@@ -152,7 +152,11 @@ test(`09 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whites
       "attribute-validate-profile": 2,
     },
   });
-  equal(applyFixes(str, messages), `<head profile="https://codsen.com">`);
+  equal(
+    applyFixes(str, messages),
+    `<head profile="https://codsen.com">`,
+    "09.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-profile",
@@ -279,7 +283,8 @@ test(`12 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - bad separator - firs
   // will fix:
   equal(
     applyFixes(str, messages),
-    `<head profile="https://codsen.com https://detergent.io">`
+    `<head profile="https://codsen.com https://detergent.io">`,
+    "12.01"
   );
   compare(ok, messages, [
     {
@@ -305,7 +310,8 @@ test(`13 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - bad separator - last
   // will fix:
   equal(
     applyFixes(str, messages),
-    `<head profile="https://codsen.com https://detergent.io">`
+    `<head profile="https://codsen.com https://detergent.io">`,
+    "13.01"
   );
   compare(ok, messages, [
     {
@@ -331,7 +337,8 @@ test(`14 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - bad separator - all 
   // will fix:
   equal(
     applyFixes(str, messages),
-    `<head profile="https://codsen.com https://detergent.io">`
+    `<head profile="https://codsen.com https://detergent.io">`,
+    "14.01"
   );
   compare(ok, messages, [
     {

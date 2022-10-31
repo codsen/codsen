@@ -46,7 +46,7 @@ test("05 - decodes multiple entities within a string, entities surrounded by oth
       [2, 9, "£"],
       [12, 19, "‘"],
     ],
-    "05"
+    "05.01"
   );
 });
 
@@ -124,7 +124,7 @@ test("08 - ampersand entity", () => {
 });
 
 test("09 - nothing to find", () => {
-  equal(decode("abc"), null, "09");
+  equal(decode("abc"), null, "09.01");
 });
 
 test("10 - empty string, early ending", () => {

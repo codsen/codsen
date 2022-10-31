@@ -23,7 +23,7 @@ test("01 - wrong/missing input = throw", () => {
 });
 
 test("02 - empty string as input", () => {
-  equal(split(""), [], "02");
+  equal(split(""), [], "02.01");
 });
 
 test("03 - opts contain non-array elements", () => {
@@ -73,7 +73,7 @@ test("06 - opts.ignoreRanges offset the start", () => {
       ignoreRanges: [[0, 2]],
     }),
     ["b", "c", "d", "e"],
-    "06"
+    "06.01"
   );
 });
 
@@ -83,7 +83,7 @@ test("07 - starts from the middle of a string", () => {
       ignoreRanges: [[1, 5]],
     }),
     ["a", "f"],
-    "07"
+    "07.01"
   );
 });
 
@@ -103,7 +103,7 @@ test('08 - in tandem with package "strFindHeadsTails" - ignores heads and tails'
       ignoreRanges: headsAndTails,
     }),
     ["some", "interesting", "text", "and", "some", "more", "text."],
-    "08"
+    "08.01"
   );
 });
 
@@ -122,7 +122,7 @@ test('09 - in tandem with package "strFindHeadsTails" - ignores whole variables'
       ignoreRanges: wholeVariables,
     }),
     ["some", "interesting", "text."],
-    "09"
+    "09.01"
   );
 });
 

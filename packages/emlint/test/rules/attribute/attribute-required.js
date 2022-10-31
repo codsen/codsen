@@ -17,7 +17,7 @@ test(`01`, () => {
       "attribute-required": 2,
     },
   });
-  equal(messages, [], "01");
+  equal(messages, [], "01.01");
 });
 
 test(`02`, () => {
@@ -27,7 +27,7 @@ test(`02`, () => {
       "attribute-required": [2],
     },
   });
-  equal(messages, [], "02");
+  equal(messages, [], "02.01");
 });
 
 test(`03`, () => {
@@ -37,7 +37,7 @@ test(`03`, () => {
       "attribute-required": [2, {}],
     },
   });
-  equal(messages, [], "03");
+  equal(messages, [], "03.01");
 });
 
 test(`04`, () => {
@@ -52,7 +52,7 @@ test(`04`, () => {
       ],
     },
   });
-  equal(messages, [], "04");
+  equal(messages, [], "04.01");
 });
 
 test(`05`, () => {
@@ -67,7 +67,7 @@ test(`05`, () => {
       ],
     },
   });
-  equal(messages, [], "05");
+  equal(messages, [], "05.01");
 });
 
 test(`06`, () => {
@@ -84,7 +84,7 @@ test(`06`, () => {
       ],
     },
   });
-  equal(messages, [], "06");
+  equal(messages, [], "06.01");
 });
 
 test(`07`, () => {
@@ -101,7 +101,7 @@ test(`07`, () => {
       ],
     },
   });
-  equal(messages, [], "07");
+  equal(messages, [], "07.01");
 });
 
 // -----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ test(`08`, () => {
     ],
     "08.01"
   );
-  equal(messages.length, 1, "08.02");
+  equal(messages.length, 1, "08.01");
 });
 
 test.run();

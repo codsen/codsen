@@ -11,7 +11,7 @@ test("01 - simple nested plain objects", () => {
   equal(
     compare({ a: { d: "4" }, b: "2", c: "3" }, { a: { d: "4" }, b: "2" }),
     true,
-    "01"
+    "01.01"
   );
 });
 
@@ -19,7 +19,7 @@ test("02 - simple nested plain objects + array wrapper", () => {
   equal(
     compare({ a: [{ d: "4" }], b: "2", c: "3" }, { a: [{ d: "4" }], b: "2" }),
     true,
-    "02"
+    "02.01"
   );
 });
 
@@ -27,7 +27,7 @@ test("03 - simple nested plain objects, won't find", () => {
   equal(
     compare({ a: { d: "4" }, b: "2" }, { a: { d: "4" }, b: "2", c: "3" }),
     false,
-    "03"
+    "03.01"
   );
 });
 
@@ -35,7 +35,7 @@ test("04 - simple nested plain objects + array wrapper, won't find", () => {
   equal(
     compare({ a: [{ d: "4" }], b: "2" }, { a: [{ d: "4" }], b: "2", c: "3" }),
     false,
-    "04"
+    "04.01"
   );
 });
 
@@ -46,7 +46,7 @@ test("05 - obj, multiple nested levels, bigObj has more", () => {
       { a: { b: { c: { d: [{ e: "1" }] } } } }
     ),
     true,
-    "05"
+    "05.01"
   );
 });
 
@@ -57,7 +57,7 @@ test("06 - obj, multiple nested levels, equal", () => {
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } }
     ),
     true,
-    "06"
+    "06.01"
   );
 });
 
@@ -68,12 +68,12 @@ test("07 - obj, multiple nested levels, smallObj has more", () => {
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } }
     ),
     false,
-    "07"
+    "07.01"
   );
 });
 
 test("08 - obj, deeper level doesn't match", () => {
-  equal(compare({ a: { b: "c" } }, { a: { b: "d" } }), false, "08");
+  equal(compare({ a: { b: "c" } }, { a: { b: "d" } }), false, "08.01");
 });
 
 test("09 - empty string and empty nested object - defaults", () => {
@@ -83,7 +83,7 @@ test("09 - empty string and empty nested object - defaults", () => {
       key3: [""],
     }),
     false,
-    "09"
+    "09.01"
   );
 });
 
@@ -100,7 +100,7 @@ test("10 - empty string and empty nested object - hungryForWhitespace", () => {
       }
     ),
     true,
-    "10"
+    "10.01"
   );
 });
 
@@ -117,7 +117,7 @@ test("11 - empty string and empty nested object - matchStrictly", () => {
       }
     ),
     false,
-    "11"
+    "11.01"
   );
 });
 
@@ -135,7 +135,7 @@ test("12 - empty string and empty nested object - hungryForWhitespace + matchStr
       }
     ),
     false,
-    "12"
+    "12.01"
   );
 });
 
@@ -150,7 +150,7 @@ test("13 - empty string and empty nested object - hungryForWhitespace + matchStr
       }
     ),
     true,
-    "13"
+    "13.01"
   );
 });
 
@@ -168,7 +168,7 @@ test("14 - multiple keys", () => {
       }
     ),
     false,
-    "14"
+    "14.01"
   );
 });
 
@@ -189,7 +189,7 @@ test("15 - multiple keys", () => {
       }
     ),
     false,
-    "15"
+    "15.01"
   );
 });
 

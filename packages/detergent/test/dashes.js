@@ -826,7 +826,7 @@ test(`54 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m
 });
 
 test(`55 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - quick ad-hoc 1`, () => {
-  equal(det1(`abc def ghi jkl`).res, "abc def ghi&nbsp;jkl", "55");
+  equal(det1(`abc def ghi jkl`).res, "abc def ghi&nbsp;jkl", "55.01");
 });
 
 test(`56 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m-dash`}\u001b[${39}m - dash conversion off, widow removal on`, () => {
@@ -837,7 +837,7 @@ test(`56 - \u001b[${32}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${31}m${`m
       convertDashes: false,
     }).res,
     `a&nbsp;- b`,
-    "56"
+    "56.01"
   );
 });
 

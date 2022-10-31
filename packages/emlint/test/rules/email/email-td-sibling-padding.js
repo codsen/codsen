@@ -59,7 +59,7 @@ test(`01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - all severity levels`,
       "email-td-sibling-padding": 2,
     },
   });
-  equal(applyFixes(str, messages3), str, "01.05");
+  equal(applyFixes(str, messages3), str, "01.04");
   compare(
     ok,
     messages3,

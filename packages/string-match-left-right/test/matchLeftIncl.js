@@ -82,7 +82,7 @@ test(`04 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}     cb gives outs
       },
     }),
     "abcd",
-    "04"
+    "04.01"
   );
 });
 
@@ -369,7 +369,7 @@ test(`09 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          adhoc`, 
       lastMustMatch: false,
     }),
     false,
-    "09"
+    "09.01"
   );
 });
 

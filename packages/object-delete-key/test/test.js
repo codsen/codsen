@@ -25,7 +25,7 @@ test("01 - delete a value which is string", () => {
     a: "a",
   };
 
-  equal(actual, intended, "01");
+  equal(actual, intended, "01.01");
 });
 
 test("02 - delete a value which is plain object", () => {
@@ -43,7 +43,7 @@ test("02 - delete a value which is plain object", () => {
     a: "a",
   };
 
-  equal(actual, intended, "02");
+  equal(actual, intended, "02.01");
 });
 
 test("03 - delete two values, plain objects, cleanup=false", () => {
@@ -62,7 +62,7 @@ test("03 - delete two values, plain objects, cleanup=false", () => {
     a: { e: [{}] },
   };
 
-  equal(actual, intended, "03");
+  equal(actual, intended, "03.01");
 });
 
 test("04 - delete two values, plain objects, cleanup=true", () => {
@@ -79,7 +79,7 @@ test("04 - delete two values, plain objects, cleanup=true", () => {
   );
   let intended = {};
 
-  equal(actual, intended, "04");
+  equal(actual, intended, "04.01");
 });
 
 test("05 - delete two values which are plain objects (on default)", () => {
@@ -95,7 +95,7 @@ test("05 - delete two values which are plain objects (on default)", () => {
   );
   let intended = {};
 
-  equal(actual, intended, "05");
+  equal(actual, intended, "05.01");
 });
 
 test("06 - delete a value which is an array", () => {
@@ -113,7 +113,7 @@ test("06 - delete a value which is an array", () => {
     a: "a",
   };
 
-  equal(actual, intended, "06");
+  equal(actual, intended, "06.01");
 });
 
 test("07 - delete two values which are arrays, cleanup=false", () => {
@@ -132,7 +132,7 @@ test("07 - delete two values which are arrays, cleanup=false", () => {
     a: { e: [{}] },
   };
 
-  equal(actual, intended, "07");
+  equal(actual, intended, "07.01");
 });
 
 test("08 - delete two values which are arrays, cleanup=default", () => {
@@ -148,7 +148,7 @@ test("08 - delete two values which are arrays, cleanup=default", () => {
   );
   let intended = {};
 
-  equal(actual, intended, "08");
+  equal(actual, intended, "08.01");
 });
 
 // ==============================
@@ -403,7 +403,7 @@ test("12 - nested array/plain objects, multiple instances found, false", () => {
         d: { e: { f: { g: {} } } },
       },
     ],
-    "12 - cleanup=false"
+    "12.01 - cleanup=false"
   );
 });
 
@@ -568,7 +568,7 @@ test("14 - targets all keys by value, cleanup=true", () => {
     a: "a",
   };
 
-  equal(actual, intended, "14");
+  equal(actual, intended, "14.01");
 });
 
 test("15 - targets all keys by value, cleanup=false", () => {
@@ -588,7 +588,7 @@ test("15 - targets all keys by value, cleanup=false", () => {
     c: [{}],
   };
 
-  equal(actual, intended, "15");
+  equal(actual, intended, "15.01");
 });
 
 // ======================================
@@ -621,7 +621,7 @@ test('16 - deletion limited to level where non-empty "uncles" exist', () => {
     c: "c",
   };
 
-  equal(actual, intended, "16");
+  equal(actual, intended, "16.01");
 });
 
 test("17 - deletion of empty things is limited in arrays too", () => {
@@ -652,7 +652,7 @@ test("17 - deletion of empty things is limited in arrays too", () => {
     ["c"],
   ];
 
-  equal(actual, intended, "17");
+  equal(actual, intended, "17.01");
 });
 
 // ==============================
@@ -826,7 +826,7 @@ test("24 - real parsed HTML #1", () => {
       ],
     },
   ];
-  equal(actual, intended, "24");
+  equal(actual, intended, "24.01");
 });
 
 test("25 - real parsed HTML #2", () => {
@@ -853,7 +853,7 @@ test("25 - real parsed HTML #2", () => {
       },
     },
   ];
-  equal(actual, intended, "25");
+  equal(actual, intended, "25.01");
 });
 
 test("26 - real parsed HTML #3", () => {
@@ -877,7 +877,7 @@ test("26 - real parsed HTML #3", () => {
       e: "f",
     },
   };
-  equal(actual, intended, "26");
+  equal(actual, intended, "26.01");
 });
 
 test("27 - real parsed HTML #4", () => {
@@ -899,7 +899,7 @@ test("27 - real parsed HTML #4", () => {
       c: "d",
     },
   };
-  equal(actual, intended, "27");
+  equal(actual, intended, "27.01");
 });
 
 // ======================================
@@ -915,14 +915,14 @@ test("28 - does not mutate input args", () => {
     key: "b",
     val: "b",
   });
-  ok(unneededRes); // dummy to prevent JS Standard swearing
+  ok(unneededRes, "28.01"); // dummy to prevent JS Standard swearing
   equal(
     obj1,
     {
       a: "a",
       b: "b",
     },
-    "28.01"
+    "28.02"
   ); // real deal
 });
 
@@ -943,7 +943,7 @@ test("29 - delete a value which is empty string", () => {
     a: ["b", "c"],
   };
 
-  equal(actual, intended, "29");
+  equal(actual, intended, "29.01");
 });
 
 test("30 - delete a value which is non-empty string", () => {
@@ -959,7 +959,7 @@ test("30 - delete a value which is non-empty string", () => {
     a: ["", "c"],
   };
 
-  equal(actual, intended, "30");
+  equal(actual, intended, "30.01");
 });
 
 test("31 - delete a value which is non-empty string, with wildcards", () => {
@@ -975,7 +975,7 @@ test("31 - delete a value which is non-empty string, with wildcards", () => {
     a: ["", "c"],
   };
 
-  equal(actual, intended, "31");
+  equal(actual, intended, "31.01");
 });
 
 test("32 - delete a value which is a non-empty string, with wildcards, only on arrays", () => {
@@ -994,7 +994,7 @@ test("32 - delete a value which is a non-empty string, with wildcards, only on a
     bap: "bap",
   };
 
-  equal(actual, intended, "32");
+  equal(actual, intended, "32.01");
 });
 
 // ==============================
@@ -1018,7 +1018,7 @@ test("33 - wildcard deletes two keys have string values", () => {
     b: "b",
   };
 
-  equal(actual, intended, "33");
+  equal(actual, intended, "33.01");
 });
 
 test("34 - wildcard deletes two keys have string values", () => {
@@ -1040,7 +1040,7 @@ test("34 - wildcard deletes two keys have string values", () => {
     b: "b",
   };
 
-  equal(actual, intended, "34");
+  equal(actual, intended, "34.01");
 
   // by both key and value, with wildcards, includes sneaky close positives
   // ---------------------------------------------------------------------------
@@ -1066,7 +1066,7 @@ test("35 - wildcard deletes two keys have string values", () => {
     b: "b",
   };
 
-  equal(actual, intended, "35");
+  equal(actual, intended, "35.01");
 });
 
 test("36 - wildcard deletes keys with plain object values, by key", () => {
@@ -1084,7 +1084,7 @@ test("36 - wildcard deletes keys with plain object values, by key", () => {
     crawls: "e",
   };
 
-  equal(actual, intended, "36");
+  equal(actual, intended, "36.01");
 });
 
 test("37 - wildcard delete two values, plain objects", () => {
@@ -1107,7 +1107,7 @@ test("37 - wildcard delete two values, plain objects", () => {
     a: { e: [{}] },
   };
 
-  equal(actual, intended, "37");
+  equal(actual, intended, "37.01");
 });
 
 test("38 - wildcard delete two values, plain objects", () => {
@@ -1128,7 +1128,7 @@ test("38 - wildcard delete two values, plain objects", () => {
   );
   let intended = {};
 
-  equal(actual, intended, "38");
+  equal(actual, intended, "38.01");
 });
 
 test("39 - issue #8 - undefined as a value", () => {
@@ -1145,7 +1145,7 @@ test("39 - issue #8 - undefined as a value", () => {
     entryPoint: "a",
   };
 
-  equal(actual, intended, "39");
+  equal(actual, intended, "39.01");
 });
 
 test("40 - issue #8 - undefined as a value, outside deletion path", () => {
@@ -1163,7 +1163,7 @@ test("40 - issue #8 - undefined as a value, outside deletion path", () => {
     {
       entryPoint: undefined,
     },
-    "40"
+    "40.01"
   );
 });
 
@@ -1182,7 +1182,7 @@ test("41 - issue #8 - undefined as a value, outside deletion path", () => {
     {
       entryPoint: undefined,
     },
-    "41"
+    "41.01"
   );
 });
 

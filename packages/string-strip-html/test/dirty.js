@@ -26,7 +26,7 @@ test("01 - missing closing bracket - opening bracket acts as tag delimeter", () 
         [10, 36],
       ],
     },
-    "01"
+    "01.01"
   );
 });
 
@@ -51,7 +51,7 @@ test("02 - missing closing brackets", () => {
         [14, 57],
       ],
     },
-    "02 - with more whitespace"
+    "02.01 - with more whitespace"
   );
 });
 
@@ -73,7 +73,7 @@ test("03 - missing closing brackets", () => {
         [10, 17],
       ],
     },
-    "03 - missing closing bracket"
+    "03.01 - missing closing bracket"
   );
 });
 
@@ -95,7 +95,7 @@ test("04 - missing closing brackets, leading to EOL", () => {
         [7, 9],
       ],
     },
-    "04"
+    "04.01"
   );
 });
 
@@ -119,7 +119,7 @@ test("05 - missing closing brackets, multiple tags", () => {
         [7, 11],
       ],
     },
-    "05"
+    "05.01"
   );
 });
 
@@ -141,7 +141,7 @@ test("06 - missing opening bracket, but recognised tag name", () => {
         [8, 15],
       ],
     },
-    "06"
+    "06.01"
   );
 });
 
@@ -163,7 +163,7 @@ test("07 - missing opening bracket, but recognised tag name, inner whitespace", 
         [9, 16],
       ],
     },
-    "07"
+    "07.01"
   );
 });
 
@@ -185,7 +185,7 @@ test("08 - missing opening bracket, but recognised tag name, closing slash", () 
         [9, 16],
       ],
     },
-    "08"
+    "08.01"
   );
 });
 
@@ -207,7 +207,7 @@ test("09 - missing opening bracket, but recognised tag name, whitespace in front
         [10, 17],
       ],
     },
-    "09"
+    "09.01"
   );
 });
 
@@ -229,7 +229,7 @@ test("10 - missing opening bracket, but recognised tag name, rogue whitespace ar
         [11, 18],
       ],
     },
-    "10"
+    "10.01"
   );
 });
 
@@ -255,7 +255,7 @@ test("11 - missing opening bracket, but recognised tag name, recognised article 
         [34, 52],
       ],
     },
-    "11"
+    "11.01"
   );
 });
 
@@ -268,7 +268,7 @@ test("12 - missing opening bracket, but recognised tag name - at index position 
       filteredTagLocations: [[11, 18]],
       ranges: [[11, 18]],
     },
-    "12"
+    "12.01"
   );
 });
 
@@ -290,7 +290,7 @@ test("13 - missing opening bracket, but recognised tag name - all caps, recognis
         [8, 15],
       ],
     },
-    "13"
+    "13.01"
   );
 });
 
@@ -303,7 +303,7 @@ test("14 - missing opening bracket, but recognised tag name - low caps, unrecogn
       filteredTagLocations: [[11, 18]],
       ranges: [[11, 18]],
     },
-    "14"
+    "14.01"
   );
 });
 
@@ -316,7 +316,7 @@ test("15 - incomplete attribute", () => {
       filteredTagLocations: [[1, 20]],
       ranges: [[1, 20, " "]],
     },
-    "15"
+    "15.01"
   );
 });
 
@@ -329,7 +329,7 @@ test("16 - incomplete attribute", () => {
       filteredTagLocations: [[1, 21]],
       ranges: [[1, 21, " "]],
     },
-    "16"
+    "16.01"
   );
 });
 
@@ -342,7 +342,7 @@ test("17 - incomplete attribute", () => {
       filteredTagLocations: [[1, 21]],
       ranges: [[1, 21, " "]],
     },
-    "17"
+    "17.01"
   );
 });
 
@@ -355,7 +355,7 @@ test("18 - incomplete attribute", () => {
       filteredTagLocations: [[1, 22]],
       ranges: [[1, 22, " "]],
     },
-    "18"
+    "18.01"
   );
 });
 
@@ -368,7 +368,7 @@ test("19 - incomplete attribute", () => {
       filteredTagLocations: [[1, 22]],
       ranges: [[1, 22, " "]],
     },
-    "19"
+    "19.01"
   );
 });
 
@@ -381,7 +381,7 @@ test("20 - incomplete attribute", () => {
       filteredTagLocations: [[1, 23]],
       ranges: [[1, 23, " "]],
     },
-    "20"
+    "20.01"
   );
 });
 
@@ -394,7 +394,7 @@ test("21 - incomplete attribute", () => {
       filteredTagLocations: [[1, 23]],
       ranges: [[1, 23, " "]],
     },
-    "21"
+    "21.01"
   );
 });
 
@@ -407,7 +407,7 @@ test("22 - incomplete attribute", () => {
       filteredTagLocations: [[1, 24]],
       ranges: [[1, 24, " "]],
     },
-    "22"
+    "22.01"
   );
 });
 
@@ -420,7 +420,7 @@ test("23 - multiple incomplete attributes", () => {
       allTagLocations: [[1, 30]],
       filteredTagLocations: [[1, 30]],
     },
-    "23"
+    "23.01"
   );
 });
 
@@ -435,7 +435,7 @@ test("24 - multiple incomplete attributes", () => {
       allTagLocations: [[1, 30]],
       filteredTagLocations: [[1, 30]],
     },
-    "24"
+    "24.01"
   );
 });
 
@@ -451,7 +451,7 @@ test("25 - multiple incomplete attributes", () => {
       allTagLocations: [[1, 30]],
       filteredTagLocations: [],
     },
-    "25"
+    "25.01"
   );
 });
 
@@ -464,7 +464,7 @@ test("26 - multiple incomplete attributes", () => {
       filteredTagLocations: [[1, 31]],
       ranges: [[1, 31, " "]],
     },
-    "26"
+    "26.01"
   );
 });
 
@@ -477,7 +477,7 @@ test("27 - multiple incomplete attributes", () => {
       filteredTagLocations: [[1, 31]],
       ranges: [[1, 31, " "]],
     },
-    "27"
+    "27.01"
   );
 });
 
@@ -490,7 +490,7 @@ test("28 - multiple incomplete attributes", () => {
       filteredTagLocations: [[1, 32]],
       ranges: [[1, 32, " "]],
     },
-    "28"
+    "28.01"
   );
 });
 
@@ -503,7 +503,7 @@ test("29 - multiple incomplete attributes", () => {
       filteredTagLocations: [[1, 53]],
       ranges: [[1, 53, " "]],
     },
-    "29 - a mix thereof"
+    "29.01 - a mix thereof"
   );
 });
 
@@ -516,7 +516,7 @@ test("30 - multiple incomplete attributes", () => {
       filteredTagLocations: [[1, 54]],
       ranges: [[1, 54, " "]],
     },
-    "30 - a mix thereof"
+    "30.01 - a mix thereof"
   );
 });
 
@@ -529,7 +529,7 @@ test("31 - multiple incomplete attributes", () => {
       filteredTagLocations: [[1, 55]],
       ranges: [[1, 55, " "]],
     },
-    "31 - a mix thereof"
+    "31.01 - a mix thereof"
   );
 });
 
@@ -542,7 +542,7 @@ test("32 - multiple incomplete attributes", () => {
       filteredTagLocations: [[1, 56]],
       ranges: [[1, 56, " "]],
     },
-    "32 - a mix thereof"
+    "32.01 - a mix thereof"
   );
 });
 
@@ -555,7 +555,7 @@ test("33 - multiple incomplete attributes", () => {
       filteredTagLocations: [[1, 58]],
       ranges: [[1, 58, " "]],
     },
-    "33 - a mix thereof"
+    "33.01 - a mix thereof"
   );
 });
 
@@ -568,7 +568,7 @@ test("34 - multiple incomplete attributes", () => {
       filteredTagLocations: [[2, 59]],
       ranges: [[1, 60, " "]],
     },
-    "34 - a mix thereof"
+    "34.01 - a mix thereof"
   );
 });
 
@@ -583,7 +583,7 @@ test("35 - multiple incomplete attributes", () => {
       filteredTagLocations: [[2, 61]],
       ranges: [[1, 62, " "]],
     },
-    "35 - a mix thereof"
+    "35.01 - a mix thereof"
   );
 });
 
@@ -597,54 +597,54 @@ test("36 - tag name, equals and end of a tag", () => {
       filteredTagLocations: [[1, 11]],
       ranges: [[1, 11, " "]],
     },
-    "36"
+    "36.01"
   );
 });
 
 test("37 - tag name, equals and end of a tag", () => {
-  equal(stripHtml("a<article =>b").result, "a b", "37");
+  equal(stripHtml("a<article =>b").result, "a b", "37.01");
 });
 
 test("38 - tag name, equals and end of a tag", () => {
-  equal(stripHtml("a<article= >b").result, "a b", "38");
+  equal(stripHtml("a<article= >b").result, "a b", "38.01");
 });
 
 test("39 - tag name, equals and end of a tag", () => {
-  equal(stripHtml("a<article = >b").result, "a b", "39");
+  equal(stripHtml("a<article = >b").result, "a b", "39.01");
 });
 
 test("40 - tag name, equals and end of a tag", () => {
   // xhtml without space between the slash and closing tag
-  equal(stripHtml("a<article=/>b").result, "a b", "40");
+  equal(stripHtml("a<article=/>b").result, "a b", "40.01");
 });
 
 test("41 - tag name, equals and end of a tag", () => {
-  equal(stripHtml("a<article =/>b").result, "a b", "41");
+  equal(stripHtml("a<article =/>b").result, "a b", "41.01");
 });
 
 test("42 - tag name, equals and end of a tag", () => {
-  equal(stripHtml("a<article= />b").result, "a b", "42");
+  equal(stripHtml("a<article= />b").result, "a b", "42.01");
 });
 
 test("43 - tag name, equals and end of a tag", () => {
-  equal(stripHtml("a<article = />b").result, "a b", "43");
+  equal(stripHtml("a<article = />b").result, "a b", "43.01");
 });
 
 test("44 - tag name, equals and end of a tag", () => {
   // xhtml with space after the closing slash
-  equal(stripHtml("a<article=/ >b").result, "a b", "44");
+  equal(stripHtml("a<article=/ >b").result, "a b", "44.01");
 });
 
 test("45 - tag name, equals and end of a tag", () => {
-  equal(stripHtml("a<article =/ >b").result, "a b", "45");
+  equal(stripHtml("a<article =/ >b").result, "a b", "45.01");
 });
 
 test("46 - tag name, equals and end of a tag", () => {
-  equal(stripHtml("a<article= / >b").result, "a b", "46");
+  equal(stripHtml("a<article= / >b").result, "a b", "46.01");
 });
 
 test("47 - tag name, equals and end of a tag", () => {
-  equal(stripHtml("a<article = / >b").result, "a b", "47");
+  equal(stripHtml("a<article = / >b").result, "a b", "47.01");
 });
 
 test("48 - multiple equals after attribute's name", () => {
@@ -653,7 +653,7 @@ test("48 - multiple equals after attribute's name", () => {
   equal(
     stripHtml('aaaaaaa<div class =="zzzz">x</div>bbbbbbbb').result,
     "aaaaaaa x bbbbbbbb",
-    "48"
+    "48.01"
   );
 });
 
@@ -724,7 +724,7 @@ test("50 - multiple equals after attribute's name", () => {
   equal(
     stripHtml('aaaaaaa<div class = ="zzzz">x</div>bbbbbbbb').result,
     "aaaaaaa x bbbbbbbb",
-    "50"
+    "50.01"
   );
 });
 
@@ -733,7 +733,7 @@ test("51 - multiple equals after attribute's name", () => {
   equal(
     stripHtml('aaaaaaa<script class = ="zzzz">x</script>bbbbbbbb').result,
     "aaaaaaa bbbbbbbb",
-    "51"
+    "51.01"
   );
 });
 
@@ -743,7 +743,7 @@ test("52 - multiple equals after attribute's name", () => {
   equal(
     stripHtml('aaaaaaa<div class = = "zzzz">x</div>bbbbbbbb').result,
     "aaaaaaa x bbbbbbbb",
-    "52"
+    "52.01"
   );
 });
 
@@ -752,7 +752,7 @@ test("53 - multiple equals after attribute's name", () => {
   equal(
     stripHtml('aaaaaaa<script class = = "zzzz">x</script>bbbbbbbb').result,
     "aaaaaaa bbbbbbbb",
-    "53"
+    "53.01"
   );
 });
 
@@ -762,7 +762,7 @@ test("54 - multiple equals after attribute's name", () => {
   equal(
     stripHtml('aaaaaaa<div class= = "zzzz">x</div>bbbbbbbb').result,
     "aaaaaaa x bbbbbbbb",
-    "54"
+    "54.01"
   );
 });
 
@@ -771,7 +771,7 @@ test("55 - multiple equals after attribute's name", () => {
   equal(
     stripHtml('aaaaaaa<script class= = "zzzz">x</script>bbbbbbbb').result,
     "aaaaaaa bbbbbbbb",
-    "55"
+    "55.01"
   );
 });
 
@@ -781,7 +781,7 @@ test("56 - multiple equals after attribute's name", () => {
   equal(
     stripHtml('aaaaaaa<div class=="zzzz">x</div>bbbbbbbb').result,
     "aaaaaaa x bbbbbbbb",
-    "56"
+    "56.01"
   );
 });
 
@@ -790,7 +790,7 @@ test("57 - multiple equals after attribute's name", () => {
   equal(
     stripHtml('aaaaaaa<script class=="zzzz">x</script>bbbbbbbb').result,
     "aaaaaaa bbbbbbbb",
-    "57"
+    "57.01"
   );
 });
 
@@ -798,7 +798,7 @@ test("58 - multiple quotes in the attributes - double, opening only - normal", (
   equal(
     stripHtml('aaaaaaa<div class=""zzzz">x</div>bbbbbbbb').result,
     "aaaaaaa x bbbbbbbb",
-    "58"
+    "58.01"
   );
 });
 
@@ -806,7 +806,7 @@ test("59 - multiple quotes in the attributes - double, opening only - ranged", (
   equal(
     stripHtml('aaaaaaa<script class=""zzzz">x</script>bbbbbbbb').result,
     "aaaaaaa bbbbbbbb",
-    "59"
+    "59.01"
   );
 });
 
@@ -814,7 +814,7 @@ test("60 - multiple quotes in the attributes - double, closing - normal", () => 
   equal(
     stripHtml('aaaaaaa<div class=""zzzz">x</div>bbbbbbbb').result,
     "aaaaaaa x bbbbbbbb",
-    "60"
+    "60.01"
   );
 });
 
@@ -822,7 +822,7 @@ test("61 - multiple quotes in the attributes - double, closing - ranged", () => 
   equal(
     stripHtml('aaaaaaa<script class=""zzzz">x</script>bbbbbbbb').result,
     "aaaaaaa bbbbbbbb",
-    "61"
+    "61.01"
   );
 });
 
@@ -830,7 +830,7 @@ test("62 - multiple quotes in the attributes - double, both closing and opening 
   equal(
     stripHtml('aaaaaaa<div class=""zzzz"">x</div>bbbbbbbb').result,
     "aaaaaaa x bbbbbbbb",
-    "62"
+    "62.01"
   );
 });
 
@@ -838,7 +838,7 @@ test("63 - multiple quotes in the attributes - double, both closing and opening 
   equal(
     stripHtml('aaaaaaa<script class=""zzzz"">x</script>bbbbbbbb').result,
     "aaaaaaa bbbbbbbb",
-    "63"
+    "63.01"
   );
 });
 
@@ -846,7 +846,7 @@ test("64 - multiple quotes in the attributes - single, opening only - normal", (
   equal(
     stripHtml("aaaaaaa<div class=''zzzz'>x</div>bbbbbbbb").result,
     "aaaaaaa x bbbbbbbb",
-    "64"
+    "64.01"
   );
 });
 
@@ -854,7 +854,7 @@ test("65 - multiple quotes in the attributes - single, opening only - ranged", (
   equal(
     stripHtml("aaaaaaa<script class=''zzzz'>x</script>bbbbbbbb").result,
     "aaaaaaa bbbbbbbb",
-    "65"
+    "65.01"
   );
 });
 
@@ -862,7 +862,7 @@ test("66 - multiple quotes in the attributes - single, closing - normal", () => 
   equal(
     stripHtml("aaaaaaa<div class=''zzzz'>x</div>bbbbbbbb").result,
     "aaaaaaa x bbbbbbbb",
-    "66"
+    "66.01"
   );
 });
 
@@ -870,7 +870,7 @@ test("67 - multiple quotes in the attributes - single, closing - ranged", () => 
   equal(
     stripHtml("aaaaaaa<script class=''zzzz'>x</script>bbbbbbbb").result,
     "aaaaaaa bbbbbbbb",
-    "67"
+    "67.01"
   );
 });
 
@@ -878,7 +878,7 @@ test("68 - multiple quotes in the attributes - single, both closing and opening 
   equal(
     stripHtml("aaaaaaa<div class=''zzzz''>x</div>bbbbbbbb").result,
     "aaaaaaa x bbbbbbbb",
-    "68"
+    "68.01"
   );
 });
 
@@ -886,7 +886,7 @@ test("69 - multiple quotes in the attributes - single, both closing and opening 
   equal(
     stripHtml("aaaaaaa<script class=''zzzz''>x</script>bbbbbbbb").result,
     "aaaaaaa bbbbbbbb",
-    "69"
+    "69.01"
   );
 });
 
@@ -894,7 +894,7 @@ test("70 - multiple quotes in the attributes - mix of messed up equals and repea
   equal(
     stripHtml("aaaaaaa<div class= ==''zzzz''>x</div>bbbbbbbb").result,
     "aaaaaaa x bbbbbbbb",
-    "70"
+    "70.01"
   );
 });
 
@@ -902,7 +902,7 @@ test("71 - multiple quotes in the attributes - mix of messed up equals and repea
   equal(
     stripHtml("aaaaaaa<script class = ==''zzzz''>x</script>bbbbbbbb").result,
     "aaaaaaa bbbbbbbb",
-    "71"
+    "71.01"
   );
 });
 
@@ -910,7 +910,7 @@ test("72 - multiple quotes in the attributes - mismatching quotes only - normal"
   equal(
     stripHtml("aaaaaaa<div class=''zzzz\"\">x</div>bbbbbbbb").result,
     "aaaaaaa x bbbbbbbb",
-    "72"
+    "72.01"
   );
 });
 
@@ -918,7 +918,7 @@ test("73 - multiple quotes in the attributes - mismatching quotes only - ranged"
   equal(
     stripHtml("aaaaaaa<script class=''zzzz\"\">x</script>bbbbbbbb").result,
     "aaaaaaa bbbbbbbb",
-    "73"
+    "73.01"
   );
 });
 
@@ -926,7 +926,7 @@ test("74 - multiple quotes in the attributes - crazy messed up - normal", () => 
   equal(
     stripHtml(`aaaaaaa<div class= =='  'zzzz" " ">x</div>bbbbbbbb`).result,
     "aaaaaaa x bbbbbbbb",
-    "74"
+    "74.01"
   );
 });
 
@@ -935,7 +935,7 @@ test("75 - multiple quotes in the attributes - crazy messed up - ranged", () => 
     stripHtml('aaaaaaa<script class= ==\'  \'zzzz" " ">x</script>bbbbbbbb')
       .result,
     "aaaaaaa bbbbbbbb",
-    "75"
+    "75.01"
   );
 });
 
@@ -944,7 +944,7 @@ test("76 - multiple quotes in the attributes - even more crazy messed up - norma
     stripHtml('aaaaaaa<div class= ==\'  \'zzzz" " " /// >x</div>bbbbbbbb')
       .result,
     "aaaaaaa x bbbbbbbb",
-    "76"
+    "76.01"
   );
 });
 
@@ -953,7 +953,7 @@ test("77 - multiple quotes in the attributes - even more crazy messed up - range
     stripHtml('aaaaaaa<script class= ==\'  \'zzzz" " " /// >x</script>bbbbbbbb')
       .result,
     "aaaaaaa bbbbbbbb",
-    "77"
+    "77.01"
   );
 });
 
@@ -961,7 +961,7 @@ test("78 - unclosed attributes - normal", () => {
   equal(
     stripHtml('aaaaaaa<div class="zzzz>x</div>bbbbbbbb').result,
     "aaaaaaa x bbbbbbbb",
-    "78"
+    "78.01"
   );
 });
 
@@ -969,7 +969,7 @@ test("79 - unclosed attributes - ranged", () => {
   equal(
     stripHtml('aaaaaaa<script class="zzzz>x</script>bbbbbbbb').result,
     "aaaaaaa bbbbbbbb",
-    "79"
+    "79.01"
   );
 });
 
@@ -977,7 +977,7 @@ test("80 - unclosed attributes - single tag", () => {
   equal(
     stripHtml('aaaaaaa<br class="zzzz>x<br>bbbbbbbb').result,
     "aaaaaaa x bbbbbbbb",
-    "80"
+    "80.01"
   );
 });
 
@@ -985,7 +985,7 @@ test("81 - unclosed attributes - new tag starts, closing quote missing", () => {
   equal(
     stripHtml('aaaaaaa<br class="zzzz <br>bbbbbbbb').result,
     "aaaaaaa bbbbbbbb",
-    "81"
+    "81.01"
   );
 });
 
@@ -993,7 +993,7 @@ test("82 - unclosed attributes - new tag starts, both quotes present", () => {
   equal(
     stripHtml('aaaaaaa<br class="zzzz" <br>bbbbbbbb').result,
     "aaaaaaa bbbbbbbb",
-    "82"
+    "82.01"
   );
 });
 
@@ -1001,7 +1001,7 @@ test("83 - unclosed attributes - cut off at the end of attribute's name", () => 
   equal(
     stripHtml("aaaaaaa<br class<br>bbbbbbbb").result,
     "aaaaaaa bbbbbbbb",
-    "83"
+    "83.01"
   );
 });
 
@@ -1009,7 +1009,7 @@ test("84 - unclosed attributes - cut off with a rogue exclamation mark", () => {
   equal(
     stripHtml("aaaaaaa<br class!<br>bbbbbbbb").result,
     "aaaaaaa bbbbbbbb",
-    "84"
+    "84.01"
   );
 });
 
@@ -1017,93 +1017,93 @@ test("85 - duplicated consecutive attribute values - inner whitespace", () => {
   equal(
     stripHtml('aa< br class1="b1" yo1   =   class2 = "b2" yo2 yo3>cc').result,
     "aa cc",
-    "85"
+    "85.01"
   );
 });
 
 test("86 - space after bracket, multiple attrs, no equals", () => {
-  equal(stripHtml("aa< br a b >cc").result, "aa< br a b >cc", "86");
+  equal(stripHtml("aa< br a b >cc").result, "aa< br a b >cc", "86.01");
 });
 
 test("87 - space after bracket, multiple attrs, no equals", () => {
-  equal(stripHtml("aa < br a b >cc").result, "aa < br a b >cc", "87");
+  equal(stripHtml("aa < br a b >cc").result, "aa < br a b >cc", "87.01");
 });
 
 test("88 - space after bracket, multiple attrs, no equals", () => {
-  equal(stripHtml("aa< br a b > cc").result, "aa< br a b > cc", "88");
+  equal(stripHtml("aa< br a b > cc").result, "aa< br a b > cc", "88.01");
 });
 
 test("89 - space after bracket, multiple attrs, no equals", () => {
-  equal(stripHtml("aa < br a b > cc").result, "aa < br a b > cc", "89");
+  equal(stripHtml("aa < br a b > cc").result, "aa < br a b > cc", "89.01");
 });
 
 test("90 - space after bracket, multiple attrs, no equals", () => {
-  equal(stripHtml("aa  < br a b >  cc").result, "aa  < br a b >  cc", "90");
+  equal(stripHtml("aa  < br a b >  cc").result, "aa  < br a b >  cc", "90.01");
 });
 
 test("91 - various, #1", () => {
-  equal(stripHtml('aa< br a b=" >cc').result, "aa cc", "91");
+  equal(stripHtml('aa< br a b=" >cc').result, "aa cc", "91.01");
 });
 
 test("92 - various, #2", () => {
-  equal(stripHtml('aa< br a b= " >cc').result, "aa cc", "92");
+  equal(stripHtml('aa< br a b= " >cc').result, "aa cc", "92.01");
 });
 
 test("93 - various, #3", () => {
-  equal(stripHtml('aa< br a b =" >cc').result, "aa cc", "93");
+  equal(stripHtml('aa< br a b =" >cc').result, "aa cc", "93.01");
 });
 
 test("94 - various, #4", () => {
-  equal(stripHtml('aa< br a b = " >cc').result, "aa cc", "94");
+  equal(stripHtml('aa< br a b = " >cc').result, "aa cc", "94.01");
 });
 
 test("95 - various, #5", () => {
   // xhtml
-  equal(stripHtml('aa< br a b=" />cc').result, "aa cc", "95");
+  equal(stripHtml('aa< br a b=" />cc').result, "aa cc", "95.01");
 });
 
 test("96 - various, #6", () => {
-  equal(stripHtml('aa< br a b= " />cc').result, "aa cc", "96");
+  equal(stripHtml('aa< br a b= " />cc').result, "aa cc", "96.01");
 });
 
 test("97 - various, #7", () => {
-  equal(stripHtml('aa< br a b =" />cc').result, "aa cc", "97");
+  equal(stripHtml('aa< br a b =" />cc').result, "aa cc", "97.01");
 });
 
 test("98 - various, #8", () => {
-  equal(stripHtml('aa< br a b = " />cc').result, "aa cc", "98");
+  equal(stripHtml('aa< br a b = " />cc').result, "aa cc", "98.01");
 });
 
 test("99 - various, #9", () => {
-  equal(stripHtml('aa< br a b=" / >cc').result, "aa cc", "99");
+  equal(stripHtml('aa< br a b=" / >cc').result, "aa cc", "99.01");
 });
 
 test("100 - various, #10", () => {
-  equal(stripHtml('aa< br a b= " / >cc').result, "aa cc", "100");
+  equal(stripHtml('aa< br a b= " / >cc').result, "aa cc", "100.01");
 });
 
 test("101 - various, #11", () => {
-  equal(stripHtml('aa< br a b =" / >cc').result, "aa cc", "101");
+  equal(stripHtml('aa< br a b =" / >cc').result, "aa cc", "101.01");
 });
 
 test("102 - various, #12", () => {
-  equal(stripHtml('aa< br a b = " / >cc').result, "aa cc", "102");
+  equal(stripHtml('aa< br a b = " / >cc').result, "aa cc", "102.01");
 });
 
 test("103 - various, #13", () => {
-  equal(stripHtml('aa< br a b=" // >cc').result, "aa cc", "103");
+  equal(stripHtml('aa< br a b=" // >cc').result, "aa cc", "103.01");
 });
 
 test("104 - various, #14", () => {
-  equal(stripHtml('aa< br a b= " // >cc').result, "aa cc", "104");
+  equal(stripHtml('aa< br a b= " // >cc').result, "aa cc", "104.01");
 });
 
 test("105 - various, #15", () => {
-  equal(stripHtml('aa< br a b =" // >cc').result, "aa cc", "105");
+  equal(stripHtml('aa< br a b =" // >cc').result, "aa cc", "105.01");
 });
 
 test("106 - various, #16", () => {
-  equal(stripHtml('aa< br a b = " // >cc').result, "aa cc", "106");
+  equal(stripHtml('aa< br a b = " // >cc').result, "aa cc", "106.01");
 });
 
 test("107 - various, #17", () => {
@@ -1111,7 +1111,7 @@ test("107 - various, #17", () => {
     stripHtml('<div><article class="main" id=="something">text</article></div>')
       .result,
     "text",
-    "107"
+    "107.01"
   );
 });
 
@@ -1122,51 +1122,67 @@ test("108 - various, #18 - suddenly cut off healthy HTML", () => {
 <td><a href="http://codsen.com" target="_blank"><img src="http://cdn.codsen.com/nonexistent.gif" width="11" height="22" border="0" style="display:block; -ms-interpolation-mode:bicubic; color: #ffffff; font-style: it`
     ).result,
     "la la la",
-    "108 - HTML cut off in the middle of an inline CSS style"
+    "108.01 - HTML cut off in the middle of an inline CSS style"
   );
 });
 
 test("109 - unclosed tag followed by a tag - HTML", () => {
   // tight
-  equal(stripHtml('111 <br class="zz"<img> 222').result, "111 222", "109");
+  equal(stripHtml('111 <br class="zz"<img> 222').result, "111 222", "109.01");
 });
 
 test("110 - unclosed tag followed by a tag - XHTML", () => {
-  equal(stripHtml('111 <br class="zz"/<img> 222').result, "111 222", "110");
+  equal(stripHtml('111 <br class="zz"/<img> 222').result, "111 222", "110.01");
 });
 
 test("111 - unclosed tag followed by a tag - HTML", () => {
   // space
-  equal(stripHtml('111 <br class="zz" <img> 222').result, "111 222", "111");
+  equal(stripHtml('111 <br class="zz" <img> 222').result, "111 222", "111.01");
 });
 
 test("112 - unclosed tag followed by a tag - XHTML", () => {
-  equal(stripHtml('111 <br class="zz"/ <img> 222').result, "111 222", "112");
+  equal(stripHtml('111 <br class="zz"/ <img> 222').result, "111 222", "112.01");
 });
 
 test("113 - unclosed tag followed by a tag - HTML - line break", () => {
   //
-  equal(stripHtml('111 <br class="zz"\n<img> 222').result, "111\n222", "113");
+  equal(
+    stripHtml('111 <br class="zz"\n<img> 222').result,
+    "111\n222",
+    "113.01"
+  );
 });
 
 test("114 - unclosed tag followed by a tag - XHTML - line break", () => {
-  equal(stripHtml('111 <br class="zz"/\n<img> 222').result, "111\n222", "114");
+  equal(
+    stripHtml('111 <br class="zz"/\n<img> 222').result,
+    "111\n222",
+    "114.01"
+  );
 });
 
 test("115 - unclosed tag followed by a tag - space and line break, HTML", () => {
   //
-  equal(stripHtml('111 <br class="zz" \n<img> 222').result, "111\n222", "115");
+  equal(
+    stripHtml('111 <br class="zz" \n<img> 222').result,
+    "111\n222",
+    "115.01"
+  );
 });
 
 test("116 - unclosed tag followed by a tag - space and line break, XHTML", () => {
-  equal(stripHtml('111 <br class="zz"/ \n<img> 222').result, "111\n222", "116");
+  equal(
+    stripHtml('111 <br class="zz"/ \n<img> 222').result,
+    "111\n222",
+    "116.01"
+  );
 });
 
 test("117 - unclosed tag followed by a tag - messy", () => {
   equal(
     stripHtml('111 <br class="zz"\t/ \n<img> 222').result,
     "111\n222",
-    "117"
+    "117.01"
   );
 });
 
@@ -1174,24 +1190,32 @@ test("118 - unclosed tag followed by a tag", () => {
   equal(
     stripHtml('111 <br class="zz"\t/\r\n\t \n<img> 222').result,
     "111\n\n222",
-    "118"
+    "118.01"
   );
 });
 
 test("119 - unclosed tag followed by a tag", () => {
-  equal(stripHtml("111 <a\t/\r\n\t \n<img> 222").result, "111\n\n222", "119");
+  equal(
+    stripHtml("111 <a\t/\r\n\t \n<img> 222").result,
+    "111\n\n222",
+    "119.01"
+  );
 });
 
 test("120 - dirty code - unclosed tag followed by a tag", () => {
-  equal(stripHtml("111 <a\t/\r\n\t \n<img> 222").result, "111\n\n222", "120");
+  equal(
+    stripHtml("111 <a\t/\r\n\t \n<img> 222").result,
+    "111\n\n222",
+    "120.01"
+  );
 });
 
 test("121 - two equals", () => {
-  equal(stripHtml('aaa <div class=="yo"> zzz').result, "aaa zzz", "121");
+  equal(stripHtml('aaa <div class=="yo"> zzz').result, "aaa zzz", "121.01");
 });
 
 test("122 - space + two equals", () => {
-  equal(stripHtml('aaa <div class =="yo"> zzz').result, "aaa zzz", "122");
+  equal(stripHtml('aaa <div class =="yo"> zzz').result, "aaa zzz", "122.01");
 });
 
 // harvested from sources mentioned in https://github.com/codsen/codsen/issues/48

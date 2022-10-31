@@ -1343,17 +1343,17 @@ test(`23 - doesn't delete whitespace with linebreaks between curlies`, () => {
 
 test(`24 - does not mangle different-type line endings, LF`, () => {
   let source = "a\n";
-  equal(m(equal, source).result, source, "24");
+  equal(m(equal, source).result, source, "24.01");
 });
 
 test(`25 - does not mangle different-type line endings, CR`, () => {
   let source = "a\r";
-  equal(m(equal, source).result, source, "25");
+  equal(m(equal, source).result, source, "25.01");
 });
 
 test(`26 - does not mangle different-type line endings, CRLF`, () => {
   let source = "a\r\n";
-  equal(m(equal, source).result, source, "26");
+  equal(m(equal, source).result, source, "26.01");
 });
 
 test(`line break into space`, () => {
@@ -1417,7 +1417,7 @@ test(`29 - issue #5, minimal`, () => {
       removeIndentations: true,
     }).result,
     `<!DOCTYPE html>\r\n<html lang="en">\r\n`,
-    "29"
+    "29.01"
   );
 });
 
@@ -1430,7 +1430,7 @@ test(`30 - issue #5, minimal`, () => {
       removeCSSComments: false,
     }).result,
     `<!DOCTYPE html>\r\n<html lang="en">\r\n<head>\r\n<meta charset="UTF-8">`,
-    "30"
+    "30.01"
   );
 });
 

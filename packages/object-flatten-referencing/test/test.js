@@ -629,7 +629,7 @@ test("06 - array of input vs string of reference", () => {
         key4: ["%%_val4_%%", "%%_val5_%%"],
       },
     },
-    "06"
+    "06.01"
   );
 });
 
@@ -681,7 +681,7 @@ test("07 - action within an array's contents", () => {
         },
       ],
     },
-    "07"
+    "07.01"
   );
 });
 
@@ -707,7 +707,7 @@ test("08 - doesn't wrap empty string values", () => {
         key4: ["%%_val4_%%", ""],
       },
     },
-    "08"
+    "08.01"
   );
 });
 
@@ -733,7 +733,7 @@ test("09 - reference array as value is shorter than input's", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "09"
+    "09.01"
   );
 });
 
@@ -903,7 +903,7 @@ test("11 - deeper level - array VS. string", () => {
       ],
       b_key: "%%_b_val_%%",
     },
-    "11"
+    "11.01"
   );
 });
 
@@ -924,7 +924,7 @@ test("12 - deeper level - array within array VS. string", () => {
         "%%_xxxx_%%<br />%%_1111_%% %%_2222_%% %%_3333_%%<br />%%_yyyy_%%<br />%%_zzzz_%%",
       b_key: "%%_b_val_%%",
     },
-    "12"
+    "12.01"
   );
 });
 
@@ -1085,7 +1085,7 @@ test("14 - one ignore works on multiple keys", () => {
         },
       ],
     },
-    "14"
+    "14.01"
   );
 });
 
@@ -1679,11 +1679,11 @@ test("20 - double-wrapping prevention from setting opts.preventWrappingIfContain
 // -----------------------------------------------------------------------------
 
 test("21 - util.arrayiffyString - turns string into an array", () => {
-  equal(arrayiffyString("zzz"), ["zzz"], "21");
+  equal(arrayiffyString("zzz"), ["zzz"], "21.01");
 });
 
 test("22 - util.arrayiffyString - turns empty string into an empty array", () => {
-  equal(arrayiffyString(""), [], "22");
+  equal(arrayiffyString(""), [], "22.01");
 });
 
 test("23 - util.arrayiffyString - doesn't touch any other input types", () => {
@@ -1719,7 +1719,7 @@ test("25 - util.flattenObject > simple object", () => {
       }
     ),
     ["a.b", "c.d"],
-    "25"
+    "25.01"
   );
 });
 
@@ -1740,7 +1740,7 @@ test("26 - util.flattenObject > nested objects", () => {
       }
     ),
     ["a.b.c", "a.d.e", "f.g.h", "f.e.j"],
-    "26"
+    "26.01"
   );
 });
 
@@ -1749,7 +1749,7 @@ test("26 - util.flattenObject > nested objects", () => {
 // -----------------------------------------------------------------------------
 
 test("27 - util.flattenArr > empty input", () => {
-  equal(flattenArr(), "", "27");
+  equal(flattenArr(), "", "27.01");
 });
 
 test("28 - util.flattenArr > simple array", () => {

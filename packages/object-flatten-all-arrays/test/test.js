@@ -38,7 +38,7 @@ test("01 - simple plain object, one array", () => {
       ],
       d: "d",
     },
-    "01"
+    "01.01"
   );
 });
 
@@ -88,7 +88,7 @@ test("02 - simple plain object, two arrays", () => {
         },
       ],
     },
-    "02"
+    "02.01"
   );
 });
 
@@ -126,7 +126,7 @@ test("03 - nested simple plain object, one array", () => {
         d: "d",
       },
     ],
-    "03"
+    "03.01"
   );
 });
 
@@ -154,7 +154,7 @@ test("04 - nested objects", () => {
       },
       "z2",
     ],
-    "04"
+    "04.01"
   );
 });
 
@@ -220,7 +220,7 @@ test("05 - multiple nested arrays", () => {
         ],
       ],
     ],
-    "05"
+    "05.01"
   );
 });
 
@@ -338,7 +338,7 @@ test("07 - multiple types in an array #1", () => {
       ],
       d: "d",
     },
-    "07"
+    "07.01"
   );
 });
 
@@ -376,7 +376,7 @@ test("08 - multiple types in an array #2", () => {
       ],
       a: "aaa",
     },
-    "08"
+    "08.01"
   );
 });
 
@@ -396,7 +396,7 @@ test("09 - simple array, two ojects", () => {
         b: "b",
       },
     ],
-    "09"
+    "09.01"
   );
 });
 
@@ -416,7 +416,7 @@ test("10 - simple array, two nested ojects", () => {
         b: { b: "b" },
       },
     ],
-    "10"
+    "10.01"
   );
 });
 
@@ -502,27 +502,27 @@ test("12 - arrays within objects, strings as elements", () => {
 // ==========
 
 test("13 - empty object as input", () => {
-  equal(flattenAllArrays({}), {}, "13");
+  equal(flattenAllArrays({}), {}, "13.01");
 });
 
 test("14 - empty array as input", () => {
-  equal(flattenAllArrays([]), [], "14");
+  equal(flattenAllArrays([]), [], "14.01");
 });
 
 test("15 - empty string as input", () => {
-  equal(flattenAllArrays(""), "", "15");
+  equal(flattenAllArrays(""), "", "15.01");
 });
 
 test("16 - null as input", () => {
-  equal(flattenAllArrays(null), null, "16");
+  equal(flattenAllArrays(null), null, "16.01");
 });
 
 test("17 - undefined as input", () => {
-  equal(flattenAllArrays(undefined), undefined, "17");
+  equal(flattenAllArrays(undefined), undefined, "17.01");
 });
 
 test("18 - nothing in the input", () => {
-  equal(flattenAllArrays(), undefined, "18");
+  equal(flattenAllArrays(), undefined, "18.01");
 });
 
 // ==========================
@@ -546,7 +546,7 @@ test("19 - does not mutate input args", () => {
     ],
   };
   let unneededResult = flattenAllArrays(obj);
-  ok(unneededResult);
+  ok(unneededResult, "19.01");
   equal(
     obj,
     {
@@ -564,7 +564,7 @@ test("19 - does not mutate input args", () => {
         },
       ],
     },
-    "19.01"
+    "19.02"
   );
 });
 

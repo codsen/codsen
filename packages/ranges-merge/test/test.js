@@ -13,7 +13,7 @@ test("01 - does not throw when the first arg is wrong", () => {
   equal(rMerge(true), null, "01.02");
   equal(rMerge(null), null, "01.03");
   equal(rMerge([null]), null, "01.04");
-  equal(rMerge([null, null]), null, "01.04");
+  equal(rMerge([null, null]), null, "01.05");
 });
 
 test("02 - throws when opts.progressFn is wrong", () => {
@@ -77,7 +77,7 @@ test("06", () => {
         mergeType: true,
       }
     );
-  });
+  }, "06.01");
   not.throws(() => {
     rMerge(
       [
@@ -88,7 +88,7 @@ test("06", () => {
         progressFn: {},
       }
     );
-  });
+  }, "06.02");
 });
 
 // 01. rMerge()
@@ -465,7 +465,7 @@ test("14 - more merging examples", () => {
       [24, 28, "  "],
       [29, 31],
     ],
-    "14"
+    "14.01"
   );
 });
 
@@ -476,7 +476,7 @@ test("15 - superset range discards to-add content of their subset ranges #1", ()
       [1, 10],
     ]),
     [[1, 10]],
-    "15"
+    "15.01"
   );
 });
 
@@ -489,7 +489,7 @@ test("16 - superset range discards to-add content of their subset ranges #2", ()
       [1, 10],
     ]),
     [[1, 10]],
-    "16"
+    "16.01"
   );
 });
 

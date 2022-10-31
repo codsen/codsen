@@ -19,7 +19,7 @@ test(`01 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
       convertEntities: 0,
     }).result,
     input,
-    "01"
+    "01.01"
   );
 });
 
@@ -31,7 +31,7 @@ test(`02 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
       convertEntities: 0,
     }).result,
     input,
-    "02"
+    "02.01"
   );
 });
 
@@ -43,7 +43,7 @@ test(`03 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
       convertEntities: 0,
     }).result,
     input,
-    "03"
+    "03.01"
   );
 });
 
@@ -55,7 +55,7 @@ test(`04 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
       convertEntities: 0,
     }).result,
     ` "-" `,
-    "04"
+    "04.01"
   );
 });
 
@@ -67,7 +67,7 @@ test(`05 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - target 776`, () => {
       convertEntities: 0,
     }).result,
     ` a"`,
-    "05"
+    "05.01"
   );
 });
 

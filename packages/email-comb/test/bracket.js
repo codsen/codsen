@@ -27,7 +27,7 @@ test(`01 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - classes`, () =
 </body>
 `;
 
-  equal(comb(source).result, intended, "01");
+  equal(comb(source).result, intended, "01.01");
 });
 
 test(`02 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - bracket notation - id's`, () => {
@@ -50,7 +50,7 @@ test(`02 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - bracket notati
 </body>
 `;
 
-  equal(comb(source).result, intended, "02");
+  equal(comb(source).result, intended, "02.01");
 });
 
 test.run();

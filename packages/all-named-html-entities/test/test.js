@@ -44,21 +44,21 @@ test(`05 - decode throws if a non-entity is given`, () => {
 });
 
 test(`06 - decode existing`, () => {
-  equal(decode("&aleph;"), "\u2135");
+  equal(decode("&aleph;"), "\u2135", "06.01");
 });
 
 test(`07 - decode non-existing`, () => {
-  equal(decode("&lsdjhfkhgjd;"), null);
+  equal(decode("&lsdjhfkhgjd;"), null, "07.01");
 });
 
 test(`08 - decode numeric`, () => {
   // &#x2135; is &aleph; only numeric version of it
-  equal(decode("&#x2135;"), null);
+  equal(decode("&#x2135;"), null, "08.01");
 });
 
 test(`09 - brokenNamedEntities.json is OK`, () => {
   type(brokenNamedEntities, "object", "09.01");
-  ok(Object.keys(brokenNamedEntities).length);
+  ok(Object.keys(brokenNamedEntities).length, "09.02");
   Object.keys(brokenNamedEntities).forEach((oneOfEntities, i) => {
     // 1. ensure all are keys unique:
     Object.keys(brokenNamedEntities).forEach((entity, y) =>
@@ -79,35 +79,35 @@ test(`09 - brokenNamedEntities.json is OK`, () => {
 });
 
 test(`10 - minLength is numeric`, () => {
-  ok(Number.isInteger(minLength));
-  ok(minLength);
+  ok(Number.isInteger(minLength), "10.01");
+  ok(minLength, "10.02");
 });
 
 test(`11 - maxLength is numeric`, () => {
-  ok(Number.isInteger(maxLength));
-  ok(maxLength > 0);
+  ok(Number.isInteger(maxLength), "11.01");
+  ok(maxLength > 0, "11.02");
 });
 
 test(`12 - allNamedEntities checks`, () => {
-  ok(Object.keys(allNamedEntities).length);
+  ok(Object.keys(allNamedEntities).length, "12.01");
 });
 
 test(`13 - uncertain list is set`, () => {
-  ok(uncertain.Alpha);
-  ok(uncertain.alpha);
-  ok(uncertain.amp);
-  ok(uncertain.And);
-  ok(uncertain.and);
+  ok(uncertain.Alpha, "13.01");
+  ok(uncertain.alpha, "13.02");
+  ok(uncertain.amp, "13.03");
+  ok(uncertain.And, "13.04");
+  ok(uncertain.and, "13.05");
 });
 
 test(`14 - allNamedEntitiesSetOnly is exported and is a set`, () => {
-  type(allNamedEntitiesSetOnly, "object");
-  equal(allNamedEntitiesSetOnly.size, 2125);
+  type(allNamedEntitiesSetOnly, "object", "14.01");
+  equal(allNamedEntitiesSetOnly.size, 2125, "14.02");
 });
 
 test(`15 - allNamedEntitiesSetOnlyCaseInsensitive is exported and is a set`, () => {
-  type(allNamedEntitiesSetOnlyCaseInsensitive, "object");
-  equal(allNamedEntitiesSetOnlyCaseInsensitive.size, 1722);
+  type(allNamedEntitiesSetOnlyCaseInsensitive, "object", "15.01");
+  equal(allNamedEntitiesSetOnlyCaseInsensitive.size, 1722, "15.02");
 });
 
 test.run();

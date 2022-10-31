@@ -419,7 +419,7 @@ test("10 - not throws when data container name append is given empty, but data c
       },
       { lookForDataContainers: false, dataContainerIdentifierTails: "" }
     );
-  }, "10");
+  }, "10.01");
 });
 
 test("11 - throws when data container name append is given empty", () => {
@@ -488,7 +488,7 @@ test("15 - not throws when opts.wrapTailsWith is customised to an empty string",
       },
       { wrapTailsWith: "" }
     );
-  }, "15");
+  }, "15.01");
 });
 
 test("16 - throws when opts.heads is not string", () => {

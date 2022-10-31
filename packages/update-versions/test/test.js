@@ -342,7 +342,7 @@ test("06 - no files found in the given directory", async () => {
   );
 
   // CLI should exit with a non-error code zero:
-  equal(stdOutContents.exitCode, 0, "06");
+  equal(stdOutContents.exitCode, 0, "06.01");
 
   // delete folder:
   await execaCommand(`rm -rf ${path.join(__dirname, "../temp")}`);

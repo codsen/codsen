@@ -69,7 +69,7 @@ test(`01 - markdown input - lifts Bar, text`, () => {
     .use(rehypeStringify)
     .processSync(input);
 
-  equal(res.value, intended, "01");
+  equal(res.value, intended, "01.01");
 });
 
 test.run();

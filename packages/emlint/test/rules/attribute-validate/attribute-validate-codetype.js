@@ -81,7 +81,11 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
       "attribute-validate-codetype": 2,
     },
   });
-  equal(applyFixes(str, messages), `<object codetype="application/json">`);
+  equal(
+    applyFixes(str, messages),
+    `<object codetype="application/json">`,
+    "06.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-codetype",
@@ -103,7 +107,11 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
       "attribute-validate-codetype": 2,
     },
   });
-  equal(applyFixes(str, messages), `<object codetype="application/json">`);
+  equal(
+    applyFixes(str, messages),
+    `<object codetype="application/json">`,
+    "07.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-codetype",
@@ -125,7 +133,11 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
       "attribute-validate-codetype": 2,
     },
   });
-  equal(applyFixes(str, messages), `<object codetype="application/json">`);
+  equal(
+    applyFixes(str, messages),
+    `<object codetype="application/json">`,
+    "08.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-codetype",

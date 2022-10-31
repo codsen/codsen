@@ -70,7 +70,7 @@ test("02 - four properties three overrides", () => {
         c: true,
       },
     ],
-    "02"
+    "02.01"
   );
 });
 
@@ -89,12 +89,12 @@ test("03 - empty override object", () => {
       { a: false, b: true, c: true },
       { a: true, b: true, c: true },
     ],
-    "03"
+    "03.01"
   );
 });
 
 test("04 - both input and override objects empty", () => {
-  equal(combinations({}, {}), [{}], "04");
+  equal(combinations({}, {}), [{}], "04.01");
 });
 
 test.run();

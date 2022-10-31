@@ -281,7 +281,7 @@ test(`17 - perf test`, () => {
       allowCustomTagNames: false,
       skipOpeningBracket: true,
     }),
-    "17"
+    "17.01"
   );
 });
 

@@ -8,14 +8,14 @@ import { alts } from "../dist/html-img-alt.esm.js";
 // -----------------------------------------------------------------------------
 
 test("01 - alt without equal", () => {
-  equal(alts("zzz<img alt>zzz"), 'zzz<img alt="" >zzz', "01 - html - tight");
+  equal(alts("zzz<img alt>zzz"), 'zzz<img alt="" >zzz', "01.01 - html - tight");
 });
 
 test("02 - alt without equal", () => {
   equal(
     alts("zzz<img    alt>zzz"),
     'zzz<img alt="" >zzz',
-    "02 - html - excessive white space"
+    "02.01 - html - excessive white space"
   );
 });
 
@@ -23,7 +23,7 @@ test("03 - alt without equal", () => {
   equal(
     alts("zzz<img alt >zzz"),
     'zzz<img alt="" >zzz',
-    "03 - html - one trailing space"
+    "03.01 - html - one trailing space"
   );
 });
 
@@ -31,19 +31,23 @@ test("04 - alt without equal", () => {
   equal(
     alts("zzz<img      alt      >zzz"),
     'zzz<img alt="" >zzz',
-    "04 - html - excessive white space on both sides"
+    "04.01 - html - excessive white space on both sides"
   );
 });
 
 test("05 - alt without equal", () => {
-  equal(alts("zzz<img alt/>zzz"), 'zzz<img alt="" />zzz', "05 - xhtml - tight");
+  equal(
+    alts("zzz<img alt/>zzz"),
+    'zzz<img alt="" />zzz',
+    "05.01 - xhtml - tight"
+  );
 });
 
 test("06 - alt without equal", () => {
   equal(
     alts("zzz<img alt />zzz"),
     'zzz<img alt="" />zzz',
-    "06 - xhtml - single space on both sides"
+    "06.01 - xhtml - single space on both sides"
   );
 });
 
@@ -51,7 +55,7 @@ test("07 - alt without equal", () => {
   equal(
     alts("zzz<img      alt   />zzz"),
     'zzz<img alt="" />zzz',
-    "07 - xhtml - excessive white space on both sides"
+    "07.01 - xhtml - excessive white space on both sides"
   );
 });
 
@@ -59,7 +63,7 @@ test("08 - alt without equal", () => {
   equal(
     alts("zzz<img      alt   /   >zzz"),
     'zzz<img alt="" />zzz',
-    "08 - xhtml - excessive white space everywhere"
+    "08.01 - xhtml - excessive white space everywhere"
   );
 });
 

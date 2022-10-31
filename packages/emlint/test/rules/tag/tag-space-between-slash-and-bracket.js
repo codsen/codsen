@@ -37,7 +37,7 @@ test(`01 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one space`, () => {
     ],
     "01.01"
   );
-  equal(applyFixes(str, messages), "<br/>", "01.02");
+  equal(applyFixes(str, messages), "<br/>", "01.01");
 });
 
 test(`02 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one space`, () => {
@@ -66,7 +66,7 @@ test(`02 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one space`, () => {
     ],
     "02.01"
   );
-  equal(applyFixes(str, messages), "<br/>", "02.02");
+  equal(applyFixes(str, messages), "<br/>", "02.01");
 });
 
 test(`03 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one tab`, () => {
@@ -95,7 +95,7 @@ test(`03 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one tab`, () => {
     ],
     "03.01"
   );
-  equal(applyFixes(str, messages), "<br/>", "03.02");
+  equal(applyFixes(str, messages), "<br/>", "03.01");
 });
 
 test(`04 - backslash`, () => {
@@ -106,7 +106,7 @@ test(`04 - backslash`, () => {
       "tag-space-between-slash-and-bracket": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "04");
+  equal(applyFixes(str, messages), fixed, "04.01");
 });
 
 test.run();

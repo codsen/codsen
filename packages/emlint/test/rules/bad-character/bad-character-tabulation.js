@@ -78,7 +78,7 @@ test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warning, detects two 
     ],
     "03.01"
   );
-  equal(applyFixes(str, messages), " dlkgjld j", "03.02");
+  equal(applyFixes(str, messages), " dlkgjld j", "03.01");
 });
 
 test(`04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - error, detects two TABULATION characters`, () => {
@@ -120,7 +120,7 @@ test(`04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - error, detects two TA
     ],
     "04.01"
   );
-  equal(applyFixes(str, messages), " dlkgjld j", "04.02");
+  equal(applyFixes(str, messages), " dlkgjld j", "04.01");
 });
 
 // 02. with config
@@ -165,7 +165,7 @@ test(`05 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - config with hardcod
     ],
     "05.01"
   );
-  equal(applyFixes(str, messages), " dlkgjld j", "05.02");
+  equal(applyFixes(str, messages), " dlkgjld j", "05.01");
 });
 
 test(`06 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - indentation tab is now deemed to be fine`, () => {
@@ -193,7 +193,7 @@ test(`06 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - indentation tab is 
     ],
     "06.01"
   );
-  equal(applyFixes(str, messages), "\t\t\tdlkgjld j", "06.02");
+  equal(applyFixes(str, messages), "\t\t\tdlkgjld j", "06.01");
 });
 
 test.run();

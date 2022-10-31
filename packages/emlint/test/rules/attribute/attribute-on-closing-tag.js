@@ -56,7 +56,7 @@ test(`03 - one attribute`, () => {
     ],
     "03.02"
   );
-  equal(messages.length, 1, "03.03");
+  equal(messages.length, 1, "03.02");
 });
 
 test.run();

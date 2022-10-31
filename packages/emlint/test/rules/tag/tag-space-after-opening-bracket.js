@@ -37,7 +37,7 @@ test(`01 - a single tag`, () => {
     ],
     "01.01"
   );
-  equal(applyFixes(str, messages), "<a>", "01.02");
+  equal(applyFixes(str, messages), "<a>", "01.01");
 });
 
 test(`02 - a single closing tag, space before slash`, () => {
@@ -64,7 +64,7 @@ test(`02 - a single closing tag, space before slash`, () => {
     ],
     "02.01"
   );
-  equal(applyFixes(str, messages), "\n</a>", "02.02");
+  equal(applyFixes(str, messages), "\n</a>", "02.01");
 });
 
 test(`03 - a single closing tag, space after slash`, () => {
@@ -91,7 +91,7 @@ test(`03 - a single closing tag, space after slash`, () => {
     ],
     "03.01"
   );
-  equal(applyFixes(str, messages), "\n</a>", "03.02");
+  equal(applyFixes(str, messages), "\n</a>", "03.01");
 });
 
 test(`04 - a single closing tag, space before and after slash`, () => {
@@ -121,7 +121,7 @@ test(`04 - a single closing tag, space before and after slash`, () => {
     ],
     "04.01"
   );
-  equal(applyFixes(str, messages), "\n</a>", "04.02");
+  equal(applyFixes(str, messages), "\n</a>", "04.01");
 });
 
 test(`05 - in front of repeated slash`, () => {
@@ -151,7 +151,7 @@ test(`05 - in front of repeated slash`, () => {
     ],
     "05.01"
   );
-  equal(applyFixes(str, messages), "<//a>", "05.02");
+  equal(applyFixes(str, messages), "<//a>", "05.01");
 });
 
 test(`06 - in front of backslash`, () => {
@@ -191,7 +191,7 @@ test(`06 - in front of backslash`, () => {
     equal,
     fail
   );
-  equal(applyFixes(str, messages), `<a>`, "06");
+  equal(applyFixes(str, messages), `<a>`, "06.01");
 });
 
 test(`07 - should not trigger when opening brackets are missing`, () => {
@@ -201,7 +201,7 @@ test(`07 - should not trigger when opening brackets are missing`, () => {
       "tag-space-after-opening-bracket": 2,
     },
   });
-  equal(messages, [], "07");
+  equal(messages, [], "07.01");
 });
 
 // 02. XML
@@ -234,7 +234,7 @@ test(`08 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, () => {
   equal(
     applyFixes(str, messages),
     `<?xml version="1.0" encoding="UTF-8"?>`,
-    "08.02"
+    "08.01"
   );
 });
 

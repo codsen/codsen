@@ -29,7 +29,7 @@ test(`01 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
     </td>
   </tr>
 </table>`),
-    "01 - str before tr - 1 col"
+    "01.01 - str before tr - 1 col"
   );
 });
 
@@ -61,7 +61,7 @@ test(`02 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
     </td>
   </tr>
 </table>`),
-    "02 - str before tr - colspan=2"
+    "02.01 - str before tr - colspan=2"
   );
 });
 
@@ -87,7 +87,7 @@ test(`03 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
     </td>
   </tr>
 </table>`),
-    "03"
+    "03.01"
   );
 });
 
@@ -119,7 +119,7 @@ test(`04 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
     </td>
   </tr>
 </table>`),
-    "04"
+    "04.01"
   );
 });
 

@@ -17,7 +17,7 @@ test(`01 - no bracket - early exit`, () => {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  equal(messages, [], "01");
+  equal(messages, [], "01.01");
 });
 
 test(`02 - no bracket - early exit`, () => {
@@ -27,7 +27,7 @@ test(`02 - no bracket - early exit`, () => {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  equal(messages, [], "02");
+  equal(messages, [], "02.01");
 });
 
 // NEVER
@@ -58,8 +58,8 @@ test(`03 - a single tag, no slash`, () => {
     ],
     "03.01"
   );
-  equal(messages.length, 1, "03.02");
-  equal(applyFixes(str, messages), fixed, "03.03");
+  equal(messages.length, 1, "03.01");
+  equal(applyFixes(str, messages), fixed, "03.02");
 });
 
 test(`04 - a single tag, with slash`, () => {
@@ -87,8 +87,8 @@ test(`04 - a single tag, with slash`, () => {
     ],
     "04.01"
   );
-  equal(messages.length, 1, "04.02");
-  equal(applyFixes(str, messages), fixed, "04.03");
+  equal(messages.length, 1, "04.01");
+  equal(applyFixes(str, messages), fixed, "04.02");
 });
 
 test(`05 - a single closing tag, innter tabs`, () => {
@@ -182,7 +182,7 @@ test(`12 - void tag, tight, never, no slash`, () => {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  equal(messages, [], "12");
+  equal(messages, [], "12.01");
 });
 
 test(`13 - void tag, tight, never, slash`, () => {
@@ -192,7 +192,7 @@ test(`13 - void tag, tight, never, slash`, () => {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  equal(messages, [], "13");
+  equal(messages, [], "13.01");
 });
 
 test(`14 - void tag, space, never, no slash`, () => {
@@ -252,7 +252,7 @@ test(`18 - void tag, format-prettier, tight, never, no slash`, () => {
       "format-prettier": 2, // prettier overrides other rules, including one above
     },
   });
-  equal(applyFixes(str, messages), fixed, "18");
+  equal(applyFixes(str, messages), fixed, "18.01");
 });
 
 test(`19 - void tag, format-prettier, tight, never, slash`, () => {
@@ -264,7 +264,7 @@ test(`19 - void tag, format-prettier, tight, never, slash`, () => {
       "format-prettier": 2, // prettier overrides other rules, including one above
     },
   });
-  equal(applyFixes(str, messages), fixed, "19");
+  equal(applyFixes(str, messages), fixed, "19.01");
 });
 
 test(`20 - void tag, format-prettier, space, never, no slash`, () => {
@@ -275,7 +275,7 @@ test(`20 - void tag, format-prettier, space, never, no slash`, () => {
       "format-prettier": 2,
     },
   });
-  equal(messages, [], "20");
+  equal(messages, [], "20.01");
 });
 
 test(`21 - void tag, all rules, space, no slash`, () => {
@@ -286,7 +286,7 @@ test(`21 - void tag, all rules, space, no slash`, () => {
       all: 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "21");
+  equal(applyFixes(str, messages), fixed, "21.01");
 });
 
 test(`22 - void tag, format-prettier, space, never, slash`, () => {
@@ -297,7 +297,7 @@ test(`22 - void tag, format-prettier, space, never, slash`, () => {
       "format-prettier": 2,
     },
   });
-  equal(messages, [], "22");
+  equal(messages, [], "22.01");
 });
 
 test(`23 - void tag, all rules, space, never, slash`, () => {
@@ -307,7 +307,7 @@ test(`23 - void tag, all rules, space, never, slash`, () => {
       all: 2,
     },
   });
-  equal(messages, [], "23");
+  equal(messages, [], "23.01");
 });
 
 test(`24 - void tag, format-prettier, tab, never, no slash`, () => {
@@ -370,7 +370,7 @@ test(`28 - non-void, a space, always, no slash`, () => {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(messages, [], "28");
+  equal(messages, [], "28.01");
 });
 
 test(`29 - non-void, a space, always, slash`, () => {
@@ -380,7 +380,7 @@ test(`29 - non-void, a space, always, slash`, () => {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(messages, [], "29");
+  equal(messages, [], "29.01");
 });
 
 test(`30 - non-void, no space, always, no slash`, () => {
@@ -408,8 +408,8 @@ test(`30 - non-void, no space, always, no slash`, () => {
     ],
     "30.01"
   );
-  equal(messages.length, 1, "30.02");
-  equal(applyFixes(str, messages), fixed, "30.03");
+  equal(messages.length, 1, "30.01");
+  equal(applyFixes(str, messages), fixed, "30.02");
 });
 
 test(`31 - non-void, no space, always, slash`, () => {
@@ -437,8 +437,8 @@ test(`31 - non-void, no space, always, slash`, () => {
     ],
     "31.01"
   );
-  equal(messages.length, 1, "31.02");
-  equal(applyFixes(str, messages), fixed, "31.03");
+  equal(messages.length, 1, "31.01");
+  equal(applyFixes(str, messages), fixed, "31.02");
 });
 
 test(`32 - non-void, tab tight, no slash, always`, () => {
@@ -523,7 +523,7 @@ test(`38 - pair, on a default, prettier`, () => {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "38");
+  equal(applyFixes(str, messages), fixed, "38.01");
 });
 
 test(`39 - pair, on a default, prettier`, () => {
@@ -535,7 +535,7 @@ test(`39 - pair, on a default, prettier`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "39");
+  equal(applyFixes(str, messages), fixed, "39.01");
 });
 
 test(`40 - pair, never, prettier`, () => {
@@ -546,7 +546,7 @@ test(`40 - pair, never, prettier`, () => {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "40");
+  equal(applyFixes(str, messages), fixed, "40.01");
 });
 
 test(`41 - pair, never, prettier`, () => {
@@ -558,7 +558,7 @@ test(`41 - pair, never, prettier`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "41");
+  equal(applyFixes(str, messages), fixed, "41.01");
 });
 
 test(`42 - pair, always, prettier`, () => {
@@ -570,7 +570,7 @@ test(`42 - pair, always, prettier`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "42");
+  equal(applyFixes(str, messages), fixed, "42.01");
 });
 
 test(`43 - pair, always, prettier`, () => {
@@ -582,7 +582,7 @@ test(`43 - pair, always, prettier`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "43");
+  equal(applyFixes(str, messages), fixed, "43.01");
 });
 
 //
@@ -606,7 +606,7 @@ test(`45 - void tag, space, always, no slash`, () => {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(messages, [], "45");
+  equal(messages, [], "45.01");
 });
 
 test(`46 - void tag, tab, always, no slash`, () => {
@@ -643,7 +643,7 @@ test(`48 - tab, format-prettier, no slash, always`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "48");
+  equal(applyFixes(str, messages), fixed, "48.01");
 });
 
 test(`49 - tab, format-prettier, no slash, always`, () => {
@@ -655,7 +655,7 @@ test(`49 - tab, format-prettier, no slash, always`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "49");
+  equal(applyFixes(str, messages), fixed, "49.01");
 });
 
 test(`50 - tab, format-prettier, no slash, always`, () => {
@@ -667,7 +667,7 @@ test(`50 - tab, format-prettier, no slash, always`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "50");
+  equal(applyFixes(str, messages), fixed, "50.01");
 });
 
 test(`51 - tab, format-prettier, no slash, never`, () => {
@@ -679,7 +679,7 @@ test(`51 - tab, format-prettier, no slash, never`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "51");
+  equal(applyFixes(str, messages), fixed, "51.01");
 });
 
 test(`52 - void tag, format-prettier, space, always, no slash`, () => {
@@ -690,7 +690,7 @@ test(`52 - void tag, format-prettier, space, always, no slash`, () => {
       "format-prettier": 2,
     },
   });
-  equal(messages, [], "52");
+  equal(messages, [], "52.01");
 });
 
 test(`53 - void tag, format-prettier, tab, always, no slash`, () => {
@@ -702,7 +702,7 @@ test(`53 - void tag, format-prettier, tab, always, no slash`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "53");
+  equal(applyFixes(str, messages), fixed, "53.01");
 });
 
 test(`54 - void tag, tight, always, slash`, () => {
@@ -713,7 +713,7 @@ test(`54 - void tag, tight, always, slash`, () => {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "54");
+  equal(applyFixes(str, messages), fixed, "54.01");
 });
 
 test(`55 - void tag, space, always, slash`, () => {
@@ -723,7 +723,7 @@ test(`55 - void tag, space, always, slash`, () => {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(messages, [], "55");
+  equal(messages, [], "55.01");
 });
 
 test(`56 - void tag, tab, always, slash`, () => {
@@ -734,7 +734,7 @@ test(`56 - void tag, tab, always, slash`, () => {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "56");
+  equal(applyFixes(str, messages), fixed, "56.01");
 });
 
 test(`57 - void tag, format-prettier, tight, always, slash`, () => {
@@ -746,7 +746,7 @@ test(`57 - void tag, format-prettier, tight, always, slash`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "57");
+  equal(applyFixes(str, messages), fixed, "57.01");
 });
 
 test(`58 - void tag, format-prettier, space, always, slash`, () => {
@@ -757,7 +757,7 @@ test(`58 - void tag, format-prettier, space, always, slash`, () => {
       "format-prettier": 2,
     },
   });
-  equal(messages, [], "58");
+  equal(messages, [], "58.01");
 });
 
 test(`59 - void tag, format-prettier, tab, always, slash`, () => {
@@ -769,7 +769,7 @@ test(`59 - void tag, format-prettier, tab, always, slash`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "59");
+  equal(applyFixes(str, messages), fixed, "59.01");
 });
 
 // XML
@@ -799,11 +799,11 @@ test(`60 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, () => {
     ],
     "60.01"
   );
-  equal(messages.length, 1, "60.02");
+  equal(messages.length, 1, "60.01");
   equal(
     applyFixes(str, messages),
     `<?xml version="1.0" encoding="UTF-8"?>`,
-    "60.03"
+    "60.02"
   );
 });
 
@@ -832,11 +832,11 @@ test(`61 - prettier overrides setting always`, () => {
     ],
     "61.01"
   );
-  equal(messages.length, 1, "61.02");
+  equal(messages.length, 1, "61.01");
   equal(
     applyFixes(str, messages),
     `<?xml version="1.0" encoding="UTF-8"?>`,
-    "61.03"
+    "61.02"
   );
 });
 
@@ -853,7 +853,7 @@ test(`62 - default`, () => {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "62");
+  equal(applyFixes(str, messages), fixed, "62.01");
 });
 
 test(`63 - never`, () => {
@@ -864,7 +864,7 @@ test(`63 - never`, () => {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "63");
+  equal(applyFixes(str, messages), fixed, "63.01");
 });
 
 test(`64 - always`, () => {
@@ -875,7 +875,7 @@ test(`64 - always`, () => {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "64");
+  equal(applyFixes(str, messages), fixed, "64.01");
 });
 
 test(`65 - default, prettier`, () => {
@@ -887,7 +887,7 @@ test(`65 - default, prettier`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "65");
+  equal(applyFixes(str, messages), fixed, "65.01");
 });
 
 test(`66 - never, prettier`, () => {
@@ -899,7 +899,7 @@ test(`66 - never, prettier`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "66");
+  equal(applyFixes(str, messages), fixed, "66.01");
 });
 
 test(`67 - always, prettier`, () => {
@@ -911,7 +911,7 @@ test(`67 - always, prettier`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "67");
+  equal(applyFixes(str, messages), fixed, "67.01");
 });
 
 //
@@ -924,7 +924,7 @@ test(`68 - default`, () => {
       "tag-space-before-closing-bracket": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "68");
+  equal(applyFixes(str, messages), fixed, "68.01");
 });
 
 test(`69 - always`, () => {
@@ -935,7 +935,7 @@ test(`69 - always`, () => {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "69");
+  equal(applyFixes(str, messages), fixed, "69.01");
 });
 
 test(`70 - never`, () => {
@@ -946,7 +946,7 @@ test(`70 - never`, () => {
       "tag-space-before-closing-bracket": [2, "never"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "70");
+  equal(applyFixes(str, messages), fixed, "70.01");
 });
 
 test(`71 - default, prettier`, () => {
@@ -958,7 +958,7 @@ test(`71 - default, prettier`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "71");
+  equal(applyFixes(str, messages), fixed, "71.01");
 });
 
 test(`72 - always, prettier`, () => {
@@ -970,7 +970,7 @@ test(`72 - always, prettier`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "72");
+  equal(applyFixes(str, messages), fixed, "72.01");
 });
 
 test(`73 - never, prettier`, () => {
@@ -982,7 +982,7 @@ test(`73 - never, prettier`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "73");
+  equal(applyFixes(str, messages), fixed, "73.01");
 });
 
 test(`74 - messed up code, fixed on all`, () => {

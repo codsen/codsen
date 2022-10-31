@@ -13,7 +13,7 @@ test(`01 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb chan
   equal(
     det(ok, not, 0, `aAa\n\nbBb\n\ncCc`).res,
     "aAa<br/>\n<br/>\nbBb<br/>\n<br/>\ncCc",
-    "01"
+    "01.01"
   );
 });
 
@@ -23,7 +23,7 @@ test(`02 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb chan
       cb: (str) => str.toUpperCase(),
     }).res,
     "AAA<br/>\n<br/>\nBBB<br/>\n<br/>\nCCC",
-    "02"
+    "02.01"
   );
 });
 
@@ -33,7 +33,7 @@ test(`03 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb chan
       cb: (str) => str.toUpperCase(),
     }).res,
     "<b>AAA<br/>\n<br/>\nBBB<br/>\n<br/>\nCCC</b>",
-    "03"
+    "03.01"
   );
 });
 
@@ -109,7 +109,7 @@ test(`06 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip H
     `
 <div>{abc}</div>\n<div>{xyz}</div>
 `.trim(),
-    "06"
+    "06.01"
   );
 });
 

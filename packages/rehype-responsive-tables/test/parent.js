@@ -36,7 +36,7 @@ test(`01 - adds class to parent table, no class there`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "01");
+  equal(res, intended, "01.01");
 });
 
 test(`02 - adds class to parent table, no class there but other attrs`, () => {
@@ -67,7 +67,7 @@ test(`02 - adds class to parent table, no class there but other attrs`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "02");
+  equal(res, intended, "02.01");
 });
 
 test(`03 - adds class to parent table, no class value`, () => {
@@ -98,7 +98,7 @@ test(`03 - adds class to parent table, no class value`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "03");
+  equal(res, intended, "03.01");
 });
 
 test(`04 - adds class to parent table, where class is empty`, () => {
@@ -129,7 +129,7 @@ test(`04 - adds class to parent table, where class is empty`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "04");
+  equal(res, intended, "04.01");
 });
 
 test(`05 - adds class to parent table, one class exists already`, () => {
@@ -160,7 +160,7 @@ test(`05 - adds class to parent table, one class exists already`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "05");
+  equal(res, intended, "05.01");
 });
 
 test(`06 - adds class to parent table, two classes exist already`, () => {
@@ -193,7 +193,7 @@ test(`06 - adds class to parent table, two classes exist already`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "06");
+  equal(res, intended, "06.01");
 });
 
 test.run();

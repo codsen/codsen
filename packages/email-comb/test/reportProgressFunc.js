@@ -110,11 +110,12 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
       { reportProgressFunc: countingFunction }
-    )
+    ),
+    "01.05"
   );
 
   // 2. check the counter variable:
-  ok(counter > 50, "01.05 - counter called");
+  ok(counter > 50, "01.06 - counter called");
 });
 
 test(`02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - reports when passing at 50% only`, () => {
@@ -411,7 +412,8 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
         reportProgressFuncFrom: 21,
         reportProgressFuncTo: 86,
       }
-    )
+    ),
+    "03.01"
   );
 
   // 2. check the counter variable:
@@ -424,9 +426,9 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
   // since we use Math.floor, some percentages can be skipped, so let's just
   // confirm that no numbers outside of permitted values are reported
   gather.forEach((perc) => ok(compareTo.includes(perc)));
-  equal(gather.length, 86 - 21, "03.01");
+  equal(gather.length, 86 - 21, "03.02");
 
-  equal(gather, compareTo, "03.02");
+  equal(gather, compareTo, "03.03");
 });
 
 test.run();

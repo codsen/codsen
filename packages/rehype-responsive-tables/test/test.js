@@ -42,7 +42,7 @@ test(`01 - 1x2`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "01");
+  equal(res, intended, "01.01");
 });
 
 test(`02 - 1x3`, () => {
@@ -81,7 +81,7 @@ test(`02 - 1x3`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "02");
+  equal(res, intended, "02.01");
 });
 
 test(`03 - 1x5`, () => {
@@ -124,7 +124,7 @@ test(`03 - 1x5`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "03");
+  equal(res, intended, "03.01");
 });
 
 test(`04 - 2x3`, () => {
@@ -181,7 +181,7 @@ test(`04 - 2x3`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "04");
+  equal(res, intended, "04.01");
 });
 
 test(`05 - nested tags inside, no colspan`, () => {
@@ -240,7 +240,7 @@ test(`05 - nested tags inside, no colspan`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "05");
+  equal(res, intended, "05.01");
 });
 
 test(`06 - nested tags inside, colspan`, () => {
@@ -303,7 +303,7 @@ test(`06 - nested tags inside, colspan`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "06");
+  equal(res, intended, "06.01");
 });
 
 test.run();

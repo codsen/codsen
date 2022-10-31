@@ -85,7 +85,7 @@ test(`01 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - requested package does n
       })
     );
 
-  equal(cleanupMsg.exitCode, 0, "01");
+  equal(cleanupMsg.exitCode, 0, "01.01");
 });
 
 //                                  *
@@ -138,7 +138,7 @@ test(`02 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read a's packag
       })
     );
 
-  equal(cleanupMsg.exitCode, 0, "02");
+  equal(cleanupMsg.exitCode, 0, "02.01");
 });
 
 //                                  *
@@ -191,7 +191,7 @@ test(`03 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read b's packag
       })
     );
 
-  equal(cleanupMsg.exitCode, 0, "03");
+  equal(cleanupMsg.exitCode, 0, "03.01");
 });
 
 //                                  *
@@ -256,7 +256,7 @@ test(`04 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - normal dep, symlink alre
       })
     );
 
-  equal(cleanupMsg.exitCode, 0, "04");
+  equal(cleanupMsg.exitCode, 0, "04.01");
 });
 
 //                                  *
@@ -316,7 +316,7 @@ test(`05 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - error while trying to pa
       })
     );
 
-  equal(cleanupMsg.exitCode, 0, "05");
+  equal(cleanupMsg.exitCode, 0, "05.01");
 });
 
 //                                  *
@@ -387,7 +387,7 @@ test(`06 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - dep is a CLI, one of sym
       })
     );
 
-  equal(cleanupMsg.exitCode, 0, "06");
+  equal(cleanupMsg.exitCode, 0, "06.01");
 });
 
 //                                  *
@@ -446,7 +446,7 @@ test(`07 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - package.json had no main
       })
     );
 
-  equal(cleanupMsg.exitCode, 0, "07");
+  equal(cleanupMsg.exitCode, 0, "07.01");
 });
 
 //                                  *
@@ -506,7 +506,7 @@ test(`08 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal
       })
     );
 
-  equal(cleanupMsg.exitCode, 0, "08");
+  equal(cleanupMsg.exitCode, 0, "08.01");
 });
 
 test(`09 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links CLI deps`, async () => {
@@ -556,7 +556,7 @@ test(`09 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links CLI de
       })
     );
 
-  equal(cleanupMsg.exitCode, 0, "09");
+  equal(cleanupMsg.exitCode, 0, "09.01");
 });
 
 test(`10 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps, adds them as devDependencies, -d flag`, async () => {
@@ -603,7 +603,7 @@ test(`10 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal
       })
     );
 
-  equal(cleanupMsg.exitCode, 0, "10");
+  equal(cleanupMsg.exitCode, 0, "10.01");
 });
 
 test(`11 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps, adds them as devDependencies, --dev flag`, async () => {
@@ -650,7 +650,7 @@ test(`11 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal
       })
     );
 
-  equal(cleanupMsg.exitCode, 0, "11");
+  equal(cleanupMsg.exitCode, 0, "11.01");
 });
 
 test.run();

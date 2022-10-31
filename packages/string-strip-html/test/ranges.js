@@ -17,12 +17,16 @@ test("01 - ranges - quick sanity check", () => {
   let input = `Some text <a class="btn btn__large" id="z">click me</a> and more text.`;
 
   let { result, ranges, allTagLocations } = stripHtml(input);
-  equal(result, "Some text click me and more text.");
-  equal(ranges, [
-    [9, 43, " "],
-    [51, 56, " "],
-  ]);
-  equal(allTagLocations, intendedAllTagLocations);
+  equal(result, "Some text click me and more text.", "01.01");
+  equal(
+    ranges,
+    [
+      [9, 43, " "],
+      [51, 56, " "],
+    ],
+    "01.02"
+  );
+  equal(allTagLocations, intendedAllTagLocations, "01.03");
   validateTagLocations(is, input, intendedAllTagLocations);
 });
 
@@ -52,33 +56,41 @@ test("02 - consistency with ranges-apply", () => {
   let intendedResult = "1\n\n2\n\n3";
 
   let { result, ranges, allTagLocations } = stripHtml(input);
-  equal(result, intendedResult);
-  equal(ranges, [
-    [0, 136],
-    [137, 165, "\n\n"],
-    [166, 194, "\n\n"],
-    [195, 226],
-  ]);
-  equal(allTagLocations, [
-    [0, 15],
-    [18, 44],
-    [47, 53],
-    [58, 80],
-    [85, 92],
-    [92, 100],
-    [103, 110],
-    [113, 119],
-    [124, 129],
-    [142, 148],
-    [153, 158],
-    [171, 177],
-    [182, 187],
-    [200, 206],
-    [209, 216],
-    [219, 226],
-  ]);
+  equal(result, intendedResult, "02.01");
+  equal(
+    ranges,
+    [
+      [0, 136],
+      [137, 165, "\n\n"],
+      [166, 194, "\n\n"],
+      [195, 226],
+    ],
+    "02.02"
+  );
+  equal(
+    allTagLocations,
+    [
+      [0, 15],
+      [18, 44],
+      [47, 53],
+      [58, 80],
+      [85, 92],
+      [92, 100],
+      [103, 110],
+      [113, 119],
+      [124, 129],
+      [142, 148],
+      [153, 158],
+      [171, 177],
+      [182, 187],
+      [200, 206],
+      [209, 216],
+      [219, 226],
+    ],
+    "02.03"
+  );
 
-  equal(rApply(input, stripHtml(input).ranges), result, `02.02`);
+  equal(rApply(input, stripHtml(input).ranges), result, `02.04`);
 });
 
 test("03 - consistency with ranges-apply", () => {

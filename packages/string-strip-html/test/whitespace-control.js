@@ -11,7 +11,7 @@ test("01 - whitespace control - line breaks between tags", () => {
   equal(
     stripHtml("something <a> \n\n to <a> put here to test").result,
     "something\n\nto put here to test",
-    "01"
+    "01.01"
   );
 });
 
@@ -19,7 +19,7 @@ test("02 - whitespace control - line breaks within tag", () => {
   equal(
     stripHtml("something <a\n\n>  to <a> put here to test").result,
     "something to put here to test",
-    "02"
+    "02.01"
   );
 });
 
@@ -27,7 +27,7 @@ test("03 - whitespace control - leading inner tag linebreaks", () => {
   equal(
     stripHtml("something <\n\na>  to <a> put here to test").result,
     "something to put here to test",
-    "03"
+    "03.01"
   );
 });
 
@@ -35,7 +35,7 @@ test("04 - whitespace control - multiple tags, inner trailing linebreaks", () =>
   equal(
     stripHtml("something <a>  to <a\n\n> put here to test").result,
     "something to put here to test",
-    "04"
+    "04.01"
   );
 });
 
@@ -43,7 +43,7 @@ test("05 - whitespace control - multiple tags, inner leading linebreaks", () => 
   equal(
     stripHtml("something <a>  to <\n\na> put here to test").result,
     "something to put here to test",
-    "05"
+    "05.01"
   );
 });
 
@@ -51,7 +51,7 @@ test("06 - whitespace control - tabs and linebreaks inside, multiple tags", () =
   equal(
     stripHtml("something <\t\na\n>  to <a\n\n> put here to test").result,
     "something to put here to test",
-    "06"
+    "06.01"
   );
 });
 
@@ -60,19 +60,19 @@ test("07 - whitespace control - even this", () => {
     stripHtml("something <\n\na\t>\t\t\t\t\t  to \t<\n\na\t> put here to test")
       .result,
     "something to put here to test",
-    "07"
+    "07.01"
   );
 });
 
 test("08 - whitespace control - adds a space in place of stripped tags, tight", () => {
-  equal(stripHtml("a<div>b</div>c").result, "a b c", "08");
+  equal(stripHtml("a<div>b</div>c").result, "a b c", "08.01");
 });
 
 test("09 - whitespace control - adds a space in place of stripped tags, loose", () => {
   equal(
     stripHtml("a <div>   b    </div>    c").result,
     "a b c",
-    "09 - stays on one line because it was on one line"
+    "09.01 - stays on one line because it was on one line"
   );
 });
 
@@ -80,7 +80,7 @@ test("10 - whitespace control - adds a space in place of stripped tags, tabs and
   equal(
     stripHtml("\t\t\ta <div>   b    </div>    c\n\n\n").result,
     "a b c",
-    "10 - like 02 above but with trimming"
+    "10.01 - like 02 above but with trimming"
   );
 });
 
@@ -94,7 +94,7 @@ test("11 - whitespace control - adds a linebreak between each substring piece", 
   </div>
 c`).result,
     "a\n\nb\n\nc",
-    "11"
+    "11.01"
   );
 });
 
@@ -116,7 +116,7 @@ test("13 - whitespace control - multiple tag combo case #2", () => {
         </a>
       y`).result,
     "z\n\nc\n\ny",
-    "13"
+    "13.01"
   );
 });
 
@@ -124,7 +124,7 @@ test("14 - whitespace control - dirty html, trailing space", () => {
   equal(
     stripHtml("something <article>article> here").result,
     "something here",
-    "14"
+    "14.01"
   );
 });
 
@@ -132,12 +132,12 @@ test("15 - whitespace control - dirty html, few trailing spaces", () => {
   equal(
     stripHtml("something <article>article>   here").result,
     "something here",
-    "15"
+    "15.01"
   );
 });
 
 test("16 - tags on the edge of the string - normal", () => {
-  equal(stripHtml("<a>\n<b>\n<c>x</c>\n</b>\n</a>").result, "x", "16");
+  equal(stripHtml("<a>\n<b>\n<c>x</c>\n</b>\n</a>").result, "x", "16.01");
 });
 
 test("17 - tags on the edge of the string - cb", () => {
@@ -181,7 +181,7 @@ test("18 - indentations, mixed", () => {
 
   `).result,
     "A.\nB.",
-    "18"
+    "18.01"
   );
 });
 
@@ -194,7 +194,7 @@ test("19 - indentations, mixed", () => {
 
   `).result,
     "A.\nB.",
-    "19"
+    "19.01"
   );
 });
 
@@ -204,7 +204,7 @@ test("20 - indentations, tags in front", () => {
   <a>y
   `).result,
     "x\ny",
-    "20"
+    "20.01"
   );
 });
 
@@ -213,7 +213,7 @@ test("21 - indentations, sneaky pair tags", () => {
     stripHtml(`a
     <script>x    </script>  <script> y</script>  b`).result,
     "a\nb",
-    "21"
+    "21.01"
   );
 });
 

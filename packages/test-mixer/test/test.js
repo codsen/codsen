@@ -191,7 +191,7 @@ test("04 - ensure values are cloned, not referenced", () => {
         baz: { x: "y" }, // <-- still "y", not null
       },
     ],
-    "04"
+    "04.01"
   );
 });
 
@@ -234,7 +234,7 @@ test("05 - ensure values are cloned, not referenced", () => {
         cb: null,
       },
     ],
-    "05"
+    "05.01"
   );
 });
 
@@ -262,7 +262,7 @@ test("06", () => {
         qux: false,
       },
     ],
-    "06"
+    "06.01"
   );
 });
 
@@ -295,7 +295,7 @@ test("07", () => {
         qux: true,
       },
     ],
-    "07"
+    "07.01"
   );
 });
 

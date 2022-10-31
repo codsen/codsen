@@ -13,7 +13,7 @@ test("01 - empty string, defaults", () => {
       res: "",
       ranges: [],
     },
-    "01"
+    "01.01"
   );
 });
 
@@ -24,7 +24,7 @@ test("02 - empty string, classicTrim=false", () => {
       res: "",
       ranges: [],
     },
-    "02 - hardcoded default"
+    "02.01 - hardcoded default"
   );
 });
 
@@ -35,7 +35,7 @@ test("03 - empty string, classicTrim=true", () => {
       res: "",
       ranges: [],
     },
-    "03"
+    "03.01"
   );
 });
 
@@ -46,7 +46,7 @@ test("04 - single space, defaults", () => {
       res: "",
       ranges: [[0, 1]],
     },
-    "04"
+    "04.01"
   );
 });
 
@@ -57,7 +57,7 @@ test("05 - single space, classicTrim=false", () => {
       res: "",
       ranges: [[0, 1]],
     },
-    "05"
+    "05.01"
   );
 });
 
@@ -68,31 +68,31 @@ test("06 - single space, classicTrim=true", () => {
       res: "",
       ranges: [[0, 1]],
     },
-    "06"
+    "06.01"
   );
 });
 
 test("07 - single letter", () => {
-  equal(trim("a"), { res: "a", ranges: [] }, "07");
+  equal(trim("a"), { res: "a", ranges: [] }, "07.01");
 });
 
 test("08 - single letter, classicTrim=false", () => {
-  equal(trim("a", { classicTrim: false }), { res: "a", ranges: [] }, "08");
+  equal(trim("a", { classicTrim: false }), { res: "a", ranges: [] }, "08.01");
 });
 
 test("09 - single letter, classicTrim=true", () => {
-  equal(trim("a", { classicTrim: true }), { res: "a", ranges: [] }, "09");
+  equal(trim("a", { classicTrim: true }), { res: "a", ranges: [] }, "09.01");
 });
 
 test("10 - leading space, default", () => {
-  equal(trim(" a a"), { res: "a a", ranges: [[0, 1]] }, "10");
+  equal(trim(" a a"), { res: "a a", ranges: [[0, 1]] }, "10.01");
 });
 
 test("11 - leading space, classicTrim=false", () => {
   equal(
     trim(" a a", { classicTrim: false }),
     { res: "a a", ranges: [[0, 1]] },
-    "11"
+    "11.01"
   );
 });
 
@@ -100,19 +100,19 @@ test("12 - leading space, classicTrim=true", () => {
   equal(
     trim(" a a", { classicTrim: true }),
     { res: "a a", ranges: [[0, 1]] },
-    "12"
+    "12.01"
   );
 });
 
 test("13 - trailing space, defaults", () => {
-  equal(trim("a a "), { res: "a a", ranges: [[3, 4]] }, "13");
+  equal(trim("a a "), { res: "a a", ranges: [[3, 4]] }, "13.01");
 });
 
 test("14 - trailing space, defaults", () => {
   equal(
     trim("a a ", { classicTrim: false }),
     { res: "a a", ranges: [[3, 4]] },
-    "14"
+    "14.01"
   );
 });
 
@@ -120,7 +120,7 @@ test("15 - trailing space, defaults", () => {
   equal(
     trim("a a ", { classicTrim: true }),
     { res: "a a", ranges: [[3, 4]] },
-    "15"
+    "15.01"
   );
 });
 
@@ -134,7 +134,7 @@ test("16 - space on both sides", () => {
         [6, 11],
       ],
     },
-    "16"
+    "16.01"
   );
 });
 
@@ -148,7 +148,7 @@ test("17 - space on both sides - copes with emoji", () => {
         [5, 10],
       ],
     },
-    "17"
+    "17.01"
   );
 });
 
@@ -162,7 +162,7 @@ test("18 - space on both sides - classicTrim=true", () => {
         [6, 11],
       ],
     },
-    "18"
+    "18.01"
   );
 });
 
@@ -176,7 +176,7 @@ test("19 - space on both sides - copes with emoji - classicTrim=true", () => {
         [5, 10],
       ],
     },
-    "19"
+    "19.01"
   );
 });
 
@@ -190,7 +190,7 @@ test("20 - trimming hits the newline and stops", () => {
         [12, 15],
       ],
     },
-    "20"
+    "20.01"
   );
 });
 
@@ -204,7 +204,7 @@ test("21 - trimming hits the tab and stops", () => {
         [12, 15],
       ],
     },
-    "21"
+    "21.01"
   );
 });
 
@@ -218,7 +218,7 @@ test("22 - trimming hits the newline and stops - classicTrim", () => {
         [9, 15],
       ],
     }, // <---------------- !
-    "22"
+    "22.01"
   );
 });
 
@@ -232,7 +232,7 @@ test("23 - trimming hits the tab and stops - classicTrim", () => {
         [9, 15],
       ],
     }, // <---------------- !
-    "23"
+    "23.01"
   );
 });
 
@@ -282,7 +282,7 @@ test("25 - opts.space - default", () => {
         [8, 11],
       ],
     },
-    "25"
+    "25.01"
   );
 });
 

@@ -16,7 +16,7 @@ test(`01 - head CSS, missing space`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "01");
+  equal(applyFixes(str, messages), fixed, "01.01");
 });
 
 test(`02 - inline CSS, missing space`, () => {
@@ -27,7 +27,7 @@ test(`02 - inline CSS, missing space`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "02");
+  equal(applyFixes(str, messages), fixed, "02.01");
 });
 
 test(`03 - head CSS, tab as space`, () => {
@@ -38,7 +38,7 @@ test(`03 - head CSS, tab as space`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "03");
+  equal(applyFixes(str, messages), fixed, "03.01");
 });
 
 test(`04 - inline CSS, tab as space`, () => {
@@ -49,7 +49,7 @@ test(`04 - inline CSS, tab as space`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "04");
+  equal(applyFixes(str, messages), fixed, "04.01");
 });
 
 test(`05 - head CSS, two spaces`, () => {
@@ -60,7 +60,7 @@ test(`05 - head CSS, two spaces`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "05");
+  equal(applyFixes(str, messages), fixed, "05.01");
 });
 
 test(`06 - inline CSS, two spaces`, () => {
@@ -71,7 +71,7 @@ test(`06 - inline CSS, two spaces`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "06");
+  equal(applyFixes(str, messages), fixed, "06.01");
 });
 
 // missing space in after an !important
@@ -85,7 +85,7 @@ test(`07 - head CSS, missing space`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "07");
+  equal(applyFixes(str, messages), fixed, "07.01");
 });
 
 test(`08 - inline CSS, missing space`, () => {
@@ -96,7 +96,7 @@ test(`08 - inline CSS, missing space`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "08");
+  equal(applyFixes(str, messages), fixed, "08.01");
 });
 
 test(`09 - head CSS, tab as space`, () => {
@@ -107,7 +107,7 @@ test(`09 - head CSS, tab as space`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "09");
+  equal(applyFixes(str, messages), fixed, "09.01");
 });
 
 test(`10 - inline CSS, tab as space`, () => {
@@ -118,7 +118,7 @@ test(`10 - inline CSS, tab as space`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "10");
+  equal(applyFixes(str, messages), fixed, "10.01");
 });
 
 test(`11 - head CSS, two spaces`, () => {
@@ -129,7 +129,7 @@ test(`11 - head CSS, two spaces`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "11");
+  equal(applyFixes(str, messages), fixed, "11.01");
 });
 
 test(`12 - inline CSS, two spaces`, () => {
@@ -140,7 +140,7 @@ test(`12 - inline CSS, two spaces`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "12");
+  equal(applyFixes(str, messages), fixed, "12.01");
 });
 
 test(`13 - combo, HTML`, () => {
@@ -151,7 +151,7 @@ test(`13 - combo, HTML`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "13");
+  equal(applyFixes(str, messages), fixed, "13.01");
 });
 
 test(`14 - combo, Nunj`, () => {
@@ -162,7 +162,7 @@ test(`14 - combo, Nunj`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "14");
+  equal(applyFixes(str, messages), fixed, "14.01");
 });
 
 // missing space after semi
@@ -176,7 +176,7 @@ test(`15 - head CSS, missing`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "15");
+  equal(applyFixes(str, messages), fixed, "15.01");
 });
 
 test(`16 - inline CSS, missing`, () => {
@@ -187,7 +187,7 @@ test(`16 - inline CSS, missing`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "16");
+  equal(applyFixes(str, messages), fixed, "16.01");
 });
 
 test(`17 - head CSS, tab as a space`, () => {
@@ -198,7 +198,7 @@ test(`17 - head CSS, tab as a space`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "17");
+  equal(applyFixes(str, messages), fixed, "17.01");
 });
 
 test(`18 - inline CSS, tab as a space`, () => {
@@ -209,7 +209,7 @@ test(`18 - inline CSS, tab as a space`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "18");
+  equal(applyFixes(str, messages), fixed, "18.01");
 });
 
 test(`19 - head CSS, copious whitespace`, () => {
@@ -220,7 +220,7 @@ test(`19 - head CSS, copious whitespace`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "19");
+  equal(applyFixes(str, messages), fixed, "19.01");
 });
 
 test(`20 - inline CSS, copious whitespace`, () => {
@@ -231,7 +231,7 @@ test(`20 - inline CSS, copious whitespace`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "20");
+  equal(applyFixes(str, messages), fixed, "20.01");
 });
 
 test(`21 - comment as the first entry, excessive gap`, () => {
@@ -242,7 +242,7 @@ test(`21 - comment as the first entry, excessive gap`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "21");
+  equal(applyFixes(str, messages), fixed, "21.01");
 });
 
 test(`22 - comment as the first entry, tight`, () => {
@@ -253,7 +253,7 @@ test(`22 - comment as the first entry, tight`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "22");
+  equal(applyFixes(str, messages), fixed, "22.01");
 });
 
 test(`23 - comment as the first entry, tight`, () => {
@@ -264,7 +264,7 @@ test(`23 - comment as the first entry, tight`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "23");
+  equal(applyFixes(str, messages), fixed, "23.01");
 });
 
 test(`24 - copiously spaced out ESP clause`, () => {
@@ -275,7 +275,7 @@ test(`24 - copiously spaced out ESP clause`, () => {
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "24");
+  equal(applyFixes(str, messages), fixed, "24.01");
 });
 
 test(`25`, () => {
@@ -287,7 +287,7 @@ float: left;">x</td>`;
       "format-prettier": 2,
     },
   });
-  equal(applyFixes(str, messages), str, "25");
+  equal(applyFixes(str, messages), str, "25.01");
 });
 
 test.run();

@@ -20,7 +20,7 @@ test("01 - arrays referencing values which are strings", () => {
       c: "cval",
       d: "dval",
     },
-    "01"
+    "01.01"
   );
 });
 
@@ -42,7 +42,7 @@ test("02 - arrays referencing values which are arrays", () => {
       c: ["c1", "c2"],
       d: "dval",
     },
-    "02"
+    "02.01"
   );
 });
 

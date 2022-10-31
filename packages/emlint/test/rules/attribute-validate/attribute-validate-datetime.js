@@ -81,7 +81,11 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
       "attribute-validate-datetime": 2,
     },
   });
-  equal(applyFixes(str, messages), `<del datetime="2019-12-30T22:33:44Z">`);
+  equal(
+    applyFixes(str, messages),
+    `<del datetime="2019-12-30T22:33:44Z">`,
+    "06.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-datetime",
@@ -103,7 +107,11 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
       "attribute-validate-datetime": 2,
     },
   });
-  equal(applyFixes(str, messages), `<del datetime="2019-12-30T22:33:44Z">`);
+  equal(
+    applyFixes(str, messages),
+    `<del datetime="2019-12-30T22:33:44Z">`,
+    "07.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-datetime",
@@ -125,7 +133,11 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
       "attribute-validate-datetime": 2,
     },
   });
-  equal(applyFixes(str, messages), `<del datetime="2019-12-30T22:33:44Z">`);
+  equal(
+    applyFixes(str, messages),
+    `<del datetime="2019-12-30T22:33:44Z">`,
+    "08.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-datetime",

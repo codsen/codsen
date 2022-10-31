@@ -84,7 +84,7 @@ test(`02 - no findings`, () => {
 });
 
 test(`03 - starting point outside of the range`, () => {
-  equal(leftSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "03");
+  equal(leftSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "03.01");
 });
 
 test(`04 - case insensitive`, () => {

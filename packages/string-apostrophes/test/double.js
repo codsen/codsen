@@ -35,7 +35,7 @@ test(`01 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quo
       [8, 9, "&ldquo;"],
       [17, 18, "&rdquo;"],
     ],
-    "01"
+    "01.01"
   );
 });
 
@@ -60,7 +60,7 @@ test(`02 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quo
       [8, 9, `${leftDoubleQuote}`],
       [17, 18, `${rightDoubleQuote}`],
     ],
-    "02"
+    "02.01"
   );
 });
 
@@ -79,7 +79,7 @@ test(`03 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quo
         convertApostrophes: false,
       })
     );
-  equal(gatheredRes, [], "03");
+  equal(gatheredRes, [], "03.01");
 });
 
 test(`04 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - exclamation mark`, () => {
@@ -89,7 +89,7 @@ test(`04 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - exclamation 
       convertEntities: 0,
     }).result,
     `${leftDoubleQuote}What!${rightDoubleQuote} he said`,
-    "04"
+    "04.01"
   );
 });
 
@@ -100,7 +100,7 @@ test(`05 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - full stop`, 
       convertEntities: 0,
     }).result,
     `${leftDoubleQuote}What.${rightDoubleQuote} he said`,
-    "05"
+    "05.01"
   );
 });
 
@@ -111,7 +111,7 @@ test(`06 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - comma`, () =
       convertEntities: 0,
     }).result,
     `${leftDoubleQuote}What,${rightDoubleQuote} he said`,
-    "06"
+    "06.01"
   );
 });
 
@@ -122,7 +122,7 @@ test(`07 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - semicolon`, 
       convertEntities: 0,
     }).result,
     `${leftDoubleQuote}What;${rightDoubleQuote} he said`,
-    "07"
+    "07.01"
   );
 });
 
@@ -133,7 +133,7 @@ test(`08 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - question mar
       convertEntities: 0,
     }).result,
     `${leftDoubleQuote}What?${rightDoubleQuote} he said`,
-    "08"
+    "08.01"
   );
 });
 
@@ -144,7 +144,7 @@ test(`09 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - exclamation 
       convertEntities: 0,
     }).result,
     `${leftSingleQuote}${leftDoubleQuote}What!${rightDoubleQuote}${rightSingleQuote} he said`,
-    "09"
+    "09.01"
   );
 });
 
@@ -155,7 +155,7 @@ test(`10 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quote
       convertEntities: 0,
     }).result,
     `${leftSingleQuote}${leftDoubleQuote}What.${rightDoubleQuote}${rightSingleQuote} he said`,
-    "10"
+    "10.01"
   );
 });
 
@@ -166,7 +166,7 @@ test(`11 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quote
       convertEntities: 0,
     }).result,
     `${leftSingleQuote}${leftDoubleQuote}What,${rightDoubleQuote}${rightSingleQuote} he said`,
-    "11"
+    "11.01"
   );
 });
 
@@ -177,7 +177,7 @@ test(`12 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quote
       convertEntities: 0,
     }).result,
     `${leftSingleQuote}${leftDoubleQuote}What;${rightDoubleQuote}${rightSingleQuote} he said`,
-    "12"
+    "12.01"
   );
 });
 
@@ -188,7 +188,7 @@ test(`13 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quote
       convertEntities: 0,
     }).result,
     `${leftSingleQuote}${leftDoubleQuote}What?${rightDoubleQuote}${rightSingleQuote} he said`,
-    "13"
+    "13.01"
   );
 });
 
@@ -200,7 +200,7 @@ test(`14 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - with entitie
       convertEntities: 1,
     }),
     [],
-    "14"
+    "14.01"
   );
 });
 
@@ -212,7 +212,7 @@ test(`15 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - one, off`, (
       convertEntities: 1,
     }),
     [[0, 1, `"`]],
-    "15"
+    "15.01"
   );
 });
 
@@ -229,7 +229,7 @@ test(`16 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - all, off`, (
         [12, 13, `"`],
       ],
     },
-    "16"
+    "16.01"
   );
 });
 

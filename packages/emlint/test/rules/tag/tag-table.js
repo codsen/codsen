@@ -256,6 +256,7 @@ test(`04 - one col, two cols`, () => {
     },
   });
   equal(applyFixes(str, messages), fixed, "04.01");
+  equal(messages.length, 1, "04.02");
   compare(
     ok,
     messages,
@@ -271,9 +272,8 @@ test(`04 - one col, two cols`, () => {
         },
       },
     ],
-    "04.02"
+    "04.03"
   );
-  equal(messages.length, 1, "04.03");
 });
 
 test(`05 - two cols, three cols`, () => {
@@ -295,6 +295,7 @@ test(`05 - two cols, three cols`, () => {
   });
   // can't fix
   equal(applyFixes(str, messages), str, "05.01");
+  equal(messages.length, 1, "05.02");
   compare(
     ok,
     messages,
@@ -307,9 +308,8 @@ test(`05 - two cols, three cols`, () => {
         fix: null,
       },
     ],
-    "05.02"
+    "05.03"
   );
-  equal(messages.length, 1, "05.03");
 });
 
 test(`06 - 4-2-3`, () => {
@@ -337,6 +337,7 @@ test(`06 - 4-2-3`, () => {
   });
   // can't fix
   equal(applyFixes(str, messages), str, "06.01");
+  equal(messages.length, 2, "06.02");
   compare(
     ok,
     messages,
@@ -356,9 +357,8 @@ test(`06 - 4-2-3`, () => {
         fix: null,
       },
     ],
-    "06.02"
+    "06.03"
   );
-  equal(messages.length, 2, "06.03");
 });
 
 test(`07 - 4-2-1-3 - suggests a fix to one of them`, () => {
@@ -408,6 +408,7 @@ test(`07 - 4-2-1-3 - suggests a fix to one of them`, () => {
     },
   });
   equal(applyFixes(str, messages), fixed, "07.01");
+  equal(messages.length, 3, "07.02");
   compare(
     ok,
     messages,
@@ -436,9 +437,8 @@ test(`07 - 4-2-1-3 - suggests a fix to one of them`, () => {
         fix: null,
       },
     ],
-    "07.02"
+    "07.03"
   );
-  equal(messages.length, 3, "07.03");
 });
 
 // colspan in play
@@ -479,6 +479,7 @@ test(`08 - fixed a colspan value`, () => {
     },
   });
   equal(applyFixes(str, messages), fixed, "08.01");
+  equal(messages.length, 2, "08.02");
   compare(
     ok,
     messages,
@@ -500,9 +501,8 @@ test(`08 - fixed a colspan value`, () => {
         fix: null,
       },
     ],
-    "08.02"
+    "08.03"
   );
-  equal(messages.length, 2, "08.03");
 });
 
 test(`09 - removed a colspan value`, () => {
@@ -532,6 +532,7 @@ test(`09 - removed a colspan value`, () => {
     },
   });
   equal(applyFixes(str, messages), fixed, "09.01");
+  equal(messages.length, 1, "09.02");
   compare(
     ok,
     messages,
@@ -546,9 +547,8 @@ test(`09 - removed a colspan value`, () => {
         },
       },
     ],
-    "09.02"
+    "09.03"
   );
-  equal(messages.length, 1, "09.03");
 });
 
 // intra tag text tokens
@@ -562,6 +562,7 @@ test(`10 - text token between table and tr`, () => {
     },
   });
   equal(applyFixes(str, messages), str, "10.01");
+  equal(messages.length, 1, "10.02");
   compare(
     ok,
     messages,
@@ -574,9 +575,8 @@ test(`10 - text token between table and tr`, () => {
         fix: null,
       },
     ],
-    "10.02"
+    "10.03"
   );
-  equal(messages.length, 1, "10.03");
 });
 
 test(`11 - text token between table and tr`, () => {
@@ -587,6 +587,7 @@ test(`11 - text token between table and tr`, () => {
     },
   });
   equal(applyFixes(str, messages), str, "11.01");
+  equal(messages.length, 1, "11.02");
   compare(
     ok,
     messages,
@@ -599,9 +600,8 @@ test(`11 - text token between table and tr`, () => {
         fix: null,
       },
     ],
-    "11.02"
+    "11.03"
   );
-  equal(messages.length, 1, "11.03");
 });
 
 test(`12 - text token between tr and td`, () => {
@@ -612,6 +612,7 @@ test(`12 - text token between tr and td`, () => {
     },
   });
   equal(applyFixes(str, messages), str, "12.01");
+  equal(messages.length, 1, "12.02");
   compare(
     ok,
     messages,
@@ -624,9 +625,8 @@ test(`12 - text token between tr and td`, () => {
         fix: null,
       },
     ],
-    "12.02"
+    "12.03"
   );
-  equal(messages.length, 1, "12.03");
 });
 
 test(`13 - text token between tr and td`, () => {
@@ -637,6 +637,7 @@ test(`13 - text token between tr and td`, () => {
     },
   });
   equal(applyFixes(str, messages), str, "13.01");
+  equal(messages.length, 1, "13.02");
   compare(
     ok,
     messages,
@@ -649,9 +650,8 @@ test(`13 - text token between tr and td`, () => {
         fix: null,
       },
     ],
-    "13.02"
+    "13.03"
   );
-  equal(messages.length, 1, "13.03");
 });
 
 test(`14 - text token between /td and /tr`, () => {
@@ -662,6 +662,7 @@ test(`14 - text token between /td and /tr`, () => {
     },
   });
   equal(applyFixes(str, messages), str, "14.01");
+  equal(messages.length, 1, "14.02");
   compare(
     ok,
     messages,
@@ -674,9 +675,8 @@ test(`14 - text token between /td and /tr`, () => {
         fix: null,
       },
     ],
-    "14.02"
+    "14.03"
   );
-  equal(messages.length, 1, "14.03");
 });
 
 test(`15 - text token between /td and /tr`, () => {
@@ -687,6 +687,7 @@ test(`15 - text token between /td and /tr`, () => {
     },
   });
   equal(applyFixes(str, messages), str, "15.01");
+  equal(messages.length, 1, "15.02");
   compare(
     ok,
     messages,
@@ -699,9 +700,8 @@ test(`15 - text token between /td and /tr`, () => {
         fix: null,
       },
     ],
-    "15.02"
+    "15.03"
   );
-  equal(messages.length, 1, "15.03");
 });
 
 test(`16 - text token between tr and td`, () => {
@@ -712,6 +712,7 @@ test(`16 - text token between tr and td`, () => {
     },
   });
   equal(applyFixes(str, messages), str, "16.01");
+  equal(messages.length, 1, "16.02");
   compare(
     ok,
     messages,
@@ -724,9 +725,8 @@ test(`16 - text token between tr and td`, () => {
         fix: null,
       },
     ],
-    "16.02"
+    "16.03"
   );
-  equal(messages.length, 1, "16.03");
 });
 
 test(`17 - text token between tr and td`, () => {
@@ -737,6 +737,7 @@ test(`17 - text token between tr and td`, () => {
     },
   });
   equal(applyFixes(str, messages), str, "17.01");
+  equal(messages.length, 1, "17.02");
   compare(
     ok,
     messages,
@@ -749,9 +750,8 @@ test(`17 - text token between tr and td`, () => {
         fix: null,
       },
     ],
-    "17.02"
+    "17.03"
   );
-  equal(messages.length, 1, "17.03");
 });
 
 // table tag without tr
@@ -765,6 +765,7 @@ test(`18 - table without tr`, () => {
     },
   });
   equal(applyFixes(str, messages), str, "18.01");
+  equal(messages.length, 1, "18.02");
   compare(
     ok,
     messages,
@@ -777,9 +778,8 @@ test(`18 - table without tr`, () => {
         fix: null,
       },
     ],
-    "18.02"
+    "18.03"
   );
-  equal(messages.length, 1, "18.03");
 });
 
 test(`19 - table without tr`, () => {
@@ -790,6 +790,7 @@ test(`19 - table without tr`, () => {
     },
   });
   equal(applyFixes(str, messages), str, "19.01");
+  equal(messages.length, 1, "19.02");
   compare(
     ok,
     messages,
@@ -802,9 +803,8 @@ test(`19 - table without tr`, () => {
         fix: null,
       },
     ],
-    "19.02"
+    "19.03"
   );
-  equal(messages.length, 1, "19.03");
 });
 
 test(`20 - table without td`, () => {
@@ -815,6 +815,7 @@ test(`20 - table without td`, () => {
     },
   });
   equal(applyFixes(str, messages), str, "20.01");
+  equal(messages.length, 1, "20.02");
   compare(
     ok,
     messages,
@@ -827,9 +828,8 @@ test(`20 - table without td`, () => {
         fix: null,
       },
     ],
-    "20.02"
+    "20.03"
   );
-  equal(messages.length, 1, "20.03");
 });
 
 test(`21 - table without td`, () => {
@@ -840,6 +840,7 @@ test(`21 - table without td`, () => {
     },
   });
   equal(applyFixes(str, messages), str, "21.01");
+  equal(messages.length, 1, "21.02");
   compare(
     ok,
     messages,
@@ -852,9 +853,8 @@ test(`21 - table without td`, () => {
         fix: null,
       },
     ],
-    "21.02"
+    "21.03"
   );
-  equal(messages.length, 1, "21.03");
 });
 
 // empty td tag
@@ -879,6 +879,7 @@ test(`23 - empty td`, () => {
     },
   });
   equal(applyFixes(str, messages), str, "23.01");
+  equal(messages.length, 1, "23.02");
   compare(
     ok,
     messages,
@@ -891,9 +892,8 @@ test(`23 - empty td`, () => {
         fix: null,
       },
     ],
-    "23.02"
+    "23.03"
   );
-  equal(messages.length, 1, "23.03");
 });
 
 test(`24 - empty td`, () => {
@@ -904,6 +904,7 @@ test(`24 - empty td`, () => {
     },
   });
   equal(applyFixes(str, messages), str, "24.01");
+  equal(messages.length, 1, "24.02");
   compare(
     ok,
     messages,
@@ -916,9 +917,8 @@ test(`24 - empty td`, () => {
         fix: null,
       },
     ],
-    "24.02"
+    "24.03"
   );
-  equal(messages.length, 1, "24.03");
 });
 
 test.run();

@@ -106,7 +106,7 @@ test(`04 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule d
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), "<br />", "04");
+  equal(applyFixes(str, messages), "<br />", "04.01");
 });
 
 test(`05 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - one tab, rule demands space`, () => {
@@ -117,7 +117,7 @@ test(`05 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - one tab, rule demands 
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), "<br />", "05");
+  equal(applyFixes(str, messages), "<br />", "05.01");
 });
 
 test(`06 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - two tabs, rule demands space`, () => {
@@ -128,7 +128,7 @@ test(`06 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - two tabs, rule demands
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), "<br />", "06");
+  equal(applyFixes(str, messages), "<br />", "06.01");
 });
 
 test(`07 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - tight`, () => {
@@ -139,7 +139,7 @@ test(`07 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - tight`, () => {
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), "<br />", "07");
+  equal(applyFixes(str, messages), "<br />", "07.01");
 });
 
 // 02. void tag, with "tag-void-slash" rule
@@ -326,7 +326,7 @@ test(`14 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in fr
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), "<br />", "14");
+  equal(applyFixes(str, messages), "<br />", "14.01");
 });
 
 test(`15 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-bracket`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`, () => {
@@ -338,7 +338,7 @@ test(`15 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in fr
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), "<br />", "15");
+  equal(applyFixes(str, messages), "<br />", "15.01");
 });
 
 test(`16 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-bracket`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`, () => {
@@ -350,7 +350,7 @@ test(`16 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in fr
       "tag-space-before-closing-bracket": [2, "always"], // doesn't matter!
     },
   });
-  equal(applyFixes(str, messages), "<br >", "16");
+  equal(applyFixes(str, messages), "<br >", "16.01");
 });
 
 // "tag-space-before-closing-bracket" = never
@@ -480,7 +480,7 @@ test(`21 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space reque
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), "<div >", "21");
+  equal(applyFixes(str, messages), "<div >", "21.01");
 });
 
 test(`22 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space request ignored`, () => {
@@ -527,7 +527,7 @@ test(`23 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tag-void-sl
       "tag-void-slash": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), "<div >", "23");
+  equal(applyFixes(str, messages), "<div >", "23.01");
 });
 
 // 04. backslash in front of a void tag name
@@ -604,7 +604,7 @@ test(`26 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash
       tag: 2,
     },
   });
-  equal(applyFixes(str, messages), "<br/>", "26");
+  equal(applyFixes(str, messages), "<br/>", "26.01");
 });
 
 test(`27 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - combo with rule "tag-void-slash"`, () => {
@@ -644,7 +644,7 @@ test(`28 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash
       "tag-space-before-closing-bracket": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), "<br />", "28");
+  equal(applyFixes(str, messages), "<br />", "28.01");
 });
 
 test(`29 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`, () => {
@@ -807,7 +807,7 @@ test(`34 - ${`\u001b[${36}m${`both sides`}\u001b[${39}m`} - extreme case`, () =>
       tag: 2,
     },
   });
-  equal(applyFixes(str, messages), "<br/>", "34");
+  equal(applyFixes(str, messages), "<br/>", "34.01");
   deepContains(
     messages,
     [

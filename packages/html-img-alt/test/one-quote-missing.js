@@ -11,7 +11,7 @@ test("01 - alt with only one single quote", () => {
   equal(
     alts("zzz<img alt='>zzz"),
     'zzz<img alt="" >zzz',
-    "01 - html, one single quote"
+    "01.01 - html, one single quote"
   );
 });
 
@@ -19,7 +19,7 @@ test("02 - alt with only one single quote", () => {
   equal(
     alts("zzz<img alt=  '  >zzz"),
     'zzz<img alt="" >zzz',
-    "02 - html, one single quote"
+    "02.01 - html, one single quote"
   );
 });
 
@@ -27,7 +27,7 @@ test("03 - alt with only one single quote", () => {
   equal(
     alts("zzz<img alt   =  '  >zzz"),
     'zzz<img alt="" >zzz',
-    "03 - html, one single quote"
+    "03.01 - html, one single quote"
   );
 });
 
@@ -35,7 +35,7 @@ test("04 - alt with only one single quote", () => {
   equal(
     alts("zz'z<img alt='>zzz<img alt=\"legit quote: '\" >zz"),
     'zz\'z<img alt="" >zzz<img alt="legit quote: \'" >zz',
-    "04 - html, one single quote"
+    "04.01 - html, one single quote"
   );
 });
 
@@ -43,7 +43,7 @@ test("05 - alt with only one single quote", () => {
   equal(
     alts("zzz<img alt=  ''  >zzz"),
     'zzz<img alt="" >zzz',
-    "05 - html, two single quotes"
+    "05.01 - html, two single quotes"
   );
 });
 
@@ -51,7 +51,7 @@ test("06 - alt with only one single quote", () => {
   equal(
     alts("zzz<img alt=  ''>zzz"),
     'zzz<img alt="" >zzz',
-    "06 - html, two single quotes"
+    "06.01 - html, two single quotes"
   );
 });
 
@@ -59,7 +59,7 @@ test("07 - alt with only one single quote", () => {
   equal(
     alts("zzz<img alt    ='>zzz"),
     'zzz<img alt="" >zzz',
-    "07 - html, one single quote"
+    "07.01 - html, one single quote"
   );
 });
 

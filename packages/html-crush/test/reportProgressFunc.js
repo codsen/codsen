@@ -119,11 +119,12 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
       { removeLineBreaks: true, reportProgressFunc: countingFunction }
-    )
+    ),
+    "01.05"
   );
 
   // 2. check the counter variable:
-  ok(counter > 50, "01.05 - counter called");
+  ok(counter > 50, "01.06 - counter called");
 });
 
 test(`02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`, () => {
@@ -311,7 +312,8 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
         reportProgressFuncFrom: 21,
         reportProgressFuncTo: 86,
       }
-    )
+    ),
+    "02.01"
   );
 
   // 2. check the counter variable:
@@ -322,7 +324,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
   // since we use Math.floor, some percentages can be skipped, so let's just
   // confirm that no numbers outside of permitted values are reported
   gather.forEach((perc) => ok(compareTo.includes(perc), `checking: ${perc}%`));
-  equal(gather.length, 86 - 21, "02.01");
+  equal(gather.length, 86 - 21, "02.02");
   // equal(gather, compareTo, "03.02")
 });
 

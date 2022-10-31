@@ -13,7 +13,7 @@ test("generates the homepage with correct folders", async () => {
   equal(
     fs.readFileSync(path.join(dirname, "fixtures/index.html"), "utf8"),
     fs.readFileSync(path.join(dirname, "fixtures/reference.html"), "utf8"),
-    "01"
+    "01.01"
   );
   await fs.unlink("./fixtures/index.html", () => {});
 });
@@ -24,7 +24,7 @@ test("unused flags are OK", async () => {
   equal(
     fs.readFileSync(path.join(dirname, "fixtures/index.html"), "utf8"),
     fs.readFileSync(path.join(dirname, "fixtures/reference.html"), "utf8"),
-    "02"
+    "02.01"
   );
   await fs.unlink("./fixtures/index.html", () => {});
 });

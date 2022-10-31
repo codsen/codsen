@@ -51,7 +51,7 @@ test(`01 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - empty string`, () =>
 test(`02 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - empty string, empty opts`, () => {
   not.throws(() => {
     processCommaSep("");
-  }, "02");
+  }, "02.01");
 });
 
 test(`03 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - not a string`, () => {

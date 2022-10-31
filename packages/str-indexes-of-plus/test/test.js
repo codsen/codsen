@@ -14,7 +14,7 @@ test("01 - throws when the first argument is not string", () => {
       strIndexesOfPlus(1);
     },
     /first input argument must be a string/,
-    "01"
+    "01.01"
   );
 });
 
@@ -24,7 +24,7 @@ test("02 - throws when the second argument is not string", () => {
       strIndexesOfPlus("a", 1);
     },
     /second input argument/,
-    "02"
+    "02.01"
   );
 });
 

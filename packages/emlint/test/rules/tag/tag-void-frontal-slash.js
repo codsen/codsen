@@ -32,7 +32,7 @@ test(`01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - don't raise on void tags`
     ],
     "01.02"
   );
-  is(messages.length, 1, "01.03");
+  is(messages.length, 1, "01.02");
 });
 
 test(`02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 1`, () => {
@@ -71,7 +71,7 @@ test(`02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severit
     ],
     "02.02"
   );
-  equal(messages.length, 2, "02.03");
+  equal(messages.length, 2, "02.02");
 });
 
 test(`03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 2`, () => {
@@ -110,7 +110,7 @@ test(`03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severit
     ],
     "03.02"
   );
-  equal(messages.length, 2, "03.03");
+  equal(messages.length, 2, "03.02");
 });
 
 test.run();

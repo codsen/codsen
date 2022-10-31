@@ -11,7 +11,7 @@ import { extract as e } from "../dist/string-extract-class-names.esm.js";
 // ==============================
 
 test("01 - class: just class passed, nothing done, falls on default", () => {
-  equal(e(".class-name"), { res: [".class-name"], ranges: [[0, 11]] }, "01");
+  equal(e(".class-name"), { res: [".class-name"], ranges: [[0, 11]] }, "01.01");
 });
 
 test("02 - tag with two classes", () => {
@@ -24,7 +24,7 @@ test("02 - tag with two classes", () => {
         [15, 28],
       ],
     },
-    "02"
+    "02.01"
   );
 });
 
@@ -82,7 +82,7 @@ test("05 - class: more, sandwitched", () => {
       "div~!@$%^&*()+=,/';:\"?><[]{}|`.class-name~!@$%^&*()+=,/';:\"?><[]{}|`#"
     ),
     { res: [".class-name"], ranges: [[30, 41]] },
-    "05"
+    "05.01"
   );
 });
 
@@ -765,7 +765,7 @@ test("28 - one-letter class names", () => {
 // ==============================
 
 test("29 - id: just id passed, nothing done, falls on default", () => {
-  equal(e("#id-name"), { res: ["#id-name"], ranges: [[0, 8]] }, "29");
+  equal(e("#id-name"), { res: ["#id-name"], ranges: [[0, 8]] }, "29.01");
 });
 
 test("30 - id: tag with id", () => {
@@ -856,7 +856,7 @@ test("33 - id: more, sandwitched", () => {
         [42, 48],
       ],
     },
-    "33"
+    "33.01"
   );
 });
 
@@ -1694,7 +1694,7 @@ test("65 - encoded line breaks", () => {
   equal(
     e("#unused-1\n\n\n\n\t\t\t\t\nz\t\ta"),
     { res: ["#unused-1"], ranges: [[0, 9]] },
-    "65"
+    "65.01"
   );
 });
 
@@ -1711,7 +1711,7 @@ test("66 - recognises JS escaped strings and repeated dots & hashes", () => {
         [35, 44],
       ],
     },
-    "66"
+    "66.01"
   );
 });
 

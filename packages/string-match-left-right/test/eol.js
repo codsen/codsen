@@ -13,14 +13,14 @@ import {
 // -----------------------------------------------------------------------------
 
 test(`01 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching`, () => {
-  equal(matchLeft("a", 0, "EOL"), false, "01");
+  equal(matchLeft("a", 0, "EOL"), false, "01.01");
 });
 
 test(`02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching`, () => {
   equal(
     matchLeft("a", 0, () => "EOL"),
     "EOL",
-    "02"
+    "02.01"
   );
 });
 
@@ -32,7 +32,7 @@ test(`03 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
       },
     }),
     false,
-    "03"
+    "03.01"
   );
 });
 
@@ -44,7 +44,7 @@ test(`04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
       },
     }),
     "EOL",
-    "04"
+    "04.01"
   );
 });
 
@@ -65,7 +65,7 @@ test(`06 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
   equal(
     matchLeft(" a", 1, () => "EOL"),
     false,
-    "06"
+    "06.01"
   );
 });
 
@@ -73,12 +73,12 @@ test(`07 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
   equal(
     matchLeft("EOLa", 3, () => "EOL"),
     false,
-    "07"
+    "07.01"
   );
 });
 
 test(`08 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - !!!`, () => {
-  equal(matchLeft("EOLa", 3, "EOL"), "EOL", "08");
+  equal(matchLeft("EOLa", 3, "EOL"), "EOL", "08.01");
 });
 
 test(`09 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching - whitespace trim opt on`, () => {
@@ -87,7 +87,7 @@ test(`09 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "09"
+    "09.01"
   );
 });
 
@@ -96,7 +96,7 @@ test(`10 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
   equal(
     matchLeft("za", 1, () => "EOL"),
     false,
-    "10"
+    "10.01"
   );
 });
 
@@ -106,7 +106,7 @@ test(`11 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
       trimCharsBeforeMatching: ["z"],
     }),
     "EOL",
-    "11"
+    "11.01"
   );
 });
 
@@ -115,7 +115,7 @@ test(`12 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
   equal(
     matchLeft("z a", 2, () => "EOL"),
     false,
-    "12"
+    "12.01"
   );
 });
 
@@ -126,7 +126,7 @@ test(`13 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "13"
+    "13.01"
   );
 });
 
@@ -134,34 +134,34 @@ test(`13 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
 // -----------------------------------------------------------------------------
 
 test(`14 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m`, () => {
-  equal(matchLeft("a", 0, ["EOL"]), false, "14");
+  equal(matchLeft("a", 0, ["EOL"]), false, "14.01");
 });
 
 test(`15 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m`, () => {
-  equal(matchLeft("a", 0, ["EOL", "a"]), false, "15");
+  equal(matchLeft("a", 0, ["EOL", "a"]), false, "15.01");
 });
 
 test(`16 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m`, () => {
-  equal(matchLeft("a", 0, ["EOL", "z"]), false, "16");
+  equal(matchLeft("a", 0, ["EOL", "z"]), false, "16.01");
 });
 
 test(`17 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m`, () => {
-  equal(matchLeft("a", 0, ["EOL", () => "EOL"]), "EOL", "17");
+  equal(matchLeft("a", 0, ["EOL", () => "EOL"]), "EOL", "17.01");
 });
 
 test(`18 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m`, () => {
-  equal(matchLeft("a", 0, [() => "EOL"]), "EOL", "18");
+  equal(matchLeft("a", 0, [() => "EOL"]), "EOL", "18.01");
 });
 
 test(`19 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL mixed with strings\u001b[${39}m whitespace trims - whitespace trim opts control - one special`, () => {
-  equal(matchLeft(" a", 1, [() => "EOL"]), false, "19");
+  equal(matchLeft(" a", 1, [() => "EOL"]), false, "19.01");
 });
 
 test(`20 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`, () => {
   equal(
     matchLeft(" a", 1, [() => "EOL", () => "EOL"]),
     false,
-    "20 - whitespace trim opts control - two specials"
+    "20.01 - whitespace trim opts control - two specials"
   );
 });
 
@@ -169,7 +169,7 @@ test(`21 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwh
   equal(
     matchLeft(" a", 1, [() => "EOL", "EOL"]),
     false,
-    "21 - whitespace trim opts control - special mixed with cheeky"
+    "21.01 - whitespace trim opts control - special mixed with cheeky"
   );
 });
 
@@ -177,24 +177,24 @@ test(`22 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwh
   equal(
     matchLeft(" a", 1, ["EOL"]),
     false,
-    "22 - whitespace trim opts control - cheeky only"
+    "22.01 - whitespace trim opts control - cheeky only"
   );
 });
 
 test(`23 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`, () => {
-  equal(matchLeft("EOLa", 3, [() => "EOL"]), false, "23 - CHEEKY!!!");
+  equal(matchLeft("EOLa", 3, [() => "EOL"]), false, "23.01 - CHEEKY!!!");
 });
 
 test(`24 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`, () => {
-  equal(matchLeft("EOLa", 3, ["EOL"]), "EOL", "24");
+  equal(matchLeft("EOLa", 3, ["EOL"]), "EOL", "24.01");
 });
 
 test(`25 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`, () => {
-  equal(matchLeft("EOLa", 3, ["a", () => "EOL"]), false, "25 - CHEEKY!!!");
+  equal(matchLeft("EOLa", 3, ["a", () => "EOL"]), false, "25.01 - CHEEKY!!!");
 });
 
 test(`26 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`, () => {
-  equal(matchLeft("EOLa", 3, ["a", "EOL"]), "EOL", "26");
+  equal(matchLeft("EOLa", 3, ["a", "EOL"]), "EOL", "26.01");
 });
 
 test(`27 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwhitespace trims\u001b[${39}m`, () => {
@@ -203,7 +203,7 @@ test(`27 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwh
       trimBeforeMatching: true,
     }),
     "EOL",
-    "27 - whitespace trim opt on"
+    "27.01 - whitespace trim opt on"
   );
 });
 
@@ -213,7 +213,7 @@ test(`28 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwh
       trimBeforeMatching: true,
     }),
     "EOL",
-    "28 - whitespace trim opt on"
+    "28.01 - whitespace trim opt on"
   );
 });
 
@@ -223,7 +223,7 @@ test(`29 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwh
       trimBeforeMatching: true,
     }),
     "EOL",
-    "29 - whitespace trim opt on"
+    "29.01 - whitespace trim opt on"
   );
 });
 
@@ -233,7 +233,7 @@ test(`30 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwh
       trimBeforeMatching: true,
     }),
     "EOL",
-    "30 - whitespace trim opt on"
+    "30.01 - whitespace trim opt on"
   );
 });
 
@@ -241,14 +241,14 @@ test(`30 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwh
 // ------------------------------------------------------------------------------
 
 test(`31 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching`, () => {
-  equal(matchLeftIncl("a", 0, "EOL"), false, "31");
+  equal(matchLeftIncl("a", 0, "EOL"), false, "31.01");
 });
 
 test(`32 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching`, () => {
   equal(
     matchLeftIncl("a", 0, () => "EOL"),
     false,
-    "32"
+    "32.01"
   );
 });
 
@@ -260,7 +260,7 @@ test(`33 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
       },
     }),
     false,
-    "33 - cb blocking result"
+    "33.01 - cb blocking result"
   );
 });
 
@@ -272,7 +272,7 @@ test(`34 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
       },
     }),
     false,
-    "34 - useless cb"
+    "34.01 - useless cb"
   );
 });
 
@@ -280,7 +280,7 @@ test(`35 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
   equal(
     matchLeftIncl(" a", 1, () => "EOL"),
     false,
-    "35 - whitespace trim opts control"
+    "35.01 - whitespace trim opts control"
   );
 });
 
@@ -299,7 +299,7 @@ test(`37 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     false,
-    "37 - whitespace trim opt on"
+    "37.01 - whitespace trim opt on"
   );
 });
 
@@ -307,7 +307,7 @@ test(`38 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
   equal(
     matchLeftIncl("za", 1, () => "EOL"),
     false,
-    "38 - whitespace trim opts control"
+    "38.01 - whitespace trim opts control"
   );
 });
 
@@ -317,7 +317,7 @@ test(`39 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
       trimCharsBeforeMatching: ["z"],
     }),
     false,
-    "39 - whitespace trim opt on"
+    "39.01 - whitespace trim opt on"
   );
 });
 
@@ -326,7 +326,7 @@ test(`40 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
   equal(
     matchLeftIncl("z a", 2, () => "EOL"),
     false,
-    "40 - whitespace trim opts control"
+    "40.01 - whitespace trim opts control"
   );
 });
 
@@ -337,7 +337,7 @@ test(`41 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     false,
-    "41 - whitespace trim opt on"
+    "41.01 - whitespace trim opt on"
   );
 });
 
@@ -345,14 +345,14 @@ test(`41 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
 // -----------------------------------------------------------------------------
 
 test(`42 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`, () => {
-  equal(matchRight("a", 0, "EOL"), false, "42");
+  equal(matchRight("a", 0, "EOL"), false, "42.01");
 });
 
 test(`43 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`, () => {
   equal(
     matchRight("a", 0, () => "EOL"),
     "EOL",
-    "43"
+    "43.01"
   );
 });
 
@@ -364,7 +364,7 @@ test(`44 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       },
     }),
     false,
-    "44 - cb blocking result"
+    "44.01 - cb blocking result"
   );
 });
 
@@ -376,7 +376,7 @@ test(`45 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       },
     }),
     "EOL",
-    "45 - useless cb, just confirms the incoming truthy result"
+    "45.01 - useless cb, just confirms the incoming truthy result"
   );
 });
 
@@ -393,7 +393,7 @@ test(`47 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("a ", 0, () => "EOL"),
     false,
-    "47-1"
+    "47.01-1"
   );
 });
 
@@ -401,7 +401,7 @@ test(`48 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("a ", 1, () => "EOL"),
     "EOL",
-    "48-2"
+    "48.01-2"
   );
 });
 
@@ -409,12 +409,12 @@ test(`49 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("aEOL", 0, () => "EOL"),
     false,
-    "49 - CHEEKY!!!"
+    "49.01 - CHEEKY!!!"
   );
 });
 
 test(`50 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`, () => {
-  equal(matchRight("aEOL", 0, "EOL"), "EOL", "50 - !!!");
+  equal(matchRight("aEOL", 0, "EOL"), "EOL", "50.01 - !!!");
 });
 
 test(`51 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`, () => {
@@ -423,7 +423,7 @@ test(`51 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "51 - whitespace trim opt on"
+    "51.01 - whitespace trim opt on"
   );
 });
 
@@ -431,7 +431,7 @@ test(`52 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("az", 0, () => "EOL"),
     false,
-    "52 - whitespace trim opts control"
+    "52.01 - whitespace trim opts control"
   );
 });
 
@@ -441,7 +441,7 @@ test(`53 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimCharsBeforeMatching: ["z"],
     }),
     "EOL",
-    "53 - whitespace trim opt on"
+    "53.01 - whitespace trim opt on"
   );
 });
 
@@ -450,7 +450,7 @@ test(`54 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("a z", 0, () => "EOL"),
     false,
-    "54 - whitespace trim opts control"
+    "54.01 - whitespace trim opts control"
   );
 });
 
@@ -461,7 +461,7 @@ test(`55 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "55 - whitespace trim opt on"
+    "55.01 - whitespace trim opt on"
   );
 });
 
@@ -469,30 +469,30 @@ test(`55 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
 // -----------------------------------------------------------------------------
 
 test(`56 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`, () => {
-  equal(matchRight("a", 0, ["EOL"]), false, "56");
+  equal(matchRight("a", 0, ["EOL"]), false, "56.01");
 });
 
 test(`57 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`, () => {
-  equal(matchRight("a", 0, ["EOL", "a"]), false, "57");
+  equal(matchRight("a", 0, ["EOL", "a"]), false, "57.01");
 });
 
 test(`58 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`, () => {
-  equal(matchRight("a", 0, ["EOL", "z"]), false, "58");
+  equal(matchRight("a", 0, ["EOL", "z"]), false, "58.01");
 });
 
 test(`59 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`, () => {
-  equal(matchRight("a", 0, ["EOL", () => "EOL"]), "EOL", "59"); // latter, function was matched
+  equal(matchRight("a", 0, ["EOL", () => "EOL"]), "EOL", "59.01"); // latter, function was matched
 });
 
 test(`60 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`, () => {
-  equal(matchRight("a", 0, [() => "EOL"]), "EOL", "60");
+  equal(matchRight("a", 0, [() => "EOL"]), "EOL", "60.01");
 });
 
 test(`61 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`, () => {
   equal(
     matchRight("a ", 0, [() => "EOL"]),
     false,
-    "61 - whitespace trim opts control - one special"
+    "61.01 - whitespace trim opts control - one special"
   );
 });
 
@@ -500,7 +500,7 @@ test(`62 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("a ", 0, [() => "EOL", () => "EOL"]),
     false,
-    "62 - whitespace trim opts control - two specials"
+    "62.01 - whitespace trim opts control - two specials"
   );
 });
 
@@ -508,7 +508,7 @@ test(`63 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("a ", 0, [() => "EOL", "EOL"]),
     false,
-    "63 - whitespace trim opts control - special mixed with cheeky"
+    "63.01 - whitespace trim opts control - special mixed with cheeky"
   );
 });
 
@@ -516,24 +516,24 @@ test(`64 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("a ", 0, ["EOL"]),
     false,
-    "64 - whitespace trim opts control - cheeky only"
+    "64.01 - whitespace trim opts control - cheeky only"
   );
 });
 
 test(`65 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`, () => {
-  equal(matchRight("aEOL", 0, [() => "EOL"]), false, "65 - CHEEKY!!!");
+  equal(matchRight("aEOL", 0, [() => "EOL"]), false, "65.01 - CHEEKY!!!");
 });
 
 test(`66 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`, () => {
-  equal(matchRight("aEOL", 0, ["EOL"]), "EOL", "66");
+  equal(matchRight("aEOL", 0, ["EOL"]), "EOL", "66.01");
 });
 
 test(`67 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`, () => {
-  equal(matchRight("aEOL", 0, ["z", () => "EOL"]), false, "67 - CHEEKY!!!");
+  equal(matchRight("aEOL", 0, ["z", () => "EOL"]), false, "67.01 - CHEEKY!!!");
 });
 
 test(`68 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`, () => {
-  equal(matchRight("aEOL", 0, ["z", "EOL"]), "EOL", "68");
+  equal(matchRight("aEOL", 0, ["z", "EOL"]), "EOL", "68.01");
 });
 
 test(`69 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - whitespace trims`, () => {
@@ -542,7 +542,7 @@ test(`69 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "69 - array"
+    "69.01 - array"
   );
 });
 
@@ -552,7 +552,7 @@ test(`70 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "70 - other values to match"
+    "70.01 - other values to match"
   );
 });
 
@@ -562,7 +562,7 @@ test(`71 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "71 - two identical arrow functions in array, both positive"
+    "71.01 - two identical arrow functions in array, both positive"
   );
 });
 
@@ -572,12 +572,12 @@ test(`72 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "72 - two arrow f's in arrray + non-found"
+    "72.01 - two arrow f's in arrray + non-found"
   );
 });
 
 test(`73 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - character trims`, () => {
-  equal(matchRight("az", 0, [() => "EOL"]), false, "73 - trim off");
+  equal(matchRight("az", 0, [() => "EOL"]), false, "73.01 - trim off");
 });
 
 test(`74 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings - character trims`, () => {
@@ -586,7 +586,7 @@ test(`74 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimCharsBeforeMatching: ["z"],
     }),
     "EOL",
-    "74 - character trim opt on"
+    "74.01 - character trim opt on"
   );
 });
 
@@ -594,7 +594,7 @@ test(`75 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("az", 0, ["x", () => "EOL"]),
     false,
-    "75 - wrong character to trim"
+    "75.01 - wrong character to trim"
   );
 });
 
@@ -602,7 +602,7 @@ test(`76 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("az", 0, ["z", () => "EOL"]),
     "z",
-    "76 - z caught first, before EOL"
+    "76.01 - z caught first, before EOL"
   );
 });
 
@@ -612,7 +612,7 @@ test(`77 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimCharsBeforeMatching: ["z"],
     }),
     "EOL",
-    "77 - whitespace trim opt on"
+    "77.01 - whitespace trim opt on"
   );
 });
 
@@ -621,7 +621,7 @@ test(`78 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("a z", 0, [() => "EOL"]),
     false,
-    "78 - whitespace trim opts control"
+    "78.01 - whitespace trim opts control"
   );
 });
 
@@ -632,7 +632,7 @@ test(`79 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "79 - whitespace trim opt on"
+    "79.01 - whitespace trim opt on"
   );
 });
 
@@ -640,7 +640,7 @@ test(`80 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("a z", 0, ["x", () => "EOL"]),
     false,
-    "80 - whitespace trim opts control"
+    "80.01 - whitespace trim opts control"
   );
 });
 
@@ -651,7 +651,7 @@ test(`81 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "81 - whitespace trim opt on"
+    "81.01 - whitespace trim opt on"
   );
 });
 
@@ -661,7 +661,7 @@ test(`82 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "z",
-    "82 - whitespace trim opts control"
+    "82.01 - whitespace trim opts control"
   );
 });
 
@@ -672,7 +672,7 @@ test(`83 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "83 - unused char to trim"
+    "83.01 - unused char to trim"
   );
 });
 
@@ -683,7 +683,7 @@ test(`84 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     false,
-    "84 - y stands in the way"
+    "84.01 - y stands in the way"
   );
 });
 
@@ -694,14 +694,14 @@ test(`84 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
 // matchRightIncl() and matchLeftIncl() that search for EOL will always be "false".
 
 test(`85 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching`, () => {
-  equal(matchRightIncl("a", 0, "EOL"), false, "85");
+  equal(matchRightIncl("a", 0, "EOL"), false, "85.01");
 });
 
 test(`86 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching`, () => {
   equal(
     matchRightIncl("a", 0, () => "EOL"),
     false,
-    "86"
+    "86.01"
   );
 });
 
@@ -713,7 +713,7 @@ test(`87 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
       },
     }),
     false,
-    "87 - cb blocking, but still useless, result was false before cb kicked in"
+    "87.01 - cb blocking, but still useless, result was false before cb kicked in"
   );
 });
 
@@ -725,7 +725,7 @@ test(`88 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
       },
     }),
     false,
-    "88 - useless cb"
+    "88.01 - useless cb"
   );
 });
 
@@ -733,7 +733,7 @@ test(`89 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
   equal(
     matchRightIncl("a ", 0, () => "EOL"),
     false,
-    "89 - whitespace trim opts control"
+    "89.01 - whitespace trim opts control"
   );
 });
 
@@ -741,12 +741,12 @@ test(`90 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
   equal(
     matchRightIncl("aEOL", 0, () => "aEOL"),
     false,
-    "90"
+    "90.01"
   );
 });
 
 test(`91 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`, () => {
-  equal(matchRightIncl("aEOL", 0, "EOL"), false, "91");
+  equal(matchRightIncl("aEOL", 0, "EOL"), false, "91.01");
 });
 
 test(`92 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching - whitespace trims`, () => {
@@ -755,7 +755,7 @@ test(`92 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     false,
-    "92 - whitespace trim opt on"
+    "92.01 - whitespace trim opt on"
   );
 });
 
@@ -763,7 +763,7 @@ test(`93 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
   equal(
     matchRightIncl("az", 0, () => "EOL"),
     false,
-    "93 - whitespace trim opts control"
+    "93.01 - whitespace trim opts control"
   );
 });
 
@@ -773,7 +773,7 @@ test(`94 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
       trimCharsBeforeMatching: ["z"],
     }),
     false,
-    "94 - whitespace trim opt on"
+    "94.01 - whitespace trim opt on"
   );
 });
 
@@ -782,7 +782,7 @@ test(`95 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
   equal(
     matchRightIncl("a z", 0, () => "EOL"),
     false,
-    "95 - whitespace trim opts control"
+    "95.01 - whitespace trim opts control"
   );
 });
 
@@ -793,7 +793,7 @@ test(`96 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     false,
-    "96 - whitespace trim + character trim"
+    "96.01 - whitespace trim + character trim"
   );
 });
 

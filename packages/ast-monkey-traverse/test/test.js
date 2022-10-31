@@ -88,9 +88,6 @@ test(`02 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more deletion from arr
   ];
 
   let actual01 = traverse(input, (key1, val1) => {
-    // console.log('\n\n------\n')
-    // console.log('key = ' + JSON.stringify(key, null, 4))
-    // console.log('val = ' + JSON.stringify(val, null, 4))
     let current = val1 !== undefined ? val1 : key1;
     if (isEqual(current, { a: "b" })) {
       return NaN;
@@ -102,7 +99,7 @@ test(`02 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more deletion from arr
       c: "d",
     },
   ];
-  equal(actual01, intended01, "02");
+  equal(actual01, intended01, "02.01");
 });
 
 test(`03 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse, passing null, write over values`, () => {
@@ -119,9 +116,6 @@ test(`03 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse, passing 
   ];
 
   let actual01 = traverse(input, (key1, val1) => {
-    // console.log('\n\n------\n')
-    // console.log('key = ' + JSON.stringify(key, null, 4))
-    // console.log('val = ' + JSON.stringify(val, null, 4))
     let current = val1 !== undefined ? val1 : key1;
     if (current === "b") {
       return null;
@@ -139,7 +133,7 @@ test(`03 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse, passing 
       c: "d",
     },
   ];
-  equal(actual01, intended01, "03");
+  equal(actual01, intended01, "03.01");
 });
 
 test(`04 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse, passing undefined, write over values`, () => {
@@ -157,9 +151,6 @@ test(`04 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse, passing 
 
   let actual01 = traverse(input, (...args) => {
     let [key1, val1] = args;
-    // console.log("\n\n------\n");
-    // console.log(`key = ${JSON.stringify(key1, null, 4)}`);
-    // console.log(`val = ${JSON.stringify(val1, null, 4)}`);
     let current = val1 !== undefined ? val1 : key1;
     if (current === "b") {
       return;
@@ -177,22 +168,19 @@ test(`04 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse, passing 
       c: "d",
     },
   ];
-  equal(actual01, intended01, "04");
+  equal(actual01, intended01, "04.01");
 });
 
 test(`05 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traverse automatically patches up holes in arrays`, () => {
   let input = ["a", undefined, "b"];
 
   let actual01 = traverse(input, (key1, val1) => {
-    // console.log('\n\n------\n')
-    // console.log('key = ' + JSON.stringify(key, null, 4))
-    // console.log('val = ' + JSON.stringify(val, null, 4))
     let current = val1 !== undefined ? val1 : key1;
     // we do nothing here
     return current;
   });
   let intended01 = ["a", "b"];
-  equal(actual01, intended01, "05");
+  equal(actual01, intended01, "05.01");
 });
 
 test(`06 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - delete key-value pair from plain object in root`, () => {
@@ -214,7 +202,7 @@ test(`06 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - delete key-value pair 
     c: "c",
   };
 
-  equal(actual, intended, "06");
+  equal(actual, intended, "06.01");
 });
 
 test(`07 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #1`, () => {
@@ -226,7 +214,7 @@ test(`07 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #1`, (
     equal(current, objectPath.get(input, innerObj.path), innerObj.path);
     return current;
   });
-  ok(actual);
+  ok(actual, "07.01");
 });
 
 test(`08 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #2`, () => {
@@ -259,7 +247,7 @@ test(`08 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #2`, (
     gathered.push(current);
     return current;
   });
-  ok(actual);
+  ok(actual, "08.01");
 });
 
 test(`09 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #3`, () => {
@@ -269,7 +257,7 @@ test(`09 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #3`, (
     equal(current, objectPath.get(input, innerObj.path), innerObj.path);
     return current;
   });
-  ok(actual);
+  ok(actual, "09.01");
 });
 
 // 02. stopping the traversal upon request
@@ -323,7 +311,7 @@ test(`10 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - objects - a reference 
         parentKey: "b",
       },
     ],
-    "10"
+    "10.01"
   );
 });
 
@@ -339,7 +327,7 @@ test(`11 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - objects - after "b"`, 
     }
     return current;
   });
-  equal(gathered, ["a", "b"], "11");
+  equal(gathered, ["a", "b"], "11.01");
 });
 
 test(`12 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - arrays - a reference traversal`, () => {
@@ -350,7 +338,7 @@ test(`12 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - arrays - a reference t
     gathered.push(innerObj.path);
     return current;
   });
-  equal(gathered, ["0", "1", "1.0", "1.1"], "12");
+  equal(gathered, ["0", "1", "1.0", "1.1"], "12.01");
 });
 
 test(`13 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - arrays - after "b"`, () => {
@@ -365,7 +353,7 @@ test(`13 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - arrays - after "b"`, (
     }
     return current;
   });
-  equal(gathered, ["0", "1"], "13");
+  equal(gathered, ["0", "1"], "13.01");
 });
 
 // 03. traversal reporting
@@ -389,13 +377,6 @@ test(`14 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - array of objects, just
     gathered.push([key1, val1, internalObj]);
     return current;
   });
-  // console.log(
-  //   `359 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
-  //     gathered,
-  //     null,
-  //     4
-  //   )}`
-  // );
   equal(
     gathered,
     [
@@ -515,61 +496,11 @@ test(`14 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - array of objects, just
       ],
       // ===================
     ],
-    "14"
+    "14.01"
   );
 });
 
-test.skip(`01 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`, () => {
-  let input = ["a", undefined, "b"];
-  let gathered = [];
-  traverse(input, (key1, val1, internalObj) => {
-    let current = val1 !== undefined ? val1 : key1;
-    gathered.push([key1, val1, internalObj]);
-    return current;
-  });
-  // console.log(
-  //   `495 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
-  //     gathered,
-  //     null,
-  //     4
-  //   )}`
-  // );
-  equal(
-    gathered,
-    [
-      [
-        "a",
-        undefined,
-        {
-          depth: 0,
-          path: "0",
-          parent: ["a", undefined, "b"],
-          parentType: "array",
-          parentKey: null,
-        },
-      ],
-      [
-        "b",
-        undefined,
-        {
-          depth: 0,
-          path: "1",
-          parent: ["a", undefined, "b"],
-          parentType: "array",
-          parentKey: null,
-        },
-      ],
-    ],
-    "01"
-  );
-});
-
-test.skip(`02 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole, deeper`, () => {
-  let input = [{ a: "b" }, undefined, { x: "y" }];
-  ok(input);
-});
-
-test(`17 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`, () => {
+test(`15 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`, () => {
   let input = {
     a: "k",
     b: "l",
@@ -581,13 +512,6 @@ test(`17 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues af
     gathered.push([key1, val1, internalObj]);
     return current;
   });
-  // console.log(
-  //   `555 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
-  //     gathered,
-  //     null,
-  //     4
-  //   )}`
-  // );
   equal(
     gathered,
     [
@@ -640,11 +564,11 @@ test(`17 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues af
         },
       ],
     ],
-    "17"
+    "15.01"
   );
 });
 
-test(`18 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`, () => {
+test(`16 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`, () => {
   let input = {
     a: ["1", "2", "3"],
   };
@@ -654,13 +578,6 @@ test(`18 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues af
     gathered.push([key1, val1, internalObj]);
     return current;
   });
-  // console.log(
-  //   `629 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
-  //     gathered,
-  //     null,
-  //     4
-  //   )}`
-  // );
   equal(
     gathered,
     [
@@ -715,11 +632,11 @@ test(`18 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues af
         },
       ],
     ],
-    "18"
+    "16.01"
   );
 });
 
-test(`19 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more complex AST`, () => {
+test(`17 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more complex AST`, () => {
   let input = {
     a: {
       b: {
@@ -748,13 +665,6 @@ test(`19 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more complex AST`, () 
     gathered.push([key1, val1, internalObj]);
     return current;
   });
-  // console.log(
-  //   `723 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
-  //     gathered,
-  //     null,
-  //     4
-  //   )}`
-  // );
   equal(
     gathered,
     [
@@ -1206,11 +1116,11 @@ test(`19 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more complex AST`, () 
       ],
       // ===================
     ],
-    "19"
+    "17.01"
   );
 });
 
-test(`20 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more traversal`, () => {
+test(`18 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more traversal`, () => {
   let input = ["1", "2", { a: "3" }];
   let gathered = [];
   traverse(input, (key1, val1, internalObj) => {
@@ -1218,13 +1128,6 @@ test(`20 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more traversal`, () =>
     gathered.push([key1, val1, internalObj]);
     return current;
   });
-  // console.log(
-  //   `1177 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
-  //     gathered,
-  //     null,
-  //     4
-  //   )}`
-  // );
   equal(
     gathered,
     [
@@ -1295,7 +1198,7 @@ test(`20 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more traversal`, () =>
         },
       ],
     ],
-    "20"
+    "18.01"
   );
 });
 

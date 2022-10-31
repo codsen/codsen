@@ -295,7 +295,7 @@ test("09 - outer trims - single leading space", () => {
   let source = ` <body>`;
   let intended = `<body>`;
 
-  equal(comb(source).result, intended, "09");
+  equal(comb(source).result, intended, "09.01");
 });
 
 test("10 - outer trims - doctype with leading line break", () => {
@@ -308,7 +308,7 @@ test("10 - outer trims - doctype with leading line break", () => {
   equal(
     comb(source, { uglify: true, removeIndentations: true }).result,
     intended,
-    "10"
+    "10.01"
   );
 });
 
@@ -317,28 +317,28 @@ test("11 - outer trims - trailing line breaks", () => {
   let intended = `<body>
 `;
 
-  equal(comb(source).result, intended, "11");
+  equal(comb(source).result, intended, "11.01");
 });
 
 test("12 - comment surrounded by tags", () => {
   let source = ` <strong><!-- --></strong> `;
   let intended = `<strong></strong>`;
 
-  equal(comb(source).result, intended, "12");
+  equal(comb(source).result, intended, "12.01");
 });
 
 test("13 - leading comment", () => {
   let source = `<!-- something -->zzz`;
   let intended = `zzz`;
 
-  equal(comb(source).result, intended, "13");
+  equal(comb(source).result, intended, "13.01");
 });
 
 test("14 - leading spaces #1 - just text", () => {
   let source = `  a`;
   let intended = `a`;
 
-  equal(comb(source).result, intended, "14");
+  equal(comb(source).result, intended, "14.01");
 });
 
 test("15 - leading spaces #2 - no body", () => {
@@ -357,21 +357,21 @@ test("15 - leading spaces #2 - no body", () => {
 </style>
 `;
 
-  equal(comb(source).result, intended, "15");
+  equal(comb(source).result, intended, "15.01");
 });
 
 test("16 - outer trims - some leading tabs", () => {
   let source = `\n\t\t<body>`;
   let intended = `<body>`;
 
-  equal(comb(source).result, intended, "16");
+  equal(comb(source).result, intended, "16.01");
 });
 
 test("17 - outer trims - doctype with leading space", () => {
   let source = ` <!DOCTYPE>`;
   let intended = `<!DOCTYPE>`;
 
-  equal(comb(source).result, intended, "17");
+  equal(comb(source).result, intended, "17.01");
 });
 
 test("18 - mixed: classes and tag names", () => {
@@ -395,7 +395,7 @@ test("18 - mixed: classes and tag names", () => {
 </body>
 `;
 
-  equal(actual, intended, "18");
+  equal(actual, intended, "18.01");
 });
 
 test("19 - removes comments from style blocks - opts.removeHTMLComments + opts.removeCSSComments", () => {
@@ -634,7 +634,7 @@ test("20 - false real class is commented-out and therefore gets removed", () => 
 </html>
 `;
 
-  equal(comb(source).result, intended, "20");
+  equal(comb(source).result, intended, "20.01");
 });
 
 test("21 - comments in the inline styles", () => {
@@ -656,7 +656,7 @@ test("21 - comments in the inline styles", () => {
 </body>
 `;
 
-  equal(actual, intended, "21");
+  equal(actual, intended, "21.01");
 });
 
 test.run();

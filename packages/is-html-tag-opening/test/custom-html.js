@@ -9,7 +9,7 @@ import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 
 test(`01 - ${`\u001b[${36}m${`custom`}\u001b[${39}m`} - starts with dash, allowCustomTagNames=off`, () => {
   let s1 = `<-a-b>`;
-  not.ok(isOpening(s1, 0), "01");
+  not.ok(isOpening(s1, 0), "01.01");
 });
 
 test(`02 - ${`\u001b[${36}m${`custom`}\u001b[${39}m`} - starts with dash, allowCustomTagNames=on`, () => {
@@ -18,7 +18,7 @@ test(`02 - ${`\u001b[${36}m${`custom`}\u001b[${39}m`} - starts with dash, allowC
     isOpening(s1, 0, {
       allowCustomTagNames: true,
     }),
-    "02"
+    "02.01"
   );
 });
 
@@ -39,7 +39,7 @@ test(`04 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - one letter tag, all
     isOpening(s1, 0, {
       allowCustomTagNames: false,
     }),
-    "04"
+    "04.01"
   );
 });
 
@@ -49,7 +49,7 @@ test(`05 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - one letter tag, all
     isOpening(s1, 0, {
       allowCustomTagNames: true,
     }),
-    "05"
+    "05.01"
   );
 });
 

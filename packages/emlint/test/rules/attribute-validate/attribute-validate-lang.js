@@ -136,7 +136,7 @@ test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - another recognised tag`,
     },
   ]);
 
-  equal(messages.length, 1, "06.03");
+  equal(messages.length, 1, "06.02");
 });
 
 // 03. wrong value
@@ -162,7 +162,7 @@ test(`07 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - recognised tag`, () => {
     },
   ]);
 
-  equal(messages.length, 1, "07.03");
+  equal(messages.length, 1, "07.02");
 });
 
 test(`08 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - still catches whitespace on legit`, () => {
@@ -186,7 +186,7 @@ test(`08 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - still catches whitespace 
     },
   ]);
 
-  equal(messages.length, 1, "08.03");
+  equal(messages.length, 1, "08.02");
 });
 
 test(`09 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and whitespace`, () => {
@@ -222,7 +222,7 @@ test(`09 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and 
     },
   ]);
 
-  equal(messages.length, 2, "09.03");
+  equal(messages.length, 2, "09.02");
 });
 
 test(`10 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and whitespace + tag name case`, () => {
@@ -266,7 +266,7 @@ test(`10 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and 
     },
   ]);
 
-  equal(messages.length, 3, "10.03");
+  equal(messages.length, 3, "10.02");
 });
 
 test.run();

@@ -56,7 +56,7 @@ test("02 - one unsorted file", async () => {
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "02 - file is untouched though"
+    "02.01 - file is untouched though"
   );
 });
 

@@ -31,7 +31,7 @@ test("02 - plain object - false", () => {
       b: "a",
     }),
     false,
-    "02"
+    "02.01"
   );
 });
 
@@ -41,15 +41,15 @@ test("03 - array - true", () => {
 });
 
 test("04 - array - false", () => {
-  equal(isEmpty(["", " "]), false, "04");
+  equal(isEmpty(["", " "]), false, "04.01");
 });
 
 test("05 - nested array - true", () => {
-  equal(isEmpty(["", [""]]), true, "05");
+  equal(isEmpty(["", [""]]), true, "05.01");
 });
 
 test("06 - nested array - false", () => {
-  equal(isEmpty(["", [" "]]), false, "06");
+  equal(isEmpty(["", [" "]]), false, "06.01");
 });
 
 test("07 - nested plain object - true", () => {
@@ -59,7 +59,7 @@ test("07 - nested plain object - true", () => {
       b: { c: "" },
     }),
     true,
-    "07"
+    "07.01"
   );
 });
 
@@ -70,7 +70,7 @@ test("08 - nested plain object - true", () => {
       b: { c: "" },
     }),
     true,
-    "08"
+    "08.01"
   );
 });
 
@@ -83,7 +83,7 @@ test("09 - nested many things - true", () => {
       },
     ]),
     true,
-    "09"
+    "09.01"
   );
 });
 
@@ -96,16 +96,16 @@ test("10 - nested many things - true", () => {
       },
     ]),
     false,
-    "10"
+    "10.01"
   );
 });
 
 test("11 - string - true", () => {
-  equal(isEmpty(""), true, "11");
+  equal(isEmpty(""), true, "11.01");
 });
 
 test("12 - string - false", () => {
-  equal(isEmpty("."), false, "12");
+  equal(isEmpty("."), false, "12.01");
 });
 
 // ==============================
@@ -113,7 +113,7 @@ test("12 - string - false", () => {
 // ==============================
 
 test("13 - function as input - returns null", () => {
-  equal(isEmpty(dummyFunction), null, "13");
+  equal(isEmpty(dummyFunction), null, "13.01");
 });
 
 test("14 - function as input - returns null", () => {
@@ -122,7 +122,7 @@ test("14 - function as input - returns null", () => {
 });
 
 test("15 - null - returns null", () => {
-  equal(isEmpty(null), null, "15");
+  equal(isEmpty(null), null, "15.01");
 });
 
 test.run();

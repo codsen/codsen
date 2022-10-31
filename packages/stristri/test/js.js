@@ -5,7 +5,7 @@ import { stri as stri2 } from "../dist/stristri.esm.js";
 import { stri, mixer } from "./util/util.js";
 
 test(`01 - testing api directly`, () => {
-  assert.equal(stri2("<script>console.log</script>").result, "", "01");
+  assert.equal(stri2("<script>console.log</script>").result, "", "01.01");
 });
 
 test(`02`, () => {
@@ -16,7 +16,7 @@ test(`02`, () => {
       js: true,
     }).result,
     "<script></script>",
-    "02"
+    "02.01"
   );
 });
 

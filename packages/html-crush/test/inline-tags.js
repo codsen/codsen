@@ -13,7 +13,7 @@ test(`01 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - style on sup #1`, (
       removeLineBreaks: true,
     }).result,
     `<sup style="">word, here`,
-    "01"
+    "01.01"
   );
 });
 
@@ -23,7 +23,7 @@ test(`02 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - style on sup #2`, (
       removeLineBreaks: true,
     }).result,
     `<sup style="">word, here`,
-    "02"
+    "02.01"
   );
 });
 
@@ -33,7 +33,7 @@ test(`03 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - two spans with spac
       removeLineBreaks: true,
     }).result,
     `<span>a</span> <span>b</span>`,
-    "03"
+    "03.01"
   );
 });
 
@@ -43,7 +43,7 @@ test(`04 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - two spans without s
       removeLineBreaks: true,
     }).result,
     `<span>a</span><span>b</span>`,
-    "04"
+    "04.01"
   );
 });
 
@@ -53,7 +53,7 @@ test(`05 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - inside tag`, () => 
       removeLineBreaks: true,
     }).result,
     `</b>`,
-    "05"
+    "05.01"
   );
 });
 
@@ -167,7 +167,7 @@ test(`11 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - 012 pt.2`, () => {
       removeLineBreaks: true,
     }).result,
     `<i><span>a</span><span\nstyle="z">b</span></i>`,
-    "11"
+    "11.01"
   );
 });
 
@@ -197,7 +197,7 @@ test(`13 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - will line break bet
       removeLineBreaks: true,
     }).result,
     `<span>a</span>\n<div>b</div>`,
-    "13"
+    "13.01"
   );
 });
 
@@ -428,7 +428,7 @@ test(`19 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - div and sup, escess
       removeLineBreaks: true,
     }).result,
     `<div>a</div>\n<sup>b</sup>`,
-    "19"
+    "19.01"
   );
 });
 

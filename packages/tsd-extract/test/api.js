@@ -213,7 +213,7 @@ test("08 - unclosed comment range - found", () => {
       error: null,
       all: ["x"],
     },
-    "08"
+    "08.01"
   );
 });
 
@@ -238,7 +238,7 @@ test("09 - unclosed comment range - not found", () => {
       error: "not found",
       all: [],
     },
-    "09"
+    "09.01"
   );
 });
 
@@ -258,7 +258,7 @@ test("10 - unclosed line comment", () => {
       error: "not found",
       all: [],
     },
-    "10"
+    "10.01"
   );
 });
 

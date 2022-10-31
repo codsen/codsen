@@ -57,7 +57,7 @@ test("02 - tag locations - no tags were present at all", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "02"
+    "02.01"
   );
 });
 
@@ -127,7 +127,7 @@ test("04 - tag locations - opts.ignoreTags", () => {
       ],
       filteredTagLocations: [],
     },
-    "04"
+    "04.01"
   );
 });
 
@@ -154,7 +154,7 @@ test("05 - tag locations - opts.onlyStripTags", () => {
         [10, 17],
       ],
     },
-    "05"
+    "05.01"
   );
 });
 
@@ -183,7 +183,7 @@ test("06 - tag locations - opts.onlyStripTags", () => {
         [17, 21],
       ],
     },
-    "06"
+    "06.01"
   );
 });
 
@@ -203,7 +203,7 @@ test("07 - tag locations - closing bracket missing", () => {
         [23, 41],
       ],
     },
-    "07"
+    "07.01"
   );
 });
 
@@ -222,7 +222,7 @@ test("08 - tag locations - closing bracket missing", () => {
       ],
       filteredTagLocations: [[0, 41]],
     },
-    "08"
+    "08.01"
   );
 });
 
@@ -241,7 +241,7 @@ test("09 - tag locations - closing bracket missing on ignored tag", () => {
       ],
       filteredTagLocations: [],
     },
-    "09"
+    "09.01"
   );
 });
 

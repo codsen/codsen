@@ -53,7 +53,7 @@ test(`03`, () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     `a\nb`,
-    "03"
+    "03.01"
   );
 });
 
@@ -65,7 +65,7 @@ test(`04`, () => {
       trimLines: true,
     }).result,
     `a\r\n\r\nb`,
-    "04"
+    "04.01"
   );
 });
 

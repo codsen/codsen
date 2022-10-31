@@ -215,7 +215,7 @@ test(`08 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - error level, excl ma
     ],
     "08.02"
   );
-  is(messages.length, 1, "08.03");
+  is(messages.length, 1, "08.02");
 });
 
 test(`09 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`, () => {
@@ -244,7 +244,7 @@ test(`09 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`, () 
     ],
     "09.02"
   );
-  is(messages.length, 1, "09.03");
+  is(messages.length, 1, "09.02");
 });
 
 test(`10 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`, () => {
@@ -273,7 +273,7 @@ test(`10 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`, () 
     ],
     "10.02"
   );
-  is(messages.length, 1, "10.03");
+  is(messages.length, 1, "10.02");
 });
 
 test(`11 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - closing bracket missing, tag follows, tight`, () => {
@@ -302,7 +302,7 @@ test(`11 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - closing bracket miss
     ],
     "11.02"
   );
-  is(messages.length, 1, "11.03");
+  is(messages.length, 1, "11.02");
 });
 
 test(`12 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - closing bracket missing, tag follows, spaced`, () => {
@@ -331,7 +331,7 @@ test(`12 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - closing bracket miss
     ],
     "12.02"
   );
-  is(messages.length, 1, "12.03");
+  is(messages.length, 1, "12.02");
 });
 
 // 03. type="not"
@@ -370,7 +370,7 @@ test(`13 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - bracket missing`, () 
     ],
     "13.02"
   );
-  is(messages.length, 1, "13.03");
+  is(messages.length, 1, "13.02");
 });
 
 test(`14 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - excml mark missing`, () => {
@@ -399,7 +399,7 @@ test(`14 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - excml mark missing`, 
     ],
     "14.02"
   );
-  is(messages.length, 1, "14.03");
+  is(messages.length, 1, "14.02");
 });
 
 test(`15 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - dash missing`, () => {
@@ -428,7 +428,7 @@ test(`15 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - dash missing`, () => 
     ],
     "15.02"
   );
-  is(messages.length, 1, "15.03");
+  is(messages.length, 1, "15.02");
 });
 
 test(`16 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - rogue space`, () => {
@@ -457,7 +457,7 @@ test(`16 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - rogue space`, () => {
     ],
     "16.02"
   );
-  is(messages.length, 1, "16.03");
+  is(messages.length, 1, "16.02");
 });
 
 test(`17 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - rogue linebreak`, () => {
@@ -486,7 +486,7 @@ test(`17 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - rogue linebreak`, () 
     ],
     "17.02"
   );
-  is(messages.length, 1, "17.03");
+  is(messages.length, 1, "17.02");
 });
 
 test(`18 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - really messed up closing tag`, () => {
@@ -497,7 +497,7 @@ test(`18 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - really messed up clos
       all: 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "18");
+  equal(applyFixes(str, messages), fixed, "18.01");
 });
 
 test(`19 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - opening bracket missing`, () => {
@@ -526,7 +526,7 @@ test(`19 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - opening bracket missi
     ],
     "19.02"
   );
-  is(messages.length, 1, "19.03");
+  is(messages.length, 1, "19.02");
 });
 
 test(`20 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - misspelled endif`, () => {
@@ -555,7 +555,7 @@ test(`20 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - misspelled endif`, ()
     ],
     "20.02"
   );
-  is(messages.length, 1, "20.03");
+  is(messages.length, 1, "20.02");
 });
 
 test.run();

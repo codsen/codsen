@@ -13,7 +13,7 @@ import {
 // -----------------------------------------------------------------------------
 
 test(`01 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
-  equal(matchRight('<a class="something"> text', 19, ">"), ">", "01");
+  equal(matchRight('<a class="something"> text', 19, ">"), ">", "01.01");
 });
 
 test(`02 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
@@ -22,23 +22,27 @@ test(`02 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
       cb: (char) => typeof char === "string" && char.trim() === "",
     }),
     ">",
-    "02"
+    "02.01"
   );
 });
 
 test(`03 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
-  equal(matchRightIncl('<a class="something"> text', 20, "> t"), "> t", "03");
+  equal(
+    matchRightIncl('<a class="something"> text', 20, "> t"),
+    "> t",
+    "03.01"
+  );
 });
 
 test(`04 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
-  equal(matchRight('<a class="something"> text', 19, "> t"), "> t", "04");
+  equal(matchRight('<a class="something"> text', 19, "> t"), "> t", "04.01");
 });
 
 test(`05 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
   equal(
     matchRight("ab      cdef", 1, "cde", { trimBeforeMatching: true }),
     "cde",
-    "05"
+    "05.01"
   );
 });
 
@@ -48,7 +52,7 @@ test(`06 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
       cb: (char) => char === " ",
     }),
     ">",
-    "06"
+    "06.01"
   );
 });
 
@@ -59,7 +63,7 @@ test(`07 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
       trimBeforeMatching: true,
     }),
     "cde",
-    "07"
+    "07.01"
   );
 });
 
@@ -81,7 +85,7 @@ test(`09 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, set #02`, () => {
       trimCharsBeforeMatching: ["?", "!", "[", " ", "-"],
     }),
     "doctype",
-    "09"
+    "09.01"
   );
 });
 

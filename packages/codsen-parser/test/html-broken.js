@@ -36,7 +36,7 @@ test(`01 - ${`\u001b[${36}m${`void tags`}\u001b[${39}m`} - one slash in front`, 
     ],
     "01.01"
   );
-  is(ast.length, 1, "01.02");
+  is(ast.length, 1, "01.01");
 
   compare(
     ok,
@@ -51,7 +51,7 @@ test(`01 - ${`\u001b[${36}m${`void tags`}\u001b[${39}m`} - one slash in front`, 
     ],
     "01.03"
   );
-  is(gatheredErr.length, 1, "01.04");
+  is(gatheredErr.length, 1, "01.02");
 });
 
 test.run();

@@ -5,7 +5,7 @@ import { stri as stri2 } from "../dist/stristri.esm.js";
 import { stri, mixer } from "./util/util.js";
 
 test(`01 - testing api directly`, () => {
-  assert.equal(stri2("<div>").result, "", "01");
+  assert.equal(stri2("<div>").result, "", "01.01");
 });
 
 // HTML only
@@ -147,7 +147,7 @@ test(`05`, () => {
         name: null,
       },
     },
-    "05"
+    "05.01"
   );
 });
 

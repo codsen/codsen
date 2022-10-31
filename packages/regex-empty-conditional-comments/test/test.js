@@ -121,7 +121,7 @@ test("deletes comments from code", () => {
       ""
     ),
     "zzz  yyy <!-- does not touch this -->",
-    "03"
+    "03.01"
   );
 });
 

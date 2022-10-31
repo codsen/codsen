@@ -45,7 +45,7 @@ test("01 - there are no usable files at all", async () => {
       throw new Error(err);
     });
   // confirm that the existing file is intact:
-  equal(await processedFileContents, "zzz", "01");
+  equal(await processedFileContents, "zzz", "01.01");
 });
 
 //                                  *
@@ -119,7 +119,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
     });
 
   // 3. compare:
-  equal(await processedFileContents, intendedFile, "02");
+  equal(await processedFileContents, intendedFile, "02.01");
 });
 
 //                                  *

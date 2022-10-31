@@ -51,7 +51,7 @@ test("03 - un-fancies multiple alt tags", () => {
       'abc <img alt    ="   someone’s " > def\n <img alt    =" The new offer \u2014 50% discount " > ghi <img      >\n\n\njkl'
     ),
     'abc <img alt="someone\'s" > def\n <img alt="The new offer - 50% discount" > ghi <img alt="" >\n\n\njkl',
-    "03 - default"
+    "03.01 - default"
   );
 });
 
@@ -78,7 +78,7 @@ test('05 - Nunjucks code following straight after character g of "img"', () => {
       '<img{% if not state_colour_col %} class="test"{% endif %} style="display: block;">'
     ),
     '<img{% if not state_colour_col %} class="test"{% endif %} style="display: block;" alt="" >',
-    "05"
+    "05.01"
   );
 });
 

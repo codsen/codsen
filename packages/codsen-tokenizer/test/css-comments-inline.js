@@ -95,7 +95,7 @@ test(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline style`, () => 
         attribs: [],
       },
     ],
-    "01"
+    "01.01"
   );
 });
 
@@ -208,7 +208,7 @@ test(`02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline style, more`, 
         attribs: [],
       },
     ],
-    "02"
+    "02.01"
   );
 });
 
@@ -291,7 +291,7 @@ test(`03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline css, erroneous
         attribs: [],
       },
     ],
-    "03"
+    "03.01"
   );
 });
 
@@ -377,7 +377,7 @@ test(`04 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - text comment`, () => {
         ],
       },
     ],
-    "04"
+    "04.01"
   );
 });
 
@@ -475,7 +475,7 @@ test(`05 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - property terminates commen
         ],
       },
     ],
-    "05"
+    "05.01"
   );
 });
 
@@ -579,7 +579,7 @@ test(`06 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - property terminates text`,
         ],
       },
     ],
-    "06"
+    "06.01"
   );
 });
 
@@ -665,7 +665,7 @@ test(`07 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - property (no semi), then c
         ],
       },
     ],
-    "07"
+    "07.01"
   );
 });
 

@@ -689,7 +689,7 @@ test(`17 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - opening square brack
         language: "html",
       },
     ],
-    "17"
+    "17.01"
   );
 });
 
@@ -1335,7 +1335,7 @@ test(`32 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance, nothing a
         language: "html",
       },
     ],
-    "32"
+    "32.01"
   );
 });
 
@@ -1378,7 +1378,7 @@ test(`33 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance, nothing a
         language: "html",
       },
     ],
-    "33"
+    "33.01"
   );
 });
 

@@ -83,7 +83,7 @@ assert.equal(
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/rehype-responsive-tables/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/rehype-responsive-tables/) for a full description of the API. Also, try the [GUI playground](https://codsen.com/os/rehype-responsive-tables/play).
 
 ## Contributing
 

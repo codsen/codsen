@@ -225,7 +225,7 @@ test("10 - heads of one type, tails of another", () => {
         tailsEndAt: 41,
       },
     ],
-    "10 - default behaviour - not strict pair matching"
+    "10.01 - default behaviour - not strict pair matching"
   );
 });
 
@@ -473,7 +473,7 @@ test('17 - sneaky "casual" underscores try to blend in with legit heads/tails', 
         tailsEndAt: 13,
       },
     ],
-    "17"
+    "17.01"
   );
 });
 
@@ -512,7 +512,7 @@ test("19 - arrays of heads and tails", () => {
         tailsEndAt: 32,
       },
     ],
-    "19"
+    "19.01"
   );
 });
 

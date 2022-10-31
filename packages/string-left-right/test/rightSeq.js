@@ -43,7 +43,7 @@ test(`01 - normal use`, () => {
 });
 
 test(`02 - no findings`, () => {
-  equal(rightSeq("abcdefghijklmnop", 0, "d", "e", "f"), null, "02");
+  equal(rightSeq("abcdefghijklmnop", 0, "d", "e", "f"), null, "02.01");
 });
 
 test(`03 - absent skips to right()`, () => {
@@ -69,7 +69,7 @@ test(`03 - absent skips to right()`, () => {
 });
 
 test(`04 - starting point outside of the range`, () => {
-  equal(rightSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "04");
+  equal(rightSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "04.01");
 });
 
 test(`05 - optional - existing`, () => {
@@ -80,7 +80,7 @@ test(`05 - optional - existing`, () => {
       leftmostChar: 3,
       rightmostChar: 5,
     },
-    "05"
+    "05.01"
   );
 });
 
@@ -92,7 +92,7 @@ test(`06 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, no whi
       leftmostChar: 3,
       rightmostChar: 4,
     },
-    "06"
+    "06.01"
   );
 });
 
@@ -107,7 +107,7 @@ test(`07 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, with w
       leftmostChar: 5,
       rightmostChar: 9,
     },
-    "07"
+    "07.01"
   );
 });
 
@@ -119,7 +119,7 @@ test(`08 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - ends with non-existing
       leftmostChar: 5,
       rightmostChar: 5,
     },
-    "08"
+    "08.01"
   );
 });
 
@@ -131,7 +131,7 @@ test(`09 - all optional, existing`, () => {
       leftmostChar: 3,
       rightmostChar: 5,
     },
-    "09"
+    "09.01"
   );
 });
 

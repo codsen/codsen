@@ -54,8 +54,8 @@ test(`01 - detects two REPLACEMENT CHARACTERS`, () => {
     ],
     "01.01"
   );
-  equal(messages.length, 2, "01.02");
-  equal(applyFixes(str, messages), "dlkgjldj", "01.03");
+  equal(messages.length, 2, "01.01");
+  equal(applyFixes(str, messages), "dlkgjldj", "01.02");
 });
 
 test.run();

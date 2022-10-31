@@ -237,7 +237,7 @@ test(`15 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, () => {
       stripHtml: false,
     }).res,
     "<div>",
-    "15"
+    "15.01"
   );
 });
 
@@ -247,7 +247,7 @@ test(`16 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, () => {
       stripHtml: false,
     }).res,
     "<a>",
-    "16"
+    "16.01"
   );
 });
 
@@ -257,7 +257,7 @@ test(`17 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, () => {
       stripHtml: false,
     }).res,
     '<a style="font-size: red;">',
-    "17"
+    "17.01"
   );
 });
 
@@ -267,7 +267,7 @@ test(`18 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, () => {
       stripHtml: true,
     }).res,
     "",
-    "18"
+    "18.01"
   );
 });
 
@@ -277,7 +277,7 @@ test(`19 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag, lowercas
       stripHtml: true,
     }).res,
     "",
-    "19"
+    "19.01"
   );
 });
 
@@ -301,7 +301,7 @@ test(`21 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag`, () => {
       stripHtml: true,
     }).res,
     "",
-    "21"
+    "21.01"
   );
 });
 

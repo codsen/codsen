@@ -82,7 +82,7 @@ test(`07 - all callbacks are undefined`, () => {
       textAmpersandCatcherCb: undefined,
       progressFn: undefined,
     });
-  }, "07");
+  }, "07.01");
 });
 
 test(`08 - all callbacks are nulls`, () => {
@@ -93,11 +93,11 @@ test(`08 - all callbacks are nulls`, () => {
       textAmpersandCatcherCb: null,
       progressFn: null,
     });
-  }, "08");
+  }, "08.01");
 });
 
 test(`09 - there are at least twice as many possible rules as there are entities`, () => {
-  ok(allRulesESM.length > 263 * 2, "09");
+  ok(allRulesESM.length > 263 * 2, "09.01");
 });
 
 test.run();

@@ -25,7 +25,7 @@ test("01 - real-life code", () => {
 </html>`
     ),
     "xhtml",
-    "01"
+    "01.01"
   );
 });
 

@@ -33,7 +33,7 @@ test("01 - called upon a single file which is healthy", async () => {
       shell: true,
     }
   );
-  match(stdOutContents.stdout, /ALL OK/, "01");
+  match(stdOutContents.stdout, /ALL OK/, "01.01");
 });
 
 test("02 - called upon a single file which contains non-ASCII symbol", async () => {
@@ -55,7 +55,7 @@ test("02 - called upon a single file which contains non-ASCII symbol", async () 
     `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
     { shell: true }
   ).catch((e) => e);
-  match(error1.stdout, /bad character/);
+  match(error1.stdout, /bad character/, "02.01");
 });
 
 test("03 - version output mode", async () => {
@@ -89,7 +89,7 @@ test("05 - no files found in the given directory", async () => {
     `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
     { shell: true }
   ).catch((e) => e);
-  match(error1.stdout, /THROW_ID_03/);
+  match(error1.stdout, /THROW_ID_03/, "05.01");
 });
 
 test.run();

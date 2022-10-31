@@ -55,7 +55,7 @@ This is the default content
 </section>
 `,
     isJinjaNunjucksRegex(),
-    "04"
+    "04.01"
   );
 });
 

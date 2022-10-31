@@ -33,7 +33,7 @@ a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-
   equal(
     actual.result,
     intended,
-    "01 - there are no classes or id's in the query selector, checking false positives"
+    "01.01 - there are no classes or id's in the query selector, checking false positives"
   );
 });
 
@@ -63,7 +63,7 @@ a {color: #525252;}
   equal(
     actual.result,
     intended,
-    "02 - there are no classes or id's in the query selector, checking false positives"
+    "02.01 - there are no classes or id's in the query selector, checking false positives"
   );
 });
 
@@ -126,7 +126,7 @@ test('03 - sneaky attributes that end with characters "id"', () => {
 </html>
 `;
 
-  equal(actual.result, intended, "03 - sneaky urlid attribute");
+  equal(actual.result, intended, "03.01 - sneaky urlid attribute");
 });
 
 test('04 - mini version of 08.05, sneaky attributes ending with "class"', () => {
@@ -144,7 +144,7 @@ test('04 - mini version of 08.05, sneaky attributes ending with "class"', () => 
 </html>
 `;
 
-  equal(actual.result, intended, "04 - sneaky superclass attribute");
+  equal(actual.result, intended, "04.01 - sneaky superclass attribute");
 });
 
 test('05 - sneaky attributes that end with characters "class"', () => {
@@ -206,7 +206,7 @@ test('05 - sneaky attributes that end with characters "class"', () => {
 </html>
 `;
 
-  equal(actual.result, intended, "05 - sneaky superclass attribute");
+  equal(actual.result, intended, "05.01 - sneaky superclass attribute");
 });
 
 test("06 - color code hashes interpreted correctly, not as id's", () => {
@@ -248,7 +248,7 @@ test("06 - color code hashes interpreted correctly, not as id's", () => {
   equal(
     actual.deletedFromHead,
     intended,
-    "06 - look for #525252 in head styles, it should not be among results - v2.6.0+"
+    "06.01 - look for #525252 in head styles, it should not be among results - v2.6.0+"
   );
 });
 
@@ -275,7 +275,7 @@ test("07 - one-letter classes (modern notation)", () => {
 </body>
 `;
 
-  equal(actual.result, intended, "07 - class .h should not get removed");
+  equal(actual.result, intended, "07.01 - class .h should not get removed");
 });
 
 test("08 - one-letter classes (old notation)", () => {
@@ -301,7 +301,7 @@ test("08 - one-letter classes (old notation)", () => {
 </body>
 `;
 
-  equal(actual.result, intended, "08 - class .h should not get removed");
+  equal(actual.result, intended, "08.01 - class .h should not get removed");
 });
 
 test("09 - one-letter classes - comprehensive comparison", () => {
@@ -519,7 +519,7 @@ test("13 - inner whitespace #1", () => {
 <br class="abc">
 </td>
 `;
-  equal(comb(inp).result, outp, "13");
+  equal(comb(inp).result, outp, "13.01");
 });
 
 test("14 - inner whitespace #2", () => {
@@ -540,7 +540,7 @@ test("14 - inner whitespace #2", () => {
 <br class="abc">
 </td>
 `;
-  equal(comb(inp).result, outp, "14");
+  equal(comb(inp).result, outp, "14.01");
 });
 
 test("15 - inner whitespace #3", () => {
@@ -561,7 +561,7 @@ test("15 - inner whitespace #3", () => {
 <br class="abc">
 </td>
 `;
-  equal(comb(inp).result, outp, "15");
+  equal(comb(inp).result, outp, "15.01");
 });
 
 test("16 - adhoc", () => {
@@ -584,7 +584,7 @@ test("16 - adhoc", () => {
 <a href="a("'")">
 <td class="klm">
 `;
-  equal(comb(inp).result, outp, "16");
+  equal(comb(inp).result, outp, "16.01");
 });
 
 test("17 - adhoc", () => {
@@ -607,7 +607,7 @@ test("17 - adhoc", () => {
 <a href="https://www.maps.com/search/?api=1&query={{ prs.tuv.wxy | lower | replace(" ", "+") | replace("'", "%27") | replace("&", "%26") | replace("(", "%28") | replace(")", "%29") }}" target="_blank" style="font-size: 18px;">&nbsp; &nbsp;CLICK ME&nbsp; &nbsp;</a>
 <td class="klm">
 `;
-  equal(comb(inp).result, outp, "17");
+  equal(comb(inp).result, outp, "17.01");
 });
 
 test("18 - adhoc", () => {
@@ -634,7 +634,7 @@ test("18 - adhoc", () => {
 <span>S's</span>
 <td class="sm-border-0">
 `;
-  equal(comb(inp).result, outp, "18");
+  equal(comb(inp).result, outp, "18.01");
 });
 
 test("19 - #40 - pre", () => {
@@ -644,7 +644,7 @@ How are you?
 Yours sincerely,
 
 \tGood person</pre>`;
-  equal(comb(inp).result, inp, "19");
+  equal(comb(inp).result, inp, "19.01");
 });
 
 test("20 - DW reported - x-apple-data-detectors: - combo", () => {
@@ -674,7 +674,7 @@ a[href^="x-apple-data-detectors:"] { color: inherit; text-decoration: inherit;}
 </body>
 `;
 
-  equal(actual.result, intended, "20");
+  equal(actual.result, intended, "20.01");
 });
 
 test("21 - DW reported - x-apple-data-detectors: - only - detectors no colon", () => {
@@ -700,7 +700,7 @@ a[href^="x-apple-data-detectors"] { color: inherit; text-decoration: inherit;}
 </body>
 `;
 
-  equal(actual.result, intended, "21");
+  equal(actual.result, intended, "21.01");
 });
 
 test("22 - DW reported - x-apple-data-detectors: - only - detectors + colon", () => {
@@ -726,7 +726,7 @@ a[href^="x-apple-data-detectors:"] { color: inherit; text-decoration: inherit;}
 </body>
 `;
 
-  equal(actual.result, intended, "22");
+  equal(actual.result, intended, "22.01");
 });
 
 test("23 - DW reported - transition only - used", () => {
@@ -755,7 +755,7 @@ test("23 - DW reported - transition only - used", () => {
 </body>
 `;
 
-  equal(actual.result, intended, "23");
+  equal(actual.result, intended, "23.01");
 });
 
 test("24 - DW reported - deletes 2 x [class]", () => {
@@ -783,7 +783,7 @@ test("24 - DW reported - deletes 2 x [class]", () => {
 </body>
 `;
 
-  equal(actual.result, intended, "24");
+  equal(actual.result, intended, "24.01");
 });
 
 test.run();

@@ -25,7 +25,7 @@ test("01 - filling in missing keys, simple plain object", () => {
       b: false,
       c: false,
     },
-    "01"
+    "01.01"
   );
 });
 
@@ -110,7 +110,7 @@ test("03 - multiple values, sorting as well", () => {
       b: "b",
       c: false,
     },
-    "03"
+    "03.01"
   );
 });
 
@@ -135,7 +135,7 @@ test("04 - nested arrays as values (array in schema overwrites Boolean)", () => 
         },
       ],
     },
-    "04"
+    "04.01"
   );
 });
 
@@ -166,7 +166,7 @@ test("05 - more complex nested arrays", () => {
       ],
       c: "c",
     },
-    "05"
+    "05.01"
   );
 });
 
@@ -263,7 +263,7 @@ test("06 - ridiculously deep nesting", () => {
         },
       ],
     },
-    "06"
+    "06.01"
   );
 });
 
@@ -285,7 +285,7 @@ test("07 - cheeky case, custom placeholder on schema has value null", () => {
       c: null,
       d: null,
     },
-    "07"
+    "07.01"
   );
 });
 
@@ -351,7 +351,7 @@ test("08 - array one level-deep", () => {
         },
       ],
     },
-    "08"
+    "08.01"
   );
 });
 
@@ -394,7 +394,7 @@ test("09 - multiple levels of nested arrays", () => {
       ],
       c: "c",
     },
-    "09"
+    "09.01"
   );
 });
 
@@ -423,7 +423,7 @@ test("10 - string vs array clash", () => {
         },
       ],
     },
-    "10"
+    "10.01"
   );
 });
 
@@ -444,7 +444,7 @@ test("11 - string vs object clash", () => {
         b: false,
       },
     },
-    "11"
+    "11.01"
   );
 });
 
@@ -471,7 +471,7 @@ test("12 - object vs array clash", () => {
         },
       ],
     },
-    "12"
+    "12.01"
   );
 });
 
@@ -503,7 +503,7 @@ test("13 - array vs empty array", () => {
       b: "b",
       c: false,
     },
-    "13"
+    "13.01"
   );
 });
 
@@ -535,7 +535,7 @@ test("14 - array vs string", () => {
       b: "b",
       c: false,
     },
-    "14"
+    "14.01"
   );
 });
 
@@ -567,7 +567,7 @@ test("15 - array vs bool", () => {
       b: "b",
       c: false,
     },
-    "15"
+    "15.01"
   );
 });
 
@@ -611,7 +611,7 @@ test("16 - multiple levels of nested arrays #1", () => {
       ],
       c: "c",
     },
-    "16"
+    "16.01"
   );
 });
 
@@ -671,7 +671,7 @@ test("17 - multiple levels of nested arrays #2", () => {
       ],
       c: false,
     },
-    "17"
+    "17.01"
   );
 });
 
@@ -775,13 +775,13 @@ test("26 - does not mutate the input args", () => {
     b: false,
     c: false,
   });
-  ok(tempRes); // dummy
+  ok(tempRes, "26.01"); // dummy
   equal(
     testObj,
     {
       a: "a",
     },
-    "26.01"
+    "26.02"
   ); // real deal
 });
 
@@ -1194,7 +1194,7 @@ test("31 - case #51", () => {
     {
       a: false,
     },
-    "30.01"
+    "31.01"
   );
   equal(
     fillMissing(
@@ -1209,7 +1209,7 @@ test("31 - case #51", () => {
     {
       a: false,
     },
-    "30.02"
+    "31.02"
   );
   equal(
     fillMissing(
@@ -1224,7 +1224,7 @@ test("31 - case #51", () => {
     {
       a: true,
     },
-    "30.03"
+    "31.03"
   );
   equal(
     fillMissing(
@@ -1239,7 +1239,7 @@ test("31 - case #51", () => {
     {
       a: true,
     },
-    "30.04"
+    "31.04"
   );
 });
 

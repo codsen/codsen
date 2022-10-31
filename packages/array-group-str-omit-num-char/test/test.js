@@ -59,7 +59,7 @@ test("03 - groups two kinds", () => {
       "aaaaaa1-*": 3,
       bbbbbb: 1,
     },
-    "03"
+    "03.01"
   );
 });
 
@@ -70,7 +70,7 @@ test("04 - sneaky - wildcard pattern changes later in the traverse", () => {
       "aaaaaa*-*": 3,
       bbbbbb: 1,
     },
-    "04"
+    "04.01"
   );
 });
 
@@ -112,7 +112,7 @@ test("06 - nothing to group, one character", () => {
       a: 1,
       b: 1,
     },
-    "06"
+    "06.01"
   );
 });
 

@@ -33,7 +33,7 @@ test(`01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, () => {
     ],
     "01.02"
   );
-  equal(messages.length, 1, "01.03");
+  equal(messages.length, 1, "01.02");
 });
 
 test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule, severity level 1`, () => {
@@ -61,7 +61,7 @@ test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule, severity level
     ],
     "02.02"
   );
-  equal(messages.length, 1, "02.03");
+  equal(messages.length, 1, "02.02");
 });
 
 test(`03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule, severity level 2`, () => {
@@ -89,7 +89,7 @@ test(`03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule, severity level
     ],
     "03.02"
   );
-  equal(messages.length, 1, "03.03");
+  equal(messages.length, 1, "03.02");
 });
 
 test(`04 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - rule by wildcard`, () => {
@@ -117,7 +117,7 @@ test(`04 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - rule by wildcard`, () => {
     ],
     "04.02"
   );
-  equal(messages.length, 1, "04.03");
+  equal(messages.length, 1, "04.02");
 });
 
 test(`05 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule - off`, () => {
@@ -178,7 +178,7 @@ test(`08 - all`, () => {
     ],
     "08.02"
   );
-  equal(messages.length, 1, "08.03");
+  equal(messages.length, 1, "08.02");
 });
 
 test.run();

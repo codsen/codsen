@@ -107,7 +107,7 @@ test(`03 - 1/3, 2/3`, () => {
     ],
     "03.02"
   );
-  equal(messages.length, 1, "03.03");
+  equal(messages.length, 1, "03.02");
 });
 
 // semi only
@@ -243,7 +243,7 @@ test(`08`, () => {
       "css-trailing-semi": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "08");
+  equal(applyFixes(str, messages), fixed, "08.01");
   deepContains(
     messages,
     [
@@ -312,7 +312,7 @@ test(`10 - impotant [sic]`, () => {
       "css-rule-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "10");
+  equal(applyFixes(str, messages), fixed, "10.01");
   deepContains(
     messages,
     [
@@ -353,7 +353,7 @@ test(`11 - impotant [sic] - with space in front`, () => {
       "css-rule-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "11");
+  equal(applyFixes(str, messages), fixed, "11.01");
 });
 
 test(`12 - impotant [sic] - without space in front`, () => {
@@ -364,7 +364,7 @@ test(`12 - impotant [sic] - without space in front`, () => {
       "css-rule-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "12");
+  equal(applyFixes(str, messages), fixed, "12.01");
 });
 
 test(`13 - important without excl mark`, () => {
@@ -375,7 +375,7 @@ test(`13 - important without excl mark`, () => {
       "css-rule-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "13");
+  equal(applyFixes(str, messages), fixed, "13.01");
 });
 
 test(`14 - important with number one instead of excl mark`, () => {
@@ -386,7 +386,7 @@ test(`14 - important with number one instead of excl mark`, () => {
       "css-rule-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "14");
+  equal(applyFixes(str, messages), fixed, "14.01");
 });
 
 // whitespace in front of colon/semi
@@ -400,7 +400,7 @@ test(`15 - space after colon/semi`, () => {
       "css-rule-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "15");
+  equal(applyFixes(str, messages), fixed, "15.01");
 });
 
 test(`16 - no space after colon/semi`, () => {
@@ -411,7 +411,7 @@ test(`16 - no space after colon/semi`, () => {
       "css-rule-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "16");
+  equal(applyFixes(str, messages), fixed, "16.01");
 });
 
 test(`17`, () => {
@@ -422,7 +422,7 @@ test(`17`, () => {
       "css-rule-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "17");
+  equal(applyFixes(str, messages), fixed, "17.01");
 });
 
 test(`18`, () => {
@@ -433,7 +433,7 @@ test(`18`, () => {
       "css-rule-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "18");
+  equal(applyFixes(str, messages), fixed, "18.01");
 });
 
 // some other character is in place of a colon
@@ -447,7 +447,7 @@ test(`19`, () => {
       "css-rule-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "19");
+  equal(applyFixes(str, messages), fixed, "19.01");
 });
 
 // repeated semi after a property
@@ -478,7 +478,7 @@ test(`20`, () => {
     ],
     "20.01"
   );
-  equal(applyFixes(str, messages), fixed, "20.02");
+  equal(applyFixes(str, messages), fixed, "20.01");
 });
 
 test.run();

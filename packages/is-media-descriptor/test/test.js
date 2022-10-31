@@ -26,12 +26,12 @@ for (let i = 0, len = filesInSamples.length; i < len; i++) {
 // -----------------------------------------------------------------------------
 
 test(`01 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - non-string`, () => {
-  equal(isMediaD(), [], "01");
+  equal(isMediaD(), [], "01.01");
 });
 
 test(`02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - empty string`, () => {
   let str = "";
-  equal(isMediaD(str), [], "02");
+  equal(isMediaD(str), [], "02.01");
   writeSample({
     id: "00.02",
     str,
@@ -41,7 +41,7 @@ test(`02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - empty string`, () => {
 
 test(`03 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - space character`, () => {
   let str = " ";
-  equal(isMediaD(str), [], "03");
+  equal(isMediaD(str), [], "03.01");
   writeSample({
     id: "00.03",
     str,
@@ -51,7 +51,7 @@ test(`03 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - space character`, () =
 
 test(`04 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - trimmable to zero`, () => {
   let str = "\n\n\n";
-  equal(isMediaD(str), [], "04");
+  equal(isMediaD(str), [], "04.01");
   writeSample({
     id: "00.04",
     str,
@@ -932,7 +932,7 @@ test(`40 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healt
   });
   let offset = 20;
   let res = isMediaD(str, { offset });
-  equal(res, [], "40");
+  equal(res, [], "40.01");
 });
 
 test(`41 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healthy`, () => {
@@ -953,7 +953,7 @@ test(`41 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healt
         fix: null,
       },
     ],
-    "41"
+    "41.01"
   );
 });
 

@@ -164,7 +164,7 @@ test("10 - opts.ignoreTags - space before and after attribute's equal character"
   equal(
     stripHtml("<article  whatnot  =  whatyes = >zzz< / article>").result,
     "zzz",
-    "10"
+    "10.01"
   );
 });
 
@@ -174,7 +174,7 @@ test("11 - opts.ignoreTags - space before and after attribute's equal character"
       "<article  whatnot  =  whatyes = >xxx< / article> yyy <article  whatnot  =  whatyes = >zzz< / article>"
     ).result,
     "xxx yyy zzz",
-    "11"
+    "11.01"
   );
 });
 
@@ -184,7 +184,7 @@ test("12 - opts.ignoreTags - ignores single letter tag", () => {
       ignoreTags: ["b"],
     }).result,
     "Some <b>text</b> and some more text.",
-    "12"
+    "12.01"
   );
 });
 
@@ -194,7 +194,7 @@ test("13 - opts.ignoreTags - ignores singleton tag", () => {
       ignoreTags: ["hr"],
     }).result,
     "Some text <hr> some more text.",
-    "13"
+    "13.01"
   );
 });
 
@@ -204,7 +204,7 @@ test("14 - opts.ignoreTags - ignores singleton tag, XHTML", () => {
       ignoreTags: ["hr"],
     }).result,
     "Some text <hr/> some more text.",
-    "14"
+    "14.01"
   );
 });
 
@@ -214,7 +214,7 @@ test("15 - opts.ignoreTags - ignores singleton tag, spaced XHTML", () => {
       ignoreTags: ["hr"],
     }).result,
     "Some text <hr / > some more text.",
-    "15"
+    "15.01"
   );
 });
 
@@ -224,7 +224,7 @@ test("16 - opts.ignoreTags - ignores single zzz tag", () => {
       ignoreTags: ["zzz"],
     }).result,
     "Some <zzz>text</zzz> and some more text.",
-    "16"
+    "16.01"
   );
 });
 
@@ -234,7 +234,7 @@ test("17 - opts.ignoreTags - ignores zzz singleton tag", () => {
       ignoreTags: ["zzz"],
     }).result,
     "Some text <zzz> some more text.",
-    "17"
+    "17.01"
   );
 });
 
@@ -244,7 +244,7 @@ test("18 - opts.ignoreTags - ignores default ranged tag", () => {
       ignoreTags: ["script"],
     }).result,
     "Some <script>text</script> and some more text.",
-    "18"
+    "18.01"
   );
 });
 
@@ -255,7 +255,7 @@ test("19 - opts.ignoreTags - ignored tag unclosed, ending with EOF", () => {
       ignoreTags: ["b"],
     }).result,
     "Some <b>text</b",
-    "19 - if user insists, that missing bracket must be intentional"
+    "19.01 - if user insists, that missing bracket must be intentional"
   );
 });
 
@@ -265,7 +265,7 @@ test("20 - opts.ignoreTags - recognised unclosed singleton tag, HTML", () => {
       ignoreTags: ["hr"],
     }).result,
     "Some text <hr",
-    "20"
+    "20.01"
   );
 });
 
@@ -275,7 +275,7 @@ test("21 - opts.ignoreTags - recognised unclosed singleton tag, XHTML", () => {
       ignoreTags: ["hr"],
     }).result,
     "Some text <hr/",
-    "21"
+    "21.01"
   );
 });
 
@@ -285,7 +285,7 @@ test("22 - opts.ignoreTags - kept the tag and the slash, just trimmed", () => {
       ignoreTags: ["hr"],
     }).result,
     "Some text <hr /",
-    "22"
+    "22.01"
   );
 });
 
@@ -295,7 +295,7 @@ test("23 - opts.ignoreTags - ignores unclosed self-closing zzz tag", () => {
       ignoreTags: ["zzz"],
     }).result,
     "Some <zzz>text</zzz",
-    "23"
+    "23.01"
   );
 });
 
@@ -305,7 +305,7 @@ test("24 - opts.ignoreTags - ignores unclosed zzz singleton tag", () => {
       ignoreTags: ["zzz"],
     }).result,
     "Some text <zzz",
-    "24"
+    "24.01"
   );
 });
 
@@ -315,7 +315,7 @@ test("25 - opts.ignoreTags - ignores default unclosed ranged tag", () => {
       ignoreTags: ["script"],
     }).result,
     "Some <script>text</script",
-    "25"
+    "25.01"
   );
 });
 
@@ -327,7 +327,7 @@ test("26 - opts.ignoreTags - throws because of wrong type", () => {
       });
     },
     /THROW_ID_05/,
-    "26"
+    "26.01"
   );
 });
 

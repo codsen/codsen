@@ -257,7 +257,7 @@ test(`05 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - single- and double-quoted
     ],
     "05.01"
   );
-  equal(gathered.length, 1, "05.02");
+  equal(gathered.length, 1, "05.01");
 });
 
 // bool attributes
@@ -1126,7 +1126,7 @@ test(`18 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quot
         ],
       },
     ],
-    "18"
+    "18.01"
   );
 });
 
@@ -1201,7 +1201,7 @@ test(`19 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - false positives`
         ],
       },
     ],
-    "19"
+    "19.01"
   );
 });
 
@@ -1292,7 +1292,7 @@ test(`20 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quot
         ],
       },
     ],
-    "20"
+    "20.01"
   );
 });
 
@@ -1382,7 +1382,7 @@ test(`21 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quoteless attrib
         attribs: [],
       },
     ],
-    "21"
+    "21.01"
   );
 });
 
@@ -1473,7 +1473,7 @@ test(`22 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quot
         ],
       },
     ],
-    "22"
+    "22.01"
   );
 });
 
@@ -3602,7 +3602,7 @@ test(`46 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quot
         ],
       },
     ],
-    "46"
+    "46.01"
   );
 });
 

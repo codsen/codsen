@@ -19,7 +19,7 @@ test("01 - tag pair among defaults", () => {
       ],
       filteredTagLocations: [[3, 32]],
     },
-    "01"
+    "01.01"
   );
 });
 
@@ -37,7 +37,7 @@ test("02 - tag pair custom-defined", () => {
       ],
       filteredTagLocations: [[3, 32]],
     },
-    "02"
+    "02.01"
   );
 });
 
@@ -61,7 +61,7 @@ test("03 - tag pair's contents not deleted upon request", () => {
         [23, 32],
       ],
     },
-    "03"
+    "03.01"
   );
 });
 

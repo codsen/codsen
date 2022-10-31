@@ -228,14 +228,4 @@ test(`13 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whites
   ]);
 });
 
-test.skip(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - ESP tag`, () => {
-  let str = `<img src="{{ addr }}z.png"/>`;
-  let linter = new Linter();
-  let messages = linter.verify(str, {
-    rules: {
-      "attribute-validate-src": 2,
-    },
-  });
-  equal(applyFixes(str, messages), str, "01.01");
-  is(messages.length, 0, "01");
-});
+test.run();

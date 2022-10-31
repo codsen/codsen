@@ -74,7 +74,7 @@ test("06 - two astral characters offsetting the rest", () => {
   equal(
     nativeToUnicode("\uD834\uDF06aa", [0, 1, 2, 3]),
     [0, 0, 1, 2],
-    "06 - all unique"
+    "06.01 - all unique"
   );
 });
 
@@ -89,7 +89,7 @@ test("08 - two astral characters offsetting the rest", () => {
   equal(
     nativeToUnicode("\uD834\uDF06aa", ["0", "1", "2", "3"]),
     ["0", "0", "1", "2"],
-    "08"
+    "08.01"
   );
 });
 
@@ -97,7 +97,7 @@ test("09 - two astral characters offsetting the rest", () => {
   equal(
     nativeToUnicode("\uD834\uDF06aa", [0, 2, 0, 1, 2, 3]),
     [0, 1, 0, 0, 1, 2],
-    "09 - with dupes"
+    "09.01 - with dupes"
   );
 });
 
@@ -105,7 +105,7 @@ test("10 - two astral characters offsetting the rest", () => {
   equal(
     nativeToUnicode("\uD834\uDF06aa", ["0", "2", "0", "1", "2", "3"]),
     ["0", "1", "0", "0", "1", "2"],
-    "10"
+    "10.01"
   );
 });
 
@@ -113,12 +113,12 @@ test("11 - a stray astral surrogate without second counterpart counts as symbol"
   equal(
     nativeToUnicode("\uD834\uDF06a\uDF06a", [0, 1, 2, 3, 4]),
     [0, 0, 1, 2, 3],
-    "11"
+    "11.01"
   );
 });
 
 test("12 - one letter string", () => {
-  is(nativeToUnicode("a", 0), 0, "12");
+  is(nativeToUnicode("a", 0), 0, "12.01");
 });
 
 test("13 - single astral symbol", () => {
@@ -242,7 +242,7 @@ test("16 - multiple consecutive astral symbols", () => {
   equal(
     nativeToUnicode("\uD834\uDF06aa", [1, "0", [[[2]]], 3]),
     [0, "0", [[[1]]], 2],
-    "16"
+    "16.01"
   );
 });
 

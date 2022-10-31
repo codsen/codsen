@@ -35,7 +35,7 @@ test(`01 - only an ESP tag`, () => {
         tailEndsAt: 8,
       },
     ],
-    "01"
+    "01.01"
   );
 });
 
@@ -68,7 +68,7 @@ test(`02 - text and ESP tag`, () => {
         tailEndsAt: 9,
       },
     ],
-    "02"
+    "02.01"
   );
 });
 
@@ -107,7 +107,7 @@ test(`03 - text-ESP-text`, () => {
         value: " cd",
       },
     ],
-    "03"
+    "03.01"
   );
 });
 
@@ -164,7 +164,7 @@ test(`04 - tag-ESP-tag`, () => {
         attribs: [],
       },
     ],
-    "04"
+    "04.01"
   );
 });
 
@@ -204,7 +204,7 @@ test(`05 - two Nunjucks tags, same pattern set of two, tight`, () => {
         tailEndsAt: 18,
       },
     ],
-    "05"
+    "05.01"
   );
 });
 
@@ -244,7 +244,7 @@ test(`06 - two nunjucks tags, different pattern set of two, tight`, () => {
         tailEndsAt: 38,
       },
     ],
-    "06"
+    "06.01"
   );
 });
 
@@ -284,7 +284,7 @@ test(`07 - different set, *|zzz|*`, () => {
         tailEndsAt: 14,
       },
     ],
-    "07"
+    "07.01"
   );
 });
 
@@ -323,7 +323,7 @@ test(`08 - two nunjucks tags in vicinity, minimal`, () => {
         tailEndsAt: 20,
       },
     ],
-    "08"
+    "08.01"
   );
 });
 
@@ -410,7 +410,7 @@ test(`09 - two nunjucks tags in vicinity, realistic`, () => {
         tailEndsAt: 64,
       },
     ],
-    "09"
+    "09.01"
   );
 });
 

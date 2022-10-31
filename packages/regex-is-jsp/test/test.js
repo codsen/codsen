@@ -37,7 +37,7 @@ test("04 expressions", () => {
 });
 
 test("05 comments", () => {
-  match(`<%-- This is JSP comment --%>`, isJSP(), "05");
+  match(`<%-- This is JSP comment --%>`, isJSP(), "05.01");
 });
 
 test("06 directives", () => {
@@ -48,39 +48,43 @@ test("06 directives", () => {
 });
 
 test("07 JSP actions", () => {
-  match(`<jsp:action_name attribute="value" />`, isJSP(), "07");
+  match(`<jsp:action_name attribute="value" />`, isJSP(), "07.01");
 });
 
 test("08 wrapper tag", () => {
   match(
     `<%@tag description="Simple Wrapper Tag" pageEncoding="UTF-8"%>`,
     isJSP(),
-    "08"
+    "08.01"
   );
 });
 
 test("09 use bean", () => {
-  match(`<jsp:useBean id = "name" class = "package.class" />`, isJSP(), "09");
+  match(
+    `<jsp:useBean id = "name" class = "package.class" />`,
+    isJSP(),
+    "09.01"
+  );
 });
 
 test("10 cms", () => {
-  match(`<cms:enable-ade />`, isJSP(), "10");
+  match(`<cms:enable-ade />`, isJSP(), "10.01");
 });
 
 test("11 taglib", () => {
-  match(`<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>`, isJSP(), "11");
+  match(`<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>`, isJSP(), "11.01");
 });
 
 test("12 prop mentioning JSP", () => {
   match(
     `\${jspProp.cardTypeName} **** **** **** \${jspProp.cardNumber}`,
     isJSP(),
-    "12"
+    "12.01"
   );
 });
 
 test("13 c:", () => {
-  match(`<c:if test="\${!empty something}">`, isJSP(), "13");
+  match(`<c:if test="\${!empty something}">`, isJSP(), "13.01");
 });
 
 test("14 IF-ELSE", () => {
@@ -97,7 +101,7 @@ test("14 IF-ELSE", () => {
    </body>
 </html> `,
     isJSP(),
-    "14"
+    "14.01"
   );
 });
 

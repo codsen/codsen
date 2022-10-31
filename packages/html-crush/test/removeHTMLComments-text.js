@@ -25,12 +25,16 @@ test(`01 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment 
     removeHTMLComments: 0, // <---
   });
 
-  equal(result, source);
-  equal(applicableOpts, {
-    removeHTMLComments: true,
-    removeCSSComments: false,
-  });
-  equal(ranges, null);
+  equal(result, source, "01.01");
+  equal(
+    applicableOpts,
+    {
+      removeHTMLComments: true,
+      removeCSSComments: false,
+    },
+    "01.02"
+  );
+  equal(ranges, null, "01.03");
 });
 
 // removeHTMLComments=1 - only text comments
@@ -40,12 +44,16 @@ test(`02 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment 
     removeHTMLComments: 1, // <---
   });
 
-  equal(result, "");
-  equal(applicableOpts, {
-    removeHTMLComments: true,
-    removeCSSComments: false,
-  });
-  equal(ranges, [[0, 20]]);
+  equal(result, "", "02.01");
+  equal(
+    applicableOpts,
+    {
+      removeHTMLComments: true,
+      removeCSSComments: false,
+    },
+    "02.02"
+  );
+  equal(ranges, [[0, 20]], "02.03");
 });
 
 // removeHTMLComments=2 - includes outlook conditional comments
@@ -55,12 +63,16 @@ test(`03 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment 
     removeHTMLComments: 2, // <---
   });
 
-  equal(result, "");
-  equal(applicableOpts, {
-    removeHTMLComments: true,
-    removeCSSComments: false,
-  });
-  equal(ranges, [[0, 20]]);
+  equal(result, "", "03.01");
+  equal(
+    applicableOpts,
+    {
+      removeHTMLComments: true,
+      removeCSSComments: false,
+    },
+    "03.02"
+  );
+  equal(ranges, [[0, 20]], "03.03");
 });
 
 //
@@ -80,15 +92,23 @@ test(`04 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment,
     removeHTMLComments: 0, // <---
   });
 
-  equal(result, source.trim());
-  equal(applicableOpts, {
-    removeHTMLComments: true,
-    removeCSSComments: false,
-  });
-  equal(ranges, [
-    [0, 2],
-    [22, 24],
-  ]);
+  equal(result, source.trim(), "04.01");
+  equal(
+    applicableOpts,
+    {
+      removeHTMLComments: true,
+      removeCSSComments: false,
+    },
+    "04.02"
+  );
+  equal(
+    ranges,
+    [
+      [0, 2],
+      [22, 24],
+    ],
+    "04.03"
+  );
 });
 
 // removeHTMLComments=1 - only text comments
@@ -98,12 +118,16 @@ test(`05 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment,
     removeHTMLComments: 1, // <---
   });
 
-  equal(result, "");
-  equal(applicableOpts, {
-    removeHTMLComments: true,
-    removeCSSComments: false,
-  });
-  equal(ranges, [[0, 24]]);
+  equal(result, "", "05.01");
+  equal(
+    applicableOpts,
+    {
+      removeHTMLComments: true,
+      removeCSSComments: false,
+    },
+    "05.02"
+  );
+  equal(ranges, [[0, 24]], "05.03");
 });
 
 // removeHTMLComments=2 - includes outlook conditional comments
@@ -113,12 +137,16 @@ test(`06 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment,
     removeHTMLComments: 2, // <---
   });
 
-  equal(result, "");
-  equal(applicableOpts, {
-    removeHTMLComments: true,
-    removeCSSComments: false,
-  });
-  equal(ranges, [[0, 24]]);
+  equal(result, "", "06.01");
+  equal(
+    applicableOpts,
+    {
+      removeHTMLComments: true,
+      removeCSSComments: false,
+    },
+    "06.02"
+  );
+  equal(ranges, [[0, 24]], "06.03");
 });
 
 //
@@ -138,12 +166,16 @@ test(`07 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag - 0
     removeHTMLComments: 0, // <---
   });
 
-  equal(result, source);
-  equal(applicableOpts, {
-    removeHTMLComments: true,
-    removeCSSComments: false,
-  });
-  equal(ranges, null);
+  equal(result, source, "07.01");
+  equal(
+    applicableOpts,
+    {
+      removeHTMLComments: true,
+      removeCSSComments: false,
+    },
+    "07.02"
+  );
+  equal(ranges, null, "07.03");
 });
 
 // removeHTMLComments=1 - only text comments
@@ -153,12 +185,16 @@ test(`08 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag - 1
     removeHTMLComments: 1, // <---
   });
 
-  equal(result, "");
-  equal(applicableOpts, {
-    removeHTMLComments: true,
-    removeCSSComments: false,
-  });
-  equal(ranges, [[0, 13]]);
+  equal(result, "", "08.01");
+  equal(
+    applicableOpts,
+    {
+      removeHTMLComments: true,
+      removeCSSComments: false,
+    },
+    "08.02"
+  );
+  equal(ranges, [[0, 13]], "08.03");
 });
 
 // removeHTMLComments=2 - includes outlook conditional comments
@@ -168,12 +204,16 @@ test(`09 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag - 2
     removeHTMLComments: 2, // <---
   });
 
-  equal(result, "");
-  equal(applicableOpts, {
-    removeHTMLComments: true,
-    removeCSSComments: false,
-  });
-  equal(ranges, [[0, 13]]);
+  equal(result, "", "09.01");
+  equal(
+    applicableOpts,
+    {
+      removeHTMLComments: true,
+      removeCSSComments: false,
+    },
+    "09.02"
+  );
+  equal(ranges, [[0, 13]], "09.03");
 });
 
 //
@@ -202,19 +242,28 @@ test(`10 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length 
 remove
 this
 -->
-</div>`
+</div>`,
+    "10.01"
   );
-  equal(applicableOpts, {
-    removeHTMLComments: true,
-    removeCSSComments: false,
-  });
-  equal(ranges, [
-    [5, 5, "\n"],
-    [9, 10, "\n"],
-    [16, 17, "\n"],
-    [21, 22, "\n"],
-    [25, 25, "\n"],
-  ]);
+  equal(
+    applicableOpts,
+    {
+      removeHTMLComments: true,
+      removeCSSComments: false,
+    },
+    "10.02"
+  );
+  equal(
+    ranges,
+    [
+      [5, 5, "\n"],
+      [9, 10, "\n"],
+      [16, 17, "\n"],
+      [21, 22, "\n"],
+      [25, 25, "\n"],
+    ],
+    "10.03"
+  );
 });
 
 // removeHTMLComments=1 - only text comments
@@ -225,12 +274,16 @@ test(`11 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length 
     lineLengthLimit: 2,
   });
 
-  equal(result, `<div>\n</div>`);
-  equal(applicableOpts, {
-    removeHTMLComments: true,
-    removeCSSComments: false,
-  });
-  equal(ranges, [[5, 25, "\n"]]);
+  equal(result, `<div>\n</div>`, "11.01");
+  equal(
+    applicableOpts,
+    {
+      removeHTMLComments: true,
+      removeCSSComments: false,
+    },
+    "11.02"
+  );
+  equal(ranges, [[5, 25, "\n"]], "11.03");
 });
 
 // removeHTMLComments=2 - includes outlook conditional comments
@@ -241,12 +294,16 @@ test(`12 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length 
     lineLengthLimit: 2,
   });
 
-  equal(result, `<div>\n</div>`);
-  equal(applicableOpts, {
-    removeHTMLComments: true,
-    removeCSSComments: false,
-  });
-  equal(ranges, [[5, 25, "\n"]]);
+  equal(result, `<div>\n</div>`, "12.01");
+  equal(
+    applicableOpts,
+    {
+      removeHTMLComments: true,
+      removeCSSComments: false,
+    },
+    "12.02"
+  );
+  equal(ranges, [[5, 25, "\n"]], "12.03");
 });
 
 //

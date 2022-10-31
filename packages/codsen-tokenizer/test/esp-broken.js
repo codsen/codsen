@@ -67,7 +67,7 @@ test(`01 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing a
         ],
       },
     ],
-    "01"
+    "01.01"
   );
 });
 
@@ -150,7 +150,7 @@ test(`02 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing a
         ],
       },
     ],
-    "02"
+    "02.01"
   );
 });
 
@@ -227,7 +227,7 @@ test(`03 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails null - ne
         ],
       },
     ],
-    "03"
+    "03.01"
   );
 });
 
@@ -266,7 +266,7 @@ test(`04 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - error, two ESP 
         tailEndsAt: 14,
       },
     ],
-    "04"
+    "04.01"
   );
 });
 
@@ -326,7 +326,7 @@ test(`05 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing c
         ],
       },
     ],
-    "05"
+    "05.01"
   );
 });
 
@@ -462,7 +462,7 @@ test(`06 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing c
         attribs: [],
       },
     ],
-    "06"
+    "06.01"
   );
 });
 
@@ -571,7 +571,7 @@ test(`07 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing c
         ],
       },
     ],
-    "07"
+    "07.01"
   );
 });
 
@@ -630,68 +630,8 @@ test(`08 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - heads missing c
         ],
       },
     ],
-    "08"
+    "08.01"
   );
-});
-
-test.skip(`01 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - heads missing character`, () => {
-  let gathered = [];
-  ct(`<a b="{ x %}1{% y %}2">`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  equal(gathered, [], "01");
-});
-
-test.skip(`02 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - heads missing completely`, () => {
-  let gathered = [];
-  ct(`<a b="x %}1{% y %}2">`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  equal(gathered, [], "02");
-});
-
-test.skip(`03 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - Venn`, () => {
-  let gathered = [];
-  ct(`<a b="{% x"><b c="y %}">`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  equal(gathered, [], "03");
-});
-
-test.skip(`04 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - two heads, one tail only`, () => {
-  let gathered = [];
-  ct(`<a b="{% {% %}">`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  equal(gathered, [], "04");
-});
-
-test.skip(`05 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - two tails`, () => {
-  let gathered = [];
-  ct(`<a b="%} %}">`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  equal(gathered, [], "05");
-});
-
-test.skip(`06 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - abrupt ending`, () => {
-  let gathered = [];
-  ct(`<a>{% if something\n</a>`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  equal(gathered, [], "06");
 });
 
 test.run();

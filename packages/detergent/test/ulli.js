@@ -122,7 +122,7 @@ test(`05 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces,
       }
     ).res,
     "Text<br/>\nFirst point<br/>\nSecond point<br/>\nThird point<br/>\nText straight after",
-    "05"
+    "05.01"
   );
 });
 

@@ -27,7 +27,7 @@ test("01 - mvp", () => {
 </body>
 `;
 
-  equal(comb(source).result, intended, "01");
+  equal(comb(source).result, intended, "01.01");
 });
 
 test("02 - multiple classes and id's", () => {
@@ -51,7 +51,7 @@ test("02 - multiple classes and id's", () => {
 </body>
 `;
 
-  equal(comb(source).result, intended, "02");
+  equal(comb(source).result, intended, "02.01");
 });
 
 test("03 - mixed classes and non-classes", () => {
@@ -73,7 +73,7 @@ test("03 - mixed classes and non-classes", () => {
 </body>
 `;
 
-  equal(comb(source).result, intended, "03");
+  equal(comb(source).result, intended, "03.01");
 });
 
 test("04 - mixed classes and non-classes", () => {
@@ -95,7 +95,7 @@ test("04 - mixed classes and non-classes", () => {
 </body>
 `;
 
-  equal(comb(source).result, intended, "04");
+  equal(comb(source).result, intended, "04.01");
 });
 
 test("05 - sandwitched used and unused", () => {
@@ -118,7 +118,7 @@ test("05 - sandwitched used and unused", () => {
 </body>
 `;
 
-  equal(comb(source).result, intended, "05");
+  equal(comb(source).result, intended, "05.01");
 });
 
 test("06 - sandwitched used and unused", () => {
@@ -142,7 +142,7 @@ test("06 - sandwitched used and unused", () => {
 </body>
 `;
 
-  equal(actual, intended, "06");
+  equal(actual, intended, "06.01");
 });
 
 test("07 - sandwitched used and unused", () => {
@@ -165,7 +165,7 @@ test("07 - sandwitched used and unused", () => {
 <body><br class="cd">
 </body>`;
 
-  equal(actual, intended, "07");
+  equal(actual, intended, "07.01");
 });
 
 test("08 - sandwitched used and unused", () => {
@@ -186,7 +186,7 @@ test("08 - sandwitched used and unused", () => {
 </body>
 `;
 
-  equal(actual, intended, "08");
+  equal(actual, intended, "08.01");
 });
 
 test("09 - mixed classes and non-classes", () => {
@@ -211,7 +211,7 @@ test("09 - mixed classes and non-classes", () => {
 </body>
 `;
 
-  equal(actual, intended, "09");
+  equal(actual, intended, "09.01");
 });
 
 test("10 - removes classes and id's from HTML5 (normal input)", () => {
@@ -268,7 +268,7 @@ test("10 - removes classes and id's from HTML5 (normal input)", () => {
 </html>
 `;
 
-  equal(comb(source).result, intended, "10");
+  equal(comb(source).result, intended, "10.01");
 });
 
 test("11 - removes classes and id's from HTML5 - uglifies", () => {
@@ -332,7 +332,7 @@ test("11 - removes classes and id's from HTML5 - uglifies", () => {
 </html>
 `;
 
-  equal(actual, intended, "11");
+  equal(actual, intended, "11.01");
 });
 
 test("12 - deletes blank class/id attrs", () => {
@@ -395,7 +395,7 @@ test("12 - deletes blank class/id attrs", () => {
 </html>
 `;
 
-  equal(actual, intended, "12");
+  equal(actual, intended, "12.01");
 });
 
 test("13 - class present in both head and body, but head has it joined with nonexistent id", () => {
@@ -440,7 +440,7 @@ test("13 - class present in both head and body, but head has it joined with none
 </body>
 </html>
 `;
-  equal(actual, intended, "13");
+  equal(actual, intended, "13.01");
 });
 
 test("14 - multiple style tags recognised and transformed", () => {
@@ -499,7 +499,7 @@ test("14 - multiple style tags recognised and transformed", () => {
 </html>
 `;
 
-  equal(actual, intended, "14");
+  equal(actual, intended, "14.01");
 });
 
 test("15 - style tags are outside HEAD", () => {
@@ -558,7 +558,7 @@ test("15 - style tags are outside HEAD", () => {
 </html>
 `;
 
-  equal(actual, intended, "15");
+  equal(actual, intended, "15.01");
 });
 
 test("16 - removes last styles together with the whole style tag", () => {
@@ -592,7 +592,7 @@ color:  black;
 </html>
 `;
 
-  equal(actual, intended, "16");
+  equal(actual, intended, "16.01");
 });
 
 test("17 - deletes multiple empty style tags", () => {
@@ -638,7 +638,7 @@ test("17 - deletes multiple empty style tags", () => {
 </body>
 </html>
 `;
-  equal(actual, intended, "17");
+  equal(actual, intended, "17.01");
 });
 
 test("18 - removes classes wrapped with conditional Outlook comments", () => {
@@ -785,7 +785,7 @@ test("19 - peculiar pattern - two classes to be removed, then used class", () =>
   </body>
 </html>
 `;
-  equal(comb(source).result, intended, "19");
+  equal(comb(source).result, intended, "19.01");
 });
 
 test("20 - head CSS is given minified", () => {
@@ -905,11 +905,11 @@ test("22 - head CSS is expanded", () => {
 </html>
 `;
 
-  equal(comb(source).result, intended, "22");
+  equal(comb(source).result, intended, "22.01");
 });
 
 test("23 - empty string produces empty string", () => {
-  equal(comb("").result, "", "23");
+  equal(comb("").result, "", "23.01");
 });
 
 test("24 - issue no.2 - mini", () => {
@@ -935,7 +935,7 @@ test("24 - issue no.2 - mini", () => {
 </html>
 `;
 
-  equal(source, comb(source).result, "24");
+  equal(source, comb(source).result, "24.01");
 });
 
 test("25 - issue no.2 - full", () => {
@@ -1006,7 +1006,7 @@ test("25 - issue no.2 - full", () => {
 </html>
 `;
 
-  equal(actual, intended, "25");
+  equal(actual, intended, "25.01");
 });
 
 test("26 - separate style tags, wrapped with Outlook comments - used CSS", () => {
@@ -1387,7 +1387,7 @@ u+.a .jb{uvw}
 <u><a class="a"><i>y</i></a></u>
 <u><a class="a"><i class="jb">z</i></a></u>`;
 
-  equal(actual1, intended1, "29");
+  equal(actual1, intended1, "29.01");
 });
 
 test("30 - double curlies around values", () => {
@@ -1419,7 +1419,7 @@ display: {{ abc.de_fg | hi_jk: 10 }};
 <td>
 text`;
 
-  equal(actual1, intended1, "30");
+  equal(actual1, intended1, "30.01");
 });
 
 test.run();

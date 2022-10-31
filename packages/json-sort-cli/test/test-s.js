@@ -78,7 +78,7 @@ test("01 - sort, -s (silent) mode", async () => {
       throw new Error(err);
     });
 
-  equal(processedFileContents, sortedTestFileContents, "01");
+  equal(processedFileContents, sortedTestFileContents, "01.01");
 });
 
 test.run();

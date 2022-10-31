@@ -98,34 +98,34 @@ test("02 - HTML comments around string edges", () => {
 });
 
 test("03 - false positives #1 - Nunjucks code", () => {
-  equal(stripHtml("a< 2zzz==>b").result, "a< 2zzz==>b", "03");
+  equal(stripHtml("a< 2zzz==>b").result, "a< 2zzz==>b", "03.01");
 });
 
 test("04 - unclosed tag followed by another tag - range tag", () => {
-  equal(stripHtml('<script>alert("123")</script<body>').result, "", "04");
+  equal(stripHtml('<script>alert("123")</script<body>').result, "", "04.01");
 });
 
 test("05 - unclosed tag followed by self-closing tag", () => {
-  equal(stripHtml('<script>alert("123")</script</body>').result, "", "05");
+  equal(stripHtml('<script>alert("123")</script</body>').result, "", "05.01");
 });
 
 test("06 - unclosed tag followed by another tag", () => {
-  equal(stripHtml('<script>alert("123")</script</ body>').result, "", "06");
+  equal(stripHtml('<script>alert("123")</script</ body>').result, "", "06.01");
 });
 
 test("07 - unclosed tag followed by another tag", () => {
-  equal(stripHtml('<script>alert("123")</script<body/>').result, "", "07");
+  equal(stripHtml('<script>alert("123")</script<body/>').result, "", "07.01");
 });
 
 test("08 - unclosed tag followed by another unclosed tag", () => {
-  equal(stripHtml('<script>alert("123")</script<body').result, "", "08");
+  equal(stripHtml('<script>alert("123")</script<body').result, "", "08.01");
 });
 
 test("09 - unclosed tag followed by another tag - non-range tag", () => {
   equal(
     stripHtml("<article>text here</article<body>").result,
     "text here",
-    "09"
+    "09.01"
   );
 });
 
@@ -133,7 +133,7 @@ test("10 - unclosed tag followed by another tag - non-range, self-closing tag", 
   equal(
     stripHtml("<article>text here</article</body>").result,
     "text here",
-    "10"
+    "10.01"
   );
 });
 
@@ -141,7 +141,7 @@ test("11 - unclosed tag followed by another tag - self-closing, inner whitespace
   equal(
     stripHtml("<article>text here</article</ body>").result,
     "text here",
-    "11"
+    "11.01"
   );
 });
 
@@ -149,7 +149,7 @@ test("12 - unclosed tag followed by another tag - with closing slash", () => {
   equal(
     stripHtml("<article>text here</article<body/>").result,
     "text here",
-    "12"
+    "12.01"
   );
 });
 
@@ -157,19 +157,23 @@ test("13 - unclosed tag followed by another tag - html", () => {
   equal(
     stripHtml("<article>text here</article<body").result,
     "text here",
-    "13"
+    "13.01"
   );
 });
 
 test("14 - unclosed tag followed by another tag - strips many tags", () => {
-  equal(stripHtml("a<something<anything<whatever<body<html").result, "a", "14");
+  equal(
+    stripHtml("a<something<anything<whatever<body<html").result,
+    "a",
+    "14.01"
+  );
 });
 
 test("15 - unclosed tag followed by another tag - bails because of spaces", () => {
   equal(
     stripHtml("a < something < anything < whatever < body < html").result,
     "a < something < anything < whatever < body < html",
-    "15"
+    "15.01"
   );
 });
 
@@ -195,7 +199,7 @@ test("17 - range tags are overlapping - both were just custom-set", () => {
       stripTogetherWithTheirContents: ["zzz", "yyy"],
     }).result,
     "rr",
-    "17"
+    "17.01"
   );
 });
 
@@ -205,7 +209,7 @@ test("18 - range tags are overlapping - nested", () => {
       stripTogetherWithTheirContents: ["zzz", "yyy"],
     }).result,
     "rr",
-    "18"
+    "18.01"
   );
 });
 
@@ -215,7 +219,7 @@ test("19 - range tags are overlapping - wildcard", () => {
       stripTogetherWithTheirContents: ["*"],
     }).result,
     "rr",
-    "19"
+    "19.01"
   );
 });
 

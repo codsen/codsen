@@ -23,7 +23,8 @@ test(`01 - spaced m-dashes`, async () => {
     (await remark().use(fixTypography, {}).process("Some text - more text."))
       .toString()
       .trim(),
-    `Some text${rawNbsp}${mDash} more${rawNbsp}text.`
+    `Some text${rawNbsp}${mDash} more${rawNbsp}text.`,
+    "01.01"
   );
 });
 
@@ -32,7 +33,8 @@ test(`02 - ignores tight dashes`, async () => {
     (await remark().use(fixTypography, {}).process("Some text-more text."))
       .toString()
       .trim(),
-    `Some text-more text.`
+    `Some text-more text.`,
+    "02.01"
   );
 });
 

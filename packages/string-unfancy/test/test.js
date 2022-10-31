@@ -31,15 +31,15 @@ test("01 - wrong/missing input = throw", () => {
 // -----------------------------------------------------------------------------
 
 test("02 - unfancies fancy strings", () => {
-  equal(unfancy("“zzz”"), '"zzz"', "02");
+  equal(unfancy("“zzz”"), '"zzz"', "02.01");
 });
 
 test("03 - copes with encoded HTML chars that happen to be fancy", () => {
-  equal(unfancy("zzz&rsquo;zzz"), "zzz'zzz", "03");
+  equal(unfancy("zzz&rsquo;zzz"), "zzz'zzz", "03.01");
 });
 
 test("04 - fancies with triple-encoded HTML", () => {
-  equal(unfancy("zzz&amp;amp;rsquo;zzz"), "zzz'zzz", "04");
+  equal(unfancy("zzz&amp;amp;rsquo;zzz"), "zzz'zzz", "04.01");
 });
 
 test("05 - removes non-breaking spaces", () => {

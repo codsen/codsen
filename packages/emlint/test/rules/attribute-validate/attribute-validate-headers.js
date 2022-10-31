@@ -328,7 +328,8 @@ test(`15 - ${`\u001b[${35}m${`id name checks`}\u001b[${39}m`} - only dot`, () =>
 <td headers="aa bb cc dd">
 <td headers="aa bb cc dd">
 <td headers="aa bb cc dd">
-`
+`,
+    "15.01"
   );
   compare(ok, messages, [
     {

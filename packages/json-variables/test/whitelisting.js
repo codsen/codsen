@@ -275,7 +275,7 @@ test("05 - multiple dontWrapVars values", () => {
       lower_title: "{val}",
       subtitle: "val",
     },
-    '05 - still wraps because child variable call ("subtitle") is not excluded'
+    '05.01 - still wraps because child variable call ("subtitle") is not excluded'
   );
 });
 

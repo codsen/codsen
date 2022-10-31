@@ -773,7 +773,7 @@ test("06 - delete object within an array, wrong order of keys, pt.2", () => {
         ],
       },
     ],
-    "06"
+    "06.01"
   );
 });
 
@@ -790,7 +790,7 @@ test("07 - special case, not strict", () => {
     {
       key: ["a"],
     },
-    "07"
+    "07.01"
   );
 });
 
@@ -808,7 +808,7 @@ test("08 - special case, strict", () => {
     {
       key: ["a"],
     },
-    "08"
+    "08.01"
   );
 });
 
@@ -851,7 +851,7 @@ test("09 - real-life situation #1", () => {
         ],
       },
     },
-    "09"
+    "09.01"
   );
 });
 
@@ -1035,7 +1035,7 @@ test("10 - real-life situation #2", () => {
         parsingErrors: [],
       },
     },
-    "10"
+    "10.01"
   );
 });
 
@@ -1068,7 +1068,7 @@ test("11 - multiple empty values blank arrays #1", () => {
     {
       rules: [],
     },
-    "11"
+    "11.01"
   );
 });
 
@@ -1101,7 +1101,7 @@ test("12 - multiple empty values blank arrays #2", () => {
     {
       rules: [],
     },
-    "12"
+    "12.01"
   );
 });
 
@@ -1122,7 +1122,7 @@ test("13 - object's value is a blank array, looking in an array", () => {
       }
     ),
     ["elem1", "elem4"],
-    "13"
+    "13.01"
   );
 });
 
@@ -1143,7 +1143,7 @@ test("14 - object's value is a blank array, looking in an object", () => {
     {
       elem4: "zz",
     },
-    "14"
+    "14.01"
   );
 });
 
@@ -1174,7 +1174,7 @@ test("15 - delete object within object - simple #1", () => {
         key1: "val1",
       },
     ],
-    "15"
+    "15.01"
   );
 });
 
@@ -1206,7 +1206,7 @@ test("16 - multiple objects to find - simple #1", () => {
         key2: "val2",
       },
     ],
-    "16"
+    "16.01"
   );
 });
 
@@ -1242,7 +1242,7 @@ test("17 - multiple objects to find within objects", () => {
         },
       },
     ],
-    "17"
+    "17.01"
   );
 });
 
@@ -1359,7 +1359,7 @@ test("18 - real-life scenario", () => {
         ],
       },
     ],
-    "18"
+    "18.01"
   );
 });
 
@@ -1382,7 +1382,7 @@ test("19 - delete object within object - simple #1", () => {
     {
       key1: "val1",
     },
-    "19"
+    "19.01"
   );
 });
 
@@ -1404,7 +1404,7 @@ test("20 - the input is the finding", () => {
       }
     ),
     {},
-    "20"
+    "20.01"
   );
 });
 
@@ -1415,7 +1415,7 @@ test("21 - the input is boolean", () => {
       key4: "val4",
     }),
     true,
-    "21"
+    "21.01"
   );
 });
 
@@ -1426,7 +1426,7 @@ test("22 - the input is string", () => {
       key4: "val4",
     }),
     "yo",
-    "22"
+    "22.01"
   );
 });
 
@@ -1461,7 +1461,7 @@ test("24 - the input is the finding (right within array)", () => {
       }
     ),
     [],
-    "24"
+    "24.01"
   );
 });
 
@@ -1749,7 +1749,7 @@ test("28 - to find is undefined - throws", () => {
       ],
       undefined
     );
-  }, "28");
+  }, "28.01");
 });
 
 test("29 - to find is null - throws", () => {
@@ -1763,7 +1763,7 @@ test("29 - to find is null - throws", () => {
       ],
       null
     );
-  }, "29");
+  }, "29.01");
 });
 
 test("30 - to find is string - returns input", () => {
@@ -1783,7 +1783,7 @@ test("30 - to find is string - returns input", () => {
         key4: "val4",
       },
     ],
-    "30"
+    "30.01"
   );
 });
 
@@ -1820,7 +1820,7 @@ test("31 - won't delete object within an array because of strict mode", () => {
       },
       "elem4",
     ],
-    "31"
+    "31.01"
   );
 });
 
@@ -1855,7 +1855,7 @@ test("32 - won't find multiple findings because of strict mode", () => {
         },
       },
     ],
-    "32"
+    "32.01"
   );
 });
 
@@ -1930,7 +1930,7 @@ test("33 - strict mode: deletes some and skips some because of strict mode", () 
         and: "this",
       },
     ],
-    "33"
+    "33.01"
   );
 });
 
@@ -1971,7 +1971,7 @@ test("34 - won't delete object within an arrays because of strict mode", () => {
       ],
       "elem5",
     ],
-    "34"
+    "34.01"
   );
 });
 
@@ -2118,7 +2118,7 @@ test("37 - recognises array containing only empty space - not found", () => {
       },
       "elem4",
     ],
-    "37"
+    "37.01"
   );
 });
 
@@ -2143,7 +2143,7 @@ test("38 - two keys in objToDelete - default", () => {
       }
     ),
     ["elem1", "elem4"],
-    "38"
+    "38.01"
   );
 });
 
@@ -2234,7 +2234,7 @@ test("40 - two keys in objToDelete - strict", () => {
       },
       "elem4",
     ],
-    "40"
+    "40.01"
   );
 });
 
@@ -2316,7 +2316,7 @@ test("42 - array with strings containing emptiness - strict", () => {
       },
       "elem4",
     ],
-    "42"
+    "42.01"
   );
 });
 
@@ -2454,7 +2454,7 @@ test("45 - recognises string containing only empty space - strict", () => {
       },
       "elem4",
     ],
-    "45"
+    "45.01"
   );
 });
 
@@ -2483,7 +2483,7 @@ test("46 - recognises string containing only empty space - won't find", () => {
       },
       "elem4",
     ],
-    "46"
+    "46.01"
   );
 });
 
@@ -2567,7 +2567,7 @@ test("48 - recognises a string containing only empty space (queried array with e
       }
     ),
     ["elem1", "elem4"],
-    "48"
+    "48.01"
   );
 });
 
@@ -2599,7 +2599,7 @@ test("49 - a string containing only empty space (queried array) - strict", () =>
       },
       "elem4",
     ],
-    "49"
+    "49.01"
   );
 });
 
@@ -2629,7 +2629,7 @@ test("50 - a string containing only empty space (queried array) - not found", ()
       },
       "elem4",
     ],
-    "50"
+    "50.01"
   );
 });
 
@@ -2653,7 +2653,7 @@ test("51 - recognises string containing only empty space string (queried empty s
       }
     ),
     ["elem1", "elem4"],
-    "51"
+    "51.01"
   );
 });
 
@@ -2678,7 +2678,7 @@ test("52 - multiple string values in objToDelete", () => {
       }
     ),
     ["elem1", "elem4"],
-    "52"
+    "52.01"
   );
 });
 
@@ -2708,7 +2708,7 @@ test("53 - multiple string values in objToDelete - not found", () => {
       },
       "elem4",
     ],
-    "53"
+    "53.01"
   );
 });
 
@@ -2749,7 +2749,7 @@ test("54 - multiple string values in objToDelete - strict", () => {
       },
       "elem4",
     ],
-    "54"
+    "54.01"
   );
 });
 
@@ -2778,7 +2778,7 @@ test("55 - won't find, queried object with empty string value", () => {
       },
       "elem4",
     ],
-    "55"
+    "55.01"
   );
 });
 
@@ -2802,7 +2802,7 @@ test("56 - recognises array of strings each containing only empty space (queried
       }
     ),
     ["elem1", "elem4"],
-    "56"
+    "56.01"
   );
 });
 
@@ -2826,7 +2826,7 @@ test("57 - recognises array with multiple strings containing emptiness", () => {
       }
     ),
     ["elem1", "elem4"],
-    "57"
+    "57.01"
   );
 });
 
@@ -2855,7 +2855,7 @@ test("58 - empty array finding empty string", () => {
       }
     ),
     ["elem1", "elem4"],
-    "58"
+    "58.01"
   );
 });
 
@@ -2879,7 +2879,7 @@ test("59 - empty string finding empty array", () => {
       }
     ),
     ["elem1", "elem4"],
-    "59"
+    "59.01"
   );
 });
 
@@ -2893,7 +2893,7 @@ test("60 - object deleted from an array, strict mode", () => {
       { matchKeysStrictly: true }
     ),
     [],
-    "60"
+    "60.01"
   );
 });
 
@@ -2927,7 +2927,7 @@ test("61 - real life situation #1", () => {
         rules: [],
       },
     },
-    "61"
+    "61.01"
   );
 });
 
@@ -2957,7 +2957,7 @@ test("62 - real life situation #2", () => {
         rules: [],
       },
     },
-    "62"
+    "62.01"
   );
 });
 
@@ -3107,7 +3107,7 @@ test("63 - real life situation #3", () => {
         parsingErrors: [],
       },
     },
-    "63"
+    "63.01"
   );
 });
 
@@ -3257,7 +3257,7 @@ test("64 - real life situation #4", () => {
         parsingErrors: [],
       },
     },
-    "64"
+    "64.01"
   );
 });
 
@@ -3417,7 +3417,7 @@ test("67 - treats holes in arrays - ast-monkey will fix them", () => {
       x: "y",
     }),
     ["a", "b"],
-    "67"
+    "67.01"
   );
 });
 
@@ -3432,14 +3432,14 @@ test("68 - does not mutate input args", () => {
   };
   let obj2 = clone(obj1);
   let unneededResult = deleteObj(obj1, obj2, { matchKeysStrictly: true });
-  ok(unneededResult); // mock test to please linter
+  ok(unneededResult, "68.01"); // mock test to please linter
   equal(
     obj1,
     {
       a: "a",
       b: "b",
     },
-    "68.01"
+    "68.02"
   ); // real deal
   equal(
     obj2,
@@ -3447,7 +3447,7 @@ test("68 - does not mutate input args", () => {
       a: "a",
       b: "b",
     },
-    "68.02"
+    "68.03"
   ); // real deal
 });
 

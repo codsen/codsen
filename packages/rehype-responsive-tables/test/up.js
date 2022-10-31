@@ -79,7 +79,7 @@ test(`01 - lifts Bar, text`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "01");
+  equal(res, intended, "01.01");
 });
 
 test(`02 - lifts Bar, code`, () => {
@@ -176,7 +176,7 @@ test(`02 - lifts Bar, code`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "02");
+  equal(res, intended, "02.01");
 });
 
 test(`03 - wildcard`, () => {
@@ -249,7 +249,7 @@ test(`03 - wildcard`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "03");
+  equal(res, intended, "03.01");
 });
 
 test.run();

@@ -123,7 +123,7 @@ test(`09 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`,
   equal(
     det1('"', { convertApostrophes: false, convertEntities: true }).res,
     "&quot;",
-    "09"
+    "09.01"
   );
 });
 
@@ -131,7 +131,7 @@ test(`10 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`,
   equal(
     det1('^"', { convertApostrophes: false, convertEntities: true }).res,
     "^&quot;",
-    "10"
+    "10.01"
   );
 });
 
@@ -139,7 +139,7 @@ test(`11 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`,
   equal(
     det1('^`"', { convertApostrophes: false, convertEntities: true }).res,
     "^`&quot;",
-    "11"
+    "11.01"
   );
 });
 
@@ -666,7 +666,7 @@ test(`34 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, () => {
       removeWidows: true,
     }).res,
     `aaaaaaaaaaa&nbsp;&mdash; aaaaaaaaaaaa&nbsp;&mdash;&nbsp;aaaaaaaaaaaa`,
-    "34"
+    "34.01"
   );
 });
 
@@ -926,7 +926,7 @@ test(`51 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`, () => 
       removeWidows: false,
     }).res,
     "Discount: -&pound;10.00",
-    "51"
+    "51.01"
   );
 });
 
@@ -1811,7 +1811,7 @@ test(`117 - ${`\u001b[${35}m${`numeric entities`}\u001b[${39}m`} - numeric entit
   equal(
     det(ok, not, 0, `aaaaaaa aaaaaaaaa aaaaaaaaaa&#160;bbbb`).res,
     "aaaaaaa aaaaaaaaa aaaaaaaaaa&nbsp;bbbb",
-    "117"
+    "117.01"
   );
 });
 
@@ -1819,7 +1819,7 @@ test(`118 - ${`\u001b[${35}m${`numeric entities`}\u001b[${39}m`} - named entitie
   equal(
     det(ok, not, 0, `aaaaaaa aaaaaaaaa aaaaaaaaaa&nbsp;bbbb`).res,
     "aaaaaaa aaaaaaaaa aaaaaaaaaa&nbsp;bbbb",
-    "118"
+    "118.01"
   );
 });
 
@@ -1827,7 +1827,7 @@ test(`119 - ${`\u001b[${35}m${`numeric entities`}\u001b[${39}m`} - raw character
   equal(
     det(ok, not, 0, `aaaaaaa aaaaaaaaa aaaaaaaaa${rawNbsp}bbbb`).res,
     "aaaaaaa aaaaaaaaa aaaaaaaaa&nbsp;bbbb",
-    "119"
+    "119.01"
   );
 });
 
@@ -1835,15 +1835,15 @@ test(`119 - ${`\u001b[${35}m${`numeric entities`}\u001b[${39}m`} - raw character
 // -----------------------------------------------------------------------------
 
 test(`120 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities - precaution &fnof; (\\u0192)`, () => {
-  equal(det(ok, not, 0, `aaa&fnof;aaa`).res, "aaa&fnof;aaa", "120");
+  equal(det(ok, not, 0, `aaa&fnof;aaa`).res, "aaa&fnof;aaa", "120.01");
 });
 
 test(`121 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`, () => {
-  equal(det(ok, not, 0, `aaa&thinsp;aaa`).res, "aaa aaa", "121");
+  equal(det(ok, not, 0, `aaa&thinsp;aaa`).res, "aaa aaa", "121.01");
 });
 
 test(`122 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`, () => {
-  equal(det(ok, not, 0, `aaa&zwnjaaa`).res, "aaa&zwnj;aaa", "122");
+  equal(det(ok, not, 0, `aaa&zwnjaaa`).res, "aaa&zwnj;aaa", "122.01");
 });
 
 test(`123 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially clashing incomplete named entities`, () => {
@@ -1852,7 +1852,7 @@ test(`123 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially
       convertEntities: false,
     }).res,
     "aaa\u03C0\u03D6\u03C0\u03D6aaa",
-    "123"
+    "123.01"
   );
 });
 
@@ -1863,7 +1863,7 @@ test(`124 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially
       dontEncodeNonLatin: false,
     }).res,
     "aaa&pi;&piv;&pi;&piv;aaa",
-    "124"
+    "124.01"
   );
 });
 
@@ -1889,7 +1889,7 @@ test(`126 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially
   equal(
     det(ok, not, 0, `aaa&sup&sup1&sup&sup2&sup&sup3&sup&supeaaa`).res,
     "aaa&sup;&sup1;&sup;&sup2;&sup;&sup3;&sup;&supe;aaa",
-    "126"
+    "126.01"
   );
 });
 
@@ -1899,7 +1899,7 @@ test(`127 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially
       convertEntities: false,
     }).res,
     he.decode("aaa&theta;&thetasym;&theta;&thetasym;aaa"),
-    "127"
+    "127.01"
   );
 });
 
@@ -1907,7 +1907,7 @@ test(`128 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially
   equal(
     det(ok, not, 0, `aaa&ang&angst&ang&angstaaa`).res,
     "aaa&ang;&#xC5;&ang;&#xC5;aaa",
-    "128"
+    "128.01"
   );
 });
 
@@ -1915,7 +1915,7 @@ test(`128 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - potentially
 // -----------------------------------------------------------------------------
 
 test(`129 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`, () => {
-  equal(det(ok, not, 0, `aaa&lt;bbb ccc`).res, "aaa&lt;bbb ccc", "129");
+  equal(det(ok, not, 0, `aaa&lt;bbb ccc`).res, "aaa&lt;bbb ccc", "129.01");
 });
 
 test(`130 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`, () => {
@@ -1924,7 +1924,7 @@ test(`130 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if enti
       convertEntities: true,
     }).res,
     "aaa&lt;bbb ccc",
-    "130"
+    "130.01"
   );
 });
 
@@ -1934,19 +1934,19 @@ test(`131 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if enti
       convertEntities: false,
     }).res,
     "aaa<bbb ccc",
-    "131"
+    "131.01"
   );
 });
 
 test(`132 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`, () => {
-  equal(det(ok, not, 0, `aaa<bbb ccc`).res, "aaa&lt;bbb ccc", "132");
+  equal(det(ok, not, 0, `aaa<bbb ccc`).res, "aaa&lt;bbb ccc", "132.01");
 });
 
 test(`133 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if entity references are left intact`, () => {
   equal(
     det(ok, not, 0, `aaa<bbb ccc`, { convertEntities: true }).res,
     "aaa&lt;bbb ccc",
-    "133"
+    "133.01"
   );
 });
 
@@ -1954,7 +1954,7 @@ test(`134 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - checking if enti
   equal(
     det(ok, not, 0, `aaa<bbb ccc`, { convertEntities: false }).res,
     "aaa<bbb ccc",
-    "134"
+    "134.01"
   );
 });
 
@@ -2003,7 +2003,7 @@ test(`137 - email-not-friendly entities`, () => {
   equal(
     det(ok, not, 0, `&Breve;`, { convertEntities: true }).res,
     "&#x2D8;",
-    "137"
+    "137.01"
   );
 });
 
@@ -2011,7 +2011,7 @@ test(`138 - email-not-friendly entities`, () => {
   equal(
     det(ok, not, 0, `&Breve;`, { convertEntities: false }).res,
     "\u02D8",
-    "138"
+    "138.01"
   );
 });
 

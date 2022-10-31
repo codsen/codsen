@@ -22,7 +22,7 @@ test("01", () => {
       result: "the quick brown",
       addEllipsis: true,
     },
-    "01"
+    "01.01"
   );
 });
 
@@ -40,7 +40,7 @@ test("02", () => {
       result: "the quick brown fox jumps over",
       addEllipsis: true,
     },
-    "02"
+    "02.01"
   );
 });
 
@@ -58,7 +58,7 @@ test("03", () => {
       result: "the quick brown fox jumps over the lazy dog an",
       addEllipsis: true,
     },
-    "03"
+    "03.01"
   );
 });
 
@@ -76,7 +76,7 @@ test("04", () => {
       result: "the quick brown fox jumps over the lazy dog and then bites",
       addEllipsis: true,
     },
-    "04"
+    "04.01"
   );
 });
 
@@ -95,7 +95,7 @@ test("05", () => {
         "the quick brown fox jumps over the lazy dog and then bites him in the tail",
       addEllipsis: true,
     },
-    "05"
+    "05.01"
   );
 });
 
@@ -114,7 +114,7 @@ test("06", () => {
         "the quick brown fox jumps over the lazy dog and then bites him in the tail and runs away",
       addEllipsis: false,
     },
-    "06"
+    "06.01"
   );
 });
 

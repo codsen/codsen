@@ -73,7 +73,7 @@ test(`02 isolated`, () => {
       ct(`<body id="l" style="`, {
         tagCb: () => {},
       }),
-    "02"
+    "02.01"
   );
 });
 

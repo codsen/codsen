@@ -127,16 +127,16 @@ test(`06`, () => {
 
 test(`07`, () => {
   // stop at \n
-  equal(chompRight("a b c d  c d    \n", 2, null, "c", "d"), 16, "07");
+  equal(chompRight("a b c d  c d    \n", 2, null, "c", "d"), 16, "07.01");
 });
 
 test(`08`, () => {
   // stop at \n
-  equal(chompRight("a", 0, null, "x"), null, "08");
+  equal(chompRight("a", 0, null, "x"), null, "08.01");
 });
 
 test(`09`, () => {
-  equal(chompRight(1, 0, null, "x"), null, "09");
+  equal(chompRight(1, 0, null, "x"), null, "09.01");
 });
 
 test(`10`, () => {

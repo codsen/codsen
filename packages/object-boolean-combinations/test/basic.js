@@ -98,7 +98,7 @@ test("03 - non-boolean object overrides", () => {
       { a: "1", b: "1", c: "1", d: false },
       { a: "1", b: "1", c: "1", d: true },
     ],
-    "03"
+    "03.01"
   );
 });
 

@@ -13,7 +13,11 @@ test(`01 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - no layers given`, ()
   let valueToMatch = "${";
   let layers = [];
   let matchFirstInstead;
-  is(matchLayerLast(valueToMatch, layers, matchFirstInstead), undefined, "01");
+  is(
+    matchLayerLast(valueToMatch, layers, matchFirstInstead),
+    undefined,
+    "01.01"
+  );
 });
 
 test(`02 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - simple layer is matching`, () => {
@@ -32,7 +36,11 @@ test(`02 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - simple layer is matc
     },
   ];
   let matchFirstInstead;
-  is(matchLayerLast(valueToMatch, layers, matchFirstInstead), undefined, "02");
+  is(
+    matchLayerLast(valueToMatch, layers, matchFirstInstead),
+    undefined,
+    "02.01"
+  );
 });
 
 test(`03 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - esp layer is matching`, () => {
@@ -55,7 +63,7 @@ test(`03 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - esp layer is matchin
   is(
     matchLayerLast(valueToMatch, layers, matchFirstInstead),
     lengthResponse,
-    "03"
+    "03.01"
   );
 });
 
@@ -79,7 +87,7 @@ test(`04 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - esp layer is not mat
   is(
     matchLayerLast(valueToMatch, layers, matchFirstInstead),
     lengthResponse,
-    "04"
+    "04.01"
   );
 });
 
@@ -103,7 +111,7 @@ test(`05 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - extra dash - Nunjuck
   is(
     matchLayerLast(valueToMatch, layers, matchFirstInstead),
     lengthResponse,
-    "05"
+    "05.01"
   );
 });
 
@@ -114,7 +122,11 @@ test(`06 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - no layers given`, (
   let valueToMatch = "${";
   let layers = [];
   let matchFirstInstead = true;
-  is(matchLayerLast(valueToMatch, layers, matchFirstInstead), undefined, "06");
+  is(
+    matchLayerLast(valueToMatch, layers, matchFirstInstead),
+    undefined,
+    "06.01"
+  );
 });
 
 test(`07 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - simple layer is matching`, () => {
@@ -132,7 +144,11 @@ test(`07 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - simple layer is mat
     },
   ];
   let matchFirstInstead = true;
-  is(matchLayerLast(valueToMatch, layers, matchFirstInstead), undefined, "07");
+  is(
+    matchLayerLast(valueToMatch, layers, matchFirstInstead),
+    undefined,
+    "07.01"
+  );
 });
 
 test(`08 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - esp layer is matching`, () => {
@@ -155,7 +171,7 @@ test(`08 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - esp layer is matchi
   is(
     matchLayerLast(valueToMatch, layers, matchFirstInstead),
     lengthResponse,
-    "08"
+    "08.01"
   );
 });
 
@@ -179,7 +195,7 @@ test(`09 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - esp layer is not ma
   is(
     matchLayerLast(valueToMatch, layers, matchFirstInstead),
     lengthResponse,
-    "09"
+    "09.01"
   );
 });
 
@@ -203,6 +219,6 @@ test(`10 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - esp layer is 1 char
   is(
     matchLayerLast(valueToMatch, layers, matchFirstInstead),
     lengthResponse,
-    "10"
+    "10.01"
   );
 });

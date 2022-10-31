@@ -83,7 +83,7 @@ test(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - stray closing closing bloc
         ],
       },
     ],
-    "01"
+    "01.01"
   );
 });
 
@@ -175,28 +175,8 @@ test(`02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - multiple stray closing clo
         ],
       },
     ],
-    "02"
+    "02.01"
   );
-});
-
-test.skip(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - tag cut off in the middle of inline css style - closing`, () => {
-  let gathered = [];
-  ct(`<a style="  /* zzz */ color: red; </a>`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  equal(gathered, [], "01");
-});
-
-test.skip(`02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - tag cut off in the middle of inline css style - new starts`, () => {
-  let gathered = [];
-  ct(`<a style="  /* zzz */ color: red; <table><tr><td>`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  equal(gathered, [], "02");
 });
 
 test.run();

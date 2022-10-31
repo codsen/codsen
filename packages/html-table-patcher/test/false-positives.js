@@ -18,7 +18,7 @@ test(`01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${
     </td><!--zzz-->
   </tr><!--zzz-->
   </table><!--zzz-->`;
-  equal(processThis(str), tiny(str), "01");
+  equal(processThis(str), tiny(str), "01.01");
 });
 
 test(`02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - comments include line breaks`, () => {
@@ -32,7 +32,7 @@ test(`02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${
     </td><!--zzz\nyyy-->
   </tr><!--zzz\nyyy-->
   </table><!--zzz\nyyy-->`;
-  equal(processThis(str), tiny(str), "02");
+  equal(processThis(str), tiny(str), "02.01");
 });
 
 test(`03 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - comments include line breaks`, () => {
@@ -49,7 +49,7 @@ test(`03 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${
 </tr><!--lll<tr></tr><tr></tr><table>mmm</table>nnn-->
 </table><!--ooo
 ppp-->`;
-  equal(processThis(str), tiny(str), "03");
+  equal(processThis(str), tiny(str), "03.01");
 });
 
 test.run();

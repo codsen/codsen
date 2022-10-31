@@ -294,7 +294,7 @@ test(`09 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remov
 .class{width:100% !important;}
 </style>
 <![endif]-->`,
-    "09"
+    "09.01"
   );
 });
 
@@ -317,7 +317,7 @@ test(`10 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remov
 .class{width:100% !important;}
 </style>
 <![endif]-->`,
-    "10"
+    "10.01"
   );
 });
 
@@ -361,7 +361,7 @@ test(`11 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remov
 <style type="text/css">
 .class{width:100%!important;}
 </style>`,
-    "11"
+    "11.01"
   );
 });
 
@@ -406,7 +406,7 @@ test(`12 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remov
 <style type="text/css">
 .class{width:100%!important;}
 </style>`,
-    "12"
+    "12.01"
   );
 });
 

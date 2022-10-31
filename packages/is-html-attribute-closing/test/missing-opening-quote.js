@@ -12,7 +12,7 @@ import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js"
 test(`01 - ${`\u001b[${35}m${`opening missing`}\u001b[${39}m`} - one tag pair, one attr`, () => {
   let str = `<a href=z">click here</a>`;
 
-  ok(isCl(str, 8, 9), "01");
+  ok(isCl(str, 8, 9), "01.01");
 
   // fin.
 });

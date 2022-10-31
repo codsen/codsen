@@ -101,7 +101,7 @@ test("04 - two strings as result", () => {
       },
       { val: "html2", path: "1.tag" },
     ],
-    "04"
+    "04.01"
   );
 });
 
@@ -138,7 +138,7 @@ test("05 - query by key, returns mixed results", () => {
       { val: { html2: "html2" }, path: "1.tag" },
       { val: "html3", path: "2.tag" },
     ],
-    "05"
+    "05.01"
   );
 });
 
@@ -195,7 +195,7 @@ test("07 - query returns an array", () => {
       "tag"
     ),
     [{ val: ["z"], path: "0.tag" }],
-    "07"
+    "07.01"
   );
 });
 
@@ -210,7 +210,7 @@ test("08 - query returns a string", () => {
       "tag"
     ),
     [{ val: "z", path: "0.tag" }],
-    "08"
+    "08.01"
   );
 });
 
@@ -264,7 +264,7 @@ test("10 - no results query", () => {
       "tag"
     ),
     [],
-    "10"
+    "10.01"
   );
 });
 

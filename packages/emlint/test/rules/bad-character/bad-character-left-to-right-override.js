@@ -53,7 +53,7 @@ test(`01 - detects two LEFT-TO-RIGHT OVERRIDE characters`, () => {
     ],
     "01.01"
   );
-  equal(applyFixes(str, messages), "dlkgjldj", "01.02");
+  equal(applyFixes(str, messages), "dlkgjldj", "01.01");
 });
 
 test.run();

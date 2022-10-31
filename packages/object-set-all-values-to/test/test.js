@@ -22,7 +22,7 @@ test("01 - input simple plain object, default", () => {
       c: false,
       d: false,
     },
-    "01"
+    "01.01"
   );
 });
 
@@ -50,7 +50,7 @@ test("02 - two level nested plain object, default", () => {
         },
       ],
     },
-    "02"
+    "02.01"
   );
 });
 
@@ -82,7 +82,7 @@ test("03 - topmost level input is array, default", () => {
         ],
       },
     ],
-    "03"
+    "03.01"
   );
 });
 
@@ -198,7 +198,7 @@ test("04 - many levels of nested arrays, default", () => {
         ],
       ],
     ],
-    "04"
+    "04.01"
   );
 });
 
@@ -222,7 +222,7 @@ test("05 - array-object-array-object, default", () => {
         ],
       },
     ],
-    "05"
+    "05.01"
   );
 });
 
@@ -256,7 +256,7 @@ test("06 - array has array which has object, default", () => {
         d: [{ e: false }],
       },
     ],
-    "06"
+    "06.01"
   );
 });
 
@@ -288,7 +288,7 @@ test("07 - object has object value, default", () => {
         },
       },
     },
-    "07"
+    "07.01"
   );
 });
 
@@ -306,7 +306,7 @@ test("08 - input is object with only values — arrays, default", () => {
       c: ["c"],
       d: ["d"],
     },
-    "08"
+    "08.01"
   );
 });
 
@@ -314,7 +314,7 @@ test("09 - ops within an array, default", () => {
   equal(
     setAllValuesTo([["a", { b: "b" }, "c"]]),
     [["a", { b: false }, "c"]],
-    "09"
+    "09.01"
   );
 });
 
@@ -322,7 +322,7 @@ test("10 - lots of empty things, default", () => {
   equal(
     setAllValuesTo([{}, {}, {}, { a: "a" }, {}]),
     [{}, {}, {}, { a: false }, {}],
-    "10"
+    "10.01"
   );
 });
 
@@ -347,7 +347,7 @@ test("11 - input simple plain object, assigning a string", () => {
       c: "x",
       d: "x",
     },
-    "11"
+    "11.01"
   );
 });
 
@@ -368,7 +368,7 @@ test("12 - input simple plain object, assigning a plain object", () => {
       c: { x: "x" },
       d: { x: "x" },
     },
-    "12"
+    "12.01"
   );
 });
 
@@ -389,7 +389,7 @@ test("13 - input simple plain object, assigning an array", () => {
       c: ["z", "y"],
       d: ["z", "y"],
     },
-    "13"
+    "13.01"
   );
 });
 
@@ -410,7 +410,7 @@ test("14 - input simple plain object, assigning a null", () => {
       c: null,
       d: null,
     },
-    "14"
+    "14.01"
   );
 });
 
@@ -431,7 +431,7 @@ test("15 - input simple plain object, assigning a Boolean true", () => {
       c: true,
       d: true,
     },
-    "15"
+    "15.01"
   );
 });
 
@@ -465,7 +465,7 @@ test("16 - input simple plain object, assigning a function", () => {
       ],
       { x: f },
     ],
-    "16"
+    "16.01"
   );
 });
 
@@ -488,7 +488,7 @@ test("17 - input simple plain object, assigning a plain object", () => {
       c: { a: "a" },
       d: { a: "a" },
     },
-    "17"
+    "17.01"
   );
 });
 
@@ -497,15 +497,15 @@ test("17 - input simple plain object, assigning a plain object", () => {
 // ==============================
 
 test("18 - input is string, default value", () => {
-  equal(setAllValuesTo("nothing"), "nothing", "18");
+  equal(setAllValuesTo("nothing"), "nothing", "18.01");
 });
 
 test("19 - input is string, value provided", () => {
-  equal(setAllValuesTo("nothing", "something"), "nothing", "19");
+  equal(setAllValuesTo("nothing", "something"), "nothing", "19.01");
 });
 
 test("20 - input is missing but value provided", () => {
-  equal(setAllValuesTo(undefined, "a"), undefined, "20");
+  equal(setAllValuesTo(undefined, "a"), undefined, "20.01");
 });
 
 // ==============================
@@ -518,14 +518,14 @@ test("21 - does not mutate input args", () => {
     b: "b",
   };
   let dummyResult = setAllValuesTo(inp);
-  ok(dummyResult);
+  ok(dummyResult, "21.01");
   equal(
     inp,
     {
       a: "a",
       b: "b",
     },
-    "21.01"
+    "21.02"
   );
 });
 

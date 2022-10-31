@@ -12,19 +12,27 @@ test(`01 - full`, () => {
     removeLineBreaks: true,
   });
 
-  equal(result, "<a> <b>");
-  equal(ranges, [
-    [0, 1],
-    [4, 7, " "],
-    [10, 11],
-  ]);
-  equal(applicableOpts, {
-    removeHTMLComments: false,
-    removeCSSComments: false,
-  });
+  equal(result, "<a> <b>", "01.01");
+  equal(
+    ranges,
+    [
+      [0, 1],
+      [4, 7, " "],
+      [10, 11],
+    ],
+    "01.02"
+  );
+  equal(
+    applicableOpts,
+    {
+      removeHTMLComments: false,
+      removeCSSComments: false,
+    },
+    "01.03"
+  );
 });
 
-test(`01 - deletes trailing space`, () => {
+test(`02 - deletes trailing space`, () => {
   compare(
     ok,
     m(equal, " <a> \n <b> ", {
@@ -69,7 +77,7 @@ test(`01 - deletes trailing space`, () => {
   );
 });
 
-test(`02 - retains trailing linebreak`, () => {
+test(`03 - retains trailing linebreak`, () => {
   compare(
     ok,
     m(equal, " <a> \n <b> \n", {
@@ -86,7 +94,7 @@ test(`02 - retains trailing linebreak`, () => {
   );
 });
 
-test(`03 - trailing line break`, () => {
+test(`04 - trailing line break`, () => {
   compare(
     ok,
     m(equal, " a \n b \n", {
@@ -103,7 +111,7 @@ test(`03 - trailing line break`, () => {
   );
 });
 
-test(`04 - multiple line breaks`, () => {
+test(`05 - multiple line breaks`, () => {
   compare(
     ok,
     m(equal, " a \n b\n\n\nc ", {
@@ -120,7 +128,7 @@ test(`04 - multiple line breaks`, () => {
   );
 });
 
-test(`05 - ends with character`, () => {
+test(`06 - ends with character`, () => {
   compare(
     ok,
     m(equal, " a \n b\n\n\nc", {
@@ -137,7 +145,7 @@ test(`05 - ends with character`, () => {
   );
 });
 
-test(`06 - tags, end with character`, () => {
+test(`07 - tags, end with character`, () => {
   compare(
     ok,
     m(equal, " <x> \n <y>\n\n\n<z>", {
@@ -168,7 +176,7 @@ test(`06 - tags, end with character`, () => {
   );
 });
 
-test(`07 - comments`, () => {
+test(`08 - comments`, () => {
   let src = `<!--<![endif]-->`;
   compare(
     ok,
@@ -186,7 +194,7 @@ test(`07 - comments`, () => {
   );
 });
 
-test(`08 - CRLF`, () => {
+test(`09 - CRLF`, () => {
   let src = `<table>\r\n<tr>`;
   compare(
     ok,

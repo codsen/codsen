@@ -82,7 +82,7 @@ test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
     },
   ]);
 
-  is(messages.length, 1, "05.03");
+  is(messages.length, 1, "05.02");
 });
 
 test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {

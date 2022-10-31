@@ -82,7 +82,7 @@ test(`04 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, exact match`,
   equal(
     applyFixes(str, messages),
     "<div><zzz><yo><br/><a></a><script></yo>",
-    "04.02"
+    "04.01"
   );
 });
 
@@ -123,7 +123,7 @@ test(`05 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, match by wild
   equal(
     applyFixes(str, messages),
     "<div><zzz><yo><br/><a></a><script></yo>",
-    "05.02"
+    "05.01"
   );
 });
 

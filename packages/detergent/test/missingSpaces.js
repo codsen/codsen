@@ -681,7 +681,7 @@ test(`46 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - long sent
   equal(
     det(ok, not, 0, "Some text .gitignore").res,
     "Some text .gitignore",
-    "46"
+    "46.01"
   );
 });
 
@@ -997,7 +997,7 @@ test(`67`, () => {
       removeWidows: true,
     }).res,
     `Abc;&nbsp;de fghij&nbsp;klmnop.`,
-    "67"
+    "67.01"
   );
 });
 

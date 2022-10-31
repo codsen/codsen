@@ -298,7 +298,11 @@ test(`13 - ${`\u001b[${35}m${`id name checks`}\u001b[${39}m`} - mix 1`, () => {
     },
   });
   // can fix:
-  equal(applyFixes(str, messages), `<table id='ab 3a e.f' id='yy aa'>`);
+  equal(
+    applyFixes(str, messages),
+    `<table id='ab 3a e.f' id='yy aa'>`,
+    "13.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-id",
@@ -387,7 +391,8 @@ test(`16 - ${`\u001b[${35}m${`id name checks`}\u001b[${39}m`} - only dot`, () =>
 <table id="aa bb cc dd">
 <table id="aa bb cc dd">
 <table id="aa bb cc dd">
-`
+`,
+    "16.01"
   );
   compare(ok, messages, [
     {

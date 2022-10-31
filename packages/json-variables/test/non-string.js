@@ -149,7 +149,7 @@ test("03 - null values inserted into a middle of a string", () => {
       d: "stringD",
       e: null,
     },
-    "03"
+    "03.01"
   );
 });
 

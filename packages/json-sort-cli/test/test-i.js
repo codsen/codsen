@@ -33,7 +33,7 @@ test("01 - indentationCount set to 3, spaces", async () => {
     throw new Error(err);
   });
 
-  equal(fs.readFileSync(pathOfTestFile, "utf8"), sortedContents, "01");
+  equal(fs.readFileSync(pathOfTestFile, "utf8"), sortedContents, "01.01");
 
   await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {
     throw new Error(err);
@@ -55,7 +55,7 @@ test("02 - indentationCount set to 3, tabs", async () => {
     throw new Error(err);
   });
 
-  equal(fs.readFileSync(pathOfTestFile, "utf8"), sortedContents, "02");
+  equal(fs.readFileSync(pathOfTestFile, "utf8"), sortedContents, "02.01");
 
   await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {
     throw new Error(err);
@@ -77,7 +77,7 @@ test("03 - indentationCount set to 3, tabs, array", async () => {
     throw new Error(err);
   });
 
-  equal(fs.readFileSync(pathOfTestFile, "utf8"), sortedContents, "03");
+  equal(fs.readFileSync(pathOfTestFile, "utf8"), sortedContents, "03.01");
 
   await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {
     throw new Error(err);

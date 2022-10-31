@@ -7,7 +7,7 @@ import { includesWithGlob } from "../dist/array-includes-with-glob.esm.js";
 test("01 - empty array always yields false", () => {
   not.throws(() => {
     includesWithGlob([], "zzz", false);
-  }, "01");
+  }, "01.01");
 });
 
 // ===
@@ -18,7 +18,7 @@ test("02 - no wildcard, fails", () => {
   equal(
     includesWithGlob(["something", "anything", "everything"], "thing"),
     false,
-    "02"
+    "02.01"
   );
 });
 
@@ -26,7 +26,7 @@ test("03 - no wildcard, succeeds", () => {
   equal(
     includesWithGlob(["something", "anything", "everything"], "something"),
     true,
-    "03"
+    "03.01"
   );
 });
 
@@ -52,7 +52,7 @@ test("05 - wildcard, fails", () => {
   equal(
     includesWithGlob(["something", "anything", "everything"], "zzz"),
     false,
-    "05"
+    "05.01"
   );
 });
 
@@ -83,7 +83,7 @@ test("07 - second arg is empty string", () => {
   equal(
     includesWithGlob(["something", "anything", "everything"], ""),
     false,
-    "07"
+    "07.01"
   );
 });
 

@@ -38,7 +38,7 @@ test(`01`, () => {
     ],
     "01.01"
   );
-  equal(messages.length, 1, "01.02");
+  equal(messages.length, 1, "01.01");
 });
 
 test(`02 - value vs empty`, () => {
@@ -74,7 +74,7 @@ test(`02 - value vs empty`, () => {
     ],
     "02.01"
   );
-  equal(messages.length, 1, "02.02");
+  equal(messages.length, 1, "02.01");
 });
 
 test(`03 - empty vs value`, () => {
@@ -110,7 +110,7 @@ test(`03 - empty vs value`, () => {
     ],
     "03.01"
   );
-  equal(messages.length, 1, "03.02");
+  equal(messages.length, 1, "03.01");
 });
 
 test(`04 - empty vs empty`, () => {
@@ -132,7 +132,7 @@ test(`04 - empty vs empty`, () => {
       "attribute-align-mismatch": 2,
     },
   });
-  equal(messages, [], "04");
+  equal(messages, [], "04.01");
 });
 
 test(`05 - ESP`, () => {
@@ -185,7 +185,7 @@ test(`05 - ESP`, () => {
     ],
     "05.01"
   );
-  equal(messages.length, 2, "05.02");
+  equal(messages.length, 2, "05.01");
 });
 
 test.run();

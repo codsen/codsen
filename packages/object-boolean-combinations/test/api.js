@@ -104,7 +104,7 @@ test("03 - second input is not an object - throws", () => {
       combinations({ a: "a" }, "a");
     },
     /THROW_ID_03/,
-    "03"
+    "03.01"
   );
 });
 

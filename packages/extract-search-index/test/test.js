@@ -6,11 +6,11 @@ import { extract, version } from "../dist/extract-search-index.esm.js";
 // API / Throws
 // -------------------------------------------------------------------
 
-test("00 - exports a version", () => {
-  ok(/\d+\.\d+\.\d+/.test(version));
+test("01 - exports a version", () => {
+  ok(/\d+\.\d+\.\d+/.test(version), "01.01");
 });
 
-test("01 - wrong/missing input = throw", () => {
+test("02 - wrong/missing input = throw", () => {
   throws(() => {
     extract();
   }, /THROW_ID_01/g);
@@ -31,44 +31,44 @@ test("01 - wrong/missing input = throw", () => {
 // Normal use
 // -------------------------------------------------------------------
 
-test("02 - empty str input", () => {
-  equal(extract(""), "", "02");
+test("03 - empty str input", () => {
+  equal(extract(""), "", "03.01");
 });
 
-test("03 - whitespace only", () => {
-  equal(extract("\n \n \r \r"), "", "03");
+test("04 - whitespace only", () => {
+  equal(extract("\n \n \r \r"), "", "04.01");
 });
 
-test("04 - one word", () => {
-  equal(extract("zzz"), "zzz", "04");
+test("05 - one word", () => {
+  equal(extract("zzz"), "zzz", "05.01");
 });
 
-test("05 - two words", () => {
-  equal(extract("zzz yyy"), "zzz yyy", "05");
+test("06 - two words", () => {
+  equal(extract("zzz yyy"), "zzz yyy", "06.01");
 });
 
-test("06 - two of the same", () => {
-  equal(extract(" zzz \n zzz"), "zzz", "06");
+test("07 - two of the same", () => {
+  equal(extract(" zzz \n zzz"), "zzz", "07.01");
 });
 
-test("07 - tackles emoji", () => {
-  equal(extract("the quick brown fox 🦊"), "quick brown fox", "07");
+test("08 - tackles emoji", () => {
+  equal(extract("the quick brown fox 🦊"), "quick brown fox", "08.01");
 });
 
-test("08 - tackles stray astral characters", () => {
-  equal(extract("Lazy\uD800lazy\uD83Ddog!\uDBFF"), "lazy dog", "08");
+test("09 - tackles stray astral characters", () => {
+  equal(extract("Lazy\uD800lazy\uD83Ddog!\uDBFF"), "lazy dog", "09.01");
 });
 
-test("09 - tackles pair surrogates", () => {
-  equal(extract("abc \uD83D\uDE0A def"), "abc def", "09");
+test("10 - tackles pair surrogates", () => {
+  equal(extract("abc \uD83D\uDE0A def"), "abc def", "10.01");
 });
 
-test("10 - strips URL's (raw text)", () => {
-  equal(extract("visit https://www.bbc.co.uk"), "visit", "10");
+test("11 - strips URL's (raw text)", () => {
+  equal(extract("visit https://www.bbc.co.uk"), "visit", "11.01");
 });
 
-test("11 - strips URL's (markdown)", () => {
-  equal(extract("[visit](https://www.bbc.co.uk)"), "visit", "11");
+test("12 - strips URL's (markdown)", () => {
+  equal(extract("[visit](https://www.bbc.co.uk)"), "visit", "12.01");
 });
 
 // TODO - blocked by string-strip-html

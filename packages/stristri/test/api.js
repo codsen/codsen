@@ -67,11 +67,11 @@ test(`06 - testing api directly`, () => {
 });
 
 test(`07`, () => {
-  assert.equal(stri2(" ").result, "", "07");
+  assert.equal(stri2(" ").result, "", "07.01");
 });
 
 test(`08`, () => {
-  assert.equal(stri2("\n\n\n").result, "", "08");
+  assert.equal(stri2("\n\n\n").result, "", "08.01");
 });
 
 test(`09 - ensure mixer is generating variations`, () => {
@@ -80,7 +80,7 @@ test(`09 - ensure mixer is generating variations`, () => {
     2 **
       Object.keys(defaults).filter((key) => typeof defaults[key] === "boolean")
         .length,
-    "09"
+    "09.01"
   );
 });
 

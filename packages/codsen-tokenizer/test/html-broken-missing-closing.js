@@ -56,7 +56,7 @@ test(`01 - ${`\u001b[${33}m${`exact key set matching`}\u001b[${39}m`}`, () => {
         attribs: [],
       },
     ],
-    "01"
+    "01.01"
   );
 });
 
@@ -130,7 +130,7 @@ test(`02 - ${`\u001b[${33}m${`exact key set matching`}\u001b[${39}m`}`, () => {
         attribs: [],
       },
     ],
-    "02"
+    "02.01"
   );
 });
 
@@ -358,7 +358,7 @@ test(`07 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without sl
         attribs: [],
       },
     ],
-    "07"
+    "07.01"
   );
 });
 
@@ -403,7 +403,7 @@ test(`08 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without sl
         attribs: [],
       },
     ],
-    "08"
+    "08.01"
   );
 });
 
@@ -454,7 +454,7 @@ test(`09 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without sl
         attribs: [],
       },
     ],
-    "09"
+    "09.01"
   );
 });
 
@@ -488,7 +488,7 @@ test(`10 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - abruptly ended after ta
         attribs: [],
       },
     ],
-    "10"
+    "10.01"
   );
 });
 

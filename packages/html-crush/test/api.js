@@ -70,12 +70,12 @@ test(`04 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - plain object is exported an
       "reportProgressFuncTo",
       "breakToTheLeftOf",
     ].sort(),
-    "04"
+    "04.01"
   );
 });
 
 test(`05 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - plain object is exported`, () => {
-  match(version, /\d+\.\d+\.\d+/, "05");
+  match(version, /\d+\.\d+\.\d+/, "05.01");
 });
 
 test.run();

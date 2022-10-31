@@ -80,9 +80,9 @@ test("06 - strips XML - text-whitespace-tag", () => {
 
   `;
   let { result, ranges } = stripHtml(input);
-  equal(result, "abc");
-  equal(ranges, [[3, 159]]);
-  equal(rApply(input, ranges), result, "06.02");
+  equal(result, "abc", "06.01");
+  equal(ranges, [[3, 159]], "06.02");
+  equal(rApply(input, ranges), result, "06.03");
 });
 
 test("07 - strips XML - text-tabs-tag", () => {

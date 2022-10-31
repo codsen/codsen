@@ -146,7 +146,7 @@ test(`07 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - opening and closing voi
       all: 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "07");
+  equal(applyFixes(str, messages), fixed, "07.01");
 });
 
 test(`08 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - false positive - unclosed void`, () => {
@@ -157,7 +157,7 @@ test(`08 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - false positive - unclos
       all: 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "08");
+  equal(applyFixes(str, messages), fixed, "08.01");
 });
 
 test.run();

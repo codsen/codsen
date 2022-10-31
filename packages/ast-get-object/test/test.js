@@ -33,7 +33,7 @@ test("01 - get - one plain object as result", () => {
         something: "else",
       },
     ],
-    "01"
+    "01.01"
   );
 });
 
@@ -68,7 +68,7 @@ test("02 - get - two plain object as result", () => {
         attributes: "as well",
       },
     ],
-    "02"
+    "02.01"
   );
 });
 
@@ -113,7 +113,7 @@ test("03 - get - topmost level container is object", () => {
         something: "as well",
       },
     ],
-    "03"
+    "03.01"
   );
 });
 
@@ -142,7 +142,7 @@ test("04 - get - search value is object", () => {
         something: "else",
       },
     ],
-    "04"
+    "04.01"
   );
 });
 
@@ -171,7 +171,7 @@ test("05 - get - search value is array", () => {
         something: "else",
       },
     ],
-    "05"
+    "05.01"
   );
 });
 
@@ -200,7 +200,7 @@ test("06 - get - search value is nested array", () => {
         something: "else",
       },
     ],
-    "06"
+    "06.01"
   );
 });
 
@@ -249,7 +249,7 @@ test("07 - get - search value is nested object", () => {
         something: "else",
       },
     ],
-    "07"
+    "07.01"
   );
 });
 
@@ -295,7 +295,7 @@ test("08 - get - numerous everything", () => {
         d: "d",
       },
     ],
-    "08"
+    "08.01"
   );
 });
 
@@ -330,7 +330,7 @@ test("09 - rogue 4th input arg given", () => {
         something: "else",
       },
     ],
-    "09"
+    "09.01"
   );
 });
 
@@ -374,7 +374,7 @@ test("10 - set - one plain object", () => {
         attrs: "Text of the title",
       },
     ],
-    "10"
+    "10.01"
   );
 });
 
@@ -424,7 +424,7 @@ test("11 - set - two plain object", () => {
         content: "",
       },
     ],
-    "11"
+    "11.01"
   );
 });
 
@@ -489,7 +489,7 @@ test("12 - set - topmost level object, one value deleted, one changed", () => {
         },
       ],
     },
-    "12"
+    "12.01"
   );
 });
 
@@ -529,7 +529,7 @@ test("13 - set - search val object, updated val from plain obj to nested arr", (
         attrs: "Text of the title",
       },
     ],
-    "13"
+    "13.01"
   );
 });
 
@@ -569,7 +569,7 @@ test("14 - set - search value is array - updated value array", () => {
         attrs: "Text of the title",
       },
     ],
-    "14"
+    "14.01"
   );
 });
 
@@ -607,7 +607,7 @@ test("15 - set - search value is nested array - deleted finding", () => {
         attrs: "Text of the title",
       },
     ],
-    "15"
+    "15.01"
   );
 });
 
@@ -677,7 +677,7 @@ test("16 - set - edit skipping similar, false search result", () => {
         something: "else",
       },
     ],
-    "16"
+    "16.01"
   );
 });
 
@@ -745,7 +745,7 @@ test("17 - set - numerous everything, wrong order", () => {
         ],
       ],
     ],
-    "17"
+    "17.01"
   );
 });
 
@@ -790,7 +790,7 @@ test("18 - rogue 4th input arg", () => {
         attrs: "Text of the title",
       },
     ],
-    "18"
+    "18.01"
   );
 });
 

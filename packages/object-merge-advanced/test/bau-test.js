@@ -161,23 +161,24 @@ test("04 - array vs array value clash", () => {
       a: ["a", "c"],
       b: "b",
     },
-    "04"
+    "04.01"
   );
-  // equal(
-  //   mergeAdvanced(
-  //     {
-  //       a: ['c']
-  //     },
-  //     {
-  //       b: 'b',
-  //       a: ['a']
-  //     }
-  //   ),
-  //   {
-  //     a: ['c', 'a'],
-  //     b: 'b'
-  //   },
-  //   '01.04.02')
+  equal(
+    mergeAdvanced(
+      {
+        a: ["c"],
+      },
+      {
+        b: "b",
+        a: ["a"],
+      }
+    ),
+    {
+      a: ["c", "a"],
+      b: "b",
+    },
+    "04.02"
+  );
 });
 
 test("05 - object vs object value clash", () => {
@@ -198,7 +199,7 @@ test("05 - object vs object value clash", () => {
       },
       b: "b",
     },
-    "05"
+    "05.01"
   );
 });
 
@@ -737,7 +738,7 @@ test("15 - object values are arrays and get merged", () => {
       ],
       b: "b",
     },
-    "15"
+    "15.01"
   );
 });
 
@@ -1287,7 +1288,7 @@ test("25 - arrays and opts.ignoreKeys", () => {
     {
       a: [1, 2, 3],
     },
-    "25"
+    "25.01"
   );
 });
 
@@ -1307,7 +1308,7 @@ test("26 - arrays and opts.ignoreKeys", () => {
     {
       a: [4, 5, 6],
     },
-    "26"
+    "26.01"
   );
 });
 

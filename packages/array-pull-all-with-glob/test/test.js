@@ -9,27 +9,27 @@ import { pull } from "../dist/array-pull-all-with-glob.esm.js";
 // =======
 
 test("01 - no glob", () => {
-  equal(pull(["one", "two", "three"], ["one", "three"]), ["two"], "01");
+  equal(pull(["one", "two", "three"], ["one", "three"]), ["two"], "01.01");
 });
 
 test("02 - won't find", () => {
   equal(
     pull(["one", "two", "three"], ["something"]),
     ["one", "two", "three"],
-    "02"
+    "02.01"
   );
 });
 
 test("03 - empty source array", () => {
-  equal(pull([], ["one", "three"]), [], "03");
+  equal(pull([], ["one", "three"]), [], "03.01");
 });
 
 test("04 - empty source array", () => {
-  equal(pull([], []), [], "04");
+  equal(pull([], []), [], "04.01");
 });
 
 test("05 - no glob, deletes last remaining thing", () => {
-  equal(pull(["one"], ["one"]), [], "05");
+  equal(pull(["one"], ["one"]), [], "05.01");
 });
 
 test("06 - no glob, case sensitive", () => {
@@ -138,19 +138,19 @@ test("09 - asterisk in the source array", () => {
       ["module-*"]
     ),
     ["something-*", "something-**"],
-    "09"
+    "09.01"
   );
 });
 
 test("10 - empty arrays as inputs", () => {
-  equal(pull([], ["module-*"]), [], "10");
+  equal(pull([], ["module-*"]), [], "10.01");
 });
 
 test("11 - empty array as second arg", () => {
   equal(
     pull(["module-*", "module-**", "something-*", "something-**"], []),
     ["module-*", "module-**", "something-*", "something-**"],
-    "11"
+    "11.01"
   );
 });
 
@@ -168,14 +168,14 @@ test("12 - pulls normal words in various ways", () => {
 // ==========
 
 test("13 - against asterisk", () => {
-  equal(pull(["a*", "a**", "*******", "*"], ["*"]), [], "13");
+  equal(pull(["a*", "a**", "*******", "*"], ["*"]), [], "13.01");
 });
 
 test("14 - against emoji and asterisk", () => {
   equal(
     pull(["🦄", "🦄*", "🦄**", "*🦄", "*******", "*"], ["🦄*"]),
     ["*🦄", "*******", "*"],
-    "14"
+    "14.01"
   );
 });
 
@@ -203,7 +203,7 @@ test('16 - 1st arg, "originalInput" is an empty array', () => {
 });
 
 test('17 - 2nd arg, "originalToBeRemoved" is an empty string', () => {
-  equal(pull(["apples", "oranges"], ""), ["apples", "oranges"], "17");
+  equal(pull(["apples", "oranges"], ""), ["apples", "oranges"], "17.01");
 });
 
 // ========================================
@@ -215,13 +215,13 @@ test("18 - does not mutate the input args", () => {
   let arr2 = "c";
   let arr3 = ["c"];
   let unneededResult1 = pull(arr1, arr2);
-  ok(unneededResult1); // filler to shut up the linter complaining it's unused
+  ok(unneededResult1, "18.01"); // filler to shut up the linter complaining it's unused
 
   let unneededResult2 = pull(arr1, arr3);
-  ok(unneededResult2); // filler to shut up the linter complaining it's unused
-  equal(arr1, ["a", "b", "c"], "18.01");
-  equal(arr2, "c", "18.02");
-  equal(arr3, ["c"], "18.03");
+  ok(unneededResult2, "18.02"); // filler to shut up the linter complaining it's unused
+  equal(arr1, ["a", "b", "c"], "18.03");
+  equal(arr2, "c", "18.04");
+  equal(arr3, ["c"], "18.05");
 });
 
 test.run();

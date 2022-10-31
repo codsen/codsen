@@ -150,7 +150,7 @@ test("05.pt1 - does not find by key in a simple object", () => {
   let actual = find(input, { key });
   let intended = [];
 
-  equal(actual, intended, "05");
+  equal(actual, intended, "05.01");
 });
 
 test("06.pt2 - does not find by key in a simple object, with glob", () => {
@@ -163,7 +163,7 @@ test("06.pt2 - does not find by key in a simple object, with glob", () => {
   let actual = find(input, { key });
   let intended = [];
 
-  equal(actual, intended, "06");
+  equal(actual, intended, "06.01");
 });
 
 test("07.pt1 - finds by key in simple arrays #1", () => {
@@ -178,7 +178,7 @@ test("07.pt1 - finds by key in simple arrays #1", () => {
       path: [1],
     },
   ];
-  equal(actual, intended, "07");
+  equal(actual, intended, "07.01");
 });
 
 test("08.pt2 - finds by key in simple arrays, with glob", () => {
@@ -199,7 +199,7 @@ test("08.pt2 - finds by key in simple arrays, with glob", () => {
       path: [2],
     },
   ];
-  equal(actual, intended, "08");
+  equal(actual, intended, "08.01");
 });
 
 test("09.pt1 - finds by key in simple arrays #2", () => {
@@ -214,7 +214,7 @@ test("09.pt1 - finds by key in simple arrays #2", () => {
       path: [2, 3, 4],
     },
   ];
-  equal(actual, intended, "09");
+  equal(actual, intended, "09.01");
 });
 
 test("10.pt2 - finds by key in simple arrays, with globs", () => {
@@ -235,7 +235,7 @@ test("10.pt2 - finds by key in simple arrays, with globs", () => {
       path: [2, 3, 6],
     },
   ];
-  equal(actual, intended, "10");
+  equal(actual, intended, "10.01");
 });
 
 test("11.pt1 - finds by key in simple arrays #3", () => {
@@ -250,7 +250,7 @@ test("11.pt1 - finds by key in simple arrays #3", () => {
       path: [2, 5],
     },
   ];
-  equal(actual, intended, "11");
+  equal(actual, intended, "11.01");
 });
 
 test("12.pt2 - finds by key in simple arrays, with glob", () => {
@@ -271,7 +271,7 @@ test("12.pt2 - finds by key in simple arrays, with glob", () => {
       path: [2, 5],
     },
   ];
-  equal(actual, intended, "12");
+  equal(actual, intended, "12.01");
 });
 
 test("13.pt1 - does not find by key in simple arrays", () => {
@@ -279,7 +279,7 @@ test("13.pt1 - does not find by key in simple arrays", () => {
   let key = "d";
   let actual = find(input, { key });
   let intended = [];
-  equal(actual, intended, "13");
+  equal(actual, intended, "13.01");
 });
 
 test("14.pt2 - does not find by key in simple arrays, with globs", () => {
@@ -287,7 +287,7 @@ test("14.pt2 - does not find by key in simple arrays, with globs", () => {
   let key = "lexicographer*";
   let actual = find(input, { key });
   let intended = [];
-  equal(actual, intended, "14");
+  equal(actual, intended, "14.01");
 });
 
 test("15 - finds by key in simple arrays #3", () => {
@@ -302,7 +302,7 @@ test("15 - finds by key in simple arrays #3", () => {
       path: [2, 5],
     },
   ];
-  equal(actual, intended, "15");
+  equal(actual, intended, "15.01");
 });
 
 test("16 - finds by value in a simple object - string", () => {
@@ -322,7 +322,7 @@ test("16 - finds by value in a simple object - string", () => {
       path: [1, 2],
     },
   ];
-  equal(actual, intended, "16");
+  equal(actual, intended, "16.01");
 });
 
 test("17.pt1 - finds by value in a simple object - object", () => {
@@ -342,7 +342,7 @@ test("17.pt1 - finds by value in a simple object - object", () => {
       path: [1],
     },
   ];
-  equal(actual, intended, "17");
+  equal(actual, intended, "17.01");
 });
 
 test("18.pt2 - finds by value in a simple object - object, with globs", () => {
@@ -374,7 +374,7 @@ test("18.pt2 - finds by value in a simple object - object, with globs", () => {
       path: [3],
     },
   ];
-  equal(actual, intended, "18");
+  equal(actual, intended, "18.01");
 });
 
 test("19 - finds by value in a simple object - array", () => {
@@ -394,7 +394,7 @@ test("19 - finds by value in a simple object - array", () => {
       path: [1, 2],
     },
   ];
-  equal(actual, intended, "19");
+  equal(actual, intended, "19.01");
 });
 
 test("20 - finds by value in a simple object - empty array", () => {
@@ -421,7 +421,7 @@ test("20 - finds by value in a simple object - empty array", () => {
       path: [1, 3],
     },
   ];
-  equal(actual, intended, "20");
+  equal(actual, intended, "20.01");
 });
 
 test("21 - finds by value in a simple object - empty object", () => {
@@ -448,7 +448,7 @@ test("21 - finds by value in a simple object - empty object", () => {
       path: [1, 3],
     },
   ];
-  equal(actual, intended, "21");
+  equal(actual, intended, "21.01");
 });
 
 test("22 - finds multiple nested keys by key and value in mixed #1", () => {
@@ -477,7 +477,7 @@ test("22 - finds multiple nested keys by key and value in mixed #1", () => {
       path: [6],
     },
   ];
-  equal(actual, intended, "22");
+  equal(actual, intended, "22.01");
 });
 
 test("23 - finds multiple nested keys by key and value in mixed #2", () => {

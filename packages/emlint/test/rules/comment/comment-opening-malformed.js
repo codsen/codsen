@@ -34,7 +34,7 @@ test(`01 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - excl. mark is miss
     ],
     "01.02"
   );
-  is(messages.length, 1, "01.03");
+  is(messages.length, 1, "01.02");
 });
 
 test(`02 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - excl. mark is missing, tag inside`, () => {
@@ -63,7 +63,7 @@ test(`02 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - excl. mark is miss
     ],
     "02.02"
   );
-  is(messages.length, 1, "02.03");
+  is(messages.length, 1, "02.02");
 });
 
 test(`03 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 1st char, letter inside`, () => {
@@ -92,7 +92,7 @@ test(`03 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 
     ],
     "03.02"
   );
-  is(messages.length, 1, "03.03");
+  is(messages.length, 1, "03.02");
 });
 
 test(`04 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 1st char, tag inside`, () => {
@@ -121,7 +121,7 @@ test(`04 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 
     ],
     "04.02"
   );
-  is(messages.length, 1, "04.03");
+  is(messages.length, 1, "04.02");
 });
 
 test(`05 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 2nd char, letter inside`, () => {
@@ -150,7 +150,7 @@ test(`05 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 
     ],
     "05.02"
   );
-  is(messages.length, 1, "05.03");
+  is(messages.length, 1, "05.02");
 });
 
 test(`06 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 2nd char, tag inside`, () => {
@@ -179,7 +179,7 @@ test(`06 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 
     ],
     "06.02"
   );
-  is(messages.length, 1, "06.03");
+  is(messages.length, 1, "06.02");
 });
 
 test(`07 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 3rd char, letter inside`, () => {
@@ -208,7 +208,7 @@ test(`07 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 
     ],
     "07.02"
   );
-  is(messages.length, 1, "07.03");
+  is(messages.length, 1, "07.02");
 });
 
 test(`08 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 3rd char, tag inside`, () => {
@@ -237,7 +237,7 @@ test(`08 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space after 
     ],
     "08.02"
   );
-  is(messages.length, 1, "08.03");
+  is(messages.length, 1, "08.02");
 });
 
 // 02. type="only"
@@ -273,7 +273,7 @@ test(`09 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - missing dash`, () =>
     ],
     "09.02"
   );
-  is(messages.length, 1, "09.03");
+  is(messages.length, 1, "09.02");
 });
 
 test(`10 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - opening bracket missing`, () => {
@@ -306,7 +306,7 @@ test(`10 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - opening bracket miss
     ],
     "10.02"
   );
-  is(messages.length, 1, "10.03");
+  is(messages.length, 1, "10.02");
 });
 
 test(`11 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - missing closing bracket`, () => {
@@ -353,7 +353,7 @@ test(`13 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - rounded brackets`, (
       "comment-opening-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "13");
+  equal(applyFixes(str, messages), fixed, "13.01");
 });
 
 test(`14 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - curly brackets`, () => {
@@ -368,7 +368,7 @@ test(`14 - ${`\u001b[${36}m${`type: only`}\u001b[${39}m`} - curly brackets`, () 
       "comment-opening-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "14");
+  equal(applyFixes(str, messages), fixed, "14.01");
 });
 
 // 03. type="not"
@@ -404,7 +404,7 @@ test(`15 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing square closin
     ],
     "15.02"
   );
-  is(messages.length, 1, "15.03");
+  is(messages.length, 1, "15.02");
 });
 
 test(`16 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - excessive whitespace`, () => {
@@ -437,7 +437,7 @@ test(`16 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - excessive whitespace`
     ],
     "16.02"
   );
-  is(messages.length, 1, "16.03");
+  is(messages.length, 1, "16.02");
 });
 
 test(`17 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the first part`, () => {
@@ -470,7 +470,7 @@ test(`17 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the f
     ],
     "17.02"
   );
-  is(messages.length, 1, "17.03");
+  is(messages.length, 1, "17.02");
 });
 
 test(`18 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the second part`, () => {
@@ -503,7 +503,7 @@ test(`18 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - missing dash on the s
     ],
     "18.02"
   );
-  is(messages.length, 1, "18.03");
+  is(messages.length, 1, "18.02");
 });
 
 test(`19 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - rogue character in the second part`, () => {
@@ -562,7 +562,7 @@ test(`22 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - rounded brackets`, ()
       "comment-opening-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "22");
+  equal(applyFixes(str, messages), fixed, "22.01");
 });
 
 test(`23 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - curly brackets`, () => {
@@ -577,7 +577,7 @@ test(`23 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - curly brackets`, () =
       "comment-opening-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "23");
+  equal(applyFixes(str, messages), fixed, "23.01");
 });
 
 test(`24 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - second part is missing excl mark`, () => {
@@ -608,64 +608,13 @@ test(`25 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - no brackets`, () => {
       "comment-opening-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "25");
-});
-
-test.skip(`01 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - another comment follows, minimal`, () => {
-  let str = `<!--[if !mso]><!--><!-->
-  <img src="gif"/>
-<!--<![endif]-->`;
-  let messages = verify(not, str, {
-    rules: {
-      "comment-opening-malformed": 2,
-    },
-  });
-  equal(applyFixes(str, messages), str, "01");
-});
-
-test.skip(`02 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, without space`, () => {
-  let str = `<!--[if !mso]><!---->
-  <img src="gif"/>
-<!--<![endif]-->`;
-  let messages = verify(not, str, {
-    rules: {
-      "comment-opening-malformed": 2,
-    },
-  });
-  equal(applyFixes(str, messages), str, "02.01");
-  match(messages, [], "02");
-});
-
-test.skip(`03 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, with space`, () => {
-  let str = `<!--[if !mso]><!-- -->
-  <img src="gif"/>
-<!--<![endif]-->`;
-  let messages = verify(not, str, {
-    rules: {
-      "comment-opening-malformed": 2,
-    },
-  });
-  equal(applyFixes(str, messages), str, "03.01");
-  match(messages, [], "03");
-});
-
-test.skip(`04 - ${`\u001b[${35}m${`type: not`}\u001b[${39}m`} - expanded notation, with space and tab`, () => {
-  let str = `<!--[if !mso]><!--\t -->
-  <img src="gif"/>
-<!--<![endif]-->`;
-  let messages = verify(not, str, {
-    rules: {
-      "comment-opening-malformed": 2,
-    },
-  });
-  equal(applyFixes(str, messages), str, "04.01");
-  match(messages, [], "04");
+  equal(applyFixes(str, messages), fixed, "25.01");
 });
 
 // 04. various cases
 // -----------------------------------------------------------------------------
 
-test(`30 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - another comment follows, letter`, () => {
+test(`26 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - another comment follows, letter`, () => {
   let str = `<!--[if !mso><!--><!--z-->
   <img src="gif"/>
 <!--<![endif]-->`;
@@ -678,7 +627,7 @@ test(`30 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - another comment follows
       "comment-conditional-nested": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "30.01");
+  equal(applyFixes(str, messages), fixed, "26.01");
   compare(
     ok,
     messages,
@@ -714,15 +663,4 @@ test(`30 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - another comment follows
   );
 });
 
-test.skip(`05 - ${`\u001b[${34}m${`various`}\u001b[${39}m`} - first part missing`, () => {
-  let str = `<!-->
-  <img src="gif"/>
-<!--<![endif]-->`;
-  let messages = verify(not, str, {
-    rules: {
-      "comment-opening-malformed": 2,
-    },
-  });
-  equal(applyFixes(str, messages), str, "05.01");
-  match(messages, [], "05");
-});
+test.run();

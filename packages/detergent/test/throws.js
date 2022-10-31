@@ -54,11 +54,11 @@ test(`02 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the second argu
 });
 
 test(`03 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - default opts object is exported`, () => {
-  ok(Object.keys(exportedOptsObj).length > 10, "03");
+  ok(Object.keys(exportedOptsObj).length > 10, "03.01");
 });
 
 test(`04 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - version is exported`, () => {
-  match(version, /\d+\.\d+\.\d+/g, "04");
+  match(version, /\d+\.\d+\.\d+/g, "04.01");
 });
 
 test(`05 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when opts.cb is truthy and not a function`, () => {

@@ -298,7 +298,11 @@ test(`13 - ${`\u001b[${35}m${`class name checks`}\u001b[${39}m`} - mix 1`, () =>
     },
   });
   // can fix:
-  equal(applyFixes(str, messages), `<table class='ab 3a e.f' id='yy aa'>`);
+  equal(
+    applyFixes(str, messages),
+    `<table class='ab 3a e.f' id='yy aa'>`,
+    "13.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-class",
@@ -387,7 +391,8 @@ test(`16 - ${`\u001b[${35}m${`class name checks`}\u001b[${39}m`} - only dot`, ()
 <table class="aa bb cc dd">
 <table class="aa bb cc dd">
 <table class="aa bb cc dd">
-`
+`,
+    "16.01"
   );
   compare(ok, messages, [
     {

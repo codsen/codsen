@@ -37,7 +37,7 @@ test(`01 - four chunks of text - entities, one line string no full stop`, () => 
         convertEntities: false,
       },
     },
-    "01"
+    "01.01"
   );
 });
 
@@ -47,7 +47,7 @@ test(`02 - four chunks of text - entities, one line string with full stop`, () =
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd.`,
-    "02"
+    "02.01"
   );
 });
 
@@ -58,7 +58,7 @@ test(`03 - four chunks of text - no entities, one line string no full stop`, () 
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${rawnbsp}ddd`,
-    "03"
+    "03.01"
   );
 });
 
@@ -69,7 +69,7 @@ test(`04 - four chunks of text - no entities, one line string with full stop`, (
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${rawnbsp}ddd.`,
-    "04"
+    "04.01"
   );
 });
 
@@ -80,7 +80,7 @@ test(`05 - single line break - widow fix needed`, () => {
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd\neee fff ggg${encodedNbspHtml}hhh.`,
-    "05"
+    "05.01"
   );
 });
 
@@ -91,7 +91,7 @@ test(`06 - single line break -  - one line break, with full stop - widow fix nee
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd.\neee fff ggg${encodedNbspHtml}hhh.`,
-    "06"
+    "06.01"
   );
 });
 
@@ -102,7 +102,7 @@ test(`07 - trailing space`, () => {
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd.  \n\neee fff ggg${encodedNbspHtml}hhh`,
-    "07"
+    "07.01"
   );
 });
 
@@ -113,7 +113,7 @@ test(`08 - trailing tabs`, () => {
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd.\t\t\n\neee fff ggg${encodedNbspHtml}hhh\t\t`,
-    "08"
+    "08.01"
   );
 });
 
@@ -136,7 +136,7 @@ test(`10 - numeric HTML entity #160`, () => {
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd`,
-    "10"
+    "10.01"
   );
 });
 
@@ -147,7 +147,7 @@ test(`11 - numeric HTML entity #160`, () => {
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${rawnbsp}ddd`,
-    "11"
+    "11.01"
   );
 });
 
@@ -158,7 +158,7 @@ test(`12 - doesn't touch other nbsp's`, () => {
       minCharCount: 5,
     }).res,
     `aaa bbb${encodedNbspHtml}ccc${encodedNbspHtml}ddd`,
-    "12"
+    "12.01"
   );
 });
 
@@ -169,7 +169,7 @@ test(`13 - doesn't touch other nbsp's`, () => {
       minCharCount: 5,
     }).res,
     `aaa bbb${rawnbsp}ccc${rawnbsp}ddd`,
-    "13"
+    "13.01"
   );
 });
 
@@ -180,7 +180,7 @@ test(`14 - two spaces`, () => {
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd`,
-    "14"
+    "14.01"
   );
 });
 
@@ -191,7 +191,7 @@ test(`15 - two spaces`, () => {
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${rawnbsp}ddd`,
-    "15"
+    "15.01"
   );
 });
 
@@ -202,7 +202,7 @@ test(`16 - tabs`, () => {
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd`,
-    "16"
+    "16.01"
   );
 });
 
@@ -213,7 +213,7 @@ test(`17 - tabs`, () => {
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${rawnbsp}ddd`,
-    "17"
+    "17.01"
   );
 });
 
@@ -225,7 +225,7 @@ test(`18 - converts non-widow non-breaking spaces`, () => {
       minCharCount: 5,
     }).res,
     `aaa bbb${encodedNbspHtml}ccc${encodedNbspHtml}ddd`,
-    "18"
+    "18.01"
   );
 });
 
@@ -236,7 +236,7 @@ test(`19 - converts non-widow non-breaking spaces`, () => {
       minCharCount: 5,
     }).res,
     `aaa bbb${rawnbsp}ccc${rawnbsp}ddd`,
-    "19"
+    "19.01"
   );
 });
 
@@ -248,7 +248,7 @@ test(`20 - converts non-widow non-breaking spaces`, () => {
       minCharCount: 5,
     }).res,
     `aaa bbb${encodedNbspCss}ccc${encodedNbspCss}ddd`,
-    "20"
+    "20.01"
   );
 });
 
@@ -260,7 +260,7 @@ test(`21 - converts non-widow non-breaking spaces`, () => {
       minCharCount: 5,
     }).res,
     `aaa bbb${encodedNbspJs}ccc${encodedNbspJs}ddd`,
-    "21"
+    "21.01"
   );
 });
 
@@ -272,7 +272,7 @@ test(`22 - removeWidowPreventionMeasures - converts non-widow non-breaking space
       minCharCount: 5,
     }).res,
     `aaa bbb${rawnbsp}ccc ddd`,
-    "22"
+    "22.01"
   );
 });
 
@@ -284,7 +284,7 @@ test(`23 - removeWidowPreventionMeasures - converts non-widow non-breaking space
       minCharCount: 5,
     }).res,
     `aaa bbb${encodedNbspHtml}ccc ddd`,
-    "23"
+    "23.01"
   );
 });
 
@@ -297,7 +297,7 @@ test(`24 - removeWidowPreventionMeasures - converts non-widow non-breaking space
       minCharCount: 5,
     }).res,
     `aaa bbb${encodedNbspCss}ccc ddd`,
-    "24"
+    "24.01"
   );
 });
 
@@ -310,7 +310,7 @@ test(`25`, () => {
       minWordCount: 4,
     }).res,
     `Abc;&nbsp;de fg.`,
-    "25"
+    "25.01"
   );
 });
 
@@ -321,7 +321,7 @@ test(`26`, () => {
       minWordCount: 4,
     }).res,
     `Abc;${rawnbsp}de fg.`,
-    "26"
+    "26.01"
   );
 });
 
@@ -332,7 +332,7 @@ test(`27`, () => {
       minWordCount: 4,
     }).res,
     `Abc;&nbsp;de fg.`,
-    "27"
+    "27.01"
   );
 });
 
@@ -343,7 +343,7 @@ test(`28`, () => {
       minWordCount: 4,
     }).res,
     `Abc;${rawnbsp}de fg.`,
-    "28"
+    "28.01"
   );
 });
 
@@ -356,7 +356,7 @@ test(`29`, () => {
       minWordCount: 4,
     }).res,
     `Abc;&nbsp;de fg&nbsp;hijklm.`,
-    "29"
+    "29.01"
   );
 });
 
@@ -367,7 +367,7 @@ test(`30`, () => {
       minWordCount: 4,
     }).res,
     `Abc;${rawnbsp}de fg${rawnbsp}hijklm.`,
-    "30"
+    "30.01"
   );
 });
 
@@ -378,7 +378,7 @@ test(`31`, () => {
       minWordCount: 4,
     }).res,
     `Abc;&nbsp;de fg&nbsp;hijklm.`,
-    "31"
+    "31.01"
   );
 });
 
@@ -389,7 +389,7 @@ test(`32`, () => {
       minWordCount: 4,
     }).res,
     `Abc;${rawnbsp}de fg${rawnbsp}hijklm.`,
-    "32"
+    "32.01"
   );
 });
 

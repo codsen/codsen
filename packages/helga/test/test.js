@@ -14,7 +14,7 @@ test("01 - just a single word", () => {
       minified: "abc",
       beautified: "abc",
     },
-    "01"
+    "01.01"
   );
 });
 
@@ -25,7 +25,7 @@ test("02 - converts line breaks - JSON off", () => {
       minified: "abc\ndef",
       beautified: "abc\ndef",
     },
-    "02"
+    "02.01"
   );
 });
 

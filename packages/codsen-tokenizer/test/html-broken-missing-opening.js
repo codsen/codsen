@@ -60,7 +60,7 @@ test(`01 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - recognised tag name, 1 
     ],
     "01.01"
   );
-  is(gathered.length, 3, "01.02");
+  is(gathered.length, 3, "01.01");
 });
 
 test(`02 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - leading whitespace`, () => {
@@ -98,7 +98,7 @@ test(`02 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - leading whitespace`, ()
     ],
     "02.01"
   );
-  is(gathered.length, 4, "02.02");
+  is(gathered.length, 4, "02.01");
 });
 
 test(`03 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - text around`, () => {
@@ -141,7 +141,7 @@ test(`03 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - text around`, () => {
     ],
     "03.01"
   );
-  is(gathered.length, 5, "03.02");
+  is(gathered.length, 5, "03.01");
 });
 
 test(`04 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - hardcore case - two tags`, () => {
@@ -194,7 +194,7 @@ test(`04 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - hardcore case - two tag
     ],
     "04.01"
   );
-  is(gathered.length, 7, "04.02");
+  is(gathered.length, 7, "04.01");
 });
 
 // 02. two tags
@@ -277,7 +277,7 @@ test(`05 - ${`\u001b[${33}m${`two tags`}\u001b[${39}m`} - tight`, () => {
     ],
     "05.01"
   );
-  is(gathered.length, 4, "05.02");
+  is(gathered.length, 4, "05.01");
 });
 
 test.run();

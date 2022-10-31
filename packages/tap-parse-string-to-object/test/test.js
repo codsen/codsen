@@ -98,7 +98,7 @@ test("02 - case 01 - arrayiffy-if-string - all pass", () => {
       suitesPassed: 2,
       suitesFailed: 0,
     },
-    "02"
+    "02.01"
   );
 });
 
@@ -420,7 +420,7 @@ test("03 - case 01 - arrayiffy-if-string - none pass", () => {
       suitesPassed: 0,
       suitesFailed: 2,
     },
-    "03"
+    "03.01"
   );
 });
 
@@ -648,7 +648,7 @@ test("04 - ranges-merge", () => {
       suitesPassed: 1,
       suitesFailed: 0,
     },
-    "04"
+    "04.01"
   );
 });
 
@@ -801,7 +801,7 @@ test("05 - object-set-all-values-to", () => {
       suitesPassed: 1,
       suitesFailed: 0,
     },
-    "05"
+    "05.01"
   );
 });
 
@@ -893,7 +893,7 @@ ok 1 - UMD build works fine # time=10.033ms
       suitesPassed: 2,
       suitesFailed: 0,
     },
-    "06"
+    "06.01"
   );
 });
 

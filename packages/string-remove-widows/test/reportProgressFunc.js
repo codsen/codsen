@@ -63,11 +63,12 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
       { reportProgressFunc: countingFunction }
-    )
+    ),
+    "01.04"
   );
 
   // 2. check the counter variable:
-  ok(counter > 95, `01.04 - counter called`);
+  ok(counter > 95, `01.05 - counter called`);
 });
 
 test(`02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`, () => {
@@ -138,7 +139,8 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
         reportProgressFuncFrom: 21,
         reportProgressFuncTo: 86,
       }
-    )
+    ),
+    "02.01"
   );
 
   // 2. check the counter variable:
@@ -156,7 +158,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
   // since we use Math.floor, some percentages can be skipped, so let's just
   // confirm that no numbers outside of permitted values are reported
   gather.forEach((perc) => ok(compareTo.includes(perc), `checking: ${perc}%`));
-  equal(gather.length, 86 - 21 + 1, "02.01");
+  equal(gather.length, 86 - 21 + 1, "02.02");
   // equal(gather, compareTo, `10.02`)
 });
 

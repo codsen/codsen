@@ -33,7 +33,7 @@ test(`01 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entit
     ],
     "01.02"
   );
-  equal(messages.length, 1, "01.03");
+  equal(messages.length, 1, "01.02");
 });
 
 test(`02 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, 1`, () => {
@@ -61,7 +61,7 @@ test(`02 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entit
     ],
     "02.02"
   );
-  equal(messages.length, 1, "02.03");
+  equal(messages.length, 1, "02.02");
 });
 
 test(`03 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entity outside of the range - exact rule, 2`, () => {
@@ -89,7 +89,7 @@ test(`03 - ${`\u001b[${33}m${`malformed numeric`}\u001b[${39}m`} - numeric entit
     ],
     "03.02"
   );
-  equal(messages.length, 1, "03.03");
+  equal(messages.length, 1, "03.02");
 });
 
 // 02. dollar instead of a hash
@@ -120,7 +120,7 @@ test(`04 - ${`\u001b[${32}m${`malformed numeric`}\u001b[${39}m`} - dollar instea
     ],
     "04.02"
   );
-  equal(messages.length, 1, "04.03");
+  equal(messages.length, 1, "04.02");
 });
 
 // 03. disabled rule
@@ -156,7 +156,7 @@ test(`07 - ${`\u001b[${33}m${`disabled rule`}\u001b[${39}m`} - numeric entity ou
       "tag-void-slash": [1],
     },
   });
-  equal(applyFixes(str, messages), "a&#99999999999999999;z<br/>", "07");
+  equal(applyFixes(str, messages), "a&#99999999999999999;z<br/>", "07.01");
 });
 
 test.run();

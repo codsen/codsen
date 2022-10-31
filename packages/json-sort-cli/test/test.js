@@ -73,7 +73,7 @@ test("01 - default sort, called on the whole folder", async () => {
       throw new Error(err);
     });
 
-  equal(await processedFileContents, sortedTestFileContents, "01");
+  equal(await processedFileContents, sortedTestFileContents, "01.01");
 });
 
 test("02 - sort, there's a broken JSON among files", async () => {
@@ -134,7 +134,7 @@ test("02 - sort, there's a broken JSON among files", async () => {
       throw new Error(err);
     });
 
-  equal(await processedFileContents, sortedTestFileContents, "02");
+  equal(await processedFileContents, sortedTestFileContents, "02.01");
 });
 
 test("03 - fixes minified dotfiles in JSON format", async () => {
@@ -155,7 +155,7 @@ test("03 - fixes minified dotfiles in JSON format", async () => {
       throw new Error(err);
     });
 
-  equal(await processedFileContents, prettifiedContents, "03");
+  equal(await processedFileContents, prettifiedContents, "03.01");
 });
 
 test("04 - topmost level is array", async () => {
@@ -204,7 +204,7 @@ test("04 - topmost level is array", async () => {
     "p": "r"
   }
 ]\n`,
-    "04"
+    "04.01"
   );
 });
 
@@ -219,7 +219,7 @@ test("05 - no files found in the given directory", async () => {
   match(
     stdOutContents.stdout,
     /The inputs don't lead to any json files! Exiting./,
-    "05"
+    "05.01"
   );
 });
 

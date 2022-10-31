@@ -764,7 +764,7 @@ test(`12`, () => {
         acceptArrays: true,
       }
     );
-  }, "12");
+  }, "12.01");
 });
 
 test(`13`, () => {
@@ -809,7 +809,7 @@ test(`14`, () => {
         acceptArraysIgnore: [],
       }
     );
-  }, "14");
+  }, "14.01");
 });
 
 test(`15 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArraysIgnore`, () => {
@@ -972,7 +972,7 @@ test(`18 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.enforceStrictKeyset
         enforceStrictKeyset: 1,
       }
     );
-  }, "18");
+  }, "18.01");
 });
 
 test(`19 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - throws when reference and schema are both missing`, () => {
@@ -985,7 +985,7 @@ test(`19 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - throws when reference an
       },
       {}
     );
-  }, "19");
+  }, "19.01");
 });
 
 test(`20 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - acceptArrays + schema + nested`, () => {
@@ -1285,7 +1285,7 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
         },
       }
     );
-  }, "24.04");
+  }, "24.02");
 
   throws(() => {
     checkTypesMini(
@@ -1319,7 +1319,7 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
         },
       }
     );
-  }, "24.06");
+  }, "24.04");
 
   throws(() => {
     checkTypesMini(
@@ -1372,7 +1372,7 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
         },
       }
     );
-  }, "24.13");
+  }, "24.07");
 
   not.throws(() => {
     checkTypesMini(
@@ -1390,7 +1390,7 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
         },
       }
     );
-  }, "24.14");
+  }, "24.08");
 
   not.throws(() => {
     checkTypesMini(
@@ -1408,7 +1408,7 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
         },
       }
     );
-  }, "24.15");
+  }, "24.09");
 
   // second bunch
 
@@ -1483,7 +1483,7 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
         },
       }
     );
-  }, "24.19");
+  }, "24.13");
 
   throws(() => {
     checkTypesMini(
@@ -1519,7 +1519,7 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
         },
       }
     );
-  }, "24.21");
+  }, "24.15");
 
   not.throws(() => {
     checkTypesMini(
@@ -1537,7 +1537,7 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
         },
       }
     );
-  }, "24.22");
+  }, "24.16");
 
   not.throws(() => {
     checkTypesMini(
@@ -1555,7 +1555,7 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
         },
       }
     );
-  }, "24.23");
+  }, "24.17");
 
   not.throws(() => {
     checkTypesMini(
@@ -1573,7 +1573,7 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
         },
       }
     );
-  }, "24.24");
+  }, "24.18");
 
   not.throws(() => {
     checkTypesMini(
@@ -1591,7 +1591,7 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
         },
       }
     );
-  }, "24.25");
+  }, "24.19");
 
   throws(() => {
     checkTypesMini(
@@ -1626,7 +1626,7 @@ test(`25 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - deeper level k
         option2: null,
       }
     );
-  });
+  }, "25.01");
 
   throws(() => {
     checkTypesMini(

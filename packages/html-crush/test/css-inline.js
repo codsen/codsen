@@ -48,7 +48,7 @@ test(`02 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - inline 
       removeLineBreaks: true,
     }).result,
     `<a style="a:100%;e:f;">`,
-    "02"
+    "02.01"
   );
 });
 
@@ -59,7 +59,7 @@ test(`03 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - line le
       lineLengthLimit: 18,
     }).result,
     `<a style="a:100%;\ne:f;">`,
-    "03"
+    "03.01"
   );
 });
 
@@ -70,7 +70,7 @@ test(`04 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - line le
       lineLengthLimit: 30,
     }).result,
     `<a style="a:100%;e:f;">`,
-    "04 - deletion makes it to be within a limit"
+    "04.01 - deletion makes it to be within a limit"
   );
 });
 
@@ -80,7 +80,7 @@ test(`05 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - leading
       removeLineBreaks: true,
     }).result,
     `<a href="zzz" style="font-size:1px;">`,
-    "05"
+    "05.01"
   );
 });
 
@@ -90,7 +90,7 @@ test(`06 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - leading
       removeLineBreaks: true,
     }).result,
     `<a href='zzz' style='font-size:1px;'>`,
-    "06"
+    "06.01"
   );
 });
 

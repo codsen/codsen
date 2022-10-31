@@ -13,7 +13,7 @@ test(`01 - simple case`, () => {
   equal(
     det(ok, not, 0, `a <div><a>z</a></div> c`).res,
     "a z c",
-    "01 - control"
+    "01.01 - control"
   );
 });
 
@@ -23,7 +23,7 @@ test(`02 - single tag to ignore, given as string`, () => {
       stripHtmlButIgnoreTags: "a",
     }).res,
     "a <a>z</a> c",
-    "02"
+    "02.01"
   );
 });
 
@@ -33,7 +33,7 @@ test(`03 - single tag to ignore, given as string in an array`, () => {
       stripHtmlButIgnoreTags: ["a"],
     }).res,
     "a <a>z</a> c",
-    "03"
+    "03.01"
   );
 });
 
@@ -44,7 +44,7 @@ test(`04 - single tag to ignore, given as string`, () => {
       removeWidows: false,
     }).res,
     "a <div>z</div> c",
-    "04"
+    "04.01"
   );
 });
 
@@ -55,7 +55,7 @@ test(`05 - single tag to ignore, given as string in an array`, () => {
       removeWidows: false,
     }).res,
     "a <div>z</div> c",
-    "05"
+    "05.01"
   );
 });
 
@@ -66,7 +66,7 @@ test(`06 - both tags ignored`, () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "06"
+    "06.01"
   );
 });
 
@@ -77,7 +77,7 @@ test(`07 - other tags ignored, not present in the input`, () => {
       removeWidows: false,
     }).res,
     "a z c",
-    "07"
+    "07.01"
   );
 });
 
@@ -85,7 +85,7 @@ test(`08 - control for stripHtml`, () => {
   equal(
     det(ok, not, 0, `a <div><a>z</a></div> c`).res,
     "a z c",
-    "08 - control"
+    "08.01 - control"
   );
 });
 
@@ -96,7 +96,7 @@ test(`09 - no ignores`, () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "09"
+    "09.01"
   );
 });
 
@@ -107,7 +107,7 @@ test(`10 - no ignores`, () => {
       removeWidows: false,
     }).res,
     "a z c",
-    "10"
+    "10.01"
   );
 });
 
@@ -119,7 +119,7 @@ test(`11 - single tag to ignore, given as string`, () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "11"
+    "11.01"
   );
 });
 
@@ -131,7 +131,7 @@ test(`12 - single tag to ignore, given as string`, () => {
       removeWidows: false,
     }).res,
     "a <a>z</a> c",
-    "12"
+    "12.01"
   );
 });
 
@@ -143,7 +143,7 @@ test(`13 - single tag to ignore, given as string in an array`, () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "13"
+    "13.01"
   );
 });
 
@@ -155,7 +155,7 @@ test(`14 - single tag to ignore, given as string in an array`, () => {
       removeWidows: false,
     }).res,
     "a <a>z</a> c",
-    "14"
+    "14.01"
   );
 });
 
@@ -167,7 +167,7 @@ test(`15 - single tag to ignore, given as string`, () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "15"
+    "15.01"
   );
 });
 
@@ -179,7 +179,7 @@ test(`16 - single tag to ignore, given as string`, () => {
       removeWidows: false,
     }).res,
     "a <div>z</div> c",
-    "16"
+    "16.01"
   );
 });
 
@@ -191,7 +191,7 @@ test(`17 - single tag to ignore, given as string in an array`, () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "17"
+    "17.01"
   );
 });
 
@@ -203,7 +203,7 @@ test(`18 - single tag to ignore, given as string in an array`, () => {
       removeWidows: false,
     }).res,
     "a <div>z</div> c",
-    "18"
+    "18.01"
   );
 });
 
@@ -215,7 +215,7 @@ test(`19 - both tags ignored`, () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "19"
+    "19.01"
   );
 });
 
@@ -227,7 +227,7 @@ test(`20 - both tags ignored`, () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "20"
+    "20.01"
   );
 });
 
@@ -239,7 +239,7 @@ test(`21 - other tags ignored, not present in the input`, () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "21"
+    "21.01"
   );
 });
 
@@ -251,7 +251,7 @@ test(`22 - other tags ignored, not present in the input`, () => {
       removeWidows: false,
     }).res,
     "a z c",
-    "22"
+    "22.01"
   );
 });
 
@@ -262,7 +262,7 @@ test(`23 - ad hoc - one tag`, () => {
       stripHtml: true,
     }).res,
     "",
-    "23"
+    "23.01"
   );
 });
 
@@ -272,7 +272,7 @@ test(`24 - ad hoc - one tag`, () => {
       stripHtml: true,
     }).res,
     "<sup>",
-    "24"
+    "24.01"
   );
 });
 
@@ -283,7 +283,7 @@ test(`25 - ad hoc - one tag`, () => {
       stripHtml: true,
     }).res,
     "<sup>",
-    "25"
+    "25.01"
   );
 });
 
@@ -294,7 +294,7 @@ test(`26 - ad hoc - one tag`, () => {
       stripHtml: true,
     }).res,
     "",
-    "26"
+    "26.01"
   );
 });
 
@@ -305,7 +305,7 @@ test(`27 - ad hoc - four tags`, () => {
       stripHtml: true,
     }).res,
     "<a><b><c>",
-    "27"
+    "27.01"
   );
 });
 
@@ -316,7 +316,7 @@ test(`28 - ad hoc - four tags`, () => {
       stripHtml: true,
     }).res,
     "<sup><b><c>",
-    "28"
+    "28.01"
   );
 });
 
@@ -327,7 +327,7 @@ test(`29 - ad hoc - four tags`, () => {
       stripHtml: true,
     }).res,
     "<sup><a><c>",
-    "29"
+    "29.01"
   );
 });
 
@@ -338,7 +338,7 @@ test(`30 - ad hoc - four tags`, () => {
       stripHtml: true,
     }).res,
     "<sup><a><b>",
-    "30"
+    "30.01"
   );
 });
 

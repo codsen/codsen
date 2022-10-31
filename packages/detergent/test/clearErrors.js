@@ -311,15 +311,15 @@ test(`14 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, remove
 });
 
 test(`15 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - line break combinations`, () => {
-  equal(det(ok, not, 0, `a. \na`).res, "a.<br/>\na", "15");
+  equal(det(ok, not, 0, `a. \na`).res, "a.<br/>\na", "15.01");
 });
 
 test(`16 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - line break combinations`, () => {
-  equal(det(ok, not, 0, `a . \na`).res, "a.<br/>\na", "16");
+  equal(det(ok, not, 0, `a . \na`).res, "a.<br/>\na", "16.01");
 });
 
 test(`17 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - line break combinations`, () => {
-  equal(det(ok, not, 0, `a , \na`).res, "a,<br/>\na", "17");
+  equal(det(ok, not, 0, `a , \na`).res, "a,<br/>\na", "17.01");
 });
 
 test(`18 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - checking line feed being replaced with space`, () => {

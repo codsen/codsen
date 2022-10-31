@@ -66,7 +66,7 @@ test(`01 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @namespace`, () => {
         attribs: [],
       },
     ],
-    "01"
+    "01.01"
   );
 });
 
@@ -129,7 +129,7 @@ test(`02 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @charset (illegal in HTM
         attribs: [],
       },
     ],
-    "02"
+    "02.01"
   );
 });
 
@@ -233,7 +233,7 @@ test(`03 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - 2x @charset, spaced`, ()
         attribs: [],
       },
     ],
-    "03"
+    "03.01"
   );
 });
 
@@ -313,7 +313,7 @@ test(`04 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - 2x @charset, tight`, () 
         attribs: [],
       },
     ],
-    "04"
+    "04.01"
   );
 });
 

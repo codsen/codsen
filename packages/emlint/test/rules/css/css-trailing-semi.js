@@ -106,7 +106,7 @@ test(`04 - one style, always, spaced important`, () => {
     ],
     "04.01"
   );
-  equal(applyFixes(str, messages), fixed, "04.02");
+  equal(applyFixes(str, messages), fixed, "04.01");
 });
 
 test(`05 - one style, always, tight important`, () => {
@@ -117,7 +117,7 @@ test(`05 - one style, always, tight important`, () => {
       "css-trailing-semi": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "05");
+  equal(applyFixes(str, messages), fixed, "05.01");
 });
 
 test(`06 - one style, always, inner whitespace`, () => {
@@ -128,7 +128,7 @@ test(`06 - one style, always, inner whitespace`, () => {
       "css-trailing-semi": [1, "always"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "06");
+  equal(applyFixes(str, messages), fixed, "06.01");
 });
 
 test(`07 - two styles, always`, () => {
@@ -139,7 +139,7 @@ test(`07 - two styles, always`, () => {
       "css-trailing-semi": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "07");
+  equal(applyFixes(str, messages), fixed, "07.01");
 });
 
 test(`08 - two styles with space, always`, () => {
@@ -150,7 +150,7 @@ test(`08 - two styles with space, always`, () => {
       "css-trailing-semi": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "08");
+  equal(applyFixes(str, messages), fixed, "08.01");
 });
 
 test(`09 - two styles, default=always`, () => {
@@ -161,7 +161,7 @@ test(`09 - two styles, default=always`, () => {
       "css-trailing-semi": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "09");
+  equal(applyFixes(str, messages), fixed, "09.01");
 });
 
 test(`10 - nothing to fix`, () => {
@@ -214,7 +214,7 @@ test(`12 - two styles, never`, () => {
       "css-trailing-semi": [2, "never"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "12");
+  equal(applyFixes(str, messages), fixed, "12.01");
 });
 
 test(`13 - two styles, never, trailing whitespace`, () => {
@@ -225,7 +225,7 @@ test(`13 - two styles, never, trailing whitespace`, () => {
       "css-trailing-semi": [2, "never"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "13");
+  equal(applyFixes(str, messages), fixed, "13.01");
 });
 
 // ESP tags
@@ -240,7 +240,7 @@ test(`14 - wrapped with Nunjucks IF`, () => {
       "css-trailing-semi": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "14");
+  equal(applyFixes(str, messages), fixed, "14.01");
 });
 
 test(`15`, () => {
@@ -251,7 +251,7 @@ test(`15`, () => {
       "css-trailing-semi": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "15");
+  equal(applyFixes(str, messages), fixed, "15.01");
 });
 
 test.run();

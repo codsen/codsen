@@ -49,7 +49,7 @@ test("01 - when asked, sorts arrays which contain only strings", async () => {
   "z",
   "Z"
 ]\n`,
-    "01"
+    "01.01"
   );
 });
 
@@ -74,7 +74,7 @@ test("02 - when not asked, does not sort arrays which contain only strings", asy
   equal(
     await processedFileContents,
     `${JSON.stringify(sourceArr, null, 2)}\n`,
-    "02"
+    "02.01"
   );
 });
 
@@ -128,7 +128,7 @@ test("03 - array in deeper levels sorted (upon request)", async () => {
     ]
   }
 }\n`,
-    "03"
+    "03.01"
   );
 });
 

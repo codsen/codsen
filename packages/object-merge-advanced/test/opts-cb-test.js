@@ -39,7 +39,7 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       b: "test",
     },
-    "01 - control, default behaviour (logical OR)"
+    "01.01 - control, default behaviour (logical OR)"
   );
 });
 
@@ -78,7 +78,7 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       b: "test",
     },
-    "02 - opts.mergeBoolsUsingOrNotAnd (logical AND)"
+    "02.01 - opts.mergeBoolsUsingOrNotAnd (logical AND)"
   );
 });
 
@@ -125,7 +125,7 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       b: "test", // <---- notice how hard merging on Bools didn't affect this string
     },
-    "03 - cb overriding all Boolean merges"
+    "03.01 - cb overriding all Boolean merges"
   );
 });
 
@@ -173,7 +173,7 @@ test("04 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       b: "", // <---- it was outside of cb's scope as cb dealt with Bools only.
     },
-    "04 - cb partially overriding opts.ignoreEverything"
+    "04.01 - cb partially overriding opts.ignoreEverything"
   );
 });
 
@@ -222,7 +222,7 @@ test("05 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       b: "test", // <---- standard rule applies (non-empty string vs. empty string)
     },
-    "05 - cb partially overriding opts.mergeBoolsUsingOrNotAnd: false"
+    "05.01 - cb partially overriding opts.mergeBoolsUsingOrNotAnd: false"
   );
 });
 
@@ -258,7 +258,7 @@ test("06 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Boole
       },
       b: "test",
     },
-    "06"
+    "06.01"
   );
 });
 
@@ -298,7 +298,7 @@ test("07 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Boole
       },
       b: "",
     },
-    "07"
+    "07.01"
   );
 });
 
@@ -347,7 +347,7 @@ test("08 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Boole
       },
       b: "", // being hard-merged as usual
     },
-    "08"
+    "08.01"
   );
 });
 
@@ -383,7 +383,7 @@ test("09 - \u001b[33mOPTS\u001b[39m - opts.cb - using callback to wrap string wi
       },
       b: false,
     },
-    "09 - control, default behaviour (logical OR)"
+    "09.01 - control, default behaviour (logical OR)"
   );
 });
 
@@ -427,7 +427,7 @@ test("10 - \u001b[33mOPTS\u001b[39m - opts.cb - using callback to wrap string wi
       },
       b: false,
     },
-    "10 - wraps if string"
+    "10.01 - wraps if string"
   );
 });
 
@@ -502,7 +502,7 @@ test("11 - \u001b[33mOPTS\u001b[39m - opts.cb - pin the 4th arg values", () => {
   );
 
   // dummy test to prevent unused variable alerts
-  ok(tester);
+  ok(tester, "11.01");
 });
 
 test("12 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenate certain key values during merge", () => {
@@ -542,7 +542,7 @@ test("12 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenat
         key: "z.key val 2",
       },
     },
-    "12 - default behaviour, control"
+    "12.01 - default behaviour, control"
   );
 });
 
@@ -602,7 +602,7 @@ test("13 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenat
         key: "z.key val 2",
       },
     },
-    "13 - cb fourth arg's path info used to override to merge strings"
+    "13.01 - cb fourth arg's path info used to override to merge strings"
   );
 });
 

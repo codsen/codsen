@@ -145,7 +145,11 @@ test(`09 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whites
       "attribute-validate-codebase": 2,
     },
   });
-  equal(applyFixes(str, messages), `<object codebase="https://codsen.com">`);
+  equal(
+    applyFixes(str, messages),
+    `<object codebase="https://codsen.com">`,
+    "09.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-codebase",

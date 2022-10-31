@@ -40,7 +40,7 @@ test("01 - two-level querying, normal keys in the root", () => {
         key8: "value8",
       },
     },
-    "01 - running on default notation"
+    "01.01 - running on default notation"
   );
 });
 
@@ -391,7 +391,7 @@ test("04 - multi-level + from array + root data store + ignores", () => {
         submarine: { bbb: "ship" },
       },
     },
-    "04 - two ignores in an array, data store, multi-level"
+    "04.01 - two ignores in an array, data store, multi-level"
   );
 });
 

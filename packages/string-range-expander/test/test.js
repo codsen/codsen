@@ -1357,7 +1357,7 @@ test(`29 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #1`, () => {
       wipeAllWhitespaceOnLeft: true,
     }),
     [81, 95],
-    "29"
+    "29.01"
   );
 });
 
@@ -1380,7 +1380,7 @@ test(`30 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #2`, () => {
       extendToOneSide: "right",
     }),
     [32, 39],
-    "30"
+    "30.01"
   );
 });
 
@@ -1403,7 +1403,7 @@ test(`31 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #3`, () => {
       extendToOneSide: "left",
     }),
     [38, 45],
-    "31"
+    "31.01"
   );
 });
 

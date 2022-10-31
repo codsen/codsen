@@ -13,7 +13,7 @@ test("01 - with text in between", () => {
       "code here and here <style>zzz</style> and also some here <script>yyy\nyyyyy</script> and finally here some more <style>zzz</style> and also some here <script>yyy\nyyyyy</script> and finally here some more <style>zzz</style> and also some here <script>yyy\nyyyyy</script> and finally here some more"
     ).result,
     "code here and here and also some here and finally here some more and also some here and finally here some more and also some here and finally here some more",
-    "01"
+    "01.01"
   );
 });
 
@@ -23,7 +23,7 @@ test("02 - tags touching each other", () => {
       "code here and here <style>zzz</style><script>yyy\nyyyyy</script><style>zzz</style><script>yyy\nyyyyy</script><style>zzz</style><script>yyy\nyyyyy</script> and finally here some more"
     ).result,
     "code here and here and finally here some more",
-    "02"
+    "02.01"
   );
 });
 
@@ -33,7 +33,7 @@ test("03 - lots of dodgy slashes around and within tags", () => {
       "///</div>///<div/>///</ div>///< /div></ div>///< /div>///</ div />///</div/>///< / div / >///"
     ).result,
     "/// /// /// /// /// /// /// /// ///",
-    "03 - block"
+    "03.01 - block"
   );
   equal(
     stripHtml(

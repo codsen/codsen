@@ -8,7 +8,7 @@ import { chompLeft } from "../dist/string-left-right.esm.js";
 // -----------------------------------------------------------------------------
 
 test(`01`, () => {
-  equal(chompLeft("a  b c b c  x y", 12, "b", "c"), 2, "01");
+  equal(chompLeft("a  b c b c  x y", 12, "b", "c"), 2, "01.01");
 });
 
 test(`02`, () => {
@@ -134,14 +134,14 @@ test(`07`, () => {
 
 test(`08`, () => {
   // stop at \n
-  equal(chompLeft(" \n  b c   b  c   x y", 17, null, "b", "c"), 2, "08");
+  equal(chompLeft(" \n  b c   b  c   x y", 17, null, "b", "c"), 2, "08.01");
 });
 
 test(`09`, () => {
   equal(
     chompLeft("         b c   b  c   x y", 22, { mode: 2 }, "b", "c"),
     0,
-    "09"
+    "09.01"
   );
 });
 
@@ -159,7 +159,7 @@ test(`10`, () => {
 });
 
 test(`11`, () => {
-  equal(chompLeft(1, 22, { mode: 2 }, "b", "c"), null, "11");
+  equal(chompLeft(1, 22, { mode: 2 }, "b", "c"), null, "11.01");
 });
 
 test(`12`, () => {
@@ -258,14 +258,14 @@ test(`15`, () => {
 });
 
 test(`16`, () => {
-  equal(chompLeft(`. . . . . ....   . x`, 19, ".*"), 0, "16");
+  equal(chompLeft(`. . . . . ....   . x`, 19, ".*"), 0, "16.01");
 });
 
 test(`17`, () => {
   equal(
     chompLeft(`<  << <  << < !! !! ! ! [[[ [ [[  [ x`, 36, "<*", "!*", "[*"),
     0,
-    "17"
+    "17.01"
   );
 });
 

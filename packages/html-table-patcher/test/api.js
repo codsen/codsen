@@ -13,7 +13,7 @@ test(`01 - ${`\u001b[${34}m${`API bits`}\u001b[${39}m`} - defaults`, () => {
 });
 
 test(`02 - ${`\u001b[${34}m${`API bits`}\u001b[${39}m`} - version`, () => {
-  match(version, /\d*\.\d*\.\d*/, "02");
+  match(version, /\d*\.\d*\.\d*/, "02.01");
 });
 
 test(`03 - ${`\u001b[${34}m${`API bits`}\u001b[${39}m`} - patcher()`, () => {

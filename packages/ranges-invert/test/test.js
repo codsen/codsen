@@ -184,7 +184,7 @@ test("05 - zero-length ranges array", () => {
     i([], 1);
     i([], 2);
     i([], 99999);
-  }, "05");
+  }, "05.01");
 });
 
 // ==============================
@@ -468,7 +468,7 @@ test(`13 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - third argument prese
       9
     ),
     [[7, 9]],
-    "13"
+    "13.01"
   );
 });
 
@@ -478,7 +478,7 @@ test(`14 - ${`\u001b[${32}m${`null instead of ranges`}\u001b[${39}m`}`, () => {
 });
 
 test(`15 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - range to invert is far outside #1`, () => {
-  equal(i([[100, 200]], 10), [[0, 10]], "15");
+  equal(i([[100, 200]], 10), [[0, 10]], "15.01");
 });
 
 test(`16 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far outside #2`, () => {
@@ -491,7 +491,7 @@ test(`16 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far 
       10
     ),
     [[0, 10]],
-    "16"
+    "16.01"
   );
 });
 
@@ -505,7 +505,7 @@ test(`17 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far 
       10
     ),
     [[0, 10]],
-    "17"
+    "17.01"
   );
 });
 

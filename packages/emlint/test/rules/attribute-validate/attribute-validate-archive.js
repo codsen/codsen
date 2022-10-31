@@ -84,7 +84,11 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
       "attribute-validate-archive": 2,
     },
   });
-  equal(applyFixes(str, messages), `<applet archive="https://codsen.com">`);
+  equal(
+    applyFixes(str, messages),
+    `<applet archive="https://codsen.com">`,
+    "06.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-archive",
@@ -106,7 +110,11 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
       "attribute-validate-archive": 2,
     },
   });
-  equal(applyFixes(str, messages), `<applet archive="https://codsen.com">`);
+  equal(
+    applyFixes(str, messages),
+    `<applet archive="https://codsen.com">`,
+    "07.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-archive",
@@ -128,7 +136,11 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
       "attribute-validate-archive": 2,
     },
   });
-  equal(applyFixes(str, messages), `<applet archive="https://codsen.com">`);
+  equal(
+    applyFixes(str, messages),
+    `<applet archive="https://codsen.com">`,
+    "08.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-archive",
@@ -283,7 +295,8 @@ test(`15 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - typos`, () => {
   // can fix:
   equal(
     applyFixes(str, messages),
-    `<applet archive="http://codsen.com,tralal.">`
+    `<applet archive="http://codsen.com,tralal.">`,
+    "15.01"
   );
   compare(ok, messages, [
     {

@@ -153,7 +153,7 @@ test(`01 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, one level`, (
         attribs: [],
       },
     ],
-    "01"
+    "01.01"
   );
 });
 
@@ -517,7 +517,7 @@ test(`02 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, two levels`, 
         attribs: [],
       },
     ],
-    "02"
+    "02.01"
   );
 });
 
@@ -628,7 +628,7 @@ test(`03 - ${`\u001b[${35}m${`simple`}\u001b[${39}m`} - one rule`, () => {
         value: "</style>",
       },
     ]),
-    "03"
+    "03.01"
   );
 });
 
@@ -720,7 +720,7 @@ test(`04 - ${`\u001b[${35}m${`simple`}\u001b[${39}m`} - rule is nonsense`, () =>
         end: 52,
       },
     ]),
-    "04"
+    "04.01"
   );
 });
 

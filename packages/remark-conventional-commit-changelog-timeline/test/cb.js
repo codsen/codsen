@@ -58,7 +58,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
       dateDivMarkup: ({ year, month, day }) =>
         `${day} ${month}<br class="z">${year}`,
     }),
-    expected
+    expected,
+    "01.01"
   );
 });
 
@@ -87,7 +88,8 @@ test(`02 - static string in the date callback`, () => {
       dateDivLocale: "en-UK",
       dateDivMarkup: () => "foo",
     }),
-    expected
+    expected,
+    "02.01"
   );
 });
 
@@ -127,7 +129,8 @@ test(`03 - arabic dates`, () => {
         return `${year}/${month}/${day}`;
       },
     }),
-    expected
+    expected,
+    "03.01"
   );
 });
 

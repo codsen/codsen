@@ -267,7 +267,7 @@ test(`07 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`, () => {
     ],
     "07.01"
   );
-  is(gathered.length, 1, "07.02");
+  is(gathered.length, 1, "07.01");
 });
 
 test(`08 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`, () => {
@@ -291,7 +291,7 @@ test(`08 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`, () => {
     ],
     "08.01"
   );
-  is(gathered.length, 1, "08.02");
+  is(gathered.length, 1, "08.01");
 });
 
 test(`09 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`, () => {
@@ -363,7 +363,7 @@ test(`10 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`, () => {
         ],
       },
     ],
-    "10"
+    "10.01"
   );
 });
 

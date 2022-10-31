@@ -16,7 +16,7 @@ test("01 - string replaced", () => {
     {
       tag: "style",
     },
-    "01"
+    "01.01"
   );
 });
 
@@ -32,7 +32,7 @@ test("02 - string within array replaced", () => {
     {
       tag: ["style"],
     },
-    "02"
+    "02.01"
   );
 });
 
@@ -56,7 +56,7 @@ test("03 - value is object and is replaced", () => {
         c: "d",
       },
     },
-    "03"
+    "03.01"
   );
 });
 
@@ -97,7 +97,7 @@ test("04 - two objects replaced", () => {
         },
       },
     ],
-    "04"
+    "04.01"
   );
 });
 
@@ -139,7 +139,7 @@ test("05 - simple edit", () => {
         content: ["\n"],
       },
     ],
-    "05"
+    "05.01"
   );
 });
 
@@ -155,7 +155,7 @@ test("06 - replaced to an empty string", () => {
     {
       tag: "",
     },
-    "06 - empty string given as a replacement"
+    "06.01 - empty string given as a replacement"
   );
 });
 
@@ -191,7 +191,7 @@ test("07 - not enough replacement values given", () => {
         },
       ],
     },
-    "07 - still works"
+    "07.01 - still works"
   );
 });
 
@@ -207,7 +207,7 @@ test("08 - no results replacement", () => {
     {
       style: "html",
     },
-    "08"
+    "08.01"
   );
 });
 

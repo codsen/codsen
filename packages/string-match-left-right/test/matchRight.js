@@ -158,7 +158,7 @@ test(`08 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
       trimBeforeMatching: true,
     }),
     "!--",
-    "08"
+    "08.01"
   );
 });
 
@@ -171,7 +171,7 @@ test(`09 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
       firstMustMatch: true,
     }),
     false,
-    "09"
+    "09.01"
   );
 });
 
@@ -227,7 +227,7 @@ test(`11 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
       trimBeforeMatching: true,
     }),
     false,
-    "11"
+    "11.01"
   );
 });
 
@@ -238,7 +238,7 @@ test(`12 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
       maxMismatches: 1,
     }),
     false,
-    "12"
+    "12.01"
   );
 });
 
@@ -250,7 +250,7 @@ test(`13 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
       trimBeforeMatching: true,
     }),
     "<![endif]",
-    "13"
+    "13.01"
   );
 });
 
@@ -262,7 +262,7 @@ test(`14 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
       trimBeforeMatching: true,
     }),
     "<![endif]",
-    "14"
+    "14.01"
   );
 });
 
@@ -274,7 +274,7 @@ test(`15 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
       trimBeforeMatching: true,
     }),
     "![endif]",
-    "15"
+    "15.01"
   );
 });
 
@@ -286,7 +286,7 @@ test(`16 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
       trimBeforeMatching: true,
     }),
     "![endif]",
-    "16"
+    "16.01"
   );
 });
 
@@ -298,7 +298,7 @@ test(`17 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
       trimBeforeMatching: true,
     }),
     false,
-    "17"
+    "17.01"
   );
 });
 
@@ -310,7 +310,7 @@ test(`18 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
       trimBeforeMatching: true,
     }),
     false,
-    "18"
+    "18.01"
   );
 });
 
@@ -322,7 +322,7 @@ test(`19 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
       trimBeforeMatching: true,
     }),
     false,
-    "19"
+    "19.01"
   );
 });
 
@@ -334,7 +334,7 @@ test(`20 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
       trimBeforeMatching: true,
     }),
     "!--",
-    "20"
+    "20.01"
   );
 });
 
@@ -586,7 +586,7 @@ test(`22 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
       lastMustMatch: true,
     }),
     "<!-->",
-    "22"
+    "22.01"
   );
 });
 
@@ -605,7 +605,7 @@ test(`23 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
       }
     ),
     false,
-    "23"
+    "23.01"
   );
 });
 

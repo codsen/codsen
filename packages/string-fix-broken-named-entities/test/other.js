@@ -266,7 +266,7 @@ test(`11 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
         rangeValDecoded: "\xA3", // <= pound symbol
       },
     ],
-    "11"
+    "11.01"
   );
 });
 
@@ -311,7 +311,7 @@ test(`13 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
         rangeValDecoded: "\u21A0",
       },
     ],
-    "13"
+    "13.01"
   );
 });
 
@@ -356,7 +356,7 @@ test(`15 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
         rangeValDecoded: "\u0391",
       },
     ],
-    "15"
+    "15.01"
   );
 });
 
@@ -401,7 +401,7 @@ test(`17 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
         rangeValDecoded: "\u223F",
       },
     ],
-    "17"
+    "17.01"
   );
 });
 
@@ -446,7 +446,7 @@ test(`19 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
         rangeValDecoded: "\u223F",
       },
     ],
-    "19"
+    "19.01"
   );
 });
 
@@ -491,7 +491,7 @@ test(`21 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
         rangeValDecoded: null,
       },
     ],
-    "21"
+    "21.01"
   );
 });
 
@@ -536,7 +536,7 @@ test(`23 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
         rangeValDecoded: "\u200C",
       },
     ],
-    "23"
+    "23.01"
   );
 });
 
@@ -642,7 +642,7 @@ test(`28 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
       cb: (obj) => obj,
     }),
     [],
-    "28"
+    "28.01"
   );
 });
 
@@ -687,7 +687,7 @@ test(`30 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
       `"${input}" - ${i}`
     )
   );
-  equal(gathered, [], "30");
+  equal(gathered, [], "30.01");
 });
 
 test(`31 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 3`, () => {
@@ -698,7 +698,7 @@ test(`31 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
       [0, 6, "&nbsp;"],
       [6, 12, "&nbsp;"],
     ],
-    "31"
+    "31.01"
   );
 });
 
@@ -732,7 +732,7 @@ test(`33 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
       [27, 33, "&nbsp;"],
       [33, 39, "&nbsp;"],
     ],
-    "33"
+    "33.01"
   );
 });
 
@@ -766,7 +766,7 @@ test(`35 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
       [12, 17, "&nbsp;"],
       [26, 33, "&nbsp;"],
     ],
-    "35"
+    "35.01"
   );
 });
 
@@ -798,7 +798,7 @@ test(`37 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
       [27, 34, "&nbsp;"],
       [34, 41, "&nbsp;"],
     ],
-    "37"
+    "37.01"
   );
 });
 
@@ -829,7 +829,7 @@ test(`39 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
       [0, 4, "&ang;"],
       [4, 10, "&ang;"],
     ],
-    "39"
+    "39.01"
   );
 });
 
@@ -851,7 +851,7 @@ test(`40 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
 });
 
 test(`41 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`, () => {
-  equal(fix(ok, "the &;ang;100"), [[4, 10, "&ang;"]], "41");
+  equal(fix(ok, "the &;ang;100"), [[4, 10, "&ang;"]], "41.01");
 });
 
 test(`42 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`, () => {
@@ -869,7 +869,7 @@ test(`42 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
 });
 
 test(`43 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`, () => {
-  equal(fix(ok, "&Ifz;"), [[0, 5, "&Ifr;"]], "43");
+  equal(fix(ok, "&Ifz;"), [[0, 5, "&Ifr;"]], "43.01");
 });
 
 test(`44 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`, () => {
@@ -887,7 +887,7 @@ test(`44 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein
 });
 
 test(`45 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`, () => {
-  equal(fix(ok, "&ifz;"), [[0, 5]], "45");
+  equal(fix(ok, "&ifz;"), [[0, 5]], "45.01");
 });
 
 test(`46 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`, () => {
@@ -905,7 +905,7 @@ test(`46 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein
 });
 
 test(`47 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`, () => {
-  equal(fix(ok, "&ifz;&"), [[0, 5]], "47");
+  equal(fix(ok, "&ifz;&"), [[0, 5]], "47.01");
 });
 
 test(`48 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`, () => {
@@ -935,7 +935,7 @@ test(`49 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - definitely not an e
   equal(
     fix(ok, "&lhdfgdfgdllkjghlfjjhdkfghkjdfhkghfkhgjkfjhlkfjglhjfgkljhlfjhl;"),
     [],
-    "49"
+    "49.01"
   );
 });
 
@@ -969,7 +969,7 @@ test(`51 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragra
       "&Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;"
     ),
     [],
-    "51"
+    "51.01"
   );
 });
 
@@ -1004,7 +1004,7 @@ test(`53 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragra
       "&nbsp ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;"
     ),
     [[0, 5, "&nbsp;"]],
-    "53"
+    "53.01"
   );
 });
 
@@ -1027,7 +1027,7 @@ test(`54 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragra
 });
 
 test(`55`, () => {
-  equal(fix(ok, "&; &; &;"), [], "55");
+  equal(fix(ok, "&; &; &;"), [], "55.01");
 });
 
 test(`56`, () => {
@@ -1106,7 +1106,7 @@ test(`58 - rsqo, no decoding`, () => {
 
 test(`59 - rsqo + decoding, no cb`, () => {
   let inp1 = `&rsqo;`;
-  equal(fix(ok, inp1, {}), [[0, 6, "&rsquo;"]], "59");
+  equal(fix(ok, inp1, {}), [[0, 6, "&rsquo;"]], "59.01");
 });
 
 test(`60 - rsqo + decoding, whole cb`, () => {
@@ -1136,7 +1136,7 @@ test(`60 - rsqo + decoding, whole cb`, () => {
 
 test(`61 - pound in first capital`, () => {
   let inp1 = `&Pound;`;
-  equal(fix(ok, inp1, {}), [[0, 7, "&pound;"]], "61");
+  equal(fix(ok, inp1, {}), [[0, 7, "&pound;"]], "61.01");
 });
 
 test.run();

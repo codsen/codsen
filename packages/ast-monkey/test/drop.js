@@ -32,7 +32,7 @@ test("01 - drops in mixed things #1 - index string", () => {
     f: { g: [] },
   };
 
-  equal(actual, intended, "01");
+  equal(actual, intended, "01.01");
 });
 
 test("02 - drops in mixed things #2 - index number", () => {
@@ -47,7 +47,7 @@ test("02 - drops in mixed things #2 - index number", () => {
     f: {},
   };
 
-  equal(actual, intended, "02");
+  equal(actual, intended, "02.01");
 });
 
 test("03 - does not drop - zero", () => {
@@ -62,7 +62,7 @@ test("03 - does not drop - zero", () => {
     f: { g: ["h"] },
   };
 
-  equal(actual, intended, "03");
+  equal(actual, intended, "03.01");
 });
 
 test("04 - does not drop - 99", () => {
@@ -77,7 +77,7 @@ test("04 - does not drop - 99", () => {
     f: { g: ["h"] },
   };
 
-  equal(actual, intended, "04");
+  equal(actual, intended, "04.01");
 });
 
 test("05 - drops in mixed things #3 - index is not a natural number", () => {

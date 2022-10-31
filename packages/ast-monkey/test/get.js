@@ -31,7 +31,7 @@ test("01 - gets from a simple object #1", () => {
   let intended = {
     a: { b: "c" },
   };
-  equal(actual, intended, "01");
+  equal(actual, intended, "01.01");
 });
 
 test("02 - gets from a simple object #2", () => {
@@ -45,7 +45,7 @@ test("02 - gets from a simple object #2", () => {
   let intended = {
     b: "c",
   };
-  equal(actual, intended, "02");
+  equal(actual, intended, "02.01");
 });
 
 test("03 - gets from a simple object #3", () => {
@@ -57,7 +57,7 @@ test("03 - gets from a simple object #3", () => {
   let index = 3;
   let actual = get(input, { index });
   let intended = "c";
-  equal(actual, intended, "03");
+  equal(actual, intended, "03.01");
 });
 
 test("04 - does not get", () => {
@@ -69,7 +69,7 @@ test("04 - does not get", () => {
   let index = 4;
   let actual = get(input, { index });
   let intended = null;
-  equal(actual, intended, "04");
+  equal(actual, intended, "04.01");
 });
 
 test("05 - gets from a simple array", () => {
@@ -77,7 +77,7 @@ test("05 - gets from a simple array", () => {
   let index = 4;
   let actual = get(input, { index });
   let intended = "b";
-  equal(actual, intended, "05");
+  equal(actual, intended, "05.01");
 });
 
 test("06 - gets from mixed nested things, index string", () => {
@@ -91,7 +91,7 @@ test("06 - gets from mixed nested things, index string", () => {
     g: ["h"],
   };
 
-  equal(actual, intended, "06");
+  equal(actual, intended, "06.01");
 });
 
 test("07 - gets from a simple object, index is string", () => {
@@ -105,7 +105,7 @@ test("07 - gets from a simple object, index is string", () => {
   let intended = {
     b: "c",
   };
-  equal(actual, intended, "07");
+  equal(actual, intended, "07.01");
 });
 
 test("08 - index is real number as string - throws", () => {

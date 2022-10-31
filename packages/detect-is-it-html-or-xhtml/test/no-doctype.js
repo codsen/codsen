@@ -10,7 +10,7 @@ test("01 - detects by image tags only, one closed image", () => {
       'kksfkhdkjd <table><tr><td>skfhdfkshd\nsfdhjkf</td><td><img src="spacer.gif" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/></td></tr></table>jldsdfhkss'
     ),
     "xhtml",
-    "01"
+    "01.01"
   );
 });
 
@@ -20,7 +20,7 @@ test("02 - detects by images, one closed image and two unclosed", () => {
       'kksfkhdkjd <table><tr><td>skfhdfkshd\nsfdhjkf</td><td><img src="spacer.gif" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/></td></tr></table>jldsdfhkss<img src="spacer.gif" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz">aksdhsfhk skjfhjkdhg dkfjghjf <img src="spacer.gif" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz">'
     ),
     "html",
-    "02"
+    "02.01"
   );
 });
 
@@ -30,7 +30,7 @@ test("03 - one closed, one unclosed image - leans to HTML side", () => {
       'kksfkhdkjd <table><tr><td>skfhdfkshd\nsfdhjkf</td><td><img src="spacer.gif" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/></td></tr></table>jldsdfhkss<img src="spacer.gif" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz">'
     ),
     "html",
-    "03"
+    "03.01"
   );
 });
 

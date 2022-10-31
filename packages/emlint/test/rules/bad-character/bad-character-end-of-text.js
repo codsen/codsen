@@ -53,7 +53,7 @@ test(`01 - detects two END OF TEXT characters`, () => {
     ],
     "01.01"
   );
-  equal(applyFixes(str, messages), "\ndlkgjld\nj", "01.02");
+  equal(applyFixes(str, messages), "\ndlkgjld\nj", "01.01");
 });
 
 test.run();

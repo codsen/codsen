@@ -127,7 +127,7 @@ test("13 - empty input", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "13"
+    "13.01"
   );
 });
 

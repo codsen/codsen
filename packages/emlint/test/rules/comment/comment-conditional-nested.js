@@ -45,7 +45,7 @@ test(`01 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment neste
     ],
     "01.02"
   );
-  equal(messages.length, 2, "01.03");
+  equal(messages.length, 2, "01.02");
 });
 
 test(`02 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment nested, mixed`, () => {
@@ -81,7 +81,7 @@ test(`02 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment neste
     ],
     "02.02"
   );
-  equal(messages.length, 2, "02.03");
+  equal(messages.length, 2, "02.02");
 });
 
 test(`03 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two simple comments nested`, () => {
@@ -133,7 +133,7 @@ test(`03 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two simple comments 
     ],
     "03.02"
   );
-  equal(messages.length, 4, "03.03");
+  equal(messages.length, 4, "03.02");
 });
 
 test(`04 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two "only"-kind comments nested`, () => {
@@ -172,7 +172,7 @@ test(`04 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two "only"-kind comm
     ],
     "04.02"
   );
-  equal(messages.length, 2, "04.03");
+  equal(messages.length, 2, "04.02");
 });
 
 // 02. type="not"
@@ -215,7 +215,7 @@ test(`05 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested
     ],
     "05.02"
   );
-  equal(messages.length, 2, "05.03");
+  equal(messages.length, 2, "05.02");
 });
 
 test(`06 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested, mixed`, () => {
@@ -251,7 +251,7 @@ test(`06 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested
     ],
     "06.02"
   );
-  equal(messages.length, 2, "06.03");
+  equal(messages.length, 2, "06.02");
 });
 
 test(`07 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two simple comments nested`, () => {
@@ -303,7 +303,7 @@ test(`07 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two simple comments n
     ],
     "07.02"
   );
-  equal(messages.length, 4, "07.03");
+  equal(messages.length, 4, "07.02");
 });
 
 test(`08 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two "only"-kind comments nested`, () => {
@@ -342,7 +342,7 @@ test(`08 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two "only"-kind comme
     ],
     "08.02"
   );
-  equal(messages.length, 2, "08.03");
+  equal(messages.length, 2, "08.02");
 });
 
 test.run();

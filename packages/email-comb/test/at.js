@@ -29,7 +29,7 @@ test("01 - mvp", () => {
 </body>
 `;
 
-  equal(comb(source).result, intended, "01");
+  equal(comb(source).result, intended, "01.01");
 });
 
 test("02 - @charset", () => {
@@ -58,7 +58,7 @@ test("02 - @charset", () => {
 </body>
 `;
 
-  equal(comb(source).result, intended, "02");
+  equal(comb(source).result, intended, "02.01");
 });
 
 // original GitHub issue #3
@@ -95,7 +95,7 @@ test("03 - removes media query together with the whole style tag #1", () => {
 </html>
 `;
 
-  equal(actual, intended, "03");
+  equal(actual, intended, "03.01");
 });
 
 test("04 - removes media query together with the whole style tag #2", () => {
@@ -139,7 +139,7 @@ zzz
 </html>
 `;
 
-  equal(actual, intended, "04");
+  equal(actual, intended, "04.01");
 });
 
 test("05 - removes three media queries together with the style tags", () => {
@@ -190,7 +190,7 @@ test("05 - removes three media queries together with the style tags", () => {
 </html>
 `;
 
-  equal(actual, intended, "05");
+  equal(actual, intended, "05.01");
 });
 
 test("06 - empty media queries removed", () => {
@@ -249,7 +249,7 @@ test("06 - empty media queries removed", () => {
 </html>
 `;
 
-  equal(actual, intended, "06");
+  equal(actual, intended, "06.01");
 });
 
 test("07 - multiple levels of media queries cleaned", () => {
@@ -317,7 +317,7 @@ test("07 - multiple levels of media queries cleaned", () => {
 </html>
 `;
 
-  equal(actual, intended, "07");
+  equal(actual, intended, "07.01");
 });
 
 test("08 - multiple levels of media queries cleaned + @supports wrap", () => {
@@ -391,7 +391,7 @@ test("08 - multiple levels of media queries cleaned + @supports wrap", () => {
 </html>
 `;
 
-  equal(actual, intended, "08");
+  equal(actual, intended, "08.01");
 });
 
 test("09 - @charset #1", () => {
@@ -440,7 +440,7 @@ zzz
 </html>
 `;
 
-  equal(actual, intended, "09");
+  equal(actual, intended, "09.01");
 });
 
 test("10 - @charset #2", () => {
@@ -482,7 +482,7 @@ zzz
 </html>
 `;
 
-  equal(actual, intended, "10");
+  equal(actual, intended, "10.01");
 });
 
 test("11 - @charset #3", () => {
@@ -526,7 +526,7 @@ zzz
 </html>
 `;
 
-  equal(actual, intended, "11");
+  equal(actual, intended, "11.01");
 });
 
 test("12 - @charset #4", () => {
@@ -572,7 +572,7 @@ zzz
 </html>
 `;
 
-  equal(actual, intended, "12");
+  equal(actual, intended, "12.01");
 });
 
 test("13 - @charset #5", () => {
@@ -616,7 +616,7 @@ zzz
 </html>
 `;
 
-  equal(actual, intended, "13");
+  equal(actual, intended, "13.01");
 });
 
 test("14 - at-rule is followed by whitespace and another at-rule", () => {
@@ -663,7 +663,7 @@ zzz
 </html>
 `;
 
-  equal(actual, intended, "14");
+  equal(actual, intended, "14.01");
 });
 
 test("15 - at-rule is followed by whitespace and another at-rule", () => {
@@ -710,7 +710,7 @@ zzz
 </html>
 `;
 
-  equal(actual, intended, "15");
+  equal(actual, intended, "15.01");
 });
 
 test("16 - at-rule followed by closing </style>", () => {
@@ -755,7 +755,7 @@ zzz
 </html>
 `;
 
-  equal(actual, intended, "16");
+  equal(actual, intended, "16.01");
 });
 
 test("17 - at-rule followed by semicolon without contents", () => {
@@ -802,7 +802,7 @@ zzz
 </html>
 `;
 
-  equal(actual, intended, "17");
+  equal(actual, intended, "17.01");
 });
 
 test("18 - at-rule with single quotes", () => {
@@ -850,7 +850,7 @@ zzz
 </html>
 `;
 
-  equal(actual, intended, "18");
+  equal(actual, intended, "18.01");
 });
 
 test("19 - copes with @font-face within media query", () => {
@@ -940,7 +940,7 @@ test("19 - copes with @font-face within media query", () => {
 </body>
 </html>
 `;
-  equal(comb(source).result, intended, "19");
+  equal(comb(source).result, intended, "19.01");
 });
 
 test("20 - copes with @font-face not within media query", () => {
@@ -996,7 +996,7 @@ test("20 - copes with @font-face not within media query", () => {
 </body>
 </html>
 `;
-  equal(comb(source).result, intended, "20");
+  equal(comb(source).result, intended, "20.01");
 });
 
 test("21 - retains media queries", () => {
@@ -1168,7 +1168,7 @@ test("22 - does not touch @font-face", () => {
 </html>
 `;
 
-  equal(actual, intended, "22");
+  equal(actual, intended, "22.01");
 });
 
 test("23 - does not touch @import with query strings containing commas", () => {
@@ -1213,7 +1213,7 @@ test("23 - does not touch @import with query strings containing commas", () => {
 </html>
 `;
 
-  equal(actual, intended, "23");
+  equal(actual, intended, "23.01");
 });
 
 test("24 - @media contains classes to remove, @import present in the vicinity", () => {
@@ -1261,7 +1261,7 @@ zzz
 </html>
 `;
 
-  equal(actual, intended, "24");
+  equal(actual, intended, "24.01");
 });
 
 test("25 - media query with asterisk", () => {
@@ -1298,7 +1298,7 @@ test("25 - media query with asterisk", () => {
 </html>
 `;
 
-  equal(actual, intended, "25");
+  equal(actual, intended, "25.01");
 });
 
 test("26 - complex media query #1", () => {
@@ -1335,7 +1335,7 @@ test("26 - complex media query #1", () => {
 </html>
 `;
 
-  equal(actual, intended, "26");
+  equal(actual, intended, "26.01");
 });
 
 test("27 - complex media query #2", () => {
@@ -1372,7 +1372,7 @@ test("27 - complex media query #2", () => {
 </html>
 `;
 
-  equal(actual, intended, "27");
+  equal(actual, intended, "27.01");
 });
 
 test.run();

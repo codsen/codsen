@@ -32,7 +32,7 @@ test("02 - particular attention of combos of line breaks and double quotes", () 
       ["a,b", "c", "d"],
       ["e,f", "g", "h"],
     ],
-    "02 - double quotes follow line break"
+    "02.01 - double quotes follow line break"
   );
 });
 
@@ -43,7 +43,7 @@ test("03 - particular attention of double quotes at the end", () => {
       ["a,b", "c", "d"],
       ["e", "f", "g,h"],
     ],
-    "03 - double quotes follow line break"
+    "03.01 - double quotes follow line break"
   );
 });
 
@@ -56,7 +56,7 @@ test("04 - all values are wrapped with double quotes, some trailing white space"
       ["Something here", "And something there", "Notice space in front"],
       ["And here", "This is wrapped as well", "And this too"],
     ],
-    "04 - splits correctly, trimming the space around"
+    "04.01 - splits correctly, trimming the space around"
   );
 });
 
@@ -67,7 +67,7 @@ test("05 - values wrapped in double quotes that contain double quotes", () => {
       ['a,"b"', "c", "d"],
       ["e", "f", 'g "G"'],
     ],
-    "05 - double quotes that contain double quotes"
+    "05.01 - double quotes that contain double quotes"
   );
 });
 

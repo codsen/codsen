@@ -16,7 +16,7 @@ test(`01 - ${`\u001b[${33}m${`false positives`}\u001b[${39}m`} - word class in t
   </body>
 </html>
 `;
-  equal(comb(source).result, source, "01");
+  equal(comb(source).result, source, "01.01");
 });
 
 test(`02 - ${`\u001b[${33}m${`false positives`}\u001b[${39}m`} - word id in text`, () => {
@@ -28,7 +28,7 @@ test(`02 - ${`\u001b[${33}m${`false positives`}\u001b[${39}m`} - word id in text
   </body>
 </html>
 `;
-  equal(comb(source).result, source, "02");
+  equal(comb(source).result, source, "02.01");
 });
 
 test.run();

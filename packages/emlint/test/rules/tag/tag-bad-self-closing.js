@@ -45,8 +45,8 @@ test(`02 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - severity: warn`, () => {
     ],
     "02.01"
   );
-  equal(applyFixes(str, messages), fixed, "02.02");
-  equal(messages.length, 1, "02.03");
+  equal(applyFixes(str, messages), fixed, "02.01");
+  equal(messages.length, 1, "02.02");
 });
 
 test(`03 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - with attributes`, () => {
@@ -136,8 +136,8 @@ test(`03 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - with attributes`, () => 
     ],
     "03.01"
   );
-  equal(applyFixes(str, messages), fixed, "03.02");
-  equal(messages.length, 6, "03.03");
+  equal(applyFixes(str, messages), fixed, "03.01");
+  equal(messages.length, 6, "03.02");
 });
 
 test(`04 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - excessive whitespace in front`, () => {
@@ -196,7 +196,7 @@ test(`08 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - group rule "tag" should 
       tag: 2, // <---------- all "tag-*" rules
     },
   });
-  equal(applyFixes(str, messages), fixed, "08");
+  equal(applyFixes(str, messages), fixed, "08.01");
 });
 
 test(`09 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - "all rules" setting should be sensible`, () => {
@@ -207,7 +207,7 @@ test(`09 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - "all rules" setting shou
       all: 2, // <---------- all rules
     },
   });
-  equal(applyFixes(str, messages), fixed, "09");
+  equal(applyFixes(str, messages), fixed, "09.01");
 });
 
 test.run();

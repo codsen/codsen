@@ -328,7 +328,8 @@ test(`19 - ${`\u001b[${35}m${`area`}\u001b[${39}m`} - rogue space`, () => {
   });
   equal(
     applyFixes(str, messages),
-    `<area shape="rect" coords="0,82,126" href="sun.htm" alt="Sun">`
+    `<area shape="rect" coords="0,82,126" href="sun.htm" alt="Sun">`,
+    "19.01"
   );
   compare(ok, messages, [
     {

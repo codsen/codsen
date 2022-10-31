@@ -16,7 +16,7 @@ test("01 - null", () => {
       }
     ).result,
     "Let's watch news this evening",
-    "01 - control, default behaviour"
+    "01.01 - control, default behaviour"
   );
 });
 
@@ -29,7 +29,7 @@ test("02 - undefined", () => {
       }
     ).result,
     "Let's watch news this evening",
-    "02 - control, default behaviour"
+    "02.01 - control, default behaviour"
   );
 });
 
@@ -42,7 +42,7 @@ test("03 - {}", () => {
       }
     ).result,
     "Let's watch news this evening",
-    "03 - control, default behaviour"
+    "03.01 - control, default behaviour"
   );
 });
 
@@ -57,7 +57,7 @@ test("04 - {}", () => {
       );
     },
     /THROW_ID_04/,
-    "04"
+    "04.01"
   );
 });
 
@@ -70,7 +70,7 @@ test("05 - clean code, double quotes", () => {
       'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening'
     ).result,
     "Let's watch news this evening",
-    "05 - default behaviour"
+    "05.01 - default behaviour"
   );
 });
 
@@ -150,7 +150,7 @@ test("07 - clean code, double quotes", () => {
       }
     ).result,
     "Let's watch news https://www.news.com/ this evening",
-    "07 - control, default behaviour"
+    "07.01 - control, default behaviour"
   );
 });
 
@@ -180,7 +180,7 @@ test("09 - clean code, double quotes", () => {
       { dumpLinkHrefsNearby: { enabled: true } }
     ).result,
     "Here's the chief editor's mailto:bob@codsen.com?cc=gossip@codsen.com&subject=look%20what%20Kate%20did%20last%20night email.",
-    "09 - mailto links with customisation"
+    "09.01 - mailto links with customisation"
   );
 });
 
@@ -190,7 +190,7 @@ test("10 - clean code, single quotes", () => {
       "Let's watch <a href='https://www.news.com/' target='_blank'>news</a> this evening"
     ).result,
     "Let's watch news this evening",
-    "10 - control, default behaviour"
+    "10.01 - control, default behaviour"
   );
 });
 
@@ -203,7 +203,7 @@ test("11 - clean code, single quotes", () => {
       }
     ).result,
     "Let's watch news this evening",
-    "11 - control, hardcoded default"
+    "11.01 - control, hardcoded default"
   );
 });
 
@@ -216,7 +216,7 @@ test("12 - clean code, single quotes", () => {
       }
     ).result,
     "Let's watch news https://www.news.com/ this evening",
-    "12 - control, default behaviour"
+    "12.01 - control, default behaviour"
   );
 });
 
@@ -227,7 +227,7 @@ test("13 - clean code, single quotes", () => {
       { dumpLinkHrefsNearby: { enabled: true } }
     ).result,
     "Let's sell some juicy gossip to the Roy mailto:gossip@codsen.com right now!",
-    "13 - mailto links without customisation"
+    "13.01 - mailto links without customisation"
   );
 });
 
@@ -238,7 +238,7 @@ test("14 - clean code, single quotes", () => {
       { dumpLinkHrefsNearby: { enabled: true } }
     ).result,
     "Here's the chief editor's mailto:bob@codsen.com?cc=gossip@codsen.com&subject=look%20what%20Kate%20did%20last%20night email.",
-    "14 - mailto links with customisation"
+    "14.01 - mailto links with customisation"
   );
 });
 
@@ -246,7 +246,7 @@ test("15 - dirty code, HTML is chopped but href captured", () => {
   equal(
     stripHtml('Let\'s watch <a href="https://www.news.com/" targ').result,
     "Let's watch",
-    "15 - control, default behaviour"
+    "15.01 - control, default behaviour"
   );
 });
 
@@ -256,7 +256,7 @@ test("16 - dirty code, HTML is chopped but href captured", () => {
       dumpLinkHrefsNearby: { enabled: true },
     }).result,
     "Let's watch https://www.news.com/",
-    "16 - only href contents are left after stripping"
+    "16.01 - only href contents are left after stripping"
   );
 });
 
@@ -266,7 +266,7 @@ test("17 - linked image", () => {
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`
     ).result,
     "a b",
-    "17 - control, default"
+    "17.01 - control, default"
   );
 });
 
@@ -277,7 +277,7 @@ test("18 - linked image, dumpLinkHrefsNearby=off", () => {
       { dumpLinkHrefsNearby: { enabled: false } }
     ).result,
     "a b",
-    "18 - control, hardcoded default"
+    "18.01 - control, hardcoded default"
   );
 });
 
@@ -288,7 +288,7 @@ test("19 - linked image, dumpLinkHrefsNearby=on", () => {
       { dumpLinkHrefsNearby: { enabled: true } }
     ).result,
     "a https://codsen.com b",
-    "19 - dumps href of a linked image"
+    "19.01 - dumps href of a linked image"
   );
 });
 
@@ -298,7 +298,7 @@ test("20 - .putOnNewLine, control", () => {
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`
     ).result,
     "a b",
-    "20 - control, default, off"
+    "20.01 - control, default, off"
   );
 });
 
@@ -314,7 +314,7 @@ test("21 - .putOnNewLine, control", () => {
       }
     ).result,
     "a https://codsen.com b",
-    "21 - dumpLinkHrefsNearby = on; putOnNewLine = off"
+    "21.01 - dumpLinkHrefsNearby = on; putOnNewLine = off"
   );
 });
 
@@ -330,7 +330,7 @@ test("22 - .putOnNewLine, control", () => {
       }
     ).result,
     "a\n\nhttps://codsen.com\n\nb",
-    "22 - dumpLinkHrefsNearby = on; putOnNewLine = on"
+    "22.01 - dumpLinkHrefsNearby = on; putOnNewLine = on"
   );
 });
 
@@ -348,7 +348,7 @@ test("23 - .putOnNewLine", () => {
       }
     ).result,
     "a\n\n[https://codsen.com]\n\nb",
-    "23 - dumpLinkHrefsNearby = on; putOnNewLine = on; wrapHeads = on; wrapTails = on;"
+    "23.01 - dumpLinkHrefsNearby = on; putOnNewLine = on; wrapHeads = on; wrapTails = on;"
   );
 });
 
@@ -357,7 +357,7 @@ test("24 - wrapHeads/wrapTails - control", () => {
     stripHtml(`a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`)
       .result,
     "a z b",
-    "24 - control, default"
+    "24.01 - control, default"
   );
 });
 
@@ -372,7 +372,7 @@ test("25 - wrapHeads/wrapTails - default dump", () => {
       }
     ).result,
     "a z https://codsen.com b",
-    "25 - heads only"
+    "25.01 - heads only"
   );
 });
 
@@ -388,7 +388,7 @@ test("26 - wrapHeads/wrapTails wrap heads only", () => {
       }
     ).result,
     "a z [https://codsen.com b",
-    "26 - heads only"
+    "26.01 - heads only"
   );
 });
 
@@ -404,7 +404,7 @@ test("27 - wrapHeads/wrapTails wrap teads only", () => {
       }
     ).result,
     "a z https://codsen.com] b",
-    "27 - tails only"
+    "27.01 - tails only"
   );
 });
 
@@ -421,7 +421,7 @@ test("28 - wrapHeads/wrapTails wrap both", () => {
       }
     ).result,
     "a z [https://codsen.com] b",
-    "28 - tails only"
+    "28.01 - tails only"
   );
 });
 
@@ -439,7 +439,7 @@ test("29 - wrapHeads/wrapTails + ignoreTags", () => {
       }
     ).result,
     "a<div>z</div> [https://codsen.com] b",
-    "29 - ignore on a div only"
+    "29.01 - ignore on a div only"
   );
 });
 
@@ -457,7 +457,7 @@ test("30 - wrapHeads/wrapTails + ignoreTags", () => {
       }
     ).result,
     "a z [https://codsen.com] b",
-    "30 - ignore on a div only"
+    "30.01 - ignore on a div only"
   );
 });
 
@@ -475,7 +475,7 @@ test("31 - wrapHeads/wrapTails + stripTogetherWithTheirContents", () => {
       }
     ).result,
     "a [https://codsen.com] b",
-    "31 - whole div pair is removed"
+    "31.01 - whole div pair is removed"
   );
 });
 
@@ -485,7 +485,7 @@ test("32 - ends with URL - enabled=true, putOnNewLine=false", () => {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "click me https://example.com/",
-    "32"
+    "32.01"
   );
 });
 
@@ -495,7 +495,7 @@ test("33 - ends with URL - enabled=true, putOnNewLine=true", () => {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "click me\n\nhttps://example.com/",
-    "33"
+    "33.01"
   );
 });
 
@@ -505,7 +505,7 @@ test("34 - ends with URL - disabled", () => {
       dumpLinkHrefsNearby: { enabled: false },
     }).result,
     "click me",
-    "34"
+    "34.01"
   );
 });
 
@@ -515,7 +515,7 @@ test("35 - ends with URL - enabled=true, putOnNewLine=false", () => {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "click me https://example.com/",
-    "35"
+    "35.01"
   );
 });
 
@@ -525,7 +525,7 @@ test("36 - ends with URL - enabled=true, putOnNewLine=true", () => {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "click me\n\nhttps://example.com/",
-    "36"
+    "36.01"
   );
 });
 

@@ -202,7 +202,7 @@ test(`11 - on`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "11");
+  equal(applyFixes(str, messages), fixed, "11.01");
 });
 
 test(`12 - first one is dodgy`, () => {
@@ -214,7 +214,7 @@ test(`12 - first one is dodgy`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "12");
+  equal(applyFixes(str, messages), fixed, "12.01");
 });
 
 test(`13 - merging empty`, () => {
@@ -226,7 +226,7 @@ test(`13 - merging empty`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "13");
+  equal(applyFixes(str, messages), fixed, "13.01");
 });
 
 test(`14 - merging dodgy, no closing slash`, () => {
@@ -238,7 +238,7 @@ test(`14 - merging dodgy, no closing slash`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "14");
+  equal(applyFixes(str, messages), fixed, "14.01");
 });
 
 test(`15 - merging dodgy, with closing slash`, () => {
@@ -250,7 +250,7 @@ test(`15 - merging dodgy, with closing slash`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "15");
+  equal(applyFixes(str, messages), fixed, "15.01");
 });
 
 test(`16 - dodgy values with quotes`, () => {

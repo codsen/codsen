@@ -38,7 +38,7 @@ test("03 - Nunjucks", () => {
       `<div>{% if something %}do this{% else %}do that{% endif %}</div>`
     ),
     { name: "Nunjucks" },
-    "03"
+    "03.01"
   );
 });
 
@@ -46,7 +46,7 @@ test("04 - Jinja - with Python namespaces", () => {
   equal(
     detectLang(`<div>{%- set ns1 = namespace(utility_providers=0) -%}</div>`),
     { name: "Jinja" },
-    "04"
+    "04.01"
   );
 });
 
@@ -67,7 +67,7 @@ test("06 - JSP", () => {
   equal(
     detectLang(`<c:set var="someList" value="\${jspProp.someList}" />`),
     { name: "JSP" },
-    "06"
+    "06.01"
   );
 });
 

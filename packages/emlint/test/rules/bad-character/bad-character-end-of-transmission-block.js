@@ -53,7 +53,7 @@ test(`01 - detects two END OF TRANSMISSION BLOCK characters`, () => {
     ],
     "01.01"
   );
-  equal(applyFixes(str, messages), "dlkgjldj", "01.02");
+  equal(applyFixes(str, messages), "dlkgjldj", "01.01");
 });
 
 test.run();

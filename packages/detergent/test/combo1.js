@@ -158,7 +158,7 @@ test(`03`, () => {
       stripHtmlAddNewLine: ["br"], // <---
     }).res,
     "abc\ndef",
-    "03"
+    "03.01"
   );
 });
 

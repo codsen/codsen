@@ -57,7 +57,7 @@ test("03", () => {
       });
     },
     /50/,
-    `03 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - short length reports only at 50%`
+    `03.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - short length reports only at 50%`
   );
 });
 
@@ -78,7 +78,7 @@ test("04", () => {
   // 2. check the counter variable:
   ok(
     counter,
-    `01.04 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - longer length reports at 0-100%`
+    `04.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - longer length reports at 0-100%`
   );
 });
 
@@ -97,7 +97,7 @@ test("05", () => {
       });
     },
     /32/g,
-    `05 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, short input`
+    `05.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, short input`
   );
 });
 
@@ -132,12 +132,12 @@ test("06", () => {
   gather.forEach((perc) => {
     ok(compareTo.includes(perc), String(perc));
   });
-  equal(gather.length, 86 - 21);
+  equal(gather.length, 86 - 21, "06.01");
 
   equal(
     gather,
     compareTo,
-    `06 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, longer input`
+    `06.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, longer input`
   );
 });
 

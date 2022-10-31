@@ -33,7 +33,7 @@ test(`01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, () => {
     ],
     "01.02"
   );
-  equal(messages.length, 1, "01.03");
+  equal(messages.length, 1, "01.02");
 });
 
 test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule`, () => {
@@ -61,7 +61,7 @@ test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule`, () => {
     ],
     "02.02"
   );
-  equal(messages.length, 1, "02.03");
+  equal(messages.length, 1, "02.02");
 });
 
 test(`03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - through wildcard`, () => {
@@ -89,7 +89,7 @@ test(`03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - through wildcard`, () => {
     ],
     "03.02"
   );
-  equal(messages.length, 1, "03.03");
+  equal(messages.length, 1, "03.02");
 });
 
 test(`04 - all`, () => {
@@ -117,7 +117,7 @@ test(`04 - all`, () => {
     ],
     "04.02"
   );
-  equal(messages.length, 1, "04.03");
+  equal(messages.length, 1, "04.02");
 });
 
 test.run();

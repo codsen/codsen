@@ -561,7 +561,7 @@ test("17 - overriding opts.letterWidths", () => {
       },
     }),
     { result: "the quic", addEllipsis: true },
-    "17"
+    "17.01"
   );
 });
 
@@ -578,7 +578,7 @@ test("18 - opts.letterWidths", () => {
       },
     }),
     { result: "the quick", addEllipsis: true },
-    "18"
+    "18.01"
   );
 });
 
@@ -593,7 +593,7 @@ test("19 - deburr in action", () => {
       maxLines: 2,
     }),
     { result: "į".repeat(21), addEllipsis: true },
-    "19"
+    "19.01"
   );
 });
 

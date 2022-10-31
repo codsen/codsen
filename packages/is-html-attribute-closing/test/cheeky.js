@@ -296,19 +296,19 @@ test(`11 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character
 });
 
 test(`12 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - repeated and dodgy`, () => {
-  ok(isCl(`<a class="" class= class"">`, 9, 10), "12");
+  ok(isCl(`<a class="" class= class"">`, 9, 10), "12.01");
 });
 
 test(`13 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - repeated and dodgy`, () => {
-  not.ok(isCl(`<a class="" class= class"">`, 9, 24), "13");
+  not.ok(isCl(`<a class="" class= class"">`, 9, 24), "13.01");
 });
 
 test(`14 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - repeated and dodgy`, () => {
-  not.ok(isCl(`<a class="" class= class"">`, 9, 25), "14");
+  not.ok(isCl(`<a class="" class= class"">`, 9, 25), "14.01");
 });
 
 test(`15 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - repeated and dodgy`, () => {
-  ok(isCl(`<a class="" class= class"">`, 24, 25), "15");
+  ok(isCl(`<a class="" class= class"">`, 24, 25), "15.01");
 });
 
 test.run();

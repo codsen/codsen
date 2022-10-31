@@ -9,23 +9,23 @@ import { looseCompare } from "../dist/ast-loose-compare.esm.js";
 // ==============================
 
 test("01 - both inputs missing", () => {
-  equal(looseCompare(), undefined, "01");
+  equal(looseCompare(), undefined, "01.01");
 });
 
 test("02 - first input missing", () => {
-  equal(looseCompare({ a: "a" }), undefined, "02");
+  equal(looseCompare({ a: "a" }), undefined, "02.01");
 });
 
 test("03 - second input missing", () => {
-  equal(looseCompare(undefined, { a: "a" }), undefined, "03");
+  equal(looseCompare(undefined, { a: "a" }), undefined, "03.01");
 });
 
 test("04 - null as input", () => {
-  equal(looseCompare(undefined, { a: "a" }), undefined, "04");
+  equal(looseCompare(undefined, { a: "a" }), undefined, "04.01");
 });
 
 test("05 - falsey inputs", () => {
-  equal(looseCompare(null, undefined), undefined, "05");
+  equal(looseCompare(null, undefined), undefined, "05.01");
 });
 
 test("06 - undefined in a second-level depth", () => {
@@ -43,7 +43,7 @@ test("06 - undefined in a second-level depth", () => {
       }
     ),
     false,
-    "06"
+    "06.01"
   );
 });
 
@@ -55,7 +55,7 @@ test("07 - simple plain objects", () => {
   equal(
     looseCompare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2" }),
     true,
-    "07"
+    "07.01"
   );
 });
 
@@ -63,7 +63,7 @@ test("08 - simple plain objects #2", () => {
   equal(
     looseCompare({ a: "1", b: "2" }, { a: "1", b: "2", c: "3" }),
     false,
-    "08"
+    "08.01"
   );
 });
 
@@ -73,7 +73,7 @@ test("09 - comparison against empty plain objects", () => {
 });
 
 test("10 - comparing two empty plain objects", () => {
-  equal(looseCompare({}, {}), true, "10");
+  equal(looseCompare({}, {}), true, "10.01");
 });
 
 test("11 - false match involving empty arrays, sneaky similarity", () => {
@@ -95,14 +95,18 @@ test("11 - false match involving empty arrays, sneaky similarity", () => {
 });
 
 test("12 - simple plain arrays, integer, match", () => {
-  equal(looseCompare({ a: "1", b: "2", c: 3 }, { a: "1", b: "2" }), true, "12");
+  equal(
+    looseCompare({ a: "1", b: "2", c: 3 }, { a: "1", b: "2" }),
+    true,
+    "12.01"
+  );
 });
 
 test("13 - simple plain arrays, integer, no match", () => {
   equal(
     looseCompare({ a: "1", b: "2" }, { a: "1", b: "2", c: 3 }),
     false,
-    "13"
+    "13.01"
   );
 });
 
@@ -114,7 +118,7 @@ test("14 - simple nested plain objects", () => {
   equal(
     looseCompare({ a: { d: "4" }, b: "2", c: "3" }, { a: { d: "4" }, b: "2" }),
     true,
-    "14"
+    "14.01"
   );
 });
 
@@ -125,7 +129,7 @@ test("15 - simple nested plain objects + array wrapper", () => {
       { a: [{ d: "4" }], b: "2" }
     ),
     true,
-    "15"
+    "15.01"
   );
 });
 
@@ -133,7 +137,7 @@ test("16 - simple nested plain objects, won't find", () => {
   equal(
     looseCompare({ a: { d: "4" }, b: "2" }, { a: { d: "4" }, b: "2", c: "3" }),
     false,
-    "16"
+    "16.01"
   );
 });
 
@@ -144,7 +148,7 @@ test("17 - simple nested plain objects + array wrapper, won't find", () => {
       { a: [{ d: "4" }], b: "2", c: "3" }
     ),
     false,
-    "17"
+    "17.01"
   );
 });
 
@@ -155,7 +159,7 @@ test("18 - obj, multiple nested levels, bigObj has more", () => {
       { a: { b: { c: { d: [{ e: "1" }] } } } }
     ),
     true,
-    "18"
+    "18.01"
   );
 });
 
@@ -166,7 +170,7 @@ test("19 - obj, multiple nested levels, equal", () => {
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } }
     ),
     true,
-    "19"
+    "19.01"
   );
 });
 
@@ -177,7 +181,7 @@ test("20 - obj, multiple nested levels, smallObj has more", () => {
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } }
     ),
     false,
-    "20"
+    "20.01"
   );
 });
 
@@ -245,15 +249,15 @@ test("25 - simple strings", () => {
 });
 
 test("26 - strings compared and fails", () => {
-  equal(looseCompare("aaaaa\nbbbbb", ["aaaaa\nbbbbb"]), false, "26");
+  equal(looseCompare("aaaaa\nbbbbb", ["aaaaa\nbbbbb"]), false, "26.01");
 });
 
 test("27 - strings compared, positive", () => {
-  equal(looseCompare(["aaaaa\nbbbbb"], ["aaaaa\nbbbbb"]), true, "27");
+  equal(looseCompare(["aaaaa\nbbbbb"], ["aaaaa\nbbbbb"]), true, "27.01");
 });
 
 test("28 - strings compared, positive", () => {
-  equal(looseCompare(["aaaaa\nbbbbb"], []), false, "28");
+  equal(looseCompare(["aaaaa\nbbbbb"], []), false, "28.01");
 });
 
 // ==============================
@@ -279,7 +283,7 @@ test("30 - real-life - won't find", () => {
       }
     ),
     false,
-    "30"
+    "30.01"
   );
 });
 
@@ -296,7 +300,7 @@ test("31 - real-life - will find", () => {
       }
     ),
     true,
-    "31"
+    "31.01"
   );
 });
 
@@ -314,7 +318,7 @@ test("32 - from README", () => {
       }
     ),
     true,
-    "32"
+    "32.01"
   );
 });
 
@@ -330,7 +334,7 @@ test("33 - from real-life, precaution against false-positives", () => {
       }
     ),
     false,
-    "33"
+    "33.01"
   );
 });
 
@@ -400,7 +404,7 @@ test("36 - simple plain objects #3", () => {
       { a: "1", b: ["\n\n\n"] }
     ),
     true,
-    "36"
+    "36.01"
   );
 });
 
@@ -411,7 +415,7 @@ test("37 - simple plain objects #4", () => {
       { a: "1", b: "\n\n\n" }
     ),
     true,
-    "37"
+    "37.01"
   );
 });
 
@@ -422,7 +426,7 @@ test("38 - simple plain objects #5", () => {
       { a: "1", b: "\n\n\n" }
     ),
     true,
-    "38"
+    "38.01"
   );
 });
 
@@ -489,15 +493,15 @@ test("40 - simple nested plain objects - won't find", () => {
 // ==============================
 
 test("41 - Strings vs strings", () => {
-  equal(looseCompare("\n\n\n", "\t\t\t"), true, "41");
+  equal(looseCompare("\n\n\n", "\t\t\t"), true, "41.01");
 });
 
 test("42 - Comparing empty string to string", () => {
-  equal(looseCompare("", "\t\t\t"), true, "42");
+  equal(looseCompare("", "\t\t\t"), true, "42.01");
 });
 
 test("43 - Comparing string to empty string in an array", () => {
-  equal(looseCompare(["\n\n\n"], ""), true, "43");
+  equal(looseCompare(["\n\n\n"], ""), true, "43.01");
 });
 
 test("44 - Comparing empty to empty string", () => {
@@ -507,7 +511,7 @@ test("44 - Comparing empty to empty string", () => {
 });
 
 test("45 - Comparing empty array to empty plain object", () => {
-  equal(looseCompare({ a: "" }, [""]), true, "45");
+  equal(looseCompare({ a: "" }, [""]), true, "45.01");
 });
 
 // ==============================
@@ -525,7 +529,7 @@ test("46 - both are plain objects, didn't match - returns false", () => {
       }
     ),
     false,
-    "46"
+    "46.01"
   );
 });
 
@@ -533,7 +537,7 @@ test("47 - two functions given - returns false", () => {
   function dummy() {
     return "zzz";
   }
-  equal(looseCompare(dummy, dummy), false, "47");
+  equal(looseCompare(dummy, dummy), false, "47.01");
 });
 
 test.run();

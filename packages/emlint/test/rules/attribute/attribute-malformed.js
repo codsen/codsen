@@ -85,7 +85,7 @@ test(`07`, () => {
       "attribute-malformed": 1,
     },
   });
-  equal(applyFixes(str, messages), fixed, "07");
+  equal(applyFixes(str, messages), fixed, "07.01");
 });
 
 test(`08 - equal missing`, () => {
@@ -97,7 +97,7 @@ test(`08 - equal missing`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "08");
+  equal(applyFixes(str, messages), fixed, "08.01");
 });
 
 // mis-typed
@@ -193,7 +193,7 @@ test(`12 - repeated opening - single`, () => {
       "attribute-malformed": 1,
     },
   });
-  equal(applyFixes(str, messages), fixed, "12");
+  equal(applyFixes(str, messages), fixed, "12.01");
 });
 
 test(`13 - repeated opening - single quotes instead of equal`, () => {
@@ -204,7 +204,7 @@ test(`13 - repeated opening - single quotes instead of equal`, () => {
       "attribute-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "13");
+  equal(applyFixes(str, messages), fixed, "13.01");
 });
 
 test(`14 - repeated opening - double quotes instead of equal`, () => {
@@ -215,7 +215,7 @@ test(`14 - repeated opening - double quotes instead of equal`, () => {
       "attribute-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "14");
+  equal(applyFixes(str, messages), fixed, "14.01");
 });
 
 test(`15 - repeated closing - double`, () => {
@@ -257,7 +257,7 @@ test(`16 - repeated opening - rogue single`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "16");
+  equal(applyFixes(str, messages), fixed, "16.01");
 });
 
 test(`17 - repeated opening - rogue double`, () => {
@@ -269,7 +269,7 @@ test(`17 - repeated opening - rogue double`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "17");
+  equal(applyFixes(str, messages), fixed, "17.01");
 });
 
 // rogue characters
@@ -284,7 +284,7 @@ test(`18 - repeated opening - rogue characters around equal`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "18");
+  equal(applyFixes(str, messages), fixed, "18.01");
 });
 
 // equal missing
@@ -298,7 +298,7 @@ test(`19 - equal missing - equal is missing, tight`, () => {
       "attribute-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "19");
+  equal(applyFixes(str, messages), fixed, "19.01");
 });
 
 test(`20 - equal missing - space instead of equal, recognised attr names followed by quoted value`, () => {
@@ -309,7 +309,7 @@ test(`20 - equal missing - space instead of equal, recognised attr names followe
       "attribute-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "20");
+  equal(applyFixes(str, messages), fixed, "20.01");
 });
 
 test(`21 - equal missing - mismatching quotes - A,B; A,B`, () => {
@@ -380,7 +380,7 @@ test(`24 - no quotes in the value, A-B`, () => {
     ],
     "24.02"
   );
-  equal(messages.length, 1, "24.03");
+  equal(messages.length, 1, "24.02");
 });
 
 test(`25 - no quotes in the value, B-A`, () => {
@@ -423,7 +423,7 @@ test(`26 - single quotes in the value, A-B`, () => {
     ],
     "26.02"
   );
-  equal(messages.length, 1, "26.03");
+  equal(messages.length, 1, "26.02");
 });
 
 test(`27 - single quotes in the value, B-A`, () => {
@@ -453,7 +453,7 @@ test(`27 - single quotes in the value, B-A`, () => {
     ],
     "27.02"
   );
-  equal(messages.length, 1, "27.03");
+  equal(messages.length, 1, "27.02");
 });
 
 // wrong letter case, legit attributes
@@ -496,7 +496,7 @@ test(`28 - all caps attr name`, () => {
     ],
     "28.02"
   );
-  equal(messages.length, 2, "28.03");
+  equal(messages.length, 2, "28.02");
 });
 
 // unescaped matching quotes within a value
@@ -539,7 +539,7 @@ test(`29 - D-D wrapping - useSingleToEscapeDouble = off`, () => {
     ],
     "29.02"
   );
-  equal(messages.length, 2, "29.03");
+  equal(messages.length, 2, "29.02");
 });
 
 test(`30 - S-S wrapping - useSingleToEscapeDouble = off`, () => {
@@ -550,7 +550,7 @@ test(`30 - S-S wrapping - useSingleToEscapeDouble = off`, () => {
       "attribute-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "30");
+  equal(applyFixes(str, messages), fixed, "30.01");
 });
 
 test(`31 - D-S wrapping - useSingleToEscapeDouble = off`, () => {
@@ -561,7 +561,7 @@ test(`31 - D-S wrapping - useSingleToEscapeDouble = off`, () => {
       "attribute-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "31");
+  equal(applyFixes(str, messages), fixed, "31.01");
 });
 
 test(`32 - S-D wrapping - useSingleToEscapeDouble = off`, () => {
@@ -572,7 +572,7 @@ test(`32 - S-D wrapping - useSingleToEscapeDouble = off`, () => {
       "attribute-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "32");
+  equal(applyFixes(str, messages), fixed, "32.01");
 });
 
 test(`33 - useSingleToEscapeDouble = on`, () => {
@@ -611,7 +611,7 @@ test(`33 - useSingleToEscapeDouble = on`, () => {
     ],
     "33.02"
   );
-  equal(messages.length, 2, "33.03");
+  equal(messages.length, 2, "33.02");
 });
 
 test(`34 - S-S wrapping - useSingleToEscapeDouble = on`, () => {
@@ -621,7 +621,7 @@ test(`34 - S-S wrapping - useSingleToEscapeDouble = on`, () => {
       "attribute-malformed": [2, "useSingleToEscapeDouble"],
     },
   });
-  equal(messages, [], "34");
+  equal(messages, [], "34.01");
 });
 
 test(`35 - S-D wrapping - useSingleToEscapeDouble = on`, () => {
@@ -632,7 +632,7 @@ test(`35 - S-D wrapping - useSingleToEscapeDouble = on`, () => {
       "attribute-malformed": [2, "useSingleToEscapeDouble"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "35");
+  equal(applyFixes(str, messages), fixed, "35.01");
 });
 
 test(`36 - D-S wrapping - useSingleToEscapeDouble = on`, () => {
@@ -643,7 +643,7 @@ test(`36 - D-S wrapping - useSingleToEscapeDouble = on`, () => {
       "attribute-malformed": [2, "useSingleToEscapeDouble"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "36");
+  equal(applyFixes(str, messages), fixed, "36.01");
 });
 
 // various
@@ -657,7 +657,7 @@ test(`37 - curly quotes instead`, () => {
       "attribute-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "37");
+  equal(applyFixes(str, messages), fixed, "37.01");
 });
 
 test(`38`, () => {
@@ -669,7 +669,7 @@ test(`38`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "38");
+  equal(applyFixes(str, messages), fixed, "38.01");
 });
 
 test(`39`, () => {
@@ -681,7 +681,7 @@ test(`39`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "39");
+  equal(applyFixes(str, messages), fixed, "39.01");
 });
 
 test(`40`, () => {
@@ -694,7 +694,7 @@ test(`40`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "40");
+  equal(applyFixes(str, messages), fixed, "40.01");
 });
 
 test(`41`, () => {
@@ -707,7 +707,7 @@ test(`41`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "41");
+  equal(applyFixes(str, messages), fixed, "41.01");
 });
 
 test(`42`, () => {
@@ -721,7 +721,7 @@ test(`42`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "42");
+  equal(applyFixes(str, messages), fixed, "42.01");
 });
 
 test(`43`, () => {
@@ -736,7 +736,7 @@ test(`43`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "43");
+  equal(applyFixes(str, messages), fixed, "43.01");
 });
 
 test(`44`, () => {
@@ -748,7 +748,7 @@ test(`44`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "44");
+  equal(applyFixes(str, messages), fixed, "44.01");
 });
 
 test(`45`, () => {
@@ -760,7 +760,7 @@ test(`45`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "45");
+  equal(applyFixes(str, messages), fixed, "45.01");
 });
 
 test(`46`, () => {
@@ -772,7 +772,7 @@ test(`46`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), fixed, "46");
+  equal(applyFixes(str, messages), fixed, "46.01");
 });
 
 // leading whitespace
@@ -785,7 +785,7 @@ test(`47 - leading space present`, () => {
       "attribute-malformed": 2,
     },
   });
-  equal(messages, [], "47");
+  equal(messages, [], "47.01");
 });
 
 test(`48 - leading space missing`, () => {
@@ -796,7 +796,7 @@ test(`48 - leading space missing`, () => {
       "attribute-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "48");
+  equal(applyFixes(str, messages), fixed, "48.01");
 });
 
 test(`49 - two spaces`, () => {
@@ -807,7 +807,7 @@ test(`49 - two spaces`, () => {
       "attribute-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "49");
+  equal(applyFixes(str, messages), fixed, "49.01");
 });
 
 test(`50 - one tab`, () => {
@@ -818,7 +818,7 @@ test(`50 - one tab`, () => {
       "attribute-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "50");
+  equal(applyFixes(str, messages), fixed, "50.01");
 });
 
 test(`51 - ESP tags present`, () => {
@@ -828,7 +828,7 @@ test(`51 - ESP tags present`, () => {
       "attribute-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), str, "51");
+  equal(applyFixes(str, messages), str, "51.01");
 });
 
 test.run();

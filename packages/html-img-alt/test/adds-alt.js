@@ -11,7 +11,7 @@ test("01 - normalising all attributes on IMG, adding ALT", () => {
   equal(
     alts('z<img         a="zz"        >z'),
     'z<img a="zz" alt="" >z',
-    "01 - html simples"
+    "01.01 - html simples"
   );
 });
 
@@ -19,7 +19,7 @@ test("02 - normalising all attributes on IMG, adding ALT", () => {
   equal(
     alts('z<img         a="zz"        />z'),
     'z<img a="zz" alt="" />z',
-    "02 - xhtml simples"
+    "02.01 - xhtml simples"
   );
 });
 
@@ -27,7 +27,7 @@ test("03 - normalising all attributes on IMG, adding ALT", () => {
   equal(
     alts('z<img         a="zz"        /     >z'),
     'z<img a="zz" alt="" />z',
-    "03 - xhtml simples"
+    "03.01 - xhtml simples"
   );
 });
 
@@ -35,7 +35,7 @@ test("04 - normalising all attributes on IMG, adding ALT", () => {
   equal(
     alts('z<img         a="zz"/     >z'),
     'z<img a="zz" alt="" />z',
-    "04 - xhtml simples"
+    "04.01 - xhtml simples"
   );
 });
 
@@ -45,7 +45,7 @@ test("05 - normalising all attributes on IMG, adding ALT", () => {
       'zzz<img      whatever="sjldldljg; slhljdfg"       also="sdfkdh:232423 ; kgkd: 1223678638"       >zzz'
     ),
     'zzz<img whatever="sjldldljg; slhljdfg" also="sdfkdh:232423 ; kgkd: 1223678638" alt="" >zzz',
-    "05 - html advanced"
+    "05.01 - html advanced"
   );
 });
 
@@ -55,7 +55,7 @@ test("06 - normalising all attributes on IMG, adding ALT", () => {
       'zzz<img      whatever="sjldldljg; slhljdfg"       also="sdfkdh:232423 ; kgkd: 1223678638"       />zzz'
     ),
     'zzz<img whatever="sjldldljg; slhljdfg" also="sdfkdh:232423 ; kgkd: 1223678638" alt="" />zzz',
-    "06 - xhtml advanced"
+    "06.01 - xhtml advanced"
   );
 });
 

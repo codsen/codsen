@@ -151,7 +151,8 @@ test(`08 - ${`\u001b[${34}m${`wrong value`}\u001b[${39}m`} - still catches white
   });
   equal(
     applyFixes(str, messages),
-    `<body background="https://codsen.com/spacer.gif">`
+    `<body background="https://codsen.com/spacer.gif">`,
+    "08.01"
   );
   compare(ok, messages, [
     {

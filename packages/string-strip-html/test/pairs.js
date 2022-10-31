@@ -169,7 +169,7 @@ test("06 - single tag pair - astrisk", () => {
 });
 
 test("07 - single tag pair - inner line break retained", () => {
-  equal(stripHtml(" <a> zz\nz </a> ").result, "zz\nz", "07");
+  equal(stripHtml(" <a> zz\nz </a> ").result, "zz\nz", "07.01");
 });
 
 test("08 - multiple tag pairs - adds spaces - #1", () => {
@@ -177,7 +177,7 @@ test("08 - multiple tag pairs - adds spaces - #1", () => {
     stripHtml("rrr <a>zzz</a> something\nelse<img/>zzz<div>yyy</div>uuu")
       .result,
     "rrr zzz something\nelse zzz yyy uuu",
-    "08"
+    "08.01"
   );
 });
 
@@ -195,38 +195,38 @@ test("09 - multiple tag pairs - adds spaces - #2", () => {
 });
 
 test("10 - multiple tag pairs - adds spaces - #2", () => {
-  equal(stripHtml("<a>bbbbbbbb").result, "bbbbbbbb", "10");
+  equal(stripHtml("<a>bbbbbbbb").result, "bbbbbbbb", "10.01");
 });
 
 test("11 - multiple tag pairs - adds spaces - #2", () => {
-  equal(stripHtml("aaaaaaa<a>").result, "aaaaaaa", "11");
+  equal(stripHtml("aaaaaaa<a>").result, "aaaaaaa", "11.01");
 });
 
 test("12 - deletion while being on sensitive mode - recognised tag name, pair", () => {
-  equal(stripHtml("< div >x</div>").result, "x", "12");
+  equal(stripHtml("< div >x</div>").result, "x", "12.01");
 });
 
 test("13 - deletion while being on sensitive mode - recognised tag name, singleton", () => {
-  equal(stripHtml("aaaaaaa< br >bbbbbbbb").result, "aaaaaaa bbbbbbbb", "13");
+  equal(stripHtml("aaaaaaa< br >bbbbbbbb").result, "aaaaaaa bbbbbbbb", "13.01");
 });
 
 test("14 - deletion while being on sensitive mode - recognised tag name, pair, tight outer content", () => {
-  equal(stripHtml("aaaaaaa< div >x</div>").result, "aaaaaaa x", "14");
+  equal(stripHtml("aaaaaaa< div >x</div>").result, "aaaaaaa x", "14.01");
 });
 
 test("15 - deletion while being on sensitive mode - recognised tag name, pair, spaced outer content", () => {
-  equal(stripHtml("aaaaaaa < div >x</div>").result, "aaaaaaa x", "15");
+  equal(stripHtml("aaaaaaa < div >x</div>").result, "aaaaaaa x", "15.01");
 });
 
 test("16 - deletion while being on sensitive mode - recognised tag name, pair, trailing whitespace", () => {
-  equal(stripHtml("aaaaaaa< div >x</div> ").result, "aaaaaaa x", "16");
+  equal(stripHtml("aaaaaaa< div >x</div> ").result, "aaaaaaa x", "16.01");
 });
 
 test("17 - tags with attributes - tight inside tag", () => {
   equal(
     stripHtml('aaaaaaa<div class="zzzz">x</div>bbbbbbbb').result,
     "aaaaaaa x bbbbbbbb",
-    "17"
+    "17.01"
   );
 });
 
@@ -234,7 +234,7 @@ test("18 - tags with attributes - rogue spaces inside tag", () => {
   equal(
     stripHtml('aaaaaaa< br class="zzzz">bbbbbbbb').result,
     "aaaaaaa bbbbbbbb",
-    "18"
+    "18.01"
   );
 });
 
@@ -242,7 +242,7 @@ test("19 - tags with attributes - rogue spaces inside tag, pair", () => {
   equal(
     stripHtml('aaaaaaa< div class="zzzz">x</div>').result,
     "aaaaaaa x",
-    "19"
+    "19.01"
   );
 });
 
@@ -250,7 +250,7 @@ test("20 - tags with attributes", () => {
   equal(
     stripHtml('aaaaaaa < div class="zzzz">x</div>').result,
     "aaaaaaa x",
-    "20"
+    "20.01"
   );
 });
 
@@ -258,19 +258,19 @@ test("21 - tags with attributes", () => {
   equal(
     stripHtml('aaaaaaa< div class="zzzz">x</div>').result,
     "aaaaaaa x",
-    "21"
+    "21.01"
   );
 });
 
 test("22 - tags with attributes", () => {
-  equal(stripHtml('< div class="zzzz">x</div>').result, "x", "22");
+  equal(stripHtml('< div class="zzzz">x</div>').result, "x", "22.01");
 });
 
 test("23 - multiple brackets repeated", () => {
   equal(
     stripHtml("aaaa<<<<<<div>>>>something</div>bbbbb").result,
     "aaaa something bbbbb",
-    "23"
+    "23.01"
   );
 });
 
@@ -278,7 +278,7 @@ test("24 - multiple brackets repeated", () => {
   equal(
     stripHtml("aaaa<<<<<<div>something</div>bbbbb").result,
     "aaaa something bbbbb",
-    "24"
+    "24.01"
   );
 });
 
@@ -286,7 +286,7 @@ test("25 - multiple brackets repeated", () => {
   equal(
     stripHtml("aaaa<<<<<<div>>>>something<<<</div>bbbbb").result,
     "aaaa something bbbbb",
-    "25"
+    "25.01"
   );
 });
 
@@ -294,7 +294,7 @@ test("26 - multiple brackets repeated", () => {
   equal(
     stripHtml("aaaa<<<<<<div>>>>something<<<</div>>>>>>>bbbbb").result,
     "aaaa something bbbbb",
-    "26"
+    "26.01"
   );
 });
 
@@ -302,7 +302,7 @@ test("27 - multiple brackets repeated", () => {
   equal(
     stripHtml("aaaa something<<<</div>>>>>>>bbbbb").result,
     "aaaa something bbbbb",
-    "27"
+    "27.01"
   );
 });
 
@@ -310,7 +310,7 @@ test("28 - multiple brackets repeated", () => {
   equal(
     stripHtml("aaaa something<<<<  / div>>>>>>>bbbbb").result,
     "aaaa something bbbbb",
-    "28"
+    "28.01"
   );
 });
 
@@ -318,7 +318,7 @@ test("29 - multiple brackets repeated", () => {
   equal(
     stripHtml("aaaa something<<<<  //// div /// >>>>>>>bbbbb").result,
     "aaaa something bbbbb",
-    "29"
+    "29.01"
   );
 });
 
@@ -327,7 +327,7 @@ test("30 - multiple brackets repeated", () => {
     stripHtml("aaaa< <  <   <    <     <     div>>>>something<<<</div>bbbbb")
       .result,
     "aaaa something bbbbb",
-    "30"
+    "30.01"
   );
 });
 
@@ -354,7 +354,7 @@ test("32 - checking can script slip through in any way", () => {
       'some text <script>console.log("<sup>>>>>>"); alert("you\'re done!");</script> more text'
     ).result,
     "some text more text",
-    "32"
+    "32.01"
   );
 });
 
@@ -364,7 +364,7 @@ test("33 - checking can script slip through in any way", () => {
       'some text &lt;script>console.log("<sup>>>>>>"); alert("you\'re done!");</script> more text'
     ).result,
     "some text more text",
-    "33"
+    "33.01"
   );
 });
 
@@ -374,7 +374,7 @@ test("34 - checking can script slip through in any way", () => {
       'some text &lt;script&gt;console.log("<sup>>>>>>"); alert("you\'re done!");&lt;/script&gt; more text'
     ).result,
     "some text more text",
-    "34 - sneaky HTML character-encoded brackets"
+    "34.01 - sneaky HTML character-encoded brackets"
   );
 });
 

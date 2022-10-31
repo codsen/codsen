@@ -56,7 +56,7 @@ test(`06 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to r
     equal(i, index);
     index += 1;
   });
-  equal(pinged, `abxyzhij`, "06");
+  equal(pinged, `abxyzhij`, "06.01");
 });
 
 test(`07 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to insert, middle`, () => {
@@ -70,7 +70,7 @@ test(`07 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to i
     equal(i, index);
     index += 1;
   });
-  equal(pinged, `abxyzcdefghij`, "07");
+  equal(pinged, `abxyzcdefghij`, "07.01");
 });
 
 test(`08 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to replace range, start`, () => {
@@ -86,7 +86,7 @@ test(`08 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to r
     equal(i, index);
     index += 1;
   });
-  equal(pinged, `xyzhij`, "08");
+  equal(pinged, `xyzhij`, "08.01");
 });
 
 test(`09 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to insert at the end`, () => {
@@ -102,7 +102,7 @@ test(`09 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to i
     equal(i, index);
     index += 1;
   });
-  equal(pinged, `abcdefghijxyz`, "09");
+  equal(pinged, `abcdefghijxyz`, "09.01");
 });
 
 test(`10 - \u001b[${33}m${`iterating`}\u001b[${39}m - inserting over undefined character that is located just after end`, () => {
@@ -117,7 +117,7 @@ test(`10 - \u001b[${33}m${`iterating`}\u001b[${39}m - inserting over undefined c
     equal(i, index);
     index += 1;
   });
-  equal(pinged, `abcdefghijxyz`, "10");
+  equal(pinged, `abcdefghijxyz`, "10.01");
 });
 
 test(`11 - \u001b[${33}m${`iterating`}\u001b[${39}m - inserting beyond string end`, () => {
@@ -132,7 +132,7 @@ test(`11 - \u001b[${33}m${`iterating`}\u001b[${39}m - inserting beyond string en
     equal(i, index);
     index += 1;
   });
-  equal(pinged, `abcdefghij`, "11");
+  equal(pinged, `abcdefghij`, "11.01");
 });
 
 test(`12 - \u001b[${33}m${`iterating`}\u001b[${39}m - multiple ranges`, () => {
@@ -153,7 +153,7 @@ test(`12 - \u001b[${33}m${`iterating`}\u001b[${39}m - multiple ranges`, () => {
       index += 1;
     }
   );
-  equal(pinged, `abxyzhi_`, "12");
+  equal(pinged, `abxyzhi_`, "12.01");
 });
 
 test(`13 - \u001b[${33}m${`iterating`}\u001b[${39}m - replace whole thing`, () => {
@@ -167,7 +167,7 @@ test(`13 - \u001b[${33}m${`iterating`}\u001b[${39}m - replace whole thing`, () =
     equal(i, index);
     index += 1;
   });
-  equal(pinged, `xyz`, "13");
+  equal(pinged, `xyz`, "13.01");
 });
 
 test(`14 - \u001b[${33}m${`iterating`}\u001b[${39}m - delete whole thing`, () => {
@@ -181,7 +181,7 @@ test(`14 - \u001b[${33}m${`iterating`}\u001b[${39}m - delete whole thing`, () =>
     equal(i, index);
     index += 1;
   });
-  equal(pinged, "", "14");
+  equal(pinged, "", "14.01");
 });
 
 test(`15 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges array is empty`, () => {
@@ -195,7 +195,7 @@ test(`15 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges array is empty`, ()
     equal(i, index);
     index += 1;
   });
-  equal(pinged, "abcdefghij", "15");
+  equal(pinged, "abcdefghij", "15.01");
 });
 
 test(`16 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges array is null`, () => {
@@ -209,7 +209,7 @@ test(`16 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges array is null`, () 
     equal(i, index);
     index += 1;
   });
-  equal(pinged, "abcdefghij", "16");
+  equal(pinged, "abcdefghij", "16.01");
 });
 
 test(`17 - \u001b[${33}m${`iterating`}\u001b[${39}m - touching ranges to delete, adding up to everything`, () => {
@@ -232,7 +232,7 @@ test(`17 - \u001b[${33}m${`iterating`}\u001b[${39}m - touching ranges to delete,
       index += 1;
     }
   );
-  equal(pinged, "", "17");
+  equal(pinged, "", "17.01");
 });
 
 test(`18 - \u001b[${33}m${`iterating`}\u001b[${39}m - overlapping ranges to delete, adding up to everything`, () => {
@@ -255,7 +255,7 @@ test(`18 - \u001b[${33}m${`iterating`}\u001b[${39}m - overlapping ranges to dele
       index += 1;
     }
   );
-  equal(pinged, "", "18");
+  equal(pinged, "", "18.01");
 });
 
 test(`19 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges exclude single character`, () => {
@@ -295,7 +295,7 @@ test(`20 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty ranges`, () => {
       index += 1;
     }
   );
-  equal(pinged, source, "20");
+  equal(pinged, source, "20.01");
 });
 
 test(`21 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty non-existent ranges`, () => {
@@ -317,7 +317,7 @@ test(`21 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty non-existent ran
       index += 1;
     }
   );
-  equal(pinged, source, "21");
+  equal(pinged, source, "21.01");
 });
 
 // ==============================

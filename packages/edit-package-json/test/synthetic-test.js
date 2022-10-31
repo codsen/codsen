@@ -56,7 +56,8 @@ globby([
             not.ok(
               `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path
-              } - failure: ${e} - amended:\n${amended}`
+              } - failure: ${e} - amended:\n${amended}`,
+              "02.01"
             );
           });
         }
@@ -69,7 +70,8 @@ globby([
             not.ok(
               `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path
-              } - failure: ${e}`
+              } - failure: ${e}`,
+              "03.01"
             );
           });
         }

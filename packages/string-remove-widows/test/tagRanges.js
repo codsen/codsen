@@ -26,7 +26,7 @@ test(`01 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - accepts known ta
       tagRanges: [[0, 74]],
     }).res,
     source,
-    `01 - everything ignored because everything is a tag`
+    `01.01 - everything ignored because everything is a tag`
   );
 });
 

@@ -58,7 +58,7 @@ test(`02 - ${`\u001b[${36}m${`decode`}\u001b[${39}m`} - one of entities`, () => 
         rangeValDecoded: decode(`&EmptyVerySmallSquare;`),
       },
     ],
-    `02`
+    `02.01`
   );
   equal(gathered, [], "02.02");
 });

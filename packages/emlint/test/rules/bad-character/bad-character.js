@@ -110,7 +110,7 @@ test(`07 - single REPLACEMENT CHARACTER`, () => {
       "bad-character": 0,
     },
   });
-  equal(messages.length, 1, "07");
+  equal(messages.length, 1, "07.01");
 });
 
 test.run();

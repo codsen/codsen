@@ -17,7 +17,7 @@ test("01 - input is plain object, replacement is string", () => {
     {
       style: "meta",
     },
-    "01"
+    "01.01"
   );
 });
 

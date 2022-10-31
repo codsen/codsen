@@ -66,7 +66,7 @@ test("02 - deletes by key, multiple findings at the same branch", () => {
     {
       a: { b: [{}] },
     },
-    "02"
+    "02.01"
   );
 });
 
@@ -81,7 +81,7 @@ test("03 - can't find any to delete by key", () => {
       a: { b: [{ c: { c: "e" } }] },
       c: { d: ["h"] },
     },
-    "03"
+    "03.01"
   );
 });
 
@@ -95,13 +95,13 @@ test("04 - deletes by value only from mixed", () => {
     {
       a: { b: [{}] },
     },
-    "04"
+    "04.01"
   );
 });
 
 test("05 - deletes by value only from arrays", () => {
   let input = ["a", "b", "c", ["a", ["b"], "c"]];
-  equal(del(input, { key: "b" }), ["a", "c", ["a", [], "c"]], "05");
+  equal(del(input, { key: "b" }), ["a", "c", ["a", [], "c"]], "05.01");
 });
 
 test("06 - deletes by key and value from mixed", () => {
@@ -115,7 +115,7 @@ test("06 - deletes by key and value from mixed", () => {
       a: { b: [{ c: {} }] },
       f: { d: { zzz: "f" } },
     },
-    "06"
+    "06.01"
   );
 });
 
@@ -124,7 +124,7 @@ test("07 - does not delete by key and value from arrays", () => {
   equal(
     del(input, { key: "b", val: "zzz" }),
     ["a", "b", "c", ["a", ["b"], "c"]],
-    "07"
+    "07.01"
   );
 });
 
@@ -144,7 +144,7 @@ test("08 - deletes by key and value from mixed", () => {
         e: "f",
       },
     },
-    "08"
+    "08.01"
   );
 });
 
@@ -158,7 +158,7 @@ test("09 - undefined as value", () => {
     {
       a: undefined,
     },
-    "09"
+    "09.01"
   );
 });
 

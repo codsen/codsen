@@ -47,7 +47,7 @@ test(`01 - 1x2`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "01");
+  equal(res, intended, "01.01");
 });
 
 test.run();

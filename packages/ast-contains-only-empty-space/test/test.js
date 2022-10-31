@@ -19,7 +19,7 @@ test("01 - array containing empty string", () => {
 
 test("02 - array containing plain object with empty string", () => {
   // equal(empty([{ a: " " }]), true, "01.02.01");
-  equal(empty([{ a: "a" }]), false, "02");
+  equal(empty([{ a: "a" }]), false, "02.01");
 });
 
 test("03 - array containing plain obj containing array containing string", () => {
@@ -92,7 +92,7 @@ test("06 - object containing arrays of empty strings", () => {
       d: ["\t   "],
     }),
     true,
-    "06"
+    "06.01"
   );
 });
 
@@ -105,7 +105,7 @@ test("07 - object containing arrays of empty strings", () => {
       d: ["\t   "],
     }),
     false,
-    "07"
+    "07.01"
   );
 });
 
@@ -118,7 +118,7 @@ test("08 - object containing arrays of empty strings", () => {
       d: ["\t   "],
     }),
     false,
-    "08"
+    "08.01"
   );
 });
 
@@ -141,7 +141,7 @@ test("09 - object containing arrays of empty strings", () => {
       d: ["\t   "],
     }),
     false,
-    "09"
+    "09.01"
   );
 });
 
@@ -164,7 +164,7 @@ test("10 - object containing arrays of empty strings", () => {
       d: ["\t   "],
     }),
     true,
-    "10"
+    "10.01"
   );
 });
 
@@ -174,7 +174,7 @@ test("11 - object's value is null", () => {
       a: null,
     }),
     true,
-    "11"
+    "11.01"
   );
 });
 
@@ -191,7 +191,7 @@ test("12 - object containing empty strings", () => {
 });
 
 test("13 - true empty string", () => {
-  equal(empty(""), true, "13");
+  equal(empty(""), true, "13.01");
 });
 
 // ==============================
@@ -199,19 +199,19 @@ test("13 - true empty string", () => {
 // ==============================
 
 test("14 - function passed", () => {
-  equal(empty(dudFunction), false, "14");
+  equal(empty(dudFunction), false, "14.01");
 });
 
 test("15 - bool passed", () => {
-  equal(empty(true), false, "15");
+  equal(empty(true), false, "15.01");
 });
 
 test("16 - null passed", () => {
-  equal(empty(null), false, "16");
+  equal(empty(null), false, "16.01");
 });
 
 test("17 - undefined passed", () => {
-  equal(empty(undefined), false, "17");
+  equal(empty(undefined), false, "17.01");
 });
 
 test("18 - null deeper in an array", () => {
@@ -223,7 +223,7 @@ test("18 - null deeper in an array", () => {
       },
     ]),
     false,
-    "18"
+    "18.01"
   );
 });
 

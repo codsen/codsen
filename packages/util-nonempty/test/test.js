@@ -9,7 +9,7 @@ import { nonEmpty } from "../dist/util-nonempty.esm.js";
 // ==============================
 
 test("01 - inputs missing - returns false", () => {
-  equal(nonEmpty(), false, "01");
+  equal(nonEmpty(), false, "01.01");
 });
 
 // ==============================
@@ -32,11 +32,11 @@ test("04 - String", () => {
 });
 
 test("05 - null", () => {
-  equal(nonEmpty(null), false, "05");
+  equal(nonEmpty(null), false, "05.01");
 });
 
 test('06 - hardcoded "undefined" - same as missing input', () => {
-  equal(nonEmpty(undefined), false, "06");
+  equal(nonEmpty(undefined), false, "06.01");
 });
 
 test("07 - boolean - still empty (!)", () => {
@@ -48,7 +48,7 @@ test("08 - function - still empty, no matter what's returned (!)", () => {
   function dummy() {
     return "a";
   }
-  equal(nonEmpty(dummy), false, "08");
+  equal(nonEmpty(dummy), false, "08.01");
 });
 
 test("09 - Number", () => {

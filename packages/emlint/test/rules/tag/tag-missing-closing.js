@@ -172,7 +172,7 @@ test(`07 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TD missing`, () => {
     ],
     "07.02"
   );
-  equal(messages.length, 1, "07.03");
+  equal(messages.length, 1, "07.02");
 });
 
 test(`08 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TR missing`, () => {
@@ -212,7 +212,7 @@ test(`08 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TR missing`, () => {
     ],
     "08.02"
   );
-  equal(messages.length, 1, "08.03");
+  equal(messages.length, 1, "08.02");
 });
 
 test(`09 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TABLE missing`, () => {
@@ -252,28 +252,13 @@ test(`09 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TABLE missing`, () => {
     ],
     "09.02"
   );
-  equal(messages.length, 1, "09.03");
-});
-
-test.skip(`01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TR+TD missing`, () => {
-  let str = `<table width="1" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <td>
-      z
-</table>`;
-  let messages = verify(not, str, {
-    rules: {
-      "tag-missing-closing": 2,
-    },
-  });
-  equal(applyFixes(str, messages), str, "01");
-  equal(messages, [], "01.02");
+  equal(messages.length, 1, "09.02");
 });
 
 // 02. various
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - opening and closing void tag`, () => {
+test(`10 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - opening and closing void tag`, () => {
   let str = `<br><br>zzz</br></br>`;
   let fixed = `<br /><br />zzz<br /><br />`;
   let messages = verify(not, str, {
@@ -281,10 +266,10 @@ test(`11 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - opening and closing voi
       all: 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "11");
+  equal(applyFixes(str, messages), fixed, "10.01");
 });
 
-test(`12 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - false positive - unclosed void`, () => {
+test(`11 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - false positive - unclosed void`, () => {
   let str = `<br><br>zzz<br>`;
   let fixed = `<br /><br />zzz<br />`;
   let messages = verify(not, str, {
@@ -292,29 +277,7 @@ test(`12 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - false positive - unclos
       all: 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "12");
-});
-
-test.skip(`02`, () => {
-  let str = `<br<div></div>`;
-  let fixed = `<br /><div></div>`;
-  let messages = verify(not, str, {
-    rules: {
-      all: 2,
-    },
-  });
-  equal(applyFixes(str, messages), fixed, "02.01");
-});
-
-test.skip(`03`, () => {
-  let str = `<br\n<div></div>`;
-  let fixed = `<br />\n<div></div>`;
-  let messages = verify(not, str, {
-    rules: {
-      all: 2,
-    },
-  });
-  equal(applyFixes(str, messages), fixed, "03.01");
+  equal(applyFixes(str, messages), fixed, "11.01");
 });
 
 test.run();

@@ -44,7 +44,7 @@
     "dev": "echo 'no build needed'",
     "lect": "node '../../ops/lect/lect.js'",
     "letspublish": "yarn publish || :",
-    "lint": "eslint . --fix",
+    "lint": "eslint . --ext .js --ext .ts --fix",
     "prepare": "echo 'ready'",
     "prettier:format": "prettier --write '**/*.{js,md}' --no-error-on-unmatched-pattern",
     "test": "c8 yarn run unit && yarn run lint",

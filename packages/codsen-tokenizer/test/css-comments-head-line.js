@@ -84,7 +84,7 @@ test(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - first line commented out`,
         attribs: [],
       },
     ]),
-    "01"
+    "01.01"
   );
 });
 
@@ -142,7 +142,7 @@ test(`02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - line comment`, () => {
         attribs: [],
       },
     ]),
-    "02"
+    "02.01"
   );
 });
 

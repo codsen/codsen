@@ -67,7 +67,7 @@ test(`03 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - also similar
 
 test(`04 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - basic, \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
   let str = `<img src="xyz" alt="="/>`;
-  ok(isCl(str, 19, 21), "04"); // <--
+  ok(isCl(str, 19, 21), "04.01"); // <--
 
   // fin.
 });

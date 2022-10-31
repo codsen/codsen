@@ -47,7 +47,7 @@ test(`03 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - 1st arg is empty string`
       res: "",
       version,
     },
-    "03"
+    "03.01"
   );
 });
 

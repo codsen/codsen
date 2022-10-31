@@ -5,11 +5,11 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { join } from "../dist/tsd-extract.esm.js";
 
 test("01 - edge cases", () => {
-  equal(join(), "");
-  equal(join(""), "");
-  equal(join("", ""), "");
-  equal(join(null), "");
-  equal(join(null, null, null), "");
+  equal(join(), "", "01.01");
+  equal(join(""), "", "01.02");
+  equal(join("", ""), "", "01.03");
+  equal(join(null), "", "01.04");
+  equal(join(null, null, null), "", "01.05");
 });
 
 test("02 - minimal", () => {
@@ -24,7 +24,8 @@ test("02 - minimal", () => {
     `{
   a: string;
   b: string;
-}`
+}`,
+    "02.01"
   );
 });
 
@@ -58,7 +59,8 @@ test("03 - more realistic", () => {
   valueEndsAt: number | null;
   all: string[];
   error: string | null;
-}`
+}`,
+    "03.01"
   );
 });
 
@@ -89,7 +91,8 @@ test("04 - many objects", () => {
   d: null | string;
   e: number;
   f: (g) => void;
-}`
+}`,
+    "04.01"
   );
 });
 

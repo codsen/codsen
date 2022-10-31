@@ -17,11 +17,11 @@ function rand(from, to) {
 // -----------------------------------------------------------------------------
 
 test(`01 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - exported uglify is a function`, () => {
-  equal(typeof uglifyById, "function", "01");
+  equal(typeof uglifyById, "function", "01.01");
 });
 
 test(`02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - exported version is a semver version`, () => {
-  equal(String(version).match(/\d+\.\d+\.\d+/gi).length, 1, "02");
+  equal(String(version).match(/\d+\.\d+\.\d+/gi).length, 1, "02.01");
 });
 
 // -----------------------------------------------------------------------------
@@ -62,14 +62,14 @@ test(`03 - ${`\u001b[${33}m${`uglifyById`}\u001b[${39}m`} - generates unique and
 
 test(`04 - ${`\u001b[${35}m${`makeRandomArr`}\u001b[${39}m`} - generates uglified array from reference array`, () => {
   let generated = makeRandomArr(5000);
-  equal(generated.length, uglifyArr(generated).length, "04");
+  equal(generated.length, uglifyArr(generated).length, "04.01");
 });
 
 test(`05 - ${`\u001b[${35}m${`makeRandomArr`}\u001b[${39}m`} - generates unique elements array`, () => {
   // all are unique
   let length = 1000;
   let generated = uglifyArr(makeRandomArr(length));
-  equal(generated.length, length, "05");
+  equal(generated.length, length, "05.01");
   generated.forEach((name1, index1) =>
     equal(
       generated.some((name2, index2) => name1 === name2 && index1 !== index2),
@@ -130,7 +130,7 @@ test(`08 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - repetitions should be OK`,
     randArr1.push(randArr1[0]);
   }
   let generated = uglifyArr(randArr1);
-  equal(generated.length, randArr1.length, "08");
+  equal(generated.length, randArr1.length, "08.01");
   generated.forEach((val, i) => {
     // all values are repeated on both:
     equal(generated[i], generated[0]);
@@ -142,7 +142,7 @@ test(`09 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - should work if strings don
   // all are still unique
   let length = 1000;
   let generated = uglifyArr(makeRandomArr(length, false));
-  equal(generated.length, length, "09");
+  equal(generated.length, length, "09.01");
   generated.forEach((name1, index1) =>
     equal(
       generated.some((name2, index2) => name1 === name2 && index1 !== index2),
@@ -169,7 +169,7 @@ test(`10 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - should work if strings don
       ".class10",
     ]),
     [".f", ".f", ".f", ".g", ".h", ".i", ".j", ".k", ".l", ".m", ".n", ".b"],
-    "10"
+    "10.01"
   );
 });
 
@@ -190,7 +190,7 @@ test(`11 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - bunch of identical just-na
       "zzz",
     ]),
     ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
-    "11"
+    "11.01"
   );
 });
 
@@ -242,7 +242,7 @@ test(`12 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - single and double letter n
       ".c",
       "#ao", // <---------- notice it does not take #a because #a is already taken
     ],
-    "12"
+    "12.01"
   );
 });
 

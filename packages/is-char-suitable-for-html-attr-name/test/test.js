@@ -10,23 +10,23 @@ const BACKSLASH = "\u005C";
 // -----------------------------------------------------------------------------
 
 test(`01 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - no input`, () => {
-  equal(is(), false, "01");
+  equal(is(), false, "01.01");
 });
 
 test(`02 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - input is not a string`, () => {
-  equal(is(2), false, "02");
+  equal(is(2), false, "02.01");
 });
 
 test(`03 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - empty string`, () => {
-  equal(is(""), false, "03");
+  equal(is(""), false, "03.01");
 });
 
 test(`04 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - more than 1 long - first char is picked`, () => {
-  equal(is("aa"), true, "04");
+  equal(is("aa"), true, "04.01");
 });
 
 test(`05 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - more than 1 long - first char is picked`, () => {
-  equal(is(" a"), false, "05");
+  equal(is(" a"), false, "05.01");
 });
 
 // 01. B.A.U.

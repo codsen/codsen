@@ -8,7 +8,7 @@ import { collapse } from "../dist/string-collapse-white-space.esm.js";
 // -----------------------------------------------------------------------------
 
 test(`01`, () => {
-  equal(collapse("a > b  c"), { result: "a > b c", ranges: [[5, 6]] }, "01");
+  equal(collapse("a > b  c"), { result: "a > b c", ranges: [[5, 6]] }, "01.01");
 });
 
 test(`02`, () => {
@@ -56,7 +56,7 @@ test(`02`, () => {
         [5, 6],
       ],
     },
-    "02"
+    "02.01"
   );
 });
 

@@ -20,7 +20,7 @@ test("01 - CDATA - tight", () => {
       allTagLocations: [[1, 95]],
       filteredTagLocations: [[1, 95]],
     },
-    "01"
+    "01.01"
   );
 });
 
@@ -36,7 +36,7 @@ test("02 - CDATA - normal", () => {
       allTagLocations: [[2, 90]],
       filteredTagLocations: [[2, 90]],
     },
-    "02"
+    "02.01"
   );
 });
 
@@ -52,7 +52,7 @@ test("03 - CDATA - loose", () => {
       allTagLocations: [[4, 98]],
       filteredTagLocations: [[4, 98]],
     },
-    "03"
+    "03.01"
   );
 });
 
@@ -69,7 +69,7 @@ test("04 - CDATA - single linebreaks", () => {
       allTagLocations: [[2, 96]],
       filteredTagLocations: [[2, 96]],
     },
-    "04"
+    "04.01"
   );
 });
 
@@ -85,7 +85,7 @@ test("05 - CDATA - excessive linebreaks", () => {
       allTagLocations: [[4, 98]],
       filteredTagLocations: [[4, 98]],
     },
-    "05"
+    "05.01"
   );
 });
 
@@ -101,7 +101,7 @@ test("06 - CDATA - mixed linebreaks", () => {
       allTagLocations: [[6, 100]],
       filteredTagLocations: [[6, 100]],
     },
-    "06"
+    "06.01"
   );
 });
 

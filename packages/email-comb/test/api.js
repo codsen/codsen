@@ -35,13 +35,13 @@ test("04 - wrong inputs", () => {
 test("05 - wrong inputs", () => {
   not.throws(() => {
     comb("");
-  }, "05");
+  }, "05.01");
 });
 
 test("06 - wrong inputs", () => {
   not.throws(() => {
     comb("a");
-  }, "06");
+  }, "06.01");
 });
 
 test("07 - wrong opts", () => {
@@ -65,19 +65,19 @@ test("09 - wrong inputs", () => {
 test("10 - wrong inputs", () => {
   not.throws(() => {
     comb("", {});
-  }, "10");
+  }, "10.01");
 });
 
 test("11 - wrong inputs", () => {
   not.throws(() => {
     comb("", null);
-  }, "11");
+  }, "11.01");
 });
 
 test("12 - wrong inputs", () => {
   not.throws(() => {
     comb("", undefined);
-  }, "12");
+  }, "12.01");
 });
 
 test("13 - wrong inputs", () => {
@@ -89,19 +89,19 @@ test("13 - wrong inputs", () => {
 test("14 - wrong inputs", () => {
   not.throws(() => {
     comb("zzz", { whitelist: [] });
-  }, "14");
+  }, "14.01");
 });
 
 test("15 - wrong inputs", () => {
   not.throws(() => {
     comb("zzz", { whitelist: "" });
-  }, "15");
+  }, "15.01");
 });
 
 test("16 - wrong inputs", () => {
   not.throws(() => {
     comb("zzz", { whitelist: "a" });
-  }, "16");
+  }, "16.01");
 });
 
 test("17 - wrong inputs", () => {
@@ -131,7 +131,7 @@ test("20 - wrong inputs, opts.backend", () => {
 test("21 - wrong inputs, opts.backend", () => {
   throws(() => {
     comb("zzz", { backend: [{}] }); // objects have to have consistent schema: "heads" and "tails" keys
-  }, "21");
+  }, "21.01");
 });
 
 test("22 - wrong inputs, opts.backend", () => {
@@ -143,13 +143,13 @@ test("22 - wrong inputs, opts.backend", () => {
 test("23 - wrong inputs, opts.uglify", () => {
   not.throws(() => {
     comb("z", { uglify: 0 });
-  }, "23");
+  }, "23.01");
 });
 
 test("24 - wrong inputs, opts.uglify", () => {
   not.throws(() => {
     comb("z", { uglify: 1 });
-  }, "24");
+  }, "24.01");
 });
 
 test("25 - wrong inputs, opts.uglify", () => {
@@ -161,13 +161,13 @@ test("25 - wrong inputs, opts.uglify", () => {
 test("26 - wrong inputs, opts.reportProgressFunc", () => {
   not.throws(() => {
     comb("z", { reportProgressFunc: 0 });
-  }, "26");
+  }, "26.01");
 });
 
 test("27 - wrong inputs, opts.reportProgressFunc", () => {
   not.throws(() => {
     comb("z", { reportProgressFunc: false });
-  }, "27");
+  }, "27.01");
 });
 
 test("28 - wrong inputs, opts.reportProgressFunc", () => {

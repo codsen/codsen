@@ -8,7 +8,7 @@ test("01 - recognised HTML5 doctype", () => {
   equal(
     detect("<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE HTML> aaaa zzzzzz"),
     "html",
-    "01"
+    "01.01"
   );
 });
 

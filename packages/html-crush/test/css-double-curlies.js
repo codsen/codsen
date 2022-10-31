@@ -28,7 +28,7 @@ test(`01 - sampler`, () => {
     `<style>
 @media screen{div{color:white;} }.foo{background:green;}
 </style>`,
-    "01"
+    "01.01"
   );
 });
 
@@ -128,7 +128,7 @@ test(`05 - line break falls between two curlies, #1`, () => {
 @media screen{div{color:white;}
 }.foo{background:green;}
 </style>`,
-    "05"
+    "05.01"
   );
 });
 
@@ -154,7 +154,7 @@ test(`06 - line break falls between two curlies, #2`, () => {
 @media screen{div{color:white;}
 }.foo{background:green;}
 </style>`,
-    "06"
+    "06.01"
   );
 });
 
@@ -180,7 +180,7 @@ test(`07 - line break falls between two curlies, #3`, () => {
 @media screen{div{color:white;} }
 .foo{background:green;}
 </style>`,
-    "07"
+    "07.01"
   );
 });
 
@@ -206,7 +206,7 @@ test(`08 - line break falls between two curlies, #4`, () => {
 @media screen{div{color:white;} }
 .foo{background:green;}
 </style>`,
-    "08"
+    "08.01"
   );
 });
 

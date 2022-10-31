@@ -8,11 +8,11 @@ import { extractVars as e } from "../dist/string-extract-sass-vars.esm.js";
 // -----------------------------------------------------------------------------
 
 test("01 - api - first arg is not string", () => {
-  equal(Object.keys(e(null)).length, 0, "01");
+  equal(Object.keys(e(null)).length, 0, "01.01");
 });
 
 test("02 - api - first arg is empty string", () => {
-  equal(Object.keys(e("")).length, 0, "02");
+  equal(Object.keys(e("")).length, 0, "02.01");
 });
 
 test("03 - api - opts is wrong", () => {
@@ -47,7 +47,7 @@ test("06 - basics - one pair, value without quotes", () => {
     {
       blue: "#08f0fd",
     },
-    "06"
+    "06.01"
   );
 });
 
@@ -58,7 +58,7 @@ test("07 - basics - one pair, value with quotes", () => {
     {
       blue: "#08f0fd",
     },
-    "07"
+    "07.01"
   );
 });
 
@@ -70,7 +70,7 @@ test("08 - basics - two pairs", () => {
       red: "#ff6565",
       blue: "#08f0fd",
     },
-    "08"
+    "08.01"
   );
 });
 
@@ -81,7 +81,7 @@ test("09 - basics - quoted value with semicolon", () => {
     {
       red: "a; b",
     },
-    "09"
+    "09.01"
   );
 });
 
@@ -92,33 +92,33 @@ test("10 - basics - value with colon", () => {
     {
       red: "a: b",
     },
-    "10"
+    "10.01"
   );
 });
 
 test("11 - basics - value as positive integer", () => {
   let source = `$abc: 9;`;
-  is(e(source).abc, 9, "11");
+  is(e(source).abc, 9, "11.01");
 });
 
 test("12 - basics - value as positive integer", () => {
   let source = `$abc: 0;`;
-  is(e(source).abc, 0, "12");
+  is(e(source).abc, 0, "12.01");
 });
 
 test("13 - basics - value as negative integer", () => {
   let source = `$abc: -9;`;
-  is(e(source).abc, -9, "13");
+  is(e(source).abc, -9, "13.01");
 });
 
 test("14 - basics - value as positive float", () => {
   let source = `$abc: 1.333;`;
-  is(e(source).abc, 1.333, "14");
+  is(e(source).abc, 1.333, "14.01");
 });
 
 test("15 - basics - value as negative float", () => {
   let source = `$abc: -1.333;`;
-  is(e(source).abc, -1.333, "15");
+  is(e(source).abc, -1.333, "15.01");
 });
 
 test("16 - basics - value as digit", () => {
@@ -128,7 +128,7 @@ test("16 - basics - value as digit", () => {
     {
       a: "bcd: ef",
     },
-    "16"
+    "16.01"
   );
 });
 
@@ -140,7 +140,7 @@ $customValue4: 10;`;
     {
       customValue4: 10,
     },
-    "17"
+    "17.01"
   );
 });
 
@@ -155,7 +155,7 @@ test("18 - basics - slash-asterisk comments", () => {
       red: "#ff6565",
       blue: "#08f0fd",
     },
-    "18"
+    "18.01"
   );
 });
 
@@ -170,13 +170,13 @@ test("19 - basics - slash-excl. mark-asterisk comments", () => {
       red: "#ff6565",
       blue: "#08f0fd",
     },
-    "19"
+    "19.01"
   );
 });
 
 test("20 - basics - nothing", () => {
   let source = `   \t\t\t`;
-  equal(Object.keys(e(source)).length, 0, "20");
+  equal(Object.keys(e(source)).length, 0, "20.01");
 });
 
 test.run();

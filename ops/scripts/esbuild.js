@@ -77,7 +77,7 @@ if (typeof pkg.main === "string" && pkg.main.endsWith(".cjs.js")) {
     format: "cjs",
     bundle: true,
     define: { DEV: !!process.env.DEV },
-    minify: !process.env.DEV,
+    // minify: !process.env.DEV,
     sourcemap: false,
     target: ["esnext"],
     outfile: path.join(path.resolve("./"), `dist/${name}.cjs.js`),

@@ -33,7 +33,7 @@ test(`01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, () => {
     ],
     "01.02"
   );
-  equal(messages.length, 1, "01.03");
+  equal(messages.length, 1, "01.02");
 });
 
 test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule`, () => {
@@ -61,7 +61,7 @@ test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule`, () => {
     ],
     "02.02"
   );
-  equal(messages.length, 1, "02.03");
+  equal(messages.length, 1, "02.02");
 });
 
 test(`03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - rule by wildcard`, () => {
@@ -89,7 +89,7 @@ test(`03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - rule by wildcard`, () => {
     ],
     "03.02"
   );
-  equal(messages.length, 1, "03.03");
+  equal(messages.length, 1, "03.02");
 });
 
 test(`04 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule - off`, () => {
@@ -153,7 +153,7 @@ test(`07 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by wildcard`, () => 
     ],
     "07.02"
   );
-  equal(messages.length, 1, "07.03");
+  equal(messages.length, 1, "07.02");
 });
 
 test(`08 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by group rule`, () => {
@@ -181,7 +181,7 @@ test(`08 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by group rule`, () =
     ],
     "08.02"
   );
-  equal(messages.length, 1, "08.03");
+  equal(messages.length, 1, "08.02");
 });
 
 test(`09 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by exact rule`, () => {
@@ -209,7 +209,7 @@ test(`09 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by exact rule`, () =
     ],
     "09.02"
   );
-  equal(messages.length, 1, "09.03");
+  equal(messages.length, 1, "09.02");
 });
 
 test(`10 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by wildcard - off`, () => {

@@ -71,7 +71,7 @@ test(`06 - empty string`, () => {
   findMalformed("", "bde", (obj) => {
     gathered.push(obj);
   });
-  equal(gathered, [], "06");
+  equal(gathered, [], "06.01");
 });
 
 test(`07 - empty string`, () => {
@@ -79,7 +79,7 @@ test(`07 - empty string`, () => {
   findMalformed("abc", "", (obj) => {
     gathered.push(obj);
   });
-  equal(gathered, [], "07");
+  equal(gathered, [], "07.01");
 });
 
 // -----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ test(`08 - rogue character, "c"`, () => {
         idxTo: 5,
       },
     ],
-    "08"
+    "08.01"
   );
 });
 
@@ -123,7 +123,7 @@ test(`09 - overlapping and extended maxDistance`, () => {
         idxTo: 9,
       },
     ],
-    "09"
+    "09.01"
   );
 });
 
@@ -148,7 +148,7 @@ test(`10 - with opts.stringOffset`, () => {
         idxTo: 108,
       },
     ],
-    "10"
+    "10.01"
   );
 });
 
@@ -165,7 +165,7 @@ test(`11 - correct, fully matching value is not pinged`, () => {
       stringOffset: 100,
     }
   );
-  equal(gathered, [], "11");
+  equal(gathered, [], "11.01");
 });
 
 test(`12 - like before but strings in opts`, () => {
@@ -189,7 +189,7 @@ test(`12 - like before but strings in opts`, () => {
         idxTo: 112,
       },
     ],
-    "12"
+    "12.01"
   );
 });
 
@@ -211,7 +211,7 @@ test(`13 - whitespace`, () => {
         idxTo: 12,
       },
     ],
-    "13"
+    "13.01"
   );
 });
 
@@ -233,7 +233,7 @@ test(`14 - repeated characters after failed match`, () => {
         idxTo: 3,
       },
     ],
-    "14"
+    "14.01"
   );
 });
 
@@ -255,7 +255,7 @@ test(`15 - repeated characters after failed match`, () => {
         idxTo: 4,
       },
     ],
-    "15"
+    "15.01"
   );
 });
 

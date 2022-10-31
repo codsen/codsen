@@ -331,7 +331,7 @@ test(`04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mch
   equal(
     matchLeft("za", 1, [() => "EOL"]),
     false,
-    "04 - whitespace trim opts control"
+    "04.01 - whitespace trim opts control"
   );
 });
 
@@ -341,7 +341,7 @@ test(`05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mch
       trimCharsBeforeMatching: ["z"],
     }),
     "EOL",
-    "05 - whitespace trim opt on"
+    "05.01 - whitespace trim opt on"
   );
 });
 
@@ -349,12 +349,12 @@ test(`06 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mch
   equal(
     matchLeft("za", 1, ["a", () => "EOL"]),
     false,
-    "06 - whitespace trim opts control"
+    "06.01 - whitespace trim opts control"
   );
 });
 
 test(`07 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
-  equal(matchLeft("za", 1, ["z", () => "EOL"]), "z", "07 - z caught");
+  equal(matchLeft("za", 1, ["z", () => "EOL"]), "z", "07.01 - z caught");
 });
 
 test(`08 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
@@ -363,7 +363,7 @@ test(`08 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mch
       trimCharsBeforeMatching: ["z"],
     }),
     "EOL",
-    "08 - whitespace trim opt on"
+    "08.01 - whitespace trim opt on"
   );
 });
 

@@ -23,7 +23,7 @@ test("01 - missing closing TD, TR, TABLE will not throw", () => {
     some text
 `;
 
-  equal(actual, intended, "01 - does nothing as head has no styles");
+  equal(actual, intended, "01.01 - does nothing as head has no styles");
 });
 
 test("02 - doesn't remove any other empty attributes besides class/id (mini)", () => {
@@ -47,7 +47,7 @@ test("02 - doesn't remove any other empty attributes besides class/id (mini)", (
 </html>
 `;
 
-  equal(actual, intended, "02");
+  equal(actual, intended, "02.01");
 });
 
 test("03 - doesn't remove any other empty attributes besides class/id", () => {
@@ -79,7 +79,7 @@ test("03 - doesn't remove any other empty attributes besides class/id", () => {
 </html>
 `;
 
-  equal(actual, intended, "03");
+  equal(actual, intended, "03.01");
 });
 
 test("04 - removes classes and id's from HTML even if it's heavily messed up", () => {
@@ -128,7 +128,7 @@ test("04 - removes classes and id's from HTML even if it's heavily messed up", (
   equal(
     actual,
     intended,
-    "04 - rubbish in, rubbish out, only rubbish-with-unused-CSS-removed-out!"
+    "04.01 - rubbish in, rubbish out, only rubbish-with-unused-CSS-removed-out!"
   );
 });
 
@@ -154,7 +154,7 @@ test("05 - missing last @media curlie", () => {
 </body>
 `;
 
-  equal(comb(source).result, intended, "05");
+  equal(comb(source).result, intended, "05.01");
 });
 
 test("06 - dirty code - blank class attribute name", () => {
@@ -172,7 +172,7 @@ zzz
 zzz
 </body>`;
 
-  equal(actual1, intended1, "06");
+  equal(actual1, intended1, "06.01");
 });
 
 test("07 - dirty code - space between class and =", () => {
@@ -194,7 +194,7 @@ test("07 - dirty code - space between class and =", () => {
 </body>
 `;
 
-  equal(actual, intended, "07");
+  equal(actual, intended, "07.01");
 });
 
 test.run();

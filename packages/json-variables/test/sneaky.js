@@ -144,7 +144,7 @@ test("05 - another three-level var resolving", () => {
       c: "val",
       d: "val",
     },
-    "05"
+    "05.01"
   );
 });
 
@@ -321,7 +321,7 @@ test("08 - empty variable", () => {
       a: "",
       b: "bbb",
     },
-    "08 - no value is needed if variable is empty - it's resolved to empty str"
+    "08.01 - no value is needed if variable is empty - it's resolved to empty str"
   );
 });
 

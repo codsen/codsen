@@ -142,7 +142,7 @@ test("08 - tag pairs including content - healthy, typical style tag pair", () =>
 <body>aaa</body>
 </html>`).result,
     "aaa",
-    "08"
+    "08.01"
   );
 });
 
@@ -162,7 +162,7 @@ test(`09 - tag pairs including content - mismatching quotes "text/css'`, () => {
 <body>aaa</body>
 </html>`).result,
     "aaa",
-    `09`
+    `09.01`
   );
 });
 
@@ -178,7 +178,7 @@ test(`10 - tag pairs including content - mismatching quotes 'text/css"`, () => {
 <body>aaa</body>
 </html>`).result,
     "aaa",
-    "10"
+    "10.01"
   );
 });
 
@@ -383,7 +383,7 @@ test("20 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["b", "e"],
     }).result,
     "a c d g",
-    "20 - sneaky similarity, bro starts with b"
+    "20.01 - sneaky similarity, bro starts with b"
   );
 });
 
@@ -396,7 +396,7 @@ test("21 - tag pairs including content", () => {
       }
     ).result,
     "Text and some more.",
-    "21 - strips with attributes. Now resembling real life."
+    "21.01 - strips with attributes. Now resembling real life."
   );
 });
 
@@ -409,7 +409,7 @@ test("22 - tag pairs including content", () => {
       }
     ).result,
     "Text and some more.",
-    "22 - lots of spaces within tags"
+    "22.01 - lots of spaces within tags"
   );
 });
 
@@ -532,7 +532,7 @@ test("29 - tag pairs including content", () => {
       );
     },
     /THROW_ID_08/,
-    "29"
+    "29.01"
   );
 });
 

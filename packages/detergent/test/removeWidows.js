@@ -28,7 +28,7 @@ test(`01 - minimal samples`, () => {
       convertEntities: true,
     }).res,
     `aaa bbb ccc&nbsp;ddd`,
-    `01 - remove widows - entities, one line string no full stop`
+    `01.01 - remove widows - entities, one line string no full stop`
   );
 });
 
@@ -40,7 +40,7 @@ test(`02 - ETX processed twice, 2nd time during widow removal`, () => {
       removeLineBreaks: true,
     }).res,
     `aaa bbb ccc&nbsp;ddd`,
-    `02 - remove widows - entities, one line string no full stop`
+    `02.01 - remove widows - entities, one line string no full stop`
   );
 });
 

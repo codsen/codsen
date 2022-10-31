@@ -30,7 +30,7 @@ test(`01 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
     </td>
   </tr>
 </table>`),
-    "01 - str before tr - 1 col"
+    "01.01 - str before tr - 1 col"
   );
 });
 
@@ -56,7 +56,7 @@ test(`02 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
     </td>
   </tr>
 </table>`),
-    "02 - string after the tr - 1 col"
+    "02.01 - string after the tr - 1 col"
   );
 });
 
@@ -92,7 +92,7 @@ zzz
 </td>
 </tr>
 </table>`),
-    "03 - string between the tr's - 1 col"
+    "03.01 - string between the tr's - 1 col"
   );
 });
 
@@ -120,7 +120,7 @@ test(`04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
     zzz
   </tr>-->
 </table>`),
-    "04 - notice comment is never closed, yet wrapping occurs before it"
+    "04.01 - notice comment is never closed, yet wrapping occurs before it"
   );
 });
 
@@ -156,7 +156,7 @@ test(`05 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
     </td>
   </tr>
 </table>`),
-    "05 - code + comments"
+    "05.01 - code + comments"
   );
 });
 
@@ -188,7 +188,7 @@ test(`06 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
     </td>
   </tr>
 </table>`),
-    "06"
+    "06.01"
   );
 });
 
@@ -224,7 +224,7 @@ zzz
 </td>
 </tr>
 </table>`),
-    "07 - string between the tr's - 1 col"
+    "07.01 - string between the tr's - 1 col"
   );
 });
 
@@ -260,7 +260,7 @@ zzz
 </td>
 </tr>
 </table>`),
-    "08 - string between the tr's - 1 col"
+    "08.01 - string between the tr's - 1 col"
   );
 });
 
@@ -280,7 +280,7 @@ test(`09 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
 <tr><td>{{ 1 }}</td></tr>
 <tr><td>s</td></tr>
 </table>`),
-    "09"
+    "09.01"
   );
 });
 
@@ -307,7 +307,7 @@ test(`10 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
 <tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">{{ 1 }}</td></tr>
 <tr><td>s</td></tr>
 </table>`),
-    "10"
+    "10.01"
   );
 });
 
@@ -338,12 +338,12 @@ test(`11 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
 <tr><td>c</td></tr>
 <tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">{{ 3 }}</td></tr>
 </table>`),
-    "11"
+    "11.01"
   );
 });
 
 // TODO
-test.skip(`01 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts, #3`, () => {
+/*tttest(`12 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts, #3`, () => {
   equal(
     processThis(
       `<table><tr><td></td></tr>
@@ -366,7 +366,34 @@ test.skip(`01 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - 
 </td></tr>
 <tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">2</td></tr>
 <tr><td></td></tr></table>`),
-    "01"
+    "12.01"
+  );
+});*/
+
+test(`12 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`, () => {
+  equal(
+    processThis(
+      `<table><tr><td></td></tr>
+1
+<tr><td>
+<table></table>
+</td></tr>
+2
+<tr><td></td></tr></table>`,
+      {
+        cssStylesContent:
+          "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
+        alwaysCenter: true,
+      }
+    ),
+    tiny(`<table><tr><td></td></tr>
+<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">1</td></tr>
+<tr><td>
+<table></table>
+</td></tr>
+<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">2</td></tr>
+<tr><td></td></tr></table>`),
+    "12.01"
   );
 });
 
@@ -376,33 +403,6 @@ test(`13 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
       `<table><tr><td></td></tr>
 1
 <tr><td>
-<table></table>
-</td></tr>
-2
-<tr><td></td></tr></table>`,
-      {
-        cssStylesContent:
-          "background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;",
-        alwaysCenter: true,
-      }
-    ),
-    tiny(`<table><tr><td></td></tr>
-<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">1</td></tr>
-<tr><td>
-<table></table>
-</td></tr>
-<tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">2</td></tr>
-<tr><td></td></tr></table>`),
-    "13"
-  );
-});
-
-test(`14 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`, () => {
-  equal(
-    processThis(
-      `<table><tr><td></td></tr>
-1
-<tr><td>
 <table><tr><td>
 <table><tr><td>a</td></tr></table>
 <table><tr><td>b</td></tr></table>
@@ -428,7 +428,7 @@ test(`14 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
 </td></tr>
 <tr><td align="center" style="background: coral; color: black; font-family: monospace; font-size: 16px; line-height: 1; text-align: center;">2</td></tr>
 <tr><td></td></tr></table>`),
-    "14"
+    "13.01"
   );
 });
 

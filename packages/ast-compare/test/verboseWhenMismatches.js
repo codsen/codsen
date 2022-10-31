@@ -12,7 +12,7 @@ test("01 - plain objects", () => {
       { verboseWhenMismatches: true }
     ),
     "string",
-    "01"
+    "01.01"
   );
 });
 
@@ -24,7 +24,7 @@ test("02 - plain objects, useWildcards, key with wildcard", () => {
       { verboseWhenMismatches: true, useWildcards: true }
     ),
     "string",
-    "02"
+    "02.01"
   );
 });
 

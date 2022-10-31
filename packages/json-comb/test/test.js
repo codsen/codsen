@@ -187,7 +187,7 @@ test("04 - normalisation, called on the directory with subdirectories", async ()
       throw new Error(err);
     });
 
-  equal(await processedFileContents, normalisedFileContents, "04");
+  equal(await processedFileContents, normalisedFileContents, "04.01");
 });
 
 test("05 - normalisation stops if one file is given [ID_2]", async () => {
@@ -207,7 +207,7 @@ test("05 - normalisation stops if one file is given [ID_2]", async () => {
     });
 
   // CLI will complain no files could be found
-  match(stdOutContents.stdout, /ID_2/g, "05");
+  match(stdOutContents.stdout, /ID_2/g, "05.01");
 });
 
 // tap.todo("01.05 - sort, there's a broken JSON among files");

@@ -15,11 +15,11 @@ function prep(obj) {
 // -----------------------------------------------------------------------------
 
 test(`01 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - exports a function`, () => {
-  equal(typeof editor, "function", "01");
+  equal(typeof editor, "function", "01.01");
 });
 
 test(`02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - exported version is a semver version`, () => {
-  equal(String(version).match(/\d+\.\d+\.\d+/gi).length, 1, "02");
+  equal(String(version).match(/\d+\.\d+\.\d+/gi).length, 1, "02.01");
 });
 
 // -----------------------------------------------------------------------------
@@ -58,7 +58,7 @@ I ate a banana and a cucumber.
       chunkWordCounts: [7],
       chunkLengths: [30],
     },
-    "03"
+    "03.01"
   );
 });
 
@@ -108,7 +108,7 @@ So, I ate a banana and then, after five minutes, another banana. Then, I thought
       chunkWordCounts: [7, 63],
       chunkLengths: [30, 323],
     },
-    "04"
+    "04.01"
   );
 });
 
@@ -150,7 +150,7 @@ So, I ate a banana and then, after five minutes, another banana. Then, I thought
       chunkWordCounts: [7, 63],
       chunkLengths: [30, 323],
     },
-    "05"
+    "05.01"
   );
 });
 
@@ -281,7 +281,7 @@ test(`08 - three dashes in the text`, () => {
       )
     ).chunkWordCounts.length,
     1,
-    "08"
+    "08.01"
   );
 });
 
@@ -317,7 +317,7 @@ I ate bananas and cucumbers.
       chunkWordCounts: [5],
       chunkLengths: [28],
     },
-    "09"
+    "09.01"
   );
 });
 

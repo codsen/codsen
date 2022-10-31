@@ -23,7 +23,7 @@ test("01 - wrong/missing input", () => {
 });
 
 test("02 - empty string as input", () => {
-  equal(split(""), 0, "02");
+  equal(split(""), 0, "02.01");
 });
 
 test("03 - wrong second arg", () => {
@@ -35,10 +35,10 @@ test("03 - wrong second arg", () => {
   }, /THROW_ID_02/g);
   not.throws(() => {
     split("a", {});
-  });
+  }, "03.03");
   not.throws(() => {
     split("a", {}, "a");
-  });
+  }, "03.04");
 });
 
 test("04 - leading whitespace", () => {
@@ -57,7 +57,7 @@ test("04 - leading whitespace", () => {
     split(" a", {
       throwIfEdgeWhitespace: false,
     });
-  });
+  }, "04.04");
 });
 
 test("05 - trailing whitespace", () => {
@@ -76,13 +76,17 @@ test("05 - trailing whitespace", () => {
     split("a ", {
       throwIfEdgeWhitespace: false,
     });
-  });
+  }, "05.04");
 });
 
 test("06 - exports defaults", () => {
-  equal(defaults, {
-    throwIfEdgeWhitespace: true,
-  });
+  equal(
+    defaults,
+    {
+      throwIfEdgeWhitespace: true,
+    },
+    "06.01"
+  );
 });
 
 test("07 - exports version", () => {

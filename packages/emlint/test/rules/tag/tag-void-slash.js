@@ -44,7 +44,7 @@ test(`02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - slash absent`, () => 
     ],
     "02.01"
   );
-  equal(applyFixes(str, messages), "<br/>", "02.02");
+  equal(applyFixes(str, messages), "<br/>", "02.01");
 });
 
 test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - with "tag-space-before-closing-bracket"`, () => {
@@ -72,7 +72,7 @@ test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - with "tag-space-befor
     ],
     "03.01"
   );
-  equal(applyFixes(str, messages), "<br/>", "03.02");
+  equal(applyFixes(str, messages), "<br/>", "03.01");
 });
 
 test(`04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - with grouped rule, "tag"`, () => {
@@ -82,7 +82,7 @@ test(`04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - with grouped rule, "t
       tag: 2,
     },
   });
-  equal(applyFixes(str, messages), "<br/>", "04");
+  equal(applyFixes(str, messages), "<br/>", "04.01");
 });
 
 test(`05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-bracket"=always`, () => {
@@ -94,7 +94,7 @@ test(`05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-clo
       "tag-void-slash": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "05");
+  equal(applyFixes(str, messages), fixed, "05.01");
 });
 
 test(`06 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-bracket"=never`, () => {
@@ -106,7 +106,7 @@ test(`06 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-clo
       "tag-void-slash": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "06");
+  equal(applyFixes(str, messages), fixed, "06.01");
 });
 
 test(`07 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-closing-bracket"=never, hardcoded void's default always`, () => {
@@ -118,7 +118,7 @@ test(`07 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - "tag-space-before-clo
       "tag-void-slash": [2, "always"],
     },
   });
-  equal(applyFixes(str, messages), fixed, "07");
+  equal(applyFixes(str, messages), fixed, "07.01");
 });
 
 test(`08 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - both never`, () => {
@@ -160,7 +160,7 @@ test(`09 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash absent, confi
     ],
     "09.01"
   );
-  equal(applyFixes(str, messages), "<br/>", "09.02");
+  equal(applyFixes(str, messages), "<br/>", "09.01");
 });
 
 test(`10 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash absent, config=never`, () => {
@@ -198,7 +198,7 @@ test(`11 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash present, conf
     ],
     "11.01"
   );
-  equal(applyFixes(str, messages), "<br>", "11.02");
+  equal(applyFixes(str, messages), "<br>", "11.01");
 });
 
 test(`12 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - slash present, config=always`, () => {
@@ -237,69 +237,11 @@ test(`13 - does not touch the whitespace`, () => {
     ],
     "13.01"
   );
-  equal(messages.length, 1, "13.02");
-  equal(applyFixes(str, messages), fixed, "13.03");
+  equal(messages.length, 1, "13.01");
+  equal(applyFixes(str, messages), fixed, "13.02");
 });
 
 // combo with tag-malformed, missing closing bracket
 // -----------------------------------------------------------------------------
-
-test.skip(`01`, () => {
-  let str = "<br";
-  let fixed = "<br />";
-  let messages = verify(not, str, {
-    rules: {
-      "tag-malformed": 2,
-    },
-  });
-  equal(applyFixes(str, messages), fixed, "01.01");
-});
-
-test.skip(`02`, () => {
-  let str = "<br";
-  let fixed = "<br />";
-  let messages = verify(not, str, {
-    rules: {
-      "tag-void-slash": 2,
-    },
-  });
-  equal(applyFixes(str, messages), fixed, "02.01");
-});
-
-test.skip(`03`, () => {
-  let str = "<br";
-  let fixed = "<br />";
-  let messages = verify(not, str, {
-    rules: {
-      "tag-void-slash": 2,
-      "tag-malformed": 2,
-    },
-  });
-  equal(applyFixes(str, messages), fixed, "03.01");
-});
-
-test.skip(`04`, () => {
-  let str = "<br ";
-  let fixed = "<br />";
-  let messages = verify(not, str, {
-    rules: {
-      "tag-void-slash": 2,
-      "tag-malformed": 2,
-    },
-  });
-  equal(applyFixes(str, messages), fixed, "04.01");
-});
-
-test.skip(`05`, () => {
-  let str = "<br ";
-  let fixed = "<br />";
-  let messages = verify(not, str, {
-    rules: {
-      "tag-void-slash": 2,
-      "tag-malformed": 2,
-    },
-  });
-  equal(applyFixes(str, messages), fixed, "05.01");
-});
 
 test.run();

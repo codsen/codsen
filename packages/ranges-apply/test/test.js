@@ -139,7 +139,7 @@ test("03 - deletes multiple chunks correctly", () => {
       [18, 29],
     ]),
     "aaa bbb ccc",
-    "03"
+    "03.01"
   );
 });
 
@@ -154,7 +154,7 @@ test("04 - rApplyaces multiple chunks correctly", () => {
       [18, 28, "yyy"],
     ]),
     "aaa zzz bbb yyy ccc",
-    "04"
+    "04.01"
   );
 });
 
@@ -169,12 +169,12 @@ test("05 - deletes and replaces multiple chunks correctly", () => {
       [18, 28, "zzz"],
     ]),
     "aaa  bbb zzz ccc",
-    "05"
+    "05.01"
   );
 });
 
 test("06 - empty ranges array", () => {
-  equal(rApply("some text", []), "some text", "06");
+  equal(rApply("some text", []), "some text", "06.01");
 });
 
 test("07 - deletes multiple chunks with zero indexes correctly", () => {
@@ -188,7 +188,7 @@ test("07 - deletes multiple chunks with zero indexes correctly", () => {
       [14, 25],
     ]),
     "bbb ccc",
-    "07"
+    "07.01"
   );
 });
 
@@ -203,7 +203,7 @@ test("08 - rApplyaces multiple chunks with zero indexes correctly", () => {
       [14, 25],
     ]),
     "aaa bbb ccc",
-    "08"
+    "08.01"
   );
 });
 
@@ -260,7 +260,7 @@ test("11 - rApplyaces multiple chunks correctly", () => {
   equal(
     rApply(str, [[4, 13, "zzz"], null, [18, 28, null]]),
     "aaa zzz bbb  ccc",
-    "11"
+    "11.01"
   );
 });
 
@@ -275,13 +275,13 @@ test("12 - rApplyaces multiple chunks correctly given in a wrong order", () => {
       [4, 13, "zzz"],
     ]),
     "aaa zzz bbb yyy ccc",
-    "12"
+    "12.01"
   );
 });
 
 test("13 - null as rApplyacement range - does nothing", () => {
   let str = "zzzzzzzz";
-  equal(rApply(str, null), str, "13");
+  equal(rApply(str, null), str, "13.01");
 });
 
 // -----------------------------------------------------------------------------
@@ -303,7 +303,7 @@ test("15 - multiple rApplyacement pieces", () => {
       [9, 9, "ddd"],
     ]),
     "aaa bbb ccc ddd eee",
-    "15"
+    "15.01"
   );
 });
 

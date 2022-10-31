@@ -133,7 +133,11 @@ test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whites
       "attribute-validate-data": 2,
     },
   });
-  equal(applyFixes(str, messages), `<object data="https://codsen.com">`);
+  equal(
+    applyFixes(str, messages),
+    `<object data="https://codsen.com">`,
+    "08.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-data",

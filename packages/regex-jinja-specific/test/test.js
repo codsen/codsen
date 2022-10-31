@@ -17,11 +17,11 @@ test("02 maybe Jinja", () => {
 });
 
 test("03 namespaces", () => {
-  match(`{% set x = namespace(blablabla) %}`, isJinjaSpecific(), "03");
+  match(`{% set x = namespace(blablabla) %}`, isJinjaSpecific(), "03.01");
 });
 
 test("04 backwards order", () => {
-  match(`{{'oodles' if crambles else 'brambles'}}`, isJinjaSpecific(), "04");
+  match(`{{'oodles' if crambles else 'brambles'}}`, isJinjaSpecific(), "04.01");
 });
 
 test.run();

@@ -11,7 +11,7 @@ test("01", () => {
       cparser();
     },
     /THROW_ID_01/g,
-    "00.01"
+    "01.01"
   );
 
   throws(
@@ -19,7 +19,7 @@ test("01", () => {
       cparser(true);
     },
     /THROW_ID_02/g,
-    "00.02"
+    "01.02"
   );
 
   throws(
@@ -27,7 +27,7 @@ test("01", () => {
       cparser("a", "z");
     },
     /THROW_ID_03/g,
-    "00.03"
+    "01.03"
   );
 
   throws(
@@ -35,7 +35,7 @@ test("01", () => {
       cparser("a", { tagCb: "z" });
     },
     /THROW_ID_04/g,
-    "00.04 - opts.tagCb() is wrong"
+    "01.04 - opts.tagCb() is wrong"
   );
 
   throws(
@@ -43,7 +43,7 @@ test("01", () => {
       cparser("a", { charCb: "z" });
     },
     /THROW_ID_05/g,
-    "00.05 - opts.charCb() is wrong"
+    "01.05 - opts.charCb() is wrong"
   );
 
   throws(
@@ -51,7 +51,7 @@ test("01", () => {
       cparser("a", { reportProgressFunc: "z" });
     },
     /THROW_ID_06/g,
-    "00.06"
+    "01.06"
   );
 
   throws(
@@ -59,11 +59,11 @@ test("01", () => {
       cparser("a", { errCb: "z" });
     },
     /THROW_ID_07/g,
-    "00.07"
+    "01.07"
   );
 });
 
-test("01 - opts.tagCb", () => {
+test("02 - opts.tagCb", () => {
   let gathered = [];
   cparser("  <a>z", {
     tagCb: (obj) => {
@@ -90,7 +90,7 @@ test("01 - opts.tagCb", () => {
   ]);
 });
 
-test("02 - opts.charCb", () => {
+test("03 - opts.charCb", () => {
   let gathered = [];
   cparser("<a>z1", {
     charCb: (obj) => {

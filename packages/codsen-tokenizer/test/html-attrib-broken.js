@@ -268,7 +268,7 @@ test(`04 - empty attr value`, () => {
         ],
       },
     ],
-    "04"
+    "04.01"
   );
 });
 
@@ -496,7 +496,7 @@ test(`07 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening quote re
         attribs: [],
       },
     ],
-    "07"
+    "07.01"
   );
 });
 
@@ -1090,7 +1090,7 @@ test(`16 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - matching quo
         ],
       },
     ],
-    "16"
+    "16.01"
   );
 });
 
@@ -1166,7 +1166,7 @@ test(`17 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - matching quo
         ],
       },
     ],
-    "17"
+    "17.01"
   );
 });
 
@@ -1220,7 +1220,7 @@ test(`18 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quote
         ],
       },
     ],
-    "18"
+    "18.01"
   );
 });
 

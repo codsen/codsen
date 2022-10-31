@@ -101,7 +101,7 @@ test("02 - already sorted package.json", async () => {
       throw new Error(err);
     });
 
-  equal(await processedFileContents, source, "02");
+  equal(await processedFileContents, source, "02.01");
 });
 
 test("03 - empty array as package.json", async () => {
@@ -123,7 +123,7 @@ test("03 - empty array as package.json", async () => {
       throw new Error(err);
     });
 
-  equal(await processedFileContents, source, "03");
+  equal(await processedFileContents, source, "03.01");
 });
 
 test.run();

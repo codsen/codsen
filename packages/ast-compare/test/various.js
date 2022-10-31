@@ -10,7 +10,7 @@ import { compare } from "../dist/ast-compare.esm.js";
 // -----------------------------------------------------------------------------
 
 test("01 - null vs null", () => {
-  equal(compare(null, null), true, "01");
+  equal(compare(null, null), true, "01.01");
 });
 
 test("02 - real-life #1", () => {

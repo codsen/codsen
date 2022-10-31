@@ -266,7 +266,7 @@ test("02", () => {
       },
     }).result,
     `aaa`,
-    "02"
+    "02.01"
   );
 });
 
@@ -967,7 +967,7 @@ test(`05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false`
 });
 
 test(`06`, () => {
-  equal(collapse("      "), { result: "", ranges: [[0, 6]] }, "06");
+  equal(collapse("      "), { result: "", ranges: [[0, 6]] }, "06.01");
   mixer({
     trimStart: true,
   }).forEach((opt) => {
@@ -1792,7 +1792,7 @@ test("12", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     `a `,
-    "12"
+    "12.01"
   );
 });
 
@@ -1809,7 +1809,7 @@ test("13", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     `a`,
-    "13"
+    "13.01"
   );
 });
 
@@ -1826,7 +1826,7 @@ test("14", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     `a `,
-    "14"
+    "14.01"
   );
 });
 
@@ -1843,7 +1843,7 @@ test("15", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     ` a`,
-    "15"
+    "15.01"
   );
 });
 
@@ -1860,7 +1860,7 @@ test("16", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     `a`,
-    "16"
+    "16.01"
   );
 });
 
@@ -1877,7 +1877,7 @@ test("17", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     `a`,
-    "17"
+    "17.01"
   );
 });
 
@@ -1893,7 +1893,7 @@ test("18", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     `a`,
-    "18"
+    "18.01"
   );
 });
 
@@ -1910,7 +1910,7 @@ test("19", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     `a`,
-    "19"
+    "19.01"
   );
 });
 
@@ -1953,7 +1953,7 @@ test("21", () => {
       enforceSpacesOnly: true,
     }).result,
     ` a b `,
-    "21"
+    "21.01"
   );
 });
 
@@ -1970,7 +1970,7 @@ test(`22 - trim involving non-breaking spaces`, () => {
         [13, 15],
       ],
     },
-    "22"
+    "22.01"
   );
 });
 
@@ -1985,7 +1985,7 @@ test(`23 - trim involving non-breaking spaces`, () => {
         [9, 17],
       ],
     },
-    "23"
+    "23.01"
   );
 });
 
@@ -2002,7 +2002,7 @@ test(`24 - trim involving non-breaking spaces`, () => {
         [17, 23],
       ],
     },
-    "24"
+    "24.01"
   );
 });
 
@@ -2013,7 +2013,7 @@ test(`25 - trim involving non-breaking spaces`, () => {
       trimEnd: false,
     }).result,
     ` \xa0 `,
-    "25"
+    "25.01"
   );
 });
 

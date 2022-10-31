@@ -25,7 +25,7 @@ test(`01 - rule disabled`, () => {
       ],
     },
   });
-  equal(messages, [], "01");
+  equal(messages, [], "01.01");
 });
 
 test(`02 - tag not present`, () => {
@@ -42,7 +42,7 @@ test(`02 - tag not present`, () => {
       ],
     },
   });
-  equal(messages, [], "02");
+  equal(messages, [], "02.01");
 });
 
 test(`03 - nothing enforced`, () => {
@@ -57,7 +57,7 @@ test(`03 - nothing enforced`, () => {
       ],
     },
   });
-  equal(messages, [], "03");
+  equal(messages, [], "03.01");
 });
 
 test(`04 - nothing enforced - null`, () => {
@@ -72,7 +72,7 @@ test(`04 - nothing enforced - null`, () => {
       ],
     },
   });
-  equal(messages, [], "04");
+  equal(messages, [], "04.01");
 });
 
 test(`05 - nothing enforced - undef`, () => {
@@ -87,7 +87,7 @@ test(`05 - nothing enforced - undef`, () => {
       ],
     },
   });
-  equal(messages, [], "05");
+  equal(messages, [], "05.01");
 });
 
 test(`06 - all OK`, () => {
@@ -104,7 +104,7 @@ test(`06 - all OK`, () => {
       ],
     },
   });
-  equal(messages, [], "06");
+  equal(messages, [], "06.01");
 });
 
 test(`07 - bool false, one matched, one not`, () => {
@@ -122,7 +122,7 @@ test(`07 - bool false, one matched, one not`, () => {
       ],
     },
   });
-  equal(messages, [], "07");
+  equal(messages, [], "07.01");
 });
 
 test(`08 - bool false, #2`, () => {
@@ -139,7 +139,7 @@ test(`08 - bool false, #2`, () => {
       ],
     },
   });
-  equal(messages, [], "08");
+  equal(messages, [], "08.01");
 });
 
 test(`09 - bool true`, () => {
@@ -156,7 +156,7 @@ test(`09 - bool true`, () => {
       ],
     },
   });
-  equal(messages, [], "09");
+  equal(messages, [], "09.01");
 });
 
 test(`10 - all OK - number casted to string`, () => {
@@ -173,7 +173,7 @@ test(`10 - all OK - number casted to string`, () => {
       ],
     },
   });
-  equal(messages, [], "10");
+  equal(messages, [], "10.01");
 });
 
 // missing
@@ -208,7 +208,7 @@ test(`11`, () => {
     ],
     "11.01"
   );
-  equal(messages.length, 1, "11.02");
+  equal(messages.length, 1, "11.01");
 });
 
 test(`12 - loose value check, style empty`, () => {
@@ -240,7 +240,7 @@ test(`12 - loose value check, style empty`, () => {
     ],
     "12.01"
   );
-  equal(messages.length, 1, "12.02");
+  equal(messages.length, 1, "12.01");
 });
 
 test(`13 - loose value check, style not empty`, () => {
@@ -272,7 +272,7 @@ test(`13 - loose value check, style not empty`, () => {
     ],
     "13.01"
   );
-  equal(messages.length, 1, "13.02");
+  equal(messages.length, 1, "13.01");
 });
 
 test(`14 - loose value check, style not empty, one loosely matched`, () => {
@@ -305,7 +305,7 @@ test(`14 - loose value check, style not empty, one loosely matched`, () => {
     ],
     "14.01"
   );
-  equal(messages.length, 1, "14.02");
+  equal(messages.length, 1, "14.01");
 });
 
 test(`15 - strict value check, property missing`, () => {
@@ -337,7 +337,7 @@ test(`15 - strict value check, property missing`, () => {
     ],
     "15.01"
   );
-  equal(messages.length, 1, "15.02");
+  equal(messages.length, 1, "15.01");
 });
 
 test(`16 - strict value check, property present but has a wrong value`, () => {
@@ -369,7 +369,7 @@ test(`16 - strict value check, property present but has a wrong value`, () => {
     ],
     "16.01"
   );
-  equal(messages.length, 1, "16.02");
+  equal(messages.length, 1, "16.01");
 });
 
 test(`17 - strict value check, property present but has a missing value`, () => {
@@ -401,7 +401,7 @@ test(`17 - strict value check, property present but has a missing value`, () => 
     ],
     "17.01"
   );
-  equal(messages.length, 1, "17.02");
+  equal(messages.length, 1, "17.01");
 });
 
 test.run();

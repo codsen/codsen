@@ -56,7 +56,7 @@ test("04 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, loose", () => {
 });
 
 test("05 - opts.trimOnlySpaces - default", () => {
-  equal(stripHtml("\xa0 <article> \xa0").result, "", "05");
+  equal(stripHtml("\xa0 <article> \xa0").result, "", "05.01");
 });
 
 test("06 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, tag", () => {
@@ -88,26 +88,26 @@ test("07 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, two tags", () => {
 });
 
 test("08 - opts.trimOnlySpaces - whitespace around", () => {
-  equal(stripHtml(" \xa0 <article> \xa0 ").result, "", "08");
+  equal(stripHtml(" \xa0 <article> \xa0 ").result, "", "08.01");
 });
 
 test("09 - opts.trimOnlySpaces - whitespace around, trimOnlySpaces = on", () => {
   equal(
     stripHtml(" \xa0 <article> \xa0 ", { trimOnlySpaces: true }).result,
     "\xa0\xa0",
-    "09"
+    "09.01"
   );
 });
 
 test("10 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all", () => {
-  equal(stripHtml(" \t a \n ").result, "a", "10");
+  equal(stripHtml(" \t a \n ").result, "a", "10.01");
 });
 
 test("11 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all - trimOnlySpaces = on", () => {
   equal(
     stripHtml(" \t a \n ", { trimOnlySpaces: true }).result,
     "\t a \n",
-    "11"
+    "11.01"
   );
 });
 
@@ -115,19 +115,19 @@ test("12 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all 
   equal(
     stripHtml(" \t\n a \r\n ", { trimOnlySpaces: true }).result,
     "\t\na \r\n",
-    "12"
+    "12.01"
   );
 });
 
 test("13 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all - tag", () => {
-  equal(stripHtml("\t\r\n <article> \t\r\n").result, "", "13");
+  equal(stripHtml("\t\r\n <article> \t\r\n").result, "", "13.01");
 });
 
 test("14 - opts.trimOnlySpaces - tabs and CRLF", () => {
   equal(
     stripHtml("\t\r\n <article> \t\r\n", { trimOnlySpaces: true }).result,
     "\t\r\n\t\r\n",
-    "14"
+    "14.01"
   );
 });
 
@@ -135,7 +135,7 @@ test("15 - opts.trimOnlySpaces - spaced tabs and CRs, trimOnlySpaces = on", () =
   equal(
     stripHtml(" \t \r \n <article> \t \r \n ", { trimOnlySpaces: true }).result,
     "\t \r \n\t \r \n",
-    "15"
+    "15.01"
   );
 });
 
@@ -145,7 +145,7 @@ test("16 - opts.trimOnlySpaces - combos of tags and whitespace, trimOnlySpaces =
       trimOnlySpaces: true,
     }).result,
     "\n \t",
-    "16"
+    "16.01"
   );
 });
 
@@ -155,7 +155,7 @@ test("17 - opts.trimOnlySpaces - tags, trimOnlySpaces = on", () => {
       trimOnlySpaces: true,
     }).result,
     "\na b\t",
-    "17"
+    "17.01"
   );
 });
 
@@ -165,7 +165,7 @@ test("18 - opts.trimOnlySpaces - letters around are retained", () => {
       trimOnlySpaces: true,
     }).result,
     "\na b \t",
-    "18"
+    "18.01"
   );
 });
 
@@ -176,7 +176,7 @@ test("19 - opts.trimOnlySpaces - opts.ignoreTags combo", () => {
       ignoreTags: ["div"],
     }).result,
     "\na <div> b \t",
-    "19"
+    "19.01"
   );
 });
 
@@ -187,7 +187,7 @@ test("20 - opts.trimOnlySpaces - opts.ignoreTags combo - plausible but recognise
       ignoreTags: ["div"],
     }).result,
     "\na < div> b \t",
-    "20"
+    "20.01"
   );
 });
 

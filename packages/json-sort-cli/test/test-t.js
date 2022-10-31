@@ -60,7 +60,7 @@ test("01 - sort, -t (tabs) mode", async () => {
       throw new Error(err);
     });
 
-  equal(await processedFileContents, sortedTabbedTestFileContents, "01");
+  equal(await processedFileContents, sortedTabbedTestFileContents, "01.01");
 });
 
 test.run();

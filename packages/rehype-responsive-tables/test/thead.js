@@ -8,7 +8,7 @@ import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 
 // -----------------------------------------------------------------------------
 
-test(`06 - thead, 2x3`, () => {
+test(`01 - thead, 2x3`, () => {
   let input = `
 <table>
   <thead>
@@ -76,10 +76,10 @@ test(`06 - thead, 2x3`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "06");
+  equal(res, intended, "01.01");
 });
 
-test(`07 - empty thead, 2x2`, () => {
+test(`02 - empty thead, 2x2`, () => {
   let input = `
 <table>
   <thead></thead>
@@ -131,10 +131,10 @@ test(`07 - empty thead, 2x2`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "07");
+  equal(res, intended, "02.01");
 });
 
-test(`08 - empty thead tr, 2x2`, () => {
+test(`03 - empty thead tr, 2x2`, () => {
   let input = `
 <table>
   <thead>
@@ -190,10 +190,10 @@ test(`08 - empty thead tr, 2x2`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "08");
+  equal(res, intended, "03.01");
 });
 
-test(`11 - thead, td with children`, () => {
+test(`04 - thead, td with children`, () => {
   let input = `
 <table>
   <thead>
@@ -279,7 +279,7 @@ test(`11 - thead, td with children`, () => {
     .processSync(input)
     .toString();
 
-  equal(res, intended, "11");
+  equal(res, intended, "04.01");
 });
 
 test.run();

@@ -11,28 +11,28 @@ import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js"
 
 test(`01 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
   let str = `<a href="z" click here</a>`;
-  ok(isCl(str, 8, 10), "01");
+  ok(isCl(str, 8, 10), "01.01");
 
   // fin.
 });
 
 test(`02 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
   let str = `<a href="z' click here</a>`;
-  ok(isCl(str, 8, 10), "02");
+  ok(isCl(str, 8, 10), "02.01");
 
   // fin.
 });
 
 test(`03 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
   let str = `<a href='z" click here</a>`;
-  ok(isCl(str, 8, 10), "03");
+  ok(isCl(str, 8, 10), "03.01");
 
   // fin.
 });
 
 test(`04 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - missing tag ending follows - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
   let str = `<a href='z' click here</a>`;
-  ok(isCl(str, 8, 10), "04");
+  ok(isCl(str, 8, 10), "04.01");
 
   // fin.
 });
@@ -155,28 +155,28 @@ test(`08 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - attr + missing ta
 
 test(`09 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
   let str = `<a href="z"</a>`;
-  ok(isCl(str, 8, 10), "09");
+  ok(isCl(str, 8, 10), "09.01");
 
   // fin.
 });
 
 test(`10 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
   let str = `<a href="z'</a>`;
-  ok(isCl(str, 8, 10), "10");
+  ok(isCl(str, 8, 10), "10.01");
 
   // fin.
 });
 
 test(`11 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
   let str = `<a href='z"</a>`;
-  ok(isCl(str, 8, 10), "11");
+  ok(isCl(str, 8, 10), "11.01");
 
   // fin.
 });
 
 test(`12 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - tight - \u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
   let str = `<a href='z'</a>`;
-  ok(isCl(str, 8, 10), "12");
+  ok(isCl(str, 8, 10), "12.01");
 
   // fin.
 });

@@ -145,7 +145,11 @@ test(`09 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - space after comma`, 
       "attribute-validate-accept-charset": 2,
     },
   });
-  equal(applyFixes(str, messages), `<form accept-charset="utf-7,utf-8">`);
+  equal(
+    applyFixes(str, messages),
+    `<form accept-charset="utf-7,utf-8">`,
+    "09.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-accept-charset",

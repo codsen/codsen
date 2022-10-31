@@ -23,7 +23,7 @@ test("01 - missing second arg", () => {
     {
       a: "a",
     },
-    "01"
+    "01.01"
   );
 });
 
@@ -55,33 +55,33 @@ test("03 - both args missing - throws", () => {
 });
 
 test("04", () => {
-  equal(mergeAdvanced(equal, null, null), null, "04");
+  equal(mergeAdvanced(equal, null, null), null, "04.01");
 });
 
 test("05", () => {
-  equal(mergeAdvanced(equal, undefined, undefined), undefined, "05");
+  equal(mergeAdvanced(equal, undefined, undefined), undefined, "05.01");
 });
 
 test("06", () => {
-  equal(mergeAdvanced(equal, true, false), true, "06");
+  equal(mergeAdvanced(equal, true, false), true, "06.01");
 });
 
 test("07", () => {
-  equal(m(["a"], ["b"]), ["a", "b"], "07");
+  equal(m(["a"], ["b"]), ["a", "b"], "07.01");
 });
 
 test("08", () => {
   let returnsAlwaysFirstOne = (i1) => i1;
-  equal(m(["a"], ["b"], { cb: returnsAlwaysFirstOne }), ["a"], "08");
+  equal(m(["a"], ["b"], { cb: returnsAlwaysFirstOne }), ["a"], "08.01");
 });
 
 test("09", () => {
   let returnsAlwaysSecondOne = (_i1, i2) => i2;
-  equal(m(["a"], ["b"], { cb: returnsAlwaysSecondOne }), ["b"], "09");
+  equal(m(["a"], ["b"], { cb: returnsAlwaysSecondOne }), ["b"], "09.01");
 });
 
 test("10", () => {
-  equal(mergeAdvanced(equal, [], []), [], "10");
+  equal(mergeAdvanced(equal, [], []), [], "10.01");
 });
 
 // ==============================
@@ -99,7 +99,7 @@ test("11 - testing for mutation of the input args", () => {
     d: "d",
   };
   m(obj1, obj2);
-  equal(obj1, originalObj1, "11");
+  equal(obj1, originalObj1, "11.01");
 });
 
 // ================================================
@@ -149,7 +149,7 @@ test("12 - arrays, checking against dupes being added", () => {
       ],
       b: "b",
     },
-    "12"
+    "12.01"
   );
 });
 
@@ -200,7 +200,7 @@ test("13 - array merging + cb", () => {
         },
       ],
     },
-    "13"
+    "13.01"
   );
 });
 
@@ -248,7 +248,7 @@ test("14 - array merging + cb", () => {
         },
       ],
     },
-    "14"
+    "14.01"
   );
 });
 
@@ -296,7 +296,7 @@ test("15 - arrays, checking against dupes being added", () => {
       ],
       b: "b",
     },
-    "15"
+    "15.01"
   );
 });
 
@@ -345,7 +345,7 @@ test("16 - merges objects within arrays if keyset and position within array matc
         },
       ],
     },
-    "16"
+    "16.01"
   );
 });
 
@@ -398,7 +398,7 @@ test("17 - concats instead if objects within arrays are in a wrong order", () =>
         },
       ],
     },
-    "17"
+    "17.01"
   );
 });
 
@@ -455,7 +455,7 @@ test("18 - concats instead if objects within arrays are in a wrong order", () =>
         },
       ],
     },
-    "18"
+    "18.01"
   );
 });
 
@@ -498,7 +498,7 @@ test("19 - merges objects within arrays, key sets are a subset of one another", 
         },
       ],
     },
-    "19"
+    "19.01"
   );
 });
 
@@ -546,7 +546,7 @@ test("20 - merges objects within arrays, subset and no match, mixed case", () =>
         },
       ],
     },
-    "20"
+    "20.01"
   );
 });
 
@@ -840,7 +840,7 @@ test("23 - real world use case", () => {
       ],
       j: "j",
     },
-    "23"
+    "23.01"
   );
 });
 
@@ -889,7 +889,7 @@ test("24 - real world use case, mini", () => {
         },
       ],
     },
-    "24"
+    "24.01"
   );
 });
 
@@ -901,7 +901,7 @@ test("25 - merges two arrays of equal length", () => {
   equal(
     mergeAdvanced(equal, ["a", "b", "c"], ["d", "e", "f"]),
     ["a", "d", "b", "e", "c", "f"],
-    "25"
+    "25.01"
   );
 });
 
@@ -962,7 +962,7 @@ test("28 - arrays in objects", () => {
       a: ["b", "c"],
       d: ["e", "f"],
     },
-    "28"
+    "28.01"
   );
 });
 
@@ -972,7 +972,7 @@ test("29 - arrays in objects, deeper", () => {
     {
       a: ["b", "e", "c", "f"],
     },
-    "29"
+    "29.01"
   );
 });
 
@@ -982,7 +982,7 @@ test("30 - objects in arrays in objects", () => {
     {
       a: [{ b: "b" }, { c: "c" }],
     },
-    "30"
+    "30.01"
   );
 });
 
@@ -1223,7 +1223,7 @@ test("39 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys - multiple keys ignored, m
       r: "",
       equal: ["v"],
     },
-    "39"
+    "39.01"
   );
 });
 
@@ -1250,7 +1250,7 @@ test("40 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys - wildcards", () => {
       anything: "b",
       everything: "c",
     },
-    "40"
+    "40.01"
   );
 });
 
@@ -1277,7 +1277,7 @@ test("41 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys - wildcard, but not found"
       anything: ["b"],
       everything: "d",
     },
-    "41"
+    "41.01"
   );
 });
 
@@ -1456,7 +1456,7 @@ test("43 - \u001b[33mOPTS\u001b[39m - opts.hardMergeKeys and opts.ignoreKeys tog
       yyy: "overwrite",
       zzz: "overwrite",
     },
-    "43"
+    "43.01"
   );
 });
 
@@ -1550,7 +1550,7 @@ test("48 - case #9 (mirror to #81)", () => {
   equal(
     mergeAdvanced(equal, { a: ["a"] }, { a: null }, { hardMergeKeys: "*" }),
     { a: null },
-    "48 - useless hardMergeKeys setting"
+    "48.01 - useless hardMergeKeys setting"
   );
 });
 
@@ -1871,7 +1871,7 @@ test("54 - \u001b[33mOPTS\u001b[39m - opts.oneToManyArrayObjectMerge - two-to-ma
         },
       ],
     },
-    "54 - does not activate when two-to-many found"
+    "54.01 - does not activate when two-to-many found"
   );
 });
 
@@ -1882,7 +1882,7 @@ test("54 - \u001b[33mOPTS\u001b[39m - opts.oneToManyArrayObjectMerge - two-to-ma
 test("55 - \u001b[33mOPTS\u001b[39m - third argument is not a plain object", () => {
   not.throws(() => {
     mergeAdvanced(equal, { a: "a" }, { b: "b" }, {});
-  }, "55");
+  }, "55.01");
 });
 
 test("56 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys type checks work", () => {
@@ -2528,8 +2528,8 @@ test("65 - not finite date", () => {
   let o2 = { a: new Date(`2020-02-08T12:32:00`) };
 
   // don't use the wrapper, call dist/ exported function directly
-  equal(m(o1, o2), o2, "64.01");
-  equal(m(o2, o1), o2, "64.02");
+  equal(m(o1, o2), o2, "65.01");
+  equal(m(o2, o1), o2, "65.02");
 });
 
 test.run();

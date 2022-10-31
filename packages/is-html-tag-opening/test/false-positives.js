@@ -10,7 +10,7 @@ import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 // false positives
 // -----------------------------------------------------------------------------
 
-test.skip("deleteme", () => {
+/*tttest("deleteme", () => {
   ok(
     isOpening(`<x src="b" a class="">`, 11, {
       allowCustomTagNames: false,
@@ -18,9 +18,9 @@ test.skip("deleteme", () => {
     }),
     "01.01"
   );
-});
+});*/
 
-test(`02 - ${`\u001b[${32}m${`false positives`}\u001b[${39}m`} - last letter`, () => {
+test(`01 - ${`\u001b[${32}m${`false positives`}\u001b[${39}m`} - last letter`, () => {
   mixer().forEach((opt) => {
     not.ok(isOpening(`> x`, 2, opt), opt);
     //            ^
@@ -53,7 +53,7 @@ test(`02 - ${`\u001b[${32}m${`false positives`}\u001b[${39}m`} - last letter`, (
   });
 });
 
-test(`03 - starting at unrecognised tag`, () => {
+test(`02 - starting at unrecognised tag`, () => {
   // idx = 0
   let input = `bc img src="z"/>`;
   //             ^
@@ -75,7 +75,7 @@ test(`03 - starting at unrecognised tag`, () => {
   });
 });
 
-test(`04 - starting at recognised tag`, () => {
+test(`03 - starting at recognised tag`, () => {
   // idx = 3
   let input = `bc img src="z"/>`;
   //                ^
@@ -91,7 +91,7 @@ test(`04 - starting at recognised tag`, () => {
   });
 });
 
-test(`05`, () => {
+test(`04`, () => {
   mixer({
     skipOpeningBracket: false,
   }).forEach((opt) => {
@@ -104,14 +104,14 @@ test(`05`, () => {
   });
 });
 
-test(`06 one-letter-name recognised tag`, () => {
+test(`05 one-letter-name recognised tag`, () => {
   mixer().forEach((opt) => {
     ok(isOpening(`<p>`, 0, opt), opt);
     //         ^
   });
 });
 
-test(`07 one-letter-name unrecognised tag`, () => {
+test(`06 one-letter-name unrecognised tag`, () => {
   let input = `<x>`;
   //             ^
   //           idx 0
@@ -127,7 +127,7 @@ test(`07 one-letter-name unrecognised tag`, () => {
   });
 });
 
-test(`08`, () => {
+test(`07`, () => {
   [
     `<x src="b" a>`,
     `<x src="b" a >`,
@@ -147,7 +147,7 @@ test(`08`, () => {
   });
 });
 
-test(`09`, () => {
+test(`08`, () => {
   [
     `<x src="b" a class="">`,
     `<x src="b" a class="" >`,
@@ -177,7 +177,7 @@ test(`09`, () => {
   });
 });
 
-test(`10`, () => {
+test(`09`, () => {
   mixer().forEach((opt) => {
     [
       `<x src="b" <a>`,
@@ -213,7 +213,7 @@ test(`10`, () => {
   // but opening bracket means it's a tag, no matter what
 });
 
-test(`11`, () => {
+test(`10`, () => {
   mixer().forEach((opt) => {
     not.ok(isOpening(`<img src="b" img />`, 13, opt), opt);
   });
@@ -225,7 +225,7 @@ test(`11`, () => {
   });
 });
 
-test(`12 known tag name + an attribute`, () => {
+test(`11 known tag name + an attribute`, () => {
   mixer().forEach((opt) => {
     [
       `<img src="b" <img src="" />`,

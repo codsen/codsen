@@ -41,7 +41,7 @@ test("01 - only node_modules with one file, flag disabled", async () => {
       throw new Error(err);
     });
 
-  equal(await processedFilesContents, originalContents, "01");
+  equal(await processedFilesContents, originalContents, "01.01");
 });
 
 test("02 - only node_modules with one file, flag enabled", async () => {
@@ -66,7 +66,7 @@ test("02 - only node_modules with one file, flag enabled", async () => {
       throw new Error(err);
     });
 
-  equal(await processedFilesContents, `{\n  "a": 2,\n  "z": 1\n}\n`, "02");
+  equal(await processedFilesContents, `{\n  "a": 2,\n  "z": 1\n}\n`, "02.01");
 });
 
 test("03 - files inside and outside node_modules, flag enabled", async () => {

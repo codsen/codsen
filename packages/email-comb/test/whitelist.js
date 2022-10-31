@@ -64,7 +64,7 @@ test("01 - nothing removed because of settings.whitelist", () => {
 </html>
 `;
 
-  equal(actual, intended, "01");
+  equal(actual, intended, "01.01");
 });
 
 test("02 - some removed, some whitelisted", () => {
@@ -123,7 +123,7 @@ test("02 - some removed, some whitelisted", () => {
 </html>
 `;
 
-  equal(actual, intended, "02");
+  equal(actual, intended, "02.01");
 });
 
 test("03 - case of whitelisting everything", () => {
@@ -184,7 +184,7 @@ test("03 - case of whitelisting everything", () => {
 </html>
 `;
 
-  equal(actual, intended, "03");
+  equal(actual, intended, "03.01");
 });
 
 test("04 - special case - checking adjacent markers #1", () => {
@@ -206,7 +206,7 @@ zzz
 zzz
 </body>`;
 
-  equal(actual, intended, "04");
+  equal(actual, intended, "04.01");
 });
 
 test("05 - special case - checking adjacent markers #2", () => {
@@ -223,7 +223,7 @@ zzz
 </body>
 `;
 
-  equal(actual, intended, "05");
+  equal(actual, intended, "05.01");
 });
 
 // div~[^whatever] .del-1 {display: none;}
@@ -246,7 +246,7 @@ zzz
 zzz
 </body>`;
 
-  equal(actual, intended, "06");
+  equal(actual, intended, "06.01");
 });
 
 test("07 - whitelisting using non-class/id strings - baseline", () => {
@@ -266,7 +266,7 @@ zzz
 zzz
 </body>`;
 
-  equal(result, intended, "07");
+  equal(result, intended, "07.01");
 });
 
 test("08 - whitelisting using non-class/id strings - whitelisting", () => {
@@ -289,7 +289,7 @@ zzz
 zzz
 </body>`;
 
-  equal(result, intended, "08");
+  equal(result, intended, "08.01");
 });
 
 test.run();

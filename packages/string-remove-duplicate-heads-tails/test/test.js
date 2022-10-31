@@ -57,7 +57,7 @@ test("04 - none of heads or tails found", () => {
       tails: "__",
     }),
     "aaa {{",
-    "04"
+    "04.01"
   );
 });
 
@@ -91,7 +91,7 @@ test("06 - trims wrapped heads and tails, with space inside heads/tails", () => 
       tails: " }}",
     }),
     "Hi {{ first_name }}!",
-    "06 - heads and tails with spaces"
+    "06.01 - heads and tails with spaces"
   );
 });
 
@@ -102,7 +102,7 @@ test("07 - trimmed heads and tails in the source still get caught", () => {
       tails: " }}",
     }),
     "Hi {{ first_name }}!",
-    "07 - with spaces, and those spaces are not on str"
+    "07.01 - with spaces, and those spaces are not on str"
   );
 });
 
@@ -113,7 +113,7 @@ test("08 - excessive whitespace in opts heads/tails doesn't matter", () => {
       tails: "    }}       ",
     }),
     "Hi {{ first_name }}!",
-    "08 - excessive spaces"
+    "08.01 - excessive spaces"
   );
 });
 
@@ -124,7 +124,7 @@ test("09 - single curly brace heads/tails", () => {
       tails: "}",
     }),
     "Hi { first_name }!",
-    "09"
+    "09.01"
   );
 });
 
@@ -135,7 +135,7 @@ test("10 - custom heads and tails, whitespace both sides", () => {
       tails: " } ",
     }),
     "Hi { first_name }!",
-    "10"
+    "10.01"
   );
 });
 
@@ -146,7 +146,7 @@ test("11 - ends with tails, doesn't start with heads", () => {
       tails: ["-%%", "}}"],
     }),
     "Hi {{ first_name }}",
-    "11"
+    "11.01"
   );
 });
 
@@ -157,7 +157,7 @@ test("12 - starts with heads, doesn't end with tails", () => {
       tails: ["-%%", "}}"],
     }),
     "{{ first_name }}!",
-    "12"
+    "12.01"
   );
 });
 
@@ -168,7 +168,7 @@ test("13 - properly wrapped, heads/tails in array, matched", () => {
       tails: ["-%%", "}}"],
     }),
     "{{ first_name }}",
-    "13"
+    "13.01"
   );
 });
 
@@ -179,7 +179,7 @@ test("14 - starts with heads, doesn't end with tails", () => {
       tails: ["-%%", "}}"],
     }),
     "{{ a }}{{ b }}",
-    "14"
+    "14.01"
   );
 });
 
@@ -190,7 +190,7 @@ test("15 - unclosed heads", () => {
       tails: ["-%%", "}}"],
     }),
     "zzz {{",
-    "15"
+    "15.01"
   );
 });
 
@@ -201,7 +201,7 @@ test("16 - unclosed tails", () => {
       tails: ["-%%", "}}"],
     }),
     "zzz }}",
-    "16"
+    "16.01"
   );
 });
 
@@ -212,7 +212,7 @@ test("17 - ends with empty variable", () => {
       tails: ["-%%", "}}"],
     }),
     "zzz",
-    "17"
+    "17.01"
   );
 });
 
@@ -223,7 +223,7 @@ test("18 - empty variable with text both sides", () => {
       tails: ["-%%", "}}"],
     }),
     "zzz {{}} yyy",
-    "18"
+    "18.01"
   );
 });
 
@@ -234,7 +234,7 @@ test("19 - heads/tails in opposite order", () => {
       tails: ["-%%", "}}"],
     }),
     "zzz }}{{ yyy",
-    "19"
+    "19.01"
   );
 });
 
@@ -245,7 +245,7 @@ test("20 - tails with text on both sides", () => {
       tails: ["-%%", "}}"],
     }),
     "zzz }} yyy",
-    "20"
+    "20.01"
   );
 });
 
@@ -256,7 +256,7 @@ test("21 - heads with text on both sides", () => {
       tails: ["-%%", "}}"],
     }),
     "zzz {{ yyy",
-    "21"
+    "21.01"
   );
 });
 
@@ -267,7 +267,7 @@ test("22 - multiple heads, single tails", () => {
       tails: ["-%%", "}}"],
     }),
     "{{{{ first_name }}!",
-    "22"
+    "22.01"
   );
 });
 
@@ -362,7 +362,7 @@ test("24 - two sets of custom heads and tails, single char string", () => {
       tails: "!!",
     }),
     "??z!!",
-    "24"
+    "24.01"
   );
 });
 
@@ -373,7 +373,7 @@ test("25 - words with space, single set of custom heads and tails", () => {
       tails: "!!",
     }),
     "??tralalala!lalala!!",
-    "25"
+    "25.01"
   );
 });
 
@@ -385,7 +385,7 @@ test("26 - double wrapped with custom heads and tails, with whitespace", () => {
       tails: "!!",
     }),
     "?? x y !!",
-    "26"
+    "26.01"
   );
 });
 
@@ -424,7 +424,7 @@ test("28 - mixed sets of heads and tails #2", () => {
       tails: ["!!", ")))"],
     }),
     "??tralalala!!(((lalala)))",
-    "28"
+    "28.01"
   );
 });
 
@@ -516,7 +516,7 @@ test("31 - removing empty head/tail chunks from around the text #2 (touches end)
       tails: ["!!", ")))"],
     }),
     "some (((text)))",
-    "31"
+    "31.01"
   );
 });
 
@@ -565,7 +565,7 @@ test("34 - leading line break", () => {
       tails: ["!!", ")))"],
     }),
     "aaa\n",
-    "34"
+    "34.01"
   );
 });
 
@@ -576,7 +576,7 @@ test("35", () => {
       tails: ["}}"],
     }),
     "{{ items[0].abc }}",
-    "35"
+    "35.01"
   );
 });
 

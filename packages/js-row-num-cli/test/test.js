@@ -42,7 +42,7 @@ test("01 - there are no usable files at all", async () => {
       throw new Error(err);
     });
   // confirm that the existing file is intact:
-  equal(await processedFileContents, "zzz", "01");
+  equal(await processedFileContents, "zzz", "01.01");
 });
 
 //                                  *
@@ -84,7 +84,7 @@ test("02 - cli.js in the root", async () => {
     });
 
   // 3. compare:
-  equal(await processedFileContents, intendedFile, "02");
+  equal(await processedFileContents, intendedFile, "02.01");
 });
 
 //                                  *
@@ -129,7 +129,7 @@ test("03/1 - pad override, -p", async () => {
     });
 
   // 3. compare:
-  equal(await processedFileContents, intendedFile, "03");
+  equal(await processedFileContents, intendedFile, "03.01");
 });
 
 test("04/2 - pad override, --pad", async () => {
@@ -160,7 +160,7 @@ test("04/2 - pad override, --pad", async () => {
     });
 
   // 3. compare:
-  equal(await processedFileContents, intendedFile, "04");
+  equal(await processedFileContents, intendedFile, "04.01");
 });
 
 //                                  *
@@ -318,7 +318,7 @@ test('07/1 - "t" flag, -t', async () => {
     });
 
   // 3. compare:
-  equal(await processedFileContents, intendedFile, "07");
+  equal(await processedFileContents, intendedFile, "07.01");
 });
 
 test('08/2 - "t" flag, --trigger', async () => {
@@ -353,7 +353,7 @@ test('08/2 - "t" flag, --trigger', async () => {
     });
 
   // 3. compare:
-  equal(await processedFileContents, intendedFile, "08");
+  equal(await processedFileContents, intendedFile, "08.01");
 });
 
 //                                  *

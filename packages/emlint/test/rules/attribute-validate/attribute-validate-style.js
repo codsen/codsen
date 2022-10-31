@@ -73,7 +73,7 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no value`, () => {
     },
   ]);
 
-  equal(messages.length, 1, "05.03");
+  equal(messages.length, 1, "05.02");
 });
 
 test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
@@ -95,7 +95,7 @@ test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - only trimmable white
     },
   ]);
 
-  equal(messages.length, 1, "06.03");
+  equal(messages.length, 1, "06.02");
 });
 
 // 02. rogue whitespace
@@ -121,7 +121,7 @@ test(`07 - space in front`, () => {
     },
   ]);
 
-  equal(messages.length, 1, "07.03");
+  equal(messages.length, 1, "07.02");
 });
 
 test(`08 - space after`, () => {
@@ -144,7 +144,7 @@ test(`08 - space after`, () => {
     },
   ]);
 
-  equal(messages.length, 1, "08.03");
+  equal(messages.length, 1, "08.02");
 });
 
 test(`09 - copious whitespace around`, () => {
@@ -154,7 +154,7 @@ test(`09 - copious whitespace around`, () => {
       "attribute-validate-style": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td style="font-size: 10px;">`, "09");
+  equal(applyFixes(str, messages), `<td style="font-size: 10px;">`, "09.01");
 });
 
 test(`10 - whitespace inbetween`, () => {
@@ -164,7 +164,11 @@ test(`10 - whitespace inbetween`, () => {
       "attribute-validate-style": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td style="font-size: 10px;"></td>`);
+  equal(
+    applyFixes(str, messages),
+    `<td style="font-size: 10px;"></td>`,
+    "10.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-style",
@@ -177,7 +181,7 @@ test(`10 - whitespace inbetween`, () => {
     },
   ]);
 
-  equal(messages.length, 1, "10.03");
+  equal(messages.length, 1, "10.02");
 });
 
 test(`11 - tab inbetween`, () => {
@@ -187,7 +191,11 @@ test(`11 - tab inbetween`, () => {
       "attribute-validate-style": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td style="font-size: 10px;"></td>`);
+  equal(
+    applyFixes(str, messages),
+    `<td style="font-size: 10px;"></td>`,
+    "11.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-style",
@@ -200,7 +208,7 @@ test(`11 - tab inbetween`, () => {
     },
   ]);
 
-  equal(messages.length, 1, "11.03");
+  equal(messages.length, 1, "11.02");
 });
 
 test(`12 - tab inbetween`, () => {
@@ -211,7 +219,7 @@ test(`12 - tab inbetween`, () => {
       "attribute-validate-style": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "12");
+  equal(applyFixes(str, messages), fixed, "12.01");
 });
 
 test(`13 - tab inbetween`, () => {
@@ -222,7 +230,7 @@ test(`13 - tab inbetween`, () => {
       "attribute-validate-style": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "13");
+  equal(applyFixes(str, messages), fixed, "13.01");
 });
 
 // wrong parent tag
@@ -246,7 +254,7 @@ test(`14 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - wrong parent tag`, () =>
     },
   ]);
 
-  equal(messages.length, 1, "14.03");
+  equal(messages.length, 1, "14.02");
 });
 
 // rogue semi
@@ -271,7 +279,7 @@ test(`15 - two semis, tight`, () => {
     },
   ]);
 
-  equal(messages.length, 1, "15.03");
+  equal(messages.length, 1, "15.02");
 });
 
 // ESP tokens
@@ -286,39 +294,7 @@ float: left;">x</td>`;
       "attribute-validate-style": 2,
     },
   });
-  equal(applyFixes(str, messages), str, "16");
-});
-
-test.skip(`01`, () => {
-  let str = `<td style="color: red
-    {% if so %}text-align: left{% endif %}
-float: left">x</td>`;
-  let fixed = `<td style="color: red;
-    {% if so %}text-align: left;{% endif %}
-float: left">x</td>`;
-  let messages = verify(not, str, {
-    rules: {
-      "attribute-validate-style": 2,
-    },
-  });
-  equal(applyFixes(str, messages), fixed, "01.01");
-});
-
-test.skip(`02`, () => {
-  let str = `<td style="color: red
-    {% if so %}text-align: left{% endif %}
-float: left">x</td>`;
-  let fixed = `<td style="color: red;
-    {% if so %}text-align: left;{% endif %}
-float: left;">x</td>`;
-  let messages = verify(not, str, {
-    rules: {
-      "attribute-validate-style": 2,
-      "css-trailing-semi": 2,
-      "format-prettier": 2,
-    },
-  });
-  equal(applyFixes(str, messages), fixed, "02.01");
+  equal(applyFixes(str, messages), str, "16.01");
 });
 
 test.run();

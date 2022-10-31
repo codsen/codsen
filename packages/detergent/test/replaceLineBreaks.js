@@ -122,7 +122,7 @@ test(`05 - br with attribute, line break present`, () => {
       convertEntities: true,
     }).res,
     `a<br class="z">\nb`,
-    "05"
+    "05.01"
   );
 });
 

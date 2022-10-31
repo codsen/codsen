@@ -71,7 +71,7 @@ test(`01 - empty body inline style`, () => {
         attribs: [],
       },
     ],
-    "01"
+    "01.01"
   );
 });
 
@@ -154,7 +154,7 @@ test(`02 - body inline style`, () => {
         attribs: [],
       },
     ],
-    "02"
+    "02.01"
   );
 });
 
@@ -237,7 +237,7 @@ test(`03 - body inline style, no semi`, () => {
         attribs: [],
       },
     ],
-    "03"
+    "03.01"
   );
 });
 
@@ -335,7 +335,7 @@ test(`04 - two rules`, () => {
         attribs: [],
       },
     ],
-    "04"
+    "04.01"
   );
 });
 
@@ -439,7 +439,7 @@ test(`05 - two rules`, () => {
         attribs: [],
       },
     ],
-    "05"
+    "05.01"
   );
 });
 
@@ -492,7 +492,7 @@ test(`06 - font-family with commas`, () => {
         ],
       },
     ]),
-    "06"
+    "06.01"
   );
 });
 

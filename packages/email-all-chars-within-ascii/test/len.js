@@ -18,7 +18,7 @@ test("01 - default, line length exceeded", () => {
         value: 1000,
       },
     ],
-    "01"
+    "01.01"
   );
 });
 
@@ -141,7 +141,7 @@ test("03 - multiline, wrong", () => {
         value: 5,
       },
     ],
-    "03"
+    "03.01"
   );
 });
 

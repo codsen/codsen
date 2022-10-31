@@ -63,7 +63,7 @@ test("01 - Remove HTML tags, give me a clean string.", () => {
       allTagLocations,
       filteredTagLocations: allTagLocations,
     },
-    "01"
+    "01.01"
   );
 });
 

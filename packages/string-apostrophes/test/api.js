@@ -95,7 +95,7 @@ test(`14 - early exit`, () => {
       result: "",
       ranges: null,
     },
-    "14"
+    "14.01"
   );
 });
 

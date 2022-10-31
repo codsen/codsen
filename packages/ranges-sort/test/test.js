@@ -98,7 +98,7 @@ test("03 - some/all range indexes are not natural numbers", () => {
 // ==============================
 
 test("04 - no ranges given", () => {
-  equal(srt([]), [], "04 - copes fine");
+  equal(srt([]), [], "04.01 - copes fine");
 });
 
 test("05 - only one range given", () => {
@@ -165,42 +165,42 @@ test("07 - many ranges", () => {
       [5, 6],
       [5, 8],
     ],
+    "07.01"
+  );
+  equal(
+    srt([
+      [0, 8],
+      [5, 6],
+      [0, 3],
+    ]),
+    [
+      [0, 3],
+      [0, 8],
+      [5, 6],
+    ],
     "07.02"
   );
   equal(
     srt([
-      [0, 8],
       [5, 6],
-      [0, 3],
+      [5, 6],
     ]),
     [
-      [0, 3],
-      [0, 8],
+      [5, 6],
       [5, 6],
     ],
-    "07.03"
+    "07.03 - same ranges"
   );
   equal(
     srt([
       [5, 6],
-      [5, 6],
+      [5, 6, "zzz"],
     ]),
     [
       [5, 6],
-      [5, 6],
+      [5, 6, "zzz"],
     ],
     "07.04 - same ranges"
-  );
-  equal(
-    srt([
-      [5, 6],
-      [5, 6, "zzz"],
-    ]),
-    [
-      [5, 6],
-      [5, 6, "zzz"],
-    ],
-    "07.05 - same ranges"
   );
   throws(() => {
     srt(
@@ -210,7 +210,7 @@ test("07 - many ranges", () => {
       ],
       { strictlyTwoElementsInRangeArrays: true }
     );
-  }, "07.06");
+  }, "07.05");
   equal(
     srt([
       [9, 12],
@@ -220,7 +220,7 @@ test("07 - many ranges", () => {
       [9, 12],
       [9, 15],
     ],
-    "07.07"
+    "07.06"
   );
 });
 
@@ -242,7 +242,7 @@ test("08 - does not mutate the input arg", () => {
       [3, 4],
       [1, 2],
     ],
-    "08"
+    "08.01"
   );
 });
 
@@ -260,7 +260,7 @@ test("09 - readme example #1", () => {
       [1, 3],
       [5, 6],
     ],
-    "09"
+    "09.01"
   );
 });
 
@@ -276,32 +276,32 @@ test("10 - readme example #2", () => {
       [5, 3],
       [5, 6],
     ],
-    "10"
+    "10.01"
   );
 });
 
 test("11 - readme example #3", () => {
   throws(() => {
     srt([[1, 2], []]); // throws, because there's at least one empty range
-  }, "11");
+  }, "11.01");
 });
 
 test("12 - readme example #4", () => {
   throws(() => {
     srt([["a"]]); // throws, because range is given as string
-  }, "12");
+  }, "12.01");
 });
 
 test("13 - an extra for readme example #4", () => {
   throws(() => {
     srt([[1, "a"]]); // throws, because range is given as string
-  }, "13");
+  }, "13.01");
 });
 
 test("14 readme example #5", () => {
   throws(() => {
     srt([[1], [2]]); // throws, because one index is not a range
-  }, "14");
+  }, "14.01");
 });
 
 test("15 readme example #6", () => {
@@ -314,7 +314,7 @@ test("15 readme example #6", () => {
       [1, 2, "zzz"],
       [3, 4, "aaa", "bbb"],
     ],
-    "15 - 3rd argument and onwards are ignored"
+    "15.01 - 3rd argument and onwards are ignored"
   );
 });
 
@@ -401,13 +401,13 @@ test("16 - calls progress callback correctly", () => {
 test("17 - gaps in array", () => {
   throws(() => {
     srt([[0, 3], undefined, [5, 8], [5, 6]]);
-  }, "17");
+  }, "17.01");
 });
 
 test("18 - null in array", () => {
   throws(() => {
     srt([[0, 3], undefined, [5, 8], [5, 6]]);
-  }, "18");
+  }, "18.01");
 });
 
 test.run();

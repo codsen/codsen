@@ -82,12 +82,12 @@ test("02 - strings compared and fails", () => {
   not.equal(
     compare("aaaaa\nbbbbb", ["aaaaa\nbbbbb"], { verboseWhenMismatches: true }),
     true,
-    "02"
+    "02.02"
   );
 });
 
 test("03 - strings in arrays compared, positive", () => {
-  equal(compare(["aaaaa\nbbbbb"], ["aaaaa\nbbbbb"]), true, "03");
+  equal(compare(["aaaaa\nbbbbb"], ["aaaaa\nbbbbb"]), true, "03.01");
 });
 
 test("04 - string against empty array or empty string within an array", () => {

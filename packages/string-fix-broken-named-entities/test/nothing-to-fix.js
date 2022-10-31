@@ -177,7 +177,7 @@ test(`06 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - full callback, d
         rangeValDecoded: "\xA0",
       },
     ],
-    "06"
+    "06.01"
   );
 });
 
@@ -188,7 +188,7 @@ test(`07 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - two, surrounded 
       [0, 6, "\xA0"],
       [7, 13, "\xA0"],
     ],
-    "07"
+    "07.01"
   );
 });
 

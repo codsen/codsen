@@ -62,7 +62,7 @@ test("06 - two astral characters offsetting the rest", () => {
   equal(
     unicodeToNative("\uD834\uDF06aa", [0, 1, 2]),
     [0, 2, 3],
-    "06 - all unique, sorted"
+    "06.01 - all unique, sorted"
   );
 });
 
@@ -70,7 +70,7 @@ test("07 - two astral characters offsetting the rest", () => {
   equal(
     unicodeToNative("\uD834\uDF06aa", ["0", "1", "2"]),
     ["0", "2", "3"],
-    "07"
+    "07.01"
   );
 });
 
@@ -78,7 +78,7 @@ test("08 - two astral characters offsetting the rest", () => {
   equal(
     unicodeToNative("\uD834\uDF06aa", [1, 0, 2]),
     [2, 0, 3],
-    "08 - all unique, mixed up"
+    "08.01 - all unique, mixed up"
   );
 });
 
@@ -86,19 +86,19 @@ test("09 - two astral characters offsetting the rest", () => {
   equal(
     unicodeToNative("\uD834\uDF06aa", ["1", "0", "2"]),
     ["2", "0", "3"],
-    "09"
+    "09.01"
   );
 });
 
 test("10 - two astral characters offsetting the rest", () => {
-  equal(unicodeToNative("\uD834\uDF06aa", ["2", "0"]), ["3", "0"], "10");
+  equal(unicodeToNative("\uD834\uDF06aa", ["2", "0"]), ["3", "0"], "10.01");
 });
 
 test("11 - two astral characters offsetting the rest", () => {
   throws(
     () => unicodeToNative("\uD834\uDF06aa", [1, 0, 2, 3, 4]),
     /THROW_ID_06/,
-    "11"
+    "11.01"
   );
 });
 
@@ -106,7 +106,7 @@ test("12 - two astral characters offsetting the rest", () => {
   throws(
     () => unicodeToNative("\uD834\uDF06aa", ["1", "0", "2", "3", "4"]),
     /THROW_ID_06/,
-    "12"
+    "12.01"
   );
 });
 

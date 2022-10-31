@@ -20,7 +20,7 @@ test("01 - two variables in an object's key", () => {
       var1: "value1",
       var2: "value2",
     },
-    "01"
+    "01.01"
   );
 });
 
@@ -38,7 +38,7 @@ test("02 - two variables with paths in an object's key", () => {
       var1: { key1: ["value1"] },
       var2: { key2: { key3: ["", "value2"] } },
     },
-    "02 - defaults + querying object contents"
+    "02.01 - defaults + querying object contents"
   );
 });
 
@@ -62,7 +62,7 @@ test("03 - two variables, with wrapping", () => {
       var1: "value1",
       var2: "value2",
     },
-    "03 - custom wrappers"
+    "03.01 - custom wrappers"
   );
 });
 
@@ -86,7 +86,7 @@ test("04 - variables with paths being wrapped", () => {
       var1: { key1: "value1" },
       var2: { key2: "value2" },
     },
-    "04 - custom wrappers + multi-level"
+    "04.01 - custom wrappers + multi-level"
   );
 });
 
@@ -110,7 +110,7 @@ test("05 - custom heads and tails", () => {
       var1: "value1",
       var2: "value2",
     },
-    "05 - custom heads/tails"
+    "05.01 - custom heads/tails"
   );
 });
 
@@ -134,7 +134,7 @@ test("06 - custom heads and tails being wrapped", () => {
       var1: { key1: "value1" },
       var2: { key2: "value2" },
     },
-    "06 - custom heads/tails + multi-level"
+    "06.01 - custom heads/tails + multi-level"
   );
 });
 
@@ -158,7 +158,7 @@ test("07 - whitespace within custom heads and tails", () => {
       var1: "value1",
       var2: "value2",
     },
-    "07 - custom heads/tails, some whitespace inside of them"
+    "07.01 - custom heads/tails, some whitespace inside of them"
   );
 });
 
@@ -182,7 +182,7 @@ test("08 - whitespace within variables containing paths and custom heads/tails",
       var1: { key1: "value1" },
       var2: { key2: "value2" },
     },
-    "08 - custom heads/tails, some whitespace inside of them + multi-level"
+    "08.01 - custom heads/tails, some whitespace inside of them + multi-level"
   );
 });
 
@@ -206,7 +206,7 @@ test("09 - some values are equal to heads or tails", () => {
       d: "_%%",
       e: "_%%",
     },
-    "09 - some keys have heads/tails exactly - defaults"
+    "09.01 - some keys have heads/tails exactly - defaults"
   );
 });
 
@@ -235,7 +235,7 @@ test("10 - opts.noSingleMarkers - off", () => {
       d: "_%%",
       e: "_%%",
     },
-    "10 - some keys have heads/tails exactly - hardcoded defaults"
+    "10.01 - some keys have heads/tails exactly - hardcoded defaults"
   );
 });
 
@@ -301,7 +301,7 @@ test("13 - custom heads/tails, values equal to them are present in data", () => 
       d: "}",
       e: "}",
     },
-    "13 - some keys have heads/tails only - custom heads/tails, defaults"
+    "13.01 - some keys have heads/tails only - custom heads/tails, defaults"
   );
 });
 
@@ -332,7 +332,7 @@ test("14 - custom heads/tails - noSingleMarkers = false", () => {
       d: "}",
       e: "}",
     },
-    "14 - some keys have heads/tails only - custom heads/tails, hardcoded defaults"
+    "14.01 - some keys have heads/tails only - custom heads/tails, hardcoded defaults"
   );
 });
 
@@ -354,7 +354,7 @@ test("15 - value in an array", () => {
         var2: "value2",
       },
     },
-    "15"
+    "15.01"
   );
 });
 
@@ -551,7 +551,7 @@ test("18 - emoji in values", () => {
         var2: "value2",
       },
     },
-    "18"
+    "18.01"
   );
 });
 
@@ -573,7 +573,7 @@ test("19 - emoji in keys", () => {
         var2: "value2",
       },
     },
-    "19"
+    "19.01"
   );
 });
 
@@ -595,7 +595,7 @@ test("20 - emoji in variable keys", () => {
         var2: "value2💛",
       },
     },
-    "20"
+    "20.01"
   );
 });
 
@@ -615,7 +615,7 @@ test("21 - empty strings in the input AST", () => {
       var1: "value1",
       var2: "value2",
     },
-    "21 - defaults"
+    "21.01 - defaults"
   );
 });
 
@@ -643,7 +643,7 @@ test("22 - fetching variables from parent node's level", () => {
         },
       },
     },
-    "22 - defaults"
+    "22.01 - defaults"
   );
 });
 
@@ -765,7 +765,7 @@ test("25 - fetching variables from parent node's level data store", () => {
         },
       },
     },
-    "25 - defaults"
+    "25.01 - defaults"
   );
 });
 
@@ -797,7 +797,7 @@ test("26 - fetching variables from data store two levels above", () => {
         },
       },
     },
-    "26 - defaults"
+    "26.01 - defaults"
   );
 });
 
@@ -829,7 +829,7 @@ test("27 - fetching variables from data store as high as the root", () => {
         var2: "yyy",
       },
     },
-    "27 - defaults"
+    "27.01 - defaults"
   );
 });
 
@@ -871,7 +871,7 @@ test("28 - three level references", () => {
       },
       hhh: "iii",
     },
-    "28"
+    "28.01"
   );
 });
 

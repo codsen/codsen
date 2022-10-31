@@ -33,7 +33,7 @@ test("01 - sets in mixed nested things #1", () => {
     f: { g: "zzz" },
   };
 
-  equal(actual, intended, "01");
+  equal(actual, intended, "01.01");
 });
 
 test("02 - sets in mixed nested things #2", () => {
@@ -49,7 +49,7 @@ test("02 - sets in mixed nested things #2", () => {
     f: { g: ["zzz"] },
   };
 
-  equal(actual, intended, "02");
+  equal(actual, intended, "02.01");
 });
 
 test("03 - does not set", () => {
@@ -65,7 +65,7 @@ test("03 - does not set", () => {
     f: { g: ["h"] },
   };
 
-  equal(actual, intended, "03");
+  equal(actual, intended, "03.01");
 });
 
 test("04 - sets when only key given instead, index as string", () => {
@@ -81,7 +81,7 @@ test("04 - sets when only key given instead, index as string", () => {
     f: { g: ["zzz"] },
   };
 
-  equal(actual, intended, "04");
+  equal(actual, intended, "04.01");
 });
 
 test("05 - sets when only key given, numeric index", () => {
@@ -97,7 +97,7 @@ test("05 - sets when only key given, numeric index", () => {
     f: { g: ["zzz"] },
   };
 
-  equal(actual, intended, "05");
+  equal(actual, intended, "05.01");
 });
 
 test("06 - throws when inputs are wrong", () => {

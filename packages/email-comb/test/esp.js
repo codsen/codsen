@@ -36,7 +36,7 @@ color:  black;
 </html>
 `;
 
-  equal(actual, intended, "01 - default behaviour - lib will extract var1");
+  equal(actual, intended, "01.01 - default behaviour - lib will extract var1");
 });
 
 test("02 - nunjucks variable as a class name", () => {
@@ -75,7 +75,7 @@ color: black;
   equal(
     actual,
     intended,
-    "02 - default behaviour - curlies are not legal characters to be used as class names"
+    "02.01 - default behaviour - curlies are not legal characters to be used as class names"
   );
 });
 
@@ -111,7 +111,7 @@ test("03 - nunjucks variable as a class name (simplified version)", () => {
   equal(
     actual,
     intended,
-    "03 - we taught it how heads and tails look so it skips them now"
+    "03.01 - we taught it how heads and tails look so it skips them now"
   );
 });
 
@@ -159,7 +159,7 @@ color:  black;
   equal(
     actual,
     intended,
-    "04 - we taught it how heads and tails look so it skips them now"
+    "04.01 - we taught it how heads and tails look so it skips them now"
   );
 });
 
@@ -195,7 +195,7 @@ test("05 - nunjucks variables mixed with classes and id's (minimal version)", ()
   equal(
     actual,
     intended,
-    "05 - we taught it how heads and tails look so it skips them now"
+    "05.01 - we taught it how heads and tails look so it skips them now"
   );
 });
 
@@ -262,7 +262,7 @@ test("06 - nunjucks variables mixed with classes and id's (full version)", () =>
 </html>
 `;
 
-  equal(actual, intended, "06");
+  equal(actual, intended, "06.01");
 });
 
 test("07 - esp tag at the end of ignored class", () => {
@@ -296,7 +296,7 @@ test("07 - esp tag at the end of ignored class", () => {
 <table class="module-zzz-{{ loop.index }}">
 `;
 
-  equal(actual, intended, "07");
+  equal(actual, intended, "07.01");
 });
 
 test("08 - esp tag at the end of ignored class", () => {
@@ -322,7 +322,7 @@ test("08 - esp tag at the end of ignored class", () => {
 <table class="module-zzz-{{ loop.index }}">
 `;
 
-  equal(actual, intended, "08");
+  equal(actual, intended, "08.01");
 });
 
 test("09 - bug #6 - esp in head css within @font-face", () => {
@@ -340,7 +340,7 @@ test("09 - bug #6 - esp in head css within @font-face", () => {
 <body>yo</body>`;
   let actual = comb(input).result;
 
-  equal(actual, input, "09");
+  equal(actual, input, "09.01");
 });
 
 test("10 - bug #6 - unlikely case, Jinja curlies end right at real closing-ones (unlikely scenario)", () => {
@@ -356,7 +356,7 @@ test("10 - bug #6 - unlikely case, Jinja curlies end right at real closing-ones 
 <body>yo</body>`;
   let actual = comb(input).result;
 
-  equal(actual, input, "10");
+  equal(actual, input, "10.01");
 });
 
 test("11 - bug #6 - jinja/liquid blocks, spaced", () => {
@@ -380,7 +380,7 @@ test("11 - bug #6 - jinja/liquid blocks, spaced", () => {
 <body>yo</body>`;
   let actual = comb(input).result;
 
-  equal(actual, input, "11");
+  equal(actual, input, "11.01");
 });
 
 test("12 - bug #6 - jinja/liquid blocks, tight (unlikely, but possible in theory)", () => {
@@ -396,7 +396,7 @@ test("12 - bug #6 - jinja/liquid blocks, tight (unlikely, but possible in theory
 <body>yo</body>`;
   let actual = comb(input).result;
 
-  equal(actual, input, "12");
+  equal(actual, input, "12.01");
 });
 
 test.run();

@@ -27,7 +27,8 @@ test(`01 - code + apostrophe`, async () => {
     )
       .toString()
       .trim(),
-    `The \`deno\`${rightSingleQuote}s and \`verb\`${rightSingleQuote}s approaches.`
+    `The \`deno\`${rightSingleQuote}s and \`verb\`${rightSingleQuote}s approaches.`,
+    "01.01"
   );
 });
 
@@ -40,7 +41,8 @@ test(`02 - code + apostrophe, widows kick in`, async () => {
     )
       .toString()
       .trim(),
-    `The \`deno\`${rightSingleQuote}s and \`verb\`${rightSingleQuote}s approaches are very${rawNbsp}interesting.`
+    `The \`deno\`${rightSingleQuote}s and \`verb\`${rightSingleQuote}s approaches are very${rawNbsp}interesting.`,
+    "02.01"
   );
 });
 

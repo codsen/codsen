@@ -21,7 +21,7 @@ test("01 - first level keys", () => {
       }
     ),
     ["a", "b"],
-    "01"
+    "01.01"
   );
 });
 
@@ -42,7 +42,7 @@ test("02 - two level object", () => {
       }
     ),
     ["a.b", "x"],
-    "02"
+    "02.01"
   );
 });
 
@@ -61,7 +61,7 @@ test("03 - object does not even exist on a reference", () => {
       }
     ),
     ["a.b", "a.c", "x"],
-    "03"
+    "03.01"
   );
 });
 
@@ -87,7 +87,7 @@ test("04 - same as 01.03 but deeper levels", () => {
       }
     ),
     ["a.b.c.d", "a.b.c.e"],
-    "04"
+    "04.01"
   );
 });
 
@@ -352,7 +352,7 @@ test("09 - more complex plain object vs undefined (deeper levels won't be traver
       },
     }),
     ["a", "b", "c"],
-    "09"
+    "09.01"
   );
 });
 
@@ -369,12 +369,12 @@ test("10 - more complex plain object vs empty object", () => {
       {}
     ),
     ["a", "b", "c"],
-    "10"
+    "10.01"
   );
 });
 
 test("11 - string vs string", () => {
-  equal(noNewKeys("a", "b"), [], "11");
+  equal(noNewKeys("a", "b"), [], "11.01");
 });
 
 // ==========

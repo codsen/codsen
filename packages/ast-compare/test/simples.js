@@ -11,11 +11,15 @@ import { compare } from "../dist/ast-compare.esm.js";
 // =============
 
 test("01 - plain objects", () => {
-  equal(compare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2" }), true, "01");
+  equal(compare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2" }), true, "01.01");
 });
 
 test("02 - plain objects", () => {
-  equal(compare({ a: "1", b: "2" }, { a: "1", b: "2", c: "3" }), false, "02");
+  equal(
+    compare({ a: "1", b: "2" }, { a: "1", b: "2", c: "3" }),
+    false,
+    "02.01"
+  );
 });
 
 test("03 - plain objects", () => {
@@ -26,7 +30,7 @@ test("03 - plain objects", () => {
       { verboseWhenMismatches: true }
     ),
     `The given object has key "c" which the other-one does not have.`,
-    "03"
+    "03.01"
   );
 });
 
@@ -38,7 +42,7 @@ test("04 - plain objects", () => {
       { matchStrictly: true }
     ),
     false,
-    "04"
+    "04.01"
   );
 });
 
@@ -49,7 +53,8 @@ test("05 - plain objects", () => {
       { a: "1", b: "2" },
       { matchStrictly: true, verboseWhenMismatches: true }
     ),
-    "string"
+    "string",
+    "05.01"
   );
 });
 
@@ -57,7 +62,7 @@ test("06 - plain objects", () => {
   equal(
     compare({ a: "1", b: "2" }, { a: "1", b: "2" }, { matchStrictly: true }),
     true,
-    "06"
+    "06.01"
   );
 });
 
@@ -70,7 +75,7 @@ test("07 - plain objects", () => {
       { matchStrictly: true, hungryForWhitespace: true }
     ),
     false,
-    "07"
+    "07.01"
   );
 });
 
@@ -86,7 +91,8 @@ test("08 - plain objects", () => {
         verboseWhenMismatches: true,
       }
     ),
-    "string"
+    "string",
+    "08.01"
   );
 });
 
@@ -99,7 +105,7 @@ test("09 - plain objects - two whitespaces", () => {
       { matchStrictly: true, hungryForWhitespace: true }
     ),
     true,
-    "09"
+    "09.01"
   );
 });
 
@@ -112,7 +118,7 @@ test("10 - plain objects - whitespace vs empty str", () => {
       { matchStrictly: true, hungryForWhitespace: true }
     ),
     true,
-    "10"
+    "10.01"
   );
 });
 
@@ -125,7 +131,7 @@ test("11 - plain objects - empty str vs whitespace", () => {
       { matchStrictly: true, hungryForWhitespace: true }
     ),
     true,
-    "11"
+    "11.01"
   );
 });
 
@@ -138,7 +144,7 @@ test("12 - plain objects", () => {
       { matchStrictly: true, hungryForWhitespace: true }
     ),
     false,
-    "12"
+    "12.01"
   );
 });
 
@@ -154,7 +160,8 @@ test("13 - plain objects", () => {
         verboseWhenMismatches: true,
       }
     ),
-    "string"
+    "string",
+    "13.01"
   );
 });
 
@@ -167,7 +174,7 @@ test("14 - plain objects", () => {
       { matchStrictly: true, hungryForWhitespace: false }
     ),
     false,
-    "14"
+    "14.01"
   );
 });
 
@@ -183,35 +190,40 @@ test("15 - plain objects", () => {
         verboseWhenMismatches: true,
       }
     ),
-    "string"
+    "string",
+    "15.01"
   );
 });
 
 test("16 - comparison of empty plain objects", () => {
-  equal(compare({}, { a: "1", b: "2" }), false, "16");
+  equal(compare({}, { a: "1", b: "2" }), false, "16.01");
 });
 
 test("17 - comparison of empty plain objects", () => {
   equal(
     compare({}, { a: "1", b: "2" }, { hungryForWhitespace: true }),
     false,
-    "17"
+    "17.01"
   );
 });
 
 test("18 - comparison of empty plain objects", () => {
-  equal(compare({}, { a: "1", b: "2" }, { matchStrictly: true }), false, "18");
+  equal(
+    compare({}, { a: "1", b: "2" }, { matchStrictly: true }),
+    false,
+    "18.01"
+  );
 });
 
 test("19 - comparison of empty plain objects", () => {
-  equal(compare({ a: "1", b: "2", c: "3" }, {}), false, "19");
+  equal(compare({ a: "1", b: "2", c: "3" }, {}), false, "19.01");
 });
 
 test("20 - comparison of empty plain objects", () => {
   equal(
     compare({ a: "1", b: "2", c: "3" }, {}, { hungryForWhitespace: true }),
     false,
-    "20"
+    "20.01"
   );
 });
 
@@ -219,7 +231,7 @@ test("21 - comparison of empty plain objects", () => {
   equal(
     compare({ a: "1", b: "2", c: "3" }, {}, { matchStrictly: true }),
     false,
-    "21"
+    "21.01"
   );
 });
 
@@ -231,12 +243,12 @@ test("22 - comparison of empty plain objects", () => {
       { hungryForWhitespace: true, matchStrictly: true }
     ),
     false,
-    "22"
+    "22.01"
   );
 });
 
 test("23 - comparison of empty plain objects", () => {
-  equal(compare({ a: "1", b: "2", c: "3" }, { a: "\n\n\n" }), false, "23");
+  equal(compare({ a: "1", b: "2", c: "3" }, { a: "\n\n\n" }), false, "23.01");
 });
 
 test("24 - comparison of empty plain objects", () => {
@@ -247,7 +259,7 @@ test("24 - comparison of empty plain objects", () => {
       { hungryForWhitespace: false, matchStrictly: false }
     ),
     false,
-    "24"
+    "24.01"
   );
 });
 
@@ -259,7 +271,7 @@ test("25 - comparison of empty plain objects", () => {
       { hungryForWhitespace: true, matchStrictly: false }
     ),
     false,
-    "25"
+    "25.01"
   );
 });
 
@@ -271,7 +283,7 @@ test("26 - comparison of empty plain objects", () => {
       { hungryForWhitespace: false, matchStrictly: true }
     ),
     false,
-    "26"
+    "26.01"
   );
 });
 
@@ -283,19 +295,19 @@ test("27 - comparison of empty plain objects", () => {
       { hungryForWhitespace: true, matchStrictly: true }
     ),
     false,
-    "27"
+    "27.01"
   );
 });
 
 test("28 - comparing two empty plain objects", () => {
-  equal(compare({}, {}), true, "28");
+  equal(compare({}, {}), true, "28.01");
 });
 
 test("29 - comparison of empty plain objects", () => {
   equal(
     compare({}, {}, { hungryForWhitespace: true, matchStrictly: false }),
     true,
-    "29"
+    "29.01"
   );
 });
 
@@ -303,7 +315,7 @@ test("30 - comparison of empty plain objects", () => {
   equal(
     compare({}, {}, { hungryForWhitespace: true, matchStrictly: true }),
     true,
-    "30"
+    "30.01"
   );
 });
 
@@ -315,7 +327,7 @@ test("31 - catching row 199 for 100% coverage", () => {
       { hungryForWhitespace: true, matchStrictly: true }
     ),
     true,
-    "31"
+    "31.01"
   );
 });
 
@@ -323,7 +335,7 @@ test("32 - sneaky similarity", () => {
   equal(
     compare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2", c: ["3"] }),
     false,
-    "32"
+    "32.01"
   );
 });
 
@@ -331,7 +343,7 @@ test("33 - comparison of empty plain objects", () => {
   equal(
     compare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2", c: 3 }),
     false,
-    "33"
+    "33.01"
   );
 });
 
@@ -339,16 +351,16 @@ test("34 - comparison of empty plain objects", () => {
   equal(
     compare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2", c: { d: "3" } }),
     false,
-    "34"
+    "34.01"
   );
 });
 
 test("35 - big object has one element extra", () => {
-  equal(compare({ a: "1", b: "2", c: 3 }, { a: "1", b: "2" }), true, "35");
+  equal(compare({ a: "1", b: "2", c: 3 }, { a: "1", b: "2" }), true, "35.01");
 });
 
 test("36 - small object has one element extra", () => {
-  equal(compare({ a: "1", b: "2" }, { a: "1", b: "2", c: 3 }), false, "36");
+  equal(compare({ a: "1", b: "2" }, { a: "1", b: "2", c: 3 }), false, "36.01");
 });
 
 test("37 - object values are arrays, one has a string, another has none", () => {
@@ -362,7 +374,7 @@ test("37 - object values are arrays, one has a string, another has none", () => 
       }
     ),
     false,
-    "37"
+    "37.01"
   );
 });
 
@@ -381,7 +393,7 @@ test("38 - comparison of empty plain objects", () => {
       }
     ),
     "string",
-    "38"
+    "38.01"
   );
 });
 
@@ -398,7 +410,7 @@ test("39 - comparison of empty plain objects", () => {
       { hungryForWhitespace: false, matchStrictly: false }
     ),
     false,
-    "39"
+    "39.01"
   );
 });
 
@@ -414,7 +426,7 @@ test("40 - comparison of empty plain objects - hungryForWhitespace", () => {
       { hungryForWhitespace: true, matchStrictly: false }
     ),
     true,
-    "40"
+    "40.01"
   );
 });
 
@@ -430,7 +442,7 @@ test("41 - comparison of empty plain objects - same, default hardcoded", () => {
       { hungryForWhitespace: false, matchStrictly: true }
     ),
     false,
-    "41"
+    "41.01"
   );
 });
 
@@ -447,7 +459,7 @@ test("42 - comparison of empty plain objects - matchStrictly trump hungryForWhit
       { hungryForWhitespace: true, matchStrictly: true }
     ),
     false,
-    "42"
+    "42.01"
   );
 });
 
@@ -459,7 +471,7 @@ test("43 - empty object with keys vs object with no keys", () => {
       { hungryForWhitespace: false, matchStrictly: false }
     ),
     false,
-    "43"
+    "43.01"
   );
 });
 
@@ -471,7 +483,7 @@ test("44 - empty object with keys vs object with no keys", () => {
       { hungryForWhitespace: false, matchStrictly: true }
     ),
     false,
-    "44"
+    "44.01"
   );
 });
 
@@ -483,7 +495,7 @@ test("45 - empty object with keys vs object with no keys", () => {
       { hungryForWhitespace: true, matchStrictly: false }
     ),
     true,
-    "45"
+    "45.01"
   );
 });
 
@@ -495,20 +507,20 @@ test("46 - empty object with keys vs object with no keys", () => {
       { hungryForWhitespace: true, matchStrictly: true }
     ),
     true,
-    "46"
+    "46.01"
   );
 });
 
 test("47 - Boolean and numeric values", () => {
   // control - booleans and numbers as obj values
-  equal(compare({ a: false, b: 2, c: "3" }, { a: false, b: 2 }), true, "47");
+  equal(compare({ a: false, b: 2, c: "3" }, { a: false, b: 2 }), true, "47.01");
 });
 
 test("48 - s is zero length, b is empty - defaults", () => {
   equal(
     compare({ a: "\n\n\n   \t\t\t", b: "2" }, { a: "", b: "2" }),
     false,
-    "48"
+    "48.01"
   );
 });
 
@@ -520,7 +532,7 @@ test("49 - s is zero length, b is empty - opts.hungryForWhitespace", () => {
       { hungryForWhitespace: true }
     ),
     true,
-    "49"
+    "49.01"
   );
 });
 
@@ -529,7 +541,7 @@ test("50 - s is zero length, b is empty - opts.hungryForWhitespace", () => {
   equal(
     compare([{ a: "\n\n\n" }], {}, { hungryForWhitespace: true }),
     true,
-    "50"
+    "50.01"
   );
 });
 

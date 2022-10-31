@@ -13,7 +13,7 @@ test(`01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - legit pound, no
       decode: false,
     }),
     [],
-    "01"
+    "01.01"
   );
 });
 
@@ -25,7 +25,7 @@ test(`02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - legit pound, no
       decode: true,
     }),
     [],
-    "02"
+    "02.01"
   );
 });
 

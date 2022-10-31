@@ -14,20 +14,20 @@ test("01 - no tags at all, text string only", () => {
       "fhgkd  gjflkgjhlfjl gh;kj;lghj;jklkdjgj hsdkffj jagfg hdkghjkdfhg khkfg sjdgfg gfjdsgfjdhgj kf gfjhk fgkj"
     ),
     null,
-    "01"
+    "01.01"
   );
 });
 
 test("02 - unrecognised meta tag - counts as HTML", () => {
-  equal(detect("<!DOCTYPE rubbish>"), "html", "02");
+  equal(detect("<!DOCTYPE rubbish>"), "html", "02.01");
 });
 
 test("03 - no meta tag, no single tags", () => {
-  equal(detect("<table><tr><td>text</td></tr></table>"), null, "03");
+  equal(detect("<table><tr><td>text</td></tr></table>"), null, "03.01");
 });
 
 test("04 - missing input", () => {
-  equal(detect(), null, "04");
+  equal(detect(), null, "04.01");
 });
 
 test("05 - input is not string - throws", () => {

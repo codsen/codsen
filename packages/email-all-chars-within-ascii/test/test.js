@@ -10,15 +10,15 @@ const SMALLOWITHDIAERESIS = `\u00F6`; // #246
 const NONEXISTING = String.fromCodePoint(896); // #003
 
 test("01 - empty", () => {
-  equal(within(""), [], "01");
+  equal(within(""), [], "01.01");
 });
 
 test("02 - legit set of chars", () => {
-  equal(within("the quick brown fox"), [], "02");
+  equal(within("the quick brown fox"), [], "02.01");
 });
 
 test("03 - legit, line breaks", () => {
-  equal(within("the quick\rbrown\r\nfox\njumps over"), [], "03");
+  equal(within("the quick\rbrown\r\nfox\njumps over"), [], "03.01");
 });
 
 test("04 - illegal", () => {
@@ -35,7 +35,7 @@ test("04 - illegal", () => {
         UTF32Hex: "00f6",
       },
     ],
-    "04"
+    "04.01"
   );
 });
 
@@ -64,7 +64,7 @@ test("05 - multi-line illegal", () => {
         UTF32Hex: "00f6",
       },
     ],
-    "05"
+    "05.01"
   );
 });
 
@@ -82,7 +82,7 @@ test("06 - illegal low ASCII, ETX", () => {
         UTF32Hex: "0003",
       },
     ],
-    "06"
+    "06.01"
   );
 });
 
@@ -101,7 +101,7 @@ test("07 - non-existent outside ASCII, #896 or u0380", () => {
         UTF32Hex: "0380",
       },
     ],
-    "07"
+    "07.01"
   );
 });
 

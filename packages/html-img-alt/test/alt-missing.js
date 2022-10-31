@@ -8,14 +8,14 @@ import { alts } from "../dist/html-img-alt.esm.js";
 // -----------------------------------------------------------------------------
 
 test("01 - missing alt", () => {
-  equal(alts("zzz<img>zzz"), 'zzz<img alt="" >zzz', "01 - html - tight");
+  equal(alts("zzz<img>zzz"), 'zzz<img alt="" >zzz', "01.01 - html - tight");
 });
 
 test("02 - missing alt", () => {
   equal(
     alts("zzz<img >zzz"),
     'zzz<img alt="" >zzz',
-    "02 - html - trailing space"
+    "02.01 - html - trailing space"
   );
 });
 
@@ -23,19 +23,19 @@ test("03 - missing alt", () => {
   equal(
     alts("zzz<img      >zzz"),
     'zzz<img alt="" >zzz',
-    "03 - html - excessive trailing space"
+    "03.01 - html - excessive trailing space"
   );
 });
 
 test("04 - missing alt", () => {
-  equal(alts("zzz<img/>zzz"), 'zzz<img alt="" />zzz', "04 - xhtml - tight");
+  equal(alts("zzz<img/>zzz"), 'zzz<img alt="" />zzz', "04.01 - xhtml - tight");
 });
 
 test("05 - missing alt", () => {
   equal(
     alts("zzz<img />zzz"),
     'zzz<img alt="" />zzz',
-    "05 - xhtml - one space before slash"
+    "05.01 - xhtml - one space before slash"
   );
 });
 
@@ -43,7 +43,7 @@ test("06 - missing alt", () => {
   equal(
     alts("zzz<img           />zzz"),
     'zzz<img alt="" />zzz',
-    "06 - xhtml - many spaces before slash"
+    "06.01 - xhtml - many spaces before slash"
   );
 });
 
@@ -51,7 +51,7 @@ test("07 - missing alt", () => {
   equal(
     alts("zzz<img           /    >zzz"),
     'zzz<img alt="" />zzz',
-    "07 - xhtml - many spaces on both sides"
+    "07.01 - xhtml - many spaces on both sides"
   );
 });
 

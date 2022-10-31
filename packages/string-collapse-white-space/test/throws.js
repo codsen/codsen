@@ -77,15 +77,19 @@ test(`02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - wrong opts = throw`, () 
 });
 
 test(`03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - empty string`, () => {
-  equal(collapse(""), { result: "", ranges: null }, "03");
+  equal(collapse(""), { result: "", ranges: null }, "03.01");
 });
 
 test(`04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - only letter characters, no white space`, () => {
-  equal(collapse("aaa"), { result: "aaa", ranges: null }, "04");
+  equal(collapse("aaa"), { result: "aaa", ranges: null }, "04.01");
 });
 
 test(`05 - cb is null`, () => {
-  equal(collapse("aaa", { cb: null }), { result: "aaa", ranges: null }, "05");
+  equal(
+    collapse("aaa", { cb: null }),
+    { result: "aaa", ranges: null },
+    "05.01"
+  );
 });
 
 test.run();

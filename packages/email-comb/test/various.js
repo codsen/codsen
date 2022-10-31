@@ -85,7 +85,7 @@ test("02 - working on early (stage I) per-line removal", () => {
 </html>
 `;
 
-  equal(comb(source).result, intended, "02");
+  equal(comb(source).result, intended, "02.01");
 });
 
 // sneaky matching used/unused class/id names
@@ -106,7 +106,7 @@ test("03 - HTML inline CSS comments are removed - commented out selectors - semi
 </body>
 `;
 
-  equal(comb(source).result, intended, "03");
+  equal(comb(source).result, intended, "03.01");
 });
 
 test("04 - HTML inline CSS comments are removed - commented out selectors - removing comments will result in missing semicol", () => {
@@ -126,7 +126,7 @@ test("04 - HTML inline CSS comments are removed - commented out selectors - remo
 </body>
 `;
 
-  equal(comb(source).result, intended, "04");
+  equal(comb(source).result, intended, "04.01");
 });
 
 test("05 - HTML inline CSS comments are removed - commented out selectors - very cheeky contents within comments", () => {
@@ -148,7 +148,7 @@ test("05 - HTML inline CSS comments are removed - commented out selectors - very
 </body>
 `;
 
-  equal(comb(source).result, intended, "05");
+  equal(comb(source).result, intended, "05.01");
 });
 
 test("06 - Even without backend heads/tails set, it should recognise double curlies and curly-percentage -type heads", () => {
@@ -165,28 +165,10 @@ test("06 - Even without backend heads/tails set, it should recognise double curl
 </body>
 `;
 
-  equal(comb(source).result, intended, "06");
+  equal(comb(source).result, intended, "06.01");
 });
 
-// TODO
-test.skip("01 - empty class/id without equals and value gets deleted", () => {
-  let source = `<style>
-  .aa {bb:2;}
-</style>
-</head>
-<body><a id class="bb">
-</body>
-`;
-
-  let intended = `</head>
-<body><a>
-</body>
-`;
-
-  equal(comb(source).result, intended, "01.01");
-});
-
-test("08 - empty class/id with equals but without value gets deleted", () => {
+test("07 - empty class/id with equals but without value gets deleted", () => {
   let source = `<style>
   .aa {bb:2;}
 </style>
@@ -203,10 +185,10 @@ test("08 - empty class/id with equals but without value gets deleted", () => {
 </body>
 `;
 
-  equal(comb(source).result, intended, "08");
+  equal(comb(source).result, intended, "07.01");
 });
 
-test("09 - cleans spaces within classes and id's", () => {
+test("08 - cleans spaces within classes and id's", () => {
   let source = `<head>
 <style type="text/css">
   .unused1[z], .unused.used {a:1;}
@@ -226,25 +208,25 @@ test("09 - cleans spaces within classes and id's", () => {
 </body>
 `;
 
-  equal(comb(source).result, intended, "09");
+  equal(comb(source).result, intended, "08.01");
 });
 
-test("10 - does not mangle different-type line endings, LF", () => {
+test("09 - does not mangle different-type line endings, LF", () => {
   let source = "a\n";
-  equal(comb(source).result, source, "10");
+  equal(comb(source).result, source, "09.01");
 });
 
-test("11 - does not mangle different-type line endings, CR", () => {
+test("10 - does not mangle different-type line endings, CR", () => {
   let source = "a\r";
-  equal(comb(source).result, source, "11");
+  equal(comb(source).result, source, "10.01");
 });
 
-test("12 - does not mangle different-type line endings, LFCR", () => {
+test("11 - does not mangle different-type line endings, LFCR", () => {
   let source = "a\r\n";
-  equal(comb(source).result, source, "12");
+  equal(comb(source).result, source, "11.01");
 });
 
-test("13 - dirty code #1", () => {
+test("12 - dirty code #1", () => {
   let actual = comb(
     `<body>
 
@@ -272,10 +254,10 @@ float:left !important;}
 <td align="left" style="color:#00000;"><a href="https://email.yo.com" style="color:#000000;">p</a>
 `;
 
-  equal(actual, intended, "13");
+  equal(actual, intended, "12.01");
 });
 
-test("14 - adhoc #1", () => {
+test("13 - adhoc #1", () => {
   let actual = comb(
     `<style>
   .aa{b: c;}
@@ -294,10 +276,10 @@ test("14 - adhoc #1", () => {
 </body>
 `;
 
-  equal(actual, intended, "14");
+  equal(actual, intended, "13.01");
 });
 
-test("15 - adhoc 2", () => {
+test("14 - adhoc 2", () => {
   let actual = comb(
     `<head>
 <style type="text/css">
@@ -318,10 +300,10 @@ test("15 - adhoc 2", () => {
 </body>
 `;
 
-  equal(actual, intended, "15");
+  equal(actual, intended, "14.01");
 });
 
-test("16 - adhoc 3", () => {
+test("15 - adhoc 3", () => {
   let actual = comb(
     `<head>
 <style type="text/css">
@@ -342,30 +324,42 @@ test("16 - adhoc 3", () => {
 </body>
 `;
 
-  equal(actual, intended, "16");
+  equal(actual, intended, "15.01");
 });
 
-test("17 - bug #36", () => {
+test("16 - bug #36", () => {
   let input = `<style>@media only screen {}</style>
 <style>.foo {x: y;}</style>
 <body><span class="foo">z</span>`;
   let { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
     comb(input);
 
-  equal(allInBody, [".foo"], "17.01");
-  equal(allInHead, [".foo"], "17.02");
+  equal(allInBody, [".foo"], "16.01");
+  equal(allInHead, [".foo"], "16.02");
   equal(
     result,
     `<style>.foo {x: y;}</style>
 <body><span class="foo">z</span>`,
-    "17.03"
+    "16.03"
   );
+  equal(deletedFromHead, [], "16.04");
+  equal(deletedFromBody, [], "16.05");
+});
+
+test("17 - bug #45 - id", () => {
+  let input = `<body><div>https://x?id=z</div>`;
+  let { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
+    comb(input);
+
+  equal(allInBody, [], "17.01");
+  equal(allInHead, [], "17.02");
+  equal(result, input, "17.03");
   equal(deletedFromHead, [], "17.04");
   equal(deletedFromBody, [], "17.05");
 });
 
-test("18 - bug #45 - id", () => {
-  let input = `<body><div>https://x?id=z</div>`;
+test("18 - bug #45 - class", () => {
+  let input = `<body><div>https://x?class=z</div>`;
   let { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
     comb(input);
 
@@ -376,19 +370,7 @@ test("18 - bug #45 - id", () => {
   equal(deletedFromBody, [], "18.05");
 });
 
-test("19 - bug #45 - class", () => {
-  let input = `<body><div>https://x?class=z</div>`;
-  let { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
-    comb(input);
-
-  equal(allInBody, [], "19.01");
-  equal(allInHead, [], "19.02");
-  equal(result, input, "19.03");
-  equal(deletedFromHead, [], "19.04");
-  equal(deletedFromBody, [], "19.05");
-});
-
-test("20 - issue #35 - 8MB file", () => {
+test("19 - issue #35 - 8MB file", () => {
   // 8601323 bytes length = 8601323/1024/1024 = 8.2 MB
   let chunkOfWhitespace = new Array(200).map(() => " ".repeat(300)).join("\n");
 
@@ -404,8 +386,8 @@ test("20 - issue #35 - 8MB file", () => {
   let { allInBody, allInHead, deletedFromHead, deletedFromBody } = comb(input);
   equal(allInBody, [".bb", ".cc", ".zz"], "19.01");
   equal(allInHead, [".col-1", ".col-2", ".zz"], "19.02");
-  equal(deletedFromHead, [".col-1", ".col-2"], "19.04");
-  equal(deletedFromBody, [".bb", ".cc"], "19.05");
+  equal(deletedFromHead, [".col-1", ".col-2"], "19.03");
+  equal(deletedFromBody, [".bb", ".cc"], "19.04");
 });
 
 test.run();

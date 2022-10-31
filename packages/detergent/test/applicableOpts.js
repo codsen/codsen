@@ -31,7 +31,7 @@ test(`01 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leadin
       "stripHtml",
       "eol",
     ].sort(),
-    "01"
+    "01.01"
   );
 });
 

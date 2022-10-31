@@ -14,7 +14,7 @@ test("01 - testing escape latch for missing second double quote cases", () => {
   equal(
     alts('zzz<img alt="  class="" />zzz'),
     'zzz<img alt="  class="" />zzz',
-    "01"
+    "01.01"
   );
 });
 
@@ -84,7 +84,7 @@ test("04 - specific place in the algorithm, protection against rogue slashes", (
   equal(
     alts('<img alt="/ class="" />'),
     '<img alt="/ class="" />',
-    "04 - should do nothing."
+    "04.01 - should do nothing."
   );
 });
 

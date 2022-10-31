@@ -218,7 +218,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 333
 444
 `,
-    "08"
+    "08.01"
   );
 });
 
@@ -258,7 +258,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 333
 444
 `,
-    "09"
+    "09.01"
   );
 });
 
@@ -278,7 +278,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
    .pt2px[lang|=en] { padding-top: 2px !important }
 /* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 `,
-    "10"
+    "10.01"
   );
 });
 
@@ -306,7 +306,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
    .pt10px[lang|=en] { padding-top: 10px !important }
 /* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 `,
-    "11"
+    "11.01"
   );
 });
 
@@ -328,7 +328,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
  .pt3p { padding-top: 3% !important; }
 /* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 `,
-    "12"
+    "12.01"
   );
 });
 
@@ -350,7 +350,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
  .pt3p { padding-top: 3px !important; }
 /* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 `,
-    "13"
+    "13.01"
   );
 });
 
@@ -444,7 +444,7 @@ test(`16 - ${`\u001b[${33}m${`no config, no heads/tails requested`}\u001b[${39}m
     includeHeadsAndTails: false,
   }).result;
 
-  equal(generated, ref, "16");
+  equal(generated, ref, "16.01");
 });
 
 // -----------------------------------------------------------------------------
@@ -545,7 +545,7 @@ test(`19 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39
     includeHeadsAndTails: true,
   }).result;
 
-  equal(generated, ref, "19");
+  equal(generated, ref, "19.01");
   // without config we can't do a second cycle so unit test ends here
 });
 
@@ -588,7 +588,7 @@ ${CONTENTHEAD}
     includeConfig: false,
     includeHeadsAndTails: true,
   }).result;
-  equal(generated, ref, "20");
+  equal(generated, ref, "20.01");
   // without config we can't do a second cycle so unit test ends here
 });
 
@@ -628,7 +628,7 @@ ${CONTENTHEAD} */
 
   // ---------------------------------------------------------------------------
 
-  equal(generated, ref, "21");
+  equal(generated, ref, "21.01");
 
   // without config we can't do a second cycle so unit test ends here
 });
@@ -656,7 +656,7 @@ test(`22 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39
     includeHeadsAndTails: true,
   }).result;
 
-  equal(generated, ref, "22");
+  equal(generated, ref, "22.01");
 
   // without config we can't do a second cycle so unit test ends here
 });
@@ -769,7 +769,7 @@ lala`,
 lala
 `,
 
-    "25"
+    "25.01"
   );
 });
 
@@ -841,7 +841,7 @@ lala`,
 lala
 `,
 
-    "27"
+    "27.01"
   );
 });
 
@@ -876,7 +876,7 @@ lala`,
 lala
 `,
 
-    "28"
+    "28.01"
   );
 });
 
@@ -914,7 +914,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 lala
 `,
 
-    "29"
+    "29.01"
   );
 });
 
@@ -954,7 +954,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 lala
 `,
 
-    "30"
+    "30.01"
   );
 });
 
@@ -994,7 +994,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 lala
 `,
 
-    "31"
+    "31.01"
   );
 });
 
@@ -1034,7 +1034,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 lala
 `,
 
-    "32"
+    "32.01"
   );
 });
 
@@ -1069,7 +1069,7 @@ test(`33 - ${`\u001b[${35}m${`config present no config requested`}\u001b[${39}m`
 /* lala */
 `,
 
-    "33"
+    "33.01"
   );
 });
 
@@ -1104,7 +1104,7 @@ test(`34 - ${`\u001b[${35}m${`content tails present no config requested`}\u001b[
 /* lala */
 `,
 
-    "34"
+    "34.01"
   );
 });
 
@@ -1141,7 +1141,7 @@ b
     includeConfig: false,
     includeHeadsAndTails: true,
   }).result;
-  equal(generated, ref, "35");
+  equal(generated, ref, "35.01");
 });
 
 test(`36 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - head missing`, () => {
@@ -1174,7 +1174,7 @@ lala`,
 lala
 `,
 
-    "36"
+    "36.01"
   );
 });
 
@@ -1524,7 +1524,7 @@ test(`44 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} 
 </table>
 `,
 
-    "44"
+    "44.01"
   );
 });
 
@@ -1568,7 +1568,7 @@ test(`45 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} 
 </table>
 `,
 
-    "45"
+    "45.01"
   );
 });
 
@@ -1606,7 +1606,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 lala
 `,
 
-    "46"
+    "46.01"
   );
 });
 
@@ -1646,7 +1646,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 lala
 `,
 
-    "47"
+    "47.01"
   );
 });
 
@@ -1840,7 +1840,7 @@ b
 
   // ---------------------------------------------------------------------------
 
-  equal(generated, ref, "51");
+  equal(generated, ref, "51.01");
 });
 
 test(`52 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - style with no $$$, no pad`, () => {
@@ -1881,7 +1881,7 @@ ${CONTENTHEAD} */
 
   // ---------------------------------------------------------------------------
 
-  equal(generated, ref, "52");
+  equal(generated, ref, "52.01");
 });
 
 test(`53 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - via opts.configOverride`, () => {
@@ -1926,7 +1926,7 @@ ${CONTENTHEAD} */
   equal(
     generated,
     ref,
-    "53 - no content heads and tails - replaces whole thing with result"
+    "53.01 - no content heads and tails - replaces whole thing with result"
   );
 });
 
@@ -1982,7 +1982,7 @@ b
   equal(
     generated,
     ref,
-    "54 - with heads and tails - places generated content between content heads/tails"
+    "54.01 - with heads and tails - places generated content between content heads/tails"
   );
 });
 
@@ -2043,7 +2043,7 @@ y
   equal(
     generated,
     ref,
-    "55 - with heads and tails - places generated content between content heads/tails"
+    "55.01 - with heads and tails - places generated content between content heads/tails"
   );
 });
 
@@ -2099,7 +2099,7 @@ b
   equal(
     generated,
     ref,
-    "56 - with heads and tails - places generated content between content heads/tails"
+    "56.01 - with heads and tails - places generated content between content heads/tails"
   );
 });
 
@@ -2155,7 +2155,7 @@ b
   equal(
     generated,
     ref,
-    "57 - with heads and tails - places generated content between content heads/tails"
+    "57.01 - with heads and tails - places generated content between content heads/tails"
   );
 });
 
@@ -2193,7 +2193,7 @@ z`;
 
 z
 `,
-    "58"
+    "58.01"
   );
 });
 
@@ -2233,7 +2233,7 @@ z`;
 
 z
 `,
-    "59"
+    "59.01"
   );
 });
 
@@ -2278,7 +2278,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
 z
 `,
-    "60"
+    "60.01"
   );
 });
 
@@ -2308,7 +2308,7 @@ zzz
 
 z
 `,
-    "61"
+    "61.01"
   );
 });
 
@@ -2338,7 +2338,7 @@ z`;
 
 z
 `,
-    "62"
+    "62.01"
   );
 });
 
@@ -2370,7 +2370,7 @@ z`;
 
 z
 `,
-    "63"
+    "63.01"
   );
 });
 
@@ -2406,7 +2406,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
 z
 `,
-    "64"
+    "64.01"
   );
 });
 
@@ -2441,7 +2441,7 @@ ${CONTENTHEAD} */
 .dib { display: inline-block !important }
 /* ${CONTENTTAIL} */
 `,
-    "65"
+    "65.01"
   );
 });
 
@@ -2470,7 +2470,7 @@ ${CONTENTHEAD} */
 .db { display: block !important }
 /* ${CONTENTTAIL} */
 `,
-    "66"
+    "66.01"
   );
 });
 
@@ -2503,7 +2503,7 @@ ${CONTENTHEAD} */
 .zzz3 { yyy: 0 auto !important }
 /* ${CONTENTTAIL} */
 `,
-    "67"
+    "67.01"
   );
 });
 
@@ -2682,7 +2682,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 }
 /* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 `,
-    "70"
+    "70.01"
   );
 });
 
@@ -2703,7 +2703,7 @@ test(`71 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - only conten
 }
 /* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 `,
-    "71"
+    "71.01"
   );
 });
 
@@ -2722,7 +2722,7 @@ test(`72 - ${`\u001b[${33}m${`heads on, config on`}\u001b[${39}m`} - no heads/ta
   .w2p { width: 2% !important }
 }
 `,
-    "72"
+    "72.01"
   );
 });
 
@@ -2761,7 +2761,7 @@ test(`75 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - 
 });
 
 test(`76 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 3 args - taster`, () => {
-  equal(extractFromToSource("mt[lang|=en]|2"), [0, 2, "mt[lang|=en]"], "76");
+  equal(extractFromToSource("mt[lang|=en]|2"), [0, 2, "mt[lang|=en]"], "76.01");
 });
 
 test(`77 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 3 args`, () => {
@@ -2931,11 +2931,11 @@ test(`80 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - 
 // -----------------------------------------------------------------------------
 
 test(`81 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - version is exported`, () => {
-  match(version, /\d+\.\d+\.\d+/g, "81");
+  match(version, /\d+\.\d+\.\d+/g, "81.01");
 });
 
 test(`82 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - heads and tails are exported`, () => {
-  equal(Object.keys(headsAndTails).length, 4, "82");
+  equal(Object.keys(headsAndTails).length, 4, "82.01");
 });
 
 test(`83 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - exports reportProgressFunc which works`, () => {

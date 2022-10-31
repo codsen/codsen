@@ -244,7 +244,7 @@ export {
       all: [],
       error: null,
     },
-    "04"
+    "04.01"
   );
 });
 
@@ -272,7 +272,7 @@ interface def {
       all: [],
       error: "not found",
     },
-    "05"
+    "05.01"
   );
 });
 

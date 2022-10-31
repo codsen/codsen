@@ -52,7 +52,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 </ul>
 `;
 
-  equal(render(input), expected);
+  equal(render(input), expected, "01.01");
 });
 
 test(`02 - mix`, () => {
@@ -114,7 +114,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
       dateDivMarkup: ({ year, month, day }) =>
         `${day} ${month} <span>${year}</span>`,
     }),
-    expected
+    expected,
+    "02.01"
   );
 });
 
@@ -142,7 +143,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 </ul>
 `;
 
-  equal(render(input), expected);
+  equal(render(input), expected, "03.01");
 });
 
 test.run();

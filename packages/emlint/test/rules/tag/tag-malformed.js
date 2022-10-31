@@ -52,7 +52,7 @@ test(`04 - two tags, tight`, () => {
       "tag-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "04");
+  equal(applyFixes(str, messages), fixed, "04.01");
 });
 
 test(`05 - two tags, spaced`, () => {
@@ -63,7 +63,7 @@ test(`05 - two tags, spaced`, () => {
       "tag-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "05");
+  equal(applyFixes(str, messages), fixed, "05.01");
 });
 
 test(`06 - two tags, attr`, () => {
@@ -74,7 +74,7 @@ test(`06 - two tags, attr`, () => {
       "tag-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "06");
+  equal(applyFixes(str, messages), fixed, "06.01");
 });
 
 test(`07 - malformed closing tag, recognised`, () => {
@@ -85,7 +85,7 @@ test(`07 - malformed closing tag, recognised`, () => {
       "tag-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "07");
+  equal(applyFixes(str, messages), fixed, "07.01");
 });
 
 test(`08 - malformed closing tag, unrecognised`, () => {
@@ -96,7 +96,7 @@ test(`08 - malformed closing tag, unrecognised`, () => {
       "tag-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), fixed, "08");
+  equal(applyFixes(str, messages), fixed, "08.01");
 });
 
 // closing bracket missing
@@ -172,42 +172,6 @@ test(`14 - position of a missing bracket is on a new opening bracket`, () => {
   });
   equal(applyFixes(str, messages), fixed, "14.01");
   equal(messages.length, 1, "14.02");
-});
-
-test.skip(`01 - void tag`, () => {
-  let str = `<br`;
-  let fixed = `<br />`;
-  let messages = verify(not, str, {
-    rules: {
-      "tag-malformed": 2,
-    },
-  });
-  equal(applyFixes(str, messages), fixed, "01.01");
-  equal(messages.length, 1, "01.02");
-});
-
-test.skip(`02`, () => {
-  let str = `<br\n`;
-  let fixed = `<br />\n`;
-  let messages = verify(not, str, {
-    rules: {
-      "tag-malformed": 2,
-    },
-  });
-  equal(applyFixes(str, messages), fixed, "02.01");
-  equal(messages.length, 1, "02.02");
-});
-
-test.skip(`03 - multiple void tags without closing brackets`, () => {
-  let str = `<br<br<br`;
-  let fixed = `<br /><br /><br />`;
-  let messages = verify(not, str, {
-    rules: {
-      "tag-malformed": 2,
-    },
-  });
-  equal(applyFixes(str, messages), fixed, "03.01");
-  equal(messages.length, 1, "03.02");
 });
 
 test.run();

@@ -8,7 +8,7 @@ test(`01 - ${`\u001b[${90}m${`adhoc 1`}\u001b[${39}m`} - a peculiar set of chara
   equal(
     m(equal, "<a>\n<<>", { removeLineBreaks: true }).result,
     "<a><<>",
-    "01 - a peculiar set of characters"
+    "01.01 - a peculiar set of characters"
   );
 });
 
@@ -16,7 +16,7 @@ test(`02 - ${`\u001b[${90}m${`adhoc 2`}\u001b[${39}m`} - another peculiar set of
   equal(
     m(equal, "You&rsquo;ve").result,
     "You&rsquo;ve",
-    "02 - another peculiar set of characters"
+    "02.01 - another peculiar set of characters"
   );
 });
 
@@ -40,7 +40,7 @@ name="viewport" zzz`;
       breakToTheLeftOf: [],
     }).result,
     output,
-    "03 - another peculiar set of characters"
+    "03.01 - another peculiar set of characters"
   );
 });
 
@@ -48,7 +48,7 @@ test(`04 - ${`\u001b[${90}m${`adhoc 4`}\u001b[${39}m`} - result's keyset is cons
   equal(
     Object.keys(m(equal, "")).length,
     Object.keys(m(equal, "zzz")).length,
-    "04"
+    "04.01"
   );
 });
 
@@ -145,7 +145,7 @@ z>
       breakToTheLeftOf: [],
     }).result,
     output,
-    "07"
+    "07.01"
   );
 });
 
@@ -155,7 +155,7 @@ test(`08 - ${`\u001b[${90}m${`adhoc 8`}\u001b[${39}m`} - nunjucks`, () => {
       removeLineBreaks: true,
     }).result,
     "{%- length > 1 or length > 2 -%}",
-    "08"
+    "08.01"
   );
 });
 
@@ -167,7 +167,7 @@ test(`09 - ${`\u001b[${90}m${`adhoc 9`}\u001b[${39}m`} - nunjucks`, () => {
       removeLineBreaks: true,
     }).result,
     source,
-    "09"
+    "09.01"
   );
 });
 

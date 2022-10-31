@@ -16,7 +16,7 @@ test(`01 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
   equal(
     matchLeft("z a", 2, [() => "EOL"]),
     false,
-    "01 - whitespace trim opts control"
+    "01.01 - whitespace trim opts control"
   );
 });
 
@@ -27,7 +27,7 @@ test(`02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
       trimBeforeMatching: true,
     }),
     "EOL",
-    "02 - whitespace trim opt on"
+    "02.01 - whitespace trim opt on"
   );
 });
 
@@ -35,7 +35,7 @@ test(`03 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
   equal(
     matchLeft("z a", 2, ["a", () => "EOL"]),
     false,
-    "03 - whitespace trim opts control"
+    "03.01 - whitespace trim opts control"
   );
 });
 
@@ -46,7 +46,7 @@ test(`04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
       trimBeforeMatching: true,
     }),
     "EOL",
-    "04 - whitespace trim opt on"
+    "04.01 - whitespace trim opt on"
   );
 });
 
@@ -56,7 +56,7 @@ test(`05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
       trimBeforeMatching: true,
     }),
     "z",
-    "05 - whitespace trim opts control"
+    "05.01 - whitespace trim opts control"
   );
 });
 
@@ -67,7 +67,7 @@ test(`06 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
       trimBeforeMatching: true,
     }),
     "EOL",
-    "06 - whitespace trim opt on"
+    "06.01 - whitespace trim opt on"
   );
 });
 
@@ -78,7 +78,7 @@ test(`07 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
       trimBeforeMatching: true,
     }),
     false,
-    "07"
+    "07.01"
   );
 });
 

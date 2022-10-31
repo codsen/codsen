@@ -23,7 +23,7 @@ test(`01 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - \\n replacement wit
   equal(
     det(ok, not, 0, `aaa\n\nbbb\n\nccc`).res,
     "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc",
-    "01"
+    "01.01"
   );
 });
 
@@ -31,7 +31,7 @@ test(`02 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - \\n replacement wit
   equal(
     det(ok, not, 0, `aaa\r\n\r\nbbb\r\n\r\nccc`).res,
     "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc",
-    "02 - CRLF"
+    "02.01 - CRLF"
   );
 });
 
@@ -41,7 +41,7 @@ test(`03 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement
       useXHTML: true,
     }).res,
     "a<br/>b",
-    "03"
+    "03.01"
   );
 });
 
@@ -51,7 +51,7 @@ test(`04 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement
       useXHTML: false,
     }).res,
     "a<br>b",
-    "04"
+    "04.01"
   );
 });
 
@@ -89,7 +89,7 @@ test(`06 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement
       useXHTML: false,
     }).res,
     "a<br>b",
-    "06"
+    "06.01"
   );
 });
 
@@ -100,7 +100,7 @@ test(`07 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement
       replaceLineBreaks: false,
     }).res,
     "abc<br/>def<br/>ghi<br/>jkl<br/>mno",
-    "07"
+    "07.01"
   );
 });
 
@@ -111,27 +111,27 @@ test(`08 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - HTML BR replacement
       replaceLineBreaks: false,
     }).res,
     "abc<br>def<br>ghi<br>jkl<br>mno",
-    "08"
+    "08.01"
   );
 });
 
 test(`09 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`, () => {
-  equal(det(ok, not, 0, `<br />`).res, `<br/>`, "09");
+  equal(det(ok, not, 0, `<br />`).res, `<br/>`, "09.01");
 });
 
 test(`10 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`, () => {
-  equal(det(ok, not, 0, `< br>`).res, `<br/>`, "10");
+  equal(det(ok, not, 0, `< br>`).res, `<br/>`, "10.01");
 });
 
 test(`11 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`, () => {
-  equal(det(ok, not, 0, `<br class="z"/>`).res, `<br class="z"/>`, "11");
+  equal(det(ok, not, 0, `<br class="z"/>`).res, `<br class="z"/>`, "11.01");
 });
 
 test(`12 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - dirty BRs`, () => {
   equal(
     det(ok, not, 0, `aaa<br />< br>bbb< br ><br>ccc< br >< br>ddd`).res,
     "aaa<br/><br/>bbb<br/><br/>ccc<br/><br/>ddd",
-    "12"
+    "12.01"
   );
 });
 
@@ -141,7 +141,7 @@ test(`13 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #1`, () =>
       useXHTML: false,
     }).res,
     "a<br>b",
-    "13"
+    "13.01"
   );
 });
 
@@ -151,7 +151,7 @@ test(`14 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #1`, () =>
       useXHTML: true,
     }).res,
     "a<br/>b",
-    "14"
+    "14.01"
   );
 });
 
@@ -162,7 +162,7 @@ test(`15 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #2`, () =>
       replaceLineBreaks: false,
     }).res,
     "a<br>b",
-    "15"
+    "15.01"
   );
 });
 
@@ -173,7 +173,7 @@ test(`16 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #3`, () =>
       replaceLineBreaks: false,
     }).res,
     `a<br style="something">b`,
-    "16"
+    "16.01"
   );
 });
 
@@ -184,7 +184,7 @@ test(`17 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #4`, () =>
       replaceLineBreaks: false,
     }).res,
     `a<br style="something"/>b`,
-    "17"
+    "17.01"
   );
 });
 
@@ -195,7 +195,7 @@ test(`18 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`, () =>
       replaceLineBreaks: false,
     }).res,
     `a<br class="display: none;">b`,
-    "18"
+    "18.01"
   );
 });
 
@@ -206,7 +206,7 @@ test(`19 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #5`, () =>
       replaceLineBreaks: false,
     }).res,
     `a<br class="display: none;"/>b`,
-    "19"
+    "19.01"
   );
 });
 
@@ -217,7 +217,7 @@ test(`20 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #6`, () =>
       replaceLineBreaks: false,
     }).res,
     `a<br class="display: none;">b`,
-    "20"
+    "20.01"
   );
 });
 
@@ -228,7 +228,7 @@ test(`21 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #6`, () =>
       replaceLineBreaks: false,
     }).res,
     `a<br class="display: none;"/>b`,
-    "21"
+    "21.01"
   );
 });
 
@@ -239,7 +239,7 @@ test(`22 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #7`, () =>
       replaceLineBreaks: false,
     }).res,
     `a<br class="display: none;">b`,
-    "22"
+    "22.01"
   );
 });
 
@@ -250,7 +250,7 @@ test(`23 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - messy BR #7`, () =>
       replaceLineBreaks: false,
     }).res,
     `a<br class="display: none;"/>b`,
-    "23"
+    "23.01"
   );
 });
 

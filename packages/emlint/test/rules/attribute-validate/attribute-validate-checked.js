@@ -305,7 +305,11 @@ test(`17 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - healthy checked checkbox,
     },
   });
   // can fix:
-  equal(applyFixes(str, messages), `<input type="checkbox" checked="checked">`);
+  equal(
+    applyFixes(str, messages),
+    `<input type="checkbox" checked="checked">`,
+    "17.01"
+  );
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-checked",
@@ -330,7 +334,7 @@ test(`18 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - healthy checked radio, as
   equal(
     applyFixes(str, messages),
     `<input type="radio" checked="checked">`,
-    "18"
+    "18.01"
   );
 });
 
@@ -345,7 +349,7 @@ test(`19 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - missing after equal, as H
   equal(
     applyFixes(str, messages),
     `<input type="radio" checked="checked"/>`,
-    "19"
+    "19.01"
   );
 });
 
@@ -358,7 +362,11 @@ test(`20 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - closing quote and content
     },
   });
   equal(messages[0].fix.ranges, [[27, 30, `="checked"`]], "20.01");
-  equal(applyFixes(str, messages), `<input type="radio" checked="checked">`);
+  equal(
+    applyFixes(str, messages),
+    `<input type="radio" checked="checked">`,
+    "20.02"
+  );
 });
 
 test(`21 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - double quotes, no content, as HTML`, () => {
@@ -372,7 +380,7 @@ test(`21 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - double quotes, no content
   equal(
     applyFixes(str, messages),
     `<input type="radio" checked="checked"/>`,
-    "21"
+    "21.01"
   );
 });
 
@@ -387,7 +395,7 @@ test(`22 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - single quotes, no content
   equal(
     applyFixes(str, messages),
     `<input type="radio" checked='checked'/>`,
-    "22"
+    "22.01"
   );
 });
 
@@ -402,7 +410,7 @@ test(`23 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - quotes with content missi
   equal(
     applyFixes(str, messages),
     `<input type="radio" checked='checked'>`,
-    "23"
+    "23.01"
   );
 });
 
@@ -417,7 +425,7 @@ test(`24 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - equal missing, otherwise 
   equal(
     applyFixes(str, messages),
     `<input type="radio" checked="checked"/>`,
-    "24"
+    "24.01"
   );
 });
 
@@ -432,7 +440,7 @@ test(`25 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - equal missing, otherwise 
   equal(
     applyFixes(str, messages),
     `<input type="radio" checked='checked'/>`,
-    "25"
+    "25.01"
   );
 });
 

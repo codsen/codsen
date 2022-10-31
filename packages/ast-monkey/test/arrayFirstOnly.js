@@ -32,7 +32,7 @@ test("01 - arrayFirstOnly - nested arrays", () => {
     f: ["g"],
   };
 
-  equal(actual, intended, "01");
+  equal(actual, intended, "01.01");
 });
 
 test("02 - arrayFirstOnly - arrays within arrays only, no obj", () => {
@@ -72,7 +72,7 @@ test("03 - arrayFirstOnly - nested arrays #2", () => {
     },
   ];
 
-  equal(actual, intended, "03");
+  equal(actual, intended, "03.01");
 });
 
 test("04 - arrayFirstOnly leaves objects alone", () => {
@@ -90,7 +90,7 @@ test("04 - arrayFirstOnly leaves objects alone", () => {
     },
   };
 
-  equal(actual, intended, "04");
+  equal(actual, intended, "04.01");
 });
 
 test("05 - arrayFirstOnly leaves strings alone", () => {
@@ -98,7 +98,7 @@ test("05 - arrayFirstOnly leaves strings alone", () => {
   let actual = arrayFirstOnly(input);
   let intended = "zzz";
 
-  equal(actual, intended, "05");
+  equal(actual, intended, "05.01");
 });
 
 test.run();

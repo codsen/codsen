@@ -3,7 +3,7 @@ import { test } from "uvu";
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 test("01 - tbc", () => {
-  ok("TBC");
+  ok("TBC", "01.01");
 });
 
 test.run();

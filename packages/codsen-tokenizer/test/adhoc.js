@@ -52,7 +52,7 @@ test(`01 - perf investigation`, () => {
         attribs: [],
       },
     ],
-    "01"
+    "01.01"
   );
 });
 

@@ -122,7 +122,7 @@ test(`02 - unencoded characters`, () => {
     ],
     "02.01"
   );
-  equal(applyFixes(str, messages), "&pound;100", "02.02");
+  equal(applyFixes(str, messages), "&pound;100", "02.01");
 });
 
 test(`03 - unencoded characters`, () => {
@@ -132,7 +132,7 @@ test(`03 - unencoded characters`, () => {
       all: 1,
     },
   });
-  equal(applyFixes(str, messages), "&pound;100", "03");
+  equal(applyFixes(str, messages), "&pound;100", "03.01");
 });
 
 test(`04 - named`, () => {
@@ -160,7 +160,7 @@ test(`04 - named`, () => {
     ],
     "04.01"
   );
-  equal(applyFixes(str, messages), "&pound;100", "04.02");
+  equal(applyFixes(str, messages), "&pound;100", "04.01");
 });
 
 test(`05 - numeric`, () => {
@@ -188,7 +188,7 @@ test(`05 - numeric`, () => {
     ],
     "05.01"
   );
-  equal(applyFixes(str, messages), "&#xA3;100", "05.02");
+  equal(applyFixes(str, messages), "&#xA3;100", "05.01");
 });
 
 test(`06 - defaults`, () => {
@@ -216,7 +216,7 @@ test(`06 - defaults`, () => {
     ],
     "06.01"
   );
-  equal(applyFixes(str, messages), "&pound;100", "06.02");
+  equal(applyFixes(str, messages), "&pound;100", "06.01");
 });
 
 test(`07 - unrecognised`, () => {
@@ -244,7 +244,7 @@ test(`07 - unrecognised`, () => {
     ],
     "07.01"
   );
-  equal(applyFixes(str, messages), "&pound;100", "07.02");
+  equal(applyFixes(str, messages), "&pound;100", "07.01");
 });
 
 // email-unfriendly entities
@@ -275,7 +275,7 @@ test(`08 - email not-friendly named char`, () => {
     ],
     "08.01"
   );
-  equal(applyFixes(str, messages), "&#x424;", "08.02");
+  equal(applyFixes(str, messages), "&#x424;", "08.01");
 });
 
 test(`09 - email not-friendly named char`, () => {
@@ -303,7 +303,7 @@ test(`09 - email not-friendly named char`, () => {
     ],
     "09.01"
   );
-  equal(applyFixes(str, messages), "&#x424;", "09.02");
+  equal(applyFixes(str, messages), "&#x424;", "09.01");
 });
 
 test(`10 - email not-friendly named char`, () => {
@@ -331,7 +331,7 @@ test(`10 - email not-friendly named char`, () => {
     ],
     "10.01"
   );
-  equal(applyFixes(str, messages), "&#x424;", "10.02");
+  equal(applyFixes(str, messages), "&#x424;", "10.01");
 });
 
 // visible HTML-unfriendly chars
@@ -395,7 +395,7 @@ test(`11 - brackets and quotes into named`, () => {
     ],
     "11.01"
   );
-  equal(applyFixes(str, messages), "&gt;&lt;'&quot;&amp;", "11.02");
+  equal(applyFixes(str, messages), "&gt;&lt;'&quot;&amp;", "11.01");
 });
 
 test(`12 - brackets and quotes into numeric`, () => {
@@ -456,7 +456,7 @@ test(`12 - brackets and quotes into numeric`, () => {
     ],
     "12.01"
   );
-  equal(applyFixes(str, messages), "&#x3E;&#x3C;'&#x22;&#x26;", "12.02");
+  equal(applyFixes(str, messages), "&#x3E;&#x3C;'&#x22;&#x26;", "12.01");
 });
 
 test(`13`, () => {
@@ -568,7 +568,7 @@ test(`20 - ampersand as text, off`, () => {
       "character-encode": 0,
     },
   });
-  equal(messages, [], "20");
+  equal(messages, [], "20.01");
 });
 
 test(`21 - same but cleaned with Detergent`, () => {
@@ -584,7 +584,7 @@ test(`21 - same but cleaned with Detergent`, () => {
       "character-encode": 2,
     },
   });
-  equal(messages, [], "21");
+  equal(messages, [], "21.01");
 });
 
 // 05. mixed rules
@@ -616,7 +616,7 @@ test(`22 - broken closing comment, dash missing`, () => {
     ],
     "22.01"
   );
-  equal(applyFixes(str, messages), fixed, "22.02");
+  equal(applyFixes(str, messages), fixed, "22.01");
 });
 
 test(`23`, () => {
@@ -626,7 +626,7 @@ test(`23`, () => {
       "character-encode": 2,
     },
   });
-  equal(messages, [], "23");
+  equal(messages, [], "23.01");
 });
 
 test(`24`, () => {
@@ -655,7 +655,7 @@ test(`24`, () => {
     ],
     "24.02"
   );
-  equal(messages.length, 1, "24.03");
+  equal(messages.length, 1, "24.02");
 });
 
 test.run();

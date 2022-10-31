@@ -52,7 +52,7 @@ test(`02 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - b
     ],
     "02.02"
   );
-  is(messages.length, 1, "02.03");
+  is(messages.length, 1, "02.02");
 });
 
 test(`03 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - heads tag is also dirty`, () => {
@@ -98,7 +98,7 @@ test(`03 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - h
     ],
     "03.01"
   );
-  equal(applyFixes(str, messages), fixed, "03.02");
+  equal(applyFixes(str, messages), fixed, "03.01");
 });
 
 test(`04 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - tails tag is also dirty`, () => {
@@ -136,7 +136,7 @@ test(`04 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - t
     `<!--[if mso]>
   <span class="foo">z</span>
 <!--<![endif]-->`,
-    "04.02"
+    "04.01"
   );
 
   let secondRoundMessages = verify(
@@ -167,13 +167,13 @@ test(`04 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - t
     ],
     "04.03"
   );
-  equal(applyFixes(str, secondRoundMessages), fixed, "04.04");
+  equal(applyFixes(str, secondRoundMessages), fixed, "04.02");
 
   // turns tails comment tag into "only"-kind
   equal(
     applyFixes(applyFixes(str, messages), secondRoundMessages),
     fixed,
-    "04.05"
+    "04.03"
   );
 });
 
@@ -198,7 +198,7 @@ test(`05 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - b
   equal(
     applyFixes(applyFixes(str, messages), secondRoundMessages),
     fixed,
-    "05"
+    "05.01"
   );
 });
 
@@ -283,7 +283,7 @@ test(`07 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - h
     ],
     "07.02"
   );
-  is(messages.length, 2, "07.03");
+  is(messages.length, 2, "07.02");
 });
 
 test(`08 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - tails tag is also dirty`, () => {
@@ -307,7 +307,7 @@ test(`08 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - t
   equal(
     applyFixes(applyFixes(str, messages), secondRoundMessages),
     fixed,
-    "08"
+    "08.01"
   );
 });
 
@@ -332,7 +332,7 @@ test(`09 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - b
   equal(
     applyFixes(applyFixes(str, messages), secondRoundMessages),
     fixed,
-    "09"
+    "09.01"
   );
 });
 
@@ -357,3 +357,5 @@ test(`09 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - b
 // <!--[if !mso]><!-->
 //     <img src="gif">
 // <!--<![endif]-->
+
+test.run();

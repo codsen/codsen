@@ -154,7 +154,7 @@ test(`01 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of obj
       ],
       // ===================
     ],
-    "01"
+    "01.01"
   );
 });
 
@@ -391,7 +391,7 @@ test(`02 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of obj
       ],
       // ===================
     ],
-    "02"
+    "02.01"
   );
 });
 
@@ -696,7 +696,7 @@ test(`03 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of obj
       ],
       // ===================
     ],
-    "03"
+    "03.01"
   );
 });
 
@@ -1047,7 +1047,7 @@ test(`04 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of obj
       ],
       // ===================
     ],
-    "04"
+    "04.01"
   );
 });
 
@@ -1444,7 +1444,7 @@ test(`05 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of obj
       ],
       // ===================
     ],
-    "05"
+    "05.01"
   );
 });
 
@@ -1841,7 +1841,7 @@ test(`06 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of obj
       ],
       // ===================
     ],
-    "06"
+    "06.01"
   );
 });
 
@@ -2238,7 +2238,7 @@ test(`07 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of obj
       ],
       // ===================
     ],
-    "07"
+    "07.01"
   );
 });
 
@@ -2297,7 +2297,7 @@ test(`08 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all 
         },
       ],
     ],
-    "08"
+    "08.01"
   );
 });
 
@@ -2379,7 +2379,7 @@ test(`09 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all 
         },
       ],
     ],
-    "09"
+    "09.01"
   );
 });
 
@@ -2471,7 +2471,7 @@ test(`10 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all 
         },
       ],
     ],
-    "10"
+    "10.01"
   );
 });
 
@@ -2563,7 +2563,7 @@ test(`11 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all 
         },
       ],
     ],
-    "11"
+    "11.01"
   );
 });
 
@@ -2655,7 +2655,7 @@ test(`12 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all 
         },
       ],
     ],
-    "12"
+    "12.01"
   );
 });
 
@@ -2737,7 +2737,7 @@ test(`13 - ${`\u001b[${33}m${`objects`}\u001b[${39}m`} - traverses plain objects
       ],
       // ===================
     ],
-    "13"
+    "13.01"
   );
 });
 
@@ -2812,7 +2812,7 @@ test(`14 - ${`\u001b[${33}m${`objects`}\u001b[${39}m`} - object key's value is a
         },
       ],
     ],
-    "14"
+    "14.01"
   );
 });
 
@@ -3305,7 +3305,7 @@ test(`15 - ${`\u001b[${32}m${`complex`}\u001b[${39}m`} - only traversal, #2`, ()
       ],
       // ===================
     ],
-    "15"
+    "15.01"
   );
 });
 
@@ -3393,7 +3393,7 @@ test(`16 - ${`\u001b[${32}m${`complex`}\u001b[${39}m`} - only traversal, #3`, ()
         },
       ],
     ],
-    "16"
+    "16.01"
   );
 });
 
@@ -3408,7 +3408,7 @@ test(`17 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - objects - a reference 
     gathered.push(innerObj.path);
     return current;
   });
-  equal(gathered, ["a", "b", "b.c"], "17");
+  equal(gathered, ["a", "b", "b.c"], "17.01");
 });
 
 test(`18 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - objects - after "b"`, () => {
@@ -3422,7 +3422,7 @@ test(`18 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - objects - after "b"`, 
     }
     return current;
   });
-  equal(gathered, ["a", "b"], "18");
+  equal(gathered, ["a", "b"], "18.01");
 });
 
 test(`19 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - arrays - a reference traversal`, () => {
@@ -3433,7 +3433,7 @@ test(`19 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - arrays - a reference t
     gathered.push(innerObj.path);
     return current;
   });
-  equal(gathered, ["0", "1", "1.0", "1.1"], "19");
+  equal(gathered, ["0", "1", "1.0", "1.1"], "19.01");
 });
 
 test(`20 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - arrays - after "b"`, () => {
@@ -3447,7 +3447,7 @@ test(`20 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - arrays - after "b"`, (
     }
     return current;
   });
-  equal(gathered, ["0", "1"], "20");
+  equal(gathered, ["0", "1"], "20.01");
 });
 
 test.run();

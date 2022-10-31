@@ -242,7 +242,7 @@ test(`13 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - missing after equal, as H
       "attribute-validate-readonly": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<input readonly="readonly"/>`, "13");
+  equal(applyFixes(str, messages), `<input readonly="readonly"/>`, "13.01");
 });
 
 test(`14 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - closing quote and content missing, as HTML`, () => {
@@ -265,7 +265,7 @@ test(`15 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - double quotes, no content
       "attribute-validate-readonly": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<input readonly="readonly"/>`, "15");
+  equal(applyFixes(str, messages), `<input readonly="readonly"/>`, "15.01");
 });
 
 test(`16 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - single quotes, no content, as HTML`, () => {
@@ -276,7 +276,7 @@ test(`16 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - single quotes, no content
       "attribute-validate-readonly": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<input readonly='readonly'/>`, "16");
+  equal(applyFixes(str, messages), `<input readonly='readonly'/>`, "16.01");
 });
 
 test(`17 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - quotes with content missing, as HTML`, () => {
@@ -287,7 +287,7 @@ test(`17 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - quotes with content missi
       "attribute-validate-readonly": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<input readonly='readonly'>`, "17");
+  equal(applyFixes(str, messages), `<input readonly='readonly'>`, "17.01");
 });
 
 test(`18 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - equal missing, otherwise healthy HTML`, () => {
@@ -298,7 +298,7 @@ test(`18 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - equal missing, otherwise 
       "attribute-validate-readonly": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<input readonly="readonly"/>`, "18");
+  equal(applyFixes(str, messages), `<input readonly="readonly"/>`, "18.01");
 });
 
 test(`19 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - equal missing, otherwise healthy HTML`, () => {
@@ -309,7 +309,7 @@ test(`19 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - equal missing, otherwise 
       "attribute-validate-readonly": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<input readonly='readonly'/>`, "19");
+  equal(applyFixes(str, messages), `<input readonly='readonly'/>`, "19.01");
 });
 
 test.run();

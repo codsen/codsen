@@ -456,7 +456,7 @@ test(`11 - doesn't break within tag`, () => {
       hyphens: true,
     }).res,
     source,
-    `11`
+    `11.01`
   );
 });
 
@@ -470,7 +470,7 @@ test(`12 - doesn't add nbsp after line breaks`, () => {
       hyphens: true,
     }).res,
     source,
-    `12`
+    `12.01`
   );
 });
 
@@ -484,7 +484,7 @@ test(`13 - line breaks and spaces`, () => {
       hyphens: true,
     }).res,
     source,
-    `13`
+    `13.01`
   );
 });
 
@@ -497,7 +497,7 @@ test(`14 - ad hoc case`, () => {
     UKPostcodes: true,
     hyphens: true,
   });
-  equal(res.ranges, null, "14");
+  equal(res.ranges, null, "14.01");
 });
 
 test(`15 - non-widow nbsp is decoded and reported correctly, mixed with widow case`, () => {
@@ -583,7 +583,7 @@ test(`18 - multiparagraph combo with jinja`, () => {
     `<!--[if mso]>
   <p>A paragraph inside an Outlook MSO&nbsp;comment</p>&nbsp;<p>unescaped {{ foo }}</p>
 <![endif]-->`,
-    "18"
+    "18.01"
   );
 });
 
@@ -613,7 +613,7 @@ test(`19 - multiparagraph combo with jinja`, () => {
       },
     ],
   });
-  equal(res.res, source, "19");
+  equal(res.res, source, "19.01");
 });
 
 test(`20 - multiparagraph combo with jinja`, () => {
@@ -642,7 +642,7 @@ test(`20 - multiparagraph combo with jinja`, () => {
       },
     ],
   });
-  equal(res.res, source, "20");
+  equal(res.res, source, "20.01");
 });
 
 test(`21 - multiparagraph combo with jinja`, () => {
@@ -670,7 +670,7 @@ test(`21 - multiparagraph combo with jinja`, () => {
       },
     ],
   });
-  equal(res.res, source, "21");
+  equal(res.res, source, "21.01");
 });
 
 test.run();

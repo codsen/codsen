@@ -11,7 +11,7 @@ test("01 - false positives - equations: very sneaky considering b is a legit tag
   equal(
     stripHtml("Equations are: a < b and c > d").result,
     "Equations are: a < b and c > d",
-    "01"
+    "01.01"
   );
 });
 
@@ -19,7 +19,7 @@ test("02 - false positives - inwards-pointing arrows", () => {
   equal(
     stripHtml("Look here: ---> a <---").result,
     "Look here: ---> a <---",
-    "02"
+    "02.01"
   );
 });
 
@@ -29,44 +29,44 @@ test("03 - false positives - arrows mixed with tags", () => {
       "Look here: ---> a <--- and here: ---> b <--- oh, and few tags: <div><article>\nzz</article></div>"
     ).result,
     "Look here: ---> a <--- and here: ---> b <--- oh, and few tags:\nzz",
-    "03"
+    "03.01"
   );
 });
 
 test("04 - false positives - opening bracket", () => {
-  equal(stripHtml("<").result, "<", "04");
+  equal(stripHtml("<").result, "<", "04.01");
 });
 
 test("05 - false positives - closing bracket", () => {
-  equal(stripHtml(">").result, ">", "05");
+  equal(stripHtml(">").result, ">", "05.01");
 });
 
 test("06 - false positives - three openings", () => {
-  equal(stripHtml(">>>").result, ">>>", "06");
+  equal(stripHtml(">>>").result, ">>>", "06.01");
 });
 
 test("07 - false positives - three closings", () => {
-  equal(stripHtml("<<<").result, "<<<", "07");
+  equal(stripHtml("<<<").result, "<<<", "07.01");
 });
 
 test("08 - false positives - spaced three openings", () => {
-  equal(stripHtml(" <<< ").result, "<<<", "08");
+  equal(stripHtml(" <<< ").result, "<<<", "08.01");
 });
 
 test("09 - false positives - tight recognised opening tag name, missing closing", () => {
-  equal(stripHtml("<a").result, "", "09");
+  equal(stripHtml("<a").result, "", "09.01");
 });
 
 test("10 - false positives - unrecognised opening tag, missing closing", () => {
-  equal(stripHtml("<yo").result, "", "10");
+  equal(stripHtml("<yo").result, "", "10.01");
 });
 
 test("11 - false positives - missing opening, recognised tag", () => {
-  equal(stripHtml("a>").result, "a>", "11");
+  equal(stripHtml("a>").result, "a>", "11.01");
 });
 
 test("12 - false positives - missing opening, unrecognised tag", () => {
-  equal(stripHtml("yo>").result, "yo>", "12");
+  equal(stripHtml("yo>").result, "yo>", "12.01");
 });
 
 test("13 - false positives - conditionals that appear on Outlook only", () => {
@@ -83,7 +83,7 @@ zzz
   </table>
 <![endif]-->`).result,
     "zzz",
-    "13"
+    "13.01"
   );
 });
 
@@ -93,7 +93,7 @@ test("14 - false positives - conditionals that are visible for Outlook only", ()
   shown for everything except Outlook
   <!--<![endif]-->`).result,
     "shown for everything except Outlook",
-    "14 - checking also for whitespace control"
+    "14.01 - checking also for whitespace control"
   );
 });
 
@@ -103,7 +103,7 @@ test("15 - false positives - conditionals that are visible for Outlook only", ()
   shown for everything except Outlook
   <!--<![endif]-->b`).result,
     "a\nshown for everything except Outlook\nb",
-    "15 - checking also for whitespace control"
+    "15.01 - checking also for whitespace control"
   );
 });
 
@@ -117,7 +117,7 @@ test("16 - false positives - conditionals that are visible for Outlook only", ()
     </tr>
   </table><!--<![endif]-->`).result,
     "shown for everything except Outlook",
-    "16 - all those line breaks in-between the tags need to be taken care of too"
+    "16.01 - all those line breaks in-between the tags need to be taken care of too"
   );
 });
 
@@ -127,83 +127,83 @@ test("17 - false positives - consecutive tags", () => {
       "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after"
     ).result,
     "Text First point Second point Third point Text straight after",
-    "17"
+    "17.01"
   );
 });
 
 test("18 - digit is the first character following the opening bracket, quote", () => {
   let input = `"<5 text here`;
-  equal(stripHtml(input).result, input, "18");
+  equal(stripHtml(input).result, input, "18.01");
 });
 
 test("19 - digit is the first character following the opening bracket", () => {
   let input = `<5 text here`;
-  equal(stripHtml(input).result, input, "19");
+  equal(stripHtml(input).result, input, "19.01");
 });
 
 test("20 - digit is the first character following the opening bracket", () => {
   let input = `< 5 text here`;
-  equal(stripHtml(input).result, input, "20");
+  equal(stripHtml(input).result, input, "20.01");
 });
 
 test("21 - numbers compared", () => {
   let input = `1 < 5 for sure`;
-  equal(stripHtml(input).result, input, "21");
+  equal(stripHtml(input).result, input, "21.01");
 });
 
 test("22 - numbers compared, tight", () => {
   let input = `1 <5 for sure`;
-  equal(stripHtml(input).result, input, "22");
+  equal(stripHtml(input).result, input, "22.01");
 });
 
 test("23 - number letter", () => {
   let input = `aaa 1 < 5s bbb`;
-  equal(stripHtml(input).result, input, "23");
+  equal(stripHtml(input).result, input, "23.01");
 });
 
 test("24 - number letter, tight", () => {
   let input = `aaa 1 <5s bbb`;
-  equal(stripHtml(input).result, input, "24");
+  equal(stripHtml(input).result, input, "24.01");
 });
 
 test("25 - number letter, tight around", () => {
   let input = `aaa 1<5s bbb`;
-  equal(stripHtml(input).result, input, "25");
+  equal(stripHtml(input).result, input, "25.01");
 });
 
 test("26 - tag name with closing bracket in front", () => {
   let input = `>table`;
-  equal(stripHtml(input).result, input, "26");
+  equal(stripHtml(input).result, input, "26.01");
 });
 
 test("27", () => {
   let input = `{"Operator":"<=","IsValid":true}`;
-  equal(stripHtml(input).result, input, "27");
+  equal(stripHtml(input).result, input, "27.01");
 });
 
 test("28", () => {
   let input = `<a">`;
-  equal(stripHtml(input).result, "", "28");
+  equal(stripHtml(input).result, "", "28.01");
 });
 
 test("29", () => {
   let input = `<a"">`;
-  equal(stripHtml(input).result, "", "29");
+  equal(stripHtml(input).result, "", "29.01");
 });
 
 test("30", () => {
   let input = `<a'>`;
-  equal(stripHtml(input).result, "", "30");
+  equal(stripHtml(input).result, "", "30.01");
 });
 
 test("31", () => {
   let input = `<a''>`;
-  equal(stripHtml(input).result, "", "31");
+  equal(stripHtml(input).result, "", "31.01");
 });
 
 test("32", () => {
   let input = `H4<bE77]7oQL`;
-  equal(stripHtml(input).result, "H4", "32");
+  equal(stripHtml(input).result, "H4", "32.01");
 });
 
 test.run();

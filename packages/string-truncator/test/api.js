@@ -92,7 +92,7 @@ test("08 - opts.maxLines wrong type", () => {
 // THROW_ID_06
 // -----------------------------------------------------------------------------
 
-test("08 - opts.maxLines === 0", () => {
+test("09 - opts.maxLines === 0", () => {
   throws(() => {
     truncate("aaa", {
       maxLines: 0,

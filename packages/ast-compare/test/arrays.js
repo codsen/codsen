@@ -57,7 +57,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: false,
     }),
     false,
-    "01.05"
+    "01.06"
   );
   equal(
     compare(["a", "b"], ["a", "b", "c"], {
@@ -65,7 +65,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: false,
     }),
     false,
-    "01.06"
+    "01.07"
   );
 
   equal(
@@ -74,7 +74,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: true,
     }),
     false,
-    "01.07"
+    "01.08"
   );
   equal(
     compare(["a", "b"], ["a", "b", "c"], {
@@ -82,7 +82,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: true,
     }),
     false,
-    "01.08"
+    "01.09"
   );
   not.equal(
     compare(["a", "b"], ["a", "b", "c"], {
@@ -90,7 +90,8 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: true,
       verboseWhenMismatches: true,
     }),
-    true
+    true,
+    "01.10"
   );
 });
 
@@ -200,7 +201,7 @@ test("05 - empty arrays within obj key values", () => {
       { hungryForWhitespace: true, verboseWhenMismatches: true }
     ),
     true,
-    "04.05.04"
+    "05.04"
   );
   equal(
     compare(
@@ -215,7 +216,7 @@ test("05 - empty arrays within obj key values", () => {
       { hungryForWhitespace: true }
     ),
     false,
-    "05.04"
+    "05.05"
   );
 });
 
@@ -568,12 +569,12 @@ test("10 - two arrays, one empty, string within", () => {
   not.equal(
     compare(["a", "b", "c"], [], { verboseWhenMismatches: true }),
     true,
-    "04.10.02"
+    "10.02"
   );
   equal(
     compare(["a", "b", "c"], [], { hungryForWhitespace: true }),
     true,
-    "10.02"
+    "10.03"
   );
 });
 

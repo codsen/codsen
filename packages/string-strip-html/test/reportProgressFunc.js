@@ -15,7 +15,7 @@ test("01 - progress won't be reported under string length 1001", () => {
       reportProgressFunc: thrower,
     }).result,
     "text",
-    "01"
+    "01.01"
   );
 });
 
@@ -26,7 +26,7 @@ test("02 - progress won't be reported, length exactly 1000", () => {
       reportProgressFunc: thrower,
     }).result,
     "a".repeat(100),
-    "02"
+    "02.01"
   );
 });
 
@@ -39,7 +39,7 @@ test("03 - reports only at 50% if length is between 1000 and 2000", () => {
       });
     },
     /50/,
-    `03 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - short length reports only at 50%`
+    `03.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - short length reports only at 50%`
   );
 });
 
@@ -57,7 +57,7 @@ test("04 - reports all percentages is input is beyond 2000 length - default rang
     compareTo.push(i);
   }
 
-  equal(gather, compareTo, "04");
+  equal(gather, compareTo, "04.01");
 });
 
 test("05 - reports all percentages is input is beyond 2000 length - custom range 21-86", () => {
@@ -76,7 +76,7 @@ test("05 - reports all percentages is input is beyond 2000 length - custom range
     compareTo.push(i);
   }
 
-  equal(gather, compareTo, "05");
+  equal(gather, compareTo, "05.01");
 });
 
 test.run();

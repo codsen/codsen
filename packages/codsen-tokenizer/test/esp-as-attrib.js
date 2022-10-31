@@ -47,7 +47,7 @@ test(`01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - one Nunjucks tag goes in 
         ],
       },
     ],
-    "01"
+    "01.01"
   );
 });
 
@@ -147,7 +147,7 @@ test(`02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - Nunjucks conditionals wra
         ],
       },
     ],
-    "02"
+    "02.01"
   );
 });
 
@@ -247,7 +247,7 @@ test(`03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - Nunjucks conditionals wra
         ],
       },
     ],
-    "03"
+    "03.01"
   );
 });
 
