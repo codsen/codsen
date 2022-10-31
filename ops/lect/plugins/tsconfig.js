@@ -5,7 +5,7 @@ import writeFileAtomic from "write-file-atomic";
 // writes TS configs
 async function tsconfig({ state }) {
   // bail early if it's a CLI
-  if (!state.isRollup) {
+  if (!state.isRollup && !state.isCLI) {
     fs.unlink(path.resolve("tsconfig.json"))
       .then(() => {
         console.log(

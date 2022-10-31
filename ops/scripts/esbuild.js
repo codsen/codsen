@@ -4,7 +4,12 @@ import camelCase from "lodash.camelcase";
 import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
-const name = path.basename(path.resolve("./"));
+let name = path.basename(path.resolve("./"));
+// CJS packages will have "-tbc" appended, so remove that
+if (name.endsWith("-tbc")) {
+  name = name.slice(0, -4);
+}
+
 const pkg = require(path.join(path.resolve("./"), `package.json`));
 
 // bundle, but set dependencies as external
@@ -26,7 +31,10 @@ const banner = {
 };
 
 // ESM
-if (pkg.exports && (typeof pkg.exports === "string" || pkg.exports.default)) {
+if (
+  (pkg.exports && (typeof pkg.exports === "string" || pkg.exports.default)) ||
+  !pkg.type
+) {
   esbuild.buildSync({
     entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
     platform: "node",
@@ -55,6 +63,24 @@ if (pkg.exports && pkg.exports.script) {
     sourcemap: false,
     target: ["chrome58"],
     outfile: path.join(path.resolve("./"), `dist/${name}.umd.js`),
+    // pure,
+    banner,
+    // no "external" - bundle everything
+  });
+}
+
+// CJS (used in eslint plugins)
+if (typeof pkg.main === "string" && pkg.main.endsWith(".cjs.js")) {
+  esbuild.buildSync({
+    entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
+    platform: "node",
+    format: "cjs",
+    bundle: true,
+    define: { DEV: !!process.env.DEV },
+    minify: !process.env.DEV,
+    sourcemap: false,
+    target: ["esnext"],
+    outfile: path.join(path.resolve("./"), `dist/${name}.cjs.js`),
     // pure,
     banner,
     // no "external" - bundle everything

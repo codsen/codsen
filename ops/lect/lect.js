@@ -25,6 +25,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const state = {
   isRollup: false,
+  isCJS: false,
   isBin: false,
   pack: { name: null, version: null, description: null },
   originalLectrc: {},
@@ -44,6 +45,9 @@ state.root = path.resolve("./");
 
 // - Is it a program? - code in TS, built using esbuild, types via rollup:
 state.isRollup = false;
+// - Is it CJS program? - no rollup, built using esbuild
+state.isCJS = false;
+
 // also present in ./scripts/generate-info.js:
 try {
   accessSync(path.join(state.root, "rollup.config.js"), F_OK);
@@ -53,13 +57,21 @@ try {
 // - Is it a CLI?
 state.isBin = objectPath.has(packageJson, "bin");
 
+// - Is it CJS?
+if (
+  typeof packageJson.main === "string" &&
+  packageJson.main.endsWith(".cjs.js")
+) {
+  state.isCJS = true;
+}
+
 const lectrc = JSON.parse(
   await fs.readFile(path.join(__dirname, ".lectrc.json"), "utf8")
 );
 state.originalLectrc = { ...lectrc };
 
 let quickTakeExample;
-if (state.isRollup) {
+if (state.isRollup && !state.isCJS) {
   try {
     quickTakeExample = prepExampleFileStr(
       await fs.readFile(path.join(state.root, "examples/_quickTake.js"), "utf8")

@@ -194,6 +194,23 @@
     }
   },
   "scripts": {
+    "cjs": {
+      "build": "node '../../ops/scripts/esbuild.js'",
+      "dev": "DEV=true node '../../ops/scripts/esbuild.js'",
+      "dts": "echo 'skip .d.ts'",
+      "examples": "echo 'skip examples check'",
+      "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' --write",
+      "letspublish": "yarn publish || :",
+      "lint": "eslint . --fix",
+      "prettier": "prettier",
+      "prettier:format": "prettier --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern",
+      "perf": "echo 'skip perf'",
+      "prepare": "echo 'ready'",
+      "pretest": "yarn run lect && yarn run build",
+      "test": "yarn run devtest",
+      "devtest": "c8 yarn run unit && yarn run lint",
+      "unit": "uvu test"
+    },
     "cli": {
       "build": "echo 'no build needed'",
       "dev": "echo 'no build needed'",

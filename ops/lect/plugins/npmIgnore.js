@@ -5,7 +5,7 @@ import { pull } from "array-pull-all-with-glob";
 import writeFileAtomic from "write-file-atomic";
 
 // writes .npmignore
-async function npmIgnore({ lectrc }) {
+async function npmIgnore({ state, lectrc }) {
   // insurance
   if (typeof lectrc !== "object") {
     return Promise.reject(
@@ -153,6 +153,9 @@ async function npmIgnore({ lectrc }) {
   [badFiles, unclearFiles] = partition(filesList, (filesName) =>
     get("npmignore.badFiles").includes(filesName)
   );
+  if (state.isCJS) {
+    badFiles.push(`dist/${state.pack.name}.esm.js`);
+  }
   unclearFiles = pull(unclearFiles, get("npmignore.goodFiles"), {
     caseSensitive: false,
   });

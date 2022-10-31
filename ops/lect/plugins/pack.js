@@ -35,10 +35,13 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
   let content = { ...state.pack };
 
   // 1. set scripts
-  content.scripts = objectPath.get(
-    lectrc,
-    !state.isRollup ? "scripts.cli" : "scripts.rollup"
-  );
+  if (state.isCJS) {
+    content.scripts = objectPath.get(lectrc, "scripts.cjs");
+  } else if (!state.isRollup) {
+    content.scripts = objectPath.get(lectrc, "scripts.cli");
+  } else {
+    content.scripts = objectPath.get(lectrc, "scripts.rollup");
+  }
 
   // if perf script mentions "skip", don't change it
   if (
