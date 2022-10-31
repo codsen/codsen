@@ -29,7 +29,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 12.1.0 (2021-05-24)
 
@@ -68,7 +68,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 11.0.0 (2021-01-23)
 
@@ -82,7 +82,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 10.12.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 10.11.0 (2019-10-02)
 
@@ -92,7 +92,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Performance Improvements
 
-- tap Array.isArray directly, gaining around 124 times more speed ([13cd986](https://gitlab.com/codsen/codsen/commit/13cd986))
+- tap `Array.isArray` directly, gaining around 124 times more speed ([13cd986](https://gitlab.com/codsen/codsen/commit/13cd986))
 
 ## 10.10.0 (2019-01-20)
 
@@ -222,7 +222,7 @@ Bumping the _major_ just in case because strictly speaking, while things behave 
 - new options setting, `opts.ignoreKeys` - this is one direction merge. Key names accept wildcards.
 - new options setting, `opts.hardMergeKeys` - this is also one direction (opposive of above) merge. Key names accept wildcards.
 
-### PS.
+### PS
 
 It took nearly whole weekend on and off to get this out. Bloody leading wildcard [bug](https://github.com/deltreey/wildstring/issues/2) kept poking out until I switched to [matcher](https://www.npmjs.com/package/matcher), problem solved.
 

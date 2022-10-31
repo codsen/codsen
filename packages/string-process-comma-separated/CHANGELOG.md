@@ -24,7 +24,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 2.1.0 (2021-05-24)
 
@@ -42,7 +42,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 2.0.0 (2021-01-23)
 
@@ -56,7 +56,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.3.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 1.2.6 (2020-04-26)
 
@@ -73,13 +73,13 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Features
 
-- opts.innerWhitespaceAllowed ([65dfb1f](https://gitlab.com/codsen/codsen/commit/65dfb1fa5fed0b201b3e5001d418b49b5f94917c))
+- `opts.innerWhitespaceAllowed` ([65dfb1f](https://gitlab.com/codsen/codsen/commit/65dfb1fa5fed0b201b3e5001d418b49b5f94917c))
 
 ## 1.1.0 (2019-12-27)
 
 ### Fixed
 
-- add more tests and cover opts.trailingWhitespaceOK ([335c6d6](https://gitlab.com/codsen/codsen/commit/335c6d63fa3ff0b324f5d191350fc0e593e88430))
+- add more tests and cover `opts.trailingWhitespaceOK` ([335c6d6](https://gitlab.com/codsen/codsen/commit/335c6d63fa3ff0b324f5d191350fc0e593e88430))
 - returned ranges is always array of arrays, not just a single range/array ([f9469a1](https://gitlab.com/codsen/codsen/commit/f9469a1f53aa13c7f85eb953e35428a735232cd1))
 
 ### Features

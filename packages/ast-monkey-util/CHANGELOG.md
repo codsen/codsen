@@ -17,7 +17,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 1.4.0 (2021-05-24)
 
@@ -35,7 +35,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 1.3.0 (2021-01-23)
 
@@ -45,7 +45,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.2.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 1.1.2 (2020-04-04)
 

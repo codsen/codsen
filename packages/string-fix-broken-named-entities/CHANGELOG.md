@@ -24,7 +24,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 5.4.0 (2021-05-24)
 
@@ -65,7 +65,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 5.0.0 (2021-01-23)
 
@@ -79,7 +79,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.0.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 3.0.0 (2020-05-06)
 
@@ -120,7 +120,7 @@ But all existing unit tests pass and more have been added.
 
 ### Features
 
-- release opts.entityCatcherCb - change it to ping only healthy entities + documentation ([d7a76b2](https://gitlab.com/codsen/codsen/commit/d7a76b2948da41eec6054579b51ad595c07af965))
+- release `opts.entityCatcherCb` - change it to ping only healthy entities + documentation ([d7a76b2](https://gitlab.com/codsen/codsen/commit/d7a76b2948da41eec6054579b51ad595c07af965))
 
 ## 2.4.3 (2019-09-11)
 
@@ -139,7 +139,7 @@ But all existing unit tests pass and more have been added.
 
 ### Features
 
-- improved recognition of sandwitched named html entities without semicolons ([4aa96f7](https://gitlab.com/codsen/codsen/commit/4aa96f7))
+- improved recognition of joined named html entities without semicolons ([4aa96f7](https://gitlab.com/codsen/codsen/commit/4aa96f7))
 
 ## 2.3.0 (2019-06-01)
 
@@ -150,7 +150,7 @@ But all existing unit tests pass and more have been added.
 - Loosen amp fixes when ampersand is present ([49238ff](https://gitlab.com/codsen/codsen/commit/49238ff))
 - Make fixing algorithm more conservative, tap the list of uncertain entities ([1806c12](https://gitlab.com/codsen/codsen/commit/1806c12))
 - Move the known adhoc broken entity patterns above all-entity matching part ([c9350fa](https://gitlab.com/codsen/codsen/commit/c9350fa))
-- opts.entityCatcherCb ([cb77ae9](https://gitlab.com/codsen/codsen/commit/cb77ae9))
+- `opts.entityCatcherCb` ([cb77ae9](https://gitlab.com/codsen/codsen/commit/cb77ae9))
 - Programmatic tests to cover entity letter case errors and making them pass ([f3dc471](https://gitlab.com/codsen/codsen/commit/f3dc471))
 - Supports numeric entities, both decimal and hex ([d07d5c4](https://gitlab.com/codsen/codsen/commit/d07d5c4))
 - wrong case and whitespace recognition on all named HTML entities ([942d2cf](https://gitlab.com/codsen/codsen/commit/942d2cf))
@@ -182,13 +182,13 @@ But all existing unit tests pass and more have been added.
 
 ### Features
 
-- Make opts.progressFn + opts.decode combo to be more precise ([f599a29](https://gitlab.com/codsen/codsen/commit/f599a29))
+- Make `opts.progressFn` + `opts.decode` combo to be more precise ([f599a29](https://gitlab.com/codsen/codsen/commit/f599a29))
 - Add `opts.cb` ([8f34d1c](https://gitlab.com/codsen/codsen/commit/8f34d1c))
 - Add `opts.progressFn` ([869e3f0](https://gitlab.com/codsen/codsen/commit/869e3f0))
 
 ## 1.6.0 (2019-01-27)
 
-- Add opts.decode ([ae22fea](https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities/commits/ae22fea))
+- Add `opts.decode` ([ae22fea](https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities/commits/ae22fea))
 
 ## 1.4.0 (2019-01-20)
 

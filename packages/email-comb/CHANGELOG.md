@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- fix result log.originalLength ([994b27d](https://github.com/codsen/codsen/commit/994b27d3c8431f222e52512c5fe65db42011dab2))
+- fix result `log.originalLength` ([994b27d](https://github.com/codsen/codsen/commit/994b27d3c8431f222e52512c5fe65db42011dab2))
 
 # 6.2.0 (2022-08-12)
 
@@ -37,7 +37,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add safeguards against inputs with excessive whitespace ([4694257](https://github.com/codsen/codsen/commit/4694257a4d75825470a0f4da9603e52620aaf3a3)), closes [#35](https://github.com/codsen/codsen/issues/35)
+- add safeguards against inputs containing excessive whitespace ([4694257](https://github.com/codsen/codsen/commit/4694257a4d75825470a0f4da9603e52620aaf3a3)), closes [#35](https://github.com/codsen/codsen/issues/35)
 
 ## 6.1.0 (2021-11-04)
 
@@ -53,7 +53,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 5.1.0 (2021-05-24)
 
@@ -83,7 +83,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 5.0.0 (2021-01-23)
 
@@ -99,23 +99,23 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- leave quoteless attributes intact, don't try to restore quotes ([cf591db](https://git.sr.ht/~royston/codsen/commit/cf591dbbb91251cdfcfe640bfab2b82b6dc95d74))
+- leave quote-less attributes intact, don't try to restore quotes ([cf591db](https://git.sr.ht/~royston/codsen/commit/cf591dbbb91251cdfcfe640bfab2b82b6dc95d74))
 
 ## 4.0.5 (2020-12-09)
 
 ### Fixed
 
-- correct the typo in the log.timeTakenInMilliseconds ([ddc2dec](https://git.sr.ht/~royston/codsen/commit/ddc2decbe0997e0704db781e5bdc97f0b53d5054))
+- correct the typo in the `log.timeTakenInMilliseconds` ([ddc2dec](https://git.sr.ht/~royston/codsen/commit/ddc2decbe0997e0704db781e5bdc97f0b53d5054))
 
 ## 4.0.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 3.10.6 (2020-11-02)
 
 ### Fixed
 
-- recognise id= or class= in URLs as text ([547cf93](https://gitlab.com/codsen/codsen/commit/547cf9345b7c9406f778d9988e0e3384aabb5d8b)), closes [#45](https://gitlab.com/codsen/codsen/issues/45)
+- interpret `id=` or `class=` in URLs as text ([547cf93](https://gitlab.com/codsen/codsen/commit/547cf9345b7c9406f778d9988e0e3384aabb5d8b)), closes [#45](https://gitlab.com/codsen/codsen/issues/45)
 
 ## 3.10.0 (2020-09-15)
 
@@ -133,7 +133,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Fixed
 
-- stop removing "class" or "id" without following equals, completely (for now) ([c07cce5](https://gitlab.com/codsen/codsen/commit/c07cce56d8633ef72ea9451617d8b06d96efc5db)), closes [#27](https://gitlab.com/codsen/codsen/issues/27)
+- stop removing `class` or `id` without following equals, completely (for now) ([c07cce5](https://gitlab.com/codsen/codsen/commit/c07cce56d8633ef72ea9451617d8b06d96efc5db)), closes [#27](https://gitlab.com/codsen/codsen/issues/27)
 
 ## 3.9.0 (2020-01-26)
 
@@ -155,7 +155,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Fixed
 
-- remove leading spaces in cleaned like class=" zz" and tighten up class/id recognition ([a900e4e](https://gitlab.com/codsen/codsen/commit/a900e4e))
+- remove leading spaces in cleaned like `class=" zz"` and tighten up `class`/`id` recognition ([a900e4e](https://gitlab.com/codsen/codsen/commit/a900e4e))
 
 ## 3.7.0 (2019-09-04)
 
@@ -173,7 +173,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Features
 
-- support for liquid template engine double curlies as CSS style values in head CSS ([819df36](https://gitlab.com/codsen/codsen/commit/819df36))
+- support for liquid template engine _double curlies_ as CSS style values in head CSS ([819df36](https://gitlab.com/codsen/codsen/commit/819df36))
 
 ## 3.4.0 (2019-06-29)
 
@@ -185,23 +185,23 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Features
 
-- Output object's new keys countBeforeCleaning and countAfterCleaning ([55b13e7](https://gitlab.com/codsen/codsen/commit/55b13e7))
-- Uglification legend does not mention entries which were not uglified because of being whitelis ([b6bacfc](https://gitlab.com/codsen/codsen/commit/b6bacfc))
+- Output object's new keys `countBeforeCleaning` and `countAfterCleaning` ([55b13e7](https://gitlab.com/codsen/codsen/commit/55b13e7))
+- Uglification legend does not mention entries which were not uglified because of being whitelisted ([b6bacfc](https://gitlab.com/codsen/codsen/commit/b6bacfc))
 
 ## 3.2.0 (2019-06-21)
 
 ### Features
 
-- opts.removeCSSComments ([b848d1c](https://gitlab.com/codsen/codsen/commit/b848d1c))
+- `opts.removeCSSComments` ([b848d1c](https://gitlab.com/codsen/codsen/commit/b848d1c))
 - Uglification based on class/id characters but not class/id position in the reference array ([c839977](https://gitlab.com/codsen/codsen/commit/c839977))
 
 ## 3.1.0 (2019-06-18)
 
 ### Features
 
-- If uglification was turned on, output legend under log.uglified ([805ce2d](https://gitlab.com/codsen/codsen/commit/805ce2d))
-- opts.reportProgressFunc ([f5935fb](https://gitlab.com/codsen/codsen/commit/f5935fb))
-- opts.reportProgressFuncFrom and opts.reportProgressFuncTo ([8734cc5](https://gitlab.com/codsen/codsen/commit/8734cc5))
+- If uglification was turned on, output legend under `log.uglified` ([805ce2d](https://gitlab.com/codsen/codsen/commit/805ce2d))
+- `opts.reportProgressFunc` ([f5935fb](https://gitlab.com/codsen/codsen/commit/f5935fb))
+- `opts.reportProgressFuncFrom` and `opts.reportProgressFuncTo` ([8734cc5](https://gitlab.com/codsen/codsen/commit/8734cc5))
 
 ## 3.0.0 (2019-06-01)
 

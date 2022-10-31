@@ -22,6 +22,8 @@
     "rehype",
     "mdast",
     "unist",
-    "colspan"
+    "colspan",
+    "quasis",
+    "typedefs"
   ]
 }

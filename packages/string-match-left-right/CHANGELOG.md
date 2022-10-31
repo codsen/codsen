@@ -23,7 +23,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 7.1.0 (2021-05-24)
 
@@ -46,7 +46,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - algorithm improvements to avoid false positives in too early matches ([552df88](https://github.com/codsen/codsen/commit/552df885c6d97b5e1d8c5767071d0b993f214052))
-- opts.hungry ([68b1c0f](https://github.com/codsen/codsen/commit/68b1c0fae857573c2230a5baea1b149e1a87eeb5))
+- `opts.hungry` ([68b1c0f](https://github.com/codsen/codsen/commit/68b1c0fae857573c2230a5baea1b149e1a87eeb5))
 
 ### BREAKING CHANGES
 
@@ -57,7 +57,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to _npmignore_ ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 6.0.0 (2021-01-23)
 
@@ -71,7 +71,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.0.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 4.0.1 (2020-03-24)
 
@@ -86,7 +86,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 - `opts.maxMismatches` higher than one ([c0a416a](https://gitlab.com/codsen/codsen/commit/c0a416afd32aa39698703437aed36b81cb04abd6))
 - add insurance against the variable being not string ([e53f435](https://gitlab.com/codsen/codsen/commit/e53f435206b1b2daf1e7d9c45c8373933d09eca9))
 - fix `opts.matchRight` ([ba40509](https://gitlab.com/codsen/codsen/commit/ba40509c63463e2579efd9ebfdd21b97e6faa665))
-- fix maxMismatches ([be34351](https://gitlab.com/codsen/codsen/commit/be34351d02b683b191af669a33e896c04f49aacf))
+- fix `maxMismatches` ([be34351](https://gitlab.com/codsen/codsen/commit/be34351d02b683b191af669a33e896c04f49aacf))
 - fix the excessive skipping ([e97899d](https://gitlab.com/codsen/codsen/commit/e97899d92ff5794e817ff2b24ece83e1b4d3b327))
 - insurance against undefined value ([a0d5193](https://gitlab.com/codsen/codsen/commit/a0d519349b1b53852b1e6ce1948c24eb1f855667))
 
@@ -95,14 +95,14 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 - `opts.maxMismatches` ([5288fe9](https://gitlab.com/codsen/codsen/commit/5288fe9667a34a3f447c3c13a63629bc9132b4ff))
 - case when character is omitted from the source and maxMismatches allows that ([1b47eba](https://gitlab.com/codsen/codsen/commit/1b47eba3683b77511c45d02b4f2553db729ff401))
 - merge marchForward and marchBackward into one, simplify the API ([e873ee6](https://gitlab.com/codsen/codsen/commit/e873ee652da54e352c52419042e0327b3a49cdd5))
-- opts.lastMustMatch ([12ad597](https://gitlab.com/codsen/codsen/commit/12ad597c9b84d34208be620f1a8ef605b62beceb))
-- opts.skipWhitespace ([6d9c847](https://gitlab.com/codsen/codsen/commit/6d9c8479f090b22bee4d70230d2d069f198e7e81))
+- `opts.lastMustMatch` ([12ad597](https://gitlab.com/codsen/codsen/commit/12ad597c9b84d34208be620f1a8ef605b62beceb))
+- `opts.skipWhitespace` ([6d9c847](https://gitlab.com/codsen/codsen/commit/6d9c8479f090b22bee4d70230d2d069f198e7e81))
 - rebase to make twice as fast ([4530b9f](https://gitlab.com/codsen/codsen/commit/4530b9f98357654f1a35552b80810ce158dce3bd))
-- remove opts.skipInnerWhitespace ([541c1c5](https://gitlab.com/codsen/codsen/commit/541c1c5b47e1667e77328ba586e1e5cc725fcad9))
+- remove `opts.skipInnerWhitespace` ([541c1c5](https://gitlab.com/codsen/codsen/commit/541c1c5b47e1667e77328ba586e1e5cc725fcad9))
 
 ### BREAKING CHANGES
 
-- no more opts.relaxedApi - it's relaxed as much as possible by default, no
+- no more `opts.relaxedApi` - it's relaxed as much as possible by default, no
   emoji-related code
 
 ## CHANGES
@@ -135,11 +135,9 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 3.4.0 (2018-06-11)
 
-GitHub sold us out. In the meantime, we:
-
-- Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
-- Dropped BitHound (RIP) and Travis
-- Removed `package-lock`
+- migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
+- dropped BitHound (RIP) and Travis
+- removed `package-lock`
 
 ## 3.3.0 (2018-05-16)
 
@@ -168,9 +166,9 @@ GitHub sold us out. In the meantime, we:
 - `opts.trimCharsBeforeMatching` must be a string of single character or an array of single characters. Previously merged string of characters was accepted but now it's not accepted.
 - Callback `cb` now returns three arguments:
 
-  1.  `char` - the character just outside of the matched substring (as previously)
-  2.  `theRemainderOfTheString` - whole string outside of the matched substring (as previously)
-  3.  `index` - NEW - the index of the `char`.
+  1. `char` - the character just outside of the matched substring (as previously)
+  2. `theRemainderOfTheString` - whole string outside of the matched substring (as previously)
+  3. `index` - NEW - the index of the `char`.
 
   Index is handy in cases when you set trimming and it's not clear where exactly is the `char` located in the string. Also, from here you can easily calculate the index of the match - just substract its length from `index`.
 
@@ -195,9 +193,9 @@ If you relied on the result being explicitly Boolean, `true` or `false`, prepare
 ### Features
 
 - Stringifying of `opts.trimCharsBeforeMatching` now occurs only if element is not string.
-- Callbacks, [opts.cbLeft and opts.cbRight](https://www.npmjs.com/package/string-match-left-right#optscbleft-and-optscbright), get second argument - whole substring of what's on that side. First argument it received is first character, second is whole substring (including first character).
+- Callbacks, [`opts.cbLeft` and `opts.cbRight`](https://www.npmjs.com/package/string-match-left-right#optscbleft-and-optscbright), get second argument - whole substring of what's on that side. First argument it received is first character, second is whole substring (including first character).
 
-I needed this when I was coding [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css) and I was traversing the string. I wanted to check, do any of given _heads_ are equal to what's on the right of the current character being traversed. For example, if there are Nunjucks variables in HTML, they would start with `{{` and end with `}}`. I wanted `email-remove-unused-css` to ignore everything between such `heads` and `tails` (which can be customised to anything, to support any templating/programming languages).
+I needed this when I was coding [`email-remove-unused-css`](https://github.com/codsen/email-remove-unused-css) and I was traversing the string. I wanted to check, do any of given _heads_ are equal to what's on the right of the current character being traversed. For example, if there are Nunjucks variables in HTML, they would start with `{{` and end with `}}`. I wanted `email-remove-unused-css` to ignore everything between such `heads` and `tails` (which can be customised to anything, to support any templating/programming languages).
 
 ## 1.3.0 (2017-11-23)
 

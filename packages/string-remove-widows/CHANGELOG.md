@@ -24,7 +24,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 2.1.0 (2021-05-24)
 
@@ -42,7 +42,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 2.0.0 (2021-01-23)
 
@@ -56,7 +56,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.7.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 1.6.0 (2020-04-26)
 
@@ -68,7 +68,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Fixed
 
-- remove rogue require() which was present instead of import ([233a8d1](https://gitlab.com/codsen/codsen/commit/233a8d11d70f62c7a521e97207acfdb3b64d5f63))
+- remove rogue `require()` which was present instead of import ([233a8d1](https://gitlab.com/codsen/codsen/commit/233a8d11d70f62c7a521e97207acfdb3b64d5f63))
 
 ## 1.5.0 (2019-10-02)
 
@@ -78,7 +78,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Features
 
-- reporting res.whatWasDone - widow removal, decoding or both or neither ([630a08d](https://gitlab.com/codsen/codsen/commit/630a08d))
+- reporting `res.whatWasDone` - widow removal, decoding or both or neither ([630a08d](https://gitlab.com/codsen/codsen/commit/630a08d))
 
 ## 1.4.0 (2019-09-11)
 
@@ -88,32 +88,32 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Features
 
-- add opts.ignore option "all" ([a02dc78](https://gitlab.com/codsen/codsen/commit/a02dc78))
+- add `opts.ignore` option "all" ([a02dc78](https://gitlab.com/codsen/codsen/commit/a02dc78))
 - improvements to the algorithm ([8a37c1d](https://gitlab.com/codsen/codsen/commit/8a37c1d))
 
 ## 1.3.0 (2019-09-04)
 
 ### Features
 
-- add opts.tagRanges ([662bd6e](https://gitlab.com/codsen/codsen/commit/662bd6e))
+- add `opts.tagRanges` ([662bd6e](https://gitlab.com/codsen/codsen/commit/662bd6e))
 
 ## 1.2.0 (2019-08-18)
 
 ### Fixed
 
 - disable min char count setting so it's off by default ([60aa23c](https://gitlab.com/codsen/codsen/commit/60aa23c))
-- further twaks to m-dash rules ([bec2683](https://gitlab.com/codsen/codsen/commit/bec2683))
+- further tweaks to m-dash rules ([bec2683](https://gitlab.com/codsen/codsen/commit/bec2683))
 
 ### Features
 
-- enforce that nbsp's in front of dashes would be added only if whitespace follows that dash ([9b23232](https://gitlab.com/codsen/codsen/commit/9b23232))
+- enforce that `nbsp`'s in front of dashes would be added only if whitespace follows that dash ([9b23232](https://gitlab.com/codsen/codsen/commit/9b23232))
 
 ## 1.1.0 (2019-08-08)
 
 ### Features
 
 - init ([29000b2](https://gitlab.com/codsen/codsen/commit/29000b2))
-- opts.reportProgressFuncFrom and opts.reportProgressFuncTo ([751c8d7](https://gitlab.com/codsen/codsen/commit/751c8d7))
+- `opts.reportProgressFuncFrom` and `opts.reportProgressFuncTo` ([751c8d7](https://gitlab.com/codsen/codsen/commit/751c8d7))
 
 ## 1.0.0 (2019-08-07)
 

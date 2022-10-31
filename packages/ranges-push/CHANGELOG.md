@@ -30,7 +30,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 5.1.0 (2021-05-24)
 
@@ -48,7 +48,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 5.0.0 (2021-01-23)
 
@@ -62,7 +62,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.0.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 3.7.0 (2020-02-01)
 
@@ -84,7 +84,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Reverts
 
-- restores back as it was before, no changes to opts.limitToBeAddedWhitespace ([f0b36f3](https://gitlab.com/codsen/codsen/commit/f0b36f3))
+- restores back as it was before, no changes to `opts.limitToBeAddedWhitespace` ([f0b36f3](https://gitlab.com/codsen/codsen/commit/f0b36f3))
 
 ## 3.4.0 (2019-09-04)
 
@@ -96,19 +96,19 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Features
 
-- opts.mergeType ([7efa4db](https://gitlab.com/codsen/codsen/commit/7efa4db))
+- `opts.mergeType` ([7efa4db](https://gitlab.com/codsen/codsen/commit/7efa4db))
 
 ## 3.2.0 (2019-06-18)
 
 ### Features
 
-- Remove check-types-mini for perf reasons and also to reduce Lerna ECYCLE warnings ([50be5d8](https://gitlab.com/codsen/codsen/commit/50be5d8))
+- Remove `check-types-mini` for perf reasons and also to reduce Lerna `ECYCLE` warnings ([50be5d8](https://gitlab.com/codsen/codsen/commit/50be5d8))
 
 ## 3.1.0 (2019-06-01)
 
 ### Features
 
-- ranges.replace() ([f0a2de0](https://gitlab.com/codsen/codsen/commit/f0a2de0))
+- `ranges.replace()` ([f0a2de0](https://gitlab.com/codsen/codsen/commit/f0a2de0))
 
 ## 2.16.0 (2019-01-20)
 
@@ -130,11 +130,11 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ## 2.11.0 (2018-07-26)
 
-- If third argument is an empty string, now it's being completely omited. This is necessary for unit tests' sanity. Otherwise, it's impossible to `deepEqual`-match.
+- If third argument is an empty string, now it's being completely omitted. This is necessary for unit tests' sanity. Otherwise, it's impossible to `deepEqual`-match.
 
 ## 2.10.0 (2018-07-03)
 
-- Added `opts.limitLinebreaksCount` - this will allow double linebreaks resulting in an empty row between the content lines.
+- Added `opts.limitLinebreaksCount` - this will allow double line breaks resulting in an empty row between the content lines.
 
 ## 2.9.0 (2018-06-18)
 
@@ -156,7 +156,7 @@ Setup refresh.
 
 ## 2.6.0 (2018-02-24)
 
-- Chillax™ feature. If `null` is being `.push`ed, nothing happens. It won't `throw` from now on.
+- If `null` is being `.push`ed, nothing happens. It won't `throw` from now on.
 
 ## 2.5.0 (2018-02-10)
 

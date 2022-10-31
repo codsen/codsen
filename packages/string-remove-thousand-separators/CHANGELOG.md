@@ -19,7 +19,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- export defaults ([3b3806f](https://github.com/codsen/codsen/commit/3b3806fcefa94c91d3b653c9cfc0809a46ab76f6))
+- export `defaults` ([3b3806f](https://github.com/codsen/codsen/commit/3b3806fcefa94c91d3b653c9cfc0809a46ab76f6))
 
 ## [6.0.13](https://github.com/codsen/codsen/compare/string-remove-thousand-separators@6.0.12...string-remove-thousand-separators@6.0.13) (2022-03-21)
 
@@ -35,7 +35,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 5.1.0 (2021-05-24)
 
@@ -53,7 +53,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 5.0.0 (2021-01-23)
 
@@ -67,7 +67,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.0.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 2.6.0 (2019-01-20)
 

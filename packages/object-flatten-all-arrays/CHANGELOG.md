@@ -24,7 +24,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 5.1.0 (2021-05-24)
 
@@ -42,7 +42,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 5.0.0 (2021-01-23)
 
@@ -56,24 +56,20 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.9.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 4.8.1 (2019-10-05)
 
 ### Performance Improvements
 
-- remove unused check-types-mini from deps list ([53f78a6](https://gitlab.com/codsen/codsen/commit/53f78a6))
+- remove unused `check-types-mini` from deps list ([53f78a6](https://gitlab.com/codsen/codsen/commit/53f78a6))
 
 ## 4.8.0 (2019-10-02)
 
 ### Features
 
-- remove check-types-mini and replace type-detect with lodash.isplainobject ([31936bf](https://gitlab.com/codsen/codsen/commit/31936bf))
-
-## 4.8.0 (2019-09-26)
-
-- Replace "type-detect" with "lodash.isplainobject"
-- Remove `check-types-mini` to make things run faster. 76 times to be precise.
+- remove `check-types-mini` to make things run faster. 76 times to be precise.
+- replace `type-detect` with `lodash.isplainobject` ([31936bf](https://gitlab.com/codsen/codsen/commit/31936bf))
 
 ## 4.7.0 (2019-01-20)
 

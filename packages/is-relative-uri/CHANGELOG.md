@@ -14,7 +14,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- remove unused opts.offset ([5254d4f](https://github.com/codsen/codsen/commit/5254d4fac499ff76a2a79411fa5e8a3faabf9ee0))
+- remove unused `opts.offset` ([5254d4f](https://github.com/codsen/codsen/commit/5254d4fac499ff76a2a79411fa5e8a3faabf9ee0))
 
 ## 4.1.3 (2022-04-18)
 
@@ -36,7 +36,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 3.1.0 (2021-05-24)
 
@@ -54,7 +54,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 3.0.0 (2021-01-23)
 
@@ -68,7 +68,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.0.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 1.0.0 (2020-01-11)
 
@@ -78,7 +78,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 - dot dot not-slash ([5ce819d](https://gitlab.com/codsen/codsen/commit/5ce819d3053133f4b4728f0ccc8fde34650f5ff1))
 - init ([7d0891a](https://gitlab.com/codsen/codsen/commit/7d0891a1679aa10d9c30757f6e82f84d53c151c1))
 - more hash-checks ([5689915](https://gitlab.com/codsen/codsen/commit/5689915d279696cb9f9a2491f8fbf2fc60c25da8))
-- opts.flagUpUrisWithSchemes ([063d601](https://gitlab.com/codsen/codsen/commit/063d601cd740f041daf934cedd1c944e4cd53e30))
+- `opts.flagUpUrisWithSchemes` ([063d601](https://gitlab.com/codsen/codsen/commit/063d601cd740f041daf934cedd1c944e4cd53e30))
 
 ### BREAKING CHANGES
 

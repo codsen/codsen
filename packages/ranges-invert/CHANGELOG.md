@@ -24,7 +24,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 4.1.0 (2021-05-24)
 
@@ -42,7 +42,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 4.0.0 (2021-01-23)
 
@@ -56,13 +56,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.0.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 2.1.22 (2019-10-02)
 
 ### Performance Improvements
 
-- remove check-types-mini and ordinal numbers dependencies ([e62326c](https://gitlab.com/codsen/codsen/commit/e62326c))
+- remove `check-types-mini` and ordinal numbers dependencies ([e62326c](https://gitlab.com/codsen/codsen/commit/e62326c))
 
 ## 2.1.0 (2019-06-01)
 
@@ -70,7 +70,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 - If ranges exceed reference string length, result is cropped (as opposed to error) ([c05d954](https://gitlab.com/codsen/codsen/commit/c05d954))
 - null instead of ranges array produces whole input string ([e3ff153](https://gitlab.com/codsen/codsen/commit/e3ff153))
-- opts.skipChecks and precautionary measures when it's on ([b129666](https://gitlab.com/codsen/codsen/commit/b129666))
+- `opts.skipChecks` and precautionary measures when it's on ([b129666](https://gitlab.com/codsen/codsen/commit/b129666))
 
 ## 1.4.0 (2019-01-20)
 

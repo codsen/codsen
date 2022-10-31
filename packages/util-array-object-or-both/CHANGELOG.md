@@ -29,7 +29,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 3.1.0 (2021-05-24)
 
@@ -47,7 +47,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 3.0.0 (2021-01-23)
 
@@ -108,7 +108,7 @@ GitHub sold us out. In the meantime, we:
 ## 1.1.0 (2017-08-09)
 
 - 💥 Replaced `object-assign` with native ES6 `Object.assign`
-- 💥 We don't need `lodash.clonedeep` either, we can just Object.assign onto a empty object literal because Object.assign sources are not mutated.
+- 💥 We don't need `lodash.clonedeep` either, we can just `Object.assign` onto a empty object literal because `Object.assign` sources are not mutated.
 
 ## 1.0.0 (2017-06-13)
 

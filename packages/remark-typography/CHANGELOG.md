@@ -28,7 +28,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 # 1.0.0 (2022-09-25)
 
 - promote semver to stable v1
-- move few TS-exclusive dependencies from "devDependencies" to "dependencies" because types are still importing them and so they are not "dev"
+- move few TS-exclusive dependencies from `devDependencies` to `dependencies` because types are still importing them and so they are not "dev"
 
 # [0.2.0](https://github.com/codsen/codsen/compare/remark-typography@0.1.0...remark-typography@0.2.0) (2022-09-22)
 

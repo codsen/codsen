@@ -23,7 +23,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 4.1.0 (2021-05-24)
 
@@ -41,7 +41,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 4.0.0 (2021-01-23)
 
@@ -53,7 +53,7 @@ There are no API changes but we're bumping _major_ just in case.
 
 ## 3.0.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 2.0.0 (2020-05-11)
 
@@ -87,17 +87,17 @@ As a result, UMD bundle is half-the size (was 191KB minified, now 87KB)!
 ### Fixed
 
 - Add missing node globals, necessary for UMD build ([b917068](https://gitlab.com/codsen/codsen/commit/b917068))
-- Rollup globals plugin was missing in builds which errorred out the UMD builds ([2f8ee25](https://gitlab.com/codsen/codsen/commit/2f8ee25))
+- Rollup globals plugin was missing in builds which error'ed out the UMD builds ([2f8ee25](https://gitlab.com/codsen/codsen/commit/2f8ee25))
 
 ## 1.1.0 (2019-06-18)
 
 ### Features
 
-- Adds basic level of colspans ([75308e6](https://gitlab.com/codsen/codsen/commit/75308e6))
+- Adds basic level of `colspan`s ([75308e6](https://gitlab.com/codsen/codsen/commit/75308e6))
 - Complete recode using parsing ([0e31c43](https://gitlab.com/codsen/codsen/commit/0e31c43))
 - GUI with wired up UMD tap ([e1e0648](https://gitlab.com/codsen/codsen/commit/e1e0648))
 - Harden the API and tap the html-dom-parser as parser instead because former broke Rollup UMD b ([f27ac6d](https://gitlab.com/codsen/codsen/commit/f27ac6d))
-- opts.cssStylesContent ([58b6a4f](https://gitlab.com/codsen/codsen/commit/58b6a4f))
+- `opts.cssStylesContent` ([58b6a4f](https://gitlab.com/codsen/codsen/commit/58b6a4f))
 - Precautions against children tables nested at deeper levels ([ced7d36](https://gitlab.com/codsen/codsen/commit/ced7d36))
 - Tap's styling ([6487e7b](https://gitlab.com/codsen/codsen/commit/6487e7b))
 - Tighten the quotes detection clauses ([a25774e](https://gitlab.com/codsen/codsen/commit/a25774e))

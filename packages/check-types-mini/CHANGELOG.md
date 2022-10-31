@@ -30,7 +30,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 6.1.0 (2021-05-24)
 
@@ -48,7 +48,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 6.0.0 (2021-01-23)
 
@@ -62,7 +62,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.9.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 5.8.0 (2020-09-27)
 
@@ -95,7 +95,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Features
 
-- Matcher under opts.ignorePaths and opts.ignoreKeys ([4648ad5](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/4648ad5))
+- Matcher under `opts.ignorePaths` and `opts.ignoreKeys` ([4648ad5](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/4648ad5))
 - `opts.ignorePaths` and nested opts support ([c1128d6](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/c1128d6))
 - `opts.schema` can now be given in nested formatting too ([d102784](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/d102784))
 - schema ignores with types 'any' and 'whatever' now apply to all children nodes of that path ([568eb33](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/568eb33))

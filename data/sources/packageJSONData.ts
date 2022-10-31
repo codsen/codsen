@@ -9802,7 +9802,7 @@ export const packageJSONData = {
             "p-map": "^5.5.0",
             "p-progress": "^0.6.0",
             "p-reduce": "^3.0.0",
-            "pacote": "^15.0.3",
+            "pacote": "^15.0.4",
             "update-notifier": "^6.0.2",
             "write-file-atomic": "^5.0.0"
         },

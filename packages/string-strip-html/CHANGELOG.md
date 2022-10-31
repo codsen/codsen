@@ -7,25 +7,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- tweaks to broken code algorithm to align dumpLinkHrefsNearby enabled and disabled ([234faa1](https://github.com/codsen/codsen/commit/234faa1094f0dbc0c2cc8ba4345a5b91aa7cc94d))
+- tweaks to broken code algorithm to align `dumpLinkHrefsNearby` enabled and disabled ([234faa1](https://github.com/codsen/codsen/commit/234faa1094f0dbc0c2cc8ba4345a5b91aa7cc94d))
 
 ## [11.6.10](https://github.com/codsen/codsen/compare/string-strip-html@11.6.9...string-strip-html@11.6.10) (2022-10-05)
 
 ### Fixed
 
-- respect stripTogetherWithTheirContents when dumpLinkHrefsNearby is on ([43209e7](https://github.com/codsen/codsen/commit/43209e7bc2a0d13ee5392171ea120b00c377b345)), closes [#54](https://github.com/codsen/codsen/issues/54)
+- respect `stripTogetherWithTheirContents` when dumpLinkHrefsNearby is on ([43209e7](https://github.com/codsen/codsen/commit/43209e7bc2a0d13ee5392171ea120b00c377b345)), closes [#54](https://github.com/codsen/codsen/issues/54)
 
 # [11.6.0](https://github.com/codsen/codsen/compare/string-strip-html@11.5.0...string-strip-html@11.6.0) (2022-08-31)
 
 ### Features
 
-- treat HTML-encoded Combining Grapheme Joiner (U+034F) character as whitespace ([5a0d7ec](https://github.com/codsen/codsen/commit/5a0d7ec6347459c67beae621902d6fee79d6db98))
+- treat HTML-encoded _Combining Grapheme Joiner_ (`U+034F`) character as whitespace ([5a0d7ec](https://github.com/codsen/codsen/commit/5a0d7ec6347459c67beae621902d6fee79d6db98))
 
 # [11.5.0](https://github.com/codsen/codsen/compare/string-strip-html@11.4.0...string-strip-html@11.5.0) (2022-08-31)
 
 ### Features
 
-- add opts.reportProgressFunc ([4045496](https://github.com/codsen/codsen/commit/4045496da3624442a811522962d173c519a88164))
+- add `opts.reportProgressFunc` ([4045496](https://github.com/codsen/codsen/commit/4045496da3624442a811522962d173c519a88164))
 
 # [11.4.0](https://github.com/codsen/codsen/compare/string-strip-html@11.3.1...string-strip-html@11.4.0) (2022-08-31)
 
@@ -37,7 +37,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- make opts.dumpLinkHrefsNearby sub-keys all optional too ([90810d8](https://github.com/codsen/codsen/commit/90810d8a2474a230d5b3413bf14fbcfe4cf4c7f1))
+- make `opts.dumpLinkHrefsNearby` sub-keys all optional too ([90810d8](https://github.com/codsen/codsen/commit/90810d8a2474a230d5b3413bf14fbcfe4cf4c7f1))
 
 # 11.2.0 (2022-08-12)
 
@@ -49,7 +49,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- improvements to opts.dumpLinkHrefsNearby against punctuation ([daab255](https://github.com/codsen/codsen/commit/daab255c7b4736031ccead973e084c296e6ddba7))
+- improvements to `opts.dumpLinkHrefsNearby` against punctuation ([daab255](https://github.com/codsen/codsen/commit/daab255c7b4736031ccead973e084c296e6ddba7))
 
 ## [11.0.1](https://github.com/codsen/codsen/compare/string-strip-html@11.0.0...string-strip-html@11.0.1) (2022-07-26)
 
@@ -112,8 +112,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- opts.ignoreTagsWithTheirContents ([39dad96](https://github.com/codsen/codsen/commit/39dad967940208f7ac0e88fb1faa04a019f83b75))
-- opts.stripRecognisedHTMLOnly ([50010a8](https://github.com/codsen/codsen/commit/50010a8e48fd4c66a7160da8a6400942d6eca102))
+- `opts.ignoreTagsWithTheirContents` ([39dad96](https://github.com/codsen/codsen/commit/39dad967940208f7ac0e88fb1faa04a019f83b75))
+- `opts.stripRecognisedHTMLOnly` ([50010a8](https://github.com/codsen/codsen/commit/50010a8e48fd4c66a7160da8a6400942d6eca102))
 
 ## 9.0.0 (2021-09-09)
 
@@ -123,7 +123,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 8.3.0 (2021-05-24)
 
@@ -157,7 +157,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 8.0.0 (2021-01-23)
 
@@ -171,7 +171,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 7.0.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 6.3.0 (2020-11-10)
 
@@ -273,15 +273,15 @@ That's different from _ranges_ output, because _ranges_ are instructions: what t
 
 ### Features
 
-- add previously missing tag.lastClosingBracketAt on ignored tags ([f35e595](https://gitlab.com/codsen/codsen/commit/f35e595))
-- make the callback (opts.cb) ping the ignored tags too ([d9302e7](https://gitlab.com/codsen/codsen/commit/d9302e7))
-- report tag.slashPresent as index of the slash, not as a boolean ([96ce6c8](https://gitlab.com/codsen/codsen/commit/96ce6c8))
+- add previously missing `tag.lastClosingBracketAt` on ignored tags ([f35e595](https://gitlab.com/codsen/codsen/commit/f35e595))
+- make the callback (`opts.cb`) ping the ignored tags too ([d9302e7](https://gitlab.com/codsen/codsen/commit/d9302e7))
+- report `tag.slashPresent` as index of the slash, not as a boolean ([96ce6c8](https://gitlab.com/codsen/codsen/commit/96ce6c8))
 
 ## 4.1.0 (2019-08-24)
 
 ### Features
 
-- implement callback interface, opts.cb() ([79bc8dc](https://gitlab.com/codsen/codsen/commit/79bc8dc))
+- implement callback interface, `opts.cb` ([79bc8dc](https://gitlab.com/codsen/codsen/commit/79bc8dc))
 
 ## 3.5.0 (2019-01-20)
 

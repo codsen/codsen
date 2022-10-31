@@ -29,7 +29,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 2.1.0 (2021-05-24)
 
@@ -47,7 +47,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 2.0.0 (2021-01-23)
 
@@ -61,7 +61,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.14.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 1.13.0 (2020-01-26)
 
@@ -73,22 +73,22 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Performance Improvements
 
-- remove check-types-mini ([0503752](https://gitlab.com/codsen/codsen/commit/0503752))
+- remove `check-types-mini` ([0503752](https://gitlab.com/codsen/codsen/commit/0503752))
 
 ## 1.12.0 (2019-06-29)
 
 ### Features
 
-- Add perf measurement, recording and historical comparison ([8266d21](https://gitlab.com/codsen/codsen/commit/8266d21))
+- add perf measurement, recording and historical comparison ([8266d21](https://gitlab.com/codsen/codsen/commit/8266d21))
 
 ## 1.11.0 (2019-01-20)
 
-- Various documentation and setup tweaks after we migrated to monorepo
-- Setup refresh: updated dependencies and all config files using automated tools
+- various documentation and setup tweaks after we migrated to monorepo
+- updated dependencies and all config files using automated tools
 
 ## 1.7.0 (2018-12-26)
 
-- opts.useWildcards ([d541cab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare/commits/d541cab))
+- `opts.useWildcards` ([d541cab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare/commits/d541cab))
 
 ## 1.6.0 (2018-10-12)
 

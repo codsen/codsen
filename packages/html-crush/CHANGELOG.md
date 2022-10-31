@@ -28,7 +28,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 4.2.0 (2021-05-24)
 
@@ -58,7 +58,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 - correct the line length calculation around inline tags ([073f7a5](https://github.com/codsen/codsen/commit/073f7a5a2bb3f8ce0460e674deed9cf1eff63409))
 
 ## 4.0.0 (2021-01-23)
@@ -81,7 +81,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- fix typo in the output, in log.timeTakenInMilliseconds ([48debda](https://gitlab.com/codsen/codsen/commit/48debda98858aa83d6f7df4a3b7f85895756d67e))
+- fix typo in the output, in `log.timeTakenInMilliseconds` ([48debda](https://gitlab.com/codsen/codsen/commit/48debda98858aa83d6f7df4a3b7f85895756d67e))
 
 ### Features
 
@@ -92,19 +92,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- in output, log.timeTakenInMiliseconds is now called log.timeTakenInMilliseconds
+- in output, `log.timeTakenInMiliseconds` is now called `log.timeTakenInMilliseconds`
   (two l's)
-
-## 2.0.0
-
-- renamed output `log.timeTakenInMiliseconds` to `log.timeTakenInMilliseconds` (was a typo)
-- output returns `applicableOpts` - handy in UI's, to show only applicable options. Not all options can be "applicable" or not so this list contains only some of available options, not all.
 
 ## 1.9.35 (2020-05-24)
 
 ### Fixed
 
-- fixes the pre, code, CDATA and other code chunk skipping ([ec0408a](https://gitlab.com/codsen/codsen/commit/ec0408afee0b1a09cd711549cab6fefdc55efde8)), closes [#29](https://gitlab.com/codsen/codsen/issues/29)
+- fixes the `pre`, `code`, `CDATA` and other code chunk skipping ([ec0408a](https://gitlab.com/codsen/codsen/commit/ec0408afee0b1a09cd711549cab6fefdc55efde8)), closes [#29](https://gitlab.com/codsen/codsen/issues/29)
 
 ## 1.9.0 (2019-09-14)
 
@@ -181,7 +176,7 @@ That's now implemented.
 
 ### Features
 
-- opts.reportProgressFuncFrom and opts.reportProgressFuncTo ([4ebf439](https://gitlab.com/codsen/codsen/commit/4ebf439))
+- `opts.reportProgressFuncFrom` and `opts.reportProgressFuncTo` ([4ebf439](https://gitlab.com/codsen/codsen/commit/4ebf439))
 - Re-distribute the ratio of progress reported during main and final tasks ([1e80408](https://gitlab.com/codsen/codsen/commit/1e80408))
 
 ## 1.2.0 (2019-06-01)
@@ -195,7 +190,7 @@ That's now implemented.
 ### Features
 
 - Inline CSS minification ([0518f05](https://gitlab.com/codsen/codsen/commit/0518f05))
-- Only replace linebreaks when result will be smaller in size, not the same ([a431686](https://gitlab.com/codsen/codsen/commit/a431686))
+- Only replace line breaks when result will be smaller in size, not the same ([a431686](https://gitlab.com/codsen/codsen/commit/a431686))
 
 ## 1.0.11 (2019-04-06)
 
@@ -216,7 +211,7 @@ That's now implemented.
 
 - Add licence block at the top of built files in dist/ folder ([cb2c259](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/commits/cb2c259))
 - Add more logging for doNothing state ([25262e5](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/commits/25262e5))
-- Do not touch CDATA blocks ([920e9d9](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/commits/920e9d9))
+- Do not touch `CDATA` blocks ([920e9d9](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/commits/920e9d9))
 - Don't minify script tags contents ([557e8fa](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/commits/557e8fa))
 - Don't touch code within pre-code blocks ([d32c092](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/commits/d32c092))
 - Fetch a handful of real websites and minify them for tests ([f7e8153](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/commits/f7e8153))
@@ -240,7 +235,7 @@ That's now implemented.
 ## 0.2.0 (2018-12-11)
 
 - Program will not touch:
-  - CDATA blocks
+  - `CDATA` blocks
   - `<pre><code>...</code></pre>` blocks
   - `<script>` tag contents
 

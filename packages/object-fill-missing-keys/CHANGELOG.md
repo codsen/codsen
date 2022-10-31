@@ -41,7 +41,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- programs now are in ES Modules and won't work with Common JS require()
+- programs now are in ES Modules and won't work with Common JS `require()`
 
 ## 8.1.0 (2021-05-24)
 
@@ -59,7 +59,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Fixed
 
-- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- add `testStats` to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
 
 ## 8.0.0 (2021-01-23)
 
@@ -73,7 +73,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 7.11.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+Accidental version bump during migration to SourceHut. Sorry about that.
 
 ## 7.10.0 (2019-10-02)
 
@@ -83,7 +83,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Performance Improvements
 
-- tap native Array.isArray to gain around 140 times more speed ([35af347](https://gitlab.com/codsen/codsen/commit/35af347))
+- tap native `Array.isArray` to gain around 140 times more speed ([35af347](https://gitlab.com/codsen/codsen/commit/35af347))
 
 ## 7.9.0 (2019-01-20)
 
