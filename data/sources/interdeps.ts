@@ -6,7 +6,7 @@ export const interdeps = [
     },
     {
         "name": "array-group-str-omit-num-char",
-        "size": 1456,
+        "size": 1458,
         "imports": [
             "ranges-apply"
         ]
@@ -150,7 +150,7 @@ export const interdeps = [
     },
     {
         "name": "csv-sort",
-        "size": 4879,
+        "size": 4881,
         "imports": [
             "csv-split-easy"
         ]
@@ -164,7 +164,7 @@ export const interdeps = [
     },
     {
         "name": "csv-split-easy",
-        "size": 2263,
+        "size": 2265,
         "imports": [
             "string-remove-thousand-separators"
         ]
@@ -200,7 +200,7 @@ export const interdeps = [
     },
     {
         "name": "edit-package-json",
-        "size": 10243,
+        "size": 10245,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -311,7 +311,7 @@ export const interdeps = [
     },
     {
         "name": "html-img-alt",
-        "size": 3106,
+        "size": 3108,
         "imports": [
             "check-types-mini",
             "ranges-apply",
@@ -359,19 +359,19 @@ export const interdeps = [
     },
     {
         "name": "is-media-descriptor",
-        "size": 6049,
+        "size": 6051,
         "imports": [
             "string-process-comma-separated"
         ]
     },
     {
         "name": "is-relative-uri",
-        "size": 5661,
+        "size": 5663,
         "imports": []
     },
     {
         "name": "js-row-num",
-        "size": 2635,
+        "size": 2637,
         "imports": [
             "ranges-apply",
             "ranges-push"
@@ -412,7 +412,7 @@ export const interdeps = [
     },
     {
         "name": "json-variables",
-        "size": 10151,
+        "size": 10153,
         "imports": [
             "arrayiffy-if-string",
             "ast-get-values-by-key",
@@ -500,14 +500,14 @@ export const interdeps = [
     },
     {
         "name": "ranges-apply",
-        "size": 2451,
+        "size": 2453,
         "imports": [
             "ranges-merge"
         ]
     },
     {
         "name": "ranges-crop",
-        "size": 1898,
+        "size": 1900,
         "imports": [
             "ranges-merge"
         ]
@@ -521,7 +521,7 @@ export const interdeps = [
     },
     {
         "name": "ranges-invert",
-        "size": 2497,
+        "size": 2499,
         "imports": [
             "ranges-crop",
             "ranges-merge"
@@ -542,7 +542,7 @@ export const interdeps = [
     },
     {
         "name": "ranges-process-outside",
-        "size": 1424,
+        "size": 1426,
         "imports": [
             "ranges-crop",
             "ranges-invert"
@@ -558,7 +558,7 @@ export const interdeps = [
     },
     {
         "name": "ranges-regex",
-        "size": 1333,
+        "size": 1335,
         "imports": [
             "ranges-merge"
         ]
@@ -603,7 +603,7 @@ export const interdeps = [
     },
     {
         "name": "string-apostrophes",
-        "size": 7200,
+        "size": 7202,
         "imports": [
             "ranges-apply"
         ]
@@ -620,7 +620,7 @@ export const interdeps = [
     },
     {
         "name": "string-collapse-white-space",
-        "size": 3559,
+        "size": 3561,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -689,7 +689,7 @@ export const interdeps = [
     },
     {
         "name": "string-remove-duplicate-heads-tails",
-        "size": 3053,
+        "size": 3055,
         "imports": [
             "arrayiffy-if-string",
             "ranges-apply",
@@ -700,7 +700,7 @@ export const interdeps = [
     },
     {
         "name": "string-remove-thousand-separators",
-        "size": 1894,
+        "size": 1896,
         "imports": [
             "ranges-apply",
             "ranges-push"

@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.2.3](https://github.com/codsen/codsen/compare/string-bionic-split@1.2.2...string-bionic-split@1.2.3) (2022-10-31)
-
-**Note:** Version bump only for package string-bionic-split
-
 # 1.2.0 (2022-08-12)
 
 ### Features
