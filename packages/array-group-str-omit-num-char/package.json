@@ -1,6 +1,6 @@
 {
   "name": "array-group-str-omit-num-char",
-  "version": "5.2.9",
+  "version": "5.2.10",
   "description": "Groups array of strings by omitting number characters",
   "keywords": [
     "array",
@@ -70,7 +70,7 @@
   },
   "dependencies": {
     "lodash.uniq": "^4.5.0",
-    "ranges-apply": "^6.2.9"
+    "ranges-apply": "^6.2.10"
   },
   "devDependencies": {
     "@types/lodash.uniq": "^4.5.7"

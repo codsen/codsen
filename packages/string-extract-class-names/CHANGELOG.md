@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.5](https://github.com/codsen/codsen/compare/string-extract-class-names@7.1.4...string-extract-class-names@7.1.5) (2022-10-31)
+
+**Note:** Version bump only for package string-extract-class-names
+
 # 7.1.0 (2022-08-12)
 
 ### Features
