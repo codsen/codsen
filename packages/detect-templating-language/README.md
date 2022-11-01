@@ -1,13 +1,13 @@
-# detect-templating-language
+<h1 align="center">detect-templating-language</h1>
 
-> Detects various templating languages present in string
+<p align="center">Detects various templating languages present in string</p>
 
-<div class="package-badges">
-  <a href="https://www.npmjs.com/package/detect-templating-language" rel="nofollow noreferrer noopener">
-    <img src="https://img.shields.io/badge/-npm-blue?style=flat-square" alt="page on npm">
-  </a>
+<p align="center">
   <a href="https://codsen.com/os/detect-templating-language" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/-codsen-blue?style=flat-square" alt="page on codsen.com">
+  </a>
+  <a href="https://www.npmjs.com/package/detect-templating-language" rel="nofollow noreferrer noopener">
+    <img src="https://img.shields.io/badge/-npm-blue?style=flat-square" alt="page on npm">
   </a>
   <a href="https://github.com/codsen/codsen/tree/main/packages/detect-templating-language" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/-github-blue?style=flat-square" alt="page on github">
@@ -15,14 +15,11 @@
   <a href="https://npmcharts.com/compare/detect-templating-language?interval=30" rel="nofollow noreferrer noopener" target="_blank">
     <img src="https://img.shields.io/npm/dm/detect-templating-language.svg?style=flat-square" alt="Downloads per month">
   </a>
-  <a href="https://prettier.io" rel="nofollow noreferrer noopener" target="_blank">
-    <img src="https://img.shields.io/badge/code_style-prettier-brightgreen.svg?style=flat-square" alt="Code style: prettier">
+  <a href="https://codsen.com/os/detect-templating-language/changelog" rel="nofollow noreferrer noopener">
+    <img src="https://img.shields.io/badge/changelog-here-brightgreen?style=flat-square" alt="changelog">
   </a>
-  <img src="https://img.shields.io/badge/licence-MIT-brightgreen.svg?style=flat-square" alt="MIT License">
-  <a href="https://liberamanifesto.com" rel="nofollow noreferrer noopener" target="_blank">
-    <img src="https://img.shields.io/badge/libera-manifesto-lightgrey.svg?style=flat-square" alt="libera manifesto">
-  </a>
-</div>
+  <img src="https://img.shields.io/badge/licence-MIT-brightgreen.svg?style=flat-square" alt="MIT Licence">
+</p>
 
 ## Install
 
@@ -64,8 +61,8 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 ## Licence
 
-MIT License
+MIT License.
 
-Copyright (c) 2010-2022 Roy Revelt and other contributors
+Copyright © 2010-2022 Roy Revelt and other contributors.
 
-<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
+<p align="center"><img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center"></p>
