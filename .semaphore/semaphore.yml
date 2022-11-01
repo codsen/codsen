@@ -19,7 +19,7 @@ blocks:
           - nvm use 18
           - node --version
           - npm --version
-          # Correct premissions since they are too open by default:
+          # Correct permissions since they are too open by default:
           - chmod 0600 ~/.ssh/id_rsa
           # Add the key to the ssh agent:
           - ssh-add ~/.ssh/id_rsa
