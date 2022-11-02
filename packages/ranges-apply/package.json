@@ -1,6 +1,6 @@
 {
   "name": "ranges-apply",
-  "version": "6.2.10",
+  "version": "6.2.11",
   "description": "Take an array of string index ranges, delete/replace the string according to them",
   "keywords": [
     "delete",
@@ -68,7 +68,7 @@
     }
   },
   "dependencies": {
-    "ranges-merge": "^8.2.5",
+    "ranges-merge": "^8.2.6",
     "tiny-invariant": "^1.3.1"
   }
 }

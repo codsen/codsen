@@ -1,6 +1,6 @@
 {
   "name": "array-pull-all-with-glob",
-  "version": "6.2.4",
+  "version": "6.2.5",
   "description": "Like _.pullAll but with globs (wildcards)",
   "keywords": [
     "array",

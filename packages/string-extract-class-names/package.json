@@ -1,6 +1,6 @@
 {
   "name": "string-extract-class-names",
-  "version": "7.1.5",
+  "version": "7.1.6",
   "description": "Extracts CSS class/id names from a string",
   "keywords": [
     "class",
@@ -64,6 +64,6 @@
     }
   },
   "dependencies": {
-    "string-left-right": "^5.1.5"
+    "string-left-right": "^5.1.6"
   }
 }

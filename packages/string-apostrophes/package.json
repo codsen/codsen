@@ -1,6 +1,6 @@
 {
   "name": "string-apostrophes",
-  "version": "3.1.10",
+  "version": "3.1.11",
   "description": "Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes",
   "keywords": [
     "apostrophe",
@@ -67,6 +67,6 @@
     }
   },
   "dependencies": {
-    "ranges-apply": "^6.2.10"
+    "ranges-apply": "^6.2.11"
   }
 }

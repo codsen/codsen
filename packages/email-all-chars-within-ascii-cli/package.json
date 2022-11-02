@@ -1,6 +1,6 @@
 {
   "name": "email-all-chars-within-ascii-cli",
-  "version": "2.1.20",
+  "version": "2.1.21",
   "description": "Command line app to scan email templates, are all their characters within ASCII range",
   "keywords": [
     "7bit",
@@ -62,12 +62,12 @@
   },
   "dependencies": {
     "chalk": "^5.1.2",
-    "email-all-chars-within-ascii": "^4.1.4",
+    "email-all-chars-within-ascii": "^4.1.5",
     "globby": "^13.1.2",
     "inquirer": "^9.1.4",
     "lodash.pullall": "^4.2.0",
     "minimist": "^1.2.7",
-    "string-left-right": "^5.1.5",
+    "string-left-right": "^5.1.6",
     "update-notifier": "^6.0.2"
   },
   "devDependencies": {

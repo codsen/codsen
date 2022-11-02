@@ -1,6 +1,6 @@
 {
   "name": "string-process-comma-separated",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "description": "Extracts chunks from possibly comma or whatever-separated string",
   "keywords": [
     "characters",
