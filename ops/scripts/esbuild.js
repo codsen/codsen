@@ -12,6 +12,8 @@ if (name.endsWith("-tbc")) {
 
 const pkg = require(path.join(path.resolve("./"), `package.json`));
 
+const isCJS = (str) => typeof str === "string" && str.endsWith(".cjs.js");
+
 // bundle, but set dependencies as external
 const external = [
   ...Object.keys(pkg.dependencies || {}),
@@ -33,7 +35,8 @@ const banner = {
 // ESM
 if (
   (pkg.exports && (typeof pkg.exports === "string" || pkg.exports.default)) ||
-  !pkg.type
+  !pkg.type ||
+  isCJS(pkg.main)
 ) {
   esbuild.buildSync({
     entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
@@ -70,7 +73,7 @@ if (pkg.exports && pkg.exports.script) {
 }
 
 // CJS (used in eslint plugins)
-if (typeof pkg.main === "string" && pkg.main.endsWith(".cjs.js")) {
+if (isCJS(pkg.main)) {
   esbuild.buildSync({
     entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
     platform: "node",
