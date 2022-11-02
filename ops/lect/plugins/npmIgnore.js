@@ -76,6 +76,13 @@ async function npmIgnore({ state, lectrc }) {
     return objectPath.get(lectrc, p) || [];
   }
 
+  function removeTbc(str) {
+    if (typeof str === "string" && str.endsWith("-tbc")) {
+      return str.slice(0, -4);
+    }
+    return str;
+  }
+
   // function ask(regardingSomePath, what = "folder") {
   //   return inquirer.prompt(
   //     regardingSomePath.map((pathName, i, arr) => ({
@@ -154,7 +161,7 @@ async function npmIgnore({ state, lectrc }) {
     get("npmignore.badFiles").includes(filesName)
   );
   if (state.isCJS) {
-    badFiles.push(`dist/${state.pack.name}.esm.js`);
+    badFiles.push(`dist/${removeTbc(state.pack.name)}.esm.js`);
   }
   unclearFiles = pull(unclearFiles, get("npmignore.goodFiles"), {
     caseSensitive: false,
