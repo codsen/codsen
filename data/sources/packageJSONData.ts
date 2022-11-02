@@ -1378,7 +1378,7 @@ export const packageJSONData = {
             "examples": "node '../../ops/scripts/run-examples.js'",
             "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
             "letspublish": "yarn publish || :",
-            "lint": "eslint 'test/test.js' --fix",
+            "lint": "eslint . --ext .js --ext .ts --fix",
             "perf": "node perf/check.js",
             "prepare": "echo 'ready'",
             "prettier": "prettier",
