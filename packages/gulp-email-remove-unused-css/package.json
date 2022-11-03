@@ -31,8 +31,10 @@
   "type": "module",
   "exports": "./index.js",
   "scripts": {
-    "build": "echo 'no build needed'",
-    "dev": "echo 'no build needed'",
+    "build": "exit 0",
+    "cjs-off": "exit 0",
+    "cjs-on": "exit 0",
+    "dev": "exit 0",
     "lect": "node '../../ops/lect/lect.js'",
     "letspublish": "yarn publish || :",
     "lint": "eslint . --ext .js --ext .ts --fix",

@@ -33,6 +33,8 @@
   "types": "types/index.d.ts",
   "scripts": {
     "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+    "cjs-off": "exit 0",
+    "cjs-on": "exit 0",
     "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
     "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
     "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",

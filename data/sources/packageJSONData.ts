@@ -51,6 +51,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -125,6 +127,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -206,6 +210,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -276,6 +282,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -350,6 +358,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -428,6 +438,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -504,6 +516,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -582,6 +596,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -667,6 +683,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -755,6 +773,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -844,6 +864,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -933,6 +955,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -1023,6 +1047,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -1112,6 +1138,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -1197,6 +1225,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -1285,6 +1315,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -1372,6 +1404,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -1464,6 +1498,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -1550,6 +1586,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -1633,6 +1671,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -1714,6 +1754,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -1789,6 +1831,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -1860,8 +1904,10 @@ export const packageJSONData = {
             "codsen": "cli.js"
         },
         "scripts": {
-            "build": "echo 'no build needed'",
-            "dev": "echo 'no build needed'",
+            "build": "exit 0",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
+            "dev": "exit 0",
             "lect": "node '../../ops/lect/lect.js'",
             "letspublish": "yarn publish || :",
             "lint": "eslint . --ext .js --ext .ts --fix",
@@ -1925,6 +1971,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -2005,6 +2053,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -2093,6 +2143,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -2178,6 +2230,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -2259,8 +2313,10 @@ export const packageJSONData = {
             "sortcsv": "cli.js"
         },
         "scripts": {
-            "build": "echo 'no build needed'",
-            "dev": "echo 'no build needed'",
+            "build": "exit 0",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
+            "dev": "exit 0",
             "lect": "node '../../ops/lect/lect.js'",
             "letspublish": "yarn publish || :",
             "lint": "eslint . --ext .js --ext .ts --fix",
@@ -2341,6 +2397,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -2418,6 +2476,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -2484,6 +2544,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -2561,6 +2623,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -2655,6 +2719,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -2726,6 +2792,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -2806,6 +2874,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -2876,8 +2946,10 @@ export const packageJSONData = {
             "withinascii": "cli.js"
         },
         "scripts": {
-            "build": "echo 'no build needed'",
-            "dev": "echo 'no build needed'",
+            "build": "exit 0",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
+            "dev": "exit 0",
             "lect": "node '../../ops/lect/lect.js'",
             "letspublish": "yarn publish || :",
             "lint": "eslint . --ext .js --ext .ts --fix",
@@ -2956,6 +3028,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -3046,8 +3120,10 @@ export const packageJSONData = {
             "homey": "cli.js"
         },
         "scripts": {
-            "build": "echo 'no build needed'",
-            "dev": "echo 'no build needed'",
+            "build": "exit 0",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
+            "dev": "exit 0",
             "lect": "node '../../ops/lect/lect.js'",
             "letspublish": "yarn publish || :",
             "lint": "eslint . --ext .js --ext .ts --fix",
@@ -3135,6 +3211,8 @@ export const packageJSONData = {
         },
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts && node './bin/helper.js'",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -3210,6 +3288,85 @@ export const packageJSONData = {
             "ranges-apply": "^6.2.11"
         }
     },
+    "eslint-plugin-test-num-tbc": {
+        "name": "eslint-plugin-test-num-tbc",
+        "version": "2.0.1",
+        "description": "ESLint plugin to update unit test numbers automatically",
+        "keywords": [
+            "automatically",
+            "eslint",
+            "eslint-plugin",
+            "eslintplugin",
+            "identifier",
+            "js-test-num",
+            "num",
+            "number",
+            "numbers",
+            "plugin",
+            "test",
+            "test-num",
+            "update",
+            "updater"
+        ],
+        "homepage": "https://codsen.com/os/eslint-plugin-test-num",
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/codsen/codsen.git",
+            "directory": "packages/eslint-plugin-test-num-tbc"
+        },
+        "license": "MIT",
+        "author": {
+            "name": "Roy Revelt",
+            "email": "roy@codsen.com",
+            "url": "https://codsen.com"
+        },
+        "type": "module",
+        "main": "dist/eslint-plugin-test-num.cjs.js",
+        "scripts": {
+            "build": "node '../../ops/scripts/esbuild.js'",
+            "cjs-off": "node '../../ops/scripts/cjs-off.js'",
+            "cjs-on": "node '../../ops/scripts/cjs-on.js'",
+            "dev": "DEV=true node '../../ops/scripts/esbuild.js'",
+            "devtest": "c8 yarn run unit && yarn run lint",
+            "dts": "exit 0",
+            "examples": "exit 0",
+            "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' --write",
+            "letspublish": "yarn publish || :",
+            "lint": "eslint . --ext .js --ext .ts --fix",
+            "perf": "echo 'skip perf'",
+            "prepare": "echo 'ready'",
+            "prettier": "prettier",
+            "prettier:format": "prettier --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern",
+            "pretest": "yarn run lect && yarn run build",
+            "test": "yarn run devtest",
+            "unit": "uvu test"
+        },
+        "engines": {
+            "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+        },
+        "c8": {
+            "check-coverage": true,
+            "exclude": [
+                "**/test/**/*.*"
+            ],
+            "lines": 100
+        },
+        "lect": {
+            "licence": {
+                "extras": [
+                    ""
+                ]
+            },
+            "various": {}
+        },
+        "dependencies": {
+            "@types/json-stringify-safe": "^5.0.0",
+            "json-stringify-safe": "^5.0.1",
+            "object-delete-key": "^3.2.15",
+            "object-path": "^0.11.8",
+            "string-left-right": "^5.1.6"
+        }
+    },
     "extract-search-index": {
         "name": "extract-search-index",
         "version": "1.1.24",
@@ -3248,6 +3405,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -3322,6 +3481,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -3396,8 +3557,10 @@ export const packageJSONData = {
             "gac": "cli.js"
         },
         "scripts": {
-            "build": "echo 'no build needed'",
-            "dev": "echo 'no build needed'",
+            "build": "exit 0",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
+            "dev": "exit 0",
             "lect": "node '../../ops/lect/lect.js'",
             "letspublish": "yarn publish || :",
             "lint": "eslint . --ext .js --ext .ts --fix",
@@ -3466,8 +3629,10 @@ export const packageJSONData = {
         "type": "module",
         "exports": "./index.js",
         "scripts": {
-            "build": "echo 'no build needed'",
-            "dev": "echo 'no build needed'",
+            "build": "exit 0",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
+            "dev": "exit 0",
             "lect": "node '../../ops/lect/lect.js'",
             "letspublish": "yarn publish || :",
             "lint": "eslint . --ext .js --ext .ts --fix",
@@ -3542,6 +3707,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -3610,6 +3777,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -3690,6 +3859,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -3766,6 +3937,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -3842,6 +4015,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -3922,6 +4097,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -4003,6 +4180,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -4077,6 +4256,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -4157,6 +4338,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -4240,6 +4423,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -4314,6 +4499,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -4389,6 +4576,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -4466,6 +4655,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -4542,8 +4733,10 @@ export const packageJSONData = {
             "jsrownum": "cli.js"
         },
         "scripts": {
-            "build": "echo 'no build needed'",
-            "dev": "echo 'no build needed'",
+            "build": "exit 0",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
+            "dev": "exit 0",
             "lect": "node '../../ops/lect/lect.js'",
             "letspublish": "yarn publish || :",
             "lint": "eslint . --ext .js --ext .ts --fix",
@@ -4615,8 +4808,10 @@ export const packageJSONData = {
             "jsoncomb": "cli.js"
         },
         "scripts": {
-            "build": "echo 'no build needed'",
-            "dev": "echo 'no build needed'",
+            "build": "exit 0",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
+            "dev": "exit 0",
             "lect": "node '../../ops/lect/lect.js'",
             "letspublish": "yarn publish || :",
             "lint": "eslint . --ext .js --ext .ts --fix",
@@ -4689,6 +4884,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -4777,8 +4974,10 @@ export const packageJSONData = {
             "sortjson": "cli.js"
         },
         "scripts": {
-            "build": "echo 'no build needed'",
-            "dev": "echo 'no build needed'",
+            "build": "exit 0",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
+            "dev": "exit 0",
             "lect": "node '../../ops/lect/lect.js'",
             "letspublish": "yarn publish || :",
             "lint": "eslint . --ext .js --ext .ts --fix",
@@ -4865,6 +5064,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -4950,6 +5151,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -5019,8 +5222,10 @@ export const packageJSONData = {
             "lernacleanchangelog": "cli.js"
         },
         "scripts": {
-            "build": "echo 'no build needed'",
-            "dev": "echo 'no build needed'",
+            "build": "exit 0",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
+            "dev": "exit 0",
             "lect": "node '../../ops/lect/lect.js'",
             "letspublish": "yarn publish || :",
             "lint": "eslint . --ext .js --ext .ts --fix",
@@ -5102,8 +5307,10 @@ export const packageJSONData = {
             "linkdep": "cli.js"
         },
         "scripts": {
-            "build": "echo 'no build needed'",
-            "dev": "echo 'no build needed'",
+            "build": "exit 0",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
+            "dev": "exit 0",
             "lect": "node '../../ops/lect/lect.js'",
             "letspublish": "yarn publish || :",
             "lint": "eslint . --ext .js --ext .ts --fix",
@@ -5170,6 +5377,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -5241,6 +5450,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -5316,6 +5527,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -5404,6 +5617,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -5487,6 +5702,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -5569,6 +5786,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -5649,6 +5868,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -5732,6 +5953,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -5781,7 +6004,7 @@ export const packageJSONData = {
             "@types/lodash.isfinite": "^3.3.7",
             "@types/lodash.isplainobject": "^4.0.7",
             "@types/lodash.uniq": "^4.5.7",
-            "deep-equal": "^2.0.5"
+            "deep-equal": "^2.1.0"
         }
     },
     "object-no-new-keys": {
@@ -5823,6 +6046,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -5894,6 +6119,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -5972,6 +6199,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -6045,6 +6274,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -6123,6 +6354,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -6198,6 +6431,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -6267,6 +6502,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -6337,6 +6574,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -6411,6 +6650,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -6484,6 +6725,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -6549,6 +6792,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -6627,6 +6872,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -6704,6 +6951,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -6777,6 +7026,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -6849,6 +7100,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -6921,6 +7174,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -6995,6 +7250,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -7067,6 +7324,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -7133,6 +7392,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -7213,6 +7474,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -7296,6 +7559,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -7378,6 +7643,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -7449,6 +7716,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -7518,6 +7787,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -7594,6 +7865,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -7668,6 +7941,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -7742,6 +8017,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -7811,6 +8088,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -7888,6 +8167,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -7959,6 +8240,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -8034,6 +8317,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -8109,6 +8394,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -8186,6 +8473,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -8263,6 +8552,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -8346,6 +8637,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -8422,6 +8715,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -8506,6 +8801,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -8576,6 +8873,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -8645,6 +8944,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -8719,6 +9020,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -8801,6 +9104,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -8884,6 +9189,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -8967,6 +9274,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -9048,6 +9357,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -9135,6 +9446,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -9201,6 +9514,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -9282,6 +9597,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -9357,6 +9674,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -9436,6 +9755,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -9520,6 +9841,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -9600,6 +9923,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -9682,6 +10007,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -9760,8 +10087,10 @@ export const packageJSONData = {
             "upd": "cli.js"
         },
         "scripts": {
-            "build": "echo 'no build needed'",
-            "dev": "echo 'no build needed'",
+            "build": "exit 0",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
+            "dev": "exit 0",
             "lect": "node '../../ops/lect/lect.js'",
             "letspublish": "yarn publish || :",
             "lint": "eslint . --ext .js --ext .ts --fix",
@@ -9798,7 +10127,7 @@ export const packageJSONData = {
             "p-map": "^5.5.0",
             "p-progress": "^0.6.0",
             "p-reduce": "^3.0.0",
-            "pacote": "^15.0.4",
+            "pacote": "^15.0.6",
             "update-notifier": "^6.0.2",
             "write-file-atomic": "^5.0.0"
         },
@@ -9844,6 +10173,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
@@ -9918,6 +10249,8 @@ export const packageJSONData = {
         "types": "types/index.d.ts",
         "scripts": {
             "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
             "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",

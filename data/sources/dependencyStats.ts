@@ -13,6 +13,7 @@ export const dependencyStats: DependencyStats = {
     "dependencies": {
         "@sindresorhus/is": 1,
         "@types/hast": 3,
+        "@types/json-stringify-safe": 1,
         "@types/lodash.iteratee": 1,
         "all-named-html-entities": 2,
         "ansi-diff-stream": 1,
@@ -64,6 +65,7 @@ export const dependencyStats: DependencyStats = {
         "isstream": 1,
         "js-row-num": 1,
         "json-comb-core": 1,
+        "json-stringify-safe": 1,
         "lerna-clean-changelogs": 1,
         "leven": 3,
         "line-column-mini": 1,
@@ -91,11 +93,12 @@ export const dependencyStats: DependencyStats = {
         "minimist": 1,
         "object-all-values-equal-to": 1,
         "object-boolean-combinations": 1,
+        "object-delete-key": 1,
         "object-fill-missing-keys": 1,
         "object-flatten-all-arrays": 1,
         "object-merge-advanced": 3,
         "object-no-new-keys": 1,
-        "object-path": 6,
+        "object-path": 7,
         "object-set-all-values-to": 1,
         "p-filter": 2,
         "p-map": 3,
@@ -132,7 +135,7 @@ export const dependencyStats: DependencyStats = {
         "string-find-heads-tails": 1,
         "string-find-malformed": 2,
         "string-fix-broken-named-entities": 2,
-        "string-left-right": 19,
+        "string-left-right": 20,
         "string-match-left-right": 10,
         "string-process-comma-separated": 2,
         "string-range-expander": 3,
@@ -233,7 +236,7 @@ export const dependencyStats: DependencyStats = {
             "p-reduce": 8
         },
         {
-            "object-path": 6
+            "object-path": 7
         },
         {
             "lodash.uniq": 5
@@ -244,7 +247,7 @@ export const dependencyStats: DependencyStats = {
     ],
     "top10OwnDeps": [
         {
-            "string-left-right": 19
+            "string-left-right": 20
         },
         {
             "ranges-apply": 16

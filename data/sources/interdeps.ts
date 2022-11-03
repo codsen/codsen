@@ -259,6 +259,14 @@ export const interdeps = [
         ]
     },
     {
+        "name": "eslint-plugin-test-num-tbc",
+        "size": 0,
+        "imports": [
+            "object-delete-key",
+            "string-left-right"
+        ]
+    },
+    {
         "name": "extract-search-index",
         "size": 1225,
         "imports": [
