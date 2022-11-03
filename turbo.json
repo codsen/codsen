@@ -1,32 +1,19 @@
 {
   "pipeline": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**",
-        "types/**",
-        ".next/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "types/**", ".next/**"]
     },
     "test": {
-      "dependsOn": [
-        "lect",
-        "build"
-      ],
+      "dependsOn": ["lect", "build"],
       "outputs": []
     },
     "lint": {
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "outputs": []
     },
     "unit": {
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "outputs": []
     },
     "dev": {
@@ -49,19 +36,21 @@
       "outputs": [],
       "cache": false
     },
+    "cjs-on": {
+      "outputs": [],
+      "cache": false
+    },
+    "cjs-off": {
+      "outputs": [],
+      "cache": false
+    },
     "examples": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["^build"],
       "outputs": [],
       "cache": false
     },
     "prepare": {
-      "dependsOn": [
-        "unit",
-        "examples",
-        "lint"
-      ]
+      "dependsOn": ["unit", "examples", "lint"]
     }
   }
 }

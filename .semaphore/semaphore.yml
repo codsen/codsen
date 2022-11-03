@@ -76,8 +76,12 @@ blocks:
             - git add data
             - git add README.md
             - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
+            # remove "type: module" from CJS packages
+            - yarn run cjs-on
             # publish packages to npm
             - yarn run ci:publish:all
+            # restore "type: module" in CJS packages
+            - yarn run cjs-off
             # push repo with all artifacts to git remote
             - git push
             - git push origin --tags
