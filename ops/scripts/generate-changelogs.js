@@ -20,6 +20,7 @@ import changelogTimeline from "remark-conventional-commit-changelog-timeline";
 import remarkTypography from "remark-typography";
 import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
+import { removeTbc } from "../lect/plugins/_util.js";
 
 // ------------------------------------------------------------------------------
 
@@ -68,7 +69,7 @@ for (let packageName of packageNames) {
     changelogContents = value;
 
     // if (packageName === "email-comb") {
-    gatheredChangelogs[packageName] = changelogContents;
+    gatheredChangelogs[removeTbc(packageName)] = changelogContents;
     // }
   } catch (error) {
     // nothing happens and we skip it
