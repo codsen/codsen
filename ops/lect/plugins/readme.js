@@ -2,6 +2,7 @@ import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
 import arrayiffy from "../../helpers/arrayiffy.js";
 import { esmBump } from "@codsen/data";
+import { removeTbc } from "./_util.js";
 
 const playgroundLibs = [
   "string-strip-html",
@@ -44,19 +45,19 @@ async function readme({ state, quickTakeExample, lectrc }) {
   }`;
 
   // start setting up the final readme's string:
-  let content = `<h1 align="center">${state.pack.name}</h1>
+  let content = `<h1 align="center">${removeTbc(state.pack.name)}</h1>
 
 <p align="center">${state.pack.description}</p>
 
 <p align="center">
-  <a href="https://codsen.com/os/${
+  <a href="https://codsen.com/os/${removeTbc(
     state.pack.name
-  }" rel="nofollow noreferrer noopener">
+  )}" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/-codsen-blue?style=flat-square" alt="page on codsen.com">
   </a>
-  <a href="https://www.npmjs.com/package/${
+  <a href="https://www.npmjs.com/package/${removeTbc(
     state.pack.name
-  }" rel="nofollow noreferrer noopener">
+  )}" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/-npm-blue?style=flat-square" alt="page on npm">
   </a>
   <a href="https://github.com/codsen/codsen/tree/main/packages/${
@@ -64,21 +65,23 @@ async function readme({ state, quickTakeExample, lectrc }) {
   }" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/-github-blue?style=flat-square" alt="page on github">
   </a>
-  <a href="https://npmcharts.com/compare/${
+  <a href="https://npmcharts.com/compare/${removeTbc(
     state.pack.name
-  }?interval=30" rel="nofollow noreferrer noopener" target="_blank">
-    <img src="https://img.shields.io/npm/dm/${
+  )}?interval=30" rel="nofollow noreferrer noopener" target="_blank">
+    <img src="https://img.shields.io/npm/dm/${removeTbc(
       state.pack.name
-    }.svg?style=flat-square" alt="Downloads per month">
+    )}.svg?style=flat-square" alt="Downloads per month">
   </a>
-  <a href="https://codsen.com/os/${
+  <a href="https://codsen.com/os/${removeTbc(
     state.pack.name
-  }/changelog" rel="nofollow noreferrer noopener">
+  )}/changelog" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/changelog-here-brightgreen?style=flat-square" alt="changelog">
   </a>
   <img src="https://img.shields.io/badge/licence-MIT-brightgreen.svg?style=flat-square" alt="MIT Licence">${
-    hasPlayground(state.pack.name)
-      ? `\n  <a href="https://codsen.com/os/${state.pack.name}/play"><img src="https://img.shields.io/badge/playground-here-brightgreen?style=flat-square" alt="playground"></a>`
+    hasPlayground(removeTbc(state.pack.name))
+      ? `\n  <a href="https://codsen.com/os/${removeTbc(
+          state.pack.name
+        )}/play"><img src="https://img.shields.io/badge/playground-here-brightgreen?style=flat-square" alt="playground"></a>`
       : ""
   }
 </p>
@@ -86,7 +89,9 @@ async function readme({ state, quickTakeExample, lectrc }) {
 ## Install${state.pack?.exports ? `\n\n${esmNotice}` : ""}
 
 \`\`\`bash
-npm i${!state.isRollup && state.isBin ? " -g" : ""} ${state.pack.name}
+npm i${!state.isRollup && state.isBin ? " -g" : ""} ${removeTbc(
+    state.pack.name
+  )}
 \`\`\`${
     !state.isRollup && state.pack.bin
       ? `\n\nThen, call it from the command line using ${
@@ -111,11 +116,13 @@ ${quickTakeExample}
   }
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/${
+Please [visit codsen.com](https://codsen.com/os/${removeTbc(
     state.pack.name
-  }/) for a full description of the API.${
-    hasPlayground(state.pack.name)
-      ? ` Also, try the [GUI playground](https://codsen.com/os/${state.pack.name}/play).`
+  )}/) for a full description of the API.${
+    hasPlayground(removeTbc(state.pack.name))
+      ? ` Also, try the [GUI playground](https://codsen.com/os/${removeTbc(
+          state.pack.name
+        )}/play).`
       : ""
   }
 
