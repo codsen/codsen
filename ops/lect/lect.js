@@ -52,7 +52,9 @@ state.isCJS = false;
 try {
   accessSync(path.join(state.root, "rollup.config.js"), F_OK);
   state.isRollup = true;
-} catch (e) {}
+} catch (e) {
+  //
+}
 
 // - Is it a CLI?
 state.isBin = objectPath.has(packageJson, "bin");
@@ -78,7 +80,7 @@ if (state.isRollup && !state.isCJS) {
     ).str;
   } catch (e) {
     console.log(
-      `069 lect: ${`\u001b[${31}m${`no examples`}\u001b[${39}m`}: ${e}`
+      `083 lect: ${`\u001b[${31}m${`no examples`}\u001b[${39}m`}: ${e}`
     );
   }
 }
@@ -106,6 +108,6 @@ await Promise.all([
   // TBC - write ./.semaphore/semaphore.yml
   // Promise.resolve(semaphore({ state })),
 ]).catch((e) => {
-  console.log(`097 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${e}`);
+  console.log(`111 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${e}`);
   process.exit(1);
 });

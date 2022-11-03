@@ -196,15 +196,17 @@
   "scripts": {
     "cjs": {
       "build": "node '../../ops/scripts/esbuild.js'",
+      "cjs-off": "node '../../ops/scripts/cjs-off.js'",
+      "cjs-on": "node '../../ops/scripts/cjs-on.js'",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js'",
-      "dts": "echo 'skip .d.ts'",
-      "examples": "echo 'skip examples check'",
+      "dts": "exit 0",
+      "examples": "exit 0",
       "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' --write",
       "letspublish": "yarn publish || :",
       "lint": "eslint . --ext .js --ext .ts --fix",
       "prettier": "prettier",
       "prettier:format": "prettier --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern",
-      "perf": "echo 'skip perf'",
+      "perf": "exit 0",
       "prepare": "echo 'ready'",
       "pretest": "yarn run lect && yarn run build",
       "test": "yarn run devtest",
@@ -212,8 +214,10 @@
       "unit": "uvu test"
     },
     "cli": {
-      "build": "echo 'no build needed'",
-      "dev": "echo 'no build needed'",
+      "build": "exit 0",
+      "cjs-off": "exit 0",
+      "cjs-on": "exit 0",
+      "dev": "exit 0",
       "lect": "node '../../ops/lect/lect.js'",
       "letspublish": "yarn publish || :",
       "lint": "eslint . --ext .js --ext .ts --fix",
@@ -224,6 +228,8 @@
     },
     "rollup": {
       "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
+      "cjs-off": "exit 0",
+      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
       "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
       "examples": "node '../../ops/scripts/run-examples.js'",

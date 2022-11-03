@@ -4,6 +4,7 @@ import sortPackageJson, { sortOrder } from "sort-package-json";
 import { dequal } from "dequal";
 import omit from "lodash.omit";
 import intersection from "lodash.intersection";
+import { removeTbc } from "./_util.js";
 
 function format(obj) {
   if (typeof obj !== "object") {
@@ -65,7 +66,7 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
     }
   }
 
-  content.homepage = `https://codsen.com/os/${content.name}`;
+  content.homepage = `https://codsen.com/os/${removeTbc(content.name)}`;
 
   // 3. write adhoc keys
   let lectKeysHardWrite = objectPath.get(lectrc, "package_keys.write") || {};

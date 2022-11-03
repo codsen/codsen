@@ -3,6 +3,7 @@ import objectPath from "object-path";
 import partition from "lodash.partition";
 import { pull } from "array-pull-all-with-glob";
 import writeFileAtomic from "write-file-atomic";
+import { removeTbc } from "./_util.js";
 
 // writes .npmignore
 async function npmIgnore({ state, lectrc }) {
@@ -74,13 +75,6 @@ async function npmIgnore({ state, lectrc }) {
 
   function get(p) {
     return objectPath.get(lectrc, p) || [];
-  }
-
-  function removeTbc(str) {
-    if (typeof str === "string" && str.endsWith("-tbc")) {
-      return str.slice(0, -4);
-    }
-    return str;
   }
 
   // function ask(regardingSomePath, what = "folder") {
