@@ -15,6 +15,7 @@ import git from "simple-git";
 import { sortAllObjectsSync } from "json-comb-core";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
 import { programClassification } from "@codsen/data";
+import { removeTbc } from "../lect/plugins/_util.js";
 
 const isCI = process?.env?.CI || false;
 
@@ -94,7 +95,7 @@ const splitListBlackList = [
 const exportedDefaults = {};
 
 const packageNames = readdirSync(path.resolve("packages")).filter((d) =>
-  statSync(path.join("packages", d)).isDirectory()
+  removeTbc(statSync(path.join("packages", d)).isDirectory())
 );
 
 for (let packageName of packageNames) {
@@ -102,48 +103,50 @@ for (let packageName of packageNames) {
     let packageJsonContents = JSON.parse(
       readFileSync(path.join("packages", packageName, "package.json"), "utf8")
     );
-    packageJSONData[packageName] = packageJsonContents;
+    let name = packageJsonContents.name;
+
+    packageJSONData[name] = packageJsonContents;
     if (!packageJsonContents.private) {
-      allPackages.push(packageJsonContents.name);
-      currentPackages.push(packageJsonContents.name);
+      allPackages.push(name);
+      currentPackages.push(name);
     }
     if (packageJsonContents.bin) {
-      cliPackages.push(packageJsonContents.name);
+      cliPackages.push(name);
     }
     if (packageJsonContents.exports && packageJsonContents.exports.script) {
-      scriptAvailable.push(packageJsonContents.name);
+      scriptAvailable.push(name);
     }
     // also present in ./ops/lect/lect.js:
     try {
-      accessSync(path.join("packages", packageName, "rollup.config.js"), F_OK);
+      accessSync(path.join("packages", name, "rollup.config.js"), F_OK);
       // 1. add program to the "programs" list
-      programPackages.push(packageJsonContents.name);
+      programPackages.push(name);
 
       // 2. read its type definitions file .d.ts and push into "allDTS[]"
       let dts = readFileSync(
-        path.join("packages", packageName, "types/index.d.ts"),
+        path.join("packages", name, "types/index.d.ts"),
         "utf8"
       ).trim();
-      allDTS[packageName] = dts;
+      allDTS[name] = dts;
 
       // 3. extract defaults if they're exported
       try {
         let { defaults } = await import(
-          `../../packages/${packageName}/dist/${packageName}.esm.js`
+          `../../packages/${name}/dist/${name}.esm.js`
         );
         if (defaults) {
-          exportedDefaults[packageName] = JSON.stringify(defaults, null, 2);
+          exportedDefaults[name] = JSON.stringify(defaults, null, 2);
         }
       } catch (e) {
         // nothing happens
       }
-      if (packageName === "detergent" && !exportedDefaults[packageName]) {
+      if (name === "detergent" && !exportedDefaults[name]) {
         try {
           let { opts } = await import(
-            `../../packages/${packageName}/dist/${packageName}.esm.js`
+            `../../packages/${name}/dist/${name}.esm.js`
           );
           if (opts) {
-            exportedDefaults[packageName] = JSON.stringify(opts, null, 4);
+            exportedDefaults[name] = JSON.stringify(opts, null, 4);
           }
         } catch (e) {
           // nothing happens
@@ -151,11 +154,11 @@ for (let packageName of packageNames) {
       }
 
       // 4. compile all examples, including Quick Take
-      examples[packageName] = readdirSync(
-        path.join("packages", packageName, "examples")
+      examples[name] = readdirSync(
+        path.join("packages", name, "examples")
       ).reduce((accumulatedObj, fileName) => {
         let exampleContents = readFileSync(
-          path.join("packages", packageName, "examples", fileName),
+          path.join("packages", name, "examples", fileName),
           "utf-8"
         );
         let title =
@@ -176,8 +179,8 @@ for (let packageName of packageNames) {
       // nothing happens
     }
 
-    if (!programPackages.includes(packageName) && !packageJsonContents.bin) {
-      specialPackages.push(packageJsonContents.name);
+    if (!programPackages.includes(name) && !packageJsonContents.bin) {
+      specialPackages.push(name);
     }
   } catch (error) {
     // nothing happens and we skip it
@@ -265,8 +268,11 @@ interface DependencyStats {
 const dependencyStats = { dependencies: {}, devDependencies: {} };
 
 for (let i = 0, len = allPackages.length; i < len; i++) {
-  let name = allPackages[i];
-  if (packagesOutsideMonorepo.includes(name) || deprecated.includes(name)) {
+  let packageName = removeTbc(allPackages[i]);
+  if (
+    packagesOutsideMonorepo.includes(packageName) ||
+    deprecated.includes(packageName)
+  ) {
     continue;
   }
 
@@ -274,24 +280,29 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
   //   `077 ======== processing ${`\u001b[${35}m${name}\u001b[${39}m`} ========`
   // );
   let pack = JSON.parse(
-    readFileSync(path.join("packages", name, "package.json"))
+    // beware, "packageName" has "-tbc" removed! That's why we use "allPackages[i]":
+    readFileSync(path.join("packages", allPackages[i], "package.json"))
   );
 
   let size = 0;
-  if (pack.bin && !programPackages.includes(name)) {
+  if (pack.bin && !programPackages.includes(packageName)) {
     // cli's
-    size = readFileSync(path.join("packages", name, `cli.js`)).length;
+    size = readFileSync(path.join("packages", packageName, `cli.js`)).length;
   } else {
     try {
       // normal libs
-      statSync(path.join("packages", name, "dist", `${name}.esm.js`));
+      statSync(
+        path.join("packages", packageName, "dist", `${packageName}.esm.js`)
+      );
       size = readFileSync(
-        path.join("packages", name, "dist", `${name}.esm.js`)
+        path.join("packages", packageName, "dist", `${packageName}.esm.js`)
       ).length;
     } catch (e) {
       try {
         // gulp plugins etc. don't have "dist/*"
-        size = readFileSync(path.join("packages", name, `index.js`)).length;
+        size = readFileSync(
+          path.join("packages", packageName, `index.js`)
+        ).length;
       } catch (error) {
         // let's ignore all other unique ad-hoc packages like perf-ref
       }
@@ -299,7 +310,7 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
   }
 
   interdep.push({
-    name,
+    name: packageName,
     size,
     imports: pack.dependencies
       ? Object.keys(pack.dependencies).filter((n) => allPackages.includes(n))

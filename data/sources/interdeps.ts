@@ -259,7 +259,7 @@ export const interdeps = [
         ]
     },
     {
-        "name": "eslint-plugin-test-num-tbc",
+        "name": "eslint-plugin-test-num",
         "size": 0,
         "imports": [
             "object-delete-key",
@@ -402,7 +402,7 @@ export const interdeps = [
     },
     {
         "name": "json-comb-core",
-        "size": 7284,
+        "size": 7282,
         "imports": [
             "object-fill-missing-keys",
             "object-flatten-all-arrays",
@@ -782,7 +782,7 @@ export const interdeps = [
     },
     {
         "name": "tsd-extract",
-        "size": 7585,
+        "size": 7583,
         "imports": [
             "string-left-right"
         ]

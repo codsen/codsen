@@ -9,6 +9,7 @@ import path from "path";
 
 const today = new Date();
 const year = today.getFullYear();
+import { removeTbc } from "../lect/plugins/_util.js";
 
 // READ ALL LIBS
 // =============
@@ -27,7 +28,8 @@ const allPackages = fs
           "utf8"
         )
       ).private
-  );
+  )
+  .map((p) => removeTbc(p));
 
 // ASSEMBLE THE TEMPLATE
 // =====================
