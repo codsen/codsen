@@ -1,6 +1,6 @@
 {
   "name": "tsd-extract",
-  "version": "0.7.9",
+  "version": "0.7.10",
   "description": "Extract any definition from TS definitions file string",
   "keywords": [
     "ts",
@@ -75,6 +75,6 @@
     }
   },
   "dependencies": {
-    "string-left-right": "^5.1.6"
+    "string-left-right": "^5.1.7"
   }
 }

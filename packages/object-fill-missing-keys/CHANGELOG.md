@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.5](https://github.com/codsen/codsen/compare/object-fill-missing-keys@10.0.4...object-fill-missing-keys@10.0.5) (2022-11-03)
+
+**Note:** Version bump only for package object-fill-missing-keys
+
 # 10.0.0 (2022-10-16)
 
 ### Fixed

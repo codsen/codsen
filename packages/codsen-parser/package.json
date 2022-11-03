@@ -1,6 +1,6 @@
 {
   "name": "codsen-parser",
-  "version": "0.13.16",
+  "version": "0.13.17",
   "description": "Parser aiming at broken or mixed code, especially HTML & CSS",
   "keywords": [
     "ast",
@@ -68,10 +68,10 @@
     "various": {}
   },
   "dependencies": {
-    "ast-monkey-util": "^2.1.5",
-    "codsen-tokenizer": "^6.1.16",
+    "ast-monkey-util": "^2.1.6",
+    "codsen-tokenizer": "^6.1.17",
     "object-path": "^0.11.8",
-    "string-find-malformed": "^3.2.6",
-    "string-left-right": "^5.1.6"
+    "string-find-malformed": "^3.2.7",
+    "string-left-right": "^5.1.7"
   }
 }

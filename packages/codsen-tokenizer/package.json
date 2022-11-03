@@ -1,6 +1,6 @@
 {
   "name": "codsen-tokenizer",
-  "version": "6.1.16",
+  "version": "6.1.17",
   "description": "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages",
   "keywords": [
     "ast",
@@ -72,18 +72,18 @@
     }
   },
   "dependencies": {
-    "html-all-known-attributes": "^5.1.5",
-    "is-char-suitable-for-html-attr-name": "^3.2.4",
-    "is-html-attribute-closing": "^3.1.6",
-    "is-html-tag-opening": "^3.1.6",
+    "html-all-known-attributes": "^5.1.6",
+    "is-char-suitable-for-html-attr-name": "^3.2.5",
+    "is-html-attribute-closing": "^3.1.7",
+    "is-html-tag-opening": "^3.1.7",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
-    "string-left-right": "^5.1.6",
-    "string-match-left-right": "^8.2.6"
+    "string-left-right": "^5.1.7",
+    "string-match-left-right": "^8.2.7"
   },
   "devDependencies": {
     "@types/lodash.clonedeep": "^4.5.7",
     "@types/lodash.isplainobject": "^4.0.7",
-    "ast-compare": "^3.2.15"
+    "ast-compare": "^3.2.16"
   }
 }

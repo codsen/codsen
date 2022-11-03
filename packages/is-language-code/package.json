@@ -1,6 +1,6 @@
 {
   "name": "is-language-code",
-  "version": "4.1.19",
+  "version": "4.1.20",
   "description": "Is given string a language code (as per IANA)",
   "keywords": [
     "check",
