@@ -1,5 +1,3 @@
-// declare let DEV: boolean;
-
 import { correctTestNum } from "./correct-test-num";
 
 export default {
