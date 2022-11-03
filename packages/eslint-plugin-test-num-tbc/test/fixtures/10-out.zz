@@ -1,0 +1,41 @@
+tap.test(
+  `01 - x`,
+  (t) => {
+    const gathered = [];
+    ct(`<a b="{% {% %}">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "01");
+    t.end();
+  }
+);
+
+tap.test(
+  `02 - y`,
+  (t) => {
+    const gathered = [];
+    ct(`<a b="{% {% %}">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "02");
+    t.end();
+  }
+);
+
+tap.test(
+  `03 - z`,
+  (t) => {
+    const gathered = [];
+    ct(`<a b="{% {% %}">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "03");
+    t.end();
+  }
+);

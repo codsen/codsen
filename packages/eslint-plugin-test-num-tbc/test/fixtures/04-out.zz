@@ -1,0 +1,14 @@
+tap.test(
+  `01 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - full stop`,
+  (t) => {
+    t.strictSame(
+      convertAll(`"'What.'" he said`, {
+        convertApostrophes: 1,
+        convertEntities: 0,
+      }).ranges,
+      [[1, 2]],
+      "01"
+    );
+    t.end();
+  }
+);

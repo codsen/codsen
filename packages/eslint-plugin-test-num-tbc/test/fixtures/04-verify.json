@@ -1,0 +1,17 @@
+[
+  {
+    "ruleId": "test-num/correct-test-num",
+    "severity": 2,
+    "message": "Update the test number.",
+    "line": 10,
+    "column": 7,
+    "nodeType": "Literal",
+    "messageId": "correctTestNum",
+    "endLine": 10,
+    "endColumn": 11,
+    "fix": {
+      "range": [255, 257],
+      "text": "01"
+    }
+  }
+]

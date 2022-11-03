@@ -1,0 +1,47 @@
+[
+  {
+    "ruleId": "test-num/correct-test-num",
+    "severity": 2,
+    "message": "Update the test number.",
+    "line": 5,
+    "column": 5,
+    "nodeType": "Literal",
+    "messageId": "correctTestNum",
+    "endLine": 5,
+    "endColumn": 9,
+    "fix": {
+      "range": [62, 64],
+      "text": "01.01"
+    }
+  },
+  {
+    "ruleId": "test-num/correct-test-num",
+    "severity": 2,
+    "message": "Update the test number.",
+    "line": 13,
+    "column": 5,
+    "nodeType": "TemplateElement",
+    "messageId": "correctTestNum",
+    "endLine": 13,
+    "endColumn": 9,
+    "fix": {
+      "range": [138, 140],
+      "text": "02.01"
+    }
+  },
+  {
+    "ruleId": "test-num/correct-test-num",
+    "severity": 2,
+    "message": "Update the test number.",
+    "line": 18,
+    "column": 5,
+    "nodeType": "Literal",
+    "messageId": "correctTestNum",
+    "endLine": 18,
+    "endColumn": 9,
+    "fix": {
+      "range": [186, 188],
+      "text": "02.02"
+    }
+  }
+]

@@ -1,0 +1,30 @@
+tap.test(`01 - a`, (t) => {
+  const k = linter.verify("c", d);
+  t.match(
+    k,
+    {
+      fixed: true,
+      output: read("05-out"),
+    },
+    `01.01`
+  );
+  const l = linter.verify("c", d);
+  t.match(
+    l,
+    {
+      fixed: true,
+      output: read("05-out"),
+    },
+    `01.02`
+  );
+  const m = linter.verify("c", d);
+  t.match(
+    m,
+    {
+      fixed: true,
+      output: read("05-out"),
+    },
+    `01.03`
+  );
+  t.end();
+});

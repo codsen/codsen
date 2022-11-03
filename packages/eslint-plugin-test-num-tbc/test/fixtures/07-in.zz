@@ -1,0 +1,7 @@
+tap.test(`01 - a`, (t) => {
+  t.is(true, true);
+  t.match(z, a);
+  t.strictSame([],[]);
+  t.true(true);
+  t.end();
+});

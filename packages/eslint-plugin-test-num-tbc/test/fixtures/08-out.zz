@@ -1,0 +1,20 @@
+tap.test(
+  `01 - ${`\u001b[${33}m${`adds message arg`}\u001b[${39}m`} - adds`,
+  (t) => {
+    // ensure "in" is fixed
+    const resIn = linter.verifyAndFix(read("07-in"), c);
+    t.match(
+      resIn,
+      {
+        fixed: true,
+        output: read("07-out"),
+      },
+      "01.01"
+    );
+
+    // ensure no more errors are raised about "out"
+    const messages = linter.verify(read("07-out"), c);
+    t.strictSame(messages, [], "01.02");
+    t.end();
+  }
+);

@@ -1,0 +1,47 @@
+tap.todo(
+  `01 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quotation marks: +entities`,
+  (t) => {
+    const str = 'this is "citation"';
+    const gatheredRes = []
+      .concat(
+        convertOne(str, {
+          from: 8,
+        })
+      )
+      .concat(
+        convertOne(str, {
+          from: 17,
+        })
+      );
+    t.strictSame(gatheredRes, [
+      [8, 9, "&ldquo;"],
+      [17, 18, "&rdquo;"],
+    ], "01");
+    t.end();
+  }
+);
+
+tap.todo(
+  `02 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quotation marks: -entities`,
+  (t) => {
+    const str = 'this is "citation"';
+    const gatheredRes = []
+      .concat(
+        convertOne(str, {
+          from: 8,
+          convertEntities: 0,
+        })
+      )
+      .concat(
+        convertOne(str, {
+          from: 17,
+          convertEntities: 0,
+        })
+      );
+    t.strictSame(gatheredRes, [
+      [8, 9, `${leftDoubleQuote}`],
+      [17, 18, `${rightDoubleQuote}`],
+    ], "02");
+    t.end();
+  }
+);

@@ -1,0 +1,62 @@
+[
+  {
+    "ruleId": "test-num/correct-test-num",
+    "severity": 2,
+    "message": "Update the test number.",
+    "line": 2,
+    "column": 3,
+    "nodeType": "ExpressionStatement",
+    "messageId": "correctTestNum",
+    "endLine": 2,
+    "endColumn": 20,
+    "fix": {
+      "range": [45, 45],
+      "text": ", \"01.00\""
+    }
+  },
+  {
+    "ruleId": "test-num/correct-test-num",
+    "severity": 2,
+    "message": "Update the test number.",
+    "line": 3,
+    "column": 3,
+    "nodeType": "ExpressionStatement",
+    "messageId": "correctTestNum",
+    "endLine": 3,
+    "endColumn": 17,
+    "fix": {
+      "range": [62, 62],
+      "text": ", \"01.00\""
+    }
+  },
+  {
+    "ruleId": "test-num/correct-test-num",
+    "severity": 2,
+    "message": "Update the test number.",
+    "line": 4,
+    "column": 3,
+    "nodeType": "ExpressionStatement",
+    "messageId": "correctTestNum",
+    "endLine": 4,
+    "endColumn": 23,
+    "fix": {
+      "range": [85, 85],
+      "text": ", \"01.00\""
+    }
+  },
+  {
+    "ruleId": "test-num/correct-test-num",
+    "severity": 2,
+    "message": "Update the test number.",
+    "line": 5,
+    "column": 3,
+    "nodeType": "ExpressionStatement",
+    "messageId": "correctTestNum",
+    "endLine": 5,
+    "endColumn": 16,
+    "fix": {
+      "range": [101, 101],
+      "text": ", \"01.00\""
+    }
+  }
+]

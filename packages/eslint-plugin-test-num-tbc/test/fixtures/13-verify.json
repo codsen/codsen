@@ -1,0 +1,32 @@
+[
+  {
+    "ruleId": "test-num/correct-test-num",
+    "severity": 2,
+    "message": "Update the test number.",
+    "line": 1,
+    "column": 11,
+    "nodeType": "TemplateElement",
+    "messageId": "correctTestNum",
+    "endLine": 1,
+    "endColumn": 19,
+    "fix": {
+      "range": [11, 13],
+      "text": "01"
+    }
+  },
+  {
+    "ruleId": "test-num/correct-test-num",
+    "severity": 2,
+    "message": "Update the test number.",
+    "line": 9,
+    "column": 11,
+    "nodeType": "TemplateElement",
+    "messageId": "correctTestNum",
+    "endLine": 9,
+    "endColumn": 19,
+    "fix": {
+      "range": [172, 174],
+      "text": "02"
+    }
+  }
+]

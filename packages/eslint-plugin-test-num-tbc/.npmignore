@@ -1,0 +1,11 @@
+# folders:
+.turbo
+coverage
+src
+test
+
+# files:
+.all-contributorsrc
+.npmignore
+.prettierignore
+dist/eslint-plugin-test-num.esm.js

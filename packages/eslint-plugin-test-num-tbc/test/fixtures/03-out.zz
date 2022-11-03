@@ -1,0 +1,46 @@
+tap.test(
+  `k`,
+  (t) => {
+    t.is(a, "b", "yo");
+    t.end();
+  }
+);
+
+tap.test(
+  "zzz",
+  (t) => {
+    t.true(c, "02.01");
+    t.true(d, 'rrr');
+    t.true(e, "02.03");
+    t.true(f, "02.04");
+    t.end();
+  }
+);
+
+tap.test(
+  `a0`,
+  (t) => {
+    t.true(d, `yoyoyo 00.11.01`);
+    t.is(e, "f", "03.02");
+    t.true(g, "");
+    t.is(h);
+    t.end();
+  }
+);
+
+tap.test(
+  `a0`,
+  (t) => {t.true();}
+);
+
+tap.test(
+  `a0`,
+  (t) => {t();}
+);
+
+tap.test(
+  `a0`,
+  (t) => {}
+);
+
+tap.test();

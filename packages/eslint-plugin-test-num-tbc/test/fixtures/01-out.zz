@@ -1,0 +1,23 @@
+tap.test(
+  `01 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - control`,
+  (t) => {
+    t.strictSame(fix("z &ang; y"), [], "01");
+    t.end();
+  }
+);
+
+t.test(
+  "02 - tralala",
+  (t) => {
+    t.strictSame(fix("z &angst; y"), [], "02 - tralala");
+    t.end();
+  }
+);
+
+tap.only(
+  `03 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, spaced`,
+  (t) => {
+    t.strictSame(fix("z &ang y"), [[2, 6, "&ang;"]], "03");
+    t.end();
+  }
+);
