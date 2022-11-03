@@ -686,7 +686,7 @@ const splitListMiscLibs = [
     "csv-sort",
     "csv-split-easy",
     "email-homey",
-    "eslint-plugin-test-num-tbc",
+    "eslint-plugin-test-num",
     "extract-search-index",
     "regex-empty-conditional-comments",
     "regex-is-jinja-nunjucks",

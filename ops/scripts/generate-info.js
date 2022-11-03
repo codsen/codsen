@@ -191,7 +191,8 @@ for (let packageName of packageNames) {
 // splits follow
 // -----------------------------------------------------------------------------
 
-for (let p of packageNames) {
+for (let packageName of packageNames) {
+  let p = removeTbc(packageName);
   if (!splitListBlackList.includes(p)) {
     if (programClassification.flagshipLibsList.includes(p)) {
       splitListFlagshipLibs.push(p);
