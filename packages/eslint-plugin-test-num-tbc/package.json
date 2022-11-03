@@ -33,7 +33,7 @@
   "type": "module",
   "main": "dist/eslint-plugin-test-num.cjs.js",
   "scripts": {
-    "build": "node '../../ops/scripts/esbuild.js'",
+    "build": "node '../../ops/scripts/esbuild.js' && node '../../ops/scripts/fix-cjs.js'",
     "cjs-off": "node '../../ops/scripts/cjs-off.js'",
     "cjs-on": "node '../../ops/scripts/cjs-on.js'",
     "dev": "DEV=true node '../../ops/scripts/esbuild.js'",
