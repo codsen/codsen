@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.1.5](https://github.com/codsen/codsen/compare/regex-is-jinja-nunjucks@3.1.4...regex-is-jinja-nunjucks@3.1.5) (2022-11-03)
-
-**Note:** Version bump only for package regex-is-jinja-nunjucks
-
 # 3.1.0 (2022-08-12)
 
 ### Features

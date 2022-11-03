@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.2.12](https://github.com/codsen/codsen/compare/is-media-descriptor@4.2.11...is-media-descriptor@4.2.12) (2022-11-03)
-
-**Note:** Version bump only for package is-media-descriptor
-
 # 4.2.0 (2022-08-12)
 
 ### Features
