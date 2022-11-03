@@ -2,9 +2,6 @@ export const packageJSONData = {
     "eslint-plugin-row-num": {
         "description": "ESLint plugin to update row numbers on each console.log"
     },
-    "eslint-plugin-test-num": {
-        "description": "ESLint plugin to update unit test numbers automatically"
-    },
     "perf-ref": {
         "description": "A mock program to normalise perf scores against it"
     },
@@ -3323,7 +3320,7 @@ export const packageJSONData = {
         "type": "module",
         "main": "dist/eslint-plugin-test-num.cjs.js",
         "scripts": {
-            "build": "node '../../ops/scripts/esbuild.js'",
+            "build": "node '../../ops/scripts/esbuild.js' && node '../../ops/scripts/fix-cjs.js'",
             "cjs-off": "node '../../ops/scripts/cjs-off.js'",
             "cjs-on": "node '../../ops/scripts/cjs-on.js'",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js'",
