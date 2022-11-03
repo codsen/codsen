@@ -25,9 +25,6 @@ const packagesOutsideMonorepoObj = {
   "eslint-plugin-row-num": {
     description: "ESLint plugin to update row numbers on each console.log",
   },
-  "eslint-plugin-test-num": {
-    description: "ESLint plugin to update unit test numbers automatically",
-  },
   "perf-ref": {
     description: "A mock program to normalise perf scores against it",
   },
