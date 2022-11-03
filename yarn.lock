@@ -4524,15 +4524,16 @@ eslint-plugin-row-num@^2.0.1:
     js-row-num "^4.1.0"
     json-stringify-safe "^5.0.1"
 
-eslint-plugin-test-num@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-test-num/-/eslint-plugin-test-num-2.0.1.tgz#36b04ef43e0c734f93bc5d4146f531fcbe071813"
-  integrity sha512-mApe6ayGi4dSOQthYmi8SI8PwNQeKlcuw5tHP6mf4Dy/a2ZgYcYJFbcmSe5Q9/3vS/sR3k0OCRYv6Qfp2GZVQQ==
+eslint-plugin-test-num@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-test-num/-/eslint-plugin-test-num-2.1.2.tgz#d7e0d4e88b91bd9d5e7184454b083877de7c28bc"
+  integrity sha512-ZEUVA3+FJlp6S1mpTncGRQ6i4UznaPPM6OwAPEel0sI44geqc+VMJdcciObceBZ8NMDJ1tcvOJn6lCApK1Dksg==
   dependencies:
-    "@babel/runtime" "^7.14.6"
+    "@types/json-stringify-safe" "^5.0.0"
     json-stringify-safe "^5.0.1"
-    object-path "^0.11.7"
-    string-left-right "^4.1.0"
+    object-delete-key "^3.2.16"
+    object-path "^0.11.8"
+    string-left-right "^5.1.7"
 
 eslint-scope@^5.1.1:
   version "5.1.1"
@@ -8724,7 +8725,7 @@ object-keys@^1.1.1:
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.1.1.tgz#1c47f272df277f3b1daf061677d9c82e2322c60e"
   integrity sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==
 
-object-path@^0.11.7, object-path@^0.11.8:
+object-path@^0.11.8:
   version "0.11.8"
   resolved "https://registry.yarnpkg.com/object-path/-/object-path-0.11.8.tgz#ed002c02bbdd0070b78a27455e8ae01fc14d4742"
   integrity sha512-YJjNZrlXJFM42wTBn6zgOJVar9KFJvzx6sTWDte8sWZF//cnjl0BxHNpfZx+ZffXX63A9q0b1zsFiBX4g4X5KA==
@@ -10416,15 +10417,6 @@ string-collapse-leading-whitespace@^5.1.0:
   dependencies:
     "@babel/runtime" "^7.14.0"
 
-string-left-right@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/string-left-right/-/string-left-right-4.1.0.tgz#d73c066720cb0a8cd2b6a61e3188d3458b22b776"
-  integrity sha512-ic/WvfNVUygWWsgg8akzSzp2NuttfhrdbH7QmSnda5b5RFmT9aCEDiS/M+gmTJwtFy7+b/2AXU4Z6vejcePQqQ==
-  dependencies:
-    "@babel/runtime" "^7.14.0"
-    lodash.clonedeep "^4.5.0"
-    lodash.isplainobject "^4.0.6"
-
 string-length@^4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/string-length/-/string-length-4.0.2.tgz#a8a8dc7bd5c1a82b9b3c8b87e125f66871b6e57a"
@@ -11641,7 +11633,7 @@ yargs-parser@^20.2.2, yargs-parser@^20.2.3, yargs-parser@^20.2.9:
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-20.2.9.tgz#2eb7dc3b0289718fc295f362753845c41a0c94ee"
   integrity sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==
 
-yargs-parser@^21.0.0, yargs-parser@^21.1.1:
+yargs-parser@^21.1.1:
   version "21.1.1"
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-21.1.1.tgz#9096bceebf990d21bb31fa9516e0ede294a77d35"
   integrity sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==
@@ -11660,9 +11652,9 @@ yargs@^16.2.0:
     yargs-parser "^20.2.2"
 
 yargs@^17.3.1, yargs@^17.4.0:
-  version "17.6.1"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.6.1.tgz#712508771045019cda059bc1ba3ae091aaa1402e"
-  integrity sha512-leBuCGrL4dAd6ispNOGsJlhd0uZ6Qehkbu/B9KCR+Pxa/NVdNwi+i31lo0buCm6XxhJQFshXCD0/evfV4xfoUg==
+  version "17.6.2"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.6.2.tgz#2e23f2944e976339a1ee00f18c77fedee8332541"
+  integrity sha512-1/9UrdHjDZc0eOU0HxOHoS78C69UD3JRMvzlJ7S79S2nTaWRA/whGCTV8o9e/N/1Va9YIV7Q4sOxD8VV4pCWOw==
   dependencies:
     cliui "^8.0.1"
     escalade "^3.1.1"
@@ -11670,7 +11662,7 @@ yargs@^17.3.1, yargs@^17.4.0:
     require-directory "^2.1.1"
     string-width "^4.2.3"
     y18n "^5.0.5"
-    yargs-parser "^21.0.0"
+    yargs-parser "^21.1.1"
 
 yn@3.1.1:
   version "3.1.1"
