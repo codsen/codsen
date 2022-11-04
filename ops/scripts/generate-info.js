@@ -105,7 +105,7 @@ for (let packageName of packageNames) {
     );
     let name = packageJsonContents.name;
 
-    packageJSONData[name] = packageJsonContents;
+    packageJSONData[removeTbc(name)] = packageJsonContents;
     if (!packageJsonContents.private) {
       allPackages.push(name);
       currentPackages.push(name);

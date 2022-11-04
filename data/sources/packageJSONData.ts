@@ -3285,7 +3285,7 @@ export const packageJSONData = {
             "ranges-apply": "^6.2.12"
         }
     },
-    "eslint-plugin-test-num-tbc": {
+    "eslint-plugin-test-num": {
         "name": "eslint-plugin-test-num-tbc",
         "version": "2.1.2",
         "description": "ESLint plugin to update unit test numbers automatically",
