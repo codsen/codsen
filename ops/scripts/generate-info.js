@@ -15,6 +15,7 @@ import git from "simple-git";
 import { sortAllObjectsSync } from "json-comb-core";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
 import { programClassification } from "@codsen/data";
+import { det } from "detergent";
 import { removeTbc } from "../lect/plugins/_util.js";
 
 const isCI = process?.env?.CI || false;
@@ -106,6 +107,27 @@ for (let packageName of packageNames) {
     let name = packageJsonContents.name;
 
     packageJSONData[removeTbc(name)] = packageJsonContents;
+    if (packageJSONData[removeTbc(name)].description) {
+      // fix typography
+      packageJSONData[removeTbc(name)].description = det(
+        packageJSONData[removeTbc(name)].description,
+        {
+          fixBrokenEntities: true,
+          removeWidows: false,
+          convertEntities: false,
+          convertDashes: true,
+          convertApostrophes: true,
+          replaceLineBreaks: false,
+          removeLineBreaks: false,
+          useXHTML: true,
+          dontEncodeNonLatin: true,
+          addMissingSpaces: false,
+          convertDotsToEllipsis: true,
+          stripHtml: false,
+        }
+      ).res;
+    }
+
     if (!packageJsonContents.private) {
       allPackages.push(name);
       currentPackages.push(name);

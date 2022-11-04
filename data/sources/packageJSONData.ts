@@ -721,7 +721,7 @@ export const packageJSONData = {
     "ast-deep-contains": {
         "name": "ast-deep-contains",
         "version": "4.2.6",
-        "description": "Like t.same assert on array of objects, where element order doesn't matter.",
+        "description": "Like t.same assert on array of objects, where element order doesn’t matter.",
         "keywords": [
             "array",
             "arrays",
@@ -909,7 +909,7 @@ export const packageJSONData = {
     "ast-get-object": {
         "name": "ast-get-object",
         "version": "3.1.16",
-        "description": "Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs",
+        "description": "Getter/setter for nested parsed HTML AST’s, querying objects by key/value pairs",
         "keywords": [
             "ast",
             "by",
@@ -1712,7 +1712,7 @@ export const packageJSONData = {
     "charcode-is-valid-xml-name-character": {
         "name": "charcode-is-valid-xml-name-character",
         "version": "2.2.6",
-        "description": "Does a given character belong to XML spec's \"Production 4 OR 4a\" type (is acceptable for XML element's name)",
+        "description": "Does a given character belong to XML spec’s “Production 4 OR 4a” type (is acceptable for XML element’s name)",
         "keywords": [
             "4",
             "4a",
@@ -3519,7 +3519,7 @@ export const packageJSONData = {
     "generate-atomic-css-cli": {
         "name": "generate-atomic-css-cli",
         "version": "2.2.12",
-        "description": "Generates and updates all HTML templates' atomic CSS",
+        "description": "Generates and updates all HTML templates’ atomic CSS",
         "keywords": [
             "atomic",
             "cli",
@@ -3596,7 +3596,7 @@ export const packageJSONData = {
     "gulp-email-remove-unused-css": {
         "name": "gulp-email-remove-unused-css",
         "version": "4.1.22",
-        "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
+        "description": "Gulp plugin to remove unused CSS classes/id’s from styles in HTML HEAD and inline within BODY",
         "keywords": [
             "body",
             "css",
@@ -4138,7 +4138,7 @@ export const packageJSONData = {
     "is-char-suitable-for-html-attr-name": {
         "name": "is-char-suitable-for-html-attr-name",
         "version": "3.2.5",
-        "description": "Is given character suitable to be in an HTML attribute's name?",
+        "description": "Is given character suitable to be in an HTML attribute’s name?",
         "keywords": [
             "attribute",
             "character",
@@ -6238,7 +6238,7 @@ export const packageJSONData = {
     "ranges-crop": {
         "name": "ranges-crop",
         "version": "5.2.12",
-        "description": "Crop array of ranges when they go beyond the reference string's length",
+        "description": "Crop array of ranges when they go beyond the reference string’s length",
         "keywords": [
             "array",
             "crop",
@@ -9481,7 +9481,7 @@ export const packageJSONData = {
     "string-truncator": {
         "name": "string-truncator",
         "version": "1.1.7",
-        "description": "Over-engineered string truncation for web UI's",
+        "description": "Over-engineered string truncation for web UI’s",
         "keywords": [
             "string",
             "limit",
