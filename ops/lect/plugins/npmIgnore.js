@@ -3,10 +3,13 @@ import objectPath from "object-path";
 import partition from "lodash.partition";
 import { pull } from "array-pull-all-with-glob";
 import writeFileAtomic from "write-file-atomic";
-import { removeTbc } from "./_util.js";
+// import { removeTbc } from "./_util.js";
 
 // writes .npmignore
-async function npmIgnore({ state, lectrc }) {
+async function npmIgnore({
+  // state,
+  lectrc,
+}) {
   // insurance
   if (typeof lectrc !== "object") {
     return Promise.reject(
@@ -154,9 +157,9 @@ async function npmIgnore({ state, lectrc }) {
   [badFiles, unclearFiles] = partition(filesList, (filesName) =>
     get("npmignore.badFiles").includes(filesName)
   );
-  if (state.isCJS) {
-    badFiles.push(`dist/${removeTbc(state.pack.name)}.esm.js`);
-  }
+  // if (state.isCJS) {
+  //   badFiles.push(`dist/${removeTbc(state.pack.name)}.esm.js`);
+  // }
   unclearFiles = pull(unclearFiles, get("npmignore.goodFiles"), {
     caseSensitive: false,
   });
