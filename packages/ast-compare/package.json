@@ -1,6 +1,6 @@
 {
   "name": "ast-compare",
-  "version": "3.2.16",
+  "version": "3.2.17",
   "description": "Compare anything: AST, objects, arrays, strings and nested thereof",
   "keywords": [
     "array",

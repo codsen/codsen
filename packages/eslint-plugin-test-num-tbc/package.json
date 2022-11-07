@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-test-num-tbc",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "ESLint plugin to update unit test numbers automatically",
   "keywords": [
     "automatically",
@@ -72,7 +72,7 @@
   "dependencies": {
     "@types/json-stringify-safe": "^5.0.0",
     "json-stringify-safe": "^5.0.1",
-    "object-delete-key": "^3.2.16",
+    "object-delete-key": "^3.2.17",
     "object-path": "^0.11.8",
     "string-left-right": "^5.1.7"
   }

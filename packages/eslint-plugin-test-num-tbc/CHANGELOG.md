@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/codsen/codsen/compare/eslint-plugin-test-num-tbc@2.1.2...eslint-plugin-test-num-tbc@2.2.0) (2022-11-07)
+
+### Features
+
+- fix tests on TS parser, wire up `configType: flat` in tests ([f2b3bef](https://github.com/codsen/codsen/commit/f2b3bef8faf3089cb38455ec7feb9c4b887dd8be))
+
 ## 2.1.0 (2022-11-03)
 
 ### Features
