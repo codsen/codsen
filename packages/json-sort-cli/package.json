@@ -70,7 +70,7 @@
     "meow": "^11.0.0",
     "p-filter": "^3.0.0",
     "p-reduce": "^3.0.0",
-    "sort-package-json": "^2.0.0",
+    "sort-package-json": "^2.1.0",
     "update-notifier": "^6.0.2"
   },
   "devDependencies": {

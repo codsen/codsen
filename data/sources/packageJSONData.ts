@@ -83,7 +83,7 @@ export const packageJSONData = {
             }
         },
         "devDependencies": {
-            "type-fest": "^3.1.0"
+            "type-fest": "^3.2.0"
         }
     },
     "array-group-str-omit-num-char": {
@@ -636,7 +636,7 @@ export const packageJSONData = {
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7",
             "@types/type-detect": "^4.0.1",
-            "type-fest": "^3.1.0"
+            "type-fest": "^3.2.0"
         }
     },
     "ast-contains-only-empty-space": {
@@ -5009,7 +5009,7 @@ export const packageJSONData = {
             "meow": "^11.0.0",
             "p-filter": "^3.0.0",
             "p-reduce": "^3.0.0",
-            "sort-package-json": "^2.0.0",
+            "sort-package-json": "^2.1.0",
             "update-notifier": "^6.0.2"
         },
         "devDependencies": {
