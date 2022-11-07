@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.2.44](https://github.com/codsen/codsen/compare/@codsen/data@0.2.43...@codsen/data@0.2.44) (2022-11-07)
-
-**Note:** Version bump only for package @codsen/data
-
 # 0.2.0 (2022-08-12)
 
 ### Features
