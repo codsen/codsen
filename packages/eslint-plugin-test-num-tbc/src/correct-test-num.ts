@@ -142,7 +142,7 @@ const create = (context: Obj): Obj => {
           DEV && console.log(`142`);
           let { start, end, value } =
             prep(source, {
-              offset: offset1 || offset2,
+              offset: Math.max(offset1, offset2),
               returnRangesOnly: true,
             }) || {};
           DEV &&
@@ -204,9 +204,9 @@ const create = (context: Obj): Obj => {
             );
 
           // default esprima parser
-          let offset1 = op.get(node, "expression.arguments.0.start");
+          let offset1 = op.get(node, "expression.arguments.0.start") || 0;
           // customised to @typescript-eslint/parser
-          let offset2 = op.get(node, "expression.arguments.0.range.0");
+          let offset2 = op.get(node, "expression.arguments.0.range.0") || 0;
           DEV &&
             console.log(
               `212 ${`\u001b[${33}m${`offset1`}\u001b[${39}m`} = ${JSON.stringify(
@@ -222,7 +222,7 @@ const create = (context: Obj): Obj => {
 
           let { start, end, value } =
             prep(node.expression.arguments[0].raw, {
-              offset: offset1 || offset2,
+              offset: Math.max(offset1, offset2),
               returnRangesOnly: true,
             }) || {};
 
@@ -398,24 +398,35 @@ const create = (context: Obj): Obj => {
                 ) {
                   DEV && console.log(`399 TemplateLiteral`);
                   rawPathToMsgArgValue = `expression.arguments.${messageArgsPositionWeWillAimFor}.quasis.0`;
+                  DEV &&
+                    console.log(
+                      `403 SET ${`\u001b[${33}m${`rawPathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
+                        rawPathToMsgArgValue,
+                        null,
+                        4
+                      )}`
+                    );
                   pathToMsgArgValue = op.get(
                     exprStatements[i],
                     `${rawPathToMsgArgValue}.value.raw`
                   );
+                  DEV &&
+                    console.log(
+                      `415  ************************** GETTING: ${stringify(
+                        exprStatements[i]
+                      )}\n\n\n${`${rawPathToMsgArgValue}.range.0`}`
+                    );
+
                   pathToMsgArgStart =
                     +(
                       op.get(
                         exprStatements[i],
-                        `${rawPathToMsgArgValue}.start`
+                        `${rawPathToMsgArgValue}.range.0`
                       ) || 0
                     ) + 1;
                   DEV &&
                     console.log(
-                      `414 SET ${`\u001b[${31}m${`███████████████████████████████████████`}\u001b[${39}m`} ${`\u001b[${33}m${`pathToMsgArgStart`}\u001b[${39}m`} = ${JSON.stringify(
-                        pathToMsgArgStart,
-                        null,
-                        4
-                      )}`
+                      `429 SET ${`\u001b[${31}m${`███████████████████████████████████████`}\u001b[${39}m`} ${`\u001b[${33}m${`pathToMsgArgStart`}\u001b[${39}m`} = ${pathToMsgArgStart}`
                     );
                   counter2 += 1;
                 } else if (
@@ -424,11 +435,11 @@ const create = (context: Obj): Obj => {
                     `expression.arguments.${messageArgsPositionWeWillAimFor}.type`
                   ) === "Literal"
                 ) {
-                  DEV && console.log(`427 Literal`);
+                  DEV && console.log(`438 Literal`);
                   rawPathToMsgArgValue = `expression.arguments.${messageArgsPositionWeWillAimFor}`;
                   DEV &&
                     console.log(
-                      `431 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`rawPathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
+                      `442 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`rawPathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
                         rawPathToMsgArgValue,
                         null,
                         4
@@ -440,7 +451,7 @@ const create = (context: Obj): Obj => {
                   );
                   DEV &&
                     console.log(
-                      `443 ${`\u001b[${33}m${`rawPathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
+                      `454 ${`\u001b[${33}m${`rawPathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
                         rawPathToMsgArgValue,
                         null,
                         4
@@ -448,7 +459,7 @@ const create = (context: Obj): Obj => {
                     );
                   DEV &&
                     console.log(
-                      `451 ███████████████████████████████████████ ${`\u001b[${33}m${`exprStatements[${i}]`}\u001b[${39}m`} = ${stringify(
+                      `462 ███████████████████████████████████████ ${`\u001b[${33}m${`exprStatements[${i}]`}\u001b[${39}m`} = ${stringify(
                         exprStatements[i]
                       )}`
                     );
@@ -468,7 +479,7 @@ const create = (context: Obj): Obj => {
 
                 DEV &&
                   console.log(
-                    `471 FIY, ${`\u001b[${33}m${`pathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
+                    `482 FIY, ${`\u001b[${33}m${`pathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
                       pathToMsgArgValue,
                       null,
                       4
@@ -488,20 +499,14 @@ const create = (context: Obj): Obj => {
                 if (!start || !end) {
                   DEV &&
                     console.log(
-                      `491 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
+                      `502 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
                     );
                   continue;
                 }
 
                 DEV &&
                   console.log(
-                    `498 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
-                  );
-                DEV &&
-                  console.log(
-                    `502 old prepped value: ${`\u001b[${35}m${
-                      prep(pathToMsgArgValue).value
-                    }\u001b[${39}m`}`
+                    `509 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
                   );
 
                 let newValue = getNewValue(
@@ -509,6 +514,14 @@ const create = (context: Obj): Obj => {
                   testOrderNumber,
                   counter2
                 );
+                DEV &&
+                  console.log(
+                    `519 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`newValue`}\u001b[${39}m`} = ${JSON.stringify(
+                      newValue,
+                      null,
+                      4
+                    )}`
+                  );
 
                 if (
                   rawPathToMsgArgValue &&
@@ -516,7 +529,7 @@ const create = (context: Obj): Obj => {
                 ) {
                   DEV &&
                     console.log(
-                      `519 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] (${wholeSourceStr.slice(
+                      `532 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] (${wholeSourceStr.slice(
                         start,
                         end
                       )}) to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
@@ -532,7 +545,7 @@ const create = (context: Obj): Obj => {
               } else {
                 DEV &&
                   console.log(
-                    `535 ${`\u001b[${31}m${`message argument missing from assertion!`}\u001b[${39}m`}`
+                    `548 ${`\u001b[${31}m${`message argument missing from assertion!`}\u001b[${39}m`}`
                   );
 
                 // First, find out at which index position should message
@@ -554,7 +567,7 @@ const create = (context: Obj): Obj => {
                   positionDecided = 2; // counting from zero, means 3rd in a row
                   DEV &&
                     console.log(
-                      `557 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
+                      `570 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
                         positionDecided,
                         null,
                         4
@@ -570,7 +583,7 @@ const create = (context: Obj): Obj => {
                   positionDecided = 1; // counting from zero, means 2nd in a row
                   DEV &&
                     console.log(
-                      `573 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
+                      `586 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
                         positionDecided,
                         null,
                         4
@@ -580,7 +593,7 @@ const create = (context: Obj): Obj => {
 
                 DEV &&
                   console.log(
-                    `583 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
+                    `596 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
                       positionDecided,
                       null,
                       4
@@ -590,7 +603,7 @@ const create = (context: Obj): Obj => {
                 if (positionDecided) {
                   DEV &&
                     console.log(
-                      `593 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${positionDecided}`
+                      `606 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${positionDecided}`
                     );
 
                   // insert the value
@@ -601,7 +614,7 @@ const create = (context: Obj): Obj => {
                       op.get(exprStatements[i], "expression.range.1")) - 1;
                   DEV &&
                     console.log(
-                      `604 ${`\u001b[${35}m${`██`}\u001b[${39}m`} positionToInsertAt = ${positionToInsertAt}`
+                      `617 ${`\u001b[${35}m${`██`}\u001b[${39}m`} positionToInsertAt = ${positionToInsertAt}`
                     );
 
                   let newValue = getNewValue(
@@ -620,7 +633,7 @@ const create = (context: Obj): Obj => {
 
                   DEV &&
                     console.log(
-                      `623 SET ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
+                      `636 SET ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
                         startIdx,
                         null,
                         4
@@ -645,8 +658,8 @@ const create = (context: Obj): Obj => {
 
                     wholeSourceStr.slice(startIdx, endIdx).includes(`\n`)
                   ) {
-                    DEV && console.log(`648 we've got a multi-line case`);
-                    DEV && console.log(`649 slice [${startIdx}, ${endIdx}]`);
+                    DEV && console.log(`661 we've got a multi-line case`);
+                    DEV && console.log(`662 slice [${startIdx}, ${endIdx}]`);
 
                     let frontalIndentation = Array.from(
                       wholeSourceStr.slice(startIdx, endIdx)
@@ -658,7 +671,7 @@ const create = (context: Obj): Obj => {
 
                   DEV &&
                     console.log(
-                      `661 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} ${JSON.stringify(
+                      `674 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} ${JSON.stringify(
                         [startIdx, endIdx, valueToInsert],
                         null,
                         4
@@ -678,14 +691,14 @@ const create = (context: Obj): Obj => {
                 } else {
                   DEV &&
                     console.log(
-                      `681 ${`\u001b[${31}m${`"positionDecided" not decided, skip!`}\u001b[${39}m`}`
+                      `694 ${`\u001b[${31}m${`"positionDecided" not decided, skip!`}\u001b[${39}m`}`
                     );
                 }
               }
             }
             DEV &&
               console.log(
-                `688 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+                `701 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
               );
           }
         }
@@ -695,7 +708,7 @@ const create = (context: Obj): Obj => {
         if (finalDigitChunk.value) {
           DEV &&
             console.log(
-              `698 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
+              `711 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
                 finalDigitChunk.start
               }, ${finalDigitChunk.end}] (${wholeSourceStr.slice(
                 finalDigitChunk.start,

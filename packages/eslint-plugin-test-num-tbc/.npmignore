@@ -8,4 +8,3 @@ test
 .all-contributorsrc
 .npmignore
 .prettierignore
-dist/eslint-plugin-test-num.esm.js

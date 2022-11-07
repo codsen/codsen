@@ -1,17 +1,17 @@
 import stringifySafe from "json-stringify-safe";
 import { deleteKey } from "object-delete-key";
 
-declare let DEV: boolean;
+// declare let DEV: boolean;
 
 interface Obj {
   [key: string]: any;
 }
 
 export function prep(str: string, originalOpts?: Obj): Obj {
-  DEV &&
-    console.log(
-      `013 prep(): ${`\u001b[${32}m${`RECEIVED`}\u001b[${39}m`} >>>${str}<<<`
-    );
+  // DEV &&
+  //   console.log(
+  //     `013 prep(): ${`\u001b[${32}m${`RECEIVED`}\u001b[${39}m`} >>>${str}<<<`
+  //   );
 
   if (typeof str !== "string" || !str.length) {
     return {};
@@ -21,31 +21,31 @@ export function prep(str: string, originalOpts?: Obj): Obj {
     offset: 0,
   };
   let opts = { ...defaults, ...originalOpts };
-  DEV &&
-    console.log(
-      `026 prep(): final ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-        opts,
-        null,
-        4
-      )}`
-    );
+  // DEV &&
+  //   console.log(
+  //     `026 prep(): final ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+  //       opts,
+  //       null,
+  //       4
+  //     )}`
+  //   );
 
   // So it's a non-empty string. Traverse!
 
   let digitsChunkStartsAt = null;
   let lastDigitAt: number | null = null;
 
-  DEV &&
-    console.log(
-      `040 prep(): ${`\u001b[${36}m${`traverse starts`}\u001b[${39}m`}`
-    );
+  // DEV &&
+  //   console.log(
+  //     `040 prep(): ${`\u001b[${36}m${`traverse starts`}\u001b[${39}m`}`
+  //   );
   for (let i = 0, len = str.length; i <= len; i++) {
-    DEV &&
-      console.log(
-        `045 prep(): ${`\u001b[${36}m${`======================== str[${i}]= ${`\u001b[${35}m${
-          str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
-        }\u001b[${39}m`} ========================`}\u001b[${39}m`}`
-      );
+    // DEV &&
+    //   console.log(
+    //     `045 prep(): ${`\u001b[${36}m${`======================== str[${i}]= ${`\u001b[${35}m${
+    //       str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
+    //     }\u001b[${39}m`} ========================`}\u001b[${39}m`}`
+    //   );
 
     // catch the end of the digit chunk
     // -------------------------------------------------------------------------
@@ -66,18 +66,18 @@ export function prep(str: string, originalOpts?: Obj): Obj {
         // normally it would be i < len)
         !str[i])
     ) {
-      DEV &&
-        console.log(
-          `071 prep(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}: "${JSON.stringify(
-            {
-              start: opts.offset + digitsChunkStartsAt,
-              end: opts.offset + lastDigitAt + 1,
-              value: str.slice(digitsChunkStartsAt, lastDigitAt + 1),
-            },
-            null,
-            4
-          )}"`
-        );
+      // DEV &&
+      //   console.log(
+      //     `071 prep(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}: "${JSON.stringify(
+      //       {
+      //         start: opts.offset + digitsChunkStartsAt,
+      //         end: opts.offset + lastDigitAt + 1,
+      //         value: str.slice(digitsChunkStartsAt, lastDigitAt + 1),
+      //       },
+      //       null,
+      //       4
+      //     )}"`
+      //   );
       return {
         start: opts.offset + digitsChunkStartsAt,
         end: opts.offset + lastDigitAt + 1,
@@ -97,14 +97,14 @@ export function prep(str: string, originalOpts?: Obj): Obj {
         digitsChunkStartsAt === null
       ) {
         digitsChunkStartsAt = i;
-        DEV &&
-          console.log(
-            `102 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`digitsChunkStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
-              digitsChunkStartsAt,
-              null,
-              4
-            )}`
-          );
+        // DEV &&
+        //   console.log(
+        //     `102 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`digitsChunkStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+        //       digitsChunkStartsAt,
+        //       null,
+        //       4
+        //     )}`
+        //   );
       }
     }
 
@@ -119,23 +119,23 @@ export function prep(str: string, originalOpts?: Obj): Obj {
       // it's not dot or digit or some kind of quote:
       !/[\d.'"`]/.test(str[i])
     ) {
-      DEV && console.log(`122 ${`\u001b[${31}m${`early bail`}\u001b[${39}m`}`);
+      // DEV && console.log(`122 ${`\u001b[${31}m${`early bail`}\u001b[${39}m`}`);
       return {};
     }
 
     // logging
     // -------------------------------------------------------------------------
 
-    DEV && console.log(" ");
-    DEV &&
-      console.log(
-        `${`\u001b[${90}m${`██ digitsChunkStartsAt = ${digitsChunkStartsAt}`}\u001b[${39}m`}`
-      );
-    DEV &&
-      console.log(
-        `${`\u001b[${90}m${`██ lastDigitAt = ${lastDigitAt}`}\u001b[${39}m`}`
-      );
-    DEV && console.log(`${`\u001b[${90}m${`----------------`}\u001b[${39}m`}`);
+    // DEV && console.log(" ");
+    // DEV &&
+    //   console.log(
+    //     `${`\u001b[${90}m${`██ digitsChunkStartsAt = ${digitsChunkStartsAt}`}\u001b[${39}m`}`
+    //   );
+    // DEV &&
+    //   console.log(
+    //     `${`\u001b[${90}m${`██ lastDigitAt = ${lastDigitAt}`}\u001b[${39}m`}`
+    //   );
+    // DEV && console.log(`${`\u001b[${90}m${`----------------`}\u001b[${39}m`}`);
   }
 
   return {};
