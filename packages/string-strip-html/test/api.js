@@ -78,7 +78,7 @@ test("09 - wrong opts", () => {
   }, /THROW_ID_05/);
 });
 
-test("10 - wrong opts.reportProgressFuncFrom", () => {
+test("10 - wrong reportProgressFuncFrom", () => {
   throws(() => {
     stripHtml("zzz", {
       reportProgressFunc: () => {},
@@ -86,14 +86,42 @@ test("10 - wrong opts.reportProgressFuncFrom", () => {
     });
   }, /THROW_ID_06/);
   throws(() => {
-    stripHtml("zzz", { reportProgressFuncFrom: true });
-  }, /THROW_ID_06/);
-  throws(() => {
-    stripHtml("zzz", { reportProgressFuncFrom: "0" });
+    stripHtml("zzz", {
+      reportProgressFunc: () => {},
+      reportProgressFuncFrom: "0",
+    });
   }, /THROW_ID_06/);
 });
 
-test("11 - wrong opts.reportProgressFuncTo", () => {
+test("11 - ignores wrong reportProgressFuncFrom when reportProgressFunc is off", () => {
+  equal(
+    stripHtml("zzz", {
+      reportProgressFunc: null,
+      reportProgressFuncFrom: true,
+    }),
+    {
+      result: "zzz",
+      ranges: null,
+      allTagLocations: [],
+      filteredTagLocations: [],
+    },
+    "11.01"
+  );
+  equal(
+    stripHtml("zzz", {
+      reportProgressFuncFrom: "0",
+    }),
+    {
+      result: "zzz",
+      ranges: null,
+      allTagLocations: [],
+      filteredTagLocations: [],
+    },
+    "11.02"
+  );
+});
+
+test("12 - wrong opts.reportProgressFuncTo", () => {
   throws(() => {
     stripHtml("zzz", {
       reportProgressFunc: () => {},
@@ -101,14 +129,42 @@ test("11 - wrong opts.reportProgressFuncTo", () => {
     });
   }, /THROW_ID_07/);
   throws(() => {
-    stripHtml("zzz", { reportProgressFuncTo: true });
-  }, /THROW_ID_07/);
-  throws(() => {
-    stripHtml("zzz", { reportProgressFuncTo: "100" });
+    stripHtml("zzz", {
+      reportProgressFunc: () => {},
+      reportProgressFuncTo: "100",
+    });
   }, /THROW_ID_07/);
 });
 
-test("12 - wrong opts.stripTogetherWithTheirContents", () => {
+test("13 - ignores wrong reportProgressFuncTo when reportProgressFunc is off", () => {
+  equal(
+    stripHtml("zzz", {
+      reportProgressFunc: null,
+      reportProgressFuncTo: true,
+    }),
+    {
+      result: "zzz",
+      ranges: null,
+      allTagLocations: [],
+      filteredTagLocations: [],
+    },
+    "13.01"
+  );
+  equal(
+    stripHtml("zzz", {
+      reportProgressFuncTo: "0",
+    }),
+    {
+      result: "zzz",
+      ranges: null,
+      allTagLocations: [],
+      filteredTagLocations: [],
+    },
+    "13.02"
+  );
+});
+
+test("14 - wrong opts.stripTogetherWithTheirContents", () => {
   throws(() => {
     stripHtml("zzz", { stripTogetherWithTheirContents: ["div", 1] });
   }, /THROW_ID_08/);
@@ -117,7 +173,7 @@ test("12 - wrong opts.stripTogetherWithTheirContents", () => {
 // legit input
 // -----------------------------------------------------------------------------
 
-test("13 - empty input", () => {
+test("15 - empty input", () => {
   let { result, ranges, allTagLocations, filteredTagLocations } = stripHtml("");
   equal(
     { result, ranges, allTagLocations, filteredTagLocations },
@@ -127,11 +183,11 @@ test("13 - empty input", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "13.01"
+    "15.01"
   );
 });
 
-test("14 - tabs only", () => {
+test("16 - tabs only", () => {
   let input = "\t\t\t";
   equal(
     stripHtml(input, {
@@ -143,7 +199,7 @@ test("14 - tabs only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "14.01"
+    "16.01"
   );
   equal(
     stripHtml(input, {
@@ -155,11 +211,11 @@ test("14 - tabs only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "14.02"
+    "16.02"
   );
 });
 
-test("15 - spaces only", () => {
+test("17 - spaces only", () => {
   let input = "   ";
   equal(
     stripHtml(input, {
@@ -171,7 +227,7 @@ test("15 - spaces only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "15.01"
+    "17.01"
   );
   equal(
     stripHtml(input, {
@@ -183,7 +239,7 @@ test("15 - spaces only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "15.02"
+    "17.02"
   );
 });
 
