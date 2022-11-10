@@ -76,7 +76,7 @@ export interface Opts {
   reportProgressFuncTo: number;
 }
 
-const defaults = {
+const defaults: Opts = {
   ignoreTags: [],
   ignoreTagsWithTheirContents: [],
   onlyStripTags: [],

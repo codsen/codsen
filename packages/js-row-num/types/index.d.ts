@@ -4,14 +4,21 @@ declare type Range =
 declare type Ranges = Range[] | null;
 
 declare const version: string;
+
 interface Opts {
   padStart: number;
   overrideRowNum: null | number;
-  returnRangesOnly: boolean;
   triggerKeywords: string[];
   extractedLogContentsWereGiven: boolean;
 }
 declare const defaults: Opts;
-declare function fixRowNums(str: string, opts?: Partial<Opts>): string | Ranges;
+interface Res {
+  log: {
+    timeTakenInMilliseconds: number;
+  };
+  result: string;
+  ranges: Ranges;
+}
+declare function fixRowNums(str: string, opts?: Partial<Opts>): Res;
 
-export { Opts, Ranges, defaults, fixRowNums, version };
+export { Opts, Ranges, Res, defaults, fixRowNums, version };

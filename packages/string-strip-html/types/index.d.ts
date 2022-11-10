@@ -54,25 +54,7 @@ interface Opts {
   reportProgressFuncFrom: number;
   reportProgressFuncTo: number;
 }
-declare const defaults: {
-  ignoreTags: never[];
-  ignoreTagsWithTheirContents: never[];
-  onlyStripTags: never[];
-  stripTogetherWithTheirContents: string[];
-  skipHtmlDecoding: boolean;
-  trimOnlySpaces: boolean;
-  stripRecognisedHTMLOnly: boolean;
-  dumpLinkHrefsNearby: {
-    enabled: boolean;
-    putOnNewLine: boolean;
-    wrapHeads: string;
-    wrapTails: string;
-  };
-  cb: null;
-  reportProgressFunc: null;
-  reportProgressFuncFrom: number;
-  reportProgressFuncTo: number;
-};
+declare const defaults: Opts;
 interface Res {
   log: {
     timeTakenInMilliseconds: number;
