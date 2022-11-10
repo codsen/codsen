@@ -3259,7 +3259,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     }
   }
 
-  let res: Res = {
+  return {
     log: {
       timeTakenInMilliseconds: Date.now() - start,
     },
@@ -3268,16 +3268,6 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     allTagLocations,
     filteredTagLocations,
   };
-  DEV &&
-    console.log(
-      `3273 ${`\u001b[${32}m${`FINAL RESULT`}\u001b[${39}m`} = ${JSON.stringify(
-        res,
-        null,
-        4
-      )}`
-    );
-
-  return res;
 }
 
 export { stripHtml, defaults, version };
