@@ -57,5 +57,4 @@ const res =
     .join("\n")
     .trim() + "\n";
 
-console.log(`${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${res}`);
 writeFileAtomic(path.resolve("package.json"), res);
