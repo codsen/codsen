@@ -4,7 +4,8 @@ import path from "path";
 import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import { read, sha256, verifyAndFix, verify } from "./_util.js";
+import { read, sha256 } from "../../../ops/helpers/linter.js";
+import { verifyAndFix, verify } from "./_util.js";
 
 // a single test for debugging
 // -----------------------------------------------------------------------------
@@ -40,31 +41,6 @@ const shas = {
     "452ec77818e692b99d7bd699186900a6deb01455b456078eca4805cc819ee325",
 };
 
-/*tttest(`01 - adds 3rd arg, one liners`, () => {
-  let testIn = read("12-in");
-  let testVerify = JSON.parse(read(`12-verify`, "json"));
-
-  let verified = verify(testIn, equal);
-  console.log(
-    `${`\u001b[${33}m${`verified`}\u001b[${39}m`} = ${JSON.stringify(
-      verified,
-      null,
-      4
-    )}`
-  );
-  equal(verified, testVerify, `verify() - 12`);
-
-  // ensure "in" is fixed
-  let res = verifyAndFix(testIn, equal);
-  equal(res.output, read("12-out"), "verifyAndFix output");
-  equal(res.fixed, true, "verifyAndFix fixed");
-  equal(res.messages, [], "verifyAndFix messages");
-
-  // ensure no more errors are raised about "out"
-  let messages = verify(read("12-out"), equal);
-  equal(messages, [], `01.05`);
-});*/
-
 // loop through all fixtures
 // -----------------------------------------------------------------------------
 
@@ -94,11 +70,11 @@ readdirSync(fixturesPath)
 
       // 2. run Linter.verify
 
-      let verified = verify(testIn, equal);
+      let verified = verify(testIn);
       equal(verified, testVerify, `#${testName} - verify() - ${testName}`);
 
       // 3. ensure "in" is fixed
-      let verifiedAndFixed = verifyAndFix(testIn, equal);
+      let verifiedAndFixed = verifyAndFix(testIn);
       equal(
         verifiedAndFixed.output,
         testOut,
@@ -116,7 +92,7 @@ readdirSync(fixturesPath)
       );
 
       // 4. ensure no more errors are raised about "out"
-      let messages = verify(testOut, equal);
+      let messages = verify(testOut);
       equal(messages, [], `#${testName} - verify() out - ${testName}`);
     });
   });
