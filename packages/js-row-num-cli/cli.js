@@ -80,12 +80,14 @@ function readUpdateAndWriteOverFile(oneOfPaths) {
         conf.triggerKeywords = arrayiffy(cli.flags.trigger);
       }
 
-      return write(oneOfPaths, fixRowNums(filesContent, conf)).then(() => {
-        log(
-          `${messagePrefix}${oneOfPaths} - ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`
-        );
-        return true;
-      });
+      return write(oneOfPaths, fixRowNums(filesContent, conf).result).then(
+        () => {
+          log(
+            `${messagePrefix}${oneOfPaths} - ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`
+          );
+          return true;
+        }
+      );
     })
     .catch((err) => {
       console.log(
