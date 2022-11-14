@@ -1,0 +1,4 @@
+dist/
+test/fixtures
+fixtures/
+*.json
