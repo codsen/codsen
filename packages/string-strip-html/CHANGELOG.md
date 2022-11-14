@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [12.0.0](https://github.com/codsen/codsen/compare/string-strip-html@11.6.20...string-strip-html@12.0.0) (2022-11-14)
+
+### Bug Fixes
+
+- improve throw messages and rebase few tests ([c60cbf5](https://github.com/codsen/codsen/commit/c60cbf58f69fd5e2c06665abf736e7c27e94c70c))
+
+### Features
+
+- return both string and ranges ([3932619](https://github.com/codsen/codsen/commit/39326195ebf97a2ef3e3b29534a08c2c8b115f9e))
+
+### BREAKING CHANGES
+
+- main function returns both string and ranges; output is not a plain object; no more
+  opts.returnRangesOnly
+
 ## [11.6.13](https://github.com/codsen/codsen/compare/string-strip-html@11.6.12...string-strip-html@11.6.13) (2022-10-13)
 
 ### Fixed

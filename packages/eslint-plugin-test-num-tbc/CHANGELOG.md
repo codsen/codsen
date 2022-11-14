@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/codsen/codsen/compare/eslint-plugin-test-num-tbc@2.2.0...eslint-plugin-test-num-tbc@2.2.1) (2022-11-14)
+
+**Note:** Version bump only for package eslint-plugin-test-num-tbc
+
 # [2.2.0](https://github.com/codsen/codsen/compare/eslint-plugin-test-num-tbc@2.1.2...eslint-plugin-test-num-tbc@2.2.0) (2022-11-07)
 
 ### Features

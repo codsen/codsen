@@ -1,6 +1,6 @@
 {
   "name": "js-row-num",
-  "version": "5.2.12",
+  "version": "6.0.0",
   "description": "Update all row numbers in all console.logs in JS code",
   "keywords": [
     "alt",

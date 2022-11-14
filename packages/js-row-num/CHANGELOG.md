@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0](https://github.com/codsen/codsen/compare/js-row-num@5.2.12...js-row-num@6.0.0) (2022-11-14)
+
+### Features
+
+- return both string and ranges ([3932619](https://github.com/codsen/codsen/commit/39326195ebf97a2ef3e3b29534a08c2c8b115f9e))
+
+### BREAKING CHANGES
+
+- main function returns both string and ranges; output is not a plain object; no more
+  opts.returnRangesOnly
+
 # 5.2.0 (2022-08-12)
 
 ### Features

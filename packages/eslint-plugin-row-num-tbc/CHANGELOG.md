@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 3.0.0 (2022-11-14)
+
+### Features
+
+- migrate to monorepo ([c3cd136](https://github.com/codsen/codsen/commit/c3cd1367cbcf5b2b872cff4ebf6cb57ac25be2f9))
+
+### BREAKING CHANGES
+
+- bumping major only for insurance; there are no API changes in this version
+
 ## 2.0.1 (2021-09-12)
 
 ### Bug Fixes
