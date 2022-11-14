@@ -259,6 +259,14 @@ export const interdeps = [
         ]
     },
     {
+        "name": "eslint-plugin-row-num",
+        "size": 0,
+        "imports": [
+            "js-row-num",
+            "object-delete-key"
+        ]
+    },
+    {
         "name": "eslint-plugin-test-num",
         "size": 0,
         "imports": [
@@ -379,7 +387,7 @@ export const interdeps = [
     },
     {
         "name": "js-row-num",
-        "size": 2637,
+        "size": 3087,
         "imports": [
             "ranges-apply",
             "ranges-push"
@@ -387,7 +395,7 @@ export const interdeps = [
     },
     {
         "name": "js-row-num-cli",
-        "size": 5476,
+        "size": 5509,
         "imports": [
             "arrayiffy-if-string",
             "js-row-num"
@@ -733,7 +741,7 @@ export const interdeps = [
     },
     {
         "name": "string-strip-html",
-        "size": 19906,
+        "size": 19966,
         "imports": [
             "ranges-apply",
             "ranges-push",

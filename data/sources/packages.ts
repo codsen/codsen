@@ -43,7 +43,7 @@ const all = [
     "email-remove-unused-css",
     "emlint",
     "eslint-on-airbnb-base-badge",
-    "eslint-plugin-row-num",
+    "eslint-plugin-row-num-tbc",
     "eslint-plugin-test-num-tbc",
     "extract-search-index",
     "fol",
@@ -190,7 +190,7 @@ const current = [
     "email-comb",
     "email-homey",
     "emlint",
-    "eslint-plugin-row-num",
+    "eslint-plugin-row-num-tbc",
     "eslint-plugin-test-num-tbc",
     "extract-search-index",
     "generate-atomic-css",
@@ -436,6 +436,7 @@ const programs = [
     "util-nonempty"
 ] as const;
 const special = [
+    "eslint-plugin-row-num-tbc",
     "eslint-plugin-test-num-tbc",
     "gulp-email-remove-unused-css"
 ] as const;
@@ -552,7 +553,6 @@ const script = [
     "util-nonempty"
 ] as const;
 const packagesOutsideMonorepo = [
-    "eslint-plugin-row-num",
     "lect",
     "perf-ref",
     "tsd-extract-noesm"
@@ -686,6 +686,7 @@ const splitListMiscLibs = [
     "csv-sort",
     "csv-split-easy",
     "email-homey",
+    "eslint-plugin-row-num",
     "eslint-plugin-test-num",
     "extract-search-index",
     "regex-empty-conditional-comments",
@@ -717,9 +718,9 @@ export const packages = {
     currentPackagesCount: 132,
     cliCount: 12,
     programsCount: 115,
-    specialCount: 2,
+    specialCount: 3,
     scriptCount: 110,
-    packagesOutsideMonorepoCount: 4,
+    packagesOutsideMonorepoCount: 3,
     splitListFlagshipLibs,
     splitListRangeLibs,
     splitListHtmlLibs,

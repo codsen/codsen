@@ -92,8 +92,8 @@ const create = (context: Obj): Obj => {
                   }
 
                   let preppedRanges = [
-                    offset + (ranges[0][0] as number),
-                    offset + (ranges[0][1] as number),
+                    offset + ranges[0][0],
+                    offset + ranges[0][1],
                   ];
                   DEV &&
                     console.log(
@@ -168,8 +168,8 @@ const create = (context: Obj): Obj => {
                   }
 
                   let preppedRanges = [
-                    offset + (ranges[0][0] as number),
-                    offset + (ranges[0][1] as number),
+                    offset + ranges[0][0],
+                    offset + ranges[0][1],
                   ];
                   DEV &&
                     console.log(

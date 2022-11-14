@@ -24,9 +24,6 @@ const isCI = process?.env?.CI || false;
 // =============
 
 const packagesOutsideMonorepoObj = {
-  "eslint-plugin-row-num": {
-    description: "ESLint plugin to update row numbers on each console.log",
-  },
   "perf-ref": {
     description: "A mock program to normalise perf scores against it",
   },
