@@ -387,7 +387,7 @@ export const interdeps = [
     },
     {
         "name": "js-row-num",
-        "size": 3087,
+        "size": 3085,
         "imports": [
             "ranges-apply",
             "ranges-push"
@@ -741,7 +741,7 @@ export const interdeps = [
     },
     {
         "name": "string-strip-html",
-        "size": 19966,
+        "size": 19964,
         "imports": [
             "ranges-apply",
             "ranges-push",

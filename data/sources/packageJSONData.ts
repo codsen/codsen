@@ -2580,7 +2580,7 @@ export const packageJSONData = {
     },
     "detergent": {
         "name": "detergent",
-        "version": "8.1.26",
+        "version": "8.1.27",
         "description": "Extract, clean, encode text and fix English style",
         "keywords": [
             "brief",
@@ -2666,8 +2666,8 @@ export const packageJSONData = {
             "string-fix-broken-named-entities": "^6.1.17",
             "string-left-right": "^5.1.7",
             "string-range-expander": "^3.1.6",
-            "string-remove-widows": "^3.1.25",
-            "string-strip-html": "^11.6.20",
+            "string-remove-widows": "^3.1.26",
+            "string-strip-html": "^12.0.0",
             "string-trim-spaces-only": "^4.1.6"
         },
         "devDependencies": {
@@ -3284,7 +3284,7 @@ export const packageJSONData = {
     },
     "eslint-plugin-row-num": {
         "name": "eslint-plugin-row-num-tbc",
-        "version": "2.0.1",
+        "version": "3.0.0",
         "description": "ESLint plugin to update row numbers on each console.log",
         "keywords": [
             "console",
@@ -3352,14 +3352,14 @@ export const packageJSONData = {
         },
         "dependencies": {
             "@types/json-stringify-safe": "^5.0.0",
-            "js-row-num": "^5.2.12",
+            "js-row-num": "^6.0.0",
             "json-stringify-safe": "^5.0.1",
             "object-delete-key": "^3.2.17"
         }
     },
     "eslint-plugin-test-num": {
         "name": "eslint-plugin-test-num-tbc",
-        "version": "2.2.0",
+        "version": "2.2.1",
         "description": "ESLint plugin to update unit test numbers automatically",
         "keywords": [
             "automatically",
@@ -3438,7 +3438,7 @@ export const packageJSONData = {
     },
     "extract-search-index": {
         "name": "extract-search-index",
-        "version": "1.1.25",
+        "version": "1.1.26",
         "description": "Extract unique keyword input list string for search",
         "keywords": [
             "string",
@@ -3509,7 +3509,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "string-strip-html": "^11.6.20",
+            "string-strip-html": "^12.0.0",
             "string-unfancy": "^5.1.6"
         }
     },
@@ -4685,7 +4685,7 @@ export const packageJSONData = {
     },
     "js-row-num": {
         "name": "js-row-num",
-        "version": "5.2.12",
+        "version": "6.0.0",
         "description": "Update all row numbers in all console.logs in JS code",
         "keywords": [
             "alt",
@@ -4765,7 +4765,7 @@ export const packageJSONData = {
     },
     "js-row-num-cli": {
         "name": "js-row-num-cli",
-        "version": "2.2.12",
+        "version": "2.2.13",
         "description": "Update all row numbers in all console.logs in given files",
         "keywords": [
             "automated",
@@ -4834,7 +4834,7 @@ export const packageJSONData = {
             "arrayiffy-if-string": "^4.1.6",
             "globby": "^13.1.2",
             "is-d": "^1.0.0",
-            "js-row-num": "^5.2.12",
+            "js-row-num": "^6.0.0",
             "meow": "^11.0.0",
             "p-reduce": "^3.0.0",
             "update-notifier": "^6.0.2",
@@ -7593,7 +7593,7 @@ export const packageJSONData = {
     },
     "remark-typography": {
         "name": "remark-typography",
-        "version": "0.4.8",
+        "version": "0.4.9",
         "description": "Remark plugin to fix typography: quotes, dashes and so on.",
         "keywords": [
             "unified",
@@ -7666,7 +7666,7 @@ export const packageJSONData = {
         "dependencies": {
             "@types/hast": "^2.3.4",
             "string-apostrophes": "^3.1.12",
-            "string-remove-widows": "^3.1.25",
+            "string-remove-widows": "^3.1.26",
             "unified": "^10.1.2",
             "unist-util-visit": "^4.1.1"
         },
@@ -9218,7 +9218,7 @@ export const packageJSONData = {
     },
     "string-remove-widows": {
         "name": "string-remove-widows",
-        "version": "3.1.25",
+        "version": "3.1.26",
         "description": "Helps to prevent widow words in a text",
         "keywords": [
             "against",
@@ -9299,7 +9299,7 @@ export const packageJSONData = {
             "string-match-left-right": "^8.2.7"
         },
         "devDependencies": {
-            "string-strip-html": "^11.6.20"
+            "string-strip-html": "^12.0.0"
         }
     },
     "string-split-by-whitespace": {
@@ -9386,7 +9386,7 @@ export const packageJSONData = {
     },
     "string-strip-html": {
         "name": "string-strip-html",
-        "version": "11.6.20",
+        "version": "12.0.0",
         "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
         "keywords": [
             "code",
@@ -9873,7 +9873,7 @@ export const packageJSONData = {
     },
     "tap-parse-string-to-object": {
         "name": "tap-parse-string-to-object",
-        "version": "3.1.6",
+        "version": "3.1.7",
         "description": "Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object",
         "keywords": [
             "contents",
