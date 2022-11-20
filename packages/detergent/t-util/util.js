@@ -1,22 +1,22 @@
 import clone from "lodash.clonedeep";
 import objectPath from "object-path";
-import { mixer } from "test-mixer";
+import { mixer as originalMixer } from "test-mixer";
 
 import { det as det1, opts as defaults } from "../dist/detergent.esm.js";
 
-const leftSingleQuote = "\u2018";
-const rightSingleQuote = "\u2019";
-const leftDoubleQuote = "\u201C";
-const rightDoubleQuote = "\u201D";
-const punctuationChars = [".", ",", ";", "!", "?"];
-const rawNDash = "\u2013";
-const rawMDash = "\u2014";
-const rawNbsp = "\u00A0";
-const rawEllipsis = "\u2026";
-const rawhairspace = "\u200A";
-const rawReplacementMark = "\uFFFD";
-const widowRegexTest = /. ./g;
-const latinAndNonNonLatinRanges = [
+export const leftSingleQuote = "\u2018";
+export const rightSingleQuote = "\u2019";
+export const leftDoubleQuote = "\u201C";
+export const rightDoubleQuote = "\u201D";
+export const punctuationChars = [".", ",", ";", "!", "?"];
+export const rawNDash = "\u2013";
+export const rawMDash = "\u2014";
+export const rawNbsp = "\u00A0";
+export const rawEllipsis = "\u2026";
+export const rawhairspace = "\u200A";
+export const rawReplacementMark = "\uFFFD";
+export const widowRegexTest = /. ./g;
+export const latinAndNonNonLatinRanges = [
   [0, 880],
   [887, 890],
   [894, 900],
@@ -374,11 +374,11 @@ const latinAndNonNonLatinRanges = [
   [178205, 194560],
 ];
 
-function mixerToExport(ref) {
-  return mixer(ref, defaults);
+export function mixer(ref) {
+  return originalMixer(ref, defaults);
 }
 
-// // set a different eol, cycle the list of eol's from "settledObj1Eol":
+// set a different eol, cycle the list of eol's from "settledObj1Eol":
 // const allEols = ["crlf", "cr", "lf"];
 // const obj1Idx = allEols.indexOf(settledObj1Eol);
 // objectPath.set(obj2, "eol", allEols[(obj1Idx + 1) % 3]);
@@ -386,7 +386,7 @@ function mixerToExport(ref) {
 // t is passed node-tap test instance
 // n is index number of a test - we need to run the resource-heavy applicable
 // test calculations only for the n === 0
-function det(ok, not, n, src, opts = {}) {
+export function det(ok, not, n, src, opts = {}) {
   if (!n) {
     let resolvedOpts = { ...defaults, ...opts };
     let tempObj = {};
@@ -641,21 +641,3 @@ function det(ok, not, n, src, opts = {}) {
   }
   return det1(src, opts);
 }
-
-export {
-  det,
-  mixerToExport as mixer,
-  leftSingleQuote,
-  rightSingleQuote,
-  leftDoubleQuote,
-  rightDoubleQuote,
-  punctuationChars,
-  rawNDash,
-  rawMDash,
-  rawNbsp,
-  rawEllipsis,
-  rawhairspace,
-  rawReplacementMark,
-  widowRegexTest,
-  latinAndNonNonLatinRanges,
-};
