@@ -18,7 +18,6 @@ const create = (context: Obj): Obj => {
       // console.log(stringify(node, null, 4));
       DEV && console.log(`019 node.callee.type = ${node.callee.type}`);
 
-      /* istanbul ignore else */
       if (
         node.callee &&
         node.callee.type === "MemberExpression" &&
@@ -32,7 +31,7 @@ const create = (context: Obj): Obj => {
         Array.isArray(node.arguments) &&
         node.arguments.length
       ) {
-        DEV && console.log(`035 ██ `);
+        DEV && console.log(`034 ██ `);
         node.arguments.forEach((arg) => {
           // console.log(
           //   `033 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${stringify(
@@ -55,7 +54,7 @@ const create = (context: Obj): Obj => {
           ) {
             DEV &&
               console.log(
-                `058 ${`\u001b[${32}m${`we have console.log with single or double quotes`}\u001b[${39}m`}`
+                `057 ${`\u001b[${32}m${`we have console.log with single or double quotes`}\u001b[${39}m`}`
               );
             context.report({
               node,
@@ -67,7 +66,7 @@ const create = (context: Obj): Obj => {
                 });
                 DEV &&
                   console.log(
-                    `070 ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+                    `069 ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
                       ranges,
                       null,
                       4
@@ -75,7 +74,7 @@ const create = (context: Obj): Obj => {
                   );
                 DEV &&
                   console.log(
-                    `078 ${`\u001b[${33}m${`arg.start`}\u001b[${39}m`} = ${JSON.stringify(
+                    `077 ${`\u001b[${33}m${`arg.start`}\u001b[${39}m`} = ${JSON.stringify(
                       arg.start,
                       null,
                       4
@@ -97,7 +96,7 @@ const create = (context: Obj): Obj => {
                   ];
                   DEV &&
                     console.log(
-                      `100 ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+                      `099 ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
                         preppedRanges,
                         null,
                         4
@@ -123,7 +122,7 @@ const create = (context: Obj): Obj => {
           ) {
             DEV &&
               console.log(
-                `126 ${`\u001b[${32}m${`we have console.log with backticks`}\u001b[${39}m`}`
+                `125 ${`\u001b[${32}m${`we have console.log with backticks`}\u001b[${39}m`}`
               );
             context.report({
               node,
@@ -135,7 +134,7 @@ const create = (context: Obj): Obj => {
                 });
                 DEV &&
                   console.log(
-                    `138 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+                    `137 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
                       ranges,
                       null,
                       4
@@ -145,7 +144,7 @@ const create = (context: Obj): Obj => {
                   let offset = (arg.quasis[0].range[0] as number) + 1;
                   DEV &&
                     console.log(
-                      `148 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`offset`}\u001b[${39}m`} = ${JSON.stringify(
+                      `147 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`offset`}\u001b[${39}m`} = ${JSON.stringify(
                         offset,
                         null,
                         4
@@ -159,7 +158,7 @@ const create = (context: Obj): Obj => {
                     offset = (arg.quasis[0].start as number) + 1; // compensate plus one for the back-tick
                     DEV &&
                       console.log(
-                        `162 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`offset`}\u001b[${39}m`} = ${JSON.stringify(
+                        `161 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`offset`}\u001b[${39}m`} = ${JSON.stringify(
                           offset,
                           null,
                           4
@@ -173,7 +172,7 @@ const create = (context: Obj): Obj => {
                   ];
                   DEV &&
                     console.log(
-                      `176 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+                      `175 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
                         preppedRanges,
                         null,
                         4
