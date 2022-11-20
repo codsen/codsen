@@ -1,16 +1,6 @@
-/* eslint-disable no-unused-vars */
-import fs from "fs";
-import crypto from "crypto";
 import { Linter } from "eslint";
 import { equal } from "uvu/assert";
 import * as parser from "@typescript-eslint/parser";
-
-export const read = (what, extension = "zz") => {
-  return fs.readFileSync(`test/fixtures/${what}.${extension}`, "utf8");
-};
-
-export const sha256 = (x) =>
-  crypto.createHash("sha256").update(x, "utf8").digest("hex");
 
 export function lint(method, str, config) {
   if (typeof str !== "string") {
@@ -22,8 +12,6 @@ export function lint(method, str, config) {
   let linter = new Linter({
     configType: "flat",
   });
-  let methodFn =
-    method === "verifyAndFix" ? linter.verifyAndFix : linter.verify;
 
   // ensure that TS parser's result is the same
   if (method === "verifyAndFix") {
