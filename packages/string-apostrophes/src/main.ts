@@ -1096,8 +1096,9 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
       )}`
     );
 
+  let len = str.length;
   // loop through the given string
-  for (let i = 0, len = str.length; i < len; i++) {
+  for (let i = 0; i < len; i++) {
     DEV &&
       console.log(
         `${`\u001b[${36}m${`=`.repeat(50)}\u001b[${39}m`} ${JSON.stringify(
@@ -1112,12 +1113,12 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
     // multiple times
     preppedOpts.from = i;
     preppedOpts.offsetBy = (idx) => {
-      DEV && console.log(`1115 ██ BUMP i from ${i} to ${i + idx}`);
+      DEV && console.log(`1116 ██ BUMP i from ${i} to ${i + idx}`);
       i += idx;
     };
     DEV &&
       console.log(
-        `1120 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+        `1121 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
           preppedOpts,
           null,
           4
@@ -1132,7 +1133,7 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
 
   DEV &&
     console.log(
-      `1135 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} FINAL ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+      `1136 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} FINAL ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
         ranges,
         null,
         4
@@ -1141,7 +1142,7 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
 
   DEV &&
     console.log(
-      `1144 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`
+      `1145 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`
     );
   DEV && console.log(" ");
   return {
