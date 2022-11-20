@@ -4,7 +4,7 @@ import path from "path";
 import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import { read, sha256 } from "../../../ops/helpers/linter.js";
+import { read, sha256, pad } from "../../../ops/helpers/common.js";
 import { verifyAndFix, verify } from "./_util.js";
 
 // a single test for debugging
@@ -39,6 +39,28 @@ const shas = {
     "41e28ad697f8fd15837f7cfe2a172c2f67aca83cb52d05c8f7d154ceceafe4ec",
   "14-in.zz":
     "452ec77818e692b99d7bd699186900a6deb01455b456078eca4805cc819ee325",
+  "15-in.zz":
+    "ccf6d8bc1d5bff5e4ccad92cd06247ce4ae4c24ba4bbdd88bd0db1a77f301b75",
+  "16-in.zz":
+    "db738cf4852a3a32ce234e7cc5332459e6666f39b39575420464c47b5357bbe0",
+  "17-in.zz":
+    "fb3777ab6d9ec359b1a5059375ca9a5ffdccf5f01cfe9b967d0a38094508585c",
+  "18-in.zz":
+    "4cf8a3f7305d76697a08fbe492732c735e5472e1e4db8331e9a9f534df1a9ea2",
+  "19-in.zz":
+    "cefe0e160e09534705e68d3d19e715e550f71d700341fc981d375c622639b4cd",
+  "20-in.zz":
+    "cd777571904056b9dc1179faad09c358280b25a89ad4d809ce8120b962c648e2",
+  "21-in.zz":
+    "2cf6d1ea83430cfe7c382f071328d079cd28bbe7d04f78c81c50cab7c1cc96b0",
+  "22-in.zz":
+    "6413be0bead4f1ef6924154fa9a39a6df2f0be463496087ff25b47a39e0b9a83",
+  "23-in.zz":
+    "9b8b7e156ae1baf9d610dd37c5c20c2bfea4be34f246cb7c5440cb537c890c44",
+  "24-in.zz":
+    "bf26c31ef91e7dc223f70607a8cbd97bf3724182a801ae6f1b35e4cfdec39324",
+  "25-in.zz":
+    "0ac762e0c28561f85dcb706627c91d1efcd393e9b48d0398b41d256391cd44e3",
 };
 
 // loop through all fixtures
@@ -50,7 +72,7 @@ readdirSync(fixturesPath)
     (f) => statSync(path.join(fixturesPath, f)).isFile() && f.endsWith("-in.zz")
   )
   .forEach((file, i) => {
-    test(`${String(i + 1).padStart(2, "0")} - ${file}`, () => {
+    test(`${file}`, () => {
       let testName = file.slice(0, -6);
       // console.log(`${`\u001b[${90}m${`test:`}\u001b[${39}m`} ${testName}`);
       let testIn = read(`${testName}-in`);
@@ -70,8 +92,8 @@ readdirSync(fixturesPath)
 
       // 2. run Linter.verify
 
-      let verified = verify(testIn);
-      equal(verified, testVerify, `#${testName} - verify() - ${testName}`);
+      // let verified = verify(testIn);
+      // equal(verified, testVerify, `#${testName} - verify() - ${testName}`);
 
       // 3. ensure "in" is fixed
       let verifiedAndFixed = verifyAndFix(testIn);

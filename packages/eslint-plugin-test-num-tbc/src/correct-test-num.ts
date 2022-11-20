@@ -27,14 +27,25 @@ const create = (context: Obj): Obj => {
       `${`\u001b[${33}m${`context`}\u001b[${39}m`} = ${stringify(context)}`
     );
 
+  let pad = (num: number) => {
+    return String(num + 1).padStart(2, "0");
+  };
+
+  let containsNumber = (something: unknown): boolean => {
+    if (typeof something !== "string" || !something.trim()) {
+      return false;
+    }
+    return /\d/.test(something);
+  };
+
   return {
     ExpressionStatement(node: Obj) {
-      DEV && console.log(`032 inside ExpressionStatement`);
+      DEV && console.log(`043 inside ExpressionStatement`);
 
       let wholeSourceStr = context.getSourceCode().getText();
       DEV &&
         console.log(
-          `037 ${`\u001b[${33}m${`wholeSourceStr`}\u001b[${39}m`} = ${stringify(
+          `048 ${`\u001b[${33}m${`wholeSourceStr`}\u001b[${39}m`} = ${stringify(
             wholeSourceStr
           )}`
         );
@@ -90,17 +101,17 @@ const create = (context: Obj): Obj => {
           DEV && console.log(" ");
           DEV &&
             console.log(
-              `093 ${`\u001b[${34}m${`██ TemplateLiteral caught!`}\u001b[${39}m`}`
+              `104 ${`\u001b[${34}m${`██ TemplateLiteral caught!`}\u001b[${39}m`}`
             );
 
           DEV &&
             console.log(
-              `098 node.expression.arguments[0].quasis[0].value.raw: "${node.expression.arguments[0].quasis[0].value.raw}"`
+              `109 node.expression.arguments[0].quasis[0].value.raw: "${node.expression.arguments[0].quasis[0].value.raw}"`
             );
 
           DEV &&
             console.log(
-              `103 ${`\u001b[${33}m${`op.get(node, "expression.arguments.0.quasis.0.start")`}\u001b[${39}m`} = ${JSON.stringify(
+              `114 ${`\u001b[${33}m${`op.get(node, "expression.arguments.0.quasis.0.start")`}\u001b[${39}m`} = ${JSON.stringify(
                 op.get(node, "expression.arguments.0.quasis.0.start"),
                 null,
                 4
@@ -115,7 +126,7 @@ const create = (context: Obj): Obj => {
             +(op.get(node, "expression.arguments.0.range.0") || 0) + 1;
           DEV &&
             console.log(
-              `118 ${`\u001b[${33}m${`offset1`}\u001b[${39}m`} = ${JSON.stringify(
+              `129 ${`\u001b[${33}m${`offset1`}\u001b[${39}m`} = ${JSON.stringify(
                 offset1,
                 null,
                 4
@@ -132,14 +143,14 @@ const create = (context: Obj): Obj => {
           );
           DEV &&
             console.log(
-              `135 ${`\u001b[${33}m${`source`}\u001b[${39}m`} = ${JSON.stringify(
+              `146 ${`\u001b[${33}m${`source`}\u001b[${39}m`} = ${JSON.stringify(
                 source,
                 null,
                 4
               )}`
             );
 
-          DEV && console.log(`142`);
+          DEV && console.log(`153`);
           let { start, end, value } =
             prep(source, {
               offset: Math.max(offset1, offset2),
@@ -147,7 +158,7 @@ const create = (context: Obj): Obj => {
             }) || {};
           DEV &&
             console.log(
-              `150 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`start`}\u001b[${39}m`} = ${start}; ${`\u001b[${33}m${`end`}\u001b[${39}m`} = ${end}; ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${value} --- ${`\u001b[${33}m${`testOrderNumber`}\u001b[${39}m`} = ${testOrderNumber}`
+              `161 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`start`}\u001b[${39}m`} = ${start}; ${`\u001b[${33}m${`end`}\u001b[${39}m`} = ${end}; ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${value} --- ${`\u001b[${33}m${`testOrderNumber`}\u001b[${39}m`} = ${testOrderNumber}`
             );
 
           if (
@@ -158,12 +169,7 @@ const create = (context: Obj): Obj => {
           ) {
             DEV &&
               console.log(
-                `161 ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${value}`
-              );
-            DEV && console.log("!==");
-            DEV &&
-              console.log(
-                `166 ${`\u001b[${33}m${`testOrderNumber`}\u001b[${39}m`} = ${testOrderNumber}`
+                `172 ${`\u001b[${33}m${`value`}\u001b[${39}m`} ${value} !== ${`\u001b[${33}m${`testOrderNumber`}\u001b[${39}m`} ${testOrderNumber}`
               );
 
             finalDigitChunk = {
@@ -175,7 +181,7 @@ const create = (context: Obj): Obj => {
 
             DEV &&
               console.log(
-                `178 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
+                `184 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${JSON.stringify(
                   {
                     start,
                     end,
@@ -200,7 +206,7 @@ const create = (context: Obj): Obj => {
           DEV && console.log(" ");
           DEV &&
             console.log(
-              `203 ${`\u001b[${34}m${`██ Literal caught!`}\u001b[${39}m`}`
+              `209 ${`\u001b[${34}m${`██ Literal caught!`}\u001b[${39}m`}`
             );
 
           // default esprima parser
@@ -209,7 +215,7 @@ const create = (context: Obj): Obj => {
           let offset2 = op.get(node, "expression.arguments.0.range.0") || 0;
           DEV &&
             console.log(
-              `212 ${`\u001b[${33}m${`offset1`}\u001b[${39}m`} = ${JSON.stringify(
+              `218 ${`\u001b[${33}m${`offset1`}\u001b[${39}m`} = ${JSON.stringify(
                 offset1,
                 null,
                 4
@@ -264,7 +270,7 @@ const create = (context: Obj): Obj => {
           DEV && console.log(" ");
           DEV &&
             console.log(
-              `267 ${`\u001b[${34}m${`██ Third arg literal found!`}\u001b[${39}m`}`
+              `273 ${`\u001b[${34}m${`██ Third arg literal found!`}\u001b[${39}m`}`
             );
 
           // let's find out, is it a single test clause or there are multiple
@@ -291,14 +297,13 @@ const create = (context: Obj): Obj => {
           }
 
           let exprStatements = op.get(node, "expression.arguments.1.body.body");
-          DEV &&
-            console.log(
-              `296 ABOUT TO LOOP ${`\u001b[${33}m${`exprStatements`}\u001b[${39}m`} = ${stringify(
-                exprStatements
-              )}`
-            );
+          // DEV &&
+          //   console.log(
+          //     `296 ABOUT TO LOOP ${`\u001b[${33}m${`exprStatements`}\u001b[${39}m`} = ${stringify(
+          //       exprStatements
+          //     )}`
+          //   );
 
-          /* istanbul ignore else */
           if (Array.isArray(exprStatements)) {
             // loop through expression statements, t.* calls inside the (t) => {...}
 
@@ -326,7 +331,7 @@ const create = (context: Obj): Obj => {
             for (let i = 0, len = exprStatements.length; i < len; i++) {
               DEV &&
                 console.log(
-                  `329 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+                  `334 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
                 );
               let assertsName =
                 // tap:
@@ -336,14 +341,14 @@ const create = (context: Obj): Obj => {
               if (!assertsName) {
                 DEV &&
                   console.log(
-                    `339 ${`\u001b[${31}m${`error - no assert name could be extracted! CONTINUE`}\u001b[${39}m`}`
+                    `344 ${`\u001b[${31}m${`error - no assert name could be extracted! CONTINUE`}\u001b[${39}m`}`
                   );
                 continue;
               }
 
               DEV &&
                 console.log(
-                  `346 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
+                  `351 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
                     messageIsThirdArg.has(assertsName)
                       ? "III"
                       : messageIsSecondArg.has(assertsName)
@@ -375,12 +380,12 @@ const create = (context: Obj): Obj => {
               if (messageArgsPositionWeWillAimFor) {
                 DEV &&
                   console.log(
-                    `378 ${`\u001b[${32}m${`message argument missing from assertion!`}\u001b[${39}m`}`
+                    `383 ${`\u001b[${32}m${`message argument missing from assertion!`}\u001b[${39}m`}`
                   );
 
                 DEV &&
                   console.log(
-                    `383 ${`\u001b[${90}m${`let's extract the value from "message" arg in assertion`}\u001b[${39}m`}`
+                    `388 ${`\u001b[${90}m${`let's extract the value from "message" arg in assertion`}\u001b[${39}m`}`
                   );
 
                 // the "message" can be Literal (single/double quotes) or
@@ -389,18 +394,18 @@ const create = (context: Obj): Obj => {
                 let pathToMsgArgValue;
                 let rawPathToMsgArgValue = ""; // used later in eslint reporting
                 let pathToMsgArgStart;
-                /* istanbul ignore else */
+
                 if (
                   op.get(
                     exprStatements[i],
                     `expression.arguments.${messageArgsPositionWeWillAimFor}.type`
                   ) === "TemplateLiteral"
                 ) {
-                  DEV && console.log(`399 TemplateLiteral`);
+                  DEV && console.log(`404 TemplateLiteral`);
                   rawPathToMsgArgValue = `expression.arguments.${messageArgsPositionWeWillAimFor}.quasis.0`;
                   DEV &&
                     console.log(
-                      `403 SET ${`\u001b[${33}m${`rawPathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
+                      `408 SET ${`\u001b[${33}m${`rawPathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
                         rawPathToMsgArgValue,
                         null,
                         4
@@ -412,7 +417,7 @@ const create = (context: Obj): Obj => {
                   );
                   DEV &&
                     console.log(
-                      `415  ************************** GETTING: ${stringify(
+                      `420  ************************** GETTING: ${stringify(
                         exprStatements[i]
                       )}\n\n\n${`${rawPathToMsgArgValue}.range.0`}`
                     );
@@ -426,7 +431,7 @@ const create = (context: Obj): Obj => {
                     ) + 1;
                   DEV &&
                     console.log(
-                      `429 SET ${`\u001b[${31}m${`███████████████████████████████████████`}\u001b[${39}m`} ${`\u001b[${33}m${`pathToMsgArgStart`}\u001b[${39}m`} = ${pathToMsgArgStart}`
+                      `434 SET ${`\u001b[${31}m${`███████████████████████████████████████`}\u001b[${39}m`} ${`\u001b[${33}m${`pathToMsgArgStart`}\u001b[${39}m`} = ${pathToMsgArgStart}`
                     );
                   counter2 += 1;
                 } else if (
@@ -435,11 +440,11 @@ const create = (context: Obj): Obj => {
                     `expression.arguments.${messageArgsPositionWeWillAimFor}.type`
                   ) === "Literal"
                 ) {
-                  DEV && console.log(`438 Literal`);
+                  DEV && console.log(`443 Literal`);
                   rawPathToMsgArgValue = `expression.arguments.${messageArgsPositionWeWillAimFor}`;
                   DEV &&
                     console.log(
-                      `442 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`rawPathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
+                      `447 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`rawPathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
                         rawPathToMsgArgValue,
                         null,
                         4
@@ -451,7 +456,7 @@ const create = (context: Obj): Obj => {
                   );
                   DEV &&
                     console.log(
-                      `454 ${`\u001b[${33}m${`rawPathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
+                      `459 ${`\u001b[${33}m${`rawPathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
                         rawPathToMsgArgValue,
                         null,
                         4
@@ -459,7 +464,7 @@ const create = (context: Obj): Obj => {
                     );
                   DEV &&
                     console.log(
-                      `462 ███████████████████████████████████████ ${`\u001b[${33}m${`exprStatements[${i}]`}\u001b[${39}m`} = ${stringify(
+                      `467 ███████████████████████████████████████ ${`\u001b[${33}m${`exprStatements[${i}]`}\u001b[${39}m`} = ${stringify(
                         exprStatements[i]
                       )}`
                     );
@@ -479,7 +484,7 @@ const create = (context: Obj): Obj => {
 
                 DEV &&
                   console.log(
-                    `482 FIY, ${`\u001b[${33}m${`pathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
+                    `487 FIY, ${`\u001b[${33}m${`pathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
                       pathToMsgArgValue,
                       null,
                       4
@@ -499,14 +504,14 @@ const create = (context: Obj): Obj => {
                 if (!start || !end) {
                   DEV &&
                     console.log(
-                      `502 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
+                      `507 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
                     );
                   continue;
                 }
 
                 DEV &&
                   console.log(
-                    `509 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
+                    `514 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
                   );
 
                 let newValue = getNewValue(
@@ -516,7 +521,7 @@ const create = (context: Obj): Obj => {
                 );
                 DEV &&
                   console.log(
-                    `519 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`newValue`}\u001b[${39}m`} = ${JSON.stringify(
+                    `524 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`newValue`}\u001b[${39}m`} = ${JSON.stringify(
                       newValue,
                       null,
                       4
@@ -529,10 +534,15 @@ const create = (context: Obj): Obj => {
                 ) {
                   DEV &&
                     console.log(
-                      `532 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] (${wholeSourceStr.slice(
+                      `537 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] (${wholeSourceStr.slice(
                         start,
                         end
                       )}) to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
+                    );
+
+                  DEV &&
+                    console.log(
+                      `545 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`}`
                     );
                   context.report({
                     node: op.get(exprStatements[i], rawPathToMsgArgValue),
@@ -545,7 +555,7 @@ const create = (context: Obj): Obj => {
               } else {
                 DEV &&
                   console.log(
-                    `548 ${`\u001b[${31}m${`message argument missing from assertion!`}\u001b[${39}m`}`
+                    `558 ${`\u001b[${31}m${`message argument missing from assertion!`}\u001b[${39}m`}`
                   );
 
                 // First, find out at which index position should message
@@ -567,7 +577,7 @@ const create = (context: Obj): Obj => {
                   positionDecided = 2; // counting from zero, means 3rd in a row
                   DEV &&
                     console.log(
-                      `570 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
+                      `580 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
                         positionDecided,
                         null,
                         4
@@ -583,7 +593,7 @@ const create = (context: Obj): Obj => {
                   positionDecided = 1; // counting from zero, means 2nd in a row
                   DEV &&
                     console.log(
-                      `586 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
+                      `596 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
                         positionDecided,
                         null,
                         4
@@ -593,7 +603,7 @@ const create = (context: Obj): Obj => {
 
                 DEV &&
                   console.log(
-                    `596 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
+                    `606 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
                       positionDecided,
                       null,
                       4
@@ -603,7 +613,7 @@ const create = (context: Obj): Obj => {
                 if (positionDecided) {
                   DEV &&
                     console.log(
-                      `606 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${positionDecided}`
+                      `616 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${positionDecided}`
                     );
 
                   // insert the value
@@ -614,7 +624,7 @@ const create = (context: Obj): Obj => {
                       op.get(exprStatements[i], "expression.range.1")) - 1;
                   DEV &&
                     console.log(
-                      `617 ${`\u001b[${35}m${`██`}\u001b[${39}m`} positionToInsertAt = ${positionToInsertAt}`
+                      `627 ${`\u001b[${35}m${`██`}\u001b[${39}m`} positionToInsertAt = ${positionToInsertAt}`
                     );
 
                   let newValue = getNewValue(
@@ -633,7 +643,7 @@ const create = (context: Obj): Obj => {
 
                   DEV &&
                     console.log(
-                      `636 SET ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
+                      `646 SET ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
                         startIdx,
                         null,
                         4
@@ -658,8 +668,8 @@ const create = (context: Obj): Obj => {
 
                     wholeSourceStr.slice(startIdx, endIdx).includes(`\n`)
                   ) {
-                    DEV && console.log(`661 we've got a multi-line case`);
-                    DEV && console.log(`662 slice [${startIdx}, ${endIdx}]`);
+                    DEV && console.log(`671 we've got a multi-line case`);
+                    DEV && console.log(`672 slice [${startIdx}, ${endIdx}]`);
 
                     let frontalIndentation = Array.from(
                       wholeSourceStr.slice(startIdx, endIdx)
@@ -671,13 +681,12 @@ const create = (context: Obj): Obj => {
 
                   DEV &&
                     console.log(
-                      `674 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} ${JSON.stringify(
+                      `684 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} ${JSON.stringify(
                         [startIdx, endIdx, valueToInsert],
                         null,
                         4
                       )}`
                     );
-
                   context.report({
                     node: exprStatements[i],
                     messageId: "correctTestNum",
@@ -691,14 +700,14 @@ const create = (context: Obj): Obj => {
                 } else {
                   DEV &&
                     console.log(
-                      `694 ${`\u001b[${31}m${`"positionDecided" not decided, skip!`}\u001b[${39}m`}`
+                      `703 ${`\u001b[${31}m${`"positionDecided" not decided, skip!`}\u001b[${39}m`}`
                     );
                 }
               }
             }
             DEV &&
               console.log(
-                `701 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+                `710 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
               );
           }
         }
@@ -708,7 +717,14 @@ const create = (context: Obj): Obj => {
         if (finalDigitChunk.value) {
           DEV &&
             console.log(
-              `711 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
+              `720 FIY, ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${stringify(
+                finalDigitChunk
+              )}`
+            );
+
+          DEV &&
+            console.log(
+              `727 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
                 finalDigitChunk.start
               }, ${finalDigitChunk.end}] (${wholeSourceStr.slice(
                 finalDigitChunk.start,
@@ -718,7 +734,7 @@ const create = (context: Obj): Obj => {
               }\u001b[${39}m`}"`
             );
 
-          /* istanbul ignore next */
+          DEV && console.log(`737 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`}`);
           context.report({
             messageId: "correctTestNum",
             node: finalDigitChunk.node || node,
@@ -730,7 +746,248 @@ const create = (context: Obj): Obj => {
             },
           });
         }
+
+        // TACKLE THE .FOREACH LOOP EQUAL()
+        // ████████████████████████████████
+
+        if (
+          op.get(node, "expression.type") === "CallExpression" &&
+          op.get(node, "expression.arguments.1.type") ===
+            "ArrowFunctionExpression" &&
+          Array.isArray(
+            op.get(
+              node,
+              "expression.arguments.1.body.body.0.expression.arguments.0.body.body"
+            )
+          )
+        ) {
+          DEV && console.log(`764 █████████████████here██████████████████████`);
+
+          op.get(
+            node,
+            "expression.arguments.1.body.body.0.expression.arguments.0.body.body"
+          )
+            .filter(
+              (node2: Obj) =>
+                node2.type === "ExpressionStatement" &&
+                op.get(node2, "expression.callee.name") === "equal"
+            )
+            .forEach((something: Obj, somethingIdx: number) => {
+              DEV &&
+                console.log(
+                  `778 ${`\u001b[${35}m${`----- something #${somethingIdx} -----`}\u001b[${39}m`}`
+                );
+
+              // 1. CASE #1 - double or single quotes:
+              // equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], "09.02");
+              //                                                 ^     ^
+              let thirdArgVal = op.get(
+                something,
+                "expression.arguments.2.value"
+              );
+              let rangePos = op.get(
+                something,
+                "expression.arguments.2.range"
+              ) as number[];
+              if (
+                typeof thirdArgVal === "string" &&
+                containsNumber(thirdArgVal[0]) &&
+                rangePos
+              ) {
+                DEV && console.log(`797`);
+                if (
+                  !thirdArgVal.includes(".${") &&
+                  thirdArgVal !== `${testOrderNumber}.${pad(somethingIdx)}`
+                ) {
+                  DEV &&
+                    console.log(
+                      `804 WRONG THIRD ARG! SHOULD BE ${`${testOrderNumber}.${pad(
+                        somethingIdx
+                      )}`}`
+                    );
+
+                  DEV &&
+                    console.log(
+                      `811 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`}`
+                    );
+                  context.report({
+                    messageId: "correctTestNum",
+                    node,
+                    fix: (fixerObj: Obj) => {
+                      return fixerObj.replaceTextRange(
+                        [rangePos[0] + 1, rangePos[1] - 1],
+                        `${testOrderNumber}.${pad(somethingIdx)}`
+                      );
+                    },
+                  });
+                } else if (thirdArgVal.includes(".${")) {
+                  DEV &&
+                    console.log(
+                      `826 ${`\u001b[${33}m${`thirdArgVal`}\u001b[${39}m`} = ${JSON.stringify(
+                        thirdArgVal,
+                        null,
+                        4
+                      )}`
+                    );
+
+                  let firstDotPosition = thirdArgVal.indexOf(".${");
+
+                  if (
+                    thirdArgVal.slice(0, firstDotPosition) !== testOrderNumber
+                  ) {
+                    DEV &&
+                      console.log(
+                        `840 ${thirdArgVal.slice(
+                          0,
+                          firstDotPosition
+                        )} !== ${testOrderNumber}`
+                      );
+
+                    DEV &&
+                      console.log(
+                        `848 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`}`
+                      );
+                    context.report({
+                      messageId: "correctTestNum",
+                      node,
+                      fix: (fixerObj: Obj) => {
+                        return fixerObj.replaceTextRange(
+                          [rangePos[0] + 1, rangePos[1] - 1],
+                          `${testOrderNumber}${thirdArgVal.slice(
+                            firstDotPosition
+                          )}`
+                        );
+                      },
+                    });
+                  }
+                }
+              }
+
+              // 2. CASE #1 - backticks:
+              // equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], `09.02`);
+              //                                                 ^     ^
+
+              let thirdArg = op.get(something, "expression.arguments.2");
+              DEV &&
+                console.log(
+                  `873 ${`\u001b[${33}m${`thirdArg`}\u001b[${39}m`} = ${stringify(
+                    thirdArg
+                  )}`
+                );
+
+              let thirdArgRangePos = op.get(
+                something,
+                "expression.arguments.2.range"
+              );
+
+              if (
+                thirdArg &&
+                thirdArgRangePos &&
+                thirdArg.type === "TemplateLiteral" &&
+                Array.isArray(thirdArg.quasis) &&
+                op.get(thirdArg, "quasis.0.type") === "TemplateElement"
+              ) {
+                DEV && console.log(`890 template literal found`);
+
+                let thirdArgRangeVal = op.get(thirdArg, "quasis.0.value.raw");
+                DEV &&
+                  console.log(
+                    `895 * ${`\u001b[${33}m${`thirdArgRangeVal`}\u001b[${39}m`} = ${JSON.stringify(
+                      thirdArgRangeVal,
+                      null,
+                      4
+                    )}`
+                  );
+
+                if (
+                  typeof thirdArgRangeVal === "string" &&
+                  containsNumber(thirdArgRangeVal[0])
+                ) {
+                  DEV && console.log(`906`);
+                  if (
+                    thirdArg.quasis.length === 1 &&
+                    thirdArgRangeVal !==
+                      `${testOrderNumber}.${pad(somethingIdx)}`
+                  ) {
+                    DEV && console.log(`912 single-value string literal`);
+                    // for example,
+                    // equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], `09`);
+                    //                                                  ^^
+                    DEV &&
+                      console.log(
+                        `918 ${thirdArgRangeVal} !== ${`${testOrderNumber}.${pad(
+                          somethingIdx
+                        )}`}`
+                      );
+                    DEV &&
+                      console.log(
+                        `924 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`}`
+                      );
+                    context.report({
+                      messageId: "correctTestNum",
+                      node,
+                      fix: (fixerObj: Obj) => {
+                        return fixerObj.replaceTextRange(
+                          [rangePos[0] + 1, rangePos[1] - 1],
+                          `${testOrderNumber}.${pad(somethingIdx)}`
+                        );
+                      },
+                    });
+                  } else if (
+                    thirdArg.quasis.length > 1 &&
+                    thirdArgRangeVal.includes(".")
+                  ) {
+                    DEV && console.log(`940 nested string literal`);
+                    // for example,
+                    // equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], `09.${pad(n)}`);
+                    //                                                  ^^^^^^^^^^^^
+                    //
+
+                    let firstDotPosition = thirdArgRangeVal.indexOf(".");
+
+                    if (
+                      thirdArgRangeVal.slice(0, firstDotPosition) !==
+                      testOrderNumber
+                    ) {
+                      DEV &&
+                        console.log(
+                          `954 ${thirdArgRangeVal.slice(
+                            0,
+                            firstDotPosition
+                          )} !== ${testOrderNumber}`
+                        );
+
+                      DEV &&
+                        console.log(
+                          `962 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`}`
+                        );
+                      context.report({
+                        messageId: "correctTestNum",
+                        node,
+                        fix: (fixerObj: Obj) => {
+                          return fixerObj.replaceTextRange(
+                            [
+                              rangePos[0] + 1,
+                              rangePos[0] + 2 + firstDotPosition,
+                            ],
+                            `${testOrderNumber}${thirdArgRangeVal.slice(
+                              firstDotPosition
+                            )}`
+                          );
+                        },
+                      });
+                    }
+                  }
+                }
+              }
+            });
+        }
       }
+
+      DEV &&
+        console.log(
+          `989 ${`\u001b[${32}m${`OUTER END`}\u001b[${39}m`} \n\n\n\n\n\n\n\n\n\n\n`
+        );
     },
   };
 };

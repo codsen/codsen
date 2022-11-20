@@ -1,0 +1,9 @@
+test(`01 - with entities`, () => {
+  mixer({
+    convertDashes: true,
+    convertEntities: true,
+    removeWidows: false,
+  }).forEach((opt, n) => {
+    equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], "a");
+  });
+});
