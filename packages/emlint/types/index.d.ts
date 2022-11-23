@@ -8,23 +8,17 @@ import {
   EspToken as EspToken$1,
 } from "codsen-tokenizer";
 
-declare type Range =
+type Range =
   | [from: number, to: number]
   | [from: number, to: number, whatToInsert: string | null | undefined];
-declare type Ranges = Range[] | null;
+type Ranges = Range[] | null;
 
 interface Selector {
   value: string;
   selectorStarts: number;
   selectorEnds: number;
 }
-declare type CommentKind =
-  | "simple"
-  | "only"
-  | "not"
-  | "block"
-  | "line"
-  | "simplet";
+type CommentKind = "simple" | "only" | "not" | "block" | "line" | "simplet";
 interface TextToken {
   type: "text";
   start: number;
@@ -52,7 +46,7 @@ interface EspToken {
   tailStartsAt: null | number;
   tailEndsAt: null | number;
 }
-declare type PropertyValueWithinArray = TextToken | EspToken;
+type PropertyValueWithinArray = TextToken | EspToken;
 interface Property {
   property: null | string;
   propertyStarts: null | number;
@@ -115,7 +109,7 @@ interface AtToken {
   rules: (RuleToken | TextToken)[];
 }
 
-declare type Severity$1 = 0 | 1 | 2;
+type Severity$1 = 0 | 1 | 2;
 interface ErrorObj {
   ruleId?: string;
   message: string;
@@ -133,7 +127,7 @@ interface TagTokenWithChildren extends TagToken {
 interface CommentTokenWithChildren extends CommentToken$1 {
   children: TokenWithChildren[];
 }
-declare type TokenWithChildren =
+type TokenWithChildren =
   | TextToken$1
   | TagTokenWithChildren
   | RuleToken$1
@@ -141,18 +135,12 @@ declare type TokenWithChildren =
   | CommentTokenWithChildren
   | EspToken$1;
 
-declare type JsonValue =
-  | string
-  | number
-  | boolean
-  | null
-  | JsonObject
-  | JsonArray;
-declare type JsonObject = {
+type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
+type JsonObject = {
   [Key in string]?: JsonValue;
 };
-declare type JsonArray = JsonValue[];
-declare type Severity = 0 | 1 | 2;
+type JsonArray = JsonValue[];
+type Severity = 0 | 1 | 2;
 interface RulesObj {
   [rulesName: string]: Severity | [severity: Severity, ...opts: string[]];
 }
@@ -162,16 +150,16 @@ interface Config {
 interface AttribSupplementedWithParent extends Attrib {
   parent: TagTokenWithChildren;
 }
-declare type TagEvent = (node: TagTokenWithChildren) => void;
-declare type AtEvent = (node: AtToken) => void;
-declare type RuleEvent = (node: RuleToken) => void;
-declare type TextEvent = (node: TextToken) => void;
-declare type EspEvent = (node: EspToken) => void;
-declare type CharacterEvent = ({ chr, i }: { chr: string; i: number }) => void;
-declare type AttributeEvent = (node: AttribSupplementedWithParent) => void;
-declare type AstEvent = (node: JsonObject[]) => void;
-declare type CommentEvent = (node: CommentTokenWithChildren) => void;
-declare type EntityEvent = (node: { idxFrom: number; idxTo: number }) => void;
+type TagEvent = (node: TagTokenWithChildren) => void;
+type AtEvent = (node: AtToken) => void;
+type RuleEvent = (node: RuleToken) => void;
+type TextEvent = (node: TextToken) => void;
+type EspEvent = (node: EspToken) => void;
+type CharacterEvent = ({ chr, i }: { chr: string; i: number }) => void;
+type AttributeEvent = (node: AttribSupplementedWithParent) => void;
+type AstEvent = (node: JsonObject[]) => void;
+type CommentEvent = (node: CommentTokenWithChildren) => void;
+type EntityEvent = (node: { idxFrom: number; idxTo: number }) => void;
 interface RuleObjType {
   tag?: TagEvent;
   at?: AtEvent;
@@ -209,8 +197,8 @@ declare class Linter extends TypedEmitter<RuleObjType> {
   report(obj: ErrorObjWithRuleId): void;
 }
 
-declare type IdxRange = [charFrom: number, charTo: number];
-declare type CbValues = (idxRange: IdxRange) => void;
+type IdxRange = [charFrom: number, charTo: number];
+type CbValues = (idxRange: IdxRange) => void;
 interface Opts$1 {
   offset: number;
   from: number;

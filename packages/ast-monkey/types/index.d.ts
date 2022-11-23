@@ -1,7 +1,7 @@
 export { traverse } from "ast-monkey-traverse";
 
 declare const version: string;
-declare type JsonValue =
+type JsonValue =
   | string
   | number
   | boolean
@@ -9,10 +9,10 @@ declare type JsonValue =
   | undefined
   | JsonObject
   | JsonArray;
-declare type JsonObject = {
+type JsonObject = {
   [Key in string]?: JsonValue;
 };
-declare type JsonArray = JsonValue[];
+type JsonArray = JsonValue[];
 interface Finding {
   index: number;
   key: string;

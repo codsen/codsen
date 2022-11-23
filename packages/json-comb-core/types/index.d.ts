@@ -26,7 +26,7 @@ declare function enforceKeysetSync(
   schemaKeyset: Obj,
   opts?: Partial<EnforceKeysetOpts>
 ): Obj;
-declare type NoNewKeysSyncRes = string[];
+type NoNewKeysSyncRes = string[];
 declare function noNewKeysSync(obj: Obj, schemaKeyset: Obj): NoNewKeysSyncRes;
 interface FindUnusedSyncOpts {
   placeholder: boolean;

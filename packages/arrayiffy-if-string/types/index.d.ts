@@ -1,4 +1,4 @@
-declare type StringInABox<T> = T extends ""
+type StringInABox<T> = T extends ""
   ? []
   : string extends T
   ? [] | [string]

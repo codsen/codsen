@@ -1,14 +1,14 @@
-declare type Range =
+type Range =
   | [from: number, to: number]
   | [from: number, to: number, whatToInsert: string | null | undefined];
-declare type Ranges = Range[] | null;
+type Ranges = Range[] | null;
 
 declare const version: string;
 interface Obj {
   i: number;
   val: any;
 }
-declare type Callback = (obj: Obj) => void;
+type Callback = (obj: Obj) => void;
 declare function rIterate(
   str: string,
   input: Ranges,
