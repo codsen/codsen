@@ -47,9 +47,9 @@ function detectIsItHTMLOrXhtml(input: string): Output {
   }
 
   // ELSE - detect by scanning single tags
-  let allImageTagsArr = input.match(imgTag) || [];
-  let allBRTagsArr = input.match(brTag) || [];
-  let allHRTagsArr = input.match(hrTag) || [];
+  let allImageTagsArr: string[] = input.match(imgTag) || [];
+  let allBRTagsArr: string[] = input.match(brTag) || [];
+  let allHRTagsArr: string[] = input.match(hrTag) || [];
 
   // join all found tags
   let allConcernedTagsArr = allImageTagsArr
