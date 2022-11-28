@@ -80,7 +80,7 @@ export const packageJSONData = {
             }
         },
         "devDependencies": {
-            "type-fest": "^3.2.0"
+            "type-fest": "^3.3.0"
         }
     },
     "array-group-str-omit-num-char": {
@@ -633,7 +633,7 @@ export const packageJSONData = {
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7",
             "@types/type-detect": "^4.0.1",
-            "type-fest": "^3.2.0"
+            "type-fest": "^3.3.0"
         }
     },
     "ast-contains-only-empty-space": {
@@ -9953,7 +9953,7 @@ export const packageJSONData = {
         "devDependencies": {
             "@types/isstream": "^0.1.0",
             "@types/split2": "^3.2.1",
-            "@types/through2": "^2.0.37",
+            "@types/through2": "^2.0.38",
             "fs-extra": "^10.1.0"
         }
     },
