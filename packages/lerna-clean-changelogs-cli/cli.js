@@ -151,7 +151,9 @@ if (isArr(cli.input) && cli.input.length) {
     });
   });
 } else {
-  thePromise = globby(["**/changelog.md", "!**/node_modules/**"]);
+  thePromise = globby(["**/changelog.md", "!**/node_modules/**"], {
+    caseSensitiveMatch: false,
+  });
 }
 
 // ASYNCHRONOUS PART:
