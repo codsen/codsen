@@ -17,17 +17,22 @@ const pkgName = path.resolve(".").split("/").pop();
 const pkg = fs.readFileSync(path.resolve("package.json"), "utf8");
 if (!pkg) {
   throw new Error(
-    `ops/scripts/cjs-on.js: couldn't read ${path.resolve("package.json")}`
+    `ops/scripts/cjs-off.js: couldn't read ${path.resolve("package.json")}`
   );
 }
-if (!pkgName.includes("-tbc")) {
+if (!pkgName) {
   throw new Error(
-    `ops/scripts/cjs-on.js: package's folder name (${pkgName}) is missing "-tbc"!`
+    `ops/scripts/cjs-off.js: something went wrong! pkgName is falsy!`
+  );
+}
+if (pkgName.includes("eslint") && !pkgName.includes("-tbc")) {
+  throw new Error(
+    `ops/scripts/cjs-off.js: package's folder name (${pkgName}) is missing "-tbc"!`
   );
 }
 if (pkg.includes(`"main": "${pkgName}"`)) {
   throw new Error(
-    `ops/scripts/cjs-on.js: ${pkgName} package.json already contains "-tbc" values!`
+    `ops/scripts/cjs-off.js: ${pkgName} package.json already contains "-tbc" values!`
   );
 }
 
@@ -38,6 +43,7 @@ const res =
     .map((row) => {
       // 1. add "-tbc" part to every reference to package's name
       if (
+        pkgName.includes("eslint") &&
         row.includes(removeTbc(pkgName)) &&
         !row.includes(`"homepage"`) &&
         !row.includes(`"main"`) &&

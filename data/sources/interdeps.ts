@@ -797,7 +797,7 @@ export const interdeps = [
     },
     {
         "name": "update-versions",
-        "size": 15230,
+        "size": 15654,
         "imports": [
             "edit-package-json"
         ]

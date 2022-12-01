@@ -25,6 +25,6 @@ const res =
     .split(/(\r?\n)/)
     .filter((row) => row.trim() && !row.includes(MAIN_EXPORTS))
     .join("\n")
-    .trim() + "\n\nmodule.exports = __toCommonJS(main_default);\n";
+    .trim() + "\n\nmodule.exports = main_default;\n";
 
 writeFileAtomic(`dist/${removeTbc(pkgName)}.cjs.js`, res);

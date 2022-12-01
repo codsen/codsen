@@ -354,6 +354,8 @@ const programs = [
     "email-all-chars-within-ascii",
     "email-comb",
     "emlint",
+    "eslint-plugin-row-num-tbc",
+    "eslint-plugin-test-num-tbc",
     "extract-search-index",
     "generate-atomic-css",
     "helga",
@@ -436,8 +438,6 @@ const programs = [
     "util-nonempty"
 ] as const;
 const special = [
-    "eslint-plugin-row-num-tbc",
-    "eslint-plugin-test-num-tbc",
     "gulp-email-remove-unused-css"
 ] as const;
 const script = [
@@ -717,8 +717,8 @@ export const packages = {
     totalPackageCount: 150,
     currentPackagesCount: 132,
     cliCount: 12,
-    programsCount: 115,
-    specialCount: 3,
+    programsCount: 117,
+    specialCount: 1,
     scriptCount: 110,
     packagesOutsideMonorepoCount: 3,
     splitListFlagshipLibs,

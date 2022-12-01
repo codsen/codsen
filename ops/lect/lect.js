@@ -73,16 +73,12 @@ const lectrc = JSON.parse(
 state.originalLectrc = { ...lectrc };
 
 let quickTakeExample;
-if (state.isRollup && !state.isCJS) {
-  try {
-    quickTakeExample = prepExampleFileStr(
-      await fs.readFile(path.join(state.root, "examples/_quickTake.js"), "utf8")
-    ).str;
-  } catch (e) {
-    console.log(
-      `083 lect: ${`\u001b[${31}m${`no examples`}\u001b[${39}m`}: ${e}`
-    );
-  }
+try {
+  quickTakeExample = prepExampleFileStr(
+    await fs.readFile(path.join(state.root, "examples/_quickTake.js"), "utf8")
+  ).str;
+} catch (e) {
+  // console.log(`081 lect: ${`\u001b[${31}m${`no examples`}\u001b[${39}m`}`);
 }
 
 // ACTION
@@ -108,6 +104,6 @@ await Promise.all([
   // TBC - write ./.semaphore/semaphore.yml
   // Promise.resolve(semaphore({ state })),
 ]).catch((e) => {
-  console.log(`111 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${e}`);
+  console.log(`107 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${e}`);
   process.exit(1);
 });

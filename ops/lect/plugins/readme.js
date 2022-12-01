@@ -44,6 +44,8 @@ async function readme({ state, quickTakeExample, lectrc }) {
       : ""
   }`;
 
+  let cjsNotice = "This package is not pure ESM, you can `require` it.";
+
   // start setting up the final readme's string:
   let content = `<h1 align="center">${removeTbc(state.pack.name)}</h1>
 
@@ -86,7 +88,11 @@ async function readme({ state, quickTakeExample, lectrc }) {
   }
 </p>
 
-## Install${state.pack?.exports ? `\n\n${esmNotice}` : ""}
+## Install${state.pack?.exports ? `\n\n${esmNotice}` : ""}${
+    state.pack?.main && state.pack?.main.includes(".cjs")
+      ? `\n\n${cjsNotice}`
+      : ""
+  }
 
 \`\`\`bash
 npm i${!state.isRollup && state.isBin ? " -g" : ""} ${removeTbc(

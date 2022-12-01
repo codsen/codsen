@@ -21,12 +21,17 @@ if (!pkg) {
     `ops/scripts/cjs-on.js: couldn't read ${path.resolve("package.json")}`
   );
 }
-if (!pkgName.includes("-tbc")) {
+if (!pkgName) {
+  throw new Error(
+    `ops/scripts/cjs-on.js: something went wrong! pkgName is falsy!`
+  );
+}
+if (pkgName.includes("eslint") && !pkgName.includes("-tbc")) {
   throw new Error(
     `ops/scripts/cjs-on.js: package's folder name (${pkgName}) is missing "-tbc"!`
   );
 }
-if (!pkg.includes("-tbc")) {
+if (pkgName.includes("eslint") && !pkg.includes("-tbc")) {
   throw new Error(
     `ops/scripts/cjs-on.js: ${pkgName} package.json does not include "-tbc"!`
   );
@@ -38,7 +43,11 @@ const res =
     .split(/(\r?\n)/)
     .map((row) => {
       // 1. remove "-tbc" part in "<package-name>-tbc" from every row that contains it
-      if (row.includes(pkgName) && !row.includes("directory")) {
+      if (
+        pkgName.includes("eslint") &&
+        row.includes(pkgName) &&
+        !row.includes("directory")
+      ) {
         return row.replace(pkgName, removeTbc(pkgName));
       }
       // a default - nothing happens

@@ -35,9 +35,22 @@ function format(obj) {
 async function packageJson({ state, lectrc, rootPackageJSON }) {
   let content = { ...state.pack };
 
+  // 0. back up "examples", because CJS may or may not run them
+  // and the incoming "default" preset has "examples" script as "exit 0"
+  //
+  let oldExamplesScript = state.pack?.scripts?.examples;
+  let oldDevTestScript = state.pack?.scripts?.devtest;
+
   // 1. set scripts
   if (state.isCJS) {
     content.scripts = objectPath.get(lectrc, "scripts.cjs");
+    if (
+      typeof oldExamplesScript === "string" &&
+      oldExamplesScript.includes("node")
+    ) {
+      objectPath.set(content, "scripts.examples", oldExamplesScript);
+      objectPath.set(content, "scripts.devtest", oldDevTestScript);
+    }
   } else if (!state.isRollup) {
     content.scripts = objectPath.get(lectrc, "scripts.cli");
   } else {
@@ -114,6 +127,11 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
   if (!Object.keys(content.devDependencies || {}).length) {
     objectPath.del(content, "devDependencies");
   }
+
+  // ad-hoc: set engines
+  objectPath.set(content, "engines.node", ">=14.18.0");
+
+  // ---
 
   /* set the "types" also inside the exports to cater TS >=4.7
   if (state.isRollup) {

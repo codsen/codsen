@@ -187,19 +187,15 @@
       "lect.files",
       "lect.npmignore"
     ],
-    "write": {
-      "engines": {
-        "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
-      }
-    }
+    "write": {}
   },
   "scripts": {
     "cjs": {
-      "build": "node '../../ops/scripts/esbuild.js' && node '../../ops/scripts/fix-cjs.js'",
+      "build": "node '../../ops/scripts/esbuild.js' && node '../../ops/scripts/fix-cjs.js' && yarn run dts",
       "cjs-off": "node '../../ops/scripts/cjs-off.js'",
       "cjs-on": "node '../../ops/scripts/cjs-on.js'",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js'",
-      "dts": "exit 0",
+      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
+      "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
       "examples": "exit 0",
       "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' --write",
       "letspublish": "yarn publish || :",
