@@ -3,9 +3,21 @@ interface Selector {
   selectorStarts: number;
   selectorEnds: number;
 }
-type TokenType = "text" | "tag" | "rule" | "at" | "comment" | "esp";
-type TokenKind = "simplet" | "not" | "doctype" | "cdata" | "xml" | "inline";
-type CommentKind = "simple" | "only" | "not" | "block" | "line" | "simplet";
+declare type TokenType = "text" | "tag" | "rule" | "at" | "comment" | "esp";
+declare type TokenKind =
+  | "simplet"
+  | "not"
+  | "doctype"
+  | "cdata"
+  | "xml"
+  | "inline";
+declare type CommentKind =
+  | "simple"
+  | "only"
+  | "not"
+  | "block"
+  | "line"
+  | "simplet";
 interface TextToken {
   type: "text";
   start: number;
@@ -33,7 +45,7 @@ interface EspToken {
   tailStartsAt: null | number;
   tailEndsAt: null | number;
 }
-type PropertyValueWithinArray = TextToken | EspToken;
+declare type PropertyValueWithinArray = TextToken | EspToken;
 interface Property {
   property: null | string;
   propertyStarts: null | number;
@@ -110,7 +122,7 @@ interface AtToken {
   closingCurlyAt: null | number;
   rules: (RuleToken | TextToken)[];
 }
-type Token =
+declare type Token =
   | TextToken
   | TagToken
   | RuleToken
@@ -132,14 +144,14 @@ interface LayerEsp {
   guessedClosingLump: string;
   position: number;
 }
-type Layer = LayerKindAt | LayerSimple | LayerEsp;
+declare type Layer = LayerKindAt | LayerSimple | LayerEsp;
 interface CharacterToken {
   chr: string;
   i: number;
   type: TokenType;
 }
-type TokenCb = (token: Token, next: Token[]) => void;
-type CharCb = (token: CharacterToken, next: CharacterToken[]) => void;
+declare type TokenCb = (token: Token, next: Token[]) => void;
+declare type CharCb = (token: CharacterToken, next: CharacterToken[]) => void;
 interface Opts {
   tagCb: null | TokenCb;
   tagCbLookahead: number;

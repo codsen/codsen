@@ -1,9 +1,9 @@
 import { Ranges as Ranges$1 } from "ranges-push";
 
-type Range =
+declare type Range =
   | [from: number, to: number]
   | [from: number, to: number, whatToInsert: string | null | undefined];
-type Ranges = Range[] | null;
+declare type Ranges = Range[] | null;
 
 declare const version: string;
 interface Attribute {

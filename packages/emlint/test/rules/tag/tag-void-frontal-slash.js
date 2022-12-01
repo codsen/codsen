@@ -8,7 +8,7 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. basic
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - don't raise on void tags`, () => {
+test(`01 - don't raise on void tags`, () => {
   let str = "</br>";
   let fixed = "<br>";
   let messages = verify(not, str, {
@@ -35,7 +35,7 @@ test(`01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - don't raise on void tags`
   is(messages.length, 1, "01.02");
 });
 
-test(`02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 1`, () => {
+test(`02 - fixed completely, severity 1`, () => {
   let str = "</br>";
   let fixed = "<br/>";
   let messages = verify(not, str, {
@@ -74,7 +74,7 @@ test(`02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severit
   equal(messages.length, 2, "02.02");
 });
 
-test(`03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - fixed completely, severity 2`, () => {
+test(`03 - fixed completely, severity 2`, () => {
   let str = "</br>";
   let fixed = "<br/>";
   let messages = verify(not, str, {

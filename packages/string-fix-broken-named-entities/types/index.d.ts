@@ -1,7 +1,7 @@
-type Range =
+declare type Range =
   | [from: number, to: number]
   | [from: number, to: number, whatToInsert: string | null | undefined];
-type Ranges = Range[] | null;
+declare type Ranges = Range[] | null;
 
 declare const version: string;
 declare const allRules: string[];

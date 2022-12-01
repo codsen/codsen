@@ -357,7 +357,7 @@ test(`26 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - console.log wit
 // group 04. opts
 // -----------------------------------------------------------------------------
 
-test(`27 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - padding is set to numbers`, () => {
+test(`27 - padding is set to numbers`, () => {
   let str = `zzz\n${letterC}onsole.log('1 something')`;
   equal(
     fixRowNums(str).result,
@@ -413,7 +413,7 @@ test(`27 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - padding is set to numbers`
   );
 });
 
-test(`28 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - padding is set to be falsey`, () => {
+test(`28 - padding is set to be falsey`, () => {
   let str = `zzz\n${letterC}onsole.log('1 something')`;
   equal(
     fixRowNums(str, { padStart: false }).result,
@@ -432,7 +432,7 @@ test(`28 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - padding is set to be false
   );
 });
 
-test(`29 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - letter then digit`, () => {
+test(`29 - letter then digit`, () => {
   let str = `\nconsole.log("a 1")`;
   equal(
     fixRowNums(str, {
@@ -443,7 +443,7 @@ test(`29 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - letter then digit`, () => 
   );
 });
 
-test(`30 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.overrideRowNum`, () => {
+test(`30 - opts.overrideRowNum`, () => {
   let str = `\nconsole.log("a 1")`;
   equal(
     fixRowNums(str, {
@@ -454,7 +454,7 @@ test(`30 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.overrideRowNum`, () =
   );
 });
 
-test(`31 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsWereGiven`, () => {
+test(`31 - opts.extractedLogContentsWereGiven`, () => {
   let str = `\nconsole.log("a 1")`;
   equal(
     fixRowNums(str, {
@@ -465,7 +465,7 @@ test(`31 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsW
   );
 });
 
-test(`32 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsWereGiven`, () => {
+test(`32 - opts.extractedLogContentsWereGiven`, () => {
   let str = `\n"a 1"`;
   equal(
     fixRowNums(str, {
@@ -476,7 +476,7 @@ test(`32 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsW
   );
 });
 
-test(`33 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsWereGiven`, () => {
+test(`33 - opts.extractedLogContentsWereGiven`, () => {
   let str = `a 1`;
   equal(
     fixRowNums(str, {
@@ -487,7 +487,7 @@ test(`33 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsW
   );
 });
 
-test(`34 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsWereGiven`, () => {
+test(`34 - opts.extractedLogContentsWereGiven`, () => {
   let str = "`a 1`";
   equal(
     fixRowNums(str, {
@@ -498,7 +498,7 @@ test(`34 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.extractedLogContentsW
   );
 });
 
-test(`35 - ${`\u001b[${33}m${`opts`}\u001b[${39}m`} - opts.overrideRowNum and no opts.padStart`, () => {
+test(`35 - opts.overrideRowNum and no opts.padStart`, () => {
   let str = "console.log('0 something')";
   equal(
     fixRowNums(str, { padStart: null, overrideRowNum: 0 }).result,

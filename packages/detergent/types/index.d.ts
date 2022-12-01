@@ -1,4 +1,4 @@
-type EndOfLine = "lf" | "crlf" | "cr";
+declare type EndOfLine = "lf" | "crlf" | "cr";
 interface Opts {
   fixBrokenEntities: boolean;
   removeWidows: boolean;

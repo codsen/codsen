@@ -2,7 +2,7 @@ declare const version: string;
 interface Obj {
   [key: string]: any;
 }
-type NextToken = [
+declare type NextToken = [
   key: "string",
   value: any,
   innerObj: {
@@ -20,7 +20,7 @@ interface InnerObj {
   parentType?: string;
   next?: NextToken[];
 }
-type Callback = (
+declare type Callback = (
   key: string | Obj,
   val: any,
   innerObj: InnerObj,

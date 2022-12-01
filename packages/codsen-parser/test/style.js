@@ -8,7 +8,7 @@ import { cparser } from "../dist/codsen-parser.esm.js";
 // 01. basics
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, () => {
+test(`01 - two tags`, () => {
   compare(
     ok,
     cparser(`<style>

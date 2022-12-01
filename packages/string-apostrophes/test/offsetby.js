@@ -18,7 +18,7 @@ const leftSingleQuote = "\u2018";
 
 // offsetBy increments the index of external iterator
 
-test(`01 - ${`\u001b[${33}m${`offset`}\u001b[${39}m`} - let's skip single quotes`, () => {
+test(`01 - let's skip single quotes`, () => {
   let str = `Rock ${leftSingleQuote}n${leftSingleQuote} roll`;
   let gathered = [];
   let res = convertOne(str, {

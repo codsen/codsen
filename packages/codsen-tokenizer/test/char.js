@@ -7,7 +7,7 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // 01. character-based tokens
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - default lookahead`, () => {
+test(`01 - default lookahead`, () => {
   let gathered = [];
   ct("<a>z1", {
     charCb: (obj) => {
@@ -48,7 +48,7 @@ test(`01 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - default lookahead`, () =
   );
 });
 
-test(`02 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - hardcoded default lookahead`, () => {
+test(`02 - hardcoded default lookahead`, () => {
   let gathered = [];
   ct("<a>z1", {
     charCb: (obj, next) => {
@@ -95,7 +95,7 @@ test(`02 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - hardcoded default lookah
   );
 });
 
-test(`03 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 1`, () => {
+test(`03 - lookahead = 1`, () => {
   let gathered = [];
   ct("<a>z1", {
     charCb: (obj, next) => {
@@ -166,7 +166,7 @@ test(`03 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 1`, () => {
   );
 });
 
-test(`04 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 2`, () => {
+test(`04 - lookahead = 2`, () => {
   let gathered = [];
   ct("<a>z1", {
     charCb: (obj, next) => {
@@ -252,7 +252,7 @@ test(`04 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 2`, () => {
   );
 });
 
-test(`05 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 3`, () => {
+test(`05 - lookahead = 3`, () => {
   let gathered = [];
   ct("<a>z1", {
     charCb: (obj, next) => {
@@ -348,7 +348,7 @@ test(`05 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 3`, () => {
   );
 });
 
-test(`06 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 4`, () => {
+test(`06 - lookahead = 4`, () => {
   let gathered = [];
   ct("<a>z1", {
     charCb: (obj, next) => {
@@ -449,7 +449,7 @@ test(`06 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 4`, () => {
   );
 });
 
-test(`07 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 5`, () => {
+test(`07 - lookahead = 5`, () => {
   let gathered = [];
   ct("<a>z1", {
     charCb: (obj, next) => {
@@ -550,7 +550,7 @@ test(`07 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 5`, () => {
   );
 });
 
-test(`08 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 99`, () => {
+test(`08 - lookahead = 99`, () => {
   let gathered = [];
   ct("<a>z1", {
     charCb: (obj, next) => {
@@ -651,7 +651,7 @@ test(`08 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 99`, () => {
   );
 });
 
-test(`09 - ${`\u001b[${33}m${`charCb`}\u001b[${39}m`} - lookahead = 99 - doesn't push next`, () => {
+test(`09 - lookahead = 99 - doesn't push next`, () => {
   let gathered = [];
   ct("<a>z1", {
     charCb: (obj) => {

@@ -92,7 +92,7 @@ test(`05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - bools`, () => {
 // 02. taster
 // -----------------------------------------------------------------------------
 
-test(`06 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - no $$$ - oneliner`, () => {
+test(`06 - no $$$ - oneliner`, () => {
   let source = "zzz";
   equal(
     genAtomic(source, {
@@ -148,7 +148,7 @@ test(`06 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - no $$$ - oneliner`, () =
   );
 });
 
-test(`07 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - no $$$ - multiliner`, () => {
+test(`07 - no $$$ - multiliner`, () => {
   let source =
     "zzz\n\t\t\tyyyyy\ntralala\none dollar here $\ntwo dollars here $$\n";
   equal(
@@ -185,7 +185,7 @@ test(`07 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - no $$$ - multiliner`, ()
   );
 });
 
-test(`08 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - defaults, empty content`, () => {
+test(`08 - defaults, empty content`, () => {
   equal(
     genAtomic(`111
 222
@@ -222,7 +222,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
   );
 });
 
-test(`09 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - defaults, empty content, no pad`, () => {
+test(`09 - defaults, empty content, no pad`, () => {
   equal(
     genAtomic(
       `111
@@ -262,7 +262,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
   );
 });
 
-test(`10 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - placeholder in the middle of the name, ends with px`, () => {
+test(`10 - placeholder in the middle of the name, ends with px`, () => {
   equal(
     genAtomic(
       `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -282,7 +282,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
   );
 });
 
-test(`11 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - placeholder in the middle of the name, ends with px`, () => {
+test(`11 - placeholder in the middle of the name, ends with px`, () => {
   equal(
     genAtomic(
       `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -310,7 +310,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
   );
 });
 
-test(`12 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - placeholder in the middle of the name, ends with p`, () => {
+test(`12 - placeholder in the middle of the name, ends with p`, () => {
   equal(
     genAtomic(
       `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -332,7 +332,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
   );
 });
 
-test(`13 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - starts with a placeholder (not legit)`, () => {
+test(`13 - starts with a placeholder (not legit)`, () => {
   equal(
     genAtomic(
       `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS

@@ -830,7 +830,7 @@ test("05 - object-set-all-values-to", () => {
 // 03. stream was given
 // -----------------------------------------------------------------------------
 
-test(`06 - ${`\u001b[${33}m${`streams`}\u001b[${39}m`} - stream is given`, async () => {
+test(`06 - stream is given`, async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));

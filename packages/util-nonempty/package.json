@@ -50,7 +50,7 @@
     "unit": "uvu test"
   },
   "engines": {
-    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+    "node": ">=14.18.0"
   },
   "c8": {
     "check-coverage": true,

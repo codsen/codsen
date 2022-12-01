@@ -2,7 +2,7 @@ declare const version: string;
 interface Obj {
   [key: string]: any;
 }
-type Only = "array" | "object" | "any";
+declare type Only = "array" | "object" | "any";
 interface Opts {
   key: null | string;
   val: any;

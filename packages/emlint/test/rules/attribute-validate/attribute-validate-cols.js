@@ -421,7 +421,7 @@ test(`22 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - two asterisks`, () => 
 // 04. textarea
 // -----------------------------------------------------------------------------
 
-test(`23 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - right value`, () => {
+test(`23 - right value`, () => {
   let str = `<textarea cols="0">`;
   let linter = new Linter();
   let messages = linter.verify(str, {
@@ -433,7 +433,7 @@ test(`23 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - right value`, () => {
   equal(messages, [], "23.02");
 });
 
-test(`24 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - right value`, () => {
+test(`24 - right value`, () => {
   let str = `<textarea cols="10">`;
   let linter = new Linter();
   let messages = linter.verify(str, {
@@ -445,7 +445,7 @@ test(`24 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - right value`, () => {
   equal(messages, [], "24.02");
 });
 
-test(`25 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - right value, whitespace`, () => {
+test(`25 - right value, whitespace`, () => {
   let str = `<textarea cols=" 10 ">`;
   let linter = new Linter();
   let messages = linter.verify(str, {
@@ -470,7 +470,7 @@ test(`25 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - right value, whitespac
   ]);
 });
 
-test(`26 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - units`, () => {
+test(`26 - units`, () => {
   let str = `<textarea cols="100%">`;
   let linter = new Linter();
   let messages = linter.verify(str, {
@@ -490,7 +490,7 @@ test(`26 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - units`, () => {
   ]);
 });
 
-test(`27 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - units`, () => {
+test(`27 - units`, () => {
   let str = `<textarea cols="z">`;
   let linter = new Linter();
   let messages = linter.verify(str, {
@@ -510,7 +510,7 @@ test(`27 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - units`, () => {
   ]);
 });
 
-test(`28 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - missing value`, () => {
+test(`28 - missing value`, () => {
   let str = `<textarea cols="">`;
   let linter = new Linter();
   let messages = linter.verify(str, {
@@ -530,7 +530,7 @@ test(`28 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - missing value`, () => 
   ]);
 });
 
-test(`29 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - rational number`, () => {
+test(`29 - rational number`, () => {
   let str = `<textarea cols="1.5">`;
   let linter = new Linter();
   let messages = linter.verify(str, {
@@ -550,7 +550,7 @@ test(`29 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - rational number`, () =
   ]);
 });
 
-test(`30 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - rational number`, () => {
+test(`30 - rational number`, () => {
   let str = `<textarea cols="1rem">`;
   let linter = new Linter();
   let messages = linter.verify(str, {
@@ -570,7 +570,7 @@ test(`30 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - rational number`, () =
   ]);
 });
 
-test(`31 - ${`\u001b[${33}m${`textarea`}\u001b[${39}m`} - negative number`, () => {
+test(`31 - negative number`, () => {
   let str = `<textarea cols="-1">`;
   let linter = new Linter();
   let messages = linter.verify(str, {

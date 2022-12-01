@@ -36,7 +36,7 @@ const cli = meow(
     $ upd YOURFILE.json
 
   Options:
-    -m, --module        Blaclist against bumping major any type=module packages
+    -m, --module        Blacklist against bumping major any type=module packages
     -h, --help          Shows this help
     -v, --version       Shows the current installed version
 `,
@@ -93,11 +93,10 @@ if (cli.flags) {
   }
 
   let confLocation = "./upd.config.json";
-  let config;
   let newConfig = {
     noMajorBumping: [],
+    pin: {},
   };
-  newConfig.noMajorBumping = new Set(newConfig.noMajorBumping);
 
   let online = await isOnline();
   if (!online) {
@@ -109,9 +108,7 @@ if (cli.flags) {
 
   // try to read the local config if it's present
   try {
-    config = JSON.parse(readFileSync(confLocation, "utf8"));
-    newConfig = Object.assign({}, newConfig, config);
-    newConfig.noMajorBumping = new Set(newConfig.noMajorBumping);
+    newConfig = JSON.parse(readFileSync(confLocation, "utf8"));
   } catch (err) {
     console.log(
       `\n${messagePrefix}${`\u001b[${90}m${`No config found, moving on.`}\u001b[${39}m`}\n`
@@ -221,7 +218,7 @@ if (cli.flags) {
                       (cli.flags.m || cli.flags.module) &&
                       pkg1.type === "module"
                     ) {
-                      newConfig.noMajorBumping.add(pkg1.name);
+                      newConfig.noMajorBumping.push(pkg1.name);
                     }
                   }
                 });
@@ -301,12 +298,27 @@ if (cli.flags) {
               ? "workspace:"
               : "";
 
-            if (
+            if (Array.isArray(newConfig?.pin) && newConfig.pin[singleDepName]) {
+              finalContents = set(
+                finalContents,
+                `dependencies.${singleDepName}`,
+                newConfig.pin[singleDepName]
+              );
+              amended = true;
+              if (
+                !Object.prototype.hasOwnProperty.call(
+                  updatedPackages,
+                  singleDepName
+                )
+              ) {
+                updatedPackages[singleDepName] = newConfig.pin[singleDepName];
+              }
+            } else if (
               compiledDepNameVersionPairs[singleDepName] !== null &&
               singleDepValue !==
                 `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}` &&
               // either dependency is not blacklisted (so we don't care)
-              (!newConfig.noMajorBumping.has(singleDepName) ||
+              (!newConfig.noMajorBumping.includes(singleDepName) ||
                 // or it is blacklisted but the bump is within the same major semver digit
                 major(compiledDepNameVersionPairs[singleDepName]) ===
                   major(singleDepValue))
@@ -323,9 +335,8 @@ if (cli.flags) {
                   singleDepName
                 )
               ) {
-                updatedPackages[
-                  singleDepName
-                ] = `${compiledDepNameVersionPairs[singleDepName]}`;
+                updatedPackages[singleDepName] =
+                  compiledDepNameVersionPairs[singleDepName];
               }
             }
 
@@ -383,12 +394,27 @@ if (cli.flags) {
               ? "workspace:"
               : "";
 
-            if (
+            if (Array.isArray(newConfig?.pin) && newConfig.pin[singleDepName]) {
+              finalContents = set(
+                finalContents,
+                `dependencies.${singleDepName}`,
+                newConfig.pin[singleDepName]
+              );
+              amended = true;
+              if (
+                !Object.prototype.hasOwnProperty.call(
+                  updatedPackages,
+                  singleDepName
+                )
+              ) {
+                updatedPackages[singleDepName] = newConfig.pin[singleDepName];
+              }
+            } else if (
               compiledDepNameVersionPairs[singleDepName] !== null &&
               singleDepValue !==
                 `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}` &&
               // either dependency is not blacklisted (so we don't care)
-              (!newConfig.noMajorBumping.has(singleDepName) ||
+              (!newConfig.noMajorBumping.includes(singleDepName) ||
                 // or it is blacklisted but the bump is within the same major semver digit
                 major(compiledDepNameVersionPairs[singleDepName]) ===
                   major(singleDepValue))
@@ -457,22 +483,4 @@ if (cli.flags) {
   diff.pipe(process.stdout);
 
   await allProgressPromise;
-
-  // write the config back
-  if (
-    config &&
-    JSON.stringify(newConfig, null, 0) !== JSON.stringify(config, null, 0)
-  ) {
-    newConfig.noMajorBumping = [...newConfig.noMajorBumping].sort();
-    try {
-      await write(
-        confLocation,
-        `${JSON.stringify(newConfig, null, 2).trim()}\n`
-      );
-    } catch (e) {
-      console.error(
-        `${messagePrefix}error happened when writing upd.config.json:\n${e}`
-      );
-    }
-  }
 })();

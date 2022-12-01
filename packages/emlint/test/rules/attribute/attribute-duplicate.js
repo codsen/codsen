@@ -66,7 +66,7 @@ test(`05 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - duplicate undef
 // 01. checks
 // -----------------------------------------------------------------------------
 
-test(`06 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - off`, () => {
+test(`06 - off`, () => {
   let str = `<a class="bb" id="cc" class="dd">`;
   let messages = verify(not, str, {
     rules: {
@@ -77,7 +77,7 @@ test(`06 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - off`, () => {
   equal(messages, [], "06.02");
 });
 
-test(`07 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - class merged`, () => {
+test(`07 - class merged`, () => {
   let str = `<a class="bb" id="bb" class="dd">`;
   let fixed = `<a class="bb dd" id="bb">`;
   let messages = verify(not, str, {
@@ -102,7 +102,7 @@ test(`07 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - class merged`, () => {
   );
 });
 
-test(`08 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - id merged`, () => {
+test(`08 - id merged`, () => {
   let str = `<a class="cc" id="ee" id="dd" style="id" id="ff">`;
   let fixed = `<a class="cc" id="dd ee ff" style="id">`;
   let messages = verify(not, str, {
@@ -127,7 +127,7 @@ test(`08 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - id merged`, () => {
   );
 });
 
-test(`09 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - on`, () => {
+test(`09 - on`, () => {
   let str = `<a href="bb" href="bb" href="dd">`;
   let messages = verify(not, str, {
     rules: {
@@ -159,7 +159,7 @@ test(`09 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - on`, () => {
   );
 });
 
-test(`10 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - unrecognised attr duplicated, rule disabled`, () => {
+test(`10 - unrecognised attr duplicated, rule disabled`, () => {
   let str = `<td yo="z" yo="tralalaa"><a mo="z" mo="haha">z</a>`;
   let messages = verify(not, str, {
     rules: {

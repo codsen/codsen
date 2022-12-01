@@ -367,7 +367,7 @@ test(`20 - ${`\u001b[${35}m${`area`}\u001b[${39}m`} - rogue space`, () => {
 // 04. a
 // -----------------------------------------------------------------------------
 
-test(`21 - ${`\u001b[${33}m${`a`}\u001b[${39}m`} - a right value`, () => {
+test(`21 - a right value`, () => {
   let str = `<a href="sun.htm" shape="rect" coords="0,0,82,126">The Sun</a>`;
   let linter = new Linter();
   let messages = linter.verify(str, {
@@ -379,7 +379,7 @@ test(`21 - ${`\u001b[${33}m${`a`}\u001b[${39}m`} - a right value`, () => {
   equal(messages, [], "21.02");
 });
 
-test(`22 - ${`\u001b[${33}m${`a`}\u001b[${39}m`} - circle, two values`, () => {
+test(`22 - circle, two values`, () => {
   let str = `<a href="venus.htm" shape="circle" coords="124,58">Venus</a>`;
   let linter = new Linter();
   let messages = linter.verify(str, {

@@ -8,7 +8,7 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. double encoding on nbsp
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, () => {
+test(`01 - group rule`, () => {
   let str = `abc&amp;nbsp;def`;
   let messages = verify(not, str, {
     rules: {
@@ -36,7 +36,7 @@ test(`01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, () => {
   equal(messages.length, 1, "01.02");
 });
 
-test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule, severity level 1`, () => {
+test(`02 - exact rule, severity level 1`, () => {
   let str = `abc&amp;nbsp;def`;
   let messages = verify(not, str, {
     rules: {
@@ -64,7 +64,7 @@ test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule, severity level
   equal(messages.length, 1, "02.02");
 });
 
-test(`03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule, severity level 2`, () => {
+test(`03 - exact rule, severity level 2`, () => {
   let str = `abc&amp;nbsp;def`;
   let messages = verify(not, str, {
     rules: {
@@ -92,7 +92,7 @@ test(`03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule, severity level
   equal(messages.length, 1, "03.02");
 });
 
-test(`04 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - rule by wildcard`, () => {
+test(`04 - rule by wildcard`, () => {
   let str = `abc&amp;nbsp;def`;
   let messages = verify(not, str, {
     rules: {
@@ -120,7 +120,7 @@ test(`04 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - rule by wildcard`, () => {
   equal(messages.length, 1, "04.02");
 });
 
-test(`05 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule - off`, () => {
+test(`05 - group rule - off`, () => {
   let str = `abc&amp;nbsp;def`;
   let messages = verify(not, str, {
     rules: {
@@ -131,7 +131,7 @@ test(`05 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule - off`, () => {
   equal(messages, [], "05.02");
 });
 
-test(`06 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule, severity level 0 - off`, () => {
+test(`06 - exact rule, severity level 0 - off`, () => {
   let str = `abc&amp;nbsp;def`;
   let messages = verify(not, str, {
     rules: {
@@ -142,7 +142,7 @@ test(`06 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule, severity level
   equal(messages, [], "06.02");
 });
 
-test(`07 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - rule by wildcard - off`, () => {
+test(`07 - rule by wildcard - off`, () => {
   let str = `abc&amp;nbsp;def`;
   let messages = verify(not, str, {
     rules: {

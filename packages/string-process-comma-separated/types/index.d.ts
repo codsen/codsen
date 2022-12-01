@@ -1,5 +1,5 @@
 declare const version: string;
-type ErrCb = (
+declare type ErrCb = (
   indexes: [from: number, to: number][],
   explanation: string,
   isFixable: boolean

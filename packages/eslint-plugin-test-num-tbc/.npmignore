@@ -8,3 +8,5 @@ test
 .all-contributorsrc
 .npmignore
 .prettierignore
+rollup.config.js
+tsconfig.json

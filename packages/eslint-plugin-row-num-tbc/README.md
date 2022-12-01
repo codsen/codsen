@@ -23,6 +23,8 @@
 
 ## Install
 
+This package is not pure ESM, you can `require` it.
+
 ```bash
 npm i eslint-plugin-row-num
 ```

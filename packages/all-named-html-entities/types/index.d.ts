@@ -1,8 +1,14 @@
-type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
-type JsonObject = {
+declare type JsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | JsonObject
+  | JsonArray;
+declare type JsonObject = {
   [Key in string]?: JsonValue;
 };
-type JsonArray = JsonValue[];
+declare type JsonArray = JsonValue[];
 declare const version: string;
 declare const allNamedEntities: JsonObject;
 declare const brokenNamedEntities: JsonObject;

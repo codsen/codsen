@@ -1,5 +1,5 @@
 declare const version: string;
-type argType =
+declare type argType =
   | "date"
   | "date"
   | "object"

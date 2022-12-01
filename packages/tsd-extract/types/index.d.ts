@@ -25,7 +25,7 @@ interface Statement {
   valueEndsAt: number | null;
 }
 declare const defaults: Opts;
-type ReturnType = Statement & {
+declare type ReturnType = Statement & {
   all: string[];
   error: string | null;
 };

@@ -1,7 +1,7 @@
-type Range =
+declare type Range =
   | [from: number, to: number]
   | [from: number, to: number, whatToInsert: string | null | undefined];
-type Ranges = Range[] | null;
+declare type Ranges = Range[] | null;
 
 declare const version: string;
 interface Extras {
@@ -12,7 +12,7 @@ interface Extras {
 interface CbObj extends Extras {
   suggested: Range;
 }
-type Callback = (cbObj: CbObj) => any;
+declare type Callback = (cbObj: CbObj) => any;
 interface Opts {
   trimStart: boolean;
   trimEnd: boolean;

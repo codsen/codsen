@@ -8,13 +8,13 @@ import {
   CharCb,
 } from "codsen-tokenizer";
 
-type Range =
+declare type Range =
   | [from: number, to: number]
   | [from: number, to: number, whatToInsert: string | null | undefined];
-type Ranges = Range[] | null;
+declare type Ranges = Range[] | null;
 
 declare const version: string;
-type Severity = 0 | 1 | 2;
+declare type Severity = 0 | 1 | 2;
 interface ErrorObj {
   ruleId?: string;
   message: string;
@@ -36,7 +36,7 @@ interface TagTokenWithChildren extends TagToken {
 interface CommentTokenWithChildren extends CommentToken {
   children: TokenWithChildren[];
 }
-type TokenWithChildren =
+declare type TokenWithChildren =
   | TextToken
   | TagTokenWithChildren
   | RuleToken
@@ -46,7 +46,7 @@ type TokenWithChildren =
 interface SupplementedErrorObj extends ErrorObj {
   tokenObj: TokenWithChildren;
 }
-type ErrCb = (obj: Partial<SupplementedErrorObj>) => void;
+declare type ErrCb = (obj: Partial<SupplementedErrorObj>) => void;
 interface Opts {
   reportProgressFunc: null | ((percDone: number) => void);
   reportProgressFuncFrom: number;

@@ -671,7 +671,7 @@ test(`09 - some keys bailed through ignoreKeys, some through ignorePaths and as 
 // 02. Arrays
 // ======================
 
-test(`10 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArrays, strings+arrays`, () => {
+test(`10 - opts.acceptArrays, strings+arrays`, () => {
   throws(() => {
     checkTypesMini(
       {
@@ -728,7 +728,7 @@ test(`10 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArrays, strin
   }, /varname.option2 was customised to be array/);
 });
 
-test(`11 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArrays, Booleans+arrays`, () => {
+test(`11 - opts.acceptArrays, Booleans+arrays`, () => {
   throws(() => {
     checkTypesMini(
       {
@@ -812,7 +812,7 @@ test(`14`, () => {
   }, "14.01");
 });
 
-test(`15 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArraysIgnore`, () => {
+test(`15 - opts.acceptArraysIgnore`, () => {
   not.throws(() => {
     checkTypesMini(
       {
@@ -877,7 +877,7 @@ test(`15 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArraysIgnore`
   }, /opts\.option1 was customised to "\[1,0,1,0\]"/);
 });
 
-test(`16 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - involving null values`, () => {
+test(`16 - involving null values`, () => {
   throws(() => {
     checkTypesMini(
       {
@@ -894,7 +894,7 @@ test(`16 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - involving null values`, 
   }, /opts.key was customised to "1"/);
 });
 
-test(`17 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - throws/notThrows when keysets mismatch`, () => {
+test(`17 - throws/notThrows when keysets mismatch`, () => {
   throws(() => {
     checkTypesMini(
       {
@@ -955,7 +955,7 @@ test(`17 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - throws/notThrows when ke
   }, "17.04");
 });
 
-test(`18 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.enforceStrictKeyset set to a wrong thing`, () => {
+test(`18 - opts.enforceStrictKeyset set to a wrong thing`, () => {
   throws(() => {
     checkTypesMini(
       {
@@ -975,7 +975,7 @@ test(`18 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.enforceStrictKeyset
   }, "18.01");
 });
 
-test(`19 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - throws when reference and schema are both missing`, () => {
+test(`19 - throws when reference and schema are both missing`, () => {
   throws(() => {
     checkTypesMini(
       {
@@ -988,7 +988,7 @@ test(`19 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - throws when reference an
   }, "19.01");
 });
 
-test(`20 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - acceptArrays + schema + nested`, () => {
+test(`20 - acceptArrays + schema + nested`, () => {
   // control
 
   not.throws(() => {
@@ -1100,7 +1100,7 @@ test(`20 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - acceptArrays + schema + 
   }, /opts\.opt2\.opt3\.1/); // throws because schema and opts.acceptArrays detects wrong type within input's array
 });
 
-test(`21 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - enforceStrictKeyset and nested inputs`, () => {
+test(`21 - enforceStrictKeyset and nested inputs`, () => {
   throws(() => {
     checkTypesMini(
       {
@@ -1119,7 +1119,7 @@ test(`21 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - enforceStrictKeyset and 
   }, /rogueSubkey is neither covered by reference object/);
 });
 
-test(`22 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - strict mode, customising keys`, () => {
+test(`22 - strict mode, customising keys`, () => {
   // default mode (strict) - root level
 
   // it should not throw because this is typical scenario: array keys are given,

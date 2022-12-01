@@ -8,7 +8,7 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. one entity of the list
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, () => {
+test(`01 - group rule`, () => {
   let str = `abc&Intersection;def`;
   let messages = verify(not, str, {
     rules: {
@@ -36,7 +36,7 @@ test(`01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, () => {
   equal(messages.length, 1, "01.02");
 });
 
-test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule`, () => {
+test(`02 - exact rule`, () => {
   let str = `abc&Intersection;def`;
   let messages = verify(not, str, {
     rules: {
@@ -64,7 +64,7 @@ test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule`, () => {
   equal(messages.length, 1, "02.02");
 });
 
-test(`03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - through wildcard`, () => {
+test(`03 - through wildcard`, () => {
   let str = `abc&Intersection;def`;
   let messages = verify(not, str, {
     rules: {

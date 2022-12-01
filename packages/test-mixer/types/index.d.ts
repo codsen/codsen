@@ -1,8 +1,8 @@
 declare const version: string;
-type PlainObject = {
+declare type PlainObject = {
   [name: string]: any;
 };
-type PlainObjectOfBool = {
+declare type PlainObjectOfBool = {
   [name: string]: boolean;
 };
 declare function mixer(

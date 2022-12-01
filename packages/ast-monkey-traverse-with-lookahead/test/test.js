@@ -2662,7 +2662,7 @@ test(`12 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all 
 // 03. objects-only
 // -----------------------------------------------------------------------------
 
-test(`13 - ${`\u001b[${33}m${`objects`}\u001b[${39}m`} - traverses plain objects`, () => {
+test(`13 - traverses plain objects`, () => {
   let input = {
     a: "k",
     b: "l",
@@ -2741,7 +2741,7 @@ test(`13 - ${`\u001b[${33}m${`objects`}\u001b[${39}m`} - traverses plain objects
   );
 });
 
-test(`14 - ${`\u001b[${33}m${`objects`}\u001b[${39}m`} - object key's value is an array`, () => {
+test(`14 - object key's value is an array`, () => {
   let input = {
     a: ["1", "2", "3"],
   };

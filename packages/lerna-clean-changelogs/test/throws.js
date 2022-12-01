@@ -8,7 +8,7 @@ import { cleanChangelogs as c } from "../dist/lerna-clean-changelogs.esm.js";
 const require = createRequire(import.meta.url);
 const { version } = require("../package.json");
 
-test(`01 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - missing 1st arg`, () => {
+test(`01 - missing 1st arg`, () => {
   throws(() => {
     c();
   }, /THROW_ID_01/g);
@@ -18,7 +18,7 @@ test(`01 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - missing 1st arg`, () => 
   }, /THROW_ID_01/g);
 });
 
-test(`02 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - 1st arg of a wrong type`, () => {
+test(`02 - 1st arg of a wrong type`, () => {
   throws(() => {
     c(1);
   }, /THROW_ID_02/g);
@@ -40,7 +40,7 @@ test(`02 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - 1st arg of a wrong type`
   }, /THROW_ID_02/g);
 });
 
-test(`03 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - 1st arg is empty string`, () => {
+test(`03 - 1st arg is empty string`, () => {
   equal(
     c(""),
     {

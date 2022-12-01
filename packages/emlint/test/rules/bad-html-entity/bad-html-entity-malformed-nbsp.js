@@ -8,7 +8,7 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. missing letters
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, () => {
+test(`01 - group rule`, () => {
   let str = `abc&nsp;def`;
   let messages = verify(not, str, {
     rules: {
@@ -36,7 +36,7 @@ test(`01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, () => {
   equal(messages.length, 1, "01.02");
 });
 
-test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule`, () => {
+test(`02 - exact rule`, () => {
   let str = `abc&nsp;def`;
   let messages = verify(not, str, {
     rules: {
@@ -64,7 +64,7 @@ test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule`, () => {
   equal(messages.length, 1, "02.02");
 });
 
-test(`03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - rule by wildcard`, () => {
+test(`03 - rule by wildcard`, () => {
   let str = `abc&nsp;def`;
   let messages = verify(not, str, {
     rules: {
@@ -92,7 +92,7 @@ test(`03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - rule by wildcard`, () => {
   equal(messages.length, 1, "03.02");
 });
 
-test(`04 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule - off`, () => {
+test(`04 - group rule - off`, () => {
   let str = `abc&nsp;def`;
   let messages = verify(not, str, {
     rules: {
@@ -103,7 +103,7 @@ test(`04 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule - off`, () => {
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule - off`, () => {
+test(`05 - exact rule - off`, () => {
   let str = `abc&nsp;def`;
   let messages = verify(not, str, {
     rules: {
@@ -114,7 +114,7 @@ test(`05 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule - off`, () => {
   equal(messages, [], "05.02");
 });
 
-test(`06 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - rule by wildcard - off`, () => {
+test(`06 - rule by wildcard - off`, () => {
   let str = `abc&nsp;def`;
   let messages = verify(not, str, {
     rules: {
@@ -128,7 +128,7 @@ test(`06 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - rule by wildcard - off`, (
 // 02. other malformed entities
 // -----------------------------------------------------------------------------
 
-test(`07 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by wildcard`, () => {
+test(`07 - rule by wildcard`, () => {
   let str = `&pond;1000`;
   let messages = verify(not, str, {
     rules: {
@@ -156,7 +156,7 @@ test(`07 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by wildcard`, () => 
   equal(messages.length, 1, "07.02");
 });
 
-test(`08 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by group rule`, () => {
+test(`08 - rule by group rule`, () => {
   let str = `&pond;1000`;
   let messages = verify(not, str, {
     rules: {
@@ -184,7 +184,7 @@ test(`08 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by group rule`, () =
   equal(messages.length, 1, "08.02");
 });
 
-test(`09 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by exact rule`, () => {
+test(`09 - rule by exact rule`, () => {
   let str = `&pond;1000`;
   let messages = verify(not, str, {
     rules: {
@@ -212,7 +212,7 @@ test(`09 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by exact rule`, () =
   equal(messages.length, 1, "09.02");
 });
 
-test(`10 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by wildcard - off`, () => {
+test(`10 - rule by wildcard - off`, () => {
   let str = `&pond;1000`;
   let messages = verify(not, str, {
     rules: {
@@ -223,7 +223,7 @@ test(`10 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by wildcard - off`, 
   equal(messages, [], "10.02");
 });
 
-test(`11 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by group rule - off`, () => {
+test(`11 - rule by group rule - off`, () => {
   let str = `&pond;1000`;
   let messages = verify(not, str, {
     rules: {
@@ -234,7 +234,7 @@ test(`11 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by group rule - off`
   equal(messages, [], "11.02");
 });
 
-test(`12 - ${`\u001b[${33}m${`pound`}\u001b[${39}m`} - rule by exact rule - off`, () => {
+test(`12 - rule by exact rule - off`, () => {
   let str = `&pond;1000`;
   let messages = verify(not, str, {
     rules: {

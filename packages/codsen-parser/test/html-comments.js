@@ -8,7 +8,7 @@ import { cparser } from "../dist/codsen-parser.esm.js";
 // 01. simple HTML comments
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`, () => {
+test(`01 - one nested outlook-only comment`, () => {
   compare(
     ok,
     cparser("a<!--b-->c"),
@@ -47,7 +47,7 @@ test(`01 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only 
   );
 });
 
-test(`02 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only comment`, () => {
+test(`02 - one nested outlook-only comment`, () => {
   compare(
     ok,
     cparser("a<!--b->c"),
@@ -94,7 +94,7 @@ test(`02 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - one nested outlook-only 
   );
 });
 
-test(`03 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - nested tags inside broken comment closing tag pair`, () => {
+test(`03 - nested tags inside broken comment closing tag pair`, () => {
   compare(
     ok,
     cparser(`a<!--<table><tr><td>.</td></tr></table>->c`),
@@ -183,7 +183,7 @@ test(`03 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - nested tags inside broke
   );
 });
 
-test(`04 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - false positive`, () => {
+test(`04 - false positive`, () => {
   compare(
     ok,
     cparser("x<a>y->b"),
@@ -212,7 +212,7 @@ test(`04 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - false positive`, () => {
   );
 });
 
-test(`05 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - another false positive`, () => {
+test(`05 - another false positive`, () => {
   compare(
     ok,
     cparser("<!--x<a>-->y->b"),
@@ -254,7 +254,7 @@ test(`05 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - another false positive`,
   );
 });
 
-test(`06 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - rogue character in the closing`, () => {
+test(`06 - rogue character in the closing`, () => {
   compare(
     ok,
     cparser(`a<!--b--!>c`),
@@ -296,7 +296,7 @@ test(`06 - ${`\u001b[${33}m${`simple`}\u001b[${39}m`} - rogue character in the c
 // 02. conditional "only" type comments
 // -----------------------------------------------------------------------------
 
-test(`07 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, () => {
+test(`07 - one pair`, () => {
   compare(
     ok,
     cparser(`a<!--[if gte mso 9]>x<![endif]-->z`),
@@ -340,7 +340,7 @@ test(`07 - ${`\u001b[${33}m${`only`}\u001b[${39}m`} - one pair`, () => {
 // 03. conditional "not" type comments
 // -----------------------------------------------------------------------------
 
-test(`08 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, () => {
+test(`08 - one pair`, () => {
   compare(
     ok,
     cparser(`a<!--[if !mso]><!-->x<!--<![endif]-->z`),
@@ -381,7 +381,7 @@ test(`08 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - one pair`, () => {
   );
 });
 
-test(`09 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing bracket`, () => {
+test(`09 - first part's missing bracket`, () => {
   compare(
     ok,
     cparser(`<img/>!--<![endif]-->`),
@@ -403,7 +403,7 @@ test(`09 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing bracke
   );
 });
 
-test(`10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing excl mark`, () => {
+test(`10 - first part's missing excl mark`, () => {
   compare(
     ok,
     cparser(`<img/><--<![endif]-->`),
@@ -425,7 +425,7 @@ test(`10 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing excl m
   );
 });
 
-test(`11 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's character one`, () => {
+test(`11 - first part's character one`, () => {
   compare(
     ok,
     cparser(`<img/><1--<![endif]-->`),
@@ -447,7 +447,7 @@ test(`11 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's character one`
   );
 });
 
-test(`12 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`, () => {
+test(`12 - first part's missing dash`, () => {
   compare(
     ok,
     cparser(`<img/><!-<![endif]-->`),
@@ -469,7 +469,7 @@ test(`12 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
   );
 });
 
-test(`13 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`, () => {
+test(`13 - first part's missing dash`, () => {
   compare(
     ok,
     cparser(`<img/><1--<1--<1--<1--<![endif]-->`),
@@ -499,7 +499,7 @@ test(`13 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
   );
 });
 
-test(`14 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`, () => {
+test(`14 - first part's missing dash`, () => {
   compare(
     ok,
     cparser(`<img/><1--<1--<1--<1--zzzz<![endif]-->`),
@@ -526,7 +526,7 @@ test(`14 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - first part's missing dash`,
   );
 });
 
-test(`15 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`, () => {
+test(`15 - nested inside parent`, () => {
   // below, two tokens,
   // "<img src="gif"/>"
   // and
@@ -601,7 +601,7 @@ test(`15 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`, () =
   );
 });
 
-test(`16 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`, () => {
+test(`16 - nested inside parent`, () => {
   // below, two tokens,
   // "<img src="gif"/>"
   // and
@@ -682,7 +682,7 @@ test(`16 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - nested inside parent`, () =
   );
 });
 
-test(`17 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, () => {
+test(`17 - false alarm`, () => {
   // clauses are triggered but nothing's found from characters: <, ! and -
   compare(
     ok,
@@ -759,7 +759,7 @@ test(`17 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, () => {
   );
 });
 
-test(`18 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - rogue bracket`, () => {
+test(`18 - rogue bracket`, () => {
   // clauses are triggered but nothing's found from characters: <, ! and -
   compare(
     ok,

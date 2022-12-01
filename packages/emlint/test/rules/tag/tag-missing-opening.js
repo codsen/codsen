@@ -13,7 +13,7 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. basic
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - off`, () => {
+test(`01 - off`, () => {
   let str = "z </b>";
   let messages = verify(not, str, {
     rules: {
@@ -24,7 +24,7 @@ test(`01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - off`, () => {
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - warn`, () => {
+test(`02 - warn`, () => {
   let str = "z </b>";
   let messages = verify(not, str, {
     rules: {
@@ -49,7 +49,7 @@ test(`02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - warn`, () => {
   );
 });
 
-test(`03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - err`, () => {
+test(`03 - err`, () => {
   let str = "z </b>";
   let messages = verify(not, str, {
     rules: {
@@ -74,7 +74,7 @@ test(`03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - err`, () => {
   );
 });
 
-test(`04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severity 1`, () => {
+test(`04 - via blanket rule, severity 1`, () => {
   let str = "z </b>";
   let messages = verify(not, str, {
     rules: {
@@ -99,7 +99,7 @@ test(`04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severit
   );
 });
 
-test(`05 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severity 2`, () => {
+test(`05 - via blanket rule, severity 2`, () => {
   let str = "z </b>";
   let messages = verify(not, str, {
     rules: {
@@ -124,7 +124,7 @@ test(`05 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - via blanket rule, severit
   );
 });
 
-test(`06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - no issue here`, () => {
+test(`06 - no issue here`, () => {
   let str = "<style>\n\n</style>";
   let messages = verify(not, str, {
     rules: {
@@ -138,7 +138,7 @@ test(`06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - no issue here`, () => {
 // 02. various
 // -----------------------------------------------------------------------------
 
-test(`07 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - opening and closing void tag`, () => {
+test(`07 - opening and closing void tag`, () => {
   let str = `<br><br>zzz</br></br>`;
   let fixed = `<br /><br />zzz<br /><br />`;
   let messages = verify(not, str, {
@@ -149,7 +149,7 @@ test(`07 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - opening and closing voi
   equal(applyFixes(str, messages), fixed, "07.01");
 });
 
-test(`08 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - false positive - unclosed void`, () => {
+test(`08 - false positive - unclosed void`, () => {
   let str = `<br><br>zzz<br>`;
   let fixed = `<br /><br />zzz<br />`;
   let messages = verify(not, str, {

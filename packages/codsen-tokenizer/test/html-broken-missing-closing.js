@@ -461,7 +461,7 @@ test(`09 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without sl
 // 04. EOL ends the input and tag abruptly ends
 // -----------------------------------------------------------------------------
 
-test(`10 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - abruptly ended after tag name`, () => {
+test(`10 - abruptly ended after tag name`, () => {
   let gathered = [];
   ct(`</div`, {
     tagCb: (obj) => {

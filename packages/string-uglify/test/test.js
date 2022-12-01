@@ -44,7 +44,7 @@ function makeRandomArr(len = 500, dotshashes = true) {
   return randomArr;
 }
 
-test(`03 - ${`\u001b[${33}m${`uglifyById`}\u001b[${39}m`} - generates unique and short class names`, () => {
+test(`03 - generates unique and short class names`, () => {
   let randomArr = makeRandomArr();
   randomArr.forEach((key, idx) => {
     ok(typeof uglifyById(randomArr, idx) === "string", "01.01 - it exists");

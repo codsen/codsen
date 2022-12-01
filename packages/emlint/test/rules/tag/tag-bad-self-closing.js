@@ -9,7 +9,7 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 1. basics
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - rule is off`, () => {
+test(`01 - rule is off`, () => {
   let str = `<table/>`;
   let messages = verify(not, str, {
     rules: {
@@ -20,7 +20,7 @@ test(`01 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - rule is off`, () => {
   equal(applyFixes(str, messages), str, "01.02");
 });
 
-test(`02 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - severity: warn`, () => {
+test(`02 - severity: warn`, () => {
   let str = `<table/>`;
   let fixed = `<table>`;
   let messages = verify(not, str, {
@@ -49,7 +49,7 @@ test(`02 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - severity: warn`, () => {
   equal(messages.length, 1, "02.02");
 });
 
-test(`03 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - with attributes`, () => {
+test(`03 - with attributes`, () => {
   let str = `<table width="1" border="0" cellpadding="0" cellspacing="0"/>
   <tr/>
     <td/>
@@ -140,7 +140,7 @@ test(`03 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - with attributes`, () => 
   equal(messages.length, 6, "03.02");
 });
 
-test(`04 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - excessive whitespace in front`, () => {
+test(`04 - excessive whitespace in front`, () => {
   let str = `<div  />`;
   let fixed = `<div>`;
   let messages = verify(not, str, {
@@ -152,7 +152,7 @@ test(`04 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - excessive whitespace in 
   equal(messages.length, 1, "04.02");
 });
 
-test(`05 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - excessive whitespace in between`, () => {
+test(`05 - excessive whitespace in between`, () => {
   let str = `<div/    >`;
   let fixed = `<div>`;
   let messages = verify(not, str, {
@@ -164,7 +164,7 @@ test(`05 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - excessive whitespace in 
   equal(messages.length, 1, "05.02");
 });
 
-test(`06 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - excessive whitespace everywhere`, () => {
+test(`06 - excessive whitespace everywhere`, () => {
   let str = `<div   /    >`;
   let fixed = `<div>`;
   let messages = verify(not, str, {
@@ -176,7 +176,7 @@ test(`06 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - excessive whitespace eve
   equal(messages.length, 1, "06.02");
 });
 
-test(`07 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - really excessive whitespace everywhere`, () => {
+test(`07 - really excessive whitespace everywhere`, () => {
   let str = `<div\t\t\t\n\n\n\r\r\r\t\t\t/\t\t\t\r\r\r\r\r\r\r\r\t\t\t\t\t>`;
   let fixed = `<div>`;
   let messages = verify(not, str, {
@@ -188,7 +188,7 @@ test(`07 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - really excessive whitesp
   equal(messages.length, 1, "07.02");
 });
 
-test(`08 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - group rule "tag" should be sensible`, () => {
+test(`08 - group rule "tag" should be sensible`, () => {
   let str = `<div   /    >`;
   let fixed = `<div>`;
   let messages = verify(not, str, {
@@ -199,7 +199,7 @@ test(`08 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - group rule "tag" should 
   equal(applyFixes(str, messages), fixed, "08.01");
 });
 
-test(`09 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - "all rules" setting should be sensible`, () => {
+test(`09 - "all rules" setting should be sensible`, () => {
   let str = `<div   /    >`;
   let fixed = `<div>`;
   let messages = verify(not, str, {
