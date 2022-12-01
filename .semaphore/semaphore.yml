@@ -26,6 +26,7 @@ blocks:
           - checkout
           # install yarn
           - npm i -g corepack
+          - npm i -g lerna-clean-changelogs-cli
       jobs:
         - name: Publish
           commands:
@@ -55,6 +56,7 @@ blocks:
             - "git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
             # run lerna version with all extras:
             - yarn run ci:lerna:version
+            - lernacleanchangelog
             # PS. above, we don't push git tags because
             # if something goes wrong further (and there is another build coming)
             # then we'd have problems.
