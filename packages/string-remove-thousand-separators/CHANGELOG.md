@@ -3,13 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 7.0.0 (2022-12-01)
+## 7.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-# 6.2.0 (2022-08-12)
+## 6.2.0 (2022-08-12)
 
 ### Features
 
@@ -21,13 +21,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - tweak types ([3a2f1a2](https://github.com/codsen/codsen/commit/3a2f1a2b5525c8067abcabd73735511e0ec31ce2))
 
-# [6.1.0](https://github.com/codsen/codsen/compare/string-remove-thousand-separators@6.0.13...string-remove-thousand-separators@6.1.0) (2022-04-10)
+## 6.1.0 (2022-04-10)
 
 ### Features
 
 - export `defaults` ([3b3806f](https://github.com/codsen/codsen/commit/3b3806fcefa94c91d3b653c9cfc0809a46ab76f6))
 
-## [6.0.13](https://github.com/codsen/codsen/compare/string-remove-thousand-separators@6.0.12...string-remove-thousand-separators@6.0.13) (2022-03-21)
+## 6.0.13 (2022-03-21)
 
 ### Fixed
 

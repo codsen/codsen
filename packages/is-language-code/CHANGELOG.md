@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 5.0.0 (2022-12-01)
+## 5.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
@@ -15,7 +15,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - address memory leaks related to arrays not being garbage-collected ([7001193](https://github.com/codsen/codsen/commit/7001193ba3f6eec5015b5f1199f6ae296ae31204))
 
-# 4.1.0 (2022-08-12)
+## 4.1.0 (2022-08-12)
 
 ### Features
 

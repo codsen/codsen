@@ -3,13 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.0.0](https://github.com/codsen/codsen/compare/js-row-num@6.0.0...js-row-num@7.0.0) (2022-12-01)
+## 7.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-# [6.0.0](https://github.com/codsen/codsen/compare/js-row-num@5.2.12...js-row-num@6.0.0) (2022-11-14)
+## 6.0.0 (2022-11-14)
 
 ### Features
 
@@ -20,7 +20,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - main function returns both string and ranges; output is not a plain object; no more
   opts.returnRangesOnly
 
-# 5.2.0 (2022-08-12)
+## 5.2.0 (2022-08-12)
 
 ### Features
 
@@ -33,7 +33,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - tweak types ([e215772](https://github.com/codsen/codsen/commit/e215772dc1c9f9efcbdc92f26c3370f5dd0e027e))
 
-# 5.1.0 (2022-04-11)
+## 5.1.0 (2022-04-11)
 
 ### Features
 

@@ -3,13 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.0.0](https://github.com/codsen/codsen/compare/stristri@4.1.18...stristri@5.0.0) (2022-12-01)
+## 5.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-# 4.1.0 (2022-08-12)
+## 4.1.0 (2022-08-12)
 
 ### Features
 

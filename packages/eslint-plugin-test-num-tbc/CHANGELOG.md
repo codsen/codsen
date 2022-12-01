@@ -3,15 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.0.0](https://github.com/codsen/codsen/compare/eslint-plugin-test-num-tbc@2.2.1...eslint-plugin-test-num-tbc@3.0.0) (2022-12-01)
+## 3.0.0 (2022-12-01)
 
-- update the test numbers within test-mixer foreach loops ([5905781](https://github.com/codsen/codsen/commit/59057813fd11e776f8662b153812f28ca896d77a))
+- update the test numbers within test-mixer `forEach` loops ([5905781](https://github.com/codsen/codsen/commit/59057813fd11e776f8662b153812f28ca896d77a))
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-# [2.2.0](https://github.com/codsen/codsen/compare/eslint-plugin-test-num-tbc@2.1.2...eslint-plugin-test-num-tbc@2.2.0) (2022-11-07)
+## 2.2.0 (2022-11-07)
 
 ### Features
 

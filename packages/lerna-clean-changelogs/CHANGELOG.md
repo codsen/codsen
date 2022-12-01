@@ -3,19 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 5.0.0 (2022-12-01)
+## 5.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-## [4.2.2](https://github.com/codsen/codsen/compare/lerna-clean-changelogs@4.2.1...lerna-clean-changelogs@4.2.2) (2022-08-27)
+## 4.2.2 (2022-08-27)
 
 ### Fixed
 
 - support windows CRLF line endings ([4f6195a](https://github.com/codsen/codsen/commit/4f6195a1bfa8f21f18540c90b4963f17c433980c))
 
-# 4.2.0 (2022-08-12)
+## 4.2.0 (2022-08-12)
 
 ### Features
 
@@ -28,13 +28,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - tweak types ([97ea400](https://github.com/codsen/codsen/commit/97ea4001c1bb6bf1a9a09d36fa2d1694f2c4d974))
 
-# 4.1.0 (2022-04-10)
+## 4.1.0 (2022-04-10)
 
 ### Features
 
 - export defaults ([4bc7c0f](https://github.com/codsen/codsen/commit/4bc7c0fd98f3c2e768df04a8e34b6465d04835d9))
 
-# [4.0.0](https://github.com/codsen/codsen/compare/lerna-clean-changelogs@3.0.11...lerna-clean-changelogs@4.0.0) (2022-01-22)
+## 4.0.0 (2022-01-22)
 
 ### Fixed
 

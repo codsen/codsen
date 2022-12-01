@@ -3,13 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 5.0.0 (2022-12-01)
+## 5.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-# 4.2.0 (2022-08-12)
+## 4.2.0 (2022-08-12)
 
 ### Features
 
@@ -22,7 +22,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - tweak types ([7f2a0f5](https://github.com/codsen/codsen/commit/7f2a0f579d251d7472f6dfc279478deac80bfb3a))
 
-# 4.1.0 (2022-04-11)
+## 4.1.0 (2022-04-11)
 
 ### Features
 

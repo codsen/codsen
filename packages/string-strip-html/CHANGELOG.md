@@ -3,13 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [13.0.0](https://github.com/codsen/codsen/compare/string-strip-html@12.0.0...string-strip-html@13.0.0) (2022-12-01)
+## 13.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-# [12.0.0](https://github.com/codsen/codsen/compare/string-strip-html@11.6.20...string-strip-html@12.0.0) (2022-11-14)
+## 12.0.0 (2022-11-14)
 
 ### Bug Fixes
 
@@ -24,55 +24,55 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - main function returns both string and ranges; output is not a plain object; no more
   opts.returnRangesOnly
 
-## [11.6.13](https://github.com/codsen/codsen/compare/string-strip-html@11.6.12...string-strip-html@11.6.13) (2022-10-13)
+## 11.6.13 (2022-10-13)
 
 ### Fixed
 
 - tweaks to broken code algorithm to align `dumpLinkHrefsNearby` enabled and disabled ([234faa1](https://github.com/codsen/codsen/commit/234faa1094f0dbc0c2cc8ba4345a5b91aa7cc94d))
 
-## [11.6.10](https://github.com/codsen/codsen/compare/string-strip-html@11.6.9...string-strip-html@11.6.10) (2022-10-05)
+## 11.6.10 (2022-10-05)
 
 ### Fixed
 
 - respect `stripTogetherWithTheirContents` when dumpLinkHrefsNearby is on ([43209e7](https://github.com/codsen/codsen/commit/43209e7bc2a0d13ee5392171ea120b00c377b345)), closes [#54](https://github.com/codsen/codsen/issues/54)
 
-# [11.6.0](https://github.com/codsen/codsen/compare/string-strip-html@11.5.0...string-strip-html@11.6.0) (2022-08-31)
+## 11.6.0 (2022-08-31)
 
 ### Features
 
 - treat HTML-encoded _Combining Grapheme Joiner_ (`U+034F`) character as whitespace ([5a0d7ec](https://github.com/codsen/codsen/commit/5a0d7ec6347459c67beae621902d6fee79d6db98))
 
-# [11.5.0](https://github.com/codsen/codsen/compare/string-strip-html@11.4.0...string-strip-html@11.5.0) (2022-08-31)
+## 11.5.0 (2022-08-31)
 
 ### Features
 
 - add `opts.reportProgressFunc` ([4045496](https://github.com/codsen/codsen/commit/4045496da3624442a811522962d173c519a88164))
 
-# [11.4.0](https://github.com/codsen/codsen/compare/string-strip-html@11.3.1...string-strip-html@11.4.0) (2022-08-31)
+## 11.4.0 (2022-08-31)
 
 ### Features
 
 - remove indentations in front of text too ([6527eb8](https://github.com/codsen/codsen/commit/6527eb8d3995f39b8d8736194ac1d78cedaf4b6b))
 
-# [11.3.0](https://github.com/codsen/codsen/compare/string-strip-html@11.2.0...string-strip-html@11.3.0) (2022-08-18)
+## 11.3.0 (2022-08-18)
 
 ### Features
 
 - make `opts.dumpLinkHrefsNearby` sub-keys all optional too ([90810d8](https://github.com/codsen/codsen/commit/90810d8a2474a230d5b3413bf14fbcfe4cf4c7f1))
 
-# 11.2.0 (2022-08-12)
+## 11.2.0 (2022-08-12)
 
 ### Features
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
-# [11.1.0](https://github.com/codsen/codsen/compare/string-strip-html@11.0.1...string-strip-html@11.1.0) (2022-08-01)
+## 11.1.0 (2022-08-01)
 
 ### Features
 
 - improvements to `opts.dumpLinkHrefsNearby` against punctuation ([daab255](https://github.com/codsen/codsen/commit/daab255c7b4736031ccead973e084c296e6ddba7))
 
-## [11.0.1](https://github.com/codsen/codsen/compare/string-strip-html@11.0.0...string-strip-html@11.0.1) (2022-07-26)
+## 11.0.1 (2022-07-26)
 
 ### Fixed
 
@@ -80,7 +80,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - align edge whitespace processing on cb and not on cb ([43ee6d5](https://github.com/codsen/codsen/commit/43ee6d585b8c7ae68a896d4c23a1cbca104fc83a))
 - fix stripRecognisedHTMLOnly enabled to strip single letter tags ([1b7ff49](https://github.com/codsen/codsen/commit/1b7ff494290f019beb3dee191533d4dff2878606))
 
-## [11.0.0](https://github.com/codsen/codsen/compare/string-strip-html@10.1.0...string-strip-html@11.0.0) (2022-07-16)
+## 11.0.0 (2022-07-16)
 
 ### Features
 
@@ -90,13 +90,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Bumping major just formally, there are no API changes. The inline tags now have the correct surrounding whitespace.
 
-## [10.1.0](https://github.com/codsen/codsen/compare/string-strip-html@10.0.0...string-strip-html@10.1.0) (2022-07-13)
+## 10.1.0 (2022-07-13)
 
 ### Features
 
 - improve whitespace control around punctuation ([d8318a7](https://github.com/codsen/codsen/commit/d8318a70d95425eddbea2976e3b26fd519068538)), closes [#49](https://github.com/codsen/codsen/issues/49)
 
-## [10.0.0](https://github.com/codsen/codsen/compare/string-strip-html@9.1.13...string-strip-html@10.0.0) (2022-07-06)
+## 10.0.0 (2022-07-06)
 
 ### Features
 
@@ -123,7 +123,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - Bumping major just because formally, `DOCTYPE` tag attributes are now pinged to the callback differently than before (it's done correctly now, but differently nonetheless).
 
-## [9.1.7](https://github.com/codsen/codsen/compare/string-strip-html@9.1.6...string-strip-html@9.1.7) (2022-03-21)
+## 9.1.7 (2022-03-21)
 
 ### Fixed
 

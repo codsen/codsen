@@ -3,37 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 0.8.0 (2022-12-01)
+## 0.8.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-# [0.7.0](https://github.com/codsen/codsen/compare/tsd-extract@0.6.11...tsd-extract@0.7.0) (2022-10-05)
+## 0.7.0 (2022-10-05)
 
 ### Features
 
 - query sub keys from interfaces ([aa42b2d](https://github.com/codsen/codsen/commit/aa42b2dab86559346b241cba4845ffe96f1bda04))
 
-## [0.6.4](https://github.com/codsen/codsen/compare/tsd-extract@0.6.3...tsd-extract@0.6.4) (2022-08-29)
+## 0.6.4 (2022-08-29)
 
 ### Fixed
 
 - setup refresh ([af648a3](https://github.com/codsen/codsen/commit/af648a30a205b6c93bbe7379c7530d2a4cd0e837))
 
-## [0.6.1](https://github.com/codsen/codsen/compare/tsd-extract@0.6.0...tsd-extract@0.6.1) (2022-08-14)
+## 0.6.1 (2022-08-14)
 
 ### Fixed
 
 - sort only export contents ([233abc5](https://github.com/codsen/codsen/commit/233abc557119b8d4d078b3befa5a51d0429f5bcd))
 
-# 0.6.0 (2022-08-12)
+## 0.6.0 (2022-08-12)
 
 ### Features
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
-# [0.5.0](https://github.com/codsen/codsen/compare/tsd-extract@0.4.0...tsd-extract@0.5.0) (2022-04-29)
+## 0.5.0 (2022-04-29)
 
 ### Fixed
 
@@ -43,19 +43,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - add a new function, extract() ([5619589](https://github.com/codsen/codsen/commit/5619589b7f84cddc58694f370df66235b54b7ada))
 
-# [0.4.0](https://github.com/codsen/codsen/compare/tsd-extract@0.3.1...tsd-extract@0.4.0) (2022-04-24)
+## 0.4.0 (2022-04-24)
 
 ### Features
 
 - recognise generics ([09b2aea](https://github.com/codsen/codsen/commit/09b2aea975c1cc8ec63ff78af6bcd7b7ffc95c9d))
 
-# 0.3.0 (2022-04-17)
+## 0.3.0 (2022-04-17)
 
 ### Features
 
 - `opts.stripAs` ([e4e1ca6](https://github.com/codsen/codsen/commit/e4e1ca6792045068f80ac40684eac9b7758aae7f))
 
-# [0.2.0](https://github.com/codsen/codsen/compare/tsd-extract@0.1.0...tsd-extract@0.2.0) (2022-04-10)
+## 0.2.0 (2022-04-10)
 
 ### Fixed
 
@@ -68,7 +68,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - `opts.semi` ([569080b](https://github.com/codsen/codsen/commit/569080b8bcdc18b58a4ba46cddc505559671b130))
 - tackle the case of type def re-export ([7635e9e](https://github.com/codsen/codsen/commit/7635e9ecf33a3c1192df66fd05180ae0133665a7))
 
-# 0.1.0 (2022-03-21)
+## 0.1.0 (2022-03-21)
 
 ### Features
 

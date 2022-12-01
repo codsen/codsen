@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.5.0](https://github.com/codsen/codsen/compare/remark-typography@0.4.9...remark-typography@0.5.0) (2022-12-01)
+## 0.5.0 (2022-12-01)
 
 ### Features
 
@@ -14,19 +14,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - this package is not pure-ESM any more, you can `require `it; plus, minimum Node
   requirements are now v14.18 and above
 
-## [0.4.4](https://github.com/codsen/codsen/compare/remark-typography@0.4.3...remark-typography@0.4.4) (2022-10-22)
+## 0.4.4 (2022-10-22)
 
 ### Fixed
 
 - set the tree walker to be a synchronous function ([8cf34ec](https://github.com/codsen/codsen/commit/8cf34ec02437e5b2d646508beea8ebad97f5197e))
 
-# [0.4.0](https://github.com/codsen/codsen/compare/remark-typography@0.3.4...remark-typography@0.4.0) (2022-10-13)
+## 0.4.0 (2022-10-13)
 
 ### Features
 
 - correct apostrophes after code tag pairs ([6495fe3](https://github.com/codsen/codsen/commit/6495fe370022eca5ad984b689294cdee33db1a63))
 
-# [0.3.0](https://github.com/codsen/codsen/compare/remark-typography@0.2.0...remark-typography@0.3.0) (2022-09-27)
+## 0.3.0 (2022-09-27)
 
 ### Fixed
 
@@ -36,18 +36,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - fix dependencies
 
-# 1.0.0 (2022-09-25)
+## 1.0.0 (2022-09-25)
 
 - promote semver to stable v1
 - move few TS-exclusive dependencies from `devDependencies` to `dependencies` because types are still importing them and so they are not "dev"
 
-# [0.2.0](https://github.com/codsen/codsen/compare/remark-typography@0.1.0...remark-typography@0.2.0) (2022-09-22)
+## 0.2.0 (2022-09-22)
 
 ### Features
 
 - widow word removal ([d4d68d8](https://github.com/codsen/codsen/commit/d4d68d8a1331cf32a41eb1d9ca3f49bb464c59ef))
 
-# 0.1.0 (2022-09-19)
+## 0.1.0 (2022-09-19)
 
 ### Features
 

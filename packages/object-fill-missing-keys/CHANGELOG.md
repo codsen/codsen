@@ -3,13 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 11.0.0 (2022-12-01)
+## 11.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-# 10.0.0 (2022-10-16)
+## 10.0.0 (2022-10-16)
 
 ### Fixed
 
@@ -20,7 +20,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - during deep merging, if value of the incoming schema is matching what's already
   there, now already there prevails; previously, the schema would prevail
 
-# 9.2.0 (2022-08-12)
+## 9.2.0 (2022-08-12)
 
 ### Features
 
@@ -33,7 +33,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - tweak types ([050580c](https://github.com/codsen/codsen/commit/050580c1c7935383d499a7f46acb1e6cb44a0ae4))
 
-# 9.1.0 (2022-04-10)
+## 9.1.0 (2022-04-10)
 
 ### Features
 

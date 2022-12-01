@@ -3,20 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 2.0.0 (2022-12-01)
+## 2.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-# 1.2.0 (2022-08-12)
+## 1.2.0 (2022-08-12)
 
 ### Features
 
 - export types ([39e4fcd](https://github.com/codsen/codsen/commit/39e4fcd03739975fa5c692924488691100c628d8))
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
-# [1.1.0](https://github.com/codsen/codsen/compare/string-bionic-split@1.0.1...string-bionic-split@1.1.0) (2022-05-25)
+## 1.1.0 (2022-05-25)
 
 ### Features
 

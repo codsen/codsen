@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.0.0](https://github.com/codsen/codsen/compare/remark-conventional-commit-changelog-timeline@2.0.5...remark-conventional-commit-changelog-timeline@3.0.0) (2022-12-01)
+## 3.0.0 (2022-12-01)
 
 ### Features
 
@@ -14,7 +14,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - you can `require` this package now; also minimum Node requirements are v14.18 or
   above
 
-# [2.0.0](https://github.com/codsen/codsen/compare/remark-conventional-commit-changelog-timeline@1.2.0...remark-conventional-commit-changelog-timeline@2.0.0) (2022-10-26)
+## 2.0.0 (2022-10-26)
 
 ### Features
 
@@ -24,13 +24,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - implement a callback interface to fully customise the date `div` contents
 
-# [1.2.0](https://github.com/codsen/codsen/compare/remark-conventional-commit-changelog-timeline@1.1.0...remark-conventional-commit-changelog-timeline@1.2.0) (2022-10-23)
+## 1.2.0 (2022-10-23)
 
 ### Features
 
 - wrap emoji with a `span` ([9d9e25f](https://github.com/codsen/codsen/commit/9d9e25f86fb333a60d5f2fff7f0f293bb5620c63))
 
-# [1.1.0](https://github.com/codsen/codsen/compare/remark-conventional-commit-changelog-timeline@1.0.1...remark-conventional-commit-changelog-timeline@1.1.0) (2022-10-23)
+## 1.1.0 (2022-10-23)
 
 ### Features
 

@@ -3,19 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.0.0](https://github.com/codsen/codsen/compare/json-sort-cli@2.1.11...json-sort-cli@3.0.0) (2022-12-01)
+## 3.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-## [2.1.3](https://github.com/codsen/codsen/compare/json-sort-cli@2.1.2...json-sort-cli@2.1.3) (2022-10-13)
+## 2.1.3 (2022-10-13)
 
 ### Fixed
 
 - update dependencies ([a3834e7](https://github.com/codsen/codsen/commit/a3834e75d77cbdb238cfa8ec392829dfa95cb962))
 
-# 2.1.0 (2022-08-12)
+## 2.1.0 (2022-08-12)
 
 ### Features
 

@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 2.0.0 (2022-12-01)
+## 2.0.0 (2022-12-01)
 
 ### Features
 
@@ -13,7 +13,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - package is not pure ESM any more, you can `require` it now
 
-# [1.4.0](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.3.0...rehype-responsive-tables@1.4.0) (2022-10-17)
+## 1.4.0 (2022-10-17)
 
 ### Fixed
 
@@ -23,25 +23,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - wrap each lifted label with a span too ([34832ca](https://github.com/codsen/codsen/commit/34832cac9c2c21bc0ff405ff136754e1592e8a57))
 
-# [1.3.0](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.2.0...rehype-responsive-tables@1.3.0) (2022-10-11)
+## 1.3.0 (2022-10-11)
 
 ### Features
 
 - classes `rrt-new-tr-span`, `rrt-gap-tr` and setting `opts.up` ([0ebe772](https://github.com/codsen/codsen/commit/0ebe772d80a7e892ed77338c28e47440fb6e7f53))
 
-# [1.2.0](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.1.0...rehype-responsive-tables@1.2.0) (2022-10-05)
+## 1.2.0 (2022-10-05)
 
 ### Features
 
 - add `opts.tableClassName` ([bab68f3](https://github.com/codsen/codsen/commit/bab68f370af5a7ca57d8e03102a80927831d27f9))
 
-# [1.1.0](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.0.2...rehype-responsive-tables@1.1.0) (2022-09-27)
+## 1.1.0 (2022-09-27)
 
 ### Features
 
 - support nested td contents not just text nodes ([e19613a](https://github.com/codsen/codsen/commit/e19613aeec9d1800daed8043b50591fe265050df))
 
-## [1.0.2](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.0.1...rehype-responsive-tables@1.0.2) (2022-09-27)
+## 1.0.2 (2022-09-27)
 
 ### Fixed
 

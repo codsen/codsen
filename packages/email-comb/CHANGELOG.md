@@ -3,31 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 7.0.0 (2022-12-01)
+## 7.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-# [6.3.0](https://github.com/codsen/codsen/compare/email-comb@6.2.0...email-comb@6.3.0) (2022-08-18)
+## 6.3.0 (2022-08-18)
 
 ### Features
 
 - fix result `log.originalLength` ([994b27d](https://github.com/codsen/codsen/commit/994b27d3c8431f222e52512c5fe65db42011dab2))
 
-# 6.2.0 (2022-08-12)
+## 6.2.0 (2022-08-12)
 
 ### Features
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
-## [6.1.22](https://github.com/codsen/codsen/compare/email-comb@6.1.21...email-comb@6.1.22) (2022-08-04)
+## 6.1.22 (2022-08-04)
 
 ### Fixed
 
 - export `Opts` and `Res` types ([398a7d1](https://github.com/codsen/codsen/commit/398a7d19e70322c629bf5d7cf9fb107e64aefc15))
 
-## [6.1.18](https://github.com/codsen/codsen/compare/email-comb@6.1.17...email-comb@6.1.18) (2022-07-13)
+## 6.1.18 (2022-07-13)
 
 ### Fixed
 

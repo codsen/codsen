@@ -3,19 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 3.0.0 (2022-12-01)
+## 3.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-# 2.1.0 (2022-08-12)
+## 2.1.0 (2022-08-12)
 
 ### Features
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
-## [2.0.16](https://github.com/codsen/codsen/compare/lerna-clean-changelogs-cli@2.0.15...lerna-clean-changelogs-cli@2.0.16) (2022-05-04)
+## 2.0.16 (2022-05-04)
 
 ### Fixed
 

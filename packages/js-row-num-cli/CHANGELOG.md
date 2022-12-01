@@ -3,25 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.0.0](https://github.com/codsen/codsen/compare/js-row-num-cli@2.2.13...js-row-num-cli@3.0.0) (2022-12-01)
+## 3.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-## [2.2.13](https://github.com/codsen/codsen/compare/js-row-num-cli@2.2.12...js-row-num-cli@2.2.13) (2022-11-14)
+## 2.2.13 (2022-11-14)
 
 ### Bug Fixes
 
 - update to the latest js-row-num API which now returns a plain object ([231348d](https://github.com/codsen/codsen/commit/231348d93988ace923dd9d663a7c084183e6b203))
 
-# 2.2.0 (2022-08-12)
+## 2.2.0 (2022-08-12)
 
 ### Features
 
 - export types ([11b5fb9](https://github.com/codsen/codsen/commit/11b5fb936ce20e0a77c3a09806773e1cd7695c50))
 
-# 2.1.0 (2022-04-11)
+## 2.1.0 (2022-04-11)
 
 ### Features
 

@@ -3,13 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.0.0](https://github.com/codsen/codsen/compare/ast-compare@3.2.17...ast-compare@4.0.0) (2022-12-01)
+## 4.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-# 3.2.0 (2022-08-12)
+## 3.2.0 (2022-08-12)
 
 ### Features
 
@@ -21,7 +21,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - tweak types ([0454269](https://github.com/codsen/codsen/commit/0454269e8831fcea5078e6d28429947fa8ab369d))
 
-# 3.1.0 (2022-04-10)
+## 3.1.0 (2022-04-10)
 
 ### Features
 

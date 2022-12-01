@@ -3,13 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 6.0.0 (2022-12-01)
+## 6.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-## [5.0.22](https://github.com/codsen/codsen/compare/html-crush@5.0.21...html-crush@5.0.22) (2022-08-02)
+## 5.0.22 (2022-08-02)
 
 ### Fixed
 

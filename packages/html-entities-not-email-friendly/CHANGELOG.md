@@ -3,13 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 0.8.0 (2022-12-01)
+## 0.8.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
 - Minimum supported Node version is v14.18; we're dropping v12 support
 
-# 0.7.0 (2022-08-12)
+## 0.7.0 (2022-08-12)
 
 ### Features
 
