@@ -2,9 +2,9 @@
 /* eslint-disable no-unused-vars */
 
 import {
-  promises as fs,
-  F_OK,
-  accessSync,
+  // promises as fs,
+  // F_OK,
+  // accessSync,
   readdirSync,
   statSync,
   writeFile,
@@ -16,9 +16,9 @@ import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import remarkGfm from "remark-gfm";
-import changelogTimeline from "remark-conventional-commit-changelog-timeline";
-import remarkTypography from "remark-typography";
-import rehypeFormat from "rehype-format";
+import changelogTimeline from "remark-conventional-commit-changelog-timeline/dist/remark-conventional-commit-changelog-timeline.esm.js";
+import remarkTypography from "remark-typography/dist/remark-typography.esm.js";
+// import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
 import { removeTbc } from "../lect/plugins/_util.js";
 

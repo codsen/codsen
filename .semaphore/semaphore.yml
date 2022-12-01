@@ -61,12 +61,6 @@ blocks:
             #
             # Now build again, because those bumped versions need to be written into header comment blocks:
             - yarn run build
-            # Also, ci:publish:all will only generate @codsen/data source files
-            # we still need to build the fresh dist/ contents!
-            - yarn run ci:generate:info
-            - cd data
-            - yarn run build
-            - cd ..
             # run perf, it will save down the latest dep version in perf/historical.json
             # - yarn run perf
             # finally, sort the git matters
@@ -86,6 +80,13 @@ blocks:
             - git push
             - git push origin --tags
             # build and publish @codsen/data
+            - yarn run ci:generate:info
+            - yarn run ci:generate:changelogs
+            - cd data
+            - yarn run build
+            - git add .
+            - cd ..
+            - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
             - cd data
             - yarn run publ
             - cd ..
