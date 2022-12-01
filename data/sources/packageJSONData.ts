@@ -63,7 +63,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -139,7 +139,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -222,7 +222,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -294,7 +294,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -370,7 +370,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -450,7 +450,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -528,7 +528,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -608,7 +608,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -695,7 +695,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -785,7 +785,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -876,7 +876,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -967,7 +967,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -1059,7 +1059,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -1150,7 +1150,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -1237,7 +1237,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -1327,7 +1327,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -1416,7 +1416,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -1510,7 +1510,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -1598,7 +1598,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -1683,7 +1683,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -1766,7 +1766,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -1843,7 +1843,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -1911,7 +1911,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": false,
@@ -1983,7 +1983,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -2065,7 +2065,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -2155,7 +2155,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -2242,7 +2242,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -2320,7 +2320,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": false,
@@ -2409,7 +2409,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -2488,7 +2488,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -2556,7 +2556,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -2635,7 +2635,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -2731,7 +2731,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -2804,7 +2804,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -2886,7 +2886,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -2953,7 +2953,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": false,
@@ -3040,7 +3040,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -3127,7 +3127,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": false,
@@ -3223,7 +3223,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -3333,7 +3333,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -3412,7 +3412,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -3494,7 +3494,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -3570,7 +3570,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -3641,7 +3641,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": false,
@@ -3713,7 +3713,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": false,
@@ -3796,7 +3796,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -3866,7 +3866,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -3948,7 +3948,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -4026,7 +4026,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -4104,7 +4104,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -4186,7 +4186,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -4269,7 +4269,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -4345,7 +4345,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -4427,7 +4427,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -4512,7 +4512,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -4588,7 +4588,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -4665,7 +4665,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -4744,7 +4744,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -4817,7 +4817,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": false,
@@ -4892,7 +4892,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": false,
@@ -4973,7 +4973,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -5058,7 +5058,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": false,
@@ -5153,7 +5153,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -5240,7 +5240,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -5306,7 +5306,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": false,
@@ -5391,7 +5391,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": false,
@@ -5466,7 +5466,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -5539,7 +5539,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -5616,7 +5616,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -5706,7 +5706,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -5791,7 +5791,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -5875,7 +5875,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -5957,7 +5957,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -6042,7 +6042,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -6135,7 +6135,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -6208,7 +6208,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -6288,7 +6288,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -6363,7 +6363,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -6443,7 +6443,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -6520,7 +6520,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -6591,7 +6591,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -6663,7 +6663,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -6739,7 +6739,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -6814,7 +6814,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -6881,7 +6881,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -6961,7 +6961,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -7040,7 +7040,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -7115,7 +7115,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -7189,7 +7189,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -7263,7 +7263,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -7339,7 +7339,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -7413,7 +7413,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -7463,9 +7463,9 @@ export const packageJSONData = {
             "cjs-off": "node '../../ops/scripts/cjs-off.js'",
             "cjs-on": "node '../../ops/scripts/cjs-on.js'",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
-            "devtest": "c8 yarn run unit && yarn run lint",
+            "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
-            "examples": "exit 0",
+            "examples": "node '../../ops/scripts/run-examples.js'",
             "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' --write",
             "letspublish": "yarn publish || :",
             "lint": "eslint . --ext .js --ext .ts --fix",
@@ -7478,7 +7478,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -7542,9 +7542,9 @@ export const packageJSONData = {
             "cjs-off": "node '../../ops/scripts/cjs-off.js'",
             "cjs-on": "node '../../ops/scripts/cjs-on.js'",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
-            "devtest": "c8 yarn run unit && yarn run lint",
+            "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
-            "examples": "exit 0",
+            "examples": "node '../../ops/scripts/run-examples.js'",
             "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' --write",
             "letspublish": "yarn publish || :",
             "lint": "eslint . --ext .js --ext .ts --fix",
@@ -7557,7 +7557,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -7624,9 +7624,9 @@ export const packageJSONData = {
             "cjs-off": "node '../../ops/scripts/cjs-off.js'",
             "cjs-on": "node '../../ops/scripts/cjs-on.js'",
             "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
-            "devtest": "c8 yarn run unit && yarn run lint",
+            "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
             "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
-            "examples": "exit 0",
+            "examples": "node '../../ops/scripts/run-examples.js'",
             "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' --write",
             "letspublish": "yarn publish || :",
             "lint": "eslint . --ext .js --ext .ts --fix",
@@ -7639,7 +7639,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -7723,7 +7723,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "branches": 100,
@@ -7796,7 +7796,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -7867,7 +7867,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -7945,7 +7945,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -8021,7 +8021,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -8097,7 +8097,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -8168,7 +8168,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -8247,7 +8247,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -8320,7 +8320,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -8397,7 +8397,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -8474,7 +8474,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -8553,7 +8553,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -8632,7 +8632,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -8717,7 +8717,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -8795,7 +8795,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -8881,7 +8881,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -8953,7 +8953,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -9024,7 +9024,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -9100,7 +9100,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -9184,7 +9184,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -9269,7 +9269,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -9354,7 +9354,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -9437,7 +9437,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -9526,7 +9526,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -9594,7 +9594,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "branches": 100,
@@ -9677,7 +9677,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -9754,7 +9754,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -9835,7 +9835,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -9921,7 +9921,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -10003,7 +10003,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -10087,7 +10087,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -10162,7 +10162,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": false,
@@ -10253,7 +10253,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
@@ -10329,7 +10329,7 @@ export const packageJSONData = {
             "unit": "uvu test"
         },
         "engines": {
-            "node": ">=14.0.0"
+            "node": ">=14.18.0"
         },
         "c8": {
             "check-coverage": true,
