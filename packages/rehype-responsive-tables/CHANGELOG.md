@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.0 (2022-12-01)
+
+### Features
+
+- remove pure-ESM setup ([b405991](https://github.com/codsen/codsen/commit/b405991e06502e106bcb5cd4d49d94a663d078f2))
+
+### BREAKING CHANGES
+
+- package is not pure ESM any more, you can `require` it now
+
 # [1.4.0](https://github.com/codsen/codsen/compare/rehype-responsive-tables@1.3.0...rehype-responsive-tables@1.4.0) (2022-10-17)
 
 ### Fixed

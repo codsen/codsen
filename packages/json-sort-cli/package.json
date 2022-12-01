@@ -1,6 +1,6 @@
 {
   "name": "json-sort-cli",
-  "version": "2.1.11",
+  "version": "3.0.0",
   "description": "Command line app to deep sort JSON files, retains package.json special key order",
   "keywords": [
     "app",
@@ -61,7 +61,7 @@
     }
   },
   "dependencies": {
-    "ast-monkey-traverse": "^3.1.6",
+    "ast-monkey-traverse": "^4.0.0",
     "chalk": "^5.1.2",
     "fs-extra": "^11.1.0",
     "globby": "^13.1.2",

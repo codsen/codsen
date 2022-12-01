@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/codsen/codsen/compare/remark-conventional-commit-changelog-timeline@2.0.5...remark-conventional-commit-changelog-timeline@3.0.0) (2022-12-01)
+
+### Features
+
+- remove pure-ESM setup ([1cf14c4](https://github.com/codsen/codsen/commit/1cf14c4707f1f5141c2d04051e7263c9bff8f57c))
+
+### BREAKING CHANGES
+
+- you can `require` this package now; also minimum Node requirements are v14.18 or
+  above
+
 # [2.0.0](https://github.com/codsen/codsen/compare/remark-conventional-commit-changelog-timeline@1.2.0...remark-conventional-commit-changelog-timeline@2.0.0) (2022-10-26)
 
 ### Features

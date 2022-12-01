@@ -1,6 +1,6 @@
 {
   "name": "str-indexes-of-plus",
-  "version": "4.1.6",
+  "version": "5.0.0",
   "description": "Like indexOf but returns array and counts per-grapheme",
   "keywords": [
     "array",

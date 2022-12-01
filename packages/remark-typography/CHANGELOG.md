@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/codsen/codsen/compare/remark-typography@0.4.9...remark-typography@0.5.0) (2022-12-01)
+
+### Features
+
+- remove pure-ESM setup ([df06a23](https://github.com/codsen/codsen/commit/df06a2369ec5a45fc3ef66a20c1bd60c44d6ca35))
+
+### BREAKING CHANGES
+
+- this package is not pure-ESM any more, you can `require `it; plus, minimum Node
+  requirements are now v14.18 and above
+
 ## [0.4.4](https://github.com/codsen/codsen/compare/remark-typography@0.4.3...remark-typography@0.4.4) (2022-10-22)
 
 ### Fixed

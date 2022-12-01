@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 6.0.0 (2022-12-01)
+
+### Features
+
+- drop Node v12 support; minimum version requirement now is v14.18 and above ([c8049e8](https://github.com/codsen/codsen/commit/c8049e82a5844d3f72587740f1cc74e3c9020d22))
+
+### BREAKING CHANGES
+
+- Minimum supported Node version is v14.18; we're dropping v12 support
+
 # 5.1.0 (2022-08-12)
 
 ### Features
