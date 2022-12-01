@@ -12,7 +12,7 @@ interface Opts {
   dateDivMarkup: (dateParamsObj: DateParamsObj) => string;
 }
 declare const defaults: Opts;
-type UnifiedPlugin<T> = Plugin<[T], Root>;
+declare type UnifiedPlugin<T> = Plugin<[T], Root>;
 declare const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]>;
 
 export { DateParamsObj, Opts, changelogTimeline as default, defaults };

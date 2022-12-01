@@ -26,20 +26,17 @@
     "url": "https://codsen.com"
   },
   "type": "module",
-  "exports": {
-    "types": "./types/index.d.ts",
-    "default": "./dist/remark-conventional-commit-changelog-timeline.esm.js"
-  },
+  "main": "dist/remark-conventional-commit-changelog-timeline.cjs.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "build": "node '../../ops/scripts/esbuild.js' && yarn run dts",
-    "cjs-off": "exit 0",
-    "cjs-on": "exit 0",
+    "build": "node '../../ops/scripts/esbuild.js' && node '../../ops/scripts/fix-cjs.js' && yarn run dts",
+    "cjs-off": "node '../../ops/scripts/cjs-off.js'",
+    "cjs-on": "node '../../ops/scripts/cjs-on.js'",
     "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
     "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
     "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
     "examples": "node '../../ops/scripts/run-examples.js'",
-    "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
+    "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' --write",
     "letspublish": "yarn publish || :",
     "lint": "eslint . --ext .js --ext .ts --fix",
     "perf": "echo 'skip perf'",
@@ -51,7 +48,7 @@
     "unit": "uvu test"
   },
   "engines": {
-    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+    "node": ">=14.18.0"
   },
   "c8": {
     "check-coverage": true,
