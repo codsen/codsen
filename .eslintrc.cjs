@@ -64,8 +64,8 @@ module.exports = {
     "test-num/correct-test-num": "error",
     "import/extensions": "off",
     "no-shadow": "off",
-
     "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/prefer-optional-chain": "off",
   },
   overrides: [
     {
@@ -97,7 +97,6 @@ module.exports = {
         "@typescript-eslint/prefer-namespace-keyword": "error",
         "@typescript-eslint/restrict-plus-operands": "error",
         "@typescript-eslint/no-useless-constructor": "error",
-        "@typescript-eslint/prefer-optional-chain": "warn",
         "@typescript-eslint/no-dupe-class-members": "error",
         "@typescript-eslint/no-use-before-define": [
           "error",
@@ -132,6 +131,7 @@ module.exports = {
         ],
         "@typescript-eslint/array-type": "error",
         "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/prefer-optional-chain": "off",
         "@typescript-eslint/no-unnecessary-condition": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
 
