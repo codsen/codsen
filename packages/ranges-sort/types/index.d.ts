@@ -1,9 +1,9 @@
-declare type Range =
+type Range =
   | [from: number, to: number]
   | [from: number, to: number, whatToInsert: string | null | undefined];
-declare type Ranges = Range[] | null;
+type Ranges = Range[] | null;
 declare const version: string;
-declare type ProgressFn = (percentageDone: number) => void;
+type ProgressFn = (percentageDone: number) => void;
 interface Opts {
   strictlyTwoElementsInRangeArrays: boolean;
   progressFn: undefined | null | ProgressFn;

@@ -5,7 +5,7 @@ declare const version: string;
 interface UnknownValueObj {
   [key: string]: any;
 }
-declare type ProgressFn = (percentageDone: number) => void;
+type ProgressFn = (percentageDone: number) => void;
 interface Opts {
   mergeType: 1 | 2 | "1" | "2";
   progressFn: null | undefined | ProgressFn;

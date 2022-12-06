@@ -1,8 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# we use yarn
-package-lock.json
-data/yarn.lock
+# lockfiles
+# package-lock.json
+yarn.lock
 
 # dependencies
 node_modules

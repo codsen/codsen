@@ -12,5 +12,12 @@
     ".git",
     "node_modules"
   ],
-  "references": []
+  "references": [
+    {
+      "path": "../js-row-num"
+    },
+    {
+      "path": "../object-delete-key"
+    }
+  ]
 }

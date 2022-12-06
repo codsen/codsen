@@ -1,5 +1,5 @@
 declare const version: string;
-declare type Res =
+type Res =
   | {
       res: true;
       message: null;

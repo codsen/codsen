@@ -1,15 +1,9 @@
 declare const version: string;
-declare type JsonValue =
-  | string
-  | number
-  | boolean
-  | null
-  | JsonObject
-  | JsonArray;
-declare type JsonObject = {
+type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
+type JsonObject = {
   [Key in string]?: JsonValue;
 };
-declare type JsonArray = JsonValue[];
+type JsonArray = JsonValue[];
 interface Opts {
   matchKeysStrictly: boolean;
   hungryForWhitespace: boolean;

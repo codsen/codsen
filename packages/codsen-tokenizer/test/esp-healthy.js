@@ -449,7 +449,7 @@ test(`10 - nunjucks, brackets`, () => {
           tailEndsAt: input.length,
         },
       ],
-      "10"
+      "10.01"
     );
   });
 });

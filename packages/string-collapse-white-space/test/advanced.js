@@ -2094,7 +2094,7 @@ test(`27 - bracket`, () => {
         },
       }).result,
       `a > b`,
-      "26"
+      "27.01"
     );
   });
 });
@@ -2119,7 +2119,7 @@ test(`28 - bracket`, () => {
         },
       }).result,
       `<span>zzz</span> abc def ghij klm`,
-      "27.01"
+      "28.01"
     );
   });
 });

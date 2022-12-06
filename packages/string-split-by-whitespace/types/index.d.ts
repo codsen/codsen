@@ -1,4 +1,4 @@
-declare type Range =
+type Range =
   | [from: number, to: number]
   | [from: number, to: number, whatToInsert: string | null | undefined];
 

@@ -46,22 +46,22 @@
     "emlint": "bin/cli.js"
   },
   "scripts": {
-    "build": "node '../../ops/scripts/esbuild.js' && yarn run dts && node './bin/helper.js'",
+    "build": "node '../../ops/scripts/esbuild.js' && npm run dts && node './bin/helper.js'",
     "cjs-off": "exit 0",
     "cjs-on": "exit 0",
-    "dev": "DEV=true node '../../ops/scripts/esbuild.js' && yarn run dts",
-    "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
-    "dts": "rollup -c && yarn run prettier 'types/index.d.ts' --write",
+    "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
+    "devtest": "c8 npm run unit && npm run examples && npm run lint",
+    "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --loglevel 'silent'",
     "examples": "node '../../ops/scripts/run-examples.js'",
-    "lect": "node '../../ops/lect/lect.js' && yarn run prettier 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-    "letspublish": "yarn publish || :",
+    "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
+    "letspublish": "npm publish || :",
     "lint": "eslint . --ext .js --ext .ts --fix",
     "perf": "node perf/check.js",
-    "prepare": "echo 'ready'",
+    "prep": "echo 'ready'",
     "prettier": "prettier",
-    "prettier:format": "prettier --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern",
-    "pretest": "yarn run lect && yarn run build",
-    "test": "yarn run devtest",
+    "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
+    "pretest": "npm run lect && npm run build",
+    "test": "npm run devtest",
     "unit": "uvu test"
   },
   "engines": {
@@ -105,6 +105,7 @@
     "object-path": "^0.11.8",
     "p-reduce": "^3.0.0",
     "ranges-merge": "^9.0.0",
+    "re2": "^1.17.8",
     "rgba-regex": "^1.0.0",
     "string-find-malformed": "^4.0.0",
     "string-fix-broken-named-entities": "^7.0.0",
@@ -113,13 +114,14 @@
     "string-process-comma-separated": "^4.0.0",
     "tiny-typed-emitter": "^2.1.0",
     "update-notifier": "^6.0.2",
-    "url-regex": "^5.0.0"
+    "url-regex-safe": "^3.0.0"
   },
   "devDependencies": {
     "@types/he": "^1.1.2",
     "@types/lodash.clonedeep": "^4.5.7",
     "@types/lodash.isregexp": "^4.0.7",
     "@types/mime-db": "^1.43.1",
+    "@types/url-regex-safe": "^1.0.0",
     "ast-deep-contains": "^5.0.0",
     "ranges-apply": "^7.0.0"
   }

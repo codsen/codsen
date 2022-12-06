@@ -62,7 +62,7 @@ test(`03 - single sentence, no full stop`, () => {
         minCharCount: 5,
       }).res,
       `aaa bbb ccc${encodedNbsps[i]}ddd`,
-      `01.03.0${1 + i} - ${targetLanguage}`
+      `03.03.003.0${1 + i} - ${targetLanguage}`
     );
     equal(
       removeWidows(`aaa bbb ccc ddd`, {
@@ -71,7 +71,7 @@ test(`03 - single sentence, no full stop`, () => {
         minCharCount: 5,
       }).res,
       `aaa bbb ccc${rawnbsp}ddd`,
-      `01.03.0${2 + i} - ${targetLanguage}`
+      `03.03.003.0${2 + i} - ${targetLanguage}`
     );
     equal(
       removeWidows(`aaa bbb ccc ddd`, {
@@ -81,7 +81,7 @@ test(`03 - single sentence, no full stop`, () => {
         minCharCount: 5,
       }).res,
       `aaa bbb ccc ddd`,
-      `01.03.0${3 + i} - ${targetLanguage}`
+      `03.03.003.0${3 + i} - ${targetLanguage}`
     );
   });
 });
@@ -95,7 +95,7 @@ test(`04 - single sentence, full stop`, () => {
         minCharCount: 5,
       }).res,
       `Aaa bbb ccc${encodedNbsps[i]}ddd.`,
-      `01.04.0${1 + i} - ${targetLanguage}`
+      `04.04.004.0${1 + i} - ${targetLanguage}`
     );
     equal(
       removeWidows(`Aaa bbb ccc ddd.`, {
@@ -104,7 +104,7 @@ test(`04 - single sentence, full stop`, () => {
         minCharCount: 5,
       }).res,
       `Aaa bbb ccc${rawnbsp}ddd.`,
-      `01.04.0${2 + i} - ${targetLanguage}`
+      `04.04.004.0${2 + i} - ${targetLanguage}`
     );
     equal(
       removeWidows(`Aaa bbb ccc ddd.`, {
@@ -114,7 +114,7 @@ test(`04 - single sentence, full stop`, () => {
         minCharCount: 5,
       }).res,
       `Aaa bbb ccc ddd.`,
-      `01.04.0${3 + i} - ${targetLanguage}`
+      `04.04.004.0${3 + i} - ${targetLanguage}`
     );
   });
 });
@@ -221,7 +221,7 @@ test(`06 - raw non-breaking space already there`, () => {
     equal(
       val1.res,
       `aaa bbb ccc${encodedNbsps[i]}ddd`,
-      `01.06.0${1 + i} - ${targetLanguage}`
+      `06.06.006.0${1 + i} - ${targetLanguage}`
     );
     equal(val1.whatWasDone, {
       removeWidows: true,
@@ -235,7 +235,7 @@ test(`06 - raw non-breaking space already there`, () => {
     equal(
       val2.res,
       `aaa bbb ccc${rawnbsp}ddd`,
-      `01.06.0${2 + i} - ${targetLanguage}`
+      `06.06.006.0${2 + i} - ${targetLanguage}`
     );
     equal(val2.whatWasDone, {
       removeWidows: true,
@@ -247,7 +247,11 @@ test(`06 - raw non-breaking space already there`, () => {
       convertEntities: false,
       minCharCount: 5,
     });
-    equal(val3.res, `aaa bbb ccc ddd`, `01.06.0${3 + i} - ${targetLanguage}`);
+    equal(
+      val3.res,
+      `aaa bbb ccc ddd`,
+      `06.06.006.0${3 + i} - ${targetLanguage}`
+    );
     equal(val3.whatWasDone, {
       removeWidows: true,
       convertEntities: false,

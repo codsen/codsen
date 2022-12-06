@@ -48,7 +48,7 @@ test(`03 - hairspace - tight - hairspace changed to space`, () => {
         opt
       ).res,
       "a a a a a a",
-      "02"
+      "03.01"
     );
   });
 });
@@ -66,7 +66,7 @@ test(`04 - hairspace - tight - hairspace changed to space (lots of spaces)`, () 
         opt
       ).res,
       "a a a a a a",
-      "03"
+      "04.01"
     );
   });
 });
@@ -85,7 +85,7 @@ test(`05 - hairspace - tight - hairspace changed to space: +widows+entities`, ()
         opt
       ).res,
       "a b c d e&nbsp;f",
-      "04"
+      "05.01"
     );
   });
 });
@@ -99,7 +99,7 @@ test("06 - invisible breaks - raw", () => {
       det(ok, not, n, "a\u000Ab\u000Bc\u000Cd\u000De\u2028f\u2029g\u0003h", opt)
         .res,
       "a\nb\nc\nd\ne\nf\ng\nh",
-      "05"
+      "06.01"
     );
   });
 });
@@ -112,7 +112,7 @@ test("07 - invisible breaks - encoded decimal HTML entities", () => {
     equal(
       det(ok, not, n, "a&#10;b&#11;c&#12;&#13;&#8232;&#8233;&#3;d", opt).res,
       "a\nb\nc\n\nd",
-      "06"
+      "07.01"
     );
   });
 });
@@ -124,7 +124,7 @@ test("08 - invisible breaks - remove all line breaks on", () => {
     equal(
       det(ok, not, n, "a\u000Eb\u000C\u000D\u0085c\u2028\u2029d", opt).res,
       "ab cd",
-      "07"
+      "08.01"
     );
   });
 });
@@ -139,7 +139,7 @@ test("09 - invisible breaks - replace breaks into XHTML BR's", () => {
       det(ok, not, n, "a\u000Ab\u000Bc\u000C\u000D\u0085\u2028\u2029d", opt)
         .res,
       "a<br/>\nb\nc<br/>\n\nd",
-      "08"
+      "09.01"
     );
   });
 });
@@ -154,7 +154,7 @@ test("10 - invisible breaks - replace breaks into HTML BR's", () => {
       det(ok, not, n, "a\u000Ab\u000Bc\u000C\u000D\u0085\u2028\u2029d", opt)
         .res,
       "a<br>\nb\nc<br>\n\nd",
-      "09"
+      "10.01"
     );
   });
 });
@@ -164,7 +164,7 @@ test("11 - line feed \\u000A (LF) and o.removeLineBreaks", () => {
     replaceLineBreaks: false,
     removeLineBreaks: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "aaa\u000Abbb", opt).res, "aaa bbb", "10");
+    equal(det(ok, not, n, "aaa\u000Abbb", opt).res, "aaa bbb", "11.01");
   });
 });
 
@@ -174,7 +174,7 @@ test("12 - line feed \\u000A (LF) and no o.removeLineBreaks", () => {
     removeLineBreaks: false,
     convertEntities: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "aaa\u000Abbb", opt).res, "aaa\nbbb", "11");
+    equal(det(ok, not, n, "aaa\u000Abbb", opt).res, "aaa\nbbb", "12.01");
   });
 });
 
@@ -182,7 +182,7 @@ test("13 - narrow no break space", () => {
   mixer({
     convertEntities: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "a\u202Fb", opt).res, "a b", "12");
+    equal(det(ok, not, n, "a\u202Fb", opt).res, "a b", "13.01");
   });
   mixer({
     convertEntities: true,

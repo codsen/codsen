@@ -16,7 +16,7 @@ test("01 - widest letter: W", () => {
         ellipsisLen: 155,
       }),
       { result: "W", addEllipsis: true },
-      "01.01 - monospace: false"
+      "01.01"
     );
   });
   mixer({
@@ -46,7 +46,7 @@ test("02 - W x 9", () => {
         ellipsisLen: 155,
       }),
       { result: "W".repeat(9), addEllipsis: false },
-      "02.01 - monospace: false"
+      "02.01"
     );
   });
   mixer({
@@ -77,7 +77,7 @@ test("03 - W x 10", () => {
         ellipsisLen: 155,
       }),
       { result: "W".repeat(9), addEllipsis: true },
-      "03.01 - monospace: false"
+      "03.01"
     );
   });
   mixer({
@@ -108,7 +108,7 @@ test("04 - W x 11", () => {
         ellipsisLen: 155,
       }),
       { result: "W".repeat(9), addEllipsis: true },
-      "04.01 - monospace: false"
+      "04.01"
     );
   });
   mixer({
@@ -139,7 +139,7 @@ test("05 - i x 21", () => {
         ellipsisLen: 155,
       }),
       { result: "i".repeat(21), addEllipsis: false },
-      "05.01 - monospace: false"
+      "05.01"
     );
   });
   mixer({
@@ -170,7 +170,7 @@ test("06 - i x 22", () => {
         ellipsisLen: 155,
       }),
       { result: "i".repeat(21), addEllipsis: true },
-      "06.01 - monospace: false"
+      "06.01"
     );
   });
   mixer({
@@ -201,7 +201,7 @@ test("07 - i x 23", () => {
         ellipsisLen: 155,
       }),
       { result: "i".repeat(21), addEllipsis: true },
-      "07.01 - monospace: false"
+      "07.01"
     );
   });
   mixer({
@@ -232,7 +232,7 @@ test("08 - i x 24", () => {
         ellipsisLen: 155,
       }),
       { result: "i".repeat(21), addEllipsis: true },
-      "08.01 - monospace: false"
+      "08.01"
     );
   });
   mixer({
@@ -263,7 +263,7 @@ test("09 - A x 40", () => {
         ellipsisLen: 155,
       }),
       { result: "A".repeat(12), addEllipsis: true },
-      "09.01 - monospace: false"
+      "09.01"
     );
   });
   mixer({
@@ -294,7 +294,7 @@ test("10 - i x 40", () => {
         ellipsisLen: 155,
       }),
       { result: "i".repeat(21), addEllipsis: true },
-      "10.01 - monospace: false"
+      "10.01"
     );
   });
   mixer({
@@ -325,7 +325,7 @@ test("11 - a x 40", () => {
         ellipsisLen: 155,
       }),
       { result: "a".repeat(13), addEllipsis: true },
-      "11.01 - monospace: false"
+      "11.01"
     );
   });
   mixer({
@@ -356,7 +356,7 @@ test("12 - realistic, #1", () => {
         ellipsisLen: 155,
       }),
       { result: "API - includesWithGl", addEllipsis: true },
-      "12.01 - monospace: false"
+      "12.01"
     );
   });
   mixer({
@@ -387,7 +387,7 @@ test("13 - realistic, #2", () => {
         ellipsisLen: 155,
       }),
       { result: "CHOMPLEFT() & CHOMPRIGHT()", addEllipsis: false },
-      "13.01 - monospace: false"
+      "13.01"
     );
   });
   mixer({
@@ -418,7 +418,7 @@ test("14 - Russian, normal case, maxLines=1", () => {
         ellipsisLen: 155,
       }),
       { result: "Газпром остана", addEllipsis: true },
-      "14.01 - monospace: false"
+      "14.01"
     );
   });
   mixer({
@@ -449,7 +449,7 @@ test("15 - Russian, normal case, maxLines=2", () => {
         ellipsisLen: 155,
       }),
       { result: "Газпром останавливает", addEllipsis: true },
-      "15.01 - monospace: false"
+      "15.01"
     );
   });
   mixer({
@@ -480,7 +480,7 @@ test("16 - Russian, uppercase", () => {
         ellipsisLen: 155,
       }),
       { result: "ГАЗПРОМ ОСТАНАВЛИВА", addEllipsis: true },
-      "16.01 - monospace: false"
+      "16.01"
     );
   });
   mixer({

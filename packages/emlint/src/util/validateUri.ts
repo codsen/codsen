@@ -1,6 +1,6 @@
 import { processCommaSep } from "string-process-comma-separated";
 import { isRel } from "is-relative-uri";
-import urlRegex from "url-regex";
+import urlRegex from "url-regex-safe";
 
 import checkForWhitespace from "./checkForWhitespace";
 import splitByWhitespace from "./splitByWhitespace";

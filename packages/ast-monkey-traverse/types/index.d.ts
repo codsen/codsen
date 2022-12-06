@@ -10,12 +10,7 @@ interface InnerObj {
   parentType: string;
   parentKey: string | null;
 }
-declare type Callback = (
-  key: string,
-  val: any,
-  innerObj: InnerObj,
-  stop: Stop
-) => any;
+type Callback = (key: string, val: any, innerObj: InnerObj, stop: Stop) => any;
 /**
  * Utility library to traverse AST
  */

@@ -2,8 +2,8 @@ import { Ranges } from "ranges-crop";
 export { Ranges } from "ranges-crop";
 
 declare const version: string;
-declare type OffsetValueCb = (amountToOffset: number) => void;
-declare type Callback = (
+type OffsetValueCb = (amountToOffset: number) => void;
+type Callback = (
   fromIdx: number,
   toIdx: number,
   offsetValueCb: OffsetValueCb

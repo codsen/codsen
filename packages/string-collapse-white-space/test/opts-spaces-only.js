@@ -25,7 +25,7 @@ test(`02`, () => {
   mixer({
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    equal(collapse(`a \tb`, opt), { result: `a \tb`, ranges: null }, "02");
+    equal(collapse(`a \tb`, opt), { result: `a \tb`, ranges: null }, "02.01");
   });
   mixer({
     enforceSpacesOnly: true,
@@ -38,7 +38,11 @@ test(`03`, () => {
   mixer({
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    equal(collapse(`a \t\tb`, opt), { result: `a \t\tb`, ranges: null }, "03");
+    equal(
+      collapse(`a \t\tb`, opt),
+      { result: `a \t\tb`, ranges: null },
+      "03.01"
+    );
   });
   mixer({
     enforceSpacesOnly: true,
@@ -51,7 +55,7 @@ test(`04`, () => {
   mixer({
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    equal(collapse(`a\t\tb`, opt), { result: `a\t\tb`, ranges: null }, "04");
+    equal(collapse(`a\t\tb`, opt), { result: `a\t\tb`, ranges: null }, "04.01");
   });
   mixer({
     enforceSpacesOnly: true,
@@ -70,7 +74,11 @@ test(`05`, () => {
   mixer({
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    equal(collapse(`a  \tb`, opt), { result: `a \tb`, ranges: [[1, 2]] }, "05");
+    equal(
+      collapse(`a  \tb`, opt),
+      { result: `a \tb`, ranges: [[1, 2]] },
+      "05.01"
+    );
   });
   mixer({
     enforceSpacesOnly: true,
@@ -83,7 +91,11 @@ test(`06 - reuse the last space`, () => {
   mixer({
     enforceSpacesOnly: false,
   }).forEach((opt) => {
-    equal(collapse(`a\t  b`, opt), { result: `a\t b`, ranges: [[2, 3]] }, "06");
+    equal(
+      collapse(`a\t  b`, opt),
+      { result: `a\t b`, ranges: [[2, 3]] },
+      "06.01"
+    );
   });
   mixer({
     enforceSpacesOnly: true,
@@ -99,7 +111,7 @@ test(`07`, () => {
     equal(
       collapse(`a\t\t\tb`, opt),
       { result: `a\t\t\tb`, ranges: null },
-      "07"
+      "07.01"
     );
   });
   mixer({
@@ -375,7 +387,7 @@ test(`31`, () => {
   mixer({
     removeEmptyLines: false,
   }).forEach((opt) => {
-    equal(collapse(`a\n\nb`, opt), { result: `a\n\nb`, ranges: null }, "31");
+    equal(collapse(`a\n\nb`, opt), { result: `a\n\nb`, ranges: null }, "31.01");
   });
   mixer({
     removeEmptyLines: true,
@@ -394,7 +406,7 @@ test(`32`, () => {
     equal(
       collapse(`a \t \n \t b`, opt),
       { result: `a \t \n \t b`, ranges: null },
-      "32"
+      "32.01"
     );
   });
   mixer({
@@ -415,7 +427,7 @@ test(`33`, () => {
     enforceSpacesOnly: false,
     trimLines: false,
   }).forEach((opt) => {
-    equal(collapse(`a \n \t b`, opt).result, `a \n \t b`, "33");
+    equal(collapse(`a \n \t b`, opt).result, `a \n \t b`, "33.01");
   });
   mixer({
     enforceSpacesOnly: true,

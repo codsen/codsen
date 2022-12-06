@@ -72,7 +72,7 @@ test(`03 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal 
         }
       ).res,
       `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${rawnbsp}text.`,
-      `05.03.0${1 + i} - min word count threshold + ignore jinja combo`
+      `03.03.003.0${1 + i} - min word count threshold + ignore jinja combo`
     );
     equal(
       removeWidows(
@@ -85,7 +85,7 @@ test(`03 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal 
         }
       ).res,
       `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${encodedNbsps[i]}text.`,
-      `05.03.0${2 + i} - min word count threshold + ignore jinja combo`
+      `03.03.003.0${2 + i} - min word count threshold + ignore jinja combo`
     );
     equal(
       removeWidows(
@@ -98,7 +98,7 @@ test(`03 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal 
         }
       ).res,
       `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${rawnbsp}text.`,
-      `05.03.0${1 + i} - min word count threshold + ignore jinja combo`
+      `03.03.003.0${1 + i} - min word count threshold + ignore jinja combo`
     );
     equal(
       removeWidows(
@@ -111,7 +111,7 @@ test(`03 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal 
         }
       ).res,
       `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${encodedNbsps[i]}text.`,
-      `05.03.0${2 + i} - min word count threshold + ignore jinja combo`
+      `03.03.003.0${2 + i} - min word count threshold + ignore jinja combo`
     );
   });
 });

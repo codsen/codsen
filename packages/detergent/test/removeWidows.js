@@ -55,12 +55,12 @@ test(`03 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - four chunks of tex
     equal(
       det(ok, not, n, `aaa bbb ccc ddd`, opt).res,
       `aaa bbb ccc&nbsp;ddd`,
-      `01.01.01 - remove widows - entities, one line string no full stop`
+      `03.01`
     );
     equal(
       det(ok, not, n, `aaa bbb ccc ddd.`, opt).res,
       `aaa bbb ccc&nbsp;ddd.`,
-      `01.01.02 - remove widows - entities, one line string with full stop`
+      `03.02`
     );
   });
 });
@@ -73,12 +73,12 @@ test(`04 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - four chunks of tex
     equal(
       det(ok, not, n, `aaa bbb ccc ddd`, opt).res,
       `aaa bbb ccc${rawNbsp}ddd`,
-      `01.02.01 - remove widows - no entities, one line string no full stop`
+      `04.01`
     );
     equal(
       det(ok, not, n, `aaa bbb ccc ddd.`, opt).res,
       `aaa bbb ccc${rawNbsp}ddd.`,
-      `01.02.02 - remove widows - no entities, one line string with full stop`
+      `04.02`
     );
   });
 });
@@ -90,12 +90,12 @@ test(`05 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - four chunks of tex
     equal(
       det(ok, not, n, `aaa bbb ccc ddd`, opt).res,
       `aaa bbb ccc ddd`,
-      `01.03.01 - don't remove widows - no full stop`
+      `05.01`
     );
     equal(
       det(ok, not, n, `aaa bbb ccc ddd.`, opt).res,
       `aaa bbb ccc ddd.`,
-      `01.03.02 - don't remove widows - ending with full stop`
+      `05.02`
     );
   });
 });
@@ -111,7 +111,7 @@ test(`06 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks -
     equal(
       det(ok, not, n, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
       `aaa bbb ccc&nbsp;ddd<br/>\n<br/>\neee fff ggg&nbsp;hhh`,
-      `01.04 - two line breaks with encoding BR in XHTML`
+      `06.01`
     );
   });
 });
@@ -127,7 +127,7 @@ test(`07 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks -
     equal(
       det(ok, not, n, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
       `aaa bbb ccc&nbsp;ddd<br>\n<br>\neee fff ggg&nbsp;hhh`,
-      `01.05 - two BR's, widows with NBSP and HTML BR`
+      `07.01`
     );
   });
 });
@@ -142,7 +142,7 @@ test(`08 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks -
     equal(
       det(ok, not, n, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
       `aaa bbb ccc&nbsp;ddd\n\neee fff ggg&nbsp;hhh`,
-      `01.06 - two BR's, widows replaced with &nbsp`
+      `08.01`
     );
   });
 });
@@ -157,7 +157,7 @@ test(`09 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks -
     equal(
       det(ok, not, n, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
       `aaa bbb ccc${rawNbsp}ddd\n\neee fff ggg${rawNbsp}hhh`,
-      `01.07 - two BR's, widows replaced with non-encoded NBSP`
+      `09.01`
     );
   });
 });
@@ -172,12 +172,12 @@ test(`10 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks -
     equal(
       det(ok, not, n, `aaa bbb ccc ddd\neee fff ggg hhh.`, opt).res,
       `aaa bbb ccc&nbsp;ddd\neee fff ggg&nbsp;hhh.`,
-      `01.08.01`
+      `10.01`
     );
     equal(
       det(ok, not, n, `aaa bbb ccc ddd.\neee fff ggg hhh.`, opt).res,
       `aaa bbb ccc&nbsp;ddd.\neee fff ggg&nbsp;hhh.`,
-      `01.08.02`
+      `10.02`
     );
   });
 });
@@ -193,7 +193,7 @@ test(`11 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with trailing whit
     equal(
       det(ok, not, n, `aaa bbb ccc ddd. \n\neee fff ggg hhh`, opt).res,
       `aaa bbb ccc&nbsp;ddd.<br>\n<br>\neee fff ggg&nbsp;hhh`,
-      `01.09 - remove widows - trailing space`
+      `11.01`
     );
   });
 });
@@ -206,7 +206,7 @@ test(`12 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
     equal(
       det(ok, not, n, `Some text SW1A 1AA and some more text.`, opt).res,
       `Some text SW1A&nbsp;1AA and some more&nbsp;text.`,
-      `01.10.01 - properly formatted UK postcode, in caps`
+      `12.01`
     );
     equal(
       det(
@@ -217,7 +217,7 @@ test(`12 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
         opt
       ).res,
       `Some text SW1A&nbsp;1AA and some more text SW1A&nbsp;1AA and some more&nbsp;text.`,
-      `01.10.02 - multiple properly formatted postcodes`
+      `12.02`
     );
     equal(
       det(
@@ -228,7 +228,7 @@ test(`12 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
         opt
       ).res,
       `This very long line of text ends with a postcode SW1A&nbsp;1AA.`,
-      `01.10.03 - line ends with a postcode (full stop)`
+      `12.03`
     );
     equal(
       det(
@@ -239,7 +239,7 @@ test(`12 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
         opt
       ).res,
       `this very long line of text ends with a postcode SW1A&nbsp;1AA`,
-      `01.10.04 - line ends with a postcode (no full stop)`
+      `12.04`
     );
     equal(
       det(
@@ -250,12 +250,12 @@ test(`12 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
         opt
       ).res,
       `&#x1F984; some text text text SW1A&nbsp;1AA more text text text &#x1F984;&nbsp;aaa`,
-      `01.10.05 - properly formatted UK postcode, some emoji`
+      `12.05`
     );
     equal(
       det(ok, not, n, `Some text SW1A 1Aa and some more text.`, opt).res,
       `Some text SW1A 1Aa and some more&nbsp;text.`,
-      `01.10.06 - improperly formatted UK postcode`
+      `12.06`
     );
   });
 });
@@ -268,7 +268,7 @@ test(`13 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
     equal(
       det(ok, not, n, `Some text SW1A 1AA and some more text.`, opt).res,
       `Some text SW1A${rawNbsp}1AA and some more${rawNbsp}text.`,
-      `01.11.01 - properly formatted UK postcode, in caps`
+      `13.01`
     );
     equal(
       det(
@@ -279,7 +279,7 @@ test(`13 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
         opt
       ).res,
       `Some text SW1A${rawNbsp}1AA and some more text SW1A${rawNbsp}1AA and some more${rawNbsp}text.`,
-      `01.11.02 - multiple properly formatted postcodes`
+      `13.02`
     );
     equal(
       det(
@@ -290,7 +290,7 @@ test(`13 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
         opt
       ).res,
       `This very long line of text ends with a postcode SW1A${rawNbsp}1AA.`,
-      `01.11.03 - line ends with a postcode (full stop)`
+      `13.03`
     );
     equal(
       det(
@@ -301,7 +301,7 @@ test(`13 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
         opt
       ).res,
       `this very long line of text ends with a postcode SW1A${rawNbsp}1AA`,
-      `01.11.04 - line ends with a postcode (no full stop)`
+      `13.04`
     );
     equal(
       det(
@@ -312,12 +312,12 @@ test(`13 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
         opt
       ).res,
       `🦄 some text text text SW1A${rawNbsp}1AA more text text text 🦄${rawNbsp}aaa`,
-      `01.11.05 - properly formatted UK postcode, some emoji`
+      `13.05`
     );
     equal(
       det(ok, not, n, `Some text SW1A 1Aa and some more text.`, opt).res,
       `Some text SW1A 1Aa and some more${rawNbsp}text.`,
-      `01.11.06 - improperly formatted UK postcode`
+      `13.06`
     );
   });
 });
@@ -330,7 +330,7 @@ test(`14 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
     equal(
       det(ok, not, n, `Some text SW1A 1AA and some more text.`, opt).res,
       `Some text SW1A 1AA and some more text.`,
-      `01.12.01 - properly formatted UK postcode, in caps`
+      `14.01`
     );
     equal(
       det(
@@ -341,7 +341,7 @@ test(`14 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
         opt
       ).res,
       `Some text SW1A 1AA and some more text SW1A 1AA and some more text.`,
-      `01.12.02 - multiple properly formatted postcodes`
+      `14.02`
     );
     equal(
       det(
@@ -352,7 +352,7 @@ test(`14 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
         opt
       ).res,
       `This very long line of text ends with a postcode SW1A 1AA.`,
-      `01.12.03 - line ends with a postcode (full stop)`
+      `14.03`
     );
     equal(
       det(
@@ -363,7 +363,7 @@ test(`14 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
         opt
       ).res,
       `this very long line of text ends with a postcode SW1A 1AA`,
-      `01.12.04 - line ends with a postcode (no full stop)`
+      `14.04`
     );
     equal(
       det(
@@ -374,12 +374,12 @@ test(`14 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes
         opt
       ).res,
       `🦄 some text text text SW1A 1AA more text text text 🦄 aaa`,
-      `01.12.05 - properly formatted UK postcode, some emoji`
+      `14.05`
     );
     equal(
       det(ok, not, n, `Some text SW1A 1Aa and some more text.`, opt).res,
       `Some text SW1A 1Aa and some more text.`,
-      `01.12.06 - improperly formatted UK postcode`
+      `14.06`
     );
   });
 });
@@ -395,7 +395,7 @@ test(`15 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added w
         opt
       ).res,
       `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-      `01.13 - there's right slash following them`
+      `15.01`
     );
   });
 });
@@ -411,7 +411,7 @@ test(`16 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added w
         opt
       ).res,
       `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-      `01.14 - there's a known tag before them`
+      `16.01`
     );
   });
 });
@@ -427,7 +427,7 @@ test(`17 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added w
         opt
       ).res,
       `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-      `01.15 - hr tag, xhtml style`
+      `17.01`
     );
   });
 });
@@ -443,7 +443,7 @@ test(`18 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added w
         opt
       ).res,
       `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-      `01.16 - hr tag, html style`
+      `18.01`
     );
   });
 });
@@ -453,23 +453,23 @@ test(`19 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widow removal dete
     equal(
       det(ok, not, n, `{% if something %}`, opt).res,
       `{% if something %}`,
-      `01.17.01 - four chunks`
+      `19.01`
     );
     equal(
       det(ok, not, n, `{%- if something -%}`, opt).res,
       `{%- if something -%}`,
-      `01.17.02 - dashes`
+      `19.02`
     );
     equal(
       det(ok, not, n, `{{ something }}`, opt).res,
       `{{ something }}`,
-      `17.03 - three chunks`
+      `19.03`
     );
     equal(
       det(ok, not, n, `{% if something else and also another thing %}`, opt)
         .res,
       `{% if something else and also another thing %}`,
-      `17.04 - nine chunks`
+      `19.04`
     );
   });
 });
@@ -482,7 +482,7 @@ test(`20 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes 
     equal(
       det(ok, not, n, `AA Some text And Some Text - 9999`, opt).res,
       `AA Some text And Some Text - 9999`,
-      `01.18`
+      `20.01`
     );
   });
 });
@@ -496,7 +496,7 @@ test(`21 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes 
     equal(
       det(ok, not, n, `AA Some text And Some Text - 9999`, opt).res,
       `AA Some text And Some Text&nbsp;&mdash;&nbsp;9999`,
-      `01.19`
+      `21.01`
     );
   });
 });
@@ -510,7 +510,7 @@ test(`22 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes 
     equal(
       det(ok, not, n, `AA Some text And Some Text - 9999`, opt).res,
       `AA Some text And Some Text${rawNbsp}\u2014${rawNbsp}9999`,
-      `01.20`
+      `22.01`
     );
   });
 });
@@ -524,7 +524,7 @@ test(`23 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes 
     equal(
       det(ok, not, n, `AA Some text And Some Text - 9999`, opt).res,
       `AA Some text And Some Text &mdash; 9999`,
-      `01.21`
+      `23.01`
     );
   });
 });
@@ -538,7 +538,7 @@ test(`24 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes 
     equal(
       det(ok, not, n, `AA Some text And Some Text - 9999`, opt).res,
       `AA Some text And Some Text \u2014 9999`,
-      `01.22`
+      `24.01`
     );
   });
 });
@@ -555,7 +555,7 @@ test(`25 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`, () => {
     equal(
       det(ok, not, n, `a a<a something="whatever" and="here">`, opt).res,
       `a a<a something="whatever" and="here">`,
-      `02.01`
+      `25.01`
     );
   });
 });
@@ -569,7 +569,7 @@ test(`26 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`, () => {
     equal(
       det(ok, not, n, `a a <a something="whatever" and="here">`, opt).res,
       `a a <a something="whatever" and="here">`,
-      `02.02`
+      `26.01`
     );
   });
 });
@@ -583,7 +583,7 @@ test(`27 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`, () => {
     equal(
       det(ok, not, n, `a a a<a something="whatever" and="here">`, opt).res,
       `a a a<a something="whatever" and="here">`,
-      `02.03`
+      `27.01`
     );
   });
 });
@@ -597,7 +597,7 @@ test(`28 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`, () => {
     equal(
       det(ok, not, n, `a a a <a something="whatever" and="here">`, opt).res,
       `a a a <a something="whatever" and="here">`,
-      `02.04`
+      `28.01`
     );
   });
 });
@@ -611,7 +611,7 @@ test(`29 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`, () => {
     equal(
       det(ok, not, n, `a a a a<a something="whatever" and="here">`, opt).res,
       `a a a&nbsp;a<a something="whatever" and="here">`,
-      `02.05`
+      `29.01`
     );
   });
 });
@@ -625,7 +625,7 @@ test(`30 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`, () => {
     equal(
       det(ok, not, n, `a a a a <a something="whatever" and="here">`, opt).res,
       `a a a a&nbsp;<a something="whatever" and="here">`,
-      `02.06`
+      `30.01`
     );
   });
 });
@@ -638,7 +638,7 @@ test(`31`, () => {
       det(ok, not, n, `The quick brown&nbsp;fox. What an amazing animal!`, opt)
         .res,
       `The quick brown fox. What an amazing animal!`,
-      `02.06`
+      `31.01`
     );
   });
 });
@@ -656,7 +656,7 @@ test(`32`, () => {
         opt
       ).res,
       `The quick brown fox. What an amazing animal!`,
-      `02.06`
+      `32.01`
     );
   });
 });

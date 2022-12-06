@@ -12,5 +12,12 @@
     ".git",
     "node_modules"
   ],
-  "references": []
+  "references": [
+    {
+      "path": "../object-delete-key"
+    },
+    {
+      "path": "../string-left-right"
+    }
+  ]
 }

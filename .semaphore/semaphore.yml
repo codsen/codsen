@@ -1,4 +1,4 @@
-version: v1.0
+version: v2.0
 name: CODSEN
 agent:
   machine:
@@ -24,47 +24,44 @@ blocks:
           # Add the key to the ssh agent:
           - ssh-add ~/.ssh/id_rsa
           - checkout
-          # install yarn
-          - npm i -g corepack
           - npm i -g lerna-clean-changelogs-cli
       jobs:
         - name: Publish
           commands:
             - git config --global user.email "${USER_EMAIL}"
             - git config --global user.name "${YOUR_NAME_SURNAME}"
-            - npm set unsafe-perm true -g
-            - npm set //registry.npmjs.org/:_authToken ${NPM_TOKEN} -g
             - npm set username ${NPM_USERNAME} -g
             - npm set email ${NPM_EMAIL} -g
             # install deps
-            - yarn
-            # efficiently build all
-            - yarn turbo run build
+            - npm i
+            # build all
+            - npm run build
             # "unit" + "examples" + "lint":
-            - yarn turbo run prepare
+            - npm run prep
             # generate statistics files:
-            - yarn run ci:generate:info
+            - npm run ci:generate:info
             # build a readme in each package's root:
-            - yarn run ci:build:root-readme
+            - npm run ci:build:root-readme
             # git-add the build artifacts
             - git status
             - git add packages
             - git add ops
             - git add data
             - git add README.md
-            - git add yarn.lock
+            # - git-add lockfile
+            - git add package-lock.json
             - "git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
             # run lerna version with all extras:
-            - yarn run ci:lerna:version
+            - npm run ci:lerna:version
             - lernacleanchangelog
             # PS. above, we don't push git tags because
             # if something goes wrong further (and there is another build coming)
             # then we'd have problems.
             #
             # Now build again, because those bumped versions need to be written into header comment blocks:
-            - yarn run build
+            - npm run build
             # run perf, it will save down the latest dep version in perf/historical.json
-            # - yarn run perf
+            # - npm run perf
             # finally, sort the git matters
             - git status
             - git add packages
@@ -73,24 +70,24 @@ blocks:
             - git add README.md
             - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
             # remove "type: module" from CJS packages
-            - yarn run cjs-on
+            - npm run cjs-on
             # publish packages to npm
-            - yarn run ci:publish:all
+            - npm run ci:publish:all
             # restore "type: module" in CJS packages
-            - yarn run cjs-off
+            - npm run cjs-off
             # push repo with all artifacts to git remote
             - git push
             - git push origin --tags
             # build and publish @codsen/data
-            - yarn run ci:generate:info
-            - yarn run ci:generate:changelogs
+            - npm run ci:generate:info
+            - npm run ci:generate:changelogs
             - cd data
-            - yarn run build
+            - npm run build
             - git add .
             - cd ..
             - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
             - cd data
-            - yarn run publ
+            - npm run publ
             - cd ..
             - git status
             # push repo with all artifacts to git remote

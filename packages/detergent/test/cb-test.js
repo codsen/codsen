@@ -50,7 +50,7 @@ test(`04 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip H
         })
       ).res,
       "<b>ABC</b>",
-      `04`
+      `04.01`
     );
   });
 });
