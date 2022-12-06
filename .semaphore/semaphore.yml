@@ -68,7 +68,7 @@ blocks:
             - git add ops
             - git add data
             - git add README.md
-            - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
+            - "git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
             # remove "type: module" from CJS packages
             - npm run cjs-on
             # publish packages to npm
@@ -85,7 +85,7 @@ blocks:
             - npm run build
             - git add .
             - cd ..
-            - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
+            - "git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
             - cd data
             - npm run publ
             - cd ..
