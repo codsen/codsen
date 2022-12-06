@@ -1,6 +1,6 @@
 {
   "name": "string-uglify",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Shorten sets of strings deterministically, to be git-friendly",
   "keywords": [
     "class",

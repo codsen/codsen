@@ -1,6 +1,6 @@
 {
   "name": "test-mixer",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Test helper to generate function opts object variations",
   "keywords": [
     "combinations",
@@ -69,7 +69,7 @@
   },
   "dependencies": {
     "lodash.clonedeep": "^4.5.0",
-    "object-boolean-combinations": "^6.0.0"
+    "object-boolean-combinations": "^6.0.1"
   },
   "devDependencies": {
     "@types/lodash.clonedeep": "^4.5.7"

@@ -1,6 +1,6 @@
 {
   "name": "js-row-num",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "Update all row numbers in all console.logs in JS code",
   "keywords": [
     "alt",
@@ -74,7 +74,7 @@
     }
   },
   "dependencies": {
-    "ranges-apply": "^7.0.0",
-    "ranges-push": "^7.0.0"
+    "ranges-apply": "^7.0.1",
+    "ranges-push": "^7.0.1"
   }
 }

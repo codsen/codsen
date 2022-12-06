@@ -1,6 +1,6 @@
 {
   "name": "object-merge-advanced",
-  "version": "14.0.0",
+  "version": "14.0.1",
   "description": "Deeply merge JSON-like data structures",
   "keywords": [
     "advanced",
@@ -80,7 +80,7 @@
     "lodash.isplainobject": "^4.0.6",
     "lodash.uniq": "^4.5.0",
     "matcher": "^5.0.0",
-    "util-nonempty": "^5.0.0"
+    "util-nonempty": "^5.0.1"
   },
   "devDependencies": {
     "@types/lodash.clonedeep": "^4.5.7",

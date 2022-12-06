@@ -1,6 +1,6 @@
 {
   "name": "ast-is-empty",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Find out, is nested array/object/string/AST tree is empty",
   "keywords": [
     "array",
