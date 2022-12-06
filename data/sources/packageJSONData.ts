@@ -10,7 +10,7 @@ export const packageJSONData = {
     },
     "all-named-html-entities": {
         "name": "all-named-html-entities",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "List of all named HTML entities",
         "keywords": [
             "all",
@@ -85,7 +85,7 @@ export const packageJSONData = {
     },
     "array-group-str-omit-num-char": {
         "name": "array-group-str-omit-num-char",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Groups array of strings by omitting number characters",
         "keywords": [
             "array",
@@ -157,7 +157,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "lodash.uniq": "^4.5.0",
-            "ranges-apply": "^7.0.1"
+            "ranges-apply": "^7.0.2"
         },
         "devDependencies": {
             "@types/lodash.uniq": "^4.5.7"
@@ -165,7 +165,7 @@ export const packageJSONData = {
     },
     "array-includes-with-glob": {
         "name": "array-includes-with-glob",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Like _.includes but with wildcards",
         "keywords": [
             "array",
@@ -241,7 +241,7 @@ export const packageJSONData = {
     },
     "array-of-arrays-into-ast": {
         "name": "array-of-arrays-into-ast",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Turns an array of arrays of data into a nested tree of plain objects",
         "keywords": [
             "array",
@@ -311,13 +311,13 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "check-types-mini": "^8.0.1",
-            "object-merge-advanced": "^14.0.1"
+            "check-types-mini": "^8.0.2",
+            "object-merge-advanced": "^14.0.2"
         }
     },
     "array-of-arrays-sort-by-col": {
         "name": "array-of-arrays-sort-by-col",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Sort array of arrays by column, rippling the sorting outwards from that column",
         "keywords": [
             "array",
@@ -392,7 +392,7 @@ export const packageJSONData = {
     },
     "array-pull-all-with-glob": {
         "name": "array-pull-all-with-glob",
-        "version": "7.0.1",
+        "version": "7.0.2",
         "description": "Like _.pullAll but with globs (wildcards)",
         "keywords": [
             "array",
@@ -472,7 +472,7 @@ export const packageJSONData = {
     },
     "arrayiffy-if-string": {
         "name": "arrayiffy-if-string",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.",
         "keywords": [
             "api",
@@ -548,7 +548,7 @@ export const packageJSONData = {
     },
     "ast-compare": {
         "name": "ast-compare",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Compare anything: AST, objects, arrays, strings and nested thereof",
         "keywords": [
             "array",
@@ -625,7 +625,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ast-contains-only-empty-space": "^4.0.1",
+            "ast-contains-only-empty-space": "^4.0.2",
             "lodash.isplainobject": "^4.0.6",
             "matcher": "^5.0.0",
             "type-detect": "^4.0.8"
@@ -638,7 +638,7 @@ export const packageJSONData = {
     },
     "ast-contains-only-empty-space": {
         "name": "ast-contains-only-empty-space",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Does AST contain only empty space?",
         "keywords": [
             "ast",
@@ -712,12 +712,12 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ast-monkey-traverse": "^4.0.1"
+            "ast-monkey-traverse": "^4.0.2"
         }
     },
     "ast-deep-contains": {
         "name": "ast-deep-contains",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Like t.same assert on array of objects, where element order doesn’t matter.",
         "keywords": [
             "array",
@@ -804,7 +804,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "@sindresorhus/is": "^5.3.0",
-            "ast-monkey-traverse": "^4.0.1",
+            "ast-monkey-traverse": "^4.0.2",
             "object-path": "^0.11.8"
         },
         "devDependencies": {
@@ -814,7 +814,7 @@ export const packageJSONData = {
     },
     "ast-delete-object": {
         "name": "ast-delete-object",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Delete all plain objects in AST if they contain a certain key/value pair",
         "keywords": [
             "ast",
@@ -893,8 +893,8 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ast-compare": "^4.0.1",
-            "ast-monkey-traverse": "^4.0.1",
+            "ast-compare": "^4.0.2",
+            "ast-monkey-traverse": "^4.0.2",
             "lodash.clonedeep": "^4.5.0",
             "lodash.isplainobject": "^4.0.6"
         },
@@ -905,7 +905,7 @@ export const packageJSONData = {
     },
     "ast-get-object": {
         "name": "ast-get-object",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Getter/setter for nested parsed HTML AST’s, querying objects by key/value pairs",
         "keywords": [
             "ast",
@@ -985,7 +985,7 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "ast-compare": "^4.0.1",
+            "ast-compare": "^4.0.2",
             "lodash.clonedeep": "^4.5.0",
             "lodash.isplainobject": "^4.0.6"
         },
@@ -996,7 +996,7 @@ export const packageJSONData = {
     },
     "ast-get-values-by-key": {
         "name": "ast-get-values-by-key",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Extract values and paths from AST by keys OR set them by keys",
         "keywords": [
             "ast",
@@ -1076,7 +1076,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ast-monkey-traverse": "^4.0.1",
+            "ast-monkey-traverse": "^4.0.2",
             "lodash.clonedeep": "^4.5.0",
             "matcher": "^5.0.0"
         },
@@ -1086,7 +1086,7 @@ export const packageJSONData = {
     },
     "ast-is-empty": {
         "name": "ast-is-empty",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Find out, is nested array/object/string/AST tree is empty",
         "keywords": [
             "array",
@@ -1175,7 +1175,7 @@ export const packageJSONData = {
     },
     "ast-loose-compare": {
         "name": "ast-loose-compare",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Compare anything: AST, objects, arrays and strings",
         "keywords": [
             "array",
@@ -1254,7 +1254,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ast-contains-only-empty-space": "^4.0.1",
+            "ast-contains-only-empty-space": "^4.0.2",
             "lodash.isplainobject": "^4.0.6"
         },
         "devDependencies": {
@@ -1263,7 +1263,7 @@ export const packageJSONData = {
     },
     "ast-monkey": {
         "name": "ast-monkey",
-        "version": "9.0.1",
+        "version": "9.0.2",
         "description": "Traverse and edit AST",
         "keywords": [
             "ast",
@@ -1344,15 +1344,15 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ast-compare": "^4.0.1",
-            "ast-monkey-traverse": "^4.0.1",
-            "check-types-mini": "^8.0.1",
-            "util-array-object-or-both": "^5.0.1"
+            "ast-compare": "^4.0.2",
+            "ast-monkey-traverse": "^4.0.2",
+            "check-types-mini": "^8.0.2",
+            "util-array-object-or-both": "^5.0.2"
         }
     },
     "ast-monkey-traverse": {
         "name": "ast-monkey-traverse",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Utility library to traverse AST",
         "keywords": [
             "ast",
@@ -1433,7 +1433,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ast-monkey-util": "^3.0.1",
+            "ast-monkey-util": "^3.0.2",
             "lodash.clonedeep": "^4.5.0",
             "lodash.isplainobject": "^4.0.6"
         },
@@ -1445,7 +1445,7 @@ export const packageJSONData = {
     },
     "ast-monkey-traverse-with-lookahead": {
         "name": "ast-monkey-traverse-with-lookahead",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Utility library to traverse AST, reports upcoming values",
         "keywords": [
             "ast",
@@ -1539,7 +1539,7 @@ export const packageJSONData = {
     },
     "ast-monkey-util": {
         "name": "ast-monkey-util",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "Utility library of AST helper functions",
         "keywords": [
             "ast",
@@ -1620,7 +1620,7 @@ export const packageJSONData = {
     },
     "bitbucket-slug": {
         "name": "bitbucket-slug",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Generate BitBucket readme header anchor slug URLs. Unofficial, covers whole ASCII and a bit beyond.",
         "keywords": [
             "anchor",
@@ -1708,7 +1708,7 @@ export const packageJSONData = {
     },
     "charcode-is-valid-xml-name-character": {
         "name": "charcode-is-valid-xml-name-character",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "Does a given character belong to XML spec’s “Production 4 OR 4a” type (is acceptable for XML element’s name)",
         "keywords": [
             "4",
@@ -1783,12 +1783,12 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ranges-is-index-within": "^4.0.1"
+            "ranges-is-index-within": "^4.0.2"
         }
     },
     "check-types-mini": {
         "name": "check-types-mini",
-        "version": "8.0.1",
+        "version": "8.0.2",
         "description": "Validate options object",
         "keywords": [
             "compare",
@@ -1860,8 +1860,8 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "arrayiffy-if-string": "^5.0.1",
-            "ast-monkey-traverse": "^4.0.1",
+            "arrayiffy-if-string": "^5.0.2",
+            "ast-monkey-traverse": "^4.0.2",
             "lodash.intersection": "^4.4.0",
             "lodash.pullall": "^4.2.0",
             "matcher": "^5.0.0",
@@ -1875,7 +1875,7 @@ export const packageJSONData = {
     },
     "codsen": {
         "name": "codsen",
-        "version": "0.2.1",
+        "version": "0.2.2",
         "description": "Codsen CLI",
         "keywords": [
             "codsen",
@@ -1939,7 +1939,7 @@ export const packageJSONData = {
     },
     "codsen-parser": {
         "name": "codsen-parser",
-        "version": "0.14.1",
+        "version": "0.14.2",
         "description": "Parser aiming at broken or mixed code, especially HTML & CSS",
         "keywords": [
             "ast",
@@ -2007,16 +2007,16 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "ast-monkey-util": "^3.0.1",
-            "codsen-tokenizer": "^7.0.1",
+            "ast-monkey-util": "^3.0.2",
+            "codsen-tokenizer": "^7.0.2",
             "object-path": "^0.11.8",
-            "string-find-malformed": "^4.0.1",
-            "string-left-right": "^6.0.1"
+            "string-find-malformed": "^4.0.2",
+            "string-left-right": "^6.0.2"
         }
     },
     "codsen-tokenizer": {
         "name": "codsen-tokenizer",
-        "version": "7.0.1",
+        "version": "7.0.2",
         "description": "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages",
         "keywords": [
             "ast",
@@ -2088,24 +2088,24 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "html-all-known-attributes": "^6.0.1",
-            "is-char-suitable-for-html-attr-name": "^4.0.1",
-            "is-html-attribute-closing": "^4.0.1",
-            "is-html-tag-opening": "^4.0.1",
+            "html-all-known-attributes": "^6.0.2",
+            "is-char-suitable-for-html-attr-name": "^4.0.2",
+            "is-html-attribute-closing": "^4.0.2",
+            "is-html-tag-opening": "^4.0.2",
             "lodash.clonedeep": "^4.5.0",
             "lodash.isplainobject": "^4.0.6",
-            "string-left-right": "^6.0.1",
-            "string-match-left-right": "^9.0.1"
+            "string-left-right": "^6.0.2",
+            "string-match-left-right": "^9.0.2"
         },
         "devDependencies": {
             "@types/lodash.clonedeep": "^4.5.7",
             "@types/lodash.isplainobject": "^4.0.7",
-            "ast-compare": "^4.0.1"
+            "ast-compare": "^4.0.2"
         }
     },
     "color-shorthand-hex-to-six-digit": {
         "name": "color-shorthand-hex-to-six-digit",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Convert shorthand hex color codes into full",
         "keywords": [
             "characters",
@@ -2190,7 +2190,7 @@ export const packageJSONData = {
     },
     "csv-sort": {
         "name": "csv-sort",
-        "version": "7.0.1",
+        "version": "7.0.2",
         "description": "Sort double-entry bookkeeping CSV from internet banking",
         "keywords": [
             "accountancy",
@@ -2266,7 +2266,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "csv-split-easy": "^7.0.1",
+            "csv-split-easy": "^7.0.2",
             "currency.js": "^2.0.4",
             "lodash.pull": "^4.1.0"
         },
@@ -2276,7 +2276,7 @@ export const packageJSONData = {
     },
     "csv-sort-cli": {
         "name": "csv-sort-cli",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
         "keywords": [
             "accountancy",
@@ -2349,7 +2349,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "chalk": "^5.1.2",
-            "csv-sort": "^7.0.1",
+            "csv-sort": "^7.0.2",
             "globby": "^13.1.2",
             "inquirer": "^9.1.4",
             "lodash.pullall": "^4.2.0",
@@ -2364,7 +2364,7 @@ export const packageJSONData = {
     },
     "csv-split-easy": {
         "name": "csv-split-easy",
-        "version": "7.0.1",
+        "version": "7.0.2",
         "description": "Splits the CSV string into array of arrays, each representing a row of columns",
         "keywords": [
             "add",
@@ -2438,12 +2438,12 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "string-remove-thousand-separators": "^7.0.1"
+            "string-remove-thousand-separators": "^7.0.2"
         }
     },
     "detect-is-it-html-or-xhtml": {
         "name": "detect-is-it-html-or-xhtml",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Does the string resemble an HTML or XHTML (or neither)?",
         "keywords": [
             "check",
@@ -2519,7 +2519,7 @@ export const packageJSONData = {
     },
     "detect-templating-language": {
         "name": "detect-templating-language",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Detects various templating languages present in string",
         "keywords": [
             "check",
@@ -2585,14 +2585,14 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "regex-is-jinja-nunjucks": "^4.0.1",
-            "regex-is-jsp": "^4.0.1",
-            "regex-jinja-specific": "^4.0.1"
+            "regex-is-jinja-nunjucks": "^4.0.2",
+            "regex-is-jsp": "^4.0.2",
+            "regex-jinja-specific": "^4.0.2"
         }
     },
     "detergent": {
         "name": "detergent",
-        "version": "9.0.1",
+        "version": "9.0.2",
         "description": "Extract, clean, encode text and fix English style",
         "keywords": [
             "brief",
@@ -2665,31 +2665,31 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "all-named-html-entities": "^3.0.1",
+            "all-named-html-entities": "^3.0.2",
             "ansi-regex": "^6.0.1",
             "he": "^1.2.0",
-            "html-entities-not-email-friendly": "^0.8.1",
-            "ranges-apply": "^7.0.1",
-            "ranges-invert": "^6.0.1",
-            "ranges-process-outside": "^6.0.1",
-            "ranges-push": "^7.0.1",
-            "string-apostrophes": "^4.0.1",
-            "string-collapse-white-space": "^11.0.1",
-            "string-fix-broken-named-entities": "^7.0.1",
-            "string-left-right": "^6.0.1",
-            "string-range-expander": "^4.0.1",
-            "string-remove-widows": "^4.0.1",
-            "string-strip-html": "^13.0.1",
-            "string-trim-spaces-only": "^5.0.1"
+            "html-entities-not-email-friendly": "^0.8.2",
+            "ranges-apply": "^7.0.2",
+            "ranges-invert": "^6.0.2",
+            "ranges-process-outside": "^6.0.2",
+            "ranges-push": "^7.0.2",
+            "string-apostrophes": "^4.0.2",
+            "string-collapse-white-space": "^11.0.2",
+            "string-fix-broken-named-entities": "^7.0.2",
+            "string-left-right": "^6.0.2",
+            "string-range-expander": "^4.0.2",
+            "string-remove-widows": "^4.0.2",
+            "string-strip-html": "^13.0.2",
+            "string-trim-spaces-only": "^5.0.2"
         },
         "devDependencies": {
             "lodash.clonedeep": "^4.5.0",
-            "test-mixer": "^4.0.1"
+            "test-mixer": "^4.0.2"
         }
     },
     "easy-replace": {
         "name": "easy-replace",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Replace strings with optional lookarounds, but without regexes",
         "keywords": [
             "easy",
@@ -2762,7 +2762,7 @@ export const packageJSONData = {
     },
     "edit-package-json": {
         "name": "edit-package-json",
-        "version": "0.8.1",
+        "version": "0.8.2",
         "description": "Edit package.json without parsing, as string, to keep the formatting intact",
         "keywords": [
             "changes",
@@ -2834,11 +2834,11 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ranges-apply": "^7.0.1",
-            "string-left-right": "^6.0.1"
+            "ranges-apply": "^7.0.2",
+            "string-left-right": "^6.0.2"
         },
         "devDependencies": {
-            "ast-monkey-traverse": "^4.0.1",
+            "ast-monkey-traverse": "^4.0.2",
             "globby": "^13.1.2",
             "lodash.clonedeep": "^4.5.0",
             "p-map": "^5.5.0"
@@ -2846,7 +2846,7 @@ export const packageJSONData = {
     },
     "email-all-chars-within-ascii": {
         "name": "email-all-chars-within-ascii",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Scans all characters within a string and checks are they within ASCII range",
         "keywords": [
             "7bit",
@@ -2915,12 +2915,12 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "check-types-mini": "^8.0.1"
+            "check-types-mini": "^8.0.2"
         }
     },
     "email-all-chars-within-ascii-cli": {
         "name": "email-all-chars-within-ascii-cli",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "Command line app to scan email templates, are all their characters within ASCII range",
         "keywords": [
             "7bit",
@@ -2990,12 +2990,12 @@ export const packageJSONData = {
         },
         "dependencies": {
             "chalk": "^5.1.2",
-            "email-all-chars-within-ascii": "^5.0.1",
+            "email-all-chars-within-ascii": "^5.0.2",
             "globby": "^13.1.2",
             "inquirer": "^9.1.4",
             "lodash.pullall": "^4.2.0",
             "minimist": "^1.2.7",
-            "string-left-right": "^6.0.1",
+            "string-left-right": "^6.0.2",
             "update-notifier": "^6.0.2"
         },
         "devDependencies": {
@@ -3005,7 +3005,7 @@ export const packageJSONData = {
     },
     "email-comb": {
         "name": "email-comb",
-        "version": "7.0.1",
+        "version": "7.0.2",
         "description": "Remove unused CSS from email templates",
         "keywords": [
             "body",
@@ -3075,20 +3075,20 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "array-pull-all-with-glob": "^7.0.1",
-            "html-crush": "^6.0.1",
+            "array-pull-all-with-glob": "^7.0.2",
+            "html-crush": "^6.0.2",
             "lodash.intersection": "^4.4.0",
             "lodash.pullall": "^4.2.0",
             "lodash.uniq": "^4.5.0",
             "matcher": "^5.0.0",
-            "ranges-apply": "^7.0.1",
-            "ranges-push": "^7.0.1",
-            "regex-empty-conditional-comments": "^3.0.1",
-            "string-extract-class-names": "^8.0.1",
-            "string-left-right": "^6.0.1",
-            "string-match-left-right": "^9.0.1",
-            "string-range-expander": "^4.0.1",
-            "string-uglify": "^3.0.1"
+            "ranges-apply": "^7.0.2",
+            "ranges-push": "^7.0.2",
+            "regex-empty-conditional-comments": "^3.0.2",
+            "string-extract-class-names": "^8.0.2",
+            "string-left-right": "^6.0.2",
+            "string-match-left-right": "^9.0.2",
+            "string-range-expander": "^4.0.2",
+            "string-uglify": "^3.0.2"
         },
         "devDependencies": {
             "@types/lodash.intersection": "^4.4.7",
@@ -3098,7 +3098,7 @@ export const packageJSONData = {
     },
     "email-homey": {
         "name": "email-homey",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Generate homepage in the Browsersync root with links/screenshots to all your email templates",
         "keywords": [
             "browsersync",
@@ -3182,7 +3182,7 @@ export const packageJSONData = {
     },
     "emlint": {
         "name": "emlint",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Pluggable email template code linter",
         "keywords": [
             "analysis",
@@ -3264,21 +3264,21 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ast-monkey-traverse": "^4.0.1",
-            "ast-monkey-util": "^3.0.1",
-            "codsen-parser": "^0.14.1",
+            "ast-monkey-traverse": "^4.0.2",
+            "ast-monkey-util": "^3.0.2",
+            "codsen-parser": "^0.14.2",
             "define-lazy-prop": "^3.0.0",
             "globby": "^13.1.2",
             "he": "^1.2.0",
-            "html-all-known-attributes": "^6.0.1",
-            "html-entities-not-email-friendly": "^0.8.1",
+            "html-all-known-attributes": "^6.0.2",
+            "html-entities-not-email-friendly": "^0.8.2",
             "is-d": "^1.0.0",
-            "is-language-code": "^5.0.1",
-            "is-media-descriptor": "^5.0.1",
-            "is-relative-uri": "^5.0.1",
+            "is-language-code": "^5.0.2",
+            "is-media-descriptor": "^5.0.2",
+            "is-relative-uri": "^5.0.2",
             "is-url-superb": "^6.1.0",
             "leven": "^4.0.0",
-            "line-column-mini": "^3.0.1",
+            "line-column-mini": "^3.0.2",
             "lodash.clonedeep": "^4.5.0",
             "lodash.isregexp": "^4.0.1",
             "matcher": "^5.0.0",
@@ -3286,14 +3286,14 @@ export const packageJSONData = {
             "mime-db": "^1.52.0",
             "object-path": "^0.11.8",
             "p-reduce": "^3.0.0",
-            "ranges-merge": "^9.0.1",
+            "ranges-merge": "^9.0.2",
             "re2": "^1.17.8",
             "rgba-regex": "^1.0.0",
-            "string-find-malformed": "^4.0.1",
-            "string-fix-broken-named-entities": "^7.0.1",
-            "string-left-right": "^6.0.1",
-            "string-match-left-right": "^9.0.1",
-            "string-process-comma-separated": "^4.0.1",
+            "string-find-malformed": "^4.0.2",
+            "string-fix-broken-named-entities": "^7.0.2",
+            "string-left-right": "^6.0.2",
+            "string-match-left-right": "^9.0.2",
+            "string-process-comma-separated": "^4.0.2",
             "tiny-typed-emitter": "^2.1.0",
             "update-notifier": "^6.0.2",
             "url-regex-safe": "^3.0.0"
@@ -3304,13 +3304,13 @@ export const packageJSONData = {
             "@types/lodash.isregexp": "^4.0.7",
             "@types/mime-db": "^1.43.1",
             "@types/url-regex-safe": "^1.0.0",
-            "ast-deep-contains": "^5.0.1",
-            "ranges-apply": "^7.0.1"
+            "ast-deep-contains": "^5.0.2",
+            "ranges-apply": "^7.0.2"
         }
     },
     "eslint-plugin-row-num": {
         "name": "eslint-plugin-row-num-tbc",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "ESLint plugin to update row numbers on each console.log",
         "keywords": [
             "console",
@@ -3379,14 +3379,14 @@ export const packageJSONData = {
         },
         "dependencies": {
             "@types/json-stringify-safe": "^5.0.0",
-            "js-row-num": "^7.0.1",
+            "js-row-num": "^7.0.2",
             "json-stringify-safe": "^5.0.1",
-            "object-delete-key": "^4.0.1"
+            "object-delete-key": "^4.0.2"
         }
     },
     "eslint-plugin-test-num": {
         "name": "eslint-plugin-test-num-tbc",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "ESLint plugin to update unit test numbers automatically",
         "keywords": [
             "automatically",
@@ -3459,14 +3459,14 @@ export const packageJSONData = {
         "dependencies": {
             "@types/json-stringify-safe": "^5.0.0",
             "json-stringify-safe": "^5.0.1",
-            "object-delete-key": "^4.0.1",
+            "object-delete-key": "^4.0.2",
             "object-path": "^0.11.8",
-            "string-left-right": "^6.0.1"
+            "string-left-right": "^6.0.2"
         }
     },
     "extract-search-index": {
         "name": "extract-search-index",
-        "version": "2.0.1",
+        "version": "2.0.2",
         "description": "Extract unique keyword input list string for search",
         "keywords": [
             "string",
@@ -3537,13 +3537,13 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "string-strip-html": "^13.0.1",
-            "string-unfancy": "^6.0.1"
+            "string-strip-html": "^13.0.2",
+            "string-unfancy": "^6.0.2"
         }
     },
     "generate-atomic-css": {
         "name": "generate-atomic-css",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "Generate Atomic CSS",
         "keywords": [
             "api",
@@ -3613,12 +3613,12 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "string-left-right": "^6.0.1"
+            "string-left-right": "^6.0.2"
         }
     },
     "generate-atomic-css-cli": {
         "name": "generate-atomic-css-cli",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "Generates and updates all HTML templates’ atomic CSS",
         "keywords": [
             "atomic",
@@ -3690,7 +3690,7 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "generate-atomic-css": "^3.0.1",
+            "generate-atomic-css": "^3.0.2",
             "globby": "^13.1.2",
             "is-d": "^1.0.0",
             "meow": "^11.0.0",
@@ -3701,7 +3701,7 @@ export const packageJSONData = {
     },
     "gulp-email-remove-unused-css": {
         "name": "gulp-email-remove-unused-css",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Gulp plugin to remove unused CSS classes/id’s from styles in HTML HEAD and inline within BODY",
         "keywords": [
             "body",
@@ -3767,7 +3767,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "email-comb": "^7.0.1",
+            "email-comb": "^7.0.2",
             "plugin-error": "^2.0.0"
         },
         "devDependencies": {
@@ -3777,7 +3777,7 @@ export const packageJSONData = {
     },
     "helga": {
         "name": "helga",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "Your next best friend when editing complex nested code",
         "keywords": [
             "api",
@@ -3853,7 +3853,7 @@ export const packageJSONData = {
     },
     "html-all-known-attributes": {
         "name": "html-all-known-attributes",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "All HTML attributes known to the Humanity",
         "keywords": [
             "email",
@@ -3923,7 +3923,7 @@ export const packageJSONData = {
     },
     "html-crush": {
         "name": "html-crush",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Minify email templates",
         "keywords": [
             "breaks",
@@ -4003,17 +4003,17 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ranges-apply": "^7.0.1",
-            "ranges-push": "^7.0.1",
-            "string-left-right": "^6.0.1",
-            "string-match-left-right": "^9.0.1",
-            "string-range-expander": "^4.0.1",
-            "test-mixer": "^4.0.1"
+            "ranges-apply": "^7.0.2",
+            "ranges-push": "^7.0.2",
+            "string-left-right": "^6.0.2",
+            "string-match-left-right": "^9.0.2",
+            "string-range-expander": "^4.0.2",
+            "test-mixer": "^4.0.2"
         }
     },
     "html-entities-not-email-friendly": {
         "name": "html-entities-not-email-friendly",
-        "version": "0.8.1",
+        "version": "0.8.2",
         "description": "All HTML entities which are not email template friendly",
         "keywords": [
             "email",
@@ -4083,7 +4083,7 @@ export const packageJSONData = {
     },
     "html-img-alt": {
         "name": "html-img-alt",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Adds missing alt attributes to img tags. Non-parsing.",
         "keywords": [
             "add",
@@ -4159,15 +4159,15 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "check-types-mini": "^8.0.1",
-            "ranges-apply": "^7.0.1",
-            "ranges-push": "^7.0.1",
-            "string-unfancy": "^6.0.1"
+            "check-types-mini": "^8.0.2",
+            "ranges-apply": "^7.0.2",
+            "ranges-push": "^7.0.2",
+            "string-unfancy": "^6.0.2"
         }
     },
     "html-table-patcher": {
         "name": "html-table-patcher",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Visual helper to place templating code around table tags into correct places",
         "keywords": [
             "add",
@@ -4241,15 +4241,15 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ast-monkey-traverse-with-lookahead": "^4.0.1",
-            "codsen-parser": "^0.14.1",
-            "ranges-apply": "^7.0.1",
-            "ranges-push": "^7.0.1"
+            "ast-monkey-traverse-with-lookahead": "^4.0.2",
+            "codsen-parser": "^0.14.2",
+            "ranges-apply": "^7.0.2",
+            "ranges-push": "^7.0.2"
         }
     },
     "is-char-suitable-for-html-attr-name": {
         "name": "is-char-suitable-for-html-attr-name",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Is given character suitable to be in an HTML attribute’s name?",
         "keywords": [
             "attribute",
@@ -4326,7 +4326,7 @@ export const packageJSONData = {
     },
     "is-html-attribute-closing": {
         "name": "is-html-attribute-closing",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Is a character on a given index a closing of an HTML attribute?",
         "keywords": [
             "attribute",
@@ -4401,15 +4401,15 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "html-all-known-attributes": "^6.0.1",
-            "is-char-suitable-for-html-attr-name": "^4.0.1",
-            "string-left-right": "^6.0.1",
-            "string-match-left-right": "^9.0.1"
+            "html-all-known-attributes": "^6.0.2",
+            "is-char-suitable-for-html-attr-name": "^4.0.2",
+            "string-left-right": "^6.0.2",
+            "string-match-left-right": "^9.0.2"
         }
     },
     "is-html-tag-opening": {
         "name": "is-html-tag-opening",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Does an HTML tag start at given position?",
         "keywords": [
             "bracket",
@@ -4482,16 +4482,16 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "string-left-right": "^6.0.1",
-            "string-match-left-right": "^9.0.1"
+            "string-left-right": "^6.0.2",
+            "string-match-left-right": "^9.0.2"
         },
         "devDependencies": {
-            "test-mixer": "^4.0.1"
+            "test-mixer": "^4.0.2"
         }
     },
     "is-language-code": {
         "name": "is-language-code",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Is given string a language code (as per IANA)",
         "keywords": [
             "check",
@@ -4569,7 +4569,7 @@ export const packageJSONData = {
     },
     "is-media-descriptor": {
         "name": "is-media-descriptor",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Is given string a valid media descriptor (including media query)?",
         "keywords": [
             "attribute",
@@ -4642,15 +4642,15 @@ export const packageJSONData = {
         },
         "dependencies": {
             "leven": "^4.0.0",
-            "string-process-comma-separated": "^4.0.1"
+            "string-process-comma-separated": "^4.0.2"
         },
         "devDependencies": {
-            "ranges-apply": "^7.0.1"
+            "ranges-apply": "^7.0.2"
         }
     },
     "is-relative-uri": {
         "name": "is-relative-uri",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Is given string a relative URI?",
         "keywords": [
             "href",
@@ -4720,12 +4720,12 @@ export const packageJSONData = {
             }
         },
         "devDependencies": {
-            "ranges-apply": "^7.0.1"
+            "ranges-apply": "^7.0.2"
         }
     },
     "js-row-num": {
         "name": "js-row-num",
-        "version": "7.0.1",
+        "version": "7.0.2",
         "description": "Update all row numbers in all console.logs in JS code",
         "keywords": [
             "alt",
@@ -4799,13 +4799,13 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ranges-apply": "^7.0.1",
-            "ranges-push": "^7.0.1"
+            "ranges-apply": "^7.0.2",
+            "ranges-push": "^7.0.2"
         }
     },
     "js-row-num-cli": {
         "name": "js-row-num-cli",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "Update all row numbers in all console.logs in given files",
         "keywords": [
             "automated",
@@ -4877,10 +4877,10 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "arrayiffy-if-string": "^5.0.1",
+            "arrayiffy-if-string": "^5.0.2",
             "globby": "^13.1.2",
             "is-d": "^1.0.0",
-            "js-row-num": "^7.0.1",
+            "js-row-num": "^7.0.2",
             "meow": "^11.0.0",
             "p-reduce": "^3.0.0",
             "update-notifier": "^6.0.2",
@@ -4889,7 +4889,7 @@ export const packageJSONData = {
     },
     "json-comb": {
         "name": "json-comb",
-        "version": "0.8.1",
+        "version": "0.8.2",
         "description": "Command line app to manage sets of JSON files",
         "keywords": [
             "app",
@@ -4961,7 +4961,7 @@ export const packageJSONData = {
             "fs-extra": "^11.1.0",
             "globby": "^13.1.2",
             "is-d": "^1.0.0",
-            "json-comb-core": "^8.0.1",
+            "json-comb-core": "^8.0.2",
             "meow": "^11.0.0",
             "p-map": "^5.5.0",
             "p-reduce": "^3.0.0",
@@ -4970,7 +4970,7 @@ export const packageJSONData = {
     },
     "json-comb-core": {
         "name": "json-comb-core",
-        "version": "8.0.1",
+        "version": "8.0.2",
         "description": "The inner core of json-comb",
         "keywords": [
             "comb",
@@ -5043,11 +5043,11 @@ export const packageJSONData = {
         "dependencies": {
             "lodash.clonedeep": "^4.5.0",
             "lodash.includes": "^4.3.0",
-            "object-fill-missing-keys": "^11.0.1",
-            "object-flatten-all-arrays": "^7.0.1",
-            "object-merge-advanced": "^14.0.1",
-            "object-no-new-keys": "^5.0.1",
-            "object-set-all-values-to": "^6.0.1",
+            "object-fill-missing-keys": "^11.0.2",
+            "object-flatten-all-arrays": "^7.0.2",
+            "object-merge-advanced": "^14.0.2",
+            "object-no-new-keys": "^5.0.2",
+            "object-set-all-values-to": "^6.0.2",
             "p-map": "^5.5.0",
             "p-one": "^2.0.0",
             "p-reduce": "^3.0.0",
@@ -5063,7 +5063,7 @@ export const packageJSONData = {
     },
     "json-sort-cli": {
         "name": "json-sort-cli",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "Command line app to deep sort JSON files, retains package.json special key order",
         "keywords": [
             "app",
@@ -5130,7 +5130,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ast-monkey-traverse": "^4.0.1",
+            "ast-monkey-traverse": "^4.0.2",
             "chalk": "^5.1.2",
             "fs-extra": "^11.1.0",
             "globby": "^13.1.2",
@@ -5149,7 +5149,7 @@ export const packageJSONData = {
     },
     "json-variables": {
         "name": "json-variables",
-        "version": "12.0.1",
+        "version": "12.0.2",
         "description": "Resolves custom-marked, cross-referenced paths in parsed JSON",
         "keywords": [
             "comb",
@@ -5227,21 +5227,21 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "arrayiffy-if-string": "^5.0.1",
-            "ast-get-values-by-key": "^5.0.1",
-            "ast-monkey-traverse": "^4.0.1",
+            "arrayiffy-if-string": "^5.0.2",
+            "ast-get-values-by-key": "^5.0.2",
+            "ast-monkey-traverse": "^4.0.2",
             "matcher": "^5.0.0",
             "object-path": "^0.11.8",
-            "ranges-apply": "^7.0.1",
-            "ranges-push": "^7.0.1",
-            "string-find-heads-tails": "^6.0.1",
-            "string-match-left-right": "^9.0.1",
-            "string-remove-duplicate-heads-tails": "^7.0.1"
+            "ranges-apply": "^7.0.2",
+            "ranges-push": "^7.0.2",
+            "string-find-heads-tails": "^6.0.2",
+            "string-match-left-right": "^9.0.2",
+            "string-remove-duplicate-heads-tails": "^7.0.2"
         }
     },
     "lerna-clean-changelogs": {
         "name": "lerna-clean-changelogs",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Removes frivolous entries from commitizen generated changelogs",
         "keywords": [
             "changelog",
@@ -5315,7 +5315,7 @@ export const packageJSONData = {
     },
     "lerna-clean-changelogs-cli": {
         "name": "lerna-clean-changelogs-cli",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "CLI application to cleanse the lerna/commitizen-generated changelogs",
         "keywords": [
             "changelog",
@@ -5389,7 +5389,7 @@ export const packageJSONData = {
             "chalk": "^5.1.2",
             "fs-extra": "^11.1.0",
             "globby": "^13.1.2",
-            "lerna-clean-changelogs": "^5.0.1",
+            "lerna-clean-changelogs": "^5.0.2",
             "meow": "^11.0.0",
             "p-filter": "^3.0.0",
             "p-reduce": "^3.0.0",
@@ -5402,7 +5402,7 @@ export const packageJSONData = {
     },
     "lerna-link-dep": {
         "name": "lerna-link-dep",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "Like lerna add but does just the symlinking, works on CLI bins too",
         "keywords": [
             "add",
@@ -5485,7 +5485,7 @@ export const packageJSONData = {
     },
     "line-column-mini": {
         "name": "line-column-mini",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "Convert string index to line-column position",
         "keywords": [
             "string",
@@ -5553,7 +5553,7 @@ export const packageJSONData = {
     },
     "object-all-values-equal-to": {
         "name": "object-all-values-equal-to",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Does the AST/nested-plain-object/array/whatever contain only one kind of value?",
         "keywords": [
             "all",
@@ -5634,7 +5634,7 @@ export const packageJSONData = {
     },
     "object-boolean-combinations": {
         "name": "object-boolean-combinations",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Consumes a defaults object with booleans, generates all possible variations of it",
         "keywords": [
             "all",
@@ -5715,7 +5715,7 @@ export const packageJSONData = {
     },
     "object-delete-key": {
         "name": "object-delete-key",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
         "keywords": [
             "ast",
@@ -5791,10 +5791,10 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ast-is-empty": "^4.0.1",
-            "ast-monkey": "^9.0.1",
+            "ast-is-empty": "^4.0.2",
+            "ast-monkey": "^9.0.2",
             "lodash.clonedeep": "^4.5.0",
-            "util-array-object-or-both": "^5.0.1"
+            "util-array-object-or-both": "^5.0.2"
         },
         "devDependencies": {
             "@types/lodash.clonedeep": "^4.5.7"
@@ -5802,7 +5802,7 @@ export const packageJSONData = {
     },
     "object-fill-missing-keys": {
         "name": "object-fill-missing-keys",
-        "version": "11.0.1",
+        "version": "11.0.2",
         "description": "Add missing keys into plain objects, according to a reference object",
         "keywords": [
             "add",
@@ -5876,11 +5876,11 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "arrayiffy-if-string": "^5.0.1",
+            "arrayiffy-if-string": "^5.0.2",
             "lodash.clonedeep": "^4.5.0",
             "lodash.isplainobject": "^4.0.6",
-            "object-all-values-equal-to": "^4.0.1",
-            "object-merge-advanced": "^14.0.1"
+            "object-all-values-equal-to": "^4.0.2",
+            "object-merge-advanced": "^14.0.2"
         },
         "devDependencies": {
             "@types/lodash.clonedeep": "^4.5.7",
@@ -5889,7 +5889,7 @@ export const packageJSONData = {
     },
     "object-flatten-all-arrays": {
         "name": "object-flatten-all-arrays",
-        "version": "7.0.1",
+        "version": "7.0.2",
         "description": "Merge and flatten any arrays found in all values within plain objects",
         "keywords": [
             "arrays",
@@ -5972,7 +5972,7 @@ export const packageJSONData = {
     },
     "object-flatten-referencing": {
         "name": "object-flatten-referencing",
-        "version": "7.0.1",
+        "version": "7.0.2",
         "description": "Flatten complex nested objects according to a reference objects",
         "keywords": [
             "advanced",
@@ -6045,7 +6045,7 @@ export const packageJSONData = {
             "lodash.clonedeep": "^4.5.0",
             "lodash.isplainobject": "^4.0.6",
             "matcher": "^5.0.0",
-            "str-indexes-of-plus": "^5.0.1"
+            "str-indexes-of-plus": "^5.0.2"
         },
         "devDependencies": {
             "@types/lodash.clonedeep": "^4.5.7",
@@ -6054,7 +6054,7 @@ export const packageJSONData = {
     },
     "object-merge-advanced": {
         "name": "object-merge-advanced",
-        "version": "14.0.1",
+        "version": "14.0.2",
         "description": "Deeply merge JSON-like data structures",
         "keywords": [
             "advanced",
@@ -6134,7 +6134,7 @@ export const packageJSONData = {
             "lodash.isplainobject": "^4.0.6",
             "lodash.uniq": "^4.5.0",
             "matcher": "^5.0.0",
-            "util-nonempty": "^5.0.1"
+            "util-nonempty": "^5.0.2"
         },
         "devDependencies": {
             "@types/lodash.clonedeep": "^4.5.7",
@@ -6148,7 +6148,7 @@ export const packageJSONData = {
     },
     "object-no-new-keys": {
         "name": "object-no-new-keys",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)",
         "keywords": [
             "compare",
@@ -6222,7 +6222,7 @@ export const packageJSONData = {
     },
     "object-set-all-values-to": {
         "name": "object-set-all-values-to",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Recursively walk the input and set all found values in plain objects to something",
         "keywords": [
             "all",
@@ -6303,7 +6303,7 @@ export const packageJSONData = {
     },
     "ranges-apply": {
         "name": "ranges-apply",
-        "version": "7.0.1",
+        "version": "7.0.2",
         "description": "Take an array of string index ranges, delete/replace the string according to them",
         "keywords": [
             "delete",
@@ -6373,13 +6373,13 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ranges-merge": "^9.0.1",
+            "ranges-merge": "^9.0.2",
             "tiny-invariant": "^1.3.1"
         }
     },
     "ranges-crop": {
         "name": "ranges-crop",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Crop array of ranges when they go beyond the reference string’s length",
         "keywords": [
             "array",
@@ -6448,16 +6448,16 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ranges-merge": "^9.0.1"
+            "ranges-merge": "^9.0.2"
         },
         "devDependencies": {
             "lodash.clonedeep": "^4.5.0",
-            "ranges-apply": "^7.0.1"
+            "ranges-apply": "^7.0.2"
         }
     },
     "ranges-ent-decode": {
         "name": "ranges-ent-decode",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Recursive HTML entity decoding for Ranges workflow",
         "keywords": [
             "astral",
@@ -6531,7 +6531,7 @@ export const packageJSONData = {
         "dependencies": {
             "he": "^1.2.0",
             "lodash.isplainobject": "^4.0.6",
-            "ranges-merge": "^9.0.1"
+            "ranges-merge": "^9.0.2"
         },
         "devDependencies": {
             "@types/he": "^1.1.2",
@@ -6540,7 +6540,7 @@ export const packageJSONData = {
     },
     "ranges-invert": {
         "name": "ranges-invert",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Invert string index ranges",
         "keywords": [
             "array",
@@ -6605,13 +6605,13 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ranges-crop": "^6.0.1",
-            "ranges-merge": "^9.0.1"
+            "ranges-crop": "^6.0.2",
+            "ranges-merge": "^9.0.2"
         }
     },
     "ranges-is-index-within": {
         "name": "ranges-is-index-within",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Checks if index is within any of the given string index ranges",
         "keywords": [
             "index",
@@ -6678,7 +6678,7 @@ export const packageJSONData = {
     },
     "ranges-iterate": {
         "name": "ranges-iterate",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Iterate a string and any changes within given string index ranges",
         "keywords": [
             "array",
@@ -6748,13 +6748,13 @@ export const packageJSONData = {
             }
         },
         "devDependencies": {
-            "ranges-apply": "^7.0.1",
-            "ranges-merge": "^9.0.1"
+            "ranges-apply": "^7.0.2",
+            "ranges-merge": "^9.0.2"
         }
     },
     "ranges-merge": {
         "name": "ranges-merge",
-        "version": "9.0.1",
+        "version": "9.0.2",
         "description": "Merge and sort string index ranges",
         "keywords": [
             "index",
@@ -6824,8 +6824,8 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ranges-push": "^7.0.1",
-            "ranges-sort": "^6.0.1"
+            "ranges-push": "^7.0.2",
+            "ranges-sort": "^6.0.2"
         },
         "devDependencies": {
             "lodash.clonedeep": "^4.5.0"
@@ -6833,7 +6833,7 @@ export const packageJSONData = {
     },
     "ranges-offset": {
         "name": "ranges-offset",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Increment or decrement each index in every range",
         "keywords": [
             "array",
@@ -6901,7 +6901,7 @@ export const packageJSONData = {
     },
     "ranges-process-outside": {
         "name": "ranges-process-outside",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Iterate string considering ranges, as if they were already applied",
         "keywords": [
             "array",
@@ -6966,8 +6966,8 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ranges-crop": "^6.0.1",
-            "ranges-invert": "^6.0.1",
+            "ranges-crop": "^6.0.2",
+            "ranges-invert": "^6.0.2",
             "runes": "^0.4.3"
         },
         "devDependencies": {
@@ -6976,7 +6976,7 @@ export const packageJSONData = {
     },
     "ranges-push": {
         "name": "ranges-push",
-        "version": "7.0.1",
+        "version": "7.0.2",
         "description": "Gather string index ranges",
         "keywords": [
             "delete",
@@ -7047,13 +7047,13 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "string-collapse-leading-whitespace": "^7.0.1",
-            "string-trim-spaces-only": "^5.0.1"
+            "string-collapse-leading-whitespace": "^7.0.2",
+            "string-trim-spaces-only": "^5.0.2"
         }
     },
     "ranges-regex": {
         "name": "ranges-regex",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Integrate regex operations into Ranges workflow",
         "keywords": [
             "array",
@@ -7126,16 +7126,16 @@ export const packageJSONData = {
         },
         "dependencies": {
             "lodash.isregexp": "^4.0.1",
-            "ranges-merge": "^9.0.1"
+            "ranges-merge": "^9.0.2"
         },
         "devDependencies": {
             "@types/lodash.isregexp": "^4.0.7",
-            "ranges-apply": "^7.0.1"
+            "ranges-apply": "^7.0.2"
         }
     },
     "ranges-sort": {
         "name": "ranges-sort",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Sort string index ranges",
         "keywords": [
             "array",
@@ -7202,7 +7202,7 @@ export const packageJSONData = {
     },
     "regex-empty-conditional-comments": {
         "name": "regex-empty-conditional-comments",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "Regular expression for matching HTML empty conditional comments",
         "keywords": [
             "code",
@@ -7276,7 +7276,7 @@ export const packageJSONData = {
     },
     "regex-is-jinja-nunjucks": {
         "name": "regex-is-jinja-nunjucks",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Regular expression for detecting Jinja or Nunjucks code",
         "keywords": [
             "code",
@@ -7350,7 +7350,7 @@ export const packageJSONData = {
     },
     "regex-is-jsp": {
         "name": "regex-is-jsp",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Regular expression for detecting JSP (Java Server Pages) code",
         "keywords": [
             "code",
@@ -7426,7 +7426,7 @@ export const packageJSONData = {
     },
     "regex-jinja-specific": {
         "name": "regex-jinja-specific",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Regular expression for detecting Python-specific Jinja code",
         "keywords": [
             "code",
@@ -7500,7 +7500,7 @@ export const packageJSONData = {
     },
     "rehype-responsive-tables": {
         "name": "rehype-responsive-tables",
-        "version": "2.0.1",
+        "version": "2.0.2",
         "description": "Rehype plugin to stack the first column cells above their rows.",
         "keywords": [
             "unified",
@@ -7577,7 +7577,7 @@ export const packageJSONData = {
     },
     "remark-conventional-commit-changelog-timeline": {
         "name": "remark-conventional-commit-changelog-timeline",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
         "keywords": [
             "unified",
@@ -7651,13 +7651,13 @@ export const packageJSONData = {
             "unist-util-visit": "^4.1.1"
         },
         "devDependencies": {
-            "object-delete-key": "^4.0.1",
+            "object-delete-key": "^4.0.2",
             "remark": "^14.0.2"
         }
     },
     "remark-typography": {
         "name": "remark-typography",
-        "version": "0.5.1",
+        "version": "0.5.2",
         "description": "Remark plugin to fix typography: quotes, dashes and so on.",
         "keywords": [
             "unified",
@@ -7726,8 +7726,8 @@ export const packageJSONData = {
         },
         "dependencies": {
             "@types/hast": "^2.3.4",
-            "string-apostrophes": "^4.0.1",
-            "string-remove-widows": "^4.0.1",
+            "string-apostrophes": "^4.0.2",
+            "string-remove-widows": "^4.0.2",
             "unified": "^10.1.2",
             "unist-util-visit": "^4.1.1"
         },
@@ -7737,7 +7737,7 @@ export const packageJSONData = {
     },
     "seo-editor": {
         "name": "seo-editor",
-        "version": "2.0.1",
+        "version": "2.0.2",
         "description": "Copywriting keyword to-do list automation",
         "keywords": [
             "seo",
@@ -7811,7 +7811,7 @@ export const packageJSONData = {
     },
     "str-indexes-of-plus": {
         "name": "str-indexes-of-plus",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Like indexOf but returns array and counts per-grapheme",
         "keywords": [
             "array",
@@ -7883,7 +7883,7 @@ export const packageJSONData = {
     },
     "string-apostrophes": {
         "name": "string-apostrophes",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes",
         "keywords": [
             "apostrophe",
@@ -7952,12 +7952,12 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ranges-apply": "^7.0.1"
+            "ranges-apply": "^7.0.2"
         }
     },
     "string-bionic-split": {
         "name": "string-bionic-split",
-        "version": "2.0.1",
+        "version": "2.0.2",
         "description": "Calculate a word string split position index for later highlighting",
         "keywords": [
             "string",
@@ -8032,7 +8032,7 @@ export const packageJSONData = {
     },
     "string-character-is-astral-surrogate": {
         "name": "string-character-is-astral-surrogate",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "Tells, is given character a part of astral character, specifically, a high and low surrogate",
         "keywords": [
             "astral",
@@ -8108,7 +8108,7 @@ export const packageJSONData = {
     },
     "string-collapse-leading-whitespace": {
         "name": "string-collapse-leading-whitespace",
-        "version": "7.0.1",
+        "version": "7.0.2",
         "description": "Collapse the leading and trailing whitespace of a string",
         "keywords": [
             "alt",
@@ -8184,7 +8184,7 @@ export const packageJSONData = {
     },
     "string-collapse-white-space": {
         "name": "string-collapse-white-space",
-        "version": "11.0.1",
+        "version": "11.0.2",
         "description": "Replace chunks of whitespace with a single spaces",
         "keywords": [
             "chunk",
@@ -8253,17 +8253,17 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ranges-apply": "^7.0.1",
-            "ranges-push": "^7.0.1",
-            "string-left-right": "^6.0.1"
+            "ranges-apply": "^7.0.2",
+            "ranges-push": "^7.0.2",
+            "string-left-right": "^6.0.2"
         },
         "devDependencies": {
-            "test-mixer": "^4.0.1"
+            "test-mixer": "^4.0.2"
         }
     },
     "string-convert-indexes": {
         "name": "string-convert-indexes",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Convert between native JS string character indexes and grapheme-count-based indexes",
         "keywords": [
             "astral",
@@ -8333,13 +8333,13 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "ast-monkey-traverse": "^4.0.1",
+            "ast-monkey-traverse": "^4.0.2",
             "grapheme-splitter": "^1.0.4"
         }
     },
     "string-extract-class-names": {
         "name": "string-extract-class-names",
-        "version": "8.0.1",
+        "version": "8.0.2",
         "description": "Extracts CSS class/id names from a string",
         "keywords": [
             "class",
@@ -8405,12 +8405,12 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "string-left-right": "^6.0.1"
+            "string-left-right": "^6.0.2"
         }
     },
     "string-extract-sass-vars": {
         "name": "string-extract-sass-vars",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Parse SASS variables file into a plain object of CSS key-value pairs",
         "keywords": [
             "css",
@@ -8483,12 +8483,12 @@ export const packageJSONData = {
             "various": {}
         },
         "devDependencies": {
-            "color-shorthand-hex-to-six-digit": "^5.0.1"
+            "color-shorthand-hex-to-six-digit": "^5.0.2"
         }
     },
     "string-find-heads-tails": {
         "name": "string-find-heads-tails",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Finds where are arbitrary templating marker heads and tails located",
         "keywords": [
             "array",
@@ -8559,13 +8559,13 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "arrayiffy-if-string": "^5.0.1",
-            "string-match-left-right": "^9.0.1"
+            "arrayiffy-if-string": "^5.0.2",
+            "string-match-left-right": "^9.0.2"
         }
     },
     "string-find-malformed": {
         "name": "string-find-malformed",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Search for a malformed string. Think of Levenshtein distance but in search.",
         "keywords": [
             "character",
@@ -8638,12 +8638,12 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "string-left-right": "^6.0.1"
+            "string-left-right": "^6.0.2"
         }
     },
     "string-fix-broken-named-entities": {
         "name": "string-fix-broken-named-entities",
-        "version": "7.0.1",
+        "version": "7.0.2",
         "description": "Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes",
         "keywords": [
             "broken",
@@ -8718,10 +8718,10 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "all-named-html-entities": "^3.0.1",
+            "all-named-html-entities": "^3.0.2",
             "leven": "^4.0.0",
             "lodash.clonedeep": "^4.5.0",
-            "string-left-right": "^6.0.1"
+            "string-left-right": "^6.0.2"
         },
         "devDependencies": {
             "@types/lodash.clonedeep": "^4.5.7"
@@ -8729,7 +8729,7 @@ export const packageJSONData = {
     },
     "string-left-right": {
         "name": "string-left-right",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Looks up the first non-whitespace character to the left/right of a given index",
         "keywords": [
             "check",
@@ -8812,7 +8812,7 @@ export const packageJSONData = {
     },
     "string-match-left-right": {
         "name": "string-match-left-right",
-        "version": "9.0.1",
+        "version": "9.0.2",
         "description": "Match substrings on the left or right of a given index, ignoring whitespace",
         "keywords": [
             "left",
@@ -8880,9 +8880,9 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "arrayiffy-if-string": "^5.0.1",
+            "arrayiffy-if-string": "^5.0.2",
             "lodash.isplainobject": "^4.0.6",
-            "string-character-is-astral-surrogate": "^3.0.1"
+            "string-character-is-astral-surrogate": "^3.0.2"
         },
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7"
@@ -8890,7 +8890,7 @@ export const packageJSONData = {
     },
     "string-overlap-one-on-another": {
         "name": "string-overlap-one-on-another",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Lay one string on top of another, with an optional offset",
         "keywords": [
             "add",
@@ -8968,7 +8968,7 @@ export const packageJSONData = {
     },
     "string-process-comma-separated": {
         "name": "string-process-comma-separated",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Extracts chunks from possibly comma or whatever-separated string",
         "keywords": [
             "characters",
@@ -9040,7 +9040,7 @@ export const packageJSONData = {
     },
     "string-range-expander": {
         "name": "string-range-expander",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Expands string index ranges within whitespace boundaries until letters are met",
         "keywords": [
             "expand",
@@ -9111,7 +9111,7 @@ export const packageJSONData = {
     },
     "string-remove-duplicate-heads-tails": {
         "name": "string-remove-duplicate-heads-tails",
-        "version": "7.0.1",
+        "version": "7.0.2",
         "description": "Detect and (recursively) remove head and tail wrappings around the input string",
         "keywords": [
             "alt",
@@ -9185,12 +9185,12 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "arrayiffy-if-string": "^5.0.1",
+            "arrayiffy-if-string": "^5.0.2",
             "lodash.isplainobject": "^4.0.6",
-            "ranges-apply": "^7.0.1",
-            "ranges-push": "^7.0.1",
-            "string-match-left-right": "^9.0.1",
-            "string-trim-spaces-only": "^5.0.1"
+            "ranges-apply": "^7.0.2",
+            "ranges-push": "^7.0.2",
+            "string-match-left-right": "^9.0.2",
+            "string-trim-spaces-only": "^5.0.2"
         },
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7"
@@ -9198,7 +9198,7 @@ export const packageJSONData = {
     },
     "string-remove-thousand-separators": {
         "name": "string-remove-thousand-separators",
-        "version": "7.0.1",
+        "version": "7.0.2",
         "description": "Detects and removes thousand separators (dot/comma/quote/space) from string-type digits",
         "keywords": [
             "amount",
@@ -9270,8 +9270,8 @@ export const packageJSONData = {
         },
         "dependencies": {
             "lodash.trim": "^4.5.1",
-            "ranges-apply": "^7.0.1",
-            "ranges-push": "^7.0.1"
+            "ranges-apply": "^7.0.2",
+            "ranges-push": "^7.0.2"
         },
         "devDependencies": {
             "@types/lodash.trim": "^4.5.7"
@@ -9279,7 +9279,7 @@ export const packageJSONData = {
     },
     "string-remove-widows": {
         "name": "string-remove-widows",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Helps to prevent widow words in a text",
         "keywords": [
             "against",
@@ -9354,18 +9354,18 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ranges-apply": "^7.0.1",
-            "ranges-push": "^7.0.1",
-            "string-left-right": "^6.0.1",
-            "string-match-left-right": "^9.0.1"
+            "ranges-apply": "^7.0.2",
+            "ranges-push": "^7.0.2",
+            "string-left-right": "^6.0.2",
+            "string-match-left-right": "^9.0.2"
         },
         "devDependencies": {
-            "string-strip-html": "^13.0.1"
+            "string-strip-html": "^13.0.2"
         }
     },
     "string-split-by-whitespace": {
         "name": "string-split-by-whitespace",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Split string into array by chunks of whitespace",
         "keywords": [
             "alt",
@@ -9439,15 +9439,15 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "ranges-is-index-within": "^4.0.1"
+            "ranges-is-index-within": "^4.0.2"
         },
         "devDependencies": {
-            "string-find-heads-tails": "^6.0.1"
+            "string-find-heads-tails": "^6.0.2"
         }
     },
     "string-strip-html": {
         "name": "string-strip-html",
-        "version": "13.0.1",
+        "version": "13.0.2",
         "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
         "keywords": [
             "code",
@@ -9526,22 +9526,22 @@ export const packageJSONData = {
             "lodash.isplainobject": "^4.0.6",
             "lodash.trim": "^4.5.1",
             "lodash.without": "^4.4.0",
-            "ranges-apply": "^7.0.1",
-            "ranges-push": "^7.0.1",
-            "string-left-right": "^6.0.1"
+            "ranges-apply": "^7.0.2",
+            "ranges-push": "^7.0.2",
+            "string-left-right": "^6.0.2"
         },
         "devDependencies": {
             "@types/lodash.isplainobject": "^4.0.7",
             "@types/lodash.trim": "^4.5.7",
             "@types/lodash.without": "^4.4.7",
-            "ast-monkey-traverse": "^4.0.1",
-            "ranges-invert": "^6.0.1",
+            "ast-monkey-traverse": "^4.0.2",
+            "ranges-invert": "^6.0.2",
             "title": "^3.5.3"
         }
     },
     "string-trim-spaces-only": {
         "name": "string-trim-spaces-only",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Like String.trim() but you can choose granularly what to trim",
         "keywords": [
             "characters",
@@ -9613,7 +9613,7 @@ export const packageJSONData = {
     },
     "string-truncator": {
         "name": "string-truncator",
-        "version": "2.0.1",
+        "version": "2.0.2",
         "description": "Over-engineered string truncation for web UI’s",
         "keywords": [
             "string",
@@ -9678,7 +9678,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "lodash.deburr": "^4.1.0",
-            "string-left-right": "^6.0.1"
+            "string-left-right": "^6.0.2"
         },
         "devDependencies": {
             "@types/lodash.deburr": "^4.1.7"
@@ -9686,7 +9686,7 @@ export const packageJSONData = {
     },
     "string-uglify": {
         "name": "string-uglify",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "description": "Shorten sets of strings deterministically, to be git-friendly",
         "keywords": [
             "class",
@@ -9765,7 +9765,7 @@ export const packageJSONData = {
     },
     "string-unfancy": {
         "name": "string-unfancy",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Replace all n/m dashes, curly quotes with their simpler equivalents",
         "keywords": [
             "alt",
@@ -9847,7 +9847,7 @@ export const packageJSONData = {
     },
     "stristri": {
         "name": "stristri",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Extracts or deletes HTML, CSS, text and/or templating tags from string",
         "keywords": [
             "code",
@@ -9921,20 +9921,20 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "codsen-tokenizer": "^7.0.1",
-            "detect-templating-language": "^4.0.1",
-            "ranges-apply": "^7.0.1",
-            "ranges-merge": "^9.0.1",
-            "string-collapse-white-space": "^11.0.1"
+            "codsen-tokenizer": "^7.0.2",
+            "detect-templating-language": "^4.0.2",
+            "ranges-apply": "^7.0.2",
+            "ranges-merge": "^9.0.2",
+            "string-collapse-white-space": "^11.0.2"
         },
         "devDependencies": {
             "lodash.clonedeep": "^4.5.0",
-            "test-mixer": "^4.0.1"
+            "test-mixer": "^4.0.2"
         }
     },
     "tap-parse-string-to-object": {
         "name": "tap-parse-string-to-object",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object",
         "keywords": [
             "contents",
@@ -10020,7 +10020,7 @@ export const packageJSONData = {
     },
     "test-mixer": {
         "name": "test-mixer",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "description": "Test helper to generate function opts object variations",
         "keywords": [
             "combinations",
@@ -10089,7 +10089,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "lodash.clonedeep": "^4.5.0",
-            "object-boolean-combinations": "^6.0.1"
+            "object-boolean-combinations": "^6.0.2"
         },
         "devDependencies": {
             "@types/lodash.clonedeep": "^4.5.7"
@@ -10097,7 +10097,7 @@ export const packageJSONData = {
     },
     "tsd-extract": {
         "name": "tsd-extract",
-        "version": "0.8.1",
+        "version": "0.8.2",
         "description": "Extract any definition from TS definitions file string",
         "keywords": [
             "ts",
@@ -10172,12 +10172,12 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "string-left-right": "^6.0.1"
+            "string-left-right": "^6.0.2"
         }
     },
     "update-versions": {
         "name": "update-versions",
-        "version": "6.0.1",
+        "version": "6.0.2",
         "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
         "keywords": [
             "app",
@@ -10253,7 +10253,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ansi-diff-stream": "^1.2.1",
-            "edit-package-json": "^0.8.1",
+            "edit-package-json": "^0.8.2",
             "globby": "^13.1.2",
             "is-online": "^10.0.0",
             "lodash.isplainobject": "^4.0.6",
@@ -10275,7 +10275,7 @@ export const packageJSONData = {
     },
     "util-array-object-or-both": {
         "name": "util-array-object-or-both",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Validate and normalise user choice: array, object or both?",
         "keywords": [
             "array",
@@ -10353,7 +10353,7 @@ export const packageJSONData = {
     },
     "util-nonempty": {
         "name": "util-nonempty",
-        "version": "5.0.1",
+        "version": "5.0.2",
         "description": "Is the input (plain object, array, string or whatever) not empty?",
         "keywords": [
             "array",
