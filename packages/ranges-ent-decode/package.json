@@ -1,6 +1,6 @@
 {
   "name": "ranges-ent-decode",
-  "version": "6.0.1",
+  "version": "6.0.2",
   "description": "Recursive HTML entity decoding for Ranges workflow",
   "keywords": [
     "astral",
@@ -74,7 +74,7 @@
   "dependencies": {
     "he": "^1.2.0",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-merge": "^9.0.1"
+    "ranges-merge": "^9.0.2"
   },
   "devDependencies": {
     "@types/he": "^1.1.2",

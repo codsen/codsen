@@ -1,6 +1,6 @@
 {
   "name": "regex-is-jsp",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Regular expression for detecting JSP (Java Server Pages) code",
   "keywords": [
     "code",
