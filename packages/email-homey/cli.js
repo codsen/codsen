@@ -6,7 +6,6 @@ import fs from "fs";
 import meow from "meow";
 import path from "path";
 import chalk from "chalk";
-import uniq from "lodash.uniq";
 import { globby } from "globby";
 import splice from "string-splice";
 import logSymbols from "log-symbols";
@@ -188,7 +187,7 @@ if (Object.keys(cli.flags).length !== 0) {
       state.toDoList.push(cli.flags[key]);
     }
   });
-  state.toDoList = uniq(state.toDoList);
+  state.toDoList = [...new Set(state.toDoList)];
 }
 
 // Step #3. Crunch the input and extract the list of folders in each
