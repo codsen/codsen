@@ -29,6 +29,7 @@ const locationsArr = [
   "./main.js",
   "./cli.js",
   "./index.js",
+  "!**/node_modules/**",
 ];
 
 const cli = meow(
