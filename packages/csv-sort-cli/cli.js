@@ -9,10 +9,9 @@ import fs from "fs";
 import meow from "meow";
 import path from "path";
 import chalk from "chalk";
-import uniq from "lodash.uniq";
 import { sort } from "csv-sort";
 import inquirer from "inquirer";
-import { globby } from "globby";
+import { globbySync } from "globby";
 import pullAll from "lodash.pullall";
 import { createRequire } from "module";
 import updateNotifier from "update-notifier";
@@ -65,9 +64,9 @@ function hasOwnProperty(obj, prop) {
 //   overwrite - boolean
 // }
 function offerAListOfCSVsToPickFrom(stateObj) {
-  // this means, it was called without any arguments.
-  // that's fine
-  let allCSVsHere = globby.sync("./*.csv");
+  // This means, it was called without any arguments.
+  // That's fine.
+  let allCSVsHere = globbySync("./*.csv", "!**/node_modules/**");
   if (!allCSVsHere.length) {
     return Promise.reject(
       new Error(
@@ -129,7 +128,7 @@ if (cli.input.length > 0) {
 // value, not in "cli.input[]":
 // we anticipate the can be multiple, potentially-false flags mixed with valid file names
 if (Object.keys(cli.flags).length !== 0) {
-  state.toDoList = uniq(cli.input);
+  state.toDoList = [...new Set(cli.input)];
 }
 
 if (cli.flags.o) {
@@ -143,7 +142,12 @@ if (cli.flags.o) {
 // depending on was the acceptable file passed via args or queries afterwards.
 // -----------------------------------------------------------------------------
 let thePromise;
-if (state.toDoList.length === 0 && Object.keys(cli.flags).length === 0) {
+if (
+  state.toDoList.length === 0 &&
+  // no input args given
+  (Object.keys(cli.flags).length === 0 ||
+    (Object.keys(cli.flags).length === 1 && cli.flags.overwrite !== undefined))
+) {
   // ---------------------------------  1  -------------------------------------
   // if no arguments were given, offer a list:
   thePromise = offerAListOfCSVsToPickFrom(state);
