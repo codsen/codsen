@@ -1,5 +1,3 @@
-/* eslint no-use-before-define: 0, no-unused-vars: 0 */
-// From "type-fest" by Sindre Sorhus:
 import { version as v } from "../package.json";
 import allNamedEntitiesJson from "./allNamedEntities.json";
 import brokenNamedEntitiesJson from "./brokenNamedEntities.json";

@@ -68,8 +68,5 @@
         ""
       ]
     }
-  },
-  "devDependencies": {
-    "type-fest": "^3.3.0"
   }
 }
