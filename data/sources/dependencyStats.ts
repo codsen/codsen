@@ -83,7 +83,6 @@ export const dependencyStats: DependencyStats = {
         "lodash.pull": 2,
         "lodash.pullall": 4,
         "lodash.trim": 2,
-        "lodash.uniq": 5,
         "lodash.without": 1,
         "log-symbols": 1,
         "log-update": 1,
@@ -179,7 +178,7 @@ export const dependencyStats: DependencyStats = {
         "@types/lodash.pull": 2,
         "@types/lodash.pullall": 4,
         "@types/lodash.trim": 2,
-        "@types/lodash.uniq": 6,
+        "@types/lodash.uniq": 1,
         "@types/lodash.without": 1,
         "@types/mime-db": 1,
         "@types/object-path": 1,
@@ -212,7 +211,7 @@ export const dependencyStats: DependencyStats = {
         "string-strip-html": 1,
         "test-mixer": 4,
         "title": 1,
-        "type-fest": 2,
+        "type-fest": 1,
         "vinyl-string": 1
     },
     "top10ExternalDeps": [
@@ -241,10 +240,10 @@ export const dependencyStats: DependencyStats = {
             "object-path": 7
         },
         {
-            "lodash.uniq": 5
+            "chalk": 5
         },
         {
-            "chalk": 5
+            "is-d": 5
         }
     ],
     "top10OwnDeps": [

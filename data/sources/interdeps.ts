@@ -6,7 +6,7 @@ export const interdeps = [
     },
     {
         "name": "array-group-str-omit-num-char",
-        "size": 1456,
+        "size": 1440,
         "imports": [
             "ranges-apply"
         ]
@@ -138,7 +138,7 @@ export const interdeps = [
     },
     {
         "name": "codsen-tokenizer",
-        "size": 40201,
+        "size": 40199,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -157,7 +157,7 @@ export const interdeps = [
     },
     {
         "name": "csv-sort-cli",
-        "size": 8762,
+        "size": 8880,
         "imports": [
             "csv-sort"
         ]
@@ -215,7 +215,7 @@ export const interdeps = [
     },
     {
         "name": "email-all-chars-within-ascii-cli",
-        "size": 8521,
+        "size": 8547,
         "imports": [
             "email-all-chars-within-ascii",
             "string-left-right"
@@ -223,7 +223,7 @@ export const interdeps = [
     },
     {
         "name": "email-comb",
-        "size": 20522,
+        "size": 20531,
         "imports": [
             "array-pull-all-with-glob",
             "html-crush",
@@ -239,7 +239,7 @@ export const interdeps = [
     },
     {
         "name": "emlint",
-        "size": 175325,
+        "size": 174331,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -310,7 +310,7 @@ export const interdeps = [
     },
     {
         "name": "html-crush",
-        "size": 10986,
+        "size": 10984,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -395,7 +395,7 @@ export const interdeps = [
     },
     {
         "name": "js-row-num-cli",
-        "size": 5509,
+        "size": 5534,
         "imports": [
             "arrayiffy-if-string",
             "js-row-num"
@@ -499,7 +499,7 @@ export const interdeps = [
     },
     {
         "name": "object-merge-advanced",
-        "size": 7061,
+        "size": 7045,
         "imports": [
             "util-nonempty"
         ]
@@ -566,7 +566,7 @@ export const interdeps = [
     },
     {
         "name": "ranges-push",
-        "size": 6925,
+        "size": 6740,
         "imports": [
             "string-collapse-leading-whitespace",
             "string-trim-spaces-only"
@@ -687,7 +687,7 @@ export const interdeps = [
     },
     {
         "name": "string-match-left-right",
-        "size": 5781,
+        "size": 5779,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"
@@ -741,7 +741,7 @@ export const interdeps = [
     },
     {
         "name": "string-strip-html",
-        "size": 19964,
+        "size": 19960,
         "imports": [
             "ranges-apply",
             "ranges-push",
