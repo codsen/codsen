@@ -74,7 +74,6 @@
     "html-crush": "^6.0.2",
     "lodash.intersection": "^4.4.0",
     "lodash.pullall": "^4.2.0",
-    "lodash.uniq": "^4.5.0",
     "matcher": "^5.0.0",
     "ranges-apply": "^7.0.2",
     "ranges-push": "^7.0.2",
@@ -87,7 +86,6 @@
   },
   "devDependencies": {
     "@types/lodash.intersection": "^4.4.7",
-    "@types/lodash.pullall": "^4.2.7",
-    "@types/lodash.uniq": "^4.5.7"
+    "@types/lodash.pullall": "^4.2.7"
   }
 }
