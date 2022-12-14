@@ -7,7 +7,7 @@ import path from "path";
 import chalk from "chalk";
 import fs from "fs";
 import argv from "minimist";
-import { globby } from "globby";
+import { globbySync } from "globby";
 import inquirer from "inquirer";
 import pullAll from "lodash.pullall";
 import { createRequire } from "module";
@@ -42,7 +42,7 @@ updateNotifier({ pkg }).notify();
 
 function offerAListOfFilesToPickFrom() {
   let ui = new inquirer.ui.BottomBar();
-  let allFilesHere = globby.sync("./*.*");
+  let allFilesHere = globbySync("./*.*", "!**/node_modules/**");
   if (!allFilesHere.length) {
     log(
       chalk.grey("\nemail-all-chars-within-ascii-cli: [THROW_ID_01] ") +
