@@ -12,6 +12,8 @@ import {
   xBeforeYOnTheRight,
 } from "./util";
 
+declare let DEV: boolean;
+
 // This is an extracted logic which detects where token of a particular kind
 // starts. Previously it sat within if() clauses but became unwieldy and
 // so we extracted into a function.
@@ -121,7 +123,7 @@ function startsEsp(
       (layers[layers.length - 1] as LayerEsp).openingLump[2] === "-" &&
       (layers[layers.length - 1] as LayerEsp).openingLump[3] === "-");
 
-  DEV && console.log(`124 startsEsp(): RETURNS ${!!res}`);
+  DEV && console.log(`126 startsEsp(): RETURNS ${!!res}`);
   return !!res;
 }
 

@@ -1,6 +1,8 @@
 import { espChars, leftyChars, rightyChars, Layer, LayerEsp } from "./util";
 import getLastEspLayerObjIdx from "./getLastEspLayerObjIdx";
 
+declare let DEV: boolean;
+
 function getWholeEspTagLumpOnTheRight(
   str: string,
   i: number,
@@ -14,13 +16,13 @@ function getWholeEspTagLumpOnTheRight(
 
   DEV &&
     console.log(
-      `017 getWholeEspTagLumpOnTheRight(): ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
+      `019 getWholeEspTagLumpOnTheRight(): ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
     );
 
   for (let y = i + 1; y < len; y++) {
     DEV &&
       console.log(
-        `023 getWholeEspTagLumpOnTheRight(): ${`\u001b[${36}m${`str[${y}]=${str[y]}`}\u001b[${39}m`}`
+        `025 getWholeEspTagLumpOnTheRight(): ${`\u001b[${36}m${`str[${y}]=${str[y]}`}\u001b[${39}m`}`
       );
 
     // if righty character is on the left and now it's lefty,
@@ -38,7 +40,7 @@ function getWholeEspTagLumpOnTheRight(
     if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
       DEV &&
         console.log(
-          `041 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+          `043 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
         );
       break;
     }
@@ -65,7 +67,7 @@ function getWholeEspTagLumpOnTheRight(
     ) {
       DEV &&
         console.log(
-          `068 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+          `070 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
         );
       break;
     }
@@ -96,7 +98,7 @@ function getWholeEspTagLumpOnTheRight(
     ) {
       wholeEspTagLumpOnTheRight += str[y];
     } else {
-      DEV && console.log(`099 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+      DEV && console.log(`101 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
       break;
     }
   }
@@ -177,7 +179,7 @@ function getWholeEspTagLumpOnTheRight(
     }
   }
 
-  DEV && console.log(`180 getWholeEspTagLumpOnTheRight(): final return`);
+  DEV && console.log(`182 getWholeEspTagLumpOnTheRight(): final return`);
 
   return wholeEspTagLumpOnTheRight;
 }

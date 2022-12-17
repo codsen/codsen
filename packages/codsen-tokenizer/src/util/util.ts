@@ -1,4 +1,4 @@
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+import { leftDoubleQuote, rightDoubleQuote } from "codsen-utils";
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element
 const allHTMLTagsKnownToHumanity = new Set([
@@ -171,10 +171,6 @@ const espLumpBlacklist = [
 
 const punctuationChars = `.,;!?`;
 
-const BACKTICK = "\x60";
-const LEFTDOUBLEQUOTMARK = `\u201C`;
-const RIGHTDOUBLEQUOTMARK = `\u201D`;
-
 function lastChar(str: string): string {
   return str[str.length - 1] || "";
 }
@@ -189,37 +185,6 @@ function firstChar(str: string): string {
 
 function secondChar(str: string): string {
   return str[1] || "";
-}
-
-function isLowerCaseLetter(char: string): boolean {
-  return char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123;
-}
-
-// "is an upper case LATIN letter", that is
-function isUppercaseLetter(char: string): boolean {
-  return !!(char && char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91);
-}
-
-function isNumOrNumStr(something: any): boolean {
-  return (
-    (typeof something === "string" &&
-      something.charCodeAt(0) >= 48 &&
-      something.charCodeAt(0) <= 57) ||
-    Number.isInteger(something)
-  );
-}
-
-function isLowercase(char: string): boolean {
-  return !!(char && char.toLowerCase() === char && char.toUpperCase() !== char);
-}
-
-function isLatinLetter(char: string): boolean {
-  // we mean Latin letters A-Z, a-z
-  return !!(
-    char &&
-    ((char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
-      (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123))
-  );
 }
 
 // Considering custom element name character requirements:
@@ -253,10 +218,10 @@ function flipEspTag(str: string): string {
       res = `>${res}`;
     } else if (str[i] === ">") {
       res = `<${res}`;
-    } else if (str[i] === LEFTDOUBLEQUOTMARK) {
-      res = `${RIGHTDOUBLEQUOTMARK}${res}`;
-    } else if (str[i] === RIGHTDOUBLEQUOTMARK) {
-      res = `${LEFTDOUBLEQUOTMARK}${res}`;
+    } else if (str[i] === leftDoubleQuote) {
+      res = `${rightDoubleQuote}${res}`;
+    } else if (str[i] === rightDoubleQuote) {
+      res = `${leftDoubleQuote}${res}`;
     } else {
       res = `${str[i]}${res}`;
     }
@@ -316,98 +281,13 @@ function ensureXIsNotPresentBeforeOneOfY(
   return true;
 }
 
-// deliberately a simpler check for perf reasons
-function isObj(something: unknown): boolean {
-  return (
-    !!something && typeof something === "object" && !Array.isArray(something)
-  );
-}
-
-// https://html.spec.whatwg.org/multipage/syntax.html#elements-2
-const voidTags = [
-  "area",
-  "base",
-  "br",
-  "col",
-  "embed",
-  "hr",
-  "img",
-  "input",
-  "link",
-  "meta",
-  "param",
-  "source",
-  "track",
-  "wbr",
-];
-
-// https://developer.mozilla.org/en-US/docs/Web/HTML/Element#Inline_text_semantics
-// https://developer.mozilla.org/en-US/docs/Web/HTML/Element#Image_and_multimedia
-const inlineTags = new Set([
-  "a",
-  "abbr",
-  "acronym",
-  "audio",
-  "b",
-  "bdi",
-  "bdo",
-  "big",
-  "br",
-  "button",
-  "canvas",
-  "cite",
-  "code",
-  "data",
-  "datalist",
-  "del",
-  "dfn",
-  "em",
-  "embed",
-  "i",
-  "iframe",
-  "img",
-  "input",
-  "ins",
-  "kbd",
-  "label",
-  "map",
-  "mark",
-  "meter",
-  "noscript",
-  "object",
-  "output",
-  "picture",
-  "progress",
-  "q",
-  "ruby",
-  "s",
-  "samp",
-  "script",
-  "select",
-  "slot",
-  "small",
-  "span",
-  "strong",
-  "sub",
-  "sup",
-  "svg",
-  "template",
-  "textarea",
-  "time",
-  "u",
-  "tt",
-  "var",
-  "video",
-  "wbr",
-]);
-
 // Rules which might wrap the media queries, for example:
 // @supports (display: grid) {...
 // const atRulesWhichMightWrapStyles = ["media", "supports", "document"];
 
 const charsThatEndCSSChunks = ["{", "}", ","];
 
-const SOMEQUOTE = `'"${LEFTDOUBLEQUOTMARK}${RIGHTDOUBLEQUOTMARK}`;
+const SOMEQUOTE = `'"${leftDoubleQuote}${rightDoubleQuote}`;
 
 const attrNameRegexp = /[\w-]/;
 
@@ -595,28 +475,19 @@ export {
   charSuitableForTagName,
   isTagNameRecognised,
   xBeforeYOnTheRight,
-  isLowerCaseLetter,
-  isUppercaseLetter,
   espLumpBlacklist,
   secondToLastChar,
   punctuationChars,
   notVeryEspChars,
-  isNumOrNumStr,
-  isLatinLetter,
   veryEspChars,
   rightyChars,
-  isLowercase,
   leftyChars,
   flipEspTag,
   secondChar,
   firstChar,
   lastChar,
   espChars,
-  isObj,
   Token,
-  voidTags,
-  inlineTags,
-  BACKTICK,
   charsThatEndCSSChunks,
   SOMEQUOTE,
   attrNameRegexp,
@@ -639,6 +510,4 @@ export {
   Obj,
   TokenCb,
   CharCb,
-  LEFTDOUBLEQUOTMARK,
-  RIGHTDOUBLEQUOTMARK,
 };

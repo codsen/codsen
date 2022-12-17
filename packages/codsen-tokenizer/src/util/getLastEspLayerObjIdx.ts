@@ -1,5 +1,7 @@
 import { Layer } from "./util";
 
+// declare let DEV: boolean;
+
 // returns found object's index in "layers" array
 function getLastEspLayerObjIdx(layers: Layer[]): number | undefined {
   if (layers?.length) {

@@ -72,6 +72,7 @@
     }
   },
   "dependencies": {
+    "codsen-utils": "^1.0.0",
     "html-all-known-attributes": "^6.0.2",
     "is-char-suitable-for-html-attr-name": "^4.0.2",
     "is-html-attribute-closing": "^4.0.2",
