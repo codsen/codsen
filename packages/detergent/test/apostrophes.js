@@ -4,20 +4,19 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 // import detergent from "../dist/detergent.esm.js";
 // const det1 = detergent.det;
+import { det, mixer } from "../t-util/util.js";
 import {
-  det,
-  mixer,
   // rawReplacementMark,
   // rawNDash,
   // rawMDash,
   // rawNbsp,
-  // rawhairspace,
+  // rawHairspace,
   // rawEllipsis,
   rightSingleQuote,
   rightDoubleQuote,
   leftDoubleQuote,
   leftSingleQuote,
-} from "../t-util/util.js";
+} from "codsen-utils";
 
 // -----------------------------------------------------------------------------
 

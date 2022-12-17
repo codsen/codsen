@@ -7,20 +7,7 @@ import {
   opts as exportedOptsObj,
   version,
 } from "../dist/detergent.esm.js";
-import {
-  det,
-  // mixer,
-  // rawReplacementMark,
-  // rawNDash,
-  // rawMDash,
-  // rawNbsp,
-  // rawhairspace,
-  // rawEllipsis,
-  // rightSingleQuote,
-  // rightDoubleQuote,
-  // leftDoubleQuote,
-  // leftSingleQuote
-} from "../t-util/util.js";
+import { det } from "../t-util/util.js";
 
 test(`01 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the first argument is not string`, () => {
   throws(() => {

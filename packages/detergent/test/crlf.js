@@ -4,20 +4,7 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { compare } from "../../../ops/helpers/shallow-compare.js";
 // import { det as det1 } from "../dist/detergent.esm.js";
-import {
-  det,
-  // mixer,
-  // rawReplacementMark,
-  // rawNDash,
-  // rawMDash,
-  // rawNbsp,
-  // rawhairspace,
-  // rawEllipsis,
-  // rightSingleQuote,
-  // rightDoubleQuote,
-  // leftDoubleQuote,
-  // leftSingleQuote
-} from "../t-util/util.js";
+import { det } from "../t-util/util.js";
 
 test(`01 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - \\n replacement with BR - LF`, () => {
   equal(

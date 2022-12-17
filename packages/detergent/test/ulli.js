@@ -3,20 +3,7 @@ import { test } from "uvu";
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { det as det1 } from "../dist/detergent.esm.js";
-import {
-  det,
-  mixer,
-  // rawReplacementMark,
-  // rawNDash,
-  // rawMDash,
-  // rawNbsp,
-  // rawhairspace,
-  // rawEllipsis,
-  // rightSingleQuote,
-  // rightDoubleQuote,
-  // leftDoubleQuote,
-  // leftSingleQuote
-} from "../t-util/util.js";
+import { det, mixer } from "../t-util/util.js";
 
 test(`01 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - minimal case`, () => {
   mixer({

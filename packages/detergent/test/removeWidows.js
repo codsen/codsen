@@ -3,20 +3,19 @@ import { test } from "uvu";
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 // import { det as detergent } from "../dist/detergent.esm.js";
+import { det, mixer } from "../t-util/util.js";
 import {
-  det,
-  mixer,
   // rawReplacementMark,
   // rawNDash,
   // rawMDash,
   rawNbsp,
-  // rawhairspace,
+  // rawHairspace,
   // rawEllipsis,
   // rightSingleQuote,
   // rightDoubleQuote,
   // leftDoubleQuote,
-  // leftSingleQuote
-} from "../t-util/util.js";
+  // leftSingleQuote,
+} from "codsen-utils";
 
 // 00 - minimal cases for MVP
 // -----------------------------------------------------------------------------

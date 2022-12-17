@@ -4,17 +4,6 @@ import { mixer as originalMixer } from "test-mixer";
 
 import { det as det1, opts as defaults } from "../dist/detergent.esm.js";
 
-export const leftSingleQuote = "\u2018";
-export const rightSingleQuote = "\u2019";
-export const leftDoubleQuote = "\u201C";
-export const rightDoubleQuote = "\u201D";
-export const punctuationChars = [".", ",", ";", "!", "?"];
-export const rawNDash = "\u2013";
-export const rawMDash = "\u2014";
-export const rawNbsp = "\u00A0";
-export const rawEllipsis = "\u2026";
-export const rawhairspace = "\u200A";
-export const rawReplacementMark = "\uFFFD";
 export const widowRegexTest = /. ./g;
 export const latinAndNonNonLatinRanges = [
   [0, 880],

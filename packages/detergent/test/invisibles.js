@@ -3,20 +3,19 @@ import { test } from "uvu";
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 // import { det as det1 } from "../dist/detergent.esm.js";
+import { det, mixer } from "../t-util/util.js";
 import {
-  det,
-  mixer,
   // rawReplacementMark,
   // rawNDash,
   // rawMDash,
   // rawNbsp,
-  rawhairspace,
+  rawHairspace,
   // rawEllipsis,
   // rightSingleQuote,
   // rightDoubleQuote,
   // leftDoubleQuote,
-  // leftSingleQuote
-} from "../t-util/util.js";
+  // leftSingleQuote,
+} from "codsen-utils";
 
 test(`01 - empty string input`, () => {
   equal(det(ok, not, 0, "").res, "", "01.01");
@@ -44,7 +43,7 @@ test(`03 - hairspace - tight - hairspace changed to space`, () => {
         ok,
         not,
         n,
-        `a&hairsp;a&VeryThinSpace;a&#x0200A;a&#8202;a${rawhairspace}a`,
+        `a&hairsp;a&VeryThinSpace;a&#x0200A;a&#8202;a${rawHairspace}a`,
         opt
       ).res,
       "a a a a a a",
@@ -62,7 +61,7 @@ test(`04 - hairspace - tight - hairspace changed to space (lots of spaces)`, () 
         ok,
         not,
         n,
-        `a    &hairsp;  a  &VeryThinSpace;   a &#x0200A;     a              &#8202; a ${rawhairspace} a    `,
+        `a    &hairsp;  a  &VeryThinSpace;   a &#x0200A;     a              &#8202; a ${rawHairspace} a    `,
         opt
       ).res,
       "a a a a a a",
@@ -81,7 +80,7 @@ test(`05 - hairspace - tight - hairspace changed to space: +widows+entities`, ()
         ok,
         not,
         n,
-        `a&hairsp;b&VeryThinSpace;c&#x0200A;d&#8202;e${rawhairspace}f`,
+        `a&hairsp;b&VeryThinSpace;c&#x0200A;d&#8202;e${rawHairspace}f`,
         opt
       ).res,
       "a b c d e&nbsp;f",

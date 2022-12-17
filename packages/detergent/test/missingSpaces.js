@@ -5,7 +5,19 @@ import { test } from "uvu";
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { det as det1 } from "../dist/detergent.esm.js";
-import { det, mixer, rawNDash, rawNbsp } from "../t-util/util.js";
+import { det, mixer } from "../t-util/util.js";
+import {
+  // rawReplacementMark,
+  rawNDash,
+  // rawMDash,
+  rawNbsp,
+  // rawHairspace,
+  // rawEllipsis,
+  // rightSingleQuote,
+  // rightDoubleQuote,
+  // leftDoubleQuote,
+  // leftSingleQuote,
+} from "codsen-utils";
 
 // -----------------------------------------------------------------------------
 
