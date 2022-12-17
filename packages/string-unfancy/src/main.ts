@@ -6,10 +6,6 @@ import { version as v } from "../package.json";
 
 const version: string = v;
 
-function existy(x: any): boolean {
-  return x != null;
-}
-
 interface UnknownValueObj {
   [key: string]: any;
 }
@@ -39,14 +35,9 @@ function unfancy(str: string): string {
     "\uFE49": "-",
     "\u00A0": " ",
   };
-  if (!existy(str)) {
-    throw new Error(
-      "string-unfancy/unfancy(): [THROW_ID_01] The input is missing!"
-    );
-  }
   if (typeof str !== "string") {
     throw new Error(
-      `string-unfancy/unfancy(): [THROW_ID_02] The input is not a string! It's: ${typeof str}`
+      `string-unfancy/unfancy(): [THROW_ID_01] The input is not a string! It's: ${typeof str}`
     );
   }
   // decode anticipating multiple encoding on top of one another

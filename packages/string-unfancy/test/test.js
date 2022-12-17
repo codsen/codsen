@@ -14,7 +14,7 @@ test("01 - wrong/missing input = throw", () => {
   }, /THROW_ID_01/g);
   throws(() => {
     unfancy(1);
-  }, /THROW_ID_02/g);
+  }, /THROW_ID_01/g);
   throws(() => {
     unfancy(null);
   }, /THROW_ID_01/g);
@@ -23,7 +23,7 @@ test("01 - wrong/missing input = throw", () => {
   }, /THROW_ID_01/g);
   throws(() => {
     unfancy(true);
-  }, /THROW_ID_02/g);
+  }, /THROW_ID_01/g);
 });
 
 // -----------------------------------------------------------------------------
