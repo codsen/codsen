@@ -183,12 +183,12 @@ test("04 - ensure values are cloned, not referenced", () => {
       {
         foo: true,
         bar: false,
-        baz: { x: "y" }, // <-- still "y", not null
+        baz: { x: "y" }, // < still "y", not null
       },
       {
         foo: true,
         bar: true,
-        baz: { x: "y" }, // <-- still "y", not null
+        baz: { x: "y" }, // < still "y", not null
       },
     ],
     "04.01"
@@ -202,7 +202,7 @@ test("05 - ensure values are cloned, not referenced", () => {
         stripHtml: true,
         replaceLineBreaks: false,
         stripHtmlButIgnoreTags: [],
-        stripHtmlAddNewLine: ["br"], // <---
+        stripHtmlAddNewLine: ["br"], // <-
       },
       {
         removeWidows: true,
@@ -221,7 +221,7 @@ test("05 - ensure values are cloned, not referenced", () => {
         replaceLineBreaks: false,
         eol: "lf",
         stripHtmlButIgnoreTags: [],
-        stripHtmlAddNewLine: ["br"], // <---
+        stripHtmlAddNewLine: ["br"], // <-
         cb: null,
       },
       {
@@ -230,7 +230,7 @@ test("05 - ensure values are cloned, not referenced", () => {
         replaceLineBreaks: false,
         eol: "lf",
         stripHtmlButIgnoreTags: [],
-        stripHtmlAddNewLine: ["br"], // <---
+        stripHtmlAddNewLine: ["br"], // <-
         cb: null,
       },
     ],
@@ -296,6 +296,105 @@ test("07", () => {
       },
     ],
     "07.01"
+  );
+});
+
+test("08 - contains non-bool values which don't exist in defaultsObj", () => {
+  equal(
+    mixer(
+      {
+        foo: true,
+        bar: false,
+        x: 1,
+      },
+      {
+        foo: false,
+        bar: false,
+        qux: true,
+      }
+    ),
+    [
+      {
+        foo: true, // pinned bool
+        bar: false, // pinned bool
+        x: 1, // was not present in defaults, but it's not bool so ok
+        qux: false,
+      },
+      {
+        foo: true, // pinned bool
+        bar: false, // pinned bool
+        x: 1, // was not present in defaults, but it's not bool so ok
+        qux: true,
+      },
+    ],
+    "08.01"
+  );
+});
+
+test("09", () => {
+  equal(
+    mixer(
+      {
+        x: 1,
+      },
+      {
+        foo: false,
+        bar: false,
+        qux: true,
+      }
+    ),
+    [
+      // 2^3=8 objects:
+      {
+        foo: false,
+        bar: false,
+        qux: false,
+        x: 1,
+      },
+      {
+        foo: true,
+        bar: false,
+        qux: false,
+        x: 1,
+      },
+      {
+        foo: false,
+        bar: true,
+        qux: false,
+        x: 1,
+      },
+      {
+        foo: true,
+        bar: true,
+        qux: false,
+        x: 1,
+      },
+      {
+        foo: false,
+        bar: false,
+        qux: true,
+        x: 1,
+      },
+      {
+        foo: true,
+        bar: false,
+        qux: true,
+        x: 1,
+      },
+      {
+        foo: false,
+        bar: true,
+        qux: true,
+        x: 1,
+      },
+      {
+        foo: true,
+        bar: true,
+        qux: true,
+        x: 1,
+      },
+    ],
+    "09.01"
   );
 });
 

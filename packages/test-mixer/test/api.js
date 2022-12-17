@@ -28,6 +28,11 @@ test("03", () => {
         foo: true,
       },
       {
+        // <-- bool "foo" missing in defaults, that's wrong
+        // if would be OK if it was not a bool (because sometimes
+        // defaults don't have some valid options, for example,
+        // when those keys are obligatory and can't be defaulted,
+        // like is the case in string-apostrophes convertOne()).
         bar: true,
         baz: "zz",
       }
@@ -36,7 +41,35 @@ test("03", () => {
 });
 
 test("04", () => {
-  equal(mixer({}, {}), [], "04.01");
+  equal(
+    mixer(
+      {
+        foo: "yy",
+      },
+      {
+        // <-- foo is missing in defaults, that's ok
+        bar: true,
+        baz: "zz",
+      }
+    ),
+    [
+      {
+        foo: "yy", // foo gets copied
+        bar: false, // <-- 2^1=2 variations, of "bar" only
+        baz: "zz",
+      },
+      {
+        foo: "yy", // foo gets copied
+        bar: true,
+        baz: "zz",
+      },
+    ],
+    "04.01"
+  );
+});
+
+test("05", () => {
+  equal(mixer({}, {}), [], "05.01");
 });
 
 test.run();

@@ -55,13 +55,26 @@ function mixer(
   if (
     typeof ref === "object" &&
     typeof defaultsObj === "object" &&
-    Object.keys(ref).some((refKey) => {
-      if (!Object.keys(defaultsObj).includes(refKey)) {
-        caught = refKey;
-        return true;
-      }
-      return false;
-    })
+    Object.keys(ref)
+      // If some unrecognised key is present in the first,
+      // "ref" argument, that's OK as long as it's not boolean,
+      // it will be copied over onto every variation.
+      // We allow "ref" (1st arg) to have non-bool keys, which
+      // are not present in defaults (2nd arg) because some
+      // programs don't have defaults for every option because
+      // those options are obligatory. For example, our
+      // string-dashes or string-apostrophes export convertOne()
+      // whose "from" option is obligatory (it instructs which
+      // character to process, it takes its index position),
+      // and defaults don't have this "from".
+      .filter((refKey) => typeof ref[refKey] === "boolean")
+      .some((refKey) => {
+        if (!Object.keys(defaultsObj).includes(refKey)) {
+          caught = refKey;
+          return true;
+        }
+        return false;
+      })
   ) {
     throw new Error(
       `test-mixer: [THROW_ID_03] the second input arg object should be defaults; it should be a superset of 1st input arg object. However, 1st input arg object contains key "${caught}" which 2nd input arg object doesn't have.`
@@ -70,7 +83,7 @@ function mixer(
 
   // quick end
   if (!Object.keys(defaultsObj).length) {
-    DEV && console.log(`073 early return []`);
+    DEV && console.log(`086 early return []`);
     return [];
   }
 
@@ -93,7 +106,7 @@ function mixer(
 
   DEV &&
     console.log(
-      `096 ${`\u001b[${33}m${`refClone`}\u001b[${39}m`} = ${JSON.stringify(
+      `109 ${`\u001b[${33}m${`refClone`}\u001b[${39}m`} = ${JSON.stringify(
         refClone,
         null,
         4
@@ -101,7 +114,7 @@ function mixer(
     );
   DEV &&
     console.log(
-      `104 ${`\u001b[${33}m${`defaultsObjClone`}\u001b[${39}m`} = ${JSON.stringify(
+      `117 ${`\u001b[${33}m${`defaultsObjClone`}\u001b[${39}m`} = ${JSON.stringify(
         defaultsObjClone,
         null,
         4
@@ -109,7 +122,7 @@ function mixer(
     );
   DEV &&
     console.log(
-      `112 ${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} = ${JSON.stringify(
+      `125 ${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} = ${JSON.stringify(
         optsWithBoolValues,
         null,
         4
@@ -124,7 +137,7 @@ function mixer(
     ...obj,
   }));
 
-  DEV && console.log(`127 RETURN res = ${JSON.stringify(res, null, 4)}`);
+  DEV && console.log(`140 RETURN res = ${JSON.stringify(res, null, 4)}`);
 
   return res;
 }
