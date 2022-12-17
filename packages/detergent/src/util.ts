@@ -2,8 +2,8 @@
 
 import he from "he";
 
-type EndOfLine = "lf" | "crlf" | "cr";
-type EndOfLineVal = "\n" | "\r\n" | "\r";
+export type EndOfLine = "lf" | "crlf" | "cr";
+export type EndOfLineVal = "\n" | "\r\n" | "\r";
 
 interface Opts {
   fixBrokenEntities: boolean;
@@ -68,18 +68,6 @@ interface Res {
 interface State {
   onUrlCurrently: boolean;
 }
-
-const leftSingleQuote = "\u2018";
-const rightSingleQuote = "\u2019";
-const leftDoubleQuote = "\u201C";
-const rightDoubleQuote = "\u201D";
-const punctuationChars = [".", ",", ";", "!", "?"];
-const rawNDash = "\u2013";
-const rawMDash = "\u2014";
-const rawNbsp = "\u00A0";
-const rawEllipsis = "\u2026";
-const rawhairspace = "\u200A";
-const rawReplacementMark = "\uFFFD";
 
 const widowRegexTest = /. ./g;
 
@@ -441,24 +429,6 @@ const latinAndNonNonLatinRanges = [
   [178205, 194560],
 ];
 
-// https://html.spec.whatwg.org/multipage/syntax.html#elements-2
-const voidTags = [
-  "area",
-  "base",
-  "br",
-  "col",
-  "embed",
-  "hr",
-  "img",
-  "input",
-  "link",
-  "meta",
-  "param",
-  "source",
-  "track",
-  "wbr",
-];
-
 // -----------------------------------------------------------------------------
 
 function doConvertEntities(
@@ -505,82 +475,12 @@ function doConvertEntities(
 
 // -----------------------------------------------------------------------------
 
-function isNumber(something: any): boolean {
-  return (
-    (typeof something === "string" &&
-      something.charCodeAt(0) >= 48 &&
-      something.charCodeAt(0) <= 57) ||
-    Number.isInteger(something)
-  );
-}
-
-function isLetter(str: unknown): boolean {
-  return (
-    typeof str === "string" &&
-    str.length === 1 &&
-    str.toUpperCase() !== str.toLowerCase()
-  );
-}
-
-function isQuote(str: string): boolean {
-  return (
-    str === '"' ||
-    str === "'" ||
-    str === leftSingleQuote ||
-    str === rightSingleQuote ||
-    str === leftDoubleQuote ||
-    str === rightDoubleQuote
-  );
-}
-
-function isLowercaseLetter(str: string): boolean {
-  if (!isLetter(str)) {
-    return false;
-  }
-  return str === str.toLowerCase() && str !== str.toUpperCase();
-}
-
-function isUppercaseLetter(str: string): boolean {
-  if (!isLetter(str)) {
-    return false;
-  }
-  return str === str.toUpperCase() && str !== str.toLowerCase();
-}
-
-function removeTrailingSlash(str: string): string {
-  if (typeof str === "string" && str.length && str.endsWith("/")) {
-    return str.slice(0, -1).trim();
-  }
-  // default return - does nothing
-  return str;
-}
-
 export {
-  removeTrailingSlash,
-  isLowercaseLetter,
-  isUppercaseLetter,
   doConvertEntities,
-  punctuationChars,
-  rightSingleQuote,
-  rightDoubleQuote,
-  leftDoubleQuote,
-  leftSingleQuote,
   Opts,
   defaultOpts,
   Res,
   State,
-  EndOfLine,
-  EndOfLineVal,
   ApplicableOpts,
-  voidTags,
-  isNumber,
-  isLetter,
-  isQuote,
-  rawReplacementMark,
-  rawNDash,
-  rawMDash,
-  rawNbsp,
-  rawhairspace,
-  rawEllipsis,
   widowRegexTest,
 };
