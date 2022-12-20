@@ -34,10 +34,10 @@ npm i codsen-utils
 ```js
 import { strict as assert } from "assert";
 
-import { isNumber } from "codsen-utils";
+import { isNumberChar } from "codsen-utils";
 
-assert.equal(isNumber("z"), false);
-assert.equal(isNumber("0"), true);
+assert.equal(isNumberChar("z"), false);
+assert.equal(isNumberChar("0"), true);
 ```
 
 ## Documentation

@@ -4,7 +4,6 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { isQuote } from "../dist/codsen-utils.esm.js";
 
-// true
 // ------------------------------------------------------
 
 test("01", () => {
@@ -30,9 +29,6 @@ test("05 - left double quote", () => {
 test("06 - right double quote", () => {
   equal(isQuote("\u201D"), true, "06.01");
 });
-
-// false
-// ------------------------------------------------------
 
 test("07", () => {
   equal(isQuote(), false, "07.01");

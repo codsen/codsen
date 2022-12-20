@@ -21,13 +21,23 @@ test("02 - string-in, ends with slash", () => {
   );
 });
 
-test("03 - wrong type", () => {
-  equal(removeTrailingSlash(), undefined, "03.01");
-  equal(removeTrailingSlash(null), null, "03.02");
-  equal(removeTrailingSlash(NaN), NaN, "03.03");
-  equal(removeTrailingSlash(false), false, "03.04");
-  equal(removeTrailingSlash(true), true, "03.05");
-  equal(removeTrailingSlash(1), 1, "03.06");
+test("03 - removes only one last slash", () => {
+  equal(
+    removeTrailingSlash("http://codsen.com//"),
+    "http://codsen.com/",
+    "03.01"
+  );
+});
+
+test("04 - wrong type - returns same thing", () => {
+  equal(removeTrailingSlash(), undefined, "04.01");
+  equal(removeTrailingSlash(null), null, "04.02");
+  equal(removeTrailingSlash(NaN), NaN, "04.03");
+  equal(removeTrailingSlash(false), false, "04.04");
+  equal(removeTrailingSlash(true), true, "04.05");
+  equal(removeTrailingSlash(1), 1, "04.06");
+  equal(removeTrailingSlash(-0), -0, "04.07");
+  equal(removeTrailingSlash({}), {}, "04.08");
 });
 
 test.run();

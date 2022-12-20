@@ -2,7 +2,7 @@
 
 import { strict as assert } from "assert";
 
-import { isNumber } from "../dist/codsen-utils.esm.js";
+import { isNumberChar } from "../dist/codsen-utils.esm.js";
 
-assert.equal(isNumber("z"), false);
-assert.equal(isNumber("0"), true);
+assert.equal(isNumberChar("z"), false);
+assert.equal(isNumberChar("0"), true);

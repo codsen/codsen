@@ -3,25 +3,44 @@ declare const leftSingleQuote = "\u2018";
 declare const rightSingleQuote = "\u2019";
 declare const leftDoubleQuote = "\u201C";
 declare const rightDoubleQuote = "\u201D";
-declare const punctuationChars: string[];
 declare const rawNDash = "\u2013";
 declare const rawMDash = "\u2014";
 declare const rawNbsp = "\u00A0";
 declare const rawEllipsis = "\u2026";
 declare const rawHairspace = "\u200A";
+declare const singlePrime = "\u2032";
+declare const doublePrime = "\u2033";
+declare const backslash = "\\";
 declare const rawReplacementMark = "\uFFFD";
-declare function isNumber(something: any): boolean;
-declare function isLetter(str: unknown): boolean;
-declare function isQuote(str: unknown): boolean;
-declare function isLowercaseLetter(str: unknown): boolean;
-declare function isUppercaseLetter(str: unknown): boolean;
-declare const removeTrailingSlash: <T>(str: T) => string | T;
+declare const backtick = "`";
+declare const punctuationChars: string[];
+declare function isNumberChar(value: unknown): boolean;
+declare function isLetter(value: unknown): boolean;
+declare function isLatinLetter(value: unknown): boolean;
+declare function isQuote(value: unknown): boolean;
+declare function isLowercaseLetter(value: unknown): boolean;
+declare function isUppercaseLetter(value: unknown): boolean;
+declare const removeTrailingSlash: <T>(value: T) => string | T;
+/**
+ * Tells, is given input a plain object (an object literal,
+ * a container object Object.create(null) or created by new Object())
+ * @param value unknown
+ * @returns boolean
+ */
+declare function isPlainObject(value: unknown): boolean;
 declare const voidTags: string[];
+declare const inlineTags: Set<string>;
 
 export {
+  backslash,
+  backtick,
+  doublePrime,
+  inlineTags,
+  isLatinLetter,
   isLetter,
   isLowercaseLetter,
-  isNumber,
+  isNumberChar,
+  isPlainObject,
   isQuote,
   isUppercaseLetter,
   leftDoubleQuote,
@@ -36,6 +55,7 @@ export {
   removeTrailingSlash,
   rightDoubleQuote,
   rightSingleQuote,
+  singlePrime,
   version,
   voidTags,
 };
