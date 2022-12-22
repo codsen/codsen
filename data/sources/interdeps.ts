@@ -62,7 +62,7 @@ export const interdeps = [
     },
     {
         "name": "ast-get-object",
-        "size": 1034,
+        "size": 956,
         "imports": [
             "ast-compare",
             "codsen-utils"
@@ -846,8 +846,8 @@ export const interdeps = [
         "name": "update-versions",
         "size": 15720,
         "imports": [
-            "edit-package-json",
-            "codsen-utils"
+            "codsen-utils",
+            "edit-package-json"
         ]
     },
     {

@@ -1417,8 +1417,8 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ast-monkey-util": "^3.0.2",
-            "lodash.clonedeep": "^4.5.0",
-            "codsen-utils": "^1.0.0"
+            "codsen-utils": "^1.0.0",
+            "lodash.clonedeep": "^4.5.0"
         },
         "devDependencies": {
             "@types/lodash.clonedeep": "^4.5.7",
@@ -10278,8 +10278,8 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ansi-diff-stream": "^1.2.1",
-            "edit-package-json": "^0.8.2",
             "codsen-utils": "^1.0.0",
+            "edit-package-json": "^0.8.2",
             "globby": "^13.1.3",
             "is-online": "^10.0.0",
             "log-update": "^5.0.1",
