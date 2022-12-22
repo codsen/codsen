@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3](https://github.com/codsen/codsen/compare/csv-sort-cli@3.0.2...csv-sort-cli@3.0.3) (2022-12-22)
+
+### Bug Fixes
+
+- fix to show dialog when no args passed ([40bba75](https://github.com/codsen/codsen/commit/40bba753d189bcc41e40baece5352aa9b98f6c38))
+
 ## 3.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

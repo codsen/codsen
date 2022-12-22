@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey-traverse-with-lookahead",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "Utility library to traverse AST, reports upcoming values",
   "keywords": [
     "ast",
@@ -83,7 +83,7 @@
     "various": {}
   },
   "dependencies": {
-    "codsen-utils": "^1.0.0",
+    "codsen-utils": "^1.0.1",
     "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {

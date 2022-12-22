@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/codsen/codsen/compare/test-mixer@4.0.2...test-mixer@4.1.0) (2022-12-22)
+
+### Features
+
+- allow non-bool keys in `ref` (1st arg) which are not present in `defaults` (2nd arg) ([5259c82](https://github.com/codsen/codsen/commit/5259c82d134798fd8ef1d0ef41ab7b777f0d529c))
+
 ## 4.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

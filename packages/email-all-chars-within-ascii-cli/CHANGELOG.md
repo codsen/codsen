@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3](https://github.com/codsen/codsen/compare/email-all-chars-within-ascii-cli@3.0.2...email-all-chars-within-ascii-cli@3.0.3) (2022-12-22)
+
+### Bug Fixes
+
+- fix for latest globby api ([c615ee6](https://github.com/codsen/codsen/commit/c615ee6ba4994d2df0f8d7a59e61c4d39693a574))
+
 ## 3.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

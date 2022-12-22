@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.3](https://github.com/codsen/codsen/compare/tap-parse-string-to-object@4.0.2...tap-parse-string-to-object@4.0.3) (2022-12-22)
+
+**Note:** Version bump only for package tap-parse-string-to-object
+
 ## 4.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
