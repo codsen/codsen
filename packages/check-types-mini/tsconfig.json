@@ -18,6 +18,9 @@
     },
     {
       "path": "../ast-monkey-traverse"
+    },
+    {
+      "path": "../codsen-utils"
     }
   ]
 }

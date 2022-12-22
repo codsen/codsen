@@ -7,7 +7,7 @@ import {
   singlePrime,
   doublePrime,
   punctuationChars,
-  isNumber,
+  isNumberChar,
   isLetter,
 } from "codsen-utils";
 import type { Range, Ranges } from "ranges-apply";
@@ -160,7 +160,7 @@ function convertOne(str: string, opts: Opts): Ranges {
     if (
       str[from - 1] &&
       str[to as number] &&
-      isNumber(str[from - 1]) &&
+      isNumberChar(str[from - 1]) &&
       !isLetter(str[to as number])
     ) {
       DEV && console.log(`166 prime cases`);
@@ -279,7 +279,7 @@ function convertOne(str: string, opts: Opts): Ranges {
         str[(to as number) + 2].toLowerCase() === "u" &&
         str[(to as number) + 3].toLowerCase() === "s" &&
         str[(to as number) + 4].toLowerCase() === "e") ||
-      (str[to as number] && isNumber(str[to as number]))
+      (str[to as number] && isNumberChar(str[to as number]))
     ) {
       DEV && console.log(`284 'tis, 'twas, 'twere clauses`);
       if (
@@ -471,8 +471,8 @@ function convertOne(str: string, opts: Opts): Ranges {
     } else if (
       str[from - 1] &&
       str[to as number] &&
-      (isLetter(str[from - 1]) || isNumber(str[from - 1])) &&
-      (isLetter(str[to as number]) || isNumber(str[to as number]))
+      (isLetter(str[from - 1]) || isNumberChar(str[from - 1])) &&
+      (isLetter(str[to as number]) || isNumberChar(str[to as number]))
     ) {
       // equivalent of /(\w)'(\w)/g
       // single quote surrounded with alphanumeric characters
@@ -540,7 +540,7 @@ function convertOne(str: string, opts: Opts): Ranges {
       }
     } else if (
       str[to as number] &&
-      (isLetter(str[to as number]) || isNumber(str[to as number]))
+      (isLetter(str[to as number]) || isNumberChar(str[to as number]))
     ) {
       // equivalent of /'\b/g
       // alphanumeric follows
@@ -573,7 +573,7 @@ function convertOne(str: string, opts: Opts): Ranges {
             `573 string-apostrophes - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} a plain apostrophe [${from}, ${to}, ']`
           );
       }
-    } else if (isLetter(str[from - 1]) || isNumber(str[from - 1])) {
+    } else if (isLetter(str[from - 1]) || isNumberChar(str[from - 1])) {
       // equivalent of /'\b/g
       // alphanumeric precedes
       DEV && console.log(`579 alphanumeric precedes`);
@@ -684,7 +684,7 @@ function convertOne(str: string, opts: Opts): Ranges {
 
     if (
       str[from - 1] &&
-      isNumber(str[from - 1]) &&
+      isNumberChar(str[from - 1]) &&
       str[to as number] &&
       str[to as number] !== "'" &&
       str[to as number] !== '"' &&
@@ -881,7 +881,7 @@ function convertOne(str: string, opts: Opts): Ranges {
       }
     } else if (
       str[to as number] &&
-      (isLetter(str[to as number]) || isNumber(str[to as number]))
+      (isLetter(str[to as number]) || isNumberChar(str[to as number]))
     ) {
       // equivalent of /"\b/g
       // 4.
@@ -916,7 +916,7 @@ function convertOne(str: string, opts: Opts): Ranges {
       }
     } else if (
       str[from - 1] &&
-      (isLetter(str[from - 1]) || isNumber(str[from - 1]))
+      (isLetter(str[from - 1]) || isNumberChar(str[from - 1]))
     ) {
       // equivalent of /"\b/g
       // 5.

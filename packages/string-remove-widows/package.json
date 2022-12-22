@@ -75,6 +75,7 @@
     }
   },
   "dependencies": {
+    "codsen-utils": "^1.0.0",
     "ranges-apply": "^7.0.2",
     "ranges-push": "^7.0.2",
     "string-left-right": "^6.0.2",

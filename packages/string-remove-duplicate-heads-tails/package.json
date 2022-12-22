@@ -75,13 +75,10 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^5.0.2",
-    "lodash.isplainobject": "^4.0.6",
+    "codsen-utils": "^1.0.0",
     "ranges-apply": "^7.0.2",
     "ranges-push": "^7.0.2",
     "string-match-left-right": "^9.0.2",
     "string-trim-spaces-only": "^5.0.2"
-  },
-  "devDependencies": {
-    "@types/lodash.isplainobject": "^4.0.7"
   }
 }

@@ -11,7 +11,7 @@ import { allHtmlAttribs } from "html-all-known-attributes";
 import { isAttrNameChar } from "is-char-suitable-for-html-attr-name";
 import {
   voidTags,
-  isObj,
+  isPlainObject as isObj,
   isLatinLetter,
   inlineTags,
   backtick,

@@ -78,12 +78,11 @@
   },
   "dependencies": {
     "ast-contains-only-empty-space": "^4.0.2",
-    "lodash.isplainobject": "^4.0.6",
+    "codsen-utils": "^1.0.0",
     "matcher": "^5.0.0",
     "type-detect": "^4.0.8"
   },
   "devDependencies": {
-    "@types/lodash.isplainobject": "^4.0.7",
     "@types/type-detect": "^4.0.1",
     "type-fest": "^3.4.0"
   }

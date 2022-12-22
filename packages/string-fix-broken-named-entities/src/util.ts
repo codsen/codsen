@@ -2,14 +2,9 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import { right } from "string-left-right";
+import { isNumberChar } from "codsen-utils";
 
 declare let DEV: boolean;
-
-function isObj(something: unknown): boolean {
-  return (
-    !!something && typeof something === "object" && !Array.isArray(something)
-  );
-}
 
 function isLatinLetterOrNumberOrHash(char: string): boolean {
   // we mean:
@@ -24,13 +19,6 @@ function isLatinLetterOrNumberOrHash(char: string): boolean {
       (char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58) ||
       (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
       char.charCodeAt(0) === 35)
-  );
-}
-function isNumeric(something: unknown): boolean {
-  return (
-    typeof something === "string" &&
-    something.charCodeAt(0) > 47 &&
-    something.charCodeAt(0) < 58
   );
 }
 
@@ -55,7 +43,7 @@ function resemblesNumericEntity(str2: string, from: number, to: number) {
   for (let i = from; i < to; i++) {
     DEV &&
       console.log(
-        `058 stringFixBrokenNamedEntities: ${`\u001b[${36}m${`resemblesNumericEntity() loop: str2[${i}] = "${str2[i]}"`}\u001b[${39}m`}`
+        `046 stringFixBrokenNamedEntities: ${`\u001b[${36}m${`resemblesNumericEntity() loop: str2[${i}] = "${str2[i]}"`}\u001b[${39}m`}`
       );
     if (str2[i].trim().length) {
       charTrimmed += str2[i];
@@ -64,7 +52,7 @@ function resemblesNumericEntity(str2: string, from: number, to: number) {
     }
     if (isLatinLetter(str2[i])) {
       lettersCount += 1;
-    } else if (isNumeric(str2[i])) {
+    } else if (isNumberChar(str2[i])) {
       numbersCount += 1;
       numbersValue += String(str2[i]);
     } else if (str2[i] === "#") {
@@ -79,7 +67,7 @@ function resemblesNumericEntity(str2: string, from: number, to: number) {
 
   DEV &&
     console.log(
-      `082 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`charTrimmed[0]`}\u001b[${39}m`} = ${JSON.stringify(
+      `070 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`charTrimmed[0]`}\u001b[${39}m`} = ${JSON.stringify(
         charTrimmed[0],
         null,
         4
@@ -98,7 +86,7 @@ function resemblesNumericEntity(str2: string, from: number, to: number) {
     (numbersCount || lettersCount) &&
     ((charTrimmed[0] === "#" &&
       charTrimmed[1].toLowerCase() === "x" &&
-      (isNumeric(charTrimmed[2]) || isLatinLetter(charTrimmed[2]))) ||
+      (isNumberChar(charTrimmed[2]) || isLatinLetter(charTrimmed[2]))) ||
       (charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount))
   ) {
     // hexidecimal, for example, &#xA3;
@@ -264,7 +252,7 @@ function removeGappedFromMixedCases(str: string, temp1: TempObj[]) {
       );
       DEV &&
         console.log(
-          `267 stringFixBrokenNamedEntities: we filtered only entities with semicolons to the right: ${JSON.stringify(
+          `255 stringFixBrokenNamedEntities: we filtered only entities with semicolons to the right: ${JSON.stringify(
             copy,
             null,
             4
@@ -309,8 +297,6 @@ function removeGappedFromMixedCases(str: string, temp1: TempObj[]) {
 }
 
 export {
-  isObj,
-  isNumeric,
   resemblesNumericEntity,
   removeGappedFromMixedCases,
   isLatinLetterOrNumberOrHash,

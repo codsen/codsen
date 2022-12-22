@@ -17,6 +17,9 @@
       "path": "../all-named-html-entities"
     },
     {
+      "path": "../codsen-utils"
+    },
+    {
       "path": "../html-entities-not-email-friendly"
     },
     {

@@ -1,11 +1,11 @@
-import isPlainObject from "lodash.isplainobject";
+import { isPlainObject } from "codsen-utils";
 
 import { version as v } from "../package.json";
 
 const version: string = v;
 
 function nonEmpty(input: unknown): boolean {
-  // deliberate ==, catches undefined and null
+  // "==" catches undefined and null
   if (input == null) {
     return false;
   }

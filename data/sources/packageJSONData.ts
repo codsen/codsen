@@ -619,12 +619,11 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ast-contains-only-empty-space": "^4.0.2",
-            "lodash.isplainobject": "^4.0.6",
+            "codsen-utils": "^1.0.0",
             "matcher": "^5.0.0",
             "type-detect": "^4.0.8"
         },
         "devDependencies": {
-            "@types/lodash.isplainobject": "^4.0.7",
             "@types/type-detect": "^4.0.1",
             "type-fest": "^3.4.0"
         }
@@ -801,7 +800,6 @@ export const packageJSONData = {
             "object-path": "^0.11.8"
         },
         "devDependencies": {
-            "@types/lodash.isplainobject": "^4.0.7",
             "@types/object-path": "^0.11.1"
         }
     },
@@ -888,12 +886,11 @@ export const packageJSONData = {
         "dependencies": {
             "ast-compare": "^4.0.2",
             "ast-monkey-traverse": "^4.0.2",
-            "lodash.clonedeep": "^4.5.0",
-            "lodash.isplainobject": "^4.0.6"
+            "codsen-utils": "^1.0.0",
+            "lodash.clonedeep": "^4.5.0"
         },
         "devDependencies": {
-            "@types/lodash.clonedeep": "^4.5.7",
-            "@types/lodash.isplainobject": "^4.0.7"
+            "@types/lodash.clonedeep": "^4.5.7"
         }
     },
     "ast-get-object": {
@@ -979,12 +976,11 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ast-compare": "^4.0.2",
-            "lodash.clonedeep": "^4.5.0",
-            "lodash.isplainobject": "^4.0.6"
+            "codsen-utils": "^1.0.0",
+            "lodash.clonedeep": "^4.5.0"
         },
         "devDependencies": {
-            "@types/lodash.clonedeep": "^4.5.7",
-            "@types/lodash.isplainobject": "^4.0.7"
+            "@types/lodash.clonedeep": "^4.5.7"
         }
     },
     "ast-get-values-by-key": {
@@ -1160,10 +1156,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "lodash.isplainobject": "^4.0.6"
-        },
-        "devDependencies": {
-            "@types/lodash.isplainobject": "^4.0.7"
+            "codsen-utils": "^1.0.0"
         }
     },
     "ast-loose-compare": {
@@ -1248,10 +1241,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "ast-contains-only-empty-space": "^4.0.2",
-            "lodash.isplainobject": "^4.0.6"
-        },
-        "devDependencies": {
-            "@types/lodash.isplainobject": "^4.0.7"
+            "codsen-utils": "^1.0.0"
         }
     },
     "ast-monkey": {
@@ -1428,11 +1418,10 @@ export const packageJSONData = {
         "dependencies": {
             "ast-monkey-util": "^3.0.2",
             "lodash.clonedeep": "^4.5.0",
-            "lodash.isplainobject": "^4.0.6"
+            "codsen-utils": "^1.0.0"
         },
         "devDependencies": {
             "@types/lodash.clonedeep": "^4.5.7",
-            "@types/lodash.isplainobject": "^4.0.7",
             "lodash.isequal": "^4.5.0"
         }
     },
@@ -1521,12 +1510,11 @@ export const packageJSONData = {
             "various": {}
         },
         "dependencies": {
-            "lodash.clonedeep": "^4.5.0",
-            "lodash.isplainobject": "^4.0.6"
+            "codsen-utils": "^1.0.0",
+            "lodash.clonedeep": "^4.5.0"
         },
         "devDependencies": {
             "@types/lodash.clonedeep": "^4.5.7",
-            "@types/lodash.isplainobject": "^4.0.7",
             "lodash.isequal": "^4.5.0"
         }
     },
@@ -1855,6 +1843,7 @@ export const packageJSONData = {
         "dependencies": {
             "arrayiffy-if-string": "^5.0.2",
             "ast-monkey-traverse": "^4.0.2",
+            "codsen-utils": "^1.0.0",
             "lodash.intersection": "^4.4.0",
             "lodash.pullall": "^4.2.0",
             "matcher": "^5.0.0",
@@ -2081,19 +2070,84 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
+            "codsen-utils": "^1.0.0",
             "html-all-known-attributes": "^6.0.2",
             "is-char-suitable-for-html-attr-name": "^4.0.2",
             "is-html-attribute-closing": "^4.0.2",
             "is-html-tag-opening": "^4.0.2",
             "lodash.clonedeep": "^4.5.0",
-            "lodash.isplainobject": "^4.0.6",
             "string-left-right": "^6.0.2",
             "string-match-left-right": "^9.0.2"
         },
         "devDependencies": {
             "@types/lodash.clonedeep": "^4.5.7",
-            "@types/lodash.isplainobject": "^4.0.7",
             "ast-compare": "^4.0.2"
+        }
+    },
+    "codsen-utils": {
+        "name": "codsen-utils",
+        "version": "1.0.0",
+        "description": "Various utility functions",
+        "keywords": [
+            "codsen",
+            "utility",
+            "helpers"
+        ],
+        "homepage": "https://codsen.com/os/codsen-utils",
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/codsen/codsen.git",
+            "directory": "packages/codsen-utils"
+        },
+        "license": "MIT",
+        "author": {
+            "name": "Roy Revelt",
+            "email": "roy@codsen.com",
+            "url": "https://codsen.com"
+        },
+        "type": "module",
+        "exports": {
+            "types": "./types/index.d.ts",
+            "script": "./dist/codsen-utils.umd.js",
+            "default": "./dist/codsen-utils.esm.js"
+        },
+        "types": "types/index.d.ts",
+        "scripts": {
+            "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
+            "cjs-off": "exit 0",
+            "cjs-on": "exit 0",
+            "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
+            "devtest": "c8 npm run unit && npm run examples && npm run lint",
+            "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --loglevel 'silent'",
+            "examples": "node '../../ops/scripts/run-examples.js'",
+            "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
+            "letspublish": "npm publish || :",
+            "lint": "eslint . --ext .js --ext .ts --fix",
+            "perf": "node perf/check.js",
+            "prep": "echo 'ready'",
+            "prettier": "prettier",
+            "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
+            "pretest": "npm run lect && npm run build",
+            "test": "npm run devtest",
+            "unit": "uvu test"
+        },
+        "engines": {
+            "node": ">=14.18.0"
+        },
+        "c8": {
+            "check-coverage": true,
+            "exclude": [
+                "**/test/**/*.*"
+            ],
+            "functions": 100,
+            "lines": 100
+        },
+        "lect": {
+            "licence": {
+                "extras": [
+                    ""
+                ]
+            }
         }
     },
     "color-shorthand-hex-to-six-digit": {
@@ -2171,14 +2225,13 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
+            "codsen-utils": "^1.0.0",
             "hex-color-regex": "^1.1.0",
-            "lodash.clonedeep": "^4.5.0",
-            "lodash.isplainobject": "^4.0.6"
+            "lodash.clonedeep": "^4.5.0"
         },
         "devDependencies": {
             "@types/hex-color-regex": "^1.1.1",
-            "@types/lodash.clonedeep": "^4.5.7",
-            "@types/lodash.isplainobject": "^4.0.7"
+            "@types/lodash.clonedeep": "^4.5.7"
         }
     },
     "csv-sort": {
@@ -2658,6 +2711,7 @@ export const packageJSONData = {
         "dependencies": {
             "all-named-html-entities": "^3.0.2",
             "ansi-regex": "^6.0.1",
+            "codsen-utils": "^1.0.0",
             "he": "^1.2.0",
             "html-entities-not-email-friendly": "^0.8.2",
             "ranges-apply": "^7.0.2",
@@ -3067,6 +3121,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "array-pull-all-with-glob": "^7.0.2",
+            "codsen-utils": "^1.0.0",
             "html-crush": "^6.0.2",
             "lodash.intersection": "^4.4.0",
             "lodash.pullall": "^4.2.0",
@@ -3252,6 +3307,7 @@ export const packageJSONData = {
             "ast-monkey-traverse": "^4.0.2",
             "ast-monkey-util": "^3.0.2",
             "codsen-parser": "^0.14.2",
+            "codsen-utils": "^1.0.0",
             "define-lazy-prop": "^3.0.0",
             "globby": "^13.1.3",
             "he": "^1.2.0",
@@ -5117,10 +5173,10 @@ export const packageJSONData = {
         "dependencies": {
             "ast-monkey-traverse": "^4.0.2",
             "chalk": "^5.2.0",
+            "codsen-utils": "^1.0.0",
             "fs-extra": "^11.1.0",
             "globby": "^13.1.3",
             "is-d": "^1.0.0",
-            "lodash.isplainobject": "^4.0.6",
             "meow": "^11.0.0",
             "p-filter": "^3.0.0",
             "p-reduce": "^3.0.0",
@@ -5128,7 +5184,6 @@ export const packageJSONData = {
             "update-notifier": "^6.0.2"
         },
         "devDependencies": {
-            "@types/lodash.isplainobject": "^4.0.7",
             "p-map": "^5.5.0"
         }
     },
@@ -5609,12 +5664,11 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "lodash.isequal": "^4.5.0",
-            "lodash.isplainobject": "^4.0.6"
+            "codsen-utils": "^1.0.0",
+            "lodash.isequal": "^4.5.0"
         },
         "devDependencies": {
-            "@types/lodash.isequal": "^4.5.6",
-            "@types/lodash.isplainobject": "^4.0.7"
+            "@types/lodash.isequal": "^4.5.6"
         }
     },
     "object-boolean-combinations": {
@@ -5686,15 +5740,14 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
+            "codsen-utils": "^1.0.0",
             "lodash.clonedeep": "^4.5.0",
             "lodash.intersection": "^4.4.0",
-            "lodash.isplainobject": "^4.0.6",
             "lodash.pull": "^4.1.0"
         },
         "devDependencies": {
             "@types/lodash.clonedeep": "^4.5.7",
             "@types/lodash.intersection": "^4.4.7",
-            "@types/lodash.isplainobject": "^4.0.7",
             "@types/lodash.pull": "^4.1.7"
         }
     },
@@ -5862,14 +5915,13 @@ export const packageJSONData = {
         },
         "dependencies": {
             "arrayiffy-if-string": "^5.0.2",
+            "codsen-utils": "^1.0.0",
             "lodash.clonedeep": "^4.5.0",
-            "lodash.isplainobject": "^4.0.6",
             "object-all-values-equal-to": "^4.0.2",
             "object-merge-advanced": "^14.0.2"
         },
         "devDependencies": {
-            "@types/lodash.clonedeep": "^4.5.7",
-            "@types/lodash.isplainobject": "^4.0.7"
+            "@types/lodash.clonedeep": "^4.5.7"
         }
     },
     "object-flatten-all-arrays": {
@@ -5945,13 +5997,12 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
+            "codsen-utils": "^1.0.0",
             "lodash.clonedeep": "^4.5.0",
-            "lodash.isplainobject": "^4.0.6",
             "lodash.merge": "^4.6.2"
         },
         "devDependencies": {
             "@types/lodash.clonedeep": "^4.5.7",
-            "@types/lodash.isplainobject": "^4.0.7",
             "@types/lodash.merge": "^4.6.7"
         }
     },
@@ -6027,14 +6078,13 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
+            "codsen-utils": "^1.0.0",
             "lodash.clonedeep": "^4.5.0",
-            "lodash.isplainobject": "^4.0.6",
             "matcher": "^5.0.0",
             "str-indexes-of-plus": "^5.0.2"
         },
         "devDependencies": {
-            "@types/lodash.clonedeep": "^4.5.7",
-            "@types/lodash.isplainobject": "^4.0.7"
+            "@types/lodash.clonedeep": "^4.5.7"
         }
     },
     "object-merge-advanced": {
@@ -6112,11 +6162,11 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
+            "codsen-utils": "^1.0.0",
             "lodash.clonedeep": "^4.5.0",
             "lodash.includes": "^4.3.0",
             "lodash.isdate": "^4.0.1",
             "lodash.isfinite": "^3.3.2",
-            "lodash.isplainobject": "^4.0.6",
             "matcher": "^5.0.0",
             "util-nonempty": "^5.0.2"
         },
@@ -6125,7 +6175,6 @@ export const packageJSONData = {
             "@types/lodash.includes": "^4.3.7",
             "@types/lodash.isdate": "^4.0.7",
             "@types/lodash.isfinite": "^3.3.7",
-            "@types/lodash.isplainobject": "^4.0.7",
             "deep-equal": "^2.1.0"
         }
     },
@@ -6276,12 +6325,11 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "lodash.clonedeep": "^4.5.0",
-            "lodash.isplainobject": "^4.0.6"
+            "codsen-utils": "^1.0.0",
+            "lodash.clonedeep": "^4.5.0"
         },
         "devDependencies": {
-            "@types/lodash.clonedeep": "^4.5.7",
-            "@types/lodash.isplainobject": "^4.0.7"
+            "@types/lodash.clonedeep": "^4.5.7"
         }
     },
     "ranges-apply": {
@@ -6512,13 +6560,12 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
+            "codsen-utils": "^1.0.0",
             "he": "^1.2.0",
-            "lodash.isplainobject": "^4.0.6",
             "ranges-merge": "^9.0.2"
         },
         "devDependencies": {
-            "@types/he": "^1.1.2",
-            "@types/lodash.isplainobject": "^4.0.7"
+            "@types/he": "^1.1.2"
         }
     },
     "ranges-invert": {
@@ -7935,6 +7982,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
+            "codsen-utils": "^1.0.0",
             "ranges-apply": "^7.0.2"
         }
     },
@@ -8702,6 +8750,7 @@ export const packageJSONData = {
         },
         "dependencies": {
             "all-named-html-entities": "^3.0.2",
+            "codsen-utils": "^1.0.0",
             "leven": "^4.0.0",
             "lodash.clonedeep": "^4.5.0",
             "string-left-right": "^6.0.2"
@@ -8785,12 +8834,11 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "lodash.clonedeep": "^4.5.0",
-            "lodash.isplainobject": "^4.0.6"
+            "codsen-utils": "^1.0.0",
+            "lodash.clonedeep": "^4.5.0"
         },
         "devDependencies": {
-            "@types/lodash.clonedeep": "^4.5.7",
-            "@types/lodash.isplainobject": "^4.0.7"
+            "@types/lodash.clonedeep": "^4.5.7"
         }
     },
     "string-match-left-right": {
@@ -8864,11 +8912,8 @@ export const packageJSONData = {
         },
         "dependencies": {
             "arrayiffy-if-string": "^5.0.2",
-            "lodash.isplainobject": "^4.0.6",
+            "codsen-utils": "^1.0.0",
             "string-character-is-astral-surrogate": "^3.0.2"
-        },
-        "devDependencies": {
-            "@types/lodash.isplainobject": "^4.0.7"
         }
     },
     "string-overlap-one-on-another": {
@@ -9169,14 +9214,11 @@ export const packageJSONData = {
         },
         "dependencies": {
             "arrayiffy-if-string": "^5.0.2",
-            "lodash.isplainobject": "^4.0.6",
+            "codsen-utils": "^1.0.0",
             "ranges-apply": "^7.0.2",
             "ranges-push": "^7.0.2",
             "string-match-left-right": "^9.0.2",
             "string-trim-spaces-only": "^5.0.2"
-        },
-        "devDependencies": {
-            "@types/lodash.isplainobject": "^4.0.7"
         }
     },
     "string-remove-thousand-separators": {
@@ -9337,6 +9379,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
+            "codsen-utils": "^1.0.0",
             "ranges-apply": "^7.0.2",
             "ranges-push": "^7.0.2",
             "string-left-right": "^6.0.2",
@@ -9505,8 +9548,8 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
+            "codsen-utils": "^1.0.0",
             "html-entities": "^2.3.3",
-            "lodash.isplainobject": "^4.0.6",
             "lodash.trim": "^4.5.1",
             "lodash.without": "^4.4.0",
             "ranges-apply": "^7.0.2",
@@ -9514,7 +9557,6 @@ export const packageJSONData = {
             "string-left-right": "^6.0.2"
         },
         "devDependencies": {
-            "@types/lodash.isplainobject": "^4.0.7",
             "@types/lodash.trim": "^4.5.7",
             "@types/lodash.without": "^4.4.7",
             "ast-monkey-traverse": "^4.0.2",
@@ -10237,21 +10279,20 @@ export const packageJSONData = {
         "dependencies": {
             "ansi-diff-stream": "^1.2.1",
             "edit-package-json": "^0.8.2",
+            "codsen-utils": "^1.0.0",
             "globby": "^13.1.3",
             "is-online": "^10.0.0",
-            "lodash.isplainobject": "^4.0.6",
             "log-update": "^5.0.1",
             "meow": "^11.0.0",
             "object-path": "^0.11.8",
             "p-map": "^5.5.0",
             "p-progress": "^0.6.0",
             "p-reduce": "^3.0.0",
-            "pacote": "^15.0.7",
+            "pacote": "^15.0.8",
             "update-notifier": "^6.0.2",
             "write-file-atomic": "^5.0.0"
         },
         "devDependencies": {
-            "@types/lodash.isplainobject": "^4.0.7",
             "fs-extra": "^11.1.0",
             "lodash.clonedeep": "^4.5.0"
         }
@@ -10403,10 +10444,7 @@ export const packageJSONData = {
             }
         },
         "dependencies": {
-            "lodash.isplainobject": "^4.0.6"
-        },
-        "devDependencies": {
-            "@types/lodash.isplainobject": "^4.0.7"
+            "codsen-utils": "^1.0.0"
         }
     }
 };

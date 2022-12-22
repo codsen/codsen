@@ -2,7 +2,7 @@ import { processCommaSep } from "string-process-comma-separated";
 
 import checkForWhitespace from "./checkForWhitespace";
 import { knownUnits } from "./constants";
-import { isObj } from "./util";
+import { isPlainObject as isObj } from "codsen-utils";
 import { ErrorObj } from "./commonTypes";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

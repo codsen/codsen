@@ -1,6 +1,6 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import isObj from "lodash.isplainobject";
+import { isPlainObject as isObj } from "codsen-utils";
 import isEq from "lodash.isequal";
 
 import { version as v } from "../package.json";

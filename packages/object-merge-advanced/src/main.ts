@@ -2,7 +2,7 @@
 
 import clone from "lodash.clonedeep";
 import lodashIncludes from "lodash.includes";
-import isObj from "lodash.isplainobject";
+import { isPlainObject as isObj } from "codsen-utils";
 import isDate from "lodash.isdate";
 import isFinite from "lodash.isfinite";
 import { nonEmpty } from "util-nonempty";

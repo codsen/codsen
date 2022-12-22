@@ -3,7 +3,7 @@
 import clone from "lodash.clonedeep";
 import { strIndexesOfPlus } from "str-indexes-of-plus";
 import { isMatch } from "matcher";
-import isObj from "lodash.isplainobject";
+import { isPlainObject as isObj } from "codsen-utils";
 
 import {
   flattenObject,

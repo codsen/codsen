@@ -91,7 +91,6 @@
     "object-path": "^0.11.8"
   },
   "devDependencies": {
-    "@types/lodash.isplainobject": "^4.0.7",
     "@types/object-path": "^0.11.1"
   }
 }

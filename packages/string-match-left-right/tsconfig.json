@@ -17,6 +17,9 @@
       "path": "../arrayiffy-if-string"
     },
     {
+      "path": "../codsen-utils"
+    },
+    {
       "path": "../string-character-is-astral-surrogate"
     }
   ]

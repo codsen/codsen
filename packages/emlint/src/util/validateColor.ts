@@ -4,7 +4,7 @@ import {
   extendedColorNames,
   sixDigitHexColorRegex,
 } from "./constants";
-import { isLetter } from "./util";
+import { isLetter } from "codsen-utils";
 import { ErrorObj } from "./commonTypes";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

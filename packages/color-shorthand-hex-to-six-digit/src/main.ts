@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import r from "hex-color-regex";
-import isPlainObject from "lodash.isplainobject";
+import { isPlainObject } from "codsen-utils";
 import clone from "lodash.clonedeep";
 
 import { version as v } from "../package.json";

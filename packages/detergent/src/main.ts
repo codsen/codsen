@@ -17,7 +17,7 @@ import {
   removeTrailingSlash,
   voidTags,
   isLetter,
-  isNumber,
+  isNumberChar,
   isLowercaseLetter,
   rawMDash,
   rightSingleQuote,
@@ -284,7 +284,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
           str[i + 2] === "e") ||
         (str[i - 1] &&
           str[i - 1].toLowerCase() === "s" &&
-          (!str[i + 1] || (!isLetter(str[i + 1]) && !isNumber(str[i + 1]))))
+          (!str[i + 1] || (!isLetter(str[i + 1]) && !isNumberChar(str[i + 1]))))
       ) {
         // 1. case of n�t, for example, couldn�t (n + � + t),
         // or case of <letter>�s, for example your�s (letter + � + s).

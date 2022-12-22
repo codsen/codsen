@@ -1,5 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
-import { isObj } from "../../util/util";
+import { isPlainObject as isObj } from "codsen-utils";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare let DEV: boolean;

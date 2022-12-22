@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-import isObj from "lodash.isplainobject";
+import { isPlainObject as isObj } from "codsen-utils";
 import trim from "lodash.trim";
 import without from "lodash.without";
 import { decode } from "html-entities";

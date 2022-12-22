@@ -1,4 +1,4 @@
-import { isObj } from "./util";
+import { isPlainObject as isObj } from "codsen-utils";
 import { Linter } from "../linter";
 import { ErrorObj } from "./commonTypes";
 import { Attrib } from "../../../codsen-tokenizer/src/util/util";

@@ -1,5 +1,5 @@
 import clone from "lodash.clonedeep";
-import isObj from "lodash.isplainobject";
+import { isPlainObject as isObj } from "codsen-utils";
 
 interface Obj {
   [key: string]: any;

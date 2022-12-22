@@ -15,6 +15,9 @@
   "references": [
     {
       "path": "../ast-monkey-util"
+    },
+    {
+      "path": "../codsen-utils"
     }
   ]
 }

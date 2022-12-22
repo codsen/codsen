@@ -1,5 +1,5 @@
 import { empty } from "ast-contains-only-empty-space";
-import isObj from "lodash.isplainobject";
+import { isPlainObject as isObj } from "codsen-utils";
 
 import { version as v } from "../package.json";
 

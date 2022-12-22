@@ -23,6 +23,9 @@
       "path": "../codsen-parser"
     },
     {
+      "path": "../codsen-utils"
+    },
+    {
       "path": "../html-all-known-attributes"
     },
     {

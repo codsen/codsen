@@ -74,6 +74,9 @@
       "path": "packages/codsen-tokenizer"
     },
     {
+      "path": "packages/codsen-utils"
+    },
+    {
       "path": "packages/color-shorthand-hex-to-six-digit"
     },
     {

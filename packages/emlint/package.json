@@ -85,6 +85,7 @@
     "ast-monkey-traverse": "^4.0.2",
     "ast-monkey-util": "^3.0.2",
     "codsen-parser": "^0.14.2",
+    "codsen-utils": "^1.0.0",
     "define-lazy-prop": "^3.0.0",
     "globby": "^13.1.3",
     "he": "^1.2.0",

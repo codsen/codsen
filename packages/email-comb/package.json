@@ -71,6 +71,7 @@
   },
   "dependencies": {
     "array-pull-all-with-glob": "^7.0.2",
+    "codsen-utils": "^1.0.0",
     "html-crush": "^6.0.2",
     "lodash.intersection": "^4.4.0",
     "lodash.pullall": "^4.2.0",

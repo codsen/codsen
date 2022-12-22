@@ -1,7 +1,7 @@
 import clone from "lodash.clonedeep";
 import { compare } from "ast-compare";
 import { traverse } from "ast-monkey-traverse";
-import isObj from "lodash.isplainobject";
+import { isPlainObject as isObj } from "codsen-utils";
 
 import { version as v } from "../package.json";
 

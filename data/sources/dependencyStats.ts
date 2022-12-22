@@ -32,6 +32,7 @@ export const dependencyStats: DependencyStats = {
         "check-types-mini": 4,
         "codsen-parser": 2,
         "codsen-tokenizer": 2,
+        "codsen-utils": 31,
         "csv-sort": 1,
         "csv-split-easy": 1,
         "currency.js": 1,
@@ -76,7 +77,6 @@ export const dependencyStats: DependencyStats = {
         "lodash.isdate": 1,
         "lodash.isequal": 1,
         "lodash.isfinite": 1,
-        "lodash.isplainobject": 24,
         "lodash.isregexp": 2,
         "lodash.iteratee": 1,
         "lodash.merge": 1,
@@ -172,7 +172,6 @@ export const dependencyStats: DependencyStats = {
         "@types/lodash.isdate": 1,
         "@types/lodash.isequal": 1,
         "@types/lodash.isfinite": 1,
-        "@types/lodash.isplainobject": 25,
         "@types/lodash.isregexp": 2,
         "@types/lodash.merge": 1,
         "@types/lodash.pull": 2,
@@ -216,9 +215,6 @@ export const dependencyStats: DependencyStats = {
     },
     "top10ExternalDeps": [
         {
-            "lodash.isplainobject": 24
-        },
-        {
             "lodash.clonedeep": 19
         },
         {
@@ -244,9 +240,15 @@ export const dependencyStats: DependencyStats = {
         },
         {
             "is-d": 5
+        },
+        {
+            "lodash.pullall": 4
         }
     ],
     "top10OwnDeps": [
+        {
+            "codsen-utils": 31
+        },
         {
             "string-left-right": 20
         },
@@ -273,9 +275,6 @@ export const dependencyStats: DependencyStats = {
         },
         {
             "object-merge-advanced": 3
-        },
-        {
-            "ast-compare": 3
         }
     ]
 };

@@ -69,10 +69,7 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^5.0.2",
-    "lodash.isplainobject": "^4.0.6",
+    "codsen-utils": "^1.0.0",
     "string-character-is-astral-surrogate": "^3.0.2"
-  },
-  "devDependencies": {
-    "@types/lodash.isplainobject": "^4.0.7"
   }
 }

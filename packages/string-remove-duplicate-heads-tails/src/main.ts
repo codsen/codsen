@@ -1,4 +1,4 @@
-import isObj from "lodash.isplainobject";
+import { isPlainObject as isObj } from "codsen-utils";
 import { arrayiffy } from "arrayiffy-if-string";
 import { matchLeftIncl, matchRightIncl } from "string-match-left-right";
 import { Ranges } from "ranges-push";

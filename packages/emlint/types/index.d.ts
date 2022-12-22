@@ -235,9 +235,7 @@ declare const astErrMessages: {
   "tag-missing-closing": string;
   "tag-void-frontal-slash": string;
 };
-declare function isLetter(str: unknown): boolean;
 declare function isAnEnabledValue(maybeARulesValue: unknown): Severity;
-declare function isObj(something: unknown): boolean;
 declare function isAnEnabledRule(rules: RulesObj, ruleId: string): Severity;
 
 declare const util_wholeExtensionRegex: typeof wholeExtensionRegex;
@@ -249,9 +247,7 @@ declare const util_validateString: typeof validateString;
 declare const util_fontSizeRegex: typeof fontSizeRegex;
 declare const util_isoDateRegex: typeof isoDateRegex;
 declare const util_linkTypes: typeof linkTypes;
-declare const util_isLetter: typeof isLetter;
 declare const util_badChars: typeof badChars;
-declare const util_isObj: typeof isObj;
 declare namespace util {
   export {
     util_wholeExtensionRegex as wholeExtensionRegex,
@@ -263,9 +259,7 @@ declare namespace util {
     util_fontSizeRegex as fontSizeRegex,
     util_isoDateRegex as isoDateRegex,
     util_linkTypes as linkTypes,
-    util_isLetter as isLetter,
     util_badChars as badChars,
-    util_isObj as isObj,
   };
 }
 

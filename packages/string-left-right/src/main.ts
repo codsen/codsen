@@ -1,4 +1,4 @@
-import isObj from "lodash.isplainobject";
+import { isPlainObject as isObj } from "codsen-utils";
 import clone from "lodash.clonedeep";
 
 import { version as v } from "../package.json";

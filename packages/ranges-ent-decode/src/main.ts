@@ -1,6 +1,6 @@
 import he from "he";
 import { rMerge } from "ranges-merge";
-import isObj from "lodash.isplainobject";
+import { isPlainObject as isObj } from "codsen-utils";
 import type { Ranges } from "ranges-merge";
 
 import { version as v } from "../package.json";

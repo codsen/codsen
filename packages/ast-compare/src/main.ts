@@ -1,6 +1,6 @@
 import typeDetect from "type-detect";
 import { empty } from "ast-contains-only-empty-space";
-import isObj from "lodash.isplainobject";
+import { isPlainObject as isObj } from "codsen-utils";
 import { isMatch } from "matcher";
 
 import { version as v } from "../package.json";
@@ -299,7 +299,7 @@ function compare(
       ) {
         DEV && console.log(`300 case #2.`);
         DEV && console.log(`301 types mismatch`);
-        // Types mismatch. Probably falsey result, unless comparing with
+        // Types mismatch. Probably falsy result, unless comparing with
         // empty/blank things. Let's check.
         // it might be blank array vs blank object:
         if (

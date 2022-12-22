@@ -15,6 +15,9 @@
   "references": [
     {
       "path": "../ast-contains-only-empty-space"
+    },
+    {
+      "path": "../codsen-utils"
     }
   ]
 }

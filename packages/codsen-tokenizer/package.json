@@ -78,13 +78,11 @@
     "is-html-attribute-closing": "^4.0.2",
     "is-html-tag-opening": "^4.0.2",
     "lodash.clonedeep": "^4.5.0",
-    "lodash.isplainobject": "^4.0.6",
     "string-left-right": "^6.0.2",
     "string-match-left-right": "^9.0.2"
   },
   "devDependencies": {
     "@types/lodash.clonedeep": "^4.5.7",
-    "@types/lodash.isplainobject": "^4.0.7",
     "ast-compare": "^4.0.2"
   }
 }

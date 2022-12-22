@@ -17,6 +17,9 @@
       "path": "../array-pull-all-with-glob"
     },
     {
+      "path": "../codsen-utils"
+    },
+    {
       "path": "../html-crush"
     },
     {
