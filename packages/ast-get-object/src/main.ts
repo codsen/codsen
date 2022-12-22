@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import clone from "lodash.clonedeep";
-import isObj from "lodash.isplainobject";
+import { isPlainObject as isObj } from "codsen-utils";
 import { compare } from "ast-compare";
 
 import { version as v } from "../package.json";
@@ -15,16 +15,6 @@ export interface UnknownValueObj {
   [key: string]: any;
 }
 
-// ===================================
-// F U N C T I O N S
-
-function existy(x: any): boolean {
-  return x != null;
-}
-function truthy(x: any): boolean {
-  return x !== false && existy(x);
-}
-
 /**
  * Getter/setter for nested parsed HTML AST's
  */
@@ -34,17 +24,17 @@ function internalApi(
   replacementContentsArr?: UnknownValueObj[],
   result: any[] = []
 ): any {
-  if (!existy(originalAst)) {
+  if (!originalAst) {
     throw new Error("ast-get-object: [THROW_ID_01] First argument is missing!");
   }
-  if (!existy(keyValPair)) {
+  if (!keyValPair) {
     throw new Error(
       "ast-get-object: [THROW_ID_02] Second argument is missing!"
     );
   }
   // is it set mode or not:
   let set = false;
-  if (existy(replacementContentsArr) && Array.isArray(replacementContentsArr)) {
+  if (Array.isArray(replacementContentsArr)) {
     set = true;
   }
   let ast = clone(originalAst);
@@ -101,7 +91,7 @@ function internalApi(
     });
   }
 
-  if (truthy(replacementContentsArr)) {
+  if (replacementContentsArr) {
     // DEV && console.log('ast = ' + JSON.stringify(ast, null, 4))
     return ast;
   }

@@ -15,6 +15,9 @@
   "references": [
     {
       "path": "../ast-compare"
+    },
+    {
+      "path": "../codsen-utils"
     }
   ]
 }
