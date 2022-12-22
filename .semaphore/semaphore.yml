@@ -73,3 +73,23 @@ blocks:
             - npm run cjs-on
             # publish packages to npm
             - npm run ci:publish:all
+            # restore "type: module" in CJS packages
+            - npm run cjs-off
+            # push repo with all artifacts to git remote
+            - git push
+            - git push origin --tags
+            # build and publish @codsen/data
+            - npm run ci:generate:info
+            - npm run ci:generate:changelogs
+            - cd data
+            - npm run build
+            - git add .
+            - cd ..
+            - "git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
+            - cd data
+            - npm run publ
+            - cd ..
+            - git status
+            # push repo with all artifacts to git remote
+            - git push
+            - git push origin --tags
