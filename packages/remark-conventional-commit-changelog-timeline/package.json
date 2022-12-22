@@ -37,7 +37,7 @@
     "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --loglevel 'silent'",
     "examples": "node '../../ops/scripts/run-examples.js'",
     "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' --write --loglevel 'silent'",
-    "letspublish": "npm publish || :",
+    "letspublish": "npm publish --dry-run || :",
     "lint": "eslint . --ext .js --ext .ts --fix",
     "perf": "echo 'skip perf'",
     "prep": "echo 'ready'",

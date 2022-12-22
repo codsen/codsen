@@ -48,7 +48,7 @@
     "dts": "exit 0",
     "examples": "exit 0",
     "lect": "node '../../ops/lect/lect.js'",
-    "letspublish": "npm publish || :",
+    "letspublish": "npm publish --dry-run || :",
     "lint": "eslint . --ext .js --ext .ts --fix",
     "perf": "exit 0",
     "prep": "echo 'ready'",
@@ -76,8 +76,8 @@
   },
   "dependencies": {
     "ansi-diff-stream": "^1.2.1",
-    "edit-package-json": "^0.8.2",
     "codsen-utils": "^1.0.0",
+    "edit-package-json": "^0.8.2",
     "globby": "^13.1.3",
     "is-online": "^10.0.0",
     "log-update": "^5.0.1",

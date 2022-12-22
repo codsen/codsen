@@ -10,7 +10,7 @@ import readme from "./plugins/readme.js";
 import hardWrite from "./plugins/hardWrite.js";
 import hardDelete from "./plugins/hardDelete.js";
 import pack from "./plugins/pack.js";
-import npmIgnore from "./plugins/npmIgnore.js";
+// import npmIgnore from "./plugins/npmIgnore.js";
 import rollupConfig from "./plugins/rollupConfig.js";
 import tsconfig from "./plugins/tsconfig.js";
 import allContrib from "./plugins/allContributors.js";
@@ -94,7 +94,7 @@ await Promise.all([
   // write package.json
   Promise.resolve(pack({ state, lectrc, rootPackageJSON })),
   // write .npmignore
-  Promise.resolve(npmIgnore({ state, lectrc })),
+  // Promise.resolve(npmIgnore({ state, lectrc })),
   // write rollup.config.js
   Promise.resolve(rollupConfig({ state })),
   // write tsconfig.json

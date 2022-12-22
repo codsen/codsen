@@ -45,7 +45,7 @@
     "dts": "exit 0",
     "examples": "exit 0",
     "lect": "node '../../ops/lect/lect.js'",
-    "letspublish": "npm publish || :",
+    "letspublish": "npm publish --dry-run || :",
     "lint": "eslint . --ext .js --ext .ts --fix",
     "perf": "exit 0",
     "prep": "echo 'ready'",
