@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.51](https://github.com/codsen/codsen/compare/@codsen/data@0.2.50...@codsen/data@0.2.51) (2022-12-23)
+
+### Bug Fixes
+
+- update the latest version for `string-strip-html` ([8c25d73](https://github.com/codsen/codsen/commit/8c25d7349ed324303257af576d6d3574318b8d14))
+
 ## 0.2.0 (2022-08-12)
 
 ### Features
