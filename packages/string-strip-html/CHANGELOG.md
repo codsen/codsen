@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.4.0 (2022-12-22)
+
+### Features
+
+Back-porting the latest v13.0.3 to CJS and releasing as non-pure ESM (no `type: module` in package.json).
+
 ## 13.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
