@@ -108,7 +108,7 @@ export const esmBump = {
   "string-remove-thousand-separators": "5.1.0",
   "string-remove-widows": "2.1.0",
   "string-split-by-whitespace": "2.1.0",
-  "string-strip-html": "8.3.0",
+  "string-strip-html": "8.4.0",
   "string-trim-spaces-only": "3.1.0",
   "string-uglify": "1.5.0",
   "string-unfancy": "4.1.0",
