@@ -7,7 +7,7 @@ import meow from "meow";
 import path from "path";
 import chalk from "chalk";
 import { globby } from "globby";
-import splice from "string-splice";
+import { stringSplice } from "codsen-utils";
 import logSymbols from "log-symbols";
 import { createRequire } from "module";
 import updateNotifier from "update-notifier";
@@ -97,7 +97,7 @@ function step5() {
   }
 
   // calculate the final template string (which will be written to a new file):
-  finalTemplateString = splice(
+  finalTemplateString = stringSplice(
     seedData,
     indexOfThePlaceholder - 1,
     marker.length + 2,
