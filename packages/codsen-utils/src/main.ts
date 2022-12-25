@@ -124,6 +124,27 @@ export function stringSplice(str = "", index = 0, count = 0, add = "") {
 
 // ----------------------------------------------------------------
 
+/**
+ * Gives array of indexes of all found substring occurrences
+ * @param string source string
+ * @param substring what to look for
+ * @returns array of findings' position indexes
+ * adapted from https://stackoverflow.com/a/10710406
+ * console.log(findAllIdx("scissors", "s"));
+ * -> [0, 3, 4, 7]
+ */
+export function findAllIdx(value: unknown, substring: unknown) {
+  if (typeof value !== "string" || typeof substring !== "string") {
+    return [];
+  }
+  let a = [];
+  let i = -1;
+  while ((i = value.indexOf(substring, i + 1)) >= 0) a.push(i);
+  return a;
+}
+
+// ----------------------------------------------------------------
+
 // https://html.spec.whatwg.org/multipage/syntax.html#elements-2
 export const voidTags = [
   "area",

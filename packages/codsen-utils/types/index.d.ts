@@ -29,12 +29,12 @@ declare const removeTrailingSlash: <T>(value: T) => string | T;
  */
 declare function isPlainObject(value: unknown): boolean;
 /**
- * Adapted from https://stackoverflow.com/a/21350614
  * @param str input string
  * @param index starting index
  * @param count how many characters to replace
  * @param add what string to insert
  * @returns string
+ * Adapted from https://stackoverflow.com/a/21350614
  */
 declare function stringSplice(
   str?: string,
@@ -42,6 +42,16 @@ declare function stringSplice(
   count?: number,
   add?: string
 ): string;
+/**
+ * Gives array of indexes of all found substring occurrences
+ * @param string source string
+ * @param substring what to look for
+ * @returns array of findings' position indexes
+ * adapted from https://stackoverflow.com/a/10710406
+ * console.log(findAllIdx("scissors", "s"));
+ * -> [0, 3, 4, 7]
+ */
+declare function findAllIdx(value: unknown, substring: unknown): number[];
 declare const voidTags: string[];
 declare const inlineTags: Set<string>;
 
@@ -49,6 +59,7 @@ export {
   backslash,
   backtick,
   doublePrime,
+  findAllIdx,
   inlineTags,
   isLatinLetter,
   isLetter,
