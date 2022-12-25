@@ -28,6 +28,20 @@ declare const removeTrailingSlash: <T>(value: T) => string | T;
  * @returns boolean
  */
 declare function isPlainObject(value: unknown): boolean;
+/**
+ * Adapted from https://stackoverflow.com/a/21350614
+ * @param str input string
+ * @param index starting index
+ * @param count how many characters to replace
+ * @param add what string to insert
+ * @returns string
+ */
+declare function stringSplice(
+  str?: string,
+  index?: number,
+  count?: number,
+  add?: string
+): string;
 declare const voidTags: string[];
 declare const inlineTags: Set<string>;
 
@@ -56,6 +70,7 @@ export {
   rightDoubleQuote,
   rightSingleQuote,
   singlePrime,
+  stringSplice,
   version,
   voidTags,
 };

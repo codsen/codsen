@@ -104,6 +104,26 @@ export function isPlainObject(value: unknown): boolean {
 
 // ----------------------------------------------------------------
 
+/**
+ * @param str input string
+ * @param index starting index
+ * @param count how many characters to replace
+ * @param add what string to insert
+ * @returns string
+ * Adapted from https://stackoverflow.com/a/21350614
+ */
+export function stringSplice(str = "", index = 0, count = 0, add = "") {
+  if (index < 0) {
+    index += str.length;
+    if (index < 0) {
+      index = 0;
+    }
+  }
+  return str.slice(0, index) + (add || "") + str.slice(index + count);
+}
+
+// ----------------------------------------------------------------
+
 // https://html.spec.whatwg.org/multipage/syntax.html#elements-2
 export const voidTags = [
   "area",
