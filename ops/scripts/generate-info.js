@@ -165,7 +165,7 @@ for (let packageName of packageNames) {
             `../../packages/${name}/dist/${name}.esm.js`
           );
           if (opts) {
-            exportedDefaults[name] = JSON.stringify(opts, null, 4);
+            exportedDefaults[name] = JSON.stringify(opts, null, 2);
           }
         } catch (e) {
           // nothing happens
@@ -282,6 +282,8 @@ interface DependencyStats {
   devDependencies: UnknownValueObj;
   top10ExternalDeps: UnknownValueObj[];
   top10OwnDeps: UnknownValueObj[];
+  allExternalDeps: string[];
+  allOwnDeps: string[];
 }
 `;
 
@@ -376,62 +378,47 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
 
 const top10OwnDeps = [];
 const top10ExternalDeps = [];
-// there are no devdeps statistics because all devdeps are the same
+const allOwnDeps = new Set();
+const allExternalDeps = new Set();
 
-let foundOwnMax;
-let foundExternalMax;
-for (let i = 0; i < 10; i++) {
-  // reset
-  foundOwnMax = null;
-  foundExternalMax = null;
+function getFirstKey(obj) {
+  return Object.keys(obj)[0];
+}
+function depsSort(depObj1, depObj2) {
+  return depObj2[getFirstKey(depObj2)] - depObj1[getFirstKey(depObj1)];
+}
 
-  // iterate
-  Object.keys(dependencyStats.dependencies).forEach((depName) => {
-    if (
-      (!foundOwnMax ||
-        dependencyStats.dependencies[depName] >
-          dependencyStats.dependencies[foundOwnMax]) &&
-      allPackages.includes(depName) &&
-      !top10OwnDeps.some((obj) =>
-        Object.prototype.hasOwnProperty.call(obj, depName)
-      )
-    ) {
-      foundOwnMax = depName;
+for (let depName in dependencyStats.dependencies) {
+  if (allPackages.includes(depName)) {
+    // it's one of ours
+    if (top10OwnDeps.length < 10) {
+      top10OwnDeps.push({
+        [depName]: dependencyStats.dependencies[depName],
+      });
     }
-
-    if (
-      (!foundExternalMax ||
-        dependencyStats.dependencies[depName] >
-          dependencyStats.dependencies[foundExternalMax]) &&
-      !allPackages.includes(depName) &&
-      !top10ExternalDeps.some((obj) =>
-        Object.prototype.hasOwnProperty.call(obj, depName)
-      )
-    ) {
-      foundExternalMax = depName;
+    allOwnDeps.add(depName);
+  } else {
+    // it's external
+    if (top10ExternalDeps.length < 10) {
+      top10ExternalDeps.push({
+        [depName]: dependencyStats.dependencies[depName],
+      });
     }
-  });
-  if (foundOwnMax) {
-    top10OwnDeps.push({
-      [foundOwnMax]: dependencyStats.dependencies[foundOwnMax],
-    });
-  }
-  if (foundExternalMax) {
-    top10ExternalDeps.push({
-      [foundExternalMax]: dependencyStats.dependencies[foundExternalMax],
-    });
+    allExternalDeps.add(depName);
   }
 }
 
-dependencyStats.top10OwnDeps = top10OwnDeps;
-dependencyStats.top10ExternalDeps = top10ExternalDeps;
+dependencyStats.top10OwnDeps = top10OwnDeps.sort(depsSort);
+dependencyStats.top10ExternalDeps = top10ExternalDeps.sort(depsSort);
+dependencyStats.allOwnDeps = [...allOwnDeps].sort();
+dependencyStats.allExternalDeps = [...allExternalDeps].sort();
 
 // 4. write files
 // -----------------------------------------------------------------------------
 
 writeFile(
   path.resolve("./data/sources/interdeps.ts"),
-  // JSON.stringify(interdep, null, 4),
+  // JSON.stringify(interdep, null, 2),
   `export const interdeps = ${JSON.stringify(
     interdep.filter((obj1) => {
       return !(
@@ -440,7 +427,7 @@ writeFile(
       );
     }),
     null,
-    4
+    2
   )};\n`,
   (err) => {
     if (err) {
@@ -452,54 +439,54 @@ writeFile(
 
 writeFile(
   path.resolve("./data/sources/packages.ts"),
-  `const all = ${JSON.stringify(allPackages.sort(), null, 4)} as const;
-const current = ${JSON.stringify(currentPackages.sort(), null, 4)} as const;
-const cli = ${JSON.stringify(cliPackages.sort(), null, 4)} as const;
-const deprecated = ${JSON.stringify(deprecated.sort(), null, 4)} as const;
-const programs = ${JSON.stringify(programPackages.sort(), null, 4)} as const;
-const special = ${JSON.stringify(specialPackages.sort(), null, 4)} as const;
-const script = ${JSON.stringify(scriptAvailable.sort(), null, 4)} as const;
+  `const all = ${JSON.stringify(allPackages.sort(), null, 2)} as const;
+const current = ${JSON.stringify(currentPackages.sort(), null, 2)} as const;
+const cli = ${JSON.stringify(cliPackages.sort(), null, 2)} as const;
+const deprecated = ${JSON.stringify(deprecated.sort(), null, 2)} as const;
+const programs = ${JSON.stringify(programPackages.sort(), null, 2)} as const;
+const special = ${JSON.stringify(specialPackages.sort(), null, 2)} as const;
+const script = ${JSON.stringify(scriptAvailable.sort(), null, 2)} as const;
 const packagesOutsideMonorepo = ${JSON.stringify(
     packagesOutsideMonorepo.sort(),
     null,
-    4
+    2
   )} as const;
 const splitListFlagshipLibs = ${JSON.stringify(
     splitListFlagshipLibs,
     null,
-    4
+    2
   )} as const;
 const splitListRangeLibs = ${JSON.stringify(
     splitListRangeLibs,
     null,
-    4
+    2
   )} as const;
 const splitListHtmlLibs = ${JSON.stringify(
     splitListHtmlLibs,
     null,
-    4
+    2
   )} as const;
 const splitListStringLibs = ${JSON.stringify(
     splitListStringLibs,
     null,
-    4
+    2
   )} as const;
 const splitListObjectOrArrLibs = ${JSON.stringify(
     splitListObjectOrArrLibs,
     null,
-    4
+    2
   )} as const;
 const splitListLernaLibs = ${JSON.stringify(
     splitListLernaLibs,
     null,
-    4
+    2
   )} as const;
-const splitListCliApps = ${JSON.stringify(splitListCliApps, null, 4)} as const;
-const splitListASTApps = ${JSON.stringify(splitListASTApps, null, 4)} as const;
+const splitListCliApps = ${JSON.stringify(splitListCliApps, null, 2)} as const;
+const splitListASTApps = ${JSON.stringify(splitListASTApps, null, 2)} as const;
 const splitListMiscLibs = ${JSON.stringify(
     splitListMiscLibs,
     null,
-    4
+    2
   )} as const;
 
 export type Package = typeof all[number];
@@ -543,7 +530,7 @@ writeFile(
   `${dependencyStatsTypings}\nexport const dependencyStats: DependencyStats = ${JSON.stringify(
     sortAllObjectsSync(dependencyStats),
     null,
-    4
+    2
   )};\n`,
   (err) => {
     if (err) {
@@ -558,7 +545,7 @@ writeFile(
   `export const packageJSONData = ${JSON.stringify(
     packageJSONData,
     null,
-    4
+    2
   )};\n`,
   (err) => {
     if (err) {
@@ -621,7 +608,7 @@ if (!isCI) {
       `export const gitStats = ${JSON.stringify(
         { commitTotal: commitTotal.trim() },
         null,
-        4
+        2
       )}`,
       (err) => {
         if (err) {
