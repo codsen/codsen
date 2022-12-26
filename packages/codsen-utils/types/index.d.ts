@@ -6,14 +6,15 @@ declare const rightDoubleQuote = "\u201D";
 declare const rawNDash = "\u2013";
 declare const rawMDash = "\u2014";
 declare const rawNbsp = "\u00A0";
-declare const rawEllipsis = "\u2026";
-declare const rawHairspace = "\u200A";
+declare const ellipsis = "\u2026";
+declare const hairspace = "\u200A";
 declare const thinSpace = "\u2009";
 declare const singlePrime = "\u2032";
 declare const doublePrime = "\u2033";
 declare const backslash = "\\";
 declare const rawReplacementMark = "\uFFFD";
 declare const backtick = "`";
+declare const multiplicationSign = "\u00D7";
 declare const punctuationChars: string[];
 declare function isNumberChar(value: unknown): boolean;
 declare function isLetter(value: unknown): boolean;
@@ -61,7 +62,9 @@ export {
   backslash,
   backtick,
   doublePrime,
+  ellipsis,
   findAllIdx,
+  hairspace,
   inlineTags,
   isLatinLetter,
   isLetter,
@@ -73,9 +76,8 @@ export {
   isWhitespaceChar,
   leftDoubleQuote,
   leftSingleQuote,
+  multiplicationSign,
   punctuationChars,
-  rawEllipsis,
-  rawHairspace,
   rawMDash,
   rawNDash,
   rawNbsp,

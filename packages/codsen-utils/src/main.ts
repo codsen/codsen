@@ -9,14 +9,15 @@ export const rightDoubleQuote = "\u201D";
 export const rawNDash = "\u2013"; // https://www.fileformat.info/info/unicode/char/2013/index.htm
 export const rawMDash = "\u2014"; // https://www.fileformat.info/info/unicode/char/2014/index.htm
 export const rawNbsp = "\u00A0"; // https://www.fileformat.info/info/unicode/char/00a0/index.htm
-export const rawEllipsis = "\u2026"; // https://www.fileformat.info/info/unicode/char/2026/index.htm
-export const rawHairspace = "\u200A"; // https://www.fileformat.info/info/unicode/char/200a/index.htm
+export const ellipsis = "\u2026"; // https://www.fileformat.info/info/unicode/char/2026/index.htm
+export const hairspace = "\u200A"; // https://www.fileformat.info/info/unicode/char/200a/index.htm
 export const thinSpace = "\u2009"; // https://www.fileformat.info/info/unicode/char/2009/index.htm
 export const singlePrime = "\u2032";
 export const doublePrime = "\u2033";
 export const backslash = "\u005C";
 export const rawReplacementMark = "\uFFFD";
 export const backtick = "\x60";
+export const multiplicationSign = "\u00D7"; // https://www.fileformat.info/info/unicode/char/00d7/index.htm
 
 export const punctuationChars = [".", ",", ";", "!", "?"];
 

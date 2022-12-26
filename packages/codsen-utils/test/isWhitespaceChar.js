@@ -5,7 +5,7 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import {
   isWhitespaceChar,
   rawNbsp,
-  rawHairspace,
+  hairspace,
   thinSpace,
 } from "../dist/codsen-utils.esm.js";
 
@@ -34,7 +34,7 @@ test("06 - raw non-breaking space", () => {
 });
 
 test("07 - raw hairspace", () => {
-  equal(isWhitespaceChar(rawHairspace), true, "07.01");
+  equal(isWhitespaceChar(hairspace), true, "07.01");
 });
 
 test("08 - thin space", () => {
