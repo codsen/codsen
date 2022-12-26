@@ -8,6 +8,7 @@ declare const rawMDash = "\u2014";
 declare const rawNbsp = "\u00A0";
 declare const rawEllipsis = "\u2026";
 declare const rawHairspace = "\u200A";
+declare const thinSpace = "\u2009";
 declare const singlePrime = "\u2032";
 declare const doublePrime = "\u2033";
 declare const backslash = "\\";
@@ -20,6 +21,7 @@ declare function isLatinLetter(value: unknown): boolean;
 declare function isQuote(value: unknown): boolean;
 declare function isLowercaseLetter(value: unknown): boolean;
 declare function isUppercaseLetter(value: unknown): boolean;
+declare function isWhitespaceChar(value: unknown): boolean;
 declare const removeTrailingSlash: <T>(value: T) => string | T;
 /**
  * Tells, is given input a plain object (an object literal,
@@ -68,6 +70,7 @@ export {
   isPlainObject,
   isQuote,
   isUppercaseLetter,
+  isWhitespaceChar,
   leftDoubleQuote,
   leftSingleQuote,
   punctuationChars,
@@ -82,6 +85,7 @@ export {
   rightSingleQuote,
   singlePrime,
   stringSplice,
+  thinSpace,
   version,
   voidTags,
 };

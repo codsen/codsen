@@ -8,9 +8,10 @@ export const leftDoubleQuote = "\u201C";
 export const rightDoubleQuote = "\u201D";
 export const rawNDash = "\u2013";
 export const rawMDash = "\u2014";
-export const rawNbsp = "\u00A0";
-export const rawEllipsis = "\u2026";
-export const rawHairspace = "\u200A";
+export const rawNbsp = "\u00A0"; // https://www.fileformat.info/info/unicode/char/00a0/index.htm
+export const rawEllipsis = "\u2026"; // https://www.fileformat.info/info/unicode/char/2026/index.htm
+export const rawHairspace = "\u200A"; // https://www.fileformat.info/info/unicode/char/200a/index.htm
+export const thinSpace = "\u2009"; // https://www.fileformat.info/info/unicode/char/2009/index.htm
 export const singlePrime = "\u2032";
 export const doublePrime = "\u2033";
 export const backslash = "\u005C";
@@ -70,6 +71,15 @@ export function isUppercaseLetter(value: unknown): boolean {
   }
   return value === value.toUpperCase() && value !== value.toLowerCase();
 }
+
+export function isWhitespaceChar(value: unknown): boolean {
+  if (typeof value !== "string" || !value) {
+    return false;
+  }
+  return !value[0].trim();
+}
+
+// -----------------------------------------------------------------
 
 export const removeTrailingSlash = <T>(value: T) => {
   if (typeof value === "string" && value.length && value.endsWith("/")) {
