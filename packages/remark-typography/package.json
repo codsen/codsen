@@ -35,7 +35,7 @@
     "cjs-off": "node '../../ops/scripts/cjs-off.js'",
     "cjs-on": "node '../../ops/scripts/cjs-on.js'",
     "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-    "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
+    "devtest": "c8 npm run unit && npm run examples && npm run lint",
     "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --loglevel 'silent'",
     "examples": "node '../../ops/scripts/run-examples.js'",
     "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' --write --loglevel 'silent'",
@@ -69,7 +69,10 @@
   },
   "dependencies": {
     "@types/hast": "^2.3.4",
+    "codsen-utils": "^1.1.0",
+    "fp-ts": "^2.13.1",
     "string-apostrophes": "^4.0.4",
+    "string-dashes": "^1.0.1",
     "string-remove-widows": "^4.0.4",
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.1"

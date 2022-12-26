@@ -4,7 +4,6 @@ import { test } from "uvu";
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import api from "../dist/remark-typography.esm.js";
 
-// API wirings
 // -----------------------------------------------------------------------------
 
 test(`01 - a function is exported`, () => {
