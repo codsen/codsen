@@ -1,17 +1,15 @@
 import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import {
+  leftSingleQuote,
+  rightSingleQuote,
+  leftDoubleQuote,
+  rightDoubleQuote,
+} from "codsen-utils";
 
 import { convertOne, convertAll } from "../dist/string-apostrophes.esm.js";
 
-const leftSingleQuote = "\u2018";
-const rightSingleQuote = "\u2019";
-const leftDoubleQuote = "\u201C";
-const rightDoubleQuote = "\u201D";
-// const singlePrime = "\u2032";
-// const doublePrime = "\u2033";
-
-// 01. single apostrophes
 // -----------------------------------------------------------------------------
 
 test(`01 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`, () => {

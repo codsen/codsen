@@ -1,17 +1,18 @@
 import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import {
+  leftSingleQuote,
+  rightSingleQuote,
+  leftDoubleQuote,
+  rightDoubleQuote,
+  singlePrime,
+  doublePrime,
+} from "codsen-utils";
 
 import { convertAll } from "../dist/string-apostrophes.esm.js";
 
-const leftSingleQuote = "\u2018";
-const rightSingleQuote = "\u2019";
-const leftDoubleQuote = "\u201C";
-const rightDoubleQuote = "\u201D";
-const singlePrime = "\u2032";
-const doublePrime = "\u2033";
-
-// Following unit tests adapted from:
+// The following unit tests adapted from:
 // https://github.com/kemitchell/straight-to-curly-quotes.json/
 // License CC0-1.0
 

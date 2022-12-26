@@ -1,15 +1,9 @@
 import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { leftSingleQuote } from "codsen-utils";
 
 import { convertOne } from "../dist/string-apostrophes.esm.js";
-
-const leftSingleQuote = "\u2018";
-// const rightSingleQuote = "\u2019";
-// const leftDoubleQuote = "\u201C";
-// const rightDoubleQuote = "\u201D";
-// const singlePrime = "\u2032";
-// const doublePrime = "\u2033";
 
 // offset is needed to bypass characters we already fixed - it happens for
 // example with nested quotes - we'd fix many in one go and we need to skip
@@ -33,13 +27,6 @@ test(`01 - let's skip single quotes`, () => {
     },
   });
 
-  // console.log(
-  //   `036 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
-  //     gathered,
-  //     null,
-  //     4
-  //   )}`
-  // );
   equal(res, [[5, 8, `'n'`]], "01.01");
   equal(gathered, [2], "01.02");
 });

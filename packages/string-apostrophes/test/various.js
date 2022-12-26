@@ -1,15 +1,9 @@
 import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { leftDoubleQuote, rightDoubleQuote } from "codsen-utils";
 
 import { convertAll } from "../dist/string-apostrophes.esm.js";
-
-// const leftSingleQuote = "\u2018";
-// const rightSingleQuote = "\u2019";
-const leftDoubleQuote = "\u201C";
-const rightDoubleQuote = "\u201D";
-// const singlePrime = "\u2032";
-// const doublePrime = "\u2033";
 
 test(`01 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
   let input = `" " `;
