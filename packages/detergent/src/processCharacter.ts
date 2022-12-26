@@ -21,7 +21,7 @@ import {
   punctuationChars,
   leftSingleQuote,
   leftDoubleQuote,
-  rawEllipsis,
+  ellipsis,
   isLetter,
   isNumberChar,
   rawMDash,
@@ -1282,12 +1282,12 @@ function processCharacter(
                 console.log(
                   `1283 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${
                     y + 2
-                  }, ${opts.convertEntities ? "&hellip;" : `${rawEllipsis}`}]`
+                  }, ${opts.convertEntities ? "&hellip;" : `${ellipsis}`}]`
                 );
               rangesArr.push(
                 i,
                 y + 2,
-                opts.convertEntities ? "&hellip;" : `${rawEllipsis}`
+                opts.convertEntities ? "&hellip;" : `${ellipsis}`
               );
             }
           }

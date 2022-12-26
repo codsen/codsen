@@ -9,8 +9,8 @@ import {
   // rawNDash,
   // rawMDash,
   // rawNbsp,
-  // rawHairspace,
-  rawEllipsis,
+  // hairspace,
+  ellipsis,
   // rightSingleQuote,
   // rightDoubleQuote,
   // leftDoubleQuote,
@@ -24,7 +24,7 @@ test(`01 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - horizontal ellipsis sanity 
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `${rawEllipsis}`, opt).res,
+      det(ok, not, n, `${ellipsis}`, opt).res,
       "...",
       JSON.stringify(opt, null, 4)
     );
@@ -61,7 +61,7 @@ test(`04 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - encodes the ellipsis 
     convertDotsToEllipsis: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `${rawEllipsis}`, opt).res,
+      det(ok, not, n, `${ellipsis}`, opt).res,
       "&hellip;",
       JSON.stringify(opt, null, 4)
     );
@@ -119,7 +119,7 @@ test(`09 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting 
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `${rawEllipsis}`, opt).res,
+      det(ok, not, n, `${ellipsis}`, opt).res,
       "...",
       JSON.stringify(opt, null, 4)
     );
@@ -156,8 +156,8 @@ test(`12 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`, () => {
     convertDotsToEllipsis: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `${rawEllipsis}`, opt).res,
-      `${rawEllipsis}`,
+      det(ok, not, n, `${ellipsis}`, opt).res,
+      `${ellipsis}`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -170,7 +170,7 @@ test(`13 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`, () => {
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "&hellip;", opt).res,
-      `${rawEllipsis}`,
+      `${ellipsis}`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -183,7 +183,7 @@ test(`14 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`, () => {
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "&mldr;", opt).res,
-      `${rawEllipsis}`,
+      `${ellipsis}`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -196,7 +196,7 @@ test(`15 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - three 
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "...", opt).res,
-      `${rawEllipsis}`,
+      `${ellipsis}`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -210,7 +210,7 @@ test(`16 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - three 
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "Aaaaa... Bbbbb... C...", opt).res,
-      `Aaaaa${rawEllipsis} Bbbbb${rawEllipsis} C${rawEllipsis}`,
+      `Aaaaa${ellipsis} Bbbbb${ellipsis} C${ellipsis}`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -224,7 +224,7 @@ test(`17 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - encode
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "&hellip;", opt).res,
-      `${rawEllipsis}`,
+      `${ellipsis}`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -238,7 +238,7 @@ test(`18 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - encode
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "&mldr;", opt).res,
-      `${rawEllipsis}`,
+      `${ellipsis}`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -252,7 +252,7 @@ test(`19 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - hexide
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "&#x02026;", opt).res,
-      `${rawEllipsis}`,
+      `${ellipsis}`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -266,7 +266,7 @@ test(`20 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - decima
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "&#8230;", opt).res,
-      `${rawEllipsis}`,
+      `${ellipsis}`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -359,7 +359,7 @@ test(`27 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - unencod
     convertDotsToEllipsis: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `${rawEllipsis}`, opt).res,
+      det(ok, not, n, `${ellipsis}`, opt).res,
       "&hellip;",
       JSON.stringify(opt, null, 4)
     );
@@ -473,7 +473,7 @@ test(`35 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of false pos
         "Chapter 01 ..................... page 21\nChapter 02 ..................... page 43\nI said so...",
         opt
       ).res,
-      `Chapter 01 ..................... page 21\nChapter 02 ..................... page 43\nI said so${rawEllipsis}`,
+      `Chapter 01 ..................... page 21\nChapter 02 ..................... page 43\nI said so${ellipsis}`,
       JSON.stringify(opt, null, 4)
     );
   });
@@ -508,7 +508,7 @@ test(`36 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of dots`, ()
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "..... ... . ..", opt).res,
-      `..... ${rawEllipsis} . ..`,
+      `..... ${ellipsis} . ..`,
       JSON.stringify(opt, null, 4)
     );
   });

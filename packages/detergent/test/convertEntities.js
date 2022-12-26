@@ -10,8 +10,8 @@ import {
   // rawNDash,
   rawMDash,
   rawNbsp,
-  rawHairspace,
-  // rawEllipsis,
+  hairspace,
+  // ellipsis,
   rightSingleQuote,
   // rightDoubleQuote,
   // leftDoubleQuote,
@@ -102,7 +102,7 @@ test(`07 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - hairspace`
     convertDashes: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `a${rawHairspace}&mdash;${rawHairspace}a`, opt).res,
+      det(ok, not, n, `a${hairspace}&mdash;${hairspace}a`, opt).res,
       `a ${rawMDash} a`,
       JSON.stringify(opt, null, 4)
     );
@@ -115,7 +115,7 @@ test(`08 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - hairspace`
     removeWidows: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `a${rawHairspace}&mdash;${rawHairspace}a`, opt).res,
+      det(ok, not, n, `a${hairspace}&mdash;${hairspace}a`, opt).res,
       `a - a`,
       JSON.stringify(opt, null, 4)
     );
@@ -184,7 +184,7 @@ test(`13 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
         ok,
         not,
         n,
-        `HOORAY  ${rawMDash}  IT${rightSingleQuote}S HERE ${rawHairspace}`,
+        `HOORAY  ${rawMDash}  IT${rightSingleQuote}S HERE ${hairspace}`,
         opt
       ).res,
       `HOORAY &mdash; IT&rsquo;S HERE`,
@@ -205,7 +205,7 @@ test(`14 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
         ok,
         not,
         n,
-        `HOORAY  ${rawMDash}  IT${leftSingleQuote}S HERE ${rawHairspace}`,
+        `HOORAY  ${rawMDash}  IT${leftSingleQuote}S HERE ${hairspace}`,
         opt
       ).res,
       `HOORAY &mdash; IT&rsquo;S HERE`,
@@ -222,8 +222,7 @@ test(`15 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
     removeWidows: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `HOORAY  ${rawMDash}  IT'S HERE ${rawHairspace}`, opt)
-        .res,
+      det(ok, not, n, `HOORAY  ${rawMDash}  IT'S HERE ${hairspace}`, opt).res,
       `HOORAY &mdash; IT'S HERE`,
       JSON.stringify(opt, null, 4)
     );
@@ -242,7 +241,7 @@ test(`16 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
         ok,
         not,
         n,
-        `HOORAY  -  IT${rightSingleQuote}S HERE ${rawHairspace}`,
+        `HOORAY  -  IT${rightSingleQuote}S HERE ${hairspace}`,
         opt
       ).res,
       "HOORAY &mdash; IT&rsquo;S HERE",
@@ -259,13 +258,8 @@ test(`17 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
     removeWidows: false,
   }).forEach((opt, n) => {
     equal(
-      det(
-        ok,
-        not,
-        n,
-        `HOORAY  -  IT${leftSingleQuote}S HERE ${rawHairspace}`,
-        opt
-      ).res,
+      det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
+        .res,
       "HOORAY &mdash; IT&rsquo;S HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -280,13 +274,8 @@ test(`18 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
     removeWidows: false,
   }).forEach((opt, n) => {
     equal(
-      det(
-        ok,
-        not,
-        n,
-        `HOORAY  -  IT${leftSingleQuote}S HERE ${rawHairspace}`,
-        opt
-      ).res,
+      det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
+        .res,
       "HOORAY &mdash; IT'S HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -305,7 +294,7 @@ test(`19 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
         ok,
         not,
         n,
-        `HOORAY  -  IT${rightSingleQuote}S HERE ${rawHairspace}`,
+        `HOORAY  -  IT${rightSingleQuote}S HERE ${hairspace}`,
         opt
       ).res,
       "HOORAY &mdash; IT'S HERE",
@@ -322,13 +311,8 @@ test(`20 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
     removeWidows: false,
   }).forEach((opt, n) => {
     equal(
-      det(
-        ok,
-        not,
-        n,
-        `HOORAY  -  IT${leftSingleQuote}S HERE ${rawHairspace}`,
-        opt
-      ).res,
+      det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
+        .res,
       "HOORAY - IT&rsquo;S HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -343,13 +327,8 @@ test(`21 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
     removeWidows: false,
   }).forEach((opt, n) => {
     equal(
-      det(
-        ok,
-        not,
-        n,
-        `HOORAY  -  IT${leftSingleQuote}S HERE ${rawHairspace}`,
-        opt
-      ).res,
+      det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
+        .res,
       "HOORAY - IT'S HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -368,7 +347,7 @@ test(`22 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
         ok,
         not,
         n,
-        `HOORAY  -  IT${rightSingleQuote}S HERE ${rawHairspace}`,
+        `HOORAY  -  IT${rightSingleQuote}S HERE ${hairspace}`,
         opt
       ).res,
       "HOORAY - IT&rsquo;S HERE",
@@ -389,7 +368,7 @@ test(`23 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
         ok,
         not,
         n,
-        `HOORAY  -  IT${rightSingleQuote}S HERE ${rawHairspace}`,
+        `HOORAY  -  IT${rightSingleQuote}S HERE ${hairspace}`,
         opt
       ).res,
       "HOORAY - IT'S HERE",
@@ -406,13 +385,8 @@ test(`24 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
     removeWidows: true,
   }).forEach((opt, n) => {
     equal(
-      det(
-        ok,
-        not,
-        n,
-        `HOORAY  -  IT${leftSingleQuote}S HERE ${rawHairspace}`,
-        opt
-      ).res,
+      det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
+        .res,
       "HOORAY&nbsp;- IT&rsquo;S&nbsp;HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -424,13 +398,8 @@ test(`24 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
     removeWidows: true,
   }).forEach((opt, n) => {
     equal(
-      det(
-        ok,
-        not,
-        n,
-        `HOORAY  -  IT${leftSingleQuote}S HERE ${rawHairspace}`,
-        opt
-      ).res,
+      det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
+        .res,
       `HOORAY${rawNbsp}- IT${rightSingleQuote}S${rawNbsp}HERE`,
       JSON.stringify(opt, null, 4)
     );
@@ -445,13 +414,8 @@ test(`25 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
     removeWidows: true,
   }).forEach((opt, n) => {
     equal(
-      det(
-        ok,
-        not,
-        n,
-        `HOORAY  -  IT${leftSingleQuote}S HERE ${rawHairspace}`,
-        opt
-      ).res,
+      det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
+        .res,
       "HOORAY&nbsp;- IT'S&nbsp;HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -463,13 +427,8 @@ test(`25 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
     removeWidows: true,
   }).forEach((opt, n) => {
     equal(
-      det(
-        ok,
-        not,
-        n,
-        `HOORAY  -  IT${leftSingleQuote}S HERE ${rawHairspace}`,
-        opt
-      ).res,
+      det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
+        .res,
       "HOORAY&nbsp;&mdash; IT'S&nbsp;HERE",
       JSON.stringify(opt, null, 4)
     );
@@ -488,7 +447,7 @@ test(`26 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
         ok,
         not,
         n,
-        `HOORAY  -  IT${rightSingleQuote}S HERE ${rawHairspace}`,
+        `HOORAY  -  IT${rightSingleQuote}S HERE ${hairspace}`,
         opt
       ).res,
       "HOORAY&nbsp;- IT'S&nbsp;HERE",
@@ -506,7 +465,7 @@ test(`26 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
         ok,
         not,
         n,
-        `HOORAY  -  IT${rightSingleQuote}S HERE ${rawHairspace}`,
+        `HOORAY  -  IT${rightSingleQuote}S HERE ${hairspace}`,
         opt
       ).res,
       `HOORAY${rawNbsp}- IT'S${rawNbsp}HERE`,
@@ -527,7 +486,7 @@ test(`27 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
         ok,
         not,
         n,
-        `HOORAY  ${rawMDash}  IT${leftSingleQuote}S HERE ${rawHairspace}`,
+        `HOORAY  ${rawMDash}  IT${leftSingleQuote}S HERE ${hairspace}`,
         opt
       ).res,
       "HOORAY&nbsp;&mdash; IT&rsquo;S&nbsp;HERE",
@@ -548,7 +507,7 @@ test(`28 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
         ok,
         not,
         n,
-        `HOORAY  ${rawMDash}  IT${rightSingleQuote}S HERE ${rawHairspace}`,
+        `HOORAY  ${rawMDash}  IT${rightSingleQuote}S HERE ${hairspace}`,
         opt
       ).res,
       "HOORAY&nbsp;&mdash; IT&rsquo;S&nbsp;HERE",
@@ -569,7 +528,7 @@ test(`29 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
         ok,
         not,
         n,
-        `HOORAY  ${rawMDash}  IT${leftSingleQuote}S HERE ${rawHairspace}`,
+        `HOORAY  ${rawMDash}  IT${leftSingleQuote}S HERE ${hairspace}`,
         opt
       ).res,
       "HOORAY&nbsp;&mdash; IT'S&nbsp;HERE",
@@ -590,7 +549,7 @@ test(`30 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
         ok,
         not,
         n,
-        `HOORAY  ${rawMDash}  IT${rightSingleQuote}S HERE ${rawHairspace}`,
+        `HOORAY  ${rawMDash}  IT${rightSingleQuote}S HERE ${hairspace}`,
         opt
       ).res,
       "HOORAY&nbsp;&mdash; IT'S&nbsp;HERE",
@@ -801,7 +760,7 @@ test(`43 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, () => {
     addMissingSpaces: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `a${rawHairspace}${rawMDash}a`, opt).res,
+      det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       "a&nbsp;&mdash;a",
       JSON.stringify(opt, null, 4)
     );
@@ -816,7 +775,7 @@ test(`44 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, () => {
     addMissingSpaces: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `a${rawHairspace}${rawMDash}a`, opt).res,
+      det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       "a&nbsp;&mdash; a",
       JSON.stringify(opt, null, 4)
     );
@@ -831,7 +790,7 @@ test(`45 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, () => {
     addMissingSpaces: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `a${rawHairspace}${rawMDash}a`, opt).res,
+      det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       "a &mdash;a",
       JSON.stringify(opt, null, 4)
     );
@@ -846,7 +805,7 @@ test(`46 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, () => {
     addMissingSpaces: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `a${rawHairspace}${rawMDash}a`, opt).res,
+      det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       "a &mdash; a",
       JSON.stringify(opt, null, 4)
     );
@@ -861,7 +820,7 @@ test(`47 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, () => {
     addMissingSpaces: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `a${rawHairspace}${rawMDash}a`, opt).res,
+      det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       `a${rawNbsp}${rawMDash}a`,
       JSON.stringify(opt, null, 4)
     );
@@ -876,7 +835,7 @@ test(`48 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, () => {
     addMissingSpaces: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `a${rawHairspace}${rawMDash}a`, opt).res,
+      det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       `a${rawNbsp}${rawMDash} a`,
       JSON.stringify(opt, null, 4)
     );
@@ -891,7 +850,7 @@ test(`49 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, () => {
     addMissingSpaces: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `a${rawHairspace}${rawMDash}a`, opt).res,
+      det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       `a ${rawMDash}a`,
       JSON.stringify(opt, null, 4)
     );
@@ -904,7 +863,7 @@ test(`50 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, () => {
     removeWidows: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `a${rawHairspace}${rawMDash} a`, opt).res,
+      det(ok, not, n, `a${hairspace}${rawMDash} a`, opt).res,
       `a - a`,
       JSON.stringify(opt, null, 4)
     );
@@ -967,7 +926,7 @@ test(`54 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities
         ok,
         not,
         n,
-        `a${rawHairspace}a a a a a a a a a ${rawMDash} a a a a `,
+        `a${hairspace}a a a a a a a a a ${rawMDash} a a a a `,
         opt
       ).res,
       "a a a a a a a a a a&nbsp;&mdash; a a a&nbsp;a",
@@ -987,7 +946,7 @@ test(`55 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities
         ok,
         not,
         n,
-        `a a a a a a${rawHairspace}a a a a ${rawMDash} a a a a `,
+        `a a a a a a${hairspace}a a a a ${rawMDash} a a a a `,
         opt
       ).res,
       "a a a a a a a a a a &mdash; a a a a",
@@ -1007,7 +966,7 @@ test(`56 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities
         ok,
         not,
         n,
-        `a a a a a a a a a a ${rawMDash} a a a a ${rawHairspace}`,
+        `a a a a a a a a a a ${rawMDash} a a a a ${hairspace}`,
         opt
       ).res,
       `a a a a a a a a a a${rawNbsp}${rawMDash} a a a${rawNbsp}a`,
@@ -1027,7 +986,7 @@ test(`57 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities
         ok,
         not,
         n,
-        `a a a a a a a a a a ${rawMDash} a a a a ${rawHairspace}`,
+        `a a a a a a a a a a ${rawMDash} a a a a ${hairspace}`,
         opt
       ).res,
       `a a a a a a a a a a ${rawMDash} a a a a`,
@@ -1044,7 +1003,7 @@ test(`58 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, () => {
     addMissingSpaces: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `a${rawHairspace}${rawMDash}a`, opt).res,
+      det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       `a ${rawMDash} a`,
       JSON.stringify(opt, null, 4)
     );

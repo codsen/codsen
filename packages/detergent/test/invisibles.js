@@ -9,8 +9,8 @@ import {
   // rawNDash,
   // rawMDash,
   // rawNbsp,
-  rawHairspace,
-  // rawEllipsis,
+  hairspace,
+  // ellipsis,
   // rightSingleQuote,
   // rightDoubleQuote,
   // leftDoubleQuote,
@@ -43,7 +43,7 @@ test(`03 - hairspace - tight - hairspace changed to space`, () => {
         ok,
         not,
         n,
-        `a&hairsp;a&VeryThinSpace;a&#x0200A;a&#8202;a${rawHairspace}a`,
+        `a&hairsp;a&VeryThinSpace;a&#x0200A;a&#8202;a${hairspace}a`,
         opt
       ).res,
       "a a a a a a",
@@ -61,7 +61,7 @@ test(`04 - hairspace - tight - hairspace changed to space (lots of spaces)`, () 
         ok,
         not,
         n,
-        `a    &hairsp;  a  &VeryThinSpace;   a &#x0200A;     a              &#8202; a ${rawHairspace} a    `,
+        `a    &hairsp;  a  &VeryThinSpace;   a &#x0200A;     a              &#8202; a ${hairspace} a    `,
         opt
       ).res,
       "a a a a a a",
@@ -80,7 +80,7 @@ test(`05 - hairspace - tight - hairspace changed to space: +widows+entities`, ()
         ok,
         not,
         n,
-        `a&hairsp;b&VeryThinSpace;c&#x0200A;d&#8202;e${rawHairspace}f`,
+        `a&hairsp;b&VeryThinSpace;c&#x0200A;d&#8202;e${hairspace}f`,
         opt
       ).res,
       "a b c d e&nbsp;f",
