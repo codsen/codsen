@@ -281,6 +281,9 @@
       "path": "packages/string-convert-indexes"
     },
     {
+      "path": "packages/string-dashes"
+    },
+    {
       "path": "packages/string-extract-class-names"
     },
     {

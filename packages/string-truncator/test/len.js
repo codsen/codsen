@@ -34,7 +34,7 @@ test("01 - widest letter: W", () => {
   });
 });
 
-test("02 - W x 9", () => {
+test("02 - W × 9", () => {
   mixer({
     monospace: false,
   }).forEach((opt) => {
@@ -65,7 +65,7 @@ test("02 - W x 9", () => {
   });
 });
 
-test("03 - W x 10", () => {
+test("03 - W × 10", () => {
   mixer({
     monospace: false,
   }).forEach((opt) => {
@@ -96,7 +96,7 @@ test("03 - W x 10", () => {
   });
 });
 
-test("04 - W x 11", () => {
+test("04 - W × 11", () => {
   mixer({
     monospace: false,
   }).forEach((opt) => {
@@ -127,7 +127,7 @@ test("04 - W x 11", () => {
   });
 });
 
-test("05 - i x 21", () => {
+test("05 - i × 21", () => {
   mixer({
     monospace: false,
   }).forEach((opt) => {
@@ -158,7 +158,7 @@ test("05 - i x 21", () => {
   });
 });
 
-test("06 - i x 22", () => {
+test("06 - i × 22", () => {
   mixer({
     monospace: false,
   }).forEach((opt) => {
@@ -189,7 +189,7 @@ test("06 - i x 22", () => {
   });
 });
 
-test("07 - i x 23", () => {
+test("07 - i × 23", () => {
   mixer({
     monospace: false,
   }).forEach((opt) => {
@@ -220,7 +220,7 @@ test("07 - i x 23", () => {
   });
 });
 
-test("08 - i x 24", () => {
+test("08 - i × 24", () => {
   mixer({
     monospace: false,
   }).forEach((opt) => {
@@ -251,7 +251,7 @@ test("08 - i x 24", () => {
   });
 });
 
-test("09 - A x 40", () => {
+test("09 - A × 40", () => {
   mixer({
     monospace: false,
   }).forEach((opt) => {
@@ -282,7 +282,7 @@ test("09 - A x 40", () => {
   });
 });
 
-test("10 - i x 40", () => {
+test("10 - i × 40", () => {
   mixer({
     monospace: false,
   }).forEach((opt) => {
@@ -313,7 +313,7 @@ test("10 - i x 40", () => {
   });
 });
 
-test("11 - a x 40", () => {
+test("11 - a × 40", () => {
   mixer({
     monospace: false,
   }).forEach((opt) => {

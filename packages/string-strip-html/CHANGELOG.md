@@ -7,13 +7,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-Back-porting the latest v13.0.3 to CJS and releasing as non-pure ESM (no `type: module` in package.json).
+- back-porting the latest v13.0.3 to CJS and releasing as non-pure ESM (no `type: module` in package.json).
 
 ## 13.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
 
-- Minimum supported Node version is v14.18; we're dropping v12 support
+- minimum supported Node version is v14.18; we're dropping v12 support
 
 ## 12.0.0 (2022-11-14)
 

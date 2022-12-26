@@ -6174,7 +6174,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
             layers.pop();
             DEV &&
               console.log(
-                `6177 POP x 2, now layers = ${JSON.stringify(layers, null, 4)}`
+                `6177 POP × 2, now layers = ${JSON.stringify(layers, null, 4)}`
               );
           }
 
@@ -6469,7 +6469,7 @@ function tokenizer(str: string, opts?: Partial<Opts>): Res {
             layers.pop();
             DEV &&
               console.log(
-                `6472 POP x 1, now layers = ${JSON.stringify(layers, null, 4)}`
+                `6472 POP × 1, now layers = ${JSON.stringify(layers, null, 4)}`
               );
           }
 

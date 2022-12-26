@@ -21,7 +21,7 @@ test("01 - progress won't be reported under string length 1001", () => {
 
 test("02 - progress won't be reported, length exactly 1000", () => {
   equal(
-    // (length 10) x 100 = 1000
+    // (length 10) × 100 = 1000
     stripHtml("<em>a</em>".repeat(100), {
       reportProgressFunc: thrower,
     }).result,
