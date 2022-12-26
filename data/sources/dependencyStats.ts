@@ -186,7 +186,7 @@ export const dependencyStats: DependencyStats = {
     "check-types-mini": 4,
     "codsen-parser": 2,
     "codsen-tokenizer": 2,
-    "codsen-utils": 31,
+    "codsen-utils": 32,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -260,7 +260,7 @@ export const dependencyStats: DependencyStats = {
     "p-reduce": 8,
     "pacote": 1,
     "plugin-error": 1,
-    "ranges-apply": 16,
+    "ranges-apply": 17,
     "ranges-crop": 2,
     "ranges-invert": 2,
     "ranges-is-index-within": 2,
@@ -361,7 +361,7 @@ export const dependencyStats: DependencyStats = {
     "remark": 2,
     "string-find-heads-tails": 1,
     "string-strip-html": 1,
-    "test-mixer": 4,
+    "test-mixer": 5,
     "title": 1,
     "type-fest": 1,
     "vinyl-string": 1
@@ -400,10 +400,10 @@ export const dependencyStats: DependencyStats = {
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 31
+      "codsen-utils": 32
     },
     {
-      "ranges-apply": 16
+      "ranges-apply": 17
     },
     {
       "ast-monkey-traverse": 10

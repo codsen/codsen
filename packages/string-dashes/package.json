@@ -71,10 +71,10 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.0.0",
-    "ranges-apply": "^7.0.2"
+    "codsen-utils": "^1.0.1",
+    "ranges-apply": "^7.0.3"
   },
   "devDependencies": {
-    "test-mixer": "^4.0.2"
+    "test-mixer": "^4.1.0"
   }
 }
