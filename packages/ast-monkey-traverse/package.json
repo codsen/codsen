@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey-traverse",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "Utility library to traverse AST",
   "keywords": [
     "ast",
@@ -82,7 +82,7 @@
   },
   "dependencies": {
     "ast-monkey-util": "^3.0.3",
-    "codsen-utils": "^1.0.1",
+    "codsen-utils": "^1.1.0",
     "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {

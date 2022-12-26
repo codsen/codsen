@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.0.4](https://github.com/codsen/codsen/compare/string-strip-html@13.0.3...string-strip-html@13.0.4) (2022-12-26)
+
+**Note:** Version bump only for package string-strip-html
+
 ## 8.4.0 (2022-12-22)
 
 ### Features

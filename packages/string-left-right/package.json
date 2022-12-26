@@ -1,6 +1,6 @@
 {
   "name": "string-left-right",
-  "version": "6.0.3",
+  "version": "6.0.4",
   "description": "Looks up the first non-whitespace character to the left/right of a given index",
   "keywords": [
     "check",
@@ -73,7 +73,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.0.1",
+    "codsen-utils": "^1.1.0",
     "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {

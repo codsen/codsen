@@ -1,6 +1,6 @@
 {
   "name": "object-boolean-combinations",
-  "version": "6.0.3",
+  "version": "6.0.4",
   "description": "Consumes a defaults object with booleans, generates all possible variations of it",
   "keywords": [
     "all",
@@ -67,7 +67,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.0.1",
+    "codsen-utils": "^1.1.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.intersection": "^4.4.0",
     "lodash.pull": "^4.1.0"
