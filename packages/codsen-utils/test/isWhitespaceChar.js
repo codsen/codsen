@@ -40,3 +40,16 @@ test("07 - raw hairspace", () => {
 test("08 - thin space", () => {
   equal(isWhitespaceChar(thinSpace), true, "08.01");
 });
+
+test("09", () => {
+  equal(isWhitespaceChar("a"), false, "09.01");
+});
+
+test("10", () => {
+  equal(isWhitespaceChar("."), false, "10.01");
+});
+
+test("11 - Start of Heading character (U+0001)", () => {
+  // https://www.fileformat.info/info/unicode/char/0001/index.htm
+  equal(isWhitespaceChar("\u0001"), false, "11.01");
+});
