@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/codsen/codsen/compare/codsen-utils@1.1.1...codsen-utils@1.2.0) (2022-12-27)
+
+### Features
+
+- add `isCurrencyChar()` ([3de83c3](https://github.com/codsen/codsen/commit/3de83c3edf31c503bf394887b64915d3d74ed185))
+- add `isCurrencySymbol()` ([9de553c](https://github.com/codsen/codsen/commit/9de553c30c2dbbc570409b876dde8161ac2ae693))
+
 ## [1.1.1](https://github.com/codsen/codsen/compare/codsen-utils@1.1.0...codsen-utils@1.1.1) (2022-12-27)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "object-set-all-values-to",
-  "version": "6.0.5",
+  "version": "6.0.6",
   "description": "Recursively walk the input and set all found values in plain objects to something",
   "keywords": [
     "all",
@@ -71,7 +71,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.1.1",
+    "codsen-utils": "^1.2.0",
     "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {

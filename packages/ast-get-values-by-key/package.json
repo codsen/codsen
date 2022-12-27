@@ -1,6 +1,6 @@
 {
   "name": "ast-get-values-by-key",
-  "version": "5.0.5",
+  "version": "5.0.6",
   "description": "Extract values and paths from AST by keys OR set them by keys",
   "keywords": [
     "ast",
@@ -80,7 +80,7 @@
     }
   },
   "dependencies": {
-    "ast-monkey-traverse": "^4.0.5",
+    "ast-monkey-traverse": "^4.0.6",
     "lodash.clonedeep": "^4.5.0",
     "matcher": "^5.0.0"
   },

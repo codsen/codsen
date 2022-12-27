@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-referencing",
-  "version": "7.0.5",
+  "version": "7.0.6",
   "description": "Flatten complex nested objects according to a reference objects",
   "keywords": [
     "advanced",
@@ -70,7 +70,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.1.1",
+    "codsen-utils": "^1.2.0",
     "lodash.clonedeep": "^4.5.0",
     "matcher": "^5.0.0",
     "str-indexes-of-plus": "^5.0.3"

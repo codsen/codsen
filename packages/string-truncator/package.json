@@ -1,6 +1,6 @@
 {
   "name": "string-truncator",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Over-engineered string truncation for web UI's",
   "keywords": [
     "string",
@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "lodash.deburr": "^4.1.0",
-    "string-left-right": "^6.0.5"
+    "string-left-right": "^6.0.6"
   },
   "devDependencies": {
     "@types/lodash.deburr": "^4.1.7"
