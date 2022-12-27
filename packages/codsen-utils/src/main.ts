@@ -29,6 +29,12 @@ export function isNumberChar(value: unknown): boolean {
   );
 }
 
+export function isCurrencyChar(value: unknown): boolean {
+  return (
+    typeof value === "string" && "؋$₼៛¥₡₱£€¢₹﷼₪₩₭₨₮₦₽₫฿₩₺₴".includes(value)
+  );
+}
+
 export function isLetter(value: unknown): boolean {
   return (
     typeof value === "string" &&
