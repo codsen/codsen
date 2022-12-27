@@ -1,7 +1,9 @@
 import { rApply } from "ranges-apply";
+import { left, right } from "string-left-right";
 import {
   isLetter,
   isNumberChar,
+  isCurrencyChar,
   rawNDash,
   rawMDash,
   isWhitespaceChar,
@@ -84,14 +86,13 @@ function convertOne(str: string, opts: Opts): Ranges {
   // ======
 
   let rangesArr: Range[] = [];
-  // let punctuationChars = [".", ",", ";", "!", "?"];
 
   DEV &&
     console.log(
-      `091 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
+      `092 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
     );
 
-  DEV && console.log("094 settings: ");
+  DEV && console.log("095 settings: n/a");
   DEV &&
     console.log(
       `${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
@@ -145,7 +146,7 @@ function convertOne(str: string, opts: Opts): Ranges {
   if (!convertDashes) {
     DEV &&
       console.log(
-        `148 opts.convertDashes = false, ${`\u001b[${32}m${`early exit`}\u001b[${39}m`}`
+        `149 opts.convertDashes = false, ${`\u001b[${32}m${`early exit`}\u001b[${39}m`}`
       );
     return null;
   }
@@ -155,7 +156,7 @@ function convertOne(str: string, opts: Opts): Ranges {
     (value && [`-`, rawMDash].includes(value)) ||
     (to === from + 1 && [`-`, rawMDash].includes(str[from]))
   ) {
-    DEV && console.log(`158 n-dash clauses`);
+    DEV && console.log(`159 n-dash clauses`);
 
     if (
       // 1.1. tight dash surrounded by numbers 1880-1912
@@ -172,7 +173,7 @@ function convertOne(str: string, opts: Opts): Ranges {
       rangesArr.push([from, to, convertEntities ? "&ndash;" : rawNDash]);
       DEV &&
         console.log(
-          `175 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} n-dash symbol [${from}, ${to}, ${
+          `176 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} n-dash symbol [${from}, ${to}, ${
             convertEntities ? "&ndash;" : rawNDash
           }]`
         );
@@ -184,7 +185,7 @@ function convertOne(str: string, opts: Opts): Ranges {
     (value && [`-`, rawNDash].includes(value)) ||
     (to === from + 1 && [`-`, rawNDash].includes(str[from]))
   ) {
-    DEV && console.log(`187 m-dash clauses`);
+    DEV && console.log(`188 m-dash clauses`);
 
     if (
       // 2.1. whitespace-hyphen-whitespace
@@ -193,13 +194,96 @@ function convertOne(str: string, opts: Opts): Ranges {
       isWhitespaceChar(str[from - 1]) &&
       isWhitespaceChar(str[to])
     ) {
-      rangesArr.push([from, to, convertEntities ? "&mdash;" : rawMDash]);
-      DEV &&
-        console.log(
-          `199 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} m-dash symbol [${from}, ${to}, ${
-            convertEntities ? "&mdash;" : rawMDash
-          }]`
-        );
+      // find out what are nearest surrounding non-whitespace characters
+      let idxOnTheLeft: number | null = null;
+      let idxOnTheRight: number | null = null;
+
+      if (str[from - 2]) {
+        if (str[from - 2].trim()) {
+          // "cheaper" calculation
+          idxOnTheLeft = from - 2;
+          DEV &&
+            console.log(
+              `207 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
+                idxOnTheLeft,
+                null,
+                4
+              )}`
+            );
+        } else {
+          // a more "expensive" calculation
+          idxOnTheLeft = left(str, from);
+          DEV &&
+            console.log(
+              `218 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
+                idxOnTheLeft,
+                null,
+                4
+              )}`
+            );
+        }
+      }
+      if (str[to + 1]) {
+        if (str[to + 1].trim()) {
+          // "cheaper" calculation
+          idxOnTheRight = to + 1;
+          DEV &&
+            console.log(
+              `232 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheRight`}\u001b[${39}m`} = ${JSON.stringify(
+                idxOnTheRight,
+                null,
+                4
+              )}`
+            );
+        } else {
+          // a more "expensive" calculation
+          idxOnTheRight = right(str, from);
+          DEV &&
+            console.log(
+              `243 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheRight`}\u001b[${39}m`} = ${JSON.stringify(
+                idxOnTheRight,
+                null,
+                4
+              )}`
+            );
+        }
+      }
+
+      // 2.1.2
+      // If it's a mathematical minus sign, use n-dash
+      if (
+        // 2.1.2.1
+        // "1 - 2"
+        (isNumberChar(str[idxOnTheLeft as number]) &&
+          isNumberChar(str[idxOnTheRight as number])) ||
+        // 2.1.2.2
+        // "$5 - $2 = $3"
+        (isNumberChar(str[idxOnTheLeft as number]) &&
+          isCurrencyChar(str[idxOnTheRight as number])) ||
+        // "5$ - 2$ = 3$"
+        (isCurrencyChar(str[idxOnTheLeft as number]) &&
+          isNumberChar(str[idxOnTheRight as number]))
+      ) {
+        rangesArr.push([from, to, convertEntities ? "&ndash;" : rawNDash]);
+        DEV &&
+          console.log(
+            `270 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} n-dash symbol [${from}, ${to}, ${
+              convertEntities ? "&ndash;" : rawNDash
+            }]`
+          );
+      }
+
+      // 2.2.2
+      // else, use m-dash
+      else {
+        rangesArr.push([from, to, convertEntities ? "&mdash;" : rawMDash]);
+        DEV &&
+          console.log(
+            `282 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} m-dash symbol [${from}, ${to}, ${
+              convertEntities ? "&mdash;" : rawMDash
+            }]`
+          );
+      }
     } /* else if (
       // 2.2. (HTML-encoded whitespace character OR whitespace) - hyphen - (HTML-encoded whitespace character OR whitespace)
     ) {
@@ -209,7 +293,7 @@ function convertOne(str: string, opts: Opts): Ranges {
 
   DEV &&
     console.log(
-      `212 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`
+      `296 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`
     );
 
   return rangesArr.length ? rangesArr : null;
@@ -265,7 +349,7 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
 
   DEV &&
     console.log(
-      `268 CALCULATED ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `352 CALCULATED ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         preppedOpts,
         null,
         4
@@ -289,12 +373,12 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
     // multiple times
     preppedOpts.from = i;
     preppedOpts.offsetBy = (idx) => {
-      DEV && console.log(`292 ██ BUMP i from ${i} to ${i + idx}`);
+      DEV && console.log(`376 ██ BUMP i from ${i} to ${i + idx}`);
       i += idx;
     };
     DEV &&
       console.log(
-        `297 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+        `381 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
           preppedOpts,
           null,
           4
@@ -309,7 +393,7 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
 
   DEV &&
     console.log(
-      `312 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} FINAL ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+      `396 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} FINAL ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
         ranges,
         null,
         4
@@ -318,7 +402,7 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
 
   DEV &&
     console.log(
-      `321 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`
+      `405 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`
     );
   DEV && console.log(" ");
   return {
