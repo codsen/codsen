@@ -8444,7 +8444,8 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.1.1",
-      "ranges-apply": "^7.0.3"
+      "ranges-apply": "^7.0.3",
+      "string-left-right": "^6.0.5"
     },
     "devDependencies": {
       "test-mixer": "^4.1.2"

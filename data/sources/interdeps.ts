@@ -161,7 +161,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-utils",
-    "size": 2628,
+    "size": 3203,
     "imports": []
   },
   {
@@ -694,10 +694,11 @@ export const interdeps = [
   },
   {
     "name": "string-dashes",
-    "size": 2385,
+    "size": 2646,
     "imports": [
       "codsen-utils",
-      "ranges-apply"
+      "ranges-apply",
+      "string-left-right"
     ]
   },
   {
