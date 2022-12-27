@@ -23,6 +23,7 @@ export const dependencyStats: DependencyStats = {
     "currency.js",
     "define-lazy-prop",
     "execa",
+    "fp-ts",
     "fs-extra",
     "globby",
     "grapheme-splitter",
@@ -145,6 +146,7 @@ export const dependencyStats: DependencyStats = {
     "string-character-is-astral-surrogate",
     "string-collapse-leading-whitespace",
     "string-collapse-white-space",
+    "string-dashes",
     "string-extract-class-names",
     "string-find-heads-tails",
     "string-find-malformed",
@@ -186,7 +188,7 @@ export const dependencyStats: DependencyStats = {
     "check-types-mini": 4,
     "codsen-parser": 2,
     "codsen-tokenizer": 2,
-    "codsen-utils": 32,
+    "codsen-utils": 33,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -196,6 +198,7 @@ export const dependencyStats: DependencyStats = {
     "email-all-chars-within-ascii": 1,
     "email-comb": 1,
     "execa": 1,
+    "fp-ts": 1,
     "fs-extra": 4,
     "generate-atomic-css": 1,
     "globby": 10,
@@ -285,6 +288,7 @@ export const dependencyStats: DependencyStats = {
     "string-character-is-astral-surrogate": 1,
     "string-collapse-leading-whitespace": 1,
     "string-collapse-white-space": 2,
+    "string-dashes": 1,
     "string-extract-class-names": 1,
     "string-find-heads-tails": 1,
     "string-find-malformed": 2,
@@ -400,7 +404,7 @@ export const dependencyStats: DependencyStats = {
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 32
+      "codsen-utils": 33
     },
     {
       "ranges-apply": 17

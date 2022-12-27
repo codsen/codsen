@@ -161,7 +161,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-utils",
-    "size": 2601,
+    "size": 2628,
     "imports": []
   },
   {
@@ -203,7 +203,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "size": 24942,
+    "size": 24939,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -645,9 +645,11 @@ export const interdeps = [
   },
   {
     "name": "remark-typography",
-    "size": 750,
+    "size": 1048,
     "imports": [
+      "codsen-utils",
       "string-apostrophes",
+      "string-dashes",
       "string-remove-widows"
     ]
   },
