@@ -35,6 +35,53 @@ export function isCurrencyChar(value: unknown): boolean {
   );
 }
 
+export function isCurrencySymbol(value: unknown): boolean {
+  let currencySymbols = new Set([
+    "$U",
+    "$b",
+    "B/.",
+    "BZ$",
+    "Br",
+    "Bs",
+    "C$",
+    "CHF",
+    "Ft",
+    "Gs",
+    "J$",
+    "KM",
+    "Kč",
+    "L",
+    "MT",
+    "NT$",
+    "P",
+    "Q",
+    "R",
+    "R$",
+    "RD$",
+    "RM",
+    "Rp",
+    "S",
+    "S/.",
+    "TT$",
+    "Z$",
+    "kn",
+    "kr",
+    "lei",
+    "zł",
+    "ƒ",
+    "Дин.",
+    "ден",
+    "лв",
+    "د.إ",
+    "Lek",
+  ]);
+  return (
+    typeof value === "string" &&
+    !!value.trim() &&
+    (isCurrencyChar(value) || currencySymbols.has(value))
+  );
+}
+
 export function isLetter(value: unknown): boolean {
   return (
     typeof value === "string" &&

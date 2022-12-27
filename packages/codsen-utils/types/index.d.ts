@@ -18,6 +18,7 @@ declare const multiplicationSign = "\u00D7";
 declare const punctuationChars: string[];
 declare function isNumberChar(value: unknown): boolean;
 declare function isCurrencyChar(value: unknown): boolean;
+declare function isCurrencySymbol(value: unknown): boolean;
 declare function isLetter(value: unknown): boolean;
 declare function isLatinLetter(value: unknown): boolean;
 declare function isQuote(value: unknown): boolean;
@@ -68,6 +69,7 @@ export {
   hairspace,
   inlineTags,
   isCurrencyChar,
+  isCurrencySymbol,
   isLatinLetter,
   isLetter,
   isLowercaseLetter,
