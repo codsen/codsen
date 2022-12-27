@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.8.5](https://github.com/codsen/codsen/compare/json-comb@0.8.4...json-comb@0.8.5) (2022-12-27)
-
-**Note:** Version bump only for package json-comb
-
 ## 0.8.0 (2022-12-01)
 
 ### BREAKING CHANGES

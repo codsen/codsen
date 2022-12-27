@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.14.5](https://github.com/codsen/codsen/compare/codsen-parser@0.14.4...codsen-parser@0.14.5) (2022-12-27)
-
-**Note:** Version bump only for package codsen-parser
-
 ## 0.14.0 (2022-12-01)
 
 ### BREAKING CHANGES
