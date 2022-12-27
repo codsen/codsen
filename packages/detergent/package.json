@@ -1,6 +1,6 @@
 {
   "name": "detergent",
-  "version": "9.0.4",
+  "version": "9.0.5",
   "description": "Extract, clean, encode text and fix English style",
   "keywords": [
     "brief",
@@ -75,24 +75,24 @@
   "dependencies": {
     "all-named-html-entities": "^3.0.3",
     "ansi-regex": "^6.0.1",
-    "codsen-utils": "^1.1.0",
+    "codsen-utils": "^1.1.1",
     "he": "^1.2.0",
     "html-entities-not-email-friendly": "^0.8.3",
     "ranges-apply": "^7.0.3",
     "ranges-invert": "^6.0.3",
     "ranges-process-outside": "^6.0.3",
     "ranges-push": "^7.0.3",
-    "string-apostrophes": "^4.0.4",
-    "string-collapse-white-space": "^11.0.4",
-    "string-fix-broken-named-entities": "^7.0.4",
-    "string-left-right": "^6.0.4",
+    "string-apostrophes": "^4.0.5",
+    "string-collapse-white-space": "^11.0.5",
+    "string-fix-broken-named-entities": "^7.0.5",
+    "string-left-right": "^6.0.5",
     "string-range-expander": "^4.0.3",
-    "string-remove-widows": "^4.0.4",
-    "string-strip-html": "^13.0.4",
+    "string-remove-widows": "^4.0.5",
+    "string-strip-html": "^13.0.5",
     "string-trim-spaces-only": "^5.0.3"
   },
   "devDependencies": {
     "lodash.clonedeep": "^4.5.0",
-    "test-mixer": "^4.1.1"
+    "test-mixer": "^4.1.2"
   }
 }

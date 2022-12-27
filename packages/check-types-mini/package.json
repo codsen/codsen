@@ -1,6 +1,6 @@
 {
   "name": "check-types-mini",
-  "version": "8.0.4",
+  "version": "8.0.5",
   "description": "Validate options object",
   "keywords": [
     "compare",
@@ -73,8 +73,8 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^5.0.3",
-    "ast-monkey-traverse": "^4.0.4",
-    "codsen-utils": "^1.1.0",
+    "ast-monkey-traverse": "^4.0.5",
+    "codsen-utils": "^1.1.1",
     "lodash.intersection": "^4.4.0",
     "lodash.pullall": "^4.2.0",
     "matcher": "^5.0.0",

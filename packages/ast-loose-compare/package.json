@@ -1,6 +1,6 @@
 {
   "name": "ast-loose-compare",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "Compare anything: AST, objects, arrays and strings",
   "keywords": [
     "array",
@@ -79,7 +79,7 @@
     }
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^4.0.4",
-    "codsen-utils": "^1.1.0"
+    "ast-contains-only-empty-space": "^4.0.5",
+    "codsen-utils": "^1.1.1"
   }
 }

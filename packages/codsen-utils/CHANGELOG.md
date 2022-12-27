@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/codsen/codsen/compare/codsen-utils@1.1.0...codsen-utils@1.1.1) (2022-12-27)
+
+### Bug Fixes
+
+- add multiplication sign ([a93a230](https://github.com/codsen/codsen/commit/a93a2302d2385cc32f2cea0825666b683b4402e0))
+
 # [1.1.0](https://github.com/codsen/codsen/compare/codsen-utils@1.0.1...codsen-utils@1.1.0) (2022-12-26)
 
 ### Features

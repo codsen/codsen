@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/codsen/codsen/compare/remark-typography@0.5.4...remark-typography@0.6.0) (2022-12-27)
+
+### Features
+
+- tap `string-dashes` and add fixes for multiplication characters ([caf9f4f](https://github.com/codsen/codsen/commit/caf9f4fa858042faacec2a4dcb3b67bdd3d903f2))
+
 ## 0.5.0 (2022-12-01)
 
 ### Features

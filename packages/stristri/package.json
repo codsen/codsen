@@ -1,6 +1,6 @@
 {
   "name": "stristri",
-  "version": "5.0.4",
+  "version": "5.0.5",
   "description": "Extracts or deletes HTML, CSS, text and/or templating tags from string",
   "keywords": [
     "code",
@@ -74,14 +74,14 @@
     "various": {}
   },
   "dependencies": {
-    "codsen-tokenizer": "^7.0.4",
+    "codsen-tokenizer": "^7.0.5",
     "detect-templating-language": "^4.0.3",
     "ranges-apply": "^7.0.3",
     "ranges-merge": "^9.0.3",
-    "string-collapse-white-space": "^11.0.4"
+    "string-collapse-white-space": "^11.0.5"
   },
   "devDependencies": {
     "lodash.clonedeep": "^4.5.0",
-    "test-mixer": "^4.1.1"
+    "test-mixer": "^4.1.2"
   }
 }
