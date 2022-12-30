@@ -106,7 +106,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- Efficiency improvements — any tags within `<script>` are now skipped. But this comes at expense of tackling the weird case when two paired tags are overlapping,
+- Efficiency improvements — any tags within `<script>` are now skipped. From now, we won't be able to tackle the weird case when two paired tags are overlapping,
 
   ```html
   <script>
@@ -118,7 +118,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
   </style>
   ```
 
-  That's a strange broken code case, but it still warrants a major semver bump. Our perf measurement doesn't cover the particular branch of the algorithm, so there is no perf difference in the records.
+  That's the reason of a major semver bump. Our perf measurement doesn't cover the particular branch of the algorithm, so there is no perf difference in the [records](https://github.com/codsen/codsen/blob/main/packages/string-strip-html/perf/historical.json).
 
 ### Fixed
 
