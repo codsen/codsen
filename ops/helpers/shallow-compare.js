@@ -4,7 +4,7 @@ import { compare } from "ast-compare";
 function c(ok, thing1, thing2, ...args) {
   let res = compare(thing1, thing2, { verboseWhenMismatches: true });
   if (typeof res === "string") {
-    return ok(false, res, ...args);
+    return ok(false, res);
   }
   return ok(res, ...args);
 }
