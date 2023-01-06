@@ -10,7 +10,7 @@ import { findAllIdx, rawNDash } from "codsen-utils";
 // for debug purposes only
 // -----------------------------------------------------------------------------
 
-test.only(`01 - WIP`, () => {
+/*test(`01 - WIP`, () => {
   let input = `m-m`;
   equal(
     convertOne(input, {
@@ -20,7 +20,7 @@ test.only(`01 - WIP`, () => {
     null,
     `01.01`
   );
-});
+});*/
 
 // -----------------------------------------------------------------------------
 
