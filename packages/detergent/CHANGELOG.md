@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [9.1.0](https://github.com/codsen/codsen/compare/detergent@9.0.6...detergent@9.1.0) (2023-01-06)
+
+### Features
+
+- replace dashes fixes with string-dashes ([9a370a7](https://github.com/codsen/codsen/commit/9a370a7634dc27d701b3e2ee142ab62337c6e002))
+
 ## 9.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

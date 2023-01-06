@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-test-num-tbc",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "description": "ESLint plugin to update unit test numbers automatically",
   "keywords": [
     "automatically",

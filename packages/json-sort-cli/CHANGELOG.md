@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.7](https://github.com/codsen/codsen/compare/json-sort-cli@3.0.6...json-sort-cli@3.0.7) (2023-01-06)
+
+### Bug Fixes
+
+- replace the missing dependency ([310f982](https://github.com/codsen/codsen/commit/310f9821e7817e6b0c6267694e1167233cda76a6))
+
 ## 3.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

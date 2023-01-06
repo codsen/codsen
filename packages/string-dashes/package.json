@@ -1,6 +1,6 @@
 {
   "name": "string-dashes",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Comprehensive, HTML-entities-aware tool to typographically-correct the dashes and hyphens",
   "keywords": [
     "dash",
