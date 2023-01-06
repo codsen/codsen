@@ -203,7 +203,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "size": 24939,
+    "size": 24154,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -214,6 +214,7 @@ export const interdeps = [
       "ranges-push",
       "string-apostrophes",
       "string-collapse-white-space",
+      "string-dashes",
       "string-fix-broken-named-entities",
       "string-left-right",
       "string-range-expander",
@@ -447,7 +448,7 @@ export const interdeps = [
   },
   {
     "name": "json-sort-cli",
-    "size": 13148,
+    "size": 13176,
     "imports": [
       "ast-monkey-traverse",
       "codsen-utils"
@@ -694,7 +695,7 @@ export const interdeps = [
   },
   {
     "name": "string-dashes",
-    "size": 2646,
+    "size": 2749,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -855,7 +856,7 @@ export const interdeps = [
   },
   {
     "name": "update-versions",
-    "size": 15720,
+    "size": 15772,
     "imports": [
       "codsen-utils",
       "edit-package-json"

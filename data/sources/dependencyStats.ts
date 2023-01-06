@@ -288,7 +288,7 @@ export const dependencyStats: DependencyStats = {
     "string-character-is-astral-surrogate": 1,
     "string-collapse-leading-whitespace": 1,
     "string-collapse-white-space": 2,
-    "string-dashes": 1,
+    "string-dashes": 2,
     "string-extract-class-names": 1,
     "string-find-heads-tails": 1,
     "string-find-malformed": 2,

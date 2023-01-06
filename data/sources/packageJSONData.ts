@@ -2720,6 +2720,7 @@ export const packageJSONData = {
       "ranges-push": "^7.0.3",
       "string-apostrophes": "^4.0.6",
       "string-collapse-white-space": "^11.0.6",
+      "string-dashes": "^1.1.0",
       "string-fix-broken-named-entities": "^7.0.6",
       "string-left-right": "^6.0.6",
       "string-range-expander": "^4.0.3",
@@ -10339,7 +10340,7 @@ export const packageJSONData = {
       "prep": "echo 'ready'",
       "prettier": "prettier",
       "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-      "pretest": "echo 0",
+      "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
