@@ -374,4 +374,28 @@ test(`15 - m-dash, sentence with digits`, () => {
   });
 });
 
+test(`16 - cut-off in citation`, () => {
+  let input = `I smiled and she said, 'You mean you want me to-'`;
+  mixer({
+    from: 47,
+    convertDashes: false,
+  }).forEach((opt, n) => {
+    equal(convertOne(input, opt), null, `01.01.${pad(n)}`);
+  });
+  mixer({
+    from: 47,
+    convertDashes: true,
+    convertEntities: true,
+  }).forEach((opt, n) => {
+    equal(convertOne(input, opt), [[47, 48, "&mdash;"]], `01.02.${pad(n)}`);
+  });
+  mixer({
+    from: 47,
+    convertDashes: true,
+    convertEntities: false,
+  }).forEach((opt, n) => {
+    equal(convertOne(input, opt), [[47, 48, rawMDash]], `01.03.${pad(n)}`);
+  });
+});
+
 test.run();
