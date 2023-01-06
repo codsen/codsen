@@ -50,9 +50,7 @@
   },
   "ava": {
     "compileEnhancements": false,
-    "require": [
-      "esm"
-    ],
+    "require": ["esm"],
     "timeout": "99m",
     "verbose": true
   },
@@ -132,9 +130,7 @@
   },
   "nyc": {
     "instrument": false,
-    "require": [
-      "@babel/register"
-    ],
+    "require": ["@babel/register"],
     "sourceMap": false
   },
   "dependencies": {
@@ -144,7 +140,6 @@
     "he": "^1.2.0",
     "html-entities-not-email-friendly": "^0.1.4",
     "lodash.clonedeep": "^4.5.0",
-    "lodash.isplainobject": "^4.0.6",
     "object-merge-advanced": "^10.11.0",
     "object-path": "^0.11.4",
     "ranges-apply": "^3.0.35",
