@@ -10,15 +10,14 @@ import { findAllIdx, rawNDash } from "codsen-utils";
 // for debug purposes only
 // -----------------------------------------------------------------------------
 
-test(`01 - WIP`, () => {
-  let input = `1880-1912, pages 330-39`;
+test.only(`01 - WIP`, () => {
+  let input = `m-m`;
   equal(
     convertOne(input, {
-      from: 4,
+      from: 1,
       convertDashes: true,
-      convertEntities: true,
     }),
-    [[4, 5, "&ndash;"]],
+    null,
     `01.01`
   );
 });

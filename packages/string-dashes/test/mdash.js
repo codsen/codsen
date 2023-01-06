@@ -398,4 +398,13 @@ test(`16 - cut-off in citation`, () => {
   });
 });
 
+test(`17 - vague case`, () => {
+  let input = `m-m`;
+  mixer({
+    from: 1,
+  }).forEach((opt, n) => {
+    equal(convertOne(input, opt), null, `17.01.${pad(n)}`);
+  });
+});
+
 test.run();
