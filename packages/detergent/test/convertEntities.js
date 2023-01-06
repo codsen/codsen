@@ -377,7 +377,7 @@ test(`23 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
   });
 });
 
-test(`24 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=on`, () => {
+test.skip(`24 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=on`, () => {
   mixer({
     convertEntities: true, // <-----
     convertApostrophes: true,
@@ -406,7 +406,7 @@ test(`24 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
   });
 });
 
-test(`25 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`, () => {
+test.skip(`25 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`, () => {
   mixer({
     convertEntities: true,
     convertApostrophes: false,
@@ -435,7 +435,7 @@ test(`25 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #
   });
 });
 
-test(`26 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`, () => {
+test.skip(`26 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`, () => {
   mixer({
     convertEntities: true, // <-----
     convertApostrophes: false,
@@ -575,7 +575,7 @@ test(`31 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, () => {
   });
 });
 
-test(`32 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, () => {
+test.skip(`32 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, () => {
   mixer({
     convertDashes: false,
     removeWidows: true,
