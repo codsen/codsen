@@ -12,7 +12,7 @@ import diff1 from "ansi-diff-stream";
 import objectPath from "object-path";
 import write from "write-file-atomic";
 import { createRequire } from "module";
-import isObj from "lodash.isplainobject";
+import { isPlainObject } from "codsen-utils";
 import { promises, readFileSync } from "fs";
 import { set, del } from "edit-package-json";
 import updateNotifier from "update-notifier";
@@ -159,11 +159,11 @@ if (cli.flags) {
         let parsedContents = pathsPromise.contentsObj[oneOfPaths];
 
         let totalDeps = (
-          isObj(parsedContents.dependencies)
+          isPlainObject(parsedContents.dependencies)
             ? Object.keys(parsedContents.dependencies)
             : []
         ).concat(
-          isObj(parsedContents.devDependencies)
+          isPlainObject(parsedContents.devDependencies)
             ? Object.keys(parsedContents.devDependencies)
             : []
         );
@@ -259,7 +259,7 @@ if (cli.flags) {
         //
         //
 
-        if (isObj(parsedContents.dependencies)) {
+        if (isPlainObject(parsedContents.dependencies)) {
           let keys = Object.keys(parsedContents.dependencies);
           for (let y = 0, len2 = keys.length; y < len2; y++) {
             // delete this dependency from lect.various.devDependencies if present
@@ -364,11 +364,11 @@ if (cli.flags) {
         //
         //
 
-        if (isObj(parsedContents.devDependencies)) {
+        if (isPlainObject(parsedContents.devDependencies)) {
           let keys = Object.keys(parsedContents.devDependencies);
           // 1. first, remove deps which if they are in normal dependencies in
           // package.json, that's our value parsedContents.dependencies
-          if (isObj(parsedContents.dependencies)) {
+          if (isPlainObject(parsedContents.dependencies)) {
             Object.keys(parsedContents.dependencies).forEach((depName) => {
               if (keys.includes(depName)) {
                 // 1. delete devdep entry on JSON string
@@ -446,7 +446,7 @@ if (cli.flags) {
         }
 
         if (
-          isObj(parsedContents) &&
+          isPlainObject(parsedContents) &&
           Object.prototype.hasOwnProperty.call(parsedContents, "gitHead")
         ) {
           finalContents = del(finalContents, "gitHead");
