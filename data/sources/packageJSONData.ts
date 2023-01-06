@@ -2636,7 +2636,7 @@ export const packageJSONData = {
   },
   "detergent": {
     "name": "detergent",
-    "version": "9.0.6",
+    "version": "9.1.0",
     "description": "Extract, clean, encode text and fix English style",
     "keywords": [
       "brief",
@@ -2720,7 +2720,7 @@ export const packageJSONData = {
       "ranges-push": "^7.0.3",
       "string-apostrophes": "^4.0.6",
       "string-collapse-white-space": "^11.0.6",
-      "string-dashes": "^1.1.0",
+      "string-dashes": "^1.2.0",
       "string-fix-broken-named-entities": "^7.0.6",
       "string-left-right": "^6.0.6",
       "string-range-expander": "^4.0.3",
@@ -2808,7 +2808,7 @@ export const packageJSONData = {
   },
   "edit-package-json": {
     "name": "edit-package-json",
-    "version": "0.8.6",
+    "version": "0.8.7",
     "description": "Edit package.json without parsing, as string, to keep the formatting intact",
     "keywords": [
       "changes",
@@ -3427,7 +3427,7 @@ export const packageJSONData = {
   },
   "eslint-plugin-test-num": {
     "name": "eslint-plugin-test-num-tbc",
-    "version": "3.0.6",
+    "version": "3.0.7",
     "description": "ESLint plugin to update unit test numbers automatically",
     "keywords": [
       "automatically",
@@ -5104,7 +5104,7 @@ export const packageJSONData = {
   },
   "json-sort-cli": {
     "name": "json-sort-cli",
-    "version": "3.0.6",
+    "version": "3.0.7",
     "description": "Command line app to deep sort JSON files, retains package.json special key order",
     "keywords": [
       "app",
@@ -7687,7 +7687,7 @@ export const packageJSONData = {
   },
   "remark-typography": {
     "name": "remark-typography",
-    "version": "0.6.1",
+    "version": "0.6.2",
     "description": "Remark plugin to fix typography: quotes, dashes and so on.",
     "keywords": [
       "unified",
@@ -7759,7 +7759,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.2.0",
       "fp-ts": "^2.13.1",
       "string-apostrophes": "^4.0.6",
-      "string-dashes": "^1.1.0",
+      "string-dashes": "^1.2.0",
       "string-remove-widows": "^4.0.6",
       "unified": "^10.1.2",
       "unist-util-visit": "^4.1.1"
@@ -8373,7 +8373,7 @@ export const packageJSONData = {
   },
   "string-dashes": {
     "name": "string-dashes",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Comprehensive, HTML-entities-aware tool to typographically-correct the dashes and hyphens",
     "keywords": [
       "dash",
@@ -10286,7 +10286,7 @@ export const packageJSONData = {
   },
   "update-versions": {
     "name": "update-versions",
-    "version": "6.0.6",
+    "version": "6.0.7",
     "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
     "keywords": [
       "app",
@@ -10363,7 +10363,7 @@ export const packageJSONData = {
     "dependencies": {
       "ansi-diff-stream": "^1.2.1",
       "codsen-utils": "^1.2.0",
-      "edit-package-json": "^0.8.6",
+      "edit-package-json": "^0.8.7",
       "globby": "^13.1.3",
       "is-online": "^10.0.0",
       "log-update": "^5.0.1",
