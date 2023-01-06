@@ -12,7 +12,7 @@ import pReduce from "p-reduce";
 import pFilter from "p-filter";
 import { globby } from "globby";
 import { createRequire } from "module";
-import isObj from "lodash.isplainobject";
+import { isPlainObject } from "codsen-utils";
 import updateNotifier from "update-notifier";
 import { traverse } from "ast-monkey-traverse";
 import sortPackageJson, { sortOrder } from "sort-package-json";
@@ -178,7 +178,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
       }
       let result;
 
-      if (isObj(parsedJson)) {
+      if (isPlainObject(parsedJson)) {
         result = sortObj(parsedJson);
       } else if (
         cli.flags.arrays &&
@@ -214,7 +214,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
           let stringified = JSON.stringify(
             traverse(obj, (key, val) => {
               let current = val !== undefined ? val : key;
-              if (isObj(current)) {
+              if (isPlainObject(current)) {
                 return sortObj(current);
               }
               if (
@@ -240,7 +240,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
             oneOfPaths,
             traverse(obj, (key, val) => {
               let current = val !== undefined ? val : key;
-              if (isObj(current)) {
+              if (isPlainObject(current)) {
                 return sortObj(current);
               }
               if (
