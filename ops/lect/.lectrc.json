@@ -220,7 +220,7 @@
       "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
       "perf": "exit 0",
       "prep": "echo 'ready'",
-      "pretest": "echo 0",
+      "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "devtest": "npm run test",
       "unit": "uvu test"
