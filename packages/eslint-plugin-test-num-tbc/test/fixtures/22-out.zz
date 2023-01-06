@@ -4,7 +4,7 @@ test(`01 - with entities`, () => {
     convertEntities: true,
     removeWidows: false,
   }).forEach((opt, n) => {
-    equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], `01.${pad(n)}`);
+    equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], `01.01.${pad(n)}`);
   });
 });
 
@@ -14,6 +14,6 @@ test(`02 - with entities`, () => {
     convertEntities: true,
     removeWidows: false,
   }).forEach((opt, n) => {
-    equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], `02.${pad(n)}`);
+    equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], `02.01.${pad(n)}`);
   });
 });

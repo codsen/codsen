@@ -1,0 +1,37 @@
+test(`01 - \u001b[${34}m${`opts.convertDashes`}\u001b[${39}m - \u001b[${36}m${`minuses`}\u001b[${39}m - legit minus between two numbers`, () => {
+  mixer({
+    removeWidows: false,
+    convertEntities: true,
+    convertDashes: true,
+  }).forEach((opt, n) => {
+    equal(
+      // nothing to convert:
+      det(ok, not, n, `1 - 2 = 3`, opt).res,
+      `1 &ndash; 2 = 3`,
+      "01.01"
+    );
+  });
+  mixer({
+    removeWidows: false,
+    convertEntities: false,
+    convertDashes: true,
+  }).forEach((opt, n) => {
+    equal(
+      // nothing to convert:
+      det(ok, not, n, `1 - 2 = 3`, opt).res,
+      `1 ${rawNDash} 2 = 3`,
+      "01.02"
+    );
+  });
+  mixer({
+    removeWidows: false,
+    convertDashes: false,
+  }).forEach((opt, n) => {
+    equal(
+      // nothing to convert:
+      det(ok, not, n, `1 - 2 = 3`, opt).res,
+      `1 - 2 = 3`,
+      "01.03"
+    );
+  });
+});

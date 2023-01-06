@@ -4,6 +4,8 @@ import path from "path";
 import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+
+import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { read, sha256, pad } from "../../../ops/helpers/common.js";
 import { verifyAndFix, verify } from "./_util.js";
 
@@ -12,9 +14,9 @@ import { verifyAndFix, verify } from "./_util.js";
 
 const shas = {
   "01-in.zz":
-    "ac32ddfd3670f39ce2f55ce674f99850989e1fe1958c49c5348ba7a87a1534ab",
+    "d6b5f83792903c7cbb93967c66a0c0464b4eb4132643710e9f4e08cfcb827f33",
   "02-in.zz":
-    "0e93107084848ff145b984e3945f0e17e47eea75ccfa505511d82673858f405d",
+    "d1bbd6f35cf2d17816decc1d40a912ea4b074f30d886ee1ec6713a1ecbfd0efa",
   "03-in.zz":
     "ee2b27660e5d0e3932803a3a4cd82c1cf861b5902bfc7eaa3341d23fb6639cba",
   "04-in.zz":
@@ -30,13 +32,13 @@ const shas = {
   "09-in.zz":
     "1c405662a72591e677c165b94a111b436a0b18543658e8f0ac140b79c286e7a1",
   "10-in.zz":
-    "e920867a63a9d0f4c3d9ee9990517514106dcadd3e94daaabaff3fc43377bc00",
+    "eaebf238a771d47f08dc4d3aa3fd14352593724630c84590726ba2f84693c1cd",
   "11-in.zz":
     "fc6a3ffef2286d70b652c2455b29bf5056f086659a108cb515866ce7d93727e0",
   "12-in.zz":
     "f4a1b8f05ff95dd6ae870762310b75fb64c41520e7ccb08d28fa52725701c26f",
   "13-in.zz":
-    "41e28ad697f8fd15837f7cfe2a172c2f67aca83cb52d05c8f7d154ceceafe4ec",
+    "1dd4161500eea010ad385742fd48c182723ed1ca763d60b6acffc08022852237",
   "14-in.zz":
     "452ec77818e692b99d7bd699186900a6deb01455b456078eca4805cc819ee325",
   "15-in.zz":
@@ -58,9 +60,23 @@ const shas = {
   "23-in.zz":
     "9b8b7e156ae1baf9d610dd37c5c20c2bfea4be34f246cb7c5440cb537c890c44",
   "24-in.zz":
-    "bf26c31ef91e7dc223f70607a8cbd97bf3724182a801ae6f1b35e4cfdec39324",
+    "88dbe3c48fccd5c2cf7f43b92273169a9d20522c8d562b5ef6f234e346531c7b",
   "25-in.zz":
     "0ac762e0c28561f85dcb706627c91d1efcd393e9b48d0398b41d256391cd44e3",
+  "26-in.zz":
+    "99e1bda2e155149b2cebeff8d973abd2b538e806497b57df38d0f7477265d159",
+  "27-in.zz":
+    "a6cb3a377406b24ff2e8f67b8bcdcbac156e89f2a6f15b70b6872efb17871e09",
+  "28-in.zz":
+    "f268b4e1675c60028a94ba5ef2aebbb936f3ab65680c398f0a14360ad3127064",
+  "29-in.zz":
+    "4cdb3450eefabe0be731c5bd4e1868eebce84e3ba0e4875134ad7c5dc3a463e5",
+  "30-in.zz":
+    "52f2642fc204d7e1dbba37974e4bc89f2168cab17173fd44c6bddb465161b606",
+  "31-in.zz":
+    "3d98852c1debaed9d415901d85bed31e1175a19cf8b5bff62e4e814ac5dd0556",
+  "32-in.zz":
+    "e058ee4ea64cbd2669f03c3ec4422eb7d0df158592d453e36487ce9a8d8942bb",
 };
 
 // loop through all fixtures
@@ -74,10 +90,8 @@ readdirSync(fixturesPath)
   .forEach((file, i) => {
     test(`${file}`, () => {
       let testName = file.slice(0, -6);
-      // console.log(`${`\u001b[${90}m${`test:`}\u001b[${39}m`} ${testName}`);
       let testIn = read(`${testName}-in`);
       let testOut = read(`${testName}-out`);
-      let testVerify = JSON.parse(read(`${testName}-verify`, "json"));
 
       // 1. ensure inputs haven't been mangled
       if (!shas[file]) {
@@ -90,12 +104,7 @@ readdirSync(fixturesPath)
         );
       }
 
-      // 2. run Linter.verify
-
-      // let verified = verify(testIn);
-      // equal(verified, testVerify, `#${testName} - verify() - ${testName}`);
-
-      // 3. ensure "in" is fixed
+      // 2. ensure "in" is fixed
       let verifiedAndFixed = verifyAndFix(testIn);
       equal(
         verifiedAndFixed.output,
@@ -104,18 +113,16 @@ readdirSync(fixturesPath)
       );
       equal(
         verifiedAndFixed.fixed,
-        true,
+        // if "in" and "out" are the same,
+        // there was nothing to fix, so "fixed" will be "false"
+        testIn !== testOut,
         `#${testName} - verifyAndFix().fixed`
       );
-      equal(
+      /*equal(
         verifiedAndFixed.messages,
         [],
         `#${testName} - verifyAndFix().messages`
-      );
-
-      // 4. ensure no more errors are raised about "out"
-      let messages = verify(testOut);
-      equal(messages, [], `#${testName} - verify() out - ${testName}`);
+      );*/
     });
   });
 

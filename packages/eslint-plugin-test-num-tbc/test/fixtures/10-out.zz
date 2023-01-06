@@ -7,7 +7,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "01");
+    t.match(gathered, [], "01.01");
     t.end();
   }
 );
@@ -21,7 +21,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "02");
+    t.match(gathered, [], `02.01`);
     t.end();
   }
 );
@@ -35,7 +35,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "03");
+    t.match(gathered, [], "03.01");
     t.end();
   }
 );

@@ -6,7 +6,7 @@ test.skip(`01 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continu
   );
 });
 
-test.skip(`02 - b`, () => {
+test.only(`02 - b`, () => {
   equal(
     extract({}),
     {},

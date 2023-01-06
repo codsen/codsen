@@ -1,29 +1,36 @@
-test(`09 - with entities`, () => {
+test(`34 - with entities`, () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
     removeWidows: false,
   }).forEach((opt, n) => {
-    equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], '09.${pad(n)}');
+    equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], '61.${pad(n)}');
   });
 });
 
-test(`09 - with entities`, () => {
+test(`45 - with entities`, () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
     removeWidows: false,
   }).forEach((opt, n) => {
-    equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], `09.${pad(n)}`);
+    equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], `72.${pad(n)}`);
+  });
+  mixer({
+    convertDashes: true,
+    convertEntities: true,
+    removeWidows: false,
+  }).forEach((opt, n) => {
+    equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], `72.${pad(n)}`);
   });
 });
 
-test(`09 - with entities`, () => {
+test(`56 - with entities`, () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
     removeWidows: false,
   }).forEach((opt, n) => {
-    equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], "09.${pad(n)}");
+    equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], "83.${pad(n)}");
   });
 });

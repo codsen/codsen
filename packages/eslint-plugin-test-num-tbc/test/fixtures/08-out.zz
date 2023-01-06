@@ -8,8 +8,7 @@ tap.test(
       {
         fixed: true,
         output: read("07-out"),
-      },
-      "01.01"
+      }, "01.01"
     );
 
     // ensure no more errors are raised about "out"

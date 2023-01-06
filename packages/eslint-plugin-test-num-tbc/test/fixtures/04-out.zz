@@ -7,7 +7,7 @@ tap.test(
         convertEntities: 0,
       }).ranges,
       [[1, 2]],
-      "01"
+      "01.01"
     );
     t.end();
   }

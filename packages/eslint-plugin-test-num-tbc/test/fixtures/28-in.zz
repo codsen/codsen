@@ -1,0 +1,11 @@
+test(`01`, () => {
+  mixer().forEach((opt, n) => {
+    equal(a(), "b", `31.${pad(n)}`);
+  });
+  mixer().forEach((opt, n) => {
+    equal(c(), "d", `42.${pad(n)}`);
+  });
+  mixer().forEach((opt, n) => {
+    equal(e(), "f", `01.03.${pad(n)}`);
+  });
+});

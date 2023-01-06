@@ -1,0 +1,16 @@
+test(`01`, () => {
+  mixer({}).forEach((opt, n) => {
+    equal(
+      a(),
+      `b`,
+      "88.88"
+    );
+  });
+  mixer({}).forEach((opt, n) => {
+    equal(
+      a(),
+      `b`,
+      "99.99"
+    );
+  });
+});

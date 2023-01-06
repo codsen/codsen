@@ -21,7 +21,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "23");
+    t.match(gathered, [], `23`);
     t.end();
   }
 );

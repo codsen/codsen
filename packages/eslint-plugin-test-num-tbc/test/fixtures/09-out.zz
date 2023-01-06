@@ -16,7 +16,7 @@ tap.todo(
     t.strictSame(gatheredRes, [
       [8, 9, "&ldquo;"],
       [17, 18, "&rdquo;"],
-    ], "01");
+    ], "01.01");
     t.end();
   }
 );
@@ -41,7 +41,7 @@ tap.todo(
     t.strictSame(gatheredRes, [
       [8, 9, `${leftDoubleQuote}`],
       [17, 18, `${rightDoubleQuote}`],
-    ], "02");
+    ], "02.01");
     t.end();
   }
 );
