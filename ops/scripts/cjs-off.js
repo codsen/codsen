@@ -5,16 +5,17 @@
 // It restores the "type": "module" row from the package.json
 // and appends "-tbc".
 
-import writeFileAtomic from "write-file-atomic";
 import fs from "fs";
 import path from "path";
-import { removeTbc } from "../lect/plugins/_util.js";
+import writeFileAtomic from "write-file-atomic";
+import { set } from "edit-package-json";
 
 console.log(`ops/scripts/cjs-off.js`);
 
 const pkgName = path.resolve(".").split("/").pop();
 
 const pkg = fs.readFileSync(path.resolve("package.json"), "utf8");
+const pkg_bak = fs.readFileSync(path.resolve("package_bak.json"), "utf8");
 if (!pkg) {
   throw new Error(
     `ops/scripts/cjs-off.js: couldn't read ${path.resolve("package.json")}`
@@ -36,31 +37,20 @@ if (pkg.includes(`"main": "${pkgName}"`)) {
   );
 }
 
-// split by row and process each
-const res =
-  pkg
-    .split(/(\r?\n)/)
-    .map((row) => {
-      // 1. add "-tbc" part to every reference to package's name
-      if (
-        pkgName.includes("eslint") &&
-        row.includes(removeTbc(pkgName)) &&
-        !row.includes(`"homepage"`) &&
-        !row.includes(`"main"`) &&
-        !row.includes("-tbc")
-      ) {
-        return row.replace(removeTbc(pkgName), pkgName);
-      }
-      // 2. add the "type: module" row above "main"
-      if (row.includes(`"main"`) && !pkg.includes(`"type": "module"`)) {
-        return `  "type": "module",\n${row}`;
-      }
-      // a default - nothing happens
-      return row;
-    })
-    // 2. remove any blank lines
-    .filter((row) => row.trim())
-    .join("\n")
-    .trim() + "\n";
+// 1. check, does the backup exist
+fs.existsSync(path.resolve("package_bak.json"));
+fs.existsSync(path.resolve("package.json"));
 
-writeFileAtomic(path.resolve("package.json"), res);
+// 2. assume the version on CJS "package.json" might have mutated since - grab it
+const v = JSON.parse(pkg).version;
+if (!v) {
+  throw new Error(`045 ops/scripts/cjs-off.js - missing version!`);
+}
+
+// 3. delete both
+fs.unlinkSync(path.resolve("package.json"));
+fs.unlinkSync(path.resolve("package_bak.json"));
+
+// 4. write a new package.json:
+const pkg_new = set(pkg_bak, "version", v);
+writeFileAtomic(path.resolve("package.json"), pkg_new);

@@ -26,6 +26,7 @@ ideas.md
 deps-graph.png
 .nyc_output
 testStats.md
+package_bak.json
 package.json.lerna_backup
 
 # debug
