@@ -16,7 +16,7 @@ test(`01 - key in the root`, () => {
   let result = `{
   "c": "d"
 }`;
-  deleter(equal, source, result, "a", "05.01");
+  deleter(equal, source, result, "a", "01");
 });
 
 test(`02 - key in the root`, () => {
@@ -27,7 +27,7 @@ test(`02 - key in the root`, () => {
   let result = `{
   "a": "b"
 }`;
-  deleter(equal, source, result, "c", "05.02");
+  deleter(equal, source, result, "c", "02");
 });
 
 test(`03 - key in the root`, () => {
@@ -40,7 +40,7 @@ test(`03 - key in the root`, () => {
   "a": "b",
   "e": "f"
 }`;
-  deleter(equal, source, result, "c", "05.03");
+  deleter(equal, source, result, "c", "03");
 });
 
 test(`04 - deletes the first array's element`, () => {
@@ -53,7 +53,7 @@ test(`04 - deletes the first array's element`, () => {
   "cd",
   "ef"
 ]}`;
-  deleter(equal, source, result, "qwe.0", "05.04");
+  deleter(equal, source, result, "qwe.0", "04");
 });
 
 test(`05 - deletes the middle array's element`, () => {
@@ -66,7 +66,7 @@ test(`05 - deletes the middle array's element`, () => {
   "ab",
   "ef"
 ]}`;
-  deleter(equal, source, result, "qwe.1", "05.05");
+  deleter(equal, source, result, "qwe.1", "05");
 });
 
 test(`06 - deletes the last array's element`, () => {
@@ -79,7 +79,7 @@ test(`06 - deletes the last array's element`, () => {
   "ab",
   "cd"
 ]}`;
-  deleter(equal, source, result, "qwe.2", "05.06");
+  deleter(equal, source, result, "qwe.2", "06");
 });
 
 test(`07 - deletes the first array's element`, () => {
@@ -92,7 +92,7 @@ test(`07 - deletes the first array's element`, () => {
   "cd",
   "ef"
 ]}`;
-  deleter(equal, source, result, "qwe.0", "05.07");
+  deleter(equal, source, result, "qwe.0", "07");
 });
 
 test(`08 - deletes the middle array's element`, () => {
@@ -105,7 +105,7 @@ test(`08 - deletes the middle array's element`, () => {
   "ab",
   "ef"
 ]}`;
-  deleter(equal, source, result, "qwe.1", "05.08");
+  deleter(equal, source, result, "qwe.1", "08");
 });
 
 test(`09 - deletes the last array's element`, () => {
@@ -118,7 +118,7 @@ test(`09 - deletes the last array's element`, () => {
   "ab",
   "cd"
 ]}`;
-  deleter(equal, source, result, "qwe.2", "05.09");
+  deleter(equal, source, result, "qwe.2", "09");
 });
 
 test(`10 - dips to root level key before going to second branch`, () => {
@@ -155,7 +155,7 @@ test(`10 - dips to root level key before going to second branch`, () => {
     }
   }
 }`;
-  deleter(equal, source, result, "ij.kl.mn.2", "05.10");
+  deleter(equal, source, result, "ij.kl.mn.2", "10");
 });
 
 test(`11 - nested arrays`, () => {
@@ -186,7 +186,7 @@ test(`11 - nested arrays`, () => {
     ]
   }
 }`;
-  deleter(equal, source, result, "a.f.0.h", "05.11");
+  deleter(equal, source, result, "a.f.0.h", "11");
 });
 
 test(`12 - nested arrays`, () => {
@@ -221,7 +221,16 @@ test(`12 - nested arrays`, () => {
     ]
   }
 }`;
-  deleter(equal, source, result, "a.f.0.h", "05.12");
+  deleter(equal, source, result, "a.f.0.h", "12");
+});
+
+test(`13 - key for deletion does not exist`, () => {
+  let source = `{
+  "a": "b",
+  "c": "d",
+  "e": "f"
+}`;
+  deleter(equal, source, source, "zzz", "13");
 });
 
 test.run();
