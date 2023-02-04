@@ -1,6 +1,6 @@
 {
   "name": "string-extract-sass-vars",
-  "version": "4.0.6",
+  "version": "4.0.7",
   "description": "Parse SASS variables file into a plain object of CSS key-value pairs",
   "keywords": [
     "css",
