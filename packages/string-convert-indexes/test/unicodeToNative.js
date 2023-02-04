@@ -59,11 +59,7 @@ test("05 - multiple consecutive astral symbols", () => {
 });
 
 test("06 - two astral characters offsetting the rest", () => {
-  equal(
-    unicodeToNative("\uD834\uDF06aa", [0, 1, 2]),
-    [0, 2, 3],
-    "06.01 - all unique, sorted"
-  );
+  equal(unicodeToNative("\uD834\uDF06aa", [0, 1, 2]), [0, 2, 3], "06.01");
 });
 
 test("07 - two astral characters offsetting the rest", () => {
@@ -75,11 +71,7 @@ test("07 - two astral characters offsetting the rest", () => {
 });
 
 test("08 - two astral characters offsetting the rest", () => {
-  equal(
-    unicodeToNative("\uD834\uDF06aa", [1, 0, 2]),
-    [2, 0, 3],
-    "08.01 - all unique, mixed up"
-  );
+  equal(unicodeToNative("\uD834\uDF06aa", [1, 0, 2]), [2, 0, 3], "08.01");
 });
 
 test("09 - two astral characters offsetting the rest", () => {

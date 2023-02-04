@@ -13,11 +13,7 @@ import {
 // -----------------------------------------------------------------------------
 
 test(`01 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`, () => {
-  equal(
-    matchLeft("z a", 2, [() => "EOL"]),
-    false,
-    "01.01 - whitespace trim opts control"
-  );
+  equal(matchLeft("z a", 2, [() => "EOL"]), false, "01.01");
 });
 
 test(`02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`, () => {
@@ -27,16 +23,12 @@ test(`02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
       trimBeforeMatching: true,
     }),
     "EOL",
-    "02.01 - whitespace trim opt on"
+    "02.01"
   );
 });
 
 test(`03 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`, () => {
-  equal(
-    matchLeft("z a", 2, ["a", () => "EOL"]),
-    false,
-    "03.01 - whitespace trim opts control"
-  );
+  equal(matchLeft("z a", 2, ["a", () => "EOL"]), false, "03.01");
 });
 
 test(`04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtrim combos\u001b[${39}m`, () => {
@@ -46,7 +38,7 @@ test(`04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
       trimBeforeMatching: true,
     }),
     "EOL",
-    "04.01 - whitespace trim opt on"
+    "04.01"
   );
 });
 
@@ -56,7 +48,7 @@ test(`05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
       trimBeforeMatching: true,
     }),
     "z",
-    "05.01 - whitespace trim opts control"
+    "05.01"
   );
 });
 
@@ -67,7 +59,7 @@ test(`06 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
       trimBeforeMatching: true,
     }),
     "EOL",
-    "06.01 - whitespace trim opt on"
+    "06.01"
   );
 });
 

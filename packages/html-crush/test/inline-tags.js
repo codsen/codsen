@@ -528,7 +528,7 @@ test(`23 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - spanner is not span
       removeLineBreaks: true,
     }).result,
     `<spa n="m">1</spa><spa n="m">2</spa><spa n="m">3</spa>`,
-    "23.03 - insurance against whitespace-hungry matching components"
+    "23.03"
   );
 });
 

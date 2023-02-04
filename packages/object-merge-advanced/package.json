@@ -86,6 +86,6 @@
     "@types/lodash.includes": "^4.3.7",
     "@types/lodash.isdate": "^4.0.7",
     "@types/lodash.isfinite": "^3.3.7",
-    "deep-equal": "^2.1.0"
+    "deep-equal": "^2.2.0"
   }
 }

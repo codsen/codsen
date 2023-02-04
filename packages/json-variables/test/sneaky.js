@@ -18,7 +18,7 @@ test("01 - two-level variables resolved", () => {
       b: "val",
       c: "val",
     },
-    "01.01 - two redirects, querying strings"
+    "01.01"
   );
   equal(
     jVar({
@@ -31,7 +31,7 @@ test("01 - two-level variables resolved", () => {
       b: { c_key: "val" },
       c: "val",
     },
-    "01.02 - two redirects, querying multi-level"
+    "01.02"
   );
 });
 
@@ -168,27 +168,35 @@ test("06 - multiple variables resolved", () => {
     },
     "06.01"
   );
-  throws(() => {
-    jVar({
-      a: "%%_e_%% %%_d_%%",
-      b: "%%_a_%%",
-      c: "c",
-      d: "%%_c_%%",
-      e: "%%_b_%%",
-      f: "%%_b_%%",
-    });
-  }, /THROW_ID_19/);
+  throws(
+    () => {
+      jVar({
+        a: "%%_e_%% %%_d_%%",
+        b: "%%_a_%%",
+        c: "c",
+        d: "%%_c_%%",
+        e: "%%_b_%%",
+        f: "%%_b_%%",
+      });
+    },
+    /THROW_ID_19/,
+    "06.02"
+  );
 
-  throws(() => {
-    jVar({
-      a: "%%_e_%% %%_d_%%",
-      b: "%%_a_%%",
-      c: "c",
-      d: "%%_f_%%",
-      e: "%%_c_%%",
-      f: "%%_b_%%",
-    });
-  }, /THROW_ID_19/);
+  throws(
+    () => {
+      jVar({
+        a: "%%_e_%% %%_d_%%",
+        b: "%%_a_%%",
+        c: "c",
+        d: "%%_f_%%",
+        e: "%%_c_%%",
+        f: "%%_b_%%",
+      });
+    },
+    /THROW_ID_19/,
+    "06.03"
+  );
 });
 
 test("07 - preventDoubleWrapping: on & off", () => {
@@ -274,7 +282,7 @@ test("07 - preventDoubleWrapping: on & off", () => {
       b: "{Some text {val} and another {val}}",
       c: "Some text {val} and another {val}",
     },
-    "07.05 - more real-life case"
+    "07.05"
   );
   equal(
     jVar(
@@ -290,7 +298,7 @@ test("07 - preventDoubleWrapping: on & off", () => {
       b: "Some text {val} and another {val}",
       c: "Some text {val} and another {val}",
     },
-    "07.06 - more real-life case"
+    "07.06"
   );
 
   equal(
@@ -307,7 +315,7 @@ test("07 - preventDoubleWrapping: on & off", () => {
       b: "{val}",
       c: { d: "val" },
     },
-    "07.07 - object multi-level values"
+    "07.07"
   );
 });
 
@@ -321,7 +329,7 @@ test("08 - empty variable", () => {
       a: "",
       b: "bbb",
     },
-    "08.01 - no value is needed if variable is empty - it's resolved to empty str"
+    "08.01"
   );
 });
 

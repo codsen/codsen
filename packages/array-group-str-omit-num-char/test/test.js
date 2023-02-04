@@ -122,14 +122,14 @@ test("07 - concerning dedupe", () => {
     {
       "a-1": 1,
     },
-    "07.01 - default behaviour - dedupe is on"
+    "07.01"
   );
   equal(
     group(["a-1", "a-1", "a-1"], { dedupePlease: false }),
     {
       "a-1": 3,
     },
-    "07.02 - dedupe is off"
+    "07.02"
   );
 });
 
@@ -140,11 +140,7 @@ test("07 - concerning dedupe", () => {
 test("08 - does not mutate the input array", () => {
   let source = ["aaaaaa1-1", "aaaaaa1-2", "bbbbbb", "aaaaaa1-3"];
   group(source); // attempt to mutate
-  equal(
-    source,
-    ["aaaaaa1-1", "aaaaaa1-2", "bbbbbb", "aaaaaa1-3"],
-    "08.01 - even after couple rounds the input arg is not mutated"
-  );
+  equal(source, ["aaaaaa1-1", "aaaaaa1-2", "bbbbbb", "aaaaaa1-3"], "08.01");
 });
 
 test("09 - does not mutate an empty given array", () => {
@@ -164,7 +160,7 @@ test("10 - opts.wildcard", () => {
       "a-*": 3,
       "b-*": 2,
     },
-    "10.01 - default, asterisk is used for wildcards"
+    "10.01"
   );
   equal(
     group(["a-1", "a-2", "a-333333", "b-1", "b-99999"], {

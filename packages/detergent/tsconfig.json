@@ -41,6 +41,9 @@
       "path": "../string-collapse-white-space"
     },
     {
+      "path": "../string-dashes"
+    },
+    {
       "path": "../string-fix-broken-named-entities"
     },
     {

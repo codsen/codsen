@@ -117,10 +117,7 @@ test(`07 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - ${howMany} random string a
   //     4
   //   )}`
   // );
-  ok(
-    counter < generated2.length * 0.001,
-    "07.03 - less than 1% of classes/id's affected "
-  );
+  ok(counter < generated2.length * 0.001, "07.03");
 });
 
 test(`08 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - repetitions should be OK`, () => {

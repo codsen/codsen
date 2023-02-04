@@ -5,39 +5,51 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { mixer } from "../dist/test-mixer.esm.js";
 
 test("01", () => {
-  throws(() => {
-    mixer("z");
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      mixer("z");
+    },
+    /THROW_ID_01/g,
+    "01.01"
+  );
 });
 
 test("02", () => {
-  throws(() => {
-    mixer(
-      {
-        foo: true,
-      },
-      "z"
-    );
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      mixer(
+        {
+          foo: true,
+        },
+        "z"
+      );
+    },
+    /THROW_ID_02/g,
+    "02.01"
+  );
 });
 
 test("03", () => {
-  throws(() => {
-    mixer(
-      {
-        foo: true,
-      },
-      {
-        // <-- bool "foo" missing in defaults, that's wrong
-        // if would be OK if it was not a bool (because sometimes
-        // defaults don't have some valid options, for example,
-        // when those keys are obligatory and can't be defaulted,
-        // like is the case in string-apostrophes convertOne()).
-        bar: true,
-        baz: "zz",
-      }
-    );
-  }, /THROW_ID_03/g);
+  throws(
+    () => {
+      mixer(
+        {
+          foo: true,
+        },
+        {
+          // <-- bool "foo" missing in defaults, that's wrong
+          // if would be OK if it was not a bool (because sometimes
+          // defaults don't have some valid options, for example,
+          // when those keys are obligatory and can't be defaulted,
+          // like is the case in string-apostrophes convertOne()).
+          bar: true,
+          baz: "zz",
+        }
+      );
+    },
+    /THROW_ID_03/g,
+    "03.01"
+  );
 });
 
 test("04", () => {

@@ -55,9 +55,13 @@ test(`02 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - empty string, empty 
 });
 
 test(`03 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - not a string`, () => {
-  throws(() => {
-    processCommaSep(true);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      processCommaSep(true);
+    },
+    /THROW_ID_01/,
+    "03.01"
+  );
 });
 
 // 02. B.A.U

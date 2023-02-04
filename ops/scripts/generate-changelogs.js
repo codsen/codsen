@@ -16,7 +16,7 @@ import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import remarkGfm from "remark-gfm";
-import changelogTimeline from "remark-conventional-commit-changelog-timeline/dist/remark-conventional-commit-changelog-timeline.esm.js";
+import changelogTimeline from "./remark-conventional-commit-changelog-timeline.esm.js";
 import remarkTypography from "remark-typography/dist/remark-typography.esm.js";
 // import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";

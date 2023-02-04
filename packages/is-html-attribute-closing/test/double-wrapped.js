@@ -696,7 +696,7 @@ const str6 = `<span width="'100'">`;
 test(`99`, () => {
   not.ok(isCl(str6, 12, 13), "99.01");
   not.ok(isCl(str6, 12, 17), "99.02");
-  ok(isCl(str6, 12, 18), "99.03");
+  ok(isCl(str6, 12, 18), "99.01");
 });
 
 test.run();

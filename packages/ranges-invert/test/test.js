@@ -11,60 +11,92 @@ import { rInvert as i } from "../dist/ranges-invert.esm.js";
 
 test("01 - not array", () => {
   // throw pinning:
-  throws(() => {
-    i(null);
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      i(null);
+    },
+    /THROW_ID_02/,
+    "01.01"
+  );
 
   not.throws(() => {
     i(null, 0);
   }, "01.02");
 
-  throws(() => {
-    i(1);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      i(1);
+    },
+    /THROW_ID_01/,
+    "01.02"
+  );
 
-  throws(() => {
-    i(true);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      i(true);
+    },
+    /THROW_ID_01/,
+    "01.03"
+  );
 
-  throws(() => {
-    i({ e: true });
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      i({ e: true });
+    },
+    /THROW_ID_01/,
+    "01.04"
+  );
 
-  throws(() => {
-    i([1, 3], 1); // <----- not array of arrays!
-  }, /THROW_ID_07/);
+  throws(
+    () => {
+      i([1, 3], 1); // <----- not array of arrays!
+    },
+    /THROW_ID_07/,
+    "01.05"
+  );
 });
 
 test("02 - not two arguments in one of ranges", () => {
-  throws(() => {
-    i([[1, 2, 3]], 4, { strictlyTwoElementsInRangeArrays: true });
-  }, /THROW_ID_04/g);
+  throws(
+    () => {
+      i([[1, 2, 3]], 4, { strictlyTwoElementsInRangeArrays: true });
+    },
+    /THROW_ID_04/g,
+    "02.01"
+  );
 
-  throws(() => {
-    i(
-      [
-        [1, 2, 3],
-        [4, 5, 6],
-      ],
-      6,
-      { strictlyTwoElementsInRangeArrays: true }
-    );
-  }, /THROW_ID_04/g);
+  throws(
+    () => {
+      i(
+        [
+          [1, 2, 3],
+          [4, 5, 6],
+        ],
+        6,
+        { strictlyTwoElementsInRangeArrays: true }
+      );
+    },
+    /THROW_ID_04/g,
+    "02.02"
+  );
 
-  throws(() => {
-    i(
-      [
-        [1, 2],
-        [4, 5, 6],
-        [7, 8],
-      ],
-      9,
-      {
-        strictlyTwoElementsInRangeArrays: true,
-      }
-    );
-  }, /THROW_ID_04/g);
+  throws(
+    () => {
+      i(
+        [
+          [1, 2],
+          [4, 5, 6],
+          [7, 8],
+        ],
+        9,
+        {
+          strictlyTwoElementsInRangeArrays: true,
+        }
+      );
+    },
+    /THROW_ID_04/g,
+    "02.03"
+  );
 
   // DOES NOT THROW:
 
@@ -144,39 +176,71 @@ test("03 - some/all range indexes are not natural numbers", () => {
     i([[0, 3]], 4);
   }, "03.02");
 
-  throws(() => {
-    i([[0.2, 3]], 4);
-  }, /THROW_ID_05/g);
+  throws(
+    () => {
+      i([[0.2, 3]], 4);
+    },
+    /THROW_ID_05/g,
+    "03.01"
+  );
 
-  throws(() => {
-    i([[0.2, 3.3]], 4);
-  }, /THROW_ID_05/g);
+  throws(
+    () => {
+      i([[0.2, 3.3]], 4);
+    },
+    /THROW_ID_05/g,
+    "03.02"
+  );
 
-  throws(() => {
-    i([[2, 3.3]], 4);
-  }, /THROW_ID_05/g);
+  throws(
+    () => {
+      i([[2, 3.3]], 4);
+    },
+    /THROW_ID_05/g,
+    "03.03"
+  );
 
-  throws(() => {
-    i([[0.2, 3.3]], 5);
-  }, /THROW_ID_05/g);
+  throws(
+    () => {
+      i([[0.2, 3.3]], 5);
+    },
+    /THROW_ID_05/g,
+    "03.04"
+  );
 
-  throws(() => {
-    i([[0.2, 33]], 40);
-  }, /THROW_ID_05/g);
+  throws(
+    () => {
+      i([[0.2, 33]], 40);
+    },
+    /THROW_ID_05/g,
+    "03.05"
+  );
 
-  throws(() => {
-    i([[0.2, 33, 55, 66.7]], 100);
-  }, /THROW_ID_05/g);
+  throws(
+    () => {
+      i([[0.2, 33, 55, 66.7]], 100);
+    },
+    /THROW_ID_05/g,
+    "03.06"
+  );
 });
 
 test("04 - second arg, strLen is wrong", () => {
-  throws(() => {
-    i([[0, 3]], 4.1);
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      i([[0, 3]], 4.1);
+    },
+    /THROW_ID_02/g,
+    "04.01"
+  );
 
-  throws(() => {
-    i([[0, 3]], "a");
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      i([[0, 3]], "a");
+    },
+    /THROW_ID_02/g,
+    "04.02"
+  );
 });
 
 test("05 - zero-length ranges array", () => {
@@ -217,13 +281,13 @@ test(`07 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - reference string cove
   let range1 = [1, 3];
   let range2p1 = [0, 1];
   let range2p2 = [3, 10];
-  equal(ref.slice(...range1), "bc", "07.01 - we mean what we intended");
-  equal(ref.slice(...range2p1), "a", "07.02 - chunk before is correct");
-  equal(ref.slice(...range2p2), "defghij", "07.03 - chunk after is correct");
+  equal(ref.slice(...range1), "bc", "07.01");
+  equal(ref.slice(...range2p1), "a", "07.02");
+  equal(ref.slice(...range2p2), "defghij", "07.03");
   equal(
     ref.slice(...range2p1) + ref.slice(...range1) + ref.slice(...range2p2),
     ref,
-    "07.04 - all pieces add up"
+    "07.04"
   );
   // now, real deal:
   equal(i([range1], ref.length), [range2p1, range2p2], "07.05");
@@ -259,7 +323,7 @@ test(`10 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - reference string cov
       ref.slice(...range2) +
       ref.slice(...range2p3),
     ref,
-    "10.03 - all pieces add up"
+    "10.03"
   );
   // // now, real deal:
   equal(
@@ -282,7 +346,7 @@ test(`11 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each ot
       [0, 3],
       [7, 9],
     ],
-    "11.01 - ranges with deltas of two indexes"
+    "11.01"
   );
   equal(
     i(
@@ -296,7 +360,7 @@ test(`11 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each ot
       [0, 3],
       [7, 9],
     ],
-    "11.02 - ranges with deltas of one index"
+    "11.02"
   );
   equal(
     i(
@@ -307,7 +371,7 @@ test(`11 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each ot
       9
     ),
     [[2, 9]],
-    "11.03 - ranges with deltas of one index"
+    "11.03"
   );
   equal(
     i(
@@ -319,7 +383,7 @@ test(`11 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each ot
       9
     ),
     [[2, 5]],
-    "11.04 - ranges with deltas of one index"
+    "11.04"
   );
   equal(
     i(
@@ -330,7 +394,7 @@ test(`11 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each ot
       9
     ),
     [],
-    "11.05 - ranges with deltas of one index"
+    "11.05"
   );
 
   // opts.skipChecks - results are the same
@@ -348,7 +412,7 @@ test(`11 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each ot
       [0, 3],
       [7, 9],
     ],
-    "11.06 - ranges with deltas of two indexes"
+    "11.06"
   );
   equal(
     i(
@@ -363,7 +427,7 @@ test(`11 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each ot
       [0, 3],
       [7, 9],
     ],
-    "11.07 - ranges with deltas of one index"
+    "11.07"
   );
   equal(
     i(
@@ -375,7 +439,7 @@ test(`11 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each ot
       { skipChecks: true }
     ),
     [[2, 9]],
-    "11.08 - ranges with deltas of one index"
+    "11.08"
   );
   equal(
     i(
@@ -388,7 +452,7 @@ test(`11 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each ot
       { skipChecks: true }
     ),
     [[2, 5]],
-    "11.09 - ranges with deltas of one index"
+    "11.09"
   );
   equal(
     i(
@@ -400,7 +464,7 @@ test(`11 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each ot
       { skipChecks: true }
     ),
     [],
-    "11.10 - ranges with deltas of one index"
+    "11.10"
   );
 });
 
@@ -414,7 +478,7 @@ test(`12 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - input was given not 
       9
     ),
     [[7, 9]],
-    "12.01 - starts at zero"
+    "12.01"
   );
   equal(
     i(
@@ -428,7 +492,7 @@ test(`12 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - input was given not 
       [0, 2],
       [7, 9],
     ],
-    "12.02 - does not start at zero"
+    "12.02"
   );
   equal(
     i(
@@ -442,20 +506,24 @@ test(`12 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - input was given not 
       [0, 2],
       [7, 9],
     ],
-    "12.03 - does not start at zero"
+    "12.03"
   );
 
   // PS. opts.skipChecks would give erroneous result here
-  throws(() => {
-    i(
-      [
-        [0, 5],
-        [3, 7],
-      ],
-      9,
-      { skipChecks: true }
-    );
-  }, /THROW_ID_08/);
+  throws(
+    () => {
+      i(
+        [
+          [0, 5],
+          [3, 7],
+        ],
+        9,
+        { skipChecks: true }
+      );
+    },
+    /THROW_ID_08/,
+    "12.04"
+  );
 });
 
 test(`13 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - third argument present`, () => {

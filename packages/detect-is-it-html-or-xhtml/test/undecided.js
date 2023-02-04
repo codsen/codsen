@@ -31,11 +31,15 @@ test("04 - missing input", () => {
 });
 
 test("05 - input is not string - throws", () => {
-  throws(() => {
-    detect({
-      a: "a",
-    });
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      detect({
+        a: "a",
+      });
+    },
+    /THROW_ID_01/g,
+    "05.01"
+  );
 });
 
 test.run();

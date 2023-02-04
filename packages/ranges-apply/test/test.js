@@ -10,32 +10,56 @@ import { rApply } from "../dist/ranges-apply.esm.js";
 
 test("01 - wrong inputs", () => {
   // no input
-  throws(() => {
-    rApply();
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      rApply();
+    },
+    /THROW_ID_01/g,
+    "01.01"
+  );
 
   // first arg not string
-  throws(() => {
-    rApply(1);
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      rApply(1);
+    },
+    /THROW_ID_02/g,
+    "01.02"
+  );
 
-  throws(() => {
-    rApply(1, [[4, 13]]);
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      rApply(1, [[4, 13]]);
+    },
+    /THROW_ID_02/g,
+    "01.03"
+  );
 
   // second arg not array
-  throws(() => {
-    rApply("aaa", 1);
-  }, /THROW_ID_03/g);
+  throws(
+    () => {
+      rApply("aaa", 1);
+    },
+    /THROW_ID_03/g,
+    "01.04"
+  );
 
   // ranges array contain something else than arrays
-  throws(() => {
-    rApply("aaa", [1]);
-  }, /THROW_ID_05/g);
+  throws(
+    () => {
+      rApply("aaa", [1]);
+    },
+    /THROW_ID_05/g,
+    "01.05"
+  );
 
-  throws(() => {
-    rApply("aaa", [[1, "a"]]);
-  }, /THROW_ID_07/g);
+  throws(
+    () => {
+      rApply("aaa", [[1, "a"]]);
+    },
+    /THROW_ID_07/g,
+    "01.06"
+  );
 
   not.throws(() => {
     rApply("aaa", [["1", 2]]);
@@ -53,43 +77,67 @@ test("01 - wrong inputs", () => {
     rApply("aaa", [[1, 2]]);
   }, "01.10");
 
-  throws(() => {
-    rApply("aaa", [[1], [10, 20]]);
-  }, /THROW_ID_07/g);
+  throws(
+    () => {
+      rApply("aaa", [[1], [10, 20]]);
+    },
+    /THROW_ID_07/g,
+    "01.07"
+  );
 
-  throws(() => {
-    rApply("aaa", [[10, 20], [30]]);
-  }, /THROW_ID_07/g);
+  throws(
+    () => {
+      rApply("aaa", [[10, 20], [30]]);
+    },
+    /THROW_ID_07/g,
+    "01.08"
+  );
 
-  throws(() => {
-    rApply("aaa", [[10.1, 20]]);
-  }, /THROW_ID_06/g);
+  throws(
+    () => {
+      rApply("aaa", [[10.1, 20]]);
+    },
+    /THROW_ID_06/g,
+    "01.09"
+  );
 
-  throws(() => {
-    rApply("aaa", [["10.1", "20"]]);
-  }, /THROW_ID_06/g);
+  throws(
+    () => {
+      rApply("aaa", [["10.1", "20"]]);
+    },
+    /THROW_ID_06/g,
+    "01.10"
+  );
 
-  throws(() => {
-    rApply(
-      "sldfsljfldjfgldflgkdjlgjlkgjhlfjglhjflgh",
-      [
-        [10, 20],
-        [15, 16],
-      ],
-      1
-    );
-  }, /THROW_ID_04/g);
+  throws(
+    () => {
+      rApply(
+        "sldfsljfldjfgldflgkdjlgjlkgjhlfjglhjflgh",
+        [
+          [10, 20],
+          [15, 16],
+        ],
+        1
+      );
+    },
+    /THROW_ID_04/g,
+    "01.11"
+  );
 
-  throws(() => {
-    rApply(
-      "sldfsljfldjfgldflgkdjlgjlkgjhlfjglhjflgh",
-      [
-        [10, 20],
-        [15, 16],
-      ],
-      true
-    );
-  }, /THROW_ID_04/g);
+  throws(
+    () => {
+      rApply(
+        "sldfsljfldjfgldflgkdjlgjlkgjhlfjglhjflgh",
+        [
+          [10, 20],
+          [15, 16],
+        ],
+        true
+      );
+    },
+    /THROW_ID_04/g,
+    "01.12"
+  );
 });
 
 test("02 - correct inputs", () => {
@@ -209,16 +257,8 @@ test("08 - rApplyaces multiple chunks with zero indexes correctly", () => {
 
 test("09 - rApplyace with ending index zero", () => {
   let str = "bbb ccc";
-  equal(
-    rApply(str, [[0, 0, "aaa "]]),
-    "aaa bbb ccc",
-    "09.01 - both from and to indexes are zeros, because we're adding content in front"
-  );
-  equal(
-    rApply(str, [0, 0, "aaa "]),
-    "aaa bbb ccc",
-    "09.02 - single range, put straight into argument"
-  );
+  equal(rApply(str, [[0, 0, "aaa "]]), "aaa bbb ccc", "09.01");
+  equal(rApply(str, [0, 0, "aaa "]), "aaa bbb ccc", "09.02");
 });
 
 test("10 - null in third arg does nothing", () => {
@@ -340,7 +380,7 @@ test("17 - progressFn - basic rApplyacement", () => {
       [5, 7],
     ]),
     "rrrlzgygljhlgzzzkyyyaaaa;dfrrrr lsjfldksj",
-    "17.01 - baseline"
+    "17.01"
   );
   equal(
     rApply(
@@ -372,7 +412,7 @@ test("17 - progressFn - basic rApplyacement", () => {
       }
     ),
     "rrrlzgygljhlgzzzkyyyaaaa;dfrrrr lsjfldksj",
-    "17.02 - calls the progress function"
+    "17.02"
   );
   ok(count <= 101, "17.03");
 });

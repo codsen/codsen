@@ -30,7 +30,7 @@ test("01 - delete one object within an array", () => {
       { matchKeysStrictly: false, hungryForWhitespace: false }
     ),
     ["elem1", "elem4"],
-    "01.01 - defaults"
+    "01.01"
   );
   equal(
     deleteObj(
@@ -58,7 +58,7 @@ test("01 - delete one object within an array", () => {
       },
       "elem4",
     ],
-    "01.02 - strict matching"
+    "01.02"
   );
   equal(
     deleteObj(
@@ -78,7 +78,7 @@ test("01 - delete one object within an array", () => {
       { matchKeysStrictly: false, hungryForWhitespace: true }
     ),
     ["elem1", "elem4"],
-    "01.03 - hungry for whitespace"
+    "01.03"
   );
   equal(
     deleteObj(
@@ -106,7 +106,7 @@ test("01 - delete one object within an array", () => {
       },
       "elem4",
     ],
-    "01.04 - hungry for whitespace, strict match"
+    "01.04"
   );
 });
 
@@ -137,7 +137,7 @@ test("02 - delete one object, involves white space", () => {
       },
       "elem4",
     ],
-    "02.01 - won't delete because of white space mismatching strictly"
+    "02.01"
   );
   equal(
     deleteObj(
@@ -165,7 +165,7 @@ test("02 - delete one object, involves white space", () => {
       },
       "elem4",
     ],
-    "02.02 - won't delete because of strict match is on"
+    "02.02"
   );
   equal(
     deleteObj(
@@ -185,7 +185,7 @@ test("02 - delete one object, involves white space", () => {
       { matchKeysStrictly: false, hungryForWhitespace: true }
     ),
     ["elem1", "elem4"],
-    "02.03 - will delete because match is not strict and hungry is on"
+    "02.03"
   );
   equal(
     deleteObj(
@@ -213,7 +213,7 @@ test("02 - delete one object, involves white space", () => {
       },
       "elem4",
     ],
-    "02.04 - won't delete because of strict match, hungry does not matter"
+    "02.04"
   );
 });
 
@@ -328,7 +328,7 @@ test("03 - multiple findings, object within array", () => {
         and: "this",
       },
     ],
-    "03.02 - some not deleted because of strict match"
+    "03.02"
   );
   equal(
     deleteObj(
@@ -441,7 +441,7 @@ test("03 - multiple findings, object within array", () => {
         and: "this",
       },
     ],
-    "03.04 - some not deleted because of strict match"
+    "03.04"
   );
 });
 
@@ -591,7 +591,7 @@ test("05 - delete object within an array, wrong order of keys, pt.1", () => {
       { matchKeysStrictly: false, hungryForWhitespace: false }
     ),
     ["elem1", "elem4"],
-    "05.01 - defaults (not strict match, not white space hungry)"
+    "05.01"
   );
   equal(
     deleteObj(
@@ -629,7 +629,7 @@ test("05 - delete object within an array, wrong order of keys, pt.1", () => {
       },
       "elem4",
     ],
-    "05.02 - strict match"
+    "05.02"
   );
   equal(
     deleteObj(
@@ -654,7 +654,7 @@ test("05 - delete object within an array, wrong order of keys, pt.1", () => {
       { matchKeysStrictly: false, hungryForWhitespace: true }
     ),
     ["elem1", "elem4"],
-    "05.03 - whitespace hungry"
+    "05.03"
   );
   equal(
     deleteObj(
@@ -692,7 +692,7 @@ test("05 - delete object within an array, wrong order of keys, pt.1", () => {
       },
       "elem4",
     ],
-    "05.04 - white space hungry with strict match"
+    "05.04"
   );
   equal(
     deleteObj(
@@ -724,7 +724,7 @@ test("05 - delete object within an array, wrong order of keys, pt.1", () => {
       },
       "elem4",
     ],
-    "05.05 - strict match, different input"
+    "05.05"
   );
 });
 
@@ -1431,19 +1431,31 @@ test("22 - the input is string", () => {
 });
 
 test("23 - no input - throws", () => {
-  throws(() => {
-    deleteObj();
-  }, "23.01");
-  throws(() => {
-    deleteObj(undefined, {
-      key3: "val3",
-      key4: "val4",
-    });
-  }, "23.02");
+  throws(
+    () => {
+      deleteObj();
+    },
+    "23.01",
+    "23.01"
+  );
+  throws(
+    () => {
+      deleteObj(undefined, {
+        key3: "val3",
+        key4: "val4",
+      });
+    },
+    "23.02",
+    "23.02"
+  );
   // wrong third argument throws:
-  throws(() => {
-    deleteObj({ a: "z" }, { b: "y" }, 1);
-  }, "23.03");
+  throws(
+    () => {
+      deleteObj({ a: "z" }, { b: "y" }, 1);
+    },
+    "23.03",
+    "23.03"
+  );
 });
 
 test("24 - the input is the finding (right within array)", () => {
@@ -1590,7 +1602,7 @@ test("26 - pt2. empty object to find", () => {
         key4: "val4",
       },
     ],
-    "26.02 - rare case - both opts on, matching against blank object - will yield positive against other blank objects, disregarding the STRICTLY flag"
+    "26.02"
   );
   equal(
     deleteObj(
@@ -1739,31 +1751,39 @@ test("27 - pt3. empty object to find", () => {
 });
 
 test("28 - to find is undefined - throws", () => {
-  throws(() => {
-    deleteObj(
-      [
-        {
-          key3: "val3",
-          key4: "val4",
-        },
-      ],
-      undefined
-    );
-  }, "28.01");
+  throws(
+    () => {
+      deleteObj(
+        [
+          {
+            key3: "val3",
+            key4: "val4",
+          },
+        ],
+        undefined
+      );
+    },
+    "28.01",
+    "28.01"
+  );
 });
 
 test("29 - to find is null - throws", () => {
-  throws(() => {
-    deleteObj(
-      [
-        {
-          key3: "val3",
-          key4: "val4",
-        },
-      ],
-      null
-    );
-  }, "29.01");
+  throws(
+    () => {
+      deleteObj(
+        [
+          {
+            key3: "val3",
+            key4: "val4",
+          },
+        ],
+        null
+      );
+    },
+    "29.01",
+    "29.01"
+  );
 });
 
 test("30 - to find is string - returns input", () => {
@@ -3287,7 +3307,7 @@ test("65 - empty strings within arrays", () => {
       },
       "",
     ],
-    "65.01 - defaults"
+    "65.01"
   );
   equal(
     deleteObj(
@@ -3309,7 +3329,7 @@ test("65 - empty strings within arrays", () => {
       }
     ),
     ["", ""], // <<< result
-    "65.02 - hungryForWhitespace"
+    "65.02"
   );
   equal(
     deleteObj(
@@ -3339,7 +3359,7 @@ test("65 - empty strings within arrays", () => {
       },
       "",
     ],
-    "65.03 - matchKeysStrictly"
+    "65.03"
   );
   equal(
     deleteObj(
@@ -3370,7 +3390,7 @@ test("65 - empty strings within arrays", () => {
       },
       "",
     ],
-    "65.04 - matchKeysStrictly + hungryForWhitespace"
+    "65.04"
   );
 });
 

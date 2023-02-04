@@ -26,7 +26,7 @@ test("01 - variables resolve being in deeper levels", () => {
       ],
       c: "d2",
     },
-    "01.01 - defaults"
+    "01.01"
   );
 });
 
@@ -50,7 +50,7 @@ test("02 - deeper level variables not found, bubble up and are found", () => {
       ],
       c: "d2",
     },
-    "02.01 - defaults"
+    "02.01"
   );
 });
 
@@ -82,7 +82,7 @@ test("03 - third level resolves at its level", () => {
       ],
       d: "e2",
     },
-    "03.01 - defaults"
+    "03.01"
   );
 });
 
@@ -114,7 +114,7 @@ test("04 - third level falls back to root", () => {
       ],
       d: "e2",
     },
-    "04.01 - defaults"
+    "04.01"
   );
 });
 
@@ -154,7 +154,7 @@ test("05 - third level uses data container key", () => {
       ],
       d: "e2",
     },
-    "05.01 - defaults"
+    "05.01"
   );
 });
 
@@ -192,7 +192,7 @@ test("06 - third level uses data container key, but there's nothing there so fal
       ],
       d: "e2",
     },
-    "06.01 - defaults"
+    "06.01"
   );
 });
 
@@ -234,7 +234,7 @@ test("07 - third level uses data container key, but there's nothing there so fal
         d: "e2",
       },
     },
-    "07.01 - defaults - root has normal container, a_data, named by topmost parent key"
+    "07.01"
   );
   equal(
     jVar({
@@ -273,7 +273,7 @@ test("07 - third level uses data container key, but there's nothing there so fal
         d: "e2",
       },
     },
-    "07.02 - root has container, named how deepest data contaienr should be named"
+    "07.02"
   );
 });
 

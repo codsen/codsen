@@ -30,7 +30,7 @@ test("02 - all possible line endings, no caching", () => {
       line: 1,
       col: 1,
     },
-    "02.01 - a"
+    "02.01"
   );
   equal(
     lineCol(input, 1),
@@ -38,7 +38,7 @@ test("02 - all possible line endings, no caching", () => {
       line: 1,
       col: 2,
     },
-    "02.02 - b"
+    "02.02"
   );
   equal(
     lineCol(input, 2),
@@ -46,7 +46,7 @@ test("02 - all possible line endings, no caching", () => {
       line: 1,
       col: 3,
     },
-    "02.03 - c"
+    "02.03"
   );
   equal(
     lineCol(input, 3),
@@ -54,7 +54,7 @@ test("02 - all possible line endings, no caching", () => {
       line: 1,
       col: 4,
     },
-    "02.04 - \\n"
+    "02.04"
   );
   equal(
     lineCol(input, 4),
@@ -62,7 +62,7 @@ test("02 - all possible line endings, no caching", () => {
       line: 2,
       col: 1,
     },
-    "02.05 - d"
+    "02.05"
   );
   equal(
     lineCol(input, 5),
@@ -70,7 +70,7 @@ test("02 - all possible line endings, no caching", () => {
       line: 2,
       col: 2,
     },
-    "02.06 - e"
+    "02.06"
   );
   equal(
     lineCol(input, 6),
@@ -78,7 +78,7 @@ test("02 - all possible line endings, no caching", () => {
       line: 2,
       col: 3,
     },
-    "02.07 - f"
+    "02.07"
   );
   equal(
     lineCol(input, 7),
@@ -86,7 +86,7 @@ test("02 - all possible line endings, no caching", () => {
       line: 2,
       col: 4,
     },
-    "02.08 - \\r"
+    "02.08"
   );
   equal(
     lineCol(input, 8),
@@ -94,7 +94,7 @@ test("02 - all possible line endings, no caching", () => {
       line: 2,
       col: 5,
     },
-    "02.09 - \\n"
+    "02.09"
   );
   equal(
     lineCol(input, 9),
@@ -102,7 +102,7 @@ test("02 - all possible line endings, no caching", () => {
       line: 3,
       col: 1,
     },
-    "02.10 - g"
+    "02.10"
   );
   equal(
     lineCol(input, 10),
@@ -110,7 +110,7 @@ test("02 - all possible line endings, no caching", () => {
       line: 3,
       col: 2,
     },
-    "02.11 - h"
+    "02.11"
   );
   equal(
     lineCol(input, 11),
@@ -118,7 +118,7 @@ test("02 - all possible line endings, no caching", () => {
       line: 3,
       col: 3,
     },
-    "02.12 - i"
+    "02.12"
   );
   equal(
     lineCol(input, 12),
@@ -126,7 +126,7 @@ test("02 - all possible line endings, no caching", () => {
       line: 3,
       col: 4,
     },
-    "02.13 - \\r"
+    "02.13"
   );
   equal(
     lineCol(input, 13),
@@ -134,7 +134,7 @@ test("02 - all possible line endings, no caching", () => {
       line: 4,
       col: 1,
     },
-    "02.14 - j"
+    "02.14"
   );
   equal(
     lineCol(input, 14),
@@ -142,7 +142,7 @@ test("02 - all possible line endings, no caching", () => {
       line: 4,
       col: 2,
     },
-    "02.15 - k"
+    "02.15"
   );
   equal(
     lineCol(input, 15),
@@ -150,9 +150,9 @@ test("02 - all possible line endings, no caching", () => {
       line: 4,
       col: 3,
     },
-    "02.16 - l"
+    "02.16"
   );
-  equal(lineCol(input, 16), null, "02.17 - on str.length");
+  equal(lineCol(input, 16), null, "02.17");
 });
 
 test("03 - all possible line endings, with caching", () => {
@@ -165,7 +165,7 @@ test("03 - all possible line endings, with caching", () => {
       line: 1,
       col: 1,
     },
-    "03.02 - a"
+    "03.02"
   );
   equal(
     lineCol(startIndexes, 1),
@@ -173,7 +173,7 @@ test("03 - all possible line endings, with caching", () => {
       line: 1,
       col: 2,
     },
-    "03.03 - b"
+    "03.03"
   );
   equal(
     lineCol(startIndexes, 2),
@@ -181,7 +181,7 @@ test("03 - all possible line endings, with caching", () => {
       line: 1,
       col: 3,
     },
-    "03.04 - c"
+    "03.04"
   );
   equal(
     lineCol(startIndexes, 3),
@@ -189,7 +189,7 @@ test("03 - all possible line endings, with caching", () => {
       line: 1,
       col: 4,
     },
-    "03.05 - \\n"
+    "03.05"
   );
   equal(
     lineCol(startIndexes, 4),
@@ -197,7 +197,7 @@ test("03 - all possible line endings, with caching", () => {
       line: 2,
       col: 1,
     },
-    "03.06 - d"
+    "03.06"
   );
   equal(
     lineCol(startIndexes, 5),
@@ -205,7 +205,7 @@ test("03 - all possible line endings, with caching", () => {
       line: 2,
       col: 2,
     },
-    "03.07 - e"
+    "03.07"
   );
   equal(
     lineCol(startIndexes, 6),
@@ -213,7 +213,7 @@ test("03 - all possible line endings, with caching", () => {
       line: 2,
       col: 3,
     },
-    "03.08 - f"
+    "03.08"
   );
   equal(
     lineCol(startIndexes, 7),
@@ -221,7 +221,7 @@ test("03 - all possible line endings, with caching", () => {
       line: 2,
       col: 4,
     },
-    "03.09 - \\r"
+    "03.09"
   );
   equal(
     lineCol(startIndexes, 8),
@@ -229,7 +229,7 @@ test("03 - all possible line endings, with caching", () => {
       line: 2,
       col: 5,
     },
-    "03.10 - \\n"
+    "03.10"
   );
   equal(
     lineCol(startIndexes, 9),
@@ -237,7 +237,7 @@ test("03 - all possible line endings, with caching", () => {
       line: 3,
       col: 1,
     },
-    "03.11 - g"
+    "03.11"
   );
   equal(
     lineCol(startIndexes, 10),
@@ -245,7 +245,7 @@ test("03 - all possible line endings, with caching", () => {
       line: 3,
       col: 2,
     },
-    "03.12 - h"
+    "03.12"
   );
   equal(
     lineCol(startIndexes, 11),
@@ -253,7 +253,7 @@ test("03 - all possible line endings, with caching", () => {
       line: 3,
       col: 3,
     },
-    "03.13 - i"
+    "03.13"
   );
   equal(
     lineCol(startIndexes, 12),
@@ -261,7 +261,7 @@ test("03 - all possible line endings, with caching", () => {
       line: 3,
       col: 4,
     },
-    "03.14 - \\r"
+    "03.14"
   );
   equal(
     lineCol(startIndexes, 13),
@@ -269,7 +269,7 @@ test("03 - all possible line endings, with caching", () => {
       line: 4,
       col: 1,
     },
-    "03.15 - j"
+    "03.15"
   );
   equal(
     lineCol(startIndexes, 14),
@@ -277,7 +277,7 @@ test("03 - all possible line endings, with caching", () => {
       line: 4,
       col: 2,
     },
-    "03.16 - k"
+    "03.16"
   );
   equal(
     lineCol(startIndexes, 15),
@@ -285,9 +285,9 @@ test("03 - all possible line endings, with caching", () => {
       line: 4,
       col: 3,
     },
-    "03.17 - l"
+    "03.17"
   );
-  equal(lineCol(startIndexes, 16), null, "03.18 - on str.length");
+  equal(lineCol(startIndexes, 16), null, "03.18");
 });
 
 test("04 - skipChecks arg", () => {
@@ -299,7 +299,7 @@ test("04 - skipChecks arg", () => {
       line: 2,
       col: 2,
     },
-    "04.01 - e"
+    "04.01"
   );
 
   // with caching
@@ -310,7 +310,7 @@ test("04 - skipChecks arg", () => {
       line: 2,
       col: 2,
     },
-    "04.02 - e"
+    "04.02"
   );
 });
 

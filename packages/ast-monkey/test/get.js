@@ -109,18 +109,22 @@ test("07 - gets from a simple object, index is string", () => {
 });
 
 test("08 - index is real number as string - throws", () => {
-  throws(() => {
-    get(
-      {
-        a: {
-          b: "c",
+  throws(
+    () => {
+      get(
+        {
+          a: {
+            b: "c",
+          },
         },
-      },
-      {
-        index: "2.1",
-      }
-    );
-  }, /THROW_ID_11/g);
+        {
+          index: "2.1",
+        }
+      );
+    },
+    /THROW_ID_11/g,
+    "08.01"
+  );
 });
 
 test.run();

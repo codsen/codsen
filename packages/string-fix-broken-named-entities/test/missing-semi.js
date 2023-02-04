@@ -364,14 +364,14 @@ test(`15 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "15.01 - spaces are obligatory"
+    "15.01"
   );
   equal(
     fix(ok, "text&angsttext&angsttext", {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "15.02 - spaces are obligatory"
+    "15.02"
   );
   equal(gathered, [], "15.03");
 });
@@ -435,14 +435,14 @@ test(`18 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     [],
-    "18.01 - won't fix, it's a dubious case"
+    "18.01"
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     [],
-    "18.02 - won't fix, it's a dubious case"
+    "18.02"
   );
   equal(gathered, [4, 11], "18.03");
 });
@@ -484,14 +484,14 @@ test(`20 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "20.01 - also won't fix, it's not conclusive"
+    "20.01"
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "20.02 - also won't fix, it's not conclusive"
+    "20.02"
   );
   equal(gathered, [4, 11], "20.03");
 });

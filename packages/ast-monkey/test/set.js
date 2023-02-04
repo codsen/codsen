@@ -101,40 +101,56 @@ test("05 - sets when only key given, numeric index", () => {
 });
 
 test("06 - throws when inputs are wrong", () => {
-  throws(() => {
-    set(
-      { a: "a", b: ["c"] },
-      {
-        index: "1",
-      }
-    );
-  }, /THROW_ID_14/g);
-  throws(() => {
-    set(
-      { a: "a" },
-      {
-        val: "a",
-      }
-    );
-  }, /THROW_ID_15/g);
-  throws(() => {
-    set(
-      { a: "a" },
-      {
-        val: "a",
-        index: "a",
-      }
-    );
-  }, /THROW_ID_17/g);
-  throws(() => {
-    set(
-      { a: "a", b: ["c"] },
-      {
-        val: "a",
-        index: 1.5,
-      }
-    );
-  }, /THROW_ID_17/g);
+  throws(
+    () => {
+      set(
+        { a: "a", b: ["c"] },
+        {
+          index: "1",
+        }
+      );
+    },
+    /THROW_ID_14/g,
+    "06.01"
+  );
+  throws(
+    () => {
+      set(
+        { a: "a" },
+        {
+          val: "a",
+        }
+      );
+    },
+    /THROW_ID_15/g,
+    "06.02"
+  );
+  throws(
+    () => {
+      set(
+        { a: "a" },
+        {
+          val: "a",
+          index: "a",
+        }
+      );
+    },
+    /THROW_ID_17/g,
+    "06.03"
+  );
+  throws(
+    () => {
+      set(
+        { a: "a", b: ["c"] },
+        {
+          val: "a",
+          index: 1.5,
+        }
+      );
+    },
+    /THROW_ID_17/g,
+    "06.04"
+  );
 });
 
 test.run();

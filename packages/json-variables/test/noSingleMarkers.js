@@ -25,17 +25,21 @@ test("01 - UTIL > single markers in the values", () => {
     );
   }, "01.02");
 
-  throws(() => {
-    jVar(
-      {
-        a: "z",
-        b: "%%_",
-      },
-      {
-        noSingleMarkers: true,
-      }
-    );
-  }, /THROW_ID_16/);
+  throws(
+    () => {
+      jVar(
+        {
+          a: "z",
+          b: "%%_",
+        },
+        {
+          noSingleMarkers: true,
+        }
+      );
+    },
+    /THROW_ID_16/,
+    "01.01"
+  );
 
   not.throws(() => {
     jVar({
@@ -55,17 +59,21 @@ test("01 - UTIL > single markers in the values", () => {
     );
   }, "01.05");
 
-  throws(() => {
-    jVar(
-      {
-        a: "z",
-        b: "%%-",
-      },
-      {
-        noSingleMarkers: true,
-      }
-    );
-  }, /THROW_ID_16/);
+  throws(
+    () => {
+      jVar(
+        {
+          a: "z",
+          b: "%%-",
+        },
+        {
+          noSingleMarkers: true,
+        }
+      );
+    },
+    /THROW_ID_16/,
+    "01.02"
+  );
 });
 
 test.run();

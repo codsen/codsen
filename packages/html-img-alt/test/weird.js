@@ -32,60 +32,24 @@ test("02 - testing seriously messed up code", () => {
 });
 
 test("03 - other attributes don't have equal and value", () => {
-  equal(
-    alts('<img something alt="" >'),
-    '<img something alt="" >',
-    "03.01 - img tag only, with alt"
-  );
-  equal(
-    alts("<img something>"),
-    '<img something alt="" >',
-    "03.02 - img tag only, no alt"
-  );
-  equal(
-    alts("<img something >"),
-    '<img something alt="" >',
-    "03.03 - img tag only, no alt"
-  );
+  equal(alts('<img something alt="" >'), '<img something alt="" >', "03.01");
+  equal(alts("<img something>"), '<img something alt="" >', "03.02");
+  equal(alts("<img something >"), '<img something alt="" >', "03.03");
   // XHTML counterparts:
-  equal(
-    alts('<img something alt="" />'),
-    '<img something alt="" />',
-    "03.04 - img tag only, with alt"
-  );
-  equal(
-    alts("<img something/>"),
-    '<img something alt="" />',
-    "03.05 - img tag only, no alt, tight"
-  );
-  equal(
-    alts("<img something />"),
-    '<img something alt="" />',
-    "03.06 - img tag only, no alt"
-  );
+  equal(alts('<img something alt="" />'), '<img something alt="" />', "03.04");
+  equal(alts("<img something/>"), '<img something alt="" />', "03.05");
+  equal(alts("<img something />"), '<img something alt="" />', "03.06");
   equal(
     alts('<img something alt="" /     >'),
     '<img something alt="" />',
-    "03.07 - img tag only, with alt, excessive white space"
+    "03.07"
   );
-  equal(
-    alts("<img something/     >"),
-    '<img something alt="" />',
-    "03.08 - img tag only, no alt, excessive white space"
-  );
-  equal(
-    alts("<img something /     >"),
-    '<img something alt="" />',
-    "03.09 - img tag only, no alt, excessive white space"
-  );
+  equal(alts("<img something/     >"), '<img something alt="" />', "03.08");
+  equal(alts("<img something /     >"), '<img something alt="" />', "03.09");
 });
 
 test("04 - specific place in the algorithm, protection against rogue slashes", () => {
-  equal(
-    alts('<img alt="/ class="" />'),
-    '<img alt="/ class="" />',
-    "04.01 - should do nothing."
-  );
+  equal(alts('<img alt="/ class="" />'), '<img alt="/ class="" />', "04.01");
 });
 
 test.run();

@@ -127,9 +127,13 @@ test(`06`, () => {
 });
 
 test(`07`, () => {
-  throws(() => {
-    chompLeft("a b c d  c dx", 2, { mode: "z" }, "k", "l");
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      chompLeft("a b c d  c dx", 2, { mode: "z" }, "k", "l");
+    },
+    /THROW_ID_01/,
+    "07.01"
+  );
 });
 
 test(`08`, () => {

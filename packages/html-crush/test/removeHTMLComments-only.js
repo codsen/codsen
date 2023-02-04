@@ -58,15 +58,23 @@ test(`01.02 - outlook "only" type, tight`, () => {
     removeHTMLComments: 2, // <---
   });
 
-  equal(result, `<img src="fallback"/>`);
-  equal(applicableOpts, {
-    removeHTMLComments: true,
-    removeCSSComments: false,
-  });
-  equal(ranges, [
-    [0, 13],
-    [34, 46],
-  ]);
+  equal(result, `<img src="fallback"/>`, "03.01");
+  equal(
+    applicableOpts,
+    {
+      removeHTMLComments: true,
+      removeCSSComments: false,
+    },
+    "03.02"
+  );
+  equal(
+    ranges,
+    [
+      [0, 13],
+      [34, 46],
+    ],
+    "03.03"
+  );
 });
 
 // removeHTMLComments=0 - off

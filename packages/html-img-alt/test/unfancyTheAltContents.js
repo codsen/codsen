@@ -11,17 +11,17 @@ test("01 - cleans alt tag contents - fancy quote", () => {
   equal(
     alts('<img alt    ="   someone’s " >'),
     '<img alt="someone\'s" >',
-    "01.01 - default"
+    "01.01"
   );
   equal(
     alts('<img alt    ="   someone’s " >', { unfancyTheAltContents: true }),
     '<img alt="someone\'s" >',
-    "01.02 - hardcoded default, unfancyTheAltContents on"
+    "01.02"
   );
   equal(
     alts('<img alt    ="   someone’s " >', { unfancyTheAltContents: false }),
     '<img alt="   someone’s " >',
-    "01.03 - unfancyTheAltContents off - no character substitution, no trim"
+    "01.03"
   );
 });
 
@@ -29,19 +29,19 @@ test("02 - cleans alt tag contents - m-dash + trim", () => {
   equal(
     alts('<img alt    =" The new offer \u2014 50% discount " >'),
     '<img alt="The new offer - 50% discount" >',
-    "02.01 - default"
+    "02.01"
   );
   equal(
     alts('<img alt    =" The new offer \u2014 50% discount " >'),
     '<img alt="The new offer - 50% discount" >',
-    "02.02 - hardcoded default, unfancyTheAltContents on"
+    "02.02"
   );
   equal(
     alts('<img alt    =" The new offer \u2014 50% discount " >', {
       unfancyTheAltContents: false,
     }),
     '<img alt=" The new offer \u2014 50% discount " >',
-    "02.03 - unfancyTheAltContents off - no character substitution, no trimming done"
+    "02.03"
   );
 });
 
@@ -51,7 +51,7 @@ test("03 - un-fancies multiple alt tags", () => {
       'abc <img alt    ="   someone’s " > def\n <img alt    =" The new offer \u2014 50% discount " > ghi <img      >\n\n\njkl'
     ),
     'abc <img alt="someone\'s" > def\n <img alt="The new offer - 50% discount" > ghi <img alt="" >\n\n\njkl',
-    "03.01 - default"
+    "03.01"
   );
 });
 
@@ -61,7 +61,7 @@ test("04 - adds an ALT within a nunjucks-sprinkled HTML", () => {
       '<img {% if m.n_o %}class="x-y"{% else %}id="a db-c d" style="display: block;"{% endif %}></td>'
     ),
     '<img {% if m.n_o %}class="x-y"{% else %}id="a db-c d" style="display: block;"{% endif %} alt="" ></td>',
-    "04.01 - minime of 18.04.02"
+    "04.01"
   );
   equal(
     alts(
@@ -86,17 +86,17 @@ test("06 - Nunjucks code tight before ALT", () => {
   equal(
     alts('<img {% if variables %}class="variables" {% endif %}alt=>'),
     '<img {% if variables %}class="variables" {% endif %}alt="" >',
-    "06.01 - alt with equal with no quotes"
+    "06.01"
   );
   equal(
     alts('<img {% if variables %}class="variables" {% endif %}alt=">'),
     '<img {% if variables %}class="variables" {% endif %}alt="" >',
-    "06.02 - alt with equal and single quote, second is missing"
+    "06.02"
   );
   equal(
     alts('<img {% if variables %}class="variables" {% endif %}alt>'),
     '<img {% if variables %}class="variables" {% endif %}alt="" >',
-    "06.03 - alt with both equal and quotes missing"
+    "06.03"
   );
 });
 

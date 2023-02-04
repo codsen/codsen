@@ -10,12 +10,20 @@ import { splitByW as split } from "../dist/string-split-by-whitespace.esm.js";
 // -----------------------------------------------------------------------------
 
 test("01 - wrong/missing input = throw", () => {
-  throws(() => {
-    split();
-  }, /THROW_ID_01/g);
-  throws(() => {
-    split(undefined);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      split();
+    },
+    /THROW_ID_01/g,
+    "01.01"
+  );
+  throws(
+    () => {
+      split(undefined);
+    },
+    /THROW_ID_01/g,
+    "01.02"
+  );
 
   equal(split(1), 1, "01.03");
   equal(split(null), null, "01.04");
@@ -27,9 +35,13 @@ test("02 - empty string as input", () => {
 });
 
 test("03 - opts contain non-array elements", () => {
-  throws(() => {
-    split("a b", { ignoreRanges: ["a"] });
-  }, /THROW_ID_03/g);
+  throws(
+    () => {
+      split("a b", { ignoreRanges: ["a"] });
+    },
+    /THROW_ID_03/g,
+    "03.01"
+  );
 });
 
 // -----------------------------------------------------------------------------

@@ -10,33 +10,53 @@ const BACKSLASH = "\u005C";
 // -----------------------------------------------------------------------------
 
 test(`01 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 1st arg wrong`, () => {
-  throws(() => {
-    isRel();
-  }, /THROW_ID_01/gm);
+  throws(
+    () => {
+      isRel();
+    },
+    /THROW_ID_01/gm,
+    "01.01"
+  );
 });
 
 test(`02 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 1st arg wrong`, () => {
-  throws(() => {
-    isRel(true);
-  }, /THROW_ID_01/gm);
+  throws(
+    () => {
+      isRel(true);
+    },
+    /THROW_ID_01/gm,
+    "02.01"
+  );
 });
 
 test(`03 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 1st arg wrong`, () => {
-  throws(() => {
-    isRel(1);
-  }, /THROW_ID_01/gm);
+  throws(
+    () => {
+      isRel(1);
+    },
+    /THROW_ID_01/gm,
+    "03.01"
+  );
 });
 
 test(`04 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 2nd arg wrong`, () => {
-  throws(() => {
-    isRel("", true);
-  }, /THROW_ID_02/gm);
+  throws(
+    () => {
+      isRel("", true);
+    },
+    /THROW_ID_02/gm,
+    "04.01"
+  );
 });
 
 test(`05 - ${`\u001b[${32}m${`api bits`}\u001b[${39}m`} - 2nd arg wrong`, () => {
-  throws(() => {
-    isRel("", 1);
-  }, /THROW_ID_02/gm);
+  throws(
+    () => {
+      isRel("", 1);
+    },
+    /THROW_ID_02/gm,
+    "05.01"
+  );
 });
 
 // 01. correct values

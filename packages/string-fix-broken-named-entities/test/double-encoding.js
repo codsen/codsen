@@ -118,7 +118,7 @@ test(`07 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[4, 14, "&nbsp;"]],
-    "07.01 - double encoded"
+    "07.01"
   );
   equal(gathered, [], "07.02");
 });
@@ -152,7 +152,7 @@ test(`08 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[4, 14, "&nbsp;"]],
-    "08.01 - double encoded"
+    "08.01"
   );
   equal(gathered, [], "08.02");
 });

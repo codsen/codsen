@@ -225,7 +225,7 @@ export const interdeps = [
   },
   {
     "name": "edit-package-json",
-    "size": 10243,
+    "size": 9369,
     "imports": [
       "ranges-apply",
       "string-left-right"
@@ -711,7 +711,7 @@ export const interdeps = [
   },
   {
     "name": "string-find-heads-tails",
-    "size": 7402,
+    "size": 7379,
     "imports": [
       "arrayiffy-if-string",
       "string-match-left-right"
@@ -799,7 +799,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 19969,
+    "size": 20486,
     "imports": [
       "codsen-utils",
       "ranges-apply",

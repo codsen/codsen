@@ -104,7 +104,7 @@ test("09 - both arrays, no wildcards", () => {
       ["anything", "zzz"]
     ),
     true,
-    "09.01 - default (opts ANY)"
+    "09.01"
   );
   equal(
     includesWithGlob(
@@ -115,7 +115,7 @@ test("09 - both arrays, no wildcards", () => {
       }
     ),
     true,
-    "09.02 - hardcoded opts ANY"
+    "09.02"
   );
   equal(
     includesWithGlob(
@@ -126,7 +126,7 @@ test("09 - both arrays, no wildcards", () => {
       }
     ),
     false,
-    "09.03 - opts ALL"
+    "09.03"
   );
   equal(
     includesWithGlob(
@@ -134,18 +134,10 @@ test("09 - both arrays, no wildcards", () => {
       ["*thing", "zzz"]
     ),
     true,
-    "09.04 - hardcoded opts ANY"
+    "09.04"
   );
-  equal(
-    includesWithGlob("something", ["*thing", "zzz"]),
-    true,
-    "09.05 - string source, array to search, with wildcards, found"
-  );
-  equal(
-    includesWithGlob("something", ["thing", "*zzz"]),
-    false,
-    "09.06 - string source, array to search, with wildcards, not found"
-  );
+  equal(includesWithGlob("something", ["*thing", "zzz"]), true, "09.05");
+  equal(includesWithGlob("something", ["thing", "*zzz"]), false, "09.06");
   equal(
     includesWithGlob(
       ["something", "anything", "everything"],
@@ -155,72 +147,64 @@ test("09 - both arrays, no wildcards", () => {
       }
     ),
     false,
-    "09.07 - opts ALL vs array"
+    "09.07"
   );
   equal(
     includesWithGlob("something", ["*thing", "zzz"], {
       arrayVsArrayAllMustBeFound: "all",
     }),
     false,
-    "09.08 - opts ALL vs string"
+    "09.08"
   );
   equal(
     includesWithGlob("something", "*thing", {
       arrayVsArrayAllMustBeFound: "all",
     }),
     true,
-    "09.09 - opts ALL string vs string"
+    "09.09"
   );
 });
 
 test("10", () => {
-  equal(
-    includesWithGlob("zzz", ["*thing", "*zz"]),
-    true,
-    "10.01 - two keys to match in a second arg, running on assumed default"
-  );
+  equal(includesWithGlob("zzz", ["*thing", "*zz"]), true, "10.01");
   equal(
     includesWithGlob("zzz", ["*thing", "*zz"], {
       arrayVsArrayAllMustBeFound: "any",
     }),
     true,
-    "10.02 - two keys to match in a second arg, running on hardcoded default"
+    "10.02"
   );
   equal(
     includesWithGlob("zzz", ["*thing", "*zz"], {
       arrayVsArrayAllMustBeFound: "all",
     }),
     false,
-    "10.03 - two keys to match in a second arg, running on hardcoded default"
+    "10.03"
   );
 });
 
 test("11 - opts.caseSensitive", () => {
-  equal(
-    includesWithGlob("something", ["*THING", "zzz"]),
-    false,
-    "11.01 - default"
-  );
+  equal(includesWithGlob("something", ["*THING", "zzz"]), false, "11.01");
   equal(
     includesWithGlob("something", ["*THING", "zzz"], {
       caseSensitive: true,
     }),
     false,
-    "11.02 - hardcoded default"
+    "11.02"
   );
   equal(
     includesWithGlob("something", ["*THING", "zzz"], {
       caseSensitive: false,
     }),
     true,
-    "11.03 - not case sensitive"
+    "11.03"
   );
   equal(
     includesWithGlob("something", ["*ZING", "zzz"], {
       caseSensitive: false,
     }),
     false,
-    "11.04 - control"
+    "11.04"
   );
 });
 

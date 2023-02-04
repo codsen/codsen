@@ -5,21 +5,41 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { split, defaults, version } from "../dist/string-bionic-split.esm.js";
 
 test("01 - wrong/missing input", () => {
-  throws(() => {
-    split();
-  }, /THROW_ID_01/g);
-  throws(() => {
-    split(undefined);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    split(1);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    split(true);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    split(null);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      split();
+    },
+    /THROW_ID_01/g,
+    "01.01"
+  );
+  throws(
+    () => {
+      split(undefined);
+    },
+    /THROW_ID_01/g,
+    "01.02"
+  );
+  throws(
+    () => {
+      split(1);
+    },
+    /THROW_ID_01/g,
+    "01.03"
+  );
+  throws(
+    () => {
+      split(true);
+    },
+    /THROW_ID_01/g,
+    "01.04"
+  );
+  throws(
+    () => {
+      split(null);
+    },
+    /THROW_ID_01/g,
+    "01.05"
+  );
 });
 
 test("02 - empty string as input", () => {
@@ -27,12 +47,20 @@ test("02 - empty string as input", () => {
 });
 
 test("03 - wrong second arg", () => {
-  throws(() => {
-    split("a", true);
-  }, /THROW_ID_02/g);
-  throws(() => {
-    split("a", "a");
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      split("a", true);
+    },
+    /THROW_ID_02/g,
+    "03.01"
+  );
+  throws(
+    () => {
+      split("a", "a");
+    },
+    /THROW_ID_02/g,
+    "03.02"
+  );
   not.throws(() => {
     split("a", {});
   }, "03.03");
@@ -42,17 +70,29 @@ test("03 - wrong second arg", () => {
 });
 
 test("04 - leading whitespace", () => {
-  throws(() => {
-    split(" a");
-  }, /THROW_ID_03/g);
-  throws(() => {
-    split(" a", {});
-  }, /THROW_ID_03/g);
-  throws(() => {
-    split(" a", {
-      throwIfEdgeWhitespace: true,
-    });
-  }, /THROW_ID_03/g);
+  throws(
+    () => {
+      split(" a");
+    },
+    /THROW_ID_03/g,
+    "04.01"
+  );
+  throws(
+    () => {
+      split(" a", {});
+    },
+    /THROW_ID_03/g,
+    "04.02"
+  );
+  throws(
+    () => {
+      split(" a", {
+        throwIfEdgeWhitespace: true,
+      });
+    },
+    /THROW_ID_03/g,
+    "04.03"
+  );
   not.throws(() => {
     split(" a", {
       throwIfEdgeWhitespace: false,
@@ -61,17 +101,29 @@ test("04 - leading whitespace", () => {
 });
 
 test("05 - trailing whitespace", () => {
-  throws(() => {
-    split("a ");
-  }, /THROW_ID_04/g);
-  throws(() => {
-    split("a ", {});
-  }, /THROW_ID_04/g);
-  throws(() => {
-    split("a ", {
-      throwIfEdgeWhitespace: true,
-    });
-  }, /THROW_ID_04/g);
+  throws(
+    () => {
+      split("a ");
+    },
+    /THROW_ID_04/g,
+    "05.01"
+  );
+  throws(
+    () => {
+      split("a ", {});
+    },
+    /THROW_ID_04/g,
+    "05.02"
+  );
+  throws(
+    () => {
+      split("a ", {
+        throwIfEdgeWhitespace: true,
+      });
+    },
+    /THROW_ID_04/g,
+    "05.03"
+  );
   not.throws(() => {
     split("a ", {
       throwIfEdgeWhitespace: false,

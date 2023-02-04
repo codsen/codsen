@@ -40,7 +40,7 @@ test("01 - two-level querying, normal keys in the root", () => {
         key8: "value8",
       },
     },
-    "01.01 - running on default notation"
+    "01.01"
   );
 });
 
@@ -89,7 +89,7 @@ test("02 - two-level querying, normal keys in the root + wrapping & opts", () =>
         key8: "value8",
       },
     },
-    "02.01 - didn't wrap either, first level caught"
+    "02.01"
   );
 
   equal(
@@ -136,7 +136,7 @@ test("02 - two-level querying, normal keys in the root + wrapping & opts", () =>
         key8: "value8",
       },
     },
-    "02.02 - didn't wrap one, second level caught"
+    "02.02"
   );
 
   equal(
@@ -181,7 +181,7 @@ test("02 - two-level querying, normal keys in the root + wrapping & opts", () =>
         key8: "value8",
       },
     },
-    "02.03 - didn't wrap either, second levels caught"
+    "02.03"
   );
 
   equal(
@@ -228,7 +228,7 @@ test("02 - two-level querying, normal keys in the root + wrapping & opts", () =>
         key8: "value8",
       },
     },
-    "02.04 - didn't wrap either because of %%- the non-wrapping notation."
+    "02.04"
   );
 
   equal(
@@ -280,19 +280,23 @@ test("02 - two-level querying, normal keys in the root + wrapping & opts", () =>
 });
 
 test("03 - opts.throwWhenNonStringInsertedInString", () => {
-  throws(() => {
-    jVar(
-      {
-        a: "some text %%_var1_%% more text %%_var2_%%",
-        b: "something",
-        var1: { key1: "value1", key2: "value2" },
-        var2: { key3: "value3", key4: "value4" },
-      },
-      {
-        throwWhenNonStringInsertedInString: true,
-      }
-    );
-  }, /THROW_ID_23/);
+  throws(
+    () => {
+      jVar(
+        {
+          a: "some text %%_var1_%% more text %%_var2_%%",
+          b: "something",
+          var1: { key1: "value1", key2: "value2" },
+          var2: { key3: "value3", key4: "value4" },
+        },
+        {
+          throwWhenNonStringInsertedInString: true,
+        }
+      );
+    },
+    /THROW_ID_23/,
+    "03.01"
+  );
 
   not.throws(() => {
     jVar({
@@ -318,7 +322,7 @@ test("03 - opts.throwWhenNonStringInsertedInString", () => {
       b: false,
       var2: false,
     },
-    "03.03 - no path, values are variables in whole"
+    "03.02"
   );
 
   equal(
@@ -334,7 +338,7 @@ test("03 - opts.throwWhenNonStringInsertedInString", () => {
       b: false,
       var2: { key2: false },
     },
-    "03.04 - control"
+    "03.03"
   );
 
   equal(
@@ -353,7 +357,7 @@ test("03 - opts.throwWhenNonStringInsertedInString", () => {
       b: false,
       var2: { key2: false },
     },
-    "03.05 - opts"
+    "03.04"
   );
 });
 
@@ -391,7 +395,7 @@ test("04 - multi-level + from array + root data store + ignores", () => {
         submarine: { bbb: "ship" },
       },
     },
-    "04.01 - two ignores in an array, data store, multi-level"
+    "04.01"
   );
 });
 

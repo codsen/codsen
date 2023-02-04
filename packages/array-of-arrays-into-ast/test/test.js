@@ -93,9 +93,13 @@ test("02 - opts.dedupe", () => {
 });
 
 test("03 - throws", () => {
-  throws(() => {
-    generateAst(true);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      generateAst(true);
+    },
+    /THROW_ID_01/g,
+    "03.01"
+  );
 });
 
 test("04 - empty input ends the operation quick", () => {

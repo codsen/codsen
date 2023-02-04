@@ -14,11 +14,11 @@ import {
 
 test(`01 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          on a simple string`, () => {
   equal(matchLeft("abc", 2, "b"), "b", "01.01");
-  equal(matchLeft("abcdefghi", 3, ["abc"]), "abc", "01.02 - one elem to match");
+  equal(matchLeft("abcdefghi", 3, ["abc"]), "abc", "01.02");
   equal(
     matchLeft("abcdefghi", 3, ["c", "bc"]),
     "c", // first one matched returned, although both did match
-    "01.03 - multiple to match"
+    "01.03"
   );
   equal(matchLeft("abcdefghi", 3, ["aaa", "bc"]), "bc", "01.04");
   equal(matchLeft("abcdefghi", 3, ["aaa", "zzz"]), false, "01.05");
@@ -27,8 +27,8 @@ test(`01 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          on a simple 
 });
 
 test(`02 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          case insensitive`, () => {
-  equal(matchLeft("abc", 2, "B"), false, "02.01 - control");
-  equal(matchLeft("abc", 2, "B", { i: true }), "B", "02.02 - opts.i");
+  equal(matchLeft("abc", 2, "B"), false, "02.01");
+  equal(matchLeft("abc", 2, "B", { i: true }), "B", "02.02");
 });
 
 test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, three-char set`, () => {

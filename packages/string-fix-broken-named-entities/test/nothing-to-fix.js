@@ -85,7 +85,7 @@ test(`01 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - false positives`
 });
 
 test(`02 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - no decode requested`, () => {
-  equal(fix(ok, "&nbsp;"), [], "02.01 - one, surrounded by EOL");
+  equal(fix(ok, "&nbsp;"), [], "02.01");
 
   let gathered = [];
   equal(
@@ -95,13 +95,13 @@ test(`02 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - no decode reques
       },
     }),
     [],
-    "02.02 - one, surrounded by EOL"
+    "02.02"
   );
   equal(gathered, [], "02.03");
 });
 
 test(`03 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - no decode requested`, () => {
-  equal(fix(ok, "&nbsp; &nbsp;"), [], "03.01 - two, surrounded by EOL");
+  equal(fix(ok, "&nbsp; &nbsp;"), [], "03.01");
 
   let gathered = [];
   equal(
@@ -111,13 +111,13 @@ test(`03 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - no decode reques
       },
     }),
     [],
-    "03.02 - two, surrounded by EOL"
+    "03.02"
   );
   equal(gathered, [], "03.03");
 });
 
 test(`04 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - no decode requested`, () => {
-  equal(fix(ok, "a&nbsp;b"), [], "04.01 - surrounded by letters");
+  equal(fix(ok, "a&nbsp;b"), [], "04.01");
 
   let gathered = [];
   equal(
@@ -127,7 +127,7 @@ test(`04 - ${`\u001b[${33}m${`nothing to fix`}\u001b[${39}m`} - no decode reques
       },
     }),
     [],
-    "04.02 - surrounded by letters"
+    "04.02"
   );
   equal(gathered, [], "04.03");
 });

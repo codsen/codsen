@@ -20,11 +20,7 @@ test(`01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - calls t
     counter += 1;
   };
 
-  equal(
-    m(equal, "aaaaaaaaaa").result,
-    "aaaaaaaaaa",
-    "01.01 - default behaviour"
-  );
+  equal(m(equal, "aaaaaaaaaa").result, "aaaaaaaaaa", "01.01");
   equal(
     m(equal, "aaaaaaaaaa", { reportProgressFunc: null }).result,
     "aaaaaaaaaa",
@@ -124,7 +120,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
   );
 
   // 2. check the counter variable:
-  ok(counter > 50, "01.06 - counter called");
+  ok(counter > 50, "01.06");
 });
 
 test(`02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`, () => {

@@ -256,7 +256,7 @@ test("06 - array contents are not of the same type", () => {
         "z",
       ],
     },
-    "06.01 - default"
+    "06.01"
   );
   equal(
     flattenAllArrays(
@@ -286,7 +286,7 @@ test("06 - array contents are not of the same type", () => {
       a: "a",
       c: [],
     },
-    "06.02 - opts.flattenArraysContainingStringsToBeEmpty"
+    "06.02"
   );
 });
 
@@ -440,7 +440,7 @@ test("11 - array, mix of ojects, arrays and strings", () => {
       },
       ["yyy"],
     ],
-    "11.01 - default"
+    "11.01"
   );
   equal(
     flattenAllArrays(
@@ -459,7 +459,7 @@ test("11 - array, mix of ojects, arrays and strings", () => {
       }
     ),
     [],
-    "11.02 - opts"
+    "11.02"
   );
 });
 
@@ -475,7 +475,7 @@ test("12 - arrays within objects, strings as elements", () => {
         b: ["c", "d"],
       },
     },
-    "12.01 - default"
+    "12.01"
   );
   equal(
     flattenAllArrays(
@@ -493,7 +493,7 @@ test("12 - arrays within objects, strings as elements", () => {
         b: [],
       },
     },
-    "12.02 - opts"
+    "12.02"
   );
 });
 

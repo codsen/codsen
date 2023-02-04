@@ -10,33 +10,53 @@ import { rIterate as iterate } from "../dist/ranges-iterate.esm.js";
 // ==============================
 
 test(`01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 1st arg not string`, () => {
-  throws(() => {
-    iterate(1);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      iterate(1);
+    },
+    /THROW_ID_01/,
+    "01.01"
+  );
 });
 
 test(`02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 1st arg empty string`, () => {
-  throws(() => {
-    iterate("");
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      iterate("");
+    },
+    /THROW_ID_02/,
+    "02.01"
+  );
 });
 
 test(`03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 2nd arg not array`, () => {
-  throws(() => {
-    iterate("z", 1);
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      iterate("z", 1);
+    },
+    /THROW_ID_03/,
+    "03.01"
+  );
 });
 
 test(`04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 3rd arg missing`, () => {
-  throws(() => {
-    iterate("z", [[0, 1]]);
-  }, /THROW_ID_04/);
+  throws(
+    () => {
+      iterate("z", [[0, 1]]);
+    },
+    /THROW_ID_04/,
+    "04.01"
+  );
 });
 
 test(`05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 3rd arg not a callback function`, () => {
-  throws(() => {
-    iterate("z", [[0, 1]], 1);
-  }, /THROW_ID_05/);
+  throws(
+    () => {
+      iterate("z", [[0, 1]], 1);
+    },
+    /THROW_ID_05/,
+    "05.01"
+  );
 });
 
 // ==============================

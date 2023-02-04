@@ -70,21 +70,37 @@ test("01 - multiple elements, #1", () => {
     "2"
   );
 
-  throws(() => {
-    sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], 3);
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], 3);
+    },
+    /THROW_ID_03/,
+    "01.01"
+  );
 
-  throws(() => {
-    sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], "3");
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], "3");
+    },
+    /THROW_ID_03/,
+    "01.02"
+  );
 
-  throws(() => {
-    sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], 99);
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], 99);
+    },
+    /THROW_ID_03/,
+    "01.03"
+  );
 
-  throws(() => {
-    sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], "999");
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], "999");
+    },
+    /THROW_ID_03/,
+    "01.04"
+  );
 });
 
 test("02 - multiple elements, #2", () => {
@@ -119,15 +135,23 @@ test("05 - multiple elements, #2", () => {
 });
 
 test("06 - multiple elements, #2 - axis outside of the range", () => {
-  throws(() => {
-    sortByCol([[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]], 3);
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      sortByCol([[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]], 3);
+    },
+    /THROW_ID_03/,
+    "06.01"
+  );
 });
 
 test("07 - multiple elements, #2 - axis outside of the range", () => {
-  throws(() => {
-    sortByCol([[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]], 99);
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      sortByCol([[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]], 99);
+    },
+    /THROW_ID_03/,
+    "07.01"
+  );
 });
 
 test("08 - multiple elements, #3 - opposite order", () => {
@@ -157,13 +181,21 @@ test("09 - multiple elements, #4 - single elements", () => {
   mixer([[0], [0], [3], [2], [1]], [[0], [0], [1], [2], [3]], 0);
   mixer([[0], [0], [3], [2], [1]], [[0], [0], [1], [2], [3]], "0");
 
-  throws(() => {
-    sortByCol([[0], [0], [3], [2], [1]], 1); // second element doesn't exist
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      sortByCol([[0], [0], [3], [2], [1]], 1); // second element doesn't exist
+    },
+    /THROW_ID_03/,
+    "09.01"
+  );
 
-  throws(() => {
-    sortByCol([[0], [0], [3], [2], [1]], 99); // 100-th element doesn't exist
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      sortByCol([[0], [0], [3], [2], [1]], 99); // 100-th element doesn't exist
+    },
+    /THROW_ID_03/,
+    "09.02"
+  );
 });
 
 test("10 - first column indexes contain opposite order values", () => {
@@ -440,34 +472,54 @@ test("20 - various empty arrays", () => {
 
 test("21 - throws", () => {
   // pinning throws by throw ID:
-  throws(() => {
-    sortByCol(1);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      sortByCol(1);
+    },
+    /THROW_ID_01/,
+    "21.01"
+  );
 
-  throws(() => {
-    sortByCol(true);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      sortByCol(true);
+    },
+    /THROW_ID_01/,
+    "21.02"
+  );
 
-  throws(() => {
-    sortByCol("z");
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      sortByCol("z");
+    },
+    /THROW_ID_01/,
+    "21.03"
+  );
 
-  throws(() => {
-    sortByCol([], "a");
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      sortByCol([], "a");
+    },
+    /THROW_ID_02/,
+    "21.04"
+  );
 });
 
 test("22 - throws when sort-by value is outside of any sub-arrays", () => {
   // pinning throws by throw ID:
-  throws(() => {
-    sortByCol(
-      [
-        [1, 2, 3],
-        [4, 5, 6],
-      ],
-      3 // all sub-arrays' max-length=2 since it's zero-indexed
-    );
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      sortByCol(
+        [
+          [1, 2, 3],
+          [4, 5, 6],
+        ],
+        3 // all sub-arrays' max-length=2 since it's zero-indexed
+      );
+    },
+    /THROW_ID_03/,
+    "22.01"
+  );
 });
 
 // -----------------------------------------------------------------------------

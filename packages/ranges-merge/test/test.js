@@ -17,67 +17,87 @@ test("01 - does not throw when the first arg is wrong", () => {
 });
 
 test("02 - throws when opts.progressFn is wrong", () => {
-  throws(() => {
-    rMerge(
-      [
-        [1, 2],
-        [0, 1],
-      ],
-      { progressFn: "z" }
-    );
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      rMerge(
+        [
+          [1, 2],
+          [0, 1],
+        ],
+        { progressFn: "z" }
+      );
+    },
+    /THROW_ID_01/,
+    "02.01"
+  );
 });
 
 test("03 - throws when opts.mergeType is wrong", () => {
-  throws(() => {
-    rMerge(
-      [
-        [1, 2],
-        [0, 1],
-      ],
-      { mergeType: "z" }
-    );
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      rMerge(
+        [
+          [1, 2],
+          [0, 1],
+        ],
+        { mergeType: "z" }
+      );
+    },
+    /THROW_ID_02/,
+    "03.01"
+  );
 });
 
 test("04 - throws when the second arg is wrong", () => {
-  throws(() => {
-    rMerge(
-      [
-        [1, 2],
-        [0, 1],
-      ],
-      1
-    );
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      rMerge(
+        [
+          [1, 2],
+          [0, 1],
+        ],
+        1
+      );
+    },
+    /THROW_ID_03/,
+    "04.01"
+  );
 });
 
 test("05 - throws when opts.joinRangesThatTouchEdges is wrong", () => {
-  throws(() => {
-    rMerge(
-      [
-        [1, 2],
-        [0, 1],
-      ],
-      {
-        joinRangesThatTouchEdges: "z",
-      }
-    );
-  }, /THROW_ID_04/);
+  throws(
+    () => {
+      rMerge(
+        [
+          [1, 2],
+          [0, 1],
+        ],
+        {
+          joinRangesThatTouchEdges: "z",
+        }
+      );
+    },
+    /THROW_ID_04/,
+    "05.01"
+  );
 });
 
 test("06", () => {
-  throws(() => {
-    rMerge(
-      [
-        [1, 2],
-        [0, 1],
-      ],
-      {
-        mergeType: true,
-      }
-    );
-  }, "06.01");
+  throws(
+    () => {
+      rMerge(
+        [
+          [1, 2],
+          [0, 1],
+        ],
+        {
+          mergeType: true,
+        }
+      );
+    },
+    "06.01",
+    "06.01"
+  );
   not.throws(() => {
     rMerge(
       [
@@ -101,17 +121,17 @@ test("07 - simples: merges three overlapping ranges", () => {
     [2, 5],
   ];
   let inputBackup = clone(input);
-  equal(rMerge(input), [[1, 8]], "07.01 - two args");
+  equal(rMerge(input), [[1, 8]], "07.01");
   equal(
     rMerge(input, {
       joinRangesThatTouchEdges: false,
     }),
     [[1, 8]],
-    "07.02 - two args"
+    "07.02"
   );
 
   // input argument mutation checks:
-  equal(input, inputBackup, "07.03 - no mutation happened");
+  equal(input, inputBackup, "07.03");
 });
 
 test("08 - nothing to merge", () => {
@@ -124,7 +144,7 @@ test("08 - nothing to merge", () => {
       [1, 2],
       [3, 8],
     ],
-    "08.01 - just sorted"
+    "08.01"
   );
   equal(
     rMerge(
@@ -603,7 +623,7 @@ test("20 - input arg mutation prevention", () => {
   let originalRef = Array.from(originalInput); // clone it
 
   equal(rMerge(originalInput), [[1, 10, " "]], "useless test");
-  equal(originalInput, originalRef, "20.02 - mutation didn't happen");
+  equal(originalInput, originalRef, "20.02");
 });
 
 test("21 - only two identical args in the range", () => {
@@ -741,7 +761,7 @@ test("23 - few ranges starting at the same index", () => {
       [3, 12, "zzz"],
     ]),
     [[3, 12, "aaazzz"]],
-    "23.01 - control #1"
+    "23.01"
   );
   equal(
     rMerge([
@@ -749,7 +769,7 @@ test("23 - few ranges starting at the same index", () => {
       [3, 4, "aaa"],
     ]), // notice order is opposite
     [[3, 12, "aaazzz"]], // <--- order does not matter, ranges are sorted
-    "23.02 - control #2"
+    "23.02"
   );
   equal(
     rMerge(
@@ -760,7 +780,7 @@ test("23 - few ranges starting at the same index", () => {
       { mergeType: 1 }
     ),
     [[3, 12, "aaazzz"]],
-    "23.03 - hardcoded correct default value"
+    "23.03"
   );
   equal(
     rMerge(
@@ -771,7 +791,7 @@ test("23 - few ranges starting at the same index", () => {
       { mergeType: "1" }
     ),
     [[3, 12, "aaazzz"]],
-    "23.04 - hardcoded incorrect type default value"
+    "23.04"
   );
 
   // entrée - opts.mergeType === 2

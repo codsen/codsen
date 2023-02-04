@@ -57,7 +57,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: false,
     }),
     false,
-    "01.06"
+    "01.05"
   );
   equal(
     compare(["a", "b"], ["a", "b", "c"], {
@@ -65,7 +65,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: false,
     }),
     false,
-    "01.07"
+    "01.06"
   );
 
   equal(
@@ -74,7 +74,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: true,
     }),
     false,
-    "01.08"
+    "01.07"
   );
   equal(
     compare(["a", "b"], ["a", "b", "c"], {
@@ -82,7 +82,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: true,
     }),
     false,
-    "01.09"
+    "01.08"
   );
   not.equal(
     compare(["a", "b"], ["a", "b", "c"], {
@@ -216,7 +216,7 @@ test("05 - empty arrays within obj key values", () => {
       { hungryForWhitespace: true }
     ),
     false,
-    "05.05"
+    "05.04"
   );
 });
 
@@ -366,35 +366,19 @@ test("07 - empty arrays vs empty strings", () => {
 
 test("08 - two arrays, matches middle, string within", () => {
   equal(compare(["a", "b", "c", "d", "e"], ["b", "c", "d"]), true, "08.01");
-  equal(
-    compare(["b", "c", "d"], ["a", "b", "c", "d", "e"]),
-    false,
-    "08.02 opposite"
-  );
+  equal(compare(["b", "c", "d"], ["a", "b", "c", "d", "e"]), false, "08.02");
 
   equal(compare(["a", "b", "c", "d", "e"], ["b", "c", "e"]), true, "08.03");
-  equal(
-    compare(["b", "c", "e"], ["a", "b", "c", "d", "e"]),
-    false,
-    "08.04 opposite"
-  );
+  equal(compare(["b", "c", "e"], ["a", "b", "c", "d", "e"]), false, "08.04");
 
   equal(compare(["a", "b", "c", "d", "e"], ["a", "b", "c"]), true, "08.05");
-  equal(
-    compare(["a", "b", "c"], ["a", "b", "c", "d", "e"]),
-    false,
-    "08.06 opposite"
-  );
+  equal(compare(["a", "b", "c"], ["a", "b", "c", "d", "e"]), false, "08.06");
 
   equal(compare(["a", "b", "c", "d", "e"], ["c", "d", "e"]), true, "08.07");
-  equal(
-    compare(["c", "d", "e"], ["a", "b", "c", "d", "e"]),
-    false,
-    "08.08 opposite"
-  );
+  equal(compare(["c", "d", "e"], ["a", "b", "c", "d", "e"]), false, "08.08");
 
   equal(compare(["a", "b", "c", "d", "e"], ["e"]), true, "08.09");
-  equal(compare(["e"], ["a", "b", "c", "d", "e"]), false, "08.10 opposite");
+  equal(compare(["e"], ["a", "b", "c", "d", "e"]), false, "08.10");
 });
 
 test("09 - two arrays, matches middle, objects within", () => {
@@ -412,7 +396,7 @@ test("09 - two arrays, matches middle, objects within", () => {
       [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }]
     ),
     false,
-    "09.02 opposite"
+    "09.02"
   );
 
   equal(
@@ -429,7 +413,7 @@ test("09 - two arrays, matches middle, objects within", () => {
       [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }]
     ),
     false,
-    "09.04 opposite"
+    "09.04"
   );
 
   equal(
@@ -446,7 +430,7 @@ test("09 - two arrays, matches middle, objects within", () => {
       [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }]
     ),
     false,
-    "09.06 opposite"
+    "09.06"
   );
 
   equal(
@@ -463,7 +447,7 @@ test("09 - two arrays, matches middle, objects within", () => {
       [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }]
     ),
     false,
-    "09.08 opposite"
+    "09.08"
   );
 
   equal(
@@ -480,7 +464,7 @@ test("09 - two arrays, matches middle, objects within", () => {
       [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }]
     ),
     false,
-    "09.10 opposite"
+    "09.10"
   );
 
   equal(
@@ -574,7 +558,7 @@ test("10 - two arrays, one empty, string within", () => {
   equal(
     compare(["a", "b", "c"], [], { hungryForWhitespace: true }),
     true,
-    "10.03"
+    "10.02"
   );
 });
 

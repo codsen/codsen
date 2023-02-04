@@ -22,7 +22,7 @@ test("01 - Boolean values inserted into a middle of a string", () => {
       d: "stringD",
       e: false,
     },
-    "01.01 - mix of Bools and strings resolve to the value of the first encountered Bool"
+    "01.01"
   );
   equal(
     jVar(
@@ -174,7 +174,7 @@ test("04 - null values inserted instead of other values, in whole", () => {
       a: null,
       b: null,
     },
-    "04.02 - spaces around a value which would resolve to null"
+    "04.02"
   );
   equal(
     jVar({
@@ -185,7 +185,7 @@ test("04 - null values inserted instead of other values, in whole", () => {
       a: null,
       b: null,
     },
-    "04.03 - using non-wrapping heads/tails"
+    "04.03"
   );
   equal(
     jVar({
@@ -196,7 +196,7 @@ test("04 - null values inserted instead of other values, in whole", () => {
       a: null,
       b: null,
     },
-    "04.04 - like #3 but with extra whitespace"
+    "04.04"
   );
   equal(
     jVar(
@@ -213,7 +213,7 @@ test("04 - null values inserted instead of other values, in whole", () => {
       a: null,
       b: null,
     },
-    "04.05 - doesn't wrap null"
+    "04.05"
   );
   equal(
     jVar(
@@ -230,7 +230,7 @@ test("04 - null values inserted instead of other values, in whole", () => {
       a: null,
       b: null,
     },
-    "04.06 - doesn't wrap null"
+    "04.06"
   );
 });
 

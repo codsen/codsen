@@ -24,7 +24,7 @@ test(`01 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - closing tag`, () =>
     isOpening(str, 1, {
       skipOpeningBracket: true,
     }),
-    "01.05"
+    "01.04"
   );
 });
 
@@ -44,7 +44,7 @@ test(`02 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - closing tag`, () =>
     isOpening(str, 1, {
       skipOpeningBracket: true,
     }),
-    "02.05"
+    "02.04"
   );
 });
 
@@ -64,7 +64,7 @@ test(`03 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - closing tag`, () =>
     isOpening(str, 1, {
       skipOpeningBracket: true,
     }),
-    "03.05"
+    "03.04"
   );
 });
 
@@ -84,7 +84,7 @@ test(`04 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - closing tag`, () =>
     isOpening(str, 1, {
       skipOpeningBracket: true,
     }),
-    "04.05"
+    "04.04"
   );
 });
 
@@ -104,7 +104,7 @@ test(`05 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - closing tag`, () =>
     isOpening(str, 1, {
       skipOpeningBracket: true,
     }),
-    "05.05"
+    "05.04"
   );
 });
 
@@ -147,7 +147,7 @@ test(`07 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - closing tag`, () =>
       allowCustomTagNames: false,
       skipOpeningBracket: true,
     }),
-    "07.03"
+    "07.02"
   );
   not.ok(
     isOpening(str, 16, {

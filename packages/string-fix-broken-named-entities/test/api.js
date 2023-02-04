@@ -11,35 +11,63 @@ test(`01 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - 1st input arg is wrong`,
   not.throws(() => {
     fix("");
   }, "01.01");
-  throws(() => {
-    fix();
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      fix();
+    },
+    /THROW_ID_01/,
+    "01.01"
+  );
 
-  throws(() => {
-    fix(true);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      fix(true);
+    },
+    /THROW_ID_01/,
+    "01.02"
+  );
 
-  throws(() => {
-    fix(0);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      fix(0);
+    },
+    /THROW_ID_01/,
+    "01.03"
+  );
 
-  throws(() => {
-    fix(1);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      fix(1);
+    },
+    /THROW_ID_01/,
+    "01.04"
+  );
 
-  throws(() => {
-    fix(null);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      fix(null);
+    },
+    /THROW_ID_01/,
+    "01.05"
+  );
 });
 
 test(`02 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - 2nd input arg is wrong`, () => {
-  throws(() => {
-    fix("aaa", "bbb");
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      fix("aaa", "bbb");
+    },
+    /THROW_ID_02/,
+    "02.01"
+  );
 
-  throws(() => {
-    fix("aaa", true);
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      fix("aaa", true);
+    },
+    /THROW_ID_02/,
+    "02.02"
+  );
 
   // does not throw on falsey:
   not.throws(() => {
@@ -51,27 +79,43 @@ test(`02 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - 2nd input arg is wrong`,
 });
 
 test(`03 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.cb is not function`, () => {
-  throws(() => {
-    fix("aaa", { cb: "bbb" });
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      fix("aaa", { cb: "bbb" });
+    },
+    /THROW_ID_03/,
+    "03.01"
+  );
 });
 
 test(`04 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.entityCatcherCb is not function`, () => {
-  throws(() => {
-    fix("aaa", { entityCatcherCb: "bbb" });
-  }, /THROW_ID_04/);
+  throws(
+    () => {
+      fix("aaa", { entityCatcherCb: "bbb" });
+    },
+    /THROW_ID_04/,
+    "04.01"
+  );
 });
 
 test(`05 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.progressFn is not function`, () => {
-  throws(() => {
-    fix("aaa", { progressFn: "bbb" });
-  }, /THROW_ID_05/);
+  throws(
+    () => {
+      fix("aaa", { progressFn: "bbb" });
+    },
+    /THROW_ID_05/,
+    "05.01"
+  );
 });
 
 test(`06 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.textAmpersandCatcherCb is not function`, () => {
-  throws(() => {
-    fix("aaa", { textAmpersandCatcherCb: "bbb" });
-  }, /THROW_ID_06/);
+  throws(
+    () => {
+      fix("aaa", { textAmpersandCatcherCb: "bbb" });
+    },
+    /THROW_ID_06/,
+    "06.01"
+  );
 });
 
 test(`07 - all callbacks are undefined`, () => {

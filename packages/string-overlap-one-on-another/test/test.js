@@ -9,25 +9,45 @@ import { overlap } from "../dist/string-overlap-one-on-another.esm.js";
 // -----------------------------------------------------------------------------
 
 test("01 - wrong inputs throw", () => {
-  throws(() => {
-    overlap(true, "z");
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      overlap(true, "z");
+    },
+    /THROW_ID_01/,
+    "01.01"
+  );
 
-  throws(() => {
-    overlap("z", true);
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      overlap("z", true);
+    },
+    /THROW_ID_02/,
+    "01.02"
+  );
 
-  throws(() => {
-    overlap("z", "z", true);
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      overlap("z", "z", true);
+    },
+    /THROW_ID_03/,
+    "01.03"
+  );
 
-  throws(() => {
-    overlap("z", "z", { offset: 1.2 });
-  }, /THROW_ID_04/);
+  throws(
+    () => {
+      overlap("z", "z", { offset: 1.2 });
+    },
+    /THROW_ID_04/,
+    "01.04"
+  );
 
-  throws(() => {
-    overlap("z", "z", { offset: -1.2 });
-  }, /THROW_ID_04/);
+  throws(
+    () => {
+      overlap("z", "z", { offset: -1.2 });
+    },
+    /THROW_ID_04/,
+    "01.05"
+  );
 });
 
 // -----------------------------------------------------------------------------

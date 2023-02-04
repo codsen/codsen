@@ -29,7 +29,7 @@ test("01 - widest letter: W", () => {
         ellipsisLen: 155,
       }),
       { result: "W", addEllipsis: true },
-      "01.02 - monospace: true"
+      "01.02"
     );
   });
 });
@@ -60,7 +60,7 @@ test("02 - W × 9", () => {
         ellipsisLen: 155,
       }),
       { result: "W".repeat(9), addEllipsis: false },
-      "02.02 - monospace: true"
+      "02.02"
     );
   });
 });
@@ -91,7 +91,7 @@ test("03 - W × 10", () => {
         ellipsisLen: 155,
       }),
       { result: "W".repeat(9), addEllipsis: true },
-      "03.02 - monospace: true"
+      "03.02"
     );
   });
 });
@@ -122,7 +122,7 @@ test("04 - W × 11", () => {
         ellipsisLen: 155,
       }),
       { result: "W".repeat(9), addEllipsis: true },
-      "04.02 - monospace: true"
+      "04.02"
     );
   });
 });
@@ -153,7 +153,7 @@ test("05 - i × 21", () => {
         ellipsisLen: 155,
       }),
       { result: "i".repeat(9), addEllipsis: true },
-      "05.02 - monospace: true"
+      "05.02"
     );
   });
 });
@@ -184,7 +184,7 @@ test("06 - i × 22", () => {
         ellipsisLen: 155,
       }),
       { result: "i".repeat(9), addEllipsis: true },
-      "06.02 - monospace: true"
+      "06.02"
     );
   });
 });
@@ -215,7 +215,7 @@ test("07 - i × 23", () => {
         ellipsisLen: 155,
       }),
       { result: "i".repeat(9), addEllipsis: true },
-      "07.02 - monospace: true"
+      "07.02"
     );
   });
 });
@@ -246,7 +246,7 @@ test("08 - i × 24", () => {
         ellipsisLen: 155,
       }),
       { result: "i".repeat(9), addEllipsis: true },
-      "08.02 - monospace: true"
+      "08.02"
     );
   });
 });
@@ -277,7 +277,7 @@ test("09 - A × 40", () => {
         ellipsisLen: 155,
       }),
       { result: "A".repeat(9), addEllipsis: true },
-      "09.02 - monospace: true"
+      "09.02"
     );
   });
 });
@@ -308,7 +308,7 @@ test("10 - i × 40", () => {
         ellipsisLen: 155,
       }),
       { result: "i".repeat(9), addEllipsis: true },
-      "10.02 - monospace: true"
+      "10.02"
     );
   });
 });
@@ -339,7 +339,7 @@ test("11 - a × 40", () => {
         ellipsisLen: 155,
       }),
       { result: "a".repeat(9), addEllipsis: true },
-      "11.02 - monospace: true"
+      "11.02"
     );
   });
 });
@@ -370,7 +370,7 @@ test("12 - realistic, #1", () => {
         ellipsisLen: 155,
       }),
       { result: "API - includesW", addEllipsis: true },
-      "12.02 - monospace: true"
+      "12.02"
     );
   });
 });
@@ -401,7 +401,7 @@ test("13 - realistic, #2", () => {
         ellipsisLen: 155,
       }),
       { result: "CHOMPLEFT", addEllipsis: true },
-      "13.02 - monospace: true"
+      "13.02"
     );
   });
 });
@@ -432,7 +432,7 @@ test("14 - Russian, normal case, maxLines=1", () => {
         ellipsisLen: 155,
       }),
       { result: "Газпром", addEllipsis: true },
-      "14.02 - monospace: true"
+      "14.02"
     );
   });
 });
@@ -463,7 +463,7 @@ test("15 - Russian, normal case, maxLines=2", () => {
         ellipsisLen: 155,
       }),
       { result: "Газпром останавли", addEllipsis: true },
-      "15.02 - monospace: true"
+      "15.02"
     );
   });
 });
@@ -494,7 +494,7 @@ test("16 - Russian, uppercase", () => {
         ellipsisLen: 155,
       }),
       { result: "ГАЗПРОМ ОСТАНАВЛИ", addEllipsis: true },
-      "16.02 - monospace: true"
+      "16.02"
     );
   });
 });

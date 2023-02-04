@@ -155,7 +155,7 @@ test("06 - replaced to an empty string", () => {
     {
       tag: "",
     },
-    "06.01 - empty string given as a replacement"
+    "06.01"
   );
 });
 
@@ -191,7 +191,7 @@ test("07 - not enough replacement values given", () => {
         },
       ],
     },
-    "07.01 - still works"
+    "07.01"
   );
 });
 

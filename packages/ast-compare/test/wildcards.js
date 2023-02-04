@@ -13,7 +13,7 @@ test("01 - wildcards against values within object", () => {
   equal(
     compare({ a: "1", b: "2a", c: "3" }, { a: "1", b: "2*" }),
     false,
-    "01.01 - default"
+    "01.01"
   );
   equal(
     compare(
@@ -22,7 +22,7 @@ test("01 - wildcards against values within object", () => {
       { useWildcards: false }
     ),
     false,
-    "01.02 - hardcoded default"
+    "01.02"
   );
   equal(
     compare(
@@ -31,7 +31,7 @@ test("01 - wildcards against values within object", () => {
       { useWildcards: true }
     ),
     true,
-    "01.03 - wildcards enabled"
+    "01.03"
   );
   equal(
     compare(
@@ -40,7 +40,7 @@ test("01 - wildcards against values within object", () => {
       { useWildcards: true }
     ),
     true,
-    "01.04 - with letters and wildcards"
+    "01.04"
   );
   equal(
     compare(
@@ -49,7 +49,7 @@ test("01 - wildcards against values within object", () => {
       { useWildcards: true }
     ),
     false,
-    "01.05 - won't match because it's now case-sensitive in wildcards too"
+    "01.05"
   );
   equal(
     compare(
@@ -58,7 +58,7 @@ test("01 - wildcards against values within object", () => {
       { useWildcards: true }
     ),
     true,
-    "01.06 - won't match because it's now case-sensitive in wildcards too"
+    "01.06"
   );
 
   equal(
@@ -68,7 +68,7 @@ test("01 - wildcards against values within object", () => {
       { useWildcards: true }
     ),
     false,
-    "01.07 - weird"
+    "01.07"
   );
   equal(
     compare(
@@ -77,7 +77,7 @@ test("01 - wildcards against values within object", () => {
       { useWildcards: false }
     ),
     false,
-    "01.08 - weird, false anyway"
+    "01.08"
   );
 });
 
@@ -85,7 +85,7 @@ test("02 - wildcards against keys within object", () => {
   equal(
     compare({ az: "1", bz: "2a", cz: "3" }, { "a*": "1", "b*": "2*" }),
     false,
-    "02.01 - default"
+    "02.01"
   );
   equal(
     compare(
@@ -94,12 +94,12 @@ test("02 - wildcards against keys within object", () => {
       { useWildcards: true }
     ),
     true,
-    "02.02 - wildcards on"
+    "02.02"
   );
   equal(
     compare({ az: "1", bz: "2a", cz: "3" }, { "x*": "1", "b*": "2*" }),
     false,
-    "02.03 - won't find, despite wildcards, which are turned off"
+    "02.03"
   );
   equal(
     compare(
@@ -108,7 +108,7 @@ test("02 - wildcards against keys within object", () => {
       { useWildcards: true }
     ),
     false,
-    "02.04 - won't find, despite wildcards, which are turned on"
+    "02.04"
   );
 });
 
@@ -132,7 +132,7 @@ test("03 - wildcards in deeper levels", () => {
       { useWildcards: false }
     ),
     false,
-    "03.01 - default (control), wildcards are turned off"
+    "03.01"
   );
   equal(
     compare(
@@ -153,7 +153,7 @@ test("03 - wildcards in deeper levels", () => {
       { useWildcards: true }
     ),
     true,
-    "03.02 - default (control), wildcards are turned off"
+    "03.02"
   );
 });
 

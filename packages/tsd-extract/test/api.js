@@ -9,39 +9,75 @@ import { extract } from "../dist/tsd-extract.esm.js";
 // -----------------------------------------------------------------------------
 
 test("01 - source defs arg is wrong", () => {
-  throws(() => {
-    extract();
-  }, /THROW_ID_01/g);
-  throws(() => {
-    extract(1);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    extract(true);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      extract();
+    },
+    /THROW_ID_01/g,
+    "01.01"
+  );
+  throws(
+    () => {
+      extract(1);
+    },
+    /THROW_ID_01/g,
+    "01.02"
+  );
+  throws(
+    () => {
+      extract(true);
+    },
+    /THROW_ID_01/g,
+    "01.03"
+  );
 });
 
 test("02 - def arg is wrong", () => {
-  throws(() => {
-    extract("");
-  }, /THROW_ID_02/g);
-  throws(() => {
-    extract("zzz", 1);
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      extract("");
+    },
+    /THROW_ID_02/g,
+    "02.01"
+  );
+  throws(
+    () => {
+      extract("zzz", 1);
+    },
+    /THROW_ID_02/g,
+    "02.02"
+  );
 });
 
 test("03 - opts arg is wrong", () => {
-  throws(() => {
-    extract("zzz", "zzz", 1);
-  }, /THROW_ID_03/g);
-  throws(() => {
-    extract("zzz", "zzz", []);
-  }, /THROW_ID_03/g);
-  throws(() => {
-    extract("zzz", "zzz", [""]);
-  }, /THROW_ID_03/g);
-  throws(() => {
-    extract("zzz", "zzz", ["throwIfNotFound"]);
-  }, /THROW_ID_03/g);
+  throws(
+    () => {
+      extract("zzz", "zzz", 1);
+    },
+    /THROW_ID_03/g,
+    "03.01"
+  );
+  throws(
+    () => {
+      extract("zzz", "zzz", []);
+    },
+    /THROW_ID_03/g,
+    "03.02"
+  );
+  throws(
+    () => {
+      extract("zzz", "zzz", [""]);
+    },
+    /THROW_ID_03/g,
+    "03.03"
+  );
+  throws(
+    () => {
+      extract("zzz", "zzz", ["throwIfNotFound"]);
+    },
+    /THROW_ID_03/g,
+    "03.04"
+  );
 });
 
 test("04 - defs arg is not found", () => {

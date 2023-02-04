@@ -18,7 +18,7 @@ test("01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix", () 
       a: false,
       b: false,
     },
-    "01.01 - false - default (opts on)"
+    "01.01"
   );
   equal(
     jVar(
@@ -34,7 +34,7 @@ test("01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix", () 
       a: false,
       b: false,
     },
-    "01.02 - false - hardcoded (opts on)"
+    "01.02"
   );
   equal(
     jVar(
@@ -50,7 +50,7 @@ test("01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix", () 
       a: "zzz  zzz",
       b: false,
     },
-    "01.03 - false - opts off"
+    "01.03"
   );
 
   // True
@@ -71,7 +71,7 @@ test("01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix", () 
       b: true,
       c: false,
     },
-    "01.04 - relying on default, opts.resolveToFalseIfAnyValuesContainBool does not matter"
+    "01.04"
   );
   equal(
     jVar(
@@ -90,7 +90,7 @@ test("01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix", () 
       b: true,
       c: false,
     },
-    "01.05 - Bools hardcoded default, not forcing false"
+    "01.05"
   );
   equal(
     jVar(
@@ -109,7 +109,7 @@ test("01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix", () 
       b: true,
       c: false,
     },
-    "01.06 - Bools hardcoded default, forcing false"
+    "01.06"
   );
 });
 

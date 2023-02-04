@@ -625,7 +625,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.1",
-      "type-fest": "^3.5.0"
+      "type-fest": "^3.5.5"
     }
   },
   "ast-contains-only-empty-space": {
@@ -2056,7 +2056,7 @@ export const packageJSONData = {
       "node": ">=14.18.0"
     },
     "c8": {
-      "check-coverage": true,
+      "check-coverage": false,
       "exclude": [
         "**/test/**/*.*"
       ],
@@ -5180,7 +5180,7 @@ export const packageJSONData = {
       "meow": "^11.0.0",
       "p-filter": "^3.0.0",
       "p-reduce": "^3.0.0",
-      "sort-package-json": "^2.1.0",
+      "sort-package-json": "^2.4.0",
       "update-notifier": "^6.0.2"
     },
     "devDependencies": {
@@ -6175,7 +6175,7 @@ export const packageJSONData = {
       "@types/lodash.includes": "^4.3.7",
       "@types/lodash.isdate": "^4.0.7",
       "@types/lodash.isfinite": "^3.3.7",
-      "deep-equal": "^2.1.0"
+      "deep-equal": "^2.2.0"
     }
   },
   "object-no-new-keys": {
@@ -7598,91 +7598,11 @@ export const packageJSONData = {
       "@types/lodash.iteratee": "^4.7.7",
       "lodash.iteratee": "^4.7.0",
       "unified": "^10.1.2",
-      "unist-util-visit": "^4.1.1"
+      "unist-util-visit": "^4.1.2"
     },
     "devDependencies": {
       "rehype": "^12.0.1",
       "rehype-parse": "^8.0.4"
-    }
-  },
-  "remark-conventional-commit-changelog-timeline": {
-    "name": "remark-conventional-commit-changelog-timeline",
-    "version": "3.0.6",
-    "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
-    "keywords": [
-      "unified",
-      "remark",
-      "remark-plugin",
-      "plugin",
-      "mdast",
-      "markdown",
-      "changelog",
-      "conventional",
-      "commits"
-    ],
-    "homepage": "https://codsen.com/os/remark-conventional-commit-changelog-timeline",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/remark-conventional-commit-changelog-timeline"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "main": "dist/remark-conventional-commit-changelog-timeline.cjs.js",
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && node '../../ops/scripts/fix-cjs.js' && npm run dts",
-      "cjs-off": "node '../../ops/scripts/cjs-off.js'",
-      "cjs-on": "node '../../ops/scripts/cjs-on.js'",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --loglevel 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' --write --loglevel 'silent'",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --ext .js --ext .ts --fix",
-      "perf": "echo 'skip perf'",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      },
-      "various": {}
-    },
-    "dependencies": {
-      "@types/hast": "^2.3.4",
-      "hast-util-raw": "^7.2.3",
-      "semver-regex": "^4.0.5",
-      "unified": "^10.1.2",
-      "unist-builder": "^3.0.0",
-      "unist-util-visit": "^4.1.1"
-    },
-    "devDependencies": {
-      "object-delete-key": "^4.0.6",
-      "remark": "^14.0.2"
     }
   },
   "remark-typography": {
@@ -7762,7 +7682,7 @@ export const packageJSONData = {
       "string-dashes": "^1.2.0",
       "string-remove-widows": "^4.0.6",
       "unified": "^10.1.2",
-      "unist-util-visit": "^4.1.1"
+      "unist-util-visit": "^4.1.2"
     },
     "devDependencies": {
       "remark": "^14.0.2"

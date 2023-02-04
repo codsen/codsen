@@ -40,7 +40,7 @@ test(`04 - entEndsWithCaseInsensitive is set`, () => {
 });
 
 test(`05 - decode throws if a non-entity is given`, () => {
-  throws(() => decode("zzz"), /THROW_ID_01/);
+  throws(() => decode("zzz"), /THROW_ID_01/, "05.01");
 });
 
 test(`06 - decode existing`, () => {

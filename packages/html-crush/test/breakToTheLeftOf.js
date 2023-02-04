@@ -13,14 +13,14 @@ test(`01 - ${`\u001b[${34}m${`opts.breakToTheLeftOf`}\u001b[${39}m`} - breaks ba
       removeLineBreaks: false,
     }).result,
     `<m><n><o>`,
-    "01.01 - no linebreak removal"
+    "01.01"
   );
   equal(
     m(equal, `<m><n><o>`, {
       removeLineBreaks: true,
     }).result,
     `<m><n><o>`,
-    "01.02 - default line break removal"
+    "01.02"
   );
   equal(
     m(equal, `<m><n><o>`, {
@@ -28,7 +28,7 @@ test(`01 - ${`\u001b[${34}m${`opts.breakToTheLeftOf`}\u001b[${39}m`} - breaks ba
       breakToTheLeftOf: ["<n"],
     }).result,
     `<m>\n<n><o>`,
-    "01.03 - break in the middle, once"
+    "01.03"
   );
   equal(
     m(equal, `<m><n><o>`, {
@@ -36,7 +36,7 @@ test(`01 - ${`\u001b[${34}m${`opts.breakToTheLeftOf`}\u001b[${39}m`} - breaks ba
       breakToTheLeftOf: ["<n", "<o"],
     }).result,
     `<m>\n<n>\n<o>`,
-    "01.04 - break twice"
+    "01.04"
   );
   equal(
     m(equal, `<m><n><o>`, {
@@ -44,7 +44,7 @@ test(`01 - ${`\u001b[${34}m${`opts.breakToTheLeftOf`}\u001b[${39}m`} - breaks ba
       breakToTheLeftOf: ["<z", "<n", "<o"],
     }).result,
     `<m>\n<n>\n<o>`,
-    "01.05 - don't break in front"
+    "01.05"
   );
   equal(
     m(equal, `\n   \t   \t   <m><n><o>`, {
@@ -52,7 +52,7 @@ test(`01 - ${`\u001b[${34}m${`opts.breakToTheLeftOf`}\u001b[${39}m`} - breaks ba
       breakToTheLeftOf: ["<m", "<n", "<o"],
     }).result,
     `<m>\n<n>\n<o>`,
-    "01.06 - don't break in front"
+    "01.06"
   );
   equal(
     m(equal, `<m><n><o>`, {
@@ -159,7 +159,7 @@ test(`02 - ${`\u001b[${34}m${`opts.breakToTheLeftOf`}\u001b[${39}m`} - breaks ba
       breakToTheLeftOf: ["<x", "y"],
     }).result,
     `<a> <b><c>`,
-    "02.09 - nothing in given breakpoints is useful"
+    "02.09"
   );
   equal(
     m(equal, `<m>\n<n><o>`, {

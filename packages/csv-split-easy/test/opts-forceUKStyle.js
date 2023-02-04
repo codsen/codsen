@@ -14,7 +14,7 @@ test("01 - Russian/Lithuanian/continental decimal notation style CSV that uses c
       ["Cepelinai", "5,25", "5,10"],
       ["Jautienos kepsnys", "14,50", "14,20"],
     ],
-    "01.01 - does not convert the notation by default, but does pad"
+    "01.01"
   );
   equal(
     splitEasy(
@@ -26,7 +26,7 @@ test("01 - Russian/Lithuanian/continental decimal notation style CSV that uses c
       ["Cepelinai", "5.25", "5.10"],
       ["Jautienos kepsnys", "14.50", "14.20"],
     ],
-    "01.02 - converts the notation as requested, and does pad by default"
+    "01.02"
   );
   equal(
     splitEasy(
@@ -38,7 +38,7 @@ test("01 - Russian/Lithuanian/continental decimal notation style CSV that uses c
       ["Cepelinai", "5,25", "5,1"],
       ["Jautienos kepsnys", "14,5", "14,2"],
     ],
-    "01.03 - does not convert the notation by default, and does not pad as requested"
+    "01.03"
   );
   equal(
     splitEasy(
@@ -50,7 +50,7 @@ test("01 - Russian/Lithuanian/continental decimal notation style CSV that uses c
       ["Cepelinai", "5.25", "5.1"],
       ["Jautienos kepsnys", "14.5", "14.2"],
     ],
-    "01.04 - converts the notation as requested, but does not pad as requested"
+    "01.04"
   );
 });
 

@@ -14,7 +14,13 @@
   ],
   "references": [
     {
+      "path": "../codsen-utils"
+    },
+    {
       "path": "../string-apostrophes"
+    },
+    {
+      "path": "../string-dashes"
     },
     {
       "path": "../string-remove-widows"

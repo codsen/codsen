@@ -182,11 +182,7 @@ test("06 - empty space vs different empty space", () => {
 });
 
 test("07 - two arrays, one empty", () => {
-  equal(
-    compare(["\t\t\t\t\t\t      \n\n\n    \t\t\t"], []),
-    false,
-    "07.01 - in root, defaults"
-  );
+  equal(compare(["\t\t\t\t\t\t      \n\n\n    \t\t\t"], []), false, "07.01");
   equal(
     compare(
       { a: ["\t\t\t\t\t\t      \n\n\n    \t\t\t"] },
@@ -194,14 +190,14 @@ test("07 - two arrays, one empty", () => {
       { hungryForWhitespace: true }
     ),
     true,
-    "07.02 - in root, defaults"
+    "07.02"
   );
   equal(
     compare([], ["\t\t\t\t\t\t      \n\n\n    \t\t\t"], {
       hungryForWhitespace: true,
     }),
     true,
-    "07.03 - in root, defaults, opposite from #2"
+    "07.03"
   );
 });
 
@@ -213,7 +209,7 @@ test("08 - opts.matchStrictly", () => {
       { matchStrictly: true, verboseWhenMismatches: true }
     ),
     false,
-    "08.01 - key count mismatch"
+    "08.01"
   );
   equal(
     typeof compare(
@@ -222,7 +218,7 @@ test("08 - opts.matchStrictly", () => {
       { matchStrictly: true, verboseWhenMismatches: true }
     ),
     "string",
-    "08.02 - key count mismatch"
+    "08.02"
   );
 });
 

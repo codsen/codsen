@@ -65,9 +65,13 @@ test("05 - Special numerical escapes (see he.js issue #4)", () => {
 });
 
 test("06 - special numerical escapes in strict mode", () => {
-  throws(() => {
-    decode("a&#xD834;b", { strict: true });
-  }, /Parse error/);
+  throws(
+    () => {
+      decode("a&#xD834;b", { strict: true });
+    },
+    /Parse error/,
+    "06.01"
+  );
 });
 
 test("07 - out-of-range hexadecimal escape in error-tolerant mode", () => {
@@ -75,9 +79,13 @@ test("07 - out-of-range hexadecimal escape in error-tolerant mode", () => {
 });
 
 test("08 - out-of-range hexadecimal escape in strict mode", () => {
-  throws(() => {
-    decode("a&#x9999999999999999;b", { strict: true });
-  }, /Parse error/);
+  throws(
+    () => {
+      decode("a&#x9999999999999999;b", { strict: true });
+    },
+    /Parse error/,
+    "08.01"
+  );
 });
 
 test("09 - out-of-range hexadecimal escape in error-tolerant mode", () => {
@@ -85,9 +93,13 @@ test("09 - out-of-range hexadecimal escape in error-tolerant mode", () => {
 });
 
 test("10 - out-of-range hexadecimal escape in strict mode", () => {
-  throws(() => {
-    decode("a&#x110000;b", { strict: true });
-  }, /Parse error/);
+  throws(
+    () => {
+      decode("a&#x110000;b", { strict: true });
+    },
+    /Parse error/,
+    "10.01"
+  );
 });
 
 test("11 - ambiguous ampersand in text context", () => {
@@ -95,9 +107,13 @@ test("11 - ambiguous ampersand in text context", () => {
 });
 
 test("12 - ambiguous ampersand in text context in strict mode", () => {
-  throws(() => {
-    decode("foo&ampbar", { strict: true });
-  }, /Parse error/);
+  throws(
+    () => {
+      decode("foo&ampbar", { strict: true });
+    },
+    /Parse error/,
+    "12.01"
+  );
 });
 
 test("13 - hexadecimal escape without trailing semicolon in error-tolerant mode", () => {
@@ -105,9 +121,13 @@ test("13 - hexadecimal escape without trailing semicolon in error-tolerant mode"
 });
 
 test("14 - hexadecimal escape without trailing semicolon in strict mode", () => {
-  throws(() => {
-    decode("foo&#x1D306qux", { strict: true });
-  }, /Parse error/);
+  throws(
+    () => {
+      decode("foo&#x1D306qux", { strict: true });
+    },
+    /Parse error/,
+    "14.01"
+  );
 });
 
 test("15 - decimal escape without trailing semicolon in error-tolerant mode", () => {
@@ -115,9 +135,13 @@ test("15 - decimal escape without trailing semicolon in error-tolerant mode", ()
 });
 
 test("16 - decimal escape without trailing semicolon in strict mode", () => {
-  throws(() => {
-    decode("foo&#119558qux", { strict: true });
-  }, /Parse error/g);
+  throws(
+    () => {
+      decode("foo&#119558qux", { strict: true });
+    },
+    /Parse error/g,
+    "16.01"
+  );
 });
 
 test("17 - attribute value context - entity without semicolon sandwitched", () => {
@@ -126,7 +150,7 @@ test("17 - attribute value context - entity without semicolon sandwitched", () =
       isAttributeValue: true,
     }),
     null,
-    "17.01 - nothing happens"
+    "17.01"
   );
 });
 
@@ -155,12 +179,16 @@ test("20 - entity ends with equal sign instead of semicolon", () => {
 });
 
 test("21 - throws in strict mode when entity ends with equal sign instead of semicol", () => {
-  throws(() => {
-    decode("foo&amp=", {
-      strict: true,
-      isAttributeValue: true,
-    });
-  }, /Parse error/);
+  throws(
+    () => {
+      decode("foo&amp=", {
+        strict: true,
+        isAttributeValue: true,
+      });
+    },
+    /Parse error/,
+    "21.01"
+  );
 });
 
 test("22 - unclosed HTML entity ends the input string", () => {
@@ -185,21 +213,29 @@ test("23 - false positive, not a parsing error", () => {
 });
 
 test("24 - foo&amplol in strict mode throws in text context", () => {
-  throws(() => {
-    decode("foo&amplol", {
-      isAttributeValue: false,
-      strict: true,
-    });
-  }, /Parse error/g);
+  throws(
+    () => {
+      decode("foo&amplol", {
+        isAttributeValue: false,
+        strict: true,
+      });
+    },
+    /Parse error/g,
+    "24.01"
+  );
 });
 
 test("25 - throws when strict mode is on isAttributeValue is false", () => {
-  throws(() => {
-    decode("I'm &notit; I tell you", {
-      strict: true,
-      isAttributeValue: false,
-    });
-  }, /Parse error/);
+  throws(
+    () => {
+      decode("I'm &notit; I tell you", {
+        strict: true,
+        isAttributeValue: false,
+      });
+    },
+    /Parse error/,
+    "25.01"
+  );
 });
 
 test("26 - attribute value in error-tolerant mode, non-strict", () => {
@@ -228,11 +264,15 @@ test("28 - decoding `&#x8D;` in error-tolerant mode", () => {
 });
 
 test("29 - decoding `&#x8D;` in strict mode", () => {
-  throws(() => {
-    decode("&#x8D;", {
-      strict: true,
-    });
-  }, /Parse error/);
+  throws(
+    () => {
+      decode("&#x8D;", {
+        strict: true,
+      });
+    },
+    /Parse error/,
+    "29.01"
+  );
 });
 
 test("30 - decoding `&#xD;` in error-tolerant mode", () => {
@@ -240,11 +280,15 @@ test("30 - decoding `&#xD;` in error-tolerant mode", () => {
 });
 
 test("31 - decoding `&#xD;` in strict mode", () => {
-  throws(() => {
-    decode("&#xD;", {
-      strict: true,
-    });
-  }, /Parse error/g);
+  throws(
+    () => {
+      decode("&#xD;", {
+        strict: true,
+      });
+    },
+    /Parse error/g,
+    "31.01"
+  );
 });
 
 test("32 - decoding `&#x94;` in error-tolerant mode", () => {
@@ -252,11 +296,15 @@ test("32 - decoding `&#x94;` in error-tolerant mode", () => {
 });
 
 test("33 - decoding `&#x94;` in strict mode", () => {
-  throws(() => {
-    decode("&#x94;", {
-      strict: true,
-    });
-  }, /Parse error/);
+  throws(
+    () => {
+      decode("&#x94;", {
+        strict: true,
+      });
+    },
+    /Parse error/,
+    "33.01"
+  );
 });
 
 test("34 - decoding `&#x1;` in error-tolerant mode", () => {
@@ -264,9 +312,13 @@ test("34 - decoding `&#x1;` in error-tolerant mode", () => {
 });
 
 test("35 - decoding `&#x1;` in strict mode", () => {
-  throws(() => {
-    decode("&#x1;", { strict: true });
-  }, /Parse error/g);
+  throws(
+    () => {
+      decode("&#x1;", { strict: true });
+    },
+    /Parse error/g,
+    "35.01"
+  );
 });
 
 test("36 - decoding `&#x10FFFF;` in error-tolerant mode", () => {
@@ -274,9 +326,13 @@ test("36 - decoding `&#x10FFFF;` in error-tolerant mode", () => {
 });
 
 test("37 - decoding `&#x10FFFF;` in strict mode", () => {
-  throws(() => {
-    decode("&#x10FFFF;", { strict: true });
-  }, /Parse error/);
+  throws(
+    () => {
+      decode("&#x10FFFF;", { strict: true });
+    },
+    /Parse error/,
+    "37.01"
+  );
 });
 
 test("38 - decoding `&#196605;` (valid code point) in strict mode", () => {
@@ -288,9 +344,13 @@ test("38 - decoding `&#196605;` (valid code point) in strict mode", () => {
 });
 
 test("39 - throws when decoding `&#196607;` in strict mode", () => {
-  throws(() => {
-    decode("&#196607;", { strict: true });
-  }, /Parse error/);
+  throws(
+    () => {
+      decode("&#196607;", { strict: true });
+    },
+    /Parse error/,
+    "39.01"
+  );
 });
 
 test("40 - decoding &#xZ in error-tolerant mode", () => {
@@ -298,9 +358,13 @@ test("40 - decoding &#xZ in error-tolerant mode", () => {
 });
 
 test("41 - decoding &#xZ in strict mode", () => {
-  throws(() => {
-    decode("&#xZ", { strict: true });
-  }, "41.01");
+  throws(
+    () => {
+      decode("&#xZ", { strict: true });
+    },
+    "41.01",
+    "41.01"
+  );
 });
 
 test("42 - decoding &#Z in error-tolerant mode", () => {
@@ -308,9 +372,13 @@ test("42 - decoding &#Z in error-tolerant mode", () => {
 });
 
 test("43 - decoding &#Z in strict mode", () => {
-  throws(() => {
-    decode("&#Z", { strict: true });
-  }, /Parse error/);
+  throws(
+    () => {
+      decode("&#Z", { strict: true });
+    },
+    /Parse error/,
+    "43.01"
+  );
 });
 
 test("44 - decoding `&#00` numeric character reference (see issue #43)", () => {

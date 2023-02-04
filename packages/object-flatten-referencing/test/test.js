@@ -15,15 +15,27 @@ import {
 // -----------------------------------------------------------------------------
 
 test("01 - throws when inputs are missing/wrong", () => {
-  throws(() => {
-    ofr();
-  }, /THROW_ID_01/g);
-  throws(() => {
-    ofr({ a: "a" });
-  }, /THROW_ID_02/g);
-  throws(() => {
-    ofr({ a: "a" }, { a: "a" }, 1);
-  }, /THROW_ID_03/g);
+  throws(
+    () => {
+      ofr();
+    },
+    /THROW_ID_01/g,
+    "01.01"
+  );
+  throws(
+    () => {
+      ofr({ a: "a" });
+    },
+    /THROW_ID_02/g,
+    "01.02"
+  );
+  throws(
+    () => {
+      ofr({ a: "a" }, { a: "a" }, 1);
+    },
+    /THROW_ID_03/g,
+    "01.03"
+  );
 });
 
 // -----------------------------------------------------------------------------
@@ -46,7 +58,7 @@ test("02 - defaults - objects, one level", () => {
       key1: "%%_val11.val12_%%",
       key2: "%%_val21.val22_%%",
     },
-    "02.01 - defaults wrapping strings"
+    "02.01"
   );
   equal(
     ofr(
@@ -67,7 +79,7 @@ test("02 - defaults - objects, one level", () => {
       key1: "val11.val12",
       key2: "val21.val22",
     },
-    "02.02 - heads/tails override, wrapping with empty strings"
+    "02.02"
   );
   equal(
     ofr(
@@ -88,7 +100,7 @@ test("02 - defaults - objects, one level", () => {
       key1: "{val11.val12",
       key2: "{val21.val22",
     },
-    "02.03 - wrapping only with heads; tails empty"
+    "02.03"
   );
   equal(
     ofr(
@@ -109,7 +121,7 @@ test("02 - defaults - objects, one level", () => {
       key1: "val11.val12}",
       key2: "val21.val22}",
     },
-    "02.04 - wrapping only with heads; tails empty"
+    "02.04"
   );
   equal(
     ofr(
@@ -129,7 +141,7 @@ test("02 - defaults - objects, one level", () => {
       key1: "val11.val12",
       key2: "val21.val22",
     },
-    '02.05 - does not wrap because starts with "key", string opt'
+    "02.05"
   );
   equal(
     ofr(
@@ -149,7 +161,7 @@ test("02 - defaults - objects, one level", () => {
       key1: "val11.val12",
       key2: "val21.val22",
     },
-    '02.06 - does not wrap because starts with "key", array opt'
+    "02.06"
   );
   equal(
     ofr(
@@ -169,7 +181,7 @@ test("02 - defaults - objects, one level", () => {
       key1: "val11.val12",
       key2: "val21.val22",
     },
-    "02.07 - does not wrap because ends with 1 or 2"
+    "02.07"
   );
   equal(
     ofr(
@@ -189,7 +201,7 @@ test("02 - defaults - objects, one level", () => {
       thekey1: "val11.val12",
       akey2: "val21.val22",
     },
-    "02.08 - mix of various wildcards, sources are strings"
+    "02.08"
   );
   equal(
     ofr(
@@ -209,7 +221,7 @@ test("02 - defaults - objects, one level", () => {
       thekey1: "val11.val12",
       akey2: "val21.val22",
     },
-    "02.09 - mix of various wildcards, sources are plain objects"
+    "02.09"
   );
   equal(
     ofr(
@@ -229,7 +241,7 @@ test("02 - defaults - objects, one level", () => {
       KEY1: "val11.val12",
       KEY2: "val21.val22",
     },
-    "02.10 - wildcards are case sensitive since v4.3.0"
+    "02.10"
   );
 });
 
@@ -249,7 +261,7 @@ test("03 - opts.preventDoubleWrapping", () => {
       key1: "%%_val11.val12_%%",
       key2: "%%_val21.val22_%%",
     },
-    "03.01 - preventDoubleWrapping reading default heads/tails"
+    "03.01"
   );
   equal(
     ofr(
@@ -269,7 +281,7 @@ test("03 - opts.preventDoubleWrapping", () => {
       key1: "%%_%%_val11.val12_%%_%%",
       key2: "%%_val21.val22_%%",
     },
-    "03.02 - preventDoubleWrapping off"
+    "03.02"
   );
   equal(
     ofr(
@@ -290,7 +302,7 @@ test("03 - opts.preventDoubleWrapping", () => {
       key1: "{val11.val12}",
       key2: "{val21.val22}",
     },
-    "03.03 - preventDoubleWrapping reading default heads/tails"
+    "03.03"
   );
   equal(
     ofr(
@@ -311,7 +323,7 @@ test("03 - opts.preventDoubleWrapping", () => {
       key1: "aaa %%val11.val12%% bbb",
       key2: "%%val21.val22%%",
     },
-    "03.04 - preventDoubleWrapping reading default heads/tails"
+    "03.04"
   );
 });
 
@@ -454,7 +466,7 @@ test("04 - flattens an array value but doesn't touch other one", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "04.05 - does not put <br /> at all when flattening arrays"
+    "04.05"
   );
 });
 
@@ -485,7 +497,7 @@ test("05 - wildcards in opts.dontWrapKeys", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "05.01 - does not wrap the key1 contents"
+    "05.01"
   );
   equal(
     ofr(
@@ -513,7 +525,7 @@ test("05 - wildcards in opts.dontWrapKeys", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "05.02 - opposite key order"
+    "05.02"
   );
   equal(
     ofr(
@@ -542,7 +554,7 @@ test("05 - wildcards in opts.dontWrapKeys", () => {
         key4: ["val4", "val5", "val6"],
       },
     },
-    "05.03 - does not touch key3 children"
+    "05.03"
   );
   equal(
     ofr(
@@ -572,7 +584,7 @@ test("05 - wildcards in opts.dontWrapKeys", () => {
         key4: ["val4", "val5", "val6"],
       },
     },
-    "05.04 - does not wrap the key3 children"
+    "05.04"
   );
   equal(
     ofr(
@@ -603,7 +615,7 @@ test("05 - wildcards in opts.dontWrapKeys", () => {
         key4: ["val4", "val5", "val6"],
       },
     },
-    "05.05 - nothing, because key4 is not top-level"
+    "05.05"
   );
 });
 
@@ -760,7 +772,7 @@ test("10 - one ignore works on multiple keys", () => {
       key_bbbb: "anything",
       wrapme: "oh yes",
     },
-    "10.01 - defaults on opts.whatToDoWhenReferenceIsMissing"
+    "10.01"
   );
   equal(
     ofr(
@@ -785,7 +797,7 @@ test("10 - one ignore works on multiple keys", () => {
       key_bbbb: "anything",
       wrapme: "oh yes",
     },
-    "10.02 - hardcoded defaults on opts.whatToDoWhenReferenceIsMissing"
+    "10.02"
   );
   equal(
     ofr(
@@ -810,7 +822,7 @@ test("10 - one ignore works on multiple keys", () => {
       key_bbbb: "anything",
       wrapme: "${oh yes}",
     },
-    "10.03 - defaults on opts.whatToDoWhenReferenceIsMissing"
+    "10.03"
   );
   equal(
     ofr(
@@ -835,7 +847,7 @@ test("10 - one ignore works on multiple keys", () => {
       key_bbbb: "anything",
       wrapme: "${oh yes}",
     },
-    '10.04 - normal case, where reference is provided for key "wrapme"'
+    "10.04"
   );
   equal(
     ofr(
@@ -860,7 +872,7 @@ test("10 - one ignore works on multiple keys", () => {
       key_bbbb: "b.b",
       wrapme: "${c.c}",
     },
-    "10.05 - same as #04 but with objects"
+    "10.05"
   );
 });
 
@@ -960,7 +972,7 @@ test("13 - deeper level - array within array VS. string #2", () => {
         },
       ],
     },
-    "13.01 - innermost array is first element"
+    "13.01"
   );
   equal(
     ofr(
@@ -993,7 +1005,7 @@ test("13 - deeper level - array within array VS. string #2", () => {
         },
       ],
     },
-    "13.02 - innermost array is second element"
+    "13.02"
   );
 });
 
@@ -1109,7 +1121,7 @@ test("15 - opts.mergeWithoutTrailingBrIfLineContainsBr", () => {
     {
       key1: "{% if val1 %}{{ val1 }}<br />{% endif %}{% if val2 %}{{ val2 }}<br />{% endif %}{% if val3 %}{{ val3 }}{% endif %}",
     },
-    "15.01 - default - BRs are detected and no additional BRs are added"
+    "15.01"
   );
   equal(
     ofr(
@@ -1131,7 +1143,7 @@ test("15 - opts.mergeWithoutTrailingBrIfLineContainsBr", () => {
     {
       key1: "{% if val1 %}{{ val1 }}<br />{% endif %}{% if val2 %}{{ val2 }}<br />{% endif %}{% if val3 %}{{ val3 }}{% endif %}",
     },
-    "15.02 - hardcoded default - same as #01"
+    "15.02"
   );
   equal(
     ofr(
@@ -1153,7 +1165,7 @@ test("15 - opts.mergeWithoutTrailingBrIfLineContainsBr", () => {
     {
       key1: "{% if val1 %}{{ val1 }}<br />{% endif %}<br />{% if val2 %}{{ val2 }}<br />{% endif %}<br />{% if val3 %}{{ val3 }}{% endif %}",
     },
-    "15.03 - off - will add excessive BRs"
+    "15.03"
   );
 
   // NOW COMBOS:
@@ -1179,7 +1191,7 @@ test("15 - opts.mergeWithoutTrailingBrIfLineContainsBr", () => {
     {
       key1: "{% if val1 %}{{ val1 }}<br />{% endif %}<br>{% if val2 %}{{ val2 }}<br />{% endif %}<br>{% if val3 %}{{ val3 }}{% endif %}",
     },
-    "15.04 - xhtml = false"
+    "15.04"
   );
 });
 
@@ -1203,7 +1215,7 @@ test("16 - opts.ignore & wrapping function", () => {
       key1: "%%_val11.val12_%%",
       key2: "%%_val21.val22_%%",
     },
-    "16.01 - default behaviour"
+    "16.01"
   );
   equal(
     ofr(
@@ -1223,7 +1235,7 @@ test("16 - opts.ignore & wrapping function", () => {
       key1: "val11.val12",
       key2: "%%_val21.val22_%%",
     },
-    "16.02 - does not wrap ignored string"
+    "16.02"
   );
   equal(
     ofr(
@@ -1243,7 +1255,7 @@ test("16 - opts.ignore & wrapping function", () => {
       key1: "val11.val12",
       key2: "%%_val21.val22_%%",
     },
-    "16.03 - does not wrap ignored array"
+    "16.03"
   );
 });
 
@@ -1330,7 +1342,7 @@ test("17 - flattens an array value but doesn't touch other one", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "17.03 - ignore affects key1, default wrapping"
+    "17.03"
   );
   equal(
     ofr(
@@ -1362,7 +1374,7 @@ test("17 - flattens an array value but doesn't touch other one", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "17.04 - ignore affects key1, custom wrapping"
+    "17.04"
   );
   equal(
     ofr(
@@ -1399,7 +1411,7 @@ test("17 - flattens an array value but doesn't touch other one", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "17.05 - some ignored, some flattened"
+    "17.05"
   );
 });
 
@@ -1428,7 +1440,7 @@ test("18 - opts.whatToDoWhenReferenceIsMissing", () => {
         e: "f",
       },
     },
-    "18.01 - no opts - opt. 0 - skips"
+    "18.01"
   );
   equal(
     ofr(
@@ -1450,26 +1462,30 @@ test("18 - opts.whatToDoWhenReferenceIsMissing", () => {
         e: "f",
       },
     },
-    "18.02 - opts - opt. 0 hardcoded - skips (same as #01)"
+    "18.02"
   );
-  throws(() => {
-    ofr(
-      {
-        a: {
-          c: "d",
+  throws(
+    () => {
+      ofr(
+        {
+          a: {
+            c: "d",
+          },
+          b: {
+            e: "f",
+          },
         },
-        b: {
-          e: "f",
+        {
+          a: "a",
         },
-      },
-      {
-        a: "a",
-      },
-      {
-        whatToDoWhenReferenceIsMissing: 1,
-      }
-    );
-  }, "18.03");
+        {
+          whatToDoWhenReferenceIsMissing: 1,
+        }
+      );
+    },
+    "18.03",
+    "18.03"
+  );
   equal(
     ofr(
       {
@@ -1491,7 +1507,7 @@ test("18 - opts.whatToDoWhenReferenceIsMissing", () => {
       a: "%%_c.d_%%",
       b: "%%_e.f_%%",
     },
-    "18.04 - opts - opt. 2 - flattens to string anyway + wraps if permitted"
+    "18.04"
   );
 });
 
@@ -1515,7 +1531,7 @@ test("19 - double-wrapping prevention when markers have white space", () => {
       key1: "%%_val11.val12_%%",
       key2: "%%_val21.val22_%%",
     },
-    "19.01 - base"
+    "19.01"
   );
   equal(
     ofr(
@@ -1536,7 +1552,7 @@ test("19 - double-wrapping prevention when markers have white space", () => {
       key1: "%%_val11.val12_%%",
       key2: "%%_ val21.val22 _%%",
     },
-    "19.02 - whitespace on default heads and tails, checking double wrapping prevention"
+    "19.02"
   );
   equal(
     ofr(
@@ -1557,7 +1573,7 @@ test("19 - double-wrapping prevention when markers have white space", () => {
       key1: "{val11.val12}", // << not { {val11.val12} }
       key2: "{ val21.val22 }",
     },
-    "19.03 - whitespace on custom heads and tails, checking double wrapping prevention"
+    "19.03"
   );
 });
 
@@ -1581,7 +1597,7 @@ test("20 - double-wrapping prevention from setting opts.preventWrappingIfContain
       key1: "{{ {% if some_module.some_special_value %}some text{% endif %} }}",
       key2: "{{ val21.val22 }}",
     },
-    "20.01 - default - double wrapping on key1 because {%...%} is not recognised"
+    "20.01"
   );
   equal(
     ofr(
@@ -1603,7 +1619,7 @@ test("20 - double-wrapping prevention from setting opts.preventWrappingIfContain
       key1: "{% if some_module.some_special_value %}some text{% endif %}",
       key2: "{{ val21.val22 }}",
     },
-    "20.02 - opts.preventWrappingIfContains, value as string"
+    "20.02"
   );
   equal(
     ofr(
@@ -1625,7 +1641,7 @@ test("20 - double-wrapping prevention from setting opts.preventWrappingIfContain
       key1: "{% if some_module.some_special_value %}some text{% endif %}",
       key2: "{{ val21.val22 }}",
     },
-    "20.03 - opts.preventWrappingIfContains, value as array"
+    "20.03"
   );
   equal(
     ofr(
@@ -1647,7 +1663,7 @@ test("20 - double-wrapping prevention from setting opts.preventWrappingIfContain
       key1: "{{ {% if some_module.some_special_value %}some text{% endif %} }}",
       key2: "{{ val21.val22 }}",
     },
-    "20.04 - opts.preventWrappingIfContains contents don't match and thus string get double-wrapped"
+    "20.04"
   );
   equal(
     ofr(
@@ -1670,7 +1686,7 @@ test("20 - double-wrapping prevention from setting opts.preventWrappingIfContain
       key1: "{% if some_module.some_special_value %}some text{% endif %}",
       key2: "val21.val22",
     },
-    "20.05 - opts.preventWrappingIfContains and opts.wrapGlobalFlipSwitch kill switch on"
+    "20.05"
   );
 });
 

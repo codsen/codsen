@@ -193,16 +193,20 @@ test("03 - opts.dontWrapVars", () => {
     },
     "03.04"
   );
-  throws(() => {
-    jVar(
-      {
-        a: "%%_b_%%",
-        b: "%%_c_%%",
-        c: "val",
-      },
-      { wrapHeadsWith: "{", wrapTailsWith: "}", dontWrapVars: [1, 2, 3] }
-    );
-  }, "03.05");
+  throws(
+    () => {
+      jVar(
+        {
+          a: "%%_b_%%",
+          b: "%%_c_%%",
+          c: "val",
+        },
+        { wrapHeadsWith: "{", wrapTailsWith: "}", dontWrapVars: [1, 2, 3] }
+      );
+    },
+    "03.05",
+    "03.05"
+  );
 });
 
 test("04 - opts.dontWrapVars, real key names", () => {
@@ -275,7 +279,7 @@ test("05 - multiple dontWrapVars values", () => {
       lower_title: "{val}",
       subtitle: "val",
     },
-    '05.01 - still wraps because child variable call ("subtitle") is not excluded'
+    "05.01"
   );
 });
 

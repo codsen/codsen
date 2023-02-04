@@ -28,17 +28,17 @@ test(`01`, () => {
   equal(
     chompRight("a b c d  c d  \nx", 2, { mode: null }, "c", "d"),
     14,
-    "01.12 - falsey values default to 0"
+    "01.12"
   );
   equal(
     chompRight("a b c d  c d  \nx", 2, { mode: "" }, "c", "d"),
     14,
-    "01.13 - falsey values default to 0"
+    "01.13"
   );
   equal(
     chompRight("a b c d  c d  \nx", 2, { mode: undefined }, "c", "d"),
     14,
-    "01.14 - falsey values default to 0"
+    "01.14"
   );
 });
 
@@ -120,9 +120,13 @@ test(`05`, () => {
 });
 
 test(`06`, () => {
-  throws(() => {
-    chompRight("a b c d  c dx", 2, { mode: "z" }, "k", "l");
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      chompRight("a b c d  c dx", 2, { mode: "z" }, "k", "l");
+    },
+    /THROW_ID_02/,
+    "06.01"
+  );
 });
 
 test(`07`, () => {

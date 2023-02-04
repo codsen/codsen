@@ -71,11 +71,7 @@ test("05 - emojis mix", () => {
 // -----------------------------------------------------------------------------
 
 test("06 - two astral characters offsetting the rest", () => {
-  equal(
-    nativeToUnicode("\uD834\uDF06aa", [0, 1, 2, 3]),
-    [0, 0, 1, 2],
-    "06.01 - all unique"
-  );
+  equal(nativeToUnicode("\uD834\uDF06aa", [0, 1, 2, 3]), [0, 0, 1, 2], "06.01");
 });
 
 test("07 - non-emoji indexes match completely", () => {
@@ -97,7 +93,7 @@ test("09 - two astral characters offsetting the rest", () => {
   equal(
     nativeToUnicode("\uD834\uDF06aa", [0, 2, 0, 1, 2, 3]),
     [0, 1, 0, 0, 1, 2],
-    "09.01 - with dupes"
+    "09.01"
   );
 });
 
@@ -124,9 +120,13 @@ test("12 - one letter string", () => {
 test("13 - single astral symbol", () => {
   is(nativeToUnicode("\uD834\uDF06", 0), 0, "13.01");
   is(nativeToUnicode("\uD834\uDF06", 1), 0, "13.02");
-  throws(() => {
-    nativeToUnicode("\uD834\uDF06", 2);
-  }, "13.03");
+  throws(
+    () => {
+      nativeToUnicode("\uD834\uDF06", 2);
+    },
+    "13.03",
+    "13.03"
+  );
 });
 
 test("14 - six-char long, single-grapheme emoji", () => {

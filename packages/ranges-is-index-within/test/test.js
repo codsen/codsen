@@ -9,43 +9,27 @@ import { isIndexWithin as wthn } from "../dist/ranges-is-index-within.esm.js";
 // ==============================
 
 test("01 - one range, both defaults and inclusive", () => {
-  equal(wthn(1, [[0, 3]]), true, "01.01 - within range");
-  equal(wthn(0, [[0, 3]]), false, "01.02 - on the starting of the range");
-  equal(
-    wthn(0, [[0, 3]], { inclusiveRangeEnds: true }),
-    true,
-    "01.03 - on the starting of the range, inclusive"
-  );
-  equal(wthn(3, [[0, 3]]), false, "01.04 - on the ending of the range");
-  equal(
-    wthn(3, [[0, 3]], { inclusiveRangeEnds: true }),
-    true,
-    "01.05 - on the ending of the range, inclusive"
-  );
-  equal(wthn(99, [[0, 3]]), false, "01.06 - outside of the range");
-  equal(
-    wthn(99, [[0, 3]], { inclusiveRangeEnds: true }),
-    false,
-    "01.07 - outside of the range, inclusive"
-  );
-  equal(
-    wthn(99, null, { inclusiveRangeEnds: true }),
-    false,
-    "01.08 - matching against null"
-  );
-  equal(wthn(0, null), false, "01.09 - matching against null");
+  equal(wthn(1, [[0, 3]]), true, "01.01");
+  equal(wthn(0, [[0, 3]]), false, "01.02");
+  equal(wthn(0, [[0, 3]], { inclusiveRangeEnds: true }), true, "01.03");
+  equal(wthn(3, [[0, 3]]), false, "01.04");
+  equal(wthn(3, [[0, 3]], { inclusiveRangeEnds: true }), true, "01.05");
+  equal(wthn(99, [[0, 3]]), false, "01.06");
+  equal(wthn(99, [[0, 3]], { inclusiveRangeEnds: true }), false, "01.07");
+  equal(wthn(99, null, { inclusiveRangeEnds: true }), false, "01.08");
+  equal(wthn(0, null), false, "01.09");
 });
 
 test("02 - one range, opts.returnMatchedRangeInsteadOfTrue", () => {
   equal(
     wthn(1, [[0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
     [0, 3],
-    "02.01 - within range"
+    "02.01"
   );
   equal(
     wthn(0, [[0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
     false,
-    "02.02 - on the starting of the range"
+    "02.02"
   );
   equal(
     wthn(0, [[0, 3]], {
@@ -53,12 +37,12 @@ test("02 - one range, opts.returnMatchedRangeInsteadOfTrue", () => {
       returnMatchedRangeInsteadOfTrue: true,
     }),
     [0, 3],
-    "02.03 - on the starting of the range, inclusive"
+    "02.03"
   );
   equal(
     wthn(3, [[0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
     false,
-    "02.04 - on the ending of the range"
+    "02.04"
   );
   equal(
     wthn(3, [[0, 3]], {
@@ -66,12 +50,12 @@ test("02 - one range, opts.returnMatchedRangeInsteadOfTrue", () => {
       returnMatchedRangeInsteadOfTrue: true,
     }),
     [0, 3],
-    "02.05 - on the ending of the range, inclusive"
+    "02.05"
   );
   equal(
     wthn(99, [[0, 3]], { returnMatchedRangeInsteadOfTrue: true }),
     false,
-    "02.06 - outside of the range"
+    "02.06"
   );
   equal(
     wthn(99, [[0, 3]], {
@@ -79,7 +63,7 @@ test("02 - one range, opts.returnMatchedRangeInsteadOfTrue", () => {
       returnMatchedRangeInsteadOfTrue: true,
     }),
     false,
-    "02.07 - outside of the range, inclusive"
+    "02.07"
   );
 });
 
@@ -94,7 +78,7 @@ test("03 - two ranges, edges on defaults", () => {
       [6, 8],
     ]),
     false,
-    "03.01 - outside of the range"
+    "03.01"
   );
   equal(
     wthn(5, [
@@ -102,7 +86,7 @@ test("03 - two ranges, edges on defaults", () => {
       [6, 8],
     ]),
     false,
-    "03.02 - outside of the range"
+    "03.02"
   );
   equal(
     wthn(9, [
@@ -110,7 +94,7 @@ test("03 - two ranges, edges on defaults", () => {
       [6, 8],
     ]),
     false,
-    "03.03 - outside of the range"
+    "03.03"
   );
   equal(
     wthn(3, [
@@ -118,7 +102,7 @@ test("03 - two ranges, edges on defaults", () => {
       [6, 8],
     ]),
     true,
-    "03.04 - outside of the range"
+    "03.04"
   );
   equal(
     wthn(7, [
@@ -126,7 +110,7 @@ test("03 - two ranges, edges on defaults", () => {
       [6, 8],
     ]),
     true,
-    "03.05 - outside of the range"
+    "03.05"
   );
 });
 
@@ -142,7 +126,7 @@ test("04 - two ranges, edges inclusive", () => {
       { inclusiveRangeEnds: true }
     ),
     false,
-    "04.01 - outside of the range"
+    "04.01"
   );
   equal(
     wthn(
@@ -154,7 +138,7 @@ test("04 - two ranges, edges inclusive", () => {
       { inclusiveRangeEnds: true }
     ),
     false,
-    "04.02 - outside of the range"
+    "04.02"
   );
   equal(
     wthn(
@@ -166,7 +150,7 @@ test("04 - two ranges, edges inclusive", () => {
       { inclusiveRangeEnds: true }
     ),
     false,
-    "04.03 - outside of the range"
+    "04.03"
   );
   equal(
     wthn(
@@ -178,7 +162,7 @@ test("04 - two ranges, edges inclusive", () => {
       { inclusiveRangeEnds: true }
     ),
     true,
-    "04.04 - outside of the range"
+    "04.04"
   );
   equal(
     wthn(
@@ -190,7 +174,7 @@ test("04 - two ranges, edges inclusive", () => {
       { inclusiveRangeEnds: true }
     ),
     true,
-    "04.05 - outside of the range"
+    "04.05"
   );
 
   // checking range edges:
@@ -255,7 +239,7 @@ test("05 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on defaults",
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "05.01 - outside of the range"
+    "05.01"
   );
   equal(
     wthn(
@@ -267,7 +251,7 @@ test("05 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on defaults",
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "05.02 - outside of the range"
+    "05.02"
   );
   equal(
     wthn(
@@ -279,7 +263,7 @@ test("05 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on defaults",
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "05.03 - outside of the range"
+    "05.03"
   );
   equal(
     wthn(
@@ -291,7 +275,7 @@ test("05 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on defaults",
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     [2, 4],
-    "05.04 - outside of the range"
+    "05.04"
   );
   equal(
     wthn(
@@ -303,7 +287,7 @@ test("05 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges on defaults",
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     [6, 8],
-    "05.05 - outside of the range"
+    "05.05"
   );
 });
 
@@ -322,7 +306,7 @@ test("06 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive", (
       }
     ),
     false,
-    "06.01 - outside of the range"
+    "06.01"
   );
   equal(
     wthn(
@@ -337,7 +321,7 @@ test("06 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive", (
       }
     ),
     false,
-    "06.02 - outside of the range"
+    "06.02"
   );
   equal(
     wthn(
@@ -352,7 +336,7 @@ test("06 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive", (
       }
     ),
     false,
-    "06.03 - outside of the range"
+    "06.03"
   );
   equal(
     wthn(
@@ -367,7 +351,7 @@ test("06 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive", (
       }
     ),
     [2, 4],
-    "06.04 - outside of the range"
+    "06.04"
   );
   equal(
     wthn(
@@ -382,7 +366,7 @@ test("06 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive", (
       }
     ),
     [6, 8],
-    "06.05 - outside of the range"
+    "06.05"
   );
   // checking range edges:
   equal(
@@ -458,7 +442,7 @@ test("06 - two ranges, opts.returnMatchedRangeInsteadOfTrue, edges inclusive", (
       }
     ),
     [0, 4],
-    "06.10 - zero"
+    "06.10"
   );
 });
 
@@ -478,7 +462,7 @@ test("07 - more than two ranges, uneven count, not inclusive", () => {
       [55, 60],
     ]),
     false,
-    "07.01 - outside of the range"
+    "07.01"
   );
   equal(
     wthn(
@@ -495,7 +479,7 @@ test("07 - more than two ranges, uneven count, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "07.02 - with opts, outside of the range"
+    "07.02"
   );
   equal(
     wthn(
@@ -512,7 +496,7 @@ test("07 - more than two ranges, uneven count, not inclusive", () => {
       { inclusiveRangeEnds: true }
     ),
     false,
-    "07.03 - outside of the range"
+    "07.03"
   );
   equal(
     wthn(
@@ -529,7 +513,7 @@ test("07 - more than two ranges, uneven count, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true, inclusiveRangeEnds: true }
     ),
     false,
-    "07.04 - with opts, outside of the range"
+    "07.04"
   );
 });
 
@@ -574,7 +558,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.02-2"
+    "08.02"
   );
   equal(
     wthn(1, [
@@ -616,7 +600,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.04-2"
+    "08.04"
   );
   equal(
     wthn(2, [
@@ -715,7 +699,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.09-2"
+    "08.09"
   );
   equal(
     wthn(6, [
@@ -757,7 +741,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     [5, 10],
-    "08.11-2"
+    "08.11"
   );
   equal(
     wthn(7, [
@@ -841,7 +825,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     [5, 10],
-    "08.15-2"
+    "08.15"
   );
   equal(
     wthn(9, [
@@ -883,7 +867,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     [5, 10],
-    "08.17-2"
+    "08.17"
   );
   equal(
     wthn(10, [
@@ -925,7 +909,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.19-2"
+    "08.19"
   );
   equal(
     wthn(11, [
@@ -967,7 +951,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.21-2"
+    "08.21"
   );
   equal(
     wthn(12, [
@@ -1066,7 +1050,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true }
     ),
     true,
-    "08.26-2"
+    "08.26"
   );
   equal(
     wthn(
@@ -1089,7 +1073,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.27-3"
+    "08.27"
   );
   equal(
     wthn(
@@ -1112,7 +1096,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
     [15, 20],
-    "08.28-4"
+    "08.28"
   );
   equal(
     wthn(16, [
@@ -1154,7 +1138,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     [15, 20],
-    "08.30-2"
+    "08.30"
   );
   equal(
     wthn(17, [
@@ -1253,7 +1237,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true }
     ),
     true,
-    "08.35-2"
+    "08.35"
   );
   equal(
     wthn(
@@ -1276,7 +1260,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.36-3"
+    "08.36"
   );
   equal(
     wthn(
@@ -1299,7 +1283,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
     [15, 20],
-    "08.37-4"
+    "08.37"
   );
   equal(
     wthn(21, [
@@ -1964,7 +1948,7 @@ test("08 - even more ranges, not inclusive", () => {
       [125, 130],
     ]),
     false,
-    "08.72-1"
+    "08.72"
   );
   equal(
     wthn(
@@ -1987,7 +1971,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true }
     ),
     true,
-    "08.73-2"
+    "08.73"
   );
   equal(
     wthn(
@@ -2010,7 +1994,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.74-3"
+    "08.74"
   );
   equal(
     wthn(
@@ -2033,7 +2017,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
     [55, 60],
-    "08.75-4"
+    "08.75"
   );
   equal(
     wthn(56, [
@@ -2052,7 +2036,7 @@ test("08 - even more ranges, not inclusive", () => {
       [125, 130],
     ]),
     true,
-    "08.76-1"
+    "08.76"
   );
   equal(
     wthn(
@@ -2075,7 +2059,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     [55, 60],
-    "08.77-2"
+    "08.77"
   );
   equal(
     wthn(57, [
@@ -2227,7 +2211,7 @@ test("08 - even more ranges, not inclusive", () => {
       [125, 130],
     ]),
     false,
-    "08.85-1"
+    "08.85"
   );
   equal(
     wthn(
@@ -2250,7 +2234,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.86-2"
+    "08.86"
   );
   equal(
     wthn(65, [
@@ -2269,7 +2253,7 @@ test("08 - even more ranges, not inclusive", () => {
       [125, 130],
     ]),
     false,
-    "08.87-1"
+    "08.87"
   );
   equal(
     wthn(
@@ -2292,7 +2276,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.88-2"
+    "08.88"
   );
   equal(
     wthn(66, [
@@ -2311,7 +2295,7 @@ test("08 - even more ranges, not inclusive", () => {
       [125, 130],
     ]),
     true,
-    "08.89-1"
+    "08.89"
   );
   equal(
     wthn(
@@ -2334,7 +2318,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     [65, 70],
-    "08.90-2"
+    "08.90"
   );
   equal(
     wthn(67, [
@@ -2372,7 +2356,7 @@ test("08 - even more ranges, not inclusive", () => {
       [125, 130],
     ]),
     true,
-    "08.92-1"
+    "08.92"
   );
   equal(
     wthn(
@@ -2395,7 +2379,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     [65, 70],
-    "08.93-2"
+    "08.93"
   );
   equal(
     wthn(69, [
@@ -2547,7 +2531,7 @@ test("08 - even more ranges, not inclusive", () => {
       [125, 130],
     ]),
     true,
-    "08.101-1"
+    "08.101"
   );
   equal(
     wthn(
@@ -2570,7 +2554,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     [75, 80],
-    "08.102-2"
+    "08.102"
   );
   equal(
     wthn(77, [
@@ -2760,7 +2744,7 @@ test("08 - even more ranges, not inclusive", () => {
       [125, 130],
     ]),
     true,
-    "08.112-1"
+    "08.112"
   );
   equal(
     wthn(
@@ -2783,7 +2767,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     [85, 90],
-    "08.113-2"
+    "08.113"
   );
   equal(
     wthn(87, [
@@ -2992,7 +2976,7 @@ test("08 - even more ranges, not inclusive", () => {
       [125, 130],
     ]),
     true,
-    "08.124-1"
+    "08.124"
   );
   equal(
     wthn(
@@ -3015,7 +2999,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     [95, 100],
-    "08.125-2"
+    "08.125"
   );
   equal(
     wthn(98, [
@@ -3072,7 +3056,7 @@ test("08 - even more ranges, not inclusive", () => {
       [125, 130],
     ]),
     false,
-    "08.128-1"
+    "08.128"
   );
   equal(
     wthn(
@@ -3095,7 +3079,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true }
     ),
     true,
-    "08.129-2"
+    "08.129"
   );
   equal(
     wthn(
@@ -3118,7 +3102,7 @@ test("08 - even more ranges, not inclusive", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.130-3"
+    "08.130"
   );
   equal(
     wthn(
@@ -3141,7 +3125,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
     [95, 100],
-    "08.131-4"
+    "08.131"
   );
 
   //
@@ -3236,7 +3220,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: false }
     ),
     true,
-    "08.135-1"
+    "08.135"
   );
   equal(
     wthn(
@@ -3259,7 +3243,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: true }
     ),
     [115, 120],
-    "08.136-2"
+    "08.136"
   );
   equal(
     wthn(
@@ -3305,7 +3289,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.138-1"
+    "08.138"
   );
   equal(
     wthn(
@@ -3328,7 +3312,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: false }
     ),
     false,
-    "08.139-2"
+    "08.139"
   );
   equal(
     wthn(
@@ -3351,7 +3335,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.140-3"
+    "08.140"
   );
   equal(
     wthn(
@@ -3374,7 +3358,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: false }
     ),
     false,
-    "08.141-4"
+    "08.141"
   );
   equal(
     wthn(
@@ -3397,7 +3381,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: false }
     ),
     true,
-    "08.142-1"
+    "08.142"
   );
   equal(
     wthn(
@@ -3420,7 +3404,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: false }
     ),
     true,
-    "08.143-2"
+    "08.143"
   );
   equal(
     wthn(
@@ -3443,7 +3427,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
     [125, 130],
-    "08.144-3"
+    "08.144"
   );
   equal(
     wthn(
@@ -3466,7 +3450,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: true }
     ),
     [125, 130],
-    "08.145-4"
+    "08.145"
   );
 
   equal(
@@ -3490,7 +3474,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.146-1"
+    "08.146"
   );
   equal(
     wthn(
@@ -3513,7 +3497,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
     [125, 130],
-    "08.147-2"
+    "08.147"
   );
   equal(
     wthn(
@@ -3536,7 +3520,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: false }
     ),
     false,
-    "08.148-3"
+    "08.148"
   );
   equal(
     wthn(
@@ -3559,7 +3543,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: false }
     ),
     true,
-    "08.149-4"
+    "08.149"
   );
 
   // outside of the range
@@ -3584,7 +3568,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: false }
     ),
     false,
-    "08.150-1"
+    "08.150"
   );
   equal(
     wthn(
@@ -3607,7 +3591,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.151-2"
+    "08.151"
   );
   equal(
     wthn(
@@ -3630,7 +3614,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: false }
     ),
     false,
-    "08.152-3"
+    "08.152"
   );
   equal(
     wthn(
@@ -3653,7 +3637,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.153-4"
+    "08.153"
   );
   equal(
     wthn(
@@ -3676,7 +3660,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: false }
     ),
     false,
-    "08.154-1"
+    "08.154"
   );
   equal(
     wthn(
@@ -3699,7 +3683,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.155-2"
+    "08.155"
   );
   equal(
     wthn(
@@ -3722,7 +3706,7 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: false }
     ),
     false,
-    "08.156-3"
+    "08.156"
   );
   equal(
     wthn(
@@ -3745,22 +3729,14 @@ test("08 - even more ranges, not inclusive", () => {
       { inclusiveRangeEnds: false, returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "08.157-4"
+    "08.157"
   );
 });
 
 test("09 - small ranges - zero", () => {
-  equal(wthn(0, [[0, 1]]), false, "09.01 - no opts");
-  equal(
-    wthn(0, [[0, 1]], { inclusiveRangeEnds: false }),
-    false,
-    "09.02 - hardcoded opts defaults"
-  );
-  equal(
-    wthn(0, [[0, 1]], { inclusiveRangeEnds: true }),
-    true,
-    "09.03 - inclusive"
-  );
+  equal(wthn(0, [[0, 1]]), false, "09.01");
+  equal(wthn(0, [[0, 1]], { inclusiveRangeEnds: false }), false, "09.02");
+  equal(wthn(0, [[0, 1]], { inclusiveRangeEnds: true }), true, "09.03");
   equal(
     wthn(0, [
       [0, 1],
@@ -3775,7 +3751,7 @@ test("09 - small ranges - zero", () => {
       [1, 3],
     ]),
     false,
-    "09.05 - overlap"
+    "09.05"
   );
   equal(
     wthn(0, [
@@ -3783,7 +3759,7 @@ test("09 - small ranges - zero", () => {
       [0, 3],
     ]),
     false,
-    "09.06 - overlap #2"
+    "09.06"
   );
   equal(
     wthn(0, [
@@ -3791,7 +3767,7 @@ test("09 - small ranges - zero", () => {
       [0, 3],
     ]),
     false,
-    "09.07 - overlap and wrong order"
+    "09.07"
   );
   equal(
     wthn(
@@ -3803,7 +3779,7 @@ test("09 - small ranges - zero", () => {
       { inclusiveRangeEnds: true }
     ),
     true,
-    "09.08 - overlap and wrong order - inclusive"
+    "09.08"
   );
   equal(
     wthn(
@@ -3815,7 +3791,7 @@ test("09 - small ranges - zero", () => {
       { inclusiveRangeEnds: true }
     ),
     true,
-    "09.09 - overlap and wrong order - inclusive"
+    "09.09"
   );
 
   // returnMatchedRangeInsteadOfTrue: true
@@ -3823,7 +3799,7 @@ test("09 - small ranges - zero", () => {
   equal(
     wthn(0, [[0, 1]], { returnMatchedRangeInsteadOfTrue: true }),
     false,
-    "09.10 - no opts"
+    "09.10"
   );
   equal(
     wthn(0, [[0, 1]], {
@@ -3831,7 +3807,7 @@ test("09 - small ranges - zero", () => {
       returnMatchedRangeInsteadOfTrue: true,
     }),
     false,
-    "09.11 - hardcoded opts defaults"
+    "09.11"
   );
   equal(
     wthn(0, [[0, 1]], {
@@ -3839,7 +3815,7 @@ test("09 - small ranges - zero", () => {
       returnMatchedRangeInsteadOfTrue: true,
     }),
     [0, 1],
-    "09.12 - inclusive"
+    "09.12"
   );
   equal(
     wthn(
@@ -3863,7 +3839,7 @@ test("09 - small ranges - zero", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "09.14 - overlap"
+    "09.14"
   );
   equal(
     wthn(
@@ -3875,7 +3851,7 @@ test("09 - small ranges - zero", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "09.15 - overlap #2"
+    "09.15"
   );
   equal(
     wthn(
@@ -3887,7 +3863,7 @@ test("09 - small ranges - zero", () => {
       { returnMatchedRangeInsteadOfTrue: true }
     ),
     false,
-    "09.16 - overlap and wrong order"
+    "09.16"
   );
   equal(
     wthn(
@@ -3902,7 +3878,7 @@ test("09 - small ranges - zero", () => {
       }
     ),
     [0, 10],
-    "09.17 - overlap and wrong order - inclusive"
+    "09.17"
   );
   equal(
     wthn(
@@ -3917,22 +3893,14 @@ test("09 - small ranges - zero", () => {
       }
     ),
     [0, 3],
-    "09.18 - overlap and wrong order - inclusive"
+    "09.18"
   );
 });
 
 test("10 - small ranges - one", () => {
-  equal(wthn(1, [[0, 1]]), false, "10.01 - no opts");
-  equal(
-    wthn(1, [[0, 1]], { inclusiveRangeEnds: false }),
-    false,
-    "10.02 - hardcoded opts defaults"
-  );
-  equal(
-    wthn(1, [[0, 1]], { inclusiveRangeEnds: true }),
-    true,
-    "10.03 - inclusive"
-  );
+  equal(wthn(1, [[0, 1]]), false, "10.01");
+  equal(wthn(1, [[0, 1]], { inclusiveRangeEnds: false }), false, "10.02");
+  equal(wthn(1, [[0, 1]], { inclusiveRangeEnds: true }), true, "10.03");
 
   // opts.returnMatchedRangeInsteadOfTrue
   equal(
@@ -3946,7 +3914,7 @@ test("10 - small ranges - one", () => {
       returnMatchedRangeInsteadOfTrue: true,
     }),
     false,
-    "10.05 - hardcoded opts defaults"
+    "10.05"
   );
   equal(
     wthn(1, [[0, 1]], {
@@ -3954,7 +3922,7 @@ test("10 - small ranges - one", () => {
       returnMatchedRangeInsteadOfTrue: true,
     }),
     [0, 1],
-    "10.06 - inclusive"
+    "10.06"
   );
 });
 
@@ -3963,21 +3931,9 @@ test("11 - identical range endings", () => {
   equal(wthn(1, [[1, 1]], { inclusiveRangeEnds: false }), false, "11.02");
   equal(wthn(0, [[0, 0]], { inclusiveRangeEnds: true }), true, "11.03");
   equal(wthn(1, [[1, 1]], { inclusiveRangeEnds: true }), true, "11.04");
-  equal(
-    wthn(0, [[1, 1]], { inclusiveRangeEnds: true }),
-    false,
-    "11.05 - identical range ends, index under"
-  );
-  equal(
-    wthn(2, [[1, 1]], { inclusiveRangeEnds: true }),
-    false,
-    "11.06 - identical range ends, index above"
-  );
-  equal(
-    wthn(2, [[1, 1]], { inclusiveRangeEnds: false }),
-    false,
-    "11.07 - identical range ends, index above"
-  );
+  equal(wthn(0, [[1, 1]], { inclusiveRangeEnds: true }), false, "11.05");
+  equal(wthn(2, [[1, 1]], { inclusiveRangeEnds: true }), false, "11.06");
+  equal(wthn(2, [[1, 1]], { inclusiveRangeEnds: false }), false, "11.07");
   equal(
     wthn(
       1,
@@ -3989,7 +3945,7 @@ test("11 - identical range endings", () => {
       { inclusiveRangeEnds: false }
     ),
     false,
-    "11.08 - identical consecutive"
+    "11.08"
   );
   equal(
     wthn(
@@ -4002,7 +3958,7 @@ test("11 - identical range endings", () => {
       { inclusiveRangeEnds: false }
     ),
     false,
-    "11.09 - identical consecutive"
+    "11.09"
   );
   equal(
     wthn(
@@ -4015,7 +3971,7 @@ test("11 - identical range endings", () => {
       { inclusiveRangeEnds: false }
     ),
     false,
-    "11.10 - identical consecutive"
+    "11.10"
   );
   equal(
     wthn(
@@ -4028,7 +3984,7 @@ test("11 - identical range endings", () => {
       { inclusiveRangeEnds: true }
     ),
     true,
-    "11.11 - identical consecutive"
+    "11.11"
   );
   equal(
     wthn(
@@ -4041,7 +3997,7 @@ test("11 - identical range endings", () => {
       { inclusiveRangeEnds: true }
     ),
     true,
-    "11.12 - identical consecutive"
+    "11.12"
   );
   equal(
     wthn(
@@ -4054,7 +4010,7 @@ test("11 - identical range endings", () => {
       { inclusiveRangeEnds: true }
     ),
     true,
-    "11.13 - identical consecutive"
+    "11.13"
   );
   equal(
     wthn(
@@ -4067,7 +4023,7 @@ test("11 - identical range endings", () => {
       { inclusiveRangeEnds: true }
     ),
     false,
-    "11.14 - identical consecutive with gap"
+    "11.14"
   );
   equal(
     wthn(
@@ -4080,7 +4036,7 @@ test("11 - identical range endings", () => {
       { inclusiveRangeEnds: false }
     ),
     false,
-    "11.15 - identical consecutive with gap"
+    "11.15"
   );
 
   // opts.returnMatchedRangeInsteadOfTrue
@@ -4122,7 +4078,7 @@ test("11 - identical range endings", () => {
       returnMatchedRangeInsteadOfTrue: true,
     }),
     false,
-    "11.20 - identical range ends, index under"
+    "11.20"
   );
   equal(
     wthn(2, [[1, 1]], {
@@ -4130,7 +4086,7 @@ test("11 - identical range endings", () => {
       returnMatchedRangeInsteadOfTrue: true,
     }),
     false,
-    "11.21 - identical range ends, index above"
+    "11.21"
   );
   equal(
     wthn(2, [[1, 1]], {
@@ -4138,7 +4094,7 @@ test("11 - identical range endings", () => {
       returnMatchedRangeInsteadOfTrue: true,
     }),
     false,
-    "11.22 - identical range ends, index above"
+    "11.22"
   );
   equal(
     wthn(
@@ -4154,7 +4110,7 @@ test("11 - identical range endings", () => {
       }
     ),
     false,
-    "11.23 - identical consecutive"
+    "11.23"
   );
   equal(
     wthn(
@@ -4170,7 +4126,7 @@ test("11 - identical range endings", () => {
       }
     ),
     false,
-    "11.24 - identical consecutive"
+    "11.24"
   );
   equal(
     wthn(
@@ -4186,7 +4142,7 @@ test("11 - identical range endings", () => {
       }
     ),
     false,
-    "11.25 - identical consecutive"
+    "11.25"
   );
   equal(
     wthn(
@@ -4202,7 +4158,7 @@ test("11 - identical range endings", () => {
       }
     ),
     [1, 1],
-    "11.26 - identical consecutive"
+    "11.26"
   );
   equal(
     wthn(
@@ -4218,7 +4174,7 @@ test("11 - identical range endings", () => {
       }
     ),
     [2, 2],
-    "11.27 - identical consecutive"
+    "11.27"
   );
   equal(
     wthn(
@@ -4234,7 +4190,7 @@ test("11 - identical range endings", () => {
       }
     ),
     [3, 3],
-    "11.28 - identical consecutive"
+    "11.28"
   );
   equal(
     wthn(
@@ -4250,7 +4206,7 @@ test("11 - identical range endings", () => {
       }
     ),
     false,
-    "11.29 - identical consecutive with gap"
+    "11.29"
   );
   equal(
     wthn(
@@ -4266,7 +4222,7 @@ test("11 - identical range endings", () => {
       }
     ),
     false,
-    "11.30 - identical consecutive with gap"
+    "11.30"
   );
 });
 

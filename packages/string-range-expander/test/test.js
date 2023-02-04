@@ -8,73 +8,109 @@ import { expander as e } from "../dist/string-range-expander.esm.js";
 // -----------------------------------------------------------------------------
 
 test("01 - throws on Boolean input", () => {
-  throws(() => {
-    e(true);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      e(true);
+    },
+    /THROW_ID_01/,
+    "01.01"
+  );
 });
 
 test("02 - throws on missing input", () => {
-  throws(() => {
-    e();
-  }, /missing completely/);
+  throws(
+    () => {
+      e();
+    },
+    /missing completely/,
+    "02.01"
+  );
 });
 
 test("03 - throws on null input", () => {
-  throws(() => {
-    e(null);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      e(null);
+    },
+    /THROW_ID_01/,
+    "03.01"
+  );
 });
 
 test("04 - throws on string input", () => {
-  throws(() => {
-    e("zzz");
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      e("zzz");
+    },
+    /THROW_ID_01/,
+    "04.01"
+  );
 });
 
 test("05 - throws on empty plain object", () => {
-  throws(() => {
-    e({});
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      e({});
+    },
+    /THROW_ID_02/,
+    "05.01"
+  );
 });
 
 test('06 - throws when "from" is not a number', () => {
-  throws(() => {
-    e({
-      str: "aaa",
-      from: "0",
-      to: 0,
-    });
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      e({
+        str: "aaa",
+        from: "0",
+        to: 0,
+      });
+    },
+    /THROW_ID_03/,
+    "06.01"
+  );
 });
 
 test('07 - throws when "to" is not a number', () => {
-  throws(() => {
-    e({
-      str: "aaa",
-      from: 0,
-      to: "0",
-    });
-  }, /THROW_ID_04/);
+  throws(
+    () => {
+      e({
+        str: "aaa",
+        from: 0,
+        to: "0",
+      });
+    },
+    /THROW_ID_04/,
+    "07.01"
+  );
 });
 
 test('08 - throws when "from" is outside the str boundaries', () => {
-  throws(() => {
-    e({
-      str: "aaa",
-      from: 10,
-      to: 20,
-    });
-  }, /THROW_ID_05/);
+  throws(
+    () => {
+      e({
+        str: "aaa",
+        from: 10,
+        to: 20,
+      });
+    },
+    /THROW_ID_05/,
+    "08.01"
+  );
 });
 
 test('09 - throws when "to" is way outside the str boundaries', () => {
-  throws(() => {
-    e({
-      str: "aaa",
-      from: 0,
-      to: 4,
-    });
-  }, /THROW_ID_06/);
+  throws(
+    () => {
+      e({
+        str: "aaa",
+        from: 0,
+        to: 4,
+      });
+    },
+    /THROW_ID_06/,
+    "09.01"
+  );
 
   // but 3 (= str.length) is OK:
   not.throws(() => {
@@ -87,23 +123,31 @@ test('09 - throws when "to" is way outside the str boundaries', () => {
 });
 
 test("10 - throws when opts.extendToOneSide is unrecognised", () => {
-  throws(() => {
-    e({
-      str: "aaa",
-      from: 1,
-      to: 2,
-      extendToOneSide: "zzz",
-    });
-  }, /THROW_ID_08/);
+  throws(
+    () => {
+      e({
+        str: "aaa",
+        from: 1,
+        to: 2,
+        extendToOneSide: "zzz",
+      });
+    },
+    /THROW_ID_08/,
+    "10.01"
+  );
 
-  throws(() => {
-    e({
-      str: "aaa",
-      from: 1,
-      to: 2,
-      extendToOneSide: null,
-    });
-  }, /THROW_ID_08/);
+  throws(
+    () => {
+      e({
+        str: "aaa",
+        from: 1,
+        to: 2,
+        extendToOneSide: null,
+      });
+    },
+    /THROW_ID_08/,
+    "10.02"
+  );
 });
 
 // 01. BAU.
@@ -151,7 +195,7 @@ test("11 - nothing to expand", () => {
       to: 5,
     }),
     [2, 5],
-    "11.04 - addSingleSpaceToPreventAccidentalConcatenation default"
+    "11.04"
   );
   equal(
     e({
@@ -161,7 +205,7 @@ test("11 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [2, 5],
-    "11.05 - addSingleSpaceToPreventAccidentalConcatenation hardcoded default"
+    "11.05"
   );
   equal(
     e({
@@ -204,7 +248,7 @@ test("11 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [0, 5],
-    "11.09 - does not add space if touching EOL"
+    "11.09"
   );
 
   //
@@ -295,7 +339,7 @@ test("11 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [2, 5],
-    "11.17 - hardcoded addSingleSpaceToPreventAccidentalConcatenation default"
+    "11.17"
   );
   equal(
     e({
@@ -306,7 +350,7 @@ test("11 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [2, 5, " "],
-    "11.18 - combo, no whitespace"
+    "11.18"
   );
 });
 
@@ -521,7 +565,7 @@ test("15 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       wipeAllWhitespaceOnLeft: false,
     }),
     [5, 6],
-    "15.02 - wipeAllWhitespaceOnLeft hardcoded default"
+    "15.02"
   );
   equal(
     e({
@@ -531,7 +575,7 @@ test("15 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       wipeAllWhitespaceOnLeft: true,
     }),
     [5, 6],
-    "15.03 - wipeAllWhitespaceOnLeft on"
+    "15.03"
   );
 
   // addSingleSpaceToPreventAccidentalConcatenation
@@ -553,7 +597,7 @@ test("15 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [5, 6, " "],
-    "15.05 - combo, no whitespace"
+    "15.05"
   );
 
   // combo
@@ -566,7 +610,7 @@ test("15 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [5, 6, " "],
-    "15.06 - true-true"
+    "15.06"
   );
   equal(
     e({
@@ -577,7 +621,7 @@ test("15 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [5, 6],
-    "15.07 - true-false"
+    "15.07"
   );
   equal(
     e({
@@ -588,7 +632,7 @@ test("15 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [5, 6, " "],
-    "15.08 - false-true"
+    "15.08"
   );
   equal(
     e({
@@ -599,7 +643,7 @@ test("15 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [5, 6],
-    "15.09 - false-false"
+    "15.09"
   );
 });
 
@@ -769,7 +813,7 @@ test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [8, 16],
-    "19.01 - baseline"
+    "19.01"
   );
   equal(
     e({
@@ -779,7 +823,7 @@ test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [8, 16],
-    "19.02 - non digits and non letters"
+    "19.02"
   );
   equal(
     e({
@@ -789,7 +833,7 @@ test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [1, 9, " "],
-    "19.03 - letters"
+    "19.03"
   );
   equal(
     e({
@@ -799,7 +843,7 @@ test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [5, 13, " "],
-    "19.04 - letter on one side"
+    "19.04"
   );
   equal(
     e({
@@ -1186,7 +1230,7 @@ test(`26 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisCropItToo`}\u001b[${39}
       ifRightSideIncludesThisThenCropTightly: "<",
     }),
     [10, 21],
-    "26.01 - control #1"
+    "26.01"
   );
   equal(
     e({
@@ -1196,7 +1240,7 @@ test(`26 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisCropItToo`}\u001b[${39}
       ifLeftSideIncludesThisCropItToo: "\n\t",
     }),
     [10, 20],
-    "26.02 - control #2"
+    "26.02"
   );
   equal(
     e({
@@ -1256,7 +1300,7 @@ test(`27 - ${`\u001b[${33}m${`opts.extendToOneSide`}\u001b[${39}m`} - one side o
       to: 5,
     }),
     [3, 6],
-    "27.01 - default, a control"
+    "27.01"
   );
   equal(
     e({
@@ -1266,7 +1310,7 @@ test(`27 - ${`\u001b[${33}m${`opts.extendToOneSide`}\u001b[${39}m`} - one side o
       extendToOneSide: false,
     }),
     [3, 6],
-    "27.02 - hardcoded default"
+    "27.02"
   );
   equal(
     e({
@@ -1276,7 +1320,7 @@ test(`27 - ${`\u001b[${33}m${`opts.extendToOneSide`}\u001b[${39}m`} - one side o
       extendToOneSide: "right",
     }),
     [4, 6],
-    "27.03 - right only"
+    "27.03"
   );
   equal(
     e({
@@ -1286,7 +1330,7 @@ test(`27 - ${`\u001b[${33}m${`opts.extendToOneSide`}\u001b[${39}m`} - one side o
       extendToOneSide: "left",
     }),
     [3, 5],
-    "27.04 - left only"
+    "27.04"
   );
 });
 
@@ -1301,7 +1345,7 @@ test(`28 - ${`\u001b[${33}m${`opts.wipeAllWhitespaceOnLeft`}\u001b[${39}m`} - ex
       to: 5,
     }),
     [3, 6],
-    "28.01 - a control"
+    "28.01"
   );
   equal(
     e({
@@ -1311,7 +1355,7 @@ test(`28 - ${`\u001b[${33}m${`opts.wipeAllWhitespaceOnLeft`}\u001b[${39}m`} - ex
       wipeAllWhitespaceOnLeft: true,
     }),
     [2, 6],
-    "28.02 - left"
+    "28.02"
   );
   equal(
     e({
@@ -1321,7 +1365,7 @@ test(`28 - ${`\u001b[${33}m${`opts.wipeAllWhitespaceOnLeft`}\u001b[${39}m`} - ex
       wipeAllWhitespaceOnRight: true,
     }),
     [3, 7],
-    "28.03 - right"
+    "28.03"
   );
   equal(
     e({
@@ -1332,7 +1376,7 @@ test(`28 - ${`\u001b[${33}m${`opts.wipeAllWhitespaceOnLeft`}\u001b[${39}m`} - ex
       wipeAllWhitespaceOnRight: true,
     }),
     [2, 7],
-    "28.04 - both"
+    "28.04"
   );
 });
 

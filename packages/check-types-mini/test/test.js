@@ -5,83 +5,103 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { checkTypesMini } from "../dist/check-types-mini.esm.js";
 
 test(`01 - when all/first args are missing`, () => {
-  throws(() => {
-    checkTypesMini();
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      checkTypesMini();
+    },
+    /THROW_ID_01/,
+    "01.01"
+  );
 });
 
 test(`02 - when one of the arguments is of a wrong type`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: "false",
-        option3: false,
-      },
-      {
-        option1: "setting1",
-        option2: false,
-        option3: false,
-      }
-    );
-  }, /not boolean but string/g);
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: "false",
+          option3: false,
+        },
+        {
+          option1: "setting1",
+          option2: false,
+          option3: false,
+        }
+      );
+    },
+    /not boolean but string/g,
+    "02.01"
+  );
 
   // with opts.enforceStrictKeyset === false
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: "false",
-        option3: false,
-      },
-      {
-        option1: "setting1",
-        option2: false,
-        option3: false,
-      },
-      {
-        enforceStrictKeyset: false,
-      }
-    );
-  }, /not boolean but string/g);
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: "false",
+          option3: false,
+        },
+        {
+          option1: "setting1",
+          option2: false,
+          option3: false,
+        },
+        {
+          enforceStrictKeyset: false,
+        }
+      );
+    },
+    /not boolean but string/g,
+    "02.02"
+  );
 });
 
 test(`03`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: "false",
-        option3: false,
-      },
-      {
-        option1: "setting1",
-        option2: false,
-        option3: false,
-      },
-      {
-        msg: "newLibrary/index.js [THROW_ID_01]", // << no trailing space
-      }
-    );
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: "false",
+          option3: false,
+        },
+        {
+          option1: "setting1",
+          option2: false,
+          option3: false,
+        },
+        {
+          msg: "newLibrary/index.js [THROW_ID_01]", // << no trailing space
+        }
+      );
+    },
+    /THROW_ID_01/g,
+    "03.01"
+  );
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: "false",
-        option3: false,
-      },
-      {
-        option1: "setting1",
-        option2: false,
-        option3: false,
-      },
-      {
-        msg: "newLibrary/index.js [THROW_ID_01]:        ", // << trailing space
-      }
-    );
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: "false",
+          option3: false,
+        },
+        {
+          option1: "setting1",
+          option2: false,
+          option3: false,
+        },
+        {
+          msg: "newLibrary/index.js [THROW_ID_01]:        ", // << trailing space
+        }
+      );
+    },
+    /THROW_ID_01/g,
+    "03.02"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -130,28 +150,32 @@ test(`04 - when opts are set wrong`, () => {
 });
 
 test(`05 - nested options`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: "setting2",
-        option3: {
-          aaa: {
-            bbb: true, // should be text, not Bool
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: "setting2",
+          option3: {
+            aaa: {
+              bbb: true, // should be text, not Bool
+            },
           },
         },
-      },
-      {
-        option1: "setting1",
-        option2: "setting2",
-        option3: {
-          aaa: {
-            bbb: "a",
+        {
+          option1: "setting1",
+          option2: "setting2",
+          option3: {
+            aaa: {
+              bbb: "a",
+            },
           },
-        },
-      }
-    );
-  }, /opts\.option3\.aaa\.bbb was customised to/);
+        }
+      );
+    },
+    /opts\.option3\.aaa\.bbb was customised to/,
+    "05.01"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -200,31 +224,35 @@ test(`06 - opts.ignorePaths`, () => {
   }, "06.01");
 
   // paths ignored - given as array:
-  throws(() => {
-    checkTypesMini(
-      {
-        aaa: {
-          bbb: "a",
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          aaa: {
+            bbb: "a",
+          },
+          ccc: {
+            bbb: "d",
+          },
         },
-        ccc: {
-          bbb: "d",
+        {
+          aaa: {
+            bbb: true,
+          },
+          ccc: {
+            bbb: true,
+          },
         },
-      },
-      {
-        aaa: {
-          bbb: true,
-        },
-        ccc: {
-          bbb: true,
-        },
-      },
-      {
-        msg: "msg",
-        optsVarName: "OPTS",
-        ignorePaths: ["aaa.bbb"], // <----- array.
-      }
-    );
-  }, /OPTS\.ccc\.bbb was customised to/g);
+        {
+          msg: "msg",
+          optsVarName: "OPTS",
+          ignorePaths: ["aaa.bbb"], // <----- array.
+        }
+      );
+    },
+    /OPTS\.ccc\.bbb was customised to/g,
+    "06.01"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -331,31 +359,35 @@ test(`06 - opts.ignorePaths`, () => {
   }, "06.06");
 
   // paths ignored - given as string:
-  throws(() => {
-    checkTypesMini(
-      {
-        aaa: {
-          bbb: "a",
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          aaa: {
+            bbb: "a",
+          },
+          ccc: {
+            bbb: "d",
+          },
         },
-        ccc: {
-          bbb: "d",
+        {
+          aaa: {
+            bbb: true,
+          },
+          ccc: {
+            bbb: true,
+          },
         },
-      },
-      {
-        aaa: {
-          bbb: true,
-        },
-        ccc: {
-          bbb: true,
-        },
-      },
-      {
-        msg: "msg",
-        optsVarName: "OPTS",
-        ignorePaths: "aaa.bbb", // <----- string. Should be same thing tho.
-      }
-    );
-  }, 'msg: OPTS.ccc.bbb was customised to "d" which is not boolean but string');
+        {
+          msg: "msg",
+          optsVarName: "OPTS",
+          ignorePaths: "aaa.bbb", // <----- string. Should be same thing tho.
+        }
+      );
+    },
+    'msg: OPTS.ccc.bbb was customised to "d" which is not boolean but string',
+    "06.02"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -414,58 +446,66 @@ test(`06 - opts.ignorePaths`, () => {
 
 test(`07 - opts.ignorePaths with wildcards`, () => {
   // paths ignored - given as string:
-  throws(() => {
-    checkTypesMini(
-      {
-        aaa: {
-          bbb: "a",
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          aaa: {
+            bbb: "a",
+          },
+          ccc: {
+            bbb: "d",
+          },
         },
-        ccc: {
-          bbb: "d",
+        {
+          aaa: {
+            bbb: true,
+          },
+          ccc: {
+            bbb: true,
+          },
         },
-      },
-      {
-        aaa: {
-          bbb: true,
-        },
-        ccc: {
-          bbb: true,
-        },
-      },
-      {
-        msg: "msg",
-        optsVarName: "OPTS",
-        ignorePaths: "aaa.*", // <----- string, not string in an array
-      }
-    );
-  }, 'msg: OPTS.ccc.bbb was customised to "d" which is not boolean but string');
+        {
+          msg: "msg",
+          optsVarName: "OPTS",
+          ignorePaths: "aaa.*", // <----- string, not string in an array
+        }
+      );
+    },
+    'msg: OPTS.ccc.bbb was customised to "d" which is not boolean but string',
+    "07.01"
+  );
 
   // paths ignored - given as array:
-  throws(() => {
-    checkTypesMini(
-      {
-        aaa: {
-          bbb: "a",
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          aaa: {
+            bbb: "a",
+          },
+          ccc: {
+            bbb: "d",
+          },
         },
-        ccc: {
-          bbb: "d",
+        {
+          aaa: {
+            bbb: true,
+          },
+          ccc: {
+            bbb: true,
+          },
         },
-      },
-      {
-        aaa: {
-          bbb: true,
-        },
-        ccc: {
-          bbb: true,
-        },
-      },
-      {
-        msg: "msg",
-        optsVarName: "OPTS",
-        ignorePaths: ["aaa.*"], // <----- array
-      }
-    );
-  }, 'msg: OPTS.ccc.bbb was customised to "d" which is not boolean but string');
+        {
+          msg: "msg",
+          optsVarName: "OPTS",
+          ignorePaths: ["aaa.*"], // <----- array
+        }
+      );
+    },
+    'msg: OPTS.ccc.bbb was customised to "d" which is not boolean but string',
+    "07.02"
+  );
 
   // paths ignored - given as string:
   not.throws(() => {
@@ -499,44 +539,52 @@ test(`07 - opts.ignorePaths with wildcards`, () => {
 
 test(`08 - opts.ignoreKeys with wildcards not referenced by schema/reference obj.`, () => {
   // the control
-  throws(() => {
-    checkTypesMini(
-      {
-        www1: "yyy",
-        www2: "zzz",
-      },
-      {
-        aaa: "bbb",
-        ccc: "ddd",
-      },
-      {
-        msg: "msg",
-        optsVarName: "OPTS",
-      }
-    );
-  }, "msg: The input object has keys which are not covered by the reference object: www1, www2");
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          www1: "yyy",
+          www2: "zzz",
+        },
+        {
+          aaa: "bbb",
+          ccc: "ddd",
+        },
+        {
+          msg: "msg",
+          optsVarName: "OPTS",
+        }
+      );
+    },
+    "msg: The input object has keys which are not covered by the reference object: www1, www2",
+    "08.01"
+  );
 
   // the bizness
   // default mode is Strict, opts.enforceStrictKeyset = true by default, so
   // even though "www1" and "www2" will be bailed out, the check-types-mini will
   // ask, WTF are the keys "aaa" and "ccc":
-  throws(() => {
-    checkTypesMini(
-      {
-        www1: "yyy",
-        www2: "zzz",
-      },
-      {
-        aaa: "bbb",
-        ccc: "ddd",
-      },
-      {
-        msg: "msg",
-        optsVarName: "OPTS",
-        ignoreKeys: "www*",
-      }
-    );
-  }, "msg: The reference object has keys which are not present in the input object: aaa, ccc");
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          www1: "yyy",
+          www2: "zzz",
+        },
+        {
+          aaa: "bbb",
+          ccc: "ddd",
+        },
+        {
+          msg: "msg",
+          optsVarName: "OPTS",
+          ignoreKeys: "www*",
+        }
+      );
+    },
+    "msg: The reference object has keys which are not present in the input object: aaa, ccc",
+    "08.02"
+  );
   // and it will throw the question at you.
 
   // but if we turn off Strict mode, no more throws:
@@ -562,55 +610,63 @@ test(`08 - opts.ignoreKeys with wildcards not referenced by schema/reference obj
 
 test(`09 - some keys bailed through ignoreKeys, some through ignorePaths and as a result it does not throw`, () => {
   // the control:
-  throws(() => {
-    checkTypesMini(
-      {
-        aaa: {
-          bbb: "ccc",
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          aaa: {
+            bbb: "ccc",
+          },
+          ddd: {
+            eee: "fff",
+          },
         },
-        ddd: {
-          eee: "fff",
+        {
+          aaa: {
+            bbb: false,
+          },
+          ddd: {
+            eee: false,
+          },
         },
-      },
-      {
-        aaa: {
-          bbb: false,
-        },
-        ddd: {
-          eee: false,
-        },
-      },
-      {
-        msg: "msg",
-      }
-    );
-  }, 'msg: opts.aaa.bbb was customised to "ccc" which is not boolean but string');
+        {
+          msg: "msg",
+        }
+      );
+    },
+    'msg: opts.aaa.bbb was customised to "ccc" which is not boolean but string',
+    "09.01"
+  );
 
   // bail the "aaa.bbb" via "ignoreKeys"
-  throws(() => {
-    checkTypesMini(
-      {
-        aaa: {
-          bbb: "ccc",
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          aaa: {
+            bbb: "ccc",
+          },
+          ddd: {
+            eee: "fff", // <----- ddd.eee fill cause a throw now
+          },
         },
-        ddd: {
-          eee: "fff", // <----- ddd.eee fill cause a throw now
+        {
+          aaa: {
+            bbb: false,
+          },
+          ddd: {
+            eee: false,
+          },
         },
-      },
-      {
-        aaa: {
-          bbb: false,
-        },
-        ddd: {
-          eee: false,
-        },
-      },
-      {
-        msg: "msg",
-        ignoreKeys: "bbb",
-      }
-    );
-  }, 'msg: opts.ddd.eee was customised to "fff" which is not boolean but string');
+        {
+          msg: "msg",
+          ignoreKeys: "bbb",
+        }
+      );
+    },
+    'msg: opts.ddd.eee was customised to "fff" which is not boolean but string',
+    "09.02"
+  );
 
   // bail the "aaa.bbb" via "opts.ignoreKeys" and "ddd.eee" via "opts.ignorePaths"
   not.throws(() => {
@@ -640,31 +696,35 @@ test(`09 - some keys bailed through ignoreKeys, some through ignorePaths and as 
   }, "09.03");
 
   // just to make sure options can fail too:
-  throws(() => {
-    checkTypesMini(
-      {
-        aaa: {
-          bbb: "ccc",
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          aaa: {
+            bbb: "ccc",
+          },
+          ddd: {
+            eee: "fff",
+          },
         },
-        ddd: {
-          eee: "fff",
+        {
+          aaa: {
+            bbb: false,
+          },
+          ddd: {
+            eee: false,
+          },
         },
-      },
-      {
-        aaa: {
-          bbb: false,
-        },
-        ddd: {
-          eee: false,
-        },
-      },
-      {
-        msg: "msg",
-        ignoreKeys: "zzz", // <------ unused key name
-        ignorePaths: "ddd.yyy", // <-- unused path
-      }
-    );
-  }, "09.04");
+        {
+          msg: "msg",
+          ignoreKeys: "zzz", // <------ unused key name
+          ignorePaths: "ddd.yyy", // <-- unused path
+        }
+      );
+    },
+    "09.04",
+    "09.03"
+  );
 });
 
 // ======================
@@ -672,20 +732,24 @@ test(`09 - some keys bailed through ignoreKeys, some through ignorePaths and as 
 // ======================
 
 test(`10 - opts.acceptArrays, strings+arrays`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: ["setting3", "setting4"],
-        option3: false,
-      },
-      {
-        option1: "setting1",
-        option2: "setting2",
-        option3: false,
-      }
-    );
-  }, /opts.option2 was customised/);
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: ["setting3", "setting4"],
+          option3: false,
+        },
+        {
+          option1: "setting1",
+          option2: "setting2",
+          option3: false,
+        }
+      );
+    },
+    /opts.option2 was customised/,
+    "10.01"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -707,42 +771,50 @@ test(`10 - opts.acceptArrays, strings+arrays`, () => {
     );
   }, "10.02");
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: ["setting3", true, "setting4"],
-        option3: false,
-      },
-      {
-        option1: "setting1",
-        option2: "setting2",
-        option3: false,
-      },
-      {
-        msg: "message",
-        optsVarName: "varname",
-        acceptArrays: true,
-      }
-    );
-  }, /varname.option2 was customised to be array/);
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: ["setting3", true, "setting4"],
+          option3: false,
+        },
+        {
+          option1: "setting1",
+          option2: "setting2",
+          option3: false,
+        },
+        {
+          msg: "message",
+          optsVarName: "varname",
+          acceptArrays: true,
+        }
+      );
+    },
+    /varname.option2 was customised to be array/,
+    "10.02"
+  );
 });
 
 test(`11 - opts.acceptArrays, Booleans+arrays`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: [true, true],
-        option3: false,
-      },
-      {
-        option1: "setting1",
-        option2: false,
-        option3: false,
-      }
-    );
-  }, /opts.option2 was customised to "\[true,true\]"/);
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: [true, true],
+          option3: false,
+        },
+        {
+          option1: "setting1",
+          option2: false,
+          option3: false,
+        }
+      );
+    },
+    /opts.option2 was customised to "\[true,true\]"/,
+    "11.01"
+  );
 });
 
 test(`12`, () => {
@@ -768,25 +840,29 @@ test(`12`, () => {
 });
 
 test(`13`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: [true, true, 1],
-        option3: false,
-      },
-      {
-        option1: "setting1",
-        option2: false,
-        option3: false,
-      },
-      {
-        msg: "message",
-        optsVarName: "varname",
-        acceptArrays: true,
-      }
-    );
-  }, /varname\.option2 was customised to be array/);
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: [true, true, 1],
+          option3: false,
+        },
+        {
+          option1: "setting1",
+          option2: false,
+          option3: false,
+        },
+        {
+          msg: "message",
+          optsVarName: "varname",
+          acceptArrays: true,
+        }
+      );
+    },
+    /varname\.option2 was customised to be array/,
+    "13.01"
+  );
 });
 
 test(`14`, () => {
@@ -834,93 +910,113 @@ test(`15 - opts.acceptArraysIgnore`, () => {
     );
   }, "15.01");
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: [1, 0, 1, 0],
-        option2: [true, true],
-        option3: false,
-      },
-      {
-        option1: 0,
-        option2: false,
-        option3: false,
-      },
-      {
-        msg: "test: [THROW_ID_01]",
-        optsVarName: "opts",
-        acceptArrays: true,
-        acceptArraysIgnore: ["zzz", "option1"],
-      }
-    );
-  }, /\[THROW_ID_01\]/);
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: [1, 0, 1, 0],
+          option2: [true, true],
+          option3: false,
+        },
+        {
+          option1: 0,
+          option2: false,
+          option3: false,
+        },
+        {
+          msg: "test: [THROW_ID_01]",
+          optsVarName: "opts",
+          acceptArrays: true,
+          acceptArraysIgnore: ["zzz", "option1"],
+        }
+      );
+    },
+    /\[THROW_ID_01\]/,
+    "15.01"
+  );
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: [1, 0, 1, 0],
-        option2: [true, true],
-        option3: false,
-      },
-      {
-        option1: 0,
-        option2: false,
-        option3: false,
-      },
-      {
-        msg: "test: [THROW_ID_01]",
-        optsVarName: "opts",
-        acceptArrays: false,
-        acceptArraysIgnore: ["zzz", "option1"],
-      }
-    );
-  }, /opts\.option1 was customised to "\[1,0,1,0\]"/);
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: [1, 0, 1, 0],
+          option2: [true, true],
+          option3: false,
+        },
+        {
+          option1: 0,
+          option2: false,
+          option3: false,
+        },
+        {
+          msg: "test: [THROW_ID_01]",
+          optsVarName: "opts",
+          acceptArrays: false,
+          acceptArraysIgnore: ["zzz", "option1"],
+        }
+      );
+    },
+    /opts\.option1 was customised to "\[1,0,1,0\]"/,
+    "15.02"
+  );
 });
 
 test(`16 - involving null values`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        key: 1,
-        val: null,
-        cleanup: true,
-      },
-      {
-        key: null,
-        val: null,
-        cleanup: true,
-      }
-    );
-  }, /opts.key was customised to "1"/);
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          key: 1,
+          val: null,
+          cleanup: true,
+        },
+        {
+          key: null,
+          val: null,
+          cleanup: true,
+        }
+      );
+    },
+    /opts.key was customised to "1"/,
+    "16.01"
+  );
 });
 
 test(`17 - throws/notThrows when keysets mismatch`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        key: null,
-        val: null,
-        cleanup: true,
-      },
-      {
-        key: null,
-        val: null,
-      }
-    );
-  }, "17.01");
-  throws(() => {
-    checkTypesMini(
-      {
-        key: null,
-        val: null,
-      },
-      {
-        key: null,
-        val: null,
-        cleanup: true,
-      }
-    );
-  }, "17.02");
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          key: null,
+          val: null,
+          cleanup: true,
+        },
+        {
+          key: null,
+          val: null,
+        }
+      );
+    },
+    "17.01",
+    "17.01"
+  );
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          key: null,
+          val: null,
+        },
+        {
+          key: null,
+          val: null,
+          cleanup: true,
+        }
+      );
+    },
+    "17.02",
+    "17.02"
+  );
   not.throws(() => {
     checkTypesMini(
       {
@@ -956,36 +1052,44 @@ test(`17 - throws/notThrows when keysets mismatch`, () => {
 });
 
 test(`18 - opts.enforceStrictKeyset set to a wrong thing`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        key: 1,
-        val: null,
-        cleanup: true,
-      },
-      {
-        key: null,
-        val: null,
-        cleanup: true,
-      },
-      {
-        enforceStrictKeyset: 1,
-      }
-    );
-  }, "18.01");
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          key: 1,
+          val: null,
+          cleanup: true,
+        },
+        {
+          key: null,
+          val: null,
+          cleanup: true,
+        },
+        {
+          enforceStrictKeyset: 1,
+        }
+      );
+    },
+    "18.01",
+    "18.01"
+  );
 });
 
 test(`19 - throws when reference and schema are both missing`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        key: 1,
-        val: null,
-        cleanup: true,
-      },
-      {}
-    );
-  }, "19.01");
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          key: 1,
+          val: null,
+          cleanup: true,
+        },
+        {}
+      );
+    },
+    "19.01",
+    "19.01"
+  );
 });
 
 test(`20 - acceptArrays + schema + nested`, () => {
@@ -1035,27 +1139,31 @@ test(`20 - acceptArrays + schema + nested`, () => {
 
   // the value opt2.opt3 is missing from ref but given in schema. Parent key,
   // opt2, is present in ref.
-  throws(() => {
-    checkTypesMini(
-      {
-        opt1: "aaa",
-        opt2: {
-          opt3: ["bbb"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          opt1: "aaa",
+          opt2: {
+            opt3: ["bbb"],
+          },
         },
-      },
-      {
-        // <---- ref object
-        opt1: "zzz",
-        opt2: {},
-      },
-      {
-        acceptArrays: false,
-        schema: {
-          "opt2.opt3": "string",
+        {
+          // <---- ref object
+          opt1: "zzz",
+          opt2: {},
         },
-      }
-    );
-  }, /opts\.opt2\.opt3 was customised to/);
+        {
+          acceptArrays: false,
+          schema: {
+            "opt2.opt3": "string",
+          },
+        }
+      );
+    },
+    /opts\.opt2\.opt3 was customised to/,
+    "20.01"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -1078,45 +1186,53 @@ test(`20 - acceptArrays + schema + nested`, () => {
     );
   }, "20.04");
 
-  throws(() => {
-    checkTypesMini(
-      {
-        opt1: "aaa",
-        opt2: {
-          opt3: ["bbb", 999],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          opt1: "aaa",
+          opt2: {
+            opt3: ["bbb", 999],
+          },
         },
-      },
-      {
-        opt1: "zzz",
-        opt2: {},
-      },
-      {
-        acceptArrays: true,
-        schema: {
-          "opt2.opt3": "string",
+        {
+          opt1: "zzz",
+          opt2: {},
         },
-      }
-    );
-  }, /opts\.opt2\.opt3\.1/); // throws because schema and opts.acceptArrays detects wrong type within input's array
+        {
+          acceptArrays: true,
+          schema: {
+            "opt2.opt3": "string",
+          },
+        }
+      );
+    },
+    /opts\.opt2\.opt3\.1/,
+    "20.02"
+  ); // throws because schema and opts.acceptArrays detects wrong type within input's array
 });
 
 test(`21 - enforceStrictKeyset and nested inputs`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: "setting2",
-        rogueKey: {
-          rogueSubkey: false,
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: "setting2",
+          rogueKey: {
+            rogueSubkey: false,
+          },
         },
-      },
-      {
-        option1: "zz",
-        option2: "yy",
-        rogueKey: {},
-      }
-    );
-  }, /rogueSubkey is neither covered by reference object/);
+        {
+          option1: "zz",
+          option2: "yy",
+          rogueKey: {},
+        }
+      );
+    },
+    /rogueSubkey is neither covered by reference object/,
+    "21.01"
+  );
 });
 
 test(`22 - strict mode, customising keys`, () => {
@@ -1196,23 +1312,27 @@ test(`22 - strict mode, customising keys`, () => {
     );
   }, "22.04");
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "aaa",
-        ignoreThese: [{ a: "zzz" }, { a: "yyy" }], // <----
-        option2: false,
-      },
-      {
-        option1: "aaa",
-        ignoreThese: [{ a: "" }], // <---- defaults come empty
-        option2: false,
-      },
-      {
-        enforceStrictKeyset: true,
-      }
-    );
-  }, /opts\.ignoreThese\.1 is neither covered by reference object/);
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "aaa",
+          ignoreThese: [{ a: "zzz" }, { a: "yyy" }], // <----
+          option2: false,
+        },
+        {
+          option1: "aaa",
+          ignoreThese: [{ a: "" }], // <---- defaults come empty
+          option2: false,
+        },
+        {
+          enforceStrictKeyset: true,
+        }
+      );
+    },
+    /opts\.ignoreThese\.1 is neither covered by reference object/,
+    "22.01"
+  );
 });
 
 // ======================
@@ -1220,19 +1340,23 @@ test(`22 - strict mode, customising keys`, () => {
 // ======================
 
 test(`23 - ${`\u001b[${32}m${`opts.acceptArrays`}\u001b[${39}m`} - strings + arrays`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: "setting2",
-        rogueKey: false,
-      },
-      {
-        option1: "zz",
-        option2: "yy",
-      }
-    );
-  }, "23.01");
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: "setting2",
+          rogueKey: false,
+        },
+        {
+          option1: "zz",
+          option2: "yy",
+        }
+      );
+    },
+    "23.01",
+    "23.01"
+  );
   not.throws(() => {
     checkTypesMini(
       {
@@ -1256,18 +1380,22 @@ test(`23 - ${`\u001b[${32}m${`opts.acceptArrays`}\u001b[${39}m`} - strings + arr
 // ======================
 
 test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in root`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: null,
-      },
-      {
-        option1: "zz",
-        option2: "yy",
-      }
-    );
-  }, /opts.option2 was customised to/);
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: null,
+        },
+        {
+          option1: "zz",
+          option2: "yy",
+        }
+      );
+    },
+    /opts.option2 was customised to/,
+    "24.01"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -1287,23 +1415,27 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
     );
   }, "24.02");
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: null,
-      },
-      {
-        option1: "zz",
-        option2: "yy",
-      },
-      {
-        schema: {
-          option2: ["string", "boolean"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: null,
         },
-      }
-    );
-  }, /opts\.option2 was customised to "null"/);
+        {
+          option1: "zz",
+          option2: "yy",
+        },
+        {
+          schema: {
+            option2: ["string", "boolean"],
+          },
+        }
+      );
+    },
+    /opts\.option2 was customised to "null"/,
+    "24.02"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -1321,40 +1453,48 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
     );
   }, "24.04");
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: null,
-      },
-      null,
-      {
-        schema: {
-          // <<< notice how option1 is missing AND also missing in reference obj
-          option2: ["stRing", null],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: null,
         },
-      }
-    );
-  }, /opts\.enforceStrictKeyset is on and the following key/);
+        null,
+        {
+          schema: {
+            // <<< notice how option1 is missing AND also missing in reference obj
+            option2: ["stRing", null],
+          },
+        }
+      );
+    },
+    /opts\.enforceStrictKeyset is on and the following key/,
+    "24.03"
+  );
 
   // true not allowed, - only false or null or string
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: true,
-      },
-      {
-        option1: "zz",
-        option2: null,
-      },
-      {
-        schema: {
-          option2: ["null", "false", "string"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: true,
         },
-      }
-    );
-  }, /opts\.option2 was customised to "true"/);
+        {
+          option1: "zz",
+          option2: null,
+        },
+        {
+          schema: {
+            option2: ["null", "false", "string"],
+          },
+        }
+      );
+    },
+    /opts\.option2 was customised to "true"/,
+    "24.04"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -1413,59 +1553,71 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
   // second bunch
 
   // true or string
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: false,
-      },
-      {
-        option1: "zz",
-        option2: true,
-      },
-      {
-        schema: {
-          option2: ["true", "string"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: false,
         },
-      }
-    );
-  }, /check-types-mini: opts\.option2 was customised to "false" \(type: boolean\)/);
+        {
+          option1: "zz",
+          option2: true,
+        },
+        {
+          schema: {
+            option2: ["true", "string"],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2 was customised to "false" \(type: boolean\)/,
+    "24.05"
+  );
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: null,
-      },
-      {
-        option1: "zz",
-        option2: true,
-      },
-      {
-        schema: {
-          option2: ["true", "string"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: null,
         },
-      }
-    );
-  }, /check-types-mini: opts\.option2 was customised to "null"/);
+        {
+          option1: "zz",
+          option2: true,
+        },
+        {
+          schema: {
+            option2: ["true", "string"],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2 was customised to "null"/,
+    "24.06"
+  );
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: 0,
-      },
-      {
-        option1: "zz",
-        option2: true,
-      },
-      {
-        schema: {
-          option2: ["true", "string"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: 0,
         },
-      }
-    );
-  }, /check-types-mini: opts\.option2 was customised to "0"/);
+        {
+          option1: "zz",
+          option2: true,
+        },
+        {
+          schema: {
+            option2: ["true", "string"],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2 was customised to "0"/,
+    "24.07"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -1485,23 +1637,27 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
     );
   }, "24.13");
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: "zzz",
-      },
-      {
-        option1: "zz",
-        option2: true,
-      },
-      {
-        schema: {
-          option2: ["true"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: "zzz",
         },
-      }
-    );
-  }, /check-types-mini: opts\.option2 was customised to "zzz"/);
+        {
+          option1: "zz",
+          option2: true,
+        },
+        {
+          schema: {
+            option2: ["true"],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2 was customised to "zzz"/,
+    "24.08"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -1593,98 +1749,118 @@ test(`24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in roo
     );
   }, "24.19");
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: "true", // <-- because it's string
-      },
-      {
-        option1: "zz",
-        option2: false,
-      },
-      {
-        schema: {
-          option2: ["boolean"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: "true", // <-- because it's string
         },
-      }
-    );
-  }, /check-types-mini: opts\.option2 was customised to "true" \(type: string\)/);
+        {
+          option1: "zz",
+          option2: false,
+        },
+        {
+          schema: {
+            option2: ["boolean"],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2 was customised to "true" \(type: string\)/,
+    "24.09"
+  );
 });
 
 test(`25 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - deeper level key doesn't even exist in ref`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: {
-          option3: null,
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: {
+            option3: null,
+          },
         },
-      },
-      {
-        option1: "zz",
-        option2: null,
-      }
-    );
-  }, "25.01");
+        {
+          option1: "zz",
+          option2: null,
+        }
+      );
+    },
+    "25.01",
+    "25.01"
+  );
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: {
-          option3: "null",
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: {
+            option3: "null",
+          },
         },
-      },
-      {
-        option1: "zz",
-        option2: {
-          option3: null,
-        },
-      }
-    );
-  }, /check-types-mini: opts\.option2.option3 was customised to "null" which is not null but string/);
+        {
+          option1: "zz",
+          option2: {
+            option3: null,
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2.option3 was customised to "null" which is not null but string/,
+    "25.02"
+  );
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: {
-          option3: null,
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: {
+            option3: null,
+          },
         },
-      },
-      {
-        option1: "zz",
-        option2: {
-          option3: "null",
-        },
-      }
-    );
-  }, /check-types-mini: opts\.option2\.option3 was customised to "null" which is not string but null/);
+        {
+          option1: "zz",
+          option2: {
+            option3: "null",
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2\.option3 was customised to "null" which is not string but null/,
+    "25.03"
+  );
 });
 
 test(`26 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - deeper level key type mismatches but is allowed through a schema`, () => {
   // control - make it throw:
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: {
-          option3: null,
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: {
+            option3: null,
+          },
         },
-      },
-      {
-        option1: "zz",
-        option2: { option3: "yy" },
-      },
-      {
-        schema: {
-          option1: ["stRing"],
+        {
+          option1: "zz",
+          option2: { option3: "yy" },
         },
-      }
-    );
-  }, /check-types-mini: opts\.option2\.option3 was customised to "null" which is not string but null/);
+        {
+          schema: {
+            option1: ["stRing"],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2\.option3 was customised to "null" which is not string but null/,
+    "26.01"
+  );
 
   // now prove that schema works:
 
@@ -1710,23 +1886,27 @@ test(`26 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - deeper level k
 });
 
 test(`27 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located deeper`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: { option3: null },
-      },
-      {
-        option1: "zz",
-        option2: { option3: "yy" },
-      },
-      {
-        schema: {
-          "option2.option3": ["string", "boolean"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: { option3: null },
         },
-      }
-    );
-  }, /check-types-mini: opts\.option2\.option3 was customised to "null" \(type: null\)/);
+        {
+          option1: "zz",
+          option2: { option3: "yy" },
+        },
+        {
+          schema: {
+            "option2.option3": ["string", "boolean"],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2\.option3 was customised to "null" \(type: null\)/,
+    "27.01"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -1745,58 +1925,70 @@ test(`27 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located deeper
     );
   }, "27.02");
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: { option3: null },
-      },
-      null,
-      {
-        schema: {
-          // <<< notice how option1 is missing AND also missing in reference obj
-          "option2.option3": ["stRing", null],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: { option3: null },
         },
-      }
-    );
-  }, /option1, option2/);
+        null,
+        {
+          schema: {
+            // <<< notice how option1 is missing AND also missing in reference obj
+            "option2.option3": ["stRing", null],
+          },
+        }
+      );
+    },
+    /option1, option2/,
+    "27.02"
+  );
 
   // make error message mention a missing deeper-level path:
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: { option2: "setting1" },
-        option3: { option4: null },
-      },
-      null,
-      {
-        schema: {
-          option1: "object", // option1.option2 is missing!
-          option3: "object",
-          "option3.option4": ["stRing", null],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: { option2: "setting1" },
+          option3: { option4: null },
         },
-      }
-    );
-  }, /check-types-mini: opts\.option1\.option2 is neither covered by reference object/);
+        null,
+        {
+          schema: {
+            option1: "object", // option1.option2 is missing!
+            option3: "object",
+            "option3.option4": ["stRing", null],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option1\.option2 is neither covered by reference object/,
+    "27.03"
+  );
 
   // true not allowed, - only false or null or string
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: true,
-      },
-      {
-        option1: "zz",
-        option2: null,
-      },
-      {
-        schema: {
-          option2: ["null", "false", "string"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: true,
         },
-      }
-    );
-  }, /check-types-mini: opts\.option2 was customised to "true" \(type: boolean\)/);
+        {
+          option1: "zz",
+          option2: null,
+        },
+        {
+          schema: {
+            option2: ["null", "false", "string"],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2 was customised to "true" \(type: boolean\)/,
+    "27.04"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -1855,59 +2047,71 @@ test(`27 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located deeper
   // second bunch
 
   // true or string
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: false,
-      },
-      {
-        option1: "zz",
-        option2: true,
-      },
-      {
-        schema: {
-          option2: ["true", "string"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: false,
         },
-      }
-    );
-  }, /check-types-mini: opts\.option2 was customised to "false" \(type: boolean\)/);
+        {
+          option1: "zz",
+          option2: true,
+        },
+        {
+          schema: {
+            option2: ["true", "string"],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2 was customised to "false" \(type: boolean\)/,
+    "27.05"
+  );
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: null,
-      },
-      {
-        option1: "zz",
-        option2: true,
-      },
-      {
-        schema: {
-          option2: ["true", "string"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: null,
         },
-      }
-    );
-  }, /check-types-mini: opts\.option2 was customised to "null" \(type: null\)/);
+        {
+          option1: "zz",
+          option2: true,
+        },
+        {
+          schema: {
+            option2: ["true", "string"],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2 was customised to "null" \(type: null\)/,
+    "27.06"
+  );
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: 0,
-      },
-      {
-        option1: "zz",
-        option2: true,
-      },
-      {
-        schema: {
-          option2: ["true", "string"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: 0,
         },
-      }
-    );
-  }, /check-types-mini: opts\.option2 was customised to "0" \(type: number\)/);
+        {
+          option1: "zz",
+          option2: true,
+        },
+        {
+          schema: {
+            option2: ["true", "string"],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2 was customised to "0" \(type: number\)/,
+    "27.07"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -1927,23 +2131,27 @@ test(`27 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located deeper
     );
   }, "27.12");
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: "zzz",
-      },
-      {
-        option1: "zz",
-        option2: true,
-      },
-      {
-        schema: {
-          option2: ["true"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: "zzz",
         },
-      }
-    );
-  }, /check-types-mini: opts\.option2 was customised to "zzz" \(type: string\)/);
+        {
+          option1: "zz",
+          option2: true,
+        },
+        {
+          schema: {
+            option2: ["true"],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2 was customised to "zzz" \(type: string\)/,
+    "27.08"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -2035,38 +2243,46 @@ test(`27 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located deeper
     );
   }, "27.18");
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: "true", // <-- because it's string
-      },
-      {
-        option1: "zz",
-        option2: false,
-      },
-      {
-        schema: {
-          option2: ["boolean"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: "true", // <-- because it's string
         },
-      }
-    );
-  }, /check-types-mini: opts\.option2 was customised to "true" \(type: string\)/);
+        {
+          option1: "zz",
+          option2: false,
+        },
+        {
+          schema: {
+            option2: ["boolean"],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2 was customised to "true" \(type: string\)/,
+    "27.09"
+  );
 });
 
 test(`28 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} values as strings + "whatever" keys`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: { somekey: "setting1" },
-        option2: null,
-      },
-      {
-        option1: { somekey: "zz" },
-        option2: "yy",
-      }
-    );
-  }, /opts.option2 was customised to "null" which is not string but null/);
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: { somekey: "setting1" },
+          option2: null,
+        },
+        {
+          option1: { somekey: "zz" },
+          option2: "yy",
+        }
+      );
+    },
+    /opts.option2 was customised to "null" which is not string but null/,
+    "28.01"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -2105,24 +2321,28 @@ test(`28 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} values as strings + "
     );
   }, "28.03");
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: { somekey: "setting1" },
-        option2: null,
-      },
-      {
-        option1: { somekey: "zz" },
-        option2: "yy",
-      },
-      {
-        schema: {
-          option1: "string", // << will throw because this type is not followed
-          option2: ["whatever"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: { somekey: "setting1" },
+          option2: null,
         },
-      }
-    );
-  }, /check-types-mini: opts\.option1 was customised to "{"somekey":"setting1"}" \(type: object\)/);
+        {
+          option1: { somekey: "zz" },
+          option2: "yy",
+        },
+        {
+          schema: {
+            option1: "string", // << will throw because this type is not followed
+            option2: ["whatever"],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option1 was customised to "{"somekey":"setting1"}" \(type: object\)/,
+    "28.02"
+  );
 
   not.throws(() => {
     checkTypesMini(
@@ -2165,23 +2385,27 @@ test(`28 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} values as strings + "
 
 test(`29 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} falling back to reference object`, () => {
   // with throwing consequences:
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: { somekey: "setting1" },
-        option2: null,
-      },
-      {
-        option1: "zz",
-        option2: "yy",
-      },
-      {
-        schema: {
-          option1: "number",
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: { somekey: "setting1" },
+          option2: null,
         },
-      }
-    );
-  }, /check-types-mini: opts\.option1 was customised to "{"somekey":"setting1"}" \(type: object\)/);
+        {
+          option1: "zz",
+          option2: "yy",
+        },
+        {
+          schema: {
+            option1: "number",
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option1 was customised to "{"somekey":"setting1"}" \(type: object\)/,
+    "29.01"
+  );
 
   // without throwing consequences:
   not.throws(() => {
@@ -2204,36 +2428,44 @@ test(`29 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} falling back to refer
 });
 
 test(`30 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} is set to a wrong thing - throws`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: { somekey: "setting1" },
-        option2: null,
-      },
-      {
-        option1: "zz",
-        option2: "yy",
-      },
-      {
-        schema: "zzz",
-      }
-    );
-  }, /check-types-mini: opts\.schema was customised to "zzz" which is not object but string/);
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: { somekey: "setting1" },
+          option2: null,
+        },
+        {
+          option1: "zz",
+          option2: "yy",
+        },
+        {
+          schema: "zzz",
+        }
+      );
+    },
+    /check-types-mini: opts\.schema was customised to "zzz" which is not object but string/,
+    "30.01"
+  );
 });
 
 test(`31 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} understands opts.acceptArrays`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: ["setting2"],
-      },
-      {
-        option1: "zz",
-        option2: "yy",
-      }
-    );
-  }, /check-types-mini: opts.option2 was customised to "\["setting2"]" which is not string but array/); // throws because reference's type mismatches.
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: ["setting2"],
+        },
+        {
+          option1: "zz",
+          option2: "yy",
+        }
+      );
+    },
+    /check-types-mini: opts.option2 was customised to "\["setting2"]" which is not string but array/,
+    "31.01"
+  ); // throws because reference's type mismatches.
 
   not.throws(() => {
     checkTypesMini(
@@ -2268,23 +2500,27 @@ test(`31 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} understands opts.acce
     );
   }, "31.03"); // does not throw because of opts.acceptArrays is matching against schema's keys
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: ["setting2", 999],
-      },
-      {
-        option1: "zz",
-      },
-      {
-        acceptArrays: true,
-        schema: {
-          option2: "string",
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: ["setting2", 999],
         },
-      }
-    );
-  }, /opts\.option2\.1, the 1th element \(equal to 999\) is of a type number, but only the following are allowed by the opts\.schema: string/); // throws because schema and opts.acceptArrays detects wrong type within input's array
+        {
+          option1: "zz",
+        },
+        {
+          acceptArrays: true,
+          schema: {
+            option2: "string",
+          },
+        }
+      );
+    },
+    /opts\.option2\.1, the 1th element \(equal to 999\) is of a type number, but only the following are allowed by the opts\.schema: string/,
+    "31.02"
+  ); // throws because schema and opts.acceptArrays detects wrong type within input's array
 
   not.throws(() => {
     checkTypesMini(
@@ -2304,23 +2540,27 @@ test(`31 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} understands opts.acce
     );
   }, "31.05"); // number is allowed now
 
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: ["setting2", 999],
-      },
-      {
-        option1: "zz",
-      },
-      {
-        acceptArrays: false,
-        schema: {
-          option2: ["string", "number"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: ["setting2", 999],
         },
-      }
-    );
-  }, /check-types-mini: opts\.option2 was customised to "\["setting2",999\]" \(type: array\)/); // number is allowed in schema, but not in an array, and opts.acceptArrays is off, so throws
+        {
+          option1: "zz",
+        },
+        {
+          acceptArrays: false,
+          schema: {
+            option2: ["string", "number"],
+          },
+        }
+      );
+    },
+    /check-types-mini: opts\.option2 was customised to "\["setting2",999\]" \(type: array\)/,
+    "31.03"
+  ); // number is allowed in schema, but not in an array, and opts.acceptArrays is off, so throws
 
   not.throws(() => {
     checkTypesMini(
@@ -2343,73 +2583,81 @@ test(`31 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} understands opts.acce
 });
 
 test(`32 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} #1`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        heads: "%%_",
-        tails: "_%%",
-        headsNoWrap: "%%-",
-        tailsNoWrap: "-%%",
-        lookForDataContainers: true,
-        dataContainerIdentifierTails: "_data",
-        wrapHeadsWith: "",
-        wrapTailsWith: false, // <--------------------  !!!
-        dontWrapVars: [],
-        preventDoubleWrapping: true,
-        wrapGlobalFlipSwitch: true,
-        noSingleMarkers: false,
-        resolveToBoolIfAnyValuesContainBool: true,
-        resolveToFalseIfAnyValuesContainBool: true,
-        throwWhenNonStringInsertedInString: false,
-      },
-      {
-        heads: "%%_",
-        tails: "_%%",
-        headsNoWrap: "%%-",
-        tailsNoWrap: "-%%",
-        lookForDataContainers: true,
-        dataContainerIdentifierTails: "_data",
-        wrapHeadsWith: "",
-        wrapTailsWith: "", // <--------------------  !!!
-        dontWrapVars: [],
-        preventDoubleWrapping: true,
-        wrapGlobalFlipSwitch: true,
-        noSingleMarkers: false,
-        resolveToBoolIfAnyValuesContainBool: true,
-        resolveToFalseIfAnyValuesContainBool: true,
-        throwWhenNonStringInsertedInString: false,
-      },
-      {
-        msg: "json-variables/jsonVariables(): [THROW_ID_04*]",
-        schema: {
-          headsNoWrap: ["string", "null", "undefined"],
-          tailsNoWrap: ["string", "null", "undefined"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          heads: "%%_",
+          tails: "_%%",
+          headsNoWrap: "%%-",
+          tailsNoWrap: "-%%",
+          lookForDataContainers: true,
+          dataContainerIdentifierTails: "_data",
+          wrapHeadsWith: "",
+          wrapTailsWith: false, // <--------------------  !!!
+          dontWrapVars: [],
+          preventDoubleWrapping: true,
+          wrapGlobalFlipSwitch: true,
+          noSingleMarkers: false,
+          resolveToBoolIfAnyValuesContainBool: true,
+          resolveToFalseIfAnyValuesContainBool: true,
+          throwWhenNonStringInsertedInString: false,
         },
-      }
-    );
-  }, /\[THROW_ID_04\*]/);
+        {
+          heads: "%%_",
+          tails: "_%%",
+          headsNoWrap: "%%-",
+          tailsNoWrap: "-%%",
+          lookForDataContainers: true,
+          dataContainerIdentifierTails: "_data",
+          wrapHeadsWith: "",
+          wrapTailsWith: "", // <--------------------  !!!
+          dontWrapVars: [],
+          preventDoubleWrapping: true,
+          wrapGlobalFlipSwitch: true,
+          noSingleMarkers: false,
+          resolveToBoolIfAnyValuesContainBool: true,
+          resolveToFalseIfAnyValuesContainBool: true,
+          throwWhenNonStringInsertedInString: false,
+        },
+        {
+          msg: "json-variables/jsonVariables(): [THROW_ID_04*]",
+          schema: {
+            headsNoWrap: ["string", "null", "undefined"],
+            tailsNoWrap: ["string", "null", "undefined"],
+          },
+        }
+      );
+    },
+    /\[THROW_ID_04\*]/,
+    "32.01"
+  );
 });
 
 test(`33 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} #2 - enforcing first-level key types but ignoring sub-level values`, () => {
   // root level "placeholder" gets flagged up, deeper levels given in "ignorePaths"
   // don't even matter.
-  throws(() => {
-    checkTypesMini(
-      {
-        placeholder: {},
-      },
-      {
-        placeholder: false,
-      },
-      {
-        msg: "json-comb-core/getKeyset(): [THROW_ID_10*]",
-        ignorePaths: ["placeholder.*"],
-        schema: {
-          placeholder: ["null", "number", "string", "boolean"], // <--- no object here!
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          placeholder: {},
         },
-      }
-    );
-  }, /THROW_ID_10\*/);
+        {
+          placeholder: false,
+        },
+        {
+          msg: "json-comb-core/getKeyset(): [THROW_ID_10*]",
+          ignorePaths: ["placeholder.*"],
+          schema: {
+            placeholder: ["null", "number", "string", "boolean"], // <--- no object here!
+          },
+        }
+      );
+    },
+    /THROW_ID_10\*/,
+    "33.01"
+  );
 
   // adding "object" in schema stops the throws:
   not.throws(() => {
@@ -2513,23 +2761,27 @@ test(`34 - ${`\u001b[${35}m${`opts.schema`}\u001b[${39}m`} type "any" applies to
 });
 
 test(`35 - ${`\u001b[${35}m${`opts.schema`}\u001b[${39}m`} key's value is "undefined" literal, it's in schema`, () => {
-  throws(() => {
-    checkTypesMini(
-      {
-        option1: "setting1",
-        option2: undefined,
-      },
-      {
-        option1: "zz",
-        option2: "yy",
-      },
-      {
-        schema: {
-          option2: ["string", "boolean"],
+  throws(
+    () => {
+      checkTypesMini(
+        {
+          option1: "setting1",
+          option2: undefined,
         },
-      }
-    );
-  }, /opts\.option2 was customised to "undefined"/);
+        {
+          option1: "zz",
+          option2: "yy",
+        },
+        {
+          schema: {
+            option2: ["string", "boolean"],
+          },
+        }
+      );
+    },
+    /opts\.option2 was customised to "undefined"/,
+    "35.01"
+  );
 
   not.throws(() => {
     checkTypesMini(

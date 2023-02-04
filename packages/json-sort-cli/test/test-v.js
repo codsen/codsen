@@ -39,7 +39,7 @@ test("02 - version flag trumps silent flag", async () => {
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "02.03 - file is untouched though"
+    "02.03"
   );
 });
 

@@ -50,7 +50,7 @@ test("02 - help flag trumps silent flag", async () => {
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "02.04 - file is untouched though"
+    "02.04"
   );
 });
 

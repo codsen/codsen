@@ -48,19 +48,19 @@ test(`05 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - attr + missing ta
 
   // D-S follows
   let str2 = `<a href="z" class="yo' click here</a>`;
-  ok(isCl(str2, 8, 10), "05.04");
+  ok(isCl(str2, 8, 10), "05.02");
   not.ok(isCl(str2, 8, 18), "05.05");
   not.ok(isCl(str2, 8, 21), "05.06");
 
   // S-D follows
   let str3 = `<a href="z" class='yo" click here</a>`;
-  ok(isCl(str3, 8, 10), "05.07");
+  ok(isCl(str3, 8, 10), "05.03");
   not.ok(isCl(str3, 8, 18), "05.08");
   not.ok(isCl(str3, 8, 21), "05.09");
 
   // S-S follows
   let str4 = `<a href="z" class='yo' click here</a>`;
-  ok(isCl(str4, 8, 10), "05.10");
+  ok(isCl(str4, 8, 10), "05.04");
   not.ok(isCl(str4, 8, 18), "05.11");
   not.ok(isCl(str4, 8, 21), "05.12");
 
@@ -76,19 +76,19 @@ test(`06 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - attr + missing ta
 
   // D-S follows
   let str2 = `<a href="z' class="yo' click here</a>`;
-  ok(isCl(str2, 8, 10), "06.04");
+  ok(isCl(str2, 8, 10), "06.02");
   not.ok(isCl(str2, 8, 18), "06.05");
   not.ok(isCl(str2, 8, 21), "06.06");
 
   // S-D follows
   let str3 = `<a href="z' class='yo" click here</a>`;
-  ok(isCl(str3, 8, 10), "06.07");
+  ok(isCl(str3, 8, 10), "06.03");
   not.ok(isCl(str3, 8, 18), "06.08");
   not.ok(isCl(str3, 8, 21), "06.09");
 
   // S-S follows
   let str4 = `<a href="z' class='yo' click here</a>`;
-  ok(isCl(str4, 8, 10), "06.10");
+  ok(isCl(str4, 8, 10), "06.04");
   not.ok(isCl(str4, 8, 18), "06.11");
   not.ok(isCl(str4, 8, 21), "06.12");
 
@@ -104,19 +104,19 @@ test(`07 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - attr + missing ta
 
   // D-S follows
   let str2 = `<a href='z" class="yo' click here</a>`;
-  ok(isCl(str2, 8, 10), "07.04");
+  ok(isCl(str2, 8, 10), "07.02");
   not.ok(isCl(str2, 8, 18), "07.05");
   not.ok(isCl(str2, 8, 21), "07.06");
 
   // S-D follows
   let str3 = `<a href='z" class='yo" click here</a>`;
-  ok(isCl(str3, 8, 10), "07.07");
+  ok(isCl(str3, 8, 10), "07.03");
   not.ok(isCl(str3, 8, 18), "07.08");
   not.ok(isCl(str3, 8, 21), "07.09");
 
   // S-S follows
   let str4 = `<a href='z" class='yo' click here</a>`;
-  ok(isCl(str4, 8, 10), "07.10");
+  ok(isCl(str4, 8, 10), "07.04");
   not.ok(isCl(str4, 8, 18), "07.11");
   not.ok(isCl(str4, 8, 21), "07.12");
 
@@ -132,19 +132,19 @@ test(`08 - ${`\u001b[${31}m${`unclosed tags`}\u001b[${39}m`} - attr + missing ta
 
   // D-S follows
   let str2 = `<a href='z' class="yo' click here</a>`;
-  ok(isCl(str2, 8, 10), "08.04");
+  ok(isCl(str2, 8, 10), "08.02");
   not.ok(isCl(str2, 8, 18), "08.05");
   not.ok(isCl(str2, 8, 21), "08.06");
 
   // S-D follows
   let str3 = `<a href='z' class='yo" click here</a>`;
-  ok(isCl(str3, 8, 10), "08.07");
+  ok(isCl(str3, 8, 10), "08.03");
   not.ok(isCl(str3, 8, 18), "08.08");
   not.ok(isCl(str3, 8, 21), "08.09");
 
   // S-S follows
   let str4 = `<a href='z' class='yo' click here</a>`;
-  ok(isCl(str4, 8, 10), "08.10");
+  ok(isCl(str4, 8, 10), "08.04");
   not.ok(isCl(str4, 8, 18), "08.11");
   not.ok(isCl(str4, 8, 21), "08.12");
 

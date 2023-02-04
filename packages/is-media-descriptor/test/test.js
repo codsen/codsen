@@ -60,9 +60,13 @@ test(`04 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - trimmable to zero`, ()
 });
 
 test(`05 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - weird offset`, () => {
-  throws(() => {
-    isMediaD("", { offset: true });
-  }, /THROW_ID_01/gm);
+  throws(
+    () => {
+      isMediaD("", { offset: true });
+    },
+    /THROW_ID_01/gm,
+    "05.01"
+  );
 });
 
 // 01. single-string values

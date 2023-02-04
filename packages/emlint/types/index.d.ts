@@ -238,28 +238,28 @@ declare const astErrMessages: {
 declare function isAnEnabledValue(maybeARulesValue: unknown): Severity;
 declare function isAnEnabledRule(rules: RulesObj, ruleId: string): Severity;
 
-declare const util_wholeExtensionRegex: typeof wholeExtensionRegex;
-declare const util_splitByWhitespace: typeof splitByWhitespace;
-declare const util_isAnEnabledValue: typeof isAnEnabledValue;
-declare const util_isAnEnabledRule: typeof isAnEnabledRule;
 declare const util_astErrMessages: typeof astErrMessages;
-declare const util_validateString: typeof validateString;
+declare const util_badChars: typeof badChars;
 declare const util_fontSizeRegex: typeof fontSizeRegex;
+declare const util_isAnEnabledRule: typeof isAnEnabledRule;
+declare const util_isAnEnabledValue: typeof isAnEnabledValue;
 declare const util_isoDateRegex: typeof isoDateRegex;
 declare const util_linkTypes: typeof linkTypes;
-declare const util_badChars: typeof badChars;
+declare const util_splitByWhitespace: typeof splitByWhitespace;
+declare const util_validateString: typeof validateString;
+declare const util_wholeExtensionRegex: typeof wholeExtensionRegex;
 declare namespace util {
   export {
-    util_wholeExtensionRegex as wholeExtensionRegex,
-    util_splitByWhitespace as splitByWhitespace,
-    util_isAnEnabledValue as isAnEnabledValue,
-    util_isAnEnabledRule as isAnEnabledRule,
     util_astErrMessages as astErrMessages,
-    util_validateString as validateString,
+    util_badChars as badChars,
     util_fontSizeRegex as fontSizeRegex,
+    util_isAnEnabledRule as isAnEnabledRule,
+    util_isAnEnabledValue as isAnEnabledValue,
     util_isoDateRegex as isoDateRegex,
     util_linkTypes as linkTypes,
-    util_badChars as badChars,
+    util_splitByWhitespace as splitByWhitespace,
+    util_validateString as validateString,
+    util_wholeExtensionRegex as wholeExtensionRegex,
   };
 }
 

@@ -14,7 +14,7 @@ test("01 - to pad or not to pad", () => {
       ["Pencil HB", "2.20", "2.10"],
       ["Pencil 2H", "2.32", "2.30"],
     ],
-    "01.01 - default behaviour, padds"
+    "01.01"
   );
   equal(
     splitEasy(
@@ -28,7 +28,7 @@ test("01 - to pad or not to pad", () => {
       ["Pencil HB", "2.2", "2.1"],
       ["Pencil 2H", "2.32", "2.3"],
     ],
-    "01.02 - padding off"
+    "01.02"
   );
 });
 

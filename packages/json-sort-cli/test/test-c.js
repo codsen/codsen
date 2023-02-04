@@ -34,7 +34,7 @@ test("01 - one sorted file", async () => {
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     sortedFile,
-    "01.02 - file is untouched though"
+    "01.02"
   );
 });
 
@@ -56,7 +56,7 @@ test("02 - one unsorted file", async () => {
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "02.01 - file is untouched though"
+    "02.01"
   );
 });
 
@@ -79,7 +79,7 @@ test("03 - 'dry' flag trumps 'ci' flag", async () => {
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "03.03 - file is untouched though"
+    "03.03"
   );
 });
 
@@ -100,7 +100,7 @@ test("04 - 'dry', arg order is backwards", async () => {
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "04.03 - file is untouched though"
+    "04.03"
   );
 });
 

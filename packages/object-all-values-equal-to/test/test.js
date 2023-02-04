@@ -94,28 +94,36 @@ test("03 - nulls", () => {
 test("04 - empty obj/arr", () => {
   equal(allEq([], false), true, "04.01");
   equal(allEq({}, false), true, "04.02");
-  equal(
-    allEq(null, false),
-    false,
-    "04.03 - only valid for empty container-like types, array and plain object"
-  );
+  equal(allEq(null, false), false, "04.03");
 });
 
 // 02. Throws
 // -----------------------------------------------------------------------------
 
 test("05 - various throws", () => {
-  throws(() => {
-    allEq();
-  }, /THROW_ID_01/); // first arg missing - will throw
+  throws(
+    () => {
+      allEq();
+    },
+    /THROW_ID_01/,
+    "05.01"
+  ); // first arg missing - will throw
 
-  throws(() => {
-    allEq(1);
-  }, /THROW_ID_02/); // second arg missing
+  throws(
+    () => {
+      allEq(1);
+    },
+    /THROW_ID_02/,
+    "05.02"
+  ); // second arg missing
 
-  throws(() => {
-    allEq(["a"], false, "zzz");
-  }, /THROW_ID_03/); // third arg is not a plain obj
+  throws(
+    () => {
+      allEq(["a"], false, "zzz");
+    },
+    /THROW_ID_03/,
+    "05.03"
+  ); // third arg is not a plain obj
 });
 
 test.run();

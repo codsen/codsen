@@ -5,24 +5,40 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { detectLang } from "../dist/detect-templating-language.esm.js";
 
 test(`01 - throws`, () => {
-  throws(() => {
-    detectLang(true);
-  }, /THROW_ID_01/gm);
+  throws(
+    () => {
+      detectLang(true);
+    },
+    /THROW_ID_01/gm,
+    "01.01"
+  );
 
   function fn() {
     return "zzz";
   }
-  throws(() => {
-    detectLang(fn);
-  }, /THROW_ID_01/gm);
+  throws(
+    () => {
+      detectLang(fn);
+    },
+    /THROW_ID_01/gm,
+    "01.02"
+  );
 
-  throws(() => {
-    detectLang({ a: "b" });
-  }, /THROW_ID_01/gm);
+  throws(
+    () => {
+      detectLang({ a: "b" });
+    },
+    /THROW_ID_01/gm,
+    "01.03"
+  );
 
-  throws(() => {
-    detectLang(null);
-  }, /THROW_ID_01/gm);
+  throws(
+    () => {
+      detectLang(null);
+    },
+    /THROW_ID_01/gm,
+    "01.04"
+  );
 });
 
 test("02 - no templating tags at all", () => {

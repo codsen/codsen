@@ -14,7 +14,7 @@ test(`01 - ${`\u001b[${36}m${`broken code`}\u001b[${39}m`} - quotes missing`, ()
     isOpening(s1, 0, {
       allowCustomTagNames: true,
     }),
-    "01.02"
+    "01.01"
   );
 });
 

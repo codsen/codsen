@@ -9,61 +9,93 @@ import { findMalformed } from "../dist/string-find-malformed.esm.js";
 // -----------------------------------------------------------------------------
 
 test("01 - throws when the first argument, source string, is not a string", () => {
-  throws(() => {
-    findMalformed(1);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      findMalformed(1);
+    },
+    /THROW_ID_01/,
+    "01.01"
+  );
 
   // more resembling real-life:
-  throws(() => {
-    findMalformed(
-      1,
-      "a",
-      () => {
-        console.log("yo");
-      },
-      null
-    );
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      findMalformed(
+        1,
+        "a",
+        () => {
+          console.log("yo");
+        },
+        null
+      );
+    },
+    /THROW_ID_01/,
+    "01.02"
+  );
 });
 
 test("02 - throws when the second argument, ref string, is not a string", () => {
-  throws(() => {
-    findMalformed("aaa", 1);
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      findMalformed("aaa", 1);
+    },
+    /THROW_ID_02/,
+    "02.01"
+  );
 
   // more resembling real-life:
-  throws(() => {
-    findMalformed(
-      "a",
-      1,
-      () => {
-        console.log("yo");
-      },
-      null
-    );
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      findMalformed(
+        "a",
+        1,
+        () => {
+          console.log("yo");
+        },
+        null
+      );
+    },
+    /THROW_ID_02/,
+    "02.02"
+  );
 });
 
 test("03 - throws when the third argument, callback, is not a function", () => {
-  throws(() => {
-    findMalformed("aaa", "zzz", 1);
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      findMalformed("aaa", "zzz", 1);
+    },
+    /THROW_ID_03/,
+    "03.01"
+  );
 
-  throws(() => {
-    findMalformed("a", "b", "c", null);
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      findMalformed("a", "b", "c", null);
+    },
+    /THROW_ID_03/,
+    "03.02"
+  );
 });
 
 test("04 - throws when the fourth argument, optional options object, is not a plain object", () => {
-  throws(() => {
-    findMalformed("aaa", "bbb", () => {}, "ccc");
-  }, /THROW_ID_04/);
+  throws(
+    () => {
+      findMalformed("aaa", "bbb", () => {}, "ccc");
+    },
+    /THROW_ID_04/,
+    "04.01"
+  );
 });
 
 test("05 - throws when opts.stringOffset is not a number", () => {
-  throws(() => {
-    findMalformed("aaa", "bbb", () => {}, { stringOffset: "ccc" });
-  }, /THROW_ID_05/);
+  throws(
+    () => {
+      findMalformed("aaa", "bbb", () => {}, { stringOffset: "ccc" });
+    },
+    /THROW_ID_05/,
+    "05.01"
+  );
 });
 
 test(`06 - empty string`, () => {

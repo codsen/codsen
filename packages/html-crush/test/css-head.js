@@ -214,28 +214,28 @@ test(`07 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whites
       removeLineBreaks: true,
     }).result,
     `<style>a{display:block!important;}`,
-    "07.01 - no space"
+    "07.01"
   );
   equal(
     m(equal, `<style>\n  a { display:block !important; }`, {
       removeLineBreaks: true,
     }).result,
     `<style>a{display:block!important;}`,
-    "07.02 - one space"
+    "07.02"
   );
   equal(
     m(equal, `<style>\n  a { display:block  !important; }`, {
       removeLineBreaks: true,
     }).result,
     `<style>a{display:block!important;}`,
-    "07.03 - two spaces"
+    "07.03"
   );
   equal(
     m(equal, `<style>/*  `, {
       removeLineBreaks: true,
     }).result,
     `<style>`,
-    "07.04 - resembling real life"
+    "07.04"
   );
 });
 

@@ -20,6 +20,9 @@
       "path": "../ranges-apply"
     },
     {
+      "path": "../string-left-right"
+    },
+    {
       "path": "../test-mixer"
     }
   ]

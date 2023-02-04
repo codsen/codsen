@@ -38,7 +38,7 @@ test("01 - deletes by key, multiple findings", () => {
       a: { b: [{ c: { d: "e" } }] },
       c: { d: ["h"] },
     },
-    "01.02 - only array"
+    "01.02"
   );
   equal(
     del(input, { key: "c", only: "o" }),
@@ -174,7 +174,7 @@ test("10 - sneaky-one: object keys have values as null", () => {
     },
     "10.01"
   );
-  equal(del(input, { key: "c", only: "array" }), input, "10.02 - only array");
+  equal(del(input, { key: "c", only: "array" }), input, "10.02");
   equal(
     del(input, { key: "c", only: "object" }),
     {
@@ -196,7 +196,7 @@ test("11 - sneaky-one: object keys have values as undefined", () => {
     },
     "11.01"
   );
-  equal(del(input, { key: "c", only: "array" }), input, "11.02 - only array");
+  equal(del(input, { key: "c", only: "array" }), input, "11.02");
   equal(
     del(input, { key: "c", only: "object" }),
     {

@@ -9,21 +9,41 @@ import { unfancy } from "../dist/string-unfancy.esm.js";
 // -----------------------------------------------------------------------------
 
 test("01 - wrong/missing input = throw", () => {
-  throws(() => {
-    unfancy();
-  }, /THROW_ID_01/g);
-  throws(() => {
-    unfancy(1);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    unfancy(null);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    unfancy(undefined);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    unfancy(true);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      unfancy();
+    },
+    /THROW_ID_01/g,
+    "01.01"
+  );
+  throws(
+    () => {
+      unfancy(1);
+    },
+    /THROW_ID_01/g,
+    "01.02"
+  );
+  throws(
+    () => {
+      unfancy(null);
+    },
+    /THROW_ID_01/g,
+    "01.03"
+  );
+  throws(
+    () => {
+      unfancy(undefined);
+    },
+    /THROW_ID_01/g,
+    "01.04"
+  );
+  throws(
+    () => {
+      unfancy(true);
+    },
+    /THROW_ID_01/g,
+    "01.05"
+  );
 });
 
 // -----------------------------------------------------------------------------

@@ -8,16 +8,12 @@ test(`01 - ${`\u001b[${90}m${`adhoc 1`}\u001b[${39}m`} - a peculiar set of chara
   equal(
     m(equal, "<a>\n<<>", { removeLineBreaks: true }).result,
     "<a><<>",
-    "01.01 - a peculiar set of characters"
+    "01.01"
   );
 });
 
 test(`02 - ${`\u001b[${90}m${`adhoc 2`}\u001b[${39}m`} - another peculiar set of characters`, () => {
-  equal(
-    m(equal, "You&rsquo;ve").result,
-    "You&rsquo;ve",
-    "02.01 - another peculiar set of characters"
-  );
+  equal(m(equal, "You&rsquo;ve").result, "You&rsquo;ve", "02.01");
 });
 
 test(`03 - ${`\u001b[${90}m${`adhoc 3`}\u001b[${39}m`} - yet another peculiar set of chars`, () => {
@@ -40,7 +36,7 @@ name="viewport" zzz`;
       breakToTheLeftOf: [],
     }).result,
     output,
-    "03.01 - another peculiar set of characters"
+    "03.01"
   );
 });
 

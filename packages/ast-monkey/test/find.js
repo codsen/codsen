@@ -486,11 +486,7 @@ test("23 - finds multiple nested keys by key and value in mixed #2", () => {
     c: { d: ["d"] },
   };
   // ---------------------------
-  equal(
-    find(input, { key: "d", val: null }),
-    [],
-    "23.01 - Null is a valid value! It's not found in the input!"
-  );
+  equal(find(input, { key: "d", val: null }), [], "23.01");
   // ---------------------------
   equal(
     find(input, { key: "d", val: undefined }),
@@ -514,7 +510,7 @@ test("23 - finds multiple nested keys by key and value in mixed #2", () => {
         path: [6, 7, 8],
       },
     ],
-    "23.02 - hardcoded undefined as a value"
+    "23.02"
   );
   // ---------------------------
   equal(
@@ -539,7 +535,7 @@ test("23 - finds multiple nested keys by key and value in mixed #2", () => {
         path: [6, 7, 8],
       },
     ],
-    "23.03 - default behaviour, val is not hardcoded - should be the same as null"
+    "23.03"
   );
   // ---------------------------
   // arrays only:
@@ -553,7 +549,7 @@ test("23 - finds multiple nested keys by key and value in mixed #2", () => {
         path: [6, 7, 8],
       },
     ],
-    "23.04 - finds only array instances and omits object-ones"
+    "23.04"
   );
   // ---------------------------
   // objects only:
@@ -573,7 +569,7 @@ test("23 - finds multiple nested keys by key and value in mixed #2", () => {
         path: [6, 7],
       },
     ],
-    "23.05 - finds only array instances and omits object-ones"
+    "23.05"
   );
   // ---------------------------
   // any:
@@ -599,7 +595,7 @@ test("23 - finds multiple nested keys by key and value in mixed #2", () => {
         path: [6, 7, 8],
       },
     ],
-    "23.06 - finds only array instances and omits object-ones"
+    "23.06"
   );
 });
 
@@ -631,7 +627,7 @@ test("24 - like 02.15, but with sneaky objects where values are null, tricking t
         path: [6, 7, 8],
       },
     ],
-    "24.01 - default behaviour, val is hardcoded `undefined`"
+    "24.01"
   );
   // ---------------------------
   equal(
@@ -656,7 +652,7 @@ test("24 - like 02.15, but with sneaky objects where values are null, tricking t
         path: [6, 7, 8],
       },
     ],
-    "24.02 - default behaviour, val is not hardcoded - should be the same as null"
+    "24.02"
   );
   // ---------------------------
   // arrays only:
@@ -670,7 +666,7 @@ test("24 - like 02.15, but with sneaky objects where values are null, tricking t
         path: [6, 7, 8],
       },
     ],
-    "24.03 - finds only array instances and omits object-ones"
+    "24.03"
   );
   // ---------------------------
   // objects only:
@@ -690,7 +686,7 @@ test("24 - like 02.15, but with sneaky objects where values are null, tricking t
         path: [6, 7],
       },
     ],
-    "24.04 - finds only array instances and omits object-ones"
+    "24.04"
   );
   // ---------------------------
   // any:
@@ -716,7 +712,7 @@ test("24 - like 02.15, but with sneaky objects where values are null, tricking t
         path: [6, 7, 8],
       },
     ],
-    "24.05 - finds only array instances and omits object-ones"
+    "24.05"
   );
 });
 

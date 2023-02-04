@@ -87,16 +87,8 @@ test("03 - files inside and outside node_modules, flag enabled", async () => {
     throw new Error(err);
   });
 
-  equal(
-    fs.readFileSync(pathOfTestFile1, "utf8"),
-    sortedContents,
-    "03.01 - sorted within node_modules"
-  );
-  equal(
-    fs.readFileSync(pathOfTestFile2, "utf8"),
-    sortedContents,
-    "03.02 - sorted outside node_modules"
-  );
+  equal(fs.readFileSync(pathOfTestFile1, "utf8"), sortedContents, "03.01");
+  equal(fs.readFileSync(pathOfTestFile2, "utf8"), sortedContents, "03.02");
 
   await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {
     throw new Error(err);
@@ -121,16 +113,8 @@ test("04 - files inside and outside node_modules, flag disabled", async () => {
     throw new Error(err);
   });
 
-  equal(
-    fs.readFileSync(pathOfTestFile1, "utf8"),
-    originalContents,
-    "04.01 - not sorted within node_modules"
-  );
-  equal(
-    fs.readFileSync(pathOfTestFile2, "utf8"),
-    sortedContents,
-    "04.02 - sorted outside node_modules"
-  );
+  equal(fs.readFileSync(pathOfTestFile1, "utf8"), originalContents, "04.01");
+  equal(fs.readFileSync(pathOfTestFile2, "utf8"), sortedContents, "04.02");
 
   await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {
     throw new Error(err);

@@ -9,33 +9,53 @@ import { remDup as rem } from "../dist/string-remove-duplicate-heads-tails.esm.j
 // -----------------------------------------------------------------------------
 
 test("01 - wrong/missing input = throw", () => {
-  throws(() => {
-    rem();
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      rem();
+    },
+    /THROW_ID_01/g,
+    "01.01"
+  );
   not.throws(() => {
     rem(1);
   }, "01.02");
 });
 
 test("02 - wrong opts", () => {
-  throws(() => {
-    rem("a", "a");
-  }, /THROW_ID_03/g);
-  throws(() => {
-    rem("a", 1);
-  }, /THROW_ID_03/g);
-  throws(() => {
-    rem("a {{}} b", {
-      heads: ["{{", 1],
-      tails: ["}}"],
-    });
-  }, /THROW_ID_04/g);
-  throws(() => {
-    rem("a {{}} b", {
-      heads: ["{{"],
-      tails: ["}}", 1],
-    });
-  }, /THROW_ID_05/g);
+  throws(
+    () => {
+      rem("a", "a");
+    },
+    /THROW_ID_03/g,
+    "02.01"
+  );
+  throws(
+    () => {
+      rem("a", 1);
+    },
+    /THROW_ID_03/g,
+    "02.02"
+  );
+  throws(
+    () => {
+      rem("a {{}} b", {
+        heads: ["{{", 1],
+        tails: ["}}"],
+      });
+    },
+    /THROW_ID_04/g,
+    "02.03"
+  );
+  throws(
+    () => {
+      rem("a {{}} b", {
+        heads: ["{{"],
+        tails: ["}}", 1],
+      });
+    },
+    /THROW_ID_05/g,
+    "02.04"
+  );
 });
 
 test("03 - empty input string", () => {
@@ -91,7 +111,7 @@ test("06 - trims wrapped heads and tails, with space inside heads/tails", () => 
       tails: " }}",
     }),
     "Hi {{ first_name }}!",
-    "06.01 - heads and tails with spaces"
+    "06.01"
   );
 });
 
@@ -102,7 +122,7 @@ test("07 - trimmed heads and tails in the source still get caught", () => {
       tails: " }}",
     }),
     "Hi {{ first_name }}!",
-    "07.01 - with spaces, and those spaces are not on str"
+    "07.01"
   );
 });
 
@@ -113,7 +133,7 @@ test("08 - excessive whitespace in opts heads/tails doesn't matter", () => {
       tails: "    }}       ",
     }),
     "Hi {{ first_name }}!",
-    "08.01 - excessive spaces"
+    "08.01"
   );
 });
 
@@ -342,7 +362,7 @@ test("23 - one set of custom heads and tails, single char string", () => {
       tails: "!!",
     }),
     "{{ z }}",
-    "23.09 - checking are defaults not leaking #1"
+    "23.09"
   );
   equal(
     rem("{{{{ z }}}}", {
@@ -350,7 +370,7 @@ test("23 - one set of custom heads and tails, single char string", () => {
       tails: "!!",
     }),
     "{{{{ z }}}}",
-    "23.10 - checking are defaults not leaking #2"
+    "23.10"
   );
 });
 
@@ -397,7 +417,7 @@ test("27 - mixed sets of heads and tails #1", () => {
       tails: ["!!", ")))"],
     }),
     "?? x !! ?? y !!",
-    "27.01 - input with spaces"
+    "27.01"
   );
   equal(
     rem("?? ((( ?? x !! ?? y !! ))) !!", {
@@ -405,7 +425,7 @@ test("27 - mixed sets of heads and tails #1", () => {
       tails: [" !!", " )))"],
     }),
     "?? x !! ?? y !!",
-    "27.02 - both input and head/tail references with spaces"
+    "27.02"
   );
   equal(
     rem("??(((??x!!??y!!)))!!", {
@@ -413,7 +433,7 @@ test("27 - mixed sets of heads and tails #1", () => {
       tails: [" !!", " )))"],
     }),
     "??x!!??y!!",
-    "27.03 - both input and head/tail references with spaces"
+    "27.03"
   );
 });
 
@@ -535,7 +555,7 @@ test("32 - removing empty head/tail chunks from around the text #3 (touches begi
       tails: ["!!", ")))"],
     }),
     "(((some))) text",
-    "32.02 - tab would not get trimmed, but since it was standing in the way of empty heads/tails, it was removed"
+    "32.02"
   );
 });
 
@@ -546,7 +566,7 @@ test("33 - leading letter ruins the removal from the front", () => {
       tails: ["!!", ")))"],
     }),
     "\ta ((())) (((some))) text",
-    '33.01 - because of the "a" the removal is terminated until trailing chunks met'
+    "33.01"
   );
   equal(
     rem(" a ((())) (((some))) text ((()))", {
@@ -595,7 +615,7 @@ test("36 - opts are not mutated", () => {
       heads: "{{",
       tails: "}}",
     },
-    "36.02 - opts were mutated!"
+    "36.02"
   );
 });
 

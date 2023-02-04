@@ -165,7 +165,7 @@ test(`07 - opts.lineLengthLimit`, () => {
   equal(
     m(equal, original, { removeLineBreaks: true }).result,
     minified,
-    "07.01 - default settings"
+    "07.01"
   );
   equal(strip(original), strip(minified), "07.02");
 
@@ -221,7 +221,7 @@ test(`08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 0,
     }).result,
     "aaaaaa bbbbbb cccccc",
-    "08.01-1"
+    "08.01"
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -229,7 +229,7 @@ test(`08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 0,
     }).result,
     "aaaaaa bbbbbb cccccc",
-    "08.02-2"
+    "08.02"
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -325,7 +325,7 @@ test(`08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 12,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "08.14 - the very edge"
+    "08.14"
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -341,7 +341,7 @@ test(`08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 13,
     }).result,
     "aaaaaa bbbbbb\ncccccc",
-    "08.16 - double space"
+    "08.16"
   );
   equal(
     m(equal, "aaaaaa\n\nbbbbbb cccccc", {
@@ -349,7 +349,7 @@ test(`08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 13,
     }).result,
     "aaaaaa bbbbbb\ncccccc",
-    "08.17 - double linebreak"
+    "08.17"
   );
   equal(
     m(equal, "aaaaaa \n \n bbbbbb cccccc", {
@@ -357,7 +357,7 @@ test(`08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 13,
     }).result,
     "aaaaaa bbbbbb\ncccccc",
-    "08.18 - double linebreak with spaces"
+    "08.18"
   );
   equal(
     m(equal, "aaaaaa\t\n\t\n\tbbbbbb cccccc", {
@@ -365,7 +365,7 @@ test(`08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 13,
     }).result,
     "aaaaaa bbbbbb\ncccccc",
-    "08.19 - double linebreak with spaces"
+    "08.19"
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -373,7 +373,7 @@ test(`08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 14,
     }).result,
     "aaaaaa bbbbbb\ncccccc",
-    "08.20 - two chunks can stay on one line generously"
+    "08.20"
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -381,7 +381,7 @@ test(`08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 15,
     }).result,
     "aaaaaa bbbbbb\ncccccc",
-    "08.21 - two chunks can stay on one line generously"
+    "08.21"
   );
 });
 
@@ -488,7 +488,7 @@ test(`09 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 12,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "09.13 - the very edge"
+    "09.13"
   );
   equal(
     m(equal, "aaaaaa\nbbbbbb\ncccccc", {
@@ -603,7 +603,7 @@ test(`10 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 12,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "10.13 - the very edge"
+    "10.13"
   );
 });
 
@@ -614,7 +614,7 @@ test(`11 - tags with single space between them`, () => {
       lineLengthLimit: 0,
     }).result,
     "<aaaa><bbbb><cccc>",
-    "11.01 - same but with tags"
+    "11.01"
   );
   equal(
     m(equal, "<aaaa> <bbbb> <cccc>", {
@@ -622,7 +622,7 @@ test(`11 - tags with single space between them`, () => {
       lineLengthLimit: 1,
     }).result,
     "<aaaa>\n<bbbb>\n<cccc>",
-    "11.02 - the very edge"
+    "11.02"
   );
   equal(
     m(equal, "<aaaa> <bbbb> <cccc>", {
@@ -960,7 +960,7 @@ test(`15 - script tags are skipped`, () => {
       removeIndentations: true,
     }).result,
     "a\n<script>\n \t\t   na\n  \tz</script> z",
-    "15.02 - default"
+    "15.02"
   );
   equal(
     m(equal, "a <script>\n \t\t   na\n  \tz</script> z    ", {
@@ -995,7 +995,7 @@ test(`16 - unfinished script tags are skipped too`, () => {
       removeIndentations: true,
     }).result,
     "a\n<script>\n \t\t   na\n  \tz    z    ",
-    "16.02 - default"
+    "16.02"
   );
   equal(
     m(equal, "a <script>\n \t\t   na\n  \tz    z    ", {

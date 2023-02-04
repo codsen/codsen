@@ -8,31 +8,51 @@ import { crush, defaults, version } from "../dist/html-crush.esm.js";
 // -----------------------------------------------------------------------------
 
 test(`01 - ${`\u001b[${34}m${`throws`}\u001b[${39}m`} - when first arg is wrong`, () => {
-  throws(() => {
-    crush();
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      crush();
+    },
+    /THROW_ID_01/,
+    "01.01"
+  );
 
-  throws(() => {
-    crush(true);
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      crush(true);
+    },
+    /THROW_ID_02/,
+    "01.02"
+  );
 });
 
 test(`02 - ${`\u001b[${34}m${`throws`}\u001b[${39}m`} - when second arg is wrong`, () => {
-  throws(() => {
-    crush("zzz", true);
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      crush("zzz", true);
+    },
+    /THROW_ID_03/,
+    "02.01"
+  );
 
-  throws(() => {
-    crush("zzz", "{}");
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      crush("zzz", "{}");
+    },
+    /THROW_ID_03/,
+    "02.02"
+  );
 });
 
 test(`03 - ${`\u001b[${34}m${`throws`}\u001b[${39}m`} - when opts.breakToTheLeftOf contains non-string elements`, () => {
-  throws(() => {
-    crush("zzz", {
-      breakToTheLeftOf: ["<a", true],
-    });
-  }, /THROW_ID_05/);
+  throws(
+    () => {
+      crush("zzz", {
+        breakToTheLeftOf: ["<a", true],
+      });
+    },
+    /THROW_ID_05/,
+    "03.01"
+  );
 
   // but does not throw when array is false, null or empty:
   not.throws(() => {

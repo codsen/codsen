@@ -12,25 +12,49 @@ import {
 // -----------------------------------------------------------------------------
 
 test("01 - wrong/missing input = throw", () => {
-  throws(() => {
-    isHighSurrogate(1);
-  }, "01.01");
-  throws(() => {
-    isHighSurrogate(null);
-  }, "01.02");
-  throws(() => {
-    isHighSurrogate(true);
-  }, "01.03");
+  throws(
+    () => {
+      isHighSurrogate(1);
+    },
+    "01.01",
+    "01.01"
+  );
+  throws(
+    () => {
+      isHighSurrogate(null);
+    },
+    "01.02",
+    "01.02"
+  );
+  throws(
+    () => {
+      isHighSurrogate(true);
+    },
+    "01.03",
+    "01.03"
+  );
 
-  throws(() => {
-    isLowSurrogate(1);
-  }, "01.04");
-  throws(() => {
-    isLowSurrogate(null);
-  }, "01.05");
-  throws(() => {
-    isLowSurrogate(true);
-  }, "01.06");
+  throws(
+    () => {
+      isLowSurrogate(1);
+    },
+    "01.04",
+    "01.04"
+  );
+  throws(
+    () => {
+      isLowSurrogate(null);
+    },
+    "01.05",
+    "01.05"
+  );
+  throws(
+    () => {
+      isLowSurrogate(true);
+    },
+    "01.06",
+    "01.06"
+  );
 });
 
 // -----------------------------------------------------------------------------

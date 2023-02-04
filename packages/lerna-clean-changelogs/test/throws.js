@@ -9,35 +9,63 @@ const require = createRequire(import.meta.url);
 const { version } = require("../package.json");
 
 test(`01 - missing 1st arg`, () => {
-  throws(() => {
-    c();
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      c();
+    },
+    /THROW_ID_01/g,
+    "01.01"
+  );
 
-  throws(() => {
-    c(undefined);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      c(undefined);
+    },
+    /THROW_ID_01/g,
+    "01.02"
+  );
 });
 
 test(`02 - 1st arg of a wrong type`, () => {
-  throws(() => {
-    c(1);
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      c(1);
+    },
+    /THROW_ID_02/g,
+    "02.01"
+  );
 
-  throws(() => {
-    c(true);
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      c(true);
+    },
+    /THROW_ID_02/g,
+    "02.02"
+  );
 
-  throws(() => {
-    c([]);
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      c([]);
+    },
+    /THROW_ID_02/g,
+    "02.03"
+  );
 
-  throws(() => {
-    c(null);
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      c(null);
+    },
+    /THROW_ID_02/g,
+    "02.04"
+  );
 
-  throws(() => {
-    c({});
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      c({});
+    },
+    /THROW_ID_02/g,
+    "02.05"
+  );
 });
 
 test(`03 - 1st arg is empty string`, () => {

@@ -25,7 +25,7 @@ test("01 - three properties two overrides", () => {
       { a: "z", b: "y", c: false },
       { a: "z", b: "y", c: true },
     ],
-    "01.02 - override key values are strings"
+    "01.02"
   );
   equal(
     combinations({ a: false, b: false, c: false }, { a: null, b: null }),
@@ -33,7 +33,7 @@ test("01 - three properties two overrides", () => {
       { a: null, b: null, c: false },
       { a: null, b: null, c: true },
     ],
-    "01.03 - override key values are strings"
+    "01.03"
   );
   equal(
     combinations({ a: false, b: false, c: false }, { a: ["x"], b: ["y"] }),
@@ -41,7 +41,7 @@ test("01 - three properties two overrides", () => {
       { a: ["x"], b: ["y"], c: false },
       { a: ["x"], b: ["y"], c: true },
     ],
-    "01.04 - override key values are strings"
+    "01.04"
   );
 });
 

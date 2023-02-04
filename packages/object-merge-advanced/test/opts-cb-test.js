@@ -39,7 +39,7 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       b: "test",
     },
-    "01.01 - control, default behaviour (logical OR)"
+    "01.01"
   );
 });
 
@@ -78,7 +78,7 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       b: "test",
     },
-    "02.01 - opts.mergeBoolsUsingOrNotAnd (logical AND)"
+    "02.01"
   );
 });
 
@@ -125,7 +125,7 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       b: "test", // <---- notice how hard merging on Bools didn't affect this string
     },
-    "03.01 - cb overriding all Boolean merges"
+    "03.01"
   );
 });
 
@@ -173,7 +173,7 @@ test("04 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       b: "", // <---- it was outside of cb's scope as cb dealt with Bools only.
     },
-    "04.01 - cb partially overriding opts.ignoreEverything"
+    "04.01"
   );
 });
 
@@ -222,7 +222,7 @@ test("05 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       b: "test", // <---- standard rule applies (non-empty string vs. empty string)
     },
-    "05.01 - cb partially overriding opts.mergeBoolsUsingOrNotAnd: false"
+    "05.01"
   );
 });
 
@@ -383,7 +383,7 @@ test("09 - \u001b[33mOPTS\u001b[39m - opts.cb - using callback to wrap string wi
       },
       b: false,
     },
-    "09.01 - control, default behaviour (logical OR)"
+    "09.01"
   );
 });
 
@@ -427,7 +427,7 @@ test("10 - \u001b[33mOPTS\u001b[39m - opts.cb - using callback to wrap string wi
       },
       b: false,
     },
-    "10.01 - wraps if string"
+    "10.01"
   );
 });
 
@@ -542,7 +542,7 @@ test("12 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenat
         key: "z.key val 2",
       },
     },
-    "12.01 - default behaviour, control"
+    "12.01"
   );
 });
 
@@ -602,7 +602,7 @@ test("13 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenat
         key: "z.key val 2",
       },
     },
-    "13.01 - cb fourth arg's path info used to override to merge strings"
+    "13.01"
   );
 });
 

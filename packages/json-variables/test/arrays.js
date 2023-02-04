@@ -76,7 +76,7 @@ test("03 - arrays, whitelisting as string", () => {
       subtitle: "text",
       submarine: "ship",
     },
-    "03.01 - base - no ignores"
+    "03.01"
   );
   equal(
     jVar(
@@ -107,7 +107,7 @@ test("03 - arrays, whitelisting as string", () => {
       subtitle: "text",
       submarine: "ship",
     },
-    "03.02 - string whitelist startsWith"
+    "03.02"
   );
 });
 
@@ -172,7 +172,7 @@ test("04 - arrays, whitelisting as array #1", () => {
       subtitle: "text",
       submarine: "ship",
     },
-    "04.02 - two ignores in an array"
+    "04.02"
   );
   equal(
     jVar(
@@ -203,7 +203,7 @@ test("04 - arrays, whitelisting as array #1", () => {
       subtitle: "text",
       submarine: "ship",
     },
-    "04.03 - two ignores in an array startsWith"
+    "04.03"
   );
   equal(
     jVar(
@@ -234,7 +234,7 @@ test("04 - arrays, whitelisting as array #1", () => {
       subtitle: "text",
       submarine: "ship",
     },
-    "04.04 - two ignores in an array, endsWith"
+    "04.04"
   );
 });
 
@@ -272,7 +272,7 @@ test("05 - arrays, whitelisting as array #2", () => {
         submarine: "ship",
       },
     },
-    "05.01 - two ignores in an array, data store"
+    "05.01"
   );
   equal(
     jVar(
@@ -312,7 +312,7 @@ test("05 - arrays, whitelisting as array #2", () => {
         },
       },
     },
-    "05.02 - does not wrap SUB"
+    "05.02"
   );
   equal(
     jVar(
@@ -357,7 +357,7 @@ test("05 - arrays, whitelisting as array #2", () => {
         },
       },
     },
-    "05.03 - does not wrap SUB"
+    "05.03"
   );
   equal(
     jVar(
@@ -398,39 +398,43 @@ test("05 - arrays, whitelisting as array #2", () => {
         submarine: "ship",
       },
     },
-    "05.04 - wraps SUB"
+    "05.04"
   );
 
-  throws(() => {
-    jVar(
-      {
-        title: [
-          "something",
-          "Some text %%_subtitle_%%",
-          "%%_whatnot_%%",
-          "anything",
-        ],
-        title_data: {
-          subtitle: "SUB",
+  throws(
+    () => {
+      jVar(
+        {
+          title: [
+            "something",
+            "Some text %%_subtitle_%%",
+            "%%_whatnot_%%",
+            "anything",
+          ],
+          title_data: {
+            subtitle: "SUB",
+          },
+          whatnot: "%%_submarine_%%",
+          whatnot_data: {
+            zzz: "yyy",
+          },
         },
-        whatnot: "%%_submarine_%%",
-        whatnot_data: {
-          zzz: "yyy",
-        },
-      },
-      {
-        heads: "%%_",
-        tails: "_%%",
-        lookForDataContainers: true,
-        dataContainerIdentifierTails: "_data",
-        wrapHeadsWith: "{",
-        wrapTailsWith: "}",
-        dontWrapVars: ["*zzz", "*yyy"],
-        preventDoubleWrapping: true,
-        wrapGlobalFlipSwitch: true,
-      }
-    );
-  }, /THROW_ID_18/);
+        {
+          heads: "%%_",
+          tails: "_%%",
+          lookForDataContainers: true,
+          dataContainerIdentifierTails: "_data",
+          wrapHeadsWith: "{",
+          wrapTailsWith: "}",
+          dontWrapVars: ["*zzz", "*yyy"],
+          preventDoubleWrapping: true,
+          wrapGlobalFlipSwitch: true,
+        }
+      );
+    },
+    /THROW_ID_18/,
+    "05.05"
+  );
 });
 
 test.run();

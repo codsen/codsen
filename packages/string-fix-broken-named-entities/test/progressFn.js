@@ -40,7 +40,7 @@ test(`01 - ${`\u001b[${32}m${`opts.progressFn`}\u001b[${39}m`} - reports progres
       [53, 57, "&ang;"],
       [62, 66, "&ang;"],
     ],
-    "01.02 - calls the progress function"
+    "01.02"
   );
   ok(typeof count === "number" && count <= 101 && count > 0, "01.03");
 });

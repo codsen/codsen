@@ -23,15 +23,15 @@ test(`02 - normal use`, () => {
   not.ok(!!right("a"), "02.02");
 
   // zero was defaulted to, which is 'a', so to the right of it is 'b', index 1:
-  equal(right("ab"), 1, "02.03");
+  equal(right("ab"), 1, "02.01");
 
   // 2nd input arg was omitted so starting index is zero, which is "a".
   // Now, to the right of it, there's a space, index 1, next non-whitespace char
   // is b which is index 2.
-  equal(right("a b"), 2, "02.04");
+  equal(right("a b"), 2, "02.02");
 
-  equal(right("a \n\n\nb"), 5, "02.05");
-  equal(right("a \n\n\n\n"), null, "02.06");
+  equal(right("a \n\n\nb"), 5, "02.03");
+  equal(right("a \n\n\n\n"), null, "02.04");
 });
 
 test.run();

@@ -27,7 +27,7 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
     {
       a: false,
     },
-    "01.01 - control, case #79 - false. Null is lower in rank than any Boolean."
+    "01.01"
   );
   equal(
     mergeAdvanced(
@@ -41,7 +41,7 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
     {
       a: true,
     },
-    "01.02 - control, case #79 - true. Null is lower in rank than any Boolean."
+    "01.02"
   );
 
   // ===
@@ -58,7 +58,7 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
     {
       a: false,
     },
-    "01.03 - control, case #88 - false"
+    "01.03"
   );
   equal(
     mergeAdvanced(
@@ -72,7 +72,7 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
     {
       a: true,
     },
-    "01.04 - control, case #88 - true"
+    "01.04"
   );
 
   // ===
@@ -96,7 +96,7 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
     {
       a: null,
     },
-    "01.05 - null-as-explicit-false, case #79 - false"
+    "01.05"
   );
   equal(
     mergeAdvanced(
@@ -113,7 +113,7 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
     {
       a: null,
     },
-    "01.06 - null-as-explicit-false, case #79 - true"
+    "01.06"
   );
 
   // ===
@@ -133,7 +133,7 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
     {
       a: null,
     },
-    "01.07 - null-as-explicit-false, case #88 - false"
+    "01.07"
   );
   equal(
     mergeAdvanced(
@@ -150,7 +150,7 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
     {
       a: null,
     },
-    "01.08 - null-as-explicit-false, case #88 - true"
+    "01.08"
   );
 });
 
@@ -170,7 +170,7 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
     {
       a: null,
     },
-    "02.01 - #81 - null vs non-empty array"
+    "02.01"
   );
   equal(
     mergeAdvanced(
@@ -187,7 +187,7 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
     {
       a: null,
     },
-    "02.02 - #82 - null vs. empty array"
+    "02.02"
   );
   equal(
     mergeAdvanced(
@@ -204,7 +204,7 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
     {
       a: null,
     },
-    "02.03 - #83 - null vs. non-empty plain object"
+    "02.03"
   );
   equal(
     mergeAdvanced(
@@ -221,7 +221,7 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
     {
       a: null,
     },
-    "02.04 - #84 - null vs. empty plain object"
+    "02.04"
   );
   equal(
     mergeAdvanced(
@@ -238,7 +238,7 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
     {
       a: null,
     },
-    "02.05 - #85 - null vs. non-empty string"
+    "02.05"
   );
   equal(
     mergeAdvanced(
@@ -255,7 +255,7 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
     {
       a: null,
     },
-    "02.06 - #86 - null vs. non-empty string"
+    "02.06"
   );
   equal(
     mergeAdvanced(
@@ -272,7 +272,7 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
     {
       a: null,
     },
-    "02.07 - #87 - null vs. num"
+    "02.07"
   );
   equal(
     mergeAdvanced(
@@ -289,7 +289,7 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
     {
       a: null,
     },
-    "02.08 - #88 - null vs. bool, true"
+    "02.08"
   );
   equal(
     mergeAdvanced(
@@ -306,7 +306,7 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
     {
       a: null,
     },
-    "02.09 - #88 - null vs. bool, false"
+    "02.09"
   );
   equal(
     mergeAdvanced(
@@ -323,7 +323,7 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
     {
       a: null,
     },
-    "02.10 - #89 - null vs. null"
+    "02.10"
   );
   equal(
     mergeAdvanced(
@@ -340,7 +340,7 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
     {
       a: null,
     },
-    "02.11 - #90 - null vs. null"
+    "02.11"
   );
 });
 
@@ -360,7 +360,7 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
     {
       a: null,
     },
-    "03.01 - #9 - null vs non-empty array"
+    "03.01"
   );
   equal(
     mergeAdvanced(
@@ -377,7 +377,7 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
     {
       a: null,
     },
-    "03.02 - #19 - null vs. empty array"
+    "03.02"
   );
   equal(
     mergeAdvanced(
@@ -394,7 +394,7 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
     {
       a: null,
     },
-    "03.03 - #29 - null vs. non-empty plain object"
+    "03.03"
   );
   equal(
     mergeAdvanced(
@@ -411,7 +411,7 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
     {
       a: null,
     },
-    "03.04 - #39 - null vs. empty plain object"
+    "03.04"
   );
   equal(
     mergeAdvanced(
@@ -428,7 +428,7 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
     {
       a: null,
     },
-    "03.05 - #49 - null vs. non-empty string"
+    "03.05"
   );
   equal(
     mergeAdvanced(
@@ -445,7 +445,7 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
     {
       a: null,
     },
-    "03.06 - #59 - null vs. non-empty string"
+    "03.06"
   );
   equal(
     mergeAdvanced(
@@ -462,7 +462,7 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
     {
       a: null,
     },
-    "03.07 - #69 - null vs. num"
+    "03.07"
   );
   equal(
     mergeAdvanced(
@@ -479,7 +479,7 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
     {
       a: null,
     },
-    "03.08 - #79 - null vs. bool, true"
+    "03.08"
   );
   equal(
     mergeAdvanced(
@@ -496,7 +496,7 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
     {
       a: null,
     },
-    "03.09 - #79 - null vs. bool, false"
+    "03.09"
   );
   equal(
     mergeAdvanced(
@@ -513,7 +513,7 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
     {
       a: null,
     },
-    "03.10 - #89 - null vs. null"
+    "03.10"
   );
   equal(
     mergeAdvanced(
@@ -530,7 +530,7 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
     {
       a: null,
     },
-    "03.11 - #99 - null vs. null"
+    "03.11"
   );
 });
 

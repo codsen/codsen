@@ -799,21 +799,29 @@ test("18 - rogue 4th input arg", () => {
 // ==============================
 
 test("19 - missing inputs - throws", () => {
-  throws(() => {
-    getObj();
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      getObj();
+    },
+    /THROW_ID_01/g,
+    "19.01"
+  );
 });
 
 test("20 - missing keyValPair", () => {
-  throws(() => {
-    getObj([
-      {
-        tag: "meta",
-        content: "UTF-8",
-        something: "else",
-      },
-    ]);
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      getObj([
+        {
+          tag: "meta",
+          content: "UTF-8",
+          something: "else",
+        },
+      ]);
+    },
+    /THROW_ID_02/g,
+    "20.01"
+  );
 });
 
 test.run();

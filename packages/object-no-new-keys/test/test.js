@@ -115,7 +115,7 @@ test("05 - objects within arrays", () => {
       }
     ),
     ["a[0].d"],
-    "05.01 - basic"
+    "05.01"
   );
   equal(
     noNewKeys(
@@ -147,7 +147,7 @@ test("05 - objects within arrays", () => {
       }
     ),
     ["a[0].d", "a[0].f", "a[1].k", "x"],
-    "05.02 - proper"
+    "05.02"
   );
   equal(
     noNewKeys(
@@ -175,7 +175,7 @@ test("05 - objects within arrays", () => {
       }
     ),
     ["a[0].d", "a[0].f", "a[1].k", "x"],
-    "05.03 - array in the reference has lesser number of elements (default, MODE #2)"
+    "05.03"
   );
   equal(
     noNewKeys(
@@ -204,7 +204,7 @@ test("05 - objects within arrays", () => {
       { mode: 1 }
     ),
     ["a[0].d", "a[0].f", "a[1].c", "a[1].k", "x"],
-    "05.04 - MODE #1 - array in the reference has lesser number of elements"
+    "05.04"
   );
   equal(
     noNewKeys(
@@ -233,7 +233,7 @@ test("05 - objects within arrays", () => {
       { mode: "1" }
     ),
     ["a[0].d", "a[0].f", "a[1].c", "a[1].k", "x"],
-    "05.05 - same as #4, but with mode identifier as string"
+    "05.05"
   );
 });
 
@@ -288,20 +288,12 @@ test("06 - other cases", () => {
 // ========================================
 
 test("07 - array vs ..., can be inner recursion situation", () => {
-  equal(
-    noNewKeys(["a", "b", "c"]),
-    ["[0]", "[1]", "[2]"],
-    "07.01 - array vs undefined"
-  );
-  equal(
-    noNewKeys(["a", "b", "c"], "zzz"),
-    ["[0]", "[1]", "[2]"],
-    "07.02 - array vs string"
-  );
+  equal(noNewKeys(["a", "b", "c"]), ["[0]", "[1]", "[2]"], "07.01");
+  equal(noNewKeys(["a", "b", "c"], "zzz"), ["[0]", "[1]", "[2]"], "07.02");
   equal(
     noNewKeys(["a", "b", "c"], { z: "zzz" }),
     ["[0]", "[1]", "[2]"],
-    "07.03 - array vs plain object"
+    "07.03"
   );
   equal(
     noNewKeys(
@@ -326,7 +318,7 @@ test("08 - plain object vs ..., can be inner recursion situation", () => {
       c: "c",
     }),
     ["a", "b", "c"],
-    "08.01 - object vs undefined"
+    "08.01"
   );
   equal(
     noNewKeys(
@@ -338,7 +330,7 @@ test("08 - plain object vs ..., can be inner recursion situation", () => {
       ["a"]
     ),
     ["a", "b", "c"],
-    "08.02 - object vs array"
+    "08.02"
   );
 });
 
@@ -382,24 +374,44 @@ test("11 - string vs string", () => {
 // ==========
 
 test("12 - mode.opts customised to a wrong type - throws", () => {
-  throws(() => {
-    noNewKeys({ a: "a" }, { b: "b" }, { mode: "z" });
-  }, /THROW_ID_01/);
-  throws(() => {
-    noNewKeys({ a: "a" }, { b: "b" }, { mode: 1.5 });
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      noNewKeys({ a: "a" }, { b: "b" }, { mode: "z" });
+    },
+    /THROW_ID_01/,
+    "12.01"
+  );
+  throws(
+    () => {
+      noNewKeys({ a: "a" }, { b: "b" }, { mode: 1.5 });
+    },
+    /THROW_ID_01/,
+    "12.02"
+  );
 });
 
 test("13 - mode is given as integer - throws", () => {
-  throws(() => {
-    noNewKeys({ a: "a" }, { b: "b" }, 1);
-  }, /THROW_ID_02/);
-  throws(() => {
-    noNewKeys({ a: "a" }, { b: "b" }, 2);
-  }, /THROW_ID_02/);
-  throws(() => {
-    noNewKeys({ a: "a" }, { b: "b" }, 2.5);
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      noNewKeys({ a: "a" }, { b: "b" }, 1);
+    },
+    /THROW_ID_02/,
+    "13.01"
+  );
+  throws(
+    () => {
+      noNewKeys({ a: "a" }, { b: "b" }, 2);
+    },
+    /THROW_ID_02/,
+    "13.02"
+  );
+  throws(
+    () => {
+      noNewKeys({ a: "a" }, { b: "b" }, 2.5);
+    },
+    /THROW_ID_02/,
+    "13.03"
+  );
 });
 
 test.run();

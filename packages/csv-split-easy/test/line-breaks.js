@@ -40,7 +40,7 @@ test("01 - breaks lines correctly leaving no empty lines", () => {
       ["a", "b", "c"],
       ["d", "e", "f"],
     ],
-    "01.01 - minimal amount of chars in each col"
+    "01.01"
   );
   equal(
     splitEasy(
@@ -50,7 +50,7 @@ test("01 - breaks lines correctly leaving no empty lines", () => {
       ["apples and some more apples", "bananas", "cherries"],
       ["donuts", "eclairs", "froyos"],
     ],
-    "01.02 - normal words in each col"
+    "01.02"
   );
   equal(
     splitEasy("a,b,c\n\r\n\r\r\r\r\n\n\nd,e,f"),
@@ -58,7 +58,7 @@ test("01 - breaks lines correctly leaving no empty lines", () => {
       ["a", "b", "c"],
       ["d", "e", "f"],
     ],
-    "01.03 - minimal amount of chars in each col"
+    "01.03"
   );
   equal(
     splitEasy(
@@ -68,28 +68,20 @@ test("01 - breaks lines correctly leaving no empty lines", () => {
       ["apples and some more apples", "bananas", "cherries"],
       ["donuts", "eclairs", "froyos"],
     ],
-    "01.04 - normal words in each col"
+    "01.04"
   );
 });
 
 test("02 - breaks lines that have empty values", () => {
-  equal(
-    splitEasy(",,\na,b,c"),
-    [["a", "b", "c"]],
-    "02.01 - whole row comprises of empty values"
-  );
-  equal(
-    splitEasy("a,b\n,\n,"),
-    [["a", "b"]],
-    "02.02 - only first row contains real data"
-  );
+  equal(splitEasy(",,\na,b,c"), [["a", "b", "c"]], "02.01");
+  equal(splitEasy("a,b\n,\n,"), [["a", "b"]], "02.02");
   equal(
     splitEasy("a,b\n\r,\n,c"),
     [
       ["a", "b"],
       ["", "c"],
     ],
-    "02.03 - only first row contains real data"
+    "02.03"
   );
   equal(
     splitEasy('a,b\n\r"",""\n,c'),
@@ -97,7 +89,7 @@ test("02 - breaks lines that have empty values", () => {
       ["a", "b"],
       ["", "c"],
     ],
-    "02.04 - empty row all with double quotes"
+    "02.04"
   );
   equal(
     splitEasy('a,b\n\r"",""\n"",c'),
@@ -105,7 +97,7 @@ test("02 - breaks lines that have empty values", () => {
       ["a", "b"],
       ["", "c"],
     ],
-    "02.05 - more double quotes"
+    "02.05"
   );
   equal(
     splitEasy('a,"b"\n\r"",""\n"","c"'),
@@ -113,7 +105,7 @@ test("02 - breaks lines that have empty values", () => {
       ["a", "b"],
       ["", "c"],
     ],
-    "02.06 - double quotes almost everywhere"
+    "02.06"
   );
   equal(
     splitEasy("a,b,c\n\r,,\n\r,,\n,,\n,,\r,,\n,,\n,d,"),
@@ -121,10 +113,10 @@ test("02 - breaks lines that have empty values", () => {
       ["a", "b", "c"],
       ["", "d", ""],
     ],
-    "02.07 - many empty rows"
+    "02.07"
   );
-  equal(splitEasy(",,,"), [[""]], "02.08 - three commas");
-  equal(splitEasy(""), [[""]], "02.09 - nothing");
+  equal(splitEasy(",,,"), [[""]], "02.08");
+  equal(splitEasy(""), [[""]], "02.09");
 });
 
 test("03 - copes with leading/trailing empty space", () => {
@@ -143,7 +135,7 @@ Bought pens,10,,1000\n`),
       ["Bought chairs", "20", "", "980"],
       ["Bought pens", "10", "", "1000"],
     ],
-    "03.01 - one trailing \\n"
+    "03.01"
   );
   equal(
     splitEasy(`\nDescription,Debit Amount,Credit Amount,Balance
@@ -160,7 +152,7 @@ Bought pens,10,,1000\n \r \n \r \r\r\r\n\n\n\n      `),
       ["Bought chairs", "20", "", "980"],
       ["Bought pens", "10", "", "1000"],
     ],
-    "03.02 - bunch of leading and trailing whitespace"
+    "03.02"
   );
 });
 

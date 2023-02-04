@@ -42,31 +42,47 @@ test("05 - ADD() - three null args", () => {
 });
 
 test("06 - ADD() - wrong input args", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.add("a");
-  }, /THROW_ID_12/g);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.add("a");
+    },
+    /THROW_ID_12/g,
+    "06.01"
+  );
 });
 
 test("07 - ADD() - wrong types", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.add("a", "a");
-  }, /THROW_ID_09/g);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.add("a", "a");
+    },
+    /THROW_ID_09/g,
+    "07.01"
+  );
 });
 
 test("08 - ADD() - wrong types", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.add(1, "a");
-  }, /THROW_ID_10/g);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.add(1, "a");
+    },
+    /THROW_ID_10/g,
+    "08.01"
+  );
 });
 
 test("09 - ADD() - wrong types", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.add("a", 1);
-  }, /THROW_ID_09/g);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.add("a", 1);
+    },
+    /THROW_ID_09/g,
+    "09.01"
+  );
 });
 
 test("10 - ADD() - wrong input args", () => {
@@ -78,17 +94,25 @@ test("10 - ADD() - wrong input args", () => {
 
 test("11 - ADD() - wrong input args", () => {
   // numbers but not natural integers
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.add(1.2, 1);
-  }, /THROW_ID_09/g);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.add(1.2, 1);
+    },
+    /THROW_ID_09/g,
+    "11.01"
+  );
 });
 
 test("12 - ADD() - wrong input args", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.add(1, 1.3);
-  }, /THROW_ID_10/);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.add(1, 1.3);
+    },
+    /THROW_ID_10/,
+    "12.01"
+  );
 });
 
 test("13 - ADD() - third input arg is not string", () => {
@@ -98,31 +122,47 @@ test("13 - ADD() - third input arg is not string", () => {
 });
 
 test("14 - PUSH() - wrong inputs", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.push("a");
-  }, /THROW_ID_12/);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.push("a");
+    },
+    /THROW_ID_12/,
+    "14.01"
+  );
 });
 
 test("15 - PUSH() - wrong inputs", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.push("a", "a");
-  }, /THROW_ID_09/);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.push("a", "a");
+    },
+    /THROW_ID_09/,
+    "15.01"
+  );
 });
 
 test("16 - PUSH() - wrong inputs", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.push(1, "a");
-  }, /THROW_ID_10/);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.push(1, "a");
+    },
+    /THROW_ID_10/,
+    "16.01"
+  );
 });
 
 test("17 - PUSH() - wrong inputs", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.push("a", 1);
-  }, /THROW_ID_09/);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.push("a", 1);
+    },
+    /THROW_ID_09/,
+    "17.01"
+  );
 });
 
 test("18 - PUSH() - wrong inputs", () => {
@@ -133,45 +173,69 @@ test("18 - PUSH() - wrong inputs", () => {
 });
 
 test("19 - PUSH() - wrong inputs", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.push(undefined, 1);
-  }, /THROW_ID_13/);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.push(undefined, 1);
+    },
+    /THROW_ID_13/,
+    "19.01"
+  );
 });
 
 test("20 - PUSH() - wrong inputs", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.push(null, 1);
-  }, /THROW_ID_13/);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.push(null, 1);
+    },
+    /THROW_ID_13/,
+    "20.01"
+  );
 });
 
 test("21 - PUSH() - wrong inputs", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.push(1, undefined);
-  }, /THROW_ID_12/);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.push(1, undefined);
+    },
+    /THROW_ID_12/,
+    "21.01"
+  );
 });
 
 test("22 - PUSH() - wrong inputs", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.push(1, null);
-  }, /THROW_ID_12/);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.push(1, null);
+    },
+    /THROW_ID_12/,
+    "22.01"
+  );
 });
 
 test("23 - PUSH() - numbers but not natural integers", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.push(1.2, 1);
-  }, /THROW_ID_09/);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.push(1.2, 1);
+    },
+    /THROW_ID_09/,
+    "23.01"
+  );
 });
 
 test("24 - PUSH() - numbers but not natural integers", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.push(1, 1.3);
-  }, /THROW_ID_10/);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.push(1, 1.3);
+    },
+    /THROW_ID_10/,
+    "24.01"
+  );
 });
 
 test("25 - ADD() - first argument is .current() output of ranges", () => {
@@ -181,40 +245,44 @@ test("25 - ADD() - first argument is .current() output of ranges", () => {
 });
 
 test("26 - ADD() - first argument is .current() output of ranges", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.add([[1, "z"]]);
-  }, /THROW_ID_10/);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.add([[1, "z"]]);
+    },
+    /THROW_ID_10/,
+    "26.01"
+  );
 });
 
 test("27 - ADD() - first argument is .current() output of ranges", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.add([["z", 1]]);
-  }, /THROW_ID_09/);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.add([["z", 1]]);
+    },
+    /THROW_ID_09/,
+    "27.01"
+  );
 });
 
 test("28 - ADD() - first argument is .current() output of ranges", () => {
-  throws(() => {
-    let ranges = new Ranges();
-    ranges.add([["z", 1], 1]);
-  }, /THROW_ID_09/);
+  throws(
+    () => {
+      let ranges = new Ranges();
+      ranges.add([["z", 1], 1]);
+    },
+    /THROW_ID_09/,
+    "28.01"
+  );
 });
 
 test("29 - ADD() - null being pushed", () => {
   let ranges1 = new Ranges();
   let ranges2 = new Ranges();
-  equal(
-    ranges1.current(),
-    null,
-    "29.01 - part1 - result about-to-be-pushed is really null"
-  );
+  equal(ranges1.current(), null, "29.01");
   ranges2.push(ranges1.current());
-  equal(
-    ranges2.current(),
-    null,
-    "29.02 - part2 - does not throw when null is pushed"
-  );
+  equal(ranges2.current(), null, "29.02");
 });
 
 // -----------------------------------------------------------------------------
@@ -695,82 +763,70 @@ test("72 - opts.limitToBeAddedWhitespace - spaces grouped - #1", () => {
   let ranges = new Ranges({ limitToBeAddedWhitespace: true });
   ranges.add(1, 2, " ");
   ranges.add(2, 4, "   ");
-  equal(ranges.current(), [[1, 4, " "]], "72.01 - both with spaces only");
+  equal(ranges.current(), [[1, 4, " "]], "72.01");
 });
 
 test("73 - opts.limitToBeAddedWhitespace - spaces grouped - #2", () => {
   let ranges = new Ranges({ limitToBeAddedWhitespace: true });
   ranges.add(1, 2, " \t\t\t        ");
   ranges.add(2, 4, "   ");
-  equal(ranges.current(), [[1, 4, " "]], "73.01 - with tabs");
+  equal(ranges.current(), [[1, 4, " "]], "73.01");
 });
 
 test("74 - opts.limitToBeAddedWhitespace - spaces grouped - #3", () => {
   let ranges = new Ranges({ limitToBeAddedWhitespace: true });
   ranges.add(1, 2);
   ranges.add(2, 4, "   ");
-  equal(ranges.current(), [[1, 4, " "]], "74.01 - first slice has none");
+  equal(ranges.current(), [[1, 4, " "]], "74.01");
 });
 
 test("75 - opts.limitToBeAddedWhitespace - spaces grouped - #4", () => {
   let ranges = new Ranges({ limitToBeAddedWhitespace: true });
   ranges.add(1, 2, "");
   ranges.add(2, 4, "   ");
-  equal(ranges.current(), [[1, 4, " "]], "75.01 - first slice has empty str");
+  equal(ranges.current(), [[1, 4, " "]], "75.01");
 });
 
 test("76 - opts.limitToBeAddedWhitespace - spaces grouped - #5", () => {
   let ranges = new Ranges({ limitToBeAddedWhitespace: true });
   ranges.add(1, 2, "");
   ranges.add(2, 4, " \t\t\t        ");
-  equal(
-    ranges.current(),
-    [[1, 4, " "]],
-    "76.01 - first empty second with tabs"
-  );
+  equal(ranges.current(), [[1, 4, " "]], "76.01");
 });
 
 test("77 - opts.limitToBeAddedWhitespace - spaces grouped - #6", () => {
   let ranges = new Ranges({ limitToBeAddedWhitespace: true });
   ranges.add(1, 2, "   ");
   ranges.add(2, 4);
-  equal(ranges.current(), [[1, 4, " "]], "77.01 - second slice has none");
+  equal(ranges.current(), [[1, 4, " "]], "77.01");
 });
 
 test("78 - opts.limitToBeAddedWhitespace - spaces grouped - #7", () => {
   let ranges = new Ranges({ limitToBeAddedWhitespace: true });
   ranges.add(1, 2, "   ");
   ranges.add(2, 4, "");
-  equal(ranges.current(), [[1, 4, " "]], "78.01 - first slice has empty str");
+  equal(ranges.current(), [[1, 4, " "]], "78.01");
 });
 
 test("79 - opts.limitToBeAddedWhitespace - spaces grouped - #8", () => {
   let ranges = new Ranges({ limitToBeAddedWhitespace: true });
   ranges.add(1, 2, " \t\t\t        ");
   ranges.add(2, 4, "");
-  equal(
-    ranges.current(),
-    [[1, 4, " "]],
-    "79.01 - first empty second with tabs"
-  );
+  equal(ranges.current(), [[1, 4, " "]], "79.01");
 });
 
 test("80 - opts.limitToBeAddedWhitespace - linebreaks - #1", () => {
   let ranges = new Ranges({ limitToBeAddedWhitespace: true });
   ranges.add(1, 2, " \t\t\t     \n   ");
   ranges.add(2, 4, "    ");
-  equal(
-    ranges.current(),
-    [[1, 4, "\n"]],
-    "80.01 - only 1st-one has line break"
-  );
+  equal(ranges.current(), [[1, 4, "\n"]], "80.01");
 });
 
 test("81 - opts.limitToBeAddedWhitespace - linebreaks - #2", () => {
   let ranges = new Ranges({ limitToBeAddedWhitespace: true });
   ranges.add(1, 2, " \t\t\t     \n   ");
   ranges.add(2, 4, "  \n  ");
-  equal(ranges.current(), [[1, 4, "\n"]], "81.01 - both have \\n");
+  equal(ranges.current(), [[1, 4, "\n"]], "81.01");
 });
 
 test("82 - opts.limitToBeAddedWhitespace - linebreaks - #3", () => {
@@ -813,7 +869,7 @@ test("86 - opts.limitToBeAddedWhitespace - null negates 3rd arg #1", () => {
       [1, 4, null],
       [10, 20, " x  "],
     ],
-    "86.01 - no opts"
+    "86.01"
   );
 });
 
@@ -1087,14 +1143,22 @@ test("103 - REPLACE() - replaces ranges with single range (throws)", () => {
   oldRanges.add(9, 10);
 
   // without third element, "what to insert"
-  throws(() => {
-    oldRanges.replace([6, 8]);
-  }, /THROW_ID_11/);
+  throws(
+    () => {
+      oldRanges.replace([6, 8]);
+    },
+    /THROW_ID_11/,
+    "103.01"
+  );
 
   // with third element, "what to insert"
-  throws(() => {
-    oldRanges.replace([6, 8, "zzz"]);
-  }, /THROW_ID_11/);
+  throws(
+    () => {
+      oldRanges.replace([6, 8, "zzz"]);
+    },
+    /THROW_ID_11/,
+    "103.02"
+  );
 
   // but range or ranges does work fine:
   oldRanges.replace([[6, 8, "zzz"]]);

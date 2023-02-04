@@ -38,7 +38,7 @@ test("02 - two variables with paths in an object's key", () => {
       var1: { key1: ["value1"] },
       var2: { key2: { key3: ["", "value2"] } },
     },
-    "02.01 - defaults + querying object contents"
+    "02.01"
   );
 });
 
@@ -62,7 +62,7 @@ test("03 - two variables, with wrapping", () => {
       var1: "value1",
       var2: "value2",
     },
-    "03.01 - custom wrappers"
+    "03.01"
   );
 });
 
@@ -86,7 +86,7 @@ test("04 - variables with paths being wrapped", () => {
       var1: { key1: "value1" },
       var2: { key2: "value2" },
     },
-    "04.01 - custom wrappers + multi-level"
+    "04.01"
   );
 });
 
@@ -110,7 +110,7 @@ test("05 - custom heads and tails", () => {
       var1: "value1",
       var2: "value2",
     },
-    "05.01 - custom heads/tails"
+    "05.01"
   );
 });
 
@@ -134,7 +134,7 @@ test("06 - custom heads and tails being wrapped", () => {
       var1: { key1: "value1" },
       var2: { key2: "value2" },
     },
-    "06.01 - custom heads/tails + multi-level"
+    "06.01"
   );
 });
 
@@ -158,7 +158,7 @@ test("07 - whitespace within custom heads and tails", () => {
       var1: "value1",
       var2: "value2",
     },
-    "07.01 - custom heads/tails, some whitespace inside of them"
+    "07.01"
   );
 });
 
@@ -182,7 +182,7 @@ test("08 - whitespace within variables containing paths and custom heads/tails",
       var1: { key1: "value1" },
       var2: { key2: "value2" },
     },
-    "08.01 - custom heads/tails, some whitespace inside of them + multi-level"
+    "08.01"
   );
 });
 
@@ -206,7 +206,7 @@ test("09 - some values are equal to heads or tails", () => {
       d: "_%%",
       e: "_%%",
     },
-    "09.01 - some keys have heads/tails exactly - defaults"
+    "09.01"
   );
 });
 
@@ -235,44 +235,52 @@ test("10 - opts.noSingleMarkers - off", () => {
       d: "_%%",
       e: "_%%",
     },
-    "10.01 - some keys have heads/tails exactly - hardcoded defaults"
+    "10.01"
   );
 });
 
 test("11 - opts.noSingleMarkers - on", () => {
-  throws(() => {
-    jVar(
-      {
-        a: "some text %%_var1_%% more text %%_var2_%%",
-        b: "something",
-        var1: "value1",
-        var2: "value2",
-        c: "%%_",
-        d: "_%%",
-        e: "_%%",
-      },
-      {
-        noSingleMarkers: true,
-      }
-    );
-  }, /THROW_ID_16/);
+  throws(
+    () => {
+      jVar(
+        {
+          a: "some text %%_var1_%% more text %%_var2_%%",
+          b: "something",
+          var1: "value1",
+          var2: "value2",
+          c: "%%_",
+          d: "_%%",
+          e: "_%%",
+        },
+        {
+          noSingleMarkers: true,
+        }
+      );
+    },
+    /THROW_ID_16/,
+    "11.01"
+  );
 });
 
 test("12 - opts.noSingleMarkers - off - more throw tests", () => {
-  throws(() => {
-    jVar(
-      {
-        a: "some text %%_var1_%% more text %%_var2_%%",
-        b: "something",
-        var1: "value1",
-        var2: "value2",
-        c: "%%_",
-      },
-      {
-        noSingleMarkers: true,
-      }
-    );
-  }, /THROW_ID_16/);
+  throws(
+    () => {
+      jVar(
+        {
+          a: "some text %%_var1_%% more text %%_var2_%%",
+          b: "something",
+          var1: "value1",
+          var2: "value2",
+          c: "%%_",
+        },
+        {
+          noSingleMarkers: true,
+        }
+      );
+    },
+    /THROW_ID_16/,
+    "12.01"
+  );
 });
 
 test("13 - custom heads/tails, values equal to them are present in data", () => {
@@ -301,7 +309,7 @@ test("13 - custom heads/tails, values equal to them are present in data", () => 
       d: "}",
       e: "}",
     },
-    "13.01 - some keys have heads/tails only - custom heads/tails, defaults"
+    "13.01"
   );
 });
 
@@ -332,7 +340,7 @@ test("14 - custom heads/tails - noSingleMarkers = false", () => {
       d: "}",
       e: "}",
     },
-    "14.01 - some keys have heads/tails only - custom heads/tails, hardcoded defaults"
+    "14.01"
   );
 });
 
@@ -417,7 +425,7 @@ test("16 - data stores #1", () => {
         var3: { key3: "333333" },
       },
     },
-    "16.03 - data stash and multi-level, all default"
+    "16.03"
   );
   equal(
     jVar(
@@ -439,7 +447,7 @@ test("16 - data stores #1", () => {
         var3: { key3: "333333" },
       },
     },
-    "16.04 - data stash and multi-level, default markers, custom wrap"
+    "16.04"
   );
 });
 
@@ -463,7 +471,7 @@ test("17 - top-level key and data stash clash", () => {
         var3: "333333",
       },
     },
-    "17.01 - default, no wrap"
+    "17.01"
   );
   equal(
     jVar(
@@ -487,7 +495,7 @@ test("17 - top-level key and data stash clash", () => {
         var3: "333333",
       },
     },
-    "17.02 - wrap"
+    "17.02"
   );
   equal(
     jVar({
@@ -508,7 +516,7 @@ test("17 - top-level key and data stash clash", () => {
         var3: { key3: "333333" },
       },
     },
-    "17.03 - root key would take precedence, but it's of a wrong format and therefore algorithm chooses data storage instead (which is correct type)"
+    "17.03"
   );
   equal(
     jVar({
@@ -529,7 +537,7 @@ test("17 - top-level key and data stash clash", () => {
         var3: { key3: "333333" },
       },
     },
-    "17.04 - mix, one var resolved from root, another from data store"
+    "17.04"
   );
 });
 
@@ -615,7 +623,7 @@ test("21 - empty strings in the input AST", () => {
       var1: "value1",
       var2: "value2",
     },
-    "21.01 - defaults"
+    "21.01"
   );
 });
 
@@ -643,7 +651,7 @@ test("22 - fetching variables from parent node's level", () => {
         },
       },
     },
-    "22.01 - defaults"
+    "22.01"
   );
 });
 
@@ -672,7 +680,7 @@ test("23 - fetching variables from two levels above", () => {
         var2: "yyy",
       },
     },
-    "23.01 - defaults"
+    "23.01"
   );
   // mutation didn't happen:
   equal(
@@ -717,7 +725,7 @@ test("24 - fetching variables from root, three levels above", () => {
       var1: { z: "zzz" },
       var2: "yyy",
     },
-    "24.01 - defaults"
+    "24.01"
   );
   // input argument was not mutated:
   equal(
@@ -765,7 +773,7 @@ test("25 - fetching variables from parent node's level data store", () => {
         },
       },
     },
-    "25.01 - defaults"
+    "25.01"
   );
 });
 
@@ -797,7 +805,7 @@ test("26 - fetching variables from data store two levels above", () => {
         },
       },
     },
-    "26.01 - defaults"
+    "26.01"
   );
 });
 
@@ -829,7 +837,7 @@ test("27 - fetching variables from data store as high as the root", () => {
         var2: "yyy",
       },
     },
-    "27.01 - defaults"
+    "27.01"
   );
 });
 

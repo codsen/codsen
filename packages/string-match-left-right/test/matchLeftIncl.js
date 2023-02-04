@@ -13,16 +13,12 @@ import {
 // -----------------------------------------------------------------------------
 
 test(`01 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      on a simple string`, () => {
-  equal(matchLeftIncl("abc", 2, "c"), "c", "01.01 - pointless, but still");
-  equal(
-    matchLeftIncl("zabcdefghi", 4, ["bcd"]),
-    "bcd",
-    "01.02 - one elem to match"
-  );
+  equal(matchLeftIncl("abc", 2, "c"), "c", "01.01");
+  equal(matchLeftIncl("zabcdefghi", 4, ["bcd"]), "bcd", "01.02");
   equal(
     matchLeftIncl("abcdefghi", 3, ["cd", "bcd"]),
     "cd", // first match
-    "01.03 - multiple to match"
+    "01.03"
   );
   equal(matchLeftIncl("abcdefghi", 3, ["aaa", "bcd"]), "bcd", "01.04");
   equal(matchLeftIncl("abcdefghi", 3, ["aaa", "zzz"]), false, "01.05");
@@ -52,14 +48,10 @@ test(`01 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      on a simple 
 });
 
 test(`02 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      case insensitive`, () => {
-  equal(matchLeftIncl("abc", 2, "C"), false, "02.01 - control");
-  equal(matchLeftIncl("abc", 2, "C", { i: true }), "C", "02.02 - opts.i");
+  equal(matchLeftIncl("abc", 2, "C"), false, "02.01");
+  equal(matchLeftIncl("abc", 2, "C", { i: true }), "C", "02.02");
   equal(matchLeftIncl("abc", 2, "BC", { i: true }), "BC", "02.03");
-  equal(
-    matchLeftIncl("abC", 2, "c", { i: true }),
-    "c",
-    "02.04 - source is uppercase, needle is lowercase"
-  );
+  equal(matchLeftIncl("abC", 2, "c", { i: true }), "c", "02.04");
 });
 
 test(`03 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      left substring to check is longer than what's on the left`, () => {
@@ -67,7 +59,7 @@ test(`03 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      left substri
   equal(
     matchLeftIncl("abc", 2, ["cjsldfdjshfjkdfhgkdkgfhkd"], { i: true }),
     false,
-    "03.02 - opts should not affect anything here"
+    "03.02"
   );
 });
 
@@ -87,13 +79,13 @@ test(`04 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}     cb gives outs
 });
 
 test(`05 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMismatches === 1, one char`, () => {
-  equal(matchLeftIncl("abc", 2, "c"), "c", "05.01 - control");
+  equal(matchLeftIncl("abc", 2, "c"), "c", "05.01");
   equal(
     matchLeftIncl("abcd", 2, "c", {
       maxMismatches: 1,
     }),
     "c",
-    "05.02 - matching"
+    "05.02"
   );
   equal(
     matchLeft("abcd", 3, "c", {
@@ -111,7 +103,7 @@ test(`05 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       maxMismatches: 1,
     }),
     false, // <-- because at least one character must have been matched (general rule)
-    "05.04 - mismatching"
+    "05.04"
   );
   equal(
     matchLeft("abc", 2, "x", {
@@ -148,7 +140,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: false,
     }),
     false,
-    "07.01 - d mismatching"
+    "07.01"
   );
   equal(
     matchLeftIncl("_ab.defghi", 4, ["bcd"], {
@@ -156,7 +148,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: false,
     }),
     "bcd",
-    "07.02 - c mismatching"
+    "07.02"
   );
   equal(
     matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
@@ -164,7 +156,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: false,
     }),
     "bcd",
-    "07.03 - b mismatching"
+    "07.03"
   );
   equal(
     matchLeftIncl(".cdefghi", 2, ["bcd"], {
@@ -172,7 +164,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: false,
     }),
     "bcd",
-    "07.04 - string starts with the value"
+    "07.04"
   );
   equal(
     matchLeftIncl("cdefghi", 1, ["bcd"], {
@@ -180,7 +172,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: false,
     }),
     "bcd",
-    "07.05 - last char to match would be outside of the str"
+    "07.05"
   );
   equal(
     matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
@@ -199,7 +191,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: true,
     }),
     "bcd",
-    "07.07 - d mismatching"
+    "07.07"
   );
   equal(
     matchLeftIncl("_ab.defghi", 4, ["bcd"], {
@@ -207,7 +199,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: true,
     }),
     "bcd",
-    "07.08 - c mismatching"
+    "07.08"
   );
   equal(
     matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
@@ -215,7 +207,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: true,
     }),
     "bcd",
-    "07.09 - b mismatching"
+    "07.09"
   );
   equal(
     matchLeftIncl(".cdefghi", 2, ["bcd"], {
@@ -223,7 +215,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: true,
     }),
     "bcd",
-    "07.10 - string starts with the value"
+    "07.10"
   );
   equal(
     matchLeftIncl("cdefghi", 1, ["bcd"], {
@@ -231,7 +223,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: true,
     }),
     "bcd",
-    "07.11 - last char to match would be outside of the str"
+    "07.11"
   );
   equal(
     matchLeftIncl("_a.cdefghi", 4, ["bcd"], {

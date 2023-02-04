@@ -9,21 +9,33 @@ import { rEntDecode as decode } from "../dist/ranges-ent-decode.esm.js";
 // ==============================
 
 test("01 - throws when first input argument is missing", () => {
-  throws(() => {
-    decode();
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      decode();
+    },
+    /THROW_ID_01/,
+    "01.01"
+  );
 });
 
 test("02 - throws when first input argument is not string", () => {
-  throws(() => {
-    decode(true);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      decode(true);
+    },
+    /THROW_ID_01/,
+    "02.01"
+  );
 });
 
 test("03 - throws when second input argument is not a plain object", () => {
-  throws(() => {
-    decode("zzz", "tralala");
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      decode("zzz", "tralala");
+    },
+    /THROW_ID_02/,
+    "03.01"
+  );
 });
 
 test("04 - falsey opts does not throw", () => {

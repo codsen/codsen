@@ -12,21 +12,41 @@ import { parseTap as parse } from "../dist/tap-parse-string-to-object.esm.js";
 // -----------------------------------------------------------------------------
 
 test("01 - wrong/missing input = throw", () => {
-  throws(() => {
-    parse();
-  }, /THROW_ID_01/g);
-  throws(() => {
-    parse(1);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    parse(null);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    parse(undefined);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    parse(true);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      parse();
+    },
+    /THROW_ID_01/g,
+    "01.01"
+  );
+  throws(
+    () => {
+      parse(1);
+    },
+    /THROW_ID_01/g,
+    "01.02"
+  );
+  throws(
+    () => {
+      parse(null);
+    },
+    /THROW_ID_01/g,
+    "01.03"
+  );
+  throws(
+    () => {
+      parse(undefined);
+    },
+    /THROW_ID_01/g,
+    "01.04"
+  );
+  throws(
+    () => {
+      parse(true);
+    },
+    /THROW_ID_01/g,
+    "01.05"
+  );
 });
 
 // -----------------------------------------------------------------------------

@@ -16,25 +16,37 @@ test("02 - api - first arg is empty string", () => {
 });
 
 test("03 - api - opts is wrong", () => {
-  throws(() => {
-    e("z", true);
-  }, /THROW_ID_01/gm);
+  throws(
+    () => {
+      e("z", true);
+    },
+    /THROW_ID_01/gm,
+    "03.01"
+  );
 });
 
 test("04 - api - opts.cb", () => {
-  throws(() => {
-    e("z", {
-      cb: true,
-    });
-  }, /THROW_ID_02/gm);
+  throws(
+    () => {
+      e("z", {
+        cb: true,
+      });
+    },
+    /THROW_ID_02/gm,
+    "04.01"
+  );
 });
 
 test("05 - api - opts.throwIfEmpty", () => {
-  throws(() => {
-    e("z", {
-      throwIfEmpty: true,
-    });
-  }, /THROW_ID_03/gm);
+  throws(
+    () => {
+      e("z", {
+        throwIfEmpty: true,
+      });
+    },
+    /THROW_ID_03/gm,
+    "05.01"
+  );
 });
 
 // 01. let's do the basics

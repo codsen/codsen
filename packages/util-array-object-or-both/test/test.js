@@ -50,22 +50,34 @@ test("04 - opts.msg", () => {
     "object",
     "04.01"
   );
-  throws(() => {
-    arrObjOrBoth("aaa", {
-      msg: "z",
-    });
-  }, "z The given variable was customised to an unrecognised value: aaa. Please check it against the API documentation.");
-  throws(() => {
-    arrObjOrBoth("aaa", {
-      msg: "some-library/some-function(): [THROW_ID_99]",
-    });
-  }, "some-library/some-function(): [THROW_ID_99] The given variable was customised to an unrecognised value: aaa. Please check it against the API documentation.");
-  throws(() => {
-    arrObjOrBoth("bbb", {
-      msg: "some-library/some-function(): [THROW_ID_99]",
-      optsVarName: "only",
-    });
-  }, 'some-library/some-function(): [THROW_ID_99] The variable "only" was customised to an unrecognised value: bbb. Please check it against the API documentation.');
+  throws(
+    () => {
+      arrObjOrBoth("aaa", {
+        msg: "z",
+      });
+    },
+    "z The given variable was customised to an unrecognised value: aaa. Please check it against the API documentation.",
+    "04.02"
+  );
+  throws(
+    () => {
+      arrObjOrBoth("aaa", {
+        msg: "some-library/some-function(): [THROW_ID_99]",
+      });
+    },
+    "some-library/some-function(): [THROW_ID_99] The given variable was customised to an unrecognised value: aaa. Please check it against the API documentation.",
+    "04.03"
+  );
+  throws(
+    () => {
+      arrObjOrBoth("bbb", {
+        msg: "some-library/some-function(): [THROW_ID_99]",
+        optsVarName: "only",
+      });
+    },
+    'some-library/some-function(): [THROW_ID_99] The variable "only" was customised to an unrecognised value: bbb. Please check it against the API documentation.',
+    "04.04"
+  );
 });
 
 test.run();

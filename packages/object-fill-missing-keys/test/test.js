@@ -680,86 +680,126 @@ test("17 - multiple levels of nested arrays #2", () => {
 // ==============================
 
 test("18 - number as input", () => {
-  throws(() => {
-    fillMissing(1, {
-      a: {
-        b: false,
-      },
-    });
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      fillMissing(1, {
+        a: {
+          b: false,
+        },
+      });
+    },
+    /THROW_ID_02/g,
+    "18.01"
+  );
 });
 
 test("19 - boolean as input", () => {
-  throws(() => {
-    fillMissing(true, {
-      a: {
-        b: false,
-      },
-    });
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      fillMissing(true, {
+        a: {
+          b: false,
+        },
+      });
+    },
+    /THROW_ID_02/g,
+    "19.01"
+  );
 });
 
 test("20 - null as input", () => {
-  throws(() => {
-    fillMissing(null, {
-      a: {
-        b: false,
-      },
-    });
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      fillMissing(null, {
+        a: {
+          b: false,
+        },
+      });
+    },
+    /THROW_ID_02/g,
+    "20.01"
+  );
 });
 
 test("21 - both args missing (as in hardcoded undefined)", () => {
-  throws(() => {
-    fillMissing(undefined, undefined);
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      fillMissing(undefined, undefined);
+    },
+    /THROW_ID_02/g,
+    "21.01"
+  );
 });
 
 test("22 - both args completely missing", () => {
-  throws(() => {
-    fillMissing();
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      fillMissing();
+    },
+    /THROW_ID_01/g,
+    "22.01"
+  );
 });
 
 test("23 - second arg is not a plain object", () => {
-  throws(() => {
-    fillMissing({ a: "b" }, 1);
-  }, /THROW_ID_03/g);
+  throws(
+    () => {
+      fillMissing({ a: "b" }, 1);
+    },
+    /THROW_ID_03/g,
+    "23.01"
+  );
 });
 
 test("24 - opts is not a plain object", () => {
-  throws(() => {
-    fillMissing({ a: "c" }, { a: "b" }, 1);
-  }, /THROW_ID_04/g);
+  throws(
+    () => {
+      fillMissing({ a: "c" }, { a: "b" }, 1);
+    },
+    /THROW_ID_04/g,
+    "24.01"
+  );
   not.throws(() => {
     fillMissing({ a: "c" }, { a: "b" }, null);
   }, "24.02");
 });
 
 test("25 - opts.doNotFillThesePathsIfTheyContainPlaceholders", () => {
-  throws(() => {
-    fillMissing(
-      { a: "c" },
-      { a: "b" },
-      {
-        doNotFillThesePathsIfTheyContainPlaceholders: ["aa.aaa", 1],
-      }
-    );
-  }, /THROW_ID_06/g);
-  throws(() => {
-    fillMissing({ a: "c" }, [{ a: "b" }], {
-      doNotFillThesePathsIfTheyContainPlaceholders: ["aa.aaa", { a: 1 }],
-    });
-  }, /THROW_ID_03/g);
-  throws(() => {
-    fillMissing(
-      { a: "c" },
-      { a: "b" },
-      {
+  throws(
+    () => {
+      fillMissing(
+        { a: "c" },
+        { a: "b" },
+        {
+          doNotFillThesePathsIfTheyContainPlaceholders: ["aa.aaa", 1],
+        }
+      );
+    },
+    /THROW_ID_06/g,
+    "25.01"
+  );
+  throws(
+    () => {
+      fillMissing({ a: "c" }, [{ a: "b" }], {
         doNotFillThesePathsIfTheyContainPlaceholders: ["aa.aaa", { a: 1 }],
-      }
-    );
-  }, /THROW_ID_06/g);
+      });
+    },
+    /THROW_ID_03/g,
+    "25.02"
+  );
+  throws(
+    () => {
+      fillMissing(
+        { a: "c" },
+        { a: "b" },
+        {
+          doNotFillThesePathsIfTheyContainPlaceholders: ["aa.aaa", { a: 1 }],
+        }
+      );
+    },
+    /THROW_ID_06/g,
+    "25.03"
+  );
 });
 
 // ================================
@@ -822,7 +862,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       z: "z",
     },
-    "27.01 - default behaviour - keys are added"
+    "27.01"
   );
 
   equal(
@@ -855,7 +895,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       z: "z",
     },
-    "27.02 - opts.doNotFillThesePathsIfTheyContainPlaceholders"
+    "27.02"
   );
 
   equal(
@@ -892,7 +932,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       z: "z",
     },
-    "27.03 - triggering the normalisation when it's off from opts"
+    "27.03"
   );
 
   equal(
@@ -924,7 +964,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       z: "z",
     },
-    "27.04 - key in given path is missing completely"
+    "27.04"
   );
 
   equal(

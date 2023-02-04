@@ -61,7 +61,7 @@ module.exports = {
     "prefer-const": "off",
     "no-nested-ternary": "off",
     "row-num/correct-row-num": "error",
-    "test-num/correct-test-num": "error",
+    "test-num/correct-test-num": "off",
     "import/extensions": "off",
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],

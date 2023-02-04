@@ -24,7 +24,7 @@ test("02 - empty string, classicTrim=false", () => {
       res: "",
       ranges: [],
     },
-    "02.01 - hardcoded default"
+    "02.01"
   );
 });
 
@@ -237,38 +237,70 @@ test("23 - trimming hits the tab and stops - classicTrim", () => {
 });
 
 test("24 - non-string input", () => {
-  throws(() => {
-    trim(true);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      trim(true);
+    },
+    /THROW_ID_01/g,
+    "24.01"
+  );
 
-  throws(() => {
-    trim(undefined);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      trim(undefined);
+    },
+    /THROW_ID_01/g,
+    "24.02"
+  );
 
-  throws(() => {
-    trim(9);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      trim(9);
+    },
+    /THROW_ID_01/g,
+    "24.03"
+  );
 
   let input = { a: "zzz" };
-  throws(() => {
-    trim(input);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      trim(input);
+    },
+    /THROW_ID_01/g,
+    "24.04"
+  );
 
-  throws(() => {
-    trim(true, { classicTrim: true });
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      trim(true, { classicTrim: true });
+    },
+    /THROW_ID_01/g,
+    "24.05"
+  );
 
-  throws(() => {
-    trim(undefined, { classicTrim: true });
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      trim(undefined, { classicTrim: true });
+    },
+    /THROW_ID_01/g,
+    "24.06"
+  );
 
-  throws(() => {
-    trim(9, { classicTrim: true });
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      trim(9, { classicTrim: true });
+    },
+    /THROW_ID_01/g,
+    "24.07"
+  );
 
-  throws(() => {
-    trim(input, { classicTrim: true });
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      trim(input, { classicTrim: true });
+    },
+    /THROW_ID_01/g,
+    "24.08"
+  );
 });
 
 // opts.space
@@ -318,7 +350,7 @@ test("26 - opts.space - tabs", () => {
         [9, 13],
       ],
     },
-    "26.03 - classicTrim negates everything"
+    "26.03"
   );
   equal(
     trim(" \t  a b c  \t ", { space: true, tab: true }),
@@ -334,7 +366,7 @@ test("26 - opts.space - tabs", () => {
   equal(
     trim(" \t  a b c  \t ", { space: false, tab: true }),
     { res: " \t  a b c  \t ", ranges: [] },
-    "26.05 - spaces trim is not enabled and stops everything"
+    "26.05"
   );
 });
 
@@ -371,7 +403,7 @@ test("27 - opts.cr", () => {
         [9, 13],
       ],
     },
-    "27.03 - classicTrim negates all other settings"
+    "27.03"
   );
   equal(
     trim(" \r  a b c  \r ", { cr: true }),
@@ -387,7 +419,7 @@ test("27 - opts.cr", () => {
   equal(
     trim(" \r  a b c  \r ", { cr: true, space: false }),
     { res: " \r  a b c  \r ", ranges: [] },
-    "27.05 - spaces turned off"
+    "27.05"
   );
   equal(
     trim("\r  a b c  \r", { cr: true, space: false }),
@@ -398,7 +430,7 @@ test("27 - opts.cr", () => {
         [10, 11],
       ],
     },
-    "27.06 - only CR's trimmed as requested"
+    "27.06"
   );
 });
 
@@ -435,7 +467,7 @@ test("28 - opts.lf", () => {
         [9, 13],
       ],
     },
-    "28.03 - classicTrim negates all other settings"
+    "28.03"
   );
   equal(
     trim(" \n  a b c  \n ", { lf: true }),
@@ -451,7 +483,7 @@ test("28 - opts.lf", () => {
   equal(
     trim(" \n  a b c  \n ", { lf: true, space: false }),
     { res: " \n  a b c  \n ", ranges: [] },
-    "28.05 - spaces turned off"
+    "28.05"
   );
   equal(
     trim("\n  a b c  \n", { lf: true, space: false }),
@@ -462,7 +494,7 @@ test("28 - opts.lf", () => {
         [10, 11],
       ],
     },
-    "28.06 - only CR's trimmed as requested"
+    "28.06"
   );
 });
 
@@ -499,7 +531,7 @@ test("29 - opts.tab", () => {
         [9, 13],
       ],
     },
-    "29.03 - classicTrim negates all other settings"
+    "29.03"
   );
   equal(
     trim(" \t  a b c  \t ", { tab: true }),
@@ -515,7 +547,7 @@ test("29 - opts.tab", () => {
   equal(
     trim(" \t  a b c  \t ", { tab: true, space: false }),
     { res: " \t  a b c  \t ", ranges: [] },
-    "29.05 - spaces turted off"
+    "29.05"
   );
   equal(
     trim("\t  a b c  \t", { tab: true, space: false }),
@@ -526,7 +558,7 @@ test("29 - opts.tab", () => {
         [10, 11],
       ],
     },
-    "29.06 - only tabs were trimmed as requested"
+    "29.06"
   );
 });
 
@@ -563,7 +595,7 @@ test("30 - opts.nbsp", () => {
         [9, 13],
       ],
     },
-    "30.03 - classicTrim negates all other settings"
+    "30.03"
   );
   equal(
     trim(` ${rawnbsp}  a b c  ${rawnbsp} `, { nbsp: true }),
@@ -579,7 +611,7 @@ test("30 - opts.nbsp", () => {
   equal(
     trim(` ${rawnbsp}  a b c  ${rawnbsp} `, { nbsp: true, space: false }),
     { res: ` ${rawnbsp}  a b c  ${rawnbsp} `, ranges: [] },
-    "30.05 - spaces turted off"
+    "30.05"
   );
   equal(
     trim(`${rawnbsp}  a b c  ${rawnbsp}`, { nbsp: true, space: false }),
@@ -590,7 +622,7 @@ test("30 - opts.nbsp", () => {
         [10, 11],
       ],
     },
-    "30.06 - only tabs were trimmed as requested"
+    "30.06"
   );
   equal(
     trim(`${rawnbsp}  a b c  ${rawnbsp}`, {

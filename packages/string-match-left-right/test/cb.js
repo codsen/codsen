@@ -606,7 +606,7 @@ test(`12 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${3
       cb: startsWithZ,
     }),
     false,
-    "12.06 - cheeky - nothing for callback to hang onto"
+    "12.06"
   );
 });
 
@@ -628,11 +628,15 @@ test(`13 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
     }),
     "13.02"
   );
-  throws(() => {
-    matchLeft("abc", 1, null, {
-      i: true,
-    });
-  }, /THROW_ID_08/);
+  throws(
+    () => {
+      matchLeft("abc", 1, null, {
+        i: true,
+      });
+    },
+    /THROW_ID_08/,
+    "13.02"
+  );
 });
 
 test(`14 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()`, () => {
@@ -648,13 +652,17 @@ test(`14 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       i: true,
       cb: (char) => char === "b",
     }),
+    "14.01"
+  );
+  throws(
+    () => {
+      matchLeftIncl("abc", 1, "", {
+        i: true,
+      });
+    },
+    /THROW_ID_08/,
     "14.02"
   );
-  throws(() => {
-    matchLeftIncl("abc", 1, "", {
-      i: true,
-    });
-  }, /THROW_ID_08/);
 });
 
 test(`15 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()`, () => {
@@ -672,11 +680,15 @@ test(`15 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
     }),
     "15.02"
   );
-  throws(() => {
-    matchRight("abc", 1, "", {
-      i: true,
-    });
-  }, /THROW_ID_08/);
+  throws(
+    () => {
+      matchRight("abc", 1, "", {
+        i: true,
+      });
+    },
+    /THROW_ID_08/,
+    "15.02"
+  );
 });
 
 test(`16 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl()`, () => {
@@ -692,13 +704,17 @@ test(`16 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       i: true,
       cb: (char) => char === "b",
     }),
+    "16.01"
+  );
+  throws(
+    () => {
+      matchRightIncl("abc", 1, "", {
+        i: true,
+      });
+    },
+    /THROW_ID_08/,
     "16.02"
   );
-  throws(() => {
-    matchRightIncl("abc", 1, "", {
-      i: true,
-    });
-  }, /THROW_ID_08/);
 });
 
 test(`17 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight() other cb args`, () => {
@@ -752,21 +768,21 @@ test(`18 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       trimBeforeMatching: true,
       cb: (char) => char === "d",
     }),
-    "18.04"
+    "18.01"
   );
   ok(
     matchRight("abc   def", 2, "", {
       trimBeforeMatching: true,
       cb: (char, rest) => rest === "def",
     }),
-    "18.05"
+    "18.02"
   );
   ok(
     matchRight("abc   def", 2, "", {
       trimBeforeMatching: true,
       cb: (char, rest, index) => index === 6, // "d" is at index 6
     }),
-    "18.06"
+    "18.03"
   );
 });
 
@@ -797,21 +813,21 @@ test(`19 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       trimBeforeMatching: true,
       cb: (char) => char === "d",
     }),
-    "19.04"
+    "19.01"
   );
   ok(
     matchRightIncl("abc   def", 3, "", {
       trimBeforeMatching: true,
       cb: (char, rest) => rest === "def",
     }),
-    "19.05"
+    "19.02"
   );
   ok(
     matchRightIncl("abc   def", 3, "", {
       trimBeforeMatching: true,
       cb: (char, rest, index) => index === 6, // "d" is at index 6
     }),
-    "19.06"
+    "19.03"
   );
 });
 
@@ -852,21 +868,21 @@ test(`20 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
         cb: (char) => char === "c",
       }
     ),
-    "20.04"
+    "20.01"
   );
   ok(
     matchLeft("abc   def", 6, "", {
       trimBeforeMatching: true,
       cb: (char, rest) => rest === "abc",
     }),
-    "20.05"
+    "20.02"
   );
   ok(
     matchLeft("abc   def", 6, "", {
       trimBeforeMatching: true,
       cb: (char, rest, index) => index === 2, // "c" is at index 2
     }),
-    "20.06"
+    "20.03"
   );
 });
 
@@ -907,21 +923,21 @@ test(`21 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
         cb: (char) => char === "c",
       }
     ),
-    "21.04"
+    "21.01"
   );
   ok(
     matchLeftIncl("abc   def", 5, "", {
       trimBeforeMatching: true,
       cb: (char, rest) => rest === "abc",
     }),
-    "21.05"
+    "21.02"
   );
   ok(
     matchLeftIncl("abc   def", 5, "", {
       trimBeforeMatching: true,
       cb: (char, rest, index) => index === 2, // "c" is at index 2
     }),
-    "21.06"
+    "21.03"
   );
 });
 
@@ -985,7 +1001,7 @@ test(`23 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
         cb: (char) => char === "_",
       }
     ),
-    "23.02"
+    "23.01"
   );
 });
 
@@ -1002,7 +1018,7 @@ test(`24 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       trimCharsBeforeMatching: ["b", "c"],
       cb: (char) => char === "+",
     }),
-    "24.02"
+    "24.01"
   );
 });
 
@@ -1029,7 +1045,7 @@ test(`25 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
         cb: (char) => char === "_",
       }
     ),
-    "25.02"
+    "25.01"
   );
 });
 
@@ -1046,7 +1062,7 @@ test(`26 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       trimCharsBeforeMatching: ["b", "c"],
       cb: (char) => char === "+",
     }),
-    "26.02"
+    "26.01"
   );
 });
 

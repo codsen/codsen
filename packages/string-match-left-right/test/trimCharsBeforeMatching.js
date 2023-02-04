@@ -24,9 +24,13 @@ test(`01 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
     "01.02"
   );
   // two character-long opts.trimCharsBeforeMatching
-  throws(() => {
-    matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: ["/ "] });
-  }, "01.03");
+  throws(
+    () => {
+      matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: ["/ "] });
+    },
+    "01.03",
+    "01.03"
+  );
   equal(
     matchRight("< / div>", 0, ["div"], {
       trimCharsBeforeMatching: ["/", " "],
@@ -93,17 +97,17 @@ test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
   equal(
     matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: "/" }),
     "div",
-    "02.02 - opts.trimCharsBeforeMatching given as string"
+    "02.02"
   );
   equal(
     matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: ["/"] }),
     "div",
-    "02.03 - opts.trimCharsBeforeMatching given within array"
+    "02.03"
   );
   equal(
     matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: ["a", "/"] }),
     "div",
-    "02.04 - opts.trimCharsBeforeMatching given within array"
+    "02.04"
   );
   equal(
     matchRight("<adiv>", 0, ["div"], { trimCharsBeforeMatching: "A" }),
@@ -124,7 +128,7 @@ test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: "A",
     }),
     "div",
-    "02.07 - case insensitive affects trimCharsBeforeMatching too and yields results"
+    "02.07"
   );
   equal(
     matchRight("<adiv>", 0, ["dIv"], {
@@ -281,11 +285,15 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
     "div",
     "03.01"
   );
-  throws(() => {
-    matchRight("</div>", 0, ["zz", "div"], {
-      trimCharsBeforeMatching: ["/<"], // <--- has to be character-by-character
-    });
-  }, "03.02");
+  throws(
+    () => {
+      matchRight("</div>", 0, ["zz", "div"], {
+        trimCharsBeforeMatching: ["/<"], // <--- has to be character-by-character
+      });
+    },
+    "03.02",
+    "03.02"
+  );
 
   equal(
     matchLeft("</div>", 5, ["zz", "div"], {
@@ -294,11 +302,15 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
     "div",
     "03.03"
   );
-  throws(() => {
-    matchLeft("</div>", 5, ["zz", "div"], {
-      trimCharsBeforeMatching: ["/<"], // <--- has to be character-by-character
-    });
-  }, "03.04");
+  throws(
+    () => {
+      matchLeft("</div>", 5, ["zz", "div"], {
+        trimCharsBeforeMatching: ["/<"], // <--- has to be character-by-character
+      });
+    },
+    "03.04",
+    "03.04"
+  );
 
   equal(
     matchRightIncl("</div>", 1, ["zz", "div"], {
@@ -307,11 +319,15 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
     "div",
     "03.05"
   );
-  throws(() => {
-    matchRightIncl("</div>", 1, ["zz", "div"], {
-      trimCharsBeforeMatching: ["/<"], // <--- has to be character-by-character
-    });
-  }, "03.06");
+  throws(
+    () => {
+      matchRightIncl("</div>", 1, ["zz", "div"], {
+        trimCharsBeforeMatching: ["/<"], // <--- has to be character-by-character
+      });
+    },
+    "03.06",
+    "03.06"
+  );
 
   equal(
     matchLeftIncl("</div>", 4, ["zz", "div"], {
@@ -320,19 +336,19 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
     "div",
     "03.07"
   );
-  throws(() => {
-    matchLeftIncl("</div>", 4, ["zz", "div"], {
-      trimCharsBeforeMatching: ["/<"], // <--- has to be character-by-character
-    });
-  }, "03.08");
+  throws(
+    () => {
+      matchLeftIncl("</div>", 4, ["zz", "div"], {
+        trimCharsBeforeMatching: ["/<"], // <--- has to be character-by-character
+      });
+    },
+    "03.08",
+    "03.08"
+  );
 });
 
 test(`04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
-  equal(
-    matchLeft("za", 1, [() => "EOL"]),
-    false,
-    "04.01 - whitespace trim opts control"
-  );
+  equal(matchLeft("za", 1, [() => "EOL"]), false, "04.01");
 });
 
 test(`05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
@@ -341,20 +357,16 @@ test(`05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mch
       trimCharsBeforeMatching: ["z"],
     }),
     "EOL",
-    "05.01 - whitespace trim opt on"
+    "05.01"
   );
 });
 
 test(`06 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
-  equal(
-    matchLeft("za", 1, ["a", () => "EOL"]),
-    false,
-    "06.01 - whitespace trim opts control"
-  );
+  equal(matchLeft("za", 1, ["a", () => "EOL"]), false, "06.01");
 });
 
 test(`07 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
-  equal(matchLeft("za", 1, ["z", () => "EOL"]), "z", "07.01 - z caught");
+  equal(matchLeft("za", 1, ["z", () => "EOL"]), "z", "07.01");
 });
 
 test(`08 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
@@ -363,7 +375,7 @@ test(`08 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mch
       trimCharsBeforeMatching: ["z"],
     }),
     "EOL",
-    "08.01 - whitespace trim opt on"
+    "08.01"
   );
 });
 

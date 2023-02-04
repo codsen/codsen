@@ -26,7 +26,7 @@ test("01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars", () =>
       var1: "value1",
       var2: "value2",
     },
-    "01.01 - defaults"
+    "01.01"
   );
   equal(
     jVar(
@@ -49,7 +49,7 @@ test("01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars", () =>
       var1: "value1",
       var2: "value2",
     },
-    "01.02 - custom opts.headsNoWrap & opts.tailsNoWrap"
+    "01.02"
   );
   equal(
     jVar(
@@ -72,7 +72,7 @@ test("01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars", () =>
       var1: "value1",
       var2: "value2",
     },
-    "01.03 - left side wrapped only, custom opts.headsNoWrap & opts.tailsNoWrap"
+    "01.03"
   );
   equal(
     jVar(
@@ -95,7 +95,7 @@ test("01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars", () =>
       var1: "value1",
       var2: "value2",
     },
-    "01.04 - right side wrapped only, custom opts.headsNoWrap & opts.tailsNoWrap"
+    "01.04"
   );
 });
 
@@ -117,7 +117,7 @@ test("02 - opts.headsNoWrap & opts.tailsNoWrap work on multi-level vars", () => 
       b: "??z!!",
       c: "z",
     },
-    "02.01 - two level redirects, default opts.headsNoWrap & opts.tailsNoWrap, matching var key lengths"
+    "02.01"
   );
   equal(
     jVar(
@@ -136,7 +136,7 @@ test("02 - opts.headsNoWrap & opts.tailsNoWrap work on multi-level vars", () => 
       bbb: "??z!!",
       c: "z",
     },
-    "02.02 - two level redirects, default opts.headsNoWrap & opts.tailsNoWrap, mismatching var key lengths"
+    "02.02"
   );
   equal(
     jVar(
@@ -159,7 +159,7 @@ test("02 - opts.headsNoWrap & opts.tailsNoWrap work on multi-level vars", () => 
       bbb: "??z!!",
       c: "z",
     },
-    "02.03 - two level redirects, custom everything"
+    "02.03"
   );
 });
 
@@ -179,7 +179,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
       aaa: "ccc\n",
       bbb: "ccc\n",
     },
-    "03.01 - basic, checking are trailing line breaks retained"
+    "03.01"
   );
 
   equal(
@@ -205,7 +205,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
         lll: "yyy\n",
       },
     },
-    "03.02 - line breaks on the values coming into array"
+    "03.02"
   );
 
   equal(
@@ -231,7 +231,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
         lll: "yyy",
       },
     },
-    "03.03 - line breaks at array-level"
+    "03.03"
   );
 
   equal(
@@ -257,7 +257,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
         lll: "yyy",
       },
     },
-    "03.04 - like #02 but with wrapping"
+    "03.04"
   );
 
   equal(
@@ -316,7 +316,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
         yyy: "yyy_val",
       },
     },
-    "03.06 - simple version"
+    "03.06"
   );
 
   equal(
@@ -412,7 +412,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
         row8_var: "order.shopInfo.zipCode",
       },
     },
-    "03.07 - real-life version"
+    "03.07"
   );
 });
 

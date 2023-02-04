@@ -179,7 +179,7 @@ test(`11 - bunch of whitespace 1`, () => {
       `${letterC}onsole.log(\`\\u001b[$\{012399999999}m$\{\` \t 888 z\`}\\u001b[${39}m\`)`
     ).result,
     `${letterC}onsole.log(\`\\u001b[$\{012399999999}m$\{\` \t 001 z\`}\\u001b[${39}m\`)`,
-    `11.01 - synthetic test where colour is put in deeper curlies for easier visual grepping`
+    `11.01`
   );
 });
 
@@ -189,7 +189,7 @@ test(`12 - bunch of whitespace 2`, () => {
       `${letterC}onsole.log(\`\\u001b[012399999999m$\{\` \t 888 z\`}\\u001b[${39}m\`)`
     ).result,
     `${letterC}onsole.log(\`\\u001b[012399999999m$\{\` \t 001 z\`}\\u001b[${39}m\`)`,
-    `12.01 - synthetic test where colour code is put raw`
+    `12.01`
   );
 });
 
@@ -362,7 +362,7 @@ test(`27 - padding is set to numbers`, () => {
   equal(
     fixRowNums(str).result,
     `zzz\n${letterC}onsole.log('002 something')`,
-    `27.01 - control - default is three`
+    `27.01`
   );
   equal(
     fixRowNums(str, { padStart: 0 }).result,
@@ -397,7 +397,7 @@ test(`27 - padding is set to numbers`, () => {
   equal(
     fixRowNums(str, { padStart: 1 }).result,
     `zzz\n${letterC}onsole.log('2 something')`,
-    `27.08 - negative numbers are ignored, default (3) is used`
+    `27.08`
   );
 
   // opts.overrideRowNum
@@ -535,7 +535,7 @@ test(`37 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - broken ANSI - will not u
       `${letterC}onsole.log(\`${BACKSLASH}u001b[012399999999$\{\` \t 888 z\`}${BACKSLASH}u001b[$\{39}m\`)`
     ).result,
     `${letterC}onsole.log(\`${BACKSLASH}u001b[012399999999$\{\` \t 888 z\`}${BACKSLASH}u001b[$\{39}m\`)`,
-    `37.01 - ANSI opening sequence's m is missing`
+    `37.01`
   );
 });
 

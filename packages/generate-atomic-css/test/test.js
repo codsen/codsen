@@ -59,33 +59,53 @@ const allOptsVariations = [
 // -----------------------------------------------------------------------------
 
 test(`01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - wrong/missing input`, () => {
-  throws(() => {
-    genAtomic();
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      genAtomic();
+    },
+    /THROW_ID_01/g,
+    "01.01"
+  );
 });
 
 test(`02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - undefined literal`, () => {
-  throws(() => {
-    genAtomic(undefined);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      genAtomic(undefined);
+    },
+    /THROW_ID_01/g,
+    "02.01"
+  );
 });
 
 test(`03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - numbers`, () => {
-  throws(() => {
-    genAtomic(1);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      genAtomic(1);
+    },
+    /THROW_ID_01/g,
+    "03.01"
+  );
 });
 
 test(`04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - null`, () => {
-  throws(() => {
-    genAtomic(null);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      genAtomic(null);
+    },
+    /THROW_ID_01/g,
+    "04.01"
+  );
 });
 
 test(`05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - bools`, () => {
-  throws(() => {
-    genAtomic(true);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      genAtomic(true);
+    },
+    /THROW_ID_01/g,
+    "05.01"
+  );
 });
 
 // -----------------------------------------------------------------------------
@@ -1923,11 +1943,7 @@ ${CONTENTHEAD} */
 
   // ---------------------------------------------------------------------------
 
-  equal(
-    generated,
-    ref,
-    "53.01 - no content heads and tails - replaces whole thing with result"
-  );
+  equal(generated, ref, "53.01");
 });
 
 test(`54 - ${`\u001b[${34}m${`no config requested, not present`}\u001b[${39}m`} - via opts.configOverride`, () => {
@@ -1979,11 +1995,7 @@ b
     }
   ).result;
 
-  equal(
-    generated,
-    ref,
-    "54.01 - with heads and tails - places generated content between content heads/tails"
-  );
+  equal(generated, ref, "54.01");
 });
 
 test(`55 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - via opts.configOverride`, () => {
@@ -2040,11 +2052,7 @@ y
     }
   ).result;
 
-  equal(
-    generated,
-    ref,
-    "55.01 - with heads and tails - places generated content between content heads/tails"
-  );
+  equal(generated, ref, "55.01");
 });
 
 test(`56 - ${`\u001b[${34}m${`no config requested, not present`}\u001b[${39}m`} - via opts.configOverride #2`, () => {
@@ -2096,11 +2104,7 @@ b
     }
   ).result;
 
-  equal(
-    generated,
-    ref,
-    "56.01 - with heads and tails - places generated content between content heads/tails"
-  );
+  equal(generated, ref, "56.01");
 });
 
 test(`57 - ${`\u001b[${34}m${`no config requested, not present`}\u001b[${39}m`} - via opts.configOverride #3`, () => {
@@ -2152,11 +2156,7 @@ b
     }
   ).result;
 
-  equal(
-    generated,
-    ref,
-    "57.01 - with heads and tails - places generated content between content heads/tails"
-  );
+  equal(generated, ref, "57.01");
 });
 
 // -----------------------------------------------------------------------------

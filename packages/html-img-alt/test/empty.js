@@ -8,63 +8,35 @@ import { alts } from "../dist/html-img-alt.esm.js";
 // -----------------------------------------------------------------------------
 
 test("01 - alt without equal", () => {
-  equal(alts("zzz<img alt>zzz"), 'zzz<img alt="" >zzz', "01.01 - html - tight");
+  equal(alts("zzz<img alt>zzz"), 'zzz<img alt="" >zzz', "01.01");
 });
 
 test("02 - alt without equal", () => {
-  equal(
-    alts("zzz<img    alt>zzz"),
-    'zzz<img alt="" >zzz',
-    "02.01 - html - excessive white space"
-  );
+  equal(alts("zzz<img    alt>zzz"), 'zzz<img alt="" >zzz', "02.01");
 });
 
 test("03 - alt without equal", () => {
-  equal(
-    alts("zzz<img alt >zzz"),
-    'zzz<img alt="" >zzz',
-    "03.01 - html - one trailing space"
-  );
+  equal(alts("zzz<img alt >zzz"), 'zzz<img alt="" >zzz', "03.01");
 });
 
 test("04 - alt without equal", () => {
-  equal(
-    alts("zzz<img      alt      >zzz"),
-    'zzz<img alt="" >zzz',
-    "04.01 - html - excessive white space on both sides"
-  );
+  equal(alts("zzz<img      alt      >zzz"), 'zzz<img alt="" >zzz', "04.01");
 });
 
 test("05 - alt without equal", () => {
-  equal(
-    alts("zzz<img alt/>zzz"),
-    'zzz<img alt="" />zzz',
-    "05.01 - xhtml - tight"
-  );
+  equal(alts("zzz<img alt/>zzz"), 'zzz<img alt="" />zzz', "05.01");
 });
 
 test("06 - alt without equal", () => {
-  equal(
-    alts("zzz<img alt />zzz"),
-    'zzz<img alt="" />zzz',
-    "06.01 - xhtml - single space on both sides"
-  );
+  equal(alts("zzz<img alt />zzz"), 'zzz<img alt="" />zzz', "06.01");
 });
 
 test("07 - alt without equal", () => {
-  equal(
-    alts("zzz<img      alt   />zzz"),
-    'zzz<img alt="" />zzz',
-    "07.01 - xhtml - excessive white space on both sides"
-  );
+  equal(alts("zzz<img      alt   />zzz"), 'zzz<img alt="" />zzz', "07.01");
 });
 
 test("08 - alt without equal", () => {
-  equal(
-    alts("zzz<img      alt   /   >zzz"),
-    'zzz<img alt="" />zzz',
-    "08.01 - xhtml - excessive white space everywhere"
-  );
+  equal(alts("zzz<img      alt   /   >zzz"), 'zzz<img alt="" />zzz', "08.01");
 });
 
 test.run();

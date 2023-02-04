@@ -36,12 +36,12 @@ test("06 - no glob, case sensitive", () => {
   equal(
     pull(["One", "two", "Three"], ["one", "three"]),
     ["One", "two", "Three"],
-    "06.01 - default"
+    "06.01"
   );
   equal(
     pull(["One", "two", "Three"], ["one", "three"], { caseSensitive: false }),
     ["two"],
-    "06.02 - opts.caseSensitive"
+    "06.02"
   );
 });
 

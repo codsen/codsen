@@ -1674,15 +1674,23 @@ test("62 - old bracket notation - empty values", () => {
 // ==============================
 
 test("63 - missing input args", () => {
-  throws(() => {
-    e(undefined);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      e(undefined);
+    },
+    /THROW_ID_01/g,
+    "63.01"
+  );
 });
 
 test("64 - the first input arg of a wrong type", () => {
-  throws(() => {
-    e(1);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      e(1);
+    },
+    /THROW_ID_01/g,
+    "64.01"
+  );
 });
 
 // ==============================

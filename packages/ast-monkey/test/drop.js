@@ -86,9 +86,13 @@ test("05 - drops in mixed things #3 - index is not a natural number", () => {
     f: { g: ["h"] },
   };
   let index = "6.1";
-  throws(() => {
-    drop(input, { index });
-  }, /THROW_ID_23/g);
+  throws(
+    () => {
+      drop(input, { index });
+    },
+    /THROW_ID_23/g,
+    "05.01"
+  );
 });
 
 test.run();
