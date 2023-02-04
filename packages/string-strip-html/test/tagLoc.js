@@ -25,7 +25,7 @@ test("01 - tag locations - anchor wrapping text", () => {
         [14, 18],
       ],
     },
-    "01.01 - inline"
+    "01.01"
   );
   equal(
     stripHtml("abc<div>click me</div>def"),
@@ -44,7 +44,7 @@ test("01 - tag locations - anchor wrapping text", () => {
         [16, 22],
       ],
     },
-    "01.02 - block"
+    "01.02"
   );
 });
 
@@ -83,7 +83,7 @@ test("03 - tag locations - opts.ignoreTags", () => {
         [10, 17],
       ],
     },
-    "03.01 - inline"
+    "03.01"
   );
   equal(
     stripHtml("<div><span>z</span></div>", {
@@ -106,7 +106,7 @@ test("03 - tag locations - opts.ignoreTags", () => {
         [12, 19],
       ],
     },
-    "03.02 - block"
+    "03.02"
   );
 });
 

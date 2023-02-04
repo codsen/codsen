@@ -1,5 +1,7 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
 
+declare let DEV: boolean;
+
 interface Obj {
   [key: string]: any;
 }
@@ -32,16 +34,21 @@ function xBeforeYOnTheRight(
   x: string,
   y: string
 ): boolean {
+  DEV && console.log(`037 xBeforeYOnTheRight(): called; x=${x}; y=${y}`);
   for (let i = startingIdx, len = str.length; i < len; i++) {
+    DEV && console.log(`039 xBeforeYOnTheRight(): loop str[${i}] = ${str[i]}`);
     if (str.startsWith(x, i)) {
+      DEV && console.log(`041 xBeforeYOnTheRight(): return true`);
       return true;
     }
 
     if (str.startsWith(y, i)) {
+      DEV && console.log(`046 xBeforeYOnTheRight(): return false`);
       return false;
     }
   }
 
+  DEV && console.log(`051 xBeforeYOnTheRight(): return false`);
   return false;
 }
 
@@ -53,11 +60,60 @@ function xBeforeYOnTheRight(
 //
 /* c8 ignore next */
 function notWithinAttrQuotes(tag: Obj, str: string, i: number): boolean {
-  return (
-    !tag ||
-    !tag.quotes ||
-    !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">")
+  DEV && console.log(`063 notWithinAttrQuotes(): start`);
+  DEV &&
+    console.log(
+      `066 notWithinAttrQuotes(): ${`\u001b[${33}m${`tag`}\u001b[${39}m`} = ${JSON.stringify(
+        tag,
+        null,
+        4
+      )}; i=${i}`
+    );
+
+  let R1 = !tag?.quotes;
+  let R2 =
+    !!tag?.quotes?.value &&
+    !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">");
+
+  let R31 = tag?.quotes?.next !== -1;
+  let R32 = !xBeforeYOnTheRight(
+    str,
+    tag?.quotes?.next - 1,
+    tag?.quotes?.value,
+    `>`
   );
+
+  DEV &&
+    console.log(
+      `088 notWithinAttrQuotes(): ███████████████████████████████████████ ${`\u001b[${33}m${`R1`}\u001b[${39}m`} = ${JSON.stringify(
+        R1,
+        null,
+        4
+      )} || [ ${`\u001b[${33}m${`R2`}\u001b[${39}m`} = ${JSON.stringify(
+        R2,
+        null,
+        4
+      )} && (${`\u001b[${33}m${`R31`}\u001b[${39}m`} = ${JSON.stringify(
+        R31,
+        null,
+        4
+      )} AND ${`\u001b[${33}m${`R32`}\u001b[${39}m`} = ${JSON.stringify(
+        R32,
+        null,
+        4
+      )}) ]`
+    );
+
+  return (
+    !tag?.quotes ||
+    (!xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">") &&
+      tag?.quotes?.next !== -1 &&
+      xBeforeYOnTheRight(str, tag?.quotes?.next - 1, tag?.quotes?.value, `>`))
+  );
+}
+
+export function countInstancesOf(needle: string, hay: string): number {
+  return (hay.match(new RegExp(needle, "g")) || []).length;
 }
 
 export const definitelyTagNames = new Set([

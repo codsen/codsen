@@ -13,7 +13,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       `Let's watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening`
     ).result,
     "Let's watch news this evening",
-    "01.01 - control, default behaviour"
+    "01.01"
   );
   equal(
     stripHtml(
@@ -23,7 +23,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       }
     ).result,
     `Let's watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening`,
-    "01.02 - non-existent tag option - leaves all tags"
+    "01.02"
   );
   equal(
     stripHtml(
@@ -33,7 +33,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       }
     ).result,
     "Let's watch news this evening",
-    "01.03 - falsey option"
+    "01.03"
   );
   equal(
     stripHtml(
@@ -43,7 +43,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       }
     ).result,
     "Let's watch news this evening",
-    "01.04 - no tags mentioned, will strip all"
+    "01.04"
   );
   equal(
     stripHtml(
@@ -53,7 +53,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       }
     ).result,
     `Let's watch news this evening`,
-    "01.05 - empty strings will be removed and will become default, blank setting"
+    "01.05"
   );
   equal(
     stripHtml(
@@ -63,14 +63,14 @@ test("01 - opts.onlyStripTags - base cases", () => {
       }
     ).result,
     `Let's watch news this evening`,
-    "01.06 - same, whitespace entries will be removed, setting will become default - strip all"
+    "01.06"
   );
   equal(
     stripHtml(
       `Let's watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening`
     ).result,
     `Let's watch news this evening`,
-    "01.07 - control, default behaviour"
+    "01.07"
   );
   equal(
     stripHtml(
@@ -80,7 +80,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       }
     ).result,
     `Let's watch <b>news</b> this evening`,
-    "01.08 - only strip anchor tags"
+    "01.08"
   );
   equal(
     stripHtml(
@@ -90,7 +90,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       }
     ).result,
     `Let's watch <b>news</b> this evening`,
-    "01.09 - only strip anchor tags"
+    "01.09"
   );
   equal(
     stripHtml(
@@ -100,7 +100,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       }
     ).result,
     `Let's watch <a href="https://www.news.com/" target="_blank">news</a> this evening`,
-    "01.10 - only strip anchor tags"
+    "01.10"
   );
   equal(
     stripHtml(
@@ -110,7 +110,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       }
     ).result,
     `Let's watch <a href="https://www.news.com/" target="_blank">news</a> this evening`,
-    "01.11 - only strip anchor tags"
+    "01.11"
   );
 });
 
@@ -120,7 +120,7 @@ test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
       `<div>Let's watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening</div>`
     ).result,
     "Let's watch news this evening",
-    "02.01 - control, default behaviour"
+    "02.01"
   );
   equal(
     stripHtml(
@@ -151,7 +151,7 @@ test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
       }
     ).result,
     `<div>Let's watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening</div>`,
-    "02.04 - both entries cancel each one out"
+    "02.04"
   );
   equal(
     stripHtml(
@@ -162,7 +162,7 @@ test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
       }
     ).result,
     `<div>Let's watch <a href="https://www.news.com/" target="_blank">news</a> this evening</div>`,
-    "02.05 - both entries cancel each one out"
+    "02.05"
   );
   equal(
     stripHtml(
@@ -173,7 +173,7 @@ test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
       }
     ).result,
     `<div>Let's watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening</div>`,
-    "02.06 - both entries cancel each one out"
+    "02.06"
   );
 });
 

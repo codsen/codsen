@@ -93,7 +93,7 @@ test("14 - false positives - conditionals that are visible for Outlook only", ()
   shown for everything except Outlook
   <!--<![endif]-->`).result,
     "shown for everything except Outlook",
-    "14.01 - checking also for whitespace control"
+    "14.01"
   );
 });
 
@@ -103,7 +103,7 @@ test("15 - false positives - conditionals that are visible for Outlook only", ()
   shown for everything except Outlook
   <!--<![endif]-->b`).result,
     "a\nshown for everything except Outlook\nb",
-    "15.01 - checking also for whitespace control"
+    "15.01"
   );
 });
 
@@ -117,7 +117,7 @@ test("16 - false positives - conditionals that are visible for Outlook only", ()
     </tr>
   </table><!--<![endif]-->`).result,
     "shown for everything except Outlook",
-    "16.01 - all those line breaks in-between the tags need to be taken care of too"
+    "16.01"
   );
 });
 

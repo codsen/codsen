@@ -188,14 +188,14 @@ test("11 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "11.01 - block"
+    "11.01"
   );
   equal(
     stripHtml("a<b>c</b>d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "ad",
-    "11.02 - inline"
+    "11.02"
   );
 });
 
@@ -205,14 +205,14 @@ test("12 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "12.01 - whitespace within the block tag"
+    "12.01"
   );
   equal(
     stripHtml("a<    b    >c<   /   b   >d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "ad",
-    "12.02 - whitespace within the inline tag"
+    "12.02"
   );
 });
 
@@ -222,14 +222,14 @@ test("13 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "13.01 - block"
+    "13.01"
   );
   equal(
     stripHtml("a<    b    >c<     b   /    >d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "ad",
-    "13.02 - inline"
+    "13.02"
   );
 });
 
@@ -239,21 +239,21 @@ test("14 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "14.01 - two closing slashes - block"
+    "14.01"
   );
   equal(
     stripHtml("a<    b    >c<   /    b   /    >d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "ad",
-    "14.02 - two closing slashes - inline tight"
+    "14.02"
   );
   equal(
     stripHtml("a <    b    >c<   /    b   /    > d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "a d",
-    "14.03 - two closing slashes - inline spaced"
+    "14.03"
   );
 });
 
@@ -263,21 +263,21 @@ test("15 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "15.01 - multiple duplicated closing slashes - block"
+    "15.01"
   );
   equal(
     stripHtml("a<    b    >c<   //    b   //    >d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "ad",
-    "15.02 - multiple duplicated closing slashes - inline tags tight"
+    "15.02"
   );
   equal(
     stripHtml("a <    b    >c<   //    b   //    > d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "a d",
-    "15.03 - multiple duplicated closing slashes - inline tags spaced"
+    "15.03"
   );
 });
 
@@ -287,28 +287,28 @@ test("16 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "16.01 - multiple duplicated closing slashes - block"
+    "16.01"
   );
   equal(
     stripHtml("a <    div    >c<   //  <  div   // >   > d", {
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "16.02 - multiple duplicated closing slashes - spaced"
+    "16.02"
   );
   equal(
     stripHtml("a<    b    >c<   //  <  b   // >   >d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "a d",
-    "16.03 - multiple duplicated closing slashes - inline tight"
+    "16.03"
   );
   equal(
     stripHtml("a <    b    >c<   //  <  b   // >   > d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "a d",
-    "16.04 - multiple duplicated closing slashes - inline spaced"
+    "16.04"
   );
 });
 
@@ -318,14 +318,14 @@ test("17 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "17.01 - block"
+    "17.01"
   );
   equal(
     stripHtml("a<    b    >c<   /    b   /    >d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "ad",
-    "17.02 - inline"
+    "17.02"
   );
 });
 
@@ -335,21 +335,21 @@ test("18 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a\n\nd",
-    "18.01 - no closing slashes - block"
+    "18.01"
   );
   equal(
     stripHtml("a<    b    >     c \n\n\n        <   /    b   /    >d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "a\n\nd",
-    "18.02 - no closing slashes - inline"
+    "18.02"
   );
   equal(
     stripHtml("a <    b    >     c \n\n\n        <   /    b   /    > d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "a\n\nd",
-    "18.03 - no closing slashes - inline spaced"
+    "18.03"
   );
 });
 
@@ -359,21 +359,21 @@ test("19 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["div", "e"],
     }).result,
     "a d g",
-    "19.01 - block + non-existent"
+    "19.01"
   );
   equal(
     stripHtml("a<b>c</b>d<e>f</e>g", {
       stripTogetherWithTheirContents: ["b", "e"],
     }).result,
     "ad g",
-    "19.02 - inline + non-existent"
+    "19.02"
   );
   equal(
     stripHtml("a <b>c</b> d <e>f</e> g", {
       stripTogetherWithTheirContents: ["b", "e"],
     }).result,
     "a d g",
-    "19.03 - inline + non-existent"
+    "19.03"
   );
 });
 
@@ -383,7 +383,7 @@ test("20 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["b", "e"],
     }).result,
     "a c d g",
-    "20.01 - sneaky similarity, bro starts with b"
+    "20.01"
   );
 });
 
@@ -396,7 +396,7 @@ test("21 - tag pairs including content", () => {
       }
     ).result,
     "Text and some more.",
-    "21.01 - strips with attributes. Now resembling real life."
+    "21.01"
   );
 });
 
@@ -409,7 +409,7 @@ test("22 - tag pairs including content", () => {
       }
     ).result,
     "Text and some more.",
-    "22.01 - lots of spaces within tags"
+    "22.01"
   );
 });
 
@@ -419,14 +419,14 @@ test("23 - tag pairs including content", () => {
       stripTogetherWithTheirContents: [],
     }).result,
     "a c d",
-    "23.01 - override stripTogetherWithTheirContents to an empty array - block"
+    "23.01"
   );
   equal(
     stripHtml("a<    b    >c<     b   /    >d", {
       stripTogetherWithTheirContents: [],
     }).result,
     "acd",
-    "23.02 - override stripTogetherWithTheirContents to an empty array - inline"
+    "23.02"
   );
 });
 
@@ -436,14 +436,14 @@ test("24 - tag pairs including content", () => {
       stripTogetherWithTheirContents: null,
     }).result,
     "a c d",
-    "24.01 - override stripTogetherWithTheirContents to an empty array - block"
+    "24.01"
   );
   equal(
     stripHtml("a<    b    >c<     b   /    >d", {
       stripTogetherWithTheirContents: null,
     }).result,
     "acd",
-    "24.02 - override stripTogetherWithTheirContents to an empty array - inline"
+    "24.02"
   );
 });
 
@@ -453,14 +453,14 @@ test("25 - tag pairs including content", () => {
       stripTogetherWithTheirContents: false,
     }).result,
     "a c d",
-    "25.01 - override stripTogetherWithTheirContents to an empty array - block"
+    "25.01"
   );
   equal(
     stripHtml("a<    b    >c<     b   /    >d", {
       stripTogetherWithTheirContents: false,
     }).result,
     "acd",
-    "25.02 - override stripTogetherWithTheirContents to an empty array - inline"
+    "25.02"
   );
 });
 
@@ -470,14 +470,14 @@ test("26 - tag pairs including content", () => {
       stripTogetherWithTheirContents: "div",
     }).result,
     "a d",
-    "26.01 - opts.stripTogetherWithTheirContents is not array but string - block"
+    "26.01"
   );
   equal(
     stripHtml("a<    b    >c<   //  <  b   // >   >d", {
       stripTogetherWithTheirContents: "b",
     }).result,
     "a d", // ! still a space as a precaution
-    "26.02 - opts.stripTogetherWithTheirContents is not array but string - inline"
+    "26.02"
   );
 });
 
@@ -490,7 +490,7 @@ test("27 - tag pairs including content", () => {
       }
     ).result,
     "a d",
-    "27.01 - block"
+    "27.01"
   );
   equal(
     stripHtml(
@@ -500,7 +500,7 @@ test("27 - tag pairs including content", () => {
       }
     ).result,
     "a d", // ! still a space as a precaution
-    "27.02 - inline"
+    "27.02"
   );
 });
 
@@ -510,14 +510,14 @@ test("28 - tag pairs including content", () => {
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a c",
-    "28.01 - single custom range tag - block"
+    "28.01"
   );
   equal(
     stripHtml("a<    b    >c", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "ac",
-    "28.02 - single custom range tag - inline"
+    "28.02"
   );
 });
 

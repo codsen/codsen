@@ -255,7 +255,7 @@ test("19 - opts.ignoreTags - ignored tag unclosed, ending with EOF", () => {
       ignoreTags: ["b"],
     }).result,
     "Some <b>text</b",
-    "19.01 - if user insists, that missing bracket must be intentional"
+    "19.01"
   );
 });
 

@@ -8,89 +8,145 @@ import { stripHtml } from "./util/noLog.js";
 // -----------------------------------------------------------------------------
 
 test("01 - wrong input type", () => {
-  throws(() => {
-    stripHtml(true);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      stripHtml(true);
+    },
+    /THROW_ID_01/,
+    "01.01"
+  );
 });
 
 test("02 - wrong input type", () => {
-  throws(() => {
-    stripHtml(false);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      stripHtml(false);
+    },
+    /THROW_ID_01/,
+    "02.01"
+  );
 });
 
 test("03 - wrong input type", () => {
-  throws(() => {
-    stripHtml(null);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      stripHtml(null);
+    },
+    /THROW_ID_01/,
+    "03.01"
+  );
 });
 
 test("04 - wrong input type", () => {
-  throws(() => {
-    stripHtml(1);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      stripHtml(1);
+    },
+    /THROW_ID_01/,
+    "04.01"
+  );
 });
 
 test("05 - wrong opts", () => {
-  throws(() => {
-    stripHtml("zzz", 1);
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      stripHtml("zzz", 1);
+    },
+    /THROW_ID_02/,
+    "05.01"
+  );
 });
 
 test("06 - wrong opts", () => {
-  throws(() => {
-    stripHtml("zzz", true);
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      stripHtml("zzz", true);
+    },
+    /THROW_ID_02/,
+    "06.01"
+  );
 });
 
 test("07 - wrong opts.reportProgressFunc", () => {
-  throws(() => {
-    stripHtml("zzz", { reportProgressFunc: 1 });
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      stripHtml("zzz", { reportProgressFunc: 1 });
+    },
+    /THROW_ID_03/,
+    "07.01"
+  );
 });
 
 test("08 - wrong opts.dumpLinkHrefsNearby", () => {
-  throws(() => {
-    stripHtml("zzz", { dumpLinkHrefsNearby: true });
-  }, /THROW_ID_04/);
+  throws(
+    () => {
+      stripHtml("zzz", { dumpLinkHrefsNearby: true });
+    },
+    /THROW_ID_04/,
+    "08.01"
+  );
 });
 
 test("09 - wrong opts", () => {
-  throws(() => {
-    stripHtml("zzz", {
-      returnRangesOnly: true,
-    });
-  }, /THROW_ID_05/);
-  throws(() => {
-    stripHtml("zzz", {
-      returnRangesOnly: false,
-    });
-  }, /THROW_ID_05/);
-  throws(() => {
-    stripHtml("zzz", {
-      returnRangesOnly: null,
-    });
-  }, /THROW_ID_05/);
-  throws(() => {
-    stripHtml("zzz", {
-      returnRangesOnly: undefined,
-    });
-  }, /THROW_ID_05/);
+  throws(
+    () => {
+      stripHtml("zzz", {
+        returnRangesOnly: true,
+      });
+    },
+    /THROW_ID_05/,
+    "09.01"
+  );
+  throws(
+    () => {
+      stripHtml("zzz", {
+        returnRangesOnly: false,
+      });
+    },
+    /THROW_ID_05/,
+    "09.02"
+  );
+  throws(
+    () => {
+      stripHtml("zzz", {
+        returnRangesOnly: null,
+      });
+    },
+    /THROW_ID_05/,
+    "09.03"
+  );
+  throws(
+    () => {
+      stripHtml("zzz", {
+        returnRangesOnly: undefined,
+      });
+    },
+    /THROW_ID_05/,
+    "09.04"
+  );
 });
 
 test("10 - wrong reportProgressFuncFrom", () => {
-  throws(() => {
-    stripHtml("zzz", {
-      reportProgressFunc: () => {},
-      reportProgressFuncFrom: true,
-    });
-  }, /THROW_ID_06/);
-  throws(() => {
-    stripHtml("zzz", {
-      reportProgressFunc: () => {},
-      reportProgressFuncFrom: "0",
-    });
-  }, /THROW_ID_06/);
+  throws(
+    () => {
+      stripHtml("zzz", {
+        reportProgressFunc: () => {},
+        reportProgressFuncFrom: true,
+      });
+    },
+    /THROW_ID_06/,
+    "10.01"
+  );
+  throws(
+    () => {
+      stripHtml("zzz", {
+        reportProgressFunc: () => {},
+        reportProgressFuncFrom: "0",
+      });
+    },
+    /THROW_ID_06/,
+    "10.02"
+  );
 });
 
 test("11 - ignores wrong reportProgressFuncFrom when reportProgressFunc is off", () => {
@@ -122,18 +178,26 @@ test("11 - ignores wrong reportProgressFuncFrom when reportProgressFunc is off",
 });
 
 test("12 - wrong opts.reportProgressFuncTo", () => {
-  throws(() => {
-    stripHtml("zzz", {
-      reportProgressFunc: () => {},
-      reportProgressFuncTo: true,
-    });
-  }, /THROW_ID_07/);
-  throws(() => {
-    stripHtml("zzz", {
-      reportProgressFunc: () => {},
-      reportProgressFuncTo: "100",
-    });
-  }, /THROW_ID_07/);
+  throws(
+    () => {
+      stripHtml("zzz", {
+        reportProgressFunc: () => {},
+        reportProgressFuncTo: true,
+      });
+    },
+    /THROW_ID_07/,
+    "12.01"
+  );
+  throws(
+    () => {
+      stripHtml("zzz", {
+        reportProgressFunc: () => {},
+        reportProgressFuncTo: "100",
+      });
+    },
+    /THROW_ID_07/,
+    "12.02"
+  );
 });
 
 test("13 - ignores wrong reportProgressFuncTo when reportProgressFunc is off", () => {
@@ -165,9 +229,13 @@ test("13 - ignores wrong reportProgressFuncTo when reportProgressFunc is off", (
 });
 
 test("14 - wrong opts.stripTogetherWithTheirContents", () => {
-  throws(() => {
-    stripHtml("zzz", { stripTogetherWithTheirContents: ["div", 1] });
-  }, /THROW_ID_08/);
+  throws(
+    () => {
+      stripHtml("zzz", { stripTogetherWithTheirContents: ["div", 1] });
+    },
+    /THROW_ID_08/,
+    "14.01"
+  );
 });
 
 // legit input

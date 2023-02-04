@@ -33,14 +33,14 @@ test("03 - lots of dodgy slashes around and within tags", () => {
       "///</div>///<div/>///</ div>///< /div></ div>///< /div>///</ div />///</div/>///< / div / >///"
     ).result,
     "/// /// /// /// /// /// /// /// ///",
-    "03.01 - block"
+    "03.01"
   );
   equal(
     stripHtml(
       "///</a>///<a/>///</ a>///< /a></ a>///< /a>///</ a />///</a/>///< / a / >///"
     ).result,
     "///////////////////////////",
-    "03.02 - inline"
+    "03.02"
   );
 });
 
@@ -50,14 +50,14 @@ test("04 - this time repeated slashes inside", () => {
       "///<///div>///<div/////>///<//// div>///< ///div><// div>///< ///div>///<// div //>///<///div///>///< //// div //// >///"
     ).result,
     "/// /// /// /// /// /// /// /// ///",
-    "04.01 - block"
+    "04.01"
   );
   equal(
     stripHtml(
       "///<///a>///<a/////>///<//// a>///< ///a><// a>///< ///a>///<// a //>///<///a///>///< //// a //// >///"
     ).result,
     "///////////////////////////",
-    "04.02 - inline"
+    "04.02"
   );
 });
 
@@ -68,14 +68,14 @@ test("05 - and the same but with bunch of line breaks and tabs", () => {
       "///</\n/\n/\tdiv>///<div\n///\n//\t>///<\n////\t div>///< /\n//\ndiv><// \tdiv>///<\n\n\n\n ///div>///<\t\t\t\t// \n\n\ndiv //>///<\n\n\n///div\n///\n>///<\n //// \ndiv\n //// \n>///"
     ).result,
     "/// /// /// /// /// /// /// /// ///",
-    "05.01 - block"
+    "05.01"
   );
   equal(
     stripHtml(
       "///</\n/\n/\ta>///<a\n///\n//\t>///<\n////\t a>///< /\n//\na><// \ta>///<\n\n\n\n ///a>///<\t\t\t\t// \n\n\na //>///<\n\n\n///a\n///\n>///<\n //// \na\n //// \n>///"
     ).result,
     "///////////////////////////",
-    "05.02 - inline"
+    "05.02"
   );
 });
 
@@ -85,14 +85,14 @@ test("06 - lots of dodgy exclamation marks around and within tags", () => {
       "zzz<!div>zzz<div!>zzz<! div>zzz< !div><! div>zzz< !div>zzz<! div !>zzz<!div!>zzz< ! div ! >zzz"
     ).result,
     "zzz zzz zzz zzz zzz zzz zzz zzz zzz",
-    "06.01 - block"
+    "06.01"
   );
   equal(
     stripHtml(
       "zzz<!a>zzz<a!>zzz<! a>zzz< !a><! a>zzz< !a>zzz<! a !>zzz<!a!>zzz< ! a ! >zzz"
     ).result,
     "zzzzzzzzzzzzzzzzzzzzzzzzzzz",
-    "06.02 - inline"
+    "06.02"
   );
 });
 
@@ -102,14 +102,14 @@ test("07 - this time repeated exclamation marks inside", () => {
       "zzz<!!!div>zzz<div!!!!!>zzz<!!!! div>zzz< !!!div><!! div>zzz< !!!div>zzz<!! div !!>zzz<!!!div!!!>zzz< !!!! div !!!! >zzz"
     ).result,
     "zzz zzz zzz zzz zzz zzz zzz zzz zzz",
-    "07.01 - block"
+    "07.01"
   );
   equal(
     stripHtml(
       "zzz<!!!a>zzz<a!!!!!>zzz<!!!! a>zzz< !!!a><!! a>zzz< !!!a>zzz<!! a !!>zzz<!!!a!!!>zzz< !!!! a !!!! >zzz"
     ).result,
     "zzzzzzzzzzzzzzzzzzzzzzzzzzz",
-    "07.02 - inline"
+    "07.02"
   );
 });
 
@@ -119,14 +119,14 @@ test("08 - and the same but with bunch of line breaks and tabs", () => {
       "zzz<!\n!\n!\tdiv>zzz<div\n!!!\n!!\t>zzz<\n!!!!\t div>zzz< !\n!!\ndiv><!! \tdiv>zzz<\n\n\n\n !!!div>zzz<\t\t\t\t!! \n\n\ndiv !!>zzz<\n\n\n!!!div\n!!!\n>zzz<\n !!!! \ndiv\n !!!! \n>zzz"
     ).result,
     "zzz zzz zzz zzz zzz zzz zzz zzz zzz",
-    "08.01 - block"
+    "08.01"
   );
   equal(
     stripHtml(
       "zzz<!\n!\n!\ta>zzz<a\n!!!\n!!\t>zzz<\n!!!!\t a>zzz< !\n!!\na><!! \ta>zzz<\n\n\n\n !!!a>zzz<\t\t\t\t!! \n\n\na !!>zzz<\n\n\n!!!a\n!!!\n>zzz<\n !!!! \na\n !!!! \n>zzz"
     ).result,
     "zzzzzzzzzzzzzzzzzzzzzzzzzzz",
-    "08.02 - inline"
+    "08.02"
   );
 });
 

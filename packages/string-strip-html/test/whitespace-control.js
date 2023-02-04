@@ -69,18 +69,14 @@ test("08 - whitespace control - adds a space in place of stripped tags, tight", 
 });
 
 test("09 - whitespace control - adds a space in place of stripped tags, loose", () => {
-  equal(
-    stripHtml("a <div>   b    </div>    c").result,
-    "a b c",
-    "09.01 - stays on one line because it was on one line"
-  );
+  equal(stripHtml("a <div>   b    </div>    c").result, "a b c", "09.01");
 });
 
 test("10 - whitespace control - adds a space in place of stripped tags, tabs and LF's", () => {
   equal(
     stripHtml("\t\t\ta <div>   b    </div>    c\n\n\n").result,
     "a b c",
-    "10.01 - like 02 above but with trimming"
+    "10.01"
   );
 });
 

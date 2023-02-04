@@ -9,76 +9,28 @@ import { stripHtml } from "./util/noLog.js";
 
 test("01 - strips HTML comments", () => {
   // group #1. spaces on both outsides
-  equal(
-    stripHtml("aaa <!-- <tr> --> bbb").result,
-    "aaa bbb",
-    "01.01 - double space"
-  );
-  equal(
-    stripHtml("aaa <!-- <tr>--> bbb").result,
-    "aaa bbb",
-    "01.02 - single space"
-  );
-  equal(
-    stripHtml("aaa <!--<tr> --> bbb").result,
-    "aaa bbb",
-    "01.03 - single space"
-  );
-  equal(stripHtml("aaa <!--<tr>--> bbb").result, "aaa bbb", "01.04 - no space");
+  equal(stripHtml("aaa <!-- <tr> --> bbb").result, "aaa bbb", "01.01");
+  equal(stripHtml("aaa <!-- <tr>--> bbb").result, "aaa bbb", "01.02");
+  equal(stripHtml("aaa <!--<tr> --> bbb").result, "aaa bbb", "01.03");
+  equal(stripHtml("aaa <!--<tr>--> bbb").result, "aaa bbb", "01.04");
 
   // group #2. spaces on right only
-  equal(
-    stripHtml("aaa<!-- <tr> --> bbb").result,
-    "aaa bbb",
-    "01.05 - double space"
-  );
-  equal(
-    stripHtml("aaa<!-- <tr>--> bbb").result,
-    "aaa bbb",
-    "01.06 - single space"
-  );
-  equal(
-    stripHtml("aaa<!--<tr> --> bbb").result,
-    "aaa bbb",
-    "01.07 - single space"
-  );
-  equal(stripHtml("aaa<!--<tr>--> bbb").result, "aaa bbb", "01.08 - no space");
+  equal(stripHtml("aaa<!-- <tr> --> bbb").result, "aaa bbb", "01.05");
+  equal(stripHtml("aaa<!-- <tr>--> bbb").result, "aaa bbb", "01.06");
+  equal(stripHtml("aaa<!--<tr> --> bbb").result, "aaa bbb", "01.07");
+  equal(stripHtml("aaa<!--<tr>--> bbb").result, "aaa bbb", "01.08");
 
   // group #3. spaces on left only
-  equal(
-    stripHtml("aaa <!-- <tr> -->bbb").result,
-    "aaa bbb",
-    "01.09 - double space"
-  );
-  equal(
-    stripHtml("aaa <!-- <tr>-->bbb").result,
-    "aaa bbb",
-    "01.10 - single space"
-  );
-  equal(
-    stripHtml("aaa <!--<tr> -->bbb").result,
-    "aaa bbb",
-    "01.11 - single space"
-  );
-  equal(stripHtml("aaa <!--<tr>-->bbb").result, "aaa bbb", "01.12 - no space");
+  equal(stripHtml("aaa <!-- <tr> -->bbb").result, "aaa bbb", "01.09");
+  equal(stripHtml("aaa <!-- <tr>-->bbb").result, "aaa bbb", "01.10");
+  equal(stripHtml("aaa <!--<tr> -->bbb").result, "aaa bbb", "01.11");
+  equal(stripHtml("aaa <!--<tr>-->bbb").result, "aaa bbb", "01.12");
 
   // group #4. no spaces outside
-  equal(
-    stripHtml("aaa<!-- <tr> -->bbb").result,
-    "aaa bbb",
-    "01.13 - double space"
-  );
-  equal(
-    stripHtml("aaa<!-- <tr>-->bbb").result,
-    "aaa bbb",
-    "01.14 - single space"
-  );
-  equal(
-    stripHtml("aaa<!--<tr> -->bbb").result,
-    "aaa bbb",
-    "01.15 - single space"
-  );
-  equal(stripHtml("aaa<!--<tr>-->bbb").result, "aaa bbb", "01.16 - no space");
+  equal(stripHtml("aaa<!-- <tr> -->bbb").result, "aaa bbb", "01.13");
+  equal(stripHtml("aaa<!-- <tr>-->bbb").result, "aaa bbb", "01.14");
+  equal(stripHtml("aaa<!--<tr> -->bbb").result, "aaa bbb", "01.15");
+  equal(stripHtml("aaa<!--<tr>-->bbb").result, "aaa bbb", "01.16");
 });
 
 test("02 - HTML comments around string edges", () => {

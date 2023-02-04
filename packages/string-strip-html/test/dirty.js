@@ -51,7 +51,7 @@ test("02 - missing closing brackets", () => {
         [14, 57],
       ],
     },
-    "02.01 - with more whitespace"
+    "02.01"
   );
 });
 
@@ -73,7 +73,7 @@ test("03 - missing closing brackets", () => {
         [10, 17],
       ],
     },
-    "03.01 - missing closing bracket"
+    "03.01"
   );
 });
 
@@ -503,7 +503,7 @@ test("29 - multiple incomplete attributes", () => {
       filteredTagLocations: [[1, 53]],
       ranges: [[1, 53, " "]],
     },
-    "29.01 - a mix thereof"
+    "29.01"
   );
 });
 
@@ -516,7 +516,7 @@ test("30 - multiple incomplete attributes", () => {
       filteredTagLocations: [[1, 54]],
       ranges: [[1, 54, " "]],
     },
-    "30.01 - a mix thereof"
+    "30.01"
   );
 });
 
@@ -529,7 +529,7 @@ test("31 - multiple incomplete attributes", () => {
       filteredTagLocations: [[1, 55]],
       ranges: [[1, 55, " "]],
     },
-    "31.01 - a mix thereof"
+    "31.01"
   );
 });
 
@@ -542,7 +542,7 @@ test("32 - multiple incomplete attributes", () => {
       filteredTagLocations: [[1, 56]],
       ranges: [[1, 56, " "]],
     },
-    "32.01 - a mix thereof"
+    "32.01"
   );
 });
 
@@ -555,7 +555,7 @@ test("33 - multiple incomplete attributes", () => {
       filteredTagLocations: [[1, 58]],
       ranges: [[1, 58, " "]],
     },
-    "33.01 - a mix thereof"
+    "33.01"
   );
 });
 
@@ -568,7 +568,7 @@ test("34 - multiple incomplete attributes", () => {
       filteredTagLocations: [[2, 59]],
       ranges: [[1, 60, " "]],
     },
-    "34.01 - a mix thereof"
+    "34.01"
   );
 });
 
@@ -583,7 +583,7 @@ test("35 - multiple incomplete attributes", () => {
       filteredTagLocations: [[2, 61]],
       ranges: [[1, 62, " "]],
     },
-    "35.01 - a mix thereof"
+    "35.01"
   );
 });
 
@@ -984,8 +984,18 @@ test("80 - unclosed attributes - single tag", () => {
 test("81 - unclosed attributes - new tag starts, closing quote missing", () => {
   equal(
     stripHtml('aaaaaaa<br class="zzzz <br>bbbbbbbb').result,
-    "aaaaaaa bbbbbbbb",
+    "aaaaaaa",
     "81.01"
+  );
+  equal(
+    stripHtml('aaa<br class="zzzz <br>\n<div>bbb</div>').result,
+    "aaa",
+    "81.02"
+  );
+  equal(
+    stripHtml('aaa<br class="zzzz <br>\n<div class="x">bbb</div>').result,
+    "aaa\nbbb",
+    "81.03"
   );
 });
 
@@ -1122,7 +1132,7 @@ test("108 - various, #18 - suddenly cut off healthy HTML", () => {
 <td><a href="http://codsen.com" target="_blank"><img src="http://cdn.codsen.com/nonexistent.gif" width="11" height="22" border="0" style="display:block; -ms-interpolation-mode:bicubic; color: #ffffff; font-style: it`
     ).result,
     "la la la",
-    "108.01 - HTML cut off in the middle of an inline CSS style"
+    "108.01"
   );
 });
 
@@ -1424,6 +1434,56 @@ test("126 - Alvaro's #4", () => {
       },
     ],
     "126.02"
+  );
+});
+
+test("127 - #65, nested, minimal", () => {
+  let gathered = [];
+  let cb = (o) => {
+    gathered.push(o.tag);
+    o.rangesArr.push(o.proposedReturn);
+  };
+  let { result } = stripHtml(`<a href="<b>c</b>">d</a>`, { cb });
+  equal(result, "d", "127.01");
+  equal(
+    gathered,
+    [
+      {
+        attributes: [
+          {
+            nameStarts: 3,
+            nameEnds: 7,
+            equalsAt: 7,
+            name: "href",
+            valueStarts: 9,
+            valueEnds: 17,
+            value: "<b>c</b>",
+          },
+        ],
+        lastOpeningBracketAt: 0,
+        slashPresent: false,
+        leftOuterWhitespace: 0,
+        onlyPlausible: false,
+        nameStarts: 1,
+        nameContainsLetters: true,
+        nameEnds: 2,
+        name: "a",
+        lastClosingBracketAt: 18,
+      },
+      {
+        lastOpeningBracketAt: 20,
+        slashPresent: 21,
+        attributes: [],
+        leftOuterWhitespace: 20,
+        onlyPlausible: false,
+        nameStarts: 22,
+        nameContainsLetters: true,
+        nameEnds: 23,
+        name: "a",
+        lastClosingBracketAt: 23,
+      },
+    ],
+    "127.02"
   );
 });
 
