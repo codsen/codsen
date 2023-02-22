@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [13.1.0](https://github.com/codsen/codsen/compare/string-strip-html@13.0.6...string-strip-html@13.1.0) (2023-02-04)
+
+### Features
+
+- strip tags inside HTML attribute values ([94a25c7](https://github.com/codsen/codsen/commit/94a25c71a531e185f4634a51ca11d3daaeacb9a7)), closes [#65](https://github.com/codsen/codsen/issues/65)
+
 ## 8.4.0 (2022-12-22)
 
 ### Features

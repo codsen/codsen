@@ -331,4 +331,139 @@ test("26 - opts.ignoreTags - throws because of wrong type", () => {
   );
 });
 
+test("27 - custom tags, no attrs", () => {
+  equal(
+    stripHtml(`a<MyTag />b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a<MyTag />b c`,
+    "27.01"
+  );
+  equal(
+    stripHtml(`a<MyTag/>b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a<MyTag/>b c`,
+    "27.02"
+  );
+  equal(
+    stripHtml(`a<MyTag >b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a<MyTag >b c`,
+    "27.03"
+  );
+  equal(
+    stripHtml(`a<MyTag>b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a<MyTag>b c`,
+    "27.04"
+  );
+  equal(
+    stripHtml(`a</MyTag>b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a</MyTag>b c`,
+    "27.05"
+  );
+  equal(
+    stripHtml(`a</MyTag/>b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a</MyTag/>b c`,
+    "27.06"
+  );
+});
+
+test("28 - custom tags, with attrs", () => {
+  equal(
+    stripHtml(`a<MyTag zzz />b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a<MyTag zzz />b c`,
+    "28.01"
+  );
+  equal(
+    stripHtml(`a<MyTag zzz/>b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a<MyTag zzz/>b c`,
+    "28.02"
+  );
+  equal(
+    stripHtml(`a<MyTag zzz >b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a<MyTag zzz >b c`,
+    "28.03"
+  );
+  equal(
+    stripHtml(`a<MyTag zzz>b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a<MyTag zzz>b c`,
+    "28.04"
+  );
+  equal(
+    stripHtml(`a</MyTag zzz>b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a</MyTag zzz>b c`,
+    "28.05"
+  );
+  equal(
+    stripHtml(`a</MyTag zzz/>b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a</MyTag zzz/>b c`,
+    "28.06"
+  );
+});
+
+test("29 - custom tags, with proper attrs", () => {
+  equal(
+    stripHtml(`a<MyTag class="z" />b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a<MyTag class="z" />b c`,
+    "29.01"
+  );
+  equal(
+    stripHtml(`a<MyTag class="z"/>b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a<MyTag class="z"/>b c`,
+    "29.02"
+  );
+  equal(
+    stripHtml(`a<MyTag class="z" >b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a<MyTag class="z" >b c`,
+    "29.03"
+  );
+  equal(
+    stripHtml(`a<MyTag class="z">b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a<MyTag class="z">b c`,
+    "29.04"
+  );
+  equal(
+    stripHtml(`a</MyTag class="z">b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a</MyTag class="z">b c`,
+    "29.05"
+  );
+  equal(
+    stripHtml(`a</MyTag class="z"/>b <div>c</div>`, {
+      ignoreTags: ["MyTag"],
+    }).result,
+    `a</MyTag class="z"/>b c`,
+    "29.06"
+  );
+});
+
 test.run();
