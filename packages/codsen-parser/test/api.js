@@ -35,7 +35,7 @@ test("01", () => {
       cparser("a", { tagCb: "z" });
     },
     /THROW_ID_04/g,
-    "01.04 - opts.tagCb() is wrong"
+    "01.04"
   );
 
   throws(
@@ -43,7 +43,7 @@ test("01", () => {
       cparser("a", { charCb: "z" });
     },
     /THROW_ID_05/g,
-    "01.05 - opts.charCb() is wrong"
+    "01.05"
   );
 
   throws(

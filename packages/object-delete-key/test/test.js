@@ -168,7 +168,7 @@ test("09 - simple plain object, couple instances found", () => {
     {
       a: "a",
     },
-    "09.01 - no settings"
+    "09.01"
   );
   equal(
     deleteKey(source, {
@@ -178,7 +178,7 @@ test("09 - simple plain object, couple instances found", () => {
     {
       a: "a",
     },
-    "09.02 - objects only (same outcome as 2.1.1)"
+    "09.02"
   );
   equal(
     deleteKey(source, {
@@ -190,7 +190,7 @@ test("09 - simple plain object, couple instances found", () => {
       b: "whatever",
       c: [{ b: "whatever as well" }],
     },
-    "09.03 - arrays only (none found)"
+    "09.03"
   );
   equal(
     deleteKey(source, {
@@ -200,7 +200,7 @@ test("09 - simple plain object, couple instances found", () => {
     {
       a: "a",
     },
-    "09.04 - only=any"
+    "09.04"
   );
 
   // ensure no mutation happened:
@@ -232,7 +232,7 @@ test("10 - simple plain object, cleanup", () => {
       a: "a",
       b: "whatever",
     },
-    '10.01 - does not touch key within object; cleanup will remove up to and including key "c"'
+    "10.01"
   );
   equal(
     deleteKey(
@@ -250,7 +250,7 @@ test("10 - simple plain object, cleanup", () => {
       b: "whatever",
       c: ["a"],
     },
-    "10.02 - does not touch key within array"
+    "10.02"
   );
   equal(
     deleteKey(
@@ -268,7 +268,7 @@ test("10 - simple plain object, cleanup", () => {
       a: "apples",
       b: "whatever",
     },
-    "10.03 - does not touch key within array"
+    "10.03"
   );
   equal(
     deleteKey(
@@ -288,7 +288,7 @@ test("10 - simple plain object, cleanup", () => {
       b: "whatever",
       c: [],
     },
-    "10.04 - same as #06 but without cleanup"
+    "10.04"
   );
 });
 
@@ -313,7 +313,7 @@ test("11 - nested array/plain objects, multiple instances found", () => {
       }
     ),
     [{ a: "a" }],
-    "11.01, default cleanup"
+    "11.01"
   );
   equal(
     deleteKey(
@@ -336,7 +336,7 @@ test("11 - nested array/plain objects, multiple instances found", () => {
       }
     ),
     [{ a: "a" }],
-    "11.02, only=object (same)"
+    "11.02"
   );
   equal(
     deleteKey(
@@ -369,7 +369,7 @@ test("11 - nested array/plain objects, multiple instances found", () => {
         d: { e: { f: { g: { b: "and this, no matter how deep-nested" } } } },
       },
     ],
-    "11.03, only=array (nothing done)"
+    "11.03"
   );
 });
 
@@ -403,7 +403,7 @@ test("12 - nested array/plain objects, multiple instances found, false", () => {
         d: { e: { f: { g: {} } } },
       },
     ],
-    "12.01 - cleanup=false"
+    "12.01"
   );
 });
 
@@ -430,7 +430,7 @@ test("13 - mixed array and object findings", () => {
       }
     ),
     [{ a: "a" }],
-    "13.01, default cleanup"
+    "13.01"
   );
   equal(
     deleteKey(
@@ -455,7 +455,7 @@ test("13 - mixed array and object findings", () => {
       }
     ),
     [{ a: "a" }],
-    "13.02, only=any"
+    "13.02"
   );
   equal(
     deleteKey(
@@ -477,7 +477,7 @@ test("13 - mixed array and object findings", () => {
         c: ["b", "b"],
       },
     ],
-    "13.03, only=object, mini case"
+    "13.03"
   );
   equal(
     deleteKey(
@@ -512,7 +512,7 @@ test("13 - mixed array and object findings", () => {
         d: { e: { f: { g: [{ b: "and this, no matter how deep-nested" }] } } },
       },
     ],
-    "13.04, only=arrays"
+    "13.04"
   );
   equal(
     deleteKey(
@@ -545,7 +545,7 @@ test("13 - mixed array and object findings", () => {
         d: { e: { f: { g: ["b"] } } },
       },
     ],
-    "13.05, only=object, bigger example"
+    "13.05"
   );
 });
 
@@ -660,53 +660,77 @@ test("17 - deletion of empty things is limited in arrays too", () => {
 // ==============================
 
 test("18 - both key and value missing - throws", () => {
-  throws(() => {
-    deleteKey({ a: "a" }, {});
-  }, /THROW_ID_04/);
+  throws(
+    () => {
+      deleteKey({ a: "a" }, {});
+    },
+    /THROW_ID_04/,
+    "18.01"
+  );
 });
 
 test("19 - nonsensical options object - throws", () => {
-  throws(() => {
-    deleteKey({ a: "a" }, { z: "z" });
-  }, /THROW_ID_04/);
+  throws(
+    () => {
+      deleteKey({ a: "a" }, { z: "z" });
+    },
+    /THROW_ID_04/,
+    "19.01"
+  );
 });
 
 test("20 - nonsensical options object - throws", () => {
-  throws(() => {
-    deleteKey({ a: "a" }, 1);
-  }, /THROW_ID_04/);
+  throws(
+    () => {
+      deleteKey({ a: "a" }, 1);
+    },
+    /THROW_ID_04/,
+    "20.01"
+  );
 });
 
 test("21 - no input args - throws", () => {
-  throws(() => {
-    deleteKey();
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      deleteKey();
+    },
+    /THROW_ID_01/,
+    "21.01"
+  );
 });
 
 test("22 - wrong input args - throws", () => {
-  throws(() => {
-    deleteKey(
-      { a: "a" },
-      {
-        key: 1,
-        val: null,
-        cleanup: true,
-      }
-    );
-  }, /opts\.key/g);
+  throws(
+    () => {
+      deleteKey(
+        { a: "a" },
+        {
+          key: 1,
+          val: null,
+          cleanup: true,
+        }
+      );
+    },
+    /opts\.key/g,
+    "22.01"
+  );
 });
 
 test("23 - wrong input args - throws", () => {
-  throws(() => {
-    deleteKey(
-      { a: "a" },
-      {
-        key: 1,
-        val: null,
-        cleanup: "zzz",
-      }
-    );
-  }, /opts\.key/);
+  throws(
+    () => {
+      deleteKey(
+        { a: "a" },
+        {
+          key: 1,
+          val: null,
+          cleanup: "zzz",
+        }
+      );
+    },
+    /opts\.key/,
+    "23.01"
+  );
 });
 
 // ==============================

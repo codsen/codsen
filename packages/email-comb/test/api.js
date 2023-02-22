@@ -9,27 +9,43 @@ import { comb } from "../dist/email-comb.esm.js";
 // -----------------------------------------------------------------------------
 
 test("01 - wrong inputs", () => {
-  throws(() => {
-    comb();
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      comb();
+    },
+    /THROW_ID_01/,
+    "01.01"
+  );
 });
 
 test("02 - wrong inputs", () => {
-  throws(() => {
-    comb(true);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      comb(true);
+    },
+    /THROW_ID_01/,
+    "02.01"
+  );
 });
 
 test("03 - wrong inputs", () => {
-  throws(() => {
-    comb(null);
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      comb(null);
+    },
+    /THROW_ID_01/,
+    "03.01"
+  );
 });
 
 test("04 - wrong inputs", () => {
-  throws(() => {
-    comb({ a: "b" });
-  }, /THROW_ID_01/);
+  throws(
+    () => {
+      comb({ a: "b" });
+    },
+    /THROW_ID_01/,
+    "04.01"
+  );
 });
 
 test("05 - wrong inputs", () => {
@@ -45,21 +61,33 @@ test("06 - wrong inputs", () => {
 });
 
 test("07 - wrong opts", () => {
-  throws(() => {
-    comb("", 1);
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      comb("", 1);
+    },
+    /THROW_ID_02/,
+    "07.01"
+  );
 });
 
 test("08 - wrong inputs", () => {
-  throws(() => {
-    comb("", true);
-  }, /THROW_ID_02/);
+  throws(
+    () => {
+      comb("", true);
+    },
+    /THROW_ID_02/,
+    "08.01"
+  );
 });
 
 test("09 - wrong inputs", () => {
-  throws(() => {
-    comb("", { whitelist: 1 });
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      comb("", { whitelist: 1 });
+    },
+    /THROW_ID_03/,
+    "09.01"
+  );
 });
 
 test("10 - wrong inputs", () => {
@@ -81,9 +109,13 @@ test("12 - wrong inputs", () => {
 });
 
 test("13 - wrong inputs", () => {
-  throws(() => {
-    comb("zzz", { whitelist: true });
-  }, /THROW_ID_03/);
+  throws(
+    () => {
+      comb("zzz", { whitelist: true });
+    },
+    /THROW_ID_03/,
+    "13.01"
+  );
 });
 
 test("14 - wrong inputs", () => {
@@ -105,39 +137,63 @@ test("16 - wrong inputs", () => {
 });
 
 test("17 - wrong inputs", () => {
-  throws(() => {
-    comb("zzz", { whitelist: [true] });
-  }, /THROW_ID_04/);
+  throws(
+    () => {
+      comb("zzz", { whitelist: [true] });
+    },
+    /THROW_ID_04/,
+    "17.01"
+  );
 });
 
 test("18 - wrong inputs, opts.backend", () => {
-  throws(() => {
-    comb("zzz", { backend: 1 });
-  }, /THROW_ID_05/);
+  throws(
+    () => {
+      comb("zzz", { backend: 1 });
+    },
+    /THROW_ID_05/,
+    "18.01"
+  );
 });
 
 test("19 - wrong inputs, opts.backend", () => {
-  throws(() => {
-    comb("zzz", { backend: "a" });
-  }, /THROW_ID_05/);
+  throws(
+    () => {
+      comb("zzz", { backend: "a" });
+    },
+    /THROW_ID_05/,
+    "19.01"
+  );
 });
 
 test("20 - wrong inputs, opts.backend", () => {
-  throws(() => {
-    comb("zzz", { backend: ["a"] }); // sneaky
-  }, /THROW_ID_06/);
+  throws(
+    () => {
+      comb("zzz", { backend: ["a"] }); // sneaky
+    },
+    /THROW_ID_06/,
+    "20.01"
+  );
 });
 
 test("21 - wrong inputs, opts.backend", () => {
-  throws(() => {
-    comb("zzz", { backend: [{}] }); // objects have to have consistent schema: "heads" and "tails" keys
-  }, "21.01");
+  throws(
+    () => {
+      comb("zzz", { backend: [{}] }); // objects have to have consistent schema: "heads" and "tails" keys
+    },
+    "21.01",
+    "21.01"
+  );
 });
 
 test("22 - wrong inputs, opts.backend", () => {
-  throws(() => {
-    comb("zzz", { backend: [{ a: "b" }] }); // unrecognised keys
-  }, /THROW_ID_07/);
+  throws(
+    () => {
+      comb("zzz", { backend: [{ a: "b" }] }); // unrecognised keys
+    },
+    /THROW_ID_07/,
+    "22.01"
+  );
 });
 
 test("23 - wrong inputs, opts.uglify", () => {
@@ -153,9 +209,13 @@ test("24 - wrong inputs, opts.uglify", () => {
 });
 
 test("25 - wrong inputs, opts.uglify", () => {
-  throws(() => {
-    comb("z", { uglify: "z" });
-  }, /THROW_ID_08/);
+  throws(
+    () => {
+      comb("z", { uglify: "z" });
+    },
+    /THROW_ID_08/,
+    "25.01"
+  );
 });
 
 test("26 - wrong inputs, opts.reportProgressFunc", () => {
@@ -171,9 +231,13 @@ test("27 - wrong inputs, opts.reportProgressFunc", () => {
 });
 
 test("28 - wrong inputs, opts.reportProgressFunc", () => {
-  throws(() => {
-    comb("z", { reportProgressFunc: "z" });
-  }, /THROW_ID_09/);
+  throws(
+    () => {
+      comb("z", { reportProgressFunc: "z" });
+    },
+    /THROW_ID_09/,
+    "28.01"
+  );
 });
 
 test.run();

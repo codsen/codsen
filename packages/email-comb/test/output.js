@@ -131,16 +131,8 @@ test("03 - as 06.02 but now with whitelist, dirty HTML", () => {
     [".body-only-class-1", ".body-only-class-2"],
     "03.02"
   );
-  equal(
-    actual.deletedFromHead,
-    [],
-    "03.03 - nothing removed because of whitelist"
-  );
-  equal(
-    actual.deletedFromBody,
-    [],
-    "03.04 - nothing removed because of whitelist"
-  );
+  equal(actual.deletedFromHead, [], "03.03");
+  equal(actual.deletedFromBody, [], "03.04");
 });
 
 test("04 - correct classes reported in info/deletedFromBody", () => {
@@ -170,11 +162,7 @@ test("04 - correct classes reported in info/deletedFromBody", () => {
   equal(actual.allInHead, [".unused", ".used"], "04.01");
   equal(actual.allInBody, [".used"], "04.02");
   equal(actual.deletedFromHead, [".unused", ".used"], "04.03");
-  equal(
-    actual.deletedFromBody,
-    [".used"],
-    "04.04 - sneaky case - it is within head, but it is sandwitched with an unused class, so it does not count!"
-  );
+  equal(actual.deletedFromBody, [".used"], "04.04");
 });
 
 test("05 - more sandwitched classes/ids cases", () => {
@@ -212,13 +200,9 @@ test("05 - more sandwitched classes/ids cases", () => {
   equal(
     actual.deletedFromHead,
     ["#unused-id", "#used-id", ".unused-class", ".used-class"],
-    "05.03 - deleted because they'e sandwitched with unused classes/ids"
+    "05.03"
   );
-  equal(
-    actual.deletedFromBody,
-    ["#used-id", ".used-class"],
-    "05.04 - deleted because they'e sandwitched with unused classes/ids"
-  );
+  equal(actual.deletedFromBody, ["#used-id", ".used-class"], "05.04");
 });
 
 test.run();

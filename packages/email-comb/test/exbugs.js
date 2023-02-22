@@ -30,11 +30,7 @@ a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-
 </body>
 `;
 
-  equal(
-    actual.result,
-    intended,
-    "01.01 - there are no classes or id's in the query selector, checking false positives"
-  );
+  equal(actual.result, intended, "01.01");
 });
 
 test("02 - selectors in head styles without classes or ids", () => {
@@ -60,11 +56,7 @@ a {color: #525252;}
 </body>
 `;
 
-  equal(
-    actual.result,
-    intended,
-    "02.01 - there are no classes or id's in the query selector, checking false positives"
-  );
+  equal(actual.result, intended, "02.01");
 });
 
 test('03 - sneaky attributes that end with characters "id"', () => {
@@ -126,7 +118,7 @@ test('03 - sneaky attributes that end with characters "id"', () => {
 </html>
 `;
 
-  equal(actual.result, intended, "03.01 - sneaky urlid attribute");
+  equal(actual.result, intended, "03.01");
 });
 
 test('04 - mini version of 08.05, sneaky attributes ending with "class"', () => {
@@ -144,7 +136,7 @@ test('04 - mini version of 08.05, sneaky attributes ending with "class"', () => 
 </html>
 `;
 
-  equal(actual.result, intended, "04.01 - sneaky superclass attribute");
+  equal(actual.result, intended, "04.01");
 });
 
 test('05 - sneaky attributes that end with characters "class"', () => {
@@ -206,7 +198,7 @@ test('05 - sneaky attributes that end with characters "class"', () => {
 </html>
 `;
 
-  equal(actual.result, intended, "05.01 - sneaky superclass attribute");
+  equal(actual.result, intended, "05.01");
 });
 
 test("06 - color code hashes interpreted correctly, not as id's", () => {
@@ -245,11 +237,7 @@ test("06 - color code hashes interpreted correctly, not as id's", () => {
 
   let intended = ["#head-only-id1", ".mobile_link"];
 
-  equal(
-    actual.deletedFromHead,
-    intended,
-    "06.01 - look for #525252 in head styles, it should not be among results - v2.6.0+"
-  );
+  equal(actual.deletedFromHead, intended, "06.01");
 });
 
 test("07 - one-letter classes (modern notation)", () => {
@@ -275,7 +263,7 @@ test("07 - one-letter classes (modern notation)", () => {
 </body>
 `;
 
-  equal(actual.result, intended, "07.01 - class .h should not get removed");
+  equal(actual.result, intended, "07.01");
 });
 
 test("08 - one-letter classes (old notation)", () => {
@@ -301,7 +289,7 @@ test("08 - one-letter classes (old notation)", () => {
 </body>
 `;
 
-  equal(actual.result, intended, "08.01 - class .h should not get removed");
+  equal(actual.result, intended, "08.01");
 });
 
 test("09 - one-letter classes - comprehensive comparison", () => {
@@ -358,24 +346,24 @@ test("09 - one-letter classes - comprehensive comparison", () => {
   equal(
     actual.allInHead.sort().join(" - "),
     intended.allInHead.sort().join(" - "),
-    "09.01 - allInHead"
+    "09.01"
   );
   equal(
     actual.allInBody.sort().join(" - "),
     intended.allInBody.sort().join(" - "),
-    "09.02 - allInBody"
+    "09.02"
   );
   equal(
     actual.deletedFromHead.sort().join(" - "),
     intended.deletedFromHead.sort().join(" - "),
-    "09.03 - deletedFromHead"
+    "09.03"
   );
   equal(
     actual.deletedFromBody.sort().join(" - "),
     intended.deletedFromBody.sort().join(" - "),
-    "09.04 - deletedFromBody"
+    "09.04"
   );
-  equal(actual.result, intended.result, "09.05 - result");
+  equal(actual.result, intended.result, "09.05");
 });
 
 test("10 - checking whole results object, all its keys #1", () => {
@@ -408,27 +396,19 @@ test("10 - checking whole results object, all its keys #1", () => {
     deletedFromBody: [".used-1", ".unused-4"],
   };
 
-  equal(
-    actual.allInHead.sort(),
-    intended.allInHead.sort(),
-    "10.01 - allInHead"
-  );
-  equal(
-    actual.allInBody.sort(),
-    intended.allInBody.sort(),
-    "10.02 - allInBody"
-  );
+  equal(actual.allInHead.sort(), intended.allInHead.sort(), "10.01");
+  equal(actual.allInBody.sort(), intended.allInBody.sort(), "10.02");
   equal(
     actual.deletedFromHead.sort(),
     intended.deletedFromHead.sort(),
-    "10.03 - deletedFromHead"
+    "10.03"
   );
   equal(
     actual.deletedFromBody.sort(),
     intended.deletedFromBody.sort(),
-    "10.04 - deletedFromBody"
+    "10.04"
   );
-  equal(actual.result, intended.result, "10.05 - result");
+  equal(actual.result, intended.result, "10.05");
 });
 
 test("11 - checking whole results object, all its keys #2", () => {
@@ -468,27 +448,19 @@ test("11 - checking whole results object, all its keys #2", () => {
     deletedFromBody: [".unused-4"],
   };
 
-  equal(
-    actual.allInHead.sort(),
-    intended.allInHead.sort(),
-    "11.01 - allInHead"
-  );
-  equal(
-    actual.allInBody.sort(),
-    intended.allInBody.sort(),
-    "11.02 - allInBody"
-  );
+  equal(actual.allInHead.sort(), intended.allInHead.sort(), "11.01");
+  equal(actual.allInBody.sort(), intended.allInBody.sort(), "11.02");
   equal(
     actual.deletedFromHead.sort(),
     intended.deletedFromHead.sort(),
-    "11.03 - deletedFromHead"
+    "11.03"
   );
   equal(
     actual.deletedFromBody.sort(),
     intended.deletedFromBody.sort(),
-    "11.04 - deletedFromBody"
+    "11.04"
   );
-  equal(actual.result, intended.result, "11.05 - result");
+  equal(actual.result, intended.result, "11.05");
 });
 
 test("12 - Cosmin's reported bug", () => {

@@ -12,34 +12,54 @@ const femaleWhiteSleuthEmoji = "\uD83D\uDD75\uD83C\uDFFC\u200D\u2640\uFE0F";
 
 // throw pinning:
 test(`01 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - first arg wrong #1`, () => {
-  throws(() => {
-    p(undefined, [[0, 1]]);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      p(undefined, [[0, 1]]);
+    },
+    /THROW_ID_01/g,
+    "01.01"
+  );
 });
 
 test(`02 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - first arg wrong #2`, () => {
-  throws(() => {
-    p(null, [[0, 1]]);
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      p(null, [[0, 1]]);
+    },
+    /THROW_ID_02/g,
+    "02.01"
+  );
 });
 
 test(`03 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - first arg wrong #3`, () => {
-  throws(() => {
-    p(true, [[0, 1]]);
-  }, /THROW_ID_02/g);
+  throws(
+    () => {
+      p(true, [[0, 1]]);
+    },
+    /THROW_ID_02/g,
+    "03.01"
+  );
 });
 
 test(`04 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - second arg wrong #4`, () => {
   // throw pinning:
-  throws(() => {
-    p("zzz", true);
-  }, /THROW_ID_03/g);
+  throws(
+    () => {
+      p("zzz", true);
+    },
+    /THROW_ID_03/g,
+    "04.01"
+  );
 });
 
 test(`05 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - second arg wrong #5`, () => {
-  throws(() => {
-    p("zzz", ["zzz"], () => {});
-  }, /THROW_ID_03/g);
+  throws(
+    () => {
+      p("zzz", ["zzz"], () => {});
+    },
+    /THROW_ID_03/g,
+    "05.01"
+  );
 });
 
 test(`06 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - second arg null means absence of ranges`, () => {
@@ -50,9 +70,13 @@ test(`06 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - second arg null means ab
 
 test(`07 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - third arg wrong`, () => {
   // throw pinning:
-  throws(() => {
-    p("zzz", [[0, 1]], null);
-  }, /THROW_ID_04/g);
+  throws(
+    () => {
+      p("zzz", [[0, 1]], null);
+    },
+    /THROW_ID_04/g,
+    "07.01"
+  );
 });
 
 // ==============================
@@ -131,31 +155,31 @@ test(`13 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges
       [7, 8],
       [0, 5],
     ],
-    "13.01 - inputs were not mutated"
+    "13.01"
   );
-  equal(
-    gather2,
-    [5, 6, 8, 9],
-    "13.02 - result is the same as in previous test"
-  );
+  equal(gather2, [5, 6, 8, 9], "13.02");
 });
 
 test(`14 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - throws`, () => {
   // skipping checking/merges/sorts will trigger safety latches and cause a throw
   let gather2 = [];
-  throws(() => {
-    p(
-      "abcdefghij",
-      [
-        [7, 8],
-        [0, 5],
-      ],
-      (idx) => {
-        gather2.push(idx);
-      },
-      true
-    );
-  }, /THROW_ID_08/g);
+  throws(
+    () => {
+      p(
+        "abcdefghij",
+        [
+          [7, 8],
+          [0, 5],
+        ],
+        (idx) => {
+          gather2.push(idx);
+        },
+        true
+      );
+    },
+    /THROW_ID_08/g,
+    "14.01"
+  );
 });
 
 // range outside the string length
@@ -171,7 +195,7 @@ test(`15 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges
       gather.push(idx);
     }
   );
-  equal(gather, [5, 6], "15.01 - result is the same as in previous test");
+  equal(gather, [5, 6], "15.01");
 });
 
 test(`16 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges - touching zero - protrudes - with checks skip`, () => {
@@ -182,19 +206,23 @@ test(`16 - ${`\u001b[${31}m${`few ranges`}\u001b[${39}m`} - string covers ranges
   // index 100 would not come at the first place if we processed the same string
   // even on many different iterations and different functions. That index 100
   // can't appear from anywhere if reference string's indexes don't span that far.
-  throws(() => {
-    p(
-      "abcdefghij",
-      [
-        [0, 5],
-        [7, 100],
-      ],
-      (idx) => {
-        gather.push(idx);
-      },
-      true
-    );
-  }, /THROW_ID_08/g);
+  throws(
+    () => {
+      p(
+        "abcdefghij",
+        [
+          [0, 5],
+          [7, 100],
+        ],
+        (idx) => {
+          gather.push(idx);
+        },
+        true
+      );
+    },
+    /THROW_ID_08/g,
+    "16.01"
+  );
 });
 
 test(`17 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - absent ranges - empty array given`, () => {
@@ -265,7 +293,7 @@ test(`22 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges 
 });
 
 test(`23 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - string covers ranges - emoji - checks on`, () => {
-  equal(femaleWhiteSleuthEmoji.length, 7, "23.01 - sanity check");
+  equal(femaleWhiteSleuthEmoji.length, 7, "23.01");
   let gather = [];
   p(
     `abcdef${femaleWhiteSleuthEmoji}ij`,

@@ -39,11 +39,7 @@ test("01 - removes HTML comments - healthy code", () => {
 `;
 
   equal(comb(source).result, intended, "01.01");
-  equal(
-    comb(source, { removeHTMLComments: true }).result,
-    intended,
-    "01.02 - hardcoded default"
-  );
+  equal(comb(source, { removeHTMLComments: true }).result, intended, "01.02");
   equal(comb(source, { removeHTMLComments: false }).result, source, "01.03");
 
   // uglify on:
@@ -57,7 +53,7 @@ test("01 - removes HTML comments - healthy code", () => {
   equal(
     comb(source, { removeHTMLComments: true, uglify: true }).result,
     uglified,
-    "01.05 - hardcoded default"
+    "01.05"
   );
   equal(
     comb(source, { removeHTMLComments: false, uglify: true }).result,
@@ -109,46 +105,42 @@ test("03 - removes HTML comments - healthy code with mso conditional - one liner
 `;
 
   equal(comb(source).result, source, "03.01");
-  equal(
-    comb(source, { removeHTMLComments: true }).result,
-    source,
-    "03.02 - hardcoded default"
-  );
+  equal(comb(source, { removeHTMLComments: true }).result, source, "03.02");
   equal(comb(source, { removeHTMLComments: false }).result, source, "03.03");
   equal(
     comb(source, {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["mso", "ie"],
     }).result,
     source,
-    "03.04 - both mso and ie ignores cause a complete skip"
+    "03.04"
   );
   equal(
     comb(source, {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: "mso",
     }).result,
     source,
-    "03.05 - mso ignore causes a complete skip"
+    "03.05"
   );
   equal(
     comb(source, {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: "ie",
     }).result,
     conditionalRemoved,
-    "03.06 - ie ignore is redundant and comment is removed"
+    "03.06"
   );
   equal(
     comb(source, {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: "",
     }).result,
     conditionalRemoved,
-    "03.07 - empty string"
+    "03.07"
   );
   equal(
     comb(source, {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result,
     conditionalRemoved,
-    "03.08 - empty array"
+    "03.08"
   );
 });
 
@@ -163,11 +155,7 @@ test("04 - removes HTML comments - everywhere-except-outlook conditional - type 
 `;
 
   equal(comb(source).result, source, "04.01");
-  equal(
-    comb(source, { removeHTMLComments: true }).result,
-    source,
-    "04.02 - hardcoded default"
-  );
+  equal(comb(source, { removeHTMLComments: true }).result, source, "04.02");
   equal(comb(source, { removeHTMLComments: false }).result, source, "04.03");
   equal(
     comb(source, {
@@ -175,7 +163,7 @@ test("04 - removes HTML comments - everywhere-except-outlook conditional - type 
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result,
     completelyStripped,
-    "04.04 - completely strips all comments, including outlook conditionals"
+    "04.04"
   );
 });
 
@@ -191,11 +179,7 @@ test("05 - removes HTML comments - everywhere-except-outlook conditional - type 
 `;
 
   equal(comb(source2).result, source2, "05.01");
-  equal(
-    comb(source2, { removeHTMLComments: true }).result,
-    source2,
-    "05.02 - hardcoded default"
-  );
+  equal(comb(source2, { removeHTMLComments: true }).result, source2, "05.02");
   equal(comb(source2, { removeHTMLComments: false }).result, source2, "05.03");
   equal(
     comb(source2, {
@@ -203,7 +187,7 @@ test("05 - removes HTML comments - everywhere-except-outlook conditional - type 
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result,
     completelyStripped,
-    "05.04 - completely strips all comments, including outlook conditionals"
+    "05.04"
   );
 });
 
@@ -255,11 +239,7 @@ test("07 - does not touch a table with conditional comment on the columns", () =
 `;
 
   equal(comb(source).result, source, "07.01");
-  equal(
-    comb(source, { removeHTMLComments: true }).result,
-    source,
-    "07.02 - hardcoded default"
-  );
+  equal(comb(source, { removeHTMLComments: true }).result, source, "07.02");
   equal(comb(source, { removeHTMLComments: false }).result, source, "07.03");
 });
 
@@ -283,11 +263,7 @@ test("08 - trims commented-out HTML", () => {
 `;
 
   equal(comb(source).result, intended, "08.01");
-  equal(
-    comb(source, { removeHTMLComments: true }).result,
-    intended,
-    "08.02 - hardcoded default"
-  );
+  equal(comb(source, { removeHTMLComments: true }).result, intended, "08.02");
   equal(comb(source, { removeHTMLComments: false }).result, source, "08.03");
 });
 
@@ -542,38 +518,38 @@ test("19 - removes comments from style blocks - opts.removeHTMLComments + opts.r
 </body>
 </html>
 `;
-  equal(comb(source).result, cssAndHtmlCommentsRemoved, "19.01 - defaults");
+  equal(comb(source).result, cssAndHtmlCommentsRemoved, "19.01");
   equal(
     comb(source, { removeCSSComments: true }).result,
     cssAndHtmlCommentsRemoved,
-    "19.02 - hardcoded defaults"
+    "19.02"
   );
   equal(
     comb(source, { removeCSSComments: false }).result,
     htmlRemovedCssNot,
-    "19.03 - off"
+    "19.03"
   );
 
   equal(
     comb(source, { removeCSSComments: true, removeHTMLComments: true }).result,
     cssAndHtmlCommentsRemoved,
-    "19.04 - html on, css on"
+    "19.04"
   );
   equal(
     comb(source, { removeCSSComments: false, removeHTMLComments: true }).result,
     htmlRemovedCssNot,
-    "19.05 - html on, css off"
+    "19.05"
   );
   equal(
     comb(source, { removeCSSComments: true, removeHTMLComments: false }).result,
     cssRemovedHtmlNot,
-    "19.06 - html off, css on"
+    "19.06"
   );
   equal(
     comb(source, { removeCSSComments: false, removeHTMLComments: false })
       .result,
     neitherCssNorHtml,
-    "19.07 - html off, css off"
+    "19.07"
   );
 });
 

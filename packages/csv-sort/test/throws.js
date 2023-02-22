@@ -22,21 +22,41 @@ test("03. offset columns - will throw", () => {
 });
 
 test("04. throws when input types are wrong", () => {
-  throws(() => {
-    sort(true);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    sort(null);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    sort(1);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    sort(undefined);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    sort({ a: "b" });
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      sort(true);
+    },
+    /THROW_ID_01/g,
+    "04.01"
+  );
+  throws(
+    () => {
+      sort(null);
+    },
+    /THROW_ID_01/g,
+    "04.02"
+  );
+  throws(
+    () => {
+      sort(1);
+    },
+    /THROW_ID_01/g,
+    "04.03"
+  );
+  throws(
+    () => {
+      sort(undefined);
+    },
+    /THROW_ID_01/g,
+    "04.04"
+  );
+  throws(
+    () => {
+      sort({ a: "b" });
+    },
+    /THROW_ID_01/g,
+    "04.05"
+  );
 });
 
 test("05. throws because there are no numeric-only columns", () => {

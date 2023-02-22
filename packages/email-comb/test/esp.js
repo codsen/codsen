@@ -36,7 +36,7 @@ color:  black;
 </html>
 `;
 
-  equal(actual, intended, "01.01 - default behaviour - lib will extract var1");
+  equal(actual, intended, "01.01");
 });
 
 test("02 - nunjucks variable as a class name", () => {
@@ -72,11 +72,7 @@ color: black;
 </html>
 `;
 
-  equal(
-    actual,
-    intended,
-    "02.01 - default behaviour - curlies are not legal characters to be used as class names"
-  );
+  equal(actual, intended, "02.01");
 });
 
 test("03 - nunjucks variable as a class name (simplified version)", () => {
@@ -108,11 +104,7 @@ test("03 - nunjucks variable as a class name (simplified version)", () => {
 </body>
 `;
 
-  equal(
-    actual,
-    intended,
-    "03.01 - we taught it how heads and tails look so it skips them now"
-  );
+  equal(actual, intended, "03.01");
 });
 
 test("04 - nunjucks variable as a class name (full version)", () => {
@@ -156,11 +148,7 @@ color:  black;
 </html>
 `;
 
-  equal(
-    actual,
-    intended,
-    "04.01 - we taught it how heads and tails look so it skips them now"
-  );
+  equal(actual, intended, "04.01");
 });
 
 test("05 - nunjucks variables mixed with classes and id's (minimal version)", () => {
@@ -192,11 +180,7 @@ test("05 - nunjucks variables mixed with classes and id's (minimal version)", ()
 </body>
 `;
 
-  equal(
-    actual,
-    intended,
-    "05.01 - we taught it how heads and tails look so it skips them now"
-  );
+  equal(actual, intended, "05.01");
 });
 
 test("06 - nunjucks variables mixed with classes and id's (full version)", () => {

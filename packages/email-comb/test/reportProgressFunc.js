@@ -19,7 +19,7 @@ test(`01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - calls t
     counter += 1;
   };
 
-  equal(comb("aaaaaaaaaa").result, "aaaaaaaaaa", "01.01 - default behaviour");
+  equal(comb("aaaaaaaaaa").result, "aaaaaaaaaa", "01.01");
   equal(
     comb("aaaaaaaaaa", { reportProgressFunc: null }).result,
     "aaaaaaaaaa",
@@ -32,9 +32,10 @@ test(`01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - calls t
   );
 
   // short input string should report only when passing at 50%:
-  throws(() => {
-    comb(
-      `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  throws(
+    () => {
+      comb(
+        `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -56,9 +57,12 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-      { reportProgressFunc: shouldveBeenCalled }
-    );
-  }, /50/);
+        { reportProgressFunc: shouldveBeenCalled }
+      );
+    },
+    /50/,
+    "01.04"
+  );
 
   // long input (>1000 chars long) should report at each natural number percentage passed:
 
@@ -115,7 +119,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
   );
 
   // 2. check the counter variable:
-  ok(counter > 50, "01.06 - counter called");
+  ok(counter > 50, "01.06");
 });
 
 test(`02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - reports when passing at 50% only`, () => {
@@ -124,9 +128,10 @@ test(`02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - reports
   }
 
   // short input string should report only when passing at 50%:
-  throws(() => {
-    comb(
-      `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  throws(
+    () => {
+      comb(
+        `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -148,13 +153,16 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-      {
-        reportProgressFunc: shouldveBeenCalled,
-        reportProgressFuncFrom: 21,
-        reportProgressFuncTo: 86,
-      }
-    );
-  }, /32/);
+        {
+          reportProgressFunc: shouldveBeenCalled,
+          reportProgressFuncFrom: 21,
+          reportProgressFuncTo: 86,
+        }
+      );
+    },
+    /32/,
+    "02.01"
+  );
 });
 
 test(`03 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`, () => {

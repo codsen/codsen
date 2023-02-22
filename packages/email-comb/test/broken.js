@@ -23,7 +23,7 @@ test("01 - missing closing TD, TR, TABLE will not throw", () => {
     some text
 `;
 
-  equal(actual, intended, "01.01 - does nothing as head has no styles");
+  equal(actual, intended, "01.01");
 });
 
 test("02 - doesn't remove any other empty attributes besides class/id (mini)", () => {
@@ -125,11 +125,7 @@ test("04 - removes classes and id's from HTML even if it's heavily messed up", (
 </table>
 </body>`;
 
-  equal(
-    actual,
-    intended,
-    "04.01 - rubbish in, rubbish out, only rubbish-with-unused-CSS-removed-out!"
-  );
+  equal(actual, intended, "04.01");
 });
 
 test("05 - missing last @media curlie", () => {

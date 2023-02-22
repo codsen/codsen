@@ -30,7 +30,7 @@ test(`01 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
     </td>
   </tr>
 </table>`),
-    "01.01 - str before tr - 1 col"
+    "01.01"
   );
 });
 
@@ -56,7 +56,7 @@ test(`02 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
     </td>
   </tr>
 </table>`),
-    "02.01 - string after the tr - 1 col"
+    "02.01"
   );
 });
 
@@ -92,7 +92,7 @@ zzz
 </td>
 </tr>
 </table>`),
-    "03.01 - string between the tr's - 1 col"
+    "03.01"
   );
 });
 
@@ -120,7 +120,7 @@ test(`04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
     zzz
   </tr>-->
 </table>`),
-    "04.01 - notice comment is never closed, yet wrapping occurs before it"
+    "04.01"
   );
 });
 
@@ -156,7 +156,7 @@ test(`05 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
     </td>
   </tr>
 </table>`),
-    "05.01 - code + comments"
+    "05.01"
   );
 });
 
@@ -224,7 +224,7 @@ zzz
 </td>
 </tr>
 </table>`),
-    "07.01 - string between the tr's - 1 col"
+    "07.01"
   );
 });
 
@@ -260,7 +260,7 @@ zzz
 </td>
 </tr>
 </table>`),
-    "08.01 - string between the tr's - 1 col"
+    "08.01"
   );
 });
 

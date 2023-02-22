@@ -99,17 +99,9 @@ test(`02 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores`, () => {
 </body>
 `;
 
-  equal(
-    comb(source, { uglify: false }).result,
-    baseline,
-    "02.01 - default settings (no uglify, no ignores)"
-  );
+  equal(comb(source, { uglify: false }).result, baseline, "02.01");
 
-  equal(
-    comb(source, { uglify: true }).result,
-    baselineUglified,
-    "02.02 - uglified, no ignores"
-  );
+  equal(comb(source, { uglify: true }).result, baselineUglified, "02.02");
 
   equal(
     comb(source, {
@@ -117,7 +109,7 @@ test(`02 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores`, () => {
       whitelist: ".zzz*",
     }).result,
     ignores,
-    "02.03 - no uglify, with ignores"
+    "02.03"
   );
 
   equal(
@@ -126,7 +118,7 @@ test(`02 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores`, () => {
       whitelist: ".zzz*",
     }).result,
     ignoresUglified,
-    "02.04 - uglified + with ignores"
+    "02.04"
   );
 });
 
@@ -205,14 +197,10 @@ test(`03 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - class name exceeds libra
 </body>
 `;
 
-  equal(
-    comb(actual, { uglify: false }).result,
-    actual,
-    "03.01 - uglify is off"
-  );
+  equal(comb(actual, { uglify: false }).result, actual, "03.01");
 
   let res = comb(actual, { uglify: true });
-  equal(res.result, intended, "03.02 - uglify is on");
+  equal(res.result, intended, "03.02");
 
   equal(
     res.log.uglified,
@@ -499,7 +487,7 @@ zzz
   not.ok(actual.log.uglified.includes("#outlook"), "08.03");
 
   // but there's "serif" uglified value in the uglification legend:
-  equal(actual.log.uglified.length, 1, "08.04");
+  equal(actual.log.uglified.length, 1, "08.03");
 });
 
 test.run();

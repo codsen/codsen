@@ -19,10 +19,10 @@ test("01 - allWithEnt", () => {
 
 test("02 - all", () => {
   not.ok(all.includes("bad-html-entity-malformed-quot"), "02.01");
-  ok(all.includes("bad-html-entity-malformed-numeric"), "02.02");
+  ok(all.includes("bad-html-entity-malformed-numeric"), "02.01");
   not.ok(all.includes("bad-html-entity-encoded-quot"), "02.03");
-  ok(all.includes("bad-html-entity-unrecognised"), "02.04");
-  ok(all.includes("bad-html-entity-multiple-encoding"), "02.05");
+  ok(all.includes("bad-html-entity-unrecognised"), "02.02");
+  ok(all.includes("bad-html-entity-multiple-encoding"), "02.03");
 });
 
 test.run();
