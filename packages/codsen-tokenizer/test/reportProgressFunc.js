@@ -57,7 +57,7 @@ test("03", () => {
       });
     },
     /50/,
-    `03.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - short length reports only at 50%`
+    `03.01`
   );
 });
 
@@ -76,10 +76,7 @@ test("04", () => {
   });
 
   // 2. check the counter variable:
-  ok(
-    counter,
-    `04.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - longer length reports at 0-100%`
-  );
+  ok(counter, `04.01`);
 });
 
 test("05", () => {
@@ -97,7 +94,7 @@ test("05", () => {
       });
     },
     /32/g,
-    `05.01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, short input`
+    `05.01`
   );
 });
 
@@ -134,11 +131,7 @@ test("06", () => {
   });
   equal(gather.length, 86 - 21, "06.01");
 
-  equal(
-    gather,
-    compareTo,
-    `06.02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, longer input`
-  );
+  equal(gather, compareTo, `06.02`);
 });
 
 test.run();
