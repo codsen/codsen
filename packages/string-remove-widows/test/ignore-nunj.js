@@ -44,11 +44,7 @@ test(`01 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal 
 test(`02 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal detects template code and widows are prevented`, () => {
   let source = `{% if something else and also another thing %}tralala {% endif %}some text here`;
   let res = `{% if something else and also another thing %}tralala {% endif %}some text${encodedNbspHtml}here`;
-  equal(
-    removeWidows(source, { minCharCount: 5 }).res,
-    res,
-    `02.01 - words under threshold outside templating chunk which completes the threshold`
-  );
+  equal(removeWidows(source, { minCharCount: 5 }).res, res, `02.01`);
   equal(
     removeWidows(source, {
       ignore: `jinja`,

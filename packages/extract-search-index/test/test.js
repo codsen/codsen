@@ -11,21 +11,41 @@ test("01 - exports a version", () => {
 });
 
 test("02 - wrong/missing input = throw", () => {
-  throws(() => {
-    extract();
-  }, /THROW_ID_01/g);
-  throws(() => {
-    extract(1);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    extract(null);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    extract(undefined);
-  }, /THROW_ID_01/g);
-  throws(() => {
-    extract(true);
-  }, /THROW_ID_01/g);
+  throws(
+    () => {
+      extract();
+    },
+    /THROW_ID_01/g,
+    "02.01"
+  );
+  throws(
+    () => {
+      extract(1);
+    },
+    /THROW_ID_01/g,
+    "02.02"
+  );
+  throws(
+    () => {
+      extract(null);
+    },
+    /THROW_ID_01/g,
+    "02.03"
+  );
+  throws(
+    () => {
+      extract(undefined);
+    },
+    /THROW_ID_01/g,
+    "02.04"
+  );
+  throws(
+    () => {
+      extract(true);
+    },
+    /THROW_ID_01/g,
+    "02.05"
+  );
 });
 
 // Normal use

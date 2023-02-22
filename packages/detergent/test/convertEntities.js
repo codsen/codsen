@@ -628,7 +628,7 @@ test(`34 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, () => {
       removeWidows: true,
     }).res,
     `aaaaaaaaaaa&nbsp;&mdash; aaaaaaaaaaaa&nbsp;&mdash;&nbsp;aaaaaaaaaaaa`,
-    "34.01"
+    "34.02"
   );
 });
 
@@ -888,7 +888,7 @@ test(`51 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`, () => 
       removeWidows: false,
     }).res,
     "Discount: -&pound;10.00",
-    "51.01"
+    "51.02"
   );
 });
 
@@ -1842,7 +1842,8 @@ test(`125 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - precaution 
         "Zzz times; Zzzz or; Zzzzzz real; Zzzz alpha; Zzzzz exist; Zzzzz euro;",
         opt
       ).res,
-      `Zzz times; Zzzz or; Zzzzzz real; Zzzz alpha; Zzzzz exist; Zzzzz${rawNbsp}euro;`
+      `Zzz times; Zzzz or; Zzzzzz real; Zzzz alpha; Zzzzz exist; Zzzzz${rawNbsp}euro;`,
+      "125.01"
     );
   });
 });

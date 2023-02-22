@@ -26,11 +26,7 @@ test(`01 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - minimal, 
   mixer({
     removeLineBreaks: true,
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, `a\nb`, opt).res,
-      "a b",
-      JSON.stringify(opt, null, 0)
-    );
+    equal(det(ok, not, n, `a\nb`, opt).res, "a b", "01.01");
   });
 });
 
@@ -39,11 +35,7 @@ test(`02 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - minimal, 
     removeLineBreaks: false,
     replaceLineBreaks: false,
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, `a\nb`, opt).res,
-      "a\nb",
-      JSON.stringify(opt, null, 0)
-    );
+    equal(det(ok, not, n, `a\nb`, opt).res, "a\nb", "02.01");
   });
 });
 
@@ -61,7 +53,7 @@ test(`03 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix styl
         opt
       ).res,
       "tralala tralala2 tralala3 tralala4",
-      JSON.stringify(opt, null, 0)
+      "03.01"
     );
   });
 });
@@ -81,7 +73,7 @@ test(`04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix styl
         opt
       ).res,
       "tralala tralala2 tralala3&nbsp;tralala4",
-      JSON.stringify(opt, null, 0)
+      "04.01"
     );
   });
 
@@ -98,7 +90,7 @@ test(`04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix styl
       convertEntities: true,
       eol: false,
     }).res,
-    "04.01"
+    "04.02"
   );
 
   not.ok(
@@ -107,15 +99,6 @@ test(`04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix styl
       removeWidows: true,
       convertEntities: true,
     }).applicableOpts.eol,
-    "04.02"
-  );
-
-  not.ok(
-    det1(`\n\n\na\nb\nc\n\n\nd\n\n\n`, {
-      removeLineBreaks: true,
-      removeWidows: true,
-      convertEntities: true,
-    }).applicableOpts.replaceLineBreaks,
     "04.03"
   );
 
@@ -124,8 +107,17 @@ test(`04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix styl
       removeLineBreaks: true,
       removeWidows: true,
       convertEntities: true,
-    }).applicableOpts.useXHTML,
+    }).applicableOpts.replaceLineBreaks,
     "04.04"
+  );
+
+  not.ok(
+    det1(`\n\n\na\nb\nc\n\n\nd\n\n\n`, {
+      removeLineBreaks: true,
+      removeWidows: true,
+      convertEntities: true,
+    }).applicableOpts.useXHTML,
+    "04.05"
   );
 
   compare(
@@ -153,7 +145,7 @@ test(`04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix styl
         eol: false,
       },
     },
-    "04.05"
+    "04.06"
   );
 });
 
@@ -171,7 +163,7 @@ test(`05 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - DOS style
         opt
       ).res,
       "tralala tralala2 tralala3 tralala4",
-      JSON.stringify(opt, null, 0)
+      "05.01"
     );
   });
 });
@@ -191,7 +183,7 @@ test(`06 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - DOS style
         opt
       ).res,
       `tralala tralala2 tralala3${rawNbsp}tralala4`,
-      JSON.stringify(opt, null, 0)
+      "06.01"
     );
   });
 });
@@ -210,7 +202,7 @@ test(`07 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - clasic Ma
         opt
       ).res,
       "tralala tralala2 tralala3 tralala4",
-      JSON.stringify(opt, null, 0)
+      "07.01"
     );
   });
 });
@@ -230,7 +222,7 @@ test(`08 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - clasic Ma
         opt
       ).res,
       "tralala tralala2 tralala3&nbsp;tralala4",
-      JSON.stringify(opt, null, 0)
+      "08.01"
     );
   });
 });

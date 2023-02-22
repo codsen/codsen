@@ -180,7 +180,7 @@ test(`10 - ${`\u001b[${34}m${`ad-hoc`}\u001b[${39}m`} - custom EOL - CRLF presen
   equal(
     det(ok, not, 0, source, opts).res,
     "aaa<br/>\r<br/>\rbbb<br/>\r<br/>\rccc",
-    "10.01 - CR requested"
+    "10.01"
   );
   ok(det1(source, opts).applicableOpts.eol, "10.02");
 });

@@ -18,7 +18,7 @@ test(`02 - ${`\u001b[${33}m${`line breaks`}\u001b[${39}m`} - \\n replacement wit
   equal(
     det(ok, not, 0, `aaa\r\n\r\nbbb\r\n\r\nccc`).res,
     "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc",
-    "02.01 - CRLF"
+    "02.01"
   );
 });
 

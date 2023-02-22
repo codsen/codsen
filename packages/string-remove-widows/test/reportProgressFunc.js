@@ -28,11 +28,7 @@ test(`01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - calls t
     counter += 1;
   };
 
-  equal(
-    removeWidows(`aaaaaaaaaa`).res,
-    `aaaaaaaaaa`,
-    `01.01 - default behaviour`
-  );
+  equal(removeWidows(`aaaaaaaaaa`).res, `aaaaaaaaaa`, `01.01`);
   equal(
     removeWidows(`aaaaaaaaaa`, { reportProgressFunc: null }).res,
     `aaaaaaaaaa`,
@@ -68,7 +64,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
   );
 
   // 2. check the counter variable:
-  ok(counter > 95, `01.05 - counter called`);
+  ok(counter > 95, `01.05`);
 });
 
 test(`02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`, () => {

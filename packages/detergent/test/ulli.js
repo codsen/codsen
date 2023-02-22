@@ -12,11 +12,7 @@ test(`01 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - minimal case`, () =>
     replaceLineBreaks: false,
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, "z <ul><li>y", opt).res,
-      "z\ny",
-      JSON.stringify(opt, null, 0)
-    );
+    equal(det(ok, not, n, "z <ul><li>y", opt).res, "z\ny", "01.01");
   });
 });
 
@@ -35,7 +31,7 @@ test(`02 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces,
         opt
       ).res,
       "Text First point Second point Third point Text straight after",
-      JSON.stringify(opt, null, 0)
+      "02.01"
     );
   });
 });
@@ -47,11 +43,7 @@ test(`03 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces,
     replaceLineBreaks: false,
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, `a<li>b`, opt).res,
-      "a\nb",
-      JSON.stringify(opt, null, 0)
-    );
+    equal(det(ok, not, n, `a<li>b`, opt).res, "a\nb", "03.01");
   });
 });
 
@@ -71,7 +63,7 @@ test(`04 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces,
         opt
       ).res,
       "Text\nFirst point\nSecond point\nThird point\nText straight after",
-      JSON.stringify(opt, null, 0)
+      "04.01"
     );
   });
 });
@@ -93,7 +85,7 @@ test(`05 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces,
         opt
       ).res,
       "Text<br/>\nFirst point<br/>\nSecond point<br/>\nThird point<br/>\nText straight after",
-      JSON.stringify(opt, null, 0)
+      "05.01"
     );
   });
 
@@ -109,7 +101,7 @@ test(`05 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces,
       }
     ).res,
     "Text<br/>\nFirst point<br/>\nSecond point<br/>\nThird point<br/>\nText straight after",
-    "05.01"
+    "05.02"
   );
 });
 

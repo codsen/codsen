@@ -279,204 +279,204 @@ test("16 - rogue closing tag", () => {
   );
 });
 
-test("16 - rogue self-closing tag", () => {
+test("17 - rogue self-closing tag", () => {
   let source = `<div>a</div> b <zz/> c <div>d</div>`;
   equal(
     stripHtml(source, {
       ignoreTagsWithTheirContents: ["zz"],
     }).result,
     "a b <zz/> c d",
-    "16.01"
+    "17.01"
   );
 });
 
-test("16 - rogue two-slashes tag", () => {
+test("18 - rogue two-slashes tag", () => {
   let source = `<div>a</div> b </zz/> c <div>d</div>`;
   equal(
     stripHtml(source, {
       ignoreTagsWithTheirContents: ["zz"],
     }).result,
     "a b </zz/> c d",
-    "16.01"
+    "18.01"
   );
 });
 
-test("17 - closing-opening", () => {
+test("19 - closing-opening", () => {
   let source = `<div>a</div> b </tr><tr> c <div>d</div>`;
   equal(
     stripHtml(source, {
       ignoreTagsWithTheirContents: ["tr"],
     }).result,
     "a b </tr><tr> c d",
-    "17.01"
+    "19.01"
   );
 });
 
-test("18 - closing-closing-opening", () => {
+test("20 - closing-closing-opening", () => {
   let source = `</tr> <div>a</div> b </tr> c <div>d</div> <tr> <div>e</div>`;
   equal(
     stripHtml(source, {
       ignoreTagsWithTheirContents: ["tr"],
     }).result,
     "</tr> a b </tr> c d <tr> e",
-    "18.01"
+    "20.01"
   );
 });
 
-test("19 - closing-opening-opening", () => {
+test("21 - closing-opening-opening", () => {
   let source = `</tr> <div>a</div> b <tr> c <div>d</div> <tr> <div>e</div>`;
   equal(
     stripHtml(source, {
       ignoreTagsWithTheirContents: ["tr"],
     }).result,
     "</tr> a b <tr> c d <tr> e",
-    "19.01"
+    "21.01"
   );
 });
 
-test("19 - closing-opening-opening", () => {
+test("22 - closing-opening-opening", () => {
   let source = `</tr> <div>a</div> b <tr> c <div>d</div> </tr> <div>e</div>`;
   equal(
     stripHtml(source, {
       ignoreTagsWithTheirContents: ["tr"],
     }).result,
     `</tr> a b <tr> c <div>d</div> </tr> e`,
-    "19.01"
+    "22.01"
   );
 });
 
-test("20 - custom tags, no attrs", () => {
+test("23 - custom tags, no attrs", () => {
   equal(
     stripHtml(`a<MyTag />b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a<MyTag />b c`,
-    "20.01"
+    "23.01"
   );
   equal(
     stripHtml(`a<MyTag/>b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a<MyTag/>b c`,
-    "20.02"
+    "23.02"
   );
   equal(
     stripHtml(`a<MyTag >b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a<MyTag >b c`,
-    "20.03"
+    "23.03"
   );
   equal(
     stripHtml(`a<MyTag>b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a<MyTag>b c`,
-    "20.04"
+    "23.04"
   );
   equal(
     stripHtml(`a</MyTag>b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a</MyTag>b c`,
-    "20.05"
+    "23.05"
   );
   equal(
     stripHtml(`a</MyTag/>b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a</MyTag/>b c`,
-    "20.06"
+    "23.06"
   );
 });
 
-test("21 - custom tags, with attrs", () => {
+test("24 - custom tags, with attrs", () => {
   equal(
     stripHtml(`a<MyTag zzz />b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a<MyTag zzz />b c`,
-    "21.01"
+    "24.01"
   );
   equal(
     stripHtml(`a<MyTag zzz/>b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a<MyTag zzz/>b c`,
-    "21.02"
+    "24.02"
   );
   equal(
     stripHtml(`a<MyTag zzz >b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a<MyTag zzz >b c`,
-    "21.03"
+    "24.03"
   );
   equal(
     stripHtml(`a<MyTag zzz>b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a<MyTag zzz>b c`,
-    "21.04"
+    "24.04"
   );
   equal(
     stripHtml(`a</MyTag zzz>b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a</MyTag zzz>b c`,
-    "21.05"
+    "24.05"
   );
   equal(
     stripHtml(`a</MyTag zzz/>b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a</MyTag zzz/>b c`,
-    "21.06"
+    "24.06"
   );
 });
 
-test("22 - custom tags, with proper attrs", () => {
+test("25 - custom tags, with proper attrs", () => {
   equal(
     stripHtml(`a<MyTag class="z" />b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a<MyTag class="z" />b c`,
-    "22.01"
+    "25.01"
   );
   equal(
     stripHtml(`a<MyTag class="z"/>b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a<MyTag class="z"/>b c`,
-    "22.02"
+    "25.02"
   );
   equal(
     stripHtml(`a<MyTag class="z" >b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a<MyTag class="z" >b c`,
-    "22.03"
+    "25.03"
   );
   equal(
     stripHtml(`a<MyTag class="z">b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a<MyTag class="z">b c`,
-    "22.04"
+    "25.04"
   );
   equal(
     stripHtml(`a</MyTag class="z">b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a</MyTag class="z">b c`,
-    "22.05"
+    "25.05"
   );
   equal(
     stripHtml(`a</MyTag class="z"/>b <div>c</div>`, {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     `a</MyTag class="z"/>b c`,
-    "22.06"
+    "25.06"
   );
 });
 

@@ -12,7 +12,7 @@ test(`01 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - healthy tag pair`, (
     equal(
       det(ok, not, n, `text <a>text</a> text`, opt).res,
       "text text text",
-      JSON.stringify(opt, null, 4)
+      "01.01"
     );
   });
   mixer({
@@ -21,7 +21,7 @@ test(`01 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - healthy tag pair`, (
     equal(
       det(ok, not, n, `text <a>text</a> text`, opt).res,
       "text <a>text</a> text",
-      JSON.stringify(opt, null, 4)
+      "01.02"
     );
   });
 });
@@ -31,16 +31,12 @@ test(`02 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - closing tag without 
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, input, opt).res,
-      "text text text",
-      JSON.stringify(opt, null, 4)
-    );
+    equal(det(ok, not, n, input, opt).res, "text text text", "02.01");
   });
   mixer({
     stripHtml: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, JSON.stringify(opt, null, 4));
+    equal(det(ok, not, n, input, opt).res, input, "02.02");
   });
 });
 
@@ -49,16 +45,12 @@ test(`03 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - unrecognised tag`, (
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, input, opt).res,
-      "text text text",
-      JSON.stringify(opt, null, 4)
-    );
+    equal(det(ok, not, n, input, opt).res, "text text text", "03.01");
   });
   mixer({
     stripHtml: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, JSON.stringify(opt, null, 4));
+    equal(det(ok, not, n, input, opt).res, input, "03.02");
   });
 });
 
@@ -68,16 +60,12 @@ test(`04 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips nonsense tags
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, input, opt).res,
-      "text text text",
-      JSON.stringify(opt, null, 4)
-    );
+    equal(det(ok, not, n, input, opt).res, "text text text", "04.01");
   });
   mixer({
     stripHtml: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, JSON.stringify(opt, null, 4));
+    equal(det(ok, not, n, input, opt).res, input, "04.02");
   });
 });
 
@@ -86,16 +74,12 @@ test(`05 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips legit HTML`, 
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, input, opt).res,
-      "text text text",
-      JSON.stringify(opt, null, 4)
-    );
+    equal(det(ok, not, n, input, opt).res, "text text text", "05.01");
   });
   mixer({
     stripHtml: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, JSON.stringify(opt, null, 4));
+    equal(det(ok, not, n, input, opt).res, input, "05.02");
   });
 });
 
@@ -104,23 +88,19 @@ test(`06 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips non-ignored s
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, "", JSON.stringify(opt, null, 4));
+    equal(det(ok, not, n, input, opt).res, "", "06.01");
   });
   mixer({
     stripHtml: false,
     useXHTML: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, JSON.stringify(opt, null, 4));
+    equal(det(ok, not, n, input, opt).res, input, "06.02");
   });
   mixer({
     stripHtml: false,
     useXHTML: true,
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, input, opt).res,
-      "<hr/>",
-      JSON.stringify(opt, null, 4)
-    );
+    equal(det(ok, not, n, input, opt).res, "<hr/>", "06.03");
   });
 });
 
@@ -130,11 +110,7 @@ test(`07 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - custom ignored singl
     useXHTML: false,
     stripHtmlButIgnoreTags: ["hr"],
   }).forEach((opt, i) => {
-    equal(
-      det(ok, not, 0, `<hr>`, opt).res,
-      "<hr>",
-      `opt #${i}:\n${JSON.stringify(opt, null, 4)}`
-    );
+    equal(det(ok, not, 0, `<hr>`, opt).res, "<hr>", `opt #${i}:\n${"04.01"}`);
   });
 });
 
@@ -144,11 +120,7 @@ test(`08 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - remo
     useXHTML: false,
     stripHtmlButIgnoreTags: ["hr"],
   }).forEach((opt, i) => {
-    equal(
-      det(ok, not, 0, `<hr/>`, opt).res,
-      "<hr>",
-      `opt #${i}:\n${JSON.stringify(opt, null, 4)}`
-    );
+    equal(det(ok, not, 0, `<hr/>`, opt).res, "<hr>", `opt #${i}:\n${"04.01"}`);
   });
 });
 
@@ -158,11 +130,7 @@ test(`09 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - adds
     stripHtml: true,
     stripHtmlButIgnoreTags: ["hr"],
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, `<hr>`, opt).res,
-      "<hr/>",
-      JSON.stringify(opt, null, 4)
-    );
+    equal(det(ok, not, n, `<hr>`, opt).res, "<hr/>", "09.01");
   });
 });
 
@@ -172,11 +140,7 @@ test(`10 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - keep
     stripHtml: true,
     stripHtmlButIgnoreTags: ["hr"],
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, `<hr>`, opt).res,
-      "<hr/>",
-      JSON.stringify(opt, null, 4)
-    );
+    equal(det(ok, not, n, `<hr>`, opt).res, "<hr/>", "10.01");
   });
 });
 
@@ -184,11 +148,7 @@ test(`11 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - mini
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, `a<div>b</div>c`, opt).res,
-      "a b c",
-      JSON.stringify(opt, null, 4)
-    );
+    equal(det(ok, not, n, `a<div>b</div>c`, opt).res, "a b c", "11.01");
   });
 });
 
@@ -199,7 +159,7 @@ test(`12 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - mini
     equal(
       det(ok, not, n, `a<div>b</div>c`, opt).res,
       "a<div>b</div>c",
-      JSON.stringify(opt, null, 4)
+      "12.01"
     );
   });
 });
@@ -212,7 +172,7 @@ test(`13 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - mini
       det(ok, not, n, `\u0000a\u0001<div>\u0002b\u0002</div>\u0004c\u0005`, opt)
         .res,
       "a<div>b</div>c",
-      JSON.stringify(opt, null, 4)
+      "13.01"
     );
   });
 });
@@ -226,7 +186,7 @@ test(`14 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - opts.useXHTML - mini
       det(ok, not, n, `\u00A3a\u00A3<div>\u00A3b\u00A3</div>\u00A3c\u00A3`, opt)
         .res,
       "&pound;a&pound;<div>&pound;b&pound;</div>&pound;c&pound;",
-      JSON.stringify(opt, null, 4)
+      "14.01"
     );
   });
 });
@@ -286,12 +246,12 @@ test(`20 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - single tag, uppercas
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, "", JSON.stringify(opt, null, 4));
+    equal(det(ok, not, n, input, opt).res, "", "20.01");
   });
   mixer({
     stripHtml: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, JSON.stringify(opt, null, 4));
+    equal(det(ok, not, n, input, opt).res, input, "20.02");
   });
 });
 
@@ -312,7 +272,7 @@ test(`22 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags
     equal(
       det(ok, not, n, `a<script>var i = 0;</script>b`, opt).res,
       "a b",
-      JSON.stringify(opt, null, 4)
+      "22.01"
     );
   });
 });
@@ -324,7 +284,7 @@ test(`23 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags
     equal(
       det(ok, not, n, `<script>var i = 0;</script>b`, opt).res,
       "b",
-      JSON.stringify(opt, null, 4)
+      "23.01"
     );
   });
 });
@@ -336,7 +296,7 @@ test(`24 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags
     equal(
       det(ok, not, n, `a<script>var i = 0;</script>`, opt).res,
       "a",
-      JSON.stringify(opt, null, 4)
+      "24.01"
     );
   });
 });
@@ -345,11 +305,7 @@ test(`25 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - strips <script> tags
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, `<script>var i = 0;</script>`, opt).res,
-      "",
-      JSON.stringify(opt, null, 4)
-    );
+    equal(det(ok, not, n, `<script>var i = 0;</script>`, opt).res, "", "25.01");
   });
 });
 
@@ -360,7 +316,7 @@ test(`26 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> tags with w
     equal(
       det(ok, not, n, `a<script>var i = 0;</script        >b`, opt).res,
       "a b",
-      JSON.stringify(opt, null, 4)
+      "26.01"
     );
   });
 });
@@ -374,7 +330,7 @@ test(`27 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> sneaky case
     equal(
       det(ok, not, n, `a<script>var i = 0;</script        `, opt).res,
       "a",
-      JSON.stringify(opt, null, 4)
+      "27.01"
     );
   });
 });
@@ -388,7 +344,7 @@ test(`28 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - <script> sneaky case
     equal(
       det(ok, not, n, `a<script>var i = 0;</script`, opt).res,
       "a",
-      JSON.stringify(opt, null, 4)
+      "28.01"
     );
   });
 });
@@ -406,7 +362,7 @@ test(`29 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining b tags by 
         opt
       ).res,
       'test text is being <b class="test" id="br">set in bold</b> here',
-      JSON.stringify(opt, null, 4)
+      "29.01"
     );
   });
 });
@@ -424,7 +380,7 @@ test(`30 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining b tags by 
         opt
       ).res,
       'test text is being <b class="test">set in bold</b> here',
-      JSON.stringify(opt, null, 4)
+      "30.01"
     );
   });
 });
@@ -436,7 +392,7 @@ test(`31 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing t
     equal(
       det(ok, not, n, `a <sup>c<sup/> d`, opt).res,
       "a <sup>c</sup> d",
-      JSON.stringify(opt, null, 4)
+      "31.01"
     );
   });
 });
@@ -449,7 +405,7 @@ test(`32 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing t
       det(ok, not, n, `test text is being < b >set in bold< b /> here`, opt)
         .res,
       "test text is being <b>set in bold</b> here",
-      JSON.stringify(opt, null, 4)
+      "32.01"
     );
   });
 });
@@ -461,7 +417,7 @@ test(`33 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing t
     equal(
       det(ok, not, n, `test text is being <B>set in bold<B/> here`, opt).res,
       "test text is being <B>set in bold</B> here",
-      JSON.stringify(opt, null, 4)
+      "33.01"
     );
   });
 });
@@ -479,7 +435,7 @@ test(`34 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - tag pair's closing t
         opt
       ).res,
       `test text is being <b class="h">set in bold</b> here`,
-      JSON.stringify(opt, null, 4)
+      "34.01"
     );
   });
 });
@@ -491,7 +447,7 @@ test(`35 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by 
     equal(
       det(ok, not, n, `test text is being <i>set in italic</i> here`, opt).res,
       "test text is being <i>set in italic</i> here",
-      JSON.stringify(opt, null, 4)
+      "35.01"
     );
   });
 });
@@ -504,7 +460,7 @@ test(`36 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by 
       det(ok, not, n, `test text is being < i >set in italic< /  i > here`, opt)
         .res,
       "test text is being <i>set in italic</i> here",
-      JSON.stringify(opt, null, 4)
+      "36.01"
     );
   });
 });
@@ -517,7 +473,7 @@ test(`37 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining i tags by 
       det(ok, not, n, `test text is being < I >set in italic<   I /> here`, opt)
         .res,
       "test text is being <I>set in italic</I> here",
-      JSON.stringify(opt, null, 4)
+      "37.01"
     );
   });
 });
@@ -535,7 +491,7 @@ test(`38 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tag
         opt
       ).res,
       `test text is being <strong id="main">set in bold</strong> here`,
-      JSON.stringify(opt, null, 4)
+      "38.01"
     );
   });
 });
@@ -553,7 +509,7 @@ test(`39 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tag
         opt
       ).res,
       `test text is being <strong id="main">set in bold</strong> here`,
-      JSON.stringify(opt, null, 4)
+      "39.01"
     );
   });
 });
@@ -571,7 +527,7 @@ test(`40 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tag
         opt
       ).res,
       `test text is being <StRoNg>set in bold</StRoNg class="z1"> here`,
-      JSON.stringify(opt, null, 4)
+      "40.01"
     );
   });
 });
@@ -584,7 +540,7 @@ test(`41 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tag
       det(ok, not, n, `test text is being <em>set in emphasis</em> here`, opt)
         .res,
       "test text is being <em>set in emphasis</em> here",
-      JSON.stringify(opt, null, 4)
+      "41.01"
     );
   });
 });
@@ -602,7 +558,7 @@ test(`42 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tag
         opt
       ).res,
       `test text is being <em id="main">set in emphasis</em> here`,
-      JSON.stringify(opt, null, 4)
+      "42.01"
     );
   });
 });
@@ -620,7 +576,7 @@ test(`43 - ${`\u001b[${32}m${`strip HTML`}\u001b[${39}m`} - retaining strong tag
         opt
       ).res,
       "test text is being <em>set in emphasis</em> here",
-      JSON.stringify(opt, null, 4)
+      "43.01"
     );
   });
 });
@@ -634,7 +590,7 @@ test(`44 - widow removal is aware of surrounding html`, () => {
     removeLineBreaks: false,
     stripHtml: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, "46.01");
+    equal(det(ok, not, n, input, opt).res, input, "44.01");
   });
 });
 
@@ -647,7 +603,7 @@ test(`45 - widow removal is aware of surrounding html`, () => {
     removeLineBreaks: false,
     stripHtml: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, "47.01");
+    equal(det(ok, not, n, input, opt).res, input, "45.01");
   });
 });
 
@@ -657,7 +613,7 @@ test(`46 - a JSX pattern`, () => {
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, "c", "48.01");
+    equal(det(ok, not, n, input, opt).res, "c", "46.01");
   });
   mixer({
     stripHtml: false,
@@ -668,7 +624,7 @@ test(`46 - a JSX pattern`, () => {
       det(ok, not, n, input, opt).res,
       `<A b>c</A>
 </></></></>`,
-      "48.02"
+      "46.02"
     );
   });
 });

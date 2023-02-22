@@ -10,34 +10,58 @@ import {
 import { det } from "../t-util/util.js";
 
 test(`01 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the first argument is not string`, () => {
-  throws(() => {
-    det(ok, not, 0, 1, "zzz");
-  }, /THROW_ID_01/gm);
+  throws(
+    () => {
+      det(ok, not, 0, 1, "zzz");
+    },
+    /THROW_ID_01/gm,
+    "01.01"
+  );
 
-  throws(() => {
-    det(ok, not, 0, true, "zzz");
-  }, /THROW_ID_01/gm);
+  throws(
+    () => {
+      det(ok, not, 0, true, "zzz");
+    },
+    /THROW_ID_01/gm,
+    "01.02"
+  );
 
   function fn() {
     return true;
   }
-  throws(() => {
-    det(ok, not, 0, fn, "zzz");
-  }, /THROW_ID_01/gm);
+  throws(
+    () => {
+      det(ok, not, 0, fn, "zzz");
+    },
+    /THROW_ID_01/gm,
+    "01.03"
+  );
 
-  throws(() => {
-    det(ok, not, 0, { a: "b" }, "zzz");
-  }, /THROW_ID_01/gm);
+  throws(
+    () => {
+      det(ok, not, 0, { a: "b" }, "zzz");
+    },
+    /THROW_ID_01/gm,
+    "01.04"
+  );
 
-  throws(() => {
-    det(ok, not, 0, null, "zzz");
-  }, /THROW_ID_01/gm);
+  throws(
+    () => {
+      det(ok, not, 0, null, "zzz");
+    },
+    /THROW_ID_01/gm,
+    "01.05"
+  );
 });
 
 test(`02 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when the second argument is truthy yet not a plain object`, () => {
-  throws(() => {
-    det(ok, not, 0, `zzz`, "zzz");
-  }, /THROW_ID_02/gm);
+  throws(
+    () => {
+      det(ok, not, 0, `zzz`, "zzz");
+    },
+    /THROW_ID_02/gm,
+    "02.01"
+  );
 });
 
 test(`03 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - default opts object is exported`, () => {
@@ -49,9 +73,13 @@ test(`04 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - version is exported`, () =>
 });
 
 test(`05 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - throws when opts.cb is truthy and not a function`, () => {
-  throws(() => {
-    det(ok, not, 0, `zzz`, { cb: true });
-  }, /THROW_ID_03/gm);
+  throws(
+    () => {
+      det(ok, not, 0, `zzz`, { cb: true });
+    },
+    /THROW_ID_03/gm,
+    "05.01"
+  );
 });
 
 test(`06 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - not throws when opts.cb is falsey`, () => {

@@ -26,7 +26,7 @@ test(`01 - ${`\u001b[${33}m${`opts.minCharCount`}\u001b[${39}m`} - opts.minCharC
       minCharCount: 0,
     }).res,
     `aaa bbb`,
-    `01.01 - default word count 4 kicks in and makes program skip this`
+    `01.01`
   );
   equal(
     removeWidows(`aaa bbb`, {

@@ -31,7 +31,7 @@ test(`01 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
     equal(
       det(ok, not, n, "10am &ndash;11am", opt).res,
       "10am&nbsp;&ndash;11am",
-      JSON.stringify(opt, null, 4)
+      "01.01"
     );
   });
 });
@@ -46,7 +46,7 @@ test(`02 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
     equal(
       det(ok, not, n, "10am &ndash;11am", opt).res,
       "10am &ndash; 11am",
-      JSON.stringify(opt, null, 4)
+      "02.01"
     );
   });
 });
@@ -61,7 +61,7 @@ test(`03 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
     equal(
       det(ok, not, n, "10am &ndash;11am", opt).res,
       "10am &ndash;11am",
-      JSON.stringify(opt, null, 4)
+      "03.01"
     );
   });
 });
@@ -73,11 +73,7 @@ test(`04 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
     "tel://123",
   ].forEach((src) => {
     mixer().forEach((opt, n) => {
-      equal(
-        det(ok, not, n, src, opt).res,
-        src,
-        `${src} - ${JSON.stringify(opt, null, 4)}`
-      );
+      equal(det(ok, not, n, src, opt).res, src, `${src} - ${"66.02"}`);
     });
   });
 });
@@ -91,7 +87,7 @@ test(`05 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "http://detergent.io is cool", opt).res,
       "http://detergent.io is cool",
-      JSON.stringify(opt, null, 4)
+      "05.01"
     );
   });
 });
@@ -106,7 +102,7 @@ test(`06 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "http://detergent.io.\nThis is cool", opt).res,
       "http://detergent.io.\nThis is cool",
-      JSON.stringify(opt, null, 4)
+      "06.01"
     );
   });
 });
@@ -121,7 +117,7 @@ test(`07 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "http://detergent.io. \nThis is cool", opt).res,
       "http://detergent.io.\nThis is cool",
-      JSON.stringify(opt, null, 4)
+      "07.01"
     );
   });
 });
@@ -136,7 +132,7 @@ test(`08 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "Aaaaa.Aaaa www.detergent.io bbbbb.Bbbbb", opt).res,
       "Aaaaa. Aaaa www.detergent.io bbbbb. Bbbbb",
-      JSON.stringify(opt, null, 4)
+      "08.01"
     );
   });
 });
@@ -151,7 +147,7 @@ test(`09 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "http://detergent.io is cool", opt).res,
       "http://detergent.io is cool",
-      JSON.stringify(opt, null, 4)
+      "09.01"
     );
   });
 });
@@ -164,7 +160,7 @@ test(`10 - missing space after ndash added (nbsp + ndash) - space after ndash no
     equal(
       det(ok, not, n, `10am&ndash;11am`, opt).res,
       `10am${rawNDash}11am`,
-      JSON.stringify(opt, null, 4)
+      "10.01"
     );
   });
 });
@@ -179,7 +175,7 @@ test(`11 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "http://detergent.io.\nThis is cool", opt).res,
       "http://detergent.io.\nThis is cool",
-      JSON.stringify(opt, null, 4)
+      "11.01"
     );
   });
 });
@@ -194,7 +190,7 @@ test(`12 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "http://detergent.io. \nThis is cool", opt).res,
       "http://detergent.io.\nThis is cool",
-      JSON.stringify(opt, null, 4)
+      "12.01"
     );
   });
 });
@@ -209,7 +205,7 @@ test(`13 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "Aaaaa.Aaaa www.detergent.io bbbbb.Bbbbb", opt).res,
       "Aaaaa.Aaaa www.detergent.io bbbbb.Bbbbb",
-      JSON.stringify(opt, null, 4)
+      "13.01"
     );
   });
 });
@@ -222,7 +218,7 @@ test(`14 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.This is cool.", opt).res,
       "This is http://detergent.io. This is cool.",
-      JSON.stringify(opt, null, 4)
+      "14.01"
     );
   });
 });
@@ -235,7 +231,7 @@ test(`15 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
-      JSON.stringify(opt, null, 4)
+      "15.01"
     );
   });
 });
@@ -249,7 +245,7 @@ test(`16 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.This is cool.", opt).res,
       "This is http://detergent.io. This is&nbsp;cool.",
-      JSON.stringify(opt, null, 4)
+      "16.01"
     );
   });
 });
@@ -263,7 +259,7 @@ test(`17 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
-      JSON.stringify(opt, null, 4)
+      "17.01"
     );
   });
 });
@@ -277,7 +273,7 @@ test(`18 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.This is cool.", opt).res,
       `This is http://detergent.io. This is${rawNbsp}cool.`,
-      JSON.stringify(opt, null, 4)
+      "18.01"
     );
   });
 });
@@ -291,7 +287,7 @@ test(`19 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
-      JSON.stringify(opt, null, 4)
+      "19.01"
     );
   });
 });
@@ -304,7 +300,7 @@ test(`20 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.This is cool.", opt).res,
       "This is http://detergent.io.This is cool.",
-      JSON.stringify(opt, null, 4)
+      "20.01"
     );
   });
 });
@@ -317,7 +313,7 @@ test(`21 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
-      JSON.stringify(opt, null, 4)
+      "21.01"
     );
   });
 });
@@ -331,7 +327,7 @@ test(`22 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.This is cool.", opt).res,
       "This is http://detergent.io.This is&nbsp;cool.",
-      JSON.stringify(opt, null, 4)
+      "22.01"
     );
   });
 });
@@ -345,7 +341,7 @@ test(`23 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
-      JSON.stringify(opt, null, 4)
+      "23.01"
     );
   });
 });
@@ -359,7 +355,7 @@ test(`24 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.This is cool.", opt).res,
       `This is http://detergent.io.This is${rawNbsp}cool.`,
-      JSON.stringify(opt, null, 4)
+      "24.01"
     );
   });
 });
@@ -373,7 +369,7 @@ test(`25 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
-      JSON.stringify(opt, null, 4)
+      "25.01"
     );
   });
 });
@@ -395,7 +391,7 @@ test(`26 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
         opt
       ).res,
       "Aaaa🦄.bbbbb http://detergent.whatever.a.bd.re.qwe.gf.asdew.v.df.g.er.re ZZZ.🦄YYY",
-      JSON.stringify(opt, null, 4)
+      "26.01"
     );
   });
 });
@@ -417,7 +413,7 @@ test(`27 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
         opt
       ).res,
       "Aaaa. Bbbbb http://detergent.whatever.a.bd.re.qwe.\ngf. Asdew. V. Df, g; er. Re ZZZ.🦄YYY sfhksdf fgkjhk jhfgkh.",
-      JSON.stringify(opt, null, 4)
+      "27.01"
     );
   });
 });
@@ -439,7 +435,7 @@ test(`28 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
         opt
       ).res,
       "Aaaa🦄.bbbbb http://detergent.whatever.a.bd.re.qwe.gf.asdew.v.df.g.er.re ZZZ.🦄YYY",
-      JSON.stringify(opt, null, 4)
+      "28.01"
     );
   });
 });
@@ -461,7 +457,7 @@ test(`29 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
         opt
       ).res,
       "Aaaa.Bbbbb http://detergent.whatever.a.bd.re.qwe.\ngf.Asdew.V.Df,g;er.Re ZZZ.🦄YYY sfhksdf fgkjhk jhfgkh.",
-      JSON.stringify(opt, null, 4)
+      "29.01"
     );
   });
 });
@@ -473,7 +469,7 @@ test(`30 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
     equal(
       det(ok, not, n, "http://detergent.io;is cool.", opt).res,
       "http://detergent.io;is cool.",
-      JSON.stringify(opt, null, 4)
+      "30.01"
     );
   });
 });
@@ -482,11 +478,7 @@ test(`31 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
   mixer({
     addMissingSpaces: true,
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, "aaa;bbb", opt).res,
-      "aaa; bbb",
-      JSON.stringify(opt, null, 4)
-    );
+    equal(det(ok, not, n, "aaa;bbb", opt).res, "aaa; bbb", "31.01");
   });
 });
 
@@ -497,7 +489,7 @@ test(`32 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
     equal(
       det(ok, not, n, "http://detergent.io,is cool.", opt).res,
       "http://detergent.io,is cool.",
-      JSON.stringify(opt, null, 4)
+      "32.01"
     );
   });
 });
@@ -506,11 +498,7 @@ test(`33 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
   mixer({
     addMissingSpaces: true,
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, "aaa,bbb", opt).res,
-      "aaa, bbb",
-      JSON.stringify(opt, null, 4)
-    );
+    equal(det(ok, not, n, "aaa,bbb", opt).res, "aaa, bbb", "33.01");
   });
 });
 
@@ -521,7 +509,7 @@ test(`34 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
     equal(
       det(ok, not, n, "http://detergent.io.Cool!", opt).res,
       "http://detergent.io. Cool!",
-      JSON.stringify(opt, null, 4)
+      "34.01"
     );
   });
 });
@@ -533,7 +521,7 @@ test(`35 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
     equal(
       det(ok, not, n, "http://detergent.io.IS COOL.", opt).res,
       "http://detergent.io.IS COOL.",
-      JSON.stringify(opt, null, 4)
+      "35.01"
     );
   });
 });
@@ -545,7 +533,7 @@ test(`36 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
     equal(
       det(ok, not, n, "http://detergent.io.is cool.", opt).res,
       "http://detergent.io.is cool.",
-      JSON.stringify(opt, null, 4)
+      "36.01"
     );
   });
 });
@@ -554,11 +542,7 @@ test(`37 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
   mixer({
     addMissingSpaces: true,
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, "aaa.bbb", opt).res,
-      "aaa.bbb",
-      JSON.stringify(opt, null, 4)
-    );
+    equal(det(ok, not, n, "aaa.bbb", opt).res, "aaa.bbb", "37.01");
   });
 });
 
@@ -566,11 +550,7 @@ test(`38 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
   mixer({
     addMissingSpaces: true,
   }).forEach((opt, n) => {
-    equal(
-      det(ok, not, n, "Aaa.Bbb", opt).res,
-      "Aaa. Bbb",
-      JSON.stringify(opt, null, 4)
-    );
+    equal(det(ok, not, n, "Aaa.Bbb", opt).res, "Aaa. Bbb", "38.01");
   });
 });
 
@@ -584,7 +564,7 @@ test(`39 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin
     equal(
       det(ok, not, n, "This is http://detergent.io.Это хорошо.", opt).res,
       "This is http://detergent.io. Это хорошо.",
-      JSON.stringify(opt, null, 4)
+      "39.01"
     );
   });
 });
@@ -599,7 +579,7 @@ test(`40 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin
     equal(
       det(ok, not, n, "This is http://detergent.io,Это хорошо.", opt).res,
       "This is http://detergent.io,Это хорошо.",
-      JSON.stringify(opt, null, 4)
+      "40.01"
     );
   });
 });
@@ -614,7 +594,7 @@ test(`41 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin
     equal(
       det(ok, not, n, "This is http://detergent.io;Это хорошо.", opt).res,
       "This is http://detergent.io;Это хорошо.",
-      JSON.stringify(opt, null, 4)
+      "41.01"
     );
   });
 });
@@ -629,7 +609,7 @@ test(`42 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin
     equal(
       det(ok, not, n, "This is http://detergent.io.Это хорошо.", opt).res,
       "This is http://detergent.io.Это хорошо.",
-      JSON.stringify(opt, null, 4)
+      "42.01"
     );
   });
 });
@@ -644,7 +624,7 @@ test(`43 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin
     equal(
       det(ok, not, n, "This is http://detergent.io,Это хорошо.", opt).res,
       "This is http://detergent.io,Это хорошо.",
-      JSON.stringify(opt, null, 4)
+      "43.01"
     );
   });
 });
@@ -659,7 +639,7 @@ test(`44 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin
     equal(
       det(ok, not, n, "This is http://detergent.io;Это хорошо.", opt).res,
       "This is http://detergent.io;Это хорошо.",
-      JSON.stringify(opt, null, 4)
+      "44.01"
     );
   });
 });
@@ -684,7 +664,7 @@ test(`45 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - leaves fi
       "image.htm",
       "image.HTM",
     ].forEach((src) => {
-      equal(det(ok, not, n, src, opt).res, src, JSON.stringify(opt, null, 4));
+      equal(det(ok, not, n, src, opt).res, src, "66.02");
     });
   });
 });
@@ -710,18 +690,14 @@ test(`47 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - long sent
         opt
       ).res,
       "When you will download header.PNG, file fix.jpg and the dotfiles named .gitignore, check them.",
-      JSON.stringify(opt, null, 4)
+      "47.01"
     );
   });
 });
 
 test(`48 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - false positive - Dutch "p.st"`, () => {
   mixer().forEach((opt, n) => {
-    equal(
-      det(ok, not, n, "10eur p.st", opt).res,
-      "10eur p.st",
-      JSON.stringify(opt, null, 4)
-    );
+    equal(det(ok, not, n, "10eur p.st", opt).res, "10eur p.st", "48.01");
   });
 });
 
@@ -734,7 +710,7 @@ test(`49 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
     equal(
       det(ok, not, n, "Text.More text.", opt).res,
       "Text. More text.",
-      JSON.stringify(opt, null, 4)
+      "49.01"
     );
   });
 });
@@ -748,7 +724,7 @@ test(`50 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
     equal(
       det(ok, not, n, "Text.More text.", opt).res,
       "Text.More text.",
-      JSON.stringify(opt, null, 4)
+      "50.01"
     );
   });
 });
@@ -759,11 +735,15 @@ test(`51 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
     dontEncodeNonLatin: true,
     useXHTML: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "Text,more text.", opt).res, "Text, more text.");
+    equal(
+      det(ok, not, n, "Text,more text.", opt).res,
+      "Text, more text.",
+      "51.01"
+    );
     equal(
       det(ok, not, n, "Text,more text,", opt).res,
       "Text, more text,",
-      JSON.stringify(opt, null, 4)
+      "51.02"
     );
   });
 });
@@ -774,11 +754,15 @@ test(`52 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
     dontEncodeNonLatin: true,
     useXHTML: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "Text,more text.", opt).res, "Text,more text.");
+    equal(
+      det(ok, not, n, "Text,more text.", opt).res,
+      "Text,more text.",
+      "52.01"
+    );
     equal(
       det(ok, not, n, "Text,more text,", opt).res,
       "Text,more text,",
-      JSON.stringify(opt, null, 4)
+      "52.02"
     );
   });
 });
@@ -789,13 +773,25 @@ test(`53 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
     dontEncodeNonLatin: true,
     useXHTML: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "Text;more text.", opt).res, "Text; more text.");
-    equal(det(ok, not, n, "text;more text.", opt).res, "text; more text.");
-    equal(det(ok, not, n, "Text;more text", opt).res, "Text; more text");
+    equal(
+      det(ok, not, n, "Text;more text.", opt).res,
+      "Text; more text.",
+      "53.01"
+    );
+    equal(
+      det(ok, not, n, "text;more text.", opt).res,
+      "text; more text.",
+      "53.02"
+    );
+    equal(
+      det(ok, not, n, "Text;more text", opt).res,
+      "Text; more text",
+      "53.03"
+    );
     equal(
       det(ok, not, n, "text;more text", opt).res,
       "text; more text",
-      JSON.stringify(opt, null, 4)
+      "53.04"
     );
   });
 });
@@ -806,13 +802,25 @@ test(`54 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
     dontEncodeNonLatin: true,
     useXHTML: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "Text;more text.", opt).res, "Text;more text.");
-    equal(det(ok, not, n, "text;more text.", opt).res, "text;more text.");
-    equal(det(ok, not, n, "Text;more text", opt).res, "Text;more text");
+    equal(
+      det(ok, not, n, "Text;more text.", opt).res,
+      "Text;more text.",
+      "54.01"
+    );
+    equal(
+      det(ok, not, n, "text;more text.", opt).res,
+      "text;more text.",
+      "54.02"
+    );
+    equal(
+      det(ok, not, n, "Text;more text", opt).res,
+      "Text;more text",
+      "54.03"
+    );
     equal(
       det(ok, not, n, "text;more text", opt).res,
       "text;more text",
-      JSON.stringify(opt, null, 4)
+      "54.04"
     );
   });
 });
@@ -827,7 +835,7 @@ test(`55 - missing space after ndash added (nbsp + ndash) - missing space after 
     equal(
       det(ok, not, n, "10am&nbsp;&ndash;11am", opt).res,
       "10am&nbsp;&ndash;&nbsp;11am",
-      JSON.stringify(opt, null, 4)
+      "55.01"
     );
   });
 });
@@ -842,7 +850,7 @@ test(`56 - missing space after ndash added (nbsp + ndash) - missing space after 
     equal(
       det(ok, not, n, "10am&nbsp;&ndash;11am", opt).res,
       "10am&nbsp;&ndash;11am",
-      JSON.stringify(opt, null, 4)
+      "56.01"
     );
   });
 });
@@ -857,7 +865,7 @@ test(`57 - missing space after ndash added (nbsp + ndash) - missing space after 
     equal(
       det(ok, not, n, "10am&nbsp;&ndash;11am and more text", opt).res,
       "10am&nbsp;&ndash;11am and more&nbsp;text",
-      JSON.stringify(opt, null, 4)
+      "57.01"
     );
   });
 });
@@ -870,7 +878,7 @@ test(`58 - missing space after ndash added (nbsp + ndash) - space after ndash no
     equal(
       det(ok, not, n, "10am&ndash;11am", opt).res,
       "10am&ndash;11am",
-      JSON.stringify(opt, null, 4)
+      "58.01"
     );
   });
 });
@@ -885,7 +893,7 @@ test(`59 - missing space after ndash added (nbsp + ndash) - missing space after 
     equal(
       det(ok, not, n, "10am&nbsp;&ndash;11am", opt).res,
       `10am${rawNbsp}${rawNDash}${rawNbsp}11am`,
-      JSON.stringify(opt, null, 4)
+      "59.01"
     );
   });
 });
@@ -900,7 +908,7 @@ test(`60 - missing space after ndash added (nbsp + ndash) - missing space after 
     equal(
       det(ok, not, n, "10am&nbsp;&ndash;11am", opt).res,
       `10am${rawNbsp}${rawNDash}${rawNbsp}11am`,
-      JSON.stringify(opt, null, 4)
+      "60.01"
     );
   });
   mixer({
@@ -912,7 +920,7 @@ test(`60 - missing space after ndash added (nbsp + ndash) - missing space after 
     equal(
       det(ok, not, n, "10am&nbsp;&ndash;11am", opt).res,
       `10am ${rawNDash} 11am`,
-      JSON.stringify(opt, null, 4)
+      "60.02"
     );
   });
 });
@@ -928,7 +936,7 @@ test(`61 - deletes space around n-dash between numbers`, () => {
     equal(
       det(ok, not, n, `1880 ${rawNDash} 1912`, opt).res,
       `1880${rawNDash}1912`,
-      JSON.stringify(opt, null, 4)
+      "61.01"
     );
   });
 });
@@ -941,7 +949,7 @@ test(`62 - deletes space around n-dash between numbers`, () => {
     equal(
       det(ok, not, n, `1880 &ndash; 1912`, opt).res,
       `1880${rawNDash}1912`,
-      JSON.stringify(opt, null, 4)
+      "62.01"
     );
   });
 });
@@ -954,7 +962,7 @@ test(`63 - deletes space around n-dash between numbers`, () => {
     equal(
       det(ok, not, n, `1880 ${rawNDash} 1912`, opt).res,
       "1880&ndash;1912",
-      JSON.stringify(opt, null, 4)
+      "63.01"
     );
   });
 });
@@ -967,7 +975,7 @@ test(`64 - deletes space around n-dash between numbers`, () => {
     equal(
       det(ok, not, n, "1880 &ndash; 1912", opt).res,
       "1880&ndash;1912",
-      JSON.stringify(opt, null, 4)
+      "64.01"
     );
   });
 });
@@ -980,7 +988,7 @@ test(`65 - space in front of n-dash, missing space after it`, () => {
     equal(
       det(ok, not, n, `1880 ${rawNDash}1912`, opt).res,
       `1880${rawNDash}1912`,
-      JSON.stringify(opt, null, 4)
+      "65.01"
     );
   });
 });
@@ -988,17 +996,17 @@ test(`65 - space in front of n-dash, missing space after it`, () => {
 test(`66 - jinja/nunjucks code chunk with double quotes`, () => {
   let str1 = '{{ "%.2f"|format(total.value) }}';
   mixer().forEach((opt, n) => {
-    equal(det(ok, not, n, str1, opt).res, str1);
+    equal(det(ok, not, n, str1, opt).res, str1, "66.01");
   });
 
   let str2 = '{% if z == "text" %}{{ text }}{% endif %}';
   mixer().forEach((opt, n) => {
-    equal(det(ok, not, n, str2, opt).res, str2);
+    equal(det(ok, not, n, str2, opt).res, str2, "66.02");
   });
 
   let str3 = '{%- if z == "text" -%}{{ text }}{%- endif -%}';
   mixer().forEach((opt, n) => {
-    equal(det(ok, not, n, str3, opt).res, str3, JSON.stringify(opt, null, 4));
+    equal(det(ok, not, n, str3, opt).res, str3, "66.03");
   });
 });
 
@@ -1021,7 +1029,7 @@ test(`68`, () => {
     equal(
       det(ok, not, n, `Abc;${rawNbsp}de fghij klmnop.`, opt).res,
       `Abc;&nbsp;de fghij&nbsp;klmnop.`,
-      JSON.stringify(opt, null, 4)
+      "68.01"
     );
   });
 });
@@ -1034,7 +1042,7 @@ test(`69`, () => {
     equal(
       det(ok, not, n, `Abc;${rawNbsp}fghij klm nop.`, opt).res,
       `Abc;${rawNbsp}fghij klm${rawNbsp}nop.`,
-      JSON.stringify(opt, null, 4)
+      "69.01"
     );
   });
 });
@@ -1046,7 +1054,7 @@ test(`70`, () => {
     equal(
       det(ok, not, n, `Abc;${rawNbsp}de fg.`, opt).res,
       `Abc; de fg.`,
-      JSON.stringify(opt, null, 4)
+      "70.01"
     );
   });
 });
@@ -1058,7 +1066,7 @@ test(`71 - sanity check #02`, () => {
     equal(
       det(ok, not, n, "Semicolon;&is cool.", opt).res,
       "Semicolon;&is cool.",
-      JSON.stringify(opt, null, 4)
+      "71.01"
     );
   });
 });

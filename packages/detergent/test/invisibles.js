@@ -186,7 +186,7 @@ test("13 - narrow no break space", () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "a\u202Fb", opt).res, "a b", "12");
+    equal(det(ok, not, n, "a\u202Fb", opt).res, "a b", "13.02");
   });
 });
 

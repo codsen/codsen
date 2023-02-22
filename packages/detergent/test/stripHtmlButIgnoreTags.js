@@ -10,11 +10,7 @@ import { det, mixer } from "../t-util/util.js";
 // ==============================
 
 test(`01 - simple case`, () => {
-  equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`).res,
-    "a z c",
-    "01.01 - control"
-  );
+  equal(det(ok, not, 0, `a <div><a>z</a></div> c`).res, "a z c", "01.01");
 });
 
 test(`02 - single tag to ignore, given as string`, () => {
@@ -82,11 +78,7 @@ test(`07 - other tags ignored, not present in the input`, () => {
 });
 
 test(`08 - control for stripHtml`, () => {
-  equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`).res,
-    "a z c",
-    "08.01 - control"
-  );
+  equal(det(ok, not, 0, `a <div><a>z</a></div> c`).res, "a z c", "08.01");
 });
 
 test(`09 - no ignores`, () => {
@@ -353,7 +345,7 @@ test(`31 - br variations, not ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc def",
-      JSON.stringify(opt, null, 4)
+      "31.01"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -362,7 +354,7 @@ test(`31 - br variations, not ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc def",
-      JSON.stringify(opt, null, 4)
+      "31.02"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -371,7 +363,7 @@ test(`31 - br variations, not ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc def",
-      JSON.stringify(opt, null, 4)
+      "31.03"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -380,7 +372,7 @@ test(`31 - br variations, not ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc def",
-      JSON.stringify(opt, null, 4)
+      "31.04"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -389,7 +381,7 @@ test(`31 - br variations, not ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc def",
-      JSON.stringify(opt, null, 4)
+      "31.05"
     );
   });
 });
@@ -406,7 +398,7 @@ test(`32 - br variations, not ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "32.01"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -415,7 +407,7 @@ test(`32 - br variations, not ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "32.02"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -424,7 +416,7 @@ test(`32 - br variations, not ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "32.03"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -433,7 +425,7 @@ test(`32 - br variations, not ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "32.04"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -442,7 +434,7 @@ test(`32 - br variations, not ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "32.05"
     );
   });
 });
@@ -459,7 +451,7 @@ test(`33 - br variations, not ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "33.01"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -468,7 +460,7 @@ test(`33 - br variations, not ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "33.02"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -477,7 +469,7 @@ test(`33 - br variations, not ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "33.03"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -486,7 +478,7 @@ test(`33 - br variations, not ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "33.04"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -495,7 +487,7 @@ test(`33 - br variations, not ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "33.05"
     );
   });
 });
@@ -513,7 +505,7 @@ test(`34 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "34.01"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -522,7 +514,7 @@ test(`34 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       `abc<br>def`,
-      JSON.stringify(opt, null, 4)
+      "34.02"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -531,7 +523,7 @@ test(`34 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       `abc<br>def`,
-      JSON.stringify(opt, null, 4)
+      "34.03"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -540,7 +532,7 @@ test(`34 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       `abc<br>def`,
-      JSON.stringify(opt, null, 4)
+      "34.04"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -549,7 +541,7 @@ test(`34 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       `abc<br>def`,
-      JSON.stringify(opt, null, 4)
+      "34.05"
     );
   });
 });
@@ -567,7 +559,7 @@ test(`35 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "35.01"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -576,7 +568,7 @@ test(`35 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "35.02"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -585,7 +577,7 @@ test(`35 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "35.03"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -594,7 +586,7 @@ test(`35 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "35.04"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -603,7 +595,7 @@ test(`35 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "35.05"
     );
   });
 });
@@ -620,7 +612,7 @@ test(`36 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "36.01"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -629,7 +621,7 @@ test(`36 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "36.02"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -638,7 +630,7 @@ test(`36 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "36.03"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -647,7 +639,7 @@ test(`36 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "36.04"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -656,7 +648,7 @@ test(`36 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "36.05"
     );
   });
 });
@@ -673,7 +665,7 @@ test(`37 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "37.01"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -682,7 +674,7 @@ test(`37 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "37.02"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -691,7 +683,7 @@ test(`37 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "37.03"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -700,7 +692,7 @@ test(`37 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "37.04"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -709,7 +701,7 @@ test(`37 - br variations, ignored`, () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "37.05"
     );
   });
 });
@@ -727,7 +719,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc\ndef",
-      JSON.stringify(opt, null, 4)
+      "38.01"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -736,7 +728,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc\ndef",
-      JSON.stringify(opt, null, 4)
+      "38.02"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -745,7 +737,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc\ndef",
-      JSON.stringify(opt, null, 4)
+      "38.03"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -754,7 +746,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc\ndef",
-      JSON.stringify(opt, null, 4)
+      "38.04"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -763,7 +755,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc\ndef",
-      JSON.stringify(opt, null, 4)
+      "38.05"
     );
   });
 
@@ -778,7 +770,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "38.06"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -787,7 +779,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "38.07"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -796,7 +788,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "38.08"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -805,7 +797,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "38.09"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -814,7 +806,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "38.10"
     );
   });
   mixer({
@@ -828,7 +820,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "38.11"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -837,7 +829,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "38.12"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -846,7 +838,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "38.13"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -855,7 +847,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "38.14"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -864,7 +856,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "38.15"
     );
   });
 });
@@ -881,7 +873,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "39.01"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -890,7 +882,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "39.02"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -899,7 +891,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "39.03"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -908,7 +900,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "39.04"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -917,7 +909,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "39.05"
     );
   });
   mixer({
@@ -931,7 +923,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "39.06"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -940,7 +932,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "39.07"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -949,7 +941,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "39.08"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -958,7 +950,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "39.09"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -967,7 +959,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "39.10"
     );
   });
 
@@ -982,7 +974,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "39.11"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -991,7 +983,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "39.12"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -1000,7 +992,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "39.13"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -1009,7 +1001,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "39.14"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -1018,7 +1010,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "39.15"
     );
   });
   mixer({
@@ -1032,7 +1024,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "39.16"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -1041,7 +1033,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "39.17"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -1050,7 +1042,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "39.18"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -1059,7 +1051,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "39.19"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -1068,7 +1060,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "39.20"
     );
   });
 });
@@ -1086,7 +1078,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc\ndef",
-      JSON.stringify(opt, null, 4)
+      "40.01"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -1095,7 +1087,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc\ndef",
-      JSON.stringify(opt, null, 4)
+      "40.02"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -1104,7 +1096,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc\ndef",
-      JSON.stringify(opt, null, 4)
+      "40.03"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -1113,7 +1105,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc\ndef",
-      JSON.stringify(opt, null, 4)
+      "40.04"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -1122,7 +1114,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc\ndef",
-      JSON.stringify(opt, null, 4)
+      "40.05"
     );
   });
 
@@ -1137,7 +1129,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "40.06"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -1146,7 +1138,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "40.07"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -1155,7 +1147,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "40.08"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -1164,7 +1156,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "40.09"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -1173,7 +1165,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "40.10"
     );
   });
   mixer({
@@ -1187,7 +1179,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "40.11"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -1196,7 +1188,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "40.12"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -1205,7 +1197,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "40.13"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -1214,7 +1206,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "40.14"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -1223,7 +1215,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "40.15"
     );
   });
 });
@@ -1240,7 +1232,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "41.01"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -1249,7 +1241,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "41.02"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -1258,7 +1250,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "41.03"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -1267,7 +1259,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "41.04"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -1276,7 +1268,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "41.05"
     );
   });
 
@@ -1291,7 +1283,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "41.06"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -1300,7 +1292,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "41.07"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -1309,7 +1301,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "41.08"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -1318,7 +1310,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "41.09"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -1327,7 +1319,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "41.10"
     );
   });
 
@@ -1342,7 +1334,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "41.11"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -1351,7 +1343,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "41.12"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -1360,7 +1352,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "41.13"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -1369,7 +1361,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "41.14"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -1378,7 +1370,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      "41.15"
     );
   });
 
@@ -1393,7 +1385,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "41.16"
     );
     equal(
       det(ok, not, n, `abc<br />def`, {
@@ -1402,7 +1394,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "41.17"
     );
     equal(
       det(ok, not, n, `abc<br/ >def`, {
@@ -1411,7 +1403,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "41.18"
     );
     equal(
       det(ok, not, n, `abc<br / >def`, {
@@ -1420,7 +1412,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "41.19"
     );
     equal(
       det(ok, not, n, `abc<br>def`, {
@@ -1429,7 +1421,7 @@ test(`41 - strip but ignore`, () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      "41.20"
     );
   });
 });

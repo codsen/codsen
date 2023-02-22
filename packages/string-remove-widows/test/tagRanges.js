@@ -26,7 +26,7 @@ test(`01 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - accepts known ta
       tagRanges: [[0, 74]],
     }).res,
     source,
-    `01.01 - everything ignored because everything is a tag`
+    `01.01`
   );
 });
 
@@ -36,7 +36,7 @@ test(`02 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - widow space betw
       `something in front here <a style="display: block;">x</a> <b style="display: block;">y</b>`
     ).res,
     `something in front here <a style="display: block;">x</a> <b style="display:${encodedNbspHtml}block;">y</b>`,
-    `02.01 - default behaviour`
+    `02.01`
   );
   equal(
     removeWidows(
@@ -51,7 +51,7 @@ test(`02 - ${`\u001b[${33}m${`opts.tagRanges`}\u001b[${39}m`} - widow space betw
       }
     ).res,
     `something in front here <a style="display: block;">x</a>${encodedNbspHtml}<b style="display: block;">y</b>`,
-    `02.02 - tags skipped`
+    `02.02`
   );
 });
 
