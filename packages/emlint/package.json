@@ -118,7 +118,7 @@
     "url-regex-safe": "^3.0.0"
   },
   "devDependencies": {
-    "@types/he": "^1.1.2",
+    "@types/he": "^1.2.0",
     "@types/lodash.clonedeep": "^4.5.7",
     "@types/lodash.isregexp": "^4.0.7",
     "@types/mime-db": "^1.43.1",

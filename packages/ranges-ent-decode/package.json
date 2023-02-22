@@ -77,6 +77,6 @@
     "ranges-merge": "^9.0.3"
   },
   "devDependencies": {
-    "@types/he": "^1.1.2"
+    "@types/he": "^1.2.0"
   }
 }

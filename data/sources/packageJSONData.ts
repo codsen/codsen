@@ -625,7 +625,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.1",
-      "type-fest": "^3.5.5"
+      "type-fest": "^3.6.0"
     }
   },
   "ast-contains-only-empty-space": {
@@ -2725,7 +2725,7 @@ export const packageJSONData = {
       "string-left-right": "^6.0.6",
       "string-range-expander": "^4.0.3",
       "string-remove-widows": "^4.0.6",
-      "string-strip-html": "^13.0.6",
+      "string-strip-html": "^13.1.0",
       "string-trim-spaces-only": "^5.0.3"
     },
     "devDependencies": {
@@ -3040,7 +3040,7 @@ export const packageJSONData = {
       "globby": "^13.1.3",
       "inquirer": "^9.1.4",
       "lodash.pullall": "^4.2.0",
-      "minimist": "^1.2.7",
+      "minimist": "^1.2.8",
       "string-left-right": "^6.0.6",
       "update-notifier": "^6.0.2"
     },
@@ -3340,7 +3340,7 @@ export const packageJSONData = {
       "url-regex-safe": "^3.0.0"
     },
     "devDependencies": {
-      "@types/he": "^1.1.2",
+      "@types/he": "^1.2.0",
       "@types/lodash.clonedeep": "^4.5.7",
       "@types/lodash.isregexp": "^4.0.7",
       "@types/mime-db": "^1.43.1",
@@ -3578,7 +3578,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "string-strip-html": "^13.0.6",
+      "string-strip-html": "^13.1.0",
       "string-unfancy": "^6.0.3"
     }
   },
@@ -5180,7 +5180,7 @@ export const packageJSONData = {
       "meow": "^11.0.0",
       "p-filter": "^3.0.0",
       "p-reduce": "^3.0.0",
-      "sort-package-json": "^2.4.0",
+      "sort-package-json": "^2.4.1",
       "update-notifier": "^6.0.2"
     },
     "devDependencies": {
@@ -5517,7 +5517,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "execa": "^6.1.0",
+      "execa": "^7.0.0",
       "fs-extra": "^11.1.0",
       "meow": "^11.0.0",
       "update-notifier": "^6.0.2"
@@ -6565,7 +6565,7 @@ export const packageJSONData = {
       "ranges-merge": "^9.0.3"
     },
     "devDependencies": {
-      "@types/he": "^1.1.2"
+      "@types/he": "^1.2.0"
     }
   },
   "ranges-invert": {
@@ -9390,7 +9390,7 @@ export const packageJSONData = {
       "string-match-left-right": "^9.0.6"
     },
     "devDependencies": {
-      "string-strip-html": "^13.0.6"
+      "string-strip-html": "^13.1.0"
     }
   },
   "string-split-by-whitespace": {
@@ -9477,7 +9477,7 @@ export const packageJSONData = {
   },
   "string-strip-html": {
     "name": "string-strip-html",
-    "version": "13.0.6",
+    "version": "13.1.0",
     "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
     "keywords": [
       "code",
@@ -9871,7 +9871,7 @@ export const packageJSONData = {
       "he": "^1.2.0"
     },
     "devDependencies": {
-      "@types/he": "^1.1.2"
+      "@types/he": "^1.2.0"
     }
   },
   "stristri": {
@@ -10292,7 +10292,7 @@ export const packageJSONData = {
       "p-map": "^5.5.0",
       "p-progress": "^0.6.0",
       "p-reduce": "^3.0.0",
-      "pacote": "^15.0.8",
+      "pacote": "^15.1.1",
       "update-notifier": "^6.0.2",
       "write-file-atomic": "^5.0.0"
     },

@@ -89,7 +89,7 @@
     "string-left-right": "^6.0.6",
     "string-range-expander": "^4.0.3",
     "string-remove-widows": "^4.0.6",
-    "string-strip-html": "^13.0.6",
+    "string-strip-html": "^13.1.0",
     "string-trim-spaces-only": "^5.0.3"
   },
   "devDependencies": {
