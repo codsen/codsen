@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [9.1.0](https://github.com/codsen/codsen/compare/detergent@9.0.6...detergent@9.1.0) (2023-01-06)
+## 9.1.0 (2023-01-06)
 
 ### Features
 

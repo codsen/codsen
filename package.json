@@ -35,7 +35,7 @@
     "prep2": "lerna run prep",
     "format": "prettier --write '**/*.{ts,tsx,.md}'",
     "deploy": "echo 'would deploy'",
-    "house": "npm run prettier && uvu ops/helpers && npm run update:projectReferences && npm run ci:generate:info && npm run ci:generate:changelogs && npm run ci:build:root-readme",
+    "house": "lernacleanchangelog && npm run prettier && uvu ops/helpers && npm run update:projectReferences && npm run ci:generate:info && npm run ci:generate:changelogs && npm run ci:build:root-readme",
     "turbo": "turbo",
     "lerna": "lerna",
     "ts": "deno run --allow-read --allow-run --allow-write --allow-net",

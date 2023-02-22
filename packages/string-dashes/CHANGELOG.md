@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.2.0](https://github.com/codsen/codsen/compare/string-dashes@1.1.0...string-dashes@1.2.0) (2023-01-06)
+## 1.2.0 (2023-01-06)
 
 ### Bug Fixes
 
@@ -13,7 +13,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - fix cut-off speech quotes ([83f1ab2](https://github.com/codsen/codsen/commit/83f1ab248642bbdf969f22c90c4640ffd6d7aa74))
 
-# [1.1.0](https://github.com/codsen/codsen/compare/string-dashes@1.0.2...string-dashes@1.1.0) (2022-12-27)
+## 1.1.0 (2022-12-27)
 
 ### Features
 
