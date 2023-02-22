@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.0.5](https://github.com/codsen/codsen/compare/array-of-arrays-sort-by-col@5.0.4...array-of-arrays-sort-by-col@5.0.5) (2023-02-22)
-
-**Note:** Version bump only for package array-of-arrays-sort-by-col
-
 ## 5.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
