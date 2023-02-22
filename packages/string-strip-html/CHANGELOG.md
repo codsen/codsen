@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [13.2.0](https://github.com/codsen/codsen/compare/string-strip-html@13.1.0...string-strip-html@13.2.0) (2023-02-22)
+
+### Features
+
+- make `ignoreTagsWithTheirContents` to recognise self-closing tags ([7946d68](https://github.com/codsen/codsen/commit/7946d685cf882b4e0e6157522e2dd23655616d66)), closes [#66](https://github.com/codsen/codsen/issues/66)
+
 # [13.1.0](https://github.com/codsen/codsen/compare/string-strip-html@13.0.6...string-strip-html@13.1.0) (2023-02-04)
 
 ### Features

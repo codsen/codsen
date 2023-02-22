@@ -1,6 +1,6 @@
 {
   "name": "ast-get-object",
-  "version": "4.0.7",
+  "version": "4.0.8",
   "description": "Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs",
   "keywords": [
     "ast",
@@ -80,7 +80,7 @@
     "various": {}
   },
   "dependencies": {
-    "ast-compare": "^4.0.7",
+    "ast-compare": "^4.0.8",
     "codsen-utils": "^1.2.0",
     "lodash.clonedeep": "^4.5.0"
   },

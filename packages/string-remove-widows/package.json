@@ -1,6 +1,6 @@
 {
   "name": "string-remove-widows",
-  "version": "4.0.7",
+  "version": "4.0.8",
   "description": "Helps to prevent widow words in a text",
   "keywords": [
     "against",
@@ -76,12 +76,12 @@
   },
   "dependencies": {
     "codsen-utils": "^1.2.0",
-    "ranges-apply": "^7.0.4",
-    "ranges-push": "^7.0.4",
-    "string-left-right": "^6.0.7",
-    "string-match-left-right": "^9.0.7"
+    "ranges-apply": "^7.0.5",
+    "ranges-push": "^7.0.5",
+    "string-left-right": "^6.0.8",
+    "string-match-left-right": "^9.0.8"
   },
   "devDependencies": {
-    "string-strip-html": "^13.1.0"
+    "string-strip-html": "^13.2.0"
   }
 }
