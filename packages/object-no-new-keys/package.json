@@ -1,6 +1,6 @@
 {
   "name": "object-no-new-keys",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "description": "Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)",
   "keywords": [
     "compare",
