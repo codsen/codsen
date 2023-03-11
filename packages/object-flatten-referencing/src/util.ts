@@ -1,9 +1,5 @@
 import clone from "lodash.clonedeep";
-import { isPlainObject as isObj } from "codsen-utils";
-
-interface Obj {
-  [key: string]: any;
-}
+import { isStr, isPlainObject as isObj, Obj } from "codsen-utils";
 
 interface Opts {
   wrapHeadsWith: string;
@@ -45,10 +41,6 @@ const defaults: Opts = {
   enforceStrictKeyset: true, // are you allowed to pass-in any unrecognised
   // keys in an options object?
 };
-
-function isStr(something: any): boolean {
-  return typeof something === "string";
-}
 
 function flattenObject(obj: Obj, opts?: Partial<Opts>): any[] {
   let resolvedOpts: Opts = { ...defaults, ...opts };
@@ -166,4 +158,4 @@ function arrayiffyString(something: string | any): any {
   return something;
 }
 
-export { flattenObject, flattenArr, arrayiffyString, Obj, defaults, Opts };
+export { flattenObject, flattenArr, arrayiffyString, defaults, Opts };

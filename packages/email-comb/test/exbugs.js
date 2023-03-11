@@ -758,4 +758,30 @@ test("24 - DW reported - deletes 2 x [class]", () => {
   equal(actual.result, intended, "24.01");
 });
 
+/*test("25 - #68 leftover commas", () => {
+  let actual = comb(
+    `<head>
+<style>
+p, li, .unused-class-1, .unused-class-2 {}
+</style>
+</head>
+<body>
+x
+</body>
+`
+  );
+
+  let intended = `<head>
+<style>
+p, li {}
+</style>
+</head>
+<body>
+x
+</body>
+`;
+
+  equal(actual.result, intended, "25.01");
+});*/
+
 test.run();

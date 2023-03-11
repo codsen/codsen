@@ -71,6 +71,7 @@
     }
   },
   "dependencies": {
+    "codsen-utils": "^1.2.0",
     "ranges-apply": "^7.0.5"
   }
 }

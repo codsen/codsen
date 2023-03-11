@@ -1,17 +1,14 @@
 /* eslint quote-props:0 */
 
 import he from "he";
+import { hasOwnProp, Obj, isStr } from "codsen-utils";
 
 import { version as v } from "../package.json";
 
 const version: string = v;
 
-interface UnknownValueObj {
-  [key: string]: any;
-}
-
 function unfancy(str: string): string {
-  let CHARS: UnknownValueObj = {
+  let CHARS: Obj = {
     "\u00B4": "'",
     "\u02BB": "'",
     "\u02BC": "'",
@@ -35,18 +32,18 @@ function unfancy(str: string): string {
     "\uFE49": "-",
     "\u00A0": " ",
   };
-  if (typeof str !== "string") {
+  if (!isStr(str)) {
     throw new Error(
       `string-unfancy/unfancy(): [THROW_ID_01] The input is not a string! It's: ${typeof str}`
     );
   }
-  // decode anticipating multiple encoding on top of one another
+  // decode anticipating multiple encoding one on top of another
   let res = str;
   while (he.decode(res) !== res) {
     res = he.decode(res);
   }
   for (let i = 0, len = res.length; i < len; i++) {
-    if (Object.prototype.hasOwnProperty.call(CHARS, res[i])) {
+    if (hasOwnProp(CHARS, res[i])) {
       res = `${res.slice(0, i)}${CHARS[res[i]]}${res.slice(i + 1)}`;
     }
   }

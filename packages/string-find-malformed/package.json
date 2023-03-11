@@ -73,6 +73,7 @@
     }
   },
   "dependencies": {
+    "codsen-utils": "^1.2.0",
     "string-left-right": "^6.0.8"
   }
 }

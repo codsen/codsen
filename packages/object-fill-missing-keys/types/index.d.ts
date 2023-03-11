@@ -1,7 +1,6 @@
+import { Obj } from "codsen-utils";
+
 declare const version: string;
-interface Obj {
-  [key: string]: any;
-}
 interface Opts {
   placeholder: boolean;
   doNotFillThesePathsIfTheyContainPlaceholders: string[];
@@ -14,4 +13,4 @@ declare function fillMissing(
   opts?: Partial<Opts>
 ): Obj;
 
-export { Obj, Opts, defaults, fillMissing, version };
+export { Opts, defaults, fillMissing, version };

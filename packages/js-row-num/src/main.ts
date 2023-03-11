@@ -1,5 +1,6 @@
 import { Ranges as RangesClass } from "ranges-push";
 import { rApply } from "ranges-apply";
+import { hasOwnProp } from "codsen-utils";
 import { Ranges } from "../../../ops/typedefs/common";
 import { version as v } from "../package.json";
 
@@ -36,7 +37,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
 
   DEV &&
     console.log(
-      `039 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      `040 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
         opts,
         null,
         4
@@ -74,7 +75,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
 
   let resolvedOpts: Opts = { ...defaults, ...opts };
 
-  if (Object.prototype.hasOwnProperty.call(resolvedOpts, "returnRangesOnly")) {
+  if (hasOwnProp(resolvedOpts, "returnRangesOnly")) {
     throw new TypeError(
       `js-row-num: [THROW_ID_02] The Optional Options Object's key "returnRangesOnly" has been removed from the API since v.6 release.`
     );
@@ -105,7 +106,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
 
   DEV &&
     console.log(
-      `108 ${`\u001b[${33}m${`str`}\u001b[${39}m`}:\n${JSON.stringify(
+      `109 ${`\u001b[${33}m${`str`}\u001b[${39}m`}:\n${JSON.stringify(
         str,
         null,
         0
@@ -132,7 +133,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
       currentRow += 1;
       DEV &&
         console.log(
-          `135 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} currentRow = ${currentRow}`
+          `136 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} currentRow = ${currentRow}`
         );
     }
 
@@ -145,7 +146,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
     ) {
       DEV &&
         console.log(
-          `148 \u001b[${31}m${`CLOSING QUOTE DETECTED - WIPE`}\u001b[${39}m`
+          `149 \u001b[${31}m${`CLOSING QUOTE DETECTED - WIPE`}\u001b[${39}m`
         );
       quotes = null;
       consoleStartsAt = null;
@@ -164,10 +165,10 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
           bracketOpensAt < i)) &&
       str[i].trim()
     ) {
-      DEV && console.log("167 within opening quotes trap clauses");
+      DEV && console.log("168 within opening quotes trap clauses");
 
       if (str[i] === '"' || str[i] === "'" || str[i] === "`") {
-        DEV && console.log(`170 clause #1 - quotes`);
+        DEV && console.log(`171 clause #1 - quotes`);
         quotes = {
           start: i,
           type: str[i],
@@ -175,7 +176,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
         wasLetterDetected = false;
         DEV &&
           console.log(
-            `178 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wasLetterDetected`}\u001b[${39}m`} = ${JSON.stringify(
+            `179 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wasLetterDetected`}\u001b[${39}m`} = ${JSON.stringify(
               wasLetterDetected,
               null,
               4
@@ -183,7 +184,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
           );
         DEV &&
           console.log(
-            `186 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`quotes`}\u001b[${39}m`} = ${JSON.stringify(
+            `187 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`quotes`}\u001b[${39}m`} = ${JSON.stringify(
               quotes,
               null,
               4
@@ -194,14 +195,14 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
         digitStartsAt === null
       ) {
         if (isDigit(str[i])) {
-          DEV && console.log(`197 clause #2`);
+          DEV && console.log(`198 clause #2`);
           digitStartsAt = i;
           DEV &&
             console.log(
-              `201 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`digitStartsAt`}\u001b[${39}m`} = ${digitStartsAt}`
+              `202 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`digitStartsAt`}\u001b[${39}m`} = ${digitStartsAt}`
             );
         } else {
-          DEV && console.log(`204 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          DEV && console.log(`205 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
       } else if (
@@ -209,11 +210,11 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
         str[i] !== "/" &&
         !resolvedOpts.extractedLogContentsWereGiven
       ) {
-        DEV && console.log(`212 clause #3`);
+        DEV && console.log(`213 clause #3`);
         // wipe
         DEV &&
           console.log(
-            `216 \u001b[${31}m${`A QUOTE EXPECTED HERE SO WIPE`}\u001b[${39}m`
+            `217 \u001b[${31}m${`A QUOTE EXPECTED HERE SO WIPE`}\u001b[${39}m`
           );
         consoleStartsAt = null;
         bracketOpensAt = null;
@@ -233,7 +234,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
       digitStartsAt = i;
       DEV &&
         console.log(
-          `236 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`digitStartsAt`}\u001b[${39}m`} = ${digitStartsAt}`
+          `237 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`digitStartsAt`}\u001b[${39}m`} = ${digitStartsAt}`
         );
     }
 
@@ -246,11 +247,11 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
       // replace the digits:
       DEV &&
         console.log(
-          `249 ${`\u001b[${32}m${`THING ABOUT TO BE PUSHED:`}\u001b[${39}m`}`
+          `250 ${`\u001b[${32}m${`THING ABOUT TO BE PUSHED:`}\u001b[${39}m`}`
         );
       DEV &&
         console.log(
-          `253 ${`\u001b[${33}m${`resolvedOpts.padStart`}\u001b[${39}m`} = ${JSON.stringify(
+          `254 ${`\u001b[${33}m${`resolvedOpts.padStart`}\u001b[${39}m`} = ${JSON.stringify(
             resolvedOpts.padStart,
             null,
             4
@@ -258,7 +259,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
         );
       DEV &&
         console.log(
-          `261 ${`\u001b[${33}m${`padStart(${currentRow} (${typeof currentRow}), ${
+          `262 ${`\u001b[${33}m${`padStart(${currentRow} (${typeof currentRow}), ${
             resolvedOpts.padStart
           } (${typeof resolvedOpts.padStart}), "0")`}\u001b[${39}m`} = ${JSON.stringify(
             String(currentRow).padStart(resolvedOpts.padStart, "0"),
@@ -268,7 +269,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
         );
       DEV &&
         console.log(
-          `271 ${`\u001b[${33}m${`currentRow`}\u001b[${39}m`} = ${JSON.stringify(
+          `272 ${`\u001b[${33}m${`currentRow`}\u001b[${39}m`} = ${JSON.stringify(
             currentRow,
             null,
             4
@@ -276,7 +277,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
         );
       DEV &&
         console.log(
-          `279 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+          `280 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
             [
               digitStartsAt,
               !isDigit(str[i]) ? i : i + 1,
@@ -298,14 +299,14 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
         );
       DEV &&
         console.log(
-          `301 ${`\u001b[${35}m${`███████████████████████████████████████`}\u001b[${39}m`}`
+          `302 ${`\u001b[${35}m${`███████████████████████████████████████`}\u001b[${39}m`}`
         );
       if (!resolvedOpts.padStart) {
-        DEV && console.log(`304 `);
+        DEV && console.log(`305 `);
         if (resolvedOpts.overrideRowNum != null) {
-          DEV && console.log(`306 ██ case 1`);
+          DEV && console.log(`307 ██ case 1`);
         } else {
-          DEV && console.log(`308 ██ case 2`);
+          DEV && console.log(`309 ██ case 2`);
         }
       }
 
@@ -328,7 +329,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
       );
       DEV &&
         console.log(
-          `331 NOW ${`\u001b[${33}m${`finalIndexesToDelete`}\u001b[${39}m`} = ${JSON.stringify(
+          `332 NOW ${`\u001b[${33}m${`finalIndexesToDelete`}\u001b[${39}m`} = ${JSON.stringify(
             finalIndexesToDelete.current(),
             null,
             4
@@ -338,13 +339,13 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
       digitStartsAt = null;
       DEV &&
         console.log(
-          `341 ${`\u001b[${33}m${`digitStartsAt`}\u001b[${39}m`} = null`
+          `342 ${`\u001b[${33}m${`digitStartsAt`}\u001b[${39}m`} = null`
         );
       // set wasLetterDetected as a decoy to prevent further digit lumps from being edited:
       wasLetterDetected = true;
       DEV &&
         console.log(
-          `347 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wasLetterDetected`}\u001b[${39}m`} = true`
+          `348 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wasLetterDetected`}\u001b[${39}m`} = true`
         );
     }
 
@@ -378,7 +379,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
         (str[i + 4] === "b" || str[i + 5] === "B") &&
         str[i + 5] === "["
       ) {
-        DEV && console.log(`381 \u001b[${35}m${`MATCHED`}\u001b[${39}m`);
+        DEV && console.log(`382 \u001b[${35}m${`MATCHED`}\u001b[${39}m`);
         // at this moment, we have stuck here:
         //
         // DEV && console.log(`\u001b[${33}m${`291 zzz`}\u001b[${39}m`)
@@ -404,7 +405,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
           startMarchingForwFrom = i + 6;
           DEV &&
             console.log(
-              `407 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startMarchingForwFrom`}\u001b[${39}m`} = ${startMarchingForwFrom}`
+              `408 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startMarchingForwFrom`}\u001b[${39}m`} = ${startMarchingForwFrom}`
             );
         } else if (
           str[i + 6] === "$" &&
@@ -414,13 +415,13 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
           startMarchingForwFrom = i + 8;
           DEV &&
             console.log(
-              `417 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startMarchingForwFrom`}\u001b[${39}m`} = ${startMarchingForwFrom}`
+              `418 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startMarchingForwFrom`}\u001b[${39}m`} = ${startMarchingForwFrom}`
             );
         }
 
         DEV &&
           console.log(
-            `423 FINAL ${`\u001b[${33}m${`startMarchingForwFrom`}\u001b[${39}m`} = ${startMarchingForwFrom}`
+            `424 FINAL ${`\u001b[${33}m${`startMarchingForwFrom`}\u001b[${39}m`} = ${startMarchingForwFrom}`
           );
 
         // find out where does this (possibly a sequence) of number(s) end:
@@ -428,7 +429,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
         if (startMarchingForwFrom as number) {
           DEV &&
             console.log(
-              `431 \u001b[${36}m${`startMarchingForwFrom`}\u001b[${39}m was set so marching forward`
+              `432 \u001b[${36}m${`startMarchingForwFrom`}\u001b[${39}m was set so marching forward`
             );
           for (let y = startMarchingForwFrom as number; y < len; y++) {
             DEV &&
@@ -445,13 +446,13 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
             }
           }
           DEV &&
-            console.log(`448 \u001b[${36}m${`stop marching`}\u001b[${39}m`);
+            console.log(`449 \u001b[${36}m${`stop marching`}\u001b[${39}m`);
         }
 
         // answer: at "numbersSequenceEndsAt".
         DEV &&
           console.log(
-            `454 \u001b[${32}m${`str[${numbersSequenceEndsAt}] = ${
+            `455 \u001b[${32}m${`str[${numbersSequenceEndsAt}] = ${
               str[numbersSequenceEndsAt as number]
             }`}\u001b[${39}m`
           );
@@ -484,7 +485,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
 
         DEV &&
           console.log(
-            `487 ${`\u001b[${33}m${`ansiSequencesLetterMAt`}\u001b[${39}m`} = ${ansiSequencesLetterMAt};`
+            `488 ${`\u001b[${33}m${`ansiSequencesLetterMAt`}\u001b[${39}m`} = ${ansiSequencesLetterMAt};`
           );
 
         /* c8 ignore next */
@@ -503,7 +504,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
           i = ansiSequencesLetterMAt + 3;
           DEV &&
             console.log(
-              `506 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`
+              `507 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`
             );
           continue;
         }
@@ -512,7 +513,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
       wasLetterDetected = true;
       DEV &&
         console.log(
-          `515 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wasLetterDetected`}\u001b[${39}m`} = true`
+          `516 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wasLetterDetected`}\u001b[${39}m`} = true`
         );
     }
 
@@ -527,7 +528,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
         bracketOpensAt = i;
         DEV &&
           console.log(
-            `530 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`bracketOpensAt`}\u001b[${39}m`} = ${JSON.stringify(
+            `531 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`bracketOpensAt`}\u001b[${39}m`} = ${JSON.stringify(
               bracketOpensAt,
               null,
               4
@@ -535,7 +536,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
           );
       } else {
         // wipe
-        DEV && console.log(`538 \u001b[${31}m${`WIPE`}\u001b[${39}m`);
+        DEV && console.log(`539 \u001b[${31}m${`WIPE`}\u001b[${39}m`);
         consoleStartsAt = null;
         digitStartsAt = null;
       }
@@ -568,13 +569,13 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
         consoleStartsAt = i + caughtKeyword.length;
         DEV &&
           console.log(
-            `571 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`consoleStartsAt`}\u001b[${39}m`} = ${consoleStartsAt}`
+            `572 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`consoleStartsAt`}\u001b[${39}m`} = ${consoleStartsAt}`
           );
         // offset the index so we don't traverse twice what was traversed already:
         i = i + caughtKeyword.length - 1;
         DEV &&
           console.log(
-            `577 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`
+            `578 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`
           );
         continue;
       }
@@ -606,7 +607,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
 
   DEV &&
     console.log(
-      `609 ${`\u001b[${33}m${`finalIndexesToDelete.current()`}\u001b[${39}m`} = ${JSON.stringify(
+      `610 ${`\u001b[${33}m${`finalIndexesToDelete.current()`}\u001b[${39}m`} = ${JSON.stringify(
         finalIndexesToDelete.current(),
         null,
         4

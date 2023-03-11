@@ -74,6 +74,7 @@
     }
   },
   "dependencies": {
+    "codsen-utils": "^1.2.0",
     "he": "^1.2.0"
   },
   "devDependencies": {

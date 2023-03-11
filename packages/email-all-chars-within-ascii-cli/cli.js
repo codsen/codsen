@@ -9,7 +9,7 @@ import fs from "fs";
 import argv from "minimist";
 import { globbySync } from "globby";
 import inquirer from "inquirer";
-import pullAll from "lodash.pullall";
+import { pullAll } from "codsen-utils";
 import { createRequire } from "module";
 import { right } from "string-left-right";
 import updateNotifier from "update-notifier";

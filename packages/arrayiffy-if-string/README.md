@@ -57,7 +57,7 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 MIT License.
 
-Copyright © 2010-2022 Roy Revelt and other contributors.
+Copyright © 2010-2023 Roy Revelt and other contributors.
 
 Thanks to KRyan for types https://stackoverflow.com/a/71834598/3943954
 

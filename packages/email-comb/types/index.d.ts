@@ -1,8 +1,5 @@
 import { Opts as Opts$1 } from "html-crush";
-
-interface Obj {
-  [key: string]: any;
-}
+import { Obj } from "codsen-utils";
 
 declare const version: string;
 interface HeadsAndTailsObj {

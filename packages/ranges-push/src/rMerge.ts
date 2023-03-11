@@ -1,15 +1,11 @@
 import { rSort } from "ranges-sort";
 import type { Range, Ranges } from "ranges-sort";
-
+import { Obj } from "codsen-utils";
 import { version as v } from "../package.json";
 
 const version: string = v;
 
 declare let DEV: boolean;
-
-interface UnknownValueObj {
-  [key: string]: any;
-}
 
 type ProgressFn = (percentageDone: number) => void;
 
@@ -102,7 +98,7 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
     resolvedOpts = { ...defaults };
   }
 
-  DEV && console.log("105");
+  DEV && console.log("101");
 
   // progress-wise, sort takes first 20%
 
@@ -130,7 +126,7 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
         // ensure each percent is passed only once:
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
-          (resolvedOpts as UnknownValueObj).progressFn(percentageDone);
+          (resolvedOpts as Obj).progressFn(percentageDone);
         }
       },
     }) as Range[];
@@ -176,7 +172,7 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
         sortedRanges[i][0] <= sortedRanges[i - 1][1])
     ) {
       DEV &&
-        console.log(`179  sortedRanges[${i}][0] = ${`\u001b[${33}m${
+        console.log(`175  sortedRanges[${i}][0] = ${`\u001b[${33}m${
           sortedRanges[i][0]
         }\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${
           i - 1
@@ -197,7 +193,7 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
       );
       DEV &&
         console.log(
-          `200 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} sortedRanges[${
+          `196 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} sortedRanges[${
             i - 1
           }][0] = ${sortedRanges[i - 1][0]}; sortedRanges[${i - 1}][1] = ${
             sortedRanges[i - 1][1]
@@ -210,7 +206,7 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
         (sortedRanges[i - 1][0] >= sortedRanges[i][0] ||
           sortedRanges[i - 1][1] <= sortedRanges[i][1])
       ) {
-        DEV && console.log(`213 inside tend the insert value clauses`);
+        DEV && console.log(`209 inside tend the insert value clauses`);
 
         // if the value of the range before exists:
         if (sortedRanges[i - 1][2] !== null) {
@@ -219,7 +215,7 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
           } else if (sortedRanges[i - 1][2] != null) {
             // if there's a clash of "insert" values:
             if (
-              +(resolvedOpts as UnknownValueObj).mergeType === 2 &&
+              +(resolvedOpts as Obj).mergeType === 2 &&
               sortedRanges[i - 1][0] === sortedRanges[i][0]
             ) {
               // take the value from the range that's on the right:
@@ -237,11 +233,11 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
       // get rid of the second element:
       DEV &&
         console.log(
-          "240 --------------------------------------------------------"
+          "236 --------------------------------------------------------"
         );
       DEV &&
         console.log(
-          `244 before splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+          `240 before splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
             sortedRanges,
             null,
             4
@@ -250,7 +246,7 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
       sortedRanges.splice(i, 1);
       DEV &&
         console.log(
-          `253 after splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+          `249 after splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
             sortedRanges,
             null,
             4
@@ -260,13 +256,13 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
       i = sortedRanges.length;
       DEV &&
         console.log(
-          `263 in the end, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} i = ${i}`
+          `259 in the end, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} i = ${i}`
         );
     }
   }
   DEV &&
     console.log(
-      `269 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} sortedRanges = ${JSON.stringify(
+      `265 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} sortedRanges = ${JSON.stringify(
         sortedRanges,
         null,
         4

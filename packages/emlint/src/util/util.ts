@@ -1,4 +1,4 @@
-import { isPlainObject as isObj } from "codsen-utils";
+import { isPlainObject as isObj, hasOwnProp } from "codsen-utils";
 import { RulesObj, Severity } from "./commonTypes";
 import splitByWhitespace from "./splitByWhitespace";
 import { badChars } from "./bad-character-all";
@@ -8,7 +8,7 @@ import validateString from "./validateString";
 declare let DEV: boolean;
 const wholeExtensionRegex = /^\.\w+$/g;
 
-// Regex is not so strict, to cover variations without miliseconds.
+// Regex is not so strict, to cover variations without milliseconds.
 // Also, we don't use capturing groups because we don't extract, only validate.
 // 2019-07-09T15:03:36Z (https://www.npmjs.com/package/iso-datestring-validator)
 // 2011-10-05T14:48:00.000Z (https://www.npmjs.com/package/regex-iso-date)
@@ -111,32 +111,20 @@ function isAnEnabledRule(rules: RulesObj, ruleId: string): Severity {
       )}`
     );
 
-  if (isObj(rules) && Object.prototype.hasOwnProperty.call(rules, ruleId)) {
+  if (isObj(rules) && hasOwnProp(rules, ruleId)) {
     DEV && console.log(`115 RETURN ${rules[ruleId]}`);
     return rules[ruleId] as any;
   }
-  if (
-    ruleId.includes("-") &&
-    Object.prototype.hasOwnProperty.call(rules, ruleId.split("-")[0])
-  ) {
+  if (ruleId.includes("-") && hasOwnProp(rules, ruleId.split("-")[0])) {
     return rules[ruleId.split("-")[0]] as any;
   }
-  if (isObj(rules) && Object.prototype.hasOwnProperty.call(rules, "all")) {
-    DEV && console.log(`125 RETURN ${rules.all}`);
+  if (isObj(rules) && hasOwnProp(rules, "all")) {
+    DEV && console.log(`122 RETURN ${rules.all}`);
     return rules.all as any;
   }
 
   // default return - rule's off:
   return 0;
-
-  // Object.keys(rules.rules).some(
-  //   ruleName =>
-  //     (ruleName === "all" || // group blanket setting
-  //     ruleName === "tag" || // group blanket setting
-  //       ruleName.startsWith(obj.ruleId)) &&
-  //     (isAnEnabledValue(rules.rules[ruleName]) ||
-  //       isAnEnabledValue(processedRulesConfig[ruleName]))
-  // )
 }
 
 // -----------------------------------------------------------------------------

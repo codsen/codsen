@@ -1,7 +1,8 @@
 import { arrObjOrBoth } from "util-array-object-or-both";
 import { checkTypesMini } from "check-types-mini";
-import { compare } from "ast-compare";
 import { traverse } from "ast-monkey-traverse";
+import { isStr, isPlainObject as isObj } from "codsen-utils";
+import { compare } from "ast-compare";
 
 import { version as v } from "../package.json";
 
@@ -40,30 +41,25 @@ export interface Finding {
 function existy(x: any): boolean {
   return x != null;
 }
-// function isStr(x) { return typeof x === 'string' }
+
 function compareIsEqual(a: any, b: any): boolean {
   if (typeof a !== typeof b) {
     return false;
   }
   return !!compare(a, b, { matchStrictly: true, useWildcards: true });
 }
-function isObj(something: unknown): boolean {
-  return (
-    !!something && typeof something === "object" && !Array.isArray(something)
-  );
-}
 
 // -----------------------------------------------------------------------------
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function monkey(originalInput: JsonValue, opts: InternalOpts) {
-  DEV && console.log(`060 monkey() called`);
+  DEV && console.log(`056 monkey() called`);
   let resolvedOpts: InternalOpts = {
     ...opts,
   };
   DEV &&
     console.log(
-      `066 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `062 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4
@@ -92,7 +88,7 @@ function monkey(originalInput: JsonValue, opts: InternalOpts) {
   }
   DEV &&
     console.log(
-      `095 ${`\u001b[${33}m${`keyOnly, ko`}\u001b[${39}m`} = ${JSON.stringify(
+      `091 ${`\u001b[${33}m${`keyOnly, ko`}\u001b[${39}m`} = ${JSON.stringify(
         ko,
         null,
         4
@@ -116,13 +112,13 @@ function monkey(originalInput: JsonValue, opts: InternalOpts) {
   //
   //
 
-  DEV && console.log(`119 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} traverse()`);
+  DEV && console.log(`115 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} traverse()`);
   input = traverse(input, (key, val, innerObj) => {
     DEV &&
-      console.log(`122 ${`\u001b[${35}m${`---------------`}\u001b[${39}m`}`);
+      console.log(`118 ${`\u001b[${35}m${`---------------`}\u001b[${39}m`}`);
     DEV &&
       console.log(
-        `125 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${JSON.stringify(
+        `121 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${JSON.stringify(
           key,
           null,
           4
@@ -198,7 +194,7 @@ function monkey(originalInput: JsonValue, opts: InternalOpts) {
     return innerObj.parentType === "object" ? val : key;
   });
   DEV &&
-    console.log(`201 ${`\u001b[${35}m${`--------------- fin.`}\u001b[${39}m`}`);
+    console.log(`197 ${`\u001b[${35}m${`--------------- fin.`}\u001b[${39}m`}`);
 
   // returns
   if (resolvedOpts.mode === "get") {
@@ -238,7 +234,7 @@ function find(input: JsonValue, opts: FindOpts): Finding[] {
     },
     msg: "ast-monkey/get(): [THROW_ID_04*]",
   });
-  if (typeof resolvedOpts.only === "string" && resolvedOpts.only.length) {
+  if (isStr(resolvedOpts.only) && resolvedOpts.only.length) {
     resolvedOpts.only = arrObjOrBoth(resolvedOpts.only, {
       optsVarName: "resolvedOpts.only",
       msg: "ast-monkey/find(): [THROW_ID_05*]",
@@ -270,10 +266,7 @@ function get(input: JsonValue, opts: GetOpts): JsonValue {
     );
   }
   let resolvedOpts = { ...opts };
-  if (
-    typeof resolvedOpts.index === "string" &&
-    /^\d+$/.test(resolvedOpts.index)
-  ) {
+  if (isStr(resolvedOpts.index) && /^\d+$/.test(resolvedOpts.index)) {
     resolvedOpts.index = +resolvedOpts.index;
   } else if (!Number.isInteger(resolvedOpts.index)) {
     throw new Error(
@@ -312,10 +305,7 @@ function set(input: JsonValue, opts: SetOpts): JsonValue {
     );
   }
   let resolvedOpts = { ...opts };
-  if (
-    typeof resolvedOpts.index === "string" &&
-    /^\d+$/.test(resolvedOpts.index)
-  ) {
+  if (isStr(resolvedOpts.index) && /^\d+$/.test(resolvedOpts.index)) {
     resolvedOpts.index = +resolvedOpts.index;
   } else if (!Number.isInteger(resolvedOpts.index)) {
     throw new Error(
@@ -356,10 +346,7 @@ function drop(input: JsonValue, opts: DropOpts): JsonValue {
     );
   }
   let resolvedOpts = { ...opts };
-  if (
-    typeof resolvedOpts.index === "string" &&
-    /^\d+$/.test(resolvedOpts.index)
-  ) {
+  if (isStr(resolvedOpts.index) && /^\d+$/.test(resolvedOpts.index)) {
     resolvedOpts.index = +resolvedOpts.index;
   } else if (!Number.isInteger(resolvedOpts.index)) {
     throw new Error(
@@ -399,7 +386,7 @@ function del(input: JsonValue, opts: DelOpts): JsonValue {
     },
     msg: "ast-monkey/drop(): [THROW_ID_29*]",
   });
-  if (typeof resolvedOpts.only === "string" && resolvedOpts.only.length) {
+  if (isStr(resolvedOpts.only) && resolvedOpts.only.length) {
     resolvedOpts.only = arrObjOrBoth(resolvedOpts.only, {
       msg: "ast-monkey/del(): [THROW_ID_30*]",
       optsVarName: "resolvedOpts.only",

@@ -1,3 +1,4 @@
+import { hasOwnProp, isPlainObject as isObj, Obj } from "codsen-utils";
 import { version as v } from "../package.json";
 
 const version: string = v;
@@ -14,19 +15,9 @@ export type JsonValue =
 export type JsonObject = { [Key in string]?: JsonValue };
 export type JsonArray = JsonValue[];
 
-interface Obj {
-  [key: string]: any;
-}
-
 interface InnerVar {
   path: string;
   res: string[];
-}
-
-function isObj(something: unknown): boolean {
-  return (
-    !!something && typeof something === "object" && !Array.isArray(something)
-  );
 }
 
 export interface Opts {
@@ -75,7 +66,7 @@ function noNewKeys(
         // match the keys and record any unique-ones.
         // then traverse recursively.
         Object.keys(resolvedInput).forEach((key) => {
-          if (!Object.prototype.hasOwnProperty.call(resolvedRef, key)) {
+          if (!hasOwnProp(resolvedRef, key)) {
             temp = innerVar.path.length ? `${innerVar.path}.${key}` : key;
             innerVar.res.push(temp);
           } else if (

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-import { isPlainObject as isObj } from "codsen-utils";
+import { isPlainObject as isObj, hasOwnProp } from "codsen-utils";
 import trim from "lodash.trim";
 import without from "lodash.without";
 import { decode } from "html-entities";
@@ -823,7 +823,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     },
   };
 
-  if (Object.prototype.hasOwnProperty.call(resolvedOpts, "returnRangesOnly")) {
+  if (hasOwnProp(resolvedOpts, "returnRangesOnly")) {
     throw new TypeError(
       `string-strip-html/stripHtml(): [THROW_ID_05] The Optional Options Object's key returnRangesOnly has been removed from the API since v.5 release.`
     );

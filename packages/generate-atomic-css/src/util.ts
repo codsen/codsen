@@ -1,16 +1,9 @@
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+/* 1eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import { left, right, leftSeq, rightSeq } from "string-left-right";
+import { isStr, Obj } from "codsen-utils";
 
 declare let DEV: boolean;
-
-interface Obj {
-  [key: string]: any;
-}
-
-function isStr(something: any): boolean {
-  return typeof something === "string";
-}
 
 const headsAndTails = {
   CONFIGHEAD: "GENERATE-ATOMIC-CSS-CONFIG-STARTS",
@@ -45,14 +38,14 @@ function extractConfig(
 ): [extractedConfig: string, rawContentAbove: string, rawContentBelow: string] {
   DEV &&
     console.log(
-      `048 util ███████████████████████████████████████ extractConfig() ███████████████████████████████████████`
+      `041 util ███████████████████████████████████████ extractConfig() ███████████████████████████████████████`
     );
   let extractedConfig = str;
   let rawContentAbove = "";
   let rawContentBelow = "";
 
   if (str.includes(CONFIGHEAD) && str.includes(CONFIGTAIL)) {
-    DEV && console.log(`055 config calc - case #2`);
+    DEV && console.log(`048 config calc - case #2`);
 
     if (
       str.indexOf(CONFIGTAIL) !== -1 &&
@@ -82,19 +75,19 @@ function extractConfig(
 
     extractedConfig = str.slice(sliceFrom, sliceTo).trim();
     if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
-      DEV && console.log(`085 util: return empty`);
+      DEV && console.log(`078 util: return empty`);
       return [extractedConfig, rawContentAbove, rawContentBelow];
     }
     DEV &&
       console.log(
-        `090 util: ${`\u001b[${36}m${`extractedConfig.trim()`}\u001b[${39}m`} = "${extractedConfig.trim()}"`
+        `083 util: ${`\u001b[${36}m${`extractedConfig.trim()`}\u001b[${39}m`} = "${extractedConfig.trim()}"`
       );
   } else if (
     str.includes(CONFIGHEAD) &&
     !str.includes(CONFIGTAIL) &&
     str.includes(CONTENTHEAD)
   ) {
-    DEV && console.log(`097 config calc - case #3`);
+    DEV && console.log(`090 config calc - case #3`);
     if (str.indexOf(CONFIGHEAD) > str.indexOf(CONTENTHEAD)) {
       throw new Error(
         `generate-atomic-css: [THROW_ID_03] Config heads are after content heads!`
@@ -110,27 +103,27 @@ function extractConfig(
     (str.includes(CONTENTHEAD) || str.includes(CONTENTTAIL))
   ) {
     // strange case where instead of config heads/tails we have content heads/tails
-    DEV && console.log(`113 config calc - case #4`);
+    DEV && console.log(`106 config calc - case #4`);
     extractedConfig = str;
 
     // remove content head
     if (extractedConfig.includes(CONTENTHEAD)) {
-      DEV && console.log(`118 CONTENTHEAD present`);
+      DEV && console.log(`111 CONTENTHEAD present`);
       // if content heads are present, cut off right after the closing comment
       // if such follows, or right after heads if not
       if (left(str, extractedConfig.indexOf(CONTENTHEAD))) {
         DEV &&
-          console.log(`123 - characters present on the left of contenthead`);
+          console.log(`116 - characters present on the left of contenthead`);
         let sliceTo = extractedConfig.indexOf(CONTENTHEAD);
         // if there are opening or closing comments, don't include those
         if (leftSeq(str, sliceTo, "/", "*")) {
-          DEV && console.log(`127`);
+          DEV && console.log(`120`);
           sliceTo = (leftSeq(str, sliceTo, "/", "*") as Obj).leftmostChar;
         }
         rawContentAbove = sliceTo === 0 ? "" : str.slice(0, sliceTo);
         DEV &&
           console.log(
-            `133 ${`\u001b[${33}m${`rawContentAbove`}\u001b[${39}m`} = ${JSON.stringify(
+            `126 ${`\u001b[${33}m${`rawContentAbove`}\u001b[${39}m`} = ${JSON.stringify(
               rawContentAbove,
               null,
               4
@@ -145,7 +138,7 @@ function extractConfig(
       let sliceFrom = extractedConfig.indexOf(CONTENTHEAD) + CONTENTHEAD.length;
       DEV &&
         console.log(
-          `148 ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${JSON.stringify(
+          `141 ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${JSON.stringify(
             sliceFrom,
             null,
             4
@@ -159,11 +152,11 @@ function extractConfig(
       let sliceTo = null;
 
       if (str.includes(CONTENTTAIL)) {
-        DEV && console.log(`162 content tail detected`);
+        DEV && console.log(`155 content tail detected`);
         sliceTo = str.indexOf(CONTENTTAIL);
         DEV &&
           console.log(
-            `166 ${`\u001b[${33}m${`sliceTo`}\u001b[${39}m`} = ${JSON.stringify(
+            `159 ${`\u001b[${33}m${`sliceTo`}\u001b[${39}m`} = ${JSON.stringify(
               sliceTo,
               null,
               4
@@ -177,7 +170,7 @@ function extractConfig(
           sliceTo = left(str, left(str, sliceTo));
           DEV &&
             console.log(
-              `180 ${`\u001b[${33}m${`sliceTo`}\u001b[${39}m`} = ${JSON.stringify(
+              `173 ${`\u001b[${33}m${`sliceTo`}\u001b[${39}m`} = ${JSON.stringify(
                 sliceTo,
                 null,
                 4
@@ -190,7 +183,7 @@ function extractConfig(
           str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
         DEV &&
           console.log(
-            `193 ${`\u001b[${33}m${`contentAfterStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+            `186 ${`\u001b[${33}m${`contentAfterStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
               contentAfterStartsAt,
               null,
               4
@@ -209,7 +202,7 @@ function extractConfig(
             ) as number) + 1;
           DEV &&
             console.log(
-              `212 ${`\u001b[${33}m${`contentAfterStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+              `205 ${`\u001b[${33}m${`contentAfterStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
                 contentAfterStartsAt,
                 null,
                 4
@@ -230,7 +223,7 @@ function extractConfig(
 
       DEV &&
         console.log(
-          `233 ${`\u001b[${33}m${`extractedConfig`}\u001b[${39}m`} = ${JSON.stringify(
+          `226 ${`\u001b[${33}m${`extractedConfig`}\u001b[${39}m`} = ${JSON.stringify(
             extractedConfig,
             null,
             4
@@ -240,7 +233,7 @@ function extractConfig(
 
     // remove content tail
     else if (extractedConfig.includes(CONTENTTAIL)) {
-      DEV && console.log(`243 CONTENTTAIL present`);
+      DEV && console.log(`236 CONTENTTAIL present`);
 
       let contentInFront: string[] = [];
       let stopFilteringAndPassAllLines = false;
@@ -277,7 +270,7 @@ function extractConfig(
       // retrieve the content after content tails
       let contentAfterStartsAt;
       if (right(str, str.indexOf(CONTENTTAIL) + CONTENTTAIL.length)) {
-        DEV && console.log(`280 content after CONTENTTAIL detected`);
+        DEV && console.log(`273 content after CONTENTTAIL detected`);
         contentAfterStartsAt = str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
         if (
           str[right(str, contentAfterStartsAt) as number] === "*" &&
@@ -297,7 +290,7 @@ function extractConfig(
 
     DEV &&
       console.log(
-        `300 ${`\u001b[${33}m${`rawContentAbove`}\u001b[${39}m`} = ${JSON.stringify(
+        `293 ${`\u001b[${33}m${`rawContentAbove`}\u001b[${39}m`} = ${JSON.stringify(
           rawContentAbove,
           null,
           4
@@ -310,14 +303,14 @@ function extractConfig(
 
     DEV &&
       console.log(
-        `313 ${`\u001b[${33}m${`extractedConfig`}\u001b[${39}m`} = ${JSON.stringify(
+        `306 ${`\u001b[${33}m${`extractedConfig`}\u001b[${39}m`} = ${JSON.stringify(
           extractedConfig,
           null,
           4
         )}`
       );
   } else {
-    DEV && console.log(`320 config calc - case #5`);
+    DEV && console.log(`313 config calc - case #5`);
 
     let contentHeadsRegex = new RegExp(
       `(\\/\\s*\\*\\s*)*${CONTENTHEAD}(\\s*\\*\\s*\\/)*`
@@ -376,7 +369,7 @@ function extractConfig(
 
   DEV &&
     console.log(
-      `379 util ███████████████████████████████████████ extractConfig() ends ███████████████████████████████████████`
+      `372 util ███████████████████████████████████████ extractConfig() ends ███████████████████████████████████████`
     );
   return [extractedConfig, rawContentAbove, rawContentBelow];
 }
@@ -428,7 +421,7 @@ function extractFromToSource(
     str.lastIndexOf("}") > 0 &&
     str.slice(str.lastIndexOf("}") + 1).includes("|")
   ) {
-    DEV && console.log(`431 util: closing curlie detected`);
+    DEV && console.log(`424 util: closing curlie detected`);
     tempArr = str
       .slice(str.lastIndexOf("}") + 1)
       .split("|")
@@ -440,7 +433,7 @@ function extractFromToSource(
           .every((char) => /\d/g.test(char))
       );
   } else if (str.includes("|")) {
-    DEV && console.log(`443 util: else case with pipes`);
+    DEV && console.log(`436 util: else case with pipes`);
     tempArr = str
       .split("|")
       .filter((val) => val.trim().length)
@@ -454,7 +447,7 @@ function extractFromToSource(
 
   DEV &&
     console.log(
-      `457 util: ${`\u001b[${33}m${`tempArr`}\u001b[${39}m`} = ${JSON.stringify(
+      `450 util: ${`\u001b[${33}m${`tempArr`}\u001b[${39}m`} = ${JSON.stringify(
         tempArr,
         null,
         4
@@ -469,7 +462,7 @@ function extractFromToSource(
     }
   }
 
-  DEV && console.log(`472 from=${from}; to=${to}`);
+  DEV && console.log(`465 from=${from}; to=${to}`);
 
   // extract the source string - it's everything from zero to first pipe
   // that follows the last closing curly brace
@@ -479,13 +472,13 @@ function extractFromToSource(
   ) {
     source = str.slice(0, str.indexOf("|", str.lastIndexOf("}") + 1)).trimEnd();
     if (source.trim().startsWith("|")) {
-      DEV && console.log(`482 util: crop leading pipe`);
+      DEV && console.log(`475 util: crop leading pipe`);
       while (source.trim().startsWith("|")) {
         source = source.trim().slice(1);
       }
     }
   } else {
-    DEV && console.log(`488 ${`\u001b[${36}m${`loop`}\u001b[${39}m`}`);
+    DEV && console.log(`481 ${`\u001b[${36}m${`loop`}\u001b[${39}m`}`);
     let lastPipeWasAt = null;
     let firstNonPipeNonWhitespaceCharMet = false;
     let startFrom = 0;
@@ -497,7 +490,7 @@ function extractFromToSource(
     for (let i = 0, len = str.length; i < len; i++) {
       DEV &&
         console.log(
-          `500 ${`\u001b[${36}m${`------ ${`str[${i}] = ${`\u001b[${35}m${
+          `493 ${`\u001b[${36}m${`------ ${`str[${i}] = ${`\u001b[${35}m${
             str[i]
           }\u001b[${39}m`}`} ------`}\u001b[${39}m`}`
         );
@@ -509,13 +502,13 @@ function extractFromToSource(
 
         if (onlyDigitsAndWhitespaceBeenMet === null && str[i].trim().length) {
           onlyDigitsAndWhitespaceBeenMet = true;
-          DEV && console.log(`512 SET onlyDigitsAndWhitespaceBeenMet = true`);
+          DEV && console.log(`505 SET onlyDigitsAndWhitespaceBeenMet = true`);
         }
       }
       // if not digit...
       else if (str[i] !== "|" && str[i].trim().length) {
         onlyDigitsAndWhitespaceBeenMet = false;
-        DEV && console.log(`518 SET onlyDigitsAndWhitespaceBeenMet = false`);
+        DEV && console.log(`511 SET onlyDigitsAndWhitespaceBeenMet = false`);
       }
 
       // catch the last character
@@ -523,47 +516,47 @@ function extractFromToSource(
         endTo = lastPipeWasAt;
         DEV &&
           console.log(
-            `526 SET ${`\u001b[${33}m${`endTo`}\u001b[${39}m`} = ${endTo}`
+            `519 SET ${`\u001b[${33}m${`endTo`}\u001b[${39}m`} = ${endTo}`
           );
       }
 
       // catch pipe
       if (str[i] === "|") {
         DEV &&
-          console.log(`533 ${`\u001b[${33}m${`pipe caught`}\u001b[${39}m`}`);
+          console.log(`526 ${`\u001b[${33}m${`pipe caught`}\u001b[${39}m`}`);
         if (onlyDigitsAndWhitespaceBeenMet && lastPipeWasAt) {
           endTo = lastPipeWasAt;
           DEV &&
             console.log(
-              `538 set endTo = ${endTo}; ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+              `531 set endTo = ${endTo}; ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
             );
           break;
         }
 
         lastPipeWasAt = i;
-        DEV && console.log(`544 SET lastPipeWasAt = ${lastPipeWasAt}`);
+        DEV && console.log(`537 SET lastPipeWasAt = ${lastPipeWasAt}`);
 
         // reset:
         onlyDigitsAndWhitespaceBeenMet = null;
-        DEV && console.log(`548 SET onlyDigitsAndWhitespaceBeenMet = null`);
+        DEV && console.log(`541 SET onlyDigitsAndWhitespaceBeenMet = null`);
       } else if (!firstNonPipeNonWhitespaceCharMet && str[i].trim().length) {
         firstNonPipeNonWhitespaceCharMet = true;
         if (lastPipeWasAt !== null) {
           startFrom = lastPipeWasAt + 1;
           DEV &&
             console.log(
-              `555 SET ${`\u001b[${33}m${`startFrom`}\u001b[${39}m`} = ${startFrom}`
+              `548 SET ${`\u001b[${33}m${`startFrom`}\u001b[${39}m`} = ${startFrom}`
             );
         }
         DEV &&
           console.log(
-            `560 SET ${`\u001b[${33}m${`firstNonPipeNonWhitespaceCharMet`}\u001b[${39}m`} = ${firstNonPipeNonWhitespaceCharMet};`
+            `553 SET ${`\u001b[${33}m${`firstNonPipeNonWhitespaceCharMet`}\u001b[${39}m`} = ${firstNonPipeNonWhitespaceCharMet};`
           );
       }
 
       DEV &&
         console.log(
-          `566 ${`\u001b[${90}m${` ENDING
+          `559 ${`\u001b[${90}m${` ENDING
 startFrom = ${startFrom}
 endTo = ${endTo}
 onlyDigitsAndWhitespaceBeenMet = ${onlyDigitsAndWhitespaceBeenMet}
@@ -571,11 +564,11 @@ lastPipeWasAt = ${lastPipeWasAt}
 `}\u001b[${39}m`}`
         );
     }
-    DEV && console.log(`574 startFrom = ${startFrom}; endTo = ${endTo}`);
+    DEV && console.log(`567 startFrom = ${startFrom}; endTo = ${endTo}`);
     source = str.slice(startFrom, endTo).trimEnd();
     DEV &&
       console.log(
-        `578 FINAL ${`\u001b[${33}m${`source`}\u001b[${39}m`} = ${source}`
+        `571 FINAL ${`\u001b[${33}m${`source`}\u001b[${39}m`} = ${source}`
       );
   }
 
@@ -602,10 +595,10 @@ function prepLine(
   let lastPercentage = 0;
   DEV && console.log(`\n\n\n\n\n`);
   DEV &&
-    console.log(`605 util: ${`\u001b[${36}m${`===========`}\u001b[${39}m`}`);
+    console.log(`598 util: ${`\u001b[${36}m${`===========`}\u001b[${39}m`}`);
   DEV &&
     console.log(
-      `608 util: prepLine(): str: "${`\u001b[${35}m${str}\u001b[${39}m`}";\n${`\u001b[${35}m${`generatedCount`}\u001b[${39}m`} = ${JSON.stringify(
+      `601 util: prepLine(): str: "${`\u001b[${35}m${str}\u001b[${39}m`}";\n${`\u001b[${35}m${`generatedCount`}\u001b[${39}m`} = ${JSON.stringify(
         generatedCount,
         null,
         0
@@ -619,7 +612,7 @@ function prepLine(
 
   DEV &&
     console.log(
-      `622 ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}\n${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}\n${`\u001b[${33}m${`source`}\u001b[${39}m`} = "${source}"\n`
+      `615 ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}\n${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}\n${`\u001b[${33}m${`source`}\u001b[${39}m`} = "${source}"\n`
     );
 
   //
@@ -639,7 +632,7 @@ function prepLine(
     DEV && console.log("\n");
     DEV &&
       console.log(
-        `642 ███████████████████████████████████████ row i=${i} ███████████████████████████████████████\n`
+        `635 ███████████████████████████████████████ row i=${i} ███████████████████████████████████████\n`
       );
     // if (pad) {
     let startPoint = 0;
@@ -659,18 +652,18 @@ function prepLine(
       if (source[y] === "$" && source[y - 1] === "$" && source[y - 2] === "$") {
         DEV &&
           console.log(
-            `662 ${`\u001b[${33}m${`startPoint`}\u001b[${39}m`} = ${JSON.stringify(
+            `655 ${`\u001b[${33}m${`startPoint`}\u001b[${39}m`} = ${JSON.stringify(
               startPoint,
               null,
               4
             )}`
           );
-        DEV && console.log(`668 $$$ caught`);
+        DEV && console.log(`661 $$$ caught`);
         // submit all the content up until now
         let restOfStr = source.slice(y + 1);
         DEV &&
           console.log(
-            `673 ${`\u001b[${33}m${`restOfStr`}\u001b[${39}m`} = ${JSON.stringify(
+            `666 ${`\u001b[${33}m${`restOfStr`}\u001b[${39}m`} = ${JSON.stringify(
               restOfStr,
               null,
               4
@@ -678,7 +671,7 @@ function prepLine(
           );
         let unitFound = "";
 
-        DEV && console.log(`681`);
+        DEV && console.log(`674`);
         if (
           i === 0 &&
           // eslint-disable-next-line consistent-return, array-callback-return
@@ -691,10 +684,10 @@ function prepLine(
           (source[right(source, y + unitFound.length) as number] === "{" ||
             !source[y + unitFound.length + 1].trim().length)
         ) {
-          DEV && console.log(`694 push: "${source.slice(startPoint, y - 2)}"`);
+          DEV && console.log(`687 push: "${source.slice(startPoint, y - 2)}"`);
           DEV &&
             console.log(
-              `697 push also: "${
+              `690 push also: "${
                 pad
                   ? String(i).padStart(
                       String(to).length -
@@ -714,24 +707,24 @@ function prepLine(
           }`;
           DEV &&
             console.log(
-              `717 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+              `710 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
             );
           startPoint = y + 1 + (unitFound ? unitFound.length : 0);
         } else {
           // extract units if any follow the $$$
           let unitThatFollow = "";
-          DEV && console.log(`723`);
+          DEV && console.log(`716`);
           // eslint-disable-next-line consistent-return, array-callback-return
           units.some((unit) => {
             if (source.startsWith(unit, y + 1)) {
               unitThatFollow = unit;
-              DEV && console.log(`728 return true`);
+              DEV && console.log(`721 return true`);
               return true;
             }
           });
           DEV &&
             console.log(
-              `734 extracted ${`\u001b[${33}m${`unitThatFollow`}\u001b[${39}m`} = ${JSON.stringify(
+              `727 extracted ${`\u001b[${33}m${`unitThatFollow`}\u001b[${39}m`} = ${JSON.stringify(
                 unitThatFollow,
                 null,
                 4
@@ -750,14 +743,14 @@ function prepLine(
             // if left-side padding can be possible:
             DEV &&
               console.log(
-                `753 source.slice(startPoint, y - 2) = "${source.slice(
+                `746 source.slice(startPoint, y - 2) = "${source.slice(
                   startPoint,
                   y - 2
                 )}"`
               );
             DEV &&
               console.log(
-                `760 push ${`${source.slice(startPoint, y - 2)}${
+                `753 push ${`${source.slice(startPoint, y - 2)}${
                   pad
                     ? String(i).padStart(
                         String(to).length +
@@ -791,7 +784,7 @@ function prepLine(
             }`;
             DEV &&
               console.log(
-                `794 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+                `787 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
               );
           } else if (
             !source[y + 1].trim().length ||
@@ -799,7 +792,7 @@ function prepLine(
           ) {
             DEV &&
               console.log(
-                `802 push ${`${source.slice(startPoint, y - 2)}${
+                `795 push ${`${source.slice(startPoint, y - 2)}${
                   pad
                     ? String(i).padEnd(
                         String(to).length +
@@ -823,17 +816,17 @@ function prepLine(
             }`;
             DEV &&
               console.log(
-                `826 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+                `819 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
               );
           } else {
             DEV &&
               console.log(
-                `831 push ${`${source.slice(startPoint, y - 2)}${i}`}`
+                `824 push ${`${source.slice(startPoint, y - 2)}${i}`}`
               );
             res += `${source.slice(startPoint, y - 2)}${i}`;
             DEV &&
               console.log(
-                `836 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+                `829 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
               );
 
             // also, make a note of padding which we'll need to do later,
@@ -848,7 +841,7 @@ function prepLine(
               debtPaddingLen = String(to).length - String(i).length;
               DEV &&
                 console.log(
-                  `851 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`debtPaddingLen`}\u001b[${39}m`} = ${JSON.stringify(
+                  `844 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`debtPaddingLen`}\u001b[${39}m`} = ${JSON.stringify(
                     debtPaddingLen,
                     null,
                     4
@@ -863,24 +856,24 @@ function prepLine(
       // catch opening curlie
       // -----------------------------------------------------------------------
       if (source[y] === "{" && pad) {
-        DEV && console.log(`866 opening curlie caught`);
+        DEV && console.log(`859 opening curlie caught`);
         if (debtPaddingLen) {
           res += `${source.slice(startPoint, y)}${` `.repeat(debtPaddingLen)}`;
           startPoint = y;
           debtPaddingLen = 0;
           DEV &&
             console.log(
-              `873 SET startPoint = ${startPoint}; debtPaddingLen = ${debtPaddingLen}`
+              `866 SET startPoint = ${startPoint}; debtPaddingLen = ${debtPaddingLen}`
             );
         }
       }
 
       // catch the last character of a line
       if (!source[y + 1]) {
-        DEV && console.log(`880 last character on a line!`);
+        DEV && console.log(`873 last character on a line!`);
         DEV &&
           console.log(
-            `883 ${`\u001b[${33}m${`startPoint`}\u001b[${39}m`} = ${JSON.stringify(
+            `876 ${`\u001b[${33}m${`startPoint`}\u001b[${39}m`} = ${JSON.stringify(
               startPoint,
               null,
               4
@@ -890,7 +883,7 @@ function prepLine(
         let restOfStr = source.slice(startPoint);
         DEV &&
           console.log(
-            `893 restOfStr = "${restOfStr}" --- we'll check, does it start with any elements from units`
+            `886 restOfStr = "${restOfStr}" --- we'll check, does it start with any elements from units`
           );
         if (
           i === 0 &&
@@ -904,27 +897,27 @@ function prepLine(
         ) {
           DEV &&
             console.log(
-              `907 push "${source.slice(startPoint + unitFound.length)}"`
+              `900 push "${source.slice(startPoint + unitFound.length)}"`
             );
           res += `${source.slice(startPoint + unitFound.length)}`;
           DEV &&
             console.log(
-              `912 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+              `905 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
             );
         } else {
           DEV &&
-            console.log(`916 last char - submit "${source.slice(startPoint)}"`);
+            console.log(`909 last char - submit "${source.slice(startPoint)}"`);
           res += `${source.slice(startPoint)}`;
           DEV &&
             console.log(
-              `920 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+              `913 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
             );
         }
         // add line break
         res += `${i !== to ? "\n" : ""}`;
         DEV &&
           console.log(
-            `927 add line break ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
+            `920 add line break ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`
           );
       }
     }
@@ -988,7 +981,6 @@ function prepConfig(
 }
 
 export {
-  Obj,
   prepLine,
   prepConfig,
   isStr,

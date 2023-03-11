@@ -1,6 +1,6 @@
 import typeDetect from "type-detect";
 import { empty } from "ast-contains-only-empty-space";
-import { isPlainObject as isObj } from "codsen-utils";
+import { isPlainObject as isObj, hasOwnProp } from "codsen-utils";
 import { isMatch } from "matcher";
 
 import { version as v } from "../package.json";
@@ -262,7 +262,7 @@ function compare(
     for (const sKey of sKeys) {
       DEV &&
         console.log(`264 ${`\u001b[${35}m${`sKey = ${sKey}`}\u001b[${39}m`}`);
-      if (!Object.prototype.hasOwnProperty.call(b, sKey)) {
+      if (!hasOwnProp(b, sKey)) {
         DEV && console.log(`266 case #1.`);
         if (
           !resolvedOpts.useWildcards ||

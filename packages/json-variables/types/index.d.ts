@@ -1,7 +1,6 @@
+import { Obj } from "codsen-utils";
+
 declare const version: string;
-interface Obj {
-  [key: string]: any;
-}
 interface Opts {
   heads: string;
   tails: string;
@@ -26,4 +25,4 @@ declare const defaults: Opts;
  */
 declare function jVar(input: Obj, opts?: Partial<Opts>): Obj;
 
-export { Obj, Opts, defaults, jVar, version };
+export { Opts, defaults, jVar, version };

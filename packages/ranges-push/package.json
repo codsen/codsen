@@ -71,6 +71,7 @@
     }
   },
   "dependencies": {
+    "codsen-utils": "^1.2.0",
     "string-collapse-leading-whitespace": "^7.0.3",
     "string-trim-spaces-only": "^5.0.5"
   }

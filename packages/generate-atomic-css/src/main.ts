@@ -1,8 +1,8 @@
 import { left, right } from "string-left-right";
+import type { Obj } from "codsen-utils";
 
 import { version as v } from "../package.json";
 import {
-  Obj,
   prepConfig,
   extractFromToSource,
   extractConfig,

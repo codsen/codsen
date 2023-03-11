@@ -2,12 +2,13 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import { flattenAllArrays } from "object-flatten-all-arrays";
-import { fillMissing } from "object-fill-missing-keys";
 import { setAllValuesTo } from "object-set-all-values-to";
+import { fillMissing } from "object-fill-missing-keys";
 import { mergeAdvanced } from "object-merge-advanced";
+import { noNewKeys } from "object-no-new-keys";
+import { existy, isStr, isPlainObject as isObj, Obj } from "codsen-utils";
 import semverCompare from "semver-compare";
 import includes from "lodash.includes";
-import { noNewKeys } from "object-no-new-keys";
 import clone from "lodash.clonedeep";
 import sortKeys from "sort-keys";
 import pReduce from "p-reduce";
@@ -21,20 +22,6 @@ const version: string = v;
 declare let DEV: boolean;
 
 // -----------------------------------------------------------------------------
-
-interface Obj {
-  [key: string]: any;
-}
-
-function existy(x: unknown): boolean {
-  return x != null;
-}
-function isObj(something: unknown): boolean {
-  return typ(something) === "Object";
-}
-function isStr(something: unknown): boolean {
-  return typeof something === "string";
-}
 
 // ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-tostring
 function toString(obj: unknown): string {
@@ -123,7 +110,7 @@ function getKeyset(
   let resolvedOpts: GetKeysetOpts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `126 CALLING check-types-mini:\nopts = ${JSON.stringify(
+      `113 CALLING check-types-mini:\nopts = ${JSON.stringify(
         resolvedOpts,
         null,
         4

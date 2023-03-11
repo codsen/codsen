@@ -3,26 +3,18 @@
 import clone from "lodash.clonedeep";
 import { strIndexesOfPlus } from "str-indexes-of-plus";
 import { isMatch } from "matcher";
-import { isPlainObject as isObj } from "codsen-utils";
+import { existy, isStr, isPlainObject as isObj, Obj } from "codsen-utils";
 
 import {
   flattenObject,
   flattenArr,
   arrayiffyString,
-  Obj,
   defaults,
   Opts,
 } from "./util";
 import { version as v } from "../package.json";
 
 const version: string = v;
-
-function existy(x: any): boolean {
-  return x != null;
-}
-function isStr(something: any): boolean {
-  return typeof something === "string";
-}
 
 function flattenReferencing(
   input: any,

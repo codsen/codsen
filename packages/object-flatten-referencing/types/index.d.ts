@@ -1,6 +1,5 @@
-interface Obj {
-  [key: string]: any;
-}
+import { Obj } from "codsen-utils";
+
 interface Opts {
   wrapHeadsWith: string;
   wrapTailsWith: string;

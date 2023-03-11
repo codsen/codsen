@@ -46,7 +46,7 @@
     "prep": "echo 'ready'",
     "prettier": "prettier",
     "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-    "pretest": "echo 0",
+    "pretest": "exit 0",
     "test": "c8 npm run unit && npm run lint",
     "unit": "uvu test"
   },
@@ -70,16 +70,12 @@
   },
   "dependencies": {
     "chalk": "^5.2.0",
+    "codsen-utils": "^1.2.0",
     "email-all-chars-within-ascii": "^5.0.8",
     "globby": "^13.1.3",
     "inquirer": "^9.1.4",
-    "lodash.pullall": "^4.2.0",
     "minimist": "^1.2.8",
     "string-left-right": "^6.0.8",
     "update-notifier": "^6.0.2"
-  },
-  "devDependencies": {
-    "@types/lodash.pullall": "^4.2.7",
-    "@types/lodash.uniq": "^4.5.7"
   }
 }

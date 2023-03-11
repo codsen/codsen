@@ -1,7 +1,6 @@
+import { Obj } from "codsen-utils";
+
 declare const version: string;
-interface Obj {
-  [key: string]: any;
-}
 declare function sortAllObjectsSync(input: any): any;
 declare function getKeyset(
   arrOfPromises: Iterable<PromiseLike<Obj> | Obj>,

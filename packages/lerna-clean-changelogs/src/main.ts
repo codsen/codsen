@@ -4,7 +4,7 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-function isStr(something: string): any {
+function isStr(something: string): something is string {
   return typeof something === "string";
 }
 

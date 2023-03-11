@@ -12,9 +12,9 @@ import chalk from "chalk";
 import { sort } from "csv-sort";
 import inquirer from "inquirer";
 import { globbySync } from "globby";
-import pullAll from "lodash.pullall";
 import { createRequire } from "module";
 import updateNotifier from "update-notifier";
+import { pullAll } from "codsen-utils";
 
 const { log } = console;
 
@@ -70,7 +70,7 @@ function offerAListOfCSVsToPickFrom(stateObj) {
   if (!allCSVsHere.length) {
     return Promise.reject(
       new Error(
-        "\ncsv-sort-cli: Alas, program couldn't find any CSV files in this folder and bailed on us!"
+        "\ncsv-sort-cli: Alas, program couldn't find any CSV files in this folder!"
       )
     );
   }
@@ -269,7 +269,7 @@ thePromise
             new Error(
               `\ncsv-sort-cli: Alas, we couldn't fetch the file "${path.basename(
                 requestedCSVsPath
-              )}" you requested and bailed on us!`
+              )}" you requested!`
             )
           );
         }

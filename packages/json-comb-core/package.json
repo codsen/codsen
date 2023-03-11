@@ -71,6 +71,7 @@
     "various": {}
   },
   "dependencies": {
+    "codsen-utils": "^1.2.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
     "object-fill-missing-keys": "^11.0.8",
