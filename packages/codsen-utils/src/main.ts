@@ -21,18 +21,16 @@ export const multiplicationSign = "\u00D7"; // https://www.fileformat.info/info/
 
 export const punctuationChars = [".", ",", ";", "!", "?"];
 
+export interface Obj {
+  [key: string]: any;
+}
+
 export function isNumberChar(value: unknown): boolean {
-  return (
-    typeof value === "string" &&
-    value.charCodeAt(0) >= 48 &&
-    value.charCodeAt(0) <= 57
-  );
+  return isStr(value) && value.charCodeAt(0) >= 48 && value.charCodeAt(0) <= 57;
 }
 
 export function isCurrencyChar(value: unknown): boolean {
-  return (
-    typeof value === "string" && "؋$₼៛¥₡₱£€¢₹﷼₪₩₭₨₮₦₽₫฿₩₺₴".includes(value)
-  );
+  return isStr(value) && "؋$₼៛¥₡₱£€¢₹﷼₪₩₭₨₮₦₽₫฿₩₺₴".includes(value);
 }
 
 export function isCurrencySymbol(value: unknown): boolean {
@@ -76,7 +74,7 @@ export function isCurrencySymbol(value: unknown): boolean {
     "Lek",
   ]);
   return (
-    typeof value === "string" &&
+    isStr(value) &&
     !!value.trim() &&
     (isCurrencyChar(value) || currencySymbols.has(value))
   );
@@ -84,7 +82,7 @@ export function isCurrencySymbol(value: unknown): boolean {
 
 export function isLetter(value: unknown): boolean {
   return (
-    typeof value === "string" &&
+    isStr(value) &&
     value.length === 1 &&
     value.toUpperCase() !== value.toLowerCase()
   );
@@ -94,7 +92,7 @@ export function isLatinLetter(value: unknown): boolean {
   // A-Z, a-z
   return !!(
     value &&
-    typeof value === "string" &&
+    isStr(value) &&
     ((value.charCodeAt(0) > 64 && value.charCodeAt(0) < 91) ||
       (value.charCodeAt(0) > 96 && value.charCodeAt(0) < 123))
   );
@@ -102,7 +100,7 @@ export function isLatinLetter(value: unknown): boolean {
 
 export function isQuote(value: unknown): boolean {
   return (
-    typeof value === "string" &&
+    isStr(value) &&
     (value === '"' ||
       value === "'" ||
       value === leftSingleQuote ||
@@ -113,21 +111,21 @@ export function isQuote(value: unknown): boolean {
 }
 
 export function isLowercaseLetter(value: unknown): boolean {
-  if (typeof value !== "string" || !isLetter(value)) {
+  if (!isStr(value) || !isLetter(value)) {
     return false;
   }
   return value === value.toLowerCase() && value !== value.toUpperCase();
 }
 
 export function isUppercaseLetter(value: unknown): boolean {
-  if (typeof value !== "string" || !isLetter(value)) {
+  if (!isStr(value) || !isLetter(value)) {
     return false;
   }
   return value === value.toUpperCase() && value !== value.toLowerCase();
 }
 
 export function isWhitespaceChar(value: unknown): boolean {
-  if (typeof value !== "string" || !value) {
+  if (!isStr(value) || !value) {
     return false;
   }
   return !value[0].trim();
@@ -136,7 +134,7 @@ export function isWhitespaceChar(value: unknown): boolean {
 // -----------------------------------------------------------------
 
 export const removeTrailingSlash = <T>(value: T) => {
-  if (typeof value === "string" && value.length && value.endsWith("/")) {
+  if (isStr(value) && value.length && value.endsWith("/")) {
     return value.slice(0, -1).trim();
   }
   // else, does nothing
@@ -188,6 +186,36 @@ export function stringSplice(str = "", index = 0, count = 0, add = "") {
 
 // ----------------------------------------------------------------
 
+export function isStr(something: unknown): something is string {
+  return typeof something === "string";
+}
+
+// ----------------------------------------------------------------
+
+export function isNum(something: unknown): something is number {
+  return Number.isFinite(something);
+}
+
+// ----------------------------------------------------------------
+
+export function isInt(something: unknown): something is number {
+  return Number.isSafeInteger(something) && (something as number) >= 0;
+}
+
+// ----------------------------------------------------------------
+
+export function isBool(something: unknown): something is boolean {
+  return typeof something === "boolean";
+}
+
+// ----------------------------------------------------------------
+
+export function isNull(something: unknown): something is null {
+  return something === null;
+}
+
+// ----------------------------------------------------------------
+
 /**
  * Gives array of indexes of all found substring occurrences
  * @param string source string
@@ -198,13 +226,63 @@ export function stringSplice(str = "", index = 0, count = 0, add = "") {
  * -> [0, 3, 4, 7]
  */
 export function findAllIdx(value: unknown, substring: unknown) {
-  if (typeof value !== "string" || typeof substring !== "string") {
+  if (!isStr(value) || !isStr(substring)) {
     return [];
   }
   let a = [];
   let i = -1;
   while ((i = value.indexOf(substring, i + 1)) >= 0) a.push(i);
   return a;
+}
+
+// ----------------------------------------------------------------
+
+/**
+ * Unlike lodash equivalent, it does not mutate the input array
+ * @param input
+ * @param remove
+ * @returns
+ */
+export function pullAll<T, U>(input: T[] = [], remove: U[] = []) {
+  // early exit
+  if (!input || !Array.isArray(input) || !input.length) {
+    // result is always an array
+    return [];
+  }
+  if (!remove || !Array.isArray(remove) || !remove.length) {
+    // does nothing
+    return input;
+  }
+  // actual filtration
+  return input.filter((val) => !remove.includes(val as any));
+}
+
+// ----------------------------------------------------------------
+
+// from Michael Fogus "Functional JavaScript"
+export function existy(x: unknown): boolean {
+  return x != null;
+}
+
+// ----------------------------------------------------------------
+
+/**
+ * Returns a shallow copy of input array, with only unique elements
+ * @param input array
+ * @returns de-duped array
+ */
+export function uniq<T>(input: T[]): T[] {
+  return [...new Set(input)];
+}
+
+// ----------------------------------------------------------------
+
+export function hasOwnProp(obj: unknown, prop: string): boolean {
+  return (
+    isPlainObject(obj) &&
+    isStr(prop) &&
+    Object.prototype.hasOwnProperty.call(obj, prop)
+  );
 }
 
 // ----------------------------------------------------------------

@@ -16,6 +16,9 @@ declare const rawReplacementMark = "\uFFFD";
 declare const backtick = "`";
 declare const multiplicationSign = "\u00D7";
 declare const punctuationChars: string[];
+interface Obj {
+  [key: string]: any;
+}
 declare function isNumberChar(value: unknown): boolean;
 declare function isCurrencyChar(value: unknown): boolean;
 declare function isCurrencySymbol(value: unknown): boolean;
@@ -47,6 +50,11 @@ declare function stringSplice(
   count?: number,
   add?: string
 ): string;
+declare function isStr(something: unknown): something is string;
+declare function isNum(something: unknown): something is number;
+declare function isInt(something: unknown): something is number;
+declare function isBool(something: unknown): something is boolean;
+declare function isNull(something: unknown): something is null;
 /**
  * Gives array of indexes of all found substring occurrences
  * @param string source string
@@ -57,30 +65,54 @@ declare function stringSplice(
  * -> [0, 3, 4, 7]
  */
 declare function findAllIdx(value: unknown, substring: unknown): number[];
+/**
+ * Unlike lodash equivalent, it does not mutate the input array
+ * @param input
+ * @param remove
+ * @returns
+ */
+declare function pullAll<T, U>(input?: T[], remove?: U[]): T[];
+declare function existy(x: unknown): boolean;
+/**
+ * Returns a shallow copy of input array, with only unique elements
+ * @param input array
+ * @returns de-duped array
+ */
+declare function uniq<T>(input: T[]): T[];
+declare function hasOwnProp(obj: unknown, prop: string): boolean;
 declare const voidTags: string[];
 declare const inlineTags: Set<string>;
 
 export {
+  Obj,
   backslash,
   backtick,
   doublePrime,
   ellipsis,
+  existy,
   findAllIdx,
   hairspace,
+  hasOwnProp,
   inlineTags,
+  isBool,
   isCurrencyChar,
   isCurrencySymbol,
+  isInt,
   isLatinLetter,
   isLetter,
   isLowercaseLetter,
+  isNull,
+  isNum,
   isNumberChar,
   isPlainObject,
   isQuote,
+  isStr,
   isUppercaseLetter,
   isWhitespaceChar,
   leftDoubleQuote,
   leftSingleQuote,
   multiplicationSign,
+  pullAll,
   punctuationChars,
   rawMDash,
   rawNDash,
@@ -92,6 +124,7 @@ export {
   singlePrime,
   stringSplice,
   thinSpace,
+  uniq,
   version,
   voidTags,
 };

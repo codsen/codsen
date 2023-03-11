@@ -20,4 +20,8 @@ test("03", () => {
   );
 });
 
+test("04", () => {
+  equal(stringSplice("a", 0, 0, "x"), "xa", "04.01");
+});
+
 test.run();

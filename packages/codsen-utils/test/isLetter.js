@@ -36,6 +36,9 @@ test("07", () => {
 
 test("08", () => {
   equal(isLetter(NaN), false, "08.01");
+  equal(isLetter(0 / 0), false, "08.02");
+  equal(isLetter(1 / 0), false, "08.03");
+  equal(isLetter(-1 / 0), false, "08.04");
 });
 
 test("09", () => {
