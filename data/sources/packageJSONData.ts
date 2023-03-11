@@ -153,6 +153,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.2.0",
       "ranges-apply": "^7.0.5"
     }
   },
@@ -625,7 +626,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.1",
-      "type-fest": "^3.6.0"
+      "type-fest": "^3.6.1"
     }
   },
   "ast-contains-only-empty-space": {
@@ -1845,14 +1846,12 @@ export const packageJSONData = {
       "ast-monkey-traverse": "^4.0.6",
       "codsen-utils": "^1.2.0",
       "lodash.intersection": "^4.4.0",
-      "lodash.pullall": "^4.2.0",
       "matcher": "^5.0.0",
       "object-path": "^0.11.8",
       "type-detect": "^4.0.8"
     },
     "devDependencies": {
-      "@types/lodash.intersection": "^4.4.7",
-      "@types/lodash.pullall": "^4.2.7"
+      "@types/lodash.intersection": "^4.4.7"
     }
   },
   "codsen": {
@@ -1894,7 +1893,7 @@ export const packageJSONData = {
       "prep": "echo 'ready'",
       "prettier": "prettier",
       "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-      "pretest": "echo 0",
+      "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
@@ -2395,15 +2394,12 @@ export const packageJSONData = {
     },
     "dependencies": {
       "chalk": "^5.2.0",
+      "codsen-utils": "^1.2.0",
       "csv-sort": "^7.0.5",
       "globby": "^13.1.3",
       "inquirer": "^9.1.4",
-      "lodash.pullall": "^4.2.0",
       "meow": "^11.0.0",
       "update-notifier": "^6.0.2"
-    },
-    "devDependencies": {
-      "@types/lodash.pullall": "^4.2.7"
     }
   },
   "csv-split-easy": {
@@ -2880,6 +2876,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.2.0",
       "ranges-apply": "^7.0.5",
       "string-left-right": "^6.0.8"
     },
@@ -3012,7 +3009,7 @@ export const packageJSONData = {
       "prep": "echo 'ready'",
       "prettier": "prettier",
       "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-      "pretest": "echo 0",
+      "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
@@ -3036,17 +3033,13 @@ export const packageJSONData = {
     },
     "dependencies": {
       "chalk": "^5.2.0",
+      "codsen-utils": "^1.2.0",
       "email-all-chars-within-ascii": "^5.0.8",
       "globby": "^13.1.3",
       "inquirer": "^9.1.4",
-      "lodash.pullall": "^4.2.0",
       "minimist": "^1.2.8",
       "string-left-right": "^6.0.8",
       "update-notifier": "^6.0.2"
-    },
-    "devDependencies": {
-      "@types/lodash.pullall": "^4.2.7",
-      "@types/lodash.uniq": "^4.5.7"
     }
   },
   "email-comb": {
@@ -3125,7 +3118,6 @@ export const packageJSONData = {
       "codsen-utils": "^1.2.0",
       "html-crush": "^6.0.8",
       "lodash.intersection": "^4.4.0",
-      "lodash.pullall": "^4.2.0",
       "matcher": "^5.0.0",
       "ranges-apply": "^7.0.5",
       "ranges-push": "^7.0.5",
@@ -3137,8 +3129,7 @@ export const packageJSONData = {
       "string-uglify": "^3.0.5"
     },
     "devDependencies": {
-      "@types/lodash.intersection": "^4.4.7",
-      "@types/lodash.pullall": "^4.2.7"
+      "@types/lodash.intersection": "^4.4.7"
     }
   },
   "email-homey": {
@@ -3191,7 +3182,7 @@ export const packageJSONData = {
       "prep": "echo 'ready'",
       "prettier": "prettier",
       "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-      "pretest": "echo 0",
+      "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
@@ -3654,6 +3645,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.2.0",
       "string-left-right": "^6.0.8"
     }
   },
@@ -3709,7 +3701,7 @@ export const packageJSONData = {
       "prep": "echo 'ready'",
       "prettier": "prettier",
       "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-      "pretest": "echo 0",
+      "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
@@ -4840,6 +4832,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.2.0",
       "ranges-apply": "^7.0.5",
       "ranges-push": "^7.0.5"
     }
@@ -4978,7 +4971,7 @@ export const packageJSONData = {
       "prep": "echo 'ready'",
       "prettier": "prettier",
       "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-      "pretest": "echo 0",
+      "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
@@ -5082,6 +5075,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
+      "codsen-utils": "^1.2.0",
       "lodash.clonedeep": "^4.5.0",
       "lodash.includes": "^4.3.0",
       "object-fill-missing-keys": "^11.0.8",
@@ -5270,6 +5264,7 @@ export const packageJSONData = {
       "arrayiffy-if-string": "^5.0.3",
       "ast-get-values-by-key": "^5.0.8",
       "ast-monkey-traverse": "^4.0.6",
+      "codsen-utils": "^1.2.0",
       "matcher": "^5.0.0",
       "object-path": "^0.11.8",
       "ranges-apply": "^7.0.5",
@@ -5403,7 +5398,7 @@ export const packageJSONData = {
       "prep": "echo 'ready'",
       "prettier": "prettier",
       "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-      "pretest": "echo 0",
+      "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
@@ -6250,6 +6245,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "dependencies": {
+      "codsen-utils": "^1.2.0"
     }
   },
   "object-set-all-values-to": {
@@ -7077,6 +7075,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.2.0",
       "string-collapse-leading-whitespace": "^7.0.3",
       "string-trim-spaces-only": "^5.0.5"
     }
@@ -7603,6 +7602,86 @@ export const packageJSONData = {
     "devDependencies": {
       "rehype": "^12.0.1",
       "rehype-parse": "^8.0.4"
+    }
+  },
+  "remark-conventional-commit-changelog-timeline": {
+    "name": "remark-conventional-commit-changelog-timeline",
+    "version": "3.0.6",
+    "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
+    "keywords": [
+      "unified",
+      "remark",
+      "remark-plugin",
+      "plugin",
+      "mdast",
+      "markdown",
+      "changelog",
+      "conventional",
+      "commits"
+    ],
+    "homepage": "https://codsen.com/os/remark-conventional-commit-changelog-timeline",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/codsen/codsen.git",
+      "directory": "packages/remark-conventional-commit-changelog-timeline"
+    },
+    "license": "MIT",
+    "author": {
+      "name": "Roy Revelt",
+      "email": "roy@codsen.com",
+      "url": "https://codsen.com"
+    },
+    "type": "module",
+    "main": "dist/remark-conventional-commit-changelog-timeline.cjs.js",
+    "types": "types/index.d.ts",
+    "scripts": {
+      "build": "node '../../ops/scripts/esbuild.js' && node '../../ops/scripts/fix-cjs.js' && npm run dts",
+      "cjs-off": "node '../../ops/scripts/cjs-off.js'",
+      "cjs-on": "node '../../ops/scripts/cjs-on.js'",
+      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
+      "devtest": "c8 npm run unit && npm run examples && npm run lint",
+      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --loglevel 'silent'",
+      "examples": "node '../../ops/scripts/run-examples.js'",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' --write --loglevel 'silent'",
+      "letspublish": "npm publish || :",
+      "lint": "eslint . --ext .js --ext .ts --fix",
+      "perf": "echo 'skip perf'",
+      "prep": "echo 'ready'",
+      "prettier": "prettier",
+      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
+      "pretest": "npm run lect && npm run build",
+      "test": "npm run devtest",
+      "unit": "uvu test"
+    },
+    "engines": {
+      "node": ">=14.18.0"
+    },
+    "c8": {
+      "check-coverage": true,
+      "exclude": [
+        "**/test/**/*.*"
+      ],
+      "lines": 100
+    },
+    "lect": {
+      "licence": {
+        "extras": [
+          ""
+        ]
+      },
+      "various": {}
+    },
+    "dependencies": {
+      "@types/hast": "^2.3.4",
+      "hast-util-raw": "^8.0.0",
+      "semver-regex": "^4.0.5",
+      "unified": "^10.1.2",
+      "unist-builder": "^3.0.1",
+      "unist-util-visit": "^4.1.2"
+    },
+    "devDependencies": {
+      "object-delete-key": "^4.0.8",
+      "remark": "^14.0.2"
     }
   },
   "remark-typography": {
@@ -8595,6 +8674,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "arrayiffy-if-string": "^5.0.3",
+      "codsen-utils": "^1.2.0",
       "string-match-left-right": "^9.0.8"
     }
   },
@@ -8673,6 +8753,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.2.0",
       "string-left-right": "^6.0.8"
     }
   },
@@ -9868,6 +9949,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.2.0",
       "he": "^1.2.0"
     },
     "devDependencies": {

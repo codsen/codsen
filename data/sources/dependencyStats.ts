@@ -27,6 +27,7 @@ export const dependencyStats: DependencyStats = {
     "fs-extra",
     "globby",
     "grapheme-splitter",
+    "hast-util-raw",
     "he",
     "hex-color-regex",
     "html-entities",
@@ -48,7 +49,6 @@ export const dependencyStats: DependencyStats = {
     "lodash.iteratee",
     "lodash.merge",
     "lodash.pull",
-    "lodash.pullall",
     "lodash.trim",
     "lodash.without",
     "log-symbols",
@@ -69,6 +69,7 @@ export const dependencyStats: DependencyStats = {
     "rgba-regex",
     "runes",
     "semver-compare",
+    "semver-regex",
     "sort-keys",
     "sort-package-json",
     "split2",
@@ -77,6 +78,7 @@ export const dependencyStats: DependencyStats = {
     "tiny-typed-emitter",
     "type-detect",
     "unified",
+    "unist-builder",
     "unist-util-visit",
     "update-notifier",
     "url-regex-safe",
@@ -165,7 +167,7 @@ export const dependencyStats: DependencyStats = {
   ],
   "dependencies": {
     "@sindresorhus/is": 1,
-    "@types/hast": 2,
+    "@types/hast": 3,
     "@types/json-stringify-safe": 2,
     "@types/lodash.iteratee": 1,
     "all-named-html-entities": 2,
@@ -185,7 +187,7 @@ export const dependencyStats: DependencyStats = {
     "check-types-mini": 4,
     "codsen-parser": 2,
     "codsen-tokenizer": 2,
-    "codsen-utils": 33,
+    "codsen-utils": 46,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -200,6 +202,7 @@ export const dependencyStats: DependencyStats = {
     "generate-atomic-css": 1,
     "globby": 10,
     "grapheme-splitter": 1,
+    "hast-util-raw": 1,
     "he": 4,
     "hex-color-regex": 1,
     "html-all-known-attributes": 3,
@@ -234,7 +237,6 @@ export const dependencyStats: DependencyStats = {
     "lodash.iteratee": 1,
     "lodash.merge": 1,
     "lodash.pull": 2,
-    "lodash.pullall": 4,
     "lodash.trim": 2,
     "lodash.without": 1,
     "log-symbols": 1,
@@ -275,6 +277,7 @@ export const dependencyStats: DependencyStats = {
     "rgba-regex": 1,
     "runes": 1,
     "semver-compare": 1,
+    "semver-regex": 1,
     "sort-keys": 1,
     "sort-package-json": 1,
     "split2": 1,
@@ -304,8 +307,9 @@ export const dependencyStats: DependencyStats = {
     "tiny-invariant": 1,
     "tiny-typed-emitter": 1,
     "type-detect": 3,
-    "unified": 2,
-    "unist-util-visit": 2,
+    "unified": 3,
+    "unist-builder": 1,
+    "unist-util-visit": 3,
     "update-notifier": 12,
     "url-regex-safe": 1,
     "util-array-object-or-both": 2,
@@ -326,9 +330,7 @@ export const dependencyStats: DependencyStats = {
     "@types/lodash.isregexp": 2,
     "@types/lodash.merge": 1,
     "@types/lodash.pull": 2,
-    "@types/lodash.pullall": 4,
     "@types/lodash.trim": 2,
-    "@types/lodash.uniq": 1,
     "@types/lodash.without": 1,
     "@types/mime-db": 1,
     "@types/object-path": 1,
@@ -349,13 +351,14 @@ export const dependencyStats: DependencyStats = {
     "lodash.clonedeep": 6,
     "lodash.isequal": 3,
     "map-stream": 1,
+    "object-delete-key": 1,
     "p-map": 3,
     "ranges-apply": 6,
     "ranges-invert": 1,
     "ranges-merge": 1,
     "rehype": 1,
     "rehype-parse": 1,
-    "remark": 1,
+    "remark": 2,
     "string-find-heads-tails": 1,
     "string-strip-html": 1,
     "test-mixer": 5,
@@ -380,9 +383,6 @@ export const dependencyStats: DependencyStats = {
       "object-path": 7
     },
     {
-      "lodash.pullall": 4
-    },
-    {
       "type-detect": 3
     },
     {
@@ -393,11 +393,14 @@ export const dependencyStats: DependencyStats = {
     },
     {
       "@sindresorhus/is": 1
+    },
+    {
+      "hex-color-regex": 1
     }
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 33
+      "codsen-utils": 46
     },
     {
       "ranges-apply": 17
