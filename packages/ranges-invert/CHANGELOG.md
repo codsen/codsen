@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.6](https://github.com/codsen/codsen/compare/ranges-invert@6.0.5...ranges-invert@6.0.6) (2023-03-12)
+
+**Note:** Version bump only for package ranges-invert
+
 ## 6.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

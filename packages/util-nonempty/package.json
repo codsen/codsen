@@ -1,6 +1,6 @@
 {
   "name": "util-nonempty",
-  "version": "5.0.6",
+  "version": "5.0.7",
   "description": "Is the input (plain object, array, string or whatever) not empty?",
   "keywords": [
     "array",
@@ -67,6 +67,6 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.2.0"
+    "codsen-utils": "^1.3.0"
   }
 }

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.7](https://github.com/codsen/codsen/compare/remark-conventional-commit-changelog-timeline@3.0.6...remark-conventional-commit-changelog-timeline@3.0.7) (2023-03-12)
+
+### Bug Fixes
+
+- move out of parked ([f9a1e1b](https://github.com/codsen/codsen/commit/f9a1e1b27e97cb665f8b841b3a773265c1ccbac6))
+
 ## 3.0.0 (2022-12-01)
 
 ### Features

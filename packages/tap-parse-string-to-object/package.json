@@ -1,6 +1,6 @@
 {
   "name": "tap-parse-string-to-object",
-  "version": "4.0.5",
+  "version": "4.0.6",
   "description": "Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object",
   "keywords": [
     "contents",

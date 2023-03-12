@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/codsen/codsen/compare/codsen-utils@1.2.0...codsen-utils@1.3.0) (2023-03-12)
+
+### Features
+
+- add new functions ([aee27c1](https://github.com/codsen/codsen/commit/aee27c1346fce279f7f2570c245469bafcaa72a5))
+
 ## 1.2.0 (2022-12-27)
 
 ### Features
