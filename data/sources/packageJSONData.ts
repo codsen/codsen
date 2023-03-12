@@ -2372,7 +2372,7 @@ export const packageJSONData = {
       "prep": "echo 'ready'",
       "prettier": "prettier",
       "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-      "pretest": "echo 0",
+      "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
@@ -3779,7 +3779,7 @@ export const packageJSONData = {
       "prep": "echo 'ready'",
       "prettier": "prettier",
       "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-      "pretest": "echo 0",
+      "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
@@ -4890,7 +4890,7 @@ export const packageJSONData = {
       "prep": "echo 'ready'",
       "prettier": "prettier",
       "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-      "pretest": "echo 0",
+      "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
@@ -5144,7 +5144,7 @@ export const packageJSONData = {
       "prep": "echo 'ready'",
       "prettier": "prettier",
       "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-      "pretest": "echo 0",
+      "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
@@ -5489,7 +5489,7 @@ export const packageJSONData = {
       "prep": "echo 'ready'",
       "prettier": "prettier",
       "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-      "pretest": "echo 0",
+      "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
