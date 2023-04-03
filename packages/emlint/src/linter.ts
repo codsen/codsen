@@ -125,7 +125,7 @@ class Linter extends TypedEmitter<RuleObjType> {
       .filter((ruleName) => {
         // same config like in ESLint - 0 is off, 1 is warning, 2 is error
         if (typeof processedRulesConfig[ruleName] === "number") {
-          return processedRulesConfig[ruleName] > 0;
+          return processedRulesConfig[ruleName];
         }
         if (Array.isArray(processedRulesConfig[ruleName])) {
           DEV &&

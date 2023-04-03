@@ -626,7 +626,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.1",
-      "type-fest": "^3.6.1"
+      "type-fest": "^3.7.2"
     }
   },
   "ast-contains-only-empty-space": {
@@ -2397,7 +2397,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.3.0",
       "csv-sort": "^7.0.6",
       "globby": "^13.1.3",
-      "inquirer": "^9.1.4",
+      "inquirer": "^9.1.5",
       "meow": "^11.0.0",
       "update-notifier": "^6.0.2"
     }
@@ -3036,7 +3036,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.3.0",
       "email-all-chars-within-ascii": "^5.0.9",
       "globby": "^13.1.3",
-      "inquirer": "^9.1.4",
+      "inquirer": "^9.1.5",
       "minimist": "^1.2.8",
       "string-left-right": "^6.0.9",
       "update-notifier": "^6.0.2"
@@ -4992,7 +4992,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "fs-extra": "^11.1.0",
+      "fs-extra": "^11.1.1",
       "globby": "^13.1.3",
       "is-d": "^1.0.0",
       "json-comb-core": "^8.0.9",
@@ -5168,7 +5168,7 @@ export const packageJSONData = {
       "ast-monkey-traverse": "^4.0.7",
       "chalk": "^5.2.0",
       "codsen-utils": "^1.3.0",
-      "fs-extra": "^11.1.0",
+      "fs-extra": "^11.1.1",
       "globby": "^13.1.3",
       "is-d": "^1.0.0",
       "meow": "^11.0.0",
@@ -5422,7 +5422,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "chalk": "^5.2.0",
-      "fs-extra": "^11.1.0",
+      "fs-extra": "^11.1.1",
       "globby": "^13.1.3",
       "lerna-clean-changelogs": "^5.0.6",
       "meow": "^11.0.0",
@@ -5512,8 +5512,8 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "execa": "^7.0.0",
-      "fs-extra": "^11.1.0",
+      "execa": "^7.1.1",
+      "fs-extra": "^11.1.1",
       "meow": "^11.0.0",
       "update-notifier": "^6.0.2"
     }
@@ -10119,14 +10119,14 @@ export const packageJSONData = {
     },
     "dependencies": {
       "isstream": "^0.1.2",
-      "split2": "^4.1.0",
+      "split2": "^4.2.0",
       "through2": "^4.0.2"
     },
     "devDependencies": {
       "@types/isstream": "^0.1.0",
       "@types/split2": "^3.2.1",
       "@types/through2": "^2.0.38",
-      "fs-extra": "^11.1.0"
+      "fs-extra": "^11.1.1"
     }
   },
   "test-mixer": {
@@ -10379,7 +10379,7 @@ export const packageJSONData = {
       "write-file-atomic": "^5.0.0"
     },
     "devDependencies": {
-      "fs-extra": "^11.1.0",
+      "fs-extra": "^11.1.1",
       "lodash.clonedeep": "^4.5.0"
     }
   },
