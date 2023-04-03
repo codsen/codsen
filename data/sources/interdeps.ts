@@ -32,7 +32,7 @@ export const interdeps = [
   },
   {
     "name": "ast-compare",
-    "size": 3427,
+    "size": 3429,
     "imports": [
       "ast-contains-only-empty-space",
       "codsen-utils"
@@ -54,7 +54,7 @@ export const interdeps = [
   },
   {
     "name": "ast-delete-object",
-    "size": 1256,
+    "size": 1258,
     "imports": [
       "ast-compare",
       "ast-monkey-traverse",
@@ -63,7 +63,7 @@ export const interdeps = [
   },
   {
     "name": "ast-get-object",
-    "size": 956,
+    "size": 958,
     "imports": [
       "ast-compare",
       "codsen-utils"
@@ -93,7 +93,7 @@ export const interdeps = [
   },
   {
     "name": "ast-monkey",
-    "size": 5514,
+    "size": 5516,
     "imports": [
       "ast-compare",
       "ast-monkey-traverse",
@@ -139,7 +139,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-parser",
-    "size": 7512,
+    "size": 7514,
     "imports": [
       "ast-monkey-util",
       "codsen-tokenizer",
@@ -149,7 +149,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-tokenizer",
-    "size": 39719,
+    "size": 39721,
     "imports": [
       "codsen-utils",
       "html-all-known-attributes",
@@ -269,7 +269,7 @@ export const interdeps = [
   },
   {
     "name": "emlint",
-    "size": 175778,
+    "size": 175781,
     "imports": [
       "ast-monkey-traverse",
       "ast-monkey-util",
@@ -369,7 +369,7 @@ export const interdeps = [
   },
   {
     "name": "html-table-patcher",
-    "size": 2840,
+    "size": 2842,
     "imports": [
       "ast-monkey-traverse-with-lookahead",
       "codsen-parser",
@@ -509,7 +509,7 @@ export const interdeps = [
   },
   {
     "name": "object-delete-key",
-    "size": 1408,
+    "size": 1410,
     "imports": [
       "ast-is-empty",
       "ast-monkey",
@@ -846,7 +846,7 @@ export const interdeps = [
   },
   {
     "name": "stristri",
-    "size": 2671,
+    "size": 2673,
     "imports": [
       "codsen-tokenizer",
       "detect-templating-language",

@@ -542,7 +542,7 @@ export const packageJSONData = {
   },
   "ast-compare": {
     "name": "ast-compare",
-    "version": "4.0.9",
+    "version": "4.0.10",
     "description": "Compare anything: AST, objects, arrays, strings and nested thereof",
     "keywords": [
       "array",
@@ -806,7 +806,7 @@ export const packageJSONData = {
   },
   "ast-delete-object": {
     "name": "ast-delete-object",
-    "version": "4.0.9",
+    "version": "4.0.10",
     "description": "Delete all plain objects in AST if they contain a certain key/value pair",
     "keywords": [
       "ast",
@@ -885,7 +885,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-compare": "^4.0.9",
+      "ast-compare": "^4.0.10",
       "ast-monkey-traverse": "^4.0.7",
       "codsen-utils": "^1.3.0",
       "lodash.clonedeep": "^4.5.0"
@@ -896,7 +896,7 @@ export const packageJSONData = {
   },
   "ast-get-object": {
     "name": "ast-get-object",
-    "version": "4.0.9",
+    "version": "4.0.10",
     "description": "Getter/setter for nested parsed HTML AST’s, querying objects by key/value pairs",
     "keywords": [
       "ast",
@@ -976,7 +976,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "ast-compare": "^4.0.9",
+      "ast-compare": "^4.0.10",
       "codsen-utils": "^1.3.0",
       "lodash.clonedeep": "^4.5.0"
     },
@@ -1247,7 +1247,7 @@ export const packageJSONData = {
   },
   "ast-monkey": {
     "name": "ast-monkey",
-    "version": "9.0.9",
+    "version": "9.0.10",
     "description": "Traverse and edit AST",
     "keywords": [
       "ast",
@@ -1328,7 +1328,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-compare": "^4.0.9",
+      "ast-compare": "^4.0.10",
       "ast-monkey-traverse": "^4.0.7",
       "check-types-mini": "^8.0.9",
       "util-array-object-or-both": "^5.0.6"
@@ -1920,7 +1920,7 @@ export const packageJSONData = {
   },
   "codsen-parser": {
     "name": "codsen-parser",
-    "version": "0.14.9",
+    "version": "0.14.10",
     "description": "Parser aiming at broken or mixed code, especially HTML & CSS",
     "keywords": [
       "ast",
@@ -1989,7 +1989,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-monkey-util": "^3.0.4",
-      "codsen-tokenizer": "^7.0.9",
+      "codsen-tokenizer": "^7.0.10",
       "object-path": "^0.11.8",
       "string-find-malformed": "^4.0.9",
       "string-left-right": "^6.0.9"
@@ -1997,7 +1997,7 @@ export const packageJSONData = {
   },
   "codsen-tokenizer": {
     "name": "codsen-tokenizer",
-    "version": "7.0.9",
+    "version": "7.0.10",
     "description": "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages",
     "keywords": [
       "ast",
@@ -2080,7 +2080,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/lodash.clonedeep": "^4.5.7",
-      "ast-compare": "^4.0.9"
+      "ast-compare": "^4.0.10"
     }
   },
   "codsen-utils": {
@@ -2321,7 +2321,7 @@ export const packageJSONData = {
   },
   "csv-sort-cli": {
     "name": "csv-sort-cli",
-    "version": "3.0.6",
+    "version": "3.0.7",
     "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
     "keywords": [
       "accountancy",
@@ -2963,7 +2963,7 @@ export const packageJSONData = {
   },
   "email-all-chars-within-ascii-cli": {
     "name": "email-all-chars-within-ascii-cli",
-    "version": "3.0.9",
+    "version": "3.0.10",
     "description": "Command line app to scan email templates, are all their characters within ASCII range",
     "keywords": [
       "7bit",
@@ -3213,7 +3213,7 @@ export const packageJSONData = {
   },
   "emlint": {
     "name": "emlint",
-    "version": "6.0.9",
+    "version": "6.0.10",
     "description": "Pluggable email template code linter",
     "keywords": [
       "analysis",
@@ -3297,7 +3297,7 @@ export const packageJSONData = {
     "dependencies": {
       "ast-monkey-traverse": "^4.0.7",
       "ast-monkey-util": "^3.0.4",
-      "codsen-parser": "^0.14.9",
+      "codsen-parser": "^0.14.10",
       "codsen-utils": "^1.3.0",
       "define-lazy-prop": "^3.0.0",
       "globby": "^13.1.3",
@@ -3342,7 +3342,7 @@ export const packageJSONData = {
   },
   "eslint-plugin-row-num": {
     "name": "eslint-plugin-row-num-tbc",
-    "version": "4.0.9",
+    "version": "4.0.10",
     "description": "ESLint plugin to update row numbers on each console.log",
     "keywords": [
       "console",
@@ -3413,12 +3413,12 @@ export const packageJSONData = {
       "@types/json-stringify-safe": "^5.0.0",
       "js-row-num": "^7.0.6",
       "json-stringify-safe": "^5.0.1",
-      "object-delete-key": "^4.0.9"
+      "object-delete-key": "^4.0.10"
     }
   },
   "eslint-plugin-test-num": {
     "name": "eslint-plugin-test-num-tbc",
-    "version": "3.0.10",
+    "version": "3.0.11",
     "description": "ESLint plugin to update unit test numbers automatically",
     "keywords": [
       "automatically",
@@ -3491,7 +3491,7 @@ export const packageJSONData = {
     "dependencies": {
       "@types/json-stringify-safe": "^5.0.0",
       "json-stringify-safe": "^5.0.1",
-      "object-delete-key": "^4.0.9",
+      "object-delete-key": "^4.0.10",
       "object-path": "^0.11.8",
       "string-left-right": "^6.0.9"
     }
@@ -4200,7 +4200,7 @@ export const packageJSONData = {
   },
   "html-table-patcher": {
     "name": "html-table-patcher",
-    "version": "6.0.9",
+    "version": "6.0.10",
     "description": "Visual helper to place templating code around table tags into correct places",
     "keywords": [
       "add",
@@ -4275,7 +4275,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-monkey-traverse-with-lookahead": "^4.0.7",
-      "codsen-parser": "^0.14.9",
+      "codsen-parser": "^0.14.10",
       "ranges-apply": "^7.0.6",
       "ranges-push": "^7.0.6"
     }
@@ -4923,7 +4923,7 @@ export const packageJSONData = {
   },
   "json-comb": {
     "name": "json-comb",
-    "version": "0.8.9",
+    "version": "0.8.10",
     "description": "Command line app to manage sets of JSON files",
     "keywords": [
       "app",
@@ -5098,7 +5098,7 @@ export const packageJSONData = {
   },
   "json-sort-cli": {
     "name": "json-sort-cli",
-    "version": "3.0.10",
+    "version": "3.0.11",
     "description": "Command line app to deep sort JSON files, retains package.json special key order",
     "keywords": [
       "app",
@@ -5350,7 +5350,7 @@ export const packageJSONData = {
   },
   "lerna-clean-changelogs-cli": {
     "name": "lerna-clean-changelogs-cli",
-    "version": "3.0.6",
+    "version": "3.0.7",
     "description": "CLI application to cleanse the lerna/commitizen-generated changelogs",
     "keywords": [
       "changelog",
@@ -5437,7 +5437,7 @@ export const packageJSONData = {
   },
   "lerna-link-dep": {
     "name": "lerna-link-dep",
-    "version": "3.0.5",
+    "version": "3.0.6",
     "description": "Like lerna add but does just the symlinking, works on CLI bins too",
     "keywords": [
       "add",
@@ -5748,7 +5748,7 @@ export const packageJSONData = {
   },
   "object-delete-key": {
     "name": "object-delete-key",
-    "version": "4.0.9",
+    "version": "4.0.10",
     "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
     "keywords": [
       "ast",
@@ -5825,7 +5825,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-is-empty": "^4.0.7",
-      "ast-monkey": "^9.0.9",
+      "ast-monkey": "^9.0.10",
       "lodash.clonedeep": "^4.5.0",
       "util-array-object-or-both": "^5.0.6"
     },
@@ -7606,7 +7606,7 @@ export const packageJSONData = {
   },
   "remark-conventional-commit-changelog-timeline": {
     "name": "remark-conventional-commit-changelog-timeline",
-    "version": "3.0.7",
+    "version": "3.0.8",
     "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
     "keywords": [
       "unified",
@@ -7680,7 +7680,7 @@ export const packageJSONData = {
       "unist-util-visit": "^4.1.2"
     },
     "devDependencies": {
-      "object-delete-key": "^4.0.9",
+      "object-delete-key": "^4.0.10",
       "remark": "^14.0.2"
     }
   },
@@ -9958,7 +9958,7 @@ export const packageJSONData = {
   },
   "stristri": {
     "name": "stristri",
-    "version": "5.0.9",
+    "version": "5.0.10",
     "description": "Extracts or deletes HTML, CSS, text and/or templating tags from string",
     "keywords": [
       "code",
@@ -10032,7 +10032,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "codsen-tokenizer": "^7.0.9",
+      "codsen-tokenizer": "^7.0.10",
       "detect-templating-language": "^4.0.6",
       "ranges-apply": "^7.0.6",
       "ranges-merge": "^9.0.6",
@@ -10045,7 +10045,7 @@ export const packageJSONData = {
   },
   "tap-parse-string-to-object": {
     "name": "tap-parse-string-to-object",
-    "version": "4.0.6",
+    "version": "4.0.7",
     "description": "Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object",
     "keywords": [
       "contents",
@@ -10288,7 +10288,7 @@ export const packageJSONData = {
   },
   "update-versions": {
     "name": "update-versions",
-    "version": "6.0.10",
+    "version": "6.0.11",
     "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
     "keywords": [
       "app",
