@@ -19,7 +19,7 @@ import { temporaryDirectory } from "tempy";
 // -----------------------------------------------------------------------------
 
 test("01 - one sorted file", async () => {
-  let sortedFile = `{\n  "a": 1,\n  "z": 2\n}\n`;
+  let sortedFile = '{\n  "a": 1,\n  "z": 2\n}\n';
 
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
@@ -39,7 +39,7 @@ test("01 - one sorted file", async () => {
 });
 
 test("02 - one unsorted file", async () => {
-  let unsortedFile = `{\n  "z": 1,\n  "a": 2\n}\n`;
+  let unsortedFile = '{\n  "z": 1,\n  "a": 2\n}\n';
 
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
@@ -61,7 +61,7 @@ test("02 - one unsorted file", async () => {
 });
 
 test("03 - 'dry' flag trumps 'ci' flag", async () => {
-  let unsortedFile = `{\n  "z": 1,\n  "a": 2\n}\n`;
+  let unsortedFile = '{\n  "z": 1,\n  "a": 2\n}\n';
 
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
@@ -84,7 +84,7 @@ test("03 - 'dry' flag trumps 'ci' flag", async () => {
 });
 
 test("04 - 'dry', arg order is backwards", async () => {
-  let unsortedFile = `{\n  "z": 1,\n  "a": 2\n}\n`;
+  let unsortedFile = '{\n  "z": 1,\n  "a": 2\n}\n';
 
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";

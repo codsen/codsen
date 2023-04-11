@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no media, error level 0`, () => {
-  let str = `<html><style>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no media, error level 0`, () => {
+  let str = "<html><style>"; // <---- deliberately a tag names of both kinds, suitable and unsuitable
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no media, error leve
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no media, error level 1`, () => {
-  let str = `<html><style>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no media, error level 1`, () => {
+  let str = "<html><style>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no media, error leve
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no media, error level 2`, () => {
-  let str = `<html><style>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no media, error level 2`, () => {
+  let str = "<html><style>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,7 +46,7 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no media, error leve
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
   let healthyValues = [
     "all",
     "aural",
@@ -76,8 +76,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div media="screen">`;
+test(`05 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div media="screen">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -96,8 +96,8 @@ test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz media="screen" yyy>`;
+test(`06 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz media="screen" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -119,8 +119,8 @@ test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`07 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<style media="screeen">`;
+test(`07 - ${`\u001b[${34}m${"value"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<style media="screeen">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -128,13 +128,13 @@ test(`07 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - recognised tag`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), `<style media="screen">`, "07.01");
+  equal(applyFixes(str, messages), '<style media="screen">', "07.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-media",
       idxFrom: 14,
       idxTo: 21,
-      message: `Did you mean "screen"?`,
+      message: 'Did you mean "screen"?',
       fix: {
         ranges: [[14, 21, "screen"]],
       },
@@ -142,21 +142,21 @@ test(`07 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`08 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - still catches whitespace on legit`, () => {
-  let str = `<style media=" screen">`;
+test(`08 - ${`\u001b[${34}m${"value"}\u001b[${39}m`} - still catches whitespace on legit`, () => {
+  let str = '<style media=" screen">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-media": 2,
     },
   });
-  equal(applyFixes(str, messages), `<style media="screen">`, "08.01");
+  equal(applyFixes(str, messages), '<style media="screen">', "08.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-media",
       idxFrom: 14,
       idxTo: 15,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[14, 15]],
       },

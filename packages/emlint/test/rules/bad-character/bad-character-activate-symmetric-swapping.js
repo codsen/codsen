@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two ACTIVATE SYMMETRIC SWAPPING characters`, () => {
+test("01 - detects two ACTIVATE SYMMETRIC SWAPPING characters", () => {
   let str = "\u206Bdlkgjld\u206Bj";
   let linter = new Linter();
   let messages = linter.verify(str, {

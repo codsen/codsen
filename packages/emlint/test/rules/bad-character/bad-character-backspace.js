@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two BACKSPACE characters`, () => {
+test("01 - detects two BACKSPACE characters", () => {
   let str = "\u0008dlkgjld\u0008j";
   let linter = new Linter();
   let messages = linter.verify(str, {

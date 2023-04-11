@@ -5,9 +5,9 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
-test(`01 - correct`, () => {
+test("01 - correct", () => {
   let gathered = [];
-  ct(`<![CDATA[x<y]]>`, {
+  ct("<![CDATA[x<y]]>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -31,7 +31,7 @@ test(`01 - correct`, () => {
 
 test("02 - messed up 1", () => {
   let gathered = [];
-  ct(`<[CDATA[x<y]]>`, {
+  ct("<[CDATA[x<y]]>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -55,7 +55,7 @@ test("02 - messed up 1", () => {
 
 test("03 - messed up 2", () => {
   let gathered = [];
-  ct(`<!CDATA[x<y]]>`, {
+  ct("<!CDATA[x<y]]>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -79,7 +79,7 @@ test("03 - messed up 2", () => {
 
 test("04 - messed up 3", () => {
   let gathered = [];
-  ct(`<![ CData[x<y]]>`, {
+  ct("<![ CData[x<y]]>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },

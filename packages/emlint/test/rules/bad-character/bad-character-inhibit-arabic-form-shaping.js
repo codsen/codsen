@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two INHIBIT ARABIC FORM SHAPING characters`, () => {
+test("01 - detects two INHIBIT ARABIC FORM SHAPING characters", () => {
   let str = "\u206Cdlkgjld\u206Cj";
   let linter = new Linter();
   let messages = linter.verify(str, {

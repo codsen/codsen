@@ -22,24 +22,24 @@ import {
 
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - minimal, removeLineBreaks=on`, () => {
+test(`01 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - minimal, removeLineBreaks=on`, () => {
   mixer({
     removeLineBreaks: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, `a\nb`, opt).res, "a b", "01.01");
+    equal(det(ok, not, n, "a\nb", opt).res, "a b", "01.01");
   });
 });
 
-test(`02 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - minimal, removeLineBreaks=off`, () => {
+test(`02 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - minimal, removeLineBreaks=off`, () => {
   mixer({
     removeLineBreaks: false,
     replaceLineBreaks: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, `a\nb`, opt).res, "a\nb", "02.01");
+    equal(det(ok, not, n, "a\nb", opt).res, "a\nb", "02.01");
   });
 });
 
-test(`03 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix style (LF or \\n)`, () => {
+test(`03 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix style (LF or \\n)`, () => {
   mixer({
     removeLineBreaks: true,
     removeWidows: false,
@@ -49,7 +49,7 @@ test(`03 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix styl
         ok,
         not,
         n,
-        `\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`,
+        "\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n",
         opt
       ).res,
       "tralala tralala2 tralala3 tralala4",
@@ -58,7 +58,7 @@ test(`03 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix styl
   });
 });
 
-test(`04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix style (LF or \\n)`, () => {
+test(`04 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix style (LF or \\n)`, () => {
   mixer({
     removeLineBreaks: true,
     removeWidows: true,
@@ -69,7 +69,7 @@ test(`04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix styl
         ok,
         not,
         n,
-        `\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`,
+        "\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n",
         opt
       ).res,
       "tralala tralala2 tralala3&nbsp;tralala4",
@@ -78,13 +78,13 @@ test(`04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix styl
   });
 
   equal(
-    det1(`\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`, {
+    det1("\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n", {
       removeLineBreaks: true,
       removeWidows: true,
       convertEntities: true,
       eol: true,
     }).res,
-    det1(`\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`, {
+    det1("\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n", {
       removeLineBreaks: true,
       removeWidows: true,
       convertEntities: true,
@@ -94,7 +94,7 @@ test(`04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix styl
   );
 
   not.ok(
-    det1(`\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`, {
+    det1("\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n", {
       removeLineBreaks: true,
       removeWidows: true,
       convertEntities: true,
@@ -103,7 +103,7 @@ test(`04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix styl
   );
 
   not.ok(
-    det1(`\n\n\na\nb\nc\n\n\nd\n\n\n`, {
+    det1("\n\n\na\nb\nc\n\n\nd\n\n\n", {
       removeLineBreaks: true,
       removeWidows: true,
       convertEntities: true,
@@ -112,7 +112,7 @@ test(`04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix styl
   );
 
   not.ok(
-    det1(`\n\n\na\nb\nc\n\n\nd\n\n\n`, {
+    det1("\n\n\na\nb\nc\n\n\nd\n\n\n", {
       removeLineBreaks: true,
       removeWidows: true,
       convertEntities: true,
@@ -122,7 +122,7 @@ test(`04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix styl
 
   compare(
     ok,
-    det1(`\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n`, {
+    det1("\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n", {
       removeLineBreaks: true,
       removeWidows: true,
       convertEntities: true,
@@ -149,7 +149,7 @@ test(`04 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - Unix styl
   );
 });
 
-test(`05 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - DOS style (CRLF or \\r\\n)`, () => {
+test(`05 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - DOS style (CRLF or \\r\\n)`, () => {
   mixer({
     removeLineBreaks: true,
     removeWidows: false,
@@ -168,7 +168,7 @@ test(`05 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - DOS style
   });
 });
 
-test(`06 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - DOS style (CRLF or \\r\\n)`, () => {
+test(`06 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - DOS style (CRLF or \\r\\n)`, () => {
   mixer({
     removeLineBreaks: true,
     removeWidows: true,
@@ -188,7 +188,7 @@ test(`06 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - DOS style
   });
 });
 
-test(`07 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - clasic Mac OS style (CR or \\r only)`, () => {
+test(`07 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - clasic Mac OS style (CR or \\r only)`, () => {
   mixer({
     removeLineBreaks: true,
     removeWidows: false,
@@ -198,7 +198,7 @@ test(`07 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - clasic Ma
         ok,
         not,
         n,
-        `\r\r\rtralala\rtralala2\rtralala3\r\r\rtralala4\r\r\r`,
+        "\r\r\rtralala\rtralala2\rtralala3\r\r\rtralala4\r\r\r",
         opt
       ).res,
       "tralala tralala2 tralala3 tralala4",
@@ -207,7 +207,7 @@ test(`07 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - clasic Ma
   });
 });
 
-test(`08 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - clasic Mac OS style (CR or \\r only)`, () => {
+test(`08 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - clasic Mac OS style (CR or \\r only)`, () => {
   mixer({
     removeLineBreaks: true,
     removeWidows: true,
@@ -218,7 +218,7 @@ test(`08 - ${`\u001b[${35}m${`opts.removeLineBreaks`}\u001b[${39}m`} - clasic Ma
         ok,
         not,
         n,
-        `\r\r\rtralala\rtralala2\rtralala3\r\r\rtralala4\r\r\r`,
+        "\r\r\rtralala\rtralala2\rtralala3\r\r\rtralala4\r\r\r",
         opt
       ).res,
       "tralala tralala2 tralala3&nbsp;tralala4",

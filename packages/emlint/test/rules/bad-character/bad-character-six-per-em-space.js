@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two SIX-PER-EM SPACE characters`, () => {
+test("01 - detects two SIX-PER-EM SPACE characters", () => {
   let str = "\u2006dlkgjld\u2006j";
   let linter = new Linter();
   let messages = linter.verify(str, {

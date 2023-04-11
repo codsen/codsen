@@ -8,7 +8,7 @@ import fixTypography from "../dist/remark-typography.esm.js";
 
 // -----------------------------------------------------------------------------
 
-test(`01 - spaced m-dashes`, async () => {
+test("01 - spaced m-dashes", async () => {
   equal(
     (await remark().use(fixTypography, {}).process("Some text - more text."))
       .toString()
@@ -18,12 +18,12 @@ test(`01 - spaced m-dashes`, async () => {
   );
 });
 
-test(`02 - ignores tight dashes`, async () => {
+test("02 - ignores tight dashes", async () => {
   equal(
     (await remark().use(fixTypography, {}).process("Some text-more text."))
       .toString()
       .trim(),
-    `Some text-more text.`,
+    "Some text-more text.",
     "02.01"
   );
 });

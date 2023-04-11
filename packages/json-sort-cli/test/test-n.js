@@ -24,7 +24,7 @@ test("01 - only node_modules with one file, flag disabled", async () => {
   fs.ensureDirSync(path.resolve(tempFolder));
   fs.ensureDirSync(path.resolve(path.join(tempFolder, "/node_modules/")));
   let pathOfTheTestfile = path.join(tempFolder, "/node_modules/sortme.json");
-  let originalContents = `{\n  "z": 1,\n  "a": 2\n}\n`;
+  let originalContents = '{\n  "z": 1,\n  "a": 2\n}\n';
 
   let processedFilesContents = fs
     .writeFile(pathOfTheTestfile, originalContents)
@@ -52,7 +52,7 @@ test("02 - only node_modules with one file, flag enabled", async () => {
   let pathOfTheTestfile = path.join(tempFolder, "/node_modules/sortme.json");
 
   let processedFilesContents = fs
-    .writeFile(pathOfTheTestfile, `{\n  "z": 1,\n  "a": 2\n}\n`)
+    .writeFile(pathOfTheTestfile, '{\n  "z": 1,\n  "a": 2\n}\n')
     .then(() => execa("./cli.js", [tempFolder, "-n"]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((testFile) =>
@@ -66,12 +66,12 @@ test("02 - only node_modules with one file, flag enabled", async () => {
       throw new Error(err);
     });
 
-  equal(await processedFilesContents, `{\n  "a": 2,\n  "z": 1\n}\n`, "02.01");
+  equal(await processedFilesContents, '{\n  "a": 2,\n  "z": 1\n}\n', "02.01");
 });
 
 test("03 - files inside and outside node_modules, flag enabled", async () => {
-  let originalContents = `{\n  "z": 1,\n  "a": 2\n}\n`;
-  let sortedContents = `{\n  "a": 2,\n  "z": 1\n}\n`;
+  let originalContents = '{\n  "z": 1,\n  "a": 2\n}\n';
+  let sortedContents = '{\n  "a": 2,\n  "z": 1\n}\n';
 
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
@@ -96,8 +96,8 @@ test("03 - files inside and outside node_modules, flag enabled", async () => {
 });
 
 test("04 - files inside and outside node_modules, flag disabled", async () => {
-  let originalContents = `{\n  "z": 1,\n  "a": 2\n}\n`;
-  let sortedContents = `{\n  "a": 2,\n  "z": 1\n}\n`;
+  let originalContents = '{\n  "z": 1,\n  "a": 2\n}\n';
+  let sortedContents = '{\n  "a": 2,\n  "z": 1\n}\n';
 
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";

@@ -27,7 +27,7 @@ function render(str, opts) {
 
 // ---------------------------------------------------------
 
-test(`01`, () => {
+test("01", () => {
   let input = `
 # Change Log
 
@@ -63,7 +63,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
   );
 });
 
-test(`02 - static string in the date callback`, () => {
+test("02 - static string in the date callback", () => {
   let input = `
 # 0.0.1 (2022-01-01)
 
@@ -93,7 +93,7 @@ test(`02 - static string in the date callback`, () => {
   );
 });
 
-test(`03 - arabic dates`, () => {
+test("03 - arabic dates", () => {
   let input = `
 # 0.0.1 (2022-01-01)
 

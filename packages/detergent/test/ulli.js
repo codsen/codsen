@@ -5,7 +5,7 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { det as det1 } from "../dist/detergent.esm.js";
 import { det, mixer } from "../t-util/util.js";
 
-test(`01 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - minimal case`, () => {
+test(`01 - ${`\u001b[${31}m${"ul/li tags"}\u001b[${39}m`} - minimal case`, () => {
   mixer({
     removeLineBreaks: false,
     removeWidows: false,
@@ -16,7 +16,7 @@ test(`01 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - minimal case`, () =>
   });
 });
 
-test(`02 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces, removeLineBreaks=on`, () => {
+test(`02 - ${`\u001b[${31}m${"ul/li tags"}\u001b[${39}m`} - adds missing spaces, removeLineBreaks=on`, () => {
   mixer({
     removeLineBreaks: true,
     removeWidows: false,
@@ -36,18 +36,18 @@ test(`02 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces,
   });
 });
 
-test(`03 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces, replaceLineBreaks=off`, () => {
+test(`03 - ${`\u001b[${31}m${"ul/li tags"}\u001b[${39}m`} - adds missing spaces, replaceLineBreaks=off`, () => {
   mixer({
     removeLineBreaks: false,
     removeWidows: false,
     replaceLineBreaks: false,
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, `a<li>b`, opt).res, "a\nb", "03.01");
+    equal(det(ok, not, n, "a<li>b", opt).res, "a\nb", "03.01");
   });
 });
 
-test(`04 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces, replaceLineBreaks=off`, () => {
+test(`04 - ${`\u001b[${31}m${"ul/li tags"}\u001b[${39}m`} - adds missing spaces, replaceLineBreaks=off`, () => {
   mixer({
     removeLineBreaks: false,
     removeWidows: false,
@@ -68,7 +68,7 @@ test(`04 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces,
   });
 });
 
-test(`05 - ${`\u001b[${31}m${`ul/li tags`}\u001b[${39}m`} - adds missing spaces, replaceLineBreaks=on`, () => {
+test(`05 - ${`\u001b[${31}m${"ul/li tags"}\u001b[${39}m`} - adds missing spaces, replaceLineBreaks=on`, () => {
   mixer({
     removeLineBreaks: false,
     removeWidows: false,

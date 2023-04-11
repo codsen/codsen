@@ -22,9 +22,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // MVP
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, one level`, () => {
+test(`01 - ${`\u001b[${34}m${"mvp"}\u001b[${39}m`} - minimal case, one level`, () => {
   let gathered = [];
-  ct(`<style>@media a {.b{c}}</style>`, {
+  ct("<style>@media a {.b{c}}</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -51,7 +51,7 @@ test(`01 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, one level`, (
         type: "rule",
         start: 17,
         end: 22,
-        value: `.b{c}`,
+        value: ".b{c}",
         left: 16,
         nested: true,
         openingCurlyAt: 19,
@@ -87,7 +87,7 @@ test(`01 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, one level`, (
         type: "at",
         start: 7,
         end: 23,
-        value: `@media a {.b{c}}`,
+        value: "@media a {.b{c}}",
         left: 6,
         nested: false,
         identifier: "media",
@@ -103,7 +103,7 @@ test(`01 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, one level`, (
             type: "rule",
             start: 17,
             end: 22,
-            value: `.b{c}`,
+            value: ".b{c}",
             left: 16,
             nested: true,
             openingCurlyAt: 19,
@@ -170,9 +170,9 @@ test(`01 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, one level`, (
 //       l: m
 //    }
 // }
-test(`02 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, two levels`, () => {
+test(`02 - ${`\u001b[${34}m${"mvp"}\u001b[${39}m`} - minimal case, two levels`, () => {
   let gathered = [];
-  ct(`<style>@a b {.c{d: e}@f g {.h{i: j}}.k{l: m}}</style>`, {
+  ct("<style>@a b {.c{d: e}@f g {.h{i: j}}.k{l: m}}</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -536,7 +536,7 @@ test(`02 - ${`\u001b[${34}m${`mvp`}\u001b[${39}m`} - minimal case, two levels`, 
 // simple
 // -----------------------------------------------------------------------------
 
-test(`03 - ${`\u001b[${35}m${`simple`}\u001b[${39}m`} - one rule`, () => {
+test(`03 - ${`\u001b[${35}m${"simple"}\u001b[${39}m`} - one rule`, () => {
   let gathered = [];
   ct(
     `<style>
@@ -632,7 +632,7 @@ test(`03 - ${`\u001b[${35}m${`simple`}\u001b[${39}m`} - one rule`, () => {
   );
 });
 
-test(`04 - ${`\u001b[${35}m${`simple`}\u001b[${39}m`} - rule is nonsense`, () => {
+test(`04 - ${`\u001b[${35}m${"simple"}\u001b[${39}m`} - rule is nonsense`, () => {
   let gathered = [];
   ct(
     `<style>

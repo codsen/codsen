@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no border, error level 0`, () => {
-  let str = `<table>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no border, error level 0`, () => {
+  let str = "<table>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no border, error lev
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no border, error level 1`, () => {
-  let str = `<table>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no border, error level 1`, () => {
+  let str = "<table>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no border, error lev
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no border, error level 2`, () => {
-  let str = `<table>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no border, error level 2`, () => {
+  let str = "<table>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no border, error lev
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy border`, () => {
-  let str = `<table border='0'>`; // <-- notice single quotes
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy border`, () => {
+  let str = "<table border='0'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -61,21 +61,21 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy border`, () 
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<table border=" 0">`;
+test(`05 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = '<table border=" 0">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-border": 2,
     },
   });
-  equal(applyFixes(str, messages), `<table border="0">`, "05.01");
+  equal(applyFixes(str, messages), '<table border="0">', "05.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-border",
       idxFrom: 15,
       idxTo: 16,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[15, 16]],
       },
@@ -83,21 +83,21 @@ test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   ]);
 });
 
-test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<table border="0 ">`;
+test(`06 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = '<table border="0 ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-border": 2,
     },
   });
-  equal(applyFixes(str, messages), `<table border="0">`, "06.01");
+  equal(applyFixes(str, messages), '<table border="0">', "06.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-border",
       idxFrom: 16,
       idxTo: 17,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[16, 17]],
       },
@@ -105,21 +105,21 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`, () => {
-  let str = `<table border="  0  ">`;
+test(`07 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around`, () => {
+  let str = '<table border="  0  ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-border": 2,
     },
   });
-  equal(applyFixes(str, messages), `<table border="0">`, "07.01");
+  equal(applyFixes(str, messages), '<table border="0">', "07.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-border",
       idxFrom: 15,
       idxTo: 20,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [15, 17],
@@ -130,8 +130,8 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<table border="  \t">`;
+test(`08 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<table border="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -145,7 +145,7 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-border",
       idxFrom: 15,
       idxTo: 18,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -154,8 +154,8 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`09 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - string as value`, () => {
-  let str = `<table border="z">`;
+test(`09 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - string as value`, () => {
+  let str = '<table border="z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -169,14 +169,14 @@ test(`09 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - string as value`, () => {
       ruleId: "attribute-validate-border",
       idxFrom: 15,
       idxTo: 16,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`10 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - value as string, space too`, () => {
-  let str = `<table border=" z">`;
+test(`10 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - value as string, space too`, () => {
+  let str = '<table border=" z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -184,13 +184,13 @@ test(`10 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - value as string, space to
     },
   });
   // can fix only partially:
-  equal(applyFixes(str, messages), `<table border="z">`, "10.01");
+  equal(applyFixes(str, messages), '<table border="z">', "10.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-border",
       idxFrom: 15,
       idxTo: 16,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[15, 16]],
       },
@@ -199,14 +199,14 @@ test(`10 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - value as string, space to
       ruleId: "attribute-validate-border",
       idxFrom: 16,
       idxTo: 17,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`11 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - dot as value`, () => {
-  let str = `<table border=".">`;
+test(`11 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - dot as value`, () => {
+  let str = '<table border=".">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -220,14 +220,14 @@ test(`11 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - dot as value`, () => {
       ruleId: "attribute-validate-border",
       idxFrom: 15,
       idxTo: 16,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`12 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - a rational number`, () => {
-  let str = `<table border="1.5">`;
+test(`12 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - a rational number`, () => {
+  let str = '<table border="1.5">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -241,14 +241,14 @@ test(`12 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - a rational number`, () =>
       ruleId: "attribute-validate-border",
       idxFrom: 16, // <--- starts at the first non-digit char
       idxTo: 18,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`13 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, () => {
-  let str = `<table border="1px">`;
+test(`13 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - with units`, () => {
+  let str = '<table border="1px">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -256,13 +256,13 @@ test(`13 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, () => {
     },
   });
   // can fix:
-  equal(applyFixes(str, messages), `<table border="1">`, "13.01");
+  equal(applyFixes(str, messages), '<table border="1">', "13.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-border",
       idxFrom: 16, // <--- starts at the first non-digit char
       idxTo: 18,
-      message: `Remove px.`,
+      message: "Remove px.",
       fix: {
         ranges: [[16, 18]],
       },
@@ -273,8 +273,8 @@ test(`13 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, () => {
 // 04. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`14 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div border="0">`;
+test(`14 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div border="0">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -293,8 +293,8 @@ test(`14 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`15 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz border="0" yyy>`;
+test(`15 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz border="0" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {

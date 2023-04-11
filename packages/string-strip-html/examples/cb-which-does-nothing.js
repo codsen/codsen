@@ -18,7 +18,7 @@ const cb1 = ({
   rangesArr.push(deleteFrom, deleteTo, insert);
 };
 const result1 = stripHtml("abc<hr>def", { cb: cb1 }).result;
-assert.equal(result1, `abc def`);
+assert.equal(result1, "abc def");
 
 // to prove it works, don't do anything:
 const cb2 = ({

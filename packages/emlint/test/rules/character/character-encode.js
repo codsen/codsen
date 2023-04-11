@@ -8,59 +8,59 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // no false positives
 // -----------------------------------------------------------------------------
 
-test(`01 - no false positives`, () => {
+test("01 - no false positives", () => {
   [
     // whitespace
-    ``,
-    ` `,
-    `\n\r\t`,
+    "",
+    " ",
+    "\n\r\t",
     // text
-    `a`,
-    `<span>a</span>`,
-    `fsdhk\nfdfgh kj `,
+    "a",
+    "<span>a</span>",
+    "fsdhk\nfdfgh kj ",
     // healthy encoded entities
-    `<span>&pound;</span>`,
-    `<span>&pound;10</span>`,
-    `<span>&#xA3;</span>`,
-    `<span>&#xA3;10</span>`,
+    "<span>&pound;</span>",
+    "<span>&pound;10</span>",
+    "<span>&#xA3;</span>",
+    "<span>&#xA3;10</span>",
     // malformed encoded entities
-    `<span>&nbs;</span>`,
-    `<span>&nbsp</span>`,
-    `<span>& nbsp;</span>`,
+    "<span>&nbs;</span>",
+    "<span>&nbsp</span>",
+    "<span>& nbsp;</span>",
     //
-    `abc&nbs;def`,
-    `abc&nbspdef`,
-    `abc& nbsp;def`,
+    "abc&nbs;def",
+    "abc&nbspdef",
+    "abc& nbsp;def",
     //
-    `abc &nbs;def`,
-    `abc &nbspdef`,
-    `abc & nbsp;def`,
+    "abc &nbs;def",
+    "abc &nbspdef",
+    "abc & nbsp;def",
     //
-    `abc&nbs; def`,
-    `abc&nbsp def`,
-    `abc& nbsp; def`,
+    "abc&nbs; def",
+    "abc&nbsp def",
+    "abc& nbsp; def",
     //
-    `abc &nbs; def`,
-    `abc &nbsp def`,
-    `abc & nbsp; def`,
+    "abc &nbs; def",
+    "abc &nbsp def",
+    "abc & nbsp; def",
     // esp tags
-    `{% if count > 1 %}{% if count > 1 %}`,
-    `{% if count < 1 %}{% if count > 1 %}`,
-    `{% if count < 1 %}{% if count < 1 %}`,
-    `{% if count > 1 %}{% if count < 1 %}`,
+    "{% if count > 1 %}{% if count > 1 %}",
+    "{% if count < 1 %}{% if count > 1 %}",
+    "{% if count < 1 %}{% if count < 1 %}",
+    "{% if count > 1 %}{% if count < 1 %}",
     //
-    `{{ a > b }}`,
+    "{{ a > b }}",
     //
-    `{%- if count > 1 -%}{%- if count > 1 -%}`,
-    `{%- if count < 1 -%}{%- if count > 1 -%}`,
-    `{%- if count < 1 -%}{%- if count < 1 -%}`,
-    `{%- if count > 1 -%}{%- if count < 1 -%}`,
-    `{%- set z = "x" -%}`,
-    `<div class="x">{%- set z = "x" -%}</div>`,
+    "{%- if count > 1 -%}{%- if count > 1 -%}",
+    "{%- if count < 1 -%}{%- if count > 1 -%}",
+    "{%- if count < 1 -%}{%- if count < 1 -%}",
+    "{%- if count > 1 -%}{%- if count < 1 -%}",
+    '{%- set z = "x" -%}',
+    '<div class="x">{%- set z = "x" -%}</div>',
     // broken comments
-    `a<!--b->c`,
-    `a<!-b->c`,
-    `a<!-b-->c`,
+    "a<!--b->c",
+    "a<!-b->c",
+    "a<!-b-->c",
     // `a<--b-->c`, // TODO
   ].forEach((str) => {
     let messages1 = verify(not, str, {
@@ -97,7 +97,7 @@ test(`01 - no false positives`, () => {
 // basic tests, no config
 // -----------------------------------------------------------------------------
 
-test(`02 - unencoded characters`, () => {
+test("02 - unencoded characters", () => {
   let str = "£100";
   let messages = verify(not, str, {
     rules: {
@@ -125,7 +125,7 @@ test(`02 - unencoded characters`, () => {
   equal(applyFixes(str, messages), "&pound;100", "02.01");
 });
 
-test(`03 - unencoded characters`, () => {
+test("03 - unencoded characters", () => {
   let str = "£100";
   let messages = verify(not, str, {
     rules: {
@@ -135,7 +135,7 @@ test(`03 - unencoded characters`, () => {
   equal(applyFixes(str, messages), "&pound;100", "03.01");
 });
 
-test(`04 - named`, () => {
+test("04 - named", () => {
   let str = "£100";
   let messages = verify(not, str, {
     rules: {
@@ -163,7 +163,7 @@ test(`04 - named`, () => {
   equal(applyFixes(str, messages), "&pound;100", "04.01");
 });
 
-test(`05 - numeric`, () => {
+test("05 - numeric", () => {
   let str = "£100";
   let messages = verify(not, str, {
     rules: {
@@ -191,7 +191,7 @@ test(`05 - numeric`, () => {
   equal(applyFixes(str, messages), "&#xA3;100", "05.01");
 });
 
-test(`06 - defaults`, () => {
+test("06 - defaults", () => {
   let str = "£100";
   let messages = verify(not, str, {
     rules: {
@@ -219,7 +219,7 @@ test(`06 - defaults`, () => {
   equal(applyFixes(str, messages), "&pound;100", "06.01");
 });
 
-test(`07 - unrecognised`, () => {
+test("07 - unrecognised", () => {
   let str = "£100";
   let messages = verify(not, str, {
     rules: {
@@ -250,7 +250,7 @@ test(`07 - unrecognised`, () => {
 // email-unfriendly entities
 // -----------------------------------------------------------------------------
 
-test(`08 - email not-friendly named char`, () => {
+test("08 - email not-friendly named char", () => {
   let str = "\u0424"; // &Fcy; or Ф
   let messages = verify(not, str, {
     rules: {
@@ -278,7 +278,7 @@ test(`08 - email not-friendly named char`, () => {
   equal(applyFixes(str, messages), "&#x424;", "08.01");
 });
 
-test(`09 - email not-friendly named char`, () => {
+test("09 - email not-friendly named char", () => {
   let str = "\u0424"; // &Fcy; or Ф
   let messages = verify(not, str, {
     rules: {
@@ -306,7 +306,7 @@ test(`09 - email not-friendly named char`, () => {
   equal(applyFixes(str, messages), "&#x424;", "09.01");
 });
 
-test(`10 - email not-friendly named char`, () => {
+test("10 - email not-friendly named char", () => {
   let str = "\u0424"; // &Fcy; or Ф
   let messages = verify(not, str, {
     rules: {
@@ -337,8 +337,8 @@ test(`10 - email not-friendly named char`, () => {
 // visible HTML-unfriendly chars
 // -----------------------------------------------------------------------------
 
-test(`11 - brackets and quotes into named`, () => {
-  let str = `><'"&`;
+test("11 - brackets and quotes into named", () => {
+  let str = "><'\"&";
   let messages = verify(not, str, {
     rules: {
       "character-encode": [2, "named"],
@@ -398,8 +398,8 @@ test(`11 - brackets and quotes into named`, () => {
   equal(applyFixes(str, messages), "&gt;&lt;'&quot;&amp;", "11.01");
 });
 
-test(`12 - brackets and quotes into numeric`, () => {
-  let str = `><'"&`;
+test("12 - brackets and quotes into numeric", () => {
+  let str = "><'\"&";
   let messages = verify(not, str, {
     rules: {
       "character-encode": [2, "numeric"],
@@ -459,9 +459,9 @@ test(`12 - brackets and quotes into numeric`, () => {
   equal(applyFixes(str, messages), "&#x3E;&#x3C;'&#x22;&#x26;", "12.01");
 });
 
-test(`13`, () => {
-  let str = `<span>£10</span>`;
-  let fixed = `<span>&pound;10</span>`;
+test("13", () => {
+  let str = "<span>£10</span>";
+  let fixed = "<span>&pound;10</span>";
   let messages = verify(not, str, {
     rules: {
       "character-encode": [2, "named"],
@@ -471,9 +471,9 @@ test(`13`, () => {
   equal(messages.length, 1, "13.02");
 });
 
-test(`14`, () => {
-  let str = `<span>£10</span>`;
-  let fixed = `<span>&#xA3;10</span>`;
+test("14", () => {
+  let str = "<span>£10</span>";
+  let fixed = "<span>&#xA3;10</span>";
   let messages = verify(not, str, {
     rules: {
       "character-encode": [2, "numeric"],
@@ -483,9 +483,9 @@ test(`14`, () => {
   equal(messages.length, 1, "14.02");
 });
 
-test(`15 - within HTML comments`, () => {
-  let str = `<!--£10 offer module starts-->`;
-  let fixed = `<!--&pound;10 offer module starts-->`;
+test("15 - within HTML comments", () => {
+  let str = "<!--£10 offer module starts-->";
+  let fixed = "<!--&pound;10 offer module starts-->";
   let messages = verify(not, str, {
     rules: {
       "character-encode": 2,
@@ -495,9 +495,9 @@ test(`15 - within HTML comments`, () => {
   equal(messages.length, 1, "15.02");
 });
 
-test(`16 - within not-outlook HTML comments`, () => {
-  let str = `<!--[if !mso]><!-->£10<!--<![endif]-->`;
-  let fixed = `<!--[if !mso]><!-->&pound;10<!--<![endif]-->`;
+test("16 - within not-outlook HTML comments", () => {
+  let str = "<!--[if !mso]><!-->£10<!--<![endif]-->";
+  let fixed = "<!--[if !mso]><!-->&pound;10<!--<![endif]-->";
   let messages = verify(not, str, {
     rules: {
       "character-encode": 2,
@@ -507,9 +507,9 @@ test(`16 - within not-outlook HTML comments`, () => {
   equal(messages.length, 1, "16.02");
 });
 
-test(`17 - within outlook-only HTML comments`, () => {
-  let str = `<!--[if mso]>£10<![endif]-->`;
-  let fixed = `<!--[if mso]>&pound;10<![endif]-->`;
+test("17 - within outlook-only HTML comments", () => {
+  let str = "<!--[if mso]>£10<![endif]-->";
+  let fixed = "<!--[if mso]>&pound;10<![endif]-->";
   let messages = verify(not, str, {
     rules: {
       "character-encode": 2,
@@ -519,9 +519,9 @@ test(`17 - within outlook-only HTML comments`, () => {
   equal(messages.length, 1, "17.02");
 });
 
-test(`18 - within CSS comments`, () => {
-  let str = `<style>/*£10 offer module starts*/</style><body>z</body>`;
-  let fixed = `<style>/*&pound;10 offer module starts*/</style><body>z</body>`;
+test("18 - within CSS comments", () => {
+  let str = "<style>/*£10 offer module starts*/</style><body>z</body>";
+  let fixed = "<style>/*&pound;10 offer module starts*/</style><body>z</body>";
   let messages = verify(not, str, {
     rules: {
       "character-encode": 2,
@@ -531,7 +531,7 @@ test(`18 - within CSS comments`, () => {
   equal(messages.length, 1, "18.02");
 });
 
-test(`19 - ampersand as text, error`, () => {
+test("19 - ampersand as text, error", () => {
   let str = `<table>
   <tr>
     <td>
@@ -555,7 +555,7 @@ test(`19 - ampersand as text, error`, () => {
   equal(messages.length, 1, "19.02");
 });
 
-test(`20 - ampersand as text, off`, () => {
+test("20 - ampersand as text, off", () => {
   let str = `<table>
   <tr>
     <td>
@@ -571,7 +571,7 @@ test(`20 - ampersand as text, off`, () => {
   equal(messages, [], "20.01");
 });
 
-test(`21 - same but cleaned with Detergent`, () => {
+test("21 - same but cleaned with Detergent", () => {
   let str = `<table>
   <tr>
     <td>
@@ -590,7 +590,7 @@ test(`21 - same but cleaned with Detergent`, () => {
 // 05. mixed rules
 // -----------------------------------------------------------------------------
 
-test(`22 - broken closing comment, dash missing`, () => {
+test("22 - broken closing comment, dash missing", () => {
   let str = "a<!--b->c";
   let fixed = "a<!--b-->c";
   let messages = verify(not, str, {
@@ -608,7 +608,7 @@ test(`22 - broken closing comment, dash missing`, () => {
         severity: 2,
         idxFrom: 6,
         idxTo: 8,
-        message: `Malformed closing comment tag.`,
+        message: "Malformed closing comment tag.",
         fix: {
           ranges: [[6, 8, "-->"]],
         },
@@ -619,8 +619,8 @@ test(`22 - broken closing comment, dash missing`, () => {
   equal(applyFixes(str, messages), fixed, "22.01");
 });
 
-test(`23`, () => {
-  let str = `abc&amp;nbsp;def`;
+test("23", () => {
+  let str = "abc&amp;nbsp;def";
   let messages = verify(not, str, {
     rules: {
       "character-encode": 2,
@@ -629,8 +629,8 @@ test(`23`, () => {
   equal(messages, [], "23.01");
 });
 
-test(`24`, () => {
-  let str = `abc&amp;nbsp;def`;
+test("24", () => {
+  let str = "abc&amp;nbsp;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-multiple-encoding": 2,

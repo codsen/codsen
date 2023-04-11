@@ -20,20 +20,20 @@ const encodedNbsps = [encodedNbspHtml, encodedNbspCss, encodedNbspJs];
 // opts.ignore - Nunjucks
 // -----------------------------------------------------------------------------
 
-test(`01 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal detects template code and nothing happens`, () => {
+test(`01 - \u001b[${35}m${"opts.ignore, nunjucks"}\u001b[${39}m - widow removal detects template code and nothing happens`, () => {
   //
   // ganged cases where nothing should happen:
   let vals = [
-    `{% if something %} some text and more text {% endif %}`,
-    `{%- if something -%}\n\nsome text and more text\n\n{%- endif -%}`,
-    `{{ something else here with many words }}`,
-    `{% if something else and also another thing %}`,
-    `Something here and there and then, {% if something else and also another thing %}`,
+    "{% if something %} some text and more text {% endif %}",
+    "{%- if something -%}\n\nsome text and more text\n\n{%- endif -%}",
+    "{{ something else here with many words }}",
+    "{% if something else and also another thing %}",
+    "Something here and there and then, {% if something else and also another thing %}",
   ];
   vals.forEach((val, i) => {
     equal(
       removeWidows(val, {
-        ignore: `jinja`,
+        ignore: "jinja",
       }).res,
       val,
       `05.01.0${1 + i} - templating chunks`
@@ -41,25 +41,26 @@ test(`01 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal 
   });
 });
 
-test(`02 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal detects template code and widows are prevented`, () => {
-  let source = `{% if something else and also another thing %}tralala {% endif %}some text here`;
+test(`02 - \u001b[${35}m${"opts.ignore, nunjucks"}\u001b[${39}m - widow removal detects template code and widows are prevented`, () => {
+  let source =
+    "{% if something else and also another thing %}tralala {% endif %}some text here";
   let res = `{% if something else and also another thing %}tralala {% endif %}some text${encodedNbspHtml}here`;
-  equal(removeWidows(source, { minCharCount: 5 }).res, res, `02.01`);
+  equal(removeWidows(source, { minCharCount: 5 }).res, res, "02.01");
   equal(
     removeWidows(source, {
-      ignore: `jinja`,
+      ignore: "jinja",
       minCharCount: 5,
     }).res,
     res,
-    `02.02`
+    "02.02"
   );
 });
 
-test(`03 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal detects template code and widows are prevented`, () => {
+test(`03 - \u001b[${35}m${"opts.ignore, nunjucks"}\u001b[${39}m - widow removal detects template code and widows are prevented`, () => {
   languages.forEach((targetLanguage, i) => {
     equal(
       removeWidows(
-        `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more text.`,
+        "Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more text.",
         {
           convertEntities: false,
           targetLanguage,
@@ -85,11 +86,11 @@ test(`03 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal 
     );
     equal(
       removeWidows(
-        `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more text.`,
+        "Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more text.",
         {
           convertEntities: false,
           targetLanguage,
-          ignore: `jinja`,
+          ignore: "jinja",
           minCharCount: 5,
         }
       ).res,
@@ -102,7 +103,7 @@ test(`03 - \u001b[${35}m${`opts.ignore, nunjucks`}\u001b[${39}m - widow removal 
         {
           convertEntities: true,
           targetLanguage,
-          ignore: `jinja`,
+          ignore: "jinja",
           minCharCount: 5,
         }
       ).res,

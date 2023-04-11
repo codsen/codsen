@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two NOMINAL DIGIT SHAPES characters`, () => {
+test("01 - detects two NOMINAL DIGIT SHAPES characters", () => {
   let str = "\u206Fdlkgjld\u206Fj";
   let linter = new Linter();
   let messages = linter.verify(str, {

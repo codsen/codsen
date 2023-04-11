@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two OPERATING SYSTEM COMMAND characters`, () => {
+test("01 - detects two OPERATING SYSTEM COMMAND characters", () => {
   let str = "\u009Ddlkgjld\u009Dj";
   let linter = new Linter();
   let messages = linter.verify(str, {

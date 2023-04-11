@@ -8,8 +8,8 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // false positives
 // -----------------------------------------------------------------------------
 
-test(`01 - value-less attributes`, () => {
-  let str = `<td nowrap >`;
+test("01 - value-less attributes", () => {
+  let str = "<td nowrap >";
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 0,
@@ -19,8 +19,8 @@ test(`01 - value-less attributes`, () => {
   equal(messages, [], "01.02");
 });
 
-test(`02 - value-less attributes`, () => {
-  let str = `<td nowrap>`;
+test("02 - value-less attributes", () => {
+  let str = "<td nowrap>";
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 0,
@@ -30,8 +30,8 @@ test(`02 - value-less attributes`, () => {
   equal(messages, [], "02.02");
 });
 
-test(`03 - value-less attributes`, () => {
-  let str = `<td nowrap/>`;
+test("03 - value-less attributes", () => {
+  let str = "<td nowrap/>";
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 0,
@@ -41,8 +41,8 @@ test(`03 - value-less attributes`, () => {
   equal(messages, [], "03.02");
 });
 
-test(`04 - value-less attributes`, () => {
-  let str = `<br nowrap />`;
+test("04 - value-less attributes", () => {
+  let str = "<br nowrap />";
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 0,
@@ -52,8 +52,8 @@ test(`04 - value-less attributes`, () => {
   equal(messages, [], "04.02");
 });
 
-test(`05 - value-less attributes`, () => {
-  let str = `</td nowrap nowrap>`;
+test("05 - value-less attributes", () => {
+  let str = "</td nowrap nowrap>";
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 0,
@@ -66,8 +66,8 @@ test(`05 - value-less attributes`, () => {
 // no config
 // -----------------------------------------------------------------------------
 
-test(`06 - off`, () => {
-  let str = `<a b"c" d'e'>`;
+test("06 - off", () => {
+  let str = "<a b\"c\" d'e'>";
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 0,
@@ -77,9 +77,9 @@ test(`06 - off`, () => {
   equal(messages, [], "06.02");
 });
 
-test(`07`, () => {
-  let str = `<a class"b" id'c'>`;
-  let fixed = `<a class="b" id="c">`;
+test("07", () => {
+  let str = "<a class\"b\" id'c'>";
+  let fixed = '<a class="b" id="c">';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 1,
@@ -88,9 +88,9 @@ test(`07`, () => {
   equal(applyFixes(str, messages), fixed, "07.01");
 });
 
-test(`08 - equal missing`, () => {
-  let str = `<img alt""/>`;
-  let fixed = `<img alt=""/>`;
+test("08 - equal missing", () => {
+  let str = '<img alt""/>';
+  let fixed = '<img alt=""/>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -103,14 +103,14 @@ test(`08 - equal missing`, () => {
 // mis-typed
 // -----------------------------------------------------------------------------
 
-test(`09 - err`, () => {
-  let str = `<td clas="w100p">`;
+test("09 - err", () => {
+  let str = '<td clas="w100p">';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td class="w100p">`, "09.01");
+  equal(applyFixes(str, messages), '<td class="w100p">', "09.01");
   compare(
     ok,
     messages,
@@ -119,7 +119,7 @@ test(`09 - err`, () => {
         ruleId: "attribute-malformed",
         idxFrom: 4,
         idxTo: 8,
-        message: `Probably meant "class".`,
+        message: 'Probably meant "class".',
         fix: {
           ranges: [[4, 8, "class"]],
         },
@@ -129,8 +129,8 @@ test(`09 - err`, () => {
   );
 });
 
-test(`10 - err`, () => {
-  let str = `<td zzzz="w100p">`;
+test("10 - err", () => {
+  let str = '<td zzzz="w100p">';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 1,
@@ -146,7 +146,7 @@ test(`10 - err`, () => {
         ruleId: "attribute-malformed",
         idxFrom: 4,
         idxTo: 8,
-        message: `Unrecognised attribute "zzzz".`,
+        message: 'Unrecognised attribute "zzzz".',
         fix: null,
       },
     ],
@@ -157,9 +157,9 @@ test(`10 - err`, () => {
 // repeated opening quotes
 // -----------------------------------------------------------------------------
 
-test(`11 - repeated opening - double`, () => {
-  let str = `<table width=""100">\n  zzz\n</table>`;
-  let fixed = `<table width="100">\n  zzz\n</table>`;
+test("11 - repeated opening - double", () => {
+  let str = '<table width=""100">\n  zzz\n</table>';
+  let fixed = '<table width="100">\n  zzz\n</table>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 1,
@@ -175,7 +175,7 @@ test(`11 - repeated opening - double`, () => {
         ruleId: "attribute-malformed",
         idxFrom: 7,
         idxTo: 19,
-        message: `Delete repeated opening quotes.`,
+        message: "Delete repeated opening quotes.",
         fix: {
           ranges: [[14, 15]],
         },
@@ -185,9 +185,9 @@ test(`11 - repeated opening - double`, () => {
   );
 });
 
-test(`12 - repeated opening - single`, () => {
-  let str = `<table width=''100'>\n  zzz\n</table>`;
-  let fixed = `<table width="100">\n  zzz\n</table>`;
+test("12 - repeated opening - single", () => {
+  let str = "<table width=''100'>\n  zzz\n</table>";
+  let fixed = '<table width="100">\n  zzz\n</table>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 1,
@@ -196,9 +196,9 @@ test(`12 - repeated opening - single`, () => {
   equal(applyFixes(str, messages), fixed, "12.01");
 });
 
-test(`13 - repeated opening - single quotes instead of equal`, () => {
-  let str = `<table width''100'>\n  zzz\n</table>`;
-  let fixed = `<table width="100">\n  zzz\n</table>`;
+test("13 - repeated opening - single quotes instead of equal", () => {
+  let str = "<table width''100'>\n  zzz\n</table>";
+  let fixed = '<table width="100">\n  zzz\n</table>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -207,9 +207,9 @@ test(`13 - repeated opening - single quotes instead of equal`, () => {
   equal(applyFixes(str, messages), fixed, "13.01");
 });
 
-test(`14 - repeated opening - double quotes instead of equal`, () => {
-  let str = `<table width""100">\n  zzz\n</table>`;
-  let fixed = `<table width="100">\n  zzz\n</table>`;
+test("14 - repeated opening - double quotes instead of equal", () => {
+  let str = '<table width""100">\n  zzz\n</table>';
+  let fixed = '<table width="100">\n  zzz\n</table>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -218,9 +218,9 @@ test(`14 - repeated opening - double quotes instead of equal`, () => {
   equal(applyFixes(str, messages), fixed, "14.01");
 });
 
-test(`15 - repeated closing - double`, () => {
-  let str = `<table width="100"">\n  zzz\n</table>`;
-  let fixed = `<table width="100">\n  zzz\n</table>`;
+test("15 - repeated closing - double", () => {
+  let str = '<table width="100"">\n  zzz\n</table>';
+  let fixed = '<table width="100">\n  zzz\n</table>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 1,
@@ -235,7 +235,7 @@ test(`15 - repeated closing - double`, () => {
         ruleId: "attribute-malformed",
         idxFrom: 7,
         idxTo: 19,
-        message: `Delete repeated closing quotes.`,
+        message: "Delete repeated closing quotes.",
         fix: {
           ranges: [[17, 18]],
         },
@@ -248,9 +248,9 @@ test(`15 - repeated closing - double`, () => {
 // rogue quotes
 // -----------------------------------------------------------------------------
 
-test(`16 - repeated opening - rogue single`, () => {
-  let str = `<table width='"100">zzz</table>`;
-  let fixed = `<table width="100">zzz</table>`;
+test("16 - repeated opening - rogue single", () => {
+  let str = '<table width=\'"100">zzz</table>';
+  let fixed = '<table width="100">zzz</table>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -260,9 +260,9 @@ test(`16 - repeated opening - rogue single`, () => {
   equal(applyFixes(str, messages), fixed, "16.01");
 });
 
-test(`17 - repeated opening - rogue double`, () => {
-  let str = `<table width="'100'>zzz</table>`;
-  let fixed = `<table width="100">zzz</table>`;
+test("17 - repeated opening - rogue double", () => {
+  let str = "<table width=\"'100'>zzz</table>";
+  let fixed = '<table width="100">zzz</table>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -275,9 +275,9 @@ test(`17 - repeated opening - rogue double`, () => {
 // rogue characters
 // -----------------------------------------------------------------------------
 
-test(`18 - repeated opening - rogue characters around equal`, () => {
-  let str = `<span width...=....."100"></span>`;
-  let fixed = `<span width="100"></span>`;
+test("18 - repeated opening - rogue characters around equal", () => {
+  let str = '<span width...=....."100"></span>';
+  let fixed = '<span width="100"></span>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -290,9 +290,9 @@ test(`18 - repeated opening - rogue characters around equal`, () => {
 // equal missing
 // -----------------------------------------------------------------------------
 
-test(`19 - equal missing - equal is missing, tight`, () => {
-  let str = `<a class"c" id'e'>`;
-  let fixed = `<a class="c" id="e">`;
+test("19 - equal missing - equal is missing, tight", () => {
+  let str = "<a class\"c\" id'e'>";
+  let fixed = '<a class="c" id="e">';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -301,9 +301,9 @@ test(`19 - equal missing - equal is missing, tight`, () => {
   equal(applyFixes(str, messages), fixed, "19.01");
 });
 
-test(`20 - equal missing - space instead of equal, recognised attr names followed by quoted value`, () => {
-  let str = `<a class "c" id 'e' href "www">`;
-  let fixed = `<a class="c" id="e" href="www">`;
+test("20 - equal missing - space instead of equal, recognised attr names followed by quoted value", () => {
+  let str = '<a class "c" id \'e\' href "www">';
+  let fixed = '<a class="c" id="e" href="www">';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -312,9 +312,9 @@ test(`20 - equal missing - space instead of equal, recognised attr names followe
   equal(applyFixes(str, messages), fixed, "20.01");
 });
 
-test(`21 - equal missing - mismatching quotes - A,B; A,B`, () => {
-  let str = `<a class"c' id"e'>`;
-  let fixed = `<a class="c" id="e">`;
+test("21 - equal missing - mismatching quotes - A,B; A,B", () => {
+  let str = "<a class\"c' id\"e'>";
+  let fixed = '<a class="c" id="e">';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -324,9 +324,9 @@ test(`21 - equal missing - mismatching quotes - A,B; A,B`, () => {
   equal(messages.length, 4, "21.02");
 });
 
-test(`22 - equal missing - mismatching quotes - A,B; B,A`, () => {
-  let str = `<a class"c' id'e">`;
-  let fixed = `<a class="c" id="e">`;
+test("22 - equal missing - mismatching quotes - A,B; B,A", () => {
+  let str = "<a class\"c' id'e\">";
+  let fixed = '<a class="c" id="e">';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -336,9 +336,9 @@ test(`22 - equal missing - mismatching quotes - A,B; B,A`, () => {
   equal(messages.length, 4, "22.02");
 });
 
-test(`23 - equal missing - mismatching quotes - A,B; B,A`, () => {
-  let str = `<a class"c' id'e">`;
-  let fixed = `<a class="c" id="e">`;
+test("23 - equal missing - mismatching quotes - A,B; B,A", () => {
+  let str = "<a class\"c' id'e\">";
+  let fixed = '<a class="c" id="e">';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -353,9 +353,9 @@ test(`23 - equal missing - mismatching quotes - A,B; B,A`, () => {
 // mismatching quotes
 // -----------------------------------------------------------------------------
 
-test(`24 - no quotes in the value, A-B`, () => {
-  let str = `<div class="c'>.</div>`;
-  let fixed = `<div class="c">.</div>`;
+test("24 - no quotes in the value, A-B", () => {
+  let str = "<div class=\"c'>.</div>";
+  let fixed = '<div class="c">.</div>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -372,9 +372,9 @@ test(`24 - no quotes in the value, A-B`, () => {
         severity: 2,
         idxFrom: 5,
         idxTo: 14,
-        message: `Wrong closing quote.`,
+        message: "Wrong closing quote.",
         fix: {
-          ranges: [[13, 14, `"`]],
+          ranges: [[13, 14, '"']],
         },
       },
     ],
@@ -383,9 +383,9 @@ test(`24 - no quotes in the value, A-B`, () => {
   equal(messages.length, 1, "24.02");
 });
 
-test(`25 - no quotes in the value, B-A`, () => {
-  let str = `<div class='c">.</div>`;
-  let fixed = `<div class="c">.</div>`;
+test("25 - no quotes in the value, B-A", () => {
+  let str = "<div class='c\">.</div>";
+  let fixed = '<div class="c">.</div>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -396,9 +396,9 @@ test(`25 - no quotes in the value, B-A`, () => {
   equal(messages.length, 1, "25.02");
 });
 
-test(`26 - single quotes in the value, A-B`, () => {
-  let str = `<img alt="Deal is your's!'/>`;
-  let fixed = `<img alt="Deal is your's!"/>`;
+test("26 - single quotes in the value, A-B", () => {
+  let str = "<img alt=\"Deal is your's!'/>";
+  let fixed = '<img alt="Deal is your\'s!"/>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -415,9 +415,9 @@ test(`26 - single quotes in the value, A-B`, () => {
         severity: 2,
         idxFrom: 5,
         idxTo: 26,
-        message: `Wrong closing quote.`,
+        message: "Wrong closing quote.",
         fix: {
-          ranges: [[25, 26, `"`]],
+          ranges: [[25, 26, '"']],
         },
       },
     ],
@@ -426,9 +426,9 @@ test(`26 - single quotes in the value, A-B`, () => {
   equal(messages.length, 1, "26.02");
 });
 
-test(`27 - single quotes in the value, B-A`, () => {
-  let str = `<img alt='Deal is your's!"/>`;
-  let fixed = `<img alt="Deal is your's!"/>`;
+test("27 - single quotes in the value, B-A", () => {
+  let str = "<img alt='Deal is your's!\"/>";
+  let fixed = '<img alt="Deal is your\'s!"/>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -445,9 +445,9 @@ test(`27 - single quotes in the value, B-A`, () => {
         severity: 2,
         idxFrom: 5,
         idxTo: 26,
-        message: `Wrong opening quote.`,
+        message: "Wrong opening quote.",
         fix: {
-          ranges: [[9, 10, `"`]],
+          ranges: [[9, 10, '"']],
         },
       },
     ],
@@ -459,9 +459,9 @@ test(`27 - single quotes in the value, B-A`, () => {
 // wrong letter case, legit attributes
 // -----------------------------------------------------------------------------
 
-test(`28 - all caps attr name`, () => {
-  let str = `<img SRC="spacer.gif" Alt=""/>`;
-  let fixed = `<img src="spacer.gif" alt=""/>`;
+test("28 - all caps attr name", () => {
+  let str = '<img SRC="spacer.gif" Alt=""/>';
+  let fixed = '<img src="spacer.gif" alt=""/>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -478,9 +478,9 @@ test(`28 - all caps attr name`, () => {
         severity: 2,
         idxFrom: 5,
         idxTo: 8,
-        message: `Should be lowercase.`,
+        message: "Should be lowercase.",
         fix: {
-          ranges: [[5, 8, `src`]],
+          ranges: [[5, 8, "src"]],
         },
       },
       {
@@ -488,9 +488,9 @@ test(`28 - all caps attr name`, () => {
         severity: 2,
         idxFrom: 22,
         idxTo: 25,
-        message: `Should be lowercase.`,
+        message: "Should be lowercase.",
         fix: {
-          ranges: [[22, 25, `alt`]],
+          ranges: [[22, 25, "alt"]],
         },
       },
     ],
@@ -502,9 +502,9 @@ test(`28 - all caps attr name`, () => {
 // unescaped matching quotes within a value
 // -----------------------------------------------------------------------------
 
-test(`29 - D-D wrapping - useSingleToEscapeDouble = off`, () => {
-  let str = `<img alt="so-called "artists"!"/>`;
-  let fixed = `<img alt="so-called &quot;artists&quot;!"/>`;
+test("29 - D-D wrapping - useSingleToEscapeDouble = off", () => {
+  let str = '<img alt="so-called "artists"!"/>';
+  let fixed = '<img alt="so-called &quot;artists&quot;!"/>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -521,9 +521,9 @@ test(`29 - D-D wrapping - useSingleToEscapeDouble = off`, () => {
         severity: 2,
         idxFrom: 10,
         idxTo: 30,
-        message: `Unencoded quote.`,
+        message: "Unencoded quote.",
         fix: {
-          ranges: [[20, 21, `&quot;`]],
+          ranges: [[20, 21, "&quot;"]],
         },
       },
       {
@@ -531,9 +531,9 @@ test(`29 - D-D wrapping - useSingleToEscapeDouble = off`, () => {
         severity: 2,
         idxFrom: 10,
         idxTo: 30,
-        message: `Unencoded quote.`,
+        message: "Unencoded quote.",
         fix: {
-          ranges: [[28, 29, `&quot;`]],
+          ranges: [[28, 29, "&quot;"]],
         },
       },
     ],
@@ -542,9 +542,9 @@ test(`29 - D-D wrapping - useSingleToEscapeDouble = off`, () => {
   equal(messages.length, 2, "29.02");
 });
 
-test(`30 - S-S wrapping - useSingleToEscapeDouble = off`, () => {
-  let str = `<img alt='so-called "artists"!'/>`;
-  let fixed = `<img alt="so-called &quot;artists&quot;!"/>`;
+test("30 - S-S wrapping - useSingleToEscapeDouble = off", () => {
+  let str = "<img alt='so-called \"artists\"!'/>";
+  let fixed = '<img alt="so-called &quot;artists&quot;!"/>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -553,9 +553,9 @@ test(`30 - S-S wrapping - useSingleToEscapeDouble = off`, () => {
   equal(applyFixes(str, messages), fixed, "30.01");
 });
 
-test(`31 - D-S wrapping - useSingleToEscapeDouble = off`, () => {
-  let str = `<img alt="so-called "artists"!'/>`;
-  let fixed = `<img alt="so-called &quot;artists&quot;!"/>`;
+test("31 - D-S wrapping - useSingleToEscapeDouble = off", () => {
+  let str = '<img alt="so-called "artists"!\'/>';
+  let fixed = '<img alt="so-called &quot;artists&quot;!"/>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -564,9 +564,9 @@ test(`31 - D-S wrapping - useSingleToEscapeDouble = off`, () => {
   equal(applyFixes(str, messages), fixed, "31.01");
 });
 
-test(`32 - S-D wrapping - useSingleToEscapeDouble = off`, () => {
-  let str = `<img alt='so-called "artists"!"/>`;
-  let fixed = `<img alt="so-called &quot;artists&quot;!"/>`;
+test("32 - S-D wrapping - useSingleToEscapeDouble = off", () => {
+  let str = '<img alt=\'so-called "artists"!"/>';
+  let fixed = '<img alt="so-called &quot;artists&quot;!"/>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -575,9 +575,9 @@ test(`32 - S-D wrapping - useSingleToEscapeDouble = off`, () => {
   equal(applyFixes(str, messages), fixed, "32.01");
 });
 
-test(`33 - useSingleToEscapeDouble = on`, () => {
-  let str = `<img alt="so-called "artists"!"/>`;
-  let fixed = `<img alt='so-called "artists"!'/>`;
+test("33 - useSingleToEscapeDouble = on", () => {
+  let str = '<img alt="so-called "artists"!"/>';
+  let fixed = "<img alt='so-called \"artists\"!'/>";
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": [2, "useSingleToEscapeDouble"],
@@ -593,9 +593,9 @@ test(`33 - useSingleToEscapeDouble = on`, () => {
         severity: 2,
         idxFrom: 5,
         idxTo: 31,
-        message: `Wrong opening quote.`,
+        message: "Wrong opening quote.",
         fix: {
-          ranges: [[9, 10, `'`]],
+          ranges: [[9, 10, "'"]],
         },
       },
       {
@@ -603,9 +603,9 @@ test(`33 - useSingleToEscapeDouble = on`, () => {
         severity: 2,
         idxFrom: 5,
         idxTo: 31,
-        message: `Wrong closing quote.`,
+        message: "Wrong closing quote.",
         fix: {
-          ranges: [[30, 31, `'`]],
+          ranges: [[30, 31, "'"]],
         },
       },
     ],
@@ -614,8 +614,8 @@ test(`33 - useSingleToEscapeDouble = on`, () => {
   equal(messages.length, 2, "33.02");
 });
 
-test(`34 - S-S wrapping - useSingleToEscapeDouble = on`, () => {
-  let str = `<img alt='so-called "artists"!'/>`;
+test("34 - S-S wrapping - useSingleToEscapeDouble = on", () => {
+  let str = "<img alt='so-called \"artists\"!'/>";
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": [2, "useSingleToEscapeDouble"],
@@ -624,9 +624,9 @@ test(`34 - S-S wrapping - useSingleToEscapeDouble = on`, () => {
   equal(messages, [], "34.01");
 });
 
-test(`35 - S-D wrapping - useSingleToEscapeDouble = on`, () => {
-  let str = `<img alt='so-called "artists"!"/>`;
-  let fixed = `<img alt='so-called "artists"!'/>`;
+test("35 - S-D wrapping - useSingleToEscapeDouble = on", () => {
+  let str = '<img alt=\'so-called "artists"!"/>';
+  let fixed = "<img alt='so-called \"artists\"!'/>";
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": [2, "useSingleToEscapeDouble"],
@@ -635,9 +635,9 @@ test(`35 - S-D wrapping - useSingleToEscapeDouble = on`, () => {
   equal(applyFixes(str, messages), fixed, "35.01");
 });
 
-test(`36 - D-S wrapping - useSingleToEscapeDouble = on`, () => {
-  let str = `<img alt="so-called "artists"!'/>`;
-  let fixed = `<img alt='so-called "artists"!'/>`;
+test("36 - D-S wrapping - useSingleToEscapeDouble = on", () => {
+  let str = '<img alt="so-called "artists"!\'/>';
+  let fixed = "<img alt='so-called \"artists\"!'/>";
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": [2, "useSingleToEscapeDouble"],
@@ -649,9 +649,9 @@ test(`36 - D-S wrapping - useSingleToEscapeDouble = on`, () => {
 // various
 // -----------------------------------------------------------------------------
 
-test(`37 - curly quotes instead`, () => {
-  let str = `<div class=“foo”>z</div>`;
-  let fixed = `<div class="foo">z</div>`;
+test("37 - curly quotes instead", () => {
+  let str = "<div class=“foo”>z</div>";
+  let fixed = '<div class="foo">z</div>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -660,9 +660,9 @@ test(`37 - curly quotes instead`, () => {
   equal(applyFixes(str, messages), fixed, "37.01");
 });
 
-test(`38`, () => {
-  let str = `<img alt="/>`;
-  let fixed = `<img alt=""/>`;
+test("38", () => {
+  let str = '<img alt="/>';
+  let fixed = '<img alt=""/>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -672,9 +672,9 @@ test(`38`, () => {
   equal(applyFixes(str, messages), fixed, "38.01");
 });
 
-test(`39`, () => {
-  let str = `<img alt='/>`;
-  let fixed = `<img alt=""/>`;
+test("39", () => {
+  let str = "<img alt='/>";
+  let fixed = '<img alt=""/>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -684,9 +684,9 @@ test(`39`, () => {
   equal(applyFixes(str, messages), fixed, "39.01");
 });
 
-test(`40`, () => {
-  let str = `<img alt=">`;
-  let fixed = `<img alt=""/>`;
+test("40", () => {
+  let str = '<img alt=">';
+  let fixed = '<img alt=""/>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -697,9 +697,9 @@ test(`40`, () => {
   equal(applyFixes(str, messages), fixed, "40.01");
 });
 
-test(`41`, () => {
-  let str = `<img alt='>`;
-  let fixed = `<img alt=""/>`;
+test("41", () => {
+  let str = "<img alt='>";
+  let fixed = '<img alt=""/>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -710,9 +710,9 @@ test(`41`, () => {
   equal(applyFixes(str, messages), fixed, "41.01");
 });
 
-test(`42`, () => {
-  let str = `<img alt=">`;
-  let fixed = `<img alt="" />`;
+test("42", () => {
+  let str = '<img alt=">';
+  let fixed = '<img alt="" />';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -724,9 +724,9 @@ test(`42`, () => {
   equal(applyFixes(str, messages), fixed, "42.01");
 });
 
-test(`43`, () => {
-  let str = `<img alt='>`;
-  let fixed = `<img alt="" />`;
+test("43", () => {
+  let str = "<img alt='>";
+  let fixed = '<img alt="" />';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -739,9 +739,9 @@ test(`43`, () => {
   equal(applyFixes(str, messages), fixed, "43.01");
 });
 
-test(`44`, () => {
-  let str = `<div class=\nfoo”>z</div>`;
-  let fixed = `<div class="foo">z</div>`;
+test("44", () => {
+  let str = "<div class=\nfoo”>z</div>";
+  let fixed = '<div class="foo">z</div>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -751,9 +751,9 @@ test(`44`, () => {
   equal(applyFixes(str, messages), fixed, "44.01");
 });
 
-test(`45`, () => {
-  let str = `<div class=“foo\n>z</div>`;
-  let fixed = `<div class="foo">z</div>`;
+test("45", () => {
+  let str = "<div class=“foo\n>z</div>";
+  let fixed = '<div class="foo">z</div>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -763,9 +763,9 @@ test(`45`, () => {
   equal(applyFixes(str, messages), fixed, "45.01");
 });
 
-test(`46`, () => {
-  let str = `<img alt='there's "somethin" here'/>`;
-  let fixed = `<img alt="there's &quot;somethin&quot; here"/>`;
+test("46", () => {
+  let str = "<img alt='there's \"somethin\" here'/>";
+  let fixed = '<img alt="there\'s &quot;somethin&quot; here"/>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -778,8 +778,8 @@ test(`46`, () => {
 // leading whitespace
 // -----------------------------------------------------------------------------
 
-test(`47 - leading space present`, () => {
-  let str = `<span class="x" id="left">.</span>`;
+test("47 - leading space present", () => {
+  let str = '<span class="x" id="left">.</span>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -788,9 +788,9 @@ test(`47 - leading space present`, () => {
   equal(messages, [], "47.01");
 });
 
-test(`48 - leading space missing`, () => {
-  let str = `<span class="x"id="left">.</span>`;
-  let fixed = `<span class="x" id="left">.</span>`;
+test("48 - leading space missing", () => {
+  let str = '<span class="x"id="left">.</span>';
+  let fixed = '<span class="x" id="left">.</span>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -799,9 +799,9 @@ test(`48 - leading space missing`, () => {
   equal(applyFixes(str, messages), fixed, "48.01");
 });
 
-test(`49 - two spaces`, () => {
-  let str = `<span class="x"  id="left">.</span>`;
-  let fixed = `<span class="x" id="left">.</span>`;
+test("49 - two spaces", () => {
+  let str = '<span class="x"  id="left">.</span>';
+  let fixed = '<span class="x" id="left">.</span>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -810,9 +810,9 @@ test(`49 - two spaces`, () => {
   equal(applyFixes(str, messages), fixed, "49.01");
 });
 
-test(`50 - one tab`, () => {
-  let str = `<span class="x"\tid="left">.</span>`;
-  let fixed = `<span class="x" id="left">.</span>`;
+test("50 - one tab", () => {
+  let str = '<span class="x"\tid="left">.</span>';
+  let fixed = '<span class="x" id="left">.</span>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,
@@ -821,8 +821,8 @@ test(`50 - one tab`, () => {
   equal(applyFixes(str, messages), fixed, "50.01");
 });
 
-test(`51 - ESP tags present`, () => {
-  let str = `<span {% if x %}class="x" {% endif %}id="left">.</span>`;
+test("51 - ESP tags present", () => {
+  let str = '<span {% if x %}class="x" {% endif %}id="left">.</span>';
   let messages = verify(not, str, {
     rules: {
       "attribute-malformed": 2,

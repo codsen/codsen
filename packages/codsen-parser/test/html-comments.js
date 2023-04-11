@@ -8,7 +8,7 @@ import { cparser } from "../dist/codsen-parser.esm.js";
 // 01. simple HTML comments
 // -----------------------------------------------------------------------------
 
-test(`01 - one nested outlook-only comment`, () => {
+test("01 - one nested outlook-only comment", () => {
   compare(
     ok,
     cparser("a<!--b-->c"),
@@ -47,7 +47,7 @@ test(`01 - one nested outlook-only comment`, () => {
   );
 });
 
-test(`02 - one nested outlook-only comment`, () => {
+test("02 - one nested outlook-only comment", () => {
   compare(
     ok,
     cparser("a<!--b->c"),
@@ -94,10 +94,10 @@ test(`02 - one nested outlook-only comment`, () => {
   );
 });
 
-test(`03 - nested tags inside broken comment closing tag pair`, () => {
+test("03 - nested tags inside broken comment closing tag pair", () => {
   compare(
     ok,
-    cparser(`a<!--<table><tr><td>.</td></tr></table>->c`),
+    cparser("a<!--<table><tr><td>.</td></tr></table>->c"),
     [
       {
         type: "text",
@@ -183,7 +183,7 @@ test(`03 - nested tags inside broken comment closing tag pair`, () => {
   );
 });
 
-test(`04 - false positive`, () => {
+test("04 - false positive", () => {
   compare(
     ok,
     cparser("x<a>y->b"),
@@ -212,7 +212,7 @@ test(`04 - false positive`, () => {
   );
 });
 
-test(`05 - another false positive`, () => {
+test("05 - another false positive", () => {
   compare(
     ok,
     cparser("<!--x<a>-->y->b"),
@@ -254,10 +254,10 @@ test(`05 - another false positive`, () => {
   );
 });
 
-test(`06 - rogue character in the closing`, () => {
+test("06 - rogue character in the closing", () => {
   compare(
     ok,
-    cparser(`a<!--b--!>c`),
+    cparser("a<!--b--!>c"),
     [
       {
         type: "text",
@@ -296,10 +296,10 @@ test(`06 - rogue character in the closing`, () => {
 // 02. conditional "only" type comments
 // -----------------------------------------------------------------------------
 
-test(`07 - one pair`, () => {
+test("07 - one pair", () => {
   compare(
     ok,
-    cparser(`a<!--[if gte mso 9]>x<![endif]-->z`),
+    cparser("a<!--[if gte mso 9]>x<![endif]-->z"),
     [
       {
         type: "text",
@@ -340,10 +340,10 @@ test(`07 - one pair`, () => {
 // 03. conditional "not" type comments
 // -----------------------------------------------------------------------------
 
-test(`08 - one pair`, () => {
+test("08 - one pair", () => {
   compare(
     ok,
-    cparser(`a<!--[if !mso]><!-->x<!--<![endif]-->z`),
+    cparser("a<!--[if !mso]><!-->x<!--<![endif]-->z"),
     [
       {
         type: "text",
@@ -381,10 +381,10 @@ test(`08 - one pair`, () => {
   );
 });
 
-test(`09 - first part's missing bracket`, () => {
+test("09 - first part's missing bracket", () => {
   compare(
     ok,
-    cparser(`<img/>!--<![endif]-->`),
+    cparser("<img/>!--<![endif]-->"),
     [
       {
         type: "tag",
@@ -403,10 +403,10 @@ test(`09 - first part's missing bracket`, () => {
   );
 });
 
-test(`10 - first part's missing excl mark`, () => {
+test("10 - first part's missing excl mark", () => {
   compare(
     ok,
-    cparser(`<img/><--<![endif]-->`),
+    cparser("<img/><--<![endif]-->"),
     [
       {
         type: "tag",
@@ -425,10 +425,10 @@ test(`10 - first part's missing excl mark`, () => {
   );
 });
 
-test(`11 - first part's character one`, () => {
+test("11 - first part's character one", () => {
   compare(
     ok,
-    cparser(`<img/><1--<![endif]-->`),
+    cparser("<img/><1--<![endif]-->"),
     [
       {
         type: "tag",
@@ -447,10 +447,10 @@ test(`11 - first part's character one`, () => {
   );
 });
 
-test(`12 - first part's missing dash`, () => {
+test("12 - first part's missing dash", () => {
   compare(
     ok,
-    cparser(`<img/><!-<![endif]-->`),
+    cparser("<img/><!-<![endif]-->"),
     [
       {
         type: "tag",
@@ -469,10 +469,10 @@ test(`12 - first part's missing dash`, () => {
   );
 });
 
-test(`13 - first part's missing dash`, () => {
+test("13 - first part's missing dash", () => {
   compare(
     ok,
-    cparser(`<img/><1--<1--<1--<1--<![endif]-->`),
+    cparser("<img/><1--<1--<1--<1--<![endif]-->"),
     [
       {
         type: "tag",
@@ -490,7 +490,7 @@ test(`13 - first part's missing dash`, () => {
         type: "comment",
         start: 18,
         end: 34,
-        value: `<1--<![endif]-->`,
+        value: "<1--<![endif]-->",
         kind: "not",
         closing: true,
       },
@@ -499,10 +499,10 @@ test(`13 - first part's missing dash`, () => {
   );
 });
 
-test(`14 - first part's missing dash`, () => {
+test("14 - first part's missing dash", () => {
   compare(
     ok,
-    cparser(`<img/><1--<1--<1--<1--zzzz<![endif]-->`),
+    cparser("<img/><1--<1--<1--<1--zzzz<![endif]-->"),
     [
       {
         type: "tag",
@@ -526,7 +526,7 @@ test(`14 - first part's missing dash`, () => {
   );
 });
 
-test(`15 - nested inside parent`, () => {
+test("15 - nested inside parent", () => {
   // below, two tokens,
   // "<img src="gif"/>"
   // and
@@ -534,7 +534,7 @@ test(`15 - nested inside parent`, () => {
   // would sit inside opening comment, inside its children[] value array
   compare(
     ok,
-    cparser(`<!--[if !mso]><!--><img src="gif"/>!--<![endif]-->`),
+    cparser('<!--[if !mso]><!--><img src="gif"/>!--<![endif]-->'),
     [
       {
         type: "comment",
@@ -601,7 +601,7 @@ test(`15 - nested inside parent`, () => {
   );
 });
 
-test(`16 - nested inside parent`, () => {
+test("16 - nested inside parent", () => {
   // below, two tokens,
   // "<img src="gif"/>"
   // and
@@ -609,7 +609,7 @@ test(`16 - nested inside parent`, () => {
   // would sit inside opening comment, inside its children[] value array
   compare(
     ok,
-    cparser(`<!--[if !mso]><!--><img src="gif"/>zzz!--<![endif]-->`),
+    cparser('<!--[if !mso]><!--><img src="gif"/>zzz!--<![endif]-->'),
     [
       {
         type: "comment",
@@ -682,11 +682,11 @@ test(`16 - nested inside parent`, () => {
   );
 });
 
-test(`17 - false alarm`, () => {
+test("17 - false alarm", () => {
   // clauses are triggered but nothing's found from characters: <, ! and -
   compare(
     ok,
-    cparser(`<!--[if !mso]><!--><img src="gif"/>zzz-<![endif]-->`),
+    cparser('<!--[if !mso]><!--><img src="gif"/>zzz-<![endif]-->'),
     [
       {
         type: "comment",
@@ -759,11 +759,11 @@ test(`17 - false alarm`, () => {
   );
 });
 
-test(`18 - rogue bracket`, () => {
+test("18 - rogue bracket", () => {
   // clauses are triggered but nothing's found from characters: <, ! and -
   compare(
     ok,
-    cparser(`zzz<<![endif]-->`),
+    cparser("zzz<<![endif]-->"),
     [
       {
         type: "text",
@@ -788,10 +788,10 @@ test(`18 - rogue bracket`, () => {
 
 // various
 
-test(`19 - a test from html-table-patcher`, () => {
+test("19 - a test from html-table-patcher", () => {
   compare(
     ok,
-    cparser(`<table><!--a--><tr><!--b<table>c<tr>d-->`),
+    cparser("<table><!--a--><tr><!--b<table>c<tr>d-->"),
     [
       {
         type: "tag",
@@ -882,7 +882,7 @@ test(`19 - a test from html-table-patcher`, () => {
   );
 });
 
-test(`20 - a test from html-table-patcher`, () => {
+test("20 - a test from html-table-patcher", () => {
   compare(
     ok,
     cparser(`<table>1<tr><td>

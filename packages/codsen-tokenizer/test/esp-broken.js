@@ -12,9 +12,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // broken
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing a character - mini`, () => {
+test(`01 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - tails missing a character - mini`, () => {
   let gathered = [];
-  ct(`<a b="{% x }">`, {
+  ct('<a b="{% x }">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -71,9 +71,9 @@ test(`01 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing a
   );
 });
 
-test(`02 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing a character - midi`, () => {
+test(`02 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - tails missing a character - midi`, () => {
   let gathered = [];
-  ct(`<a b="{% x }1{% y %}2">`, {
+  ct('<a b="{% x }1{% y %}2">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -154,9 +154,9 @@ test(`02 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing a
   );
 });
 
-test(`03 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails null - new heads follow`, () => {
+test(`03 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - tails null - new heads follow`, () => {
   let gathered = [];
-  ct(`<a b="{% x {% y %}2">`, {
+  ct('<a b="{% x {% y %}2">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -231,9 +231,9 @@ test(`03 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails null - ne
   );
 });
 
-test(`04 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - error, two ESP tags joined, first one ends with heads instead of tails`, () => {
+test(`04 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - error, two ESP tags joined, first one ends with heads instead of tails`, () => {
   let gathered = [];
-  ct(`*|zzz*|*|yyy|*`, {
+  ct("*|zzz*|*|yyy|*", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -270,9 +270,9 @@ test(`04 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - error, two ESP 
   );
 });
 
-test(`05 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing completely - attr end follows`, () => {
+test(`05 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - tails missing completely - attr end follows`, () => {
   let gathered = [];
-  let value = `<tr class="{% x">`;
+  let value = '<tr class="{% x">';
   ct(value, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -330,9 +330,9 @@ test(`05 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing c
   );
 });
 
-test(`06 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing completely - attr end follows`, () => {
+test(`06 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - tails missing completely - attr end follows`, () => {
   let gathered = [];
-  ct(`<tr class="{% x"><td style="z"></td></tr>`, {
+  ct('<tr class="{% x"><td style="z"></td></tr>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -466,9 +466,9 @@ test(`06 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing c
   );
 });
 
-test(`07 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing completely - attr end follows + another tag`, () => {
+test(`07 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - tails missing completely - attr end follows + another tag`, () => {
   let gathered = [];
-  ct(`<a b="{% x"><c d="y %}">`, {
+  ct('<a b="{% x"><c d="y %}">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -575,9 +575,9 @@ test(`07 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - tails missing c
   );
 });
 
-test(`08 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - heads missing character, minimal`, () => {
+test(`08 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - heads missing character, minimal`, () => {
   let gathered = [];
-  ct(`<a b="{ x %}">`, {
+  ct('<a b="{ x %}">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },

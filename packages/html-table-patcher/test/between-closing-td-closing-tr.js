@@ -7,7 +7,7 @@ import { processThis, tiny } from "./util.js";
 // code between closing TD and closing TR
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${35}m${`type 4`}\u001b[${39}m`}${`\u001b[${33}m${` - code closing TD and closing TR`}\u001b[${39}m`} - two tags`, () => {
+test(`01 - ${`\u001b[${35}m${"type 4"}\u001b[${39}m`}${`\u001b[${33}m${" - code closing TD and closing TR"}\u001b[${39}m`} - two tags`, () => {
   equal(
     processThis(`<table>
   <tr>

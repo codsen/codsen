@@ -101,7 +101,7 @@ if (cli.flags) {
   let online = await isOnline();
   if (!online) {
     console.error(
-      `\n${messagePrefix}${`\u001b[${31}m${`Please check your internet connection.`}\u001b[${39}m`}\n`
+      `\n${messagePrefix}${`\u001b[${31}m${"Please check your internet connection."}\u001b[${39}m`}\n`
     );
     process.exit(1);
   }
@@ -111,7 +111,7 @@ if (cli.flags) {
     newConfig = JSON.parse(readFileSync(confLocation, "utf8"));
   } catch (err) {
     console.log(
-      `\n${messagePrefix}${`\u001b[${90}m${`No config found, moving on.`}\u001b[${39}m`}\n`
+      `\n${messagePrefix}${`\u001b[${90}m${"No config found, moving on."}\u001b[${39}m`}\n`
     );
   }
 
@@ -265,7 +265,7 @@ if (cli.flags) {
             // delete this dependency from lect.various.devDependencies if present
             // ---------------------
             if (
-              objectPath.has(parsedContents, `lect.various.devDependencies`) &&
+              objectPath.has(parsedContents, "lect.various.devDependencies") &&
               Array.isArray(parsedContents.lect.various.devDependencies) &&
               parsedContents.lect.various.devDependencies.includes(keys[y])
             ) {
@@ -471,12 +471,12 @@ if (cli.flags) {
         ? `${messagePrefix}${
             Object.keys(updatedPackages).length
               ? `all updated:\n${printUpdated()}`
-              : `everything was already up-to-date`
+              : "everything was already up-to-date"
           }`
         : `${messagePrefix}${Math.floor(val * 100)}% ${
             Object.keys(updatedPackages).length
               ? `updated:\n${printUpdated()}`
-              : `done`
+              : "done"
           }`
     )
   );

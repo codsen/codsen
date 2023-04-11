@@ -10,7 +10,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no value, error level 0`, () => {
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no value, error level 0`, () => {
   ["input", "option", "param", "button", "li"].forEach((tagName) => {
     let str = `<${tagName}>`;
     let linter = new Linter();
@@ -24,7 +24,7 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no value, error leve
   });
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no value, error level 1`, () => {
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no value, error level 1`, () => {
   ["input", "option", "param", "button", "li"].forEach((tagName) => {
     let str = `<${tagName}>`;
     let linter = new Linter();
@@ -38,7 +38,7 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no value, error leve
   });
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no value, error level 2`, () => {
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no value, error level 2`, () => {
   ["input", "option", "param", "button", "li"].forEach((tagName) => {
     let str = `<${tagName}>`;
     let linter = new Linter();
@@ -55,21 +55,21 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no value, error leve
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<input value=" 1">`;
+test(`04 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = '<input value=" 1">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-value": 2,
     },
   });
-  equal(applyFixes(str, messages), `<input value="1">`, "04.01");
+  equal(applyFixes(str, messages), '<input value="1">', "04.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-value",
       idxFrom: 14,
       idxTo: 15,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[14, 15]],
       },
@@ -77,21 +77,21 @@ test(`04 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   ]);
 });
 
-test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<input value="7 ">`;
+test(`05 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = '<input value="7 ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-value": 2,
     },
   });
-  equal(applyFixes(str, messages), `<input value="7">`, "05.01");
+  equal(applyFixes(str, messages), '<input value="7">', "05.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-value",
       idxFrom: 15,
       idxTo: 16,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[15, 16]],
       },
@@ -99,21 +99,21 @@ test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`, () => {
-  let str = `<input value="  6  ">`;
+test(`06 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around`, () => {
+  let str = '<input value="  6  ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-value": 2,
     },
   });
-  equal(applyFixes(str, messages), `<input value="6">`, "06.01");
+  equal(applyFixes(str, messages), '<input value="6">', "06.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-value",
       idxFrom: 14,
       idxTo: 19,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [14, 16],
@@ -124,8 +124,8 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<input value="  \t">`;
+test(`07 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<input value="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -139,7 +139,7 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-value",
       idxFrom: 14,
       idxTo: 17,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -148,8 +148,8 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
 // 03. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div value="9">`;
+test(`08 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div value="9">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -168,8 +168,8 @@ test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz value="9" yyy>`;
+test(`09 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz value="9" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -191,8 +191,8 @@ test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 04. input/option/param/button - CDATA type
 // -----------------------------------------------------------------------------
 
-test(`10 - ${`\u001b[${35}m${`value - input/option/param/button`}\u001b[${39}m`} - string as value`, () => {
-  let str = `<input value="Submit form">`;
+test(`10 - ${`\u001b[${35}m${"value - input/option/param/button"}\u001b[${39}m`} - string as value`, () => {
+  let str = '<input value="Submit form">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -207,8 +207,8 @@ test(`10 - ${`\u001b[${35}m${`value - input/option/param/button`}\u001b[${39}m`}
 // 05. li
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - string as value`, () => {
-  let str = `<li value="z">`;
+test(`11 - ${`\u001b[${35}m${"value - font"}\u001b[${39}m`} - string as value`, () => {
+  let str = '<li value="z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -222,14 +222,14 @@ test(`11 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - string as value`, 
       ruleId: "attribute-validate-value",
       idxFrom: 11,
       idxTo: 12,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`12 - ${`\u001b[${35}m${`value - li`}\u001b[${39}m`} - dot as value`, () => {
-  let str = `<li value=".">`;
+test(`12 - ${`\u001b[${35}m${"value - li"}\u001b[${39}m`} - dot as value`, () => {
+  let str = '<li value=".">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -243,14 +243,14 @@ test(`12 - ${`\u001b[${35}m${`value - li`}\u001b[${39}m`} - dot as value`, () =>
       ruleId: "attribute-validate-value",
       idxFrom: 11,
       idxTo: 12,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`13 - ${`\u001b[${35}m${`value - li`}\u001b[${39}m`} - a rational number`, () => {
-  let str = `<li value="1.5">`;
+test(`13 - ${`\u001b[${35}m${"value - li"}\u001b[${39}m`} - a rational number`, () => {
+  let str = '<li value="1.5">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -264,14 +264,14 @@ test(`13 - ${`\u001b[${35}m${`value - li`}\u001b[${39}m`} - a rational number`, 
       ruleId: "attribute-validate-value",
       idxFrom: 12,
       idxTo: 14,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`14 - ${`\u001b[${35}m${`value - li`}\u001b[${39}m`} - with units`, () => {
-  let str = `<li value="1px">`;
+test(`14 - ${`\u001b[${35}m${"value - li"}\u001b[${39}m`} - with units`, () => {
+  let str = '<li value="1px">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -284,14 +284,14 @@ test(`14 - ${`\u001b[${35}m${`value - li`}\u001b[${39}m`} - with units`, () => {
       ruleId: "attribute-validate-value",
       idxFrom: 12,
       idxTo: 14,
-      message: `Sequence number should not be in pixels.`,
+      message: "Sequence number should not be in pixels.",
       fix: null,
     },
   ]);
 });
 
-test(`15 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - zero`, () => {
-  let str = `<li value="0">`;
+test(`15 - ${`\u001b[${35}m${"value - font"}\u001b[${39}m`} - zero`, () => {
+  let str = '<li value="0">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -304,7 +304,7 @@ test(`15 - ${`\u001b[${35}m${`value - font`}\u001b[${39}m`} - zero`, () => {
       ruleId: "attribute-validate-value",
       idxFrom: 11,
       idxTo: 12,
-      message: `Zero not allowed.`,
+      message: "Zero not allowed.",
       fix: null,
     },
   ]);

@@ -215,7 +215,7 @@ thePromise.then((received) => {
       }
       // only written files, no skipped/ignored
       else if (counter.good.length === 1) {
-        writtenAndSkippedMsg = `1 updated`;
+        writtenAndSkippedMsg = "1 updated";
       } else {
         writtenAndSkippedMsg = `All ${counter.good.length} updated`;
       }
@@ -224,13 +224,13 @@ thePromise.then((received) => {
     else if (counter.ignored && counter.ignored.length) {
       // no files were written, there were some skipped/ignored
       if (counter.ignored.length === 1) {
-        writtenAndSkippedMsg = `1 skipped`;
+        writtenAndSkippedMsg = "1 skipped";
       } else {
         writtenAndSkippedMsg = `All ${counter.ignored.length} skipped`;
       }
     } else {
       // no written files, no skipped/ignored
-      writtenAndSkippedMsg = ``;
+      writtenAndSkippedMsg = "";
     }
 
     // -------------------------------------------------------------------------

@@ -11,7 +11,7 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 // const openingCurly = "\x7B";
 
-test(`01 - JSP c: with \${ resembling a Responsys tag`, () => {
+test("01 - JSP c: with ${ resembling a Responsys tag", () => {
   let gathered = [];
   let input = '<c:set var="someList" value="${jspProp.someList}" />';
   ct(input, {
@@ -40,7 +40,7 @@ test(`01 - JSP c: with \${ resembling a Responsys tag`, () => {
   );
 });
 
-test(`02 - JSP scriptlet`, () => {
+test("02 - JSP scriptlet", () => {
   let gathered = [];
   let input = "<% code fragment %>";
   ct(input, {
@@ -69,9 +69,9 @@ test(`02 - JSP scriptlet`, () => {
   );
 });
 
-test(`03 - JSP scriptlet`, () => {
+test("03 - JSP scriptlet", () => {
   let gathered = [];
-  let input = `<% out.println("Your IP: " + request.getRemoteAddr()); %>`;
+  let input = '<% out.println("Your IP: " + request.getRemoteAddr()); %>';
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -98,18 +98,18 @@ test(`03 - JSP scriptlet`, () => {
   );
 });
 
-test(`04 - declarations`, () => {
+test("04 - declarations", () => {
   [
     // spaced out:
-    `<%! declaration; %>`,
-    `<%! int i = 0; %>`,
-    `<%! int a, b, c; %>`,
-    `<%! Circle a = new Circle(1.0); %>`,
+    "<%! declaration; %>",
+    "<%! int i = 0; %>",
+    "<%! int a, b, c; %>",
+    "<%! Circle a = new Circle(1.0); %>",
     // tight:
-    `<%!declaration;%>`,
-    `<%!int i = 0;%>`,
-    `<%!int a, b, c;%>`,
-    `<%!Circle a = new Circle(1.0);%>`,
+    "<%!declaration;%>",
+    "<%!int i = 0;%>",
+    "<%!int a, b, c;%>",
+    "<%!Circle a = new Circle(1.0);%>",
   ].forEach((input) => {
     let gathered = [];
     ct(input, {
@@ -139,14 +139,14 @@ test(`04 - declarations`, () => {
   });
 });
 
-test(`05 - expressions`, () => {
+test("05 - expressions", () => {
   [
     // spaced out:
-    `<%= expression %>`,
-    `<%= (new java.util.Date()).toLocaleString() %>`,
+    "<%= expression %>",
+    "<%= (new java.util.Date()).toLocaleString() %>",
     // tight:
-    `<%=expression%>`,
-    `<%=(new java.util.Date()).toLocaleString()%>`,
+    "<%=expression%>",
+    "<%=(new java.util.Date()).toLocaleString()%>",
   ].forEach((input) => {
     let gathered = [];
     ct(input, {
@@ -176,9 +176,10 @@ test(`05 - expressions`, () => {
   });
 });
 
-test(`06 - mixed`, () => {
+test("06 - mixed", () => {
   let gathered = [];
-  let input = `<p>Today's date: <%= (new java.util.Date()).toLocaleString()%></p>`;
+  let input =
+    "<p>Today's date: <%= (new java.util.Date()).toLocaleString()%></p>";
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -241,12 +242,12 @@ test(`06 - mixed`, () => {
   );
 });
 
-test(`07 - comments`, () => {
+test("07 - comments", () => {
   [
     // spaced out:
-    `<%-- This is JSP comment --%>`,
+    "<%-- This is JSP comment --%>",
     // tight:
-    `<%--This is JSP comment--%>`,
+    "<%--This is JSP comment--%>",
   ].forEach((input) => {
     let gathered = [];
     ct(input, {
@@ -276,32 +277,32 @@ test(`07 - comments`, () => {
   });
 });
 
-test(`08 - directives`, () => {
+test("08 - directives", () => {
   [
     // spaced out:
-    `<%@ directive attribute="value" %>`,
-    `<%@ page blablabla %>`,
-    `<%@ taglib blablabla %>`,
-    `<%@ include blablabla %>`,
-    `<%@tag description="Simple Wrapper Tag" pageEncoding="UTF-8" %>`,
-    `<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>`,
-    `<%@taglib prefix='t' tagdir='/WEB-INF/tags' %>`,
+    '<%@ directive attribute="value" %>',
+    "<%@ page blablabla %>",
+    "<%@ taglib blablabla %>",
+    "<%@ include blablabla %>",
+    '<%@tag description="Simple Wrapper Tag" pageEncoding="UTF-8" %>',
+    '<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>',
+    "<%@taglib prefix='t' tagdir='/WEB-INF/tags' %>",
     // mismatching quotes:
-    `<%@taglib prefix="t' tagdir='/WEB-INF/tags" %>`,
-    `<%@taglib prefix="t' tagdir='/WEB-INF/tags' %>`,
-    `<%@taglib prefix="t' tagdir='/WEB-INF/tags" %>`,
+    "<%@taglib prefix=\"t' tagdir='/WEB-INF/tags\" %>",
+    "<%@taglib prefix=\"t' tagdir='/WEB-INF/tags' %>",
+    "<%@taglib prefix=\"t' tagdir='/WEB-INF/tags\" %>",
     // tight:
-    `<%@directive attribute="value"%>`,
-    `<%@page blablabla%>`,
-    `<%@taglib blablabla%>`,
-    `<%@include blablabla%>`,
-    `<%@tag description="Simple Wrapper Tag" pageEncoding="UTF-8"%>`,
-    `<%@taglib prefix="t" tagdir="/WEB-INF/tags"%>`,
-    `<%@taglib prefix='t' tagdir='/WEB-INF/tags'%>`,
+    '<%@directive attribute="value"%>',
+    "<%@page blablabla%>",
+    "<%@taglib blablabla%>",
+    "<%@include blablabla%>",
+    '<%@tag description="Simple Wrapper Tag" pageEncoding="UTF-8"%>',
+    '<%@taglib prefix="t" tagdir="/WEB-INF/tags"%>',
+    "<%@taglib prefix='t' tagdir='/WEB-INF/tags'%>",
     // mismatching quotes:
-    `<%@taglib prefix="t' tagdir='/WEB-INF/tags"%>`,
-    `<%@taglib prefix="t' tagdir='/WEB-INF/tags'%>`,
-    `<%@taglib prefix="t' tagdir='/WEB-INF/tags"%>`,
+    "<%@taglib prefix=\"t' tagdir='/WEB-INF/tags\"%>",
+    "<%@taglib prefix=\"t' tagdir='/WEB-INF/tags'%>",
+    "<%@taglib prefix=\"t' tagdir='/WEB-INF/tags\"%>",
   ].forEach((input) => {
     let gathered = [];
     ct(input, {
@@ -331,9 +332,9 @@ test(`08 - directives`, () => {
   });
 });
 
-test(`09 - JSP actions`, () => {
+test("09 - JSP actions", () => {
   let gathered = [];
-  let input = `<jsp:action_name attribute="value"/>`;
+  let input = '<jsp:action_name attribute="value"/>';
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -360,9 +361,9 @@ test(`09 - JSP actions`, () => {
   );
 });
 
-test(`10 - use bean`, () => {
+test("10 - use bean", () => {
   let gathered = [];
-  let input = `<jsp:useBean id = "name" class = "package.class" />`;
+  let input = '<jsp:useBean id = "name" class = "package.class" />';
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -389,9 +390,9 @@ test(`10 - use bean`, () => {
   );
 });
 
-test(`11 - use cms`, () => {
+test("11 - use cms", () => {
   let gathered = [];
-  let input = `<cms:enable-ade />`;
+  let input = "<cms:enable-ade />";
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -418,7 +419,7 @@ test(`11 - use cms`, () => {
   );
 });
 
-test(`12 - standalone JSP prop`, () => {
+test("12 - standalone JSP prop", () => {
   let gathered = [];
   let input =
     "<p>${jspProp.cardTypeName} **** **** **** ${jspProp.cardNumber}</p>";
@@ -496,9 +497,9 @@ test(`12 - standalone JSP prop`, () => {
   );
 });
 
-test(`13 - c: without closing slash`, () => {
+test("13 - c: without closing slash", () => {
   let gathered = [];
-  let input = `<c:if test="\${!empty something}">`;
+  let input = '<c:if test="${!empty something}">';
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -525,7 +526,7 @@ test(`13 - c: without closing slash`, () => {
   );
 });
 
-test(`14 - IF-ELSE mixed with HTML`, () => {
+test("14 - IF-ELSE mixed with HTML", () => {
   let gathered = [];
   let input = `<%! int day = 1; %>
 <html>

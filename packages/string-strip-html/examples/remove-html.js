@@ -16,4 +16,4 @@ const someHtml = `<!DOCTYPE html>
   </body>
 </html>`;
 
-assert.equal(stripHtml(someHtml).result, `Title\nSome text.`);
+assert.equal(stripHtml(someHtml).result, "Title\nSome text.");

@@ -8,8 +8,8 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. double encoding on nbsp
 // -----------------------------------------------------------------------------
 
-test(`01 - group rule`, () => {
-  let str = `abc&amp;nbsp;def`;
+test("01 - group rule", () => {
+  let str = "abc&amp;nbsp;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity": 2,
@@ -36,8 +36,8 @@ test(`01 - group rule`, () => {
   equal(messages.length, 1, "01.02");
 });
 
-test(`02 - exact rule, severity level 1`, () => {
-  let str = `abc&amp;nbsp;def`;
+test("02 - exact rule, severity level 1", () => {
+  let str = "abc&amp;nbsp;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-multiple-encoding": 1,
@@ -64,8 +64,8 @@ test(`02 - exact rule, severity level 1`, () => {
   equal(messages.length, 1, "02.02");
 });
 
-test(`03 - exact rule, severity level 2`, () => {
-  let str = `abc&amp;nbsp;def`;
+test("03 - exact rule, severity level 2", () => {
+  let str = "abc&amp;nbsp;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-multiple-encoding": 2,
@@ -92,8 +92,8 @@ test(`03 - exact rule, severity level 2`, () => {
   equal(messages.length, 1, "03.02");
 });
 
-test(`04 - rule by wildcard`, () => {
-  let str = `abc&amp;nbsp;def`;
+test("04 - rule by wildcard", () => {
+  let str = "abc&amp;nbsp;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-*": 2,
@@ -120,8 +120,8 @@ test(`04 - rule by wildcard`, () => {
   equal(messages.length, 1, "04.02");
 });
 
-test(`05 - group rule - off`, () => {
-  let str = `abc&amp;nbsp;def`;
+test("05 - group rule - off", () => {
+  let str = "abc&amp;nbsp;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity": 0,
@@ -131,8 +131,8 @@ test(`05 - group rule - off`, () => {
   equal(messages, [], "05.02");
 });
 
-test(`06 - exact rule, severity level 0 - off`, () => {
-  let str = `abc&amp;nbsp;def`;
+test("06 - exact rule, severity level 0 - off", () => {
+  let str = "abc&amp;nbsp;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-multiple-encoding": 0,
@@ -142,8 +142,8 @@ test(`06 - exact rule, severity level 0 - off`, () => {
   equal(messages, [], "06.02");
 });
 
-test(`07 - rule by wildcard - off`, () => {
-  let str = `abc&amp;nbsp;def`;
+test("07 - rule by wildcard - off", () => {
+  let str = "abc&amp;nbsp;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-*": 0,
@@ -153,8 +153,8 @@ test(`07 - rule by wildcard - off`, () => {
   equal(messages, [], "07.02");
 });
 
-test(`08 - all`, () => {
-  let str = `abc&amp;nbsp;def`;
+test("08 - all", () => {
+  let str = "abc&amp;nbsp;def";
   let messages = verify(not, str, {
     rules: {
       all: 2,

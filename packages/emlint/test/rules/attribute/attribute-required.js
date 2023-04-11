@@ -10,8 +10,8 @@ import {
 
 // -----------------------------------------------------------------------------
 
-test(`01`, () => {
-  let str = `<table>`;
+test("01", () => {
+  let str = "<table>";
   let messages = verify(not, str, {
     rules: {
       "attribute-required": 2,
@@ -20,8 +20,8 @@ test(`01`, () => {
   equal(messages, [], "01.01");
 });
 
-test(`02`, () => {
-  let str = `<table>`;
+test("02", () => {
+  let str = "<table>";
   let messages = verify(not, str, {
     rules: {
       "attribute-required": [2],
@@ -30,8 +30,8 @@ test(`02`, () => {
   equal(messages, [], "02.01");
 });
 
-test(`03`, () => {
-  let str = `<table>`;
+test("03", () => {
+  let str = "<table>";
   let messages = verify(not, str, {
     rules: {
       "attribute-required": [2, {}],
@@ -40,8 +40,8 @@ test(`03`, () => {
   equal(messages, [], "03.01");
 });
 
-test(`04`, () => {
-  let str = `<table>`;
+test("04", () => {
+  let str = "<table>";
   let messages = verify(not, str, {
     rules: {
       "attribute-required": [
@@ -55,8 +55,8 @@ test(`04`, () => {
   equal(messages, [], "04.01");
 });
 
-test(`05`, () => {
-  let str = `<table>`;
+test("05", () => {
+  let str = "<table>";
   let messages = verify(not, str, {
     rules: {
       "attribute-required": [
@@ -70,8 +70,8 @@ test(`05`, () => {
   equal(messages, [], "05.01");
 });
 
-test(`06`, () => {
-  let str = `<table>`;
+test("06", () => {
+  let str = "<table>";
   let messages = verify(not, str, {
     rules: {
       "attribute-required": [
@@ -87,8 +87,8 @@ test(`06`, () => {
   equal(messages, [], "06.01");
 });
 
-test(`07`, () => {
-  let str = `<table>`;
+test("07", () => {
+  let str = "<table>";
   let messages = verify(not, str, {
     rules: {
       "attribute-required": [
@@ -106,8 +106,8 @@ test(`07`, () => {
 
 // -----------------------------------------------------------------------------
 
-test(`08`, () => {
-  let str = `<table>`;
+test("08", () => {
+  let str = "<table>";
   let messages = verify(not, str, {
     rules: {
       "attribute-required": [
@@ -129,7 +129,7 @@ test(`08`, () => {
         severity: 2,
         idxFrom: 0,
         idxTo: 7,
-        message: `Attribute "cellpadding" is missing.`,
+        message: 'Attribute "cellpadding" is missing.',
         fix: null,
       },
     ],

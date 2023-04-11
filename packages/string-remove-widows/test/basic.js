@@ -19,8 +19,8 @@ const languages = ["html`, `css`, `js"];
 const encodedNbsps = [encodedNbspHtml, encodedNbspCss, encodedNbspJs];
 const eolTypes = ["LF`, `CR`, `CRLF"];
 
-test(`01 - the most basic`, () => {
-  let resObj = removeWidows(`aaa bbb ccc ddd`, {
+test("01 - the most basic", () => {
+  let resObj = removeWidows("aaa bbb ccc ddd", {
     convertEntities: true,
     minCharCount: 5,
   });
@@ -36,8 +36,8 @@ test(`01 - the most basic`, () => {
   equal(resObj.ranges, [[11, 12, encodedNbspHtml]], "01.03");
 });
 
-test(`02`, () => {
-  let resObj = removeWidows(`aaa bbb ccc  ddd`, {
+test("02", () => {
+  let resObj = removeWidows("aaa bbb ccc  ddd", {
     convertEntities: true,
     minCharCount: 5,
   });
@@ -53,10 +53,10 @@ test(`02`, () => {
   equal(resObj.ranges, [[11, 13, encodedNbspHtml]], "02.03");
 });
 
-test(`03 - single sentence, no full stop`, () => {
+test("03 - single sentence, no full stop", () => {
   languages.forEach((targetLanguage, i) => {
     equal(
-      removeWidows(`aaa bbb ccc ddd`, {
+      removeWidows("aaa bbb ccc ddd", {
         convertEntities: true,
         targetLanguage,
         minCharCount: 5,
@@ -65,7 +65,7 @@ test(`03 - single sentence, no full stop`, () => {
       `03.03.003.0${1 + i} - ${targetLanguage}`
     );
     equal(
-      removeWidows(`aaa bbb ccc ddd`, {
+      removeWidows("aaa bbb ccc ddd", {
         convertEntities: false,
         targetLanguage,
         minCharCount: 5,
@@ -74,22 +74,22 @@ test(`03 - single sentence, no full stop`, () => {
       `03.03.003.0${2 + i} - ${targetLanguage}`
     );
     equal(
-      removeWidows(`aaa bbb ccc ddd`, {
+      removeWidows("aaa bbb ccc ddd", {
         removeWidowPreventionMeasures: true,
         convertEntities: false,
         targetLanguage,
         minCharCount: 5,
       }).res,
-      `aaa bbb ccc ddd`,
+      "aaa bbb ccc ddd",
       `03.03.003.0${3 + i} - ${targetLanguage}`
     );
   });
 });
 
-test(`04 - single sentence, full stop`, () => {
+test("04 - single sentence, full stop", () => {
   languages.forEach((targetLanguage, i) => {
     equal(
-      removeWidows(`Aaa bbb ccc ddd.`, {
+      removeWidows("Aaa bbb ccc ddd.", {
         convertEntities: true,
         targetLanguage,
         minCharCount: 5,
@@ -98,7 +98,7 @@ test(`04 - single sentence, full stop`, () => {
       `04.04.004.0${1 + i} - ${targetLanguage}`
     );
     equal(
-      removeWidows(`Aaa bbb ccc ddd.`, {
+      removeWidows("Aaa bbb ccc ddd.", {
         convertEntities: false,
         targetLanguage,
         minCharCount: 5,
@@ -107,19 +107,19 @@ test(`04 - single sentence, full stop`, () => {
       `04.04.004.0${2 + i} - ${targetLanguage}`
     );
     equal(
-      removeWidows(`Aaa bbb ccc ddd.`, {
+      removeWidows("Aaa bbb ccc ddd.", {
         removeWidowPreventionMeasures: true,
         convertEntities: false,
         targetLanguage,
         minCharCount: 5,
       }).res,
-      `Aaa bbb ccc ddd.`,
+      "Aaa bbb ccc ddd.",
       `04.04.004.0${3 + i} - ${targetLanguage}`
     );
   });
 });
 
-test(`05 - paragraphs, full stops`, () => {
+test("05 - paragraphs, full stops", () => {
   ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
     languages.forEach((targetLanguage, i) => {
       equal(
@@ -211,7 +211,7 @@ test(`05 - paragraphs, full stops`, () => {
   });
 });
 
-test(`06 - raw non-breaking space already there`, () => {
+test("06 - raw non-breaking space already there", () => {
   languages.forEach((targetLanguage, i) => {
     let val1 = removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
       convertEntities: true,
@@ -249,7 +249,7 @@ test(`06 - raw non-breaking space already there`, () => {
     });
     equal(
       val3.res,
-      `aaa bbb ccc ddd`,
+      "aaa bbb ccc ddd",
       `06.06.006.0${3 + i} - ${targetLanguage}`
     );
     equal(val3.whatWasDone, {
@@ -259,7 +259,7 @@ test(`06 - raw non-breaking space already there`, () => {
   });
 });
 
-test(`07 - paragraphs, coming already fixed`, () => {
+test("07 - paragraphs, coming already fixed", () => {
   ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
     languages.forEach((targetLanguage, i) => {
       equal(
@@ -322,7 +322,7 @@ test(`07 - paragraphs, coming already fixed`, () => {
   });
 });
 
-test(`08 - paragraphs, coming already fixed and encoded but in wrong format`, () => {
+test("08 - paragraphs, coming already fixed and encoded but in wrong format", () => {
   encodedNbsps.forEach((singleEncodedNbsp, z) => {
     ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
       languages.forEach((targetLanguage, i) => {
@@ -364,8 +364,8 @@ test(`08 - paragraphs, coming already fixed and encoded but in wrong format`, ()
   });
 });
 
-test(`09 - single word`, () => {
-  let str = `fhkdfhgkhdfjkghdkjfgjdfjgkdhfgkjhdkjfgdkfgdfjkh`;
+test("09 - single word", () => {
+  let str = "fhkdfhgkhdfjkghdkjfgjdfjgkdhfgkjhdkjfgdkfgdfjkh";
   languages.forEach((targetLanguage, i) => {
     // removeWidowPreventionMeasures false
     equal(
@@ -416,84 +416,84 @@ test(`09 - single word`, () => {
   });
 });
 
-test(`10 - doesn't touch empty strings`, () => {
+test("10 - doesn't touch empty strings", () => {
   let sources = [
-    ``,
-    ` `,
-    `\t`,
-    ` \t`,
-    `\t `,
-    ` \t `,
-    ` \t\t\t\t`,
-    `\n`,
-    `\r`,
-    `\r\n`,
-    `\n\n`,
-    `\r\r`,
-    `\r\n\r\n`,
-    `\r\n`,
-    `\n \n`,
-    `\r \r`,
-    `\r\n \r\n`,
-    `\n \t \n`,
-    `\r \t \r`,
-    `\r\n \t \r\n`,
+    "",
+    " ",
+    "\t",
+    " \t",
+    "\t ",
+    " \t ",
+    " \t\t\t\t",
+    "\n",
+    "\r",
+    "\r\n",
+    "\n\n",
+    "\r\r",
+    "\r\n\r\n",
+    "\r\n",
+    "\n \n",
+    "\r \r",
+    "\r\n \r\n",
+    "\n \t \n",
+    "\r \t \r",
+    "\r\n \t \r\n",
   ];
   sources.forEach((str) => {
     equal(
-      removeWidows(``, {
+      removeWidows("", {
         convertEntities: true,
       }).res,
-      ``,
+      "",
       `01.10 - ${JSON.stringify(str, null, 4)}`
     );
   });
 });
 
-test(`11 - doesn't break within tag`, () => {
-  let source = `aaa<br/>< br/>bbb< br/><br/>ccc< br/>< br/>ddd`;
+test("11 - doesn't break within tag", () => {
+  let source = "aaa<br/>< br/>bbb< br/><br/>ccc< br/>< br/>ddd";
   equal(
     removeWidows(source, {
       convertEntities: true,
-      targetLanguage: `html`,
+      targetLanguage: "html",
       UKPostcodes: true,
       hyphens: true,
     }).res,
     source,
-    `11.01`
+    "11.01"
   );
 });
 
-test(`12 - doesn't add nbsp after line breaks`, () => {
-  let source = `aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc`;
+test("12 - doesn't add nbsp after line breaks", () => {
+  let source = "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc";
   equal(
     removeWidows(source, {
       convertEntities: true,
-      targetLanguage: `html`,
+      targetLanguage: "html",
       UKPostcodes: true,
       hyphens: true,
     }).res,
     source,
-    `12.01`
+    "12.01"
   );
 });
 
-test(`13 - line breaks and spaces`, () => {
-  let source = `aaa<br/>\n <br/>\n bbb<br/>\n <br/>\n ccc`;
+test("13 - line breaks and spaces", () => {
+  let source = "aaa<br/>\n <br/>\n bbb<br/>\n <br/>\n ccc";
   equal(
     removeWidows(source, {
       convertEntities: true,
-      targetLanguage: `html`,
+      targetLanguage: "html",
       UKPostcodes: true,
       hyphens: true,
     }).res,
     source,
-    `13.01`
+    "13.01"
   );
 });
 
-test(`14 - ad hoc case`, () => {
-  let source = `&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;`;
+test("14 - ad hoc case", () => {
+  let source = "&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;";
   let res = removeWidows(source, {
     ignore: "all",
     convertEntities: true,
@@ -504,8 +504,8 @@ test(`14 - ad hoc case`, () => {
   equal(res.ranges, null, "14.01");
 });
 
-test(`15 - non-widow nbsp is decoded and reported correctly, mixed with widow case`, () => {
-  let source = `abc&nbsp;def ghij knmn`;
+test("15 - non-widow nbsp is decoded and reported correctly, mixed with widow case", () => {
+  let source = "abc&nbsp;def ghij knmn";
   let res = removeWidows(source, {
     convertEntities: false,
   });
@@ -520,8 +520,8 @@ test(`15 - non-widow nbsp is decoded and reported correctly, mixed with widow ca
   );
 });
 
-test(`16 - non-widow nbsp only`, () => {
-  let source = `x&nbsp;x`;
+test("16 - non-widow nbsp only", () => {
+  let source = "x&nbsp;x";
   let res = removeWidows(source, {
     convertEntities: false,
   });
@@ -536,8 +536,8 @@ test(`16 - non-widow nbsp only`, () => {
   );
 });
 
-test(`17 - nbsp only, nothing else`, () => {
-  let source = `&nbsp;`;
+test("17 - nbsp only, nothing else", () => {
+  let source = "&nbsp;";
   let res = removeWidows(source, {
     convertEntities: false,
   });
@@ -552,7 +552,7 @@ test(`17 - nbsp only, nothing else`, () => {
   );
 });
 
-test(`18 - multiparagraph combo with jinja`, () => {
+test("18 - multiparagraph combo with jinja", () => {
   let source = `<!--[if mso]>
   <p>A paragraph inside an Outlook MSO&nbsp;comment</p>
   <p>unescaped {{ foo }}</p>
@@ -591,7 +591,7 @@ test(`18 - multiparagraph combo with jinja`, () => {
   );
 });
 
-test(`19 - multiparagraph combo with jinja`, () => {
+test("19 - multiparagraph combo with jinja", () => {
   let source = `<!--[if mso]>
   <p>A paragraph inside an Outlook MSO&nbsp;comment</p>
   <p>unescaped {{ foo }}</p>
@@ -620,7 +620,7 @@ test(`19 - multiparagraph combo with jinja`, () => {
   equal(res.res, source, "19.01");
 });
 
-test(`20 - multiparagraph combo with jinja`, () => {
+test("20 - multiparagraph combo with jinja", () => {
   let source = `<!--[if !mso]><!-->
   <p>A paragraph inside an Outlook MSO&nbsp;comment</p>
   <p>unescaped {{ foo }}</p>
@@ -649,7 +649,7 @@ test(`20 - multiparagraph combo with jinja`, () => {
   equal(res.res, source, "20.01");
 });
 
-test(`21 - multiparagraph combo with jinja`, () => {
+test("21 - multiparagraph combo with jinja", () => {
   let source = `<!--[if mso]>
   <div>Show this in all Outlook versions</div>
 <![endif]-->`;

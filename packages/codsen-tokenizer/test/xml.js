@@ -7,7 +7,7 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 test("01 - correct", () => {
   let gathered = [];
-  ct(`<?xml version="1.0" encoding="UTF-8"?>`, {
+  ct('<?xml version="1.0" encoding="UTF-8"?>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -29,7 +29,7 @@ test("01 - correct", () => {
 
 test("02 - incorrect 1", () => {
   let gathered = [];
-  ct(`< ?xml version="1.0" encoding="UTF-8"?>`, {
+  ct('< ?xml version="1.0" encoding="UTF-8"?>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -51,7 +51,7 @@ test("02 - incorrect 1", () => {
 
 test("03 - incorrect 2", () => {
   let gathered = [];
-  ct(`<? xml version="1.0" encoding="UTF-8"?>`, {
+  ct('<? xml version="1.0" encoding="UTF-8"?>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -73,7 +73,7 @@ test("03 - incorrect 2", () => {
 
 test("04 - incorrect 3", () => {
   let gathered = [];
-  ct(`< ?XML version="1.0" encoding="UTF-8"?>`, {
+  ct('< ?XML version="1.0" encoding="UTF-8"?>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },

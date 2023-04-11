@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two BREAK PERMITTED HERE characters`, () => {
+test("01 - detects two BREAK PERMITTED HERE characters", () => {
   let str = "\u0082dlkgjld\u0082j";
   let linter = new Linter();
   let messages = linter.verify(str, {

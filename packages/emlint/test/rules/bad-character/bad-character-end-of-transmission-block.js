@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two END OF TRANSMISSION BLOCK characters`, () => {
+test("01 - detects two END OF TRANSMISSION BLOCK characters", () => {
   let str = "\u0017dlkgjld\u0017j";
   let linter = new Linter();
   let messages = linter.verify(str, {

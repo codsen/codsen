@@ -9,7 +9,7 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 1. no config - nothing happens
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - off`, () => {
+test(`01 - ${`\u001b[${31}m${"no config"}\u001b[${39}m`} - off`, () => {
   let str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
   let messages = verify(not, str, {
     rules: {
@@ -20,7 +20,7 @@ test(`01 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - off`, () => {
   equal(applyFixes(str, messages), str, "01.02");
 });
 
-test(`02 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - warn`, () => {
+test(`02 - ${`\u001b[${31}m${"no config"}\u001b[${39}m`} - warn`, () => {
   let str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
   let messages = verify(not, str, {
     rules: {
@@ -31,7 +31,7 @@ test(`02 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - warn`, () => {
   equal(applyFixes(str, messages), str, "02.02");
 });
 
-test(`03 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - err`, () => {
+test(`03 - ${`\u001b[${31}m${"no config"}\u001b[${39}m`} - err`, () => {
   let str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
   let messages = verify(not, str, {
     rules: {
@@ -45,7 +45,7 @@ test(`03 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - err`, () => {
 // 02. flagging up tags by their names
 // -----------------------------------------------------------------------------
 
-test(`04 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, exact match`, () => {
+test(`04 - ${`\u001b[${32}m${"config"}\u001b[${39}m`} - flags one, exact match`, () => {
   let str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";
   let messages = verify(not, str, {
     rules: {
@@ -86,7 +86,7 @@ test(`04 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, exact match`,
   );
 });
 
-test(`05 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, match by wildcard`, () => {
+test(`05 - ${`\u001b[${32}m${"config"}\u001b[${39}m`} - flags one, match by wildcard`, () => {
   let str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";
   let messages = verify(not, str, {
     rules: {

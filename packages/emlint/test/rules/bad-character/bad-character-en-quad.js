@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two EN QUAD characters`, () => {
+test("01 - detects two EN QUAD characters", () => {
   let str = "\u2000dlkgjld\u2000j";
   let linter = new Linter();
   let messages = linter.verify(str, {

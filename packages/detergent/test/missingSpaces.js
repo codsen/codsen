@@ -21,7 +21,7 @@ import {
 
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing space after ndash added (space + ndash) - missing space after ndash added`, () => {
+test(`01 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing space after ndash added (space + ndash) - missing space after ndash added`, () => {
   mixer({
     convertEntities: true,
     convertDashes: true,
@@ -36,7 +36,7 @@ test(`01 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
   });
 });
 
-test(`02 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing space after ndash added (space + ndash) - missing space after ndash added`, () => {
+test(`02 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing space after ndash added (space + ndash) - missing space after ndash added`, () => {
   mixer({
     convertEntities: true,
     convertDashes: true,
@@ -51,7 +51,7 @@ test(`02 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
   });
 });
 
-test(`03 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing space after ndash added (space + ndash) - missing space after ndash added`, () => {
+test(`03 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing space after ndash added (space + ndash) - missing space after ndash added`, () => {
   mixer({
     convertEntities: true,
     convertDashes: true,
@@ -66,7 +66,7 @@ test(`03 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
   });
 });
 
-test(`04 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't add spaces within simple URL's - url only`, () => {
+test(`04 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't add spaces within simple URL's - url only`, () => {
   [
     "http://detergent.io",
     "http://detergent.io?something=zzz%26else=ccc",
@@ -78,7 +78,7 @@ test(`04 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
   });
 });
 
-test(`05 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't add spaces within urls - url + space + text`, () => {
+test(`05 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't add spaces within urls - url + space + text`, () => {
   mixer({
     removeWidows: false,
     removeLineBreaks: false,
@@ -92,7 +92,7 @@ test(`05 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
   });
 });
 
-test(`06 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't add spaces within urls - adds space before capital letter (line break)`, () => {
+test(`06 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't add spaces within urls - adds space before capital letter (line break)`, () => {
   mixer({
     removeWidows: false,
     replaceLineBreaks: false,
@@ -107,7 +107,7 @@ test(`06 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
   });
 });
 
-test(`07 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't add spaces within urls - adds space before capital letter (line break)`, () => {
+test(`07 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't add spaces within urls - adds space before capital letter (line break)`, () => {
   mixer({
     removeWidows: false,
     replaceLineBreaks: false,
@@ -122,7 +122,7 @@ test(`07 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
   });
 });
 
-test(`08 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't add spaces within urls - no :// but www instead`, () => {
+test(`08 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't add spaces within urls - no :// but www instead`, () => {
   mixer({
     removeWidows: false,
     replaceLineBreaks: false,
@@ -137,7 +137,7 @@ test(`08 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
   });
 });
 
-test(`09 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't add spaces within urls - url + space + text`, () => {
+test(`09 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't add spaces within urls - url + space + text`, () => {
   mixer({
     removeWidows: false,
     replaceLineBreaks: false,
@@ -152,20 +152,20 @@ test(`09 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
   });
 });
 
-test(`10 - missing space after ndash added (nbsp + ndash) - space after ndash not added where not needed`, () => {
+test("10 - missing space after ndash added (nbsp + ndash) - space after ndash not added where not needed", () => {
   mixer({
     convertDashes: true,
     convertEntities: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `10am&ndash;11am`, opt).res,
+      det(ok, not, n, "10am&ndash;11am", opt).res,
       `10am${rawNDash}11am`,
       "10.01"
     );
   });
 });
 
-test(`11 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't add spaces within urls - address + full stop + line break`, () => {
+test(`11 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't add spaces within urls - address + full stop + line break`, () => {
   mixer({
     removeWidows: false,
     replaceLineBreaks: false,
@@ -180,7 +180,7 @@ test(`11 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
   });
 });
 
-test(`12 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't add spaces within urls - address + full stop + space + line break`, () => {
+test(`12 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't add spaces within urls - address + full stop + space + line break`, () => {
   mixer({
     removeWidows: false,
     replaceLineBreaks: false,
@@ -195,7 +195,7 @@ test(`12 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
   });
 });
 
-test(`13 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't add spaces within urls - no :// but www instead`, () => {
+test(`13 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't add spaces within urls - no :// but www instead`, () => {
   mixer({
     removeWidows: false,
     replaceLineBreaks: false,
@@ -210,7 +210,7 @@ test(`13 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
   });
 });
 
-test(`14 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds space after semicolon, but not in URLs - sentence #1`, () => {
+test(`14 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds space after semicolon, but not in URLs - sentence #1`, () => {
   mixer({
     removeWidows: false,
     addMissingSpaces: true,
@@ -223,7 +223,7 @@ test(`14 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
   });
 });
 
-test(`15 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds space after semicolon, but not in URLs - sentence #2`, () => {
+test(`15 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds space after semicolon, but not in URLs - sentence #2`, () => {
   mixer({
     removeWidows: false,
     addMissingSpaces: true,
@@ -236,7 +236,7 @@ test(`15 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
   });
 });
 
-test(`16 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds space after semicolon, but not in URLs - sentence #3`, () => {
+test(`16 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds space after semicolon, but not in URLs - sentence #3`, () => {
   mixer({
     removeWidows: true,
     convertEntities: true,
@@ -250,7 +250,7 @@ test(`16 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
   });
 });
 
-test(`17 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds space after semicolon, but not in URLs - sentence #4`, () => {
+test(`17 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds space after semicolon, but not in URLs - sentence #4`, () => {
   mixer({
     removeWidows: true,
     convertEntities: true,
@@ -264,7 +264,7 @@ test(`17 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
   });
 });
 
-test(`18 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds space after semicolon, but not in URLs - vs widow removal`, () => {
+test(`18 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds space after semicolon, but not in URLs - vs widow removal`, () => {
   mixer({
     removeWidows: true,
     convertEntities: false,
@@ -278,7 +278,7 @@ test(`18 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
   });
 });
 
-test(`19 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds space after semicolon, but not in URLs - trailing full stop #1`, () => {
+test(`19 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds space after semicolon, but not in URLs - trailing full stop #1`, () => {
   mixer({
     removeWidows: true,
     convertEntities: false,
@@ -292,7 +292,7 @@ test(`19 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
   });
 });
 
-test(`20 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds space after semicolon, but not in URLs - trailing full stop #2`, () => {
+test(`20 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds space after semicolon, but not in URLs - trailing full stop #2`, () => {
   mixer({
     removeWidows: false,
     addMissingSpaces: false,
@@ -305,7 +305,7 @@ test(`20 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
   });
 });
 
-test(`21 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds space after semicolon, but not in URLs - trailing full stop #3`, () => {
+test(`21 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds space after semicolon, but not in URLs - trailing full stop #3`, () => {
   mixer({
     removeWidows: false,
     addMissingSpaces: false,
@@ -318,7 +318,7 @@ test(`21 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
   });
 });
 
-test(`22 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds space after semicolon, but not in URLs - trailing full stop #4`, () => {
+test(`22 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds space after semicolon, but not in URLs - trailing full stop #4`, () => {
   mixer({
     removeWidows: true,
     convertEntities: true,
@@ -332,7 +332,7 @@ test(`22 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
   });
 });
 
-test(`23 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds space after semicolon, but not in URLs - trailing full stop #5`, () => {
+test(`23 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds space after semicolon, but not in URLs - trailing full stop #5`, () => {
   mixer({
     removeWidows: true,
     convertEntities: true,
@@ -346,7 +346,7 @@ test(`23 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
   });
 });
 
-test(`24 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds space after semicolon, but not in URLs - vs widow removal`, () => {
+test(`24 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds space after semicolon, but not in URLs - vs widow removal`, () => {
   mixer({
     removeWidows: true,
     convertEntities: false,
@@ -360,7 +360,7 @@ test(`24 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
   });
 });
 
-test(`25 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds space after semicolon, but not in URLs - trailing full stop #6`, () => {
+test(`25 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds space after semicolon, but not in URLs - trailing full stop #6`, () => {
   mixer({
     removeWidows: true,
     convertEntities: false,
@@ -374,7 +374,7 @@ test(`25 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - adds spac
   });
 });
 
-test(`26 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't add spaces within urls, considering emoji and line breaks - emoji #1`, () => {
+test(`26 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't add spaces within urls, considering emoji and line breaks - emoji #1`, () => {
   mixer({
     removeWidows: false,
     convertEntities: false,
@@ -396,7 +396,7 @@ test(`26 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
   });
 });
 
-test(`27 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't add spaces within urls, considering emoji and line breaks - emoji #2`, () => {
+test(`27 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't add spaces within urls, considering emoji and line breaks - emoji #2`, () => {
   mixer({
     removeWidows: false,
     convertEntities: false,
@@ -418,7 +418,7 @@ test(`27 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
   });
 });
 
-test(`28 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't add spaces within urls, considering emoji and line breaks - emoji #3`, () => {
+test(`28 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't add spaces within urls, considering emoji and line breaks - emoji #3`, () => {
   mixer({
     removeWidows: false,
     convertEntities: false,
@@ -440,7 +440,7 @@ test(`28 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
   });
 });
 
-test(`29 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't add spaces within urls, considering emoji and line breaks - emoji #4`, () => {
+test(`29 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't add spaces within urls, considering emoji and line breaks - emoji #4`, () => {
   mixer({
     removeWidows: false,
     convertEntities: false,
@@ -462,7 +462,7 @@ test(`29 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - doesn't a
   });
 });
 
-test(`30 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - add missing spaces`, () => {
+test(`30 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - add missing spaces`, () => {
   mixer({
     addMissingSpaces: true,
   }).forEach((opt, n) => {
@@ -474,7 +474,7 @@ test(`30 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
   });
 });
 
-test(`31 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - semicol`, () => {
+test(`31 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - semicol`, () => {
   mixer({
     addMissingSpaces: true,
   }).forEach((opt, n) => {
@@ -482,7 +482,7 @@ test(`31 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
   });
 });
 
-test(`32 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - comma + URL`, () => {
+test(`32 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - comma + URL`, () => {
   mixer({
     addMissingSpaces: true,
   }).forEach((opt, n) => {
@@ -494,7 +494,7 @@ test(`32 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
   });
 });
 
-test(`33 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - comma + text`, () => {
+test(`33 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - comma + text`, () => {
   mixer({
     addMissingSpaces: true,
   }).forEach((opt, n) => {
@@ -502,7 +502,7 @@ test(`33 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
   });
 });
 
-test(`34 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - added space because first letter is uppercase`, () => {
+test(`34 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - added space because first letter is uppercase`, () => {
   mixer({
     addMissingSpaces: true,
   }).forEach((opt, n) => {
@@ -514,7 +514,7 @@ test(`34 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
   });
 });
 
-test(`35 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - all caps will prevent space added`, () => {
+test(`35 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - all caps will prevent space added`, () => {
   mixer({
     addMissingSpaces: true,
   }).forEach((opt, n) => {
@@ -526,7 +526,7 @@ test(`35 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
   });
 });
 
-test(`36 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - small caps will prevent space added`, () => {
+test(`36 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - small caps will prevent space added`, () => {
   mixer({
     addMissingSpaces: true,
   }).forEach((opt, n) => {
@@ -538,7 +538,7 @@ test(`36 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
   });
 });
 
-test(`37 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - letter after full stop has to be uppercase`, () => {
+test(`37 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - letter after full stop has to be uppercase`, () => {
   mixer({
     addMissingSpaces: true,
   }).forEach((opt, n) => {
@@ -546,7 +546,7 @@ test(`37 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
   });
 });
 
-test(`38 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - letter after full stop has to be uppercase`, () => {
+test(`38 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - being on the safe side - not adding spaces around detected URLs - letter after full stop has to be uppercase`, () => {
   mixer({
     addMissingSpaces: true,
   }).forEach((opt, n) => {
@@ -554,7 +554,7 @@ test(`38 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - being on 
   });
 });
 
-test(`39 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin character after URL #1`, () => {
+test(`39 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - non-Latin character after URL #1`, () => {
   mixer({
     removeWidows: false,
     convertEntities: true,
@@ -569,7 +569,7 @@ test(`39 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin
   });
 });
 
-test(`40 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin character after URL #2`, () => {
+test(`40 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - non-Latin character after URL #2`, () => {
   mixer({
     removeWidows: false,
     convertEntities: true,
@@ -584,7 +584,7 @@ test(`40 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin
   });
 });
 
-test(`41 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin character after URL #3`, () => {
+test(`41 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - non-Latin character after URL #3`, () => {
   mixer({
     removeWidows: false,
     convertEntities: true,
@@ -599,7 +599,7 @@ test(`41 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin
   });
 });
 
-test(`42 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin character after URL - not adding the missing spaces #1`, () => {
+test(`42 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - non-Latin character after URL - not adding the missing spaces #1`, () => {
   mixer({
     removeWidows: false,
     convertEntities: true,
@@ -614,7 +614,7 @@ test(`42 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin
   });
 });
 
-test(`43 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin character after URL - not adding the missing spaces #2`, () => {
+test(`43 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - non-Latin character after URL - not adding the missing spaces #2`, () => {
   mixer({
     removeWidows: false,
     convertEntities: true,
@@ -629,7 +629,7 @@ test(`43 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin
   });
 });
 
-test(`44 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin character after URL - not adding the missing spaces #3`, () => {
+test(`44 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - non-Latin character after URL - not adding the missing spaces #3`, () => {
   mixer({
     removeWidows: false,
     convertEntities: true,
@@ -644,7 +644,7 @@ test(`44 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - non-Latin
   });
 });
 
-test(`45 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - leaves file names intact`, () => {
+test(`45 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - leaves file names intact`, () => {
   mixer().forEach((opt, n) => {
     [
       "image.jpg",
@@ -669,7 +669,7 @@ test(`45 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - leaves fi
   });
 });
 
-test(`46 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - long sentences with file names with extensions #1`, () => {
+test(`46 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - long sentences with file names with extensions #1`, () => {
   equal(
     det(ok, not, 0, "Some text .gitignore").res,
     "Some text .gitignore",
@@ -677,7 +677,7 @@ test(`46 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - long sent
   );
 });
 
-test(`47 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - long sentences with file names with extensions #2`, () => {
+test(`47 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - long sentences with file names with extensions #2`, () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -695,13 +695,13 @@ test(`47 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - long sent
   });
 });
 
-test(`48 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - false positive - Dutch "p.st"`, () => {
+test(`48 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - false positive - Dutch "p.st"`, () => {
   mixer().forEach((opt, n) => {
     equal(det(ok, not, n, "10eur p.st", opt).res, "10eur p.st", "48.01");
   });
 });
 
-test(`49 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing spaces addition can be turned off - full stop, addMissingSpaces=on`, () => {
+test(`49 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing spaces addition can be turned off - full stop, addMissingSpaces=on`, () => {
   mixer({
     addMissingSpaces: true,
     dontEncodeNonLatin: true,
@@ -715,7 +715,7 @@ test(`49 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
   });
 });
 
-test(`50 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing spaces addition can be turned off - full stop, addMissingSpaces=off`, () => {
+test(`50 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing spaces addition can be turned off - full stop, addMissingSpaces=off`, () => {
   mixer({
     addMissingSpaces: false,
     dontEncodeNonLatin: true,
@@ -729,7 +729,7 @@ test(`50 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
   });
 });
 
-test(`51 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing spaces addition can be turned off - full stop, addMissingSpaces=on, dontEncodeNonLatin=on`, () => {
+test(`51 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing spaces addition can be turned off - full stop, addMissingSpaces=on, dontEncodeNonLatin=on`, () => {
   mixer({
     addMissingSpaces: true,
     dontEncodeNonLatin: true,
@@ -748,7 +748,7 @@ test(`51 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
   });
 });
 
-test(`52 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing spaces addition can be turned off - full stop, addMissingSpaces=off, dontEncodeNonLatin=on`, () => {
+test(`52 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing spaces addition can be turned off - full stop, addMissingSpaces=off, dontEncodeNonLatin=on`, () => {
   mixer({
     addMissingSpaces: false,
     dontEncodeNonLatin: true,
@@ -767,7 +767,7 @@ test(`52 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
   });
 });
 
-test(`53 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing spaces addition can be turned off - full stop, addMissingSpaces=on, dontEncodeNonLatin=on`, () => {
+test(`53 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing spaces addition can be turned off - full stop, addMissingSpaces=on, dontEncodeNonLatin=on`, () => {
   mixer({
     addMissingSpaces: true,
     dontEncodeNonLatin: true,
@@ -796,7 +796,7 @@ test(`53 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
   });
 });
 
-test(`54 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing spaces addition can be turned off - semicol, addMissingSpaces=off`, () => {
+test(`54 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing spaces addition can be turned off - semicol, addMissingSpaces=off`, () => {
   mixer({
     addMissingSpaces: false,
     dontEncodeNonLatin: true,
@@ -825,7 +825,7 @@ test(`54 - ${`\u001b[${33}m${`opts.addMissingSpaces`}\u001b[${39}m`} - missing s
   });
 });
 
-test(`55 - missing space after ndash added (nbsp + ndash) - missing space after ndash added`, () => {
+test("55 - missing space after ndash added (nbsp + ndash) - missing space after ndash added", () => {
   mixer({
     convertDashes: true,
     removeWidows: true,
@@ -840,7 +840,7 @@ test(`55 - missing space after ndash added (nbsp + ndash) - missing space after 
   });
 });
 
-test(`56 - missing space after ndash added (nbsp + ndash) - missing space after ndash added`, () => {
+test("56 - missing space after ndash added (nbsp + ndash) - missing space after ndash added", () => {
   mixer({
     convertDashes: true,
     removeWidows: true,
@@ -855,7 +855,7 @@ test(`56 - missing space after ndash added (nbsp + ndash) - missing space after 
   });
 });
 
-test(`57 - missing space after ndash added (nbsp + ndash) - missing space after ndash added`, () => {
+test("57 - missing space after ndash added (nbsp + ndash) - missing space after ndash added", () => {
   mixer({
     convertDashes: true,
     removeWidows: true,
@@ -870,7 +870,7 @@ test(`57 - missing space after ndash added (nbsp + ndash) - missing space after 
   });
 });
 
-test(`58 - missing space after ndash added (nbsp + ndash) - space after ndash not added where not needed`, () => {
+test("58 - missing space after ndash added (nbsp + ndash) - space after ndash not added where not needed", () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
@@ -883,7 +883,7 @@ test(`58 - missing space after ndash added (nbsp + ndash) - space after ndash no
   });
 });
 
-test(`59 - missing space after ndash added (nbsp + ndash) - missing space after ndash added`, () => {
+test("59 - missing space after ndash added (nbsp + ndash) - missing space after ndash added", () => {
   mixer({
     convertDashes: true,
     removeWidows: true,
@@ -898,7 +898,7 @@ test(`59 - missing space after ndash added (nbsp + ndash) - missing space after 
   });
 });
 
-test(`60 - missing space after ndash added (nbsp + ndash) - missing space after ndash added`, () => {
+test("60 - missing space after ndash added (nbsp + ndash) - missing space after ndash added", () => {
   mixer({
     convertDashes: true,
     removeWidows: true,
@@ -928,7 +928,7 @@ test(`60 - missing space after ndash added (nbsp + ndash) - missing space after 
 // 02. whitespace control
 // -----------------------------------------------------------------------------
 
-test(`61 - deletes space around n-dash between numbers`, () => {
+test("61 - deletes space around n-dash between numbers", () => {
   mixer({
     convertDashes: true,
     convertEntities: false,
@@ -941,20 +941,20 @@ test(`61 - deletes space around n-dash between numbers`, () => {
   });
 });
 
-test(`62 - deletes space around n-dash between numbers`, () => {
+test("62 - deletes space around n-dash between numbers", () => {
   mixer({
     convertDashes: true,
     convertEntities: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `1880 &ndash; 1912`, opt).res,
+      det(ok, not, n, "1880 &ndash; 1912", opt).res,
       `1880${rawNDash}1912`,
       "62.01"
     );
   });
 });
 
-test(`63 - deletes space around n-dash between numbers`, () => {
+test("63 - deletes space around n-dash between numbers", () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
@@ -967,7 +967,7 @@ test(`63 - deletes space around n-dash between numbers`, () => {
   });
 });
 
-test(`64 - deletes space around n-dash between numbers`, () => {
+test("64 - deletes space around n-dash between numbers", () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
@@ -980,7 +980,7 @@ test(`64 - deletes space around n-dash between numbers`, () => {
   });
 });
 
-test(`65 - space in front of n-dash, missing space after it`, () => {
+test("65 - space in front of n-dash, missing space after it", () => {
   mixer({
     convertDashes: true,
     convertEntities: false,
@@ -993,7 +993,7 @@ test(`65 - space in front of n-dash, missing space after it`, () => {
   });
 });
 
-test(`66 - jinja/nunjucks code chunk with double quotes`, () => {
+test("66 - jinja/nunjucks code chunk with double quotes", () => {
   let str1 = '{{ "%.2f"|format(total.value) }}';
   mixer().forEach((opt, n) => {
     equal(det(ok, not, n, str1, opt).res, str1, "66.01");
@@ -1010,31 +1010,31 @@ test(`66 - jinja/nunjucks code chunk with double quotes`, () => {
   });
 });
 
-test(`67`, () => {
+test("67", () => {
   equal(
     det1(`Abc;${rawNbsp}de fghij klmnop.`, {
       convertEntities: true,
       removeWidows: true,
     }).res,
-    `Abc;&nbsp;de fghij&nbsp;klmnop.`,
+    "Abc;&nbsp;de fghij&nbsp;klmnop.",
     "67.01"
   );
 });
 
-test(`68`, () => {
+test("68", () => {
   mixer({
     convertEntities: true,
     removeWidows: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, `Abc;${rawNbsp}de fghij klmnop.`, opt).res,
-      `Abc;&nbsp;de fghij&nbsp;klmnop.`,
+      "Abc;&nbsp;de fghij&nbsp;klmnop.",
       "68.01"
     );
   });
 });
 
-test(`69`, () => {
+test("69", () => {
   mixer({
     convertEntities: false,
     removeWidows: true,
@@ -1047,19 +1047,19 @@ test(`69`, () => {
   });
 });
 
-test(`70`, () => {
+test("70", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, `Abc;${rawNbsp}de fg.`, opt).res,
-      `Abc; de fg.`,
+      "Abc; de fg.",
       "70.01"
     );
   });
 });
 
-test(`71 - sanity check #02`, () => {
+test("71 - sanity check #02", () => {
   mixer({
     convertEntities: false,
   }).forEach((opt, n) => {

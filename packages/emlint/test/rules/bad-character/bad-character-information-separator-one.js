@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two INFORMATION SEPARATOR ONE characters`, () => {
+test("01 - detects two INFORMATION SEPARATOR ONE characters", () => {
   let str = "\u001Fdlkgjld\u001Fj";
   let linter = new Linter();
   let messages = linter.verify(str, {

@@ -8,9 +8,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // false positives
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${31}m${`false positives`}\u001b[${39}m`} - double percentage`, () => {
+test(`01 - ${`\u001b[${31}m${"false positives"}\u001b[${39}m`} - double percentage`, () => {
   let gathered = [];
-  ct(`<table width="100%%">`, {
+  ct('<table width="100%%">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },

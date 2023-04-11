@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two END OF PROTECTED AREA characters`, () => {
+test("01 - detects two END OF PROTECTED AREA characters", () => {
   let str = "\u0097dlkgjld\u0097j";
   let linter = new Linter();
   let messages = linter.verify(str, {

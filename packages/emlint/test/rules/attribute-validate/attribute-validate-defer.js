@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no defer, error level 0`, () => {
-  let str = `<script><div>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no defer, error level 0`, () => {
+  let str = "<script><div>"; // <---- deliberately a tag names of both kinds, suitable and unsuitable
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no defer, error leve
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no defer, error level 1`, () => {
-  let str = `<script><div>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no defer, error level 1`, () => {
+  let str = "<script><div>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no defer, error leve
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no defer, error level 2`, () => {
-  let str = `<script><div>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no defer, error level 2`, () => {
+  let str = "<script><div>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no defer, error leve
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy script`, () => {
-  let str = `<script defer>`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy script`, () => {
+  let str = "<script defer>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -61,8 +61,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy script`, () 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div defer>`;
+test(`05 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = "<div defer>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -81,8 +81,8 @@ test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz defer class="yyy">`;
+test(`06 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz defer class="yyy">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -104,8 +104,8 @@ test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - boolean value`, () => {
-  let str = `<script defer="true">`;
+test(`07 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - boolean value`, () => {
+  let str = '<script defer="true">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -113,13 +113,13 @@ test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - boolean value`, () => {
     },
   });
   // can fix:
-  equal(applyFixes(str, messages), `<script defer>`, "07.01");
+  equal(applyFixes(str, messages), "<script defer>", "07.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-defer",
       idxFrom: 13,
       idxTo: 20,
-      message: `Should have no value.`,
+      message: "Should have no value.",
       fix: {
         ranges: [[13, 20]],
       },
@@ -127,8 +127,8 @@ test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - boolean value`, () => {
   ]);
 });
 
-test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - boolean value`, () => {
-  let str = `<script defer=true>`;
+test(`08 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - boolean value`, () => {
+  let str = "<script defer=true>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -136,13 +136,13 @@ test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - boolean value`, () => {
     },
   });
   // can fix:
-  equal(applyFixes(str, messages), `<script defer>`, "08.01");
+  equal(applyFixes(str, messages), "<script defer>", "08.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-defer",
       idxFrom: 13,
       idxTo: 18,
-      message: `Should have no value.`,
+      message: "Should have no value.",
       fix: {
         ranges: [[13, 18]],
       },
@@ -150,8 +150,8 @@ test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - boolean value`, () => {
   ]);
 });
 
-test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`, () => {
-  let str = `<script defer="">`;
+test(`09 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - empty value`, () => {
+  let str = '<script defer="">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -159,13 +159,13 @@ test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`, () => {
     },
   });
   // can't fix:
-  equal(applyFixes(str, messages), `<script defer>`, "09.01");
+  equal(applyFixes(str, messages), "<script defer>", "09.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-defer",
       idxFrom: 13,
       idxTo: 16,
-      message: `Should have no value.`,
+      message: "Should have no value.",
       fix: {
         ranges: [[13, 16]],
       },
@@ -173,8 +173,8 @@ test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`, () => {
   ]);
 });
 
-test(`10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - value missing, equal present`, () => {
-  let str = `<script defer=>`;
+test(`10 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - value missing, equal present`, () => {
+  let str = "<script defer=>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -182,13 +182,13 @@ test(`10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - value missing, equal pre
     },
   });
   // can't fix:
-  equal(applyFixes(str, messages), `<script defer>`, "10.01");
+  equal(applyFixes(str, messages), "<script defer>", "10.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-defer",
       idxFrom: 13,
       idxTo: 14,
-      message: `Should have no value.`,
+      message: "Should have no value.",
       fix: {
         ranges: [[13, 14]],
       },
@@ -199,8 +199,8 @@ test(`10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - value missing, equal pre
 // 04. XHTML
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - healthy defer checkbox, as HTML`, () => {
-  let str = `<script defer>`;
+test(`11 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - healthy defer checkbox, as HTML`, () => {
+  let str = "<script defer>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -208,96 +208,96 @@ test(`11 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - healthy defer checkbox, a
     },
   });
   // can fix:
-  equal(applyFixes(str, messages), `<script defer="defer">`, "11.01");
+  equal(applyFixes(str, messages), '<script defer="defer">', "11.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-defer",
       idxFrom: 8,
       idxTo: 13,
-      message: `It's XHTML, add value, ="defer".`,
+      message: 'It\'s XHTML, add value, ="defer".',
       fix: {
-        ranges: [[13, 13, `="defer"`]],
+        ranges: [[13, 13, '="defer"']],
       },
     },
   ]);
 });
 
-test(`12 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - missing after equal, as HTML`, () => {
-  let str = `<script defer=/>`;
+test(`12 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - missing after equal, as HTML`, () => {
+  let str = "<script defer=/>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-defer": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<script defer="defer"/>`, "12.01");
+  equal(applyFixes(str, messages), '<script defer="defer"/>', "12.01");
 });
 
-test(`13 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - closing quote and content missing, as HTML`, () => {
-  let str = `<script defer =">`;
+test(`13 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - closing quote and content missing, as HTML`, () => {
+  let str = '<script defer =">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-defer": [2, "xhtml"],
     },
   });
-  equal(messages[0].fix.ranges, [[13, 16, `="defer"`]], "13.01");
-  equal(applyFixes(str, messages), `<script defer="defer">`, "13.02");
+  equal(messages[0].fix.ranges, [[13, 16, '="defer"']], "13.01");
+  equal(applyFixes(str, messages), '<script defer="defer">', "13.02");
 });
 
-test(`14 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - double quotes, no content, as HTML`, () => {
-  let str = `<script defer=""/>`;
+test(`14 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - double quotes, no content, as HTML`, () => {
+  let str = '<script defer=""/>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-defer": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<script defer="defer"/>`, "14.01");
+  equal(applyFixes(str, messages), '<script defer="defer"/>', "14.01");
 });
 
-test(`15 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - single quotes, no content, as HTML`, () => {
-  let str = `<script defer=''/>`;
+test(`15 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - single quotes, no content, as HTML`, () => {
+  let str = "<script defer=''/>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-defer": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<script defer='defer'/>`, "15.01");
+  equal(applyFixes(str, messages), "<script defer='defer'/>", "15.01");
 });
 
-test(`16 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - quotes with content missing, as HTML`, () => {
-  let str = `<script defer='>`;
+test(`16 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - quotes with content missing, as HTML`, () => {
+  let str = "<script defer='>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-defer": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<script defer='defer'>`, "16.01");
+  equal(applyFixes(str, messages), "<script defer='defer'>", "16.01");
 });
 
-test(`17 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - equal missing, otherwise healthy HTML`, () => {
-  let str = `<script defer"defer"/>`;
+test(`17 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - equal missing, otherwise healthy HTML`, () => {
+  let str = '<script defer"defer"/>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-defer": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<script defer="defer"/>`, "17.01");
+  equal(applyFixes(str, messages), '<script defer="defer"/>', "17.01");
 });
 
-test(`18 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - equal missing, otherwise healthy HTML`, () => {
-  let str = `<script defer'defer'/>`;
+test(`18 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - equal missing, otherwise healthy HTML`, () => {
+  let str = "<script defer'defer'/>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-defer": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<script defer='defer'/>`, "18.01");
+  equal(applyFixes(str, messages), "<script defer='defer'/>", "18.01");
 });
 
 test.run();

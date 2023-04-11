@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no archive, error level 0`, () => {
-  [`<applet>`, `<object>`].forEach((tag) => {
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no archive, error level 0`, () => {
+  ["<applet>", "<object>"].forEach((tag) => {
     let linter = new Linter();
     let messages = linter.verify(tag, {
       rules: {
@@ -23,8 +23,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no archive, error le
   });
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no archive, error level 1`, () => {
-  [`<applet>`, `<object>`].forEach((tag) => {
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no archive, error level 1`, () => {
+  ["<applet>", "<object>"].forEach((tag) => {
     let linter = new Linter();
     let messages = linter.verify(tag, {
       rules: {
@@ -36,8 +36,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no archive, error le
   });
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no archive, error level 2`, () => {
-  [`<applet>`, `<object>`].forEach((tag) => {
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no archive, error level 2`, () => {
+  ["<applet>", "<object>"].forEach((tag) => {
     let linter = new Linter();
     let messages = linter.verify(tag, {
       rules: {
@@ -49,8 +49,9 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no archive, error le
   });
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy archive, applet`, () => {
-  let str = `<applet class='zz' archive='https://codsen.com,https://detergent.io' id='yy aa'>`; // <-- notice single quotes
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy archive, applet`, () => {
+  let str =
+    "<applet class='zz' archive='https://codsen.com,https://detergent.io' id='yy aa'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -61,8 +62,9 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy archive, app
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy archive, object`, () => {
-  let str = `<object class='zz' archive='https://codsen.com https://detergent.io' id='yy aa'>`; // <-- notice single quotes
+test(`05 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy archive, object`, () => {
+  let str =
+    "<object class='zz' archive='https://codsen.com https://detergent.io' id='yy aa'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -76,8 +78,8 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy archive, obj
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<applet archive=" https://codsen.com">`;
+test(`06 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = '<applet archive=" https://codsen.com">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -86,7 +88,7 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   });
   equal(
     applyFixes(str, messages),
-    `<applet archive="https://codsen.com">`,
+    '<applet archive="https://codsen.com">',
     "06.01"
   );
   compare(ok, messages, [
@@ -94,7 +96,7 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
       ruleId: "attribute-validate-archive",
       idxFrom: 17,
       idxTo: 18,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[17, 18]],
       },
@@ -102,8 +104,8 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   ]);
 });
 
-test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<applet archive="https://codsen.com ">`;
+test(`07 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = '<applet archive="https://codsen.com ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -112,7 +114,7 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   });
   equal(
     applyFixes(str, messages),
-    `<applet archive="https://codsen.com">`,
+    '<applet archive="https://codsen.com">',
     "07.01"
   );
   compare(ok, messages, [
@@ -120,7 +122,7 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
       ruleId: "attribute-validate-archive",
       idxFrom: 35,
       idxTo: 36,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[35, 36]],
       },
@@ -128,8 +130,8 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around - 6 digit object`, () => {
-  let str = `<applet archive="  https://codsen.com  ">`;
+test(`08 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around - 6 digit object`, () => {
+  let str = '<applet archive="  https://codsen.com  ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -138,7 +140,7 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   });
   equal(
     applyFixes(str, messages),
-    `<applet archive="https://codsen.com">`,
+    '<applet archive="https://codsen.com">',
     "08.01"
   );
   compare(ok, messages, [
@@ -146,7 +148,7 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
       ruleId: "attribute-validate-archive",
       idxFrom: 17,
       idxTo: 39,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [17, 19],
@@ -157,8 +159,8 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<applet archive="  \t">`;
+test(`09 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<applet archive="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -172,14 +174,14 @@ test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-archive",
       idxFrom: 17,
       idxTo: 20,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
 });
 
-test(`10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`, () => {
-  let str = `<applet archive="">`;
+test(`10 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - empty value`, () => {
+  let str = '<applet archive="">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -193,7 +195,7 @@ test(`10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`, () => 
       ruleId: "attribute-validate-archive",
       idxFrom: 8,
       idxTo: 18,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -202,8 +204,9 @@ test(`10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`, () => 
 // 03. applet tag
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - healthy`, () => {
-  let str = `<applet class='zz' archive='http://codsen.com,https://detergent.io' id='yy aa'>`; // <-- notice single quotes
+test(`11 - ${`\u001b[${35}m${"applet"}\u001b[${39}m`} - healthy`, () => {
+  let str =
+    "<applet class='zz' archive='http://codsen.com,https://detergent.io' id='yy aa'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -214,8 +217,8 @@ test(`11 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - healthy`, () => {
   equal(messages, [], "11.02");
 });
 
-test(`12 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - one unrecognised`, () => {
-  let str = `<applet archive="http://codsen.com,trala..">`;
+test(`12 - ${`\u001b[${35}m${"applet"}\u001b[${39}m`} - one unrecognised`, () => {
+  let str = '<applet archive="http://codsen.com,trala..">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -229,14 +232,14 @@ test(`12 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - one unrecognised`, () =>
       ruleId: "attribute-validate-archive",
       idxFrom: 35,
       idxTo: 42,
-      message: `Should be an URI.`,
+      message: "Should be an URI.",
       fix: null,
     },
   ]);
 });
 
-test(`13 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - one unrecognised`, () => {
-  let str = `<applet archive="abc.,def.">`;
+test(`13 - ${`\u001b[${35}m${"applet"}\u001b[${39}m`} - one unrecognised`, () => {
+  let str = '<applet archive="abc.,def.">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -250,21 +253,21 @@ test(`13 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - one unrecognised`, () =>
       ruleId: "attribute-validate-archive",
       idxFrom: 17,
       idxTo: 21,
-      message: `Should be an URI.`,
+      message: "Should be an URI.",
       fix: null,
     },
     {
       ruleId: "attribute-validate-archive",
       idxFrom: 22,
       idxTo: 26,
-      message: `Should be an URI.`,
+      message: "Should be an URI.",
       fix: null,
     },
   ]);
 });
 
-test(`14 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - legit URI's but space-separated`, () => {
-  let str = `<applet archive="https://codsen.com https://detergent.io">`;
+test(`14 - ${`\u001b[${35}m${"applet"}\u001b[${39}m`} - legit URI's but space-separated`, () => {
+  let str = '<applet archive="https://codsen.com https://detergent.io">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -278,14 +281,14 @@ test(`14 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - legit URI's but space-se
       ruleId: "attribute-validate-archive",
       idxFrom: 35,
       idxTo: 36,
-      message: `Bad whitespace.`,
+      message: "Bad whitespace.",
       fix: null,
     },
   ]);
 });
 
-test(`15 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - typos`, () => {
-  let str = `<applet archive=",http://codsen.com, tralal. , ">`;
+test(`15 - ${`\u001b[${35}m${"applet"}\u001b[${39}m`} - typos`, () => {
+  let str = '<applet archive=",http://codsen.com, tralal. , ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -295,7 +298,7 @@ test(`15 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - typos`, () => {
   // can fix:
   equal(
     applyFixes(str, messages),
-    `<applet archive="http://codsen.com,tralal.">`,
+    '<applet archive="http://codsen.com,tralal.">',
     "15.01"
   );
   compare(ok, messages, [
@@ -357,8 +360,9 @@ test(`15 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - typos`, () => {
 // 04. object tag
 // -----------------------------------------------------------------------------
 
-test(`16 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - healthy`, () => {
-  let str = `<object class='zz' archive='http://codsen.com https://detergent.io' id='yy aa'>`; // <-- notice single quotes
+test(`16 - ${`\u001b[${35}m${"object"}\u001b[${39}m`} - healthy`, () => {
+  let str =
+    "<object class='zz' archive='http://codsen.com https://detergent.io' id='yy aa'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -369,8 +373,8 @@ test(`16 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - healthy`, () => {
   equal(messages, [], "16.02");
 });
 
-test(`17 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - unrecognised URI`, () => {
-  let str = `<object archive="tralala.">`;
+test(`17 - ${`\u001b[${35}m${"object"}\u001b[${39}m`} - unrecognised URI`, () => {
+  let str = '<object archive="tralala.">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -384,14 +388,14 @@ test(`17 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - unrecognised URI`, () =>
       ruleId: "attribute-validate-archive",
       idxFrom: 17,
       idxTo: 25,
-      message: `Should be an URI.`,
+      message: "Should be an URI.",
       fix: null,
     },
   ]);
 });
 
-test(`18 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - legit URI but comma-separated`, () => {
-  let str = `<object archive="https://codsen.com,https://detergent.io">`;
+test(`18 - ${`\u001b[${35}m${"object"}\u001b[${39}m`} - legit URI but comma-separated`, () => {
+  let str = '<object archive="https://codsen.com,https://detergent.io">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -405,14 +409,14 @@ test(`18 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - legit URI but comma-sepa
       ruleId: "attribute-validate-archive",
       idxFrom: 17,
       idxTo: 56,
-      message: `URI's should be separated with a single space.`,
+      message: "URI's should be separated with a single space.",
       fix: null,
     },
   ]);
 });
 
-test(`19 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - legit URI but comma-separated`, () => {
-  let str = `<object archive="https://codsen.com, https://detergent.io">`;
+test(`19 - ${`\u001b[${35}m${"object"}\u001b[${39}m`} - legit URI but comma-separated`, () => {
+  let str = '<object archive="https://codsen.com, https://detergent.io">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -426,7 +430,7 @@ test(`19 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - legit URI but comma-sepa
       ruleId: "attribute-validate-archive",
       idxFrom: 35,
       idxTo: 36,
-      message: `No commas.`,
+      message: "No commas.",
       fix: null,
     },
   ]);

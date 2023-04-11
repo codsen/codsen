@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two SET TRANSMIT STATE characters`, () => {
+test("01 - detects two SET TRANSMIT STATE characters", () => {
   let str = "\u0093dlkgjld\u0093j";
   let linter = new Linter();
   let messages = linter.verify(str, {

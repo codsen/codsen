@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no face, error level 0`, () => {
-  let str = `<font>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no face, error level 0`, () => {
+  let str = "<font>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no face, error level
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no face, error level 1`, () => {
-  let str = `<font>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no face, error level 1`, () => {
+  let str = "<font>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no face, error level
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no face, error level 2`, () => {
-  let str = `<font>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no face, error level 2`, () => {
+  let str = "<font>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no face, error level
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
-  let str = `<font face="verdana">`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = '<font face="verdana">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -61,8 +61,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div face="verdana">`;
+test(`05 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div face="verdana">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -81,8 +81,8 @@ test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz face="verdana">`;
+test(`06 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz face="verdana">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {

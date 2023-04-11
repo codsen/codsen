@@ -8,8 +8,8 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. missing letters
 // -----------------------------------------------------------------------------
 
-test(`01 - group rule`, () => {
-  let str = `abc&nsp;def`;
+test("01 - group rule", () => {
+  let str = "abc&nsp;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity": 2,
@@ -36,8 +36,8 @@ test(`01 - group rule`, () => {
   equal(messages.length, 1, "01.02");
 });
 
-test(`02 - exact rule`, () => {
-  let str = `abc&nsp;def`;
+test("02 - exact rule", () => {
+  let str = "abc&nsp;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-malformed-nbsp": 2,
@@ -64,8 +64,8 @@ test(`02 - exact rule`, () => {
   equal(messages.length, 1, "02.02");
 });
 
-test(`03 - rule by wildcard`, () => {
-  let str = `abc&nsp;def`;
+test("03 - rule by wildcard", () => {
+  let str = "abc&nsp;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-*": 2,
@@ -92,8 +92,8 @@ test(`03 - rule by wildcard`, () => {
   equal(messages.length, 1, "03.02");
 });
 
-test(`04 - group rule - off`, () => {
-  let str = `abc&nsp;def`;
+test("04 - group rule - off", () => {
+  let str = "abc&nsp;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity": 0,
@@ -103,8 +103,8 @@ test(`04 - group rule - off`, () => {
   equal(messages, [], "04.02");
 });
 
-test(`05 - exact rule - off`, () => {
-  let str = `abc&nsp;def`;
+test("05 - exact rule - off", () => {
+  let str = "abc&nsp;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-malformed-nbsp": 0,
@@ -114,8 +114,8 @@ test(`05 - exact rule - off`, () => {
   equal(messages, [], "05.02");
 });
 
-test(`06 - rule by wildcard - off`, () => {
-  let str = `abc&nsp;def`;
+test("06 - rule by wildcard - off", () => {
+  let str = "abc&nsp;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-*": 0,
@@ -128,8 +128,8 @@ test(`06 - rule by wildcard - off`, () => {
 // 02. other malformed entities
 // -----------------------------------------------------------------------------
 
-test(`07 - rule by wildcard`, () => {
-  let str = `&pond;1000`;
+test("07 - rule by wildcard", () => {
+  let str = "&pond;1000";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-*": 2,
@@ -156,8 +156,8 @@ test(`07 - rule by wildcard`, () => {
   equal(messages.length, 1, "07.02");
 });
 
-test(`08 - rule by group rule`, () => {
-  let str = `&pond;1000`;
+test("08 - rule by group rule", () => {
+  let str = "&pond;1000";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity": 2,
@@ -184,8 +184,8 @@ test(`08 - rule by group rule`, () => {
   equal(messages.length, 1, "08.02");
 });
 
-test(`09 - rule by exact rule`, () => {
-  let str = `&pond;1000`;
+test("09 - rule by exact rule", () => {
+  let str = "&pond;1000";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-malformed-pound": 2,
@@ -212,8 +212,8 @@ test(`09 - rule by exact rule`, () => {
   equal(messages.length, 1, "09.02");
 });
 
-test(`10 - rule by wildcard - off`, () => {
-  let str = `&pond;1000`;
+test("10 - rule by wildcard - off", () => {
+  let str = "&pond;1000";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-*": 0,
@@ -223,8 +223,8 @@ test(`10 - rule by wildcard - off`, () => {
   equal(messages, [], "10.02");
 });
 
-test(`11 - rule by group rule - off`, () => {
-  let str = `&pond;1000`;
+test("11 - rule by group rule - off", () => {
+  let str = "&pond;1000";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity": 0,
@@ -234,8 +234,8 @@ test(`11 - rule by group rule - off`, () => {
   equal(messages, [], "11.02");
 });
 
-test(`12 - rule by exact rule - off`, () => {
-  let str = `&pond;1000`;
+test("12 - rule by exact rule - off", () => {
+  let str = "&pond;1000";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-malformed-pound": 0,

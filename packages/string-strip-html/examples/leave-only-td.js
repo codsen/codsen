@@ -30,5 +30,5 @@ assert.equal(
     (acc, [from, to]) => `${acc}${someHtml.slice(from, to)}`,
     ""
   ),
-  `<td class="col1"></td><td class="col2"></td><td class="col3"></td><td class="col4"></td>`
+  '<td class="col1"></td><td class="col2"></td><td class="col3"></td><td class="col4"></td>'
 );

@@ -13,7 +13,7 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. basic
 // -----------------------------------------------------------------------------
 
-test(`01 - off`, () => {
+test("01 - off", () => {
   let str = "z <div>";
   let messages = verify(not, str, {
     rules: {
@@ -24,7 +24,7 @@ test(`01 - off`, () => {
   equal(messages, [], "01.02");
 });
 
-test(`02 - warn`, () => {
+test("02 - warn", () => {
   let str = "z <div>";
   let messages = verify(not, str, {
     rules: {
@@ -41,7 +41,7 @@ test(`02 - warn`, () => {
         severity: 1,
         idxFrom: 2,
         idxTo: 7,
-        message: `Closing tag is missing.`,
+        message: "Closing tag is missing.",
         fix: null,
       },
     ],
@@ -49,7 +49,7 @@ test(`02 - warn`, () => {
   );
 });
 
-test(`03 - err`, () => {
+test("03 - err", () => {
   let str = "z <div>";
   let messages = verify(not, str, {
     rules: {
@@ -66,7 +66,7 @@ test(`03 - err`, () => {
         severity: 2,
         idxFrom: 2,
         idxTo: 7,
-        message: `Closing tag is missing.`,
+        message: "Closing tag is missing.",
         fix: null,
       },
     ],
@@ -74,7 +74,7 @@ test(`03 - err`, () => {
   );
 });
 
-test(`04 - via blanket rule, severity 1`, () => {
+test("04 - via blanket rule, severity 1", () => {
   let str = "z <div>";
   let messages = verify(not, str, {
     rules: {
@@ -91,7 +91,7 @@ test(`04 - via blanket rule, severity 1`, () => {
         severity: 1,
         idxFrom: 2,
         idxTo: 7,
-        message: `Closing tag is missing.`,
+        message: "Closing tag is missing.",
         fix: null,
       },
     ],
@@ -99,7 +99,7 @@ test(`04 - via blanket rule, severity 1`, () => {
   );
 });
 
-test(`05 - via blanket rule, severity 2`, () => {
+test("05 - via blanket rule, severity 2", () => {
   let str = "z <div>";
   let messages = verify(not, str, {
     rules: {
@@ -116,7 +116,7 @@ test(`05 - via blanket rule, severity 2`, () => {
         severity: 2,
         idxFrom: 2,
         idxTo: 7,
-        message: `Closing tag is missing.`,
+        message: "Closing tag is missing.",
         fix: null,
       },
     ],
@@ -124,7 +124,7 @@ test(`05 - via blanket rule, severity 2`, () => {
   );
 });
 
-test(`06 - no issue here`, () => {
+test("06 - no issue here", () => {
   let str = "<style>\n\n</style>";
   let messages = verify(not, str, {
     rules: {
@@ -135,7 +135,7 @@ test(`06 - no issue here`, () => {
   equal(messages, [], "06.02");
 });
 
-test(`07 - TD missing`, () => {
+test("07 - TD missing", () => {
   let str = `<table>
   <tr>
     <td>
@@ -175,7 +175,7 @@ test(`07 - TD missing`, () => {
   equal(messages.length, 1, "07.02");
 });
 
-test(`08 - TR missing`, () => {
+test("08 - TR missing", () => {
   let str = `<table width="1" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
@@ -215,7 +215,7 @@ test(`08 - TR missing`, () => {
   equal(messages.length, 1, "08.02");
 });
 
-test(`09 - TABLE missing`, () => {
+test("09 - TABLE missing", () => {
   let str = `<table width="1" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
@@ -258,9 +258,9 @@ test(`09 - TABLE missing`, () => {
 // 02. various
 // -----------------------------------------------------------------------------
 
-test(`10 - opening and closing void tag`, () => {
-  let str = `<br><br>zzz</br></br>`;
-  let fixed = `<br /><br />zzz<br /><br />`;
+test("10 - opening and closing void tag", () => {
+  let str = "<br><br>zzz</br></br>";
+  let fixed = "<br /><br />zzz<br /><br />";
   let messages = verify(not, str, {
     rules: {
       all: 2,
@@ -269,9 +269,9 @@ test(`10 - opening and closing void tag`, () => {
   equal(applyFixes(str, messages), fixed, "10.01");
 });
 
-test(`11 - false positive - unclosed void`, () => {
-  let str = `<br><br>zzz<br>`;
-  let fixed = `<br /><br />zzz<br />`;
+test("11 - false positive - unclosed void", () => {
+  let str = "<br><br>zzz<br>";
+  let fixed = "<br /><br />zzz<br />";
   let messages = verify(not, str, {
     rules: {
       all: 2,

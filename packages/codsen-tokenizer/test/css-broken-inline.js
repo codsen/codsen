@@ -7,9 +7,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // errors within inline css
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - semi missing between two rules`, () => {
+test(`01 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - semi missing between two rules`, () => {
   let gathered = [];
-  ct(`<div style="float:left color:red">`, {
+  ct('<div style="float:left color:red">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -90,9 +90,9 @@ test(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - semi missing between two r
   );
 });
 
-test(`02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`, () => {
+test(`02 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character`, () => {
   let gathered = [];
-  ct(`<div style="float:left;x">z</div>`, {
+  ct('<div style="float:left;x">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -188,9 +188,9 @@ test(`02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`, () => {
   );
 });
 
-test(`03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`, () => {
+test(`03 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character`, () => {
   let gathered = [];
-  ct(`<div style="]\nfloat:left;">z</div>`, {
+  ct('<div style="]\nfloat:left;">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -292,9 +292,9 @@ test(`03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`, () => {
   );
 });
 
-test(`04 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - copious line breaks`, () => {
+test(`04 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - copious line breaks`, () => {
   let gathered = [];
-  ct(`<div style="\n float:left;\n">z</div>`, {
+  ct('<div style="\n float:left;\n">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -387,9 +387,9 @@ test(`04 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - copious line breaks`, () =
   );
 });
 
-test(`05 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character before prop name`, () => {
+test(`05 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character before prop name`, () => {
   let gathered = [];
-  ct(`<div style=".float:left;">z</div>`, {
+  ct('<div style=".float:left;">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -470,9 +470,9 @@ test(`05 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character before pro
   );
 });
 
-test(`06 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character after prop name`, () => {
+test(`06 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character after prop name`, () => {
   let gathered = [];
-  ct(`<div style="float.:left;">z</div>`, {
+  ct('<div style="float.:left;">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -553,9 +553,9 @@ test(`06 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character after prop
   );
 });
 
-test(`07 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character before prop name, no value`, () => {
+test(`07 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character before prop name, no value`, () => {
   let gathered = [];
-  ct(`<div style=".main">z</div>`, {
+  ct('<div style=".main">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -636,9 +636,9 @@ test(`07 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character before pro
   );
 });
 
-test(`08 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character after value, no semi`, () => {
+test(`08 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character after value, no semi`, () => {
   let gathered = [];
-  ct(`<div style="float:left.">z</div>`, {
+  ct('<div style="float:left.">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -719,9 +719,9 @@ test(`08 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character after valu
   );
 });
 
-test(`09 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character after value, with semi`, () => {
+test(`09 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character after value, with semi`, () => {
   let gathered = [];
-  ct(`<div style="float:left.;">z</div>`, {
+  ct('<div style="float:left.;">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -802,9 +802,9 @@ test(`09 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character after valu
   );
 });
 
-test(`10 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`, () => {
+test(`10 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character`, () => {
   let gathered = [];
-  ct(`<div style="\n\n   float:left\n\n   .">z</div>`, {
+  ct('<div style="\n\n   float:left\n\n   .">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -912,9 +912,9 @@ test(`10 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`, () => {
   );
 });
 
-test(`11 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`, () => {
+test(`11 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character`, () => {
   let gathered = [];
-  ct(`<div style="\n\n   float:left;\n\n   .">z</div>`, {
+  ct('<div style="\n\n   float:left;\n\n   .">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1022,9 +1022,9 @@ test(`11 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`, () => {
   );
 });
 
-test(`12 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - semi instead of a colon #1`, () => {
+test(`12 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - semi instead of a colon #1`, () => {
   let gathered = [];
-  ct(`<div style="float;left">z</div>`, {
+  ct('<div style="float;left">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1120,9 +1120,9 @@ test(`12 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - semi instead of a colon #1
   );
 });
 
-test(`13 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - semi instead of a colon #2`, () => {
+test(`13 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - semi instead of a colon #2`, () => {
   let gathered = [];
-  ct(`<div style="float;left;">z</div>`, {
+  ct('<div style="float;left;">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1221,9 +1221,9 @@ test(`13 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - semi instead of a colon #2
 // quoted
 // -----------------------------------------------------------------------------
 
-test(`14 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, no semi #1`, () => {
+test(`14 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - quoted property value, no semi #1`, () => {
   let gathered = [];
-  ct(`<div style="float:"left"">z</div>`, {
+  ct('<div style="float:"left"">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1235,7 +1235,7 @@ test(`14 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, no 
         type: "tag",
         start: 0,
         end: 26,
-        value: `<div style="float:"left"">`,
+        value: '<div style="float:"left"">',
         tagNameStartsAt: 1,
         tagNameEndsAt: 4,
         tagName: "div",
@@ -1252,14 +1252,14 @@ test(`14 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, no 
             attribNameEndsAt: 10,
             attribOpeningQuoteAt: 11,
             attribClosingQuoteAt: 24,
-            attribValueRaw: `float:"left"`,
+            attribValueRaw: 'float:"left"',
             attribValue: [
               {
                 property: "float",
                 propertyStarts: 12,
                 propertyEnds: 17,
                 colon: 17,
-                value: `"left"`,
+                value: '"left"',
                 valueStarts: 18,
                 valueEnds: 24,
                 importantStarts: null,
@@ -1304,9 +1304,9 @@ test(`14 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, no 
   );
 });
 
-test(`15 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, no semi #2`, () => {
+test(`15 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - quoted property value, no semi #2`, () => {
   let gathered = [];
-  ct(`<div style="float:'left'">z</div>`, {
+  ct("<div style=\"float:'left'\">z</div>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1387,9 +1387,9 @@ test(`15 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, no 
   );
 });
 
-test(`16 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, semi #3`, () => {
+test(`16 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - quoted property value, semi #3`, () => {
   let gathered = [];
-  ct(`<div style="float:"left";">`, {
+  ct('<div style="float:"left";">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1449,9 +1449,9 @@ test(`16 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, sem
   );
 });
 
-test(`17 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, semi #4`, () => {
+test(`17 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - quoted property value, semi #4`, () => {
   let gathered = [];
-  ct(`<div style="float:'left';">z</div>`, {
+  ct("<div style=\"float:'left';\">z</div>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1532,9 +1532,9 @@ test(`17 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, sem
   );
 });
 
-test(`18 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property values`, () => {
+test(`18 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - quoted property values`, () => {
   let gathered = [];
-  ct(`<div style="float:'left'; color: 'red'">z</div>`, {
+  ct("<div style=\"float:'left'; color: 'red'\">z</div>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1636,9 +1636,9 @@ test(`18 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property values`, (
   );
 });
 
-test(`19 - repeated !important`, () => {
+test("19 - repeated !important", () => {
   let gathered = [];
-  ct(`<div style="float:left!important!important">`, {
+  ct('<div style="float:left!important!important">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1698,9 +1698,9 @@ test(`19 - repeated !important`, () => {
   );
 });
 
-test(`20 - !important cut off by a semy goes as important, not property`, () => {
+test("20 - !important cut off by a semy goes as important, not property", () => {
   let gathered = [];
-  ct(`<div style="float:left;!important">`, {
+  ct('<div style="float:left;!important">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1775,9 +1775,9 @@ test(`20 - !important cut off by a semy goes as important, not property`, () => 
   );
 });
 
-test(`21`, () => {
+test("21", () => {
   let gathered = [];
-  ct(`<div style="float.left;">`, {
+  ct('<div style="float.left;">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1837,9 +1837,9 @@ test(`21`, () => {
   );
 });
 
-test(`22`, () => {
+test("22", () => {
   let gathered = [];
-  ct(`<div style="floa/t:left;">`, {
+  ct('<div style="floa/t:left;">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1899,9 +1899,9 @@ test(`22`, () => {
   );
 });
 
-test(`23`, () => {
+test("23", () => {
   let gathered = [];
-  ct(`<div style="floa.t:left;">`, {
+  ct('<div style="floa.t:left;">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1963,9 +1963,9 @@ test(`23`, () => {
 
 // repeated semi
 
-test(`24 - repeated semi, tight`, () => {
+test("24 - repeated semi, tight", () => {
   let gathered = [];
-  ct(`<div style="float:left;;">`, {
+  ct('<div style="float:left;;">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2040,9 +2040,9 @@ test(`24 - repeated semi, tight`, () => {
   );
 });
 
-test(`25 - repeated semi, space in front`, () => {
+test("25 - repeated semi, space in front", () => {
   let gathered = [];
-  ct(`<div style="float:left; ;">`, {
+  ct('<div style="float:left; ;">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2123,9 +2123,9 @@ test(`25 - repeated semi, space in front`, () => {
   );
 });
 
-test(`26 - repeated semi, tab in front`, () => {
+test("26 - repeated semi, tab in front", () => {
   let gathered = [];
-  ct(`<div style="float:left;\t;">`, {
+  ct('<div style="float:left;\t;">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2206,9 +2206,9 @@ test(`26 - repeated semi, tab in front`, () => {
   );
 });
 
-test(`27 - repeated semi, space after, quotes follow`, () => {
+test("27 - repeated semi, space after, quotes follow", () => {
   let gathered = [];
-  ct(`<div style="float:left;; ">`, {
+  ct('<div style="float:left;; ">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2289,9 +2289,9 @@ test(`27 - repeated semi, space after, quotes follow`, () => {
   );
 });
 
-test(`28 - repeated semi, space after, bracket follows`, () => {
+test("28 - repeated semi, space after, bracket follows", () => {
   let gathered = [];
-  ct(`<div style="float:left;; >`, {
+  ct('<div style="float:left;; >', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2372,9 +2372,9 @@ test(`28 - repeated semi, space after, bracket follows`, () => {
   );
 });
 
-test(`29 - repeated semi, space after`, () => {
+test("29 - repeated semi, space after", () => {
   let gathered = [];
-  ct(`<div style="float:left;; color:red;">`, {
+  ct('<div style="float:left;; color:red;">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2470,9 +2470,9 @@ test(`29 - repeated semi, space after`, () => {
   );
 });
 
-test(`30 - unrecognised prop only - tralala #1`, () => {
+test("30 - unrecognised prop only - tralala #1", () => {
   let gathered = [];
-  ct(`<div style="tra;; la;; la;;">`, {
+  ct('<div style="tra;; la;; la;;">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2619,9 +2619,9 @@ test(`30 - unrecognised prop only - tralala #1`, () => {
   );
 });
 
-test(`31 - unrecognised prop only - tralala #2`, () => {
+test("31 - unrecognised prop only - tralala #2", () => {
   let gathered = [];
-  ct(`<div style="tra;;la;;la;;">`, {
+  ct('<div style="tra;;la;;la;;">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2756,9 +2756,9 @@ test(`31 - unrecognised prop only - tralala #2`, () => {
   );
 });
 
-test(`32 - leading semi, tight`, () => {
+test("32 - leading semi, tight", () => {
   let gathered = [];
-  ct(`<div style=";color: red;">`, {
+  ct('<div style=";color: red;">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2833,9 +2833,9 @@ test(`32 - leading semi, tight`, () => {
   );
 });
 
-test(`33 - leading semi, spaced`, () => {
+test("33 - leading semi, spaced", () => {
   let gathered = [];
-  ct(`<div style="; color: red;">`, {
+  ct('<div style="; color: red;">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2916,9 +2916,9 @@ test(`33 - leading semi, spaced`, () => {
   );
 });
 
-test(`34 - value missing`, () => {
+test("34 - value missing", () => {
   let gathered = [];
-  ct(`<img style="display" />`, {
+  ct('<img style="display" />', {
     tagCb: (obj) => {
       gathered.push(obj);
     },

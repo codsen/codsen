@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two LEFT-TO-RIGHT MARK characters`, () => {
+test("01 - detects two LEFT-TO-RIGHT MARK characters", () => {
   let str = "\u200Edlkgjld\u200Ej";
   let linter = new Linter();
   let messages = linter.verify(str, {

@@ -8,9 +8,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // whole line
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - first line commented out`, () => {
+test(`01 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - first line commented out`, () => {
   let gathered = [];
-  ct(`<style>// something\na{text-decoration: none;}</style>`, {
+  ct("<style>// something\na{text-decoration: none;}</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -88,9 +88,9 @@ test(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - first line commented out`,
   );
 });
 
-test(`02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - line comment`, () => {
+test(`02 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - line comment`, () => {
   let gathered = [];
-  ct(`<style>// something</style>`, {
+  ct("<style>// something</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },

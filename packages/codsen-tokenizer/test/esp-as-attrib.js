@@ -7,9 +7,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // ESP tags in the tag attributes
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - one Nunjucks tag goes in as attribute`, () => {
+test(`01 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - one Nunjucks tag goes in as attribute`, () => {
   let gathered = [];
-  ct(`<td{% z %}>`, {
+  ct("<td{% z %}>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -51,9 +51,9 @@ test(`01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - one Nunjucks tag goes in 
   );
 });
 
-test(`02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - Nunjucks conditionals wrapping an attr`, () => {
+test(`02 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - Nunjucks conditionals wrapping an attr`, () => {
   let gathered = [];
-  ct(`<td{% x %} class="z"{% y %} id="z">`, {
+  ct('<td{% x %} class="z"{% y %} id="z">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -151,9 +151,9 @@ test(`02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - Nunjucks conditionals wra
   );
 });
 
-test(`03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - Nunjucks conditionals wrapping an attr`, () => {
+test(`03 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - Nunjucks conditionals wrapping an attr`, () => {
   let gathered = [];
-  ct(`<td{% if something %} class="z"{% endif %} id="y">`, {
+  ct('<td{% if something %} class="z"{% endif %} id="y">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },

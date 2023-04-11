@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two LINE TABULATION SET characters`, () => {
+test("01 - detects two LINE TABULATION SET characters", () => {
   let str = "\u008Adlkgjld\u008Aj";
   let linter = new Linter();
   let messages = linter.verify(str, {

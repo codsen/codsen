@@ -10,7 +10,7 @@ import { stripHtml } from "./util/noLog.js";
 test("01 - opts.cb - baseline", () => {
   // baseline, notice dirty whitespace:
   equal(
-    stripHtml(`<div style="display: inline !important;" >abc</ div>`),
+    stripHtml('<div style="display: inline !important;" >abc</ div>'),
     {
       result: "abc",
       ranges: [

@@ -19,7 +19,7 @@ import {
 
 // -----------------------------------------------------------------------------
 
-test(`01 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - horizontal ellipsis sanity check - convert off - raw`, () => {
+test(`01 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - horizontal ellipsis sanity check - convert off - raw`, () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
@@ -31,7 +31,7 @@ test(`01 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - horizontal ellipsis sanity 
   });
 });
 
-test(`02 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - horizontal ellipsis sanity check - convert off - encoded`, () => {
+test(`02 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - horizontal ellipsis sanity check - convert off - encoded`, () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
@@ -43,7 +43,7 @@ test(`02 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - horizontal ellipsis sanity 
   });
 });
 
-test(`03 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - horizontal ellipsis sanity check - convert off - wrongly encoded`, () => {
+test(`03 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - horizontal ellipsis sanity check - convert off - wrongly encoded`, () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
@@ -55,7 +55,7 @@ test(`03 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - horizontal ellipsis sanity 
   });
 });
 
-test(`04 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - encodes the ellipsis when it has to`, () => {
+test(`04 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - encodes the ellipsis when it has to`, () => {
   mixer({
     convertEntities: true,
     convertDotsToEllipsis: true,
@@ -68,7 +68,7 @@ test(`04 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - encodes the ellipsis 
   });
 });
 
-test(`05 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - correctly encoded - converts`, () => {
+test(`05 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - correctly encoded - converts`, () => {
   mixer({
     convertEntities: true,
     convertDotsToEllipsis: true,
@@ -81,7 +81,7 @@ test(`05 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - correctly encoded - convert
   });
 });
 
-test(`06 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - wrongly encoded - convert on`, () => {
+test(`06 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - wrongly encoded - convert on`, () => {
   mixer({
     convertEntities: true,
     convertDotsToEllipsis: true,
@@ -94,7 +94,7 @@ test(`06 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - wrongly encoded - convert o
   });
 });
 
-test(`07 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting converts explicitly`, () => {
+test(`07 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - siwtched off setting converts explicitly`, () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
@@ -102,7 +102,7 @@ test(`07 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting 
   });
 });
 
-test(`08 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting converts explicitly`, () => {
+test(`08 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - siwtched off setting converts explicitly`, () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
@@ -114,7 +114,7 @@ test(`08 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting 
   });
 });
 
-test(`09 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting converts explicitly`, () => {
+test(`09 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - siwtched off setting converts explicitly`, () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
@@ -126,7 +126,7 @@ test(`09 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting 
   });
 });
 
-test(`10 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting converts explicitly`, () => {
+test(`10 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - siwtched off setting converts explicitly`, () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
@@ -138,7 +138,7 @@ test(`10 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting 
   });
 });
 
-test(`11 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting converts explicitly`, () => {
+test(`11 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - siwtched off setting converts explicitly`, () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
@@ -150,7 +150,7 @@ test(`11 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting 
   });
 });
 
-test(`12 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`, () => {
+test(`12 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - convert off`, () => {
   mixer({
     convertEntities: false,
     convertDotsToEllipsis: true,
@@ -163,7 +163,7 @@ test(`12 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`, () => {
   });
 });
 
-test(`13 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`, () => {
+test(`13 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - convert off`, () => {
   mixer({
     convertEntities: false,
     convertDotsToEllipsis: true,
@@ -176,7 +176,7 @@ test(`13 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`, () => {
   });
 });
 
-test(`14 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`, () => {
+test(`14 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - convert off`, () => {
   mixer({
     convertEntities: false,
     convertDotsToEllipsis: true,
@@ -189,7 +189,7 @@ test(`14 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`, () => {
   });
 });
 
-test(`15 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - three dots to unencoded hellip`, () => {
+test(`15 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - three dots to unencoded hellip`, () => {
   mixer({
     convertEntities: false,
     convertDotsToEllipsis: true,
@@ -202,7 +202,7 @@ test(`15 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - three 
   });
 });
 
-test(`16 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - three dots to unencoded hellip`, () => {
+test(`16 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - three dots to unencoded hellip`, () => {
   mixer({
     removeWidows: false,
     convertEntities: false,
@@ -216,7 +216,7 @@ test(`16 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - three 
   });
 });
 
-test(`17 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - encoded hellip to unencoded hellip`, () => {
+test(`17 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - encoded hellip to unencoded hellip`, () => {
   mixer({
     removeWidows: false,
     convertEntities: false,
@@ -230,7 +230,7 @@ test(`17 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - encode
   });
 });
 
-test(`18 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - encoded mldr to unencoded hellip`, () => {
+test(`18 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - encoded mldr to unencoded hellip`, () => {
   mixer({
     removeWidows: false,
     convertEntities: false,
@@ -244,7 +244,7 @@ test(`18 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - encode
   });
 });
 
-test(`19 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - hexidecimal to unencoded hellip`, () => {
+test(`19 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - hexidecimal to unencoded hellip`, () => {
   mixer({
     removeWidows: false,
     convertEntities: false,
@@ -258,7 +258,7 @@ test(`19 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - hexide
   });
 });
 
-test(`20 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - decimal to unencoded hellip`, () => {
+test(`20 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - decimal to unencoded hellip`, () => {
   mixer({
     removeWidows: false,
     convertEntities: false,
@@ -272,7 +272,7 @@ test(`20 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - decima
   });
 });
 
-test(`21 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - three dots to encoded hellip`, () => {
+test(`21 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - three dots to encoded hellip`, () => {
   mixer({
     removeWidows: false,
     convertEntities: true,
@@ -286,7 +286,7 @@ test(`21 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - three d
   });
 });
 
-test(`22 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - three dots to encoded hellip`, () => {
+test(`22 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - three dots to encoded hellip`, () => {
   mixer({
     convertEntities: true,
     convertDotsToEllipsis: true,
@@ -299,7 +299,7 @@ test(`22 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - three d
   });
 });
 
-test(`23 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - encoded hellip to encoded hellip`, () => {
+test(`23 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - encoded hellip to encoded hellip`, () => {
   mixer({
     convertEntities: true,
     convertDotsToEllipsis: true,
@@ -312,7 +312,7 @@ test(`23 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - encoded
   });
 });
 
-test(`24 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - encoded mldr to encoded hellip`, () => {
+test(`24 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - encoded mldr to encoded hellip`, () => {
   mixer({
     convertEntities: true,
     convertDotsToEllipsis: true,
@@ -325,7 +325,7 @@ test(`24 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - encoded
   });
 });
 
-test(`25 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - hexidecimal to encoded hellip`, () => {
+test(`25 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - hexidecimal to encoded hellip`, () => {
   mixer({
     convertEntities: true,
     convertDotsToEllipsis: true,
@@ -338,7 +338,7 @@ test(`25 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - hexidec
   });
 });
 
-test(`26 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - decimal to encoded hellip`, () => {
+test(`26 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - decimal to encoded hellip`, () => {
   mixer({
     removeWidows: false,
     convertEntities: true,
@@ -352,7 +352,7 @@ test(`26 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - decimal
   });
 });
 
-test(`27 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - unencoded to encoded`, () => {
+test(`27 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - unencoded to encoded`, () => {
   mixer({
     removeWidows: false,
     convertEntities: true,
@@ -366,7 +366,7 @@ test(`27 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - unencod
   });
 });
 
-test(`28 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - three dots`, () => {
+test(`28 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - three dots`, () => {
   mixer({
     removeWidows: false,
     convertDotsToEllipsis: false,
@@ -375,7 +375,7 @@ test(`28 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - three 
   });
 });
 
-test(`29 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - single letters`, () => {
+test(`29 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - single letters`, () => {
   mixer({
     removeWidows: false,
     convertDotsToEllipsis: false,
@@ -388,7 +388,7 @@ test(`29 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - single
   });
 });
 
-test(`30 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - hellip entity`, () => {
+test(`30 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - hellip entity`, () => {
   mixer({
     removeWidows: false,
     convertDotsToEllipsis: false,
@@ -401,7 +401,7 @@ test(`30 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - hellip
   });
 });
 
-test(`31 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - mldr entity`, () => {
+test(`31 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - mldr entity`, () => {
   mixer({
     removeWidows: false,
     convertDotsToEllipsis: false,
@@ -414,7 +414,7 @@ test(`31 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - mldr e
   });
 });
 
-test(`32 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - hex entity`, () => {
+test(`32 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - hex entity`, () => {
   mixer({
     removeWidows: false,
     convertDotsToEllipsis: false,
@@ -427,7 +427,7 @@ test(`32 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - hex en
   });
 });
 
-test(`33 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - numeric entity`, () => {
+test(`33 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - numeric entity`, () => {
   mixer({
     removeWidows: false,
     convertDotsToEllipsis: false,
@@ -440,7 +440,7 @@ test(`33 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - numeri
   });
 });
 
-test(`34 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - long lines of many dots are not touched`, () => {
+test(`34 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - ellipsis - long lines of many dots are not touched`, () => {
   let source =
     "Chapter 01 ..................... page 21\nChapter 02 ..................... page 43";
   mixer({
@@ -457,7 +457,7 @@ test(`34 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - long lines of ma
   });
 });
 
-test(`35 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of false positives and a real deal`, () => {
+test(`35 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - ellipsis - mix of false positives and a real deal`, () => {
   mixer({
     replaceLineBreaks: false,
     removeLineBreaks: false,
@@ -498,7 +498,7 @@ test(`35 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of false pos
   });
 });
 
-test(`36 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of dots`, () => {
+test(`36 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - ellipsis - mix of dots`, () => {
   mixer({
     replaceLineBreaks: false,
     removeLineBreaks: false,
@@ -527,7 +527,7 @@ test(`36 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of dots`, ()
   });
 });
 
-test(`37 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - resembling real life`, () => {
+test(`37 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - ellipsis - resembling real life`, () => {
   let source = "Contents.......page 01";
   mixer({
     replaceLineBreaks: false,

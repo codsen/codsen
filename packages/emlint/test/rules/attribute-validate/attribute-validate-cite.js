@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no cite, error level 0`, () => {
-  let str = `<del><form>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no cite, error level 0`, () => {
+  let str = "<del><form>"; // <---- deliberately a tag names of both kinds, suitable and unsuitable
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no cite, error level
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no cite, error level 1`, () => {
-  let str = `<del><form>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no cite, error level 1`, () => {
+  let str = "<del><form>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no cite, error level
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no cite, error level 2`, () => {
-  let str = `<del><form>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no cite, error level 2`, () => {
+  let str = "<del><form>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no cite, error level
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
-  let str = `<blockquote cite='https://codsen.com'>`; // <-- notice single quotes
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = "<blockquote cite='https://codsen.com'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -61,8 +61,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div cite='https://codsen.com'>`;
+test(`05 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = "<div cite='https://codsen.com'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -81,8 +81,8 @@ test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz cite="https://codsen.com" yyy>`;
+test(`06 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz cite="https://codsen.com" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -104,8 +104,8 @@ test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<blockquote cite="z??">`;
+test(`07 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<blockquote cite="z??">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -119,14 +119,14 @@ test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
       ruleId: "attribute-validate-cite",
       idxFrom: 18,
       idxTo: 21,
-      message: `Should be an URI.`,
+      message: "Should be an URI.",
       fix: null,
     },
   ]);
 });
 
-test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whitespace on legit URL`, () => {
-  let str = `<blockquote cite=" https://codsen.com">`;
+test(`08 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - still catches whitespace on legit URL`, () => {
+  let str = '<blockquote cite=" https://codsen.com">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -135,7 +135,7 @@ test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whites
   });
   equal(
     applyFixes(str, messages),
-    `<blockquote cite="https://codsen.com">`,
+    '<blockquote cite="https://codsen.com">',
     "08.01"
   );
   compare(ok, messages, [
@@ -143,7 +143,7 @@ test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whites
       ruleId: "attribute-validate-cite",
       idxFrom: 18,
       idxTo: 19,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[18, 19]],
       },
@@ -151,21 +151,21 @@ test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whites
   ]);
 });
 
-test(`09 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`, () => {
-  let str = `<blockquote cite=" z?? ">`;
+test(`09 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - not-a-URL and whitespace`, () => {
+  let str = '<blockquote cite=" z?? ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-cite": 2,
     },
   });
-  equal(applyFixes(str, messages), `<blockquote cite="z??">`, "09.01");
+  equal(applyFixes(str, messages), '<blockquote cite="z??">', "09.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-cite",
       idxFrom: 18,
       idxTo: 23,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [18, 19],
@@ -177,7 +177,7 @@ test(`09 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whites
       ruleId: "attribute-validate-cite",
       idxFrom: 19,
       idxTo: 22,
-      message: `Should be an URI.`,
+      message: "Should be an URI.",
       fix: null,
     },
   ]);

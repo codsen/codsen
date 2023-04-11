@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two BELL characters`, () => {
+test("01 - detects two BELL characters", () => {
   let str = "\u0007dlkgjld\u0007j";
   let linter = new Linter();
   let messages = linter.verify(str, {

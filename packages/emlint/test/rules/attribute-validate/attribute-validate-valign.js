@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no valign, error level 0`, () => {
-  let str = `<td>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no valign, error level 0`, () => {
+  let str = "<td>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no valign, error lev
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no valign, error level 1`, () => {
-  let str = `<td>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no valign, error level 1`, () => {
+  let str = "<td>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no valign, error lev
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no valign, error level 2`, () => {
-  let str = `<td>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no valign, error level 2`, () => {
+  let str = "<td>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no valign, error lev
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, td`, () => {
-  let str = `<td valign="top">`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, td`, () => {
+  let str = '<td valign="top">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -61,21 +61,21 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, t
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<td valign=' top'>`;
+test(`05 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = "<td valign=' top'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-valign": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td valign='top'>`, "05.01");
+  equal(applyFixes(str, messages), "<td valign='top'>", "05.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-valign",
       idxFrom: 12,
       idxTo: 13,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[12, 13]],
       },
@@ -85,21 +85,21 @@ test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   is(messages.length, 1, "05.02");
 });
 
-test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<td valign='top '>`;
+test(`06 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = "<td valign='top '>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-valign": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td valign='top'>`, "06.01");
+  equal(applyFixes(str, messages), "<td valign='top'>", "06.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-valign",
       idxFrom: 15,
       idxTo: 16,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[15, 16]],
       },
@@ -107,21 +107,21 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`, () => {
-  let str = `<td valign='  top  \t'>`;
+test(`07 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around`, () => {
+  let str = "<td valign='  top  \t'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-valign": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td valign='top'>`, "07.01");
+  equal(applyFixes(str, messages), "<td valign='top'>", "07.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-valign",
       idxFrom: 12,
       idxTo: 20,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [12, 14],
@@ -132,8 +132,8 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<td valign="  \t">`;
+test(`08 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<td valign="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -147,7 +147,7 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-valign",
       idxFrom: 12,
       idxTo: 15,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -156,8 +156,8 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
 // 03. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div valign="top">`;
+test(`09 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div valign="top">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -176,8 +176,8 @@ test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz valign="top">`;
+test(`10 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz valign="top">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -199,8 +199,8 @@ test(`10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 04. wrong value
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out-of-whack value`, () => {
-  let str = `<td valign="tralala">`;
+test(`11 - ${`\u001b[${35}m${"validation"}\u001b[${39}m`} - out-of-whack value`, () => {
+  let str = '<td valign="tralala">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -214,14 +214,14 @@ test(`11 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out-of-whack value`,
       ruleId: "attribute-validate-valign",
       idxFrom: 12,
       idxTo: 19,
-      message: `Should be "top|middle|bottom|baseline".`,
+      message: 'Should be "top|middle|bottom|baseline".',
       fix: null,
     },
   ]);
 });
 
-test(`12 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case`, () => {
-  let str = `<td valign="BASELINE">`;
+test(`12 - ${`\u001b[${35}m${"validation"}\u001b[${39}m`} - wrong case`, () => {
+  let str = '<td valign="BASELINE">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -229,13 +229,13 @@ test(`12 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case`, () => {
     },
   });
   // can fix:
-  equal(applyFixes(str, messages), `<td valign="baseline">`, "12.01");
+  equal(applyFixes(str, messages), '<td valign="baseline">', "12.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-valign",
       idxFrom: 12,
       idxTo: 20,
-      message: `Should be lowercase.`,
+      message: "Should be lowercase.",
       fix: {
         ranges: [[12, 20, "baseline"]],
       },

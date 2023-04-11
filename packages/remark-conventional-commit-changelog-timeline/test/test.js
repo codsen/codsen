@@ -27,7 +27,7 @@ function render(str, opts) {
 
 //
 
-test(`01 - h1 version without a link`, () => {
+test("01 - h1 version without a link", () => {
   let input = `
 # Change Log
 
@@ -55,7 +55,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
   equal(render(input), expected, "01.01");
 });
 
-test(`02 - mix`, () => {
+test("02 - mix", () => {
   let input = `# Change Log
 
 All notable changes to this project will be documented in this file.
@@ -119,7 +119,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
   );
 });
 
-test(`03 - other h2 without version`, () => {
+test("03 - other h2 without version", () => {
   let input = `
 # Change Log
 

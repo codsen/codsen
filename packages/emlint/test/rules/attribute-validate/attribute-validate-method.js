@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no method, error level 0`, () => {
-  let str = `<form>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no method, error level 0`, () => {
+  let str = "<form>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no method, error lev
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no method, error level 1`, () => {
-  let str = `<form>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no method, error level 1`, () => {
+  let str = "<form>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no method, error lev
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no method, error level 2`, () => {
-  let str = `<form>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no method, error level 2`, () => {
+  let str = "<form>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no method, error lev
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, wildcard`, () => {
-  let str = `<form method='get'>`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, wildcard`, () => {
+  let str = "<form method='get'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -61,21 +61,21 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, w
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<form method=' get'>`;
+test(`05 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = "<form method=' get'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-method": 2,
     },
   });
-  equal(applyFixes(str, messages), `<form method='get'>`, "05.01");
+  equal(applyFixes(str, messages), "<form method='get'>", "05.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-method",
       idxFrom: 14,
       idxTo: 15,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[14, 15]],
       },
@@ -83,21 +83,21 @@ test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   ]);
 });
 
-test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<form method='get '>`;
+test(`06 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = "<form method='get '>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-method": 2,
     },
   });
-  equal(applyFixes(str, messages), `<form method='get'>`, "06.01");
+  equal(applyFixes(str, messages), "<form method='get'>", "06.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-method",
       idxFrom: 17,
       idxTo: 18,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[17, 18]],
       },
@@ -105,21 +105,21 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`, () => {
-  let str = `<form method='  get  \t'>`;
+test(`07 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around`, () => {
+  let str = "<form method='  get  \t'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-method": 2,
     },
   });
-  equal(applyFixes(str, messages), `<form method='get'>`, "07.01");
+  equal(applyFixes(str, messages), "<form method='get'>", "07.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-method",
       idxFrom: 14,
       idxTo: 22,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [14, 16],
@@ -130,8 +130,8 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<form method="  \t">`;
+test(`08 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<form method="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -145,7 +145,7 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-method",
       idxFrom: 14,
       idxTo: 17,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -154,8 +154,8 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
 // 03. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div method="get">`;
+test(`09 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div method="get">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -174,8 +174,8 @@ test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz method="get">`;
+test(`10 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz method="get">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -197,8 +197,8 @@ test(`10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 04. wrong value
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out of whack value`, () => {
-  let str = `<form method="tralala">`;
+test(`11 - ${`\u001b[${35}m${"validation"}\u001b[${39}m`} - out of whack value`, () => {
+  let str = '<form method="tralala">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -212,14 +212,14 @@ test(`11 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out of whack value`,
       ruleId: "attribute-validate-method",
       idxFrom: 14,
       idxTo: 21,
-      message: `Should be "get|post".`,
+      message: 'Should be "get|post".',
       fix: null,
     },
   ]);
 });
 
-test(`12 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case get`, () => {
-  let str = `<form method="GET">`;
+test(`12 - ${`\u001b[${35}m${"validation"}\u001b[${39}m`} - wrong case get`, () => {
+  let str = '<form method="GET">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -227,13 +227,13 @@ test(`12 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case get`, () 
     },
   });
   // can fix:
-  equal(applyFixes(str, messages), `<form method="get">`, "12.01");
+  equal(applyFixes(str, messages), '<form method="get">', "12.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-method",
       idxFrom: 14,
       idxTo: 17,
-      message: `Should be lowercase.`,
+      message: "Should be lowercase.",
       fix: {
         ranges: [[14, 17, "get"]],
       },
@@ -241,8 +241,8 @@ test(`12 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case get`, () 
   ]);
 });
 
-test(`13 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case post`, () => {
-  let str = `<form method="POST">`;
+test(`13 - ${`\u001b[${35}m${"validation"}\u001b[${39}m`} - wrong case post`, () => {
+  let str = '<form method="POST">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -250,13 +250,13 @@ test(`13 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case post`, ()
     },
   });
   // can fix:
-  equal(applyFixes(str, messages), `<form method="post">`, "13.01");
+  equal(applyFixes(str, messages), '<form method="post">', "13.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-method",
       idxFrom: 14,
       idxTo: 18,
-      message: `Should be lowercase.`,
+      message: "Should be lowercase.",
       fix: {
         ranges: [[14, 18, "post"]],
       },

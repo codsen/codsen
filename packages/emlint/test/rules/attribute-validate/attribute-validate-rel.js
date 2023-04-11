@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no rel, error level 0`, () => {
-  let str = `<a>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no rel, error level 0`, () => {
+  let str = "<a>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no rel, error level 
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no rel, error level 1`, () => {
-  let str = `<a>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no rel, error level 1`, () => {
+  let str = "<a>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no rel, error level 
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no rel, error level 2`, () => {
-  let str = `<a>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no rel, error level 2`, () => {
+  let str = "<a>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no rel, error level 
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, a`, () => {
-  let str = `<a rel='nofollow'>`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, a`, () => {
+  let str = "<a rel='nofollow'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -58,8 +58,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, a
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, link`, () => {
-  let str = `<link rel='nofollow'>`;
+test(`05 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, link`, () => {
+  let str = "<link rel='nofollow'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -70,8 +70,9 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, l
   equal(messages, [], "05.02");
 });
 
-test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, link`, () => {
-  let str = `<link rel="icon" href="https://www.codsen.com/favicon.ico" type="image/x-icon"/>`;
+test(`06 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, link`, () => {
+  let str =
+    '<link rel="icon" href="https://www.codsen.com/favicon.ico" type="image/x-icon"/>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -85,21 +86,21 @@ test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, l
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<a rel=' nofollow'>`;
+test(`07 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = "<a rel=' nofollow'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-rel": 2,
     },
   });
-  equal(applyFixes(str, messages), `<a rel='nofollow'>`, "07.01");
+  equal(applyFixes(str, messages), "<a rel='nofollow'>", "07.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-rel",
       idxFrom: 8,
       idxTo: 9,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[8, 9]],
       },
@@ -107,21 +108,21 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   ]);
 });
 
-test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<a rel='nofollow '>`;
+test(`08 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = "<a rel='nofollow '>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-rel": 2,
     },
   });
-  equal(applyFixes(str, messages), `<a rel='nofollow'>`, "08.01");
+  equal(applyFixes(str, messages), "<a rel='nofollow'>", "08.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-rel",
       idxFrom: 16,
       idxTo: 17,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[16, 17]],
       },
@@ -129,21 +130,21 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`, () => {
-  let str = `<a rel='  nofollow  \t'>`;
+test(`09 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around`, () => {
+  let str = "<a rel='  nofollow  \t'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-rel": 2,
     },
   });
-  equal(applyFixes(str, messages), `<a rel='nofollow'>`, "09.01");
+  equal(applyFixes(str, messages), "<a rel='nofollow'>", "09.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-rel",
       idxFrom: 8,
       idxTo: 21,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [8, 10],
@@ -154,8 +155,8 @@ test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<a rel="  \t">`;
+test(`10 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<a rel="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -169,7 +170,7 @@ test(`10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-rel",
       idxFrom: 8,
       idxTo: 11,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -178,8 +179,8 @@ test(`10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
 // 03. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div rel="nofollow">`;
+test(`11 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div rel="nofollow">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -198,8 +199,8 @@ test(`11 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`12 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz rel="nofollow">`;
+test(`12 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz rel="nofollow">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -221,8 +222,8 @@ test(`12 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 04. wrong value
 // -----------------------------------------------------------------------------
 
-test(`13 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out of whack value`, () => {
-  let str = `<a rel="tralala">`;
+test(`13 - ${`\u001b[${35}m${"validation"}\u001b[${39}m`} - out of whack value`, () => {
+  let str = '<a rel="tralala">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -236,14 +237,14 @@ test(`13 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out of whack value`,
       ruleId: "attribute-validate-rel",
       idxFrom: 8,
       idxTo: 15,
-      message: `Unrecognised value: "tralala".`,
+      message: 'Unrecognised value: "tralala".',
       fix: null,
     },
   ]);
 });
 
-test(`14 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case nofollow`, () => {
-  let str = `<a rel="NOFOLLOW">`;
+test(`14 - ${`\u001b[${35}m${"validation"}\u001b[${39}m`} - wrong case nofollow`, () => {
+  let str = '<a rel="NOFOLLOW">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -255,8 +256,8 @@ test(`14 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case nofollow`
   equal(messages, [], "14.02");
 });
 
-test(`15 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case nofollow`, () => {
-  let str = `<a rel="NOFOLLOW">`;
+test(`15 - ${`\u001b[${35}m${"validation"}\u001b[${39}m`} - wrong case nofollow`, () => {
+  let str = '<a rel="NOFOLLOW">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -264,13 +265,13 @@ test(`15 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case nofollow`
     },
   });
   // can fix:
-  equal(applyFixes(str, messages), `<a rel="nofollow">`, "15.01");
+  equal(applyFixes(str, messages), '<a rel="nofollow">', "15.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-rel",
       idxFrom: 8,
       idxTo: 16,
-      message: `Should be lowercase.`,
+      message: "Should be lowercase.",
       fix: {
         ranges: [[8, 16, "nofollow"]],
       },

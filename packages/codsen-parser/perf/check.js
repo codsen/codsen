@@ -10,7 +10,7 @@ const callerDir = path.resolve(".");
 
 const testme = () => {
   let gathered = [];
-  cparser(`<a>"something"<span>'here'</span></a>`, {
+  cparser("<a>\"something\"<span>'here'</span></a>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },

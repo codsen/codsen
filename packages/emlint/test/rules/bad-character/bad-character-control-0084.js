@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two CONTROL characters`, () => {
+test("01 - detects two CONTROL characters", () => {
   let str = "\u0084dlkgjld\u0084j";
   let linter = new Linter();
   let messages = linter.verify(str, {

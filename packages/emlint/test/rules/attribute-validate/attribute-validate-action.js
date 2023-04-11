@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no action, error level 0`, () => {
-  let str = `<div><form>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no action, error level 0`, () => {
+  let str = "<div><form>"; // <---- deliberately a tag names of both kinds, suitable and unsuitable
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no action, error lev
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no action, error level 1`, () => {
-  let str = `<div><form>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no action, error level 1`, () => {
+  let str = "<div><form>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no action, error lev
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no action, error level 2`, () => {
-  let str = `<div><form>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no action, error level 2`, () => {
+  let str = "<div><form>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no action, error lev
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
-  let str = `<form action='https://codsen.com'>`; // <-- notice single quotes
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = "<form action='https://codsen.com'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -61,8 +61,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div action='https://codsen.com'>`;
+test(`05 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = "<div action='https://codsen.com'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -81,8 +81,8 @@ test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz action="https://codsen.com" yyy>`;
+test(`06 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz action="https://codsen.com" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -104,8 +104,8 @@ test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<form action="zz.">`;
+test(`07 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<form action="zz.">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -119,14 +119,14 @@ test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
       ruleId: "attribute-validate-action",
       idxFrom: 14,
       idxTo: 17,
-      message: `Should be an URI.`,
+      message: "Should be an URI.",
       fix: null,
     },
   ]);
 });
 
-test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whitespace on legit URL`, () => {
-  let str = `<form action=" https://codsen.com">`;
+test(`08 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - still catches whitespace on legit URL`, () => {
+  let str = '<form action=" https://codsen.com">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -135,7 +135,7 @@ test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whites
   });
   equal(
     applyFixes(str, messages),
-    `<form action="https://codsen.com">`,
+    '<form action="https://codsen.com">',
     "08.01"
   );
   compare(ok, messages, [
@@ -143,7 +143,7 @@ test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whites
       ruleId: "attribute-validate-action",
       idxFrom: 14,
       idxTo: 15,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[14, 15]],
       },
@@ -151,21 +151,21 @@ test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whites
   ]);
 });
 
-test(`09 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`, () => {
-  let str = `<form action=" zz. ">`;
+test(`09 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - not-a-URL and whitespace`, () => {
+  let str = '<form action=" zz. ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-action": 2,
     },
   });
-  equal(applyFixes(str, messages), `<form action="zz.">`, "09.01");
+  equal(applyFixes(str, messages), '<form action="zz.">', "09.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-action",
       idxFrom: 14,
       idxTo: 19,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [14, 15],
@@ -177,14 +177,14 @@ test(`09 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whites
       ruleId: "attribute-validate-action",
       idxFrom: 15,
       idxTo: 18,
-      message: `Should be an URI.`,
+      message: "Should be an URI.",
       fix: null,
     },
   ]);
 });
 
-test(`10 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - two URL's, space-separated`, () => {
-  let str = `<form action="https://codsen.com https://detergent.io">`;
+test(`10 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - two URL's, space-separated`, () => {
+  let str = '<form action="https://codsen.com https://detergent.io">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -198,14 +198,14 @@ test(`10 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - two URL's, space-sep
       ruleId: "attribute-validate-action",
       idxFrom: 14,
       idxTo: 53,
-      message: `There should be only one URI.`,
+      message: "There should be only one URI.",
       fix: null,
     },
   ]);
 });
 
-test(`11 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - two URL's, comma-separated`, () => {
-  let str = `<form action="https://codsen.com,https://detergent.io">`;
+test(`11 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - two URL's, comma-separated`, () => {
+  let str = '<form action="https://codsen.com,https://detergent.io">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -219,7 +219,7 @@ test(`11 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - two URL's, comma-sep
       ruleId: "attribute-validate-action",
       idxFrom: 14,
       idxTo: 53,
-      message: `There should be only one URI.`,
+      message: "There should be only one URI.",
       fix: null,
     },
   ]);

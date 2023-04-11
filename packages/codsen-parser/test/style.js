@@ -8,7 +8,7 @@ import { cparser } from "../dist/codsen-parser.esm.js";
 // 01. basics
 // -----------------------------------------------------------------------------
 
-test(`01 - two tags`, () => {
+test("01 - two tags", () => {
   compare(
     ok,
     cparser(`<style>
@@ -19,7 +19,7 @@ test(`01 - two tags`, () => {
         type: "tag",
         start: 0,
         end: 7,
-        value: `<style>`,
+        value: "<style>",
         tagNameStartsAt: 1,
         tagNameEndsAt: 6,
         tagName: "style",
@@ -40,7 +40,7 @@ test(`01 - two tags`, () => {
             type: "rule",
             start: 8,
             end: 25,
-            value: `.red{color: red;}`,
+            value: ".red{color: red;}",
             left: 6,
             nested: false,
             openingCurlyAt: 12,
@@ -76,7 +76,7 @@ test(`01 - two tags`, () => {
             type: "text",
             start: 25,
             end: 26,
-            value: `\n`,
+            value: "\n",
           },
         ],
       },
@@ -85,7 +85,7 @@ test(`01 - two tags`, () => {
         type: "tag",
         start: 26,
         end: 34,
-        value: `</style>`,
+        value: "</style>",
         tagNameStartsAt: 28,
         tagNameEndsAt: 33,
         tagName: "style",
@@ -105,7 +105,7 @@ test(`01 - two tags`, () => {
 // 02. media
 // -----------------------------------------------------------------------------
 
-test(`02 - ${`\u001b[${36}m${`media`}\u001b[${39}m`} - two selectors with empty curlies`, () => {
+test(`02 - ${`\u001b[${36}m${"media"}\u001b[${39}m`} - two selectors with empty curlies`, () => {
   compare(
     ok,
     cparser(`<style>

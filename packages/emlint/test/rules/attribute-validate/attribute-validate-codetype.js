@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no codetype, error level 0`, () => {
-  let str = `<object>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no codetype, error level 0`, () => {
+  let str = "<object>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no codetype, error l
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no codetype, error level 1`, () => {
-  let str = `<object>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no codetype, error level 1`, () => {
+  let str = "<object>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no codetype, error l
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no codetype, error level 2`, () => {
-  let str = `<object>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no codetype, error level 2`, () => {
+  let str = "<object>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no codetype, error l
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, wildcard`, () => {
-  let str = `<object codetype='application/json'>`; // <-- notice single quotes
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, wildcard`, () => {
+  let str = "<object codetype='application/json'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -58,8 +58,9 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, w
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - fancy MIME from the list`, () => {
-  let str = `<object codetype="application/vnd.openxmlformats-officedocument.presentationml.template.main+xml">`; // <-- notice single quotes
+test(`05 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - fancy MIME from the list`, () => {
+  let str =
+    '<object codetype="application/vnd.openxmlformats-officedocument.presentationml.template.main+xml">'; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -73,8 +74,8 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - fancy MIME from the 
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<object codetype=" application/json">`;
+test(`06 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = '<object codetype=" application/json">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -83,7 +84,7 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   });
   equal(
     applyFixes(str, messages),
-    `<object codetype="application/json">`,
+    '<object codetype="application/json">',
     "06.01"
   );
   compare(ok, messages, [
@@ -91,7 +92,7 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
       ruleId: "attribute-validate-codetype",
       idxFrom: 18,
       idxTo: 19,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[18, 19]],
       },
@@ -99,8 +100,8 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   ]);
 });
 
-test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<object codetype="application/json ">`;
+test(`07 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = '<object codetype="application/json ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -109,7 +110,7 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   });
   equal(
     applyFixes(str, messages),
-    `<object codetype="application/json">`,
+    '<object codetype="application/json">',
     "07.01"
   );
   compare(ok, messages, [
@@ -117,7 +118,7 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
       ruleId: "attribute-validate-codetype",
       idxFrom: 34,
       idxTo: 35,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[34, 35]],
       },
@@ -125,8 +126,8 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`, () => {
-  let str = `<object codetype="  application/json \t">`;
+test(`08 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around`, () => {
+  let str = '<object codetype="  application/json \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -135,7 +136,7 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   });
   equal(
     applyFixes(str, messages),
-    `<object codetype="application/json">`,
+    '<object codetype="application/json">',
     "08.01"
   );
   compare(ok, messages, [
@@ -143,7 +144,7 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
       ruleId: "attribute-validate-codetype",
       idxFrom: 18,
       idxTo: 38,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [18, 20],
@@ -154,8 +155,8 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<object codetype="  \t">`;
+test(`09 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<object codetype="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -169,7 +170,7 @@ test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-codetype",
       idxFrom: 18,
       idxTo: 21,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -178,8 +179,8 @@ test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`10 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value`, () => {
-  let str = `<object codetype="tralala">`;
+test(`10 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - an out-of-whack value`, () => {
+  let str = '<object codetype="tralala">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -193,7 +194,7 @@ test(`10 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value`, (
       ruleId: "attribute-validate-codetype",
       idxFrom: 18,
       idxTo: 25,
-      message: `Unrecognised value: "tralala".`,
+      message: 'Unrecognised value: "tralala".',
       fix: null,
     },
   ]);
@@ -202,8 +203,8 @@ test(`10 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value`, (
 // 04. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div codetype="application/json">`;
+test(`11 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div codetype="application/json">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -222,8 +223,8 @@ test(`11 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`12 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz codetype="application/json" yyy>`;
+test(`12 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz codetype="application/json" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {

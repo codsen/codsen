@@ -40,7 +40,7 @@ assert.equal(
     (acc, [from, to]) => `${acc}${someHtml.slice(from, to).trim()}`,
     ""
   ),
-  `<td class="col1"><td class="col2"><td class="col3"><td class="col4">`
+  '<td class="col1"><td class="col2"><td class="col3"><td class="col4">'
 );
 
 // the second way:
@@ -60,5 +60,5 @@ stripHtml(someHtml, {
 });
 assert.equal(
   resultStr,
-  `<td class="col1"><td class="col2"><td class="col3"><td class="col4">`
+  '<td class="col1"><td class="col2"><td class="col3"><td class="col4">'
 );

@@ -8,9 +8,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // block
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - comment-only`, () => {
+test(`01 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - comment-only`, () => {
   let gathered = [];
-  ct(`<style>/* comment */</style>`, {
+  ct("<style>/* comment */</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -58,9 +58,9 @@ test(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - comment-only`, () => {
   );
 });
 
-test(`02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - two comments`, () => {
+test(`02 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - two comments`, () => {
   let gathered = [];
-  ct(`<style>/* comment 1 *//* comment 2 */</style>`, {
+  ct("<style>/* comment 1 *//* comment 2 */</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -150,9 +150,9 @@ test(`02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - two comments`, () => {
   );
 });
 
-test(`03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - two rules`, () => {
+test(`03 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - two rules`, () => {
   let gathered = [];
-  ct(`<style>a{color:red;}/* comment 1 */p{float:left;}</style>`, {
+  ct("<style>a{color:red;}/* comment 1 */p{float:left;}</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },

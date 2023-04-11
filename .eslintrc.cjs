@@ -32,6 +32,7 @@ module.exports = {
     "perf-ref.esm.js",
   ],
   rules: {
+    quotes: ["error", "double", { avoidEscape: true }],
     "node/no-unsupported-features/node-builtins": [
       "error",
       {

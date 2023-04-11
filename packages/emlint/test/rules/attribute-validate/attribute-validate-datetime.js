@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no datetime, error level 0`, () => {
-  let str = `<del><ins>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no datetime, error level 0`, () => {
+  let str = "<del><ins>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no datetime, error l
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no datetime, error level 1`, () => {
-  let str = `<del><ins>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no datetime, error level 1`, () => {
+  let str = "<del><ins>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no datetime, error l
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no datetime, error level 2`, () => {
-  let str = `<del><ins>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no datetime, error level 2`, () => {
+  let str = "<del><ins>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,9 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no datetime, error l
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy ISO date, no milliseconds`, () => {
-  let str = `<del datetime="2019-12-30T22:55:03Z">This text has been deleted</del>`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy ISO date, no milliseconds`, () => {
+  let str =
+    '<del datetime="2019-12-30T22:55:03Z">This text has been deleted</del>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -58,8 +59,9 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy ISO date, no
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy ISO date, no milliseconds`, () => {
-  let str = `<ins datetime="2011-10-05T14:48:00.000Z">This text has been inserted</del>`;
+test(`05 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy ISO date, no milliseconds`, () => {
+  let str =
+    '<ins datetime="2011-10-05T14:48:00.000Z">This text has been inserted</del>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -73,8 +75,8 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy ISO date, no
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<del datetime=" 2019-12-30T22:33:44Z">`;
+test(`06 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = '<del datetime=" 2019-12-30T22:33:44Z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -83,7 +85,7 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   });
   equal(
     applyFixes(str, messages),
-    `<del datetime="2019-12-30T22:33:44Z">`,
+    '<del datetime="2019-12-30T22:33:44Z">',
     "06.01"
   );
   compare(ok, messages, [
@@ -91,7 +93,7 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
       ruleId: "attribute-validate-datetime",
       idxFrom: 15,
       idxTo: 16,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[15, 16]],
       },
@@ -99,8 +101,8 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   ]);
 });
 
-test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<del datetime="2019-12-30T22:33:44Z ">`;
+test(`07 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = '<del datetime="2019-12-30T22:33:44Z ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -109,7 +111,7 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   });
   equal(
     applyFixes(str, messages),
-    `<del datetime="2019-12-30T22:33:44Z">`,
+    '<del datetime="2019-12-30T22:33:44Z">',
     "07.01"
   );
   compare(ok, messages, [
@@ -117,7 +119,7 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
       ruleId: "attribute-validate-datetime",
       idxFrom: 35,
       idxTo: 36,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[35, 36]],
       },
@@ -125,8 +127,8 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`, () => {
-  let str = `<del datetime="  2019-12-30T22:33:44Z  \t">`;
+test(`08 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around`, () => {
+  let str = '<del datetime="  2019-12-30T22:33:44Z  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -135,7 +137,7 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   });
   equal(
     applyFixes(str, messages),
-    `<del datetime="2019-12-30T22:33:44Z">`,
+    '<del datetime="2019-12-30T22:33:44Z">',
     "08.01"
   );
   compare(ok, messages, [
@@ -143,7 +145,7 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
       ruleId: "attribute-validate-datetime",
       idxFrom: 15,
       idxTo: 40,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [15, 17],
@@ -154,8 +156,8 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<del datetime="  \t">`;
+test(`09 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<del datetime="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -169,7 +171,7 @@ test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-datetime",
       idxFrom: 15,
       idxTo: 18,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -178,8 +180,8 @@ test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`10 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - out of whack value`, () => {
-  let str = `<del datetime="tralala">`;
+test(`10 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - out of whack value`, () => {
+  let str = '<del datetime="tralala">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -193,7 +195,7 @@ test(`10 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - out of whack value`, () =
       ruleId: "attribute-validate-datetime",
       idxFrom: 15,
       idxTo: 22,
-      message: `Unrecognised value: "tralala".`,
+      message: 'Unrecognised value: "tralala".',
       fix: null,
     },
   ]);
@@ -202,8 +204,8 @@ test(`10 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - out of whack value`, () =
 // 04. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div datetime="2019-12-30T22:33:44Z">`;
+test(`11 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div datetime="2019-12-30T22:33:44Z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -222,8 +224,8 @@ test(`11 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`12 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz datetime="2019-12-30T22:33:44Z" yyy>`;
+test(`12 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz datetime="2019-12-30T22:33:44Z" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {

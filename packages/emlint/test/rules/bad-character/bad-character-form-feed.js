@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two FORM FEED characters`, () => {
+test("01 - detects two FORM FEED characters", () => {
   let str = "\u000Cdlkgjld\u000Cj";
   let linter = new Linter();
   let messages = linter.verify(str, {

@@ -8,7 +8,7 @@ import { processThis, tiny } from "./util.js";
 // this is an easier case than type #2.
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - the beginning`, () => {
+test(`01 - ${`\u001b[${31}m${"type 1"}\u001b[${39}m`}${`\u001b[${33}m${" - code between TABLE and TR"}\u001b[${39}m`} - the beginning`, () => {
   equal(
     processThis(`<table>
   zzz
@@ -34,7 +34,7 @@ test(`01 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
   );
 });
 
-test(`02 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - the ending`, () => {
+test(`02 - ${`\u001b[${31}m${"type 1"}\u001b[${39}m`}${`\u001b[${33}m${" - code between TABLE and TR"}\u001b[${39}m`} - the ending`, () => {
   equal(
     processThis(`<table>
   <tr>
@@ -60,7 +60,7 @@ test(`02 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
   );
 });
 
-test(`03 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - code between two tr's`, () => {
+test(`03 - ${`\u001b[${31}m${"type 1"}\u001b[${39}m`}${`\u001b[${33}m${" - code between TR and TR"}\u001b[${39}m`} - code between two tr's`, () => {
   equal(
     processThis(`<table>
 <tr>
@@ -96,7 +96,7 @@ zzz
   );
 });
 
-test(`04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - mess within comment block`, () => {
+test(`04 - ${`\u001b[${31}m${"type 1"}\u001b[${39}m`}${`\u001b[${33}m${" - code between TABLE and TR"}\u001b[${39}m`} - mess within comment block`, () => {
   equal(
     processThis(`<table>
   zzz
@@ -124,7 +124,7 @@ test(`04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
   );
 });
 
-test(`05 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - commented-out code + raw code`, () => {
+test(`05 - ${`\u001b[${31}m${"type 1"}\u001b[${39}m`}${`\u001b[${33}m${" - code between TR and TR"}\u001b[${39}m`} - commented-out code + raw code`, () => {
   equal(
     processThis(`<table>
   <tr>
@@ -160,7 +160,7 @@ test(`05 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
   );
 });
 
-test(`06 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - colspan=2`, () => {
+test(`06 - ${`\u001b[${31}m${"type 1"}\u001b[${39}m`}${`\u001b[${33}m${" - code between TR and TR"}\u001b[${39}m`} - colspan=2`, () => {
   equal(
     processThis(`<table>
   xyz
@@ -192,7 +192,7 @@ test(`06 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
   );
 });
 
-test(`07 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - detects centering, HTML align attribute`, () => {
+test(`07 - ${`\u001b[${31}m${"type 1"}\u001b[${39}m`}${`\u001b[${33}m${" - code between TR and TR"}\u001b[${39}m`} - detects centering, HTML align attribute`, () => {
   equal(
     processThis(`<table>
 <tr>
@@ -228,7 +228,7 @@ zzz
   );
 });
 
-test(`08 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - detects centering, inline CSS text-align`, () => {
+test(`08 - ${`\u001b[${31}m${"type 1"}\u001b[${39}m`}${`\u001b[${33}m${" - code between TR and TR"}\u001b[${39}m`} - detects centering, inline CSS text-align`, () => {
   equal(
     processThis(`<table>
 <tr>
@@ -264,7 +264,7 @@ zzz
   );
 });
 
-test(`09 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - single quote as TD content`, () => {
+test(`09 - ${`\u001b[${31}m${"type 1"}\u001b[${39}m`}${`\u001b[${33}m${" - code between TR and TR"}\u001b[${39}m`} - single quote as TD content`, () => {
   equal(
     processThis(`<table>
 <tr><td>a</td></tr>
@@ -284,7 +284,7 @@ test(`09 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
   );
 });
 
-test(`10 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts`, () => {
+test(`10 - ${`\u001b[${31}m${"type 1"}\u001b[${39}m`}${`\u001b[${33}m${" - code between TR and TR"}\u001b[${39}m`} - styling via opts`, () => {
   equal(
     processThis(
       `<table>
@@ -311,7 +311,7 @@ test(`10 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
   );
 });
 
-test(`11 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts, #2`, () => {
+test(`11 - ${`\u001b[${31}m${"type 1"}\u001b[${39}m`}${`\u001b[${33}m${" - code between TR and TR"}\u001b[${39}m`} - styling via opts, #2`, () => {
   equal(
     processThis(
       `<table>
@@ -370,7 +370,7 @@ test(`11 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
   );
 });*/
 
-test(`12 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`, () => {
+test(`12 - ${`\u001b[${31}m${"type 1"}\u001b[${39}m`}${`\u001b[${33}m${" - code between TR and TR"}\u001b[${39}m`} - deeper nesting`, () => {
   equal(
     processThis(
       `<table><tr><td></td></tr>
@@ -397,7 +397,7 @@ test(`12 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code 
   );
 });
 
-test(`13 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`, () => {
+test(`13 - ${`\u001b[${31}m${"type 1"}\u001b[${39}m`}${`\u001b[${33}m${" - code between TR and TR"}\u001b[${39}m`} - deeper nesting`, () => {
   equal(
     processThis(
       `<table><tr><td></td></tr>

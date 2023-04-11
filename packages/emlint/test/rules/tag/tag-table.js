@@ -9,75 +9,75 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // bails early if structure is messed up
 // -----------------------------------------------------------------------------
 
-test(`01 - bails early`, () => {
+test("01 - bails early", () => {
   [
     //
-    `<table>`,
-    `</table>`,
-    `<table/>`,
+    "<table>",
+    "</table>",
+    "<table/>",
     //
-    `<table><table>`,
-    `<table></table>`,
-    `</table><table>`,
-    `</table></table>`,
+    "<table><table>",
+    "<table></table>",
+    "</table><table>",
+    "</table></table>",
     //
-    `<table> <table>`,
-    `<table> </table>`,
-    `</table> <table>`,
-    `</table> </table>`,
+    "<table> <table>",
+    "<table> </table>",
+    "</table> <table>",
+    "</table> </table>",
     //
-    `<table><tr><table>`,
-    `<table><tr></table>`,
-    `</table><tr><table>`,
-    `</table><tr></table>`,
+    "<table><tr><table>",
+    "<table><tr></table>",
+    "</table><tr><table>",
+    "</table><tr></table>",
     //
-    `<table></tr><table>`,
-    `<table></tr></table>`,
-    `</table></tr><table>`,
-    `</table></tr></table>`,
+    "<table></tr><table>",
+    "<table></tr></table>",
+    "</table></tr><table>",
+    "</table></tr></table>",
     //
-    `<table> <tr> <table>`,
-    `<table> <tr> </table>`,
-    `</table> <tr> <table>`,
-    `</table> <tr> </table>`,
+    "<table> <tr> <table>",
+    "<table> <tr> </table>",
+    "</table> <tr> <table>",
+    "</table> <tr> </table>",
     //
-    `<table> </tr> <table>`,
-    `<table> </tr> </table>`,
-    `</table> </tr> <table>`,
-    `</table> </tr> </table>`,
+    "<table> </tr> <table>",
+    "<table> </tr> </table>",
+    "</table> </tr> <table>",
+    "</table> </tr> </table>",
     //
-    `<table><tr><tr><table>`,
-    `<table><tr><tr></table>`,
-    `</table><tr><tr><table>`,
-    `</table><tr><tr></table>`,
+    "<table><tr><tr><table>",
+    "<table><tr><tr></table>",
+    "</table><tr><tr><table>",
+    "</table><tr><tr></table>",
     //
-    `<table><tr></tr><table>`,
-    `<table><tr></tr></table>`,
-    `</table><tr></tr><table>`,
-    `</table><tr></tr></table>`,
+    "<table><tr></tr><table>",
+    "<table><tr></tr></table>",
+    "</table><tr></tr><table>",
+    "</table><tr></tr></table>",
     //
-    `<table><tr><td></tr></table>`,
-    `<table><tr></td></tr></table>`,
+    "<table><tr><td></tr></table>",
+    "<table><tr></td></tr></table>",
     //
-    `<table><tr><td><td></tr></table>`,
-    `<table><tr></td><td></tr></table>`,
-    `<table><tr><td></td></tr></table>`,
-    `<table><tr></td></td></tr></table>`,
+    "<table><tr><td><td></tr></table>",
+    "<table><tr></td><td></tr></table>",
+    "<table><tr><td></td></tr></table>",
+    "<table><tr></td></td></tr></table>",
     //
-    `<table><tr><td><td></tr></table>`,
-    `<table><tr></td><td></tr></table>`,
-    `<table><tr><td></td></tr></table>`,
-    `<table><tr></td></td></tr></table>`,
+    "<table><tr><td><td></tr></table>",
+    "<table><tr></td><td></tr></table>",
+    "<table><tr><td></td></tr></table>",
+    "<table><tr></td></td></tr></table>",
     //
-    `<table><tr><td></td></tr><tr></table>`,
-    `<table><tr><td></td></tr></tr></table>`,
-    `<table><tr><td></td></tr><td></table>`,
-    `<table><tr><td></td></tr></td></table>`,
+    "<table><tr><td></td></tr><tr></table>",
+    "<table><tr><td></td></tr></tr></table>",
+    "<table><tr><td></td></tr><td></table>",
+    "<table><tr><td></td></tr></td></table>",
     //
-    `<table><tr><td></td></tr><tr><td></table>`,
-    `<table><tr><td></td></tr></tr></td></table>`,
-    `<table><tr><td></td></tr><td><td></table>`,
-    `<table><tr><td></td></tr></td></td></table>`,
+    "<table><tr><td></td></tr><tr><td></table>",
+    "<table><tr><td></td></tr></tr></td></table>",
+    "<table><tr><td></td></tr><td><td></table>",
+    "<table><tr><td></td></tr></td></td></table>",
     //
     `<table>
     </tr><td></td></tr>
@@ -144,7 +144,7 @@ test(`01 - bails early`, () => {
   });
 });
 
-test(`02 - bails when invalid colspan is encountered`, () => {
+test("02 - bails when invalid colspan is encountered", () => {
   // bails because of "z"
   equal(
     verify(
@@ -194,7 +194,7 @@ test(`02 - bails when invalid colspan is encountered`, () => {
 // colspan issues
 // -----------------------------------------------------------------------------
 
-test(`03 - off`, () => {
+test("03 - off", () => {
   let str = `<table>
   <tr>
     <td>
@@ -219,7 +219,7 @@ test(`03 - off`, () => {
   equal(messages, [], "03.02");
 });
 
-test(`04 - one col, two cols`, () => {
+test("04 - one col, two cols", () => {
   let str = `<table>
   <tr>
     <td>
@@ -266,9 +266,9 @@ test(`04 - one col, two cols`, () => {
         severity: 1,
         idxFrom: 19,
         idxTo: 23,
-        message: `Add a collspan.`,
+        message: "Add a collspan.",
         fix: {
-          ranges: [[22, 22, ` colspan="2"`]],
+          ranges: [[22, 22, ' colspan="2"']],
         },
       },
     ],
@@ -276,7 +276,7 @@ test(`04 - one col, two cols`, () => {
   );
 });
 
-test(`05 - two cols, three cols`, () => {
+test("05 - two cols, three cols", () => {
   let str = `<table>
   <tr>
     <td>1</td>
@@ -304,7 +304,7 @@ test(`05 - two cols, three cols`, () => {
         ruleId: "tag-table",
         idxFrom: 10,
         idxTo: 14,
-        message: `Should contain 3 td's.`,
+        message: "Should contain 3 td's.",
         fix: null,
       },
     ],
@@ -312,7 +312,7 @@ test(`05 - two cols, three cols`, () => {
   );
 });
 
-test(`06 - 4-2-3`, () => {
+test("06 - 4-2-3", () => {
   let str = `<table>
   <tr>
     <td>1</td>
@@ -346,14 +346,14 @@ test(`06 - 4-2-3`, () => {
         ruleId: "tag-table",
         idxFrom: 85,
         idxTo: 89,
-        message: `Should contain 4 td's.`,
+        message: "Should contain 4 td's.",
         fix: null,
       },
       {
         ruleId: "tag-table",
         idxFrom: 130,
         idxTo: 134,
-        message: `Should contain 4 td's.`,
+        message: "Should contain 4 td's.",
         fix: null,
       },
     ],
@@ -361,7 +361,7 @@ test(`06 - 4-2-3`, () => {
   );
 });
 
-test(`07 - 4-2-1-3 - suggests a fix to one of them`, () => {
+test("07 - 4-2-1-3 - suggests a fix to one of them", () => {
   let str = `<table>
   <tr>
     <td>1</td>
@@ -417,23 +417,23 @@ test(`07 - 4-2-1-3 - suggests a fix to one of them`, () => {
         ruleId: "tag-table",
         idxFrom: 85,
         idxTo: 89,
-        message: `Should contain 4 td's.`,
+        message: "Should contain 4 td's.",
         fix: null,
       },
       {
         ruleId: "tag-table",
         idxFrom: 139,
         idxTo: 161,
-        message: `Add a collspan.`,
+        message: "Add a collspan.",
         fix: {
-          ranges: [[160, 160, ` colspan="4"`]],
+          ranges: [[160, 160, ' colspan="4"']],
         },
       },
       {
         ruleId: "tag-table",
         idxFrom: 178,
         idxTo: 182,
-        message: `Should contain 4 td's.`,
+        message: "Should contain 4 td's.",
         fix: null,
       },
     ],
@@ -444,7 +444,7 @@ test(`07 - 4-2-1-3 - suggests a fix to one of them`, () => {
 // colspan in play
 // -----------------------------------------------------------------------------
 
-test(`08 - fixed a colspan value`, () => {
+test("08 - fixed a colspan value", () => {
   let str = `<table>
   <tr>
     <td align="left" colspan="2" class="x">1</td>
@@ -488,7 +488,7 @@ test(`08 - fixed a colspan value`, () => {
         ruleId: "tag-table",
         idxFrom: 36,
         idxTo: 47,
-        message: `Should be colspan="3".`,
+        message: 'Should be colspan="3".',
         fix: {
           ranges: [[45, 46, "3"]],
         },
@@ -497,7 +497,7 @@ test(`08 - fixed a colspan value`, () => {
         ruleId: "tag-table",
         idxFrom: 75,
         idxTo: 79,
-        message: `Should contain 3 td's.`,
+        message: "Should contain 3 td's.",
         fix: null,
       },
     ],
@@ -505,7 +505,7 @@ test(`08 - fixed a colspan value`, () => {
   );
 });
 
-test(`09 - removed a colspan value`, () => {
+test("09 - removed a colspan value", () => {
   let str = `<table>
   <tr>
     <td align="left" colspan="2" class="x">1</td>
@@ -541,7 +541,7 @@ test(`09 - removed a colspan value`, () => {
         ruleId: "tag-table",
         idxFrom: 36,
         idxTo: 47,
-        message: `Remove the colspan.`,
+        message: "Remove the colspan.",
         fix: {
           ranges: [[35, 47]],
         },
@@ -554,8 +554,8 @@ test(`09 - removed a colspan value`, () => {
 // intra tag text tokens
 // -----------------------------------------------------------------------------
 
-test(`10 - text token between table and tr`, () => {
-  let str = `<table>.<tr><td>x</td></tr></table>`;
+test("10 - text token between table and tr", () => {
+  let str = "<table>.<tr><td>x</td></tr></table>";
   let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
@@ -571,7 +571,7 @@ test(`10 - text token between table and tr`, () => {
         ruleId: "tag-table",
         idxFrom: 7,
         idxTo: 8,
-        message: `Rogue character between tags.`,
+        message: "Rogue character between tags.",
         fix: null,
       },
     ],
@@ -579,8 +579,8 @@ test(`10 - text token between table and tr`, () => {
   );
 });
 
-test(`11 - text token between table and tr`, () => {
-  let str = `<table>\ntralala\n<tr><td>x</td></tr></table>`;
+test("11 - text token between table and tr", () => {
+  let str = "<table>\ntralala\n<tr><td>x</td></tr></table>";
   let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
@@ -596,7 +596,7 @@ test(`11 - text token between table and tr`, () => {
         ruleId: "tag-table",
         idxFrom: 7,
         idxTo: 16,
-        message: `Rogue characters between tags.`,
+        message: "Rogue characters between tags.",
         fix: null,
       },
     ],
@@ -604,8 +604,8 @@ test(`11 - text token between table and tr`, () => {
   );
 });
 
-test(`12 - text token between tr and td`, () => {
-  let str = `<table><tr>.<td>x</td></tr></table>`;
+test("12 - text token between tr and td", () => {
+  let str = "<table><tr>.<td>x</td></tr></table>";
   let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
@@ -621,7 +621,7 @@ test(`12 - text token between tr and td`, () => {
         ruleId: "tag-table",
         idxFrom: 11,
         idxTo: 12,
-        message: `Rogue character between tags.`,
+        message: "Rogue character between tags.",
         fix: null,
       },
     ],
@@ -629,8 +629,8 @@ test(`12 - text token between tr and td`, () => {
   );
 });
 
-test(`13 - text token between tr and td`, () => {
-  let str = `<table><tr>\ntralala\n<td>x</td></tr></table>`;
+test("13 - text token between tr and td", () => {
+  let str = "<table><tr>\ntralala\n<td>x</td></tr></table>";
   let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
@@ -646,7 +646,7 @@ test(`13 - text token between tr and td`, () => {
         ruleId: "tag-table",
         idxFrom: 11,
         idxTo: 20,
-        message: `Rogue characters between tags.`,
+        message: "Rogue characters between tags.",
         fix: null,
       },
     ],
@@ -654,8 +654,8 @@ test(`13 - text token between tr and td`, () => {
   );
 });
 
-test(`14 - text token between /td and /tr`, () => {
-  let str = `<table><tr><td>x</td>.</tr></table>`;
+test("14 - text token between /td and /tr", () => {
+  let str = "<table><tr><td>x</td>.</tr></table>";
   let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
@@ -671,7 +671,7 @@ test(`14 - text token between /td and /tr`, () => {
         ruleId: "tag-table",
         idxFrom: 21,
         idxTo: 22,
-        message: `Rogue character between tags.`,
+        message: "Rogue character between tags.",
         fix: null,
       },
     ],
@@ -679,8 +679,8 @@ test(`14 - text token between /td and /tr`, () => {
   );
 });
 
-test(`15 - text token between /td and /tr`, () => {
-  let str = `<table><tr><td>x</td>\ntralala\n</tr></table>`;
+test("15 - text token between /td and /tr", () => {
+  let str = "<table><tr><td>x</td>\ntralala\n</tr></table>";
   let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
@@ -696,7 +696,7 @@ test(`15 - text token between /td and /tr`, () => {
         ruleId: "tag-table",
         idxFrom: 21,
         idxTo: 30,
-        message: `Rogue characters between tags.`,
+        message: "Rogue characters between tags.",
         fix: null,
       },
     ],
@@ -704,8 +704,8 @@ test(`15 - text token between /td and /tr`, () => {
   );
 });
 
-test(`16 - text token between tr and td`, () => {
-  let str = `<table><tr><td>x</td></tr>.</table>`;
+test("16 - text token between tr and td", () => {
+  let str = "<table><tr><td>x</td></tr>.</table>";
   let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
@@ -721,7 +721,7 @@ test(`16 - text token between tr and td`, () => {
         ruleId: "tag-table",
         idxFrom: 26,
         idxTo: 27,
-        message: `Rogue character between tags.`,
+        message: "Rogue character between tags.",
         fix: null,
       },
     ],
@@ -729,8 +729,8 @@ test(`16 - text token between tr and td`, () => {
   );
 });
 
-test(`17 - text token between tr and td`, () => {
-  let str = `<table><tr><td>x</td></tr>\ntralala\n</table>`;
+test("17 - text token between tr and td", () => {
+  let str = "<table><tr><td>x</td></tr>\ntralala\n</table>";
   let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
@@ -746,7 +746,7 @@ test(`17 - text token between tr and td`, () => {
         ruleId: "tag-table",
         idxFrom: 26,
         idxTo: 35,
-        message: `Rogue characters between tags.`,
+        message: "Rogue characters between tags.",
         fix: null,
       },
     ],
@@ -757,8 +757,8 @@ test(`17 - text token between tr and td`, () => {
 // table tag without tr
 // -----------------------------------------------------------------------------
 
-test(`18 - table without tr`, () => {
-  let str = `<table></table>`;
+test("18 - table without tr", () => {
+  let str = "<table></table>";
   let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
@@ -774,7 +774,7 @@ test(`18 - table without tr`, () => {
         ruleId: "tag-table",
         idxFrom: 0,
         idxTo: 7,
-        message: `Missing children <tr> tags.`,
+        message: "Missing children <tr> tags.",
         fix: null,
       },
     ],
@@ -782,8 +782,8 @@ test(`18 - table without tr`, () => {
   );
 });
 
-test(`19 - table without tr`, () => {
-  let str = `<table>\n\n\n`;
+test("19 - table without tr", () => {
+  let str = "<table>\n\n\n";
   let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
@@ -799,7 +799,7 @@ test(`19 - table without tr`, () => {
         ruleId: "tag-table",
         idxFrom: 0,
         idxTo: 7,
-        message: `Missing children <tr> tags.`,
+        message: "Missing children <tr> tags.",
         fix: null,
       },
     ],
@@ -807,8 +807,8 @@ test(`19 - table without tr`, () => {
   );
 });
 
-test(`20 - table without td`, () => {
-  let str = `<table><tr></tr></table>`;
+test("20 - table without td", () => {
+  let str = "<table><tr></tr></table>";
   let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
@@ -824,7 +824,7 @@ test(`20 - table without td`, () => {
         ruleId: "tag-table",
         idxFrom: 0,
         idxTo: 7,
-        message: `Missing children <td> tags.`,
+        message: "Missing children <td> tags.",
         fix: null,
       },
     ],
@@ -832,8 +832,8 @@ test(`20 - table without td`, () => {
   );
 });
 
-test(`21 - table without td`, () => {
-  let str = `<table><tr>\n\n\n`;
+test("21 - table without td", () => {
+  let str = "<table><tr>\n\n\n";
   let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
@@ -849,7 +849,7 @@ test(`21 - table without td`, () => {
         ruleId: "tag-table",
         idxFrom: 0,
         idxTo: 7,
-        message: `Missing children <td> tags.`,
+        message: "Missing children <td> tags.",
         fix: null,
       },
     ],
@@ -860,8 +860,8 @@ test(`21 - table without td`, () => {
 // empty td tag
 // ------------------------------------------------------------------------------
 
-test(`22 - td is not empty`, () => {
-  let str = `<table><tr><td>.</td></tr></table>`;
+test("22 - td is not empty", () => {
+  let str = "<table><tr><td>.</td></tr></table>";
   let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
@@ -871,8 +871,8 @@ test(`22 - td is not empty`, () => {
   equal(messages, [], "22.02");
 });
 
-test(`23 - empty td`, () => {
-  let str = `<table><tr><td></td></tr></table>`;
+test("23 - empty td", () => {
+  let str = "<table><tr><td></td></tr></table>";
   let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
@@ -888,7 +888,7 @@ test(`23 - empty td`, () => {
         ruleId: "tag-table",
         idxFrom: 11,
         idxTo: 15,
-        message: `Empty <td> tag.`,
+        message: "Empty <td> tag.",
         fix: null,
       },
     ],
@@ -896,8 +896,8 @@ test(`23 - empty td`, () => {
   );
 });
 
-test(`24 - empty td`, () => {
-  let str = `<table>\n<tr>\n<td>\n</td>\n</tr>\n</table>`;
+test("24 - empty td", () => {
+  let str = "<table>\n<tr>\n<td>\n</td>\n</tr>\n</table>";
   let messages = verify(not, str, {
     rules: {
       "tag-table": 2,
@@ -913,7 +913,7 @@ test(`24 - empty td`, () => {
         ruleId: "tag-table",
         idxFrom: 13,
         idxTo: 17,
-        message: `Empty <td> tag.`,
+        message: "Empty <td> tag.",
         fix: null,
       },
     ],

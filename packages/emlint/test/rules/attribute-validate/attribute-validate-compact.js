@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no compact, error level 0`, () => {
-  let str = `<dir><ul>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no compact, error level 0`, () => {
+  let str = "<dir><ul>"; // <---- deliberately a tag names of both kinds, suitable and unsuitable
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no compact, error le
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no compact, error level 1`, () => {
-  let str = `<dir><ul>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no compact, error level 1`, () => {
+  let str = "<dir><ul>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no compact, error le
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no compact, error level 2`, () => {
-  let str = `<dir><ul>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no compact, error level 2`, () => {
+  let str = "<dir><ul>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no compact, error le
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy dir`, () => {
-  let str = `<dir compact>`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy dir`, () => {
+  let str = "<dir compact>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -58,8 +58,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy dir`, () => 
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy dl`, () => {
-  let str = `<dl compact>`;
+test(`05 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy dl`, () => {
+  let str = "<dl compact>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -70,8 +70,8 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy dl`, () => {
   equal(messages, [], "05.02");
 });
 
-test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy menu`, () => {
-  let str = `<menu compact>`;
+test(`06 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy menu`, () => {
+  let str = "<menu compact>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -82,8 +82,8 @@ test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy menu`, () =>
   equal(messages, [], "06.02");
 });
 
-test(`07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy ol`, () => {
-  let str = `<ol compact>`;
+test(`07 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy ol`, () => {
+  let str = "<ol compact>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -94,8 +94,8 @@ test(`07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy ol`, () => {
   equal(messages, [], "07.02");
 });
 
-test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy ul`, () => {
-  let str = `<ul compact>`;
+test(`08 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy ul`, () => {
+  let str = "<ul compact>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -109,8 +109,8 @@ test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy ul`, () => {
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div compact>`;
+test(`09 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = "<div compact>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -129,8 +129,8 @@ test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz class="z" compact>`;
+test(`10 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz class="z" compact>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -152,8 +152,8 @@ test(`10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - boolean value`, () => {
-  let str = `<ul compact="true">`;
+test(`11 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - boolean value`, () => {
+  let str = '<ul compact="true">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -161,13 +161,13 @@ test(`11 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - boolean value`, () => {
     },
   });
   // can fix:
-  equal(applyFixes(str, messages), `<ul compact>`, "11.01");
+  equal(applyFixes(str, messages), "<ul compact>", "11.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-compact",
       idxFrom: 11,
       idxTo: 18,
-      message: `Should have no value.`,
+      message: "Should have no value.",
       fix: {
         ranges: [[11, 18]],
       },
@@ -175,8 +175,8 @@ test(`11 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - boolean value`, () => {
   ]);
 });
 
-test(`12 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - boolean value`, () => {
-  let str = `<ul compact=true>`;
+test(`12 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - boolean value`, () => {
+  let str = "<ul compact=true>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -184,13 +184,13 @@ test(`12 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - boolean value`, () => {
     },
   });
   // can fix:
-  equal(applyFixes(str, messages), `<ul compact>`, "12.01");
+  equal(applyFixes(str, messages), "<ul compact>", "12.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-compact",
       idxFrom: 11,
       idxTo: 16,
-      message: `Should have no value.`,
+      message: "Should have no value.",
       fix: {
         ranges: [[11, 16]],
       },
@@ -198,8 +198,8 @@ test(`12 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - boolean value`, () => {
   ]);
 });
 
-test(`13 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`, () => {
-  let str = `<ul compact="">`;
+test(`13 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - empty value`, () => {
+  let str = '<ul compact="">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -207,13 +207,13 @@ test(`13 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`, () => {
     },
   });
   // can't fix:
-  equal(applyFixes(str, messages), `<ul compact>`, "13.01");
+  equal(applyFixes(str, messages), "<ul compact>", "13.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-compact",
       idxFrom: 11,
       idxTo: 14,
-      message: `Should have no value.`,
+      message: "Should have no value.",
       fix: {
         ranges: [[11, 14]],
       },
@@ -221,8 +221,8 @@ test(`13 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`, () => {
   ]);
 });
 
-test(`14 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - value missing, equal present`, () => {
-  let str = `<ul compact=>`;
+test(`14 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - value missing, equal present`, () => {
+  let str = "<ul compact=>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -230,13 +230,13 @@ test(`14 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - value missing, equal pre
     },
   });
   // can't fix:
-  equal(applyFixes(str, messages), `<ul compact>`, "14.01");
+  equal(applyFixes(str, messages), "<ul compact>", "14.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-compact",
       idxFrom: 11,
       idxTo: 12,
-      message: `Should have no value.`,
+      message: "Should have no value.",
       fix: {
         ranges: [[11, 12]],
       },
@@ -247,8 +247,8 @@ test(`14 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - value missing, equal pre
 // 04. XHTML
 // -----------------------------------------------------------------------------
 
-test(`15 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - healthy compact checkbox, as HTML`, () => {
-  let str = `<ul compact>`;
+test(`15 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - healthy compact checkbox, as HTML`, () => {
+  let str = "<ul compact>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -256,96 +256,96 @@ test(`15 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - healthy compact checkbox,
     },
   });
   // can fix:
-  equal(applyFixes(str, messages), `<ul compact="compact">`, "15.01");
+  equal(applyFixes(str, messages), '<ul compact="compact">', "15.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-compact",
       idxFrom: 4,
       idxTo: 11,
-      message: `It's XHTML, add value, ="compact".`,
+      message: 'It\'s XHTML, add value, ="compact".',
       fix: {
-        ranges: [[11, 11, `="compact"`]],
+        ranges: [[11, 11, '="compact"']],
       },
     },
   ]);
 });
 
-test(`16 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - missing after equal, as HTML`, () => {
-  let str = `<ul compact=/>`;
+test(`16 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - missing after equal, as HTML`, () => {
+  let str = "<ul compact=/>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-compact": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<ul compact="compact"/>`, "16.01");
+  equal(applyFixes(str, messages), '<ul compact="compact"/>', "16.01");
 });
 
-test(`17 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - closing quote and content missing, as HTML`, () => {
-  let str = `<ul compact =">`;
+test(`17 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - closing quote and content missing, as HTML`, () => {
+  let str = '<ul compact =">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-compact": [2, "xhtml"],
     },
   });
-  equal(messages[0].fix.ranges, [[11, 14, `="compact"`]], "17.01");
-  equal(applyFixes(str, messages), `<ul compact="compact">`, "17.02");
+  equal(messages[0].fix.ranges, [[11, 14, '="compact"']], "17.01");
+  equal(applyFixes(str, messages), '<ul compact="compact">', "17.02");
 });
 
-test(`18 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - double quotes, no content, as HTML`, () => {
-  let str = `<ul compact=""/>`;
+test(`18 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - double quotes, no content, as HTML`, () => {
+  let str = '<ul compact=""/>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-compact": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<ul compact="compact"/>`, "18.01");
+  equal(applyFixes(str, messages), '<ul compact="compact"/>', "18.01");
 });
 
-test(`19 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - single quotes, no content, as HTML`, () => {
-  let str = `<ul compact=''/>`;
+test(`19 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - single quotes, no content, as HTML`, () => {
+  let str = "<ul compact=''/>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-compact": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<ul compact='compact'/>`, "19.01");
+  equal(applyFixes(str, messages), "<ul compact='compact'/>", "19.01");
 });
 
-test(`20 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - quotes with content missing, as HTML`, () => {
-  let str = `<ul compact='>`;
+test(`20 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - quotes with content missing, as HTML`, () => {
+  let str = "<ul compact='>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-compact": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<ul compact='compact'>`, "20.01");
+  equal(applyFixes(str, messages), "<ul compact='compact'>", "20.01");
 });
 
-test(`21 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - equal missing, otherwise healthy HTML`, () => {
-  let str = `<ul compact"compact"/>`;
+test(`21 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - equal missing, otherwise healthy HTML`, () => {
+  let str = '<ul compact"compact"/>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-compact": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<ul compact="compact"/>`, "21.01");
+  equal(applyFixes(str, messages), '<ul compact="compact"/>', "21.01");
 });
 
-test(`22 - ${`\u001b[${34}m${`XHTML`}\u001b[${39}m`} - equal missing, otherwise healthy HTML`, () => {
-  let str = `<ul compact'compact'/>`;
+test(`22 - ${`\u001b[${34}m${"XHTML"}\u001b[${39}m`} - equal missing, otherwise healthy HTML`, () => {
+  let str = "<ul compact'compact'/>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-compact": [2, "xhtml"],
     },
   });
-  equal(applyFixes(str, messages), `<ul compact='compact'/>`, "22.01");
+  equal(applyFixes(str, messages), "<ul compact='compact'/>", "22.01");
 });
 
 test.run();

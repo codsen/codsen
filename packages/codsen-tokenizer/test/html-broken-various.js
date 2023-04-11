@@ -10,9 +10,9 @@ const BACKSLASH = "\u005C";
 // 01. rule tag-space-after-opening-bracket
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`tag-space-after-opening-bracket`}\u001b[${39}m`} - 1`, () => {
+test(`01 - ${`\u001b[${33}m${"tag-space-after-opening-bracket"}\u001b[${39}m`} - 1`, () => {
   let gathered = [];
-  ct(`a < b class="">`, {
+  ct('a < b class="">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -39,7 +39,7 @@ test(`01 - ${`\u001b[${33}m${`tag-space-after-opening-bracket`}\u001b[${39}m`} -
 // 02. rule tag-closing-left-slash
 // -----------------------------------------------------------------------------
 
-test(`02 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`, () => {
+test(`02 - ${`\u001b[${33}m${"tag-closing-left-slash"}\u001b[${39}m`} - 1`, () => {
   let gathered = [];
   ct(`<br${BACKSLASH}>`, {
     tagCb: (obj) => {
@@ -60,7 +60,7 @@ test(`02 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`, () =
   );
 });
 
-test(`03 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`, () => {
+test(`03 - ${`\u001b[${33}m${"tag-closing-left-slash"}\u001b[${39}m`} - 1`, () => {
   let gathered = [];
   ct(`<${BACKSLASH}br${BACKSLASH}>`, {
     tagCb: (obj) => {
@@ -84,7 +84,7 @@ test(`03 - ${`\u001b[${33}m${`tag-closing-left-slash`}\u001b[${39}m`} - 1`, () =
 // 03. Various
 // -----------------------------------------------------------------------------
 
-test(`04 - xml`, () => {
+test("04 - xml", () => {
   let gathered = [];
   ct(
     `a<!--[if]><z>
@@ -140,9 +140,9 @@ test(`04 - xml`, () => {
   );
 });
 
-test(`05 - abrupty ended code`, () => {
+test("05 - abrupty ended code", () => {
   let gathered = [];
-  ct(`<body id="l" style`, {
+  ct('<body id="l" style', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -209,9 +209,9 @@ test(`05 - abrupty ended code`, () => {
   );
 });
 
-test(`06 - abrupty ended code`, () => {
+test("06 - abrupty ended code", () => {
   let gathered = [];
-  ct(`<body id="l" style="`, {
+  ct('<body id="l" style="', {
     tagCb: (obj) => {
       gathered.push(obj);
     },

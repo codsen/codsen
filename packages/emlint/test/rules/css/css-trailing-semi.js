@@ -8,8 +8,8 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 00. false positives
 // -----------------------------------------------------------------------------
 
-test(`01 - not a style, inline`, () => {
-  let str = `<img alt="color: red">`;
+test("01 - not a style, inline", () => {
+  let str = '<img alt="color: red">';
   let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": 2,
@@ -19,8 +19,8 @@ test(`01 - not a style, inline`, () => {
   equal(messages, [], "01.02");
 });
 
-test(`02 - not a style, head`, () => {
-  let str = `<span>a{color: red}`;
+test("02 - not a style, head", () => {
+  let str = "<span>a{color: red}";
   let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": 2,
@@ -33,9 +33,9 @@ test(`02 - not a style, head`, () => {
 // always
 // -----------------------------------------------------------------------------
 
-test(`03 - one style, always`, () => {
-  let str = `<style>.a{color:red}</style><body style="color:red">a</body>`;
-  let fixed = `<style>.a{color:red;}</style><body style="color:red;">a</body>`;
+test("03 - one style, always", () => {
+  let str = '<style>.a{color:red}</style><body style="color:red">a</body>';
+  let fixed = '<style>.a{color:red;}</style><body style="color:red;">a</body>';
   let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
@@ -71,9 +71,11 @@ test(`03 - one style, always`, () => {
   );
 });
 
-test(`04 - one style, always, spaced important`, () => {
-  let str = `<style>.a{color: red !important}</style><body style="color: red !important">a</body>`;
-  let fixed = `<style>.a{color: red !important;}</style><body style="color: red !important;">a</body>`;
+test("04 - one style, always, spaced important", () => {
+  let str =
+    '<style>.a{color: red !important}</style><body style="color: red !important">a</body>';
+  let fixed =
+    '<style>.a{color: red !important;}</style><body style="color: red !important;">a</body>';
   let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
@@ -109,9 +111,11 @@ test(`04 - one style, always, spaced important`, () => {
   equal(applyFixes(str, messages), fixed, "04.01");
 });
 
-test(`05 - one style, always, tight important`, () => {
-  let str = `<style>.a{color:red!important}</style><body style="color:red!important">a</body>`;
-  let fixed = `<style>.a{color:red!important;}</style><body style="color:red!important;">a</body>`;
+test("05 - one style, always, tight important", () => {
+  let str =
+    '<style>.a{color:red!important}</style><body style="color:red!important">a</body>';
+  let fixed =
+    '<style>.a{color:red!important;}</style><body style="color:red!important;">a</body>';
   let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
@@ -120,9 +124,9 @@ test(`05 - one style, always, tight important`, () => {
   equal(applyFixes(str, messages), fixed, "05.01");
 });
 
-test(`06 - one style, always, inner whitespace`, () => {
-  let str = `<style>.a{color:red }</style><body>a</body>`;
-  let fixed = `<style>.a{color:red; }</style><body>a</body>`;
+test("06 - one style, always, inner whitespace", () => {
+  let str = "<style>.a{color:red }</style><body>a</body>";
+  let fixed = "<style>.a{color:red; }</style><body>a</body>";
   let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [1, "always"],
@@ -131,9 +135,9 @@ test(`06 - one style, always, inner whitespace`, () => {
   equal(applyFixes(str, messages), fixed, "06.01");
 });
 
-test(`07 - two styles, always`, () => {
-  let str = `<style>.a{text-align:left; color:red}</style><body>a</body>`;
-  let fixed = `<style>.a{text-align:left; color:red;}</style><body>a</body>`;
+test("07 - two styles, always", () => {
+  let str = "<style>.a{text-align:left; color:red}</style><body>a</body>";
+  let fixed = "<style>.a{text-align:left; color:red;}</style><body>a</body>";
   let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
@@ -142,9 +146,9 @@ test(`07 - two styles, always`, () => {
   equal(applyFixes(str, messages), fixed, "07.01");
 });
 
-test(`08 - two styles with space, always`, () => {
-  let str = `<style>.a{text-align:left; color:red }</style><body>a</body>`;
-  let fixed = `<style>.a{text-align:left; color:red; }</style><body>a</body>`;
+test("08 - two styles with space, always", () => {
+  let str = "<style>.a{text-align:left; color:red }</style><body>a</body>";
+  let fixed = "<style>.a{text-align:left; color:red; }</style><body>a</body>";
   let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
@@ -153,9 +157,9 @@ test(`08 - two styles with space, always`, () => {
   equal(applyFixes(str, messages), fixed, "08.01");
 });
 
-test(`09 - two styles, default=always`, () => {
-  let str = `<style>.a{text-align:left; color:red\n}</style><body>a</body>`;
-  let fixed = `<style>.a{text-align:left; color:red;\n}</style><body>a</body>`;
+test("09 - two styles, default=always", () => {
+  let str = "<style>.a{text-align:left; color:red\n}</style><body>a</body>";
+  let fixed = "<style>.a{text-align:left; color:red;\n}</style><body>a</body>";
   let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": 2,
@@ -164,8 +168,8 @@ test(`09 - two styles, default=always`, () => {
   equal(applyFixes(str, messages), fixed, "09.01");
 });
 
-test(`10 - nothing to fix`, () => {
-  let str = `<style>.a{\ntext-align:left;\ncolor:red;\n}</style><body>a</body>`;
+test("10 - nothing to fix", () => {
+  let str = "<style>.a{\ntext-align:left;\ncolor:red;\n}</style><body>a</body>";
   let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
@@ -178,9 +182,9 @@ test(`10 - nothing to fix`, () => {
 // never
 // -----------------------------------------------------------------------------
 
-test(`11 - one style, never`, () => {
-  let str = `<style>.a{color:red;}</style><body>a</body>`;
-  let fixed = `<style>.a{color:red}</style><body>a</body>`;
+test("11 - one style, never", () => {
+  let str = "<style>.a{color:red;}</style><body>a</body>";
+  let fixed = "<style>.a{color:red}</style><body>a</body>";
   let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "never"],
@@ -206,9 +210,9 @@ test(`11 - one style, never`, () => {
   );
 });
 
-test(`12 - two styles, never`, () => {
-  let str = `<style>.a{text-align:left;color:red;}</style><body>a</body>`;
-  let fixed = `<style>.a{text-align:left;color:red}</style><body>a</body>`;
+test("12 - two styles, never", () => {
+  let str = "<style>.a{text-align:left;color:red;}</style><body>a</body>";
+  let fixed = "<style>.a{text-align:left;color:red}</style><body>a</body>";
   let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "never"],
@@ -217,9 +221,9 @@ test(`12 - two styles, never`, () => {
   equal(applyFixes(str, messages), fixed, "12.01");
 });
 
-test(`13 - two styles, never, trailing whitespace`, () => {
-  let str = `<style>.a{text-align:left;color:red; }</style><body>a</body>`;
-  let fixed = `<style>.a{text-align:left;color:red }</style><body>a</body>`;
+test("13 - two styles, never, trailing whitespace", () => {
+  let str = "<style>.a{text-align:left;color:red; }</style><body>a</body>";
+  let fixed = "<style>.a{text-align:left;color:red }</style><body>a</body>";
   let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "never"],
@@ -232,9 +236,9 @@ test(`13 - two styles, never, trailing whitespace`, () => {
 //
 // -----------------------------------------------------------------------------
 
-test(`14 - wrapped with Nunjucks IF`, () => {
-  let str = `<td{% if foo %} style="color:red"{% endif %}>`;
-  let fixed = `<td{% if foo %} style="color:red;"{% endif %}>`;
+test("14 - wrapped with Nunjucks IF", () => {
+  let str = '<td{% if foo %} style="color:red"{% endif %}>';
+  let fixed = '<td{% if foo %} style="color:red;"{% endif %}>';
   let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
@@ -243,9 +247,9 @@ test(`14 - wrapped with Nunjucks IF`, () => {
   equal(applyFixes(str, messages), fixed, "14.01");
 });
 
-test(`15`, () => {
-  let str = `<td{% if foo %} style="color:red"{% endif %} align="left">`;
-  let fixed = `<td{% if foo %} style="color:red;"{% endif %} align="left">`;
+test("15", () => {
+  let str = '<td{% if foo %} style="color:red"{% endif %} align="left">';
+  let fixed = '<td{% if foo %} style="color:red;"{% endif %} align="left">';
   let messages = verify(not, str, {
     rules: {
       "css-trailing-semi": [2, "always"],

@@ -99,9 +99,9 @@ test("03 - single tag pair - inner and outer whitespace", () => {
 
 test("04 - single tag pair - text", () => {
   let { result, ranges, allTagLocations, filteredTagLocations } = stripHtml(
-    `This is a title with some <code>code</code> in it`
+    "This is a title with some <code>code</code> in it"
   );
-  equal(result, `This is a title with some code in it`, "04.01");
+  equal(result, "This is a title with some code in it", "04.01");
   equal(
     ranges,
     [
@@ -130,12 +130,12 @@ test("04 - single tag pair - text", () => {
 
 test("05 - single tag pair - text, pair tag", () => {
   let { result, ranges, allTagLocations, filteredTagLocations } = stripHtml(
-    `This is a title with some <code>code</code> in it`,
+    "This is a title with some <code>code</code> in it",
     {
       stripTogetherWithTheirContents: ["code"],
     }
   );
-  equal(result, `This is a title with some in it`, "05.01");
+  equal(result, "This is a title with some in it", "05.01");
   equal(ranges, [[25, 44, " "]], "05.02");
   equal(
     allTagLocations,
@@ -150,12 +150,12 @@ test("05 - single tag pair - text, pair tag", () => {
 
 test("06 - single tag pair - astrisk", () => {
   let { result, ranges, allTagLocations, filteredTagLocations } = stripHtml(
-    `This is a title with some <code>code</code> in it`,
+    "This is a title with some <code>code</code> in it",
     {
       stripTogetherWithTheirContents: ["*"],
     }
   );
-  equal(result, `This is a title with some in it`, "06.01");
+  equal(result, "This is a title with some in it", "06.01");
   equal(ranges, [[25, 44, " "]], "06.02");
   equal(
     allTagLocations,

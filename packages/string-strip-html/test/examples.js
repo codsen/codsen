@@ -83,7 +83,7 @@ The promo is still on!
     stripHtml(input);
   equal(
     result,
-    `{% if data.customer.purchases[0].spendTotal < 100 %}\nYou earned a discount!\n{% else %}\nThe promo is still on!\n{% endif %}`,
+    "{% if data.customer.purchases[0].spendTotal < 100 %}\nYou earned a discount!\n{% else %}\nThe promo is still on!\n{% endif %}",
     "02.01"
   );
   equal(
@@ -112,7 +112,7 @@ The promo is still on!
   );
   equal(
     rApply(input, rInvert(allTagLocations, input.length)),
-    `<div class="module-container"></div>`,
+    '<div class="module-container"></div>',
     "02.05"
   );
 });
@@ -154,7 +154,7 @@ test("03 - Tell me String indexes of where the <tr> tags are.", () => {
 
   equal(
     gatheredExtractedTagStrings,
-    [`<tr>`, `<tr>`, `</tr>`, `</tr>`],
+    ["<tr>", "<tr>", "</tr>", "</tr>"],
     "03.02"
   );
 });

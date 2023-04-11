@@ -7,7 +7,7 @@ import api from "../dist/remark-conventional-commit-changelog-timeline.esm.js";
 // API wirings
 // -----------------------------------------------------------------------------
 
-test(`01 - a function is exported`, () => {
+test("01 - a function is exported", () => {
   equal(typeof api, "function", "01.01");
 });
 

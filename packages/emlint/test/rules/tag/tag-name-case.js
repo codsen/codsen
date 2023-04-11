@@ -9,8 +9,8 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. recognised tag name
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - opening tag`, () => {
-  let str = `<tablE>`;
+test(`01 - ${`\u001b[${33}m${"normal tag"}\u001b[${39}m`} - opening tag`, () => {
+  let str = "<tablE>";
   let messages = verify(not, str, {
     rules: {
       "tag-name-case": 2,
@@ -36,14 +36,14 @@ test(`01 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - opening tag`, () => 
   );
 });
 
-test(`02 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - opening tag with attrs`, () => {
-  let str = `<tablE class="zzz">`;
+test(`02 - ${`\u001b[${33}m${"normal tag"}\u001b[${39}m`} - opening tag with attrs`, () => {
+  let str = '<tablE class="zzz">';
   let messages = verify(not, str, {
     rules: {
       "tag-name-case": 2,
     },
   });
-  equal(applyFixes(str, messages), `<table class="zzz">`, "02.01");
+  equal(applyFixes(str, messages), '<table class="zzz">', "02.01");
   compare(
     ok,
     messages,
@@ -63,8 +63,8 @@ test(`02 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - opening tag with att
   );
 });
 
-test(`03 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - slash in front`, () => {
-  let str = `</tablE>`;
+test(`03 - ${`\u001b[${33}m${"normal tag"}\u001b[${39}m`} - slash in front`, () => {
+  let str = "</tablE>";
   let messages = verify(not, str, {
     rules: {
       "tag-name-case": 2,
@@ -90,8 +90,8 @@ test(`03 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - slash in front`, () 
   );
 });
 
-test(`04 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - slash in front`, () => {
-  let str = `</tablE/>`;
+test(`04 - ${`\u001b[${33}m${"normal tag"}\u001b[${39}m`} - slash in front`, () => {
+  let str = "</tablE/>";
   let messages = verify(not, str, {
     rules: {
       "tag-name-case": 2,
@@ -117,8 +117,8 @@ test(`04 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - slash in front`, () 
   );
 });
 
-test(`05 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - slash in front`, () => {
-  let str = `<tablE/>`;
+test(`05 - ${`\u001b[${33}m${"normal tag"}\u001b[${39}m`} - slash in front`, () => {
+  let str = "<tablE/>";
   let messages = verify(not, str, {
     rules: {
       "tag-name-case": 2,
@@ -148,8 +148,8 @@ test(`05 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - slash in front`, () 
 // -----------------------------------------------------------------------------
 
 // https://www.w3.org/QA/2002/04/valid-dtd-list.html
-test(`06 - ${`\u001b[${36}m${`doctype`}\u001b[${39}m`} - html5 doctype, correct`, () => {
-  let str = `<!DOCTYPE html>`;
+test(`06 - ${`\u001b[${36}m${"doctype"}\u001b[${39}m`} - html5 doctype, correct`, () => {
+  let str = "<!DOCTYPE html>";
   let messages = verify(not, str, {
     rules: {
       "tag-name-case": 2,
@@ -159,8 +159,8 @@ test(`06 - ${`\u001b[${36}m${`doctype`}\u001b[${39}m`} - html5 doctype, correct`
   equal(messages, [], "06.02");
 });
 
-test(`07 - ${`\u001b[${36}m${`doctype`}\u001b[${39}m`} - html5 doctype, incorrect case`, () => {
-  let str = `<!doctype html>`;
+test(`07 - ${`\u001b[${36}m${"doctype"}\u001b[${39}m`} - html5 doctype, incorrect case`, () => {
+  let str = "<!doctype html>";
   let messages = verify(not, str, {
     rules: {
       "tag-name-case": 2,
@@ -170,7 +170,7 @@ test(`07 - ${`\u001b[${36}m${`doctype`}\u001b[${39}m`} - html5 doctype, incorrec
   equal(messages, [], "07.02");
 });
 
-test(`08 - ${`\u001b[${36}m${`doctype`}\u001b[${39}m`} - html 4.01 doctype, correct`, () => {
+test(`08 - ${`\u001b[${36}m${"doctype"}\u001b[${39}m`} - html 4.01 doctype, correct`, () => {
   let str = `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">`;
   let messages = verify(not, str, {
@@ -182,7 +182,7 @@ test(`08 - ${`\u001b[${36}m${`doctype`}\u001b[${39}m`} - html 4.01 doctype, corr
   equal(messages, [], "08.02");
 });
 
-test(`09 - ${`\u001b[${36}m${`doctype`}\u001b[${39}m`} - html 4.01 doctype, incorrect case`, () => {
+test(`09 - ${`\u001b[${36}m${"doctype"}\u001b[${39}m`} - html 4.01 doctype, incorrect case`, () => {
   let str = `<!doctype HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">`;
   let messages = verify(not, str, {
@@ -197,8 +197,8 @@ test(`09 - ${`\u001b[${36}m${`doctype`}\u001b[${39}m`} - html 4.01 doctype, inco
 // 03. CDATA
 // -----------------------------------------------------------------------------
 
-test(`10 - ${`\u001b[${32}m${`cdata`}\u001b[${39}m`} - cdata, correct`, () => {
-  let str = `<![CDATA[x<y]]>`;
+test(`10 - ${`\u001b[${32}m${"cdata"}\u001b[${39}m`} - cdata, correct`, () => {
+  let str = "<![CDATA[x<y]]>";
   let messages = verify(not, str, {
     rules: {
       "tag-name-case": 2,
@@ -208,8 +208,8 @@ test(`10 - ${`\u001b[${32}m${`cdata`}\u001b[${39}m`} - cdata, correct`, () => {
   equal(messages, [], "10.02");
 });
 
-test(`11 - ${`\u001b[${32}m${`cdata`}\u001b[${39}m`} - cdata, incorrect case`, () => {
-  let str = `<![cdata[x<y]]>`;
+test(`11 - ${`\u001b[${32}m${"cdata"}\u001b[${39}m`} - cdata, incorrect case`, () => {
+  let str = "<![cdata[x<y]]>";
   let messages = verify(not, str, {
     rules: {
       "tag-name-case": 2,

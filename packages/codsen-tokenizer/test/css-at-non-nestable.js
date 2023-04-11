@@ -7,9 +7,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // css - not nested at-rules
 // ---------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @namespace`, () => {
+test(`01 - ${`\u001b[${36}m${"basics"}\u001b[${39}m`} - @namespace`, () => {
   let gathered = [];
-  ct(`<style>@namespace url(z);</style>`, {
+  ct("<style>@namespace url(z);</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -70,9 +70,9 @@ test(`01 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @namespace`, () => {
   );
 });
 
-test(`02 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @charset (illegal in HTML)`, () => {
+test(`02 - ${`\u001b[${36}m${"basics"}\u001b[${39}m`} - @charset (illegal in HTML)`, () => {
   let gathered = [];
-  ct(`<style>@charset "utf-8";</style>`, {
+  ct('<style>@charset "utf-8";</style>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -100,7 +100,7 @@ test(`02 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @charset (illegal in HTM
         type: "at",
         start: 7,
         end: 24,
-        value: `@charset "utf-8";`,
+        value: '@charset "utf-8";',
         left: 6,
         nested: false,
         openingCurlyAt: null,
@@ -133,7 +133,7 @@ test(`02 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @charset (illegal in HTM
   );
 });
 
-test(`03 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - 2x @charset, spaced`, () => {
+test(`03 - ${`\u001b[${36}m${"basics"}\u001b[${39}m`} - 2x @charset, spaced`, () => {
   let gathered = [];
   ct(
     `<style>
@@ -237,9 +237,9 @@ test(`03 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - 2x @charset, spaced`, ()
   );
 });
 
-test(`04 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - 2x @charset, tight`, () => {
+test(`04 - ${`\u001b[${36}m${"basics"}\u001b[${39}m`} - 2x @charset, tight`, () => {
   let gathered = [];
-  ct(`<style>@charset "UTF-8";@charset "iso-8859-15";</style>`, {
+  ct('<style>@charset "UTF-8";@charset "iso-8859-15";</style>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },

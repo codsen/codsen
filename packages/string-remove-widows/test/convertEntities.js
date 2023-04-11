@@ -22,9 +22,9 @@ import {
 // opts.convertEntities
 // -----------------------------------------------------------------------------
 
-test(`01 - four chunks of text - entities, one line string no full stop`, () => {
+test("01 - four chunks of text - entities, one line string no full stop", () => {
   // log key contents are indeterminable
-  let { res, ranges, whatWasDone } = removeWidows(`aaa bbb ccc ddd`, {
+  let { res, ranges, whatWasDone } = removeWidows("aaa bbb ccc ddd", {
     minCharCount: 5,
   });
   equal(
@@ -41,9 +41,9 @@ test(`01 - four chunks of text - entities, one line string no full stop`, () => 
   );
 });
 
-test(`02 - four chunks of text - entities, one line string with full stop`, () => {
+test("02 - four chunks of text - entities, one line string with full stop", () => {
   equal(
-    removeWidows(`aaa bbb ccc ddd.`, {
+    removeWidows("aaa bbb ccc ddd.", {
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd.`,
@@ -51,9 +51,9 @@ test(`02 - four chunks of text - entities, one line string with full stop`, () =
   );
 });
 
-test(`03 - four chunks of text - no entities, one line string no full stop`, () => {
+test("03 - four chunks of text - no entities, one line string no full stop", () => {
   equal(
-    removeWidows(`aaa bbb ccc ddd`, {
+    removeWidows("aaa bbb ccc ddd", {
       convertEntities: false,
       minCharCount: 5,
     }).res,
@@ -62,9 +62,9 @@ test(`03 - four chunks of text - no entities, one line string no full stop`, () 
   );
 });
 
-test(`04 - four chunks of text - no entities, one line string with full stop`, () => {
+test("04 - four chunks of text - no entities, one line string with full stop", () => {
   equal(
-    removeWidows(`aaa bbb ccc ddd.`, {
+    removeWidows("aaa bbb ccc ddd.", {
       convertEntities: false,
       minCharCount: 5,
     }).res,
@@ -73,9 +73,9 @@ test(`04 - four chunks of text - no entities, one line string with full stop`, (
   );
 });
 
-test(`05 - single line break - widow fix needed`, () => {
+test("05 - single line break - widow fix needed", () => {
   equal(
-    removeWidows(`aaa bbb ccc ddd\neee fff ggg hhh.`, {
+    removeWidows("aaa bbb ccc ddd\neee fff ggg hhh.", {
       convertEntities: true,
       minCharCount: 5,
     }).res,
@@ -84,9 +84,9 @@ test(`05 - single line break - widow fix needed`, () => {
   );
 });
 
-test(`06 - single line break -  - one line break, with full stop - widow fix needed`, () => {
+test("06 - single line break -  - one line break, with full stop - widow fix needed", () => {
   equal(
-    removeWidows(`aaa bbb ccc ddd.\neee fff ggg hhh.`, {
+    removeWidows("aaa bbb ccc ddd.\neee fff ggg hhh.", {
       convertEntities: true,
       minCharCount: 5,
     }).res,
@@ -95,9 +95,9 @@ test(`06 - single line break -  - one line break, with full stop - widow fix nee
   );
 });
 
-test(`07 - trailing space`, () => {
+test("07 - trailing space", () => {
   equal(
-    removeWidows(`aaa bbb ccc ddd.  \n\neee fff ggg hhh`, {
+    removeWidows("aaa bbb ccc ddd.  \n\neee fff ggg hhh", {
       convertEntities: true,
       minCharCount: 5,
     }).res,
@@ -106,9 +106,9 @@ test(`07 - trailing space`, () => {
   );
 });
 
-test(`08 - trailing tabs`, () => {
+test("08 - trailing tabs", () => {
   equal(
-    removeWidows(`aaa bbb ccc ddd.\t\t\n\neee fff ggg hhh\t\t`, {
+    removeWidows("aaa bbb ccc ddd.\t\t\n\neee fff ggg hhh\t\t", {
       convertEntities: true,
       minCharCount: 5,
     }).res,
@@ -117,21 +117,21 @@ test(`08 - trailing tabs`, () => {
   );
 });
 
-test(`09 - nbsp's not added within hidden HTML tags`, () => {
+test("09 - nbsp's not added within hidden HTML tags", () => {
   let sources = [
-    `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-    `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-    `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-    `aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   ];
   sources.forEach((str, idx) => {
     equal(removeWidows(str).res, str, `02.09.0${1 + idx}`);
   });
 });
 
-test(`10 - numeric HTML entity #160`, () => {
+test("10 - numeric HTML entity #160", () => {
   equal(
-    removeWidows(`aaa bbb ccc&#160;ddd`, {
+    removeWidows("aaa bbb ccc&#160;ddd", {
       convertEntities: true,
       minCharCount: 5,
     }).res,
@@ -140,9 +140,9 @@ test(`10 - numeric HTML entity #160`, () => {
   );
 });
 
-test(`11 - numeric HTML entity #160`, () => {
+test("11 - numeric HTML entity #160", () => {
   equal(
-    removeWidows(`aaa bbb ccc&#160;ddd`, {
+    removeWidows("aaa bbb ccc&#160;ddd", {
       convertEntities: false,
       minCharCount: 5,
     }).res,
@@ -151,7 +151,7 @@ test(`11 - numeric HTML entity #160`, () => {
   );
 });
 
-test(`12 - doesn't touch other nbsp's`, () => {
+test("12 - doesn't touch other nbsp's", () => {
   equal(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc&#160;ddd`, {
       convertEntities: true,
@@ -162,7 +162,7 @@ test(`12 - doesn't touch other nbsp's`, () => {
   );
 });
 
-test(`13 - doesn't touch other nbsp's`, () => {
+test("13 - doesn't touch other nbsp's", () => {
   equal(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc&#160;ddd`, {
       convertEntities: false,
@@ -173,9 +173,9 @@ test(`13 - doesn't touch other nbsp's`, () => {
   );
 });
 
-test(`14 - two spaces`, () => {
+test("14 - two spaces", () => {
   equal(
-    removeWidows(`aaa bbb ccc  ddd`, {
+    removeWidows("aaa bbb ccc  ddd", {
       convertEntities: true,
       minCharCount: 5,
     }).res,
@@ -184,9 +184,9 @@ test(`14 - two spaces`, () => {
   );
 });
 
-test(`15 - two spaces`, () => {
+test("15 - two spaces", () => {
   equal(
-    removeWidows(`aaa bbb ccc  ddd`, {
+    removeWidows("aaa bbb ccc  ddd", {
       convertEntities: false,
       minCharCount: 5,
     }).res,
@@ -195,9 +195,9 @@ test(`15 - two spaces`, () => {
   );
 });
 
-test(`16 - tabs`, () => {
+test("16 - tabs", () => {
   equal(
-    removeWidows(`aaa bbb ccc\tddd`, {
+    removeWidows("aaa bbb ccc\tddd", {
       convertEntities: true,
       minCharCount: 5,
     }).res,
@@ -206,9 +206,9 @@ test(`16 - tabs`, () => {
   );
 });
 
-test(`17 - tabs`, () => {
+test("17 - tabs", () => {
   equal(
-    removeWidows(`aaa bbb ccc\tddd`, {
+    removeWidows("aaa bbb ccc\tddd", {
       convertEntities: false,
       minCharCount: 5,
     }).res,
@@ -218,7 +218,7 @@ test(`17 - tabs`, () => {
 });
 
 // existing, neighbour nbsp's get converted
-test(`18 - converts non-widow non-breaking spaces`, () => {
+test("18 - converts non-widow non-breaking spaces", () => {
   equal(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       convertEntities: true,
@@ -229,7 +229,7 @@ test(`18 - converts non-widow non-breaking spaces`, () => {
   );
 });
 
-test(`19 - converts non-widow non-breaking spaces`, () => {
+test("19 - converts non-widow non-breaking spaces", () => {
   equal(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       convertEntities: false,
@@ -240,10 +240,10 @@ test(`19 - converts non-widow non-breaking spaces`, () => {
   );
 });
 
-test(`20 - converts non-widow non-breaking spaces`, () => {
+test("20 - converts non-widow non-breaking spaces", () => {
   equal(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
-      targetLanguage: `css`,
+      targetLanguage: "css",
       convertEntities: true,
       minCharCount: 5,
     }).res,
@@ -252,10 +252,10 @@ test(`20 - converts non-widow non-breaking spaces`, () => {
   );
 });
 
-test(`21 - converts non-widow non-breaking spaces`, () => {
+test("21 - converts non-widow non-breaking spaces", () => {
   equal(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
-      targetLanguage: `js`,
+      targetLanguage: "js",
       convertEntities: true,
       minCharCount: 5,
     }).res,
@@ -264,7 +264,7 @@ test(`21 - converts non-widow non-breaking spaces`, () => {
   );
 });
 
-test(`22 - removeWidowPreventionMeasures - converts non-widow non-breaking spaces`, () => {
+test("22 - removeWidowPreventionMeasures - converts non-widow non-breaking spaces", () => {
   equal(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       removeWidowPreventionMeasures: true,
@@ -276,7 +276,7 @@ test(`22 - removeWidowPreventionMeasures - converts non-widow non-breaking space
   );
 });
 
-test(`23 - removeWidowPreventionMeasures - converts non-widow non-breaking spaces`, () => {
+test("23 - removeWidowPreventionMeasures - converts non-widow non-breaking spaces", () => {
   equal(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       removeWidowPreventionMeasures: true,
@@ -288,12 +288,12 @@ test(`23 - removeWidowPreventionMeasures - converts non-widow non-breaking space
   );
 });
 
-test(`24 - removeWidowPreventionMeasures - converts non-widow non-breaking spaces`, () => {
+test("24 - removeWidowPreventionMeasures - converts non-widow non-breaking spaces", () => {
   equal(
     removeWidows(`aaa bbb${encodedNbspHtml}ccc ddd`, {
       removeWidowPreventionMeasures: true,
       convertEntities: true,
-      targetLanguage: `css`,
+      targetLanguage: "css",
       minCharCount: 5,
     }).res,
     `aaa bbb${encodedNbspCss}ccc ddd`,
@@ -303,18 +303,18 @@ test(`24 - removeWidowPreventionMeasures - converts non-widow non-breaking space
 
 // 3 words, min count 4
 
-test(`25`, () => {
+test("25", () => {
   equal(
     removeWidows(`Abc;${rawnbsp}de fg.`, {
       convertEntities: true,
       minWordCount: 4,
     }).res,
-    `Abc;&nbsp;de fg.`,
+    "Abc;&nbsp;de fg.",
     "25.01"
   );
 });
 
-test(`26`, () => {
+test("26", () => {
   equal(
     removeWidows(`Abc;${rawnbsp}de fg.`, {
       convertEntities: false,
@@ -325,20 +325,20 @@ test(`26`, () => {
   );
 });
 
-test(`27`, () => {
+test("27", () => {
   equal(
-    removeWidows(`Abc;&nbsp;de fg.`, {
+    removeWidows("Abc;&nbsp;de fg.", {
       convertEntities: true,
       minWordCount: 4,
     }).res,
-    `Abc;&nbsp;de fg.`,
+    "Abc;&nbsp;de fg.",
     "27.01"
   );
 });
 
-test(`28`, () => {
+test("28", () => {
   equal(
-    removeWidows(`Abc;&nbsp;de fg.`, {
+    removeWidows("Abc;&nbsp;de fg.", {
       convertEntities: false,
       minWordCount: 4,
     }).res,
@@ -349,18 +349,18 @@ test(`28`, () => {
 
 // 4 words, min count 4
 
-test(`29`, () => {
+test("29", () => {
   equal(
     removeWidows(`Abc;${rawnbsp}de fg hijklm.`, {
       convertEntities: true,
       minWordCount: 4,
     }).res,
-    `Abc;&nbsp;de fg&nbsp;hijklm.`,
+    "Abc;&nbsp;de fg&nbsp;hijklm.",
     "29.01"
   );
 });
 
-test(`30`, () => {
+test("30", () => {
   equal(
     removeWidows(`Abc;${rawnbsp}de fg hijklm.`, {
       convertEntities: false,
@@ -371,20 +371,20 @@ test(`30`, () => {
   );
 });
 
-test(`31`, () => {
+test("31", () => {
   equal(
-    removeWidows(`Abc;&nbsp;de fg hijklm.`, {
+    removeWidows("Abc;&nbsp;de fg hijklm.", {
       convertEntities: true,
       minWordCount: 4,
     }).res,
-    `Abc;&nbsp;de fg&nbsp;hijklm.`,
+    "Abc;&nbsp;de fg&nbsp;hijklm.",
     "31.01"
   );
 });
 
-test(`32`, () => {
+test("32", () => {
   equal(
-    removeWidows(`Abc;&nbsp;de fg hijklm.`, {
+    removeWidows("Abc;&nbsp;de fg hijklm.", {
       convertEntities: false,
       minWordCount: 4,
     }).res,

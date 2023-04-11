@@ -8,7 +8,7 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. "only" opening, "not" closing
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - off, missing dash`, () => {
+test(`01 - ${`\u001b[${35}m${'"only" opening, "not" closing'}\u001b[${39}m`} - off, missing dash`, () => {
   let str = `<!--[if mso]>
   <img src="fallback">
 <!--<![endif]-->`;
@@ -21,7 +21,7 @@ test(`01 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - o
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - both tags are healthy`, () => {
+test(`02 - ${`\u001b[${35}m${'"only" opening, "not" closing'}\u001b[${39}m`} - both tags are healthy`, () => {
   let str = `<!--[if mso]>
   <span class="foo">z</span>
 <!--<![endif]-->`;
@@ -44,7 +44,7 @@ test(`02 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - b
         ruleId: "comment-mismatching-pair",
         idxFrom: 43,
         idxTo: 59,
-        message: `Remove "<!--".`,
+        message: 'Remove "<!--".',
         fix: {
           ranges: [[43, 59]],
         },
@@ -55,7 +55,7 @@ test(`02 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - b
   is(messages.length, 1, "02.02");
 });
 
-test(`03 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - heads tag is also dirty`, () => {
+test(`03 - ${`\u001b[${35}m${'"only" opening, "not" closing'}\u001b[${39}m`} - heads tag is also dirty`, () => {
   let str = `<!-- [if mso]>
   <span class="foo">z</span>
 <!--<![endif]-->`;
@@ -101,7 +101,7 @@ test(`03 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - h
   equal(applyFixes(str, messages), fixed, "03.01");
 });
 
-test(`04 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - tails tag is also dirty`, () => {
+test(`04 - ${`\u001b[${35}m${'"only" opening, "not" closing'}\u001b[${39}m`} - tails tag is also dirty`, () => {
   let str = `<!--[if mso]>
   <span class="foo">z</span>
 <!--<[endif]-->`;
@@ -158,7 +158,7 @@ test(`04 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - t
         severity: 2,
         idxFrom: 43,
         idxTo: 59,
-        message: `Remove "<!--".`,
+        message: 'Remove "<!--".',
         fix: {
           ranges: [[43, 59, "<![endif]-->"]],
         },
@@ -177,7 +177,7 @@ test(`04 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - t
   );
 });
 
-test(`05 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - both tags are also dirty`, () => {
+test(`05 - ${`\u001b[${35}m${'"only" opening, "not" closing'}\u001b[${39}m`} - both tags are also dirty`, () => {
   let str = `<!-[if mso]>
   <span class="foo">z</span>
 <!--<[endif]-->`;
@@ -205,7 +205,7 @@ test(`05 - ${`\u001b[${35}m${`"only" opening, "not" closing`}\u001b[${39}m`} - b
 // 02. "not" opening, "only" closing
 // -----------------------------------------------------------------------------
 
-test(`06 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - both tags are healthy`, () => {
+test(`06 - ${`\u001b[${36}m${'"not" opening, "only" closing'}\u001b[${39}m`} - both tags are healthy`, () => {
   let str = `<!--[if !mso]><!-->
   <span class="foo">z</span>
 <![endif]-->`;
@@ -240,7 +240,7 @@ test(`06 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - b
   );
 });
 
-test(`07 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - heads tag is also dirty`, () => {
+test(`07 - ${`\u001b[${36}m${'"not" opening, "only" closing'}\u001b[${39}m`} - heads tag is also dirty`, () => {
   let str = `<!-[if !mso]><!-->
   <span class="foo">z</span>
 <![endif]-->`;
@@ -286,7 +286,7 @@ test(`07 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - h
   is(messages.length, 2, "07.02");
 });
 
-test(`08 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - tails tag is also dirty`, () => {
+test(`08 - ${`\u001b[${36}m${'"not" opening, "only" closing'}\u001b[${39}m`} - tails tag is also dirty`, () => {
   let str = `<!--[if mso]><!-->
   <span class="foo">z</span>
 <[endif]-->`;
@@ -311,7 +311,7 @@ test(`08 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - t
   );
 });
 
-test(`09 - ${`\u001b[${36}m${`"not" opening, "only" closing`}\u001b[${39}m`} - both tags are also dirty`, () => {
+test(`09 - ${`\u001b[${36}m${'"not" opening, "only" closing'}\u001b[${39}m`} - both tags are also dirty`, () => {
   let str = `<!-[if mso]><!-->
   <span class="foo">z</span>
 <[endif]-->`;

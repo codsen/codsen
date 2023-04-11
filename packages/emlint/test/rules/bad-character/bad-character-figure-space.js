@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two FIGURE SPACE characters`, () => {
+test("01 - detects two FIGURE SPACE characters", () => {
   let str = "\u2007dlkgjld\u2007j";
   let linter = new Linter();
   let messages = linter.verify(str, {

@@ -46,7 +46,7 @@ function offerAListOfFilesToPickFrom() {
   if (!allFilesHere.length) {
     log(
       chalk.grey("\nemail-all-chars-within-ascii-cli: [THROW_ID_01] ") +
-        chalk.red(`Alas, there are no files in this folder!`)
+        chalk.red("Alas, there are no files in this folder!")
     );
     return process.exit(1);
   }

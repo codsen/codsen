@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no type, error level 0`, () => {
-  let str = `<a>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no type, error level 0`, () => {
+  let str = "<a>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no type, error level
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no type, error level 1`, () => {
-  let str = `<a>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no type, error level 1`, () => {
+  let str = "<a>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no type, error level
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no type, error level 2`, () => {
-  let str = `<a>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no type, error level 2`, () => {
+  let str = "<a>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no type, error level
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, a`, () => {
-  let str = `<a type='application/json'>`; // <-- notice single quotes
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, a`, () => {
+  let str = "<a type='application/json'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -58,8 +58,9 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, a
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - fancy MIME from the list`, () => {
-  let str = `<a type="application/vnd.openxmlformats-officedocument.presentationml.template.main+xml">`; // <-- notice single quotes
+test(`05 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - fancy MIME from the list`, () => {
+  let str =
+    '<a type="application/vnd.openxmlformats-officedocument.presentationml.template.main+xml">'; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -70,8 +71,8 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - fancy MIME from the 
   equal(messages, [], "05.02");
 });
 
-test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, input`, () => {
-  let str = `<input type="password">`;
+test(`06 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, input`, () => {
+  let str = '<input type="password">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -82,8 +83,8 @@ test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, i
   equal(messages, [], "06.02");
 });
 
-test(`07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, li`, () => {
-  let str = `<li type="disc">`;
+test(`07 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, li`, () => {
+  let str = '<li type="disc">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -94,8 +95,8 @@ test(`07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, l
   equal(messages, [], "07.02");
 });
 
-test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, ol`, () => {
-  let str = `<ol type="1">`;
+test(`08 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, ol`, () => {
+  let str = '<ol type="1">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -106,8 +107,8 @@ test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, o
   equal(messages, [], "08.02");
 });
 
-test(`09 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, ul`, () => {
-  let str = `<ul type="square">`;
+test(`09 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, ul`, () => {
+  let str = '<ul type="square">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -118,8 +119,8 @@ test(`09 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, u
   equal(messages, [], "09.02");
 });
 
-test(`10 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, button`, () => {
-  let str = `<button type="reset">`;
+test(`10 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, button`, () => {
+  let str = '<button type="reset">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -133,21 +134,21 @@ test(`10 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, b
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<a type=" application/json">`;
+test(`11 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = '<a type=" application/json">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-type": 2,
     },
   });
-  equal(applyFixes(str, messages), `<a type="application/json">`, "11.01");
+  equal(applyFixes(str, messages), '<a type="application/json">', "11.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-type",
       idxFrom: 9,
       idxTo: 10,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[9, 10]],
       },
@@ -155,21 +156,21 @@ test(`11 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   ]);
 });
 
-test(`12 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<a type="application/json ">`;
+test(`12 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = '<a type="application/json ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-type": 2,
     },
   });
-  equal(applyFixes(str, messages), `<a type="application/json">`, "12.01");
+  equal(applyFixes(str, messages), '<a type="application/json">', "12.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-type",
       idxFrom: 25,
       idxTo: 26,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[25, 26]],
       },
@@ -177,21 +178,21 @@ test(`12 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`13 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`, () => {
-  let str = `<a type="  application/json \t">`;
+test(`13 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around`, () => {
+  let str = '<a type="  application/json \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-type": 2,
     },
   });
-  equal(applyFixes(str, messages), `<a type="application/json">`, "13.01");
+  equal(applyFixes(str, messages), '<a type="application/json">', "13.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-type",
       idxFrom: 9,
       idxTo: 29,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [9, 11],
@@ -202,8 +203,8 @@ test(`13 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`14 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<a type="  \t">`;
+test(`14 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<a type="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -217,7 +218,7 @@ test(`14 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-type",
       idxFrom: 9,
       idxTo: 12,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -226,8 +227,8 @@ test(`14 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`15 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value, a`, () => {
-  let str = `<a type="tralala">`;
+test(`15 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - an out-of-whack value, a`, () => {
+  let str = '<a type="tralala">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -241,14 +242,14 @@ test(`15 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value, a`
       ruleId: "attribute-validate-type",
       idxFrom: 9,
       idxTo: 16,
-      message: `Unrecognised value: "tralala".`,
+      message: 'Unrecognised value: "tralala".',
       fix: null,
     },
   ]);
 });
 
-test(`16 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value, input`, () => {
-  let str = `<input type="circle">`;
+test(`16 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - an out-of-whack value, input`, () => {
+  let str = '<input type="circle">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -262,14 +263,14 @@ test(`16 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value, in
       ruleId: "attribute-validate-type",
       idxFrom: 13,
       idxTo: 19,
-      message: `Unrecognised value: "circle".`,
+      message: 'Unrecognised value: "circle".',
       fix: null,
     },
   ]);
 });
 
-test(`17 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value, li`, () => {
-  let str = `<li type="text">`;
+test(`17 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - an out-of-whack value, li`, () => {
+  let str = '<li type="text">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -283,14 +284,14 @@ test(`17 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value, li
       ruleId: "attribute-validate-type",
       idxFrom: 10,
       idxTo: 14,
-      message: `Unrecognised value: "text".`,
+      message: 'Unrecognised value: "text".',
       fix: null,
     },
   ]);
 });
 
-test(`18 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value, ol`, () => {
-  let str = `<ol type="text">`;
+test(`18 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - an out-of-whack value, ol`, () => {
+  let str = '<ol type="text">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -304,14 +305,14 @@ test(`18 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value, ol
       ruleId: "attribute-validate-type",
       idxFrom: 10,
       idxTo: 14,
-      message: `Should be "1|a|A|i|I".`,
+      message: 'Should be "1|a|A|i|I".',
       fix: null,
     },
   ]);
 });
 
-test(`19 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value, ul`, () => {
-  let str = `<ul type="text">`;
+test(`19 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - an out-of-whack value, ul`, () => {
+  let str = '<ul type="text">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -325,14 +326,14 @@ test(`19 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value, ul
       ruleId: "attribute-validate-type",
       idxFrom: 10,
       idxTo: 14,
-      message: `Should be "disc|square|circle".`,
+      message: 'Should be "disc|square|circle".',
       fix: null,
     },
   ]);
 });
 
-test(`20 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value, button`, () => {
-  let str = `<button type="circle">`;
+test(`20 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - an out-of-whack value, button`, () => {
+  let str = '<button type="circle">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -346,7 +347,7 @@ test(`20 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value, bu
       ruleId: "attribute-validate-type",
       idxFrom: 14,
       idxTo: 20,
-      message: `Should be "button|submit|reset".`,
+      message: 'Should be "button|submit|reset".',
       fix: null,
     },
   ]);
@@ -355,8 +356,8 @@ test(`20 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - an out-of-whack value, bu
 // 04. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`21 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div type="application/json">`;
+test(`21 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div type="application/json">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -375,8 +376,8 @@ test(`21 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`22 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz type="application/json" yyy>`;
+test(`22 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz type="application/json" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {

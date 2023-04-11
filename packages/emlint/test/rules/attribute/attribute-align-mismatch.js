@@ -5,7 +5,7 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { verify } from "../../../t-util/util.js";
 
-test(`01`, () => {
+test("01", () => {
   let str = `<table>
   <tr>
     <td align="left">
@@ -32,7 +32,7 @@ test(`01`, () => {
         ruleId: "attribute-align-mismatch",
         idxFrom: 50,
         idxTo: 63,
-        message: `Does not match parent td's "align".`,
+        message: 'Does not match parent td\'s "align".',
         fix: null,
       },
     ],
@@ -41,7 +41,7 @@ test(`01`, () => {
   equal(messages.length, 1, "01.01");
 });
 
-test(`02 - value vs empty`, () => {
+test("02 - value vs empty", () => {
   let str = `<table>
   <tr>
     <td align="left">
@@ -68,7 +68,7 @@ test(`02 - value vs empty`, () => {
         ruleId: "attribute-align-mismatch",
         idxFrom: 50,
         idxTo: 58,
-        message: `Does not match parent td's "align".`,
+        message: 'Does not match parent td\'s "align".',
         fix: null,
       },
     ],
@@ -77,7 +77,7 @@ test(`02 - value vs empty`, () => {
   equal(messages.length, 1, "02.01");
 });
 
-test(`03 - empty vs value`, () => {
+test("03 - empty vs value", () => {
   let str = `<table>
   <tr>
     <td align="">
@@ -104,7 +104,7 @@ test(`03 - empty vs value`, () => {
         ruleId: "attribute-align-mismatch",
         idxFrom: 46,
         idxTo: 58,
-        message: `Does not match parent td's "align".`,
+        message: 'Does not match parent td\'s "align".',
         fix: null,
       },
     ],
@@ -113,7 +113,7 @@ test(`03 - empty vs value`, () => {
   equal(messages.length, 1, "03.01");
 });
 
-test(`04 - empty vs empty`, () => {
+test("04 - empty vs empty", () => {
   let str = `<table>
   <tr>
     <td align="">
@@ -135,7 +135,7 @@ test(`04 - empty vs empty`, () => {
   equal(messages, [], "04.01");
 });
 
-test(`05 - ESP`, () => {
+test("05 - ESP", () => {
   let str = `<table>
   <tr>
     <td align="left">
@@ -172,14 +172,14 @@ test(`05 - ESP`, () => {
         ruleId: "attribute-align-mismatch",
         idxFrom: 200,
         idxTo: 213,
-        message: `Does not match parent td's "align".`,
+        message: 'Does not match parent td\'s "align".',
         fix: null,
       },
       {
         ruleId: "attribute-align-mismatch",
         idxFrom: 67,
         idxTo: 81,
-        message: `Does not match parent td's "align".`,
+        message: 'Does not match parent td\'s "align".',
         fix: null,
       },
     ],

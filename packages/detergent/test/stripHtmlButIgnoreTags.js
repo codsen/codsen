@@ -9,13 +9,13 @@ import { det, mixer } from "../t-util/util.js";
 // opts.stripHtmlButIgnoreTags
 // ==============================
 
-test(`01 - simple case`, () => {
-  equal(det(ok, not, 0, `a <div><a>z</a></div> c`).res, "a z c", "01.01");
+test("01 - simple case", () => {
+  equal(det(ok, not, 0, "a <div><a>z</a></div> c").res, "a z c", "01.01");
 });
 
-test(`02 - single tag to ignore, given as string`, () => {
+test("02 - single tag to ignore, given as string", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: "a",
     }).res,
     "a <a>z</a> c",
@@ -23,9 +23,9 @@ test(`02 - single tag to ignore, given as string`, () => {
   );
 });
 
-test(`03 - single tag to ignore, given as string in an array`, () => {
+test("03 - single tag to ignore, given as string in an array", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: ["a"],
     }).res,
     "a <a>z</a> c",
@@ -33,9 +33,9 @@ test(`03 - single tag to ignore, given as string in an array`, () => {
   );
 });
 
-test(`04 - single tag to ignore, given as string`, () => {
+test("04 - single tag to ignore, given as string", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: "div",
       removeWidows: false,
     }).res,
@@ -44,9 +44,9 @@ test(`04 - single tag to ignore, given as string`, () => {
   );
 });
 
-test(`05 - single tag to ignore, given as string in an array`, () => {
+test("05 - single tag to ignore, given as string in an array", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: ["div"],
       removeWidows: false,
     }).res,
@@ -55,9 +55,9 @@ test(`05 - single tag to ignore, given as string in an array`, () => {
   );
 });
 
-test(`06 - both tags ignored`, () => {
+test("06 - both tags ignored", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: ["a", "div"],
       removeWidows: false,
     }).res,
@@ -66,9 +66,9 @@ test(`06 - both tags ignored`, () => {
   );
 });
 
-test(`07 - other tags ignored, not present in the input`, () => {
+test("07 - other tags ignored, not present in the input", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: ["article", "z"],
       removeWidows: false,
     }).res,
@@ -77,13 +77,13 @@ test(`07 - other tags ignored, not present in the input`, () => {
   );
 });
 
-test(`08 - control for stripHtml`, () => {
-  equal(det(ok, not, 0, `a <div><a>z</a></div> c`).res, "a z c", "08.01");
+test("08 - control for stripHtml", () => {
+  equal(det(ok, not, 0, "a <div><a>z</a></div> c").res, "a z c", "08.01");
 });
 
-test(`09 - no ignores`, () => {
+test("09 - no ignores", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtml: false,
       removeWidows: false,
     }).res,
@@ -92,9 +92,9 @@ test(`09 - no ignores`, () => {
   );
 });
 
-test(`10 - no ignores`, () => {
+test("10 - no ignores", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtml: true,
       removeWidows: false,
     }).res,
@@ -103,9 +103,9 @@ test(`10 - no ignores`, () => {
   );
 });
 
-test(`11 - single tag to ignore, given as string`, () => {
+test("11 - single tag to ignore, given as string", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: "a",
       stripHtml: false,
       removeWidows: false,
@@ -115,9 +115,9 @@ test(`11 - single tag to ignore, given as string`, () => {
   );
 });
 
-test(`12 - single tag to ignore, given as string`, () => {
+test("12 - single tag to ignore, given as string", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: "a",
       stripHtml: true,
       removeWidows: false,
@@ -127,9 +127,9 @@ test(`12 - single tag to ignore, given as string`, () => {
   );
 });
 
-test(`13 - single tag to ignore, given as string in an array`, () => {
+test("13 - single tag to ignore, given as string in an array", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: ["a"],
       stripHtml: false,
       removeWidows: false,
@@ -139,9 +139,9 @@ test(`13 - single tag to ignore, given as string in an array`, () => {
   );
 });
 
-test(`14 - single tag to ignore, given as string in an array`, () => {
+test("14 - single tag to ignore, given as string in an array", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: ["a"],
       stripHtml: true,
       removeWidows: false,
@@ -151,9 +151,9 @@ test(`14 - single tag to ignore, given as string in an array`, () => {
   );
 });
 
-test(`15 - single tag to ignore, given as string`, () => {
+test("15 - single tag to ignore, given as string", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: "div",
       stripHtml: false,
       removeWidows: false,
@@ -163,9 +163,9 @@ test(`15 - single tag to ignore, given as string`, () => {
   );
 });
 
-test(`16 - single tag to ignore, given as string`, () => {
+test("16 - single tag to ignore, given as string", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: "div",
       stripHtml: true,
       removeWidows: false,
@@ -175,9 +175,9 @@ test(`16 - single tag to ignore, given as string`, () => {
   );
 });
 
-test(`17 - single tag to ignore, given as string in an array`, () => {
+test("17 - single tag to ignore, given as string in an array", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: ["div"],
       stripHtml: false,
       removeWidows: false,
@@ -187,9 +187,9 @@ test(`17 - single tag to ignore, given as string in an array`, () => {
   );
 });
 
-test(`18 - single tag to ignore, given as string in an array`, () => {
+test("18 - single tag to ignore, given as string in an array", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: ["div"],
       stripHtml: true,
       removeWidows: false,
@@ -199,9 +199,9 @@ test(`18 - single tag to ignore, given as string in an array`, () => {
   );
 });
 
-test(`19 - both tags ignored`, () => {
+test("19 - both tags ignored", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: ["a", "div"],
       stripHtml: false,
       removeWidows: false,
@@ -211,9 +211,9 @@ test(`19 - both tags ignored`, () => {
   );
 });
 
-test(`20 - both tags ignored`, () => {
+test("20 - both tags ignored", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: ["a", "div"],
       stripHtml: true,
       removeWidows: false,
@@ -223,9 +223,9 @@ test(`20 - both tags ignored`, () => {
   );
 });
 
-test(`21 - other tags ignored, not present in the input`, () => {
+test("21 - other tags ignored, not present in the input", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: ["article", "z"],
       stripHtml: false,
       removeWidows: false,
@@ -235,9 +235,9 @@ test(`21 - other tags ignored, not present in the input`, () => {
   );
 });
 
-test(`22 - other tags ignored, not present in the input`, () => {
+test("22 - other tags ignored, not present in the input", () => {
   equal(
-    det(ok, not, 0, `a <div><a>z</a></div> c`, {
+    det(ok, not, 0, "a <div><a>z</a></div> c", {
       stripHtmlButIgnoreTags: ["article", "z"],
       stripHtml: true,
       removeWidows: false,
@@ -247,9 +247,9 @@ test(`22 - other tags ignored, not present in the input`, () => {
   );
 });
 
-test(`23 - ad hoc - one tag`, () => {
+test("23 - ad hoc - one tag", () => {
   equal(
-    det(ok, not, 0, `<sup>`, {
+    det(ok, not, 0, "<sup>", {
       stripHtmlButIgnoreTags: [],
       stripHtml: true,
     }).res,
@@ -258,9 +258,9 @@ test(`23 - ad hoc - one tag`, () => {
   );
 });
 
-test(`24 - ad hoc - one tag`, () => {
+test("24 - ad hoc - one tag", () => {
   equal(
-    det(ok, not, 0, `<sup>`, {
+    det(ok, not, 0, "<sup>", {
       stripHtml: true,
     }).res,
     "<sup>",
@@ -268,9 +268,9 @@ test(`24 - ad hoc - one tag`, () => {
   );
 });
 
-test(`25 - ad hoc - one tag`, () => {
+test("25 - ad hoc - one tag", () => {
   equal(
-    det(ok, not, 0, `<sup>`, {
+    det(ok, not, 0, "<sup>", {
       stripHtmlButIgnoreTags: ["sup"],
       stripHtml: true,
     }).res,
@@ -279,9 +279,9 @@ test(`25 - ad hoc - one tag`, () => {
   );
 });
 
-test(`26 - ad hoc - one tag`, () => {
+test("26 - ad hoc - one tag", () => {
   equal(
-    det(ok, not, 0, `<sup>`, {
+    det(ok, not, 0, "<sup>", {
       stripHtmlButIgnoreTags: ["a"],
       stripHtml: true,
     }).res,
@@ -290,9 +290,9 @@ test(`26 - ad hoc - one tag`, () => {
   );
 });
 
-test(`27 - ad hoc - four tags`, () => {
+test("27 - ad hoc - four tags", () => {
   equal(
-    det(ok, not, 0, `<sup><a><b><c>`, {
+    det(ok, not, 0, "<sup><a><b><c>", {
       stripHtmlButIgnoreTags: ["a", "b", "c"],
       stripHtml: true,
     }).res,
@@ -301,9 +301,9 @@ test(`27 - ad hoc - four tags`, () => {
   );
 });
 
-test(`28 - ad hoc - four tags`, () => {
+test("28 - ad hoc - four tags", () => {
   equal(
-    det(ok, not, 0, `<sup><a><b><c>`, {
+    det(ok, not, 0, "<sup><a><b><c>", {
       stripHtmlButIgnoreTags: ["sup", "b", "c"],
       stripHtml: true,
     }).res,
@@ -312,9 +312,9 @@ test(`28 - ad hoc - four tags`, () => {
   );
 });
 
-test(`29 - ad hoc - four tags`, () => {
+test("29 - ad hoc - four tags", () => {
   equal(
-    det(ok, not, 0, `<sup><a><b><c>`, {
+    det(ok, not, 0, "<sup><a><b><c>", {
       stripHtmlButIgnoreTags: ["sup", "a", "c"],
       stripHtml: true,
     }).res,
@@ -323,9 +323,9 @@ test(`29 - ad hoc - four tags`, () => {
   );
 });
 
-test(`30 - ad hoc - four tags`, () => {
+test("30 - ad hoc - four tags", () => {
   equal(
-    det(ok, not, 0, `<sup><a><b><c>`, {
+    det(ok, not, 0, "<sup><a><b><c>", {
       stripHtmlButIgnoreTags: ["sup", "a", "b"],
       stripHtml: true,
     }).res,
@@ -334,12 +334,12 @@ test(`30 - ad hoc - four tags`, () => {
   );
 });
 
-test(`31 - br variations, not ignored`, () => {
+test("31 - br variations, not ignored", () => {
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: [],
@@ -348,7 +348,7 @@ test(`31 - br variations, not ignored`, () => {
       "31.01"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: [],
@@ -357,7 +357,7 @@ test(`31 - br variations, not ignored`, () => {
       "31.02"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: [],
@@ -366,7 +366,7 @@ test(`31 - br variations, not ignored`, () => {
       "31.03"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: [],
@@ -375,7 +375,7 @@ test(`31 - br variations, not ignored`, () => {
       "31.04"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: [],
@@ -386,13 +386,13 @@ test(`31 - br variations, not ignored`, () => {
   });
 });
 
-test(`32 - br variations, not ignored`, () => {
+test("32 - br variations, not ignored", () => {
   mixer({
     stripHtml: false,
     useXHTML: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: [],
@@ -401,7 +401,7 @@ test(`32 - br variations, not ignored`, () => {
       "32.01"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: [],
@@ -410,7 +410,7 @@ test(`32 - br variations, not ignored`, () => {
       "32.02"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: [],
@@ -419,7 +419,7 @@ test(`32 - br variations, not ignored`, () => {
       "32.03"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: [],
@@ -428,7 +428,7 @@ test(`32 - br variations, not ignored`, () => {
       "32.04"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: [],
@@ -439,13 +439,13 @@ test(`32 - br variations, not ignored`, () => {
   });
 });
 
-test(`33 - br variations, not ignored`, () => {
+test("33 - br variations, not ignored", () => {
   mixer({
     stripHtml: false,
     useXHTML: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: [],
@@ -454,7 +454,7 @@ test(`33 - br variations, not ignored`, () => {
       "33.01"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: [],
@@ -463,7 +463,7 @@ test(`33 - br variations, not ignored`, () => {
       "33.02"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: [],
@@ -472,7 +472,7 @@ test(`33 - br variations, not ignored`, () => {
       "33.03"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: [],
@@ -481,7 +481,7 @@ test(`33 - br variations, not ignored`, () => {
       "33.04"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: [],
@@ -492,14 +492,14 @@ test(`33 - br variations, not ignored`, () => {
   });
 });
 
-test(`34 - br variations, ignored`, () => {
+test("34 - br variations, ignored", () => {
   // useXHTML=false
   mixer({
     stripHtml: true,
     useXHTML: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -508,52 +508,52 @@ test(`34 - br variations, ignored`, () => {
       "34.01"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
       }).res,
-      `abc<br>def`,
+      "abc<br>def",
       "34.02"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
       }).res,
-      `abc<br>def`,
+      "abc<br>def",
       "34.03"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
       }).res,
-      `abc<br>def`,
+      "abc<br>def",
       "34.04"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
       }).res,
-      `abc<br>def`,
+      "abc<br>def",
       "34.05"
     );
   });
 });
 
-test(`35 - br variations, ignored`, () => {
+test("35 - br variations, ignored", () => {
   mixer({
     stripHtml: true,
     useXHTML: true,
   }).forEach((opt, n) => {
     // useXHTML=true
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -562,7 +562,7 @@ test(`35 - br variations, ignored`, () => {
       "35.01"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -571,7 +571,7 @@ test(`35 - br variations, ignored`, () => {
       "35.02"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -580,7 +580,7 @@ test(`35 - br variations, ignored`, () => {
       "35.03"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -589,7 +589,7 @@ test(`35 - br variations, ignored`, () => {
       "35.04"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -600,13 +600,13 @@ test(`35 - br variations, ignored`, () => {
   });
 });
 
-test(`36 - br variations, ignored`, () => {
+test("36 - br variations, ignored", () => {
   mixer({
     stripHtml: false,
     useXHTML: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -615,7 +615,7 @@ test(`36 - br variations, ignored`, () => {
       "36.01"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -624,7 +624,7 @@ test(`36 - br variations, ignored`, () => {
       "36.02"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -633,7 +633,7 @@ test(`36 - br variations, ignored`, () => {
       "36.03"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -642,7 +642,7 @@ test(`36 - br variations, ignored`, () => {
       "36.04"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -653,13 +653,13 @@ test(`36 - br variations, ignored`, () => {
   });
 });
 
-test(`37 - br variations, ignored`, () => {
+test("37 - br variations, ignored", () => {
   mixer({
     stripHtml: false,
     useXHTML: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -668,7 +668,7 @@ test(`37 - br variations, ignored`, () => {
       "37.01"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -677,7 +677,7 @@ test(`37 - br variations, ignored`, () => {
       "37.02"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -686,7 +686,7 @@ test(`37 - br variations, ignored`, () => {
       "37.03"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -695,7 +695,7 @@ test(`37 - br variations, ignored`, () => {
       "37.04"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: [],
@@ -706,14 +706,14 @@ test(`37 - br variations, ignored`, () => {
   });
 });
 
-test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
+test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
   mixer({
     stripHtml: true,
     removeLineBreaks: false,
     replaceLineBreaks: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br"],
@@ -722,7 +722,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
       "38.01"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br"],
@@ -731,7 +731,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
       "38.02"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br"],
@@ -740,7 +740,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
       "38.03"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br"],
@@ -749,7 +749,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
       "38.04"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br"],
@@ -764,7 +764,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
     useXHTML: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br"],
@@ -773,7 +773,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
       "38.06"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br"],
@@ -782,7 +782,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
       "38.07"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br"],
@@ -791,7 +791,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
       "38.08"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br"],
@@ -800,7 +800,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
       "38.09"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br"],
@@ -814,7 +814,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
     useXHTML: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br"],
@@ -823,7 +823,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
       "38.11"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br"],
@@ -832,7 +832,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
       "38.12"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br"],
@@ -841,7 +841,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
       "38.13"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br"],
@@ -850,7 +850,7 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
       "38.14"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br"],
@@ -861,13 +861,13 @@ test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, () => {
   });
 });
 
-test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
+test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
   mixer({
     stripHtml: true,
     useXHTML: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -876,7 +876,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.01"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -885,7 +885,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.02"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -894,7 +894,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.03"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -903,7 +903,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.04"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -917,7 +917,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
     useXHTML: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -926,7 +926,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.06"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -935,7 +935,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.07"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -944,7 +944,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.08"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -953,7 +953,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.09"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -968,7 +968,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
     useXHTML: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -977,7 +977,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.11"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -986,7 +986,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.12"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -995,7 +995,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.13"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -1004,7 +1004,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.14"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -1018,7 +1018,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
     useXHTML: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -1027,7 +1027,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.16"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -1036,7 +1036,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.17"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -1045,7 +1045,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.18"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -1054,7 +1054,7 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
       "39.19"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br"],
@@ -1065,14 +1065,14 @@ test(`39 - br variations, ignored - stripHtmlAddNewLine br`, () => {
   });
 });
 
-test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
+test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
   mixer({
     stripHtml: true,
     removeLineBreaks: false,
     replaceLineBreaks: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br/"],
@@ -1081,7 +1081,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
       "40.01"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br/"],
@@ -1090,7 +1090,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
       "40.02"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br/"],
@@ -1099,7 +1099,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
       "40.03"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br/"],
@@ -1108,7 +1108,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
       "40.04"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br/"],
@@ -1123,7 +1123,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
     useXHTML: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br/"],
@@ -1132,7 +1132,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
       "40.06"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br/"],
@@ -1141,7 +1141,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
       "40.07"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br/"],
@@ -1150,7 +1150,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
       "40.08"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br/"],
@@ -1159,7 +1159,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
       "40.09"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br/"],
@@ -1173,7 +1173,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
     useXHTML: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br/"],
@@ -1182,7 +1182,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
       "40.11"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br/"],
@@ -1191,7 +1191,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
       "40.12"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br/"],
@@ -1200,7 +1200,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
       "40.13"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br/"],
@@ -1209,7 +1209,7 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
       "40.14"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: [],
         stripHtmlAddNewLine: ["br/"],
@@ -1220,13 +1220,13 @@ test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, () => {
   });
 });
 
-test(`41 - strip but ignore`, () => {
+test("41 - strip but ignore", () => {
   mixer({
     stripHtml: true,
     useXHTML: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1235,7 +1235,7 @@ test(`41 - strip but ignore`, () => {
       "41.01"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1244,7 +1244,7 @@ test(`41 - strip but ignore`, () => {
       "41.02"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1253,7 +1253,7 @@ test(`41 - strip but ignore`, () => {
       "41.03"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1262,7 +1262,7 @@ test(`41 - strip but ignore`, () => {
       "41.04"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1277,7 +1277,7 @@ test(`41 - strip but ignore`, () => {
     useXHTML: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1286,7 +1286,7 @@ test(`41 - strip but ignore`, () => {
       "41.06"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1295,7 +1295,7 @@ test(`41 - strip but ignore`, () => {
       "41.07"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1304,7 +1304,7 @@ test(`41 - strip but ignore`, () => {
       "41.08"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1313,7 +1313,7 @@ test(`41 - strip but ignore`, () => {
       "41.09"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1328,7 +1328,7 @@ test(`41 - strip but ignore`, () => {
     useXHTML: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1337,7 +1337,7 @@ test(`41 - strip but ignore`, () => {
       "41.11"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1346,7 +1346,7 @@ test(`41 - strip but ignore`, () => {
       "41.12"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1355,7 +1355,7 @@ test(`41 - strip but ignore`, () => {
       "41.13"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1364,7 +1364,7 @@ test(`41 - strip but ignore`, () => {
       "41.14"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1379,7 +1379,7 @@ test(`41 - strip but ignore`, () => {
     useXHTML: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, {
+      det(ok, not, n, "abc<br/>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1388,7 +1388,7 @@ test(`41 - strip but ignore`, () => {
       "41.16"
     );
     equal(
-      det(ok, not, n, `abc<br />def`, {
+      det(ok, not, n, "abc<br />def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1397,7 +1397,7 @@ test(`41 - strip but ignore`, () => {
       "41.17"
     );
     equal(
-      det(ok, not, n, `abc<br/ >def`, {
+      det(ok, not, n, "abc<br/ >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1406,7 +1406,7 @@ test(`41 - strip but ignore`, () => {
       "41.18"
     );
     equal(
-      det(ok, not, n, `abc<br / >def`, {
+      det(ok, not, n, "abc<br / >def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],
@@ -1415,7 +1415,7 @@ test(`41 - strip but ignore`, () => {
       "41.19"
     );
     equal(
-      det(ok, not, n, `abc<br>def`, {
+      det(ok, not, n, "abc<br>def", {
         ...opt,
         stripHtmlButIgnoreTags: ["br"],
         stripHtmlAddNewLine: ["br/"],

@@ -20,7 +20,7 @@ const eolTypes = ["LF`, `CR`, `CRLF"];
 // line endings
 // -----------------------------------------------------------------------------
 
-test(`01 - \u001b[${34}m${`line endings`}\u001b[${39}m - does not mangle string with consistent line endings`, () => {
+test(`01 - \u001b[${34}m${"line endings"}\u001b[${39}m - does not mangle string with consistent line endings`, () => {
   ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
     languages.forEach((targetLanguage, i) => {
       equal(

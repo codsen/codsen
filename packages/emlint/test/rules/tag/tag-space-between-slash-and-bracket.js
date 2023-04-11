@@ -11,7 +11,7 @@ const BACKSLASH = "\u005C";
 // 1. no opts
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one space`, () => {
+test(`01 - ${`\u001b[${33}m${"no opts"}\u001b[${39}m`} - one space`, () => {
   let str = "<br/ >";
   let messages = verify(not, str, {
     rules: {
@@ -40,7 +40,7 @@ test(`01 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one space`, () => {
   equal(applyFixes(str, messages), "<br/>", "01.01");
 });
 
-test(`02 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one space`, () => {
+test(`02 - ${`\u001b[${33}m${"no opts"}\u001b[${39}m`} - one space`, () => {
   let str = "<br/ >";
   let messages = verify(not, str, {
     rules: {
@@ -69,7 +69,7 @@ test(`02 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one space`, () => {
   equal(applyFixes(str, messages), "<br/>", "02.01");
 });
 
-test(`03 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one tab`, () => {
+test(`03 - ${`\u001b[${33}m${"no opts"}\u001b[${39}m`} - one tab`, () => {
   let str = "<br/\t>";
   let messages = verify(not, str, {
     rules: {
@@ -98,7 +98,7 @@ test(`03 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one tab`, () => {
   equal(applyFixes(str, messages), "<br/>", "03.01");
 });
 
-test(`04 - backslash`, () => {
+test("04 - backslash", () => {
   let str = `<br\t\t${BACKSLASH}\t\t>`;
   let fixed = `<br\t\t${BACKSLASH}>`;
   let messages = verify(not, str, {

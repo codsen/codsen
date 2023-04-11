@@ -20,9 +20,9 @@ import {
 // opts.minWordCount
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordCount = zero`, () => {
+test(`01 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - opts.minWordCount = zero`, () => {
   equal(
-    removeWidows(`aaa bbb`, {
+    removeWidows("aaa bbb", {
       minWordCount: 0,
       minCharCount: 5,
     }).res,
@@ -31,10 +31,10 @@ test(`01 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordC
   );
 });
 
-test(`02 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordCount = falsey`, () => {
+test(`02 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - opts.minWordCount = falsey`, () => {
   equal(
-    removeWidows(`aaa bbb`, {
-      targetLanguage: `css`,
+    removeWidows("aaa bbb", {
+      targetLanguage: "css",
       minWordCount: null,
       minCharCount: 5,
     }).res,
@@ -43,10 +43,10 @@ test(`02 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordC
   );
 });
 
-test(`03 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordCount = falsey`, () => {
+test(`03 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - opts.minWordCount = falsey`, () => {
   equal(
-    removeWidows(`aaa bbb`, {
-      targetLanguage: `css`,
+    removeWidows("aaa bbb", {
+      targetLanguage: "css",
       minWordCount: false,
       minCharCount: 5,
     }).res,
@@ -55,9 +55,9 @@ test(`03 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - opts.minWordC
   );
 });
 
-test(`04 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is less than words in the input`, () => {
+test(`04 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - setting is less than words in the input`, () => {
   equal(
-    removeWidows(`aaa bbb ccc ddd`, {
+    removeWidows("aaa bbb ccc ddd", {
       minWordCount: 2,
       minCharCount: 5,
     }).res,
@@ -66,9 +66,9 @@ test(`04 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is le
   );
 });
 
-test(`05 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is equal to words count in the input`, () => {
+test(`05 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - setting is equal to words count in the input`, () => {
   equal(
-    removeWidows(`aaa bbb ccc ddd`, {
+    removeWidows("aaa bbb ccc ddd", {
       minWordCount: 4,
       minCharCount: 5,
     }).res,
@@ -77,13 +77,13 @@ test(`05 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is eq
   );
 });
 
-test(`06 - ${`\u001b[${32}m${`opts.minWordCount`}\u001b[${39}m`} - setting is more than words in the input`, () => {
+test(`06 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - setting is more than words in the input`, () => {
   equal(
-    removeWidows(`aaa bbb ccc ddd`, {
+    removeWidows("aaa bbb ccc ddd", {
       minWordCount: 999,
       minCharCount: 5,
     }).res,
-    `aaa bbb ccc ddd`,
+    "aaa bbb ccc ddd",
     "06.01"
   );
 });

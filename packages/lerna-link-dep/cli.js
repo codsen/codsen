@@ -105,9 +105,9 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     check = fs.statSync(path.resolve("../", cli.input[i]));
   } catch (e) {
     console.log(
-      `${messagePrefix} ${`\u001b[${31}m${`[ERROR_01] Error! A package with name "`}\u001b[${39}m`}${`\u001b[${33}m${
+      `${messagePrefix} ${`\u001b[${31}m${'[ERROR_01] Error! A package with name "'}\u001b[${39}m`}${`\u001b[${33}m${
         cli.input[i]
-      }\u001b[${39}m`}${`\u001b[${31}m${`" not found!`}\u001b[${39}m`}`
+      }\u001b[${39}m`}${`\u001b[${31}m${'" not found!'}\u001b[${39}m`}`
     );
     continue;
   }
@@ -119,7 +119,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
       fs.statSync(path.resolve("package.json"));
     } catch (e) {
       console.log(
-        `${messagePrefix} ${`\u001b[${31}m${`[ERROR_02] Error! A package.json doesn't exist at:\n`}\u001b[${39}m`}${`\u001b[${33}m${path.resolve(
+        `${messagePrefix} ${`\u001b[${31}m${"[ERROR_02] Error! A package.json doesn't exist at:\n"}\u001b[${39}m`}${`\u001b[${33}m${path.resolve(
           path.resolve(),
           "../",
           cli.input[i],
@@ -135,7 +135,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
       fs.statSync(path.resolve("../", cli.input[i], "package.json"));
     } catch (e) {
       console.log(
-        `${messagePrefix} ${`\u001b[${31}m${`[ERROR_03] Error! A package.json doesn't exist at:\n`}\u001b[${39}m`}${`\u001b[${33}m${path.resolve(
+        `${messagePrefix} ${`\u001b[${31}m${"[ERROR_03] Error! A package.json doesn't exist at:\n"}\u001b[${39}m`}${`\u001b[${33}m${path.resolve(
           path.resolve(),
           "../",
           cli.input[i],
@@ -164,9 +164,9 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
       );
     } catch (e1) {
       console.log(
-        `${messagePrefix} ${`\u001b[${31}m${`[ERROR_04] Something went wrong trying to read package.json at path:`}\u001b[${39}m`}\n${path.resolve(
+        `${messagePrefix} ${`\u001b[${31}m${"[ERROR_04] Something went wrong trying to read package.json at path:"}\u001b[${39}m`}\n${path.resolve(
           "package.json"
-        )}\n\n${`\u001b[${31}m${`error:`}\u001b[${39}m`}\n${e1}`
+        )}\n\n${`\u001b[${31}m${"error:"}\u001b[${39}m`}\n${e1}`
       );
       continue;
     }
@@ -193,7 +193,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
         try {
           if (fs.statSync(path.resolve("./", "node_modules", cli.input[i]))) {
             console.log(
-              `${messagePrefix} ${`\u001b[${33}m${`[ERROR_05] Skipped! A symlink already exists:`}\u001b[${39}m`}\n${`\u001b[${90}m${path.resolve(
+              `${messagePrefix} ${`\u001b[${33}m${"[ERROR_05] Skipped! A symlink already exists:"}\u001b[${39}m`}\n${`\u001b[${90}m${path.resolve(
                 "./",
                 "node_modules",
                 cli.input[i]
@@ -217,12 +217,12 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
       }
     } catch (e1) {
       console.log(
-        `${messagePrefix} ${`\u001b[${31}m${`[ERROR_06] Something went wrong trying to read package.json at path:`}\u001b[${39}m`}\n${path.resolve(
+        `${messagePrefix} ${`\u001b[${31}m${"[ERROR_06] Something went wrong trying to read package.json at path:"}\u001b[${39}m`}\n${path.resolve(
           path.resolve(),
           "../",
           cli.input[i],
           "package.json"
-        )}\n\n${`\u001b[${31}m${`error:`}\u001b[${39}m`}\n${e1}`
+        )}\n\n${`\u001b[${31}m${"error:"}\u001b[${39}m`}\n${e1}`
       );
       continue;
     }
@@ -244,9 +244,9 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
         );
 
         console.log(
-          `${messagePrefix} ${`\u001b[${32}m${`Success! Package`}\u001b[${39}m`} ${`\u001b[${33}m${
+          `${messagePrefix} ${`\u001b[${32}m${"Success! Package"}\u001b[${39}m`} ${`\u001b[${33}m${
             cli.input[i]
-          }\u001b[${39}m`} ${`\u001b[${32}m${`linked!`}\u001b[${39}m`}\n${`\u001b[${90}mNew symlink created at: ${path.resolve(
+          }\u001b[${39}m`} ${`\u001b[${32}m${"linked!"}\u001b[${39}m`}\n${`\u001b[${90}mNew symlink created at: ${path.resolve(
             "./",
             "node_modules",
             cli.input[i]
@@ -254,7 +254,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
         );
       } catch (err) {
         console.log(
-          `${messagePrefix} ${`\u001b[${31}m${`[ERROR_07] Execa failed when running shell command to create a symlink:`}\u001b[${39}m`}\n${err}`
+          `${messagePrefix} ${`\u001b[${31}m${"[ERROR_07] Execa failed when running shell command to create a symlink:"}\u001b[${39}m`}\n${err}`
         );
         continue;
       }
@@ -307,9 +307,9 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           );
 
           console.log(
-            `${messagePrefix} ${`\u001b[${32}m${`Success! Package's`}\u001b[${39}m`} ${`\u001b[${33}m${
+            `${messagePrefix} ${`\u001b[${32}m${"Success! Package's"}\u001b[${39}m`} ${`\u001b[${33}m${
               cli.input[i]
-            }\u001b[${39}m`} ${`\u001b[${32}m${`bin entry`}\u001b[${39}m`} ${`\u001b[${33}m"${binName}"\u001b[${39}m`} ${`\u001b[${32}m${`was linked!`}\u001b[${39}m`}\n${`\u001b[${90}mNew symlink created at: ${path.resolve(
+            }\u001b[${39}m`} ${`\u001b[${32}m${"bin entry"}\u001b[${39}m`} ${`\u001b[${33}m"${binName}"\u001b[${39}m`} ${`\u001b[${32}m${"was linked!"}\u001b[${39}m`}\n${`\u001b[${90}mNew symlink created at: ${path.resolve(
               "./",
               "node_modules",
               ".bin",
@@ -318,7 +318,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           );
         } catch (e2) {
           console.log(
-            `${messagePrefix} ${`\u001b[${31}m${`[ERROR_09] Execa failed when running shell command to create a symlink:`}\u001b[${39}m`}\n${e2}`
+            `${messagePrefix} ${`\u001b[${31}m${"[ERROR_09] Execa failed when running shell command to create a symlink:"}\u001b[${39}m`}\n${e2}`
           );
         }
       }
@@ -374,18 +374,18 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
         }
       } catch (e1) {
         console.log(
-          `${messagePrefix} ${`\u001b[${31}m${`[ERROR_11] Something went wrong trying to write package.json at path:`}\u001b[${39}m`}\n${path.resolve(
+          `${messagePrefix} ${`\u001b[${31}m${"[ERROR_11] Something went wrong trying to write package.json at path:"}\u001b[${39}m`}\n${path.resolve(
             "package.json"
-          )}\n\n${`\u001b[${31}m${`error:`}\u001b[${39}m`}\n${e1}`
+          )}\n\n${`\u001b[${31}m${"error:"}\u001b[${39}m`}\n${e1}`
         );
         continue;
       }
     }
   } else {
     console.log(
-      `${messagePrefix} ${`\u001b[${31}m${`[ERROR_12] Error! A package with name "`}\u001b[${39}m`}${`\u001b[${33}m${
+      `${messagePrefix} ${`\u001b[${31}m${'[ERROR_12] Error! A package with name "'}\u001b[${39}m`}${`\u001b[${33}m${
         cli.input[i]
-      }\u001b[${39}m`}${`\u001b[${31}m${`" not found!`}\u001b[${39}m`}`
+      }\u001b[${39}m`}${`\u001b[${31}m${'" not found!'}\u001b[${39}m`}`
     );
     continue;
   }

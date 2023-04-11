@@ -7,7 +7,7 @@ import { tokenizer } from "../dist/codsen-tokenizer.esm.js";
 const gathered = [];
 
 // it operates from a callback, like Array.prototype.forEach()
-tokenizer(`<td nowrap>`, {
+tokenizer("<td nowrap>", {
   tagCb: (obj) => {
     gathered.push(obj);
   },

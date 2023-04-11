@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no char, error level 0`, () => {
-  let str = `<td>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no char, error level 0`, () => {
+  let str = "<td>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no char, error level
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no char, error level 1`, () => {
-  let str = `<td>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no char, error level 1`, () => {
+  let str = "<td>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no char, error level
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no char, error level 2`, () => {
-  let str = `<td>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no char, error level 2`, () => {
+  let str = "<td>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no char, error level
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
-  let str = `<td align="char" char="." charoff="2">`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = '<td align="char" char="." charoff="2">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -58,8 +58,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
-  let str = `<td align="char" char="," charoff="-2">`;
+test(`05 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = '<td align="char" char="," charoff="-2">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -70,8 +70,8 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
   equal(messages, [], "05.02");
 });
 
-test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
-  let str = `<td align="char" char="," charoff="-99">`;
+test(`06 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = '<td align="char" char="," charoff="-99">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -82,8 +82,8 @@ test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
   equal(messages, [], "06.02");
 });
 
-test(`07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
-  let str = `<td align="char" char="," charoff="99">`;
+test(`07 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = '<td align="char" char="," charoff="99">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -97,8 +97,8 @@ test(`07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div char="." charoff="2">`;
+test(`08 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div char="." charoff="2">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -117,8 +117,8 @@ test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz char="." charoff="2" yyy>`;
+test(`09 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz char="." charoff="2" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -140,8 +140,8 @@ test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`10 - ${`\u001b[${35}m${`a wrong value`}\u001b[${39}m`} - not integer but str`, () => {
-  let str = `z <td char="." charoff="abc" yyy>`;
+test(`10 - ${`\u001b[${35}m${"a wrong value"}\u001b[${39}m`} - not integer but str`, () => {
+  let str = 'z <td char="." charoff="abc" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -155,27 +155,27 @@ test(`10 - ${`\u001b[${35}m${`a wrong value`}\u001b[${39}m`} - not integer but s
       ruleId: "attribute-validate-charoff",
       idxFrom: 24,
       idxTo: 27,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`11 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, encoded`, () => {
-  let str = `z <td char="." charoff=" &#x3A;">`;
+test(`11 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, encoded`, () => {
+  let str = 'z <td char="." charoff=" &#x3A;">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-charoff": 2,
     },
   });
-  equal(applyFixes(str, messages), `z <td char="." charoff="&#x3A;">`, "11.01");
+  equal(applyFixes(str, messages), 'z <td char="." charoff="&#x3A;">', "11.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-charoff",
       idxFrom: 24,
       idxTo: 25,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[24, 25]],
       },
@@ -183,8 +183,8 @@ test(`11 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, e
   ]);
 });
 
-test(`12 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - an empty value`, () => {
-  let str = `z <td char="." charoff="">`;
+test(`12 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - an empty value`, () => {
+  let str = 'z <td char="." charoff="">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -198,14 +198,14 @@ test(`12 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - an empty value`, () 
       ruleId: "attribute-validate-charoff",
       idxFrom: 15,
       idxTo: 25,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
 });
 
-test(`13 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - a rational number`, () => {
-  let str = `z <td char="." charoff="2.1">`;
+test(`13 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - a rational number`, () => {
+  let str = 'z <td char="." charoff="2.1">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -219,14 +219,14 @@ test(`13 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - a rational number`, 
       ruleId: "attribute-validate-charoff",
       idxFrom: 25,
       idxTo: 27,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`14 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - dot`, () => {
-  let str = `z <td char="." charoff=".">`;
+test(`14 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - dot`, () => {
+  let str = 'z <td char="." charoff=".">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -240,14 +240,14 @@ test(`14 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - dot`, () => {
       ruleId: "attribute-validate-charoff",
       idxFrom: 24,
       idxTo: 25,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`15 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - double minus`, () => {
-  let str = `<td align="char" char="," charoff="--2">`;
+test(`15 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - double minus`, () => {
+  let str = '<td align="char" char="," charoff="--2">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -260,7 +260,7 @@ test(`15 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - double minus`, () =>
       ruleId: "attribute-validate-charoff",
       idxFrom: 36,
       idxTo: 38,
-      message: `Repeated minus.`,
+      message: "Repeated minus.",
       fix: null,
     },
   ]);
@@ -269,8 +269,8 @@ test(`15 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - double minus`, () =>
 // 04. parent tag must have "char" attribute
 // -----------------------------------------------------------------------------
 
-test(`16 - ${`\u001b[${34}m${`char on parent`}\u001b[${39}m`} - sibling attr char is missing`, () => {
-  let str = `<td align="char" charoff="2">`;
+test(`16 - ${`\u001b[${34}m${"char on parent"}\u001b[${39}m`} - sibling attr char is missing`, () => {
+  let str = '<td align="char" charoff="2">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -283,7 +283,7 @@ test(`16 - ${`\u001b[${34}m${`char on parent`}\u001b[${39}m`} - sibling attr cha
       ruleId: "attribute-validate-charoff",
       idxFrom: 0,
       idxTo: 29,
-      message: `Attribute "char" missing.`,
+      message: 'Attribute "char" missing.',
       fix: null,
     },
   ]);

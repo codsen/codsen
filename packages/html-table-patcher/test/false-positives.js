@@ -7,7 +7,7 @@ import { processThis, tiny } from "./util.js";
 // false positives
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - tight comments`, () => {
+test(`01 - ${`\u001b[${36}m${"false positives"}\u001b[${39}m`}${`\u001b[${33}m${" - comments"}\u001b[${39}m`} - tight comments`, () => {
   let str = `<!--zzz--><table><!--zzz-->
   <tr><!--zzz-->
     <td><!--zzz-->
@@ -21,7 +21,7 @@ test(`01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${
   equal(processThis(str), tiny(str), "01.01");
 });
 
-test(`02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - comments include line breaks`, () => {
+test(`02 - ${`\u001b[${36}m${"false positives"}\u001b[${39}m`}${`\u001b[${33}m${" - comments"}\u001b[${39}m`} - comments include line breaks`, () => {
   let str = `<!--zzz\nyyy--><table><!--zzz\nyyy-->
   <tr><!--zzz\nyyy-->
     <td><!--zzz\nyyy-->
@@ -35,7 +35,7 @@ test(`02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${
   equal(processThis(str), tiny(str), "02.01");
 });
 
-test(`03 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - comments include line breaks`, () => {
+test(`03 - ${`\u001b[${36}m${"false positives"}\u001b[${39}m`}${`\u001b[${33}m${" - comments"}\u001b[${39}m`} - comments include line breaks`, () => {
   let str = `<!--111
 222--><table><!--333
 444-->

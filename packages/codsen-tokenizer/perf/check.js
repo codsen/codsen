@@ -10,7 +10,7 @@ const callerDir = path.resolve(".");
 
 const testme = () => {
   let gathered = [];
-  tokenizer(`<a>"something"<span>'here'</span></a>`, {
+  tokenizer("<a>\"something\"<span>'here'</span></a>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },

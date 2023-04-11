@@ -85,13 +85,13 @@ readdirSync(fixturesPath)
 // -----------------------------------------------------------------------------
 
 [
-  `const z = "something"`,
-  `const z = \`something\n01\``,
-  `const z = "99 aaaaa"`,
-  `const z = "something 01"`,
-  `const z = "01 something 01"`,
-  `const z = \`01 something 01\n\``,
-  `const z = "\t01 something 01"`,
+  'const z = "something"',
+  "const z = `something\n01`",
+  'const z = "99 aaaaa"',
+  'const z = "something 01"',
+  'const z = "01 something 01"',
+  "const z = `01 something 01\n`",
+  'const z = "\t01 something 01"',
 ].forEach((testStr, i) => {
   test(`02 - ${String(i + 1).padStart(2, "0")} - false positives`, () => {
     equal(

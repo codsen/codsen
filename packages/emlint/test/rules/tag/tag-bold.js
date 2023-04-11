@@ -9,7 +9,7 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. no config
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, () => {
+test(`01 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - off`, () => {
   let str = "<bold>z</bold>";
   let messages = verify(not, str, {
     rules: {
@@ -20,7 +20,7 @@ test(`01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, () => {
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, () => {
+test(`02 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - warn`, () => {
   let str = "<bold>z</bold>";
   let messages = verify(not, str, {
     rules: {
@@ -37,7 +37,7 @@ test(`02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, () => {
         severity: 1,
         idxFrom: 0,
         idxTo: 6,
-        message: `Tag "bold" does not exist in HTML.`,
+        message: 'Tag "bold" does not exist in HTML.',
         fix: {
           ranges: [[1, 5, "strong"]],
         },
@@ -47,7 +47,7 @@ test(`02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, () => {
         severity: 1,
         idxFrom: 7,
         idxTo: 14,
-        message: `Tag "bold" does not exist in HTML.`,
+        message: 'Tag "bold" does not exist in HTML.',
         fix: {
           ranges: [[9, 13, "strong"]],
         },
@@ -57,7 +57,7 @@ test(`02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, () => {
   );
 });
 
-test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, () => {
+test(`03 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - err`, () => {
   let str = "<bold>z</bold>";
   let messages = verify(not, str, {
     rules: {
@@ -74,7 +74,7 @@ test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, () => {
         severity: 2,
         idxFrom: 0,
         idxTo: 6,
-        message: `Tag "bold" does not exist in HTML.`,
+        message: 'Tag "bold" does not exist in HTML.',
         fix: {
           ranges: [[1, 5, "strong"]],
         },
@@ -84,7 +84,7 @@ test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, () => {
         severity: 2,
         idxFrom: 7,
         idxTo: 14,
-        message: `Tag "bold" does not exist in HTML.`,
+        message: 'Tag "bold" does not exist in HTML.',
         fix: {
           ranges: [[9, 13, "strong"]],
         },
@@ -97,7 +97,7 @@ test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, () => {
 // 02. config
 // -----------------------------------------------------------------------------
 
-test(`04 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - config is arr`, () => {
+test(`04 - ${`\u001b[${32}m${"config"}\u001b[${39}m`} - config is arr`, () => {
   let str = "<bold>z</bold>";
   let messages = verify(not, str, {
     rules: {
@@ -114,7 +114,7 @@ test(`04 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - config is arr`, () => {
         severity: 2,
         idxFrom: 0,
         idxTo: 6,
-        message: `Tag "bold" does not exist in HTML.`,
+        message: 'Tag "bold" does not exist in HTML.',
         fix: {
           ranges: [[1, 5, "strong"]],
         },
@@ -124,7 +124,7 @@ test(`04 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - config is arr`, () => {
         severity: 2,
         idxFrom: 7,
         idxTo: 14,
-        message: `Tag "bold" does not exist in HTML.`,
+        message: 'Tag "bold" does not exist in HTML.',
         fix: {
           ranges: [[9, 13, "strong"]],
         },
@@ -134,7 +134,7 @@ test(`04 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - config is arr`, () => {
   );
 });
 
-test(`05 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - strong is suggested`, () => {
+test(`05 - ${`\u001b[${32}m${"config"}\u001b[${39}m`} - strong is suggested`, () => {
   let str = "<bold>z</bold>";
   let messages = verify(not, str, {
     rules: {
@@ -151,7 +151,7 @@ test(`05 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - strong is suggested`, ()
         severity: 2,
         idxFrom: 0,
         idxTo: 6,
-        message: `Tag "bold" does not exist in HTML.`,
+        message: 'Tag "bold" does not exist in HTML.',
         fix: {
           ranges: [[1, 5, "strong"]],
         },
@@ -161,7 +161,7 @@ test(`05 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - strong is suggested`, ()
         severity: 2,
         idxFrom: 7,
         idxTo: 14,
-        message: `Tag "bold" does not exist in HTML.`,
+        message: 'Tag "bold" does not exist in HTML.',
         fix: {
           ranges: [[9, 13, "strong"]],
         },
@@ -171,7 +171,7 @@ test(`05 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - strong is suggested`, ()
   );
 });
 
-test(`06 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - b is suggested`, () => {
+test(`06 - ${`\u001b[${32}m${"config"}\u001b[${39}m`} - b is suggested`, () => {
   let str = "<bold>z</bold>";
   let messages = verify(not, str, {
     rules: {
@@ -188,7 +188,7 @@ test(`06 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - b is suggested`, () => {
         severity: 2,
         idxFrom: 0,
         idxTo: 6,
-        message: `Tag "bold" does not exist in HTML.`,
+        message: 'Tag "bold" does not exist in HTML.',
         fix: {
           ranges: [[1, 5, "b"]],
         },
@@ -198,7 +198,7 @@ test(`06 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - b is suggested`, () => {
         severity: 2,
         idxFrom: 7,
         idxTo: 14,
-        message: `Tag "bold" does not exist in HTML.`,
+        message: 'Tag "bold" does not exist in HTML.',
         fix: {
           ranges: [[9, 13, "b"]],
         },

@@ -11,7 +11,7 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // and so on, until we run in (str.length) runs we cover
 // the whole input source.
 
-test(`no throwing on partial inputs, anywhere`, () => {
+test("no throwing on partial inputs, anywhere", () => {
   let str = `<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -67,10 +67,10 @@ test(`no throwing on partial inputs, anywhere`, () => {
   }
 });
 
-test(`02 isolated`, () => {
+test("02 isolated", () => {
   not.throws(
     () =>
-      ct(`<body id="l" style="`, {
+      ct('<body id="l" style="', {
         tagCb: () => {},
       }),
     "02.01"

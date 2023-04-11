@@ -4,12 +4,12 @@ import * as assert from "uvu/assert";
 import { stri as stri2 } from "../dist/stristri.esm.js";
 import { stri, mixer } from "./util/util.js";
 
-test(`01 - testing api directly`, () => {
+test("01 - testing api directly", () => {
   assert.equal(stri2("<script>console.log</script>").result, "", "01.01");
 });
 
-test(`02`, () => {
-  let source = `<script>{{</script>`;
+test("02", () => {
+  let source = "<script>{{</script>";
   assert.equal(
     stri2(source, {
       html: false,
@@ -20,15 +20,15 @@ test(`02`, () => {
   );
 });
 
-test(`03`, () => {
-  let source = `<script>{{</script>`;
+test("03", () => {
+  let source = "<script>{{</script>";
   mixer({
     html: true,
     js: true,
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      ``,
+      "",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -38,7 +38,7 @@ test(`03`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `<script></script>`,
+      "<script></script>",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -48,7 +48,7 @@ test(`03`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `{{`,
+      "{{",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -64,8 +64,9 @@ test(`03`, () => {
   });
 });
 
-test(`04`, () => {
-  let source = `<html>real text<script>!function(e){function z{}};return"></script></body></html>`;
+test("04", () => {
+  let source =
+    '<html>real text<script>!function(e){function z{}};return"></script></body></html>';
 
   // 2^3=8 combinations
 
@@ -76,7 +77,7 @@ test(`04`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      ``,
+      "",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -87,7 +88,7 @@ test(`04`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `!function(e){function z{}};return">`,
+      '!function(e){function z{}};return">',
       JSON.stringify(opt, null, 4)
     );
   });
@@ -98,7 +99,7 @@ test(`04`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `real text`,
+      "real text",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -109,7 +110,7 @@ test(`04`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `<html> <script></script></body></html>`,
+      "<html> <script></script></body></html>",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -120,7 +121,7 @@ test(`04`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `<html>real text<script></script></body></html>`,
+      "<html>real text<script></script></body></html>",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -131,7 +132,7 @@ test(`04`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `real text !function(e){function z{}};return">`,
+      'real text !function(e){function z{}};return">',
       JSON.stringify(opt, null, 4)
     );
   });
@@ -142,7 +143,7 @@ test(`04`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `<html> <script>!function(e){function z{}};return"></script></body></html>`,
+      '<html> <script>!function(e){function z{}};return"></script></body></html>',
       JSON.stringify(opt, null, 4)
     );
   });
@@ -159,8 +160,8 @@ test(`04`, () => {
   });
 });
 
-test(`05`, () => {
-  let source = `<html> <script>console.log("<html>")</script></html>`;
+test("05", () => {
+  let source = '<html> <script>console.log("<html>")</script></html>';
 
   // 2^2 = 4 variations
 
@@ -170,7 +171,7 @@ test(`05`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      ``,
+      "",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -180,7 +181,7 @@ test(`05`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `console.log("<html>")`,
+      'console.log("<html>")',
       JSON.stringify(opt, null, 4)
     );
   });
@@ -190,7 +191,7 @@ test(`05`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `<html> <script></script></html>`,
+      "<html> <script></script></html>",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -206,8 +207,8 @@ test(`05`, () => {
   });
 });
 
-test(`06 - minimal <script> tags`, () => {
-  let source = `abc<script>\nconst x = 0;\n</script>xyz`;
+test("06 - minimal <script> tags", () => {
+  let source = "abc<script>\nconst x = 0;\n</script>xyz";
   mixer({
     html: true,
     js: true,
@@ -215,13 +216,13 @@ test(`06 - minimal <script> tags`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `abc xyz`,
+      "abc xyz",
       JSON.stringify(opt, null, 4)
     );
   });
 });
 
-test(`07 - <script> tags`, () => {
+test("07 - <script> tags", () => {
   let source = `abc<script>
 const x = [
   'a',

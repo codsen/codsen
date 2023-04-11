@@ -7,7 +7,7 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
-test(`01 - no semi - no px`, () => {
+test("01 - no semi - no px", () => {
   let gathered = [];
   let input = '<div style="width: {{ w }}">';
   ct(input, {
@@ -80,7 +80,7 @@ test(`01 - no semi - no px`, () => {
   ]);
 });
 
-test(`02 - no semi - no px, with important`, () => {
+test("02 - no semi - no px, with important", () => {
   let gathered = [];
   let input = '<div style="width: {{ w }}!important">';
   ct(input, {
@@ -153,7 +153,7 @@ test(`02 - no semi - no px, with important`, () => {
   ]);
 });
 
-test(`03 - no semi - no px, with broken important`, () => {
+test("03 - no semi - no px, with broken important", () => {
   let gathered = [];
   let input = '<div style="width: {{ w }}important">';
   ct(input, {
@@ -226,7 +226,7 @@ test(`03 - no semi - no px, with broken important`, () => {
   ]);
 });
 
-test(`04 - with semi - no px`, () => {
+test("04 - with semi - no px", () => {
   let gathered = [];
   let input = '<div style="width: {{ w }};">';
   ct(input, {
@@ -299,7 +299,7 @@ test(`04 - with semi - no px`, () => {
   ]);
 });
 
-test(`05 - with semi - no px - important`, () => {
+test("05 - with semi - no px - important", () => {
   let gathered = [];
   let input = '<div style="width: {{ w }}!important;">';
   ct(input, {
@@ -372,7 +372,7 @@ test(`05 - with semi - no px - important`, () => {
   ]);
 });
 
-test(`06 - no semi - with px`, () => {
+test("06 - no semi - with px", () => {
   let gathered = [];
   let input = '<div style="width: {{ w }}px">';
   ct(input, {
@@ -451,7 +451,7 @@ test(`06 - no semi - with px`, () => {
   ]);
 });
 
-test(`07 - no semi - with px - important`, () => {
+test("07 - no semi - with px - important", () => {
   let gathered = [];
   let input = '<div style="width: {{ w }}px !important">';
   ct(input, {
@@ -530,7 +530,7 @@ test(`07 - no semi - with px - important`, () => {
   ]);
 });
 
-test(`08 - with semi - with px`, () => {
+test("08 - with semi - with px", () => {
   let gathered = [];
   let input = '<div style="width: {{ w }}px;">';
   ct(input, {
@@ -608,7 +608,7 @@ test(`08 - with semi - with px`, () => {
   ]);
 });
 
-test(`09 - with semi - with px - tight important`, () => {
+test("09 - with semi - with px - tight important", () => {
   let gathered = [];
   let input = '<div style="width: {{ w }}px!important;">';
   ct(input, {
@@ -686,7 +686,7 @@ test(`09 - with semi - with px - tight important`, () => {
   ]);
 });
 
-test(`10 - with semi - with px - spaced important`, () => {
+test("10 - with semi - with px - spaced important", () => {
   let gathered = [];
   let input = '<div style="width: {{ w }}px !important;">';
   ct(input, {
@@ -764,7 +764,7 @@ test(`10 - with semi - with px - spaced important`, () => {
   ]);
 });
 
-test(`11 - sneaky, first text then ESP - no semi`, () => {
+test("11 - sneaky, first text then ESP - no semi", () => {
   let gathered = [];
   let input = '<div style="width: 100{{ w }}">';
   ct(input, {
@@ -836,7 +836,7 @@ test(`11 - sneaky, first text then ESP - no semi`, () => {
   ]);
 });
 
-test(`12 - sneaky, first text then ESP - no semi - tight important`, () => {
+test("12 - sneaky, first text then ESP - no semi - tight important", () => {
   let gathered = [];
   let input = '<div style="width: 100{{ w }}!important">';
   ct(input, {
@@ -922,7 +922,7 @@ test(`12 - sneaky, first text then ESP - no semi - tight important`, () => {
   ]);
 });
 
-test(`13 - sneaky, first text then ESP - no semi - spaced important`, () => {
+test("13 - sneaky, first text then ESP - no semi - spaced important", () => {
   let gathered = [];
   let input = '<div style="width: 100{{ w }} !important">';
   ct(input, {
@@ -1014,7 +1014,7 @@ test(`13 - sneaky, first text then ESP - no semi - spaced important`, () => {
   ]);
 });
 
-test(`14 - sneaky, first text then ESP - with semi`, () => {
+test("14 - sneaky, first text then ESP - with semi", () => {
   let gathered = [];
   let input = '<div style="width: 100{{ w }};">';
   ct(input, {
@@ -1100,7 +1100,7 @@ test(`14 - sneaky, first text then ESP - with semi`, () => {
   ]);
 });
 
-test(`15 - sneaky, first text then ESP - with semi, important`, () => {
+test("15 - sneaky, first text then ESP - with semi, important", () => {
   let gathered = [];
   let input = '<div style="width: 100{{ w }}!important;">';
   ct(input, {
@@ -1186,7 +1186,7 @@ test(`15 - sneaky, first text then ESP - with semi, important`, () => {
   ]);
 });
 
-test(`16 - sandwiched, first text then ESP - no semi`, () => {
+test("16 - sandwiched, first text then ESP - no semi", () => {
   let gathered = [];
   let input = '<div style="width: 1{{ w }}0px">';
   ct(input, {
@@ -1272,7 +1272,7 @@ test(`16 - sandwiched, first text then ESP - no semi`, () => {
   ]);
 });
 
-test(`17 - sandwiched, first text then ESP - no semi, with important`, () => {
+test("17 - sandwiched, first text then ESP - no semi, with important", () => {
   let gathered = [];
   let input = '<div style="width: 1{{ w }}0px!important">';
   ct(input, {
@@ -1358,7 +1358,7 @@ test(`17 - sandwiched, first text then ESP - no semi, with important`, () => {
   ]);
 });
 
-test(`18 - sandwiched, first text then ESP - with semi`, () => {
+test("18 - sandwiched, first text then ESP - with semi", () => {
   let gathered = [];
   let input = '<div style="width: 1{{ w }}0px;">';
   ct(input, {
@@ -1444,7 +1444,7 @@ test(`18 - sandwiched, first text then ESP - with semi`, () => {
   ]);
 });
 
-test(`19 - sandwiched, first text then ESP - with semi, with tight important`, () => {
+test("19 - sandwiched, first text then ESP - with semi, with tight important", () => {
   let gathered = [];
   let input = '<div style="width: 1{{ w }}0px!important;">';
   ct(input, {
@@ -1530,7 +1530,7 @@ test(`19 - sandwiched, first text then ESP - with semi, with tight important`, (
   ]);
 });
 
-test(`20 - sandwiched, first text then ESP - with semi, with spaced important`, () => {
+test("20 - sandwiched, first text then ESP - with semi, with spaced important", () => {
   let gathered = [];
   let input = '<div style="width: 1{{ w }}0px!important;">';
   ct(input, {
@@ -1616,7 +1616,7 @@ test(`20 - sandwiched, first text then ESP - with semi, with spaced important`, 
   ]);
 });
 
-test(`21 - multiple, sandwiched, first text then ESP - no semi`, () => {
+test("21 - multiple, sandwiched, first text then ESP - no semi", () => {
   let gathered = [];
   let input = '<div style="width: 1{{ w }}0p{{ XorT }}">';
   ct(input, {
@@ -1714,7 +1714,7 @@ test(`21 - multiple, sandwiched, first text then ESP - no semi`, () => {
   ]);
 });
 
-test(`22 - multiple, sandwiched, first text then ESP - no semi, tight important`, () => {
+test("22 - multiple, sandwiched, first text then ESP - no semi, tight important", () => {
   let gathered = [];
   let input = '<div style="width: 1{{ w }}0p{{ XorT }}!important">';
   ct(input, {
@@ -1827,7 +1827,7 @@ test(`22 - multiple, sandwiched, first text then ESP - no semi, tight important`
   ]);
 });
 
-test(`23 - multiple, sandwiched, first text then ESP - no semi, spaced important`, () => {
+test("23 - multiple, sandwiched, first text then ESP - no semi, spaced important", () => {
   let gathered = [];
   let input = '<div style="width: 1{{ w }}0p{{ XorT }} !important">';
   ct(input, {
@@ -1946,7 +1946,7 @@ test(`23 - multiple, sandwiched, first text then ESP - no semi, spaced important
   ]);
 });
 
-test(`24 - multiple, sandwiched, first text then ESP - no semi, excessively spaced important`, () => {
+test("24 - multiple, sandwiched, first text then ESP - no semi, excessively spaced important", () => {
   let gathered = [];
   let input = '<div style="width: 1{{ w }}0p{{ XorT }}   !important">';
   ct(input, {
@@ -2065,7 +2065,7 @@ test(`24 - multiple, sandwiched, first text then ESP - no semi, excessively spac
   ]);
 });
 
-test(`25 - multiple, sandwiched, first text then ESP - with semi`, () => {
+test("25 - multiple, sandwiched, first text then ESP - with semi", () => {
   let gathered = [];
   let input = '<div style="width: 1{{ w }}0p{{ XorT }};">';
   ct(input, {
@@ -2178,7 +2178,7 @@ test(`25 - multiple, sandwiched, first text then ESP - with semi`, () => {
   ]);
 });
 
-test(`26 - multiple, sandwiched, first text then ESP - with semi and tight important`, () => {
+test("26 - multiple, sandwiched, first text then ESP - with semi and tight important", () => {
   let gathered = [];
   let input = '<div style="width: 1{{ w }}0p{{ XorT }}!important;">';
   ct(input, {
@@ -2291,7 +2291,7 @@ test(`26 - multiple, sandwiched, first text then ESP - with semi and tight impor
   ]);
 });
 
-test(`27 - multiple, sandwiched, first text then ESP - with semi and spaced important`, () => {
+test("27 - multiple, sandwiched, first text then ESP - with semi and spaced important", () => {
   let gathered = [];
   let input = '<div style="width: 1{{ w }}0p{{ XorT }} !important;">';
   ct(input, {
@@ -2410,7 +2410,7 @@ test(`27 - multiple, sandwiched, first text then ESP - with semi and spaced impo
   ]);
 });
 
-test(`28 - multiple, sandwiched, first text then ESP - with semi and excessively spaced important`, () => {
+test("28 - multiple, sandwiched, first text then ESP - with semi and excessively spaced important", () => {
   let gathered = [];
   let input = '<div style="width: 1{{ w }}0p{{ XorT }}    !important;">';
   ct(input, {
@@ -2529,7 +2529,7 @@ test(`28 - multiple, sandwiched, first text then ESP - with semi and excessively
   ]);
 });
 
-test(`29 - chain`, () => {
+test("29 - chain", () => {
   let gathered = [];
   let input = '<div style="x: a{{ b }}c{{ d }}e;">';
   ct(input, {
@@ -2642,7 +2642,7 @@ test(`29 - chain`, () => {
   ]);
 });
 
-test(`30 - spaced chain, text-ESP, no important`, () => {
+test("30 - spaced chain, text-ESP, no important", () => {
   let gathered = [];
   let input = '<div style="padding: 1px {{ r }}">';
   ct(input, {
@@ -2719,7 +2719,7 @@ test(`30 - spaced chain, text-ESP, no important`, () => {
   ]);
 });
 
-test(`31 - spaced chain, text-ESP, with important`, () => {
+test("31 - spaced chain, text-ESP, with important", () => {
   let gathered = [];
   let input = '<div style="padding: 1px {{ r }} !important">';
   ct(input, {
@@ -2817,7 +2817,7 @@ test(`31 - spaced chain, text-ESP, with important`, () => {
   ]);
 });
 
-test(`32 - spaced chain`, () => {
+test("32 - spaced chain", () => {
   let gathered = [];
   let input = '<div style="padding: {{ t }} {{ r }} {{ b }} {{ l }}">';
   ct(input, {
@@ -2943,7 +2943,7 @@ test(`32 - spaced chain`, () => {
   ]);
 });
 
-test(`33 - spaced chain`, () => {
+test("33 - spaced chain", () => {
   let gathered = [];
   let input =
     '<div style="padding: {{ t }} {{ r }} {{ b }} {{ l }} !important">';
@@ -3071,7 +3071,7 @@ test(`33 - spaced chain`, () => {
   ]);
 });
 
-test(`34 - spaced chain`, () => {
+test("34 - spaced chain", () => {
   let gathered = [];
   let input = '<div style="padding: {{ t }} 1px {{ b }} {{ l }} !important">';
   ct(input, {
@@ -3179,7 +3179,7 @@ test(`34 - spaced chain`, () => {
   ]);
 });
 
-test(`35 - spaced chain`, () => {
+test("35 - spaced chain", () => {
   let gathered = [];
   let input = '<div style="padding: {{ t }} {{ r }} {{ b }} 1px !important">';
   ct(input, {
@@ -3293,7 +3293,7 @@ test(`35 - spaced chain`, () => {
   ]);
 });
 
-test(`36 - spaced chain`, () => {
+test("36 - spaced chain", () => {
   let gathered = [];
   let input = '<div style="padding: {{ t }} {{ r }} 1px 1px !important">';
   ct(input, {
@@ -3389,7 +3389,7 @@ test(`36 - spaced chain`, () => {
   ]);
 });
 
-test(`37 - two tight esp tokens, with semi`, () => {
+test("37 - two tight esp tokens, with semi", () => {
   let gathered = [];
   let input = '<div style="padding:{{ t }}{{ r }};">';
   ct(input, {
@@ -3473,7 +3473,7 @@ test(`37 - two tight esp tokens, with semi`, () => {
   ]);
 });
 
-test(`38 - two tight esp tokens`, () => {
+test("38 - two tight esp tokens", () => {
   let gathered = [];
   let input = '<div style="padding:{{ t }}\t{{ r }}">';
   ct(input, {
@@ -3563,7 +3563,7 @@ test(`38 - two tight esp tokens`, () => {
   ]);
 });
 
-test(`39`, () => {
+test("39", () => {
   let gathered = [];
   let input =
     '<td style="color: red;    {% if so %}text-align: left;{% endif %}     float: left;">x</td>';
@@ -3712,7 +3712,7 @@ test(`39`, () => {
   ]);
 });
 
-test(`40 - property without semi wrapped in ESP tokens`, () => {
+test("40 - property without semi wrapped in ESP tokens", () => {
   let gathered = [];
   let input = `<td style="a: b;
     {% if x %}c: d{% endif %}
@@ -3860,7 +3860,7 @@ e: f;">x</td>`;
   ]);
 });
 
-test(`41 - property with semi wrapped in ESP tokens`, () => {
+test("41 - property with semi wrapped in ESP tokens", () => {
   let gathered = [];
   let input = `<td style="a: b;
     {% if x %}c: d;{% endif %}
@@ -4008,7 +4008,7 @@ e: f;">x</td>`;
   ]);
 });
 
-test(`42 - property + space wrapped in ESP tokens`, () => {
+test("42 - property + space wrapped in ESP tokens", () => {
   let gathered = [];
   let input = `<td style="a: b;
     {% if x %}c: d {% endif %}

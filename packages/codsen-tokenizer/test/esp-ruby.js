@@ -8,9 +8,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 // Embedded Ruby (ERB) templates
 
-test(`01 - expression, no trim`, () => {
+test("01 - expression, no trim", () => {
   let gathered = [];
-  ct(`a<%= expression1 %>b<%= expression2 %>c`, {
+  ct("a<%= expression1 %>b<%= expression2 %>c", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -65,9 +65,9 @@ test(`01 - expression, no trim`, () => {
   );
 });
 
-test(`02 - expression, trim`, () => {
+test("02 - expression, trim", () => {
   let gathered = [];
-  ct(`a<%= expression1 -%>b<%= expression2 -%>c`, {
+  ct("a<%= expression1 -%>b<%= expression2 -%>c", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -122,9 +122,9 @@ test(`02 - expression, trim`, () => {
   );
 });
 
-test(`03 - code, no trim`, () => {
+test("03 - code, no trim", () => {
   let gathered = [];
-  ct(`a<% code1 %>b<% code2 %>c`, {
+  ct("a<% code1 %>b<% code2 %>c", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -179,9 +179,9 @@ test(`03 - code, no trim`, () => {
   );
 });
 
-test(`04 - code, trim`, () => {
+test("04 - code, trim", () => {
   let gathered = [];
-  ct(`a<% code1 -%>b<% code2 -%>c`, {
+  ct("a<% code1 -%>b<% code2 -%>c", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -236,9 +236,9 @@ test(`04 - code, trim`, () => {
   );
 });
 
-test(`05 - comment, no trim`, () => {
+test("05 - comment, no trim", () => {
   let gathered = [];
-  ct(`a<%# comment1 %>b<%# comment2 %>c`, {
+  ct("a<%# comment1 %>b<%# comment2 %>c", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -293,9 +293,9 @@ test(`05 - comment, no trim`, () => {
   );
 });
 
-test(`06 - comment, trim`, () => {
+test("06 - comment, trim", () => {
   let gathered = [];
-  ct(`a<%# comment1 -%>b<%# comment2 -%>c`, {
+  ct("a<%# comment1 -%>b<%# comment2 -%>c", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -350,9 +350,9 @@ test(`06 - comment, trim`, () => {
   );
 });
 
-test(`07 - various`, () => {
+test("07 - various", () => {
   let gathered = [];
-  ct(`<% if @a_b -%>a<%# c-d e -%>`, {
+  ct("<% if @a_b -%>a<%# c-d e -%>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -395,9 +395,9 @@ test(`07 - various`, () => {
   );
 });
 
-test(`08`, () => {
+test("08", () => {
   let gathered = [];
-  ct(`a<% if @keys_enable -%>b`, {
+  ct("a<% if @keys_enable -%>b", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -434,7 +434,7 @@ test(`08`, () => {
   );
 });
 
-test(`09`, () => {
+test("09", () => {
   let gathered = [];
   ct(
     `<% if @keys_enable -%>
@@ -561,9 +561,9 @@ trustedkey <%= @keys_trusted.join(' ') %>
 
 // ERB within HTML attributes
 
-test(`10 - two expressions as attr values`, () => {
+test("10 - two expressions as attr values", () => {
   let gathered = [];
-  ct(`<a href="https://abc?p1=<%= @p1 %>&p2=<%= @p2 %>">`, {
+  ct('<a href="https://abc?p1=<%= @p1 %>&p2=<%= @p2 %>">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },

@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no axis, error level 0`, () => {
-  let str = `<td class="z">`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no axis, error level 0`, () => {
+  let str = '<td class="z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no axis, error level
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no axis, error level 1`, () => {
-  let str = `<td class="z">`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no axis, error level 1`, () => {
+  let str = '<td class="z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no axis, error level
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no axis, error level 2`, () => {
-  let str = `<td class="z">`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no axis, error level 2`, () => {
+  let str = '<td class="z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no axis, error level
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
-  let str = `<td axis='something'>`; // <-- notice single quotes
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = "<td axis='something'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -61,8 +61,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div axis="something">`;
+test(`05 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div axis="something">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -81,8 +81,8 @@ test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz axis="something" yyy>`;
+test(`06 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz axis="something" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -104,8 +104,8 @@ test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 03. whitespace
 // -----------------------------------------------------------------------------
 
-test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`, () => {
-  let str = `<th axis="">`;
+test(`07 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - empty value`, () => {
+  let str = '<th axis="">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -119,27 +119,27 @@ test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`, () => {
       ruleId: "attribute-validate-axis",
       idxFrom: 4,
       idxTo: 11,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
 });
 
-test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - surrounding whitespace`, () => {
-  let str = `<th axis=" something ">`;
+test(`08 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - surrounding whitespace`, () => {
+  let str = '<th axis=" something ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-axis": 2,
     },
   });
-  equal(applyFixes(str, messages), `<th axis="something">`, "08.01");
+  equal(applyFixes(str, messages), '<th axis="something">', "08.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-axis",
       idxFrom: 10,
       idxTo: 21,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [10, 11],

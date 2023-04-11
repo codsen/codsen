@@ -8,9 +8,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // 01. healthy html, no tricks
 // -----------------------------------------------------------------------------
 
-test(`01 - text-tag-text`, () => {
+test("01 - text-tag-text", () => {
   let gathered = [];
-  ct(`  <a>z`, {
+  ct("  <a>z", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -47,7 +47,7 @@ test(`01 - text-tag-text`, () => {
   ]);
 });
 
-test(`02 - text only`, () => {
+test("02 - text only", () => {
   let gathered = [];
   ct("  ", {
     tagCb: (obj) => {
@@ -65,7 +65,7 @@ test(`02 - text only`, () => {
   ]);
 });
 
-test(`03 - opening tag only`, () => {
+test("03 - opening tag only", () => {
   let gathered = [];
   ct("<a>", {
     tagCb: (obj) => {
@@ -92,7 +92,7 @@ test(`03 - opening tag only`, () => {
   ]);
 });
 
-test(`04 - closing tag only`, () => {
+test("04 - closing tag only", () => {
   let gathered = [];
   ct("</a>", {
     tagCb: (obj) => {
@@ -120,7 +120,7 @@ test(`04 - closing tag only`, () => {
 });
 
 // notice the tag name case is upper:
-test(`05 - self-closing tag only`, () => {
+test("05 - self-closing tag only", () => {
   let gathered = [];
   ct("<BR/>", {
     tagCb: (obj) => {
@@ -147,7 +147,7 @@ test(`05 - self-closing tag only`, () => {
   ]);
 });
 
-test(`06 - multiple tags`, () => {
+test("06 - multiple tags", () => {
   let gathered = [];
   ct("<a><b><c>", {
     tagCb: (obj) => {
@@ -204,9 +204,9 @@ test(`06 - multiple tags`, () => {
   ]);
 });
 
-test(`07`, () => {
+test("07", () => {
   let gathered = [];
-  ct(`<x src="b" a />`, {
+  ct('<x src="b" a />', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -269,9 +269,9 @@ test(`07`, () => {
   ]);
 });
 
-test(`08 - closing bracket in the attribute's value`, () => {
+test("08 - closing bracket in the attribute's value", () => {
   let gathered = [];
-  ct(`<a alt=">">`, {
+  ct('<a alt=">">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -319,9 +319,9 @@ test(`08 - closing bracket in the attribute's value`, () => {
   ]);
 });
 
-test(`09 - closing bracket layers of nested quotes`, () => {
+test("09 - closing bracket layers of nested quotes", () => {
   let gathered = [];
-  ct(`<a alt='"'">"'"'>`, {
+  ct("<a alt='\"'\">\"'\"'>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -336,7 +336,7 @@ test(`09 - closing bracket layers of nested quotes`, () => {
   ]);
 });
 
-test(`10 - bracket as text`, () => {
+test("10 - bracket as text", () => {
   let gathered = [];
   ct("a < b", {
     tagCb: (obj) => {
@@ -354,9 +354,9 @@ test(`10 - bracket as text`, () => {
   ]);
 });
 
-test(`11 - tag followed by brackets`, () => {
+test("11 - tag followed by brackets", () => {
   let gathered = [];
-  ct(`<a>"something"<span>'here'</span></a>`, {
+  ct("<a>\"something\"<span>'here'</span></a>", {
     tagCb: (obj, next) => {
       gathered.push({ ...obj, next });
     },
@@ -407,7 +407,7 @@ test(`11 - tag followed by brackets`, () => {
   ]);
 });
 
-test(`12 - html5 doctype`, () => {
+test("12 - html5 doctype", () => {
   let gathered = [];
   ct("a<!DOCTYPE html>b", {
     tagCb: (obj) => {
@@ -461,7 +461,7 @@ test(`12 - html5 doctype`, () => {
   ]);
 });
 
-test(`13 - xhtml doctype`, () => {
+test("13 - xhtml doctype", () => {
   let gathered = [];
   ct(
     `z<!DOCTYPE html PUBLIC
@@ -504,7 +504,7 @@ test(`13 - xhtml doctype`, () => {
   ]);
 });
 
-test(`14 - xhtml DTD doctype`, () => {
+test("14 - xhtml DTD doctype", () => {
   let gathered = [];
   ct(
     `z<?xml version="1.0" encoding="UTF-8"?>
@@ -559,7 +559,7 @@ test(`14 - xhtml DTD doctype`, () => {
   ]);
 });
 
-test(`15 - void tags`, () => {
+test("15 - void tags", () => {
   let gathered = [];
   ct("<br>", {
     tagCb: (obj) => {
@@ -576,7 +576,7 @@ test(`15 - void tags`, () => {
   ]);
 });
 
-test(`16 - recognised tags`, () => {
+test("16 - recognised tags", () => {
   let gathered = [];
   ct("<content>", {
     tagCb: (obj) => {
@@ -594,7 +594,7 @@ test(`16 - recognised tags`, () => {
   ]);
 });
 
-test(`17 - unrecognised tags`, () => {
+test("17 - unrecognised tags", () => {
   let gathered = [];
   ct("<contentz>", {
     tagCb: (obj) => {
@@ -612,7 +612,7 @@ test(`17 - unrecognised tags`, () => {
   ]);
 });
 
-test(`18 - wrong case but still recognised tags`, () => {
+test("18 - wrong case but still recognised tags", () => {
   let gathered = [];
   ct("</tablE>", {
     tagCb: (obj) => {
@@ -630,7 +630,7 @@ test(`18 - wrong case but still recognised tags`, () => {
   ]);
 });
 
-test(`19 - correct HTML5 doctype`, () => {
+test("19 - correct HTML5 doctype", () => {
   let gathered = [];
   ct("<!DOCTYPE html>", {
     tagCb: (obj) => {
@@ -648,7 +648,7 @@ test(`19 - correct HTML5 doctype`, () => {
   ]);
 });
 
-test(`20 - correct HTML5 doctype`, () => {
+test("20 - correct HTML5 doctype", () => {
   let gathered = [];
   ct(
     `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -670,7 +670,7 @@ test(`20 - correct HTML5 doctype`, () => {
   ]);
 });
 
-test(`21 - tag names with numbers`, () => {
+test("21 - tag names with numbers", () => {
   let gathered = [];
   ct("<h1>", {
     tagCb: (obj) => {
@@ -692,7 +692,7 @@ test(`21 - tag names with numbers`, () => {
   ]);
 });
 
-test(`22 - exact match, tag pair with whitespace`, () => {
+test("22 - exact match, tag pair with whitespace", () => {
   let gathered = [];
   ct("<a href> </a>", {
     tagCb: (obj) => {
@@ -755,9 +755,9 @@ test(`22 - exact match, tag pair with whitespace`, () => {
   ]);
 });
 
-test(`23 - closing tag with attributes`, () => {
+test("23 - closing tag with attributes", () => {
   let gathered = [];
-  ct(`</a class="z">`, {
+  ct('</a class="z">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -767,7 +767,7 @@ test(`23 - closing tag with attributes`, () => {
       type: "tag",
       start: 0,
       end: 14,
-      value: `</a class="z">`,
+      value: '</a class="z">',
       tagNameStartsAt: 2,
       tagNameEndsAt: 3,
       tagName: "a",
@@ -804,9 +804,9 @@ test(`23 - closing tag with attributes`, () => {
   ]);
 });
 
-test(`24 - empty style tag pair`, () => {
+test("24 - empty style tag pair", () => {
   let gathered = [];
-  ct(`<style>\n\n</style>`, {
+  ct("<style>\n\n</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -843,9 +843,9 @@ test(`24 - empty style tag pair`, () => {
   ]);
 });
 
-test(`25 - line break`, () => {
+test("25 - line break", () => {
   let gathered = [];
-  ct(`a<a>\nb`, {
+  ct("a<a>\nb", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -882,9 +882,9 @@ test(`25 - line break`, () => {
   ]);
 });
 
-test(`26 - dir attribute is also a known valid tag name`, () => {
+test("26 - dir attribute is also a known valid tag name", () => {
   let gathered = [];
-  ct(`<html dir="ltr">`, {
+  ct('<html dir="ltr">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -895,7 +895,7 @@ test(`26 - dir attribute is also a known valid tag name`, () => {
       type: "tag",
       start: 0,
       end: 16,
-      value: `<html dir="ltr">`,
+      value: '<html dir="ltr">',
     },
   ]);
 });
@@ -915,7 +915,7 @@ test("27 - unrecognised tag name", () => {
       type: "tag",
       start: 0,
       end: 11,
-      value: `<something>`,
+      value: "<something>",
       tagNameStartsAt: 1,
       tagNameEndsAt: 10,
       tagName: "something",
@@ -942,7 +942,7 @@ test("28 - unrecognised tag name with dash", () => {
       type: "tag",
       start: 0,
       end: 16,
-      value: `<something-here>`,
+      value: "<something-here>",
       tagNameStartsAt: 1,
       tagNameEndsAt: 15,
       tagName: "something-here",
@@ -960,9 +960,9 @@ test("28 - unrecognised tag name with dash", () => {
 // 05. lookaheads
 // -----------------------------------------------------------------------------
 
-test(`29 - lookaheads - tag followed by brackets - without next`, () => {
+test("29 - lookaheads - tag followed by brackets - without next", () => {
   let gathered = [];
-  ct(`<a>"something"<span>'here'</span></a>`, {
+  ct("<a>\"something\"<span>'here'</span></a>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1018,9 +1018,9 @@ test(`29 - lookaheads - tag followed by brackets - without next`, () => {
   ]);
 });
 
-test(`30 - lookaheads - tag followed by brackets - with next`, () => {
+test("30 - lookaheads - tag followed by brackets - with next", () => {
   let gathered = [];
-  ct(`<a>"something"<span>'here'</span></a>`, {
+  ct("<a>\"something\"<span>'here'</span></a>", {
     tagCb: (obj, next) => {
       gathered.push({ ...obj, next });
     },
@@ -1166,7 +1166,7 @@ test(`30 - lookaheads - tag followed by brackets - with next`, () => {
   ]);
 });
 
-test(`31 - lookaheads - html5 doctype`, () => {
+test("31 - lookaheads - html5 doctype", () => {
   let gathered = [];
   ct("a<!DOCTYPE html>b", {
     tagCb: (obj, next) => {

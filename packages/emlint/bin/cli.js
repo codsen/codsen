@@ -43,7 +43,7 @@ if (cli.flags.v) {
 // -----------------------------------------------------------------------------
 
 console.log(
-  `046 FIY, ${`\u001b[${33}m${`cli.input`}\u001b[${39}m`} = ${JSON.stringify(
+  `046 FIY, ${`\u001b[${33}m${"cli.input"}\u001b[${39}m`} = ${JSON.stringify(
     cli.input,
     null,
     4

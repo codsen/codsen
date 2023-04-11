@@ -8,7 +8,7 @@ import fixTypography from "../dist/remark-typography.esm.js";
 
 // -----------------------------------------------------------------------------
 
-test(`01 - apostrophes and ellipsis`, async () => {
+test("01 - apostrophes and ellipsis", async () => {
   equal(
     (await remark().use(fixTypography, {}).process("Yes that's true but..."))
       .toString()
@@ -18,7 +18,7 @@ test(`01 - apostrophes and ellipsis`, async () => {
   );
 });
 
-test(`02 - tackles strictly three dot sequences, nothing else`, async () => {
+test("02 - tackles strictly three dot sequences, nothing else", async () => {
   let source =
     "Pragmatical croodles..............page 11\nInconsequential brapples..............page 21";
   equal(

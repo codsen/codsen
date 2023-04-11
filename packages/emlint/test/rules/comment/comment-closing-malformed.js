@@ -8,7 +8,7 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. type="simple"
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - off, missing dash`, () => {
+test(`01 - ${`\u001b[${35}m${"type: simple"}\u001b[${39}m`} - off, missing dash`, () => {
   let str = "<!--z->";
   let messages = verify(not, str, {
     rules: {
@@ -19,7 +19,7 @@ test(`01 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - off, missing dash`
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - error, missing dash, text inside`, () => {
+test(`02 - ${`\u001b[${35}m${"type: simple"}\u001b[${39}m`} - error, missing dash, text inside`, () => {
   let str = "<!--z->";
   let fixed = "<!--z-->";
   let messages = verify(not, str, {
@@ -38,7 +38,7 @@ test(`02 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - error, missing das
         severity: 2,
         idxFrom: 5,
         idxTo: 7,
-        message: `Malformed closing comment tag.`,
+        message: "Malformed closing comment tag.",
         fix: {
           ranges: [[5, 7, "-->"]],
         },
@@ -49,9 +49,9 @@ test(`02 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - error, missing das
   );
 });
 
-test(`03 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - error, missing dash, tag inside`, () => {
-  let str = `<!--<img class="z"/>->`;
-  let fixed = `<!--<img class="z"/>-->`;
+test(`03 - ${`\u001b[${35}m${"type: simple"}\u001b[${39}m`} - error, missing dash, tag inside`, () => {
+  let str = '<!--<img class="z"/>->';
+  let fixed = '<!--<img class="z"/>-->';
   let messages = verify(not, str, {
     rules: {
       "comment-closing-malformed": 2,
@@ -79,9 +79,9 @@ test(`03 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - error, missing das
   );
 });
 
-test(`04 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space`, () => {
-  let str = `<!--<img class="z"/>-- >`;
-  let fixed = `<!--<img class="z"/>-->`;
+test(`04 - ${`\u001b[${35}m${"type: simple"}\u001b[${39}m`} - rogue space`, () => {
+  let str = '<!--<img class="z"/>-- >';
+  let fixed = '<!--<img class="z"/>-->';
   let messages = verify(not, str, {
     rules: {
       "comment-closing-malformed": 2,
@@ -109,9 +109,9 @@ test(`04 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue space`, () =
   );
 });
 
-test(`05 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue excl mark`, () => {
-  let str = `<!--<img class="z"/>--!>`;
-  let fixed = `<!--<img class="z"/>-->`;
+test(`05 - ${`\u001b[${35}m${"type: simple"}\u001b[${39}m`} - rogue excl mark`, () => {
+  let str = '<!--<img class="z"/>--!>';
+  let fixed = '<!--<img class="z"/>-->';
   let messages = verify(not, str, {
     rules: {
       "comment-closing-malformed": 2,
@@ -139,9 +139,9 @@ test(`05 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue excl mark`, 
   );
 });
 
-test(`06 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue single character, z`, () => {
-  let str = `<!--<img class="z"/>--z>`;
-  let fixed = `<!--<img class="z"/>-->`;
+test(`06 - ${`\u001b[${35}m${"type: simple"}\u001b[${39}m`} - rogue single character, z`, () => {
+  let str = '<!--<img class="z"/>--z>';
+  let fixed = '<!--<img class="z"/>-->';
   let messages = verify(not, str, {
     rules: {
       "comment-closing-malformed": 2,
@@ -178,7 +178,7 @@ test(`06 - ${`\u001b[${35}m${`type: simple`}\u001b[${39}m`} - rogue single chara
 //     <img src="fallback">
 // <![endif]-->
 
-test(`07 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - off, excl mark missing`, () => {
+test(`07 - ${`\u001b[${33}m${"type: only"}\u001b[${39}m`} - off, excl mark missing`, () => {
   let str = "<!--[if mso]>x<[endif]-->";
   let messages = verify(not, str, {
     rules: {
@@ -189,7 +189,7 @@ test(`07 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - off, excl mark missi
   equal(messages, [], "07.02");
 });
 
-test(`08 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - error level, excl mark missing`, () => {
+test(`08 - ${`\u001b[${33}m${"type: only"}\u001b[${39}m`} - error level, excl mark missing`, () => {
   let str = "<!--[if mso]>x<[endif]-->";
   let fixed = "<!--[if mso]>x<![endif]-->";
   let messages = verify(not, str, {
@@ -207,7 +207,7 @@ test(`08 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - error level, excl ma
         severity: 2,
         idxFrom: 14,
         idxTo: 25,
-        message: `Malformed closing comment tag.`,
+        message: "Malformed closing comment tag.",
         fix: {
           ranges: [[14, 25, "<![endif]-->"]],
         },
@@ -218,7 +218,7 @@ test(`08 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - error level, excl ma
   is(messages.length, 1, "08.02");
 });
 
-test(`09 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`, () => {
+test(`09 - ${`\u001b[${33}m${"type: only"}\u001b[${39}m`} - 1 instead of !`, () => {
   let str = "<!--[if mso]>x<1[endif]-->";
   let fixed = "<!--[if mso]>x<![endif]-->";
   let messages = verify(not, str, {
@@ -236,7 +236,7 @@ test(`09 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`, () 
         severity: 2,
         idxFrom: 14,
         idxTo: 26,
-        message: `Malformed closing comment tag.`,
+        message: "Malformed closing comment tag.",
         fix: {
           ranges: [[14, 26, "<![endif]-->"]],
         },
@@ -247,7 +247,7 @@ test(`09 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`, () 
   is(messages.length, 1, "09.02");
 });
 
-test(`10 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`, () => {
+test(`10 - ${`\u001b[${33}m${"type: only"}\u001b[${39}m`} - 1 instead of !`, () => {
   let str = "<!--[if mso]>x<![ndif]-->";
   let fixed = "<!--[if mso]>x<![endif]-->";
   let messages = verify(not, str, {
@@ -265,7 +265,7 @@ test(`10 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`, () 
         severity: 2,
         idxFrom: 14,
         idxTo: 25,
-        message: `Malformed closing comment tag.`,
+        message: "Malformed closing comment tag.",
         fix: {
           ranges: [[14, 25, "<![endif]-->"]],
         },
@@ -276,7 +276,7 @@ test(`10 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - 1 instead of !`, () 
   is(messages.length, 1, "10.02");
 });
 
-test(`11 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - closing bracket missing, tag follows, tight`, () => {
+test(`11 - ${`\u001b[${33}m${"type: only"}\u001b[${39}m`} - closing bracket missing, tag follows, tight`, () => {
   let str = "<!--[if mso]>x<![endif]--<a>";
   let fixed = "<!--[if mso]>x<![endif]--><a>";
   let messages = verify(not, str, {
@@ -305,7 +305,7 @@ test(`11 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - closing bracket miss
   is(messages.length, 1, "11.02");
 });
 
-test(`12 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - closing bracket missing, tag follows, spaced`, () => {
+test(`12 - ${`\u001b[${33}m${"type: only"}\u001b[${39}m`} - closing bracket missing, tag follows, spaced`, () => {
   let str = "<!--[if mso]>x<![endif]--\n\n<a>";
   let fixed = "<!--[if mso]>x<![endif]-->\n\n<a>";
   let messages = verify(not, str, {
@@ -343,9 +343,9 @@ test(`12 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - closing bracket miss
 //     <img src="gif"/>
 // <!--<![endif]-->
 
-test(`13 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - bracket missing`, () => {
-  let str = `<!--[if !mso]><!--><img src="gif"/>!--<![endif]-->`;
-  let fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
+test(`13 - ${`\u001b[${31}m${"type: not"}\u001b[${39}m`} - bracket missing`, () => {
+  let str = '<!--[if !mso]><!--><img src="gif"/>!--<![endif]-->';
+  let fixed = '<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->';
   let messages = verify(not, str, {
     rules: {
       "character-unspaced-punctuation": 2,
@@ -362,7 +362,7 @@ test(`13 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - bracket missing`, () 
         severity: 2,
         idxFrom: 35,
         idxTo: 50,
-        message: `Malformed closing comment tag.`,
+        message: "Malformed closing comment tag.",
         fix: {
           ranges: [[35, 50, "<!--<![endif]-->"]],
         },
@@ -373,9 +373,9 @@ test(`13 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - bracket missing`, () 
   is(messages.length, 1, "13.02");
 });
 
-test(`14 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - excml mark missing`, () => {
-  let str = `<!--[if !mso]><!--><img src="gif"/><--<![endif]-->`;
-  let fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
+test(`14 - ${`\u001b[${31}m${"type: not"}\u001b[${39}m`} - excml mark missing`, () => {
+  let str = '<!--[if !mso]><!--><img src="gif"/><--<![endif]-->';
+  let fixed = '<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->';
   let messages = verify(not, str, {
     rules: {
       "comment-closing-malformed": 2,
@@ -391,7 +391,7 @@ test(`14 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - excml mark missing`, 
         severity: 2,
         idxFrom: 35,
         idxTo: 50,
-        message: `Malformed closing comment tag.`,
+        message: "Malformed closing comment tag.",
         fix: {
           ranges: [[35, 50, "<!--<![endif]-->"]],
         },
@@ -402,9 +402,9 @@ test(`14 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - excml mark missing`, 
   is(messages.length, 1, "14.02");
 });
 
-test(`15 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - dash missing`, () => {
-  let str = `<!--[if !mso]><!--><img src="gif"/><!-<![endif]-->`;
-  let fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
+test(`15 - ${`\u001b[${31}m${"type: not"}\u001b[${39}m`} - dash missing`, () => {
+  let str = '<!--[if !mso]><!--><img src="gif"/><!-<![endif]-->';
+  let fixed = '<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->';
   let messages = verify(not, str, {
     rules: {
       "comment-closing-malformed": 2,
@@ -420,7 +420,7 @@ test(`15 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - dash missing`, () => 
         severity: 2,
         idxFrom: 35,
         idxTo: 50,
-        message: `Malformed closing comment tag.`,
+        message: "Malformed closing comment tag.",
         fix: {
           ranges: [[35, 50, "<!--<![endif]-->"]],
         },
@@ -431,9 +431,9 @@ test(`15 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - dash missing`, () => 
   is(messages.length, 1, "15.02");
 });
 
-test(`16 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - rogue space`, () => {
-  let str = `<!--[if !mso]><!--><img src="gif"/><!- -<![endif]-->`;
-  let fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
+test(`16 - ${`\u001b[${31}m${"type: not"}\u001b[${39}m`} - rogue space`, () => {
+  let str = '<!--[if !mso]><!--><img src="gif"/><!- -<![endif]-->';
+  let fixed = '<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->';
   let messages = verify(not, str, {
     rules: {
       "comment-closing-malformed": 1,
@@ -460,9 +460,9 @@ test(`16 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - rogue space`, () => {
   is(messages.length, 1, "16.02");
 });
 
-test(`17 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - rogue linebreak`, () => {
-  let str = `<!--[if !mso]><!--><img src="gif"/><!--\n<![endif]-->`;
-  let fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
+test(`17 - ${`\u001b[${31}m${"type: not"}\u001b[${39}m`} - rogue linebreak`, () => {
+  let str = '<!--[if !mso]><!--><img src="gif"/><!--\n<![endif]-->';
+  let fixed = '<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->';
   let messages = verify(not, str, {
     rules: {
       "comment-closing-malformed": 2,
@@ -489,9 +489,9 @@ test(`17 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - rogue linebreak`, () 
   is(messages.length, 1, "17.02");
 });
 
-test(`18 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - really messed up closing tag`, () => {
-  let str = `<!--[if !mso]><!--><br /><!--<[endif]-->`;
-  let fixed = `<!--[if !mso]><!--><br /><!--<![endif]-->`;
+test(`18 - ${`\u001b[${31}m${"type: not"}\u001b[${39}m`} - really messed up closing tag`, () => {
+  let str = "<!--[if !mso]><!--><br /><!--<[endif]-->";
+  let fixed = "<!--[if !mso]><!--><br /><!--<![endif]-->";
   let messages = verify(not, str, {
     rules: {
       all: 2,
@@ -500,9 +500,9 @@ test(`18 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - really messed up clos
   equal(applyFixes(str, messages), fixed, "18.01");
 });
 
-test(`19 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - opening bracket missing`, () => {
-  let str = `<!--[if !mso]><!--><br /><!--<!endif]-->`;
-  let fixed = `<!--[if !mso]><!--><br /><!--<![endif]-->`;
+test(`19 - ${`\u001b[${31}m${"type: not"}\u001b[${39}m`} - opening bracket missing`, () => {
+  let str = "<!--[if !mso]><!--><br /><!--<!endif]-->";
+  let fixed = "<!--[if !mso]><!--><br /><!--<![endif]-->";
   let messages = verify(not, str, {
     rules: {
       "comment-closing-malformed": 2,
@@ -529,9 +529,9 @@ test(`19 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - opening bracket missi
   is(messages.length, 1, "19.02");
 });
 
-test(`20 - ${`\u001b[${31}m${`type: not`}\u001b[${39}m`} - misspelled endif`, () => {
-  let str = `<!--[if !mso]><!--><img src="gif"/><!--<![ndif]-->`;
-  let fixed = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
+test(`20 - ${`\u001b[${31}m${"type: not"}\u001b[${39}m`} - misspelled endif`, () => {
+  let str = '<!--[if !mso]><!--><img src="gif"/><!--<![ndif]-->';
+  let fixed = '<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->';
   let messages = verify(not, str, {
     rules: {
       "comment-closing-malformed": 2,

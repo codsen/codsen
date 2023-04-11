@@ -26,9 +26,9 @@ function stripAndFixApos(str) {
 
 // strips tags and fixes apostrophes:
 assert.equal(
-  stripAndFixApos(`Let's Go <strong>Larval</strong>`),
-  `Let’s Go Larval`
+  stripAndFixApos("Let's Go <strong>Larval</strong>"),
+  "Let’s Go Larval"
 );
 
 // no tags, no apostrophes:
-assert.equal(stripAndFixApos(`zzz`), `zzz`);
+assert.equal(stripAndFixApos("zzz"), "zzz");

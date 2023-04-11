@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no background, error level 0`, () => {
-  let str = `<body class="z"><div id="u">`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no background, error level 0`, () => {
+  let str = '<body class="z"><div id="u">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no background, error
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no background, error level 1`, () => {
-  let str = `<body class="z"><div id="u">`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no background, error level 1`, () => {
+  let str = '<body class="z"><div id="u">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no background, error
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no background, error level 2`, () => {
-  let str = `<body class="z"><div id="u">`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no background, error level 2`, () => {
+  let str = '<body class="z"><div id="u">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no background, error
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
-  let str = `<body background='https://codsen.com/bg.png'>`; // <-- notice single quotes
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = "<body background='https://codsen.com/bg.png'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -77,8 +77,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div background='https://codsen.com/spacer.gif'>`;
+test(`05 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = "<div background='https://codsen.com/spacer.gif'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -97,8 +97,8 @@ test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz background="https://codsen.com/spacer.gif" yyy>`;
+test(`06 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz background="https://codsen.com/spacer.gif" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -120,8 +120,8 @@ test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`07 - ${`\u001b[${35}m${`wrong value`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<body background="zz.">`;
+test(`07 - ${`\u001b[${35}m${"wrong value"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<body background="zz.">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -135,14 +135,14 @@ test(`07 - ${`\u001b[${35}m${`wrong value`}\u001b[${39}m`} - recognised tag`, ()
       ruleId: "attribute-validate-background",
       idxFrom: 18,
       idxTo: 21,
-      message: `Should be an URI.`,
+      message: "Should be an URI.",
       fix: null,
     },
   ]);
 });
 
-test(`08 - ${`\u001b[${34}m${`wrong value`}\u001b[${39}m`} - still catches whitespace on legit URL`, () => {
-  let str = `<body background=" https://codsen.com/spacer.gif">`;
+test(`08 - ${`\u001b[${34}m${"wrong value"}\u001b[${39}m`} - still catches whitespace on legit URL`, () => {
+  let str = '<body background=" https://codsen.com/spacer.gif">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -151,7 +151,7 @@ test(`08 - ${`\u001b[${34}m${`wrong value`}\u001b[${39}m`} - still catches white
   });
   equal(
     applyFixes(str, messages),
-    `<body background="https://codsen.com/spacer.gif">`,
+    '<body background="https://codsen.com/spacer.gif">',
     "08.01"
   );
   compare(ok, messages, [
@@ -159,7 +159,7 @@ test(`08 - ${`\u001b[${34}m${`wrong value`}\u001b[${39}m`} - still catches white
       ruleId: "attribute-validate-background",
       idxFrom: 18,
       idxTo: 19,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[18, 19]],
       },
@@ -167,21 +167,21 @@ test(`08 - ${`\u001b[${34}m${`wrong value`}\u001b[${39}m`} - still catches white
   ]);
 });
 
-test(`09 - ${`\u001b[${34}m${`wrong value`}\u001b[${39}m`} - not-a-URL and whitespace`, () => {
-  let str = `<body background=" zz. ">`;
+test(`09 - ${`\u001b[${34}m${"wrong value"}\u001b[${39}m`} - not-a-URL and whitespace`, () => {
+  let str = '<body background=" zz. ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-background": 2,
     },
   });
-  equal(applyFixes(str, messages), `<body background="zz.">`, "09.01");
+  equal(applyFixes(str, messages), '<body background="zz.">', "09.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-background",
       idxFrom: 18,
       idxTo: 23,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [18, 19],
@@ -193,7 +193,7 @@ test(`09 - ${`\u001b[${34}m${`wrong value`}\u001b[${39}m`} - not-a-URL and white
       ruleId: "attribute-validate-background",
       idxFrom: 19,
       idxTo: 22,
-      message: `Should be an URI.`,
+      message: "Should be an URI.",
       fix: null,
     },
   ]);
@@ -202,8 +202,8 @@ test(`09 - ${`\u001b[${34}m${`wrong value`}\u001b[${39}m`} - not-a-URL and white
 // 04. opts.localOK - allows local file paths
 // -----------------------------------------------------------------------------
 
-test(`10 - ${`\u001b[${35}m${`opts.localOK`}\u001b[${39}m`} - baseline - rule off`, () => {
-  let str = `<body background="spacer.gif">`;
+test(`10 - ${`\u001b[${35}m${"opts.localOK"}\u001b[${39}m`} - baseline - rule off`, () => {
+  let str = '<body background="spacer.gif">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -239,8 +239,8 @@ test(`10 - ${`\u001b[${35}m${`opts.localOK`}\u001b[${39}m`} - baseline - rule of
 //   }
 // );
 
-test(`11 - ${`\u001b[${35}m${`opts.localOK`}\u001b[${39}m`} - opts.localOK`, () => {
-  let str = `<body background="spacer.gif">`;
+test(`11 - ${`\u001b[${35}m${"opts.localOK"}\u001b[${39}m`} - opts.localOK`, () => {
+  let str = '<body background="spacer.gif">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -251,8 +251,8 @@ test(`11 - ${`\u001b[${35}m${`opts.localOK`}\u001b[${39}m`} - opts.localOK`, () 
   equal(messages, [], "11.02");
 });
 
-test(`12 - ${`\u001b[${35}m${`opts.localOK`}\u001b[${39}m`} - opts.localOK, dot missing`, () => {
-  let str = `<body background="spacergif.">`;
+test(`12 - ${`\u001b[${35}m${"opts.localOK"}\u001b[${39}m`} - opts.localOK, dot missing`, () => {
+  let str = '<body background="spacergif.">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -266,7 +266,7 @@ test(`12 - ${`\u001b[${35}m${`opts.localOK`}\u001b[${39}m`} - opts.localOK, dot 
       ruleId: "attribute-validate-background",
       idxFrom: 18,
       idxTo: 28,
-      message: `Should be an URI.`,
+      message: "Should be an URI.",
       fix: null,
     },
   ]);

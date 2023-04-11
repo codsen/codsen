@@ -49,7 +49,7 @@ test("03", () => {
   // short input string should report only when passing at 50%:
   throws(
     () => {
-      ct(`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(30), {
+      ct("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n".repeat(30), {
         reportProgressFunc: shouldveBeenCalled,
         tagCb: (token) => {
           gathered.push(token);
@@ -57,7 +57,7 @@ test("03", () => {
       });
     },
     /50/,
-    `03.01`
+    "03.01"
   );
 });
 
@@ -71,12 +71,12 @@ test("04", () => {
   // long input (>1000 chars long) should report at each natural number percentage passed:
 
   // 1. our function will mutate the counter variable:
-  ct(`aaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaa\n`.repeat(50), {
+  ct("aaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaa\n".repeat(50), {
     reportProgressFunc: countingFunction,
   });
 
   // 2. check the counter variable:
-  ok(counter, `04.01`);
+  ok(counter, "04.01");
 });
 
 test("05", () => {
@@ -87,14 +87,14 @@ test("05", () => {
   // short input string should report only when passing at 50%:
   throws(
     () => {
-      ct(`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(20), {
+      ct("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n".repeat(20), {
         reportProgressFunc: shouldveBeenCalled,
         reportProgressFuncFrom: 21,
         reportProgressFuncTo: 86,
       });
     },
     /32/g,
-    `05.01`
+    "05.01"
   );
 });
 
@@ -109,7 +109,7 @@ test("06", () => {
   // long input (>1000 chars long) should report at each natural number percentage passed:
   // our function will mutate the "gather" variable:
   ct(
-    `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\naaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa\n`.repeat(
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\naaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa\n".repeat(
       50
     ),
     {
@@ -131,7 +131,7 @@ test("06", () => {
   });
   equal(gather.length, 86 - 21, "06.01");
 
-  equal(gather, compareTo, `06.02`);
+  equal(gather, compareTo, "06.02");
 });
 
 test.run();

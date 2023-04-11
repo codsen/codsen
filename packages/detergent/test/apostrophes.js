@@ -20,7 +20,7 @@ import {
 
 // -----------------------------------------------------------------------------
 
-test(`01 - converts single apostrophes - with entities`, () => {
+test("01 - converts single apostrophes - with entities", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -33,7 +33,7 @@ test(`01 - converts single apostrophes - with entities`, () => {
   });
 });
 
-test(`02 - converts single apostrophes - no entities`, () => {
+test("02 - converts single apostrophes - no entities", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -46,7 +46,7 @@ test(`02 - converts single apostrophes - no entities`, () => {
   });
 });
 
-test(`03 - doesn't convert single apostrophes`, () => {
+test("03 - doesn't convert single apostrophes", () => {
   mixer({
     convertApostrophes: false,
   }).forEach((opt, n) => {
@@ -58,7 +58,7 @@ test(`03 - doesn't convert single apostrophes`, () => {
   });
 });
 
-test(`04 - converts quotation marks into fancy ones: +entities`, () => {
+test("04 - converts quotation marks into fancy ones: +entities", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -71,7 +71,7 @@ test(`04 - converts quotation marks into fancy ones: +entities`, () => {
   });
 });
 
-test(`05 - converts quotation marks into fancy ones: -entities`, () => {
+test("05 - converts quotation marks into fancy ones: -entities", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -84,7 +84,7 @@ test(`05 - converts quotation marks into fancy ones: -entities`, () => {
   });
 });
 
-test(`06 - doesn't convert quotation marks: -apostrophes-entities`, () => {
+test("06 - doesn't convert quotation marks: -apostrophes-entities", () => {
   mixer({
     convertApostrophes: false,
     convertEntities: false,
@@ -97,7 +97,7 @@ test(`06 - doesn't convert quotation marks: -apostrophes-entities`, () => {
   });
 });
 
-test(`07 - exclamation mark + double quote`, () => {
+test("07 - exclamation mark + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -111,7 +111,7 @@ test(`07 - exclamation mark + double quote`, () => {
   });
 });
 
-test(`08 - full stop + double quote`, () => {
+test("08 - full stop + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -125,7 +125,7 @@ test(`08 - full stop + double quote`, () => {
   });
 });
 
-test(`09 - comma + double quote`, () => {
+test("09 - comma + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -139,7 +139,7 @@ test(`09 - comma + double quote`, () => {
   });
 });
 
-test(`10 - semicolon + double quote`, () => {
+test("10 - semicolon + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -153,7 +153,7 @@ test(`10 - semicolon + double quote`, () => {
   });
 });
 
-test(`11 - question mark + double quote`, () => {
+test("11 - question mark + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -167,7 +167,7 @@ test(`11 - question mark + double quote`, () => {
   });
 });
 
-test(`12 - exclamation mark + double quote + space`, () => {
+test("12 - exclamation mark + double quote + space", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -181,7 +181,7 @@ test(`12 - exclamation mark + double quote + space`, () => {
   });
 });
 
-test(`13 - full stop + double quote + space`, () => {
+test("13 - full stop + double quote + space", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -195,7 +195,7 @@ test(`13 - full stop + double quote + space`, () => {
   });
 });
 
-test(`14 - comma + double quote + space`, () => {
+test("14 - comma + double quote + space", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -209,7 +209,7 @@ test(`14 - comma + double quote + space`, () => {
   });
 });
 
-test(`15 - semicolon + double quote + space`, () => {
+test("15 - semicolon + double quote + space", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -223,7 +223,7 @@ test(`15 - semicolon + double quote + space`, () => {
   });
 });
 
-test(`16 - question mark + double quote + space`, () => {
+test("16 - question mark + double quote + space", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -237,7 +237,7 @@ test(`16 - question mark + double quote + space`, () => {
   });
 });
 
-test(`17 - exclamation mark + single quote + double quote`, () => {
+test("17 - exclamation mark + single quote + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -251,7 +251,7 @@ test(`17 - exclamation mark + single quote + double quote`, () => {
   });
 });
 
-test(`18 - full stop + single quote + double quote`, () => {
+test("18 - full stop + single quote + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -265,7 +265,7 @@ test(`18 - full stop + single quote + double quote`, () => {
   });
 });
 
-test(`19 - comma + single quote + double quote`, () => {
+test("19 - comma + single quote + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -279,7 +279,7 @@ test(`19 - comma + single quote + double quote`, () => {
   });
 });
 
-test(`20 - semicolon + single quote + double quote`, () => {
+test("20 - semicolon + single quote + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -293,7 +293,7 @@ test(`20 - semicolon + single quote + double quote`, () => {
   });
 });
 
-test(`21 - question mark + single quote + double quote`, () => {
+test("21 - question mark + single quote + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -307,7 +307,7 @@ test(`21 - question mark + single quote + double quote`, () => {
   });
 });
 
-test(`22 - exclamation mark + double quote + single quote`, () => {
+test("22 - exclamation mark + double quote + single quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -321,7 +321,7 @@ test(`22 - exclamation mark + double quote + single quote`, () => {
   });
 });
 
-test(`23 - full stop + double quote + single quote`, () => {
+test("23 - full stop + double quote + single quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -335,7 +335,7 @@ test(`23 - full stop + double quote + single quote`, () => {
   });
 });
 
-test(`24 - comma + double quote + single quote`, () => {
+test("24 - comma + double quote + single quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -349,7 +349,7 @@ test(`24 - comma + double quote + single quote`, () => {
   });
 });
 
-test(`25 - semicolon + double quote + single quote`, () => {
+test("25 - semicolon + double quote + single quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -363,7 +363,7 @@ test(`25 - semicolon + double quote + single quote`, () => {
   });
 });
 
-test(`26 - question mark + double quote + single quote`, () => {
+test("26 - question mark + double quote + single quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -381,7 +381,7 @@ test(`26 - question mark + double quote + single quote`, () => {
 // https://github.com/kemitchell/straight-to-curly-quotes.JSON.
 // License CC0-1.0
 
-test(`27 - one word wrapped with double quotes`, () => {
+test("27 - one word wrapped with double quotes", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -395,7 +395,7 @@ test(`27 - one word wrapped with double quotes`, () => {
   });
 });
 
-test(`28 - single quote surrounded by letters`, () => {
+test("28 - single quote surrounded by letters", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -409,7 +409,7 @@ test(`28 - single quote surrounded by letters`, () => {
   });
 });
 
-test(`29 - single quote surrounded by letters 2`, () => {
+test("29 - single quote surrounded by letters 2", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -423,7 +423,7 @@ test(`29 - single quote surrounded by letters 2`, () => {
   });
 });
 
-test(`30 - leading single quote`, () => {
+test("30 - leading single quote", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -438,7 +438,7 @@ test(`30 - leading single quote`, () => {
   });
 });
 
-test(`31 - mixed quotes within a single sentence`, () => {
+test("31 - mixed quotes within a single sentence", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -454,7 +454,7 @@ test(`31 - mixed quotes within a single sentence`, () => {
   });
 });
 
-test(`32 - single letters wrapped with single quotes`, () => {
+test("32 - single letters wrapped with single quotes", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -469,7 +469,7 @@ test(`32 - single letters wrapped with single quotes`, () => {
   });
 });
 
-test(`33 - words wrapped with single quotes`, () => {
+test("33 - words wrapped with single quotes", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -490,7 +490,7 @@ test(`33 - words wrapped with single quotes`, () => {
   });
 });
 
-test(`34 - double quotes within single quotes`, () => {
+test("34 - double quotes within single quotes", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -511,7 +511,7 @@ test(`34 - double quotes within single quotes`, () => {
   });
 });
 
-test(`35 - double quotes within single quotes`, () => {
+test("35 - double quotes within single quotes", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -526,7 +526,7 @@ test(`35 - double quotes within single quotes`, () => {
   });
 });
 
-test(`36 - double quotes within double quotes`, () => {
+test("36 - double quotes within double quotes", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -547,7 +547,7 @@ test(`36 - double quotes within double quotes`, () => {
   });
 });
 
-test(`37 - single quotes within double quotes`, () => {
+test("37 - single quotes within double quotes", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -568,7 +568,7 @@ test(`37 - single quotes within double quotes`, () => {
   });
 });
 
-test(`38 - plural`, () => {
+test("38 - plural", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -583,7 +583,7 @@ test(`38 - plural`, () => {
   });
 });
 
-test(`39 - single quote in the end of a word`, () => {
+test("39 - single quote in the end of a word", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -597,7 +597,7 @@ test(`39 - single quote in the end of a word`, () => {
   });
 });
 
-test(`40 - single quote in the front of a word`, () => {
+test("40 - single quote in the front of a word", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -612,7 +612,7 @@ test(`40 - single quote in the front of a word`, () => {
   });
 });
 
-test(`41 - single quote in the front of a word plus in the middle`, () => {
+test("41 - single quote in the front of a word plus in the middle", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -627,7 +627,7 @@ test(`41 - single quote in the front of a word plus in the middle`, () => {
   });
 });
 
-test(`42 - single quote in the front of a word plus in the middle`, () => {
+test("42 - single quote in the front of a word plus in the middle", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -642,7 +642,7 @@ test(`42 - single quote in the front of a word plus in the middle`, () => {
   });
 });
 
-test(`43 - single quote in the front of a word plus in the middle`, () => {
+test("43 - single quote in the front of a word plus in the middle", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -657,7 +657,7 @@ test(`43 - single quote in the front of a word plus in the middle`, () => {
   });
 });
 
-test(`44 - single quote in the front of a string`, () => {
+test("44 - single quote in the front of a string", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -672,7 +672,7 @@ test(`44 - single quote in the front of a string`, () => {
   });
 });
 
-test(`45 - single quote in the front of a string`, () => {
+test("45 - single quote in the front of a string", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -687,7 +687,7 @@ test(`45 - single quote in the front of a string`, () => {
   });
 });
 
-test(`46 - single quote in the front of a string`, () => {
+test("46 - single quote in the front of a string", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -708,7 +708,7 @@ test(`46 - single quote in the front of a string`, () => {
   });
 });
 
-test(`47 - single quote in the front of a string`, () => {
+test("47 - single quote in the front of a string", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -729,7 +729,7 @@ test(`47 - single quote in the front of a string`, () => {
   });
 });
 
-test(`48 - single quotes wrapping word, ending in the middle`, () => {
+test("48 - single quotes wrapping word, ending in the middle", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -744,7 +744,7 @@ test(`48 - single quotes wrapping word, ending in the middle`, () => {
   });
 });
 
-test(`49 - single quotes wrapping a word, ending in between words`, () => {
+test("49 - single quotes wrapping a word, ending in between words", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -759,7 +759,7 @@ test(`49 - single quotes wrapping a word, ending in between words`, () => {
   });
 });
 
-test(`50 - single quote on years`, () => {
+test("50 - single quote on years", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -774,7 +774,7 @@ test(`50 - single quote on years`, () => {
   });
 });
 
-test(`51 - inches`, () => {
+test("51 - inches", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -789,7 +789,7 @@ test(`51 - inches`, () => {
   });
 });
 
-test(`52 - word wrapped with double quotes in the end of a string`, () => {
+test("52 - word wrapped with double quotes in the end of a string", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -803,7 +803,7 @@ test(`52 - word wrapped with double quotes in the end of a string`, () => {
   });
 });
 
-test(`53 - plural`, () => {
+test("53 - plural", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -818,7 +818,7 @@ test(`53 - plural`, () => {
   });
 });
 
-test(`54 - plural`, () => {
+test("54 - plural", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -840,7 +840,7 @@ test(`54 - plural`, () => {
 });
 
 // Example from https://practicaltypography.com/apostrophes.html
-test(`55 - Buttericks example - on`, () => {
+test("55 - Buttericks example - on", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -855,7 +855,7 @@ test(`55 - Buttericks example - on`, () => {
   });
 });
 
-test(`56 - Buttericks example - off`, () => {
+test("56 - Buttericks example - off", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: false,
@@ -870,7 +870,7 @@ test(`56 - Buttericks example - off`, () => {
   });
 });
 
-test(`57 - Hawaii - sets okina #1`, () => {
+test("57 - Hawaii - sets okina #1", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -885,7 +885,7 @@ test(`57 - Hawaii - sets okina #1`, () => {
   });
 });
 
-test(`58 - Hawaii - sets okina #2`, () => {
+test("58 - Hawaii - sets okina #2", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,

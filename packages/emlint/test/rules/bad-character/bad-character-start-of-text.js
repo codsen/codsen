@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two START OF TEXT characters`, () => {
+test("01 - detects two START OF TEXT characters", () => {
   let str = "\u0002dlkgjld\u0002j";
   let linter = new Linter();
   let messages = linter.verify(str, {

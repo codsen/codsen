@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no charset, error level 0`, () => {
-  let str = `<a><form>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no charset, error level 0`, () => {
+  let str = "<a><form>"; // <---- deliberately a tag names of both kinds, suitable and unsuitable
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no charset, error le
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no charset, error level 1`, () => {
-  let str = `<a><form>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no charset, error level 1`, () => {
+  let str = "<a><form>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no charset, error le
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no charset, error level 2`, () => {
-  let str = `<a><form>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no charset, error level 2`, () => {
+  let str = "<a><form>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no charset, error le
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
-  let str = `<a charset='utf-8'>`; // <-- notice single quotes
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = "<a charset='utf-8'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -61,8 +61,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div charset='utf-8'>`;
+test(`05 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = "<div charset='utf-8'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -81,8 +81,8 @@ test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz charset="utf-8" yyy>`;
+test(`06 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz charset="utf-8" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -104,8 +104,8 @@ test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<link charset="utf-z">`;
+test(`07 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<link charset="utf-z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -119,14 +119,14 @@ test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
       ruleId: "attribute-validate-charset",
       idxFrom: 15,
       idxTo: 20,
-      message: `Unrecognised value: "utf-z".`,
+      message: 'Unrecognised value: "utf-z".',
       fix: null,
     },
   ]);
 });
 
-test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - multiple, with space`, () => {
-  let str = `<a charset="utf-7, utf-8">`;
+test(`08 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - multiple, with space`, () => {
+  let str = '<a charset="utf-7, utf-8">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -140,14 +140,14 @@ test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - multiple, with space
       ruleId: "attribute-validate-charset",
       idxFrom: 12,
       idxTo: 24,
-      message: `Unrecognised value: "utf-7, utf-8".`,
+      message: 'Unrecognised value: "utf-7, utf-8".',
       fix: null,
     },
   ]);
 });
 
-test(`09 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - multiple, without space`, () => {
-  let str = `<a charset="utf-7,utf-8">`;
+test(`09 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - multiple, without space`, () => {
+  let str = '<a charset="utf-7,utf-8">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -161,14 +161,14 @@ test(`09 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - multiple, without sp
       ruleId: "attribute-validate-charset",
       idxFrom: 12,
       idxTo: 23,
-      message: `Unrecognised value: "utf-7,utf-8".`,
+      message: 'Unrecognised value: "utf-7,utf-8".',
       fix: null,
     },
   ]);
 });
 
-test(`10 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - empty`, () => {
-  let str = `<script charset="">`;
+test(`10 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - empty`, () => {
+  let str = '<script charset="">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -182,7 +182,7 @@ test(`10 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - empty`, () => {
       ruleId: "attribute-validate-charset",
       idxFrom: 8,
       idxTo: 18,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);

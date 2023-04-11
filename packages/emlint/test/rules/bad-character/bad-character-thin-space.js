@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two THIN SPACE characters`, () => {
+test("01 - detects two THIN SPACE characters", () => {
   let str = "\u2009dlkgjld\u2009j";
   let linter = new Linter();
   let messages = linter.verify(str, {

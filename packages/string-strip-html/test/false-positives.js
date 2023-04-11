@@ -132,77 +132,77 @@ test("17 - false positives - consecutive tags", () => {
 });
 
 test("18 - digit is the first character following the opening bracket, quote", () => {
-  let input = `"<5 text here`;
+  let input = '"<5 text here';
   equal(stripHtml(input).result, input, "18.01");
 });
 
 test("19 - digit is the first character following the opening bracket", () => {
-  let input = `<5 text here`;
+  let input = "<5 text here";
   equal(stripHtml(input).result, input, "19.01");
 });
 
 test("20 - digit is the first character following the opening bracket", () => {
-  let input = `< 5 text here`;
+  let input = "< 5 text here";
   equal(stripHtml(input).result, input, "20.01");
 });
 
 test("21 - numbers compared", () => {
-  let input = `1 < 5 for sure`;
+  let input = "1 < 5 for sure";
   equal(stripHtml(input).result, input, "21.01");
 });
 
 test("22 - numbers compared, tight", () => {
-  let input = `1 <5 for sure`;
+  let input = "1 <5 for sure";
   equal(stripHtml(input).result, input, "22.01");
 });
 
 test("23 - number letter", () => {
-  let input = `aaa 1 < 5s bbb`;
+  let input = "aaa 1 < 5s bbb";
   equal(stripHtml(input).result, input, "23.01");
 });
 
 test("24 - number letter, tight", () => {
-  let input = `aaa 1 <5s bbb`;
+  let input = "aaa 1 <5s bbb";
   equal(stripHtml(input).result, input, "24.01");
 });
 
 test("25 - number letter, tight around", () => {
-  let input = `aaa 1<5s bbb`;
+  let input = "aaa 1<5s bbb";
   equal(stripHtml(input).result, input, "25.01");
 });
 
 test("26 - tag name with closing bracket in front", () => {
-  let input = `>table`;
+  let input = ">table";
   equal(stripHtml(input).result, input, "26.01");
 });
 
 test("27", () => {
-  let input = `{"Operator":"<=","IsValid":true}`;
+  let input = '{"Operator":"<=","IsValid":true}';
   equal(stripHtml(input).result, input, "27.01");
 });
 
 test("28", () => {
-  let input = `<a">`;
+  let input = '<a">';
   equal(stripHtml(input).result, "", "28.01");
 });
 
 test("29", () => {
-  let input = `<a"">`;
+  let input = '<a"">';
   equal(stripHtml(input).result, "", "29.01");
 });
 
 test("30", () => {
-  let input = `<a'>`;
+  let input = "<a'>";
   equal(stripHtml(input).result, "", "30.01");
 });
 
 test("31", () => {
-  let input = `<a''>`;
+  let input = "<a''>";
   equal(stripHtml(input).result, "", "31.01");
 });
 
 test("32", () => {
-  let input = `H4<bE77]7oQL`;
+  let input = "H4<bE77]7oQL";
   equal(stripHtml(input).result, "H4", "32.01");
 });
 

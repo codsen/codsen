@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no tabindex, error level 0`, () => {
-  let str = `<textarea>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no tabindex, error level 0`, () => {
+  let str = "<textarea>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no tabindex, error l
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no tabindex, error level 1`, () => {
-  let str = `<textarea>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no tabindex, error level 1`, () => {
+  let str = "<textarea>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no tabindex, error l
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no tabindex, error level 2`, () => {
-  let str = `<textarea>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no tabindex, error level 2`, () => {
+  let str = "<textarea>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no tabindex, error l
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy tabindex`, () => {
-  let str = `<textarea tabindex='1'>`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy tabindex`, () => {
+  let str = "<textarea tabindex='1'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -61,21 +61,21 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy tabindex`, (
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<textarea tabindex=" 1">`;
+test(`05 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = '<textarea tabindex=" 1">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-tabindex": 2,
     },
   });
-  equal(applyFixes(str, messages), `<textarea tabindex="1">`, "05.01");
+  equal(applyFixes(str, messages), '<textarea tabindex="1">', "05.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-tabindex",
       idxFrom: 20,
       idxTo: 21,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[20, 21]],
       },
@@ -83,21 +83,21 @@ test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   ]);
 });
 
-test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<textarea tabindex="1 ">`;
+test(`06 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = '<textarea tabindex="1 ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-tabindex": 2,
     },
   });
-  equal(applyFixes(str, messages), `<textarea tabindex="1">`, "06.01");
+  equal(applyFixes(str, messages), '<textarea tabindex="1">', "06.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-tabindex",
       idxFrom: 21,
       idxTo: 22,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[21, 22]],
       },
@@ -105,21 +105,21 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`, () => {
-  let str = `<textarea tabindex="  9  ">`;
+test(`07 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around`, () => {
+  let str = '<textarea tabindex="  9  ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-tabindex": 2,
     },
   });
-  equal(applyFixes(str, messages), `<textarea tabindex="9">`, "07.01");
+  equal(applyFixes(str, messages), '<textarea tabindex="9">', "07.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-tabindex",
       idxFrom: 20,
       idxTo: 25,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [20, 22],
@@ -130,8 +130,8 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<textarea tabindex="  \t">`;
+test(`08 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<textarea tabindex="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -145,7 +145,7 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-tabindex",
       idxFrom: 20,
       idxTo: 23,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -154,8 +154,8 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`09 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - string as value`, () => {
-  let str = `<textarea tabindex="z">`;
+test(`09 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - string as value`, () => {
+  let str = '<textarea tabindex="z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -169,14 +169,14 @@ test(`09 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - string as value`, () => {
       ruleId: "attribute-validate-tabindex",
       idxFrom: 20,
       idxTo: 21,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`10 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - dot as value`, () => {
-  let str = `<textarea tabindex=".">`;
+test(`10 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - dot as value`, () => {
+  let str = '<textarea tabindex=".">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -190,14 +190,14 @@ test(`10 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - dot as value`, () => {
       ruleId: "attribute-validate-tabindex",
       idxFrom: 20,
       idxTo: 21,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`11 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - a rational number`, () => {
-  let str = `<textarea tabindex="1.5">`;
+test(`11 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - a rational number`, () => {
+  let str = '<textarea tabindex="1.5">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -211,14 +211,14 @@ test(`11 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - a rational number`, () =>
       ruleId: "attribute-validate-tabindex",
       idxFrom: 21, // <--- tabindexs at the first non-digit char
       idxTo: 23,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`12 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, () => {
-  let str = `<textarea tabindex="1px">`;
+test(`12 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - with units`, () => {
+  let str = '<textarea tabindex="1px">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -233,14 +233,14 @@ test(`12 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, () => {
       ruleId: "attribute-validate-tabindex",
       idxFrom: 21, // <--- tabindexs at the first non-digit char
       idxTo: 23,
-      message: `Tabbing order number should not be in pixels.`,
+      message: "Tabbing order number should not be in pixels.",
       fix: null,
     },
   ]);
 });
 
-test(`13 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - zero`, () => {
-  let str = `<textarea tabindex="0">`;
+test(`13 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - zero`, () => {
+  let str = '<textarea tabindex="0">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -251,8 +251,8 @@ test(`13 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - zero`, () => {
   equal(messages, [], "13.02");
 });
 
-test(`14 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - padded with zero, textarea`, () => {
-  let str = `<textarea tabindex="01">`;
+test(`14 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - padded with zero, textarea`, () => {
+  let str = '<textarea tabindex="01">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -266,14 +266,14 @@ test(`14 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - padded with zero, textare
       ruleId: "attribute-validate-tabindex",
       idxFrom: 20,
       idxTo: 22,
-      message: `Number padded with zero.`,
+      message: "Number padded with zero.",
       fix: null,
     },
   ]);
 });
 
-test(`15 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - padded with zero, textarea`, () => {
-  let str = `<textarea tabindex="32768">`;
+test(`15 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - padded with zero, textarea`, () => {
+  let str = '<textarea tabindex="32768">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -287,7 +287,7 @@ test(`15 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - padded with zero, textare
       ruleId: "attribute-validate-tabindex",
       idxFrom: 20,
       idxTo: 25,
-      message: `Maximum, 32767 exceeded.`,
+      message: "Maximum, 32767 exceeded.",
       fix: null,
     },
   ]);
@@ -296,8 +296,8 @@ test(`15 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - padded with zero, textare
 // 04. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`16 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div tabindex="9">`;
+test(`16 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div tabindex="9">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -316,8 +316,8 @@ test(`16 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`17 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz tabindex="0" yyy>`;
+test(`17 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz tabindex="0" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {

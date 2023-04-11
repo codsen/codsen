@@ -9,17 +9,17 @@ import { det, mixer } from "../t-util/util.js";
 // 01. main functionality
 // ==============================
 
-test(`01 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb changes the case - baseline`, () => {
+test(`01 - ${`\u001b[${33}m${"change letter case"}\u001b[${39}m`} - opts.cb changes the case - baseline`, () => {
   equal(
-    det(ok, not, 0, `aAa\n\nbBb\n\ncCc`).res,
+    det(ok, not, 0, "aAa\n\nbBb\n\ncCc").res,
     "aAa<br/>\n<br/>\nbBb<br/>\n<br/>\ncCc",
     "01.01"
   );
 });
 
-test(`02 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb changes the case - turns into an uppercase`, () => {
+test(`02 - ${`\u001b[${33}m${"change letter case"}\u001b[${39}m`} - opts.cb changes the case - turns into an uppercase`, () => {
   equal(
-    det(ok, not, 0, `aAa\n\nbBb\n\ncCc`, {
+    det(ok, not, 0, "aAa\n\nbBb\n\ncCc", {
       cb: (str) => str.toUpperCase(),
     }).res,
     "AAA<br/>\n<br/>\nBBB<br/>\n<br/>\nCCC",
@@ -27,9 +27,9 @@ test(`02 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb chan
   );
 });
 
-test(`03 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb changes the case - baseline`, () => {
+test(`03 - ${`\u001b[${33}m${"change letter case"}\u001b[${39}m`} - opts.cb changes the case - baseline`, () => {
   equal(
-    det1(`<b>aAa\n\nbBb\n\ncCc</b>`, {
+    det1("<b>aAa\n\nbBb\n\ncCc</b>", {
       cb: (str) => str.toUpperCase(),
     }).res,
     "<b>AAA<br/>\n<br/>\nBBB<br/>\n<br/>\nCCC</b>",
@@ -37,28 +37,28 @@ test(`03 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - opts.cb chan
   );
 });
 
-test(`04 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip HTML option`, () => {
+test(`04 - ${`\u001b[${33}m${"change letter case"}\u001b[${39}m`} - with strip HTML option`, () => {
   mixer().forEach((opt, n) => {
     equal(
       det(
         ok,
         not,
         n,
-        `<b>aBc</b>`,
+        "<b>aBc</b>",
         Object.assign(opt, {
           cb: (str) => str.toUpperCase(),
         })
       ).res,
       "<b>ABC</b>",
-      `04.01`
+      "04.01"
     );
   });
 });
 
-test(`05 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip HTML option`, () => {
+test(`05 - ${`\u001b[${33}m${"change letter case"}\u001b[${39}m`} - with strip HTML option`, () => {
   // warmup:
   equal(
-    det1(`AbC<z>dEf`, {
+    det1("AbC<z>dEf", {
       stripHtml: true,
       cb: (str) => str.toUpperCase(),
     }).res,
@@ -74,18 +74,18 @@ test(`05 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip H
         ok,
         not,
         n,
-        `AbC<z>dEf`,
+        "AbC<z>dEf",
         Object.assign(opt, {
           cb: (str) => str.toUpperCase(),
         })
       ).res,
       "ABC DEF",
-      `05.02`
+      "05.02"
     );
   });
 });
 
-test(`06 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip HTML option`, () => {
+test(`06 - ${`\u001b[${33}m${"change letter case"}\u001b[${39}m`} - with strip HTML option`, () => {
   equal(
     det1(
       `

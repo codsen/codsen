@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no content, error level 0`, () => {
-  let str = `<meta>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no content, error level 0`, () => {
+  let str = "<meta>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no content, error le
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no content, error level 1`, () => {
-  let str = `<meta>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no content, error level 1`, () => {
+  let str = "<meta>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no content, error le
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no content, error level 2`, () => {
-  let str = `<meta>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no content, error level 2`, () => {
+  let str = "<meta>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,9 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no content, error le
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
-  let str = `<meta http-equiv="refresh" content="3;url=https://www.mozilla.org">`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
+  let str =
+    '<meta http-equiv="refresh" content="3;url=https://www.mozilla.org">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -61,8 +62,9 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div http-equiv="refresh" content="3;url=https://www.mozilla.org">`;
+test(`05 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str =
+    '<div http-equiv="refresh" content="3;url=https://www.mozilla.org">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -81,8 +83,9 @@ test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz http-equiv="refresh" content="3;url=https://www.mozilla.org">`;
+test(`06 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str =
+    '<zzz http-equiv="refresh" content="3;url=https://www.mozilla.org">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {

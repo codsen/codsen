@@ -9,7 +9,7 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. no config
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - correct - off`, () => {
+test(`01 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - correct - off`, () => {
   let str = `<style>
   @media screen and (color), projection and (color) {zzz}
 </style>`;
@@ -22,7 +22,7 @@ test(`01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - correct - off`, () =>
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - correct - warn`, () => {
+test(`02 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - correct - warn`, () => {
   let str = `<style>
   @media screen and (color), projection and (color) {zzz}
 </style>`;
@@ -35,7 +35,7 @@ test(`02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - correct - warn`, () =
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - correct - error`, () => {
+test(`03 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - correct - error`, () => {
   let str = `<style>
   @media screen and (color), projection and (color) {zzz}
 </style>`;
@@ -48,7 +48,7 @@ test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - correct - error`, () 
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - screeen`, () => {
+test(`04 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - screeen`, () => {
   let str = `<style>
   @media screeen and (color), projection and (color) {zzz}
 </style>`;
@@ -67,7 +67,7 @@ test(`04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - screeen`, () => {
         severity: 2,
         idxFrom: 17,
         idxTo: 24,
-        message: `Unrecognised "screeen".`,
+        message: 'Unrecognised "screeen".',
         fix: null,
       },
     ],
@@ -78,7 +78,7 @@ test(`04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - screeen`, () => {
 // 02. False positives
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${33}m${`false positives`}\u001b[${39}m`} - not media`, () => {
+test(`05 - ${`\u001b[${33}m${"false positives"}\u001b[${39}m`} - not media`, () => {
   let str = `<style>
   @supports screeen and (color), projection and (color) {zzz}
 </style>`;

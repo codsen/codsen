@@ -7,7 +7,7 @@ import { stri } from "../dist/stristri.esm.js";
 // strips both HTML and Nunjucks, leaves text only:
 assert.equal(
   stri(
-    `<html><div>The price is{% if data.price > 100 %} high{% endif %}</div>`,
+    "<html><div>The price is{% if data.price > 100 %} high{% endif %}</div>",
     {
       html: true,
       css: true,

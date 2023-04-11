@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level 0`, () => {
-  let str = `<html><p>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no lang, error level 0`, () => {
+  let str = "<html><p>"; // <---- deliberately a tag names of both kinds, suitable and unsuitable
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level 1`, () => {
-  let str = `<html><p>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no lang, error level 1`, () => {
+  let str = "<html><p>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level 2`, () => {
-  let str = `<html><p>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no lang, error level 2`, () => {
+  let str = "<html><p>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,7 +46,7 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no lang, error level
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
   let healthyValues = [
     "fr-Brai",
     "ja-Kana",
@@ -77,7 +77,7 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
 // -----------------------------------------------------------------------------
 
 // <applet lang="de">
-test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
+test(`05 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
   let badParentTags = [
     "applet",
     "base",
@@ -117,8 +117,8 @@ test(`05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   });
 });
 
-test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - another recognised tag`, () => {
-  let str = `<script lang="de">`;
+test(`06 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - another recognised tag`, () => {
+  let str = '<script lang="de">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -142,8 +142,8 @@ test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - another recognised tag`,
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`07 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div lang="a-DE">`;
+test(`07 - ${`\u001b[${34}m${"value"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div lang="a-DE">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -157,7 +157,7 @@ test(`07 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - recognised tag`, () => {
       ruleId: "attribute-validate-lang",
       idxFrom: 11,
       idxTo: 15,
-      message: `Starts with singleton, "a".`,
+      message: 'Starts with singleton, "a".',
       fix: null,
     },
   ]);
@@ -165,21 +165,21 @@ test(`07 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - recognised tag`, () => {
   equal(messages.length, 1, "07.02");
 });
 
-test(`08 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - still catches whitespace on legit`, () => {
-  let str = `<a lang=" de">`;
+test(`08 - ${`\u001b[${34}m${"value"}\u001b[${39}m`} - still catches whitespace on legit`, () => {
+  let str = '<a lang=" de">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-lang": 2,
     },
   });
-  equal(applyFixes(str, messages), `<a lang="de">`, "08.01");
+  equal(applyFixes(str, messages), '<a lang="de">', "08.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-lang",
       idxFrom: 9,
       idxTo: 10,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[9, 10]],
       },
@@ -189,23 +189,23 @@ test(`08 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - still catches whitespace 
   equal(messages.length, 1, "08.02");
 });
 
-test(`09 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and whitespace`, () => {
+test(`09 - ${`\u001b[${34}m${"value"}\u001b[${39}m`} - invalid language tag and whitespace`, () => {
   // notice wrong tag name case - it won't get reported because
   // that's different rule and we didn't ask for it
-  let str = `<A lang=" 123 ">`;
+  let str = '<A lang=" 123 ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-lang": 2,
     },
   });
-  equal(applyFixes(str, messages), `<A lang="123">`, "09.01");
+  equal(applyFixes(str, messages), '<A lang="123">', "09.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-lang",
       idxFrom: 9,
       idxTo: 14,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [9, 10],
@@ -217,7 +217,7 @@ test(`09 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and 
       ruleId: "attribute-validate-lang",
       idxFrom: 10,
       idxTo: 13,
-      message: `Unrecognised language subtag, "123".`,
+      message: 'Unrecognised language subtag, "123".',
       fix: null,
     },
   ]);
@@ -225,8 +225,8 @@ test(`09 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and 
   equal(messages.length, 2, "09.02");
 });
 
-test(`10 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and whitespace + tag name case`, () => {
-  let str = `<A lang=" 123 ">`;
+test(`10 - ${`\u001b[${34}m${"value"}\u001b[${39}m`} - invalid language tag and whitespace + tag name case`, () => {
+  let str = '<A lang=" 123 ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -234,7 +234,7 @@ test(`10 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and 
       "tag-name-case": 2, // <--------------- !
     },
   });
-  equal(applyFixes(str, messages), `<a lang="123">`, "10.01");
+  equal(applyFixes(str, messages), '<a lang="123">', "10.01");
   compare(ok, messages, [
     {
       ruleId: "tag-name-case",
@@ -249,7 +249,7 @@ test(`10 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and 
       ruleId: "attribute-validate-lang",
       idxFrom: 9,
       idxTo: 14,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [9, 10],
@@ -261,7 +261,7 @@ test(`10 - ${`\u001b[${34}m${`value`}\u001b[${39}m`} - invalid language tag and 
       ruleId: "attribute-validate-lang",
       idxFrom: 10,
       idxTo: 13,
-      message: `Unrecognised language subtag, "123".`,
+      message: 'Unrecognised language subtag, "123".',
       fix: null,
     },
   ]);

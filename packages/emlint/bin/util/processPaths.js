@@ -29,7 +29,7 @@ function readUpdateAndWriteOverFile(receivedPath) {
     )
     .then((contents) => {
       console.log(
-        `032 readUpdateAndWriteOverFile(): ${`\u001b[${33}m${`linting results:`}\u001b[${39}m`} ${JSON.stringify(
+        `032 readUpdateAndWriteOverFile(): ${`\u001b[${33}m${"linting results:"}\u001b[${39}m`} ${JSON.stringify(
           contents,
           null,
           4
@@ -39,7 +39,7 @@ function readUpdateAndWriteOverFile(receivedPath) {
     })
     .catch((err) => {
       console.log(
-        `042 ERROR! ${`\u001b[${33}m${`err`}\u001b[${39}m`} = ${JSON.stringify(
+        `042 ERROR! ${`\u001b[${33}m${"err"}\u001b[${39}m`} = ${JSON.stringify(
           err,
           null,
           4
@@ -50,7 +50,7 @@ function readUpdateAndWriteOverFile(receivedPath) {
 
 function processPaths(paths) {
   console.log(
-    `053 processPaths received: ${`\u001b[${33}m${`paths`}\u001b[${39}m`} = ${JSON.stringify(
+    `053 processPaths received: ${`\u001b[${33}m${"paths"}\u001b[${39}m`} = ${JSON.stringify(
       paths,
       null,
       4
@@ -60,7 +60,7 @@ function processPaths(paths) {
     globby(paths)
       .then((oneOfpaths) => {
         console.log(
-          `063 ${`\u001b[${33}m${`oneOfpaths`}\u001b[${39}m`} = ${JSON.stringify(
+          `063 ${`\u001b[${33}m${"oneOfpaths"}\u001b[${39}m`} = ${JSON.stringify(
             oneOfpaths,
             null,
             4

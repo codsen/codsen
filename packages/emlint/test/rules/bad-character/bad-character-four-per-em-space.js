@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two FOUR-PER-EM SPACE characters`, () => {
+test("01 - detects two FOUR-PER-EM SPACE characters", () => {
   let str = "\u2005dlkgjld\u2005j";
   let linter = new Linter();
   let messages = linter.verify(str, {

@@ -9,7 +9,7 @@ const { matchLayerLast } = util;
 // match last
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - no layers given`, () => {
+test(`01 - ${`\u001b[${36}m${"match last"}\u001b[${39}m`} - no layers given`, () => {
   let valueToMatch = "${";
   let layers = [];
   let matchFirstInstead;
@@ -20,8 +20,8 @@ test(`01 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - no layers given`, ()
   );
 });
 
-test(`02 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - simple layer is matching`, () => {
-  let valueToMatch = `"`;
+test(`02 - ${`\u001b[${36}m${"match last"}\u001b[${39}m`} - simple layer is matching`, () => {
+  let valueToMatch = '"';
   let layers = [
     {
       type: "simple",
@@ -43,7 +43,7 @@ test(`02 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - simple layer is matc
   );
 });
 
-test(`03 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - esp layer is matching`, () => {
+test(`03 - ${`\u001b[${36}m${"match last"}\u001b[${39}m`} - esp layer is matching`, () => {
   let valueToMatch = "%}";
   let layers = [
     {
@@ -67,7 +67,7 @@ test(`03 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - esp layer is matchin
   );
 });
 
-test(`04 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - esp layer is not matching`, () => {
+test(`04 - ${`\u001b[${36}m${"match last"}\u001b[${39}m`} - esp layer is not matching`, () => {
   let valueToMatch = "zz";
   let layers = [
     {
@@ -91,7 +91,7 @@ test(`04 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - esp layer is not mat
   );
 });
 
-test(`05 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - extra dash - Nunjucks collapse instruction`, () => {
+test(`05 - ${`\u001b[${36}m${"match last"}\u001b[${39}m`} - extra dash - Nunjucks collapse instruction`, () => {
   let valueToMatch = "-%}";
   let layers = [
     {
@@ -118,7 +118,7 @@ test(`05 - ${`\u001b[${36}m${`match last`}\u001b[${39}m`} - extra dash - Nunjuck
 // match first
 // -----------------------------------------------------------------------------
 
-test(`06 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - no layers given`, () => {
+test(`06 - ${`\u001b[${33}m${"match first"}\u001b[${39}m`} - no layers given`, () => {
   let valueToMatch = "${";
   let layers = [];
   let matchFirstInstead = true;
@@ -129,8 +129,8 @@ test(`06 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - no layers given`, (
   );
 });
 
-test(`07 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - simple layer is matching`, () => {
-  let valueToMatch = `"`;
+test(`07 - ${`\u001b[${33}m${"match first"}\u001b[${39}m`} - simple layer is matching`, () => {
+  let valueToMatch = '"';
   let layers = [
     {
       type: "simple",
@@ -151,7 +151,7 @@ test(`07 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - simple layer is mat
   );
 });
 
-test(`08 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - esp layer is matching`, () => {
+test(`08 - ${`\u001b[${33}m${"match first"}\u001b[${39}m`} - esp layer is matching`, () => {
   let valueToMatch = "%}";
   let layers = [
     {
@@ -175,7 +175,7 @@ test(`08 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - esp layer is matchi
   );
 });
 
-test(`09 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - esp layer is not matching`, () => {
+test(`09 - ${`\u001b[${33}m${"match first"}\u001b[${39}m`} - esp layer is not matching`, () => {
   let valueToMatch = "zz";
   let layers = [
     {
@@ -199,7 +199,7 @@ test(`09 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - esp layer is not ma
   );
 });
 
-test(`10 - ${`\u001b[${33}m${`match first`}\u001b[${39}m`} - esp layer is 1 char less`, () => {
+test(`10 - ${`\u001b[${33}m${"match first"}\u001b[${39}m`} - esp layer is 1 char less`, () => {
   let valueToMatch = "-%}";
   let layers = [
     {

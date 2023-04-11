@@ -8,7 +8,7 @@ import fixTypography from "../dist/remark-typography.esm.js";
 
 // -----------------------------------------------------------------------------
 
-test(`01 - code + apostrophe`, async () => {
+test("01 - code + apostrophe", async () => {
   equal(
     (
       await remark()
@@ -22,7 +22,7 @@ test(`01 - code + apostrophe`, async () => {
   );
 });
 
-test(`02 - code + apostrophe, widows kick in`, async () => {
+test("02 - code + apostrophe, widows kick in", async () => {
   equal(
     (
       await remark()

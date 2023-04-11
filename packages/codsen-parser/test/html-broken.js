@@ -8,7 +8,7 @@ import { cparser } from "../dist/codsen-parser.esm.js";
 // 01. void tags
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`void tags`}\u001b[${39}m`} - one slash in front`, () => {
+test(`01 - ${`\u001b[${36}m${"void tags"}\u001b[${39}m`} - one slash in front`, () => {
   let gatheredErr = [];
   let ast = cparser("</br>", {
     errCb: (incoming) => gatheredErr.push(incoming),
@@ -43,7 +43,7 @@ test(`01 - ${`\u001b[${36}m${`void tags`}\u001b[${39}m`} - one slash in front`, 
     gatheredErr,
     [
       {
-        ruleId: `tag-void-frontal-slash`,
+        ruleId: "tag-void-frontal-slash",
         idxFrom: 0,
         idxTo: 5,
         fix: { ranges: [[1, 2]] },

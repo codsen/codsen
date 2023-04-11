@@ -8,8 +8,8 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. one entity of the list
 // -----------------------------------------------------------------------------
 
-test(`01 - group rule`, () => {
-  let str = `abc&Intersection;def`;
+test("01 - group rule", () => {
+  let str = "abc&Intersection;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity": 2,
@@ -36,8 +36,8 @@ test(`01 - group rule`, () => {
   equal(messages.length, 1, "01.02");
 });
 
-test(`02 - exact rule`, () => {
-  let str = `abc&Intersection;def`;
+test("02 - exact rule", () => {
+  let str = "abc&Intersection;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-not-email-friendly": 1,
@@ -64,8 +64,8 @@ test(`02 - exact rule`, () => {
   equal(messages.length, 1, "02.02");
 });
 
-test(`03 - through wildcard`, () => {
-  let str = `abc&Intersection;def`;
+test("03 - through wildcard", () => {
+  let str = "abc&Intersection;def";
   let messages = verify(not, str, {
     rules: {
       all: 1,
@@ -92,8 +92,8 @@ test(`03 - through wildcard`, () => {
   equal(messages.length, 1, "03.02");
 });
 
-test(`04 - all`, () => {
-  let str = `abc&Intersection;def`;
+test("04 - all", () => {
+  let str = "abc&Intersection;def";
   let messages = verify(not, str, {
     rules: {
       all: 2,

@@ -12,31 +12,31 @@ const fn = () => {};
 // throws
 // -----------------------------------------------------------------------------
 
-test(`01 - the first input arg is wrong`, () => {
+test("01 - the first input arg is wrong", () => {
   assert.throws(() => {
     stri2();
   }, /THROW_ID_01/gm);
 });
 
-test(`02 - the first input arg is wrong`, () => {
+test("02 - the first input arg is wrong", () => {
   assert.throws(() => {
     stri2(true);
   }, /THROW_ID_01/gm);
 });
 
-test(`03 - the first input arg is wrong`, () => {
+test("03 - the first input arg is wrong", () => {
   assert.throws(() => {
     stri2(fn);
   }, /THROW_ID_01/gm);
 });
 
-test(`04 - the second input arg is wrong`, () => {
+test("04 - the second input arg is wrong", () => {
   assert.throws(() => {
     stri2("", true);
   }, /THROW_ID_02/gm);
 });
 
-test(`05 - the second input arg is wrong`, () => {
+test("05 - the second input arg is wrong", () => {
   assert.throws(() => {
     stri2("", fn);
   }, /THROW_ID_02/gm);
@@ -45,7 +45,7 @@ test(`05 - the second input arg is wrong`, () => {
 // edge cases
 // -----------------------------------------------------------------------------
 
-test(`06 - testing api directly`, () => {
+test("06 - testing api directly", () => {
   let { result, applicableOpts, templatingLang, log } = stri2("");
   assert.equal(
     { result, applicableOpts, templatingLang },
@@ -66,15 +66,15 @@ test(`06 - testing api directly`, () => {
   assert.ok(log.timeTakenInMilliseconds, "06.02");
 });
 
-test(`07`, () => {
+test("07", () => {
   assert.equal(stri2(" ").result, "", "07.01");
 });
 
-test(`08`, () => {
+test("08", () => {
   assert.equal(stri2("\n\n\n").result, "", "08.01");
 });
 
-test(`09 - ensure mixer is generating variations`, () => {
+test("09 - ensure mixer is generating variations", () => {
   assert.equal(
     mixer({}, defaults).length,
     2 **

@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no longdesc, error level 0`, () => {
-  let str = `<img class="z">`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no longdesc, error level 0`, () => {
+  let str = '<img class="z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no longdesc, error l
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no longdesc, error level 1`, () => {
-  let str = `<img class="z">`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no longdesc, error level 1`, () => {
+  let str = '<img class="z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no longdesc, error l
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no longdesc, error level 2`, () => {
-  let str = `<img class="z">`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no longdesc, error level 2`, () => {
+  let str = '<img class="z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no longdesc, error l
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
-  let str = `<frame longdesc='#w3htmlExplained'>`; // <-- notice single quotes
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = "<frame longdesc='#w3htmlExplained'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -58,8 +58,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
-  let str = `<iframe longdesc='#w3htmlExplained'>`; // <-- notice single quotes
+test(`05 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
+  let str = "<iframe longdesc='#w3htmlExplained'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -70,8 +70,9 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
   equal(messages, [], "05.02");
 });
 
-test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, () => {
-  let str = `<img src="w3html.gif" alt="W3S" width="100" height="132" longdesc="data:text/html;charset=utf-8;,%3C!DOCTYPE%20html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EDescription%20of%20the%20Logo%3C/title%3E%3C/head%3E%3Cbody%3E%3Cp%3ESome%20description%20goes%20here%3C/body%3E%3C/html%3E">`;
+test(`06 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute`, () => {
+  let str =
+    '<img src="w3html.gif" alt="W3S" width="100" height="132" longdesc="data:text/html;charset=utf-8;,%3C!DOCTYPE%20html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EDescription%20of%20the%20Logo%3C/title%3E%3C/head%3E%3Cbody%3E%3Cp%3ESome%20description%20goes%20here%3C/body%3E%3C/html%3E">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -85,8 +86,8 @@ test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute`, 
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div longdesc="#something">`;
+test(`07 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div longdesc="#something">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -105,8 +106,8 @@ test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz longdesc="#something" yyy>`;
+test(`08 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz longdesc="#something" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -128,8 +129,8 @@ test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 03. whitespace
 // -----------------------------------------------------------------------------
 
-test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`, () => {
-  let str = `<img longdesc="">`;
+test(`09 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - empty value`, () => {
+  let str = '<img longdesc="">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -143,27 +144,27 @@ test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`, () => {
       ruleId: "attribute-validate-longdesc",
       idxFrom: 5,
       idxTo: 16,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
 });
 
-test(`10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - surrounding whitespace`, () => {
-  let str = `<img longdesc=" #something ">`;
+test(`10 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - surrounding whitespace`, () => {
+  let str = '<img longdesc=" #something ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-longdesc": 2,
     },
   });
-  equal(applyFixes(str, messages), `<img longdesc="#something">`, "10.01");
+  equal(applyFixes(str, messages), '<img longdesc="#something">', "10.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-longdesc",
       idxFrom: 15,
       idxTo: 27,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [15, 16],

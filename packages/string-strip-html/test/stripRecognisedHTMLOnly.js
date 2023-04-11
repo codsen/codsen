@@ -6,14 +6,14 @@ import { stripHtml } from "./util/noLog.js";
 
 test("01 - multiple letter tag", () => {
   equal(
-    stripHtml(`<tr><zz>a</zz></tr>`, {
+    stripHtml("<tr><zz>a</zz></tr>", {
       stripRecognisedHTMLOnly: false,
     }).result,
     "a",
     "01.01"
   );
   equal(
-    stripHtml(`<tr><zz>a</zz></tr>`, {
+    stripHtml("<tr><zz>a</zz></tr>", {
       stripRecognisedHTMLOnly: true,
     }).result,
     "<zz>a</zz>",

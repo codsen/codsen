@@ -20,7 +20,7 @@ import { removeWidows } from "../dist/string-remove-widows.esm.js";
 // opts.reportProgressFunc
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - calls the progress function`, () => {
+test(`01 - ${`\u001b[${36}m${"opts.reportProgressFunc"}\u001b[${39}m`} - calls the progress function`, () => {
   let counter = 0;
   let countingFunction = () => {
     // const countingFunction = val => {
@@ -28,16 +28,16 @@ test(`01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - calls t
     counter += 1;
   };
 
-  equal(removeWidows(`aaaaaaaaaa`).res, `aaaaaaaaaa`, `01.01`);
+  equal(removeWidows("aaaaaaaaaa").res, "aaaaaaaaaa", "01.01");
   equal(
-    removeWidows(`aaaaaaaaaa`, { reportProgressFunc: null }).res,
-    `aaaaaaaaaa`,
-    `01.02`
+    removeWidows("aaaaaaaaaa", { reportProgressFunc: null }).res,
+    "aaaaaaaaaa",
+    "01.02"
   );
   equal(
-    removeWidows(`aaaaaaaaaa`, { reportProgressFunc: false }).res,
-    `aaaaaaaaaa`,
-    `01.03`
+    removeWidows("aaaaaaaaaa", { reportProgressFunc: false }).res,
+    "aaaaaaaaaa",
+    "01.03"
   );
 
   // 1. our function will mutate the counter variable:
@@ -64,10 +64,10 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
   );
 
   // 2. check the counter variable:
-  ok(counter > 95, `01.05`);
+  ok(counter > 95, "01.05");
 });
 
-test(`02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`, () => {
+test(`02 - ${`\u001b[${36}m${"opts.reportProgressFunc"}\u001b[${39}m`} - adjusted from-to range`, () => {
   let gather = [];
   let countingFunction = (val) => {
     gather.push(val);

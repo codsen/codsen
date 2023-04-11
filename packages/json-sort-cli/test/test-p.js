@@ -106,7 +106,7 @@ test("02 - already sorted package.json", async () => {
 
 test("03 - empty array as package.json", async () => {
   let tempFolder = temporaryDirectory();
-  let source = `[]\n`;
+  let source = "[]\n";
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
   let pathOfTheTestfile = path.join(tempFolder, "package.json");

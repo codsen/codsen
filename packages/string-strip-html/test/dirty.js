@@ -440,7 +440,7 @@ test("24 - multiple incomplete attributes", () => {
 });
 
 test("25 - multiple incomplete attributes", () => {
-  let input = `a<article anything= whatever=>b`;
+  let input = "a<article anything= whatever=>b";
   equal(
     stripHtml(input, {
       ignoreTags: ["article"],
@@ -924,7 +924,7 @@ test("73 - multiple quotes in the attributes - mismatching quotes only - ranged"
 
 test("74 - multiple quotes in the attributes - crazy messed up - normal", () => {
   equal(
-    stripHtml(`aaaaaaa<div class= =='  'zzzz" " ">x</div>bbbbbbbb`).result,
+    stripHtml('aaaaaaa<div class= ==\'  \'zzzz" " ">x</div>bbbbbbbb').result,
     "aaaaaaa x bbbbbbbb",
     "74.01"
   );
@@ -1237,7 +1237,7 @@ test("123 - Alvaro's #1 - DOCTYPE attr's", () => {
   };
   equal(
     stripHtml(
-      `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">`,
+      '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
       {
         cb,
       }
@@ -1280,7 +1280,7 @@ test("124 - Alvaro's #2", () => {
     o.rangesArr.push(o.proposedReturn);
   };
   let { result } = stripHtml(
-    `<script>a.a || a.a('<script a="/a/a"><\\/script>')</script>`,
+    "<script>a.a || a.a('<script a=\"/a/a\"><\\/script>')</script>",
     { cb }
   );
   equal(result, "", "124.01");
@@ -1334,7 +1334,7 @@ test("125 - Alvaro's #3", () => {
     gathered.push(o.tag);
     o.rangesArr.push(o.proposedReturn);
   };
-  let { result } = stripHtml(`<script><div class="{%}f{%}%}"></script>`, {
+  let { result } = stripHtml('<script><div class="{%}f{%}%}"></script>', {
     cb,
   });
   equal(result, "", "125.01");
@@ -1389,7 +1389,7 @@ test("126 - Alvaro's #4", () => {
     o.rangesArr.push(o.proposedReturn);
   };
   let { result } = stripHtml(
-    `<script><div class="a {% if(b.c == 1 || (b.c >= 2 && d[1].e > 25)){%}f{%}%}"></script>`,
+    '<script><div class="a {% if(b.c == 1 || (b.c >= 2 && d[1].e > 25)){%}f{%}%}"></script>',
     { cb }
   );
   equal(result, "", "126.01");
@@ -1443,7 +1443,7 @@ test("127 - #65, nested, minimal", () => {
     gathered.push(o.tag);
     o.rangesArr.push(o.proposedReturn);
   };
-  let { result } = stripHtml(`<a href="<b>c</b>">d</a>`, { cb });
+  let { result } = stripHtml('<a href="<b>c</b>">d</a>', { cb });
   equal(result, "d", "127.01");
   equal(
     gathered,

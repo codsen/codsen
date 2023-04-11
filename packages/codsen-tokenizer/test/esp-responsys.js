@@ -12,7 +12,7 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
 const openingCurly = "\x7B";
 
-test(`01 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - one template tag`, () => {
+test(`01 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - one template tag`, () => {
   let gathered = [];
   ct("<h1>Hi ${profile.firstName}!</h1>", {
     tagCb: (obj) => {
@@ -76,7 +76,7 @@ test(`01 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - one template tag
   );
 });
 
-test(`02 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - one attr, one tag`, () => {
+test(`02 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - one attr, one tag`, () => {
   let gathered = [];
   ct('<a href="${latestProduct.url}">${latestProduct.name}</a>!', {
     tagCb: (obj) => {
@@ -160,7 +160,7 @@ test(`02 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - one attr, one ta
   );
 });
 
-test(`03 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - if conditional minimal`, () => {
+test(`03 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - if conditional minimal`, () => {
   let gathered = [];
   ct("<#if z>x</#if>", {
     tagCb: (obj) => {
@@ -198,7 +198,7 @@ test(`03 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - if conditional m
   );
 });
 
-test(`04 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - if conditional, less than`, () => {
+test(`04 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - if conditional, less than`, () => {
   let gathered = [];
   ct("<#if product.weight < 100>Light product</#if>", {
     tagCb: (obj) => {
@@ -236,7 +236,7 @@ test(`04 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - if conditional, 
   );
 });
 
-test(`05 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - if conditional, greater than`, () => {
+test(`05 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - if conditional, greater than`, () => {
   let gathered = [];
   ct("<#if product.weight > 100>Light product</#if>", {
     tagCb: (obj) => {
@@ -274,7 +274,7 @@ test(`05 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - if conditional, 
   );
 });
 
-test(`06 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - calculation inside a value`, () => {
+test(`06 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - calculation inside a value`, () => {
   let gathered = [];
   ct("<td>${cargo.weight / 2 + 100}</td>", {
     tagCb: (obj) => {
@@ -326,7 +326,7 @@ test(`06 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - calculation insi
   );
 });
 
-test(`07 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - RPL list`, () => {
+test(`07 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - RPL list`, () => {
   let gathered = [];
   ct(
     `<ul>
@@ -467,7 +467,7 @@ test(`07 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - RPL list`, () =>
   );
 });
 
-test(`08 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - RPL if`, () => {
+test(`08 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - RPL if`, () => {
   let gathered = [];
   ct(
     `<h1>
@@ -558,7 +558,7 @@ test(`08 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - RPL if`, () => {
   );
 });
 
-test(`09 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - RPL list`, () => {
+test(`09 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - RPL list`, () => {
   let gathered = [];
   ct(
     `We have these pencils:
@@ -712,7 +712,7 @@ test(`09 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - RPL list`, () =>
   );
 });
 
-test(`10 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - RPL include`, () => {
+test(`10 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - RPL include`, () => {
   let gathered = [];
   ct(
     `<td>
@@ -765,7 +765,7 @@ test(`10 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - RPL include`, ()
   );
 });
 
-test(`11 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - RPL data`, () => {
+test(`11 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - RPL data`, () => {
   let gathered = [];
   ct(
     `<table>
@@ -1036,7 +1036,7 @@ test(`11 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - RPL data`, () =>
   );
 });
 
-test(`12 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - multiple directives`, () => {
+test(`12 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - multiple directives`, () => {
   let gathered = [];
   ct(
     `<p>We have these pencils:
@@ -1294,7 +1294,7 @@ test(`12 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - multiple directi
   );
 });
 
-test(`13 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - missing values`, () => {
+test(`13 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - missing values`, () => {
   let gathered = [];
   ct('<h1>Hi ${profile.user!"Stranger"}!</h1>', {
     tagCb: (obj) => {
@@ -1342,7 +1342,7 @@ test(`13 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - missing values`,
   );
 });
 
-test(`14 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - bracket notation`, () => {
+test(`14 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - bracket notation`, () => {
   let gathered = [];
   ct(
     '${pencil.maker.name} - ${pencil["maker"].name} - ${pencil.maker.["name"]} - ${pencil["maker"]["name"]}',
@@ -1411,7 +1411,7 @@ test(`14 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - bracket notation
   );
 });
 
-test(`15 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - expression in value`, () => {
+test(`15 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - expression in value`, () => {
   let gathered = [];
   ct('${"${name}${name}${name}${name}"}', {
     tagCb: (obj) => {
@@ -1435,7 +1435,7 @@ test(`15 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - expression in va
   );
 });
 
-test(`16 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - string concat`, () => {
+test(`16 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - string concat`, () => {
   let gathered = [];
   ct("${user + user + user + user}", {
     tagCb: (obj) => {
@@ -1459,7 +1459,7 @@ test(`16 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - string concat`, 
   );
 });
 
-test(`17 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - concat of sequences`, () => {
+test(`17 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - concat of sequences`, () => {
   let gathered = [];
   ct(
     `<#list ["Joe", "Moe"] + ["Anna", "Hannah"] as user>
@@ -1516,7 +1516,7 @@ test(`17 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - concat of sequen
   );
 });
 
-test(`18 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - brackets to be pretending part of opening`, () => {
+test(`18 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - brackets to be pretending part of opening`, () => {
   let gathered = [];
   ct("${(y/4)?int}", {
     tagCb: (obj) => {
@@ -1540,7 +1540,7 @@ test(`18 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - brackets to be p
   );
 });
 
-test(`19 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - convert to int`, () => {
+test(`19 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - convert to int`, () => {
   let gathered = [];
   ct("${(y/4)?int} - ${2.2?int} - ${2.999?int} - ${-2.2?int} - ${-2.999?int}", {
     tagCb: (obj) => {
@@ -1620,7 +1620,7 @@ test(`19 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - convert to int`,
   );
 });
 
-test(`20 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - comparison`, () => {
+test(`20 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - comparison`, () => {
   let gathered = [];
   ct(
     `<#if brand = "Mercedes">
@@ -1694,9 +1694,9 @@ test(`20 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - comparison`, () 
   );
 });
 
-test(`21 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - comment`, () => {
+test(`21 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - comment`, () => {
   let gathered = [];
-  ct(`<#-- z -->`, {
+  ct("<#-- z -->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1718,7 +1718,7 @@ test(`21 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - comment`, () => 
   );
 });
 
-test(`22 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - logical ops`, () => {
+test(`22 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - logical ops`, () => {
   let gathered = [];
   ct(
     `<#if count < 10 && color = "sports">
@@ -1806,7 +1806,7 @@ test(`22 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - logical ops`, ()
   );
 });
 
-test(`23 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - refs to a file`, () => {
+test(`23 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - refs to a file`, () => {
   let gathered = [];
   ct("${file1?upper_case?html}${file2?upper_case?html}", {
     tagCb: (obj) => {
@@ -1838,7 +1838,7 @@ test(`23 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - refs to a file`,
   );
 });
 
-test(`24 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - calling methods`, () => {
+test(`24 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - calling methods`, () => {
   let gathered = [];
   ct("${avg(3, 5)}", {
     tagCb: (obj) => {
@@ -1862,7 +1862,7 @@ test(`24 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - calling methods`
   );
 });
 
-test(`25 - ${`\u001b[${35}m${`responsys-like`}\u001b[${39}m`} - missing value test operator`, () => {
+test(`25 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - missing value test operator`, () => {
   let gathered = [];
   ct(
     `<#if xml.pens.pencil??>

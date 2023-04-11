@@ -4,13 +4,14 @@ import { strict as assert } from "assert";
 
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
-const someHtml = `<a href="https://twitter.com/loretparisi">twitter:loretparisi&nbsp;&oslash;</a>`;
+const someHtml =
+  '<a href="https://twitter.com/loretparisi">twitter:loretparisi&nbsp;&oslash;</a>';
 
 assert.equal(
   stripHtml(someHtml, {
     skipHtmlDecoding: true,
   }).result,
-  `twitter:loretparisi&nbsp;&oslash;`
+  "twitter:loretparisi&nbsp;&oslash;"
 );
 
 assert.equal(
@@ -34,5 +35,5 @@ assert.equal(
       }
     },
   }).result,
-  `https://twitter.com/loretparisi twitter:loretparisi&nbsp;&oslash;`
+  "https://twitter.com/loretparisi twitter:loretparisi&nbsp;&oslash;"
 );

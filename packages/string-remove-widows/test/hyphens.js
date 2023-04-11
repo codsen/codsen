@@ -22,7 +22,7 @@ const encodedNbsps = [encodedNbspHtml, encodedNbspCss, encodedNbspJs];
 // hyphens
 // -----------------------------------------------------------------------------
 
-test(`01 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - in front of dashes`, () => {
+test(`01 - \u001b[${31}m${"opts.hyphens"}\u001b[${39}m - in front of dashes`, () => {
   [rawMdash, rawNdash, "-"].forEach((oneOfDashes) => {
     languages.forEach((targetLanguage, i) => {
       equal(
@@ -81,7 +81,7 @@ test(`01 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - in front of dashes`, ()
   });
 });
 
-test(`02 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - hyphen is minus where currency follows`, () => {
+test(`02 - \u001b[${31}m${"opts.hyphens"}\u001b[${39}m - hyphen is minus where currency follows`, () => {
   [rawMdash, rawNdash, "-"].forEach((oneOfDashes, y) => {
     languages.forEach((targetLanguage, i) => {
       equal(
@@ -98,10 +98,10 @@ test(`02 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - hyphen is minus where c
   });
 });
 
-test(`03 - \u001b[${31}m${`opts.hyphens`}\u001b[${39}m - with ${encodedNbspHtml} and double space`, () => {
+test(`03 - \u001b[${31}m${"opts.hyphens"}\u001b[${39}m - with ${encodedNbspHtml} and double space`, () => {
   languages.forEach((targetLanguage, i) => {
     equal(
-      removeWidows(`HOORAY  &mdash;  IT&rsquo;S HERE`, {
+      removeWidows("HOORAY  &mdash;  IT&rsquo;S HERE", {
         convertEntities: true,
         hyphens: true,
         targetLanguage,

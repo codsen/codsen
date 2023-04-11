@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two CHARACTER TABULATION WITH JUSTIFICATION characters`, () => {
+test("01 - detects two CHARACTER TABULATION WITH JUSTIFICATION characters", () => {
   let str = "\u0089dlkgjld\u0089j";
   let linter = new Linter();
   let messages = linter.verify(str, {

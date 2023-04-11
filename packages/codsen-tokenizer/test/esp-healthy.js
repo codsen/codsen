@@ -12,9 +12,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // ESP tag + something, no overlap
 // -----------------------------------------------------------------------------
 
-test(`01 - only an ESP tag`, () => {
+test("01 - only an ESP tag", () => {
   let gathered = [];
-  ct(`{% zz %}`, {
+  ct("{% zz %}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -39,9 +39,9 @@ test(`01 - only an ESP tag`, () => {
   );
 });
 
-test(`02 - text and ESP tag`, () => {
+test("02 - text and ESP tag", () => {
   let gathered = [];
-  ct(`a{% zz %}`, {
+  ct("a{% zz %}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -72,9 +72,9 @@ test(`02 - text and ESP tag`, () => {
   );
 });
 
-test(`03 - text-ESP-text`, () => {
+test("03 - text-ESP-text", () => {
   let gathered = [];
-  ct(`ab {% if something %} cd`, {
+  ct("ab {% if something %} cd", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -111,9 +111,9 @@ test(`03 - text-ESP-text`, () => {
   );
 });
 
-test(`04 - tag-ESP-tag`, () => {
+test("04 - tag-ESP-tag", () => {
   let gathered = [];
-  ct(`<a>{% if something %}<b>`, {
+  ct("<a>{% if something %}<b>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -169,9 +169,9 @@ test(`04 - tag-ESP-tag`, () => {
 });
 
 // heuristically detecting tails and again new heads
-test(`05 - two Nunjucks tags, same pattern set of two, tight`, () => {
+test("05 - two Nunjucks tags, same pattern set of two, tight", () => {
   let gathered = [];
-  ct(`{%- a -%}{%- b -%}`, {
+  ct("{%- a -%}{%- b -%}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -209,9 +209,9 @@ test(`05 - two Nunjucks tags, same pattern set of two, tight`, () => {
 });
 
 // heuristically detecting tails and again new heads, this time slightly different
-test(`06 - two nunjucks tags, different pattern set of two, tight`, () => {
+test("06 - two nunjucks tags, different pattern set of two, tight", () => {
   let gathered = [];
-  ct(`{%- if count > 1 -%}{% if count > 1 %}`, {
+  ct("{%- if count > 1 -%}{% if count > 1 %}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -249,9 +249,9 @@ test(`06 - two nunjucks tags, different pattern set of two, tight`, () => {
 });
 
 // heuristically detecting tails and again new heads
-test(`07 - different set, *|zzz|*`, () => {
+test("07 - different set, *|zzz|*", () => {
   let gathered = [];
-  ct(`*|zzz|**|yyy|*`, {
+  ct("*|zzz|**|yyy|*", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -288,9 +288,9 @@ test(`07 - different set, *|zzz|*`, () => {
   );
 });
 
-test(`08 - two nunjucks tags in vicinity, minimal`, () => {
+test("08 - two nunjucks tags in vicinity, minimal", () => {
   let gathered = [];
-  ct(`{{ abc }}{% endif %}`, {
+  ct("{{ abc }}{% endif %}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -327,9 +327,9 @@ test(`08 - two nunjucks tags in vicinity, minimal`, () => {
   );
 });
 
-test(`09 - two nunjucks tags in vicinity, realistic`, () => {
+test("09 - two nunjucks tags in vicinity, realistic", () => {
   let gathered = [];
-  ct(`{% if xyz %}Abc&nbsp;{{ def }}{% else %}Abc {{ def }}{% endif %}`, {
+  ct("{% if xyz %}Abc&nbsp;{{ def }}{% else %}Abc {{ def }}{% endif %}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -414,18 +414,18 @@ test(`09 - two nunjucks tags in vicinity, realistic`, () => {
   );
 });
 
-test(`10 - nunjucks, brackets`, () => {
+test("10 - nunjucks, brackets", () => {
   [
-    `{%- if ((a | length) > 0) -%}`,
-    `{%- if ((a | length) < 0) -%}`,
-    `{%- if (a | length) > 0 and (b | length) > 0 -%}`,
-    `{%- if (a | length) < 0 and (b | length) < 0 -%}`,
-    `{%- if ((a | length) > 0) and ((b | length) > 0) -%}`,
-    `{%- if ((a | length) < 0) and ((b | length) < 0) -%}`,
-    `{%- if (((a | length) > 0) and ((b | length) > 0)) -%}`,
-    `{%- if (((a | length) < 0) and ((b | length) < 0)) -%}`,
-    `{%- if (((abc.klm and ((abc.def| length) < 5)) or ((not abc.klm) and ((abc.def| length) < 5))) and ((abc.def[0] and abc.def[0].pqr and abc.def[0].stuv and (abc.def[0].stuv == 1)) or (abc.def[1] and abc.def[1].pqr and abc.def[1].stuv and (abc.def[1].stuv == 1)))) -%}`,
-    `{%- if (((abc.klm and ((abc.def| length) > 5)) or ((not abc.klm) and ((abc.def| length) > 5))) and ((abc.def[0] and abc.def[0].pqr and abc.def[0].stuv and (abc.def[0].stuv == 1)) or (abc.def[1] and abc.def[1].pqr and abc.def[1].stuv and (abc.def[1].stuv == 1)))) -%}`,
+    "{%- if ((a | length) > 0) -%}",
+    "{%- if ((a | length) < 0) -%}",
+    "{%- if (a | length) > 0 and (b | length) > 0 -%}",
+    "{%- if (a | length) < 0 and (b | length) < 0 -%}",
+    "{%- if ((a | length) > 0) and ((b | length) > 0) -%}",
+    "{%- if ((a | length) < 0) and ((b | length) < 0) -%}",
+    "{%- if (((a | length) > 0) and ((b | length) > 0)) -%}",
+    "{%- if (((a | length) < 0) and ((b | length) < 0)) -%}",
+    "{%- if (((abc.klm and ((abc.def| length) < 5)) or ((not abc.klm) and ((abc.def| length) < 5))) and ((abc.def[0] and abc.def[0].pqr and abc.def[0].stuv and (abc.def[0].stuv == 1)) or (abc.def[1] and abc.def[1].pqr and abc.def[1].stuv and (abc.def[1].stuv == 1)))) -%}",
+    "{%- if (((abc.klm and ((abc.def| length) > 5)) or ((not abc.klm) and ((abc.def| length) > 5))) and ((abc.def[0] and abc.def[0].pqr and abc.def[0].stuv and (abc.def[0].stuv == 1)) or (abc.def[1] and abc.def[1].pqr and abc.def[1].stuv and (abc.def[1].stuv == 1)))) -%}",
   ].forEach((input) => {
     let gathered = [];
     ct(input, {

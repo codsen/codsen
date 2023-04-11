@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two ZERO WIDTH NO-BREAK SPACE characters`, () => {
+test("01 - detects two ZERO WIDTH NO-BREAK SPACE characters", () => {
   let str = "\uFEFFdlkgjld\uFEFFj";
   let linter = new Linter();
   let messages = linter.verify(str, {

@@ -9,9 +9,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // 01. tight, tag name follows a closing bracket
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - recognised tag name, 1 attr`, () => {
+test(`01 - ${`\u001b[${33}m${"one tag"}\u001b[${39}m`} - recognised tag name, 1 attr`, () => {
   let gathered = [];
-  ct(`<a>img src="z"/><a>`, {
+  ct('<a>img src="z"/><a>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -30,7 +30,7 @@ test(`01 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - recognised tag name, 1 
         type: "tag",
         start: 3,
         end: 16,
-        value: `img src="z"/>`,
+        value: 'img src="z"/>',
         tagNameStartsAt: 3,
         tagNameEndsAt: 6,
         tagName: "img",
@@ -63,9 +63,9 @@ test(`01 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - recognised tag name, 1 
   is(gathered.length, 3, "01.01");
 });
 
-test(`02 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - leading whitespace`, () => {
+test(`02 - ${`\u001b[${33}m${"one tag"}\u001b[${39}m`} - leading whitespace`, () => {
   let gathered = [];
-  ct(`<a>  img src="z"/><a>`, {
+  ct('<a>  img src="z"/><a>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -101,9 +101,9 @@ test(`02 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - leading whitespace`, ()
   is(gathered.length, 4, "02.01");
 });
 
-test(`03 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - text around`, () => {
+test(`03 - ${`\u001b[${33}m${"one tag"}\u001b[${39}m`} - text around`, () => {
   let gathered = [];
-  ct(`<a>bc img src="z"/>de<a>`, {
+  ct('<a>bc img src="z"/>de<a>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -144,9 +144,9 @@ test(`03 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - text around`, () => {
   is(gathered.length, 5, "03.01");
 });
 
-test(`04 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - hardcore case - two tags`, () => {
+test(`04 - ${`\u001b[${33}m${"one tag"}\u001b[${39}m`} - hardcore case - two tags`, () => {
   let gathered = [];
-  ct(`<a>bc img src="x"/>de img src="y">fg<a>`, {
+  ct('<a>bc img src="x"/>de img src="y">fg<a>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -200,9 +200,9 @@ test(`04 - ${`\u001b[${33}m${`one tag`}\u001b[${39}m`} - hardcore case - two tag
 // 02. two tags
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${33}m${`two tags`}\u001b[${39}m`} - tight`, () => {
+test(`05 - ${`\u001b[${33}m${"two tags"}\u001b[${39}m`} - tight`, () => {
   let gathered = [];
-  ct(`<a>img src="z"/>img src="y"><a>`, {
+  ct('<a>img src="z"/>img src="y"><a>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -221,7 +221,7 @@ test(`05 - ${`\u001b[${33}m${`two tags`}\u001b[${39}m`} - tight`, () => {
         type: "tag",
         start: 3,
         end: 16,
-        value: `img src="z"/>`,
+        value: 'img src="z"/>',
         tagNameStartsAt: 3,
         tagNameEndsAt: 6,
         tagName: "img",
@@ -247,7 +247,7 @@ test(`05 - ${`\u001b[${33}m${`two tags`}\u001b[${39}m`} - tight`, () => {
         type: "tag",
         start: 16,
         end: 28,
-        value: `img src="y">`,
+        value: 'img src="y">',
         tagNameStartsAt: 16,
         tagNameEndsAt: 19,
         tagName: "img",

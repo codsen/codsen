@@ -29,7 +29,7 @@ test("03 - plain objects", () => {
       { a: "1", b: "2", c: "3" },
       { verboseWhenMismatches: true }
     ),
-    `The given object has key "c" which the other-one does not have.`,
+    'The given object has key "c" which the other-one does not have.',
     "03.01"
   );
 });

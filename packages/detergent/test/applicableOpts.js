@@ -9,10 +9,10 @@ import { det as det1 } from "../dist/detergent.esm.js";
 // 01. Only real applicable rules keys are reported
 // ================================================
 
-test(`01 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=on`, () => {
+test(`01 - ${`\u001b[${31}m${"rubbish removal"}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=on`, () => {
   equal(
     Object.keys(
-      det1(`&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;`, {
+      det1("&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;", {
         convertEntities: true,
       }).applicableOpts
     ).sort(),

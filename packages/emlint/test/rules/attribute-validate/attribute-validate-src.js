@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no src, error level 0`, () => {
-  let str = `<img><div>`; // <---- deliberately a tag names of both kinds, suitable and unsuitable
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no src, error level 0`, () => {
+  let str = "<img><div>"; // <---- deliberately a tag names of both kinds, suitable and unsuitable
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no src, error level 
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no src, error level 1`, () => {
-  let str = `<img><div>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no src, error level 1`, () => {
+  let str = "<img><div>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no src, error level 
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no src, error level 2`, () => {
-  let str = `<img><div>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no src, error level 2`, () => {
+  let str = "<img><div>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no src, error level 
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, img`, () => {
-  let str = `<img src="https://codsen.com/test.png">`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, img`, () => {
+  let str = '<img src="https://codsen.com/test.png">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -58,8 +58,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, i
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, script`, () => {
-  let str = `<script src="https://codsen.com">`;
+test(`05 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, script`, () => {
+  let str = '<script src="https://codsen.com">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -70,8 +70,8 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, s
   equal(messages, [], "05.02");
 });
 
-test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, input`, () => {
-  let str = `<input src="https://codsen.com">`;
+test(`06 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, input`, () => {
+  let str = '<input src="https://codsen.com">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -82,8 +82,8 @@ test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, i
   equal(messages, [], "06.02");
 });
 
-test(`07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, frame`, () => {
-  let str = `<frame src="https://codsen.com">`;
+test(`07 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, frame`, () => {
+  let str = '<frame src="https://codsen.com">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -94,8 +94,8 @@ test(`07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, f
   equal(messages, [], "07.02");
 });
 
-test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, iframe`, () => {
-  let str = `<iframe src="https://codsen.com">`;
+test(`08 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, iframe`, () => {
+  let str = '<iframe src="https://codsen.com">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -109,8 +109,8 @@ test(`08 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, i
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div src="https://codsen.com">`;
+test(`09 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div src="https://codsen.com">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -129,8 +129,8 @@ test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz src="https://codsen.com">`;
+test(`10 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz src="https://codsen.com">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -152,8 +152,8 @@ test(`10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<img src="zzz??">`;
+test(`11 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<img src="zzz??">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -167,27 +167,27 @@ test(`11 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
       ruleId: "attribute-validate-src",
       idxFrom: 10,
       idxTo: 15,
-      message: `Should be an URI.`,
+      message: "Should be an URI.",
       fix: null,
     },
   ]);
 });
 
-test(`12 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whitespace on legit URL`, () => {
-  let str = `<img src=" https://codsen.com">`;
+test(`12 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - still catches whitespace on legit URL`, () => {
+  let str = '<img src=" https://codsen.com">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-src": 2,
     },
   });
-  equal(applyFixes(str, messages), `<img src="https://codsen.com">`, "12.01");
+  equal(applyFixes(str, messages), '<img src="https://codsen.com">', "12.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-src",
       idxFrom: 10,
       idxTo: 11,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[10, 11]],
       },
@@ -195,22 +195,22 @@ test(`12 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - still catches whites
   ]);
 });
 
-test(`13 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whitespace`, () => {
+test(`13 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - not-a-URL and whitespace`, () => {
   // notice wrong tag name case:
-  let str = `<IMG src=" zzz?? ">`;
+  let str = '<IMG src=" zzz?? ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-src": 2,
     },
   });
-  equal(applyFixes(str, messages), `<IMG src="zzz??">`, "13.01");
+  equal(applyFixes(str, messages), '<IMG src="zzz??">', "13.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-src",
       idxFrom: 10,
       idxTo: 17,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [10, 11],
@@ -222,7 +222,7 @@ test(`13 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - not-a-URL and whites
       ruleId: "attribute-validate-src",
       idxFrom: 11,
       idxTo: 16,
-      message: `Should be an URI.`,
+      message: "Should be an URI.",
       fix: null,
     },
   ]);

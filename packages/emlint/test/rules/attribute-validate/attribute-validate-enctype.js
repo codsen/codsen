@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no enctype, error level 0`, () => {
-  let str = `<form>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no enctype, error level 0`, () => {
+  let str = "<form>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no enctype, error le
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no enctype, error level 1`, () => {
-  let str = `<form>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no enctype, error level 1`, () => {
+  let str = "<form>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no enctype, error le
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no enctype, error level 2`, () => {
-  let str = `<form>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no enctype, error level 2`, () => {
+  let str = "<form>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no enctype, error le
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, common`, () => {
-  let str = `<form enctype='text/plain'>`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, common`, () => {
+  let str = "<form enctype='text/plain'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -58,8 +58,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, c
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, rare MIME type`, () => {
-  let str = `<form enctype="application/dssc+xml">`;
+test(`05 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, rare MIME type`, () => {
+  let str = '<form enctype="application/dssc+xml">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -73,21 +73,21 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, r
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<form enctype=' text/plain'>`;
+test(`06 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = "<form enctype=' text/plain'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-enctype": 2,
     },
   });
-  equal(applyFixes(str, messages), `<form enctype='text/plain'>`, "06.01");
+  equal(applyFixes(str, messages), "<form enctype='text/plain'>", "06.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-enctype",
       idxFrom: 15,
       idxTo: 16,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[15, 16]],
       },
@@ -95,21 +95,21 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   ]);
 });
 
-test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<form enctype='text/plain '>`;
+test(`07 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = "<form enctype='text/plain '>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-enctype": 2,
     },
   });
-  equal(applyFixes(str, messages), `<form enctype='text/plain'>`, "07.01");
+  equal(applyFixes(str, messages), "<form enctype='text/plain'>", "07.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-enctype",
       idxFrom: 25,
       idxTo: 26,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[25, 26]],
       },
@@ -117,21 +117,21 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`, () => {
-  let str = `<form enctype='  text/plain  \t'>`;
+test(`08 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around`, () => {
+  let str = "<form enctype='  text/plain  \t'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-enctype": 2,
     },
   });
-  equal(applyFixes(str, messages), `<form enctype='text/plain'>`, "08.01");
+  equal(applyFixes(str, messages), "<form enctype='text/plain'>", "08.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-enctype",
       idxFrom: 15,
       idxTo: 30,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [15, 17],
@@ -142,8 +142,8 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<form enctype="  \t">`;
+test(`09 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<form enctype="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -157,7 +157,7 @@ test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-enctype",
       idxFrom: 15,
       idxTo: 18,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -166,8 +166,8 @@ test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
 // 03. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div enctype="text/plain">`;
+test(`10 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div enctype="text/plain">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -186,8 +186,8 @@ test(`10 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`11 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz enctype="text/plain">`;
+test(`11 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz enctype="text/plain">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -209,8 +209,8 @@ test(`11 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 04. wrong value
 // -----------------------------------------------------------------------------
 
-test(`12 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out of whack value`, () => {
-  let str = `<form enctype="tralala">`;
+test(`12 - ${`\u001b[${35}m${"validation"}\u001b[${39}m`} - out of whack value`, () => {
+  let str = '<form enctype="tralala">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -224,7 +224,7 @@ test(`12 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out of whack value`,
       ruleId: "attribute-validate-enctype",
       idxFrom: 15,
       idxTo: 22,
-      message: `Unrecognised value: "tralala".`,
+      message: 'Unrecognised value: "tralala".',
       fix: null,
     },
   ]);

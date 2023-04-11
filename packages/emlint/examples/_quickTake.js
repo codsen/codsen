@@ -30,7 +30,7 @@ assert.deepEqual(messages, [
     column: 1,
     severity: 2,
     ruleId: "comment-mismatching-pair",
-    message: `Add "<!--".`,
+    message: 'Add "<!--".',
     idxFrom: 49,
     idxTo: 61,
     fix: {

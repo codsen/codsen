@@ -31,7 +31,7 @@ test("01 - help output mode", async () => {
 });
 
 test("02 - help flag trumps silent flag", async () => {
-  let unsortedFile = `{\n  "z": 1,\n  "a": 2\n}\n`;
+  let unsortedFile = '{\n  "z": 1,\n  "a": 2\n}\n';
 
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";

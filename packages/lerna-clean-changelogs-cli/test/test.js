@@ -65,7 +65,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 // Quick, general unit tests
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - version output mode`, async () => {
+test(`01 - ${`\u001b[${33}m${"general parts"}\u001b[${39}m`} - version output mode`, async () => {
   let reportedVersion1 = await execa("./cli.js", ["-v"]);
   equal(reportedVersion1.stdout, pack.version, "01.01");
 
@@ -73,7 +73,7 @@ test(`01 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - version output mo
   equal(reportedVersion2.stdout, pack.version, "01.02");
 });
 
-test(`02 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - help output mode`, async () => {
+test(`02 - ${`\u001b[${33}m${"general parts"}\u001b[${39}m`} - help output mode`, async () => {
   let reportedVersion1 = await execa("./cli.js", ["-h"]);
   match(reportedVersion1.stdout, /Usage/, "02.01");
   match(reportedVersion1.stdout, /Options/, "02.02");
@@ -83,7 +83,7 @@ test(`02 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - help output mode`
   match(reportedVersion2.stdout, /Options/, "02.04");
 });
 
-test(`03 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - no files found in the given directory`, async () => {
+test(`03 - ${`\u001b[${33}m${"general parts"}\u001b[${39}m`} - no files found in the given directory`, async () => {
   // fetch us a random temp folder
   // const tempFolder = "temp";
   let tempFolder = temporaryDirectory();
@@ -100,7 +100,7 @@ test(`03 - ${`\u001b[${33}m${`general parts`}\u001b[${39}m`} - no files found in
 // Main unit tests
 // -----------------------------------------------------------------------------
 
-test(`04 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - pointed directly at a file`, async () => {
+test(`04 - ${`\u001b[${35}m${"functionality"}\u001b[${39}m`} - pointed directly at a file`, async () => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
@@ -134,7 +134,7 @@ test(`04 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - pointed directly 
   equal(await processedFileContents, changelog1Fixed, "04.01");
 });
 
-test(`05 - ${`\u001b[${35}m${`functionality`}\u001b[${39}m`} - globs, multiple written multiple skipped`, async () => {
+test(`05 - ${`\u001b[${35}m${"functionality"}\u001b[${39}m`} - globs, multiple written multiple skipped`, async () => {
   // 1. set up in which folder to write:
   // const tempFolder = "temp";
   let tempFolder = temporaryDirectory();

@@ -8,9 +8,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // basic - double quoted attributes
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - single- and double-quoted attr`, () => {
+test(`01 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - single- and double-quoted attr`, () => {
   let gathered = [];
-  ct(`<a b="c" d='e'>`, {
+  ct("<a b=\"c\" d='e'>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -74,9 +74,9 @@ test(`01 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - single- and double-quoted
   );
 });
 
-test(`02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - value-less attribute`, () => {
+test(`02 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - value-less attribute`, () => {
   let gathered = [];
-  ct(`<TD nowrap class="z">`, {
+  ct('<TD nowrap class="z">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -131,9 +131,9 @@ test(`02 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - value-less attribute`, ()
   );
 });
 
-test(`03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`, () => {
+test(`03 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - a closing tag`, () => {
   let gathered = [];
-  ct(`</Td>`, {
+  ct("</Td>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -163,9 +163,9 @@ test(`03 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`, () => {
 });
 
 // space inside tag
-test(`04 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`, () => {
+test(`04 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - a closing tag`, () => {
   let gathered = [];
-  ct(`</tD >`, {
+  ct("</tD >", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -194,9 +194,9 @@ test(`04 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - a closing tag`, () => {
   );
 });
 
-test(`05 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - single- and double-quoted attr`, () => {
+test(`05 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - single- and double-quoted attr`, () => {
   let gathered = [];
-  ct(`<a b="c" d='e'>`, {
+  ct("<a b=\"c\" d='e'>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -263,9 +263,9 @@ test(`05 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - single- and double-quoted
 // bool attributes
 // -----------------------------------------------------------------------------
 
-test(`06`, () => {
+test("06", () => {
   let gathered = [];
-  ct(`<td nowrap>`, {
+  ct("<td nowrap>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -308,9 +308,9 @@ test(`06`, () => {
   );
 });
 
-test(`07 - slash in the end`, () => {
+test("07 - slash in the end", () => {
   let gathered = [];
-  ct(`<td nowrap/>`, {
+  ct("<td nowrap/>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -353,9 +353,9 @@ test(`07 - slash in the end`, () => {
   );
 });
 
-test(`08 - slash in front`, () => {
+test("08 - slash in front", () => {
   let gathered = [];
-  ct(`</td nowrap>`, {
+  ct("</td nowrap>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -398,9 +398,9 @@ test(`08 - slash in front`, () => {
   );
 });
 
-test(`09 - now crazier`, () => {
+test("09 - now crazier", () => {
   let gathered = [];
-  ct(`</td nowrap yo yo/>`, {
+  ct("</td nowrap yo yo/>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -469,9 +469,9 @@ test(`09 - now crazier`, () => {
   );
 });
 
-test(`10 - unrecognised tag`, () => {
+test("10 - unrecognised tag", () => {
   let gathered = [];
-  ct(`<zzz accept-charset="utf-8" yyy>`, {
+  ct('<zzz accept-charset="utf-8" yyy>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -537,9 +537,9 @@ test(`10 - unrecognised tag`, () => {
 // erroneous code
 // -----------------------------------------------------------------------------
 
-test(`11 - two asterisks as an attribute's value`, () => {
+test("11 - two asterisks as an attribute's value", () => {
   let gathered = [];
-  ct(`<frameset cols="**">`, {
+  ct('<frameset cols="**">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -589,9 +589,9 @@ test(`11 - two asterisks as an attribute's value`, () => {
   );
 });
 
-test(`12 - many asterisks as an attribute's value`, () => {
+test("12 - many asterisks as an attribute's value", () => {
   let gathered = [];
-  ct(`<frameset cols="******">`, {
+  ct('<frameset cols="******">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -641,9 +641,9 @@ test(`12 - many asterisks as an attribute's value`, () => {
   );
 });
 
-test(`13 - unescaped bracket as value, one tag`, () => {
+test("13 - unescaped bracket as value, one tag", () => {
   let gathered = [];
-  ct(`<abc de=">">`, {
+  ct('<abc de=">">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -695,9 +695,9 @@ test(`13 - unescaped bracket as value, one tag`, () => {
   );
 });
 
-test(`14 - unescaped bracket as value, few tags`, () => {
+test("14 - unescaped bracket as value, few tags", () => {
   let gathered = [];
-  ct(`<abc de=">" fg="h">`, {
+  ct('<abc de=">" fg="h">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -770,10 +770,10 @@ test(`14 - unescaped bracket as value, few tags`, () => {
   );
 });
 
-test(`15 - unescaped bracket as value, more tags`, () => {
+test("15 - unescaped bracket as value, more tags", () => {
   let gathered = [];
   ct(
-    `<img alt="click here >" width="7" height="8" border="9" style="display:block;"/>`,
+    '<img alt="click here >" width="7" height="8" border="9" style="display:block;"/>',
     {
       tagCb: (obj) => {
         gathered.push(obj);
@@ -919,9 +919,9 @@ test(`15 - unescaped bracket as value, more tags`, () => {
 // 07. recognised and not recognised
 // -----------------------------------------------------------------------------
 
-test(`16 - two attrs, one recognised one not`, () => {
+test("16 - two attrs, one recognised one not", () => {
   let gathered = [];
-  ct(`<table class="aa" bbb="cc">`, {
+  ct('<table class="aa" bbb="cc">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -960,7 +960,7 @@ test(`16 - two attrs, one recognised one not`, () => {
 // 08. broken opening
 // -----------------------------------------------------------------------------
 
-test(`17 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - missing opening quote`, () => {
+test(`17 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - missing opening quote`, () => {
   let gathered = [];
   ct(
     `<span width=100">
@@ -1039,9 +1039,9 @@ test(`17 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - missing opening 
   );
 });
 
-test(`18 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes`, () => {
+test(`18 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - mismatching quotes`, () => {
   let gathered = [];
-  ct(`<span width='100"><span width='100">`, {
+  ct("<span width='100\"><span width='100\">", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1053,7 +1053,7 @@ test(`18 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quot
         type: "tag",
         start: 0,
         end: 18,
-        value: `<span width='100">`,
+        value: "<span width='100\">",
         tagNameStartsAt: 1,
         tagNameEndsAt: 5,
         tagName: "span",
@@ -1091,7 +1091,7 @@ test(`18 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quot
         type: "tag",
         start: 18,
         end: 36,
-        value: `<span width='100">`,
+        value: "<span width='100\">",
         tagNameStartsAt: 19,
         tagNameEndsAt: 23,
         tagName: "span",
@@ -1130,9 +1130,9 @@ test(`18 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quot
   );
 });
 
-test(`19 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - false positives`, () => {
+test(`19 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - false positives`, () => {
   let gathered = [];
-  ct(`<span abc="Someone's" xyz="Someone's">`, {
+  ct('<span abc="Someone\'s" xyz="Someone\'s">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1144,7 +1144,7 @@ test(`19 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - false positives`
         type: "tag",
         start: 0,
         end: 38,
-        value: `<span abc="Someone's" xyz="Someone's">`,
+        value: '<span abc="Someone\'s" xyz="Someone\'s">',
         tagNameStartsAt: 1,
         tagNameEndsAt: 5,
         tagName: "span",
@@ -1205,9 +1205,9 @@ test(`19 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - false positives`
   );
 });
 
-test(`20 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes, the other way`, () => {
+test(`20 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - mismatching quotes, the other way`, () => {
   let gathered = [];
-  ct(`<span width="100'><span width="100'>`, {
+  ct("<span width=\"100'><span width=\"100'>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1219,7 +1219,7 @@ test(`20 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quot
         type: "tag",
         start: 0,
         end: 18,
-        value: `<span width="100'>`,
+        value: "<span width=\"100'>",
         tagNameStartsAt: 1,
         tagNameEndsAt: 5,
         tagName: "span",
@@ -1257,7 +1257,7 @@ test(`20 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quot
         type: "tag",
         start: 18,
         end: 36,
-        value: `<span width="100'>`,
+        value: "<span width=\"100'>",
         tagNameStartsAt: 19,
         tagNameEndsAt: 23,
         tagName: "span",
@@ -1296,9 +1296,9 @@ test(`20 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quot
   );
 });
 
-test(`21 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quoteless attribute should not affect tag that follows`, () => {
+test(`21 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quoteless attribute should not affect tag that follows`, () => {
   let gathered = [];
-  ct(`<table width=100 border="0"><tr>`, {
+  ct('<table width=100 border="0"><tr>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1386,9 +1386,9 @@ test(`21 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quoteless attrib
   );
 });
 
-test(`22 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes, opposite pairs`, () => {
+test(`22 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - mismatching quotes, opposite pairs`, () => {
   let gathered = [];
-  ct(`<span width="100'><span width='100">`, {
+  ct("<span width=\"100'><span width='100\">", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1400,7 +1400,7 @@ test(`22 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quot
         type: "tag",
         start: 0,
         end: 18,
-        value: `<span width="100'>`,
+        value: "<span width=\"100'>",
         tagNameStartsAt: 1,
         tagNameEndsAt: 5,
         tagName: "span",
@@ -1438,7 +1438,7 @@ test(`22 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quot
         type: "tag",
         start: 18,
         end: 36,
-        value: `<span width='100">`,
+        value: "<span width='100\">",
         tagNameStartsAt: 19,
         tagNameEndsAt: 23,
         tagName: "span",
@@ -1477,7 +1477,7 @@ test(`22 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quot
   );
 });
 
-test(`23 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - whitespace chunk instead of opening`, () => {
+test(`23 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - whitespace chunk instead of opening`, () => {
   let gathered = [];
   ct(
     `<span width=  100'>
@@ -1556,7 +1556,7 @@ test(`23 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - whitespace chunk
   );
 });
 
-test(`24 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, digits`, () => {
+test(`24 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing completely, digits`, () => {
   let gathered = [];
   ct(
     `<span width=  100>
@@ -1635,7 +1635,7 @@ test(`24 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing c
   );
 });
 
-test(`25 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word`, () => {
+test(`25 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing completely, word`, () => {
   let gathered = [];
   ct(
     `<span width=  zzz>
@@ -1714,7 +1714,7 @@ test(`25 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing c
   );
 });
 
-test(`26 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`, () => {
+test(`26 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing completely, word, slash`, () => {
   let gathered = [];
   ct(
     `<span width=  zzz height=yyy>
@@ -1814,7 +1814,7 @@ test(`26 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing c
   );
 });
 
-test(`27 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`, () => {
+test(`27 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing completely, word, slash`, () => {
   let gathered = [];
   ct(
     `<span width=1 height=1>
@@ -1914,9 +1914,9 @@ test(`27 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing c
   );
 });
 
-test(`28 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`, () => {
+test(`28 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing completely, word, slash`, () => {
   let gathered = [];
-  ct(`<span width=zzz height=yyy></span>`, {
+  ct("<span width=zzz height=yyy></span>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2003,7 +2003,7 @@ test(`28 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing c
   );
 });
 
-test(`29 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals attr equals`, () => {
+test(`29 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - attr equals attr equals`, () => {
   let gathered = [];
   ct(
     `<span width=height=100">
@@ -2054,7 +2054,7 @@ test(`29 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals attr
             attribNameEndsAt: 18,
             attribOpeningQuoteAt: null,
             attribClosingQuoteAt: 22,
-            attribValueRaw: `100`,
+            attribValueRaw: "100",
             attribValue: [
               {
                 type: "text",
@@ -2096,7 +2096,7 @@ test(`29 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals attr
   );
 });
 
-test(`30 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes present, quoteless attr inside`, () => {
+test(`30 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes present, quoteless attr inside`, () => {
   let gathered = [];
   ct(
     `<span width="height=100">
@@ -2180,7 +2180,7 @@ test(`30 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes present, 
   );
 });
 
-test(`31 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - unrecognised text - equal - value`, () => {
+test(`31 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - unrecognised text - equal - value`, () => {
   let gathered = [];
   ct(
     `<span width="tralala=100">
@@ -2250,7 +2250,7 @@ test(`31 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - unrecognised tex
   );
 });
 
-test(`32 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - pattern equal - quotes inside an attribute's value`, () => {
+test(`32 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - pattern equal - quotes inside an attribute's value`, () => {
   let gathered = [];
   ct(
     `<span width="height="100">
@@ -2343,7 +2343,7 @@ test(`32 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - pattern equal - 
   );
 });
 
-test(`33 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals attr equals`, () => {
+test(`33 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - attr equals attr equals`, () => {
   let gathered = [];
   ct(
     `<span width=height=100>
@@ -2427,7 +2427,7 @@ test(`33 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals attr
   );
 });
 
-test(`34 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals space attr equals`, () => {
+test(`34 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - attr equals space attr equals`, () => {
   let gathered = [];
   ct(
     `<span width= height=100">
@@ -2511,9 +2511,9 @@ test(`34 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - attr equals spac
   );
 });
 
-test(`35 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, many attrs`, () => {
+test(`35 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing, many attrs`, () => {
   let gathered = [];
-  ct(`<table width=100 border=1 cellpadding=2 cellspacing=3>`, {
+  ct("<table width=100 border=1 cellpadding=2 cellspacing=3>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2627,9 +2627,9 @@ test(`35 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, 
   );
 });
 
-test(`36 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, many attrs`, () => {
+test(`36 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing, many attrs`, () => {
   let gathered = [];
-  ct(`<table width=100 border=z cellpadding= cellspacing=0>`, {
+  ct("<table width=100 border=z cellpadding= cellspacing=0>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2736,9 +2736,9 @@ test(`36 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, 
   );
 });
 
-test(`37 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only opening quotes present`, () => {
+test(`37 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - only opening quotes present`, () => {
   let gathered = [];
-  ct(`<table width='100 border='1 cellpadding='2 cellspacing='3>`, {
+  ct("<table width='100 border='1 cellpadding='2 cellspacing='3>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2852,9 +2852,9 @@ test(`37 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only opening quo
   );
 });
 
-test(`38 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only closing quotes present`, () => {
+test(`38 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - only closing quotes present`, () => {
   let gathered = [];
-  ct(`<table width=100' border=0' cellpadding=0' cellspacing=0'>`, {
+  ct("<table width=100' border=0' cellpadding=0' cellspacing=0'>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2968,9 +2968,9 @@ test(`38 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - only closing quo
   );
 });
 
-test(`39 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - sneaky inner/outer combo`, () => {
+test(`39 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - sneaky inner/outer combo`, () => {
   let gathered = [];
-  ct(`<table width="100 border='0 cellpadding=0' cellspacing=0">`, {
+  ct("<table width=\"100 border='0 cellpadding=0' cellspacing=0\">", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2983,7 +2983,7 @@ test(`39 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - sneaky inner/out
         type: "tag",
         start: 0,
         end: 58,
-        value: `<table width="100 border='0 cellpadding=0' cellspacing=0">`,
+        value: "<table width=\"100 border='0 cellpadding=0' cellspacing=0\">",
         tagNameStartsAt: 1,
         tagNameEndsAt: 6,
         tagName: "table",
@@ -3084,7 +3084,7 @@ test(`39 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - sneaky inner/out
   );
 });
 
-test(`40 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening consists of two types`, () => {
+test(`40 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - opening consists of two types`, () => {
   let gathered = [];
   ct(
     `<span width='"100">
@@ -3154,7 +3154,7 @@ test(`40 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening consists
   );
 });
 
-test(`41 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - rogue character`, () => {
+test(`41 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - rogue character`, () => {
   let gathered = [];
   ct(
     `<span width=."100">
@@ -3233,7 +3233,7 @@ test(`41 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - rogue character`
   );
 });
 
-test(`42 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - many dots`, () => {
+test(`42 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - many dots`, () => {
   let gathered = [];
   ct(
     `<span width....=....."100">
@@ -3303,7 +3303,7 @@ test(`42 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - many dots`, () =
   );
 });
 
-test(`43 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - all spaced`, () => {
+test(`43 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - all spaced`, () => {
   let gathered = [];
   ct(
     `< span width = " 100 " >
@@ -3382,7 +3382,7 @@ test(`43 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - all spaced`, () 
   );
 });
 
-test(`44 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`, () => {
+test(`44 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing completely, word, slash`, () => {
   let gathered = [];
   ct(
     `<span width=  zzz/>
@@ -3461,7 +3461,7 @@ test(`44 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing c
   );
 });
 
-test(`45 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, one attr`, () => {
+test(`45 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing, one attr`, () => {
   let gathered = [];
   ct(
     `<span width=100">
@@ -3531,9 +3531,9 @@ test(`45 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, 
   );
 });
 
-test(`46 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes and equal missing`, () => {
+test(`46 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - mismatching quotes and equal missing`, () => {
   let gathered = [];
-  ct(`<a class"c' id"e'>`, {
+  ct("<a class\"c' id\"e'>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -3545,7 +3545,7 @@ test(`46 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quot
         type: "tag",
         start: 0,
         end: 18,
-        value: `<a class"c' id"e'>`,
+        value: "<a class\"c' id\"e'>",
         tagNameStartsAt: 1,
         tagNameEndsAt: 2,
         tagName: "a",
@@ -3609,9 +3609,9 @@ test(`46 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quot
 // 09. broken closing
 // -----------------------------------------------------------------------------
 
-test(`47 - ${`\u001b[${33}m${`broken closing`}\u001b[${39}m`} - missing closing quote, one attr`, () => {
+test(`47 - ${`\u001b[${33}m${"broken closing"}\u001b[${39}m`} - missing closing quote, one attr`, () => {
   let gathered = [];
-  ct(`<span width="100>zzz</span>`, {
+  ct('<span width="100>zzz</span>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -3683,9 +3683,9 @@ test(`47 - ${`\u001b[${33}m${`broken closing`}\u001b[${39}m`} - missing closing 
   );
 });
 
-test(`48 - ${`\u001b[${33}m${`broken closing`}\u001b[${39}m`} - missing closing quote, two attrs`, () => {
+test(`48 - ${`\u001b[${33}m${"broken closing"}\u001b[${39}m`} - missing closing quote, two attrs`, () => {
   let gathered = [];
-  ct(`<a href="xyz border="0">`, {
+  ct('<a href="xyz border="0">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -3757,9 +3757,9 @@ test(`48 - ${`\u001b[${33}m${`broken closing`}\u001b[${39}m`} - missing closing 
   );
 });
 
-test(`49 - last attr empty, XHML`, () => {
+test("49 - last attr empty, XHML", () => {
   let gathered = [];
-  ct(`<input type="radio" checked=""/>`, {
+  ct('<input type="radio" checked=""/>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -3826,9 +3826,9 @@ test(`49 - last attr empty, XHML`, () => {
   );
 });
 
-test(`50 - uri with query params`, () => {
+test("50 - uri with query params", () => {
   let gathered = [];
-  ct(`<img src="https://example.com/my-image.png?query=" />`, {
+  ct('<img src="https://example.com/my-image.png?query=" />', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -3880,9 +3880,9 @@ test(`50 - uri with query params`, () => {
   );
 });
 
-test(`51 - more uris with query params`, () => {
+test("51 - more uris with query params", () => {
   let gathered = [];
-  ct(`<img src="codsen.com/my-image.png?query=" />`, {
+  ct('<img src="codsen.com/my-image.png?query=" />', {
     tagCb: (obj) => {
       gathered.push(obj);
     },

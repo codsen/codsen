@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two SINGLE SHIFT THREE characters`, () => {
+test("01 - detects two SINGLE SHIFT THREE characters", () => {
   let str = "\u008Fdlkgjld\u008Fj";
   let linter = new Linter();
   let messages = linter.verify(str, {

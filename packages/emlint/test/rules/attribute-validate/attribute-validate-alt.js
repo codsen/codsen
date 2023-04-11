@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no alt, error level 0`, () => {
-  let str = `<img class="z">`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no alt, error level 0`, () => {
+  let str = '<img class="z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no alt, error level 
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no alt, error level 1`, () => {
-  let str = `<img class="z">`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no alt, error level 1`, () => {
+  let str = '<img class="z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no alt, error level 
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no alt, error level 2`, () => {
-  let str = `<img class="z">`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no alt, error level 2`, () => {
+  let str = '<img class="z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no alt, error level 
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, img`, () => {
-  let str = `<img alt='something'>`; // <-- notice single quotes
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, img`, () => {
+  let str = "<img alt='something'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -58,8 +58,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, i
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, input`, () => {
-  let str = `<input alt="something">`;
+test(`05 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, input`, () => {
+  let str = '<input alt="something">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -73,8 +73,8 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, i
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div alt="something">`;
+test(`06 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div alt="something">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -93,8 +93,8 @@ test(`06 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz alt="something" yyy>`;
+test(`07 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz alt="something" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -116,8 +116,8 @@ test(`07 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 03. whitespace
 // -----------------------------------------------------------------------------
 
-test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`, () => {
-  let str = `<img alt="">`;
+test(`08 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - empty value`, () => {
+  let str = '<img alt="">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -129,21 +129,21 @@ test(`08 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - empty value`, () => {
   equal(messages, [], "08.02");
 });
 
-test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - surrounding whitespace`, () => {
-  let str = `<img alt=" something ">`;
+test(`09 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - surrounding whitespace`, () => {
+  let str = '<img alt=" something ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-alt": 2,
     },
   });
-  equal(applyFixes(str, messages), `<img alt="something">`, "09.01");
+  equal(applyFixes(str, messages), '<img alt="something">', "09.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-alt",
       idxFrom: 10,
       idxTo: 21,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [10, 11],

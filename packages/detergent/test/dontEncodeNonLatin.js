@@ -6,7 +6,7 @@ import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { det as det1 } from "../dist/detergent.esm.js";
 import { det, mixer } from "../t-util/util.js";
 
-test(`01 - ${`\u001b[${36}m${`opts.dontEncodeNonLatin`}\u001b[${39}m`} - doesn't encode non-Latin`, () => {
+test(`01 - ${`\u001b[${36}m${"opts.dontEncodeNonLatin"}\u001b[${39}m`} - doesn't encode non-Latin`, () => {
   mixer({
     removeWidows: false,
     convertEntities: true,

@@ -8,9 +8,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // 01. simple-kind comments
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - simple case`, () => {
+test(`01 - ${`\u001b[${36}m${"simple"}\u001b[${39}m`} - simple case`, () => {
   let gathered = [];
-  ct(`a<!--b-->c`, {
+  ct("a<!--b-->c", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -54,9 +54,9 @@ test(`01 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - simple case`, () => {
   );
 });
 
-test(`02 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - broken simple case, with space`, () => {
+test(`02 - ${`\u001b[${36}m${"simple"}\u001b[${39}m`} - broken simple case, with space`, () => {
   let gathered = [];
-  ct(`a<! --b-- >c`, {
+  ct("a<! --b-- >c", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -100,9 +100,9 @@ test(`02 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - broken simple case, with
   );
 });
 
-test(`03 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`, () => {
+test(`03 - ${`\u001b[${36}m${"simple"}\u001b[${39}m`} - dash missing`, () => {
   let gathered = [];
-  ct(`a<!--b->c`, {
+  ct("a<!--b->c", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -137,9 +137,9 @@ test(`03 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`, () => {
   );
 });
 
-test(`04 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`, () => {
+test(`04 - ${`\u001b[${36}m${"simple"}\u001b[${39}m`} - dash missing`, () => {
   let gathered = [];
-  ct(`a<!-b-->c`, {
+  ct("a<!-b-->c", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -188,9 +188,9 @@ test(`04 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`, () => {
   );
 });
 
-test(`05 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`, () => {
+test(`05 - ${`\u001b[${36}m${"simple"}\u001b[${39}m`} - dash missing`, () => {
   let gathered = [];
-  ct(`a<--b-->c`, {
+  ct("a<--b-->c", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -225,9 +225,9 @@ test(`05 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`, () => {
   );
 });
 
-test(`06 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`, () => {
+test(`06 - ${`\u001b[${36}m${"simple"}\u001b[${39}m`} - dash missing`, () => {
   let gathered = [];
-  ct(`a<!--b--!>c`, {
+  ct("a<!--b--!>c", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -262,9 +262,9 @@ test(`06 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`, () => {
   );
 });
 
-test(`07 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`, () => {
+test(`07 - ${`\u001b[${36}m${"simple"}\u001b[${39}m`} - dash missing`, () => {
   let gathered = [];
-  ct(`<!- -z-->`, {
+  ct("<!- -z-->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -304,9 +304,9 @@ test(`07 - ${`\u001b[${36}m${`simple`}\u001b[${39}m`} - dash missing`, () => {
 // 02. outlook conditionals: only
 // -----------------------------------------------------------------------------
 
-test(`08 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - outlook conditionals, minimal`, () => {
+test(`08 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - outlook conditionals, minimal`, () => {
   let gathered = [];
-  ct(`a<!--[if gte mso 9]>x<![endif]-->z`, {
+  ct("a<!--[if gte mso 9]>x<![endif]-->z", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -350,7 +350,7 @@ test(`08 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - outlook conditionals
   );
 });
 
-test(`09 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - outlook conditionals, complex, with xml`, () => {
+test(`09 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - outlook conditionals, complex, with xml`, () => {
   let gathered = [];
   ct(
     `abc<!--[if gte mso 9]><xml>
@@ -418,9 +418,9 @@ test(`09 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - outlook conditionals
   );
 });
 
-test(`10 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - outlook conditionals, minimal, tag inside`, () => {
+test(`10 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - outlook conditionals, minimal, tag inside`, () => {
   let gathered = [];
-  ct(`<a><!--[if gte mso 9]><b><![endif]--><i>`, {
+  ct("<a><!--[if gte mso 9]><b><![endif]--><i>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -464,9 +464,9 @@ test(`10 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - outlook conditionals
   );
 });
 
-test(`11 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - missing excl. mark`, () => {
+test(`11 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - missing excl. mark`, () => {
   let gathered = [];
-  ct(`<!--[if gte mso 9]>x<[endif]-->`, {
+  ct("<!--[if gte mso 9]>x<[endif]-->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -503,9 +503,9 @@ test(`11 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - missing excl. mark`,
   );
 });
 
-test(`12 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - empty conditional`, () => {
+test(`12 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - empty conditional`, () => {
   let gathered = [];
-  ct(`<!--[if gte mso 9]><![endif]-->`, {
+  ct("<!--[if gte mso 9]><![endif]-->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -534,9 +534,9 @@ test(`12 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - empty conditional`, 
   );
 });
 
-test(`13 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - swapped excl. mark`, () => {
+test(`13 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - swapped excl. mark`, () => {
   let gathered = [];
-  ct(`<!--[if gte mso 9]>x<[!endif]-->`, {
+  ct("<!--[if gte mso 9]>x<[!endif]-->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -570,9 +570,9 @@ test(`13 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - swapped excl. mark`,
   );
 });
 
-test(`14 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - 1 instead of !`, () => {
+test(`14 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - 1 instead of !`, () => {
   let gathered = [];
-  ct(`<!--[if gte mso 9]>x<1[endif]-->`, {
+  ct("<!--[if gte mso 9]>x<1[endif]-->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -607,9 +607,9 @@ test(`14 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - 1 instead of !`, () 
   );
 });
 
-test(`15 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - missing closing bracket`, () => {
+test(`15 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - missing closing bracket`, () => {
   let gathered = [];
-  ct(`<!--[if !mso><!-->a`, {
+  ct("<!--[if !mso><!-->a", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -638,9 +638,9 @@ test(`15 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - missing closing brac
   );
 });
 
-test(`16 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - opening square bracket missing`, () => {
+test(`16 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - opening square bracket missing`, () => {
   let gathered = [];
-  ct(`<!--if mso]>`, {
+  ct("<!--if mso]>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -662,9 +662,9 @@ test(`16 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - opening square brack
   );
 });
 
-test(`17 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - opening square bracket missing`, () => {
+test(`17 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - opening square bracket missing`, () => {
   let gathered = [];
-  ct(`zzz<<![endif]-->`, {
+  ct("zzz<<![endif]-->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -693,9 +693,9 @@ test(`17 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - opening square brack
   );
 });
 
-test(`18 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - curly brackets`, () => {
+test(`18 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - curly brackets`, () => {
   let gathered = [];
-  ct(`<!--{if gte mso 9}>x<!{endif}-->`, {
+  ct("<!--{if gte mso 9}>x<!{endif}-->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -731,9 +731,9 @@ test(`18 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - curly brackets`, () 
   );
 });
 
-test(`19 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - parentheses`, () => {
+test(`19 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - parentheses`, () => {
   let gathered = [];
-  ct(`<!--(if gte mso 9)>x<!(endif)-->`, {
+  ct("<!--(if gte mso 9)>x<!(endif)-->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -769,9 +769,9 @@ test(`19 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - parentheses`, () => 
   );
 });
 
-test(`20 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - comment nested`, () => {
+test(`20 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - comment nested`, () => {
   let gathered = [];
-  ct(`<!--[if mso]><!--tralala--><![endif]-->`, {
+  ct("<!--[if mso]><!--tralala--><![endif]-->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -824,9 +824,9 @@ test(`20 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - comment nested`, () 
   );
 });
 
-test(`21 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - no brackets`, () => {
+test(`21 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - no brackets`, () => {
   let gathered = [];
-  ct(`<!--if mso>_<!endif-->`, {
+  ct("<!--if mso>_<!endif-->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -863,9 +863,9 @@ test(`21 - ${`\u001b[${35}m${`kind: only`}\u001b[${39}m`} - no brackets`, () => 
   );
 });
 
-test(`22 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - simplet following "not"-kind opening, minimal`, () => {
+test(`22 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - simplet following "not"-kind opening, minimal`, () => {
   let gathered = [];
-  ct(`x<!--[if !mso]>abc<!-->y`, {
+  ct("x<!--[if !mso]>abc<!-->y", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -917,9 +917,9 @@ test(`22 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - simplet following "no
 // 03. outlook conditionals: only-not
 // -----------------------------------------------------------------------------
 
-test(`23 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - outlook conditionals with xml, minimal`, () => {
+test(`23 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - outlook conditionals with xml, minimal`, () => {
   let gathered = [];
-  ct(`a<!--[if !mso]><!-->x<!--<![endif]-->z`, {
+  ct("a<!--[if !mso]><!-->x<!--<![endif]-->z", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -963,9 +963,9 @@ test(`23 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - outlook conditionals 
   );
 });
 
-test(`24 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - missing dash in the opening's end`, () => {
+test(`24 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - missing dash in the opening's end`, () => {
   let gathered = [];
-  ct(`a<!--[if !mso]><!->z`, {
+  ct("a<!--[if !mso]><!->z", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -997,9 +997,9 @@ test(`24 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - missing dash in the o
   );
 });
 
-test(`25 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - missing dash in the opening's end`, () => {
+test(`25 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - missing dash in the opening's end`, () => {
   let gathered = [];
-  ct(`<!--[if !mso]><!--z>`, {
+  ct("<!--[if !mso]><!--z>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1021,9 +1021,9 @@ test(`25 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - missing dash in the o
   );
 });
 
-test(`26 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - expanded notation, no space`, () => {
+test(`26 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - expanded notation, no space`, () => {
   let gathered = [];
-  ct(`<!--[if !mso]><!---->z`, {
+  ct("<!--[if !mso]><!---->z", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1050,9 +1050,9 @@ test(`26 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - expanded notation, no
   );
 });
 
-test(`27 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - expanded notation, with space`, () => {
+test(`27 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - expanded notation, with space`, () => {
   let gathered = [];
-  ct(`<!--[if !mso]><!-- -->z`, {
+  ct("<!--[if !mso]><!-- -->z", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1079,9 +1079,9 @@ test(`27 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - expanded notation, wi
   );
 });
 
-test(`28 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - brackets missing`, () => {
+test(`28 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - brackets missing`, () => {
   let gathered = [];
-  ct(`_<!--if !mso><!-->_<!--<!endif-->_`, {
+  ct("_<!--if !mso><!-->_<!--<!endif-->_", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1125,9 +1125,9 @@ test(`28 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - brackets missing`, ()
   );
 });
 
-test(`29 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - brackets missing, spaced notation`, () => {
+test(`29 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - brackets missing, spaced notation`, () => {
   let gathered = [];
-  ct(`_<!--if !mso><!-- -->_<!--<!endif-->_`, {
+  ct("_<!--if !mso><!-- -->_<!--<!endif-->_", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1171,9 +1171,9 @@ test(`29 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - brackets missing, spa
   );
 });
 
-test(`30 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - simplet following "not"-kind opening, minimal`, () => {
+test(`30 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - simplet following "not"-kind opening, minimal`, () => {
   let gathered = [];
-  ct(`x<!--[if !mso]><!--><!-->y`, {
+  ct("x<!--[if !mso]><!--><!-->y", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1201,7 +1201,7 @@ test(`30 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - simplet following "no
         type: "comment",
         start: 20,
         end: 25,
-        value: `<!-->`,
+        value: "<!-->",
         kind: "simplet",
         closing: null,
       },
@@ -1216,7 +1216,7 @@ test(`30 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - simplet following "no
   );
 });
 
-test(`31 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - simplet following "not"-kind opening, full`, () => {
+test(`31 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - simplet following "not"-kind opening, full`, () => {
   let gathered = [];
   ct(
     `<!--[if !mso]><!--><!-->
@@ -1245,7 +1245,7 @@ test(`31 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - simplet following "no
         type: "comment",
         start: 19,
         end: 24,
-        value: `<!-->`,
+        value: "<!-->",
         kind: "simplet",
         closing: null,
       },
@@ -1314,9 +1314,9 @@ test(`31 - ${`\u001b[${33}m${`kind: not`}\u001b[${39}m`} - simplet following "no
 // 04. simplet-kind comments
 // -----------------------------------------------------------------------------
 
-test(`32 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance, nothing around`, () => {
+test(`32 - ${`\u001b[${36}m${"simplet"}\u001b[${39}m`} - one instance, nothing around`, () => {
   let gathered = [];
-  ct(`<!-->`, {
+  ct("<!-->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1329,7 +1329,7 @@ test(`32 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance, nothing a
         type: "comment",
         start: 0,
         end: 5,
-        value: `<!-->`,
+        value: "<!-->",
         kind: "simplet",
         closing: null,
         language: "html",
@@ -1339,9 +1339,9 @@ test(`32 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance, nothing a
   );
 });
 
-test(`33 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance, nothing around`, () => {
+test(`33 - ${`\u001b[${36}m${"simplet"}\u001b[${39}m`} - one instance, nothing around`, () => {
   let gathered = [];
-  ct(`<!--><!-- ><!--  >`, {
+  ct("<!--><!-- ><!--  >", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1354,7 +1354,7 @@ test(`33 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance, nothing a
         type: "comment",
         start: 0,
         end: 5,
-        value: `<!-->`,
+        value: "<!-->",
         kind: "simplet",
         closing: null,
         language: "html",
@@ -1363,7 +1363,7 @@ test(`33 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance, nothing a
         type: "comment",
         start: 5,
         end: 11,
-        value: `<!-- >`,
+        value: "<!-- >",
         kind: "simplet",
         closing: null,
         language: "html",
@@ -1372,7 +1372,7 @@ test(`33 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance, nothing a
         type: "comment",
         start: 11,
         end: 18,
-        value: `<!--  >`,
+        value: "<!--  >",
         kind: "simplet",
         closing: null,
         language: "html",
@@ -1382,9 +1382,9 @@ test(`33 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance, nothing a
   );
 });
 
-test(`34 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance`, () => {
+test(`34 - ${`\u001b[${36}m${"simplet"}\u001b[${39}m`} - one instance`, () => {
   let gathered = [];
-  ct(`x<!-->y`, {
+  ct("x<!-->y", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1415,9 +1415,9 @@ test(`34 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - one instance`, () => {
   );
 });
 
-test(`35 - ${`\u001b[${36}m${`simplet`}\u001b[${39}m`} - three instances`, () => {
+test(`35 - ${`\u001b[${36}m${"simplet"}\u001b[${39}m`} - three instances`, () => {
   let gathered = [];
-  ct(`<!--><!--><!-->`, {
+  ct("<!--><!--><!-->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },

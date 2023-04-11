@@ -9,8 +9,8 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 1. basics
 // -----------------------------------------------------------------------------
 
-test(`01 - rule is off`, () => {
-  let str = `<table/>`;
+test("01 - rule is off", () => {
+  let str = "<table/>";
   let messages = verify(not, str, {
     rules: {
       "tag-bad-self-closing": 0,
@@ -20,9 +20,9 @@ test(`01 - rule is off`, () => {
   equal(applyFixes(str, messages), str, "01.02");
 });
 
-test(`02 - severity: warn`, () => {
-  let str = `<table/>`;
-  let fixed = `<table>`;
+test("02 - severity: warn", () => {
+  let str = "<table/>";
+  let fixed = "<table>";
   let messages = verify(not, str, {
     rules: {
       "tag-bad-self-closing": 2,
@@ -49,7 +49,7 @@ test(`02 - severity: warn`, () => {
   equal(messages.length, 1, "02.02");
 });
 
-test(`03 - with attributes`, () => {
+test("03 - with attributes", () => {
   let str = `<table width="1" border="0" cellpadding="0" cellspacing="0"/>
   <tr/>
     <td/>
@@ -140,9 +140,9 @@ test(`03 - with attributes`, () => {
   equal(messages.length, 6, "03.02");
 });
 
-test(`04 - excessive whitespace in front`, () => {
-  let str = `<div  />`;
-  let fixed = `<div>`;
+test("04 - excessive whitespace in front", () => {
+  let str = "<div  />";
+  let fixed = "<div>";
   let messages = verify(not, str, {
     rules: {
       "tag-bad-self-closing": 2,
@@ -152,9 +152,9 @@ test(`04 - excessive whitespace in front`, () => {
   equal(messages.length, 1, "04.02");
 });
 
-test(`05 - excessive whitespace in between`, () => {
-  let str = `<div/    >`;
-  let fixed = `<div>`;
+test("05 - excessive whitespace in between", () => {
+  let str = "<div/    >";
+  let fixed = "<div>";
   let messages = verify(not, str, {
     rules: {
       "tag-bad-self-closing": 2,
@@ -164,9 +164,9 @@ test(`05 - excessive whitespace in between`, () => {
   equal(messages.length, 1, "05.02");
 });
 
-test(`06 - excessive whitespace everywhere`, () => {
-  let str = `<div   /    >`;
-  let fixed = `<div>`;
+test("06 - excessive whitespace everywhere", () => {
+  let str = "<div   /    >";
+  let fixed = "<div>";
   let messages = verify(not, str, {
     rules: {
       "tag-bad-self-closing": 1,
@@ -176,9 +176,9 @@ test(`06 - excessive whitespace everywhere`, () => {
   equal(messages.length, 1, "06.02");
 });
 
-test(`07 - really excessive whitespace everywhere`, () => {
-  let str = `<div\t\t\t\n\n\n\r\r\r\t\t\t/\t\t\t\r\r\r\r\r\r\r\r\t\t\t\t\t>`;
-  let fixed = `<div>`;
+test("07 - really excessive whitespace everywhere", () => {
+  let str = "<div\t\t\t\n\n\n\r\r\r\t\t\t/\t\t\t\r\r\r\r\r\r\r\r\t\t\t\t\t>";
+  let fixed = "<div>";
   let messages = verify(not, str, {
     rules: {
       "tag-bad-self-closing": 2,
@@ -188,9 +188,9 @@ test(`07 - really excessive whitespace everywhere`, () => {
   equal(messages.length, 1, "07.02");
 });
 
-test(`08 - group rule "tag" should be sensible`, () => {
-  let str = `<div   /    >`;
-  let fixed = `<div>`;
+test('08 - group rule "tag" should be sensible', () => {
+  let str = "<div   /    >";
+  let fixed = "<div>";
   let messages = verify(not, str, {
     rules: {
       tag: 2, // <---------- all "tag-*" rules
@@ -199,9 +199,9 @@ test(`08 - group rule "tag" should be sensible`, () => {
   equal(applyFixes(str, messages), fixed, "08.01");
 });
 
-test(`09 - "all rules" setting should be sensible`, () => {
-  let str = `<div   /    >`;
-  let fixed = `<div>`;
+test('09 - "all rules" setting should be sensible', () => {
+  let str = "<div   /    >";
+  let fixed = "<div>";
   let messages = verify(not, str, {
     rules: {
       all: 2, // <---------- all rules

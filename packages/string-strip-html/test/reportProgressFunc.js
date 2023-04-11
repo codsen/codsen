@@ -39,7 +39,7 @@ test("03 - reports only at 50% if length is between 1000 and 2000", () => {
       });
     },
     /50/,
-    `03.01`
+    "03.01"
   );
 });
 

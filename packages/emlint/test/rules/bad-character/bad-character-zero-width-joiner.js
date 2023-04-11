@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two ZERO WIDTH JOINER characters`, () => {
+test("01 - detects two ZERO WIDTH JOINER characters", () => {
   let str = "\u200Ddlkgjld\u200Dj";
   let linter = new Linter();
   let messages = linter.verify(str, {

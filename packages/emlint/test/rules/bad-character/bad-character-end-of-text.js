@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two END OF TEXT characters`, () => {
+test("01 - detects two END OF TEXT characters", () => {
   let str = "\u0003dlkgjld\u0003j";
   let linter = new Linter();
   let messages = linter.verify(str, {

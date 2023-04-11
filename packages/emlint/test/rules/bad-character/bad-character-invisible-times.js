@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two INVISIBLE TIMES characters`, () => {
+test("01 - detects two INVISIBLE TIMES characters", () => {
   let str = "\u2062dlkgjld\u2062j";
   let linter = new Linter();
   let messages = linter.verify(str, {

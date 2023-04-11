@@ -15,7 +15,7 @@ const BACKSLASH = "\u005C";
 // 01. void tag, no "tag-void-slash" rule
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - tight`, () => {
+test(`01 - ${`\u001b[${33}m${"void tag"}\u001b[${39}m`} - tight`, () => {
   let str = `<br${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -42,7 +42,7 @@ test(`01 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - tight`, () => {
   );
 });
 
-test(`02 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule prohibits it`, () => {
+test(`02 - ${`\u001b[${33}m${"void tag"}\u001b[${39}m`} - space in front, rule prohibits it`, () => {
   let str = `<br  ${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -70,7 +70,7 @@ test(`02 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule p
   );
 });
 
-test(`03 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule prohibits it`, () => {
+test(`03 - ${`\u001b[${33}m${"void tag"}\u001b[${39}m`} - space in front, rule prohibits it`, () => {
   let str = `<br  ${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -98,7 +98,7 @@ test(`03 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule p
   );
 });
 
-test(`04 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule demands it`, () => {
+test(`04 - ${`\u001b[${33}m${"void tag"}\u001b[${39}m`} - space in front, rule demands it`, () => {
   let str = `<br  ${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -109,7 +109,7 @@ test(`04 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule d
   equal(applyFixes(str, messages), "<br />", "04.01");
 });
 
-test(`05 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - one tab, rule demands space`, () => {
+test(`05 - ${`\u001b[${33}m${"void tag"}\u001b[${39}m`} - one tab, rule demands space`, () => {
   let str = `<br\t${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -120,7 +120,7 @@ test(`05 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - one tab, rule demands 
   equal(applyFixes(str, messages), "<br />", "05.01");
 });
 
-test(`06 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - two tabs, rule demands space`, () => {
+test(`06 - ${`\u001b[${33}m${"void tag"}\u001b[${39}m`} - two tabs, rule demands space`, () => {
   let str = `<br\t\t${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -131,7 +131,7 @@ test(`06 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - two tabs, rule demands
   equal(applyFixes(str, messages), "<br />", "06.01");
 });
 
-test(`07 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - tight`, () => {
+test(`07 - ${`\u001b[${33}m${"void tag"}\u001b[${39}m`} - tight`, () => {
   let str = `<br${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -145,7 +145,7 @@ test(`07 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - tight`, () => {
 // 02. void tag, with "tag-void-slash" rule
 // -----------------------------------------------------------------------------
 
-test(`08 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tight`, () => {
+test(`08 - ${`\u001b[${33}m${"with tag-void-slash"}\u001b[${39}m`} - tight`, () => {
   let str = `<br${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -173,7 +173,7 @@ test(`08 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tight`, () 
   );
 });
 
-test(`09 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tight`, () => {
+test(`09 - ${`\u001b[${33}m${"with tag-void-slash"}\u001b[${39}m`} - tight`, () => {
   let str = `<br${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -201,7 +201,7 @@ test(`09 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tight`, () 
   );
 });
 
-test(`10 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tight`, () => {
+test(`10 - ${`\u001b[${33}m${"with tag-void-slash"}\u001b[${39}m`} - tight`, () => {
   let str = `<br${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -231,7 +231,7 @@ test(`10 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tight`, () 
 
 // SPACE IN FRONT
 
-test(`11 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-bracket`}\u001b[${39}m`}`, () => {
+test(`11 - ${`\u001b[${33}m${"with tag-void-slash"}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${"no tag-space-before-closing-bracket"}\u001b[${39}m`}`, () => {
   let str = `<br  ${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -259,7 +259,7 @@ test(`11 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in fr
   );
 });
 
-test(`12 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-bracket`}\u001b[${39}m`}`, () => {
+test(`12 - ${`\u001b[${33}m${"with tag-void-slash"}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${"no tag-space-before-closing-bracket"}\u001b[${39}m`}`, () => {
   let str = `<br  ${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -287,7 +287,7 @@ test(`12 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in fr
   );
 });
 
-test(`13 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-bracket`}\u001b[${39}m`}`, () => {
+test(`13 - ${`\u001b[${33}m${"with tag-void-slash"}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${"no tag-space-before-closing-bracket"}\u001b[${39}m`}`, () => {
   let str = `<br  ${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -317,7 +317,7 @@ test(`13 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in fr
 
 // "tag-space-before-closing-bracket" = always
 
-test(`14 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-bracket`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`, () => {
+test(`14 - ${`\u001b[${33}m${"with tag-void-slash"}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${"tag-space-before-closing-bracket"}\u001b[${39}m`}=${`\u001b[${32}m${"always"}\u001b[${39}m`}`, () => {
   let str = `<br  ${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -329,7 +329,7 @@ test(`14 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in fr
   equal(applyFixes(str, messages), "<br />", "14.01");
 });
 
-test(`15 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-bracket`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`, () => {
+test(`15 - ${`\u001b[${33}m${"with tag-void-slash"}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${"tag-space-before-closing-bracket"}\u001b[${39}m`}=${`\u001b[${32}m${"always"}\u001b[${39}m`}`, () => {
   let str = `<br  ${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -341,7 +341,7 @@ test(`15 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in fr
   equal(applyFixes(str, messages), "<br />", "15.01");
 });
 
-test(`16 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-bracket`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`, () => {
+test(`16 - ${`\u001b[${33}m${"with tag-void-slash"}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${"tag-space-before-closing-bracket"}\u001b[${39}m`}=${`\u001b[${32}m${"always"}\u001b[${39}m`}`, () => {
   let str = `<br  ${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -355,7 +355,7 @@ test(`16 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in fr
 
 // "tag-space-before-closing-bracket" = never
 
-test(`17 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-bracket`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`, () => {
+test(`17 - ${`\u001b[${33}m${"with tag-void-slash"}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${"tag-space-before-closing-bracket"}\u001b[${39}m`}=${`\u001b[${31}m${"never"}\u001b[${39}m`}`, () => {
   let str = `<br  ${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -384,7 +384,7 @@ test(`17 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in fr
   );
 });
 
-test(`18 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-bracket`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`, () => {
+test(`18 - ${`\u001b[${33}m${"with tag-void-slash"}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${"tag-space-before-closing-bracket"}\u001b[${39}m`}=${`\u001b[${31}m${"never"}\u001b[${39}m`}`, () => {
   let str = `<br  ${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -413,7 +413,7 @@ test(`18 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in fr
   );
 });
 
-test(`19 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-bracket`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`, () => {
+test(`19 - ${`\u001b[${33}m${"with tag-void-slash"}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${"tag-space-before-closing-bracket"}\u001b[${39}m`}=${`\u001b[${31}m${"never"}\u001b[${39}m`}`, () => {
   let str = `<br  ${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -445,7 +445,7 @@ test(`19 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in fr
 // 03 not a void tag
 // -----------------------------------------------------------------------------
 
-test(`20 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - not void tag`, () => {
+test(`20 - ${`\u001b[${33}m${"void tag"}\u001b[${39}m`} - not void tag`, () => {
   let str = `<div${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -472,7 +472,7 @@ test(`20 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - not void tag`, () => {
   );
 });
 
-test(`21 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space request ignored`, () => {
+test(`21 - ${`\u001b[${33}m${"with tag-void-slash"}\u001b[${39}m`} - space request ignored`, () => {
   let str = `<div${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -483,7 +483,7 @@ test(`21 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space reque
   equal(applyFixes(str, messages), "<div >", "21.01");
 });
 
-test(`22 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space request ignored`, () => {
+test(`22 - ${`\u001b[${33}m${"with tag-void-slash"}\u001b[${39}m`} - space request ignored`, () => {
   let str = `<div${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -518,7 +518,7 @@ test(`22 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space reque
   );
 });
 
-test(`23 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tag-void-slash does not matter`, () => {
+test(`23 - ${`\u001b[${33}m${"with tag-void-slash"}\u001b[${39}m`} - tag-void-slash does not matter`, () => {
   let str = `<div${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {
@@ -533,7 +533,7 @@ test(`23 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tag-void-sl
 // 04. backslash in front of a void tag name
 // -----------------------------------------------------------------------------
 
-test(`24 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts`, () => {
+test(`24 - ${`\u001b[${33}m${"in front of a void tag"}\u001b[${39}m`} - no slash, no opts`, () => {
   let str = `<${BACKSLASH}br>`;
   let messages = verify(not, str, {
     rules: {
@@ -570,7 +570,7 @@ test(`24 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash
   );
 });
 
-test(`25 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - slash, no opts`, () => {
+test(`25 - ${`\u001b[${33}m${"in front of a void tag"}\u001b[${39}m`} - slash, no opts`, () => {
   let str = `<${BACKSLASH}br/>`;
   let messages = verify(not, str, {
     rules: {
@@ -597,7 +597,7 @@ test(`25 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - slash, n
   );
 });
 
-test(`26 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`, () => {
+test(`26 - ${`\u001b[${33}m${"in front of a void tag"}\u001b[${39}m`} - no slash, no opts, whitespace`, () => {
   let str = `<${BACKSLASH}br\t>`;
   let messages = verify(not, str, {
     rules: {
@@ -607,7 +607,7 @@ test(`26 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash
   equal(applyFixes(str, messages), "<br/>", "26.01");
 });
 
-test(`27 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - combo with rule "tag-void-slash"`, () => {
+test(`27 - ${`\u001b[${33}m${"in front of a void tag"}\u001b[${39}m`} - combo with rule "tag-void-slash"`, () => {
   let str = `<${BACKSLASH}br>`;
   let messages = verify(not, str, {
     rules: {
@@ -635,7 +635,7 @@ test(`27 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - combo wi
   );
 });
 
-test(`28 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`, () => {
+test(`28 - ${`\u001b[${33}m${"in front of a void tag"}\u001b[${39}m`} - no slash, no opts, whitespace`, () => {
   let str = `<${BACKSLASH}br\t>`;
   let messages = verify(not, str, {
     rules: {
@@ -647,7 +647,7 @@ test(`28 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash
   equal(applyFixes(str, messages), "<br />", "28.01");
 });
 
-test(`29 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`, () => {
+test(`29 - ${`\u001b[${33}m${"in front of a void tag"}\u001b[${39}m`} - no slash, no opts, whitespace`, () => {
   let str = `<${BACKSLASH}br >`;
   let messages = verify(not, str, {
     rules: {
@@ -689,7 +689,7 @@ test(`29 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash
 // 05. backslash in front of a non-void tag name
 // -----------------------------------------------------------------------------
 
-test(`30 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, tight`, () => {
+test(`30 - ${`\u001b[${33}m${"in front of a non-void tag"}\u001b[${39}m`} - div, tight`, () => {
   let str = `<${BACKSLASH}div>`;
   let messages = verify(not, str, {
     rules: {
@@ -716,7 +716,7 @@ test(`30 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div,
   );
 });
 
-test(`31 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, leading space`, () => {
+test(`31 - ${`\u001b[${33}m${"in front of a non-void tag"}\u001b[${39}m`} - div, leading space`, () => {
   let str = `< ${BACKSLASH}div>`;
   let messages = verify(not, str, {
     rules: {
@@ -743,7 +743,7 @@ test(`31 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div,
   );
 });
 
-test(`32 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, trailing space`, () => {
+test(`32 - ${`\u001b[${33}m${"in front of a non-void tag"}\u001b[${39}m`} - div, trailing space`, () => {
   let str = `<${BACKSLASH} div>`;
   let messages = verify(not, str, {
     rules: {
@@ -770,7 +770,7 @@ test(`32 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div,
   );
 });
 
-test(`33 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, spaced`, () => {
+test(`33 - ${`\u001b[${33}m${"in front of a non-void tag"}\u001b[${39}m`} - div, spaced`, () => {
   let str = `< ${BACKSLASH} div>`;
   let messages = verify(not, str, {
     rules: {
@@ -800,7 +800,7 @@ test(`33 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div,
 // 06. extreme case - backslashes on both sides
 // -----------------------------------------------------------------------------
 
-test(`34 - ${`\u001b[${36}m${`both sides`}\u001b[${39}m`} - extreme case`, () => {
+test(`34 - ${`\u001b[${36}m${"both sides"}\u001b[${39}m`} - extreme case`, () => {
   let str = `<${BACKSLASH}br${BACKSLASH}>`;
   let messages = verify(not, str, {
     rules: {

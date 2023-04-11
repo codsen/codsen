@@ -250,34 +250,34 @@ test("22 - punctuation after tag - real-life", () => {
 
 test("23 - quotes - surrounded", () => {
   equal(
-    stripHtml(`<li>"<a href="/Foo/bar">zzz</a>"</li>`).result,
-    `"zzz"`,
+    stripHtml('<li>"<a href="/Foo/bar">zzz</a>"</li>').result,
+    '"zzz"',
     "23.01"
   );
 });
 
 test("24 - quotes - surrounded, tight", () => {
-  equal(stripHtml(`<li>(<strong>zzz</strong>)</li>`).result, `(zzz)`, "24.01");
+  equal(stripHtml("<li>(<strong>zzz</strong>)</li>").result, "(zzz)", "24.01");
 });
 
 test("25 - quotes - surrounded tags in vicinity", () => {
   equal(
-    stripHtml(`<ul> <li>(<strong>zzz</strong>)</li> </ul>`).result,
-    `(zzz)`,
+    stripHtml("<ul> <li>(<strong>zzz</strong>)</li> </ul>").result,
+    "(zzz)",
     "25.01"
   );
 });
 
 test("26 - quotes - surrounded tags in vicinity", () => {
-  equal(stripHtml(`a <a>"<b>z</b>"</a> b`).result, `a "z" b`, "26.01");
+  equal(stripHtml('a <a>"<b>z</b>"</a> b').result, 'a "z" b', "26.01");
 });
 
 test("27 - examples - c-plus-us", () => {
   equal(
     stripHtml(
-      `<code>#include <stdio.h>;</code> and <code>#include &lt;stdio.h&gt;</code>`
+      "<code>#include <stdio.h>;</code> and <code>#include &lt;stdio.h&gt;</code>"
     ).result,
-    `#include; and #include`,
+    "#include; and #include",
     "27.01"
   );
 });

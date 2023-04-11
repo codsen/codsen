@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no bgcolor, error level 0`, () => {
-  let str = `<body>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no bgcolor, error level 0`, () => {
+  let str = "<body>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no bgcolor, error le
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no bgcolor, error level 1`, () => {
-  let str = `<body>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no bgcolor, error level 1`, () => {
+  let str = "<body>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no bgcolor, error le
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no bgcolor, error level 2`, () => {
-  let str = `<body>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no bgcolor, error level 2`, () => {
+  let str = "<body>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no bgcolor, error le
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy bgcolor`, () => {
-  let str = `<body class='zz' bgcolor='#CCCCCC' id='yy aa'>`; // <-- notice single quotes
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy bgcolor`, () => {
+  let str = "<body class='zz' bgcolor='#CCCCCC' id='yy aa'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -61,21 +61,21 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy bgcolor`, ()
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<body bgcolor=" #CCCCCC">`;
+test(`05 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = '<body bgcolor=" #CCCCCC">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-bgcolor": 2,
     },
   });
-  equal(applyFixes(str, messages), `<body bgcolor="#CCCCCC">`, "05.01");
+  equal(applyFixes(str, messages), '<body bgcolor="#CCCCCC">', "05.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-bgcolor",
       idxFrom: 15,
       idxTo: 16,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[15, 16]],
       },
@@ -83,21 +83,21 @@ test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   ]);
 });
 
-test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<body bgcolor="#CCCCCC ">`;
+test(`06 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = '<body bgcolor="#CCCCCC ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-bgcolor": 2,
     },
   });
-  equal(applyFixes(str, messages), `<body bgcolor="#CCCCCC">`, "06.01");
+  equal(applyFixes(str, messages), '<body bgcolor="#CCCCCC">', "06.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-bgcolor",
       idxFrom: 22,
       idxTo: 23,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[22, 23]],
       },
@@ -105,21 +105,21 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around - 6 digit hex`, () => {
-  let str = `<body bgcolor="  #CCCCCC  ">`;
+test(`07 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around - 6 digit hex`, () => {
+  let str = '<body bgcolor="  #CCCCCC  ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-bgcolor": 2,
     },
   });
-  equal(applyFixes(str, messages), `<body bgcolor="#CCCCCC">`, "07.01");
+  equal(applyFixes(str, messages), '<body bgcolor="#CCCCCC">', "07.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-bgcolor",
       idxFrom: 15,
       idxTo: 26,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [15, 17],
@@ -130,21 +130,21 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around - named`, () => {
-  let str = `<body bgcolor="  PeachPuff  ">`;
+test(`08 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around - named`, () => {
+  let str = '<body bgcolor="  PeachPuff  ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-bgcolor": 2,
     },
   });
-  equal(applyFixes(str, messages), `<body bgcolor="PeachPuff">`, "08.01");
+  equal(applyFixes(str, messages), '<body bgcolor="PeachPuff">', "08.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-bgcolor",
       idxFrom: 15,
       idxTo: 28,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [15, 17],
@@ -155,8 +155,8 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<body bgcolor="  \t">`;
+test(`09 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<body bgcolor="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -170,14 +170,14 @@ test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-bgcolor",
       idxFrom: 15,
       idxTo: 18,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
 });
 
-test(`10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`, () => {
-  let str = `<body bgcolor="">`;
+test(`10 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - empty value`, () => {
+  let str = '<body bgcolor="">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -191,7 +191,7 @@ test(`10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`, () => 
       ruleId: "attribute-validate-bgcolor",
       idxFrom: 6,
       idxTo: 16,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -200,8 +200,8 @@ test(`10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`, () => 
 // 03. named colors
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${35}m${`named`}\u001b[${39}m`} - healthy`, () => {
-  let str = `<body class='zz' bgcolor='blue' id='yy aa'>`; // <-- notice single quotes
+test(`11 - ${`\u001b[${35}m${"named"}\u001b[${39}m`} - healthy`, () => {
+  let str = "<body class='zz' bgcolor='blue' id='yy aa'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -212,8 +212,8 @@ test(`11 - ${`\u001b[${35}m${`named`}\u001b[${39}m`} - healthy`, () => {
   equal(messages, [], "11.02");
 });
 
-test(`12 - ${`\u001b[${35}m${`named`}\u001b[${39}m`} - unrecognised`, () => {
-  let str = `<body bgcolor="nearlyRed">`;
+test(`12 - ${`\u001b[${35}m${"named"}\u001b[${39}m`} - unrecognised`, () => {
+  let str = '<body bgcolor="nearlyRed">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -227,7 +227,7 @@ test(`12 - ${`\u001b[${35}m${`named`}\u001b[${39}m`} - unrecognised`, () => {
       ruleId: "attribute-validate-bgcolor",
       idxFrom: 15,
       idxTo: 24,
-      message: `Unrecognised color value.`,
+      message: "Unrecognised color value.",
       fix: null,
     },
   ]);
@@ -236,8 +236,8 @@ test(`12 - ${`\u001b[${35}m${`named`}\u001b[${39}m`} - unrecognised`, () => {
 // 04. hex colors
 // -----------------------------------------------------------------------------
 
-test(`13 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - unrecognised`, () => {
-  let str = `<body bgcolor="#gg0000">`;
+test(`13 - ${`\u001b[${35}m${"hex"}\u001b[${39}m`} - unrecognised`, () => {
+  let str = '<body bgcolor="#gg0000">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -251,14 +251,14 @@ test(`13 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - unrecognised`, () => {
       ruleId: "attribute-validate-bgcolor",
       idxFrom: 15,
       idxTo: 22,
-      message: `Unrecognised hex code.`,
+      message: "Unrecognised hex code.",
       fix: null,
     },
   ]);
 });
 
-test(`14 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, () => {
-  let str = `<body bgcolor="#ccc">`;
+test(`14 - ${`\u001b[${35}m${"hex"}\u001b[${39}m`} - bad hex`, () => {
+  let str = '<body bgcolor="#ccc">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -272,14 +272,14 @@ test(`14 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, () => {
       ruleId: "attribute-validate-bgcolor",
       idxFrom: 15,
       idxTo: 19,
-      message: `Hex color code should be 6 digits-long.`,
+      message: "Hex color code should be 6 digits-long.",
       fix: null,
     },
   ]);
 });
 
-test(`15 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, () => {
-  let str = `<body bgcolor="#aaaa">`;
+test(`15 - ${`\u001b[${35}m${"hex"}\u001b[${39}m`} - bad hex`, () => {
+  let str = '<body bgcolor="#aaaa">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -293,7 +293,7 @@ test(`15 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, () => {
       ruleId: "attribute-validate-bgcolor",
       idxFrom: 15,
       idxTo: 20,
-      message: `Hex color code should be 6 digits-long.`,
+      message: "Hex color code should be 6 digits-long.",
       fix: null,
     },
   ]);
@@ -302,8 +302,8 @@ test(`15 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, () => {
 // 05. hex colors
 // -----------------------------------------------------------------------------
 
-test(`16 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - healthy`, () => {
-  let str = `<body bgcolor="rgb(255, 0, 153)">`;
+test(`16 - ${`\u001b[${35}m${"rgba"}\u001b[${39}m`} - healthy`, () => {
+  let str = '<body bgcolor="rgb(255, 0, 153)">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -317,14 +317,14 @@ test(`16 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - healthy`, () => {
       ruleId: "attribute-validate-bgcolor",
       idxFrom: 15,
       idxTo: 31,
-      message: `rgb() is not allowed.`,
+      message: "rgb() is not allowed.",
       fix: null,
     },
   ]);
 });
 
-test(`17 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - broken`, () => {
-  let str = `<body bgcolor="rgb(255)">`;
+test(`17 - ${`\u001b[${35}m${"rgba"}\u001b[${39}m`} - broken`, () => {
+  let str = '<body bgcolor="rgb(255)">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -338,14 +338,14 @@ test(`17 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - broken`, () => {
       ruleId: "attribute-validate-bgcolor",
       idxFrom: 15,
       idxTo: 23,
-      message: `rgb() is not allowed.`,
+      message: "rgb() is not allowed.",
       fix: null,
     },
   ]);
 });
 
-test(`18 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - broken`, () => {
-  let str = `<body bgcolor="rgb()">`;
+test(`18 - ${`\u001b[${35}m${"rgba"}\u001b[${39}m`} - broken`, () => {
+  let str = '<body bgcolor="rgb()">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -359,7 +359,7 @@ test(`18 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - broken`, () => {
       ruleId: "attribute-validate-bgcolor",
       idxFrom: 15,
       idxTo: 20,
-      message: `rgb() is not allowed.`,
+      message: "rgb() is not allowed.",
       fix: null,
     },
   ]);

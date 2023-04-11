@@ -8,25 +8,25 @@ import { cparser } from "../dist/codsen-parser.esm.js";
 // 00. no error
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags`, () => {
+test(`01 - ${`\u001b[${33}m${"no error"}\u001b[${39}m`} - two tags`, () => {
   let gatheredErr = [];
-  cparser(`<div></div>`, {
+  cparser("<div></div>", {
     errCb: (errObj) => gatheredErr.push(errObj),
   });
   equal(gatheredErr, [], "01.01");
 });
 
-test(`02 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`, () => {
+test(`02 - ${`\u001b[${33}m${"no error"}\u001b[${39}m`} - two tags, whitespace in between`, () => {
   let gatheredErr = [];
-  cparser(`<style>\n\n</style>`, {
+  cparser("<style>\n\n</style>", {
     errCb: (errObj) => gatheredErr.push(errObj),
   });
   equal(gatheredErr, [], "02.01");
 });
 
-test(`03 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`, () => {
+test(`03 - ${`\u001b[${33}m${"no error"}\u001b[${39}m`} - two tags, whitespace in between`, () => {
   let gatheredErr = [];
-  cparser(`<div>\n\n</div>`, {
+  cparser("<div>\n\n</div>", {
     errCb: (errObj) => gatheredErr.push(errObj),
   });
   equal(gatheredErr, [], "03.01");
@@ -35,11 +35,11 @@ test(`03 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace i
 // 01. basic
 // -----------------------------------------------------------------------------
 
-test(`04 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - first tag is missing closing`, () => {
+test(`04 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - first tag is missing closing`, () => {
   let gatheredErr = [];
   compare(
     ok,
-    cparser(`<table><tr><td>x</td></tr>`, {
+    cparser("<table><tr><td>x</td></tr>", {
       errCb: (errObj) => gatheredErr.push(errObj),
     }),
     [
@@ -103,11 +103,11 @@ test(`04 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - first tag is missing clos
   is(gatheredErr.length, 1, "04.01");
 });
 
-test(`05 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - second tag is missing closing`, () => {
+test(`05 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - second tag is missing closing`, () => {
   let gatheredErr = [];
   compare(
     ok,
-    cparser(`<table><tr><td>x</td></table>`, {
+    cparser("<table><tr><td>x</td></table>", {
       errCb: (errObj) => gatheredErr.push(errObj),
     }),
     [
@@ -171,11 +171,11 @@ test(`05 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - second tag is missing clo
   is(gatheredErr.length, 1, "05.01");
 });
 
-test(`06 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - third tag is missing closing`, () => {
+test(`06 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - third tag is missing closing`, () => {
   let gatheredErr = [];
   compare(
     ok,
-    cparser(`<table><tr><td>x</tr></table>`, {
+    cparser("<table><tr><td>x</tr></table>", {
       errCb: (errObj) => gatheredErr.push(errObj),
     }),
     [
@@ -239,11 +239,11 @@ test(`06 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - third tag is missing clos
   is(gatheredErr.length, 1, "06.01");
 });
 
-test(`07 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - text + tag`, () => {
+test(`07 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - text + tag`, () => {
   let gatheredErr = [];
   compare(
     ok,
-    cparser(`z <div>`, {
+    cparser("z <div>", {
       errCb: (errObj) => gatheredErr.push(errObj),
     }),
     [
@@ -287,7 +287,7 @@ test(`07 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - text + tag`, () => {
   is(gatheredErr.length, 1, "07.01");
 });
 
-test(`08 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - two consecutive tags missing closing counterparts`, () => {
+test(`08 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - two consecutive tags missing closing counterparts`, () => {
   let gatheredErr = [];
   cparser(
     `<table>
@@ -331,7 +331,7 @@ test(`08 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - two consecutive tags miss
   is(gatheredErr.length, 2, "08.01");
 });
 
-test(`09 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - two consecutive tags missing closing counterparts`, () => {
+test(`09 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - two consecutive tags missing closing counterparts`, () => {
   let gatheredErr = [];
   cparser(
     `<table>
@@ -366,7 +366,7 @@ test(`09 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - two consecutive tags miss
   is(gatheredErr.length, 3, "09.01");
 });
 
-test(`10 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`}`, () => {
+test(`10 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`}`, () => {
   let gatheredErr = [];
   cparser(
     `<table>
@@ -398,7 +398,7 @@ test(`10 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`}`, () => {
   is(gatheredErr.length, 2, "10.01");
 });
 
-test(`11 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - two missing with context`, () => {
+test(`11 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - two missing with context`, () => {
   let gatheredErr = [];
   compare(
     ok,
@@ -581,9 +581,9 @@ test(`11 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - two missing with context`
   is(gatheredErr.length, 4, "11.01");
 });
 
-test(`12 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - left slash`, () => {
+test(`12 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - left slash`, () => {
   let gatheredErr = [];
-  cparser(`<td><\\td>`, {
+  cparser("<td><\\td>", {
     errCb: (errObj) => gatheredErr.push(errObj),
   });
   // equal(
@@ -610,9 +610,9 @@ test(`12 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - left slash`, () => {
 // 02. false alerts
 // -----------------------------------------------------------------------------
 
-test(`13 - ${`\u001b[${33}m${`false alerts`}\u001b[${39}m`} - healthy doctype`, () => {
+test(`13 - ${`\u001b[${33}m${"false alerts"}\u001b[${39}m`} - healthy doctype`, () => {
   let gatheredErr = [];
-  cparser(`<!doctype html>`, {
+  cparser("<!doctype html>", {
     errCb: (errObj) => gatheredErr.push(errObj),
   });
   equal(gatheredErr, [], "13.01");

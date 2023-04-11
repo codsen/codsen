@@ -9,10 +9,10 @@ import { det, mixer } from "../t-util/util.js";
 // stripped, ignored and/or replaced with line breaks
 // correctly, across all combinations of possible settings
 
-test(`01`, () => {
+test("01", () => {
   // replaceLineBreaks=false
   equal(
-    det1(`abc<br>def`, {
+    det1("abc<br>def", {
       stripHtml: true,
       replaceLineBreaks: false,
       stripHtmlButIgnoreTags: [],
@@ -22,7 +22,7 @@ test(`01`, () => {
     "01.01"
   );
   equal(
-    det1(`abc<br>def`, {
+    det1("abc<br>def", {
       stripHtml: true,
       replaceLineBreaks: false,
       stripHtmlButIgnoreTags: [],
@@ -35,7 +35,7 @@ test(`01`, () => {
   // replaceLineBreaks=true
   // useXHTML=true,
   equal(
-    det1(`abc<br>def`, {
+    det1("abc<br>def", {
       stripHtml: true,
       replaceLineBreaks: true,
       useXHTML: true,
@@ -48,7 +48,7 @@ test(`01`, () => {
   // replaceLineBreaks=true
   // useXHTML=true,
   equal(
-    det1(`abc<br>def`, {
+    det1("abc<br>def", {
       stripHtml: true,
       replaceLineBreaks: true,
       useXHTML: false,
@@ -60,7 +60,7 @@ test(`01`, () => {
   );
 
   equal(
-    det1(`abc<br>def`, {
+    det1("abc<br>def", {
       stripHtml: true,
       stripHtmlButIgnoreTags: [],
       stripHtmlAddNewLine: [], // <---
@@ -70,7 +70,7 @@ test(`01`, () => {
   );
 });
 
-test(`02`, () => {
+test("02", () => {
   mixer({
     stripHtml: true,
     removeLineBreaks: false,
@@ -79,8 +79,8 @@ test(`02`, () => {
     stripHtmlAddNewLine: ["br"], // <---
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br>def`, opt).res,
-      `abc\ndef`,
+      det(ok, not, n, "abc<br>def", opt).res,
+      "abc\ndef",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -93,8 +93,8 @@ test(`02`, () => {
     stripHtmlAddNewLine: ["br"],
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br>def`, opt).res,
-      `abc<br>\ndef`,
+      det(ok, not, n, "abc<br>def", opt).res,
+      "abc<br>\ndef",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -107,8 +107,8 @@ test(`02`, () => {
     stripHtmlAddNewLine: ["br"], // <---
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br>def`, opt).res,
-      `abc<br/>\ndef`,
+      det(ok, not, n, "abc<br>def", opt).res,
+      "abc<br/>\ndef",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -121,8 +121,8 @@ test(`02`, () => {
     stripHtmlAddNewLine: [], // <---
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br>def`, opt).res,
-      `abc def`,
+      det(ok, not, n, "abc<br>def", opt).res,
+      "abc def",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -132,8 +132,8 @@ test(`02`, () => {
     useXHTML: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br>def`, opt).res,
-      `abc<br>def`,
+      det(ok, not, n, "abc<br>def", opt).res,
+      "abc<br>def",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -142,16 +142,16 @@ test(`02`, () => {
     useXHTML: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br>def`, opt).res,
-      `abc<br/>def`,
+      det(ok, not, n, "abc<br>def", opt).res,
+      "abc<br/>def",
       JSON.stringify(opt, null, 4)
     );
   });
 });
 
-test(`03`, () => {
+test("03", () => {
   equal(
-    det1(`abc<br/>def`, {
+    det1("abc<br/>def", {
       stripHtml: true,
       replaceLineBreaks: false,
       stripHtmlButIgnoreTags: [],
@@ -162,7 +162,7 @@ test(`03`, () => {
   );
 });
 
-test(`04`, () => {
+test("04", () => {
   mixer({
     stripHtml: true,
     removeLineBreaks: false,
@@ -171,8 +171,8 @@ test(`04`, () => {
     stripHtmlAddNewLine: ["br"], // <---
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, opt).res,
-      `abc\ndef`,
+      det(ok, not, n, "abc<br/>def", opt).res,
+      "abc\ndef",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -184,8 +184,8 @@ test(`04`, () => {
     stripHtmlAddNewLine: ["br"], // <---
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, opt).res,
-      `abc def`,
+      det(ok, not, n, "abc<br/>def", opt).res,
+      "abc def",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -196,8 +196,8 @@ test(`04`, () => {
     stripHtmlAddNewLine: [], // <---
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abc<br/>def`, opt).res,
-      `abc def`,
+      det(ok, not, n, "abc<br/>def", opt).res,
+      "abc def",
       JSON.stringify(opt, null, 4)
     );
   });

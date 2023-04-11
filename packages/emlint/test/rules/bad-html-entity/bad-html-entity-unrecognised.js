@@ -8,8 +8,8 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. missing letters
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule`, () => {
-  let str = `abc&yo;def`;
+test(`01 - ${`\u001b[${33}m${"unrecognised entity"}\u001b[${39}m`} - group rule`, () => {
+  let str = "abc&yo;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity": 2,
@@ -36,8 +36,8 @@ test(`01 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule`
   equal(messages.length, 1, "01.02");
 });
 
-test(`02 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 1`, () => {
-  let str = `abc&yo;def`;
+test(`02 - ${`\u001b[${33}m${"unrecognised entity"}\u001b[${39}m`} - exact rule, severity level 1`, () => {
+  let str = "abc&yo;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-unrecognised": 1,
@@ -64,8 +64,8 @@ test(`02 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule,
   equal(messages.length, 1, "02.02");
 });
 
-test(`03 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 2`, () => {
-  let str = `abc&yo;def`;
+test(`03 - ${`\u001b[${33}m${"unrecognised entity"}\u001b[${39}m`} - exact rule, severity level 2`, () => {
+  let str = "abc&yo;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-unrecognised": 2,
@@ -92,8 +92,8 @@ test(`03 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule,
   equal(messages.length, 1, "03.02");
 });
 
-test(`04 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule`, () => {
-  let str = `abc&yo;def`;
+test(`04 - ${`\u001b[${33}m${"unrecognised entity"}\u001b[${39}m`} - group rule`, () => {
+  let str = "abc&yo;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity": 2,
@@ -120,8 +120,8 @@ test(`04 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule`
   equal(messages.length, 1, "04.02");
 });
 
-test(`05 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule - off`, () => {
-  let str = `abc&yo;def`;
+test(`05 - ${`\u001b[${33}m${"unrecognised entity"}\u001b[${39}m`} - group rule - off`, () => {
+  let str = "abc&yo;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity": 0,
@@ -131,8 +131,8 @@ test(`05 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - group rule 
   equal(messages, [], "05.02");
 });
 
-test(`06 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule, severity level 0`, () => {
-  let str = `abc&yo;def`;
+test(`06 - ${`\u001b[${33}m${"unrecognised entity"}\u001b[${39}m`} - exact rule, severity level 0`, () => {
+  let str = "abc&yo;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-unrecognised": 0,
@@ -142,8 +142,8 @@ test(`06 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - exact rule,
   equal(messages, [], "06.02");
 });
 
-test(`07 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - rule by wildcard - off`, () => {
-  let str = `abc&yo;def`;
+test(`07 - ${`\u001b[${33}m${"unrecognised entity"}\u001b[${39}m`} - rule by wildcard - off`, () => {
+  let str = "abc&yo;def";
   let messages = verify(not, str, {
     rules: {
       "bad-html-entity-*": 0,
@@ -153,8 +153,8 @@ test(`07 - ${`\u001b[${33}m${`unrecognised entity`}\u001b[${39}m`} - rule by wil
   equal(messages, [], "07.02");
 });
 
-test(`08 - all`, () => {
-  let str = `abc&yo;def`;
+test("08 - all", () => {
+  let str = "abc&yo;def";
   let messages = verify(not, str, {
     rules: {
       all: 2,

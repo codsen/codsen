@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no dir, error level 0`, () => {
-  let str = `<table>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no dir, error level 0`, () => {
+  let str = "<table>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no dir, error level 
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no dir, error level 1`, () => {
-  let str = `<table>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no dir, error level 1`, () => {
+  let str = "<table>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no dir, error level 
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no dir, error level 2`, () => {
-  let str = `<table>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no dir, error level 2`, () => {
+  let str = "<table>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no dir, error level 
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, wildcard`, () => {
-  let str = `<td dir='rtl'>`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, wildcard`, () => {
+  let str = "<td dir='rtl'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -61,21 +61,21 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, w
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<td dir=' rtl'>`;
+test(`05 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = "<td dir=' rtl'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-dir": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td dir='rtl'>`, "05.01");
+  equal(applyFixes(str, messages), "<td dir='rtl'>", "05.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-dir",
       idxFrom: 9,
       idxTo: 10,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[9, 10]],
       },
@@ -83,21 +83,21 @@ test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   ]);
 });
 
-test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<td dir='rtl '>`;
+test(`06 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = "<td dir='rtl '>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-dir": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td dir='rtl'>`, "06.01");
+  equal(applyFixes(str, messages), "<td dir='rtl'>", "06.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-dir",
       idxFrom: 12,
       idxTo: 13,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[12, 13]],
       },
@@ -105,21 +105,21 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`, () => {
-  let str = `<td dir='  rtl  \t'>`;
+test(`07 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around`, () => {
+  let str = "<td dir='  rtl  \t'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-dir": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td dir='rtl'>`, "07.01");
+  equal(applyFixes(str, messages), "<td dir='rtl'>", "07.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-dir",
       idxFrom: 9,
       idxTo: 17,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [9, 11],
@@ -130,8 +130,8 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<td dir="  \t">`;
+test(`08 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<td dir="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -145,7 +145,7 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-dir",
       idxFrom: 9,
       idxTo: 12,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -154,8 +154,8 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
 // 03. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<script dir="ltr">`;
+test(`09 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<script dir="ltr">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -177,8 +177,8 @@ test(`09 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
 // 04. wrong value
 // -----------------------------------------------------------------------------
 
-test(`10 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out of whack value`, () => {
-  let str = `<td dir="tralala">`;
+test(`10 - ${`\u001b[${35}m${"validation"}\u001b[${39}m`} - out of whack value`, () => {
+  let str = '<td dir="tralala">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -192,14 +192,14 @@ test(`10 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out of whack value`,
       ruleId: "attribute-validate-dir",
       idxFrom: 9,
       idxTo: 16,
-      message: `Should be "ltr|rtl".`,
+      message: 'Should be "ltr|rtl".',
       fix: null,
     },
   ]);
 });
 
-test(`11 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case`, () => {
-  let str = `<div dir="LTR">`;
+test(`11 - ${`\u001b[${35}m${"validation"}\u001b[${39}m`} - wrong case`, () => {
+  let str = '<div dir="LTR">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -207,13 +207,13 @@ test(`11 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - wrong case`, () => {
     },
   });
   // can fix:
-  equal(applyFixes(str, messages), `<div dir="ltr">`, "11.01");
+  equal(applyFixes(str, messages), '<div dir="ltr">', "11.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-dir",
       idxFrom: 10,
       idxTo: 13,
-      message: `Should be lowercase.`,
+      message: "Should be lowercase.",
       fix: {
         ranges: [[10, 13, "ltr"]],
       },

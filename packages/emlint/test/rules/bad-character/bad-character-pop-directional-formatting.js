@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two POP DIRECTIONAL FORMATTING characters`, () => {
+test("01 - detects two POP DIRECTIONAL FORMATTING characters", () => {
   let str = "\u202Cdlkgjld\u202Cj";
   let linter = new Linter();
   let messages = linter.verify(str, {

@@ -4,7 +4,7 @@ import * as assert from "uvu/assert";
 import { stri as stri2 } from "../dist/stristri.esm.js";
 // import { stri, mixer } from "./util/util.js";
 
-test(`01 - large input`, () => {
+test("01 - large input", () => {
   let gathered = [];
   let source = "<div>{% if something %}text";
   let res = stri2(source, {
@@ -21,7 +21,7 @@ test(`01 - large input`, () => {
   assert.equal(gathered, [], "01.02");
 });
 
-test(`02 - large input`, () => {
+test("02 - large input", () => {
   let gathered = [];
   let source = "<div>{% if something %}text".repeat(1000);
   let res = stri2(source, {

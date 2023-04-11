@@ -8,9 +8,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // ESP tags within attribute values
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag inside`, () => {
+test(`01 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - one ESP tag inside`, () => {
   let gathered = [];
-  let value = `<a b="{% if something %}"><c>`;
+  let value = '<a b="{% if something %}"><c>';
   ct(value, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -21,7 +21,7 @@ test(`01 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one
       type: "tag",
       start: 0,
       end: 26,
-      value: `<a b="{% if something %}">`,
+      value: '<a b="{% if something %}">',
       tagNameStartsAt: 1,
       tagNameEndsAt: 2,
       tagName: "a",
@@ -79,9 +79,9 @@ test(`01 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one
   ]);
 });
 
-test(`02 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag + text`, () => {
+test(`02 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - one ESP tag + text`, () => {
   let gathered = [];
-  let value = `<a b="{{ c }}d">`;
+  let value = '<a b="{{ c }}d">';
   ct(value, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -142,9 +142,9 @@ test(`02 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one
   ]);
 });
 
-test(`03 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one ESP tag + text`, () => {
+test(`03 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - one ESP tag + text`, () => {
   let gathered = [];
-  let value = `<img src="{{ root }}z" width="9"/>`;
+  let value = '<img src="{{ root }}z" width="9"/>';
   ct(value, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -227,9 +227,9 @@ test(`03 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - one
   ]);
 });
 
-test(`04 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - esp-text-esp-text`, () => {
+test(`04 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - esp-text-esp-text`, () => {
   let gathered = [];
-  ct(`<a b="{% x %}1{% y %}2">`, {
+  ct('<a b="{% x %}1{% y %}2">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -307,9 +307,9 @@ test(`04 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - esp
   ]);
 });
 
-test(`05 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - chain of text and ESP tag`, () => {
+test(`05 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - chain of text and ESP tag`, () => {
   let gathered = [];
-  ct(`<a z="{% if something %}1{% else %}2{% endif %}" y="x"/>`, {
+  ct('<a z="{% if something %}1{% else %}2{% endif %}" y="x"/>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -320,7 +320,7 @@ test(`05 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - cha
       type: "tag",
       start: 0,
       end: 56,
-      value: `<a z="{% if something %}1{% else %}2{% endif %}" y="x"/>`,
+      value: '<a z="{% if something %}1{% else %}2{% endif %}" y="x"/>',
       tagNameStartsAt: 1,
       tagNameEndsAt: 2,
       tagName: "a",
@@ -337,7 +337,7 @@ test(`05 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - cha
           attribNameEndsAt: 4,
           attribOpeningQuoteAt: 5,
           attribClosingQuoteAt: 47,
-          attribValueRaw: `{% if something %}1{% else %}2{% endif %}`,
+          attribValueRaw: "{% if something %}1{% else %}2{% endif %}",
           attribValue: [
             {
               type: "esp",
@@ -421,9 +421,9 @@ test(`05 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - cha
   ]);
 });
 
-test(`06 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - otherwise a sensitive characters inside ESP tag`, () => {
+test(`06 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - otherwise a sensitive characters inside ESP tag`, () => {
   let gathered = [];
-  ct(`<a>{% if a<b and c>d '"' ><>< %}<b>`, {
+  ct("<a>{% if a<b and c>d '\"' ><>< %}<b>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -455,9 +455,9 @@ test(`06 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - oth
   ]);
 });
 
-test(`07 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, mini extract`, () => {
+test(`07 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - The Killer Triplet, mini extract`, () => {
   let gathered = [];
-  ct(`<a b="c{{ z("'") }}"><b>`, {
+  ct('<a b="c{{ z("\'") }}"><b>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -468,7 +468,7 @@ test(`07 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The
       type: "tag",
       start: 0,
       end: 21,
-      value: `<a b="c{{ z("'") }}">`,
+      value: '<a b="c{{ z("\'") }}">',
       tagNameStartsAt: 1,
       tagNameEndsAt: 2,
       tagName: "a",
@@ -485,7 +485,7 @@ test(`07 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The
           attribNameEndsAt: 4,
           attribOpeningQuoteAt: 5,
           attribClosingQuoteAt: 19,
-          attribValueRaw: `c{{ z("'") }}`,
+          attribValueRaw: 'c{{ z("\'") }}',
           attribValue: [
             {
               type: "text",
@@ -497,7 +497,7 @@ test(`07 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The
               type: "esp",
               start: 7,
               end: 19,
-              value: `{{ z("'") }}`,
+              value: '{{ z("\'") }}',
               head: "{{",
               headStartsAt: 7,
               headEndsAt: 9,
@@ -532,9 +532,9 @@ test(`07 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The
   ]);
 });
 
-test(`08 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, midi extract`, () => {
+test(`08 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - The Killer Triplet, midi extract`, () => {
   let gathered = [];
-  ct(`<a href="https://z.y/?a=1&q={{ r("'", "%27") }}"><b>`, {
+  ct('<a href="https://z.y/?a=1&q={{ r("\'", "%27") }}"><b>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -545,7 +545,7 @@ test(`08 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The
       type: "tag",
       start: 0,
       end: 49,
-      value: `<a href="https://z.y/?a=1&q={{ r("'", "%27") }}">`,
+      value: '<a href="https://z.y/?a=1&q={{ r("\'", "%27") }}">',
       tagNameStartsAt: 1,
       tagNameEndsAt: 2,
       tagName: "a",
@@ -562,19 +562,19 @@ test(`08 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The
           attribNameEndsAt: 7,
           attribOpeningQuoteAt: 8,
           attribClosingQuoteAt: 47,
-          attribValueRaw: `https://z.y/?a=1&q={{ r("'", "%27") }}`,
+          attribValueRaw: 'https://z.y/?a=1&q={{ r("\'", "%27") }}',
           attribValue: [
             {
               type: "text",
               start: 9,
               end: 28,
-              value: `https://z.y/?a=1&q=`,
+              value: "https://z.y/?a=1&q=",
             },
             {
               type: "esp",
               start: 28,
               end: 47,
-              value: `{{ r("'", "%27") }}`,
+              value: '{{ r("\'", "%27") }}',
               head: "{{",
               headStartsAt: 28,
               headEndsAt: 30,
@@ -609,10 +609,10 @@ test(`08 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The
   ]);
 });
 
-test(`09 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The Killer Triplet, maxi extract`, () => {
+test(`09 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - The Killer Triplet, maxi extract`, () => {
   let gathered = [];
   ct(
-    `<a href="https://z.y/?a=1&q={{ r(" ", "+") | r("'", "%27") | r("&", "%26") | r("(", "%28") | r(")", "%29") }}"><b>`,
+    '<a href="https://z.y/?a=1&q={{ r(" ", "+") | r("\'", "%27") | r("&", "%26") | r("(", "%28") | r(")", "%29") }}"><b>',
     {
       tagCb: (obj) => {
         gathered.push(obj);
@@ -625,7 +625,8 @@ test(`09 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The
       type: "tag",
       start: 0,
       end: 111,
-      value: `<a href="https://z.y/?a=1&q={{ r(" ", "+") | r("'", "%27") | r("&", "%26") | r("(", "%28") | r(")", "%29") }}">`,
+      value:
+        '<a href="https://z.y/?a=1&q={{ r(" ", "+") | r("\'", "%27") | r("&", "%26") | r("(", "%28") | r(")", "%29") }}">',
       tagNameStartsAt: 1,
       tagNameEndsAt: 2,
       tagName: "a",
@@ -642,7 +643,8 @@ test(`09 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The
           attribNameEndsAt: 7,
           attribOpeningQuoteAt: 8,
           attribClosingQuoteAt: 109,
-          attribValueRaw: `https://z.y/?a=1&q={{ r(" ", "+") | r("'", "%27") | r("&", "%26") | r("(", "%28") | r(")", "%29") }}`,
+          attribValueRaw:
+            'https://z.y/?a=1&q={{ r(" ", "+") | r("\'", "%27") | r("&", "%26") | r("(", "%28") | r(")", "%29") }}',
           attribValue: [
             {
               type: "text",
@@ -654,7 +656,8 @@ test(`09 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The
               type: "esp",
               start: 28,
               end: 109,
-              value: `{{ r(" ", "+") | r("'", "%27") | r("&", "%26") | r("(", "%28") | r(")", "%29") }}`,
+              value:
+                '{{ r(" ", "+") | r("\'", "%27") | r("&", "%26") | r("(", "%28") | r(")", "%29") }}',
               head: "{{",
               headStartsAt: 28,
               headEndsAt: 30,
@@ -689,9 +692,9 @@ test(`09 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - The
   ]);
 });
 
-test(`10 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly`, () => {
+test(`10 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly`, () => {
   let gathered = [];
-  ct(`<a b="{%- c %}">`, {
+  ct('<a b="{%- c %}">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -745,9 +748,9 @@ test(`10 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
   ]);
 });
 
-test(`11 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
+test(`11 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
   let gathered = [];
-  ct(`<a b="{%- c %}x">`, {
+  ct('<a b="{%- c %}x">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -807,9 +810,9 @@ test(`11 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
   ]);
 });
 
-test(`12 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
+test(`12 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
   let gathered = [];
-  ct(`<a b="x{%- c %}">`, {
+  ct('<a b="x{%- c %}">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -869,9 +872,9 @@ test(`12 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
   ]);
 });
 
-test(`13 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly`, () => {
+test(`13 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly`, () => {
   let gathered = [];
-  ct(`<a b="{%- c -%}">`, {
+  ct('<a b="{%- c -%}">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -924,9 +927,9 @@ test(`13 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
   ]);
 });
 
-test(`14 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
+test(`14 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
   let gathered = [];
-  ct(`<a b="x{%- c -%}">`, {
+  ct('<a b="x{%- c -%}">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -985,9 +988,9 @@ test(`14 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
   ]);
 });
 
-test(`15 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
+test(`15 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
   let gathered = [];
-  let value = `<a b="{%- c -%}x">`;
+  let value = '<a b="{%- c -%}x">';
   ct(value, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -1048,10 +1051,10 @@ test(`15 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
   ]);
 });
 
-test(`16 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
+test(`16 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
   let gathered = [];
-  let value = `<a b="z {%- c -%} x">`;
-  ct(`<a b="z {%- c -%} x">`, {
+  let value = '<a b="z {%- c -%} x">';
+  ct('<a b="z {%- c -%} x">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1117,9 +1120,9 @@ test(`16 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
   ]);
 });
 
-test(`17 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly`, () => {
+test(`17 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly`, () => {
   let gathered = [];
-  let value = `<a b="{% c -%}">`;
+  let value = '<a b="{% c -%}">';
   ct(value, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -1174,9 +1177,9 @@ test(`17 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
   ]);
 });
 
-test(`18 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
+test(`18 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
   let gathered = [];
-  let value = `<a b="x{% c -%}">`;
+  let value = '<a b="x{% c -%}">';
   ct(value, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -1237,9 +1240,9 @@ test(`18 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
   ]);
 });
 
-test(`19 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
+test(`19 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
   let gathered = [];
-  let value = `<a b="{% c -%}x">`;
+  let value = '<a b="{% c -%}x">';
   ct(value, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -1300,9 +1303,9 @@ test(`19 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
   ]);
 });
 
-test(`20 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
+test(`20 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly, with text`, () => {
   let gathered = [];
-  let value = `<a b="z{% c -%}x">`;
+  let value = '<a b="z{% c -%}x">';
   ct(value, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -1372,9 +1375,9 @@ test(`20 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
 // triplets, slightly mismatching heads and tails
 // -----------------------------------------------------------------------------
 
-test(`21 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - A, baseline`, () => {
+test(`21 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly, with text - A, baseline`, () => {
   let gathered = [];
-  let value = `<a b="c{% x %}d{% y %}e{% z %}f">`;
+  let value = '<a b="c{% x %}d{% y %}e{% z %}f">';
   ct(value, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -1477,9 +1480,9 @@ test(`21 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
   ]);
 });
 
-test(`22 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - B`, () => {
+test(`22 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly, with text - B`, () => {
   let gathered = [];
-  let value = `<a b="c{%- x %}d{%- y %}e{%- z %}f">`;
+  let value = '<a b="c{%- x %}d{%- y %}e{%- z %}f">';
   ct(value, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -1582,9 +1585,9 @@ test(`22 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
   ]);
 });
 
-test(`23 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`, () => {
+test(`23 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`, () => {
   let gathered = [];
-  let value = `<a b="c{% x -%}d{% y -%}e{% z -%}f">`;
+  let value = '<a b="c{% x -%}d{% y -%}e{% z -%}f">';
   ct(value, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -1687,9 +1690,9 @@ test(`23 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
   ]);
 });
 
-test(`24 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`, () => {
+test(`24 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`, () => {
   let gathered = [];
-  let value = `<a b="c{%- x %}d{% y -%}e{%- z %}f">`;
+  let value = '<a b="c{%- x %}d{% y -%}e{%- z %}f">';
   ct(value, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -1792,9 +1795,9 @@ test(`24 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
   ]);
 });
 
-test(`25 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`, () => {
+test(`25 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`, () => {
   let gathered = [];
-  let value = `<a b="c{% x -%}d{%- y %}e{% z -%}f">`;
+  let value = '<a b="c{% x -%}d{%- y %}e{% z -%}f">';
   ct(value, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -1897,9 +1900,9 @@ test(`25 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - hea
   ]);
 });
 
-test(`26 - ${`\u001b[${35}m${`ESP tags within attr values`}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`, () => {
+test(`26 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - heads/tails not matching extractly, with text - X`, () => {
   let gathered = [];
-  let value = `<a\tb="c{% x -%}d{%- y %}e{%- z %}f">`;
+  let value = '<a\tb="c{% x -%}d{%- y %}e{%- z %}f">';
   ct(value, {
     tagCb: (obj) => {
       gathered.push(obj);

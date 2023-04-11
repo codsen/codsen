@@ -9,7 +9,7 @@ import { Linter, util } from "../../../dist/emlint.esm.js";
 // -----------------------------------------------------------------------------
 
 // ensure character-encode and bad-character-* don't clash
-test(`01`, () => {
+test("01", () => {
   util.badChars.forEach((ruleName, charCode) => {
     let linter = new Linter();
     let messages = linter.verify(String.fromCharCode(charCode), {
@@ -39,7 +39,7 @@ test(`01`, () => {
   });
 });
 
-test(`02`, () => {
+test("02", () => {
   util.badChars.forEach((ruleName, charCode) => {
     let linter = new Linter();
     let messages = linter.verify(String.fromCharCode(charCode), {
@@ -51,7 +51,7 @@ test(`02`, () => {
   });
 });
 
-test(`03`, () => {
+test("03", () => {
   util.badChars.forEach((ruleName, charCode) => {
     let linter = new Linter();
     let messages = linter.verify(String.fromCharCode(charCode), {
@@ -63,7 +63,7 @@ test(`03`, () => {
   });
 });
 
-test(`04`, () => {
+test("04", () => {
   util.badChars.forEach((ruleName, charCode) => {
     let linter = new Linter();
     let messages = linter.verify(String.fromCharCode(charCode), {
@@ -76,7 +76,7 @@ test(`04`, () => {
   });
 });
 
-test(`05`, () => {
+test("05", () => {
   util.badChars.forEach((ruleName, charCode) => {
     let linter = new Linter();
     let messages = linter.verify(String.fromCharCode(charCode), {
@@ -89,7 +89,7 @@ test(`05`, () => {
   });
 });
 
-test(`06`, () => {
+test("06", () => {
   util.badChars.forEach((ruleName, charCode) => {
     let linter = new Linter();
     let messages = linter.verify(String.fromCharCode(charCode), {
@@ -102,7 +102,7 @@ test(`06`, () => {
   });
 });
 
-test(`07 - single REPLACEMENT CHARACTER`, () => {
+test("07 - single REPLACEMENT CHARACTER", () => {
   let linter = new Linter();
   let messages = linter.verify(String.fromCharCode(65533), {
     rules: {

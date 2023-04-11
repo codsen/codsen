@@ -11,9 +11,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // Imaginary tempating languages
 // -----------------------------------------------------------------------------
 
-test(`01 - mirrorred-character heads and tails`, () => {
+test("01 - mirrorred-character heads and tails", () => {
   let gathered = [];
-  let input = `<$ yo $>`;
+  let input = "<$ yo $>";
   ct(input, {
     tagCb: (obj) => {
       gathered.push(obj);

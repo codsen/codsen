@@ -4,21 +4,21 @@ import * as assert from "uvu/assert";
 import { stri as stri2 } from "../dist/stristri.esm.js";
 import { stri, mixer } from "./util/util.js";
 
-test(`01 - testing api directly`, () => {
+test("01 - testing api directly", () => {
   assert.equal(stri2("<div>").result, "", "01.01");
 });
 
 // HTML only
 // -----------------------------------------------------------------------------
 
-test(`02 - basic`, () => {
-  let source = `<html><div>`;
+test("02 - basic", () => {
+  let source = "<html><div>";
   mixer({
     html: true,
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      ``,
+      "",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -27,21 +27,21 @@ test(`02 - basic`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `<html><div>`,
+      "<html><div>",
       JSON.stringify(opt, null, 4)
     );
   });
 });
 
-test(`03 - basic`, () => {
-  let source = `abc<!--tralala-->def`;
+test("03 - basic", () => {
+  let source = "abc<!--tralala-->def";
   mixer({
     html: true,
     text: true,
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      ``,
+      "",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -51,7 +51,7 @@ test(`03 - basic`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `abc def`,
+      "abc def",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -61,7 +61,7 @@ test(`03 - basic`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `<!--tralala-->`,
+      "<!--tralala-->",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -80,8 +80,8 @@ test(`03 - basic`, () => {
 // mixed
 // -----------------------------------------------------------------------------
 
-test(`04 - ensure no accidental text concat`, () => {
-  let source = `abc<html><div>def`;
+test("04 - ensure no accidental text concat", () => {
+  let source = "abc<html><div>def";
 
   mixer({
     html: true,
@@ -89,7 +89,7 @@ test(`04 - ensure no accidental text concat`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      ``,
+      "",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -100,7 +100,7 @@ test(`04 - ensure no accidental text concat`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `abc def`,
+      "abc def",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -111,7 +111,7 @@ test(`04 - ensure no accidental text concat`, () => {
   }).forEach((opt, n) => {
     assert.equal(
       stri(assert, n, source, opt).result,
-      `<html><div>`,
+      "<html><div>",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -128,14 +128,14 @@ test(`04 - ensure no accidental text concat`, () => {
   });
 });
 
-test(`05`, () => {
+test("05", () => {
   let { result, applicableOpts, templatingLang } = stri2(
-    `<div>Script says hello world and sky and sea</div>`
+    "<div>Script says hello world and sky and sea</div>"
   );
   assert.equal(
     { result, applicableOpts, templatingLang },
     {
-      result: `Script says hello world and sky and sea`,
+      result: "Script says hello world and sky and sea",
       applicableOpts: {
         html: true,
         css: false,

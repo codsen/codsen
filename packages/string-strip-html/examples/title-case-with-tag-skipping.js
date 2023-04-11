@@ -44,12 +44,12 @@ function tagAwareTitle(str) {
 
 // middle:
 assert.equal(
-  tagAwareTitle(`This is a title with some <code>code</code> in it`),
-  `This Is a Title with Some <code>code</code> In It`
+  tagAwareTitle("This is a title with some <code>code</code> in it"),
+  "This Is a Title with Some <code>code</code> In It"
 );
 
 // leading:
 assert.equal(
-  tagAwareTitle(`<span class="xyz">abc</span> defgh ESLint`),
-  `<span class="xyz">abc</span> Defgh ESLint`
+  tagAwareTitle('<span class="xyz">abc</span> defgh ESLint'),
+  '<span class="xyz">abc</span> Defgh ESLint'
 );

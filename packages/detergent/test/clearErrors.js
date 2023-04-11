@@ -17,7 +17,7 @@ import {
   // leftSingleQuote,
 } from "codsen-utils";
 
-test(`01 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=off`, () => {
+test(`01 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=off`, () => {
   mixer({
     removeWidows: false,
     replaceLineBreaks: true,
@@ -38,7 +38,7 @@ test(`01 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, remove
   });
 });
 
-test(`02 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=on`, () => {
+test(`02 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=on`, () => {
   mixer({
     removeWidows: true,
     convertEntities: true,
@@ -60,7 +60,7 @@ test(`02 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, remove
   });
 });
 
-test(`03 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, convertEntities=off`, () => {
+test(`03 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, convertEntities=off`, () => {
   mixer({
     removeWidows: true,
     convertEntities: false,
@@ -82,7 +82,7 @@ test(`03 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, conver
   });
 });
 
-test(`04 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeLineBreaks=off`, () => {
+test(`04 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeLineBreaks=off`, () => {
   mixer({
     removeWidows: false,
     replaceLineBreaks: false,
@@ -103,7 +103,7 @@ test(`04 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, remove
   });
 });
 
-test(`05 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, convertEntities=on`, () => {
+test(`05 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, convertEntities=on`, () => {
   mixer({
     removeWidows: true,
     convertEntities: true,
@@ -125,7 +125,7 @@ test(`05 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, conver
   });
 });
 
-test(`06 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, convertEntities=off`, () => {
+test(`06 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, convertEntities=off`, () => {
   mixer({
     removeWidows: true,
     convertEntities: false,
@@ -147,7 +147,7 @@ test(`06 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, conver
   });
 });
 
-test(`07 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=off, replaceLineBreaks=on`, () => {
+test(`07 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=off, replaceLineBreaks=on`, () => {
   mixer({
     removeWidows: false,
     replaceLineBreaks: true,
@@ -168,7 +168,7 @@ test(`07 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, remove
   });
 });
 
-test(`08 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=on, replaceLineBreaks=on`, () => {
+test(`08 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=on, replaceLineBreaks=on`, () => {
   mixer({
     removeWidows: true,
     convertEntities: true,
@@ -190,7 +190,7 @@ test(`08 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, remove
   });
 });
 
-test(`09 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=on, replaceLineBreaks=on, convertEntities=off`, () => {
+test(`09 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=on, replaceLineBreaks=on, convertEntities=off`, () => {
   mixer({
     removeWidows: true,
     convertEntities: false,
@@ -212,7 +212,7 @@ test(`09 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, remove
   });
 });
 
-test(`10 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=off, removeLineBreaks=on - LF`, () => {
+test(`10 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=off, removeLineBreaks=on - LF`, () => {
   mixer({
     removeWidows: false,
     removeLineBreaks: true,
@@ -231,7 +231,7 @@ test(`10 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, remove
   });
 });
 
-test(`11 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=off, removeLineBreaks=on - CR`, () => {
+test(`11 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=off, removeLineBreaks=on - CR`, () => {
   mixer({
     removeWidows: false,
     removeLineBreaks: true,
@@ -250,7 +250,7 @@ test(`11 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, remove
   });
 });
 
-test(`12 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=off, removeLineBreaks=on - CRLF`, () => {
+test(`12 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=off, removeLineBreaks=on - CRLF`, () => {
   mixer({
     removeWidows: false,
     removeLineBreaks: true,
@@ -269,7 +269,7 @@ test(`12 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, remove
   });
 });
 
-test(`13 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=on, removeLineBreaks=on`, () => {
+test(`13 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=on, removeLineBreaks=on`, () => {
   mixer({
     removeWidows: true,
     convertEntities: true,
@@ -289,7 +289,7 @@ test(`13 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, remove
   });
 });
 
-test(`14 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, removeWidows=on, convertEntities=off`, () => {
+test(`14 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=on, convertEntities=off`, () => {
   mixer({
     removeWidows: true,
     convertEntities: false,
@@ -309,24 +309,24 @@ test(`14 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - space - full stop, remove
   });
 });
 
-test(`15 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - line break combinations`, () => {
-  equal(det(ok, not, 0, `a. \na`).res, "a.<br/>\na", "15.01");
+test(`15 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - line break combinations`, () => {
+  equal(det(ok, not, 0, "a. \na").res, "a.<br/>\na", "15.01");
 });
 
-test(`16 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - line break combinations`, () => {
-  equal(det(ok, not, 0, `a . \na`).res, "a.<br/>\na", "16.01");
+test(`16 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - line break combinations`, () => {
+  equal(det(ok, not, 0, "a . \na").res, "a.<br/>\na", "16.01");
 });
 
-test(`17 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - line break combinations`, () => {
-  equal(det(ok, not, 0, `a , \na`).res, "a,<br/>\na", "17.01");
+test(`17 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - line break combinations`, () => {
+  equal(det(ok, not, 0, "a , \na").res, "a,<br/>\na", "17.01");
 });
 
-test(`18 - ${`\u001b[${32}m${`fixes`}\u001b[${39}m`} - checking line feed being replaced with space`, () => {
+test(`18 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - checking line feed being replaced with space`, () => {
   mixer({
     removeLineBreaks: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `aaaa\u000Abbbbb`, opt).res,
+      det(ok, not, n, "aaaa\u000Abbbbb", opt).res,
       "aaaa bbbbb",
       JSON.stringify(opt, null, 0)
     );

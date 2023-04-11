@@ -8,8 +8,8 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 00. false positives
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - one class each`, () => {
-  let str = `<td class="z"><a class="z">z</a>`;
+test(`01 - ${`\u001b[${34}m${"false positives"}\u001b[${39}m`} - one class each`, () => {
+  let str = '<td class="z"><a class="z">z</a>';
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 2,
@@ -19,8 +19,8 @@ test(`01 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - one class each`
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - duplicate but rule disabled`, () => {
-  let str = `<td class="x" class="y"><a class="z" class="yo">z</a>`;
+test(`02 - ${`\u001b[${34}m${"false positives"}\u001b[${39}m`} - duplicate but rule disabled`, () => {
+  let str = '<td class="x" class="y"><a class="z" class="yo">z</a>';
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 0,
@@ -30,8 +30,8 @@ test(`02 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - duplicate but r
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - unrecognised attr duplicated, rule disabled`, () => {
-  let str = `<td yo="z" yo="tralalaa"><a mo="z" mo="haha">z</a>`;
+test(`03 - ${`\u001b[${34}m${"false positives"}\u001b[${39}m`} - unrecognised attr duplicated, rule disabled`, () => {
+  let str = '<td yo="z" yo="tralalaa"><a mo="z" mo="haha">z</a>';
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 0,
@@ -41,8 +41,8 @@ test(`03 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - unrecognised at
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - value-less attributes repeated`, () => {
-  let str = `<td nowrap nowrap><a class="z">z</a>`;
+test(`04 - ${`\u001b[${34}m${"false positives"}\u001b[${39}m`} - value-less attributes repeated`, () => {
+  let str = '<td nowrap nowrap><a class="z">z</a>';
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 0,
@@ -52,8 +52,8 @@ test(`04 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - value-less attr
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - duplicate undefined`, () => {
-  let str = `<td{% if foo %} style="color:red;"{% endif %} align="left"></td>`;
+test(`05 - ${`\u001b[${34}m${"false positives"}\u001b[${39}m`} - duplicate undefined`, () => {
+  let str = '<td{% if foo %} style="color:red;"{% endif %} align="left"></td>';
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 2,
@@ -66,8 +66,8 @@ test(`05 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - duplicate undef
 // 01. checks
 // -----------------------------------------------------------------------------
 
-test(`06 - off`, () => {
-  let str = `<a class="bb" id="cc" class="dd">`;
+test("06 - off", () => {
+  let str = '<a class="bb" id="cc" class="dd">';
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 0,
@@ -77,9 +77,9 @@ test(`06 - off`, () => {
   equal(messages, [], "06.02");
 });
 
-test(`07 - class merged`, () => {
-  let str = `<a class="bb" id="bb" class="dd">`;
-  let fixed = `<a class="bb dd" id="bb">`;
+test("07 - class merged", () => {
+  let str = '<a class="bb" id="bb" class="dd">';
+  let fixed = '<a class="bb dd" id="bb">';
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 2,
@@ -95,16 +95,16 @@ test(`07 - class merged`, () => {
         ruleId: "attribute-duplicate",
         idxFrom: 0,
         idxTo: 33,
-        message: `Duplicate attribute "class".`,
+        message: 'Duplicate attribute "class".',
       },
     ],
     "07.02"
   );
 });
 
-test(`08 - id merged`, () => {
-  let str = `<a class="cc" id="ee" id="dd" style="id" id="ff">`;
-  let fixed = `<a class="cc" id="dd ee ff" style="id">`;
+test("08 - id merged", () => {
+  let str = '<a class="cc" id="ee" id="dd" style="id" id="ff">';
+  let fixed = '<a class="cc" id="dd ee ff" style="id">';
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 2,
@@ -120,15 +120,15 @@ test(`08 - id merged`, () => {
         ruleId: "attribute-duplicate",
         idxFrom: 0,
         idxTo: 49,
-        message: `Duplicate attribute "id".`,
+        message: 'Duplicate attribute "id".',
       },
     ],
     "08.02"
   );
 });
 
-test(`09 - on`, () => {
-  let str = `<a href="bb" href="bb" href="dd">`;
+test("09 - on", () => {
+  let str = '<a href="bb" href="bb" href="dd">';
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 2,
@@ -144,14 +144,14 @@ test(`09 - on`, () => {
         ruleId: "attribute-duplicate", // second and onwards is reported, not first
         idxFrom: 13,
         idxTo: 22,
-        message: `Duplicate attribute "href".`,
+        message: 'Duplicate attribute "href".',
         fix: null,
       },
       {
         ruleId: "attribute-duplicate",
         idxFrom: 23,
         idxTo: 32,
-        message: `Duplicate attribute "href".`,
+        message: 'Duplicate attribute "href".',
         fix: null,
       },
     ],
@@ -159,8 +159,8 @@ test(`09 - on`, () => {
   );
 });
 
-test(`10 - unrecognised attr duplicated, rule disabled`, () => {
-  let str = `<td yo="z" yo="tralalaa"><a mo="z" mo="haha">z</a>`;
+test("10 - unrecognised attr duplicated, rule disabled", () => {
+  let str = '<td yo="z" yo="tralalaa"><a mo="z" mo="haha">z</a>';
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 2,
@@ -175,14 +175,14 @@ test(`10 - unrecognised attr duplicated, rule disabled`, () => {
         ruleId: "attribute-duplicate",
         idxFrom: 11,
         idxTo: 24,
-        message: `Duplicate attribute "yo".`,
+        message: 'Duplicate attribute "yo".',
         fix: null,
       },
       {
         ruleId: "attribute-duplicate",
         idxFrom: 35,
         idxTo: 44,
-        message: `Duplicate attribute "mo".`,
+        message: 'Duplicate attribute "mo".',
         fix: null,
       },
     ],
@@ -193,9 +193,10 @@ test(`10 - unrecognised attr duplicated, rule disabled`, () => {
 // 02. merging values
 // -----------------------------------------------------------------------------
 
-test(`11 - on`, () => {
-  let str = `<a class="" class=" ll  \t nn " class="" class=" mm  kk  " id="" class="oo" id="uu" class="">`;
-  let fixed = `<a class="kk ll mm nn oo" id="uu">`;
+test("11 - on", () => {
+  let str =
+    '<a class="" class=" ll  \t nn " class="" class=" mm  kk  " id="" class="oo" id="uu" class="">';
+  let fixed = '<a class="kk ll mm nn oo" id="uu">';
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 2,
@@ -205,9 +206,10 @@ test(`11 - on`, () => {
   equal(applyFixes(str, messages), fixed, "11.01");
 });
 
-test(`12 - first one is dodgy`, () => {
-  let str = `<a class= class=" aa " class="" class=" bb  " class="cc"  class="">`;
-  let fixed = `<a class="aa bb cc">`;
+test("12 - first one is dodgy", () => {
+  let str =
+    '<a class= class=" aa " class="" class=" bb  " class="cc"  class="">';
+  let fixed = '<a class="aa bb cc">';
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 2,
@@ -217,9 +219,10 @@ test(`12 - first one is dodgy`, () => {
   equal(applyFixes(str, messages), fixed, "12.01");
 });
 
-test(`13 - merging empty`, () => {
-  let str = `<a class= class="  " class="" class=" \t\t  " class=" "  class="">`;
-  let fixed = `<a>`;
+test("13 - merging empty", () => {
+  let str =
+    '<a class= class="  " class="" class=" \t\t  " class=" "  class="">';
+  let fixed = "<a>";
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 2,
@@ -229,9 +232,9 @@ test(`13 - merging empty`, () => {
   equal(applyFixes(str, messages), fixed, "13.01");
 });
 
-test(`14 - merging dodgy, no closing slash`, () => {
-  let str = `<a class= class= class="" class= class""  >`;
-  let fixed = `<a>`;
+test("14 - merging dodgy, no closing slash", () => {
+  let str = '<a class= class= class="" class= class""  >';
+  let fixed = "<a>";
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 2,
@@ -241,9 +244,9 @@ test(`14 - merging dodgy, no closing slash`, () => {
   equal(applyFixes(str, messages), fixed, "14.01");
 });
 
-test(`15 - merging dodgy, with closing slash`, () => {
-  let str = `<br class= class= class="" class= class""  />`;
-  let fixed = `<br/>`;
+test("15 - merging dodgy, with closing slash", () => {
+  let str = '<br class= class= class="" class= class""  />';
+  let fixed = "<br/>";
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 2,
@@ -253,8 +256,8 @@ test(`15 - merging dodgy, with closing slash`, () => {
   equal(applyFixes(str, messages), fixed, "15.01");
 });
 
-test(`16 - dodgy values with quotes`, () => {
-  let str = `<img class="someone's" class='jar of "cookies"'  >`;
+test("16 - dodgy values with quotes", () => {
+  let str = '<img class="someone\'s" class=\'jar of "cookies"\'  >';
   let messages = verify(not, str, {
     rules: {
       "attribute-duplicate": 2,

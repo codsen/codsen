@@ -14,8 +14,8 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 //     <img src="fallback"/>
 // <![endif]-->
 
-test(`01 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment nested, tight`, () => {
-  let str = `<!--[if mso]><!--tralala--><![endif]-->`;
+test(`01 - ${`\u001b[${33}m${"type: only"}\u001b[${39}m`} - simple comment nested, tight`, () => {
+  let str = "<!--[if mso]><!--tralala--><![endif]-->";
   let messages = verify(not, str, {
     rules: {
       "comment-conditional-nested": 2,
@@ -31,7 +31,7 @@ test(`01 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment neste
         severity: 2,
         idxFrom: 13,
         idxTo: 17,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
       {
@@ -39,7 +39,7 @@ test(`01 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment neste
         severity: 2,
         idxFrom: 24,
         idxTo: 27,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
     ],
@@ -48,7 +48,7 @@ test(`01 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment neste
   equal(messages.length, 2, "01.02");
 });
 
-test(`02 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment nested, mixed`, () => {
+test(`02 - ${`\u001b[${33}m${"type: only"}\u001b[${39}m`} - simple comment nested, mixed`, () => {
   let str = `<!--[if mso]>
     z <!--tralala--> y
 <![endif]-->`;
@@ -67,7 +67,7 @@ test(`02 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment neste
         severity: 2,
         idxFrom: 20,
         idxTo: 24,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
       {
@@ -75,7 +75,7 @@ test(`02 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment neste
         severity: 2,
         idxFrom: 31,
         idxTo: 34,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
     ],
@@ -84,7 +84,7 @@ test(`02 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment neste
   equal(messages.length, 2, "02.02");
 });
 
-test(`03 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two simple comments nested`, () => {
+test(`03 - ${`\u001b[${33}m${"type: only"}\u001b[${39}m`} - two simple comments nested`, () => {
   let str = `<!--[if mso]>
     x <!--tralala--> z <!--tralala--> y
 <![endif]-->`;
@@ -103,7 +103,7 @@ test(`03 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two simple comments 
         severity: 2,
         idxFrom: 20,
         idxTo: 24,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
       {
@@ -111,7 +111,7 @@ test(`03 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two simple comments 
         severity: 2,
         idxFrom: 31,
         idxTo: 34,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
       {
@@ -119,7 +119,7 @@ test(`03 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two simple comments 
         severity: 2,
         idxFrom: 37,
         idxTo: 41,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
       {
@@ -127,7 +127,7 @@ test(`03 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two simple comments 
         severity: 2,
         idxFrom: 48,
         idxTo: 51,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
     ],
@@ -136,7 +136,7 @@ test(`03 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two simple comments 
   equal(messages.length, 4, "03.02");
 });
 
-test(`04 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two "only"-kind comments nested`, () => {
+test(`04 - ${`\u001b[${33}m${"type: only"}\u001b[${39}m`} - two "only"-kind comments nested`, () => {
   let str = `<!--[if mso]>
     <img src="fallback"/>
 
@@ -158,7 +158,7 @@ test(`04 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two "only"-kind comm
         severity: 2,
         idxFrom: 41,
         idxTo: 54,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
       {
@@ -166,7 +166,7 @@ test(`04 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two "only"-kind comm
         severity: 2,
         idxFrom: 55,
         idxTo: 67,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
     ],
@@ -184,8 +184,8 @@ test(`04 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - two "only"-kind comm
 //     <img src="gif"/>
 // <!--<![endif]-->
 
-test(`05 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested, tight`, () => {
-  let str = `<!--[if mso]><!--><!--tralala--><!--<![endif]-->`;
+test(`05 - ${`\u001b[${36}m${"type: not"}\u001b[${39}m`} - simple comment nested, tight`, () => {
+  let str = "<!--[if mso]><!--><!--tralala--><!--<![endif]-->";
   let messages = verify(not, str, {
     rules: {
       "comment-conditional-nested": 2,
@@ -201,7 +201,7 @@ test(`05 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested
         severity: 2,
         idxFrom: 18,
         idxTo: 22,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
       {
@@ -209,7 +209,7 @@ test(`05 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested
         severity: 2,
         idxFrom: 29,
         idxTo: 32,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
     ],
@@ -218,7 +218,7 @@ test(`05 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested
   equal(messages.length, 2, "05.02");
 });
 
-test(`06 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested, mixed`, () => {
+test(`06 - ${`\u001b[${36}m${"type: not"}\u001b[${39}m`} - simple comment nested, mixed`, () => {
   let str = `<!--[if mso]><!-->
     z <!--tralala--> y
 <!--<![endif]-->`;
@@ -237,7 +237,7 @@ test(`06 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested
         severity: 2,
         idxFrom: 25,
         idxTo: 29,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
       {
@@ -245,7 +245,7 @@ test(`06 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested
         severity: 2,
         idxFrom: 36,
         idxTo: 39,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
     ],
@@ -254,7 +254,7 @@ test(`06 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested
   equal(messages.length, 2, "06.02");
 });
 
-test(`07 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two simple comments nested`, () => {
+test(`07 - ${`\u001b[${36}m${"type: not"}\u001b[${39}m`} - two simple comments nested`, () => {
   let str = `<!--[if mso]><!-->
     x <!--tralala--> z <!--tralala--> y
 <!--<![endif]-->`;
@@ -273,7 +273,7 @@ test(`07 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two simple comments n
         severity: 2,
         idxFrom: 25,
         idxTo: 29,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
       {
@@ -281,7 +281,7 @@ test(`07 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two simple comments n
         severity: 2,
         idxFrom: 36,
         idxTo: 39,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
       {
@@ -289,7 +289,7 @@ test(`07 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two simple comments n
         severity: 2,
         idxFrom: 42,
         idxTo: 46,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
       {
@@ -297,7 +297,7 @@ test(`07 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two simple comments n
         severity: 2,
         idxFrom: 53,
         idxTo: 56,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
     ],
@@ -306,7 +306,7 @@ test(`07 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two simple comments n
   equal(messages.length, 4, "07.02");
 });
 
-test(`08 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two "only"-kind comments nested`, () => {
+test(`08 - ${`\u001b[${36}m${"type: not"}\u001b[${39}m`} - two "only"-kind comments nested`, () => {
   let str = `<!--[if mso]><!-->
     <img src="fallback"/>
 
@@ -328,7 +328,7 @@ test(`08 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two "only"-kind comme
         severity: 2,
         idxFrom: 46,
         idxTo: 59,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
       {
@@ -336,7 +336,7 @@ test(`08 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - two "only"-kind comme
         severity: 2,
         idxFrom: 60,
         idxTo: 72,
-        message: `Don't nest comments.`,
+        message: "Don't nest comments.",
         fix: null,
       },
     ],

@@ -8,7 +8,7 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // css broken rule
 // -----------------------------------------------------------------------------
 
-test(`01 - repeated closing curlies`, () => {
+test("01 - repeated closing curlies", () => {
   let gathered = [];
   ct(
     `<style>
@@ -152,9 +152,9 @@ test(`01 - repeated closing curlies`, () => {
 // missing semicols in head CSS
 // -----------------------------------------------------------------------------
 
-test(`02 - missing semicol`, () => {
+test("02 - missing semicol", () => {
   let gathered = [];
-  ct(`<style>.a{b:c d:e;}`, {
+  ct("<style>.a{b:c d:e;}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -239,9 +239,9 @@ test(`02 - missing semicol`, () => {
   );
 });
 
-test(`03 - missing semicol, !important on the left`, () => {
+test("03 - missing semicol, !important on the left", () => {
   let gathered = [];
-  ct(`<style>.a{b:c !important d:e;}`, {
+  ct("<style>.a{b:c !important d:e;}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -326,9 +326,9 @@ test(`03 - missing semicol, !important on the left`, () => {
   );
 });
 
-test(`04 - missing semicol`, () => {
+test("04 - missing semicol", () => {
   let gathered = [];
-  ct(`<style>.a{color: red text-align: left;}</style>`, {
+  ct("<style>.a{color: red text-align: left;}</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -399,9 +399,9 @@ test(`04 - missing semicol`, () => {
 // missing value
 // -----------------------------------------------------------------------------
 
-test(`05 - missing value`, () => {
+test("05 - missing value", () => {
   let gathered = [];
-  ct(`<style>.a{b}</style>`, {
+  ct("<style>.a{b}</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -448,9 +448,9 @@ test(`05 - missing value`, () => {
   );
 });
 
-test(`06 - missing value, trailing space`, () => {
+test("06 - missing value, trailing space", () => {
   let gathered = [];
-  ct(`<style>.a{b }</style>`, {
+  ct("<style>.a{b }</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -503,9 +503,9 @@ test(`06 - missing value, trailing space`, () => {
   );
 });
 
-test(`07 - missing value but colon present`, () => {
+test("07 - missing value but colon present", () => {
   let gathered = [];
-  ct(`<style>.a{b:}</style>`, {
+  ct("<style>.a{b:}</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -552,9 +552,9 @@ test(`07 - missing value but colon present`, () => {
   );
 });
 
-test(`08 - missing value but semi present`, () => {
+test("08 - missing value but semi present", () => {
   let gathered = [];
-  ct(`<style>.a{b;}</style>`, {
+  ct("<style>.a{b;}</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -601,9 +601,9 @@ test(`08 - missing value but semi present`, () => {
   );
 });
 
-test(`09 - missing value, both colon and semicolon present`, () => {
+test("09 - missing value, both colon and semicolon present", () => {
   let gathered = [];
-  ct(`<style>.a{b:;}</style>`, {
+  ct("<style>.a{b:;}</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -653,9 +653,9 @@ test(`09 - missing value, both colon and semicolon present`, () => {
 // not a colon is separating the key and value
 // -----------------------------------------------------------------------------
 
-test(`10 - semi instead of a colon - baseline, correct`, () => {
+test("10 - semi instead of a colon - baseline, correct", () => {
   let gathered = [];
-  ct(`<style>div { float: left; }</style>`, {
+  ct("<style>div { float: left; }</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -714,9 +714,9 @@ test(`10 - semi instead of a colon - baseline, correct`, () => {
   );
 });
 
-test(`11 - semi instead of a colon`, () => {
+test("11 - semi instead of a colon", () => {
   let gathered = [];
-  ct(`<style>div { float; left; }</style>`, {
+  ct("<style>div { float; left; }</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -796,9 +796,9 @@ test(`11 - semi instead of a colon`, () => {
   );
 });
 
-test(`12 - semi instead of a colon, tight`, () => {
+test("12 - semi instead of a colon, tight", () => {
   let gathered = [];
-  ct(`<style>div{float;left;}</style>`, {
+  ct("<style>div{float;left;}</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -860,9 +860,9 @@ test(`12 - semi instead of a colon, tight`, () => {
   );
 });
 
-test(`13 - abrupty ended code`, () => {
+test("13 - abrupty ended code", () => {
   let gathered = [];
-  ct(`<style>.a{color: red`, {
+  ct("<style>.a{color: red", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -909,9 +909,9 @@ test(`13 - abrupty ended code`, () => {
   );
 });
 
-test(`14 - abrupty ended second css rule`, () => {
+test("14 - abrupty ended second css rule", () => {
   let gathered = [];
-  ct(`<style>.a{color:red; text-align`, {
+  ct("<style>.a{color:red; text-align", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -979,9 +979,9 @@ test(`14 - abrupty ended second css rule`, () => {
   );
 });
 
-test(`15 - abrupty ended second css rule`, () => {
+test("15 - abrupty ended second css rule", () => {
   let gathered = [];
-  ct(`<style>.a{color:red; text-align</style>`, {
+  ct("<style>.a{color:red; text-align</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1060,9 +1060,9 @@ test(`15 - abrupty ended second css rule`, () => {
   );
 });
 
-test(`16 - nothing after colon`, () => {
+test("16 - nothing after colon", () => {
   let gathered = [];
-  ct(`<style>.a{ color: }</style>`, {
+  ct("<style>.a{ color: }</style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1134,9 +1134,9 @@ test(`16 - nothing after colon`, () => {
   );
 });
 
-test(`17 - semi before !important`, () => {
+test("17 - semi before !important", () => {
   let gathered = [];
-  ct(`<style>.a{color:red; !important;}`, {
+  ct("<style>.a{color:red; !important;}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1221,9 +1221,9 @@ test(`17 - semi before !important`, () => {
   );
 });
 
-test(`18`, () => {
+test("18", () => {
   let gathered = [];
-  ct(`<style>.a{color:red!IMPOTANT;}`, {
+  ct("<style>.a{color:red!IMPOTANT;}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1287,9 +1287,9 @@ test(`18`, () => {
   );
 });
 
-test(`19`, () => {
+test("19", () => {
   let gathered = [];
-  ct(`<style>.a{color:red;!IMPOTANT}`, {
+  ct("<style>.a{color:red;!IMPOTANT}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1368,9 +1368,9 @@ test(`19`, () => {
   );
 });
 
-test(`20`, () => {
+test("20", () => {
   let gathered = [];
-  ct(`<style>.a{color:red important}`, {
+  ct("<style>.a{color:red important}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1434,9 +1434,9 @@ test(`20`, () => {
   );
 });
 
-test(`21`, () => {
+test("21", () => {
   let gathered = [];
-  ct(`<style>.a{color:red 1important}`, {
+  ct("<style>.a{color:red 1important}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1500,9 +1500,9 @@ test(`21`, () => {
   );
 });
 
-test(`22 - rogue letter`, () => {
+test("22 - rogue letter", () => {
   let gathered = [];
-  ct(`<style>.a{float:left;x}.b{color: red}`, {
+  ct("<style>.a{float:left;x}.b{color: red}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1607,9 +1607,9 @@ test(`22 - rogue letter`, () => {
   );
 });
 
-test(`23 - rogue hash`, () => {
+test("23 - rogue hash", () => {
   let gathered = [];
-  ct(`<style>.a{float:left;#}.b{color: red}`, {
+  ct("<style>.a{float:left;#}.b{color: red}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1714,9 +1714,9 @@ test(`23 - rogue hash`, () => {
   );
 });
 
-test(`24 - rogue quote`, () => {
+test("24 - rogue quote", () => {
   let gathered = [];
-  ct(`<style>.a{float:left;"}.b{color: red}`, {
+  ct('<style>.a{float:left;"}.b{color: red}', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1821,9 +1821,9 @@ test(`24 - rogue quote`, () => {
   );
 });
 
-test(`25 - rogue quote+bracket, curlies follow`, () => {
+test("25 - rogue quote+bracket, curlies follow", () => {
   let gathered = [];
-  ct(`<style>.a{float:left;x">color: red}`, {
+  ct('<style>.a{float:left;x">color: red}', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1901,9 +1901,9 @@ test(`25 - rogue quote+bracket, curlies follow`, () => {
   );
 });
 
-test(`26`, () => {
+test("26", () => {
   let gathered = [];
-  ct(`<style>.a{float:left;">color: red}`, {
+  ct('<style>.a{float:left;">color: red}', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1981,9 +1981,9 @@ test(`26`, () => {
   );
 });
 
-test(`27 - spillage from HTML styles - rogue quote+bracket`, () => {
+test("27 - spillage from HTML styles - rogue quote+bracket", () => {
   let gathered = [];
-  ct(`<style>.a{float:left;x">.b,.c{color: red}`, {
+  ct('<style>.a{float:left;x">.b,.c{color: red}', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2103,9 +2103,9 @@ test(`27 - spillage from HTML styles - rogue quote+bracket`, () => {
   );
 });
 
-test(`28 - rogue quote+bracket, curlies follow`, () => {
+test("28 - rogue quote+bracket, curlies follow", () => {
   let gathered = [];
-  ct(`<style>.a{float:left;">}`, {
+  ct('<style>.a{float:left;">}', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2184,9 +2184,9 @@ test(`28 - rogue quote+bracket, curlies follow`, () => {
   );
 });
 
-test(`29`, () => {
+test("29", () => {
   let gathered = [];
-  ct(`<style>.a{float:left;"}`, {
+  ct('<style>.a{float:left;"}', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2265,9 +2265,9 @@ test(`29`, () => {
   );
 });
 
-test(`30 - repeated semi, tight`, () => {
+test("30 - repeated semi, tight", () => {
   let gathered = [];
-  ct(`<style>.a{float:left;;}`, {
+  ct("<style>.a{float:left;;}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2346,9 +2346,9 @@ test(`30 - repeated semi, tight`, () => {
   );
 });
 
-test(`31 - repeated semi, space in front`, () => {
+test("31 - repeated semi, space in front", () => {
   let gathered = [];
-  ct(`<style>.a{float:left; ;}`, {
+  ct("<style>.a{float:left; ;}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2433,9 +2433,9 @@ test(`31 - repeated semi, space in front`, () => {
   );
 });
 
-test(`32 - repeated semi, tab in front`, () => {
+test("32 - repeated semi, tab in front", () => {
   let gathered = [];
-  ct(`<style>.a{float:left;\t;}`, {
+  ct("<style>.a{float:left;\t;}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2520,9 +2520,9 @@ test(`32 - repeated semi, tab in front`, () => {
   );
 });
 
-test(`33 - repeated semi, space after, bracket`, () => {
+test("33 - repeated semi, space after, bracket", () => {
   let gathered = [];
-  ct(`<style>.a{float:left;; }`, {
+  ct("<style>.a{float:left;; }", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2607,9 +2607,9 @@ test(`33 - repeated semi, space after, bracket`, () => {
   );
 });
 
-test(`34 - repeated semi, space after, bracket missing`, () => {
+test("34 - repeated semi, space after, bracket missing", () => {
   let gathered = [];
-  ct(`<style>.a{float:left;; </style>`, {
+  ct("<style>.a{float:left;; </style>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2715,9 +2715,9 @@ test(`34 - repeated semi, space after, bracket missing`, () => {
   );
 });
 
-test(`35 - repeated semi, space after, new property follows`, () => {
+test("35 - repeated semi, space after, new property follows", () => {
   let gathered = [];
-  ct(`<style>.a{float:left;; color:red;}`, {
+  ct("<style>.a{float:left;; color:red;}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2817,9 +2817,9 @@ test(`35 - repeated semi, space after, new property follows`, () => {
   );
 });
 
-test(`36`, () => {
+test("36", () => {
   let gathered = [];
-  ct(`<style>a{;}`, {
+  ct("<style>a{;}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2883,9 +2883,9 @@ test(`36`, () => {
   );
 });
 
-test(`37`, () => {
+test("37", () => {
   let gathered = [];
-  ct(`<style>a{ ; }`, {
+  ct("<style>a{ ; }", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -2961,9 +2961,9 @@ test(`37`, () => {
   );
 });
 
-test(`38`, () => {
+test("38", () => {
   let gathered = [];
-  ct(`<style>.a{;;}`, {
+  ct("<style>.a{;;}", {
     tagCb: (obj) => {
       gathered.push(obj);
     },

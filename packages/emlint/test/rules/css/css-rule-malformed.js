@@ -14,9 +14,9 @@ function fail(s) {
 // missing semi on a non-last rule
 // -----------------------------------------------------------------------------
 
-test(`01 - 1/2`, () => {
-  let str = `<style>.a{color:red\ntext-align:left;}</style><body>a</body>`;
-  let fixed = `<style>.a{color:red;\ntext-align:left;}</style><body>a</body>`;
+test("01 - 1/2", () => {
+  let str = "<style>.a{color:red\ntext-align:left;}</style><body>a</body>";
+  let fixed = "<style>.a{color:red;\ntext-align:left;}</style><body>a</body>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -42,9 +42,11 @@ test(`01 - 1/2`, () => {
   );
 });
 
-test(`02 - 1/3, 2/3`, () => {
-  let str = `<style>.a{color:red\n\ntext-align:left\n\nfloat:right}</style><body>a</body>`;
-  let fixed = `<style>.a{color:red;\n\ntext-align:left;\n\nfloat:right}</style><body>a</body>`;
+test("02 - 1/3, 2/3", () => {
+  let str =
+    "<style>.a{color:red\n\ntext-align:left\n\nfloat:right}</style><body>a</body>";
+  let fixed =
+    "<style>.a{color:red;\n\ntext-align:left;\n\nfloat:right}</style><body>a</body>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -81,9 +83,11 @@ test(`02 - 1/3, 2/3`, () => {
   equal(messages.length, 2, "02.02");
 });
 
-test(`03 - 1/3, 2/3`, () => {
-  let str = `<style>.a{color:red;\n\ntext-align:left\n\nfloat:right}</style><body>a</body>`;
-  let fixed = `<style>.a{color:red;\n\ntext-align:left;\n\nfloat:right}</style><body>a</body>`;
+test("03 - 1/3, 2/3", () => {
+  let str =
+    "<style>.a{color:red;\n\ntext-align:left\n\nfloat:right}</style><body>a</body>";
+  let fixed =
+    "<style>.a{color:red;\n\ntext-align:left;\n\nfloat:right}</style><body>a</body>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -113,9 +117,9 @@ test(`03 - 1/3, 2/3`, () => {
 // semi only
 // -----------------------------------------------------------------------------
 
-test(`04 - one semi, tight`, () => {
-  let str = `<style>.a{;}</style><body>a</body>`;
-  let fixed = `<style>.a{}</style><body>a</body>`;
+test("04 - one semi, tight", () => {
+  let str = "<style>.a{;}</style><body>a</body>";
+  let fixed = "<style>.a{}</style><body>a</body>";
   let messages = verify(not, str, {
     rules: {
       // "css-rule-malformed": 2,
@@ -142,9 +146,9 @@ test(`04 - one semi, tight`, () => {
   );
 });
 
-test(`05 - two semis, tight`, () => {
-  let str = `<style>.a{;;}</style><body>a</body>`;
-  let fixed = `<style>.a{}</style><body>a</body>`;
+test("05 - two semis, tight", () => {
+  let str = "<style>.a{;;}</style><body>a</body>";
+  let fixed = "<style>.a{}</style><body>a</body>";
   let messages = verify(not, str, {
     rules: {
       // "css-rule-malformed": 2,
@@ -184,8 +188,8 @@ test(`05 - two semis, tight`, () => {
 // value missing
 // -----------------------------------------------------------------------------
 
-test(`06 - nothing after semi`, () => {
-  let str = `<style>.a{color:}</style><body>a</body>`;
+test("06 - nothing after semi", () => {
+  let str = "<style>.a{color:}</style><body>a</body>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -209,8 +213,8 @@ test(`06 - nothing after semi`, () => {
   );
 });
 
-test(`07 - value and semi missing, followed by correct rule`, () => {
-  let str = `<style>.a{ color \n\ntext-align:left;}</style><body>a</body>`;
+test("07 - value and semi missing, followed by correct rule", () => {
+  let str = "<style>.a{ color \n\ntext-align:left;}</style><body>a</body>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -234,9 +238,9 @@ test(`07 - value and semi missing, followed by correct rule`, () => {
   );
 });
 
-test(`08`, () => {
-  let str = `<style>.a{color: red !important float: left}</style>`;
-  let fixed = `<style>.a{color: red !important; float: left;}</style>`;
+test("08", () => {
+  let str = "<style>.a{color: red !important float: left}</style>";
+  let fixed = "<style>.a{color: red !important; float: left;}</style>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -276,9 +280,9 @@ test(`08`, () => {
 // rogue semi in front of important
 // -----------------------------------------------------------------------------
 
-test(`09`, () => {
-  let str = `<style>.a{color:red; !important;}</style>`;
-  let fixed = `<style>.a{color:red !important;}</style>`;
+test("09", () => {
+  let str = "<style>.a{color:red; !important;}</style>";
+  let fixed = "<style>.a{color:red !important;}</style>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -304,9 +308,9 @@ test(`09`, () => {
   );
 });
 
-test(`10 - impotant [sic]`, () => {
-  let str = `<style>.a{color:red;!impotant;}</style>`;
-  let fixed = `<style>.a{color:red !important;}</style>`;
+test("10 - impotant [sic]", () => {
+  let str = "<style>.a{color:red;!impotant;}</style>";
+  let fixed = "<style>.a{color:red !important;}</style>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -345,9 +349,9 @@ test(`10 - impotant [sic]`, () => {
 // mis-spelled !important
 // -----------------------------------------------------------------------------
 
-test(`11 - impotant [sic] - with space in front`, () => {
-  let str = `<style>.a{color:red !impotant;}</style>`;
-  let fixed = `<style>.a{color:red !important;}</style>`;
+test("11 - impotant [sic] - with space in front", () => {
+  let str = "<style>.a{color:red !impotant;}</style>";
+  let fixed = "<style>.a{color:red !important;}</style>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -356,9 +360,9 @@ test(`11 - impotant [sic] - with space in front`, () => {
   equal(applyFixes(str, messages), fixed, "11.01");
 });
 
-test(`12 - impotant [sic] - without space in front`, () => {
-  let str = `<style>.a{color:red!impotant}</style>`;
-  let fixed = `<style>.a{color:red!important}</style>`;
+test("12 - impotant [sic] - without space in front", () => {
+  let str = "<style>.a{color:red!impotant}</style>";
+  let fixed = "<style>.a{color:red!important}</style>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -367,9 +371,9 @@ test(`12 - impotant [sic] - without space in front`, () => {
   equal(applyFixes(str, messages), fixed, "12.01");
 });
 
-test(`13 - important without excl mark`, () => {
-  let str = `<style>.a{color:red important}</style>`;
-  let fixed = `<style>.a{color:red !important}</style>`;
+test("13 - important without excl mark", () => {
+  let str = "<style>.a{color:red important}</style>";
+  let fixed = "<style>.a{color:red !important}</style>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -378,9 +382,9 @@ test(`13 - important without excl mark`, () => {
   equal(applyFixes(str, messages), fixed, "13.01");
 });
 
-test(`14 - important with number one instead of excl mark`, () => {
-  let str = `<style>.a{color:red 1important}</style>`;
-  let fixed = `<style>.a{color:red !important}</style>`;
+test("14 - important with number one instead of excl mark", () => {
+  let str = "<style>.a{color:red 1important}</style>";
+  let fixed = "<style>.a{color:red !important}</style>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -392,9 +396,9 @@ test(`14 - important with number one instead of excl mark`, () => {
 // whitespace in front of colon/semi
 // -----------------------------------------------------------------------------
 
-test(`15 - space after colon/semi`, () => {
-  let str = `<style>.a{ color : red ; }</style>`;
-  let fixed = `<style>.a{ color: red; }</style>`;
+test("15 - space after colon/semi", () => {
+  let str = "<style>.a{ color : red ; }</style>";
+  let fixed = "<style>.a{ color: red; }</style>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -403,9 +407,9 @@ test(`15 - space after colon/semi`, () => {
   equal(applyFixes(str, messages), fixed, "15.01");
 });
 
-test(`16 - no space after colon/semi`, () => {
-  let str = `<style>.a{color :red ;}</style>`;
-  let fixed = `<style>.a{color:red;}</style>`;
+test("16 - no space after colon/semi", () => {
+  let str = "<style>.a{color :red ;}</style>";
+  let fixed = "<style>.a{color:red;}</style>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -414,9 +418,9 @@ test(`16 - no space after colon/semi`, () => {
   equal(applyFixes(str, messages), fixed, "16.01");
 });
 
-test(`17`, () => {
-  let str = `<style>.a{color : red;}</style>`;
-  let fixed = `<style>.a{color: red;}</style>`;
+test("17", () => {
+  let str = "<style>.a{color : red;}</style>";
+  let fixed = "<style>.a{color: red;}</style>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -425,9 +429,9 @@ test(`17`, () => {
   equal(applyFixes(str, messages), fixed, "17.01");
 });
 
-test(`18`, () => {
-  let str = `<style>.a{color : red ; text-align : left ;}</style>`;
-  let fixed = `<style>.a{color: red; text-align: left;}</style>`;
+test("18", () => {
+  let str = "<style>.a{color : red ; text-align : left ;}</style>";
+  let fixed = "<style>.a{color: red; text-align: left;}</style>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -439,9 +443,9 @@ test(`18`, () => {
 // some other character is in place of a colon
 // -----------------------------------------------------------------------------
 
-test(`19`, () => {
-  let str = `<style>.a{color/red;}</style>`;
-  let fixed = `<style>.a{color:red;}</style>`;
+test("19", () => {
+  let str = "<style>.a{color/red;}</style>";
+  let fixed = "<style>.a{color:red;}</style>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,
@@ -453,9 +457,9 @@ test(`19`, () => {
 // repeated semi after a property
 // -----------------------------------------------------------------------------
 
-test(`20`, () => {
-  let str = `<style>.a{color: red;;}</style>`;
-  let fixed = `<style>.a{color: red;}</style>`;
+test("20", () => {
+  let str = "<style>.a{color: red;;}</style>";
+  let fixed = "<style>.a{color: red;}</style>";
   let messages = verify(not, str, {
     rules: {
       "css-rule-malformed": 2,

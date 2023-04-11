@@ -7,9 +7,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // considering JS code...
 // -----------------------------------------------------------------------------
 
-test(`01 - an obvious nunjucks, but within a script`, () => {
+test("01 - an obvious nunjucks, but within a script", () => {
   let gathered = [];
-  ct(`<script>{{</script>`, {
+  ct("<script>{{</script>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -59,10 +59,10 @@ test(`01 - an obvious nunjucks, but within a script`, () => {
   );
 });
 
-test(`02`, () => {
+test("02", () => {
   let gathered = [];
   ct(
-    `<html>real text<script>!function(e){function z{}};return"></script></body></html>`,
+    '<html>real text<script>!function(e){function z{}};return"></script></body></html>',
     {
       tagCb: (obj) => {
         gathered.push(obj);
@@ -165,9 +165,9 @@ test(`02`, () => {
   );
 });
 
-test(`03 - tag within script`, () => {
+test("03 - tag within script", () => {
   let gathered = [];
-  ct(`<html><script>console.log("<html>")</script></html>`, {
+  ct('<html><script>console.log("<html>")</script></html>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },

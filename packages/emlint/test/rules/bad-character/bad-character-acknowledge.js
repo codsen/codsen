@@ -11,12 +11,12 @@ import { compare } from "../../../../../ops/helpers/shallow-compare.js";
 import { Linter } from "../../../dist/emlint.esm.js";
 import { applyFixes } from "../../../t-util/util.js";
 
-const CHAR = `\u0006`;
+const CHAR = "\u0006";
 
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two ACKNOWLEDGE characters`, () => {
+test("01 - detects two ACKNOWLEDGE characters", () => {
   let str = `${CHAR}dlkgjld${CHAR}j`;
   let linter = new Linter();
   let messages = linter.verify(str, {

@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no alink, error level 0`, () => {
-  let str = `<body>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no alink, error level 0`, () => {
+  let str = "<body>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no alink, error leve
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no alink, error level 1`, () => {
-  let str = `<body>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no alink, error level 1`, () => {
+  let str = "<body>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no alink, error leve
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no alink, error level 2`, () => {
-  let str = `<body>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no alink, error level 2`, () => {
+  let str = "<body>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no alink, error leve
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy alink`, () => {
-  let str = `<body class='zz' alink='#CCCCCC' id='yy aa'>`; // <-- notice single quotes
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy alink`, () => {
+  let str = "<body class='zz' alink='#CCCCCC' id='yy aa'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -61,21 +61,21 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy alink`, () =
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<body alink=" #CCCCCC">`;
+test(`05 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = '<body alink=" #CCCCCC">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-alink": 2,
     },
   });
-  equal(applyFixes(str, messages), `<body alink="#CCCCCC">`, "05.01");
+  equal(applyFixes(str, messages), '<body alink="#CCCCCC">', "05.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-alink",
       idxFrom: 13,
       idxTo: 14,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[13, 14]],
       },
@@ -83,21 +83,21 @@ test(`05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   ]);
 });
 
-test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<body alink="#CCCCCC ">`;
+test(`06 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = '<body alink="#CCCCCC ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-alink": 2,
     },
   });
-  equal(applyFixes(str, messages), `<body alink="#CCCCCC">`, "06.01");
+  equal(applyFixes(str, messages), '<body alink="#CCCCCC">', "06.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-alink",
       idxFrom: 20,
       idxTo: 21,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[20, 21]],
       },
@@ -105,21 +105,21 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around - 6 digit hex`, () => {
-  let str = `<body alink="  #CCCCCC  ">`;
+test(`07 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around - 6 digit hex`, () => {
+  let str = '<body alink="  #CCCCCC  ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-alink": 2,
     },
   });
-  equal(applyFixes(str, messages), `<body alink="#CCCCCC">`, "07.01");
+  equal(applyFixes(str, messages), '<body alink="#CCCCCC">', "07.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-alink",
       idxFrom: 13,
       idxTo: 24,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [13, 15],
@@ -130,21 +130,21 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around - named`, () => {
-  let str = `<body alink="  PeachPuff  ">`;
+test(`08 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around - named`, () => {
+  let str = '<body alink="  PeachPuff  ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-alink": 2,
     },
   });
-  equal(applyFixes(str, messages), `<body alink="PeachPuff">`, "08.01");
+  equal(applyFixes(str, messages), '<body alink="PeachPuff">', "08.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-alink",
       idxFrom: 13,
       idxTo: 26,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [13, 15],
@@ -155,8 +155,8 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<body alink="  \t">`;
+test(`09 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<body alink="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -170,14 +170,14 @@ test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-alink",
       idxFrom: 13,
       idxTo: 16,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
 });
 
-test(`10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`, () => {
-  let str = `<body alink="">`;
+test(`10 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - empty value`, () => {
+  let str = '<body alink="">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -191,7 +191,7 @@ test(`10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`, () => 
       ruleId: "attribute-validate-alink",
       idxFrom: 6,
       idxTo: 14,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -200,8 +200,8 @@ test(`10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - empty value`, () => 
 // 03. named colors
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${35}m${`named`}\u001b[${39}m`} - healthy`, () => {
-  let str = `<body class='zz' alink='blue' id='yy aa'>`; // <-- notice single quotes
+test(`11 - ${`\u001b[${35}m${"named"}\u001b[${39}m`} - healthy`, () => {
+  let str = "<body class='zz' alink='blue' id='yy aa'>"; // <-- notice single quotes
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -212,8 +212,8 @@ test(`11 - ${`\u001b[${35}m${`named`}\u001b[${39}m`} - healthy`, () => {
   equal(messages, [], "11.02");
 });
 
-test(`12 - ${`\u001b[${35}m${`named`}\u001b[${39}m`} - unrecognised`, () => {
-  let str = `<body alink="nearlyRed">`;
+test(`12 - ${`\u001b[${35}m${"named"}\u001b[${39}m`} - unrecognised`, () => {
+  let str = '<body alink="nearlyRed">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -227,7 +227,7 @@ test(`12 - ${`\u001b[${35}m${`named`}\u001b[${39}m`} - unrecognised`, () => {
       ruleId: "attribute-validate-alink",
       idxFrom: 13,
       idxTo: 22,
-      message: `Unrecognised color value.`,
+      message: "Unrecognised color value.",
       fix: null,
     },
   ]);
@@ -236,8 +236,8 @@ test(`12 - ${`\u001b[${35}m${`named`}\u001b[${39}m`} - unrecognised`, () => {
 // 04. hex colors
 // -----------------------------------------------------------------------------
 
-test(`13 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - unrecognised`, () => {
-  let str = `<body alink="#gg0000">`;
+test(`13 - ${`\u001b[${35}m${"hex"}\u001b[${39}m`} - unrecognised`, () => {
+  let str = '<body alink="#gg0000">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -251,14 +251,14 @@ test(`13 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - unrecognised`, () => {
       ruleId: "attribute-validate-alink",
       idxFrom: 13,
       idxTo: 20,
-      message: `Unrecognised hex code.`,
+      message: "Unrecognised hex code.",
       fix: null,
     },
   ]);
 });
 
-test(`14 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, () => {
-  let str = `<body alink="#ccc">`;
+test(`14 - ${`\u001b[${35}m${"hex"}\u001b[${39}m`} - bad hex`, () => {
+  let str = '<body alink="#ccc">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -272,14 +272,14 @@ test(`14 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, () => {
       ruleId: "attribute-validate-alink",
       idxFrom: 13,
       idxTo: 17,
-      message: `Hex color code should be 6 digits-long.`,
+      message: "Hex color code should be 6 digits-long.",
       fix: null,
     },
   ]);
 });
 
-test(`15 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, () => {
-  let str = `<body alink="#aaaa">`;
+test(`15 - ${`\u001b[${35}m${"hex"}\u001b[${39}m`} - bad hex`, () => {
+  let str = '<body alink="#aaaa">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -293,7 +293,7 @@ test(`15 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, () => {
       ruleId: "attribute-validate-alink",
       idxFrom: 13,
       idxTo: 18,
-      message: `Hex color code should be 6 digits-long.`,
+      message: "Hex color code should be 6 digits-long.",
       fix: null,
     },
   ]);
@@ -302,8 +302,8 @@ test(`15 - ${`\u001b[${35}m${`hex`}\u001b[${39}m`} - bad hex`, () => {
 // 05. hex colors
 // -----------------------------------------------------------------------------
 
-test(`16 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - healthy`, () => {
-  let str = `<body alink="rgb(255, 0, 153)">`;
+test(`16 - ${`\u001b[${35}m${"rgba"}\u001b[${39}m`} - healthy`, () => {
+  let str = '<body alink="rgb(255, 0, 153)">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -317,14 +317,14 @@ test(`16 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - healthy`, () => {
       ruleId: "attribute-validate-alink",
       idxFrom: 13,
       idxTo: 29,
-      message: `rgb() is not allowed.`,
+      message: "rgb() is not allowed.",
       fix: null,
     },
   ]);
 });
 
-test(`17 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - broken`, () => {
-  let str = `<body alink="rgb(255)">`;
+test(`17 - ${`\u001b[${35}m${"rgba"}\u001b[${39}m`} - broken`, () => {
+  let str = '<body alink="rgb(255)">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -338,14 +338,14 @@ test(`17 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - broken`, () => {
       ruleId: "attribute-validate-alink",
       idxFrom: 13,
       idxTo: 21,
-      message: `rgb() is not allowed.`,
+      message: "rgb() is not allowed.",
       fix: null,
     },
   ]);
 });
 
-test(`18 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - broken`, () => {
-  let str = `<body alink="rgb()">`;
+test(`18 - ${`\u001b[${35}m${"rgba"}\u001b[${39}m`} - broken`, () => {
+  let str = '<body alink="rgb()">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -359,7 +359,7 @@ test(`18 - ${`\u001b[${35}m${`rgba`}\u001b[${39}m`} - broken`, () => {
       ruleId: "attribute-validate-alink",
       idxFrom: 13,
       idxTo: 18,
-      message: `rgb() is not allowed.`,
+      message: "rgb() is not allowed.",
       fix: null,
     },
   ]);

@@ -4,9 +4,9 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
-test(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - stray closing closing block comment`, () => {
+test(`01 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - stray closing closing block comment`, () => {
   let gathered = [];
-  ct(`<a style="   color: red;  */">`, {
+  ct('<a style="   color: red;  */">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -87,9 +87,9 @@ test(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - stray closing closing bloc
   );
 });
 
-test(`02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - multiple stray closing closing block comments`, () => {
+test(`02 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - multiple stray closing closing block comments`, () => {
   let gathered = [];
-  ct(`<a style="  */*/ */  ">`, {
+  ct('<a style="  */*/ */  ">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },

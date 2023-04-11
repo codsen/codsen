@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two FIRST STRONG ISOLATE characters`, () => {
+test("01 - detects two FIRST STRONG ISOLATE characters", () => {
   let str = "\u2068dlkgjld\u2068j";
   let linter = new Linter();
   let messages = linter.verify(str, {

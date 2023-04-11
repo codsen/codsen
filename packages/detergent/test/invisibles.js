@@ -17,11 +17,11 @@ import {
   // leftSingleQuote,
 } from "codsen-utils";
 
-test(`01 - empty string input`, () => {
+test("01 - empty string input", () => {
   equal(det(ok, not, 0, "").res, "", "01.01");
 });
 
-test(`02 - all low ASCII invisible characters are removed`, () => {
+test("02 - all low ASCII invisible characters are removed", () => {
   equal(
     det(
       ok,
@@ -34,7 +34,7 @@ test(`02 - all low ASCII invisible characters are removed`, () => {
   );
 });
 
-test(`03 - hairspace - tight - hairspace changed to space`, () => {
+test("03 - hairspace - tight - hairspace changed to space", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -52,7 +52,7 @@ test(`03 - hairspace - tight - hairspace changed to space`, () => {
   });
 });
 
-test(`04 - hairspace - tight - hairspace changed to space (lots of spaces)`, () => {
+test("04 - hairspace - tight - hairspace changed to space (lots of spaces)", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -70,7 +70,7 @@ test(`04 - hairspace - tight - hairspace changed to space (lots of spaces)`, () 
   });
 });
 
-test(`05 - hairspace - tight - hairspace changed to space: +widows+entities`, () => {
+test("05 - hairspace - tight - hairspace changed to space: +widows+entities", () => {
   mixer({
     removeWidows: true,
     convertEntities: true,

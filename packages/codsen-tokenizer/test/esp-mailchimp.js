@@ -10,14 +10,14 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // https://templates.mailchimp.com/getting-started/template-language/
 
 // const openingCurly = "\x7B";
-const LEFTDOUBLEQUOTMARK = `\u201C`;
-const RIGHTDOUBLEQUOTMARK = `\u201D`;
+const LEFTDOUBLEQUOTMARK = "\u201C";
+const RIGHTDOUBLEQUOTMARK = "\u201D";
 
 // mc:edit
 
-test(`01 - colon in attr name is not an issue`, () => {
+test("01 - colon in attr name is not an issue", () => {
   let gathered = [];
-  ct(`<div mc:edit="right_content">`, {
+  ct('<div mc:edit="right_content">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -71,7 +71,7 @@ test(`01 - colon in attr name is not an issue`, () => {
 // various
 
 // <div mc:repeatable=.product.>
-test(`02 - fancy quotes pasted from MC documentation website`, () => {
+test("02 - fancy quotes pasted from MC documentation website", () => {
   let gathered = [];
   ct(`<div mc:repeatable=${LEFTDOUBLEQUOTMARK}product${RIGHTDOUBLEQUOTMARK}>`, {
     tagCb: (obj) => {

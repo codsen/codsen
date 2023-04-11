@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two OGHAM SPACE MARK characters`, () => {
+test("01 - detects two OGHAM SPACE MARK characters", () => {
   let str = "\u1680dlkgjld\u1680j";
   let linter = new Linter();
   let messages = linter.verify(str, {

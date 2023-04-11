@@ -8,9 +8,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // css comments within inline HTML styles
 // -----------------------------------------------------------------------------
 
-test(`01 - empty body inline style`, () => {
+test("01 - empty body inline style", () => {
   let gathered = [];
-  ct(`<div style="">z</div>`, {
+  ct('<div style="">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -75,9 +75,9 @@ test(`01 - empty body inline style`, () => {
   );
 });
 
-test(`02 - body inline style`, () => {
+test("02 - body inline style", () => {
   let gathered = [];
-  ct(`<div style="color: red;">z</div>`, {
+  ct('<div style="color: red;">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -158,9 +158,9 @@ test(`02 - body inline style`, () => {
   );
 });
 
-test(`03 - body inline style, no semi`, () => {
+test("03 - body inline style, no semi", () => {
   let gathered = [];
-  ct(`<div style="float:left">z</div>`, {
+  ct('<div style="float:left">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -241,9 +241,9 @@ test(`03 - body inline style, no semi`, () => {
   );
 });
 
-test(`04 - two rules`, () => {
+test("04 - two rules", () => {
   let gathered = [];
-  ct(`<div style="float:left;display:block;">z</div>`, {
+  ct('<div style="float:left;display:block;">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -339,9 +339,9 @@ test(`04 - two rules`, () => {
   );
 });
 
-test(`05 - two rules`, () => {
+test("05 - two rules", () => {
   let gathered = [];
-  ct(`<div style="float:left;\ndisplay:block;">z</div>`, {
+  ct('<div style="float:left;\ndisplay:block;">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -443,9 +443,9 @@ test(`05 - two rules`, () => {
   );
 });
 
-test(`06 - font-family with commas`, () => {
+test("06 - font-family with commas", () => {
   let gathered = [];
-  ct(`<td style="font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;">`, {
+  ct("<td style=\"font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;\">", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -456,7 +456,7 @@ test(`06 - font-family with commas`, () => {
         type: "tag",
         start: 0,
         end: 54,
-        value: `<td style="font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;">`,
+        value: "<td style=\"font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;\">",
         attribs: [
           {
             attribName: "style",

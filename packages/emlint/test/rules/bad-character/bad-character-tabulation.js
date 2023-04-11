@@ -15,7 +15,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // 1. no config
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, integer`, () => {
+test(`01 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - off, integer`, () => {
   let str = "\tdlkgjld\tj";
   let linter = new Linter();
   let messages = linter.verify(str, {
@@ -27,7 +27,7 @@ test(`01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, integer`, () => 
   equal(applyFixes(str, messages), str, "01.02");
 });
 
-test(`02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, array, no config`, () => {
+test(`02 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - off, array, no config`, () => {
   let str = "\tdlkgjld\tj";
   let linter = new Linter();
   let messages = linter.verify(str, {
@@ -39,7 +39,7 @@ test(`02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off, array, no config
   equal(applyFixes(str, messages), str, "02.02");
 });
 
-test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warning, detects two TABULATION characters`, () => {
+test(`03 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - warning, detects two TABULATION characters`, () => {
   let str = "\tdlkgjld\tj";
   let linter = new Linter();
   let messages = linter.verify(str, {
@@ -81,7 +81,7 @@ test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warning, detects two 
   equal(applyFixes(str, messages), " dlkgjld j", "03.01");
 });
 
-test(`04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - error, detects two TABULATION characters`, () => {
+test(`04 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - error, detects two TABULATION characters`, () => {
   let str = "\tdlkgjld\tj";
   let linter = new Linter();
   let messages = linter.verify(str, {
@@ -126,7 +126,7 @@ test(`04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - error, detects two TA
 // 02. with config
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - config with hardcoded defaults`, () => {
+test(`05 - ${`\u001b[${32}m${"with config"}\u001b[${39}m`} - config with hardcoded defaults`, () => {
   let str = "\tdlkgjld\tj";
   let linter = new Linter();
   let messages = linter.verify(str, {
@@ -168,7 +168,7 @@ test(`05 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - config with hardcod
   equal(applyFixes(str, messages), " dlkgjld j", "05.01");
 });
 
-test(`06 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - indentation tab is now deemed to be fine`, () => {
+test(`06 - ${`\u001b[${32}m${"with config"}\u001b[${39}m`} - indentation tab is now deemed to be fine`, () => {
   let str = "\t\t\tdlkgjld\tj";
   let linter = new Linter();
   let messages = linter.verify(str, {

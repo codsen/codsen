@@ -9,9 +9,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // 01. general tests, exact matching via t.strictDeepEqual
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`exact key set matching`}\u001b[${39}m`}`, () => {
+test(`01 - ${`\u001b[${33}m${"exact key set matching"}\u001b[${39}m`}`, () => {
   let gathered = [];
-  ct(`<a\n<b>`, {
+  ct("<a\n<b>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -60,9 +60,9 @@ test(`01 - ${`\u001b[${33}m${`exact key set matching`}\u001b[${39}m`}`, () => {
   );
 });
 
-test(`02 - ${`\u001b[${33}m${`exact key set matching`}\u001b[${39}m`}`, () => {
+test(`02 - ${`\u001b[${33}m${"exact key set matching"}\u001b[${39}m`}`, () => {
   let gathered = [];
-  ct(`<a href="z" click here</a>`, {
+  ct('<a href="z" click here</a>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -73,7 +73,7 @@ test(`02 - ${`\u001b[${33}m${`exact key set matching`}\u001b[${39}m`}`, () => {
       {
         start: 0,
         end: 12,
-        value: `<a href="z" `,
+        value: '<a href="z" ',
         type: "tag",
         tagNameStartsAt: 1,
         tagNameEndsAt: 2,
@@ -137,10 +137,10 @@ test(`02 - ${`\u001b[${33}m${`exact key set matching`}\u001b[${39}m`}`, () => {
 // 02. tag pair
 // -----------------------------------------------------------------------------
 
-test(`03 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - space is melded into tag's range`, () => {
+test(`03 - ${`\u001b[${33}m${"tag pair"}\u001b[${39}m`} - space is melded into tag's range`, () => {
   let gathered = [];
   // notice space at index 11:
-  ct(`<a href="z" click here</a>`, {
+  ct('<a href="z" click here</a>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -169,10 +169,10 @@ test(`03 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - space is melded into t
   );
 });
 
-test(`04 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - two spaces`, () => {
+test(`04 - ${`\u001b[${33}m${"tag pair"}\u001b[${39}m`} - two spaces`, () => {
   let gathered = [];
   // notice space at index 11:
-  ct(`<a href="z"  click here</a>`, {
+  ct('<a href="z"  click here</a>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -201,9 +201,9 @@ test(`04 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - two spaces`, () => {
   );
 });
 
-test(`05 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - no spaces`, () => {
+test(`05 - ${`\u001b[${33}m${"tag pair"}\u001b[${39}m`} - no spaces`, () => {
   let gathered = [];
-  ct(`<a href="z"click here</a>`, {
+  ct('<a href="z"click here</a>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -235,9 +235,9 @@ test(`05 - ${`\u001b[${33}m${`tag pair`}\u001b[${39}m`} - no spaces`, () => {
 // 03. missing bracket followed by opening bracket
 // -----------------------------------------------------------------------------
 
-test(`06 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - tight`, () => {
+test(`06 - ${`\u001b[${36}m${"tag follows"}\u001b[${39}m`} - tight`, () => {
   let gathered = [];
-  ct(`<a><b>c</b</a>`, {
+  ct("<a><b>c</b</a>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -317,9 +317,9 @@ test(`06 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - tight`, () => {
   );
 });
 
-test(`07 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without slash follow by a tag`, () => {
+test(`07 - ${`\u001b[${36}m${"tag follows"}\u001b[${39}m`} - void tag without slash follow by a tag`, () => {
   let gathered = [];
-  ct(`<br<div>`, {
+  ct("<br<div>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -362,9 +362,9 @@ test(`07 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without sl
   );
 });
 
-test(`08 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without slash follow by a tag`, () => {
+test(`08 - ${`\u001b[${36}m${"tag follows"}\u001b[${39}m`} - void tag without slash follow by a tag`, () => {
   let gathered = [];
-  ct(`<br/<div>`, {
+  ct("<br/<div>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -407,9 +407,9 @@ test(`08 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without sl
   );
 });
 
-test(`09 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without slash follow by whitespace, then a tag`, () => {
+test(`09 - ${`\u001b[${36}m${"tag follows"}\u001b[${39}m`} - void tag without slash follow by whitespace, then a tag`, () => {
   let gathered = [];
-  ct(`<br/    <div>`, {
+  ct("<br/    <div>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -461,9 +461,9 @@ test(`09 - ${`\u001b[${36}m${`tag follows`}\u001b[${39}m`} - void tag without sl
 // 04. EOL ends the input and tag abruptly ends
 // -----------------------------------------------------------------------------
 
-test(`10 - abruptly ended after tag name`, () => {
+test("10 - abruptly ended after tag name", () => {
   let gathered = [];
-  ct(`</div`, {
+  ct("</div", {
     tagCb: (obj) => {
       gathered.push(obj);
     },

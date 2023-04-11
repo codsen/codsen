@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two LEFT-TO-RIGHT OVERRIDE characters`, () => {
+test("01 - detects two LEFT-TO-RIGHT OVERRIDE characters", () => {
   let str = "\u202Ddlkgjld\u202Dj";
   let linter = new Linter();
   let messages = linter.verify(str, {

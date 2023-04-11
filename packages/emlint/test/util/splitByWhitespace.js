@@ -9,7 +9,7 @@ const { splitByWhitespace } = util;
 // 01. no config
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - no whitespace`, () => {
+test(`01 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - no whitespace`, () => {
   let gatheredChunks = [];
   let gatheredWhitespace = [];
   splitByWhitespace(
@@ -25,7 +25,7 @@ test(`01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - no whitespace`, () =>
   match(gatheredWhitespace, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`, () => {
+test(`02 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - only whitespace`, () => {
   let gatheredChunks = [];
   let gatheredWhitespace = [];
   splitByWhitespace(
@@ -41,7 +41,7 @@ test(`02 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`, () 
   match(gatheredWhitespace, [[0, 3]], "02.02");
 });
 
-test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`, () => {
+test(`03 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - only whitespace`, () => {
   let gatheredChunks = [];
   let gatheredWhitespace = [];
   splitByWhitespace(
@@ -72,7 +72,7 @@ test(`03 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`, () 
   );
 });
 
-test(`04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`, () => {
+test(`04 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - only whitespace`, () => {
   let gatheredChunks = [];
   let gatheredWhitespace = [];
   splitByWhitespace(
@@ -95,7 +95,7 @@ test(`04 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - only whitespace`, () 
   match(gatheredWhitespace, [[3, 7]], "04.02");
 });
 
-test(`05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - extracts classes`, () => {
+test(`05 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - extracts classes`, () => {
   let gatheredChunks = [];
   let gatheredWhitespace = [];
   splitByWhitespace(
@@ -129,7 +129,7 @@ test(`05 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - extracts classes`, ()
 // 02. with custom range
 // -----------------------------------------------------------------------------
 
-test(`06 - ${`\u001b[${35}m${`custom`}\u001b[${39}m`} - crops inside`, () => {
+test(`06 - ${`\u001b[${35}m${"custom"}\u001b[${39}m`} - crops inside`, () => {
   let gatheredChunks = [];
   let gatheredWhitespace = [];
   splitByWhitespace(

@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 
 // -----------------------------------------------------------------------------
 
-test(`01 - detects two REPLACEMENT CHARACTERS`, () => {
+test("01 - detects two REPLACEMENT CHARACTERS", () => {
   let str = `${CHAR}dlkgjld${CHAR}j`;
   let linter = new Linter();
   let messages = linter.verify(str, {

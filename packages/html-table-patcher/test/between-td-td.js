@@ -7,7 +7,7 @@ import { processThis, tiny } from "./util.js";
 // code between TD and TD
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`} ${`\u001b[${33}m${`and`}\u001b[${39}m`} ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}`} - between two TD's`, () => {
+test(`01 - ${`\u001b[${33}m${`code between ${`\u001b[${34}m${"TD"}\u001b[${39}m`} ${`\u001b[${33}m${"and"}\u001b[${39}m`} ${`\u001b[${34}m${"TD"}\u001b[${39}m`}`}`} - between two TD's`, () => {
   equal(
     processThis(`<table>
   <tr>
@@ -41,7 +41,7 @@ test(`01 - ${`\u001b[${33}m${`code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`
   );
 });
 
-test(`02 - ${`\u001b[${33}m${`code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`} ${`\u001b[${33}m${`and`}\u001b[${39}m`} ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}`} - 3 places`, () => {
+test(`02 - ${`\u001b[${33}m${`code between ${`\u001b[${34}m${"TD"}\u001b[${39}m`} ${`\u001b[${33}m${"and"}\u001b[${39}m`} ${`\u001b[${34}m${"TD"}\u001b[${39}m`}`}`} - 3 places`, () => {
   is(
     processThis(`<table>
 <tr>

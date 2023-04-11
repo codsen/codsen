@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two DELETE characters`, () => {
+test("01 - detects two DELETE characters", () => {
   let str = "\u007Fdlkgjld\u007Fj";
   let linter = new Linter();
   let messages = linter.verify(str, {

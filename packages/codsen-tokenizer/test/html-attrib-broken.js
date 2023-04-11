@@ -5,15 +5,15 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
-const doubleQuotes = `\u0022`;
-const apostrophe = `\u0027`;
+const doubleQuotes = "\u0022";
+const apostrophe = "\u0027";
 
 // broken HTML in attribute areas
 // -----------------------------------------------------------------------------
 
-test(`01 - no equals but quotes present`, () => {
+test("01 - no equals but quotes present", () => {
   let gathered = [];
-  ct(`<a href"www" class'e'>`, {
+  ct("<a href\"www\" class'e'>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -27,7 +27,7 @@ test(`01 - no equals but quotes present`, () => {
         type: "tag",
         start: 0,
         end: 22,
-        value: `<a href"www" class'e'>`,
+        value: "<a href\"www\" class'e'>",
         tagNameStartsAt: 1,
         tagNameEndsAt: 2,
         tagName: "a",
@@ -86,9 +86,9 @@ test(`01 - no equals but quotes present`, () => {
   );
 });
 
-test(`02 - no opening quotes but equals present`, () => {
+test("02 - no opening quotes but equals present", () => {
   let gathered = [];
-  ct(`<a href=www" class=e'>`, {
+  ct("<a href=www\" class=e'>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -102,7 +102,7 @@ test(`02 - no opening quotes but equals present`, () => {
         type: "tag",
         start: 0,
         end: 22,
-        value: `<a href=www" class=e'>`,
+        value: "<a href=www\" class=e'>",
         tagNameStartsAt: 1,
         tagNameEndsAt: 2,
         tagName: "a",
@@ -161,9 +161,9 @@ test(`02 - no opening quotes but equals present`, () => {
   );
 });
 
-test(`03 - two equals`, () => {
+test("03 - two equals", () => {
   let gathered = [];
-  ct(`<a b=="c" d=='e'>`, {
+  ct("<a b==\"c\" d=='e'>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -225,9 +225,9 @@ test(`03 - two equals`, () => {
   );
 });
 
-test(`04 - empty attr value`, () => {
+test("04 - empty attr value", () => {
   let gathered = [];
-  ct(`<body alink="">`, {
+  ct('<body alink="">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -272,9 +272,9 @@ test(`04 - empty attr value`, () => {
   );
 });
 
-test(`05 - false alarm, brackets - rgb()`, () => {
+test("05 - false alarm, brackets - rgb()", () => {
   let gathered = [];
-  ct(`<body alink="rgb()">`, {
+  ct('<body alink="rgb()">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -324,9 +324,9 @@ test(`05 - false alarm, brackets - rgb()`, () => {
   );
 });
 
-test(`06 - space instead of equal`, () => {
+test("06 - space instead of equal", () => {
   let gathered = [];
-  ct(`<a class "c" id 'e' href "www">`, {
+  ct('<a class "c" id \'e\' href "www">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -340,7 +340,7 @@ test(`06 - space instead of equal`, () => {
         type: "tag",
         start: 0,
         end: 31,
-        value: `<a class "c" id 'e' href "www">`,
+        value: '<a class "c" id \'e\' href "www">',
         tagNameStartsAt: 1,
         tagNameEndsAt: 2,
         tagName: "a",
@@ -420,7 +420,7 @@ test(`06 - space instead of equal`, () => {
   );
 });
 
-test(`07 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening quote repeated`, () => {
+test(`07 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - opening quote repeated`, () => {
   let gathered = [];
   // <table width=""100">
   ct(
@@ -457,13 +457,13 @@ test(`07 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening quote re
             attribNameEndsAt: 12,
             attribOpeningQuoteAt: 13,
             attribClosingQuoteAt: 18,
-            attribValueRaw: `"100`,
+            attribValueRaw: '"100',
             attribValue: [
               {
                 type: "text",
                 start: 14,
                 end: 18,
-                value: `"100`,
+                value: '"100',
               },
             ],
             attribValueStartsAt: 14,
@@ -500,7 +500,7 @@ test(`07 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening quote re
   );
 });
 
-test(`08 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, whitespace`, () => {
+test(`08 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - opening repeated, whitespace`, () => {
   let gathered = [];
   ct(`<span width="${doubleQuotes} 100">`, {
     tagCb: (obj) => {
@@ -538,7 +538,7 @@ test(`08 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated
                 type: "text",
                 start: 13,
                 end: 18,
-                value: `" 100`,
+                value: '" 100',
               },
             ],
             attribValueStartsAt: 13,
@@ -553,7 +553,7 @@ test(`08 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated
   );
 });
 
-test(`09 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, two errors - repeated opening and mismatching closing`, () => {
+test(`09 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - opening repeated, two errors - repeated opening and mismatching closing`, () => {
   let gathered = [];
   ct(
     `<span width="${doubleQuotes} 100'>
@@ -590,13 +590,13 @@ test(`09 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated
             attribNameEndsAt: 11,
             attribOpeningQuoteAt: 12,
             attribClosingQuoteAt: 18,
-            attribValueRaw: `" 100`,
+            attribValueRaw: '" 100',
             attribValue: [
               {
                 type: "text",
                 start: 13,
                 end: 18,
-                value: `" 100`,
+                value: '" 100',
               },
             ],
             attribValueStartsAt: 13,
@@ -632,7 +632,7 @@ test(`09 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated
   );
 });
 
-test(`10 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated, single quote style`, () => {
+test(`10 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - opening repeated, single quote style`, () => {
   let gathered = [];
   ct(
     `<span width='${apostrophe} 100'>
@@ -711,9 +711,9 @@ test(`10 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening repeated
   );
 });
 
-test(`11 - attr value without quotes`, () => {
+test("11 - attr value without quotes", () => {
   let gathered = [];
-  ct(`<abc de=fg hi="jkl">`, {
+  ct('<abc de=fg hi="jkl">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -783,9 +783,9 @@ test(`11 - attr value without quotes`, () => {
   );
 });
 
-test(`12 - attr value without quotes leads to tag's end`, () => {
+test("12 - attr value without quotes leads to tag's end", () => {
   let gathered = [];
-  ct(`<abc de=fg/>`, {
+  ct("<abc de=fg/>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -835,9 +835,9 @@ test(`12 - attr value without quotes leads to tag's end`, () => {
   );
 });
 
-test(`13 - attr value without quotes leads to tag's end`, () => {
+test("13 - attr value without quotes leads to tag's end", () => {
   let gathered = [];
-  ct(`<abc de=fg>`, {
+  ct("<abc de=fg>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -890,9 +890,9 @@ test(`13 - attr value without quotes leads to tag's end`, () => {
 // 05. mismatching quotes
 // -----------------------------------------------------------------------------
 
-test(`14 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in the value, A-B`, () => {
+test(`14 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - no quotes in the value, A-B`, () => {
   let gathered = [];
-  ct(`<div class="c'>.</div>`, {
+  ct("<div class=\"c'>.</div>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -906,7 +906,7 @@ test(`14 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in
         type: "tag",
         start: 0,
         end: 15,
-        value: `<div class="c'>`,
+        value: "<div class=\"c'>",
         tagNameStartsAt: 1,
         tagNameEndsAt: 4,
         tagName: "div",
@@ -965,9 +965,9 @@ test(`14 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in
   );
 });
 
-test(`15 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in the value, B-A`, () => {
+test(`15 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - no quotes in the value, B-A`, () => {
   let gathered = [];
-  ct(`<div class='c">.</div>`, {
+  ct("<div class='c\">.</div>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -981,7 +981,7 @@ test(`15 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in
         type: "tag",
         start: 0,
         end: 15,
-        value: `<div class='c">`,
+        value: "<div class='c\">",
         tagNameStartsAt: 1,
         tagNameEndsAt: 4,
         tagName: "div",
@@ -1040,9 +1040,9 @@ test(`15 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in
   );
 });
 
-test(`16 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - matching quotes as control - double quotes in the value, A-B-B-A. end of tag follows`, () => {
+test(`16 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - matching quotes as control - double quotes in the value, A-B-B-A. end of tag follows`, () => {
   let gathered = [];
-  ct(`<img alt='so-called "artists"!'/>`, {
+  ct("<img alt='so-called \"artists\"!'/>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1055,7 +1055,7 @@ test(`16 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - matching quo
         type: "tag",
         start: 0,
         end: 33,
-        value: `<img alt='so-called "artists"!'/>`,
+        value: "<img alt='so-called \"artists\"!'/>",
         tagNameStartsAt: 1,
         tagNameEndsAt: 4,
         tagName: "img",
@@ -1072,13 +1072,13 @@ test(`16 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - matching quo
             attribNameEndsAt: 8,
             attribOpeningQuoteAt: 9,
             attribClosingQuoteAt: 30,
-            attribValueRaw: `so-called "artists"!`,
+            attribValueRaw: 'so-called "artists"!',
             attribValue: [
               {
                 type: "text",
                 start: 10,
                 end: 30,
-                value: `so-called "artists"!`,
+                value: 'so-called "artists"!',
               },
             ],
             attribValueStartsAt: 10,
@@ -1094,9 +1094,9 @@ test(`16 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - matching quo
   );
 });
 
-test(`17 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - matching quotes as control - double quotes in the value, A-B-B-A. another attribute follows`, () => {
+test(`17 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - matching quotes as control - double quotes in the value, A-B-B-A. another attribute follows`, () => {
   let gathered = [];
-  ct(`<img alt='so-called "artists"!' class='yo'/>`, {
+  ct("<img alt='so-called \"artists\"!' class='yo'/>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1109,7 +1109,7 @@ test(`17 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - matching quo
         type: "tag",
         start: 0,
         end: 44,
-        value: `<img alt='so-called "artists"!' class='yo'/>`,
+        value: "<img alt='so-called \"artists\"!' class='yo'/>",
         tagNameStartsAt: 1,
         tagNameEndsAt: 4,
         tagName: "img",
@@ -1126,13 +1126,13 @@ test(`17 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - matching quo
             attribNameEndsAt: 8,
             attribOpeningQuoteAt: 9,
             attribClosingQuoteAt: 30,
-            attribValueRaw: `so-called "artists"!`,
+            attribValueRaw: 'so-called "artists"!',
             attribValue: [
               {
                 type: "text",
                 start: 10,
                 end: 30,
-                value: `so-called "artists"!`,
+                value: 'so-called "artists"!',
               },
             ],
             attribValueStartsAt: 10,
@@ -1170,9 +1170,9 @@ test(`17 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - matching quo
   );
 });
 
-test(`18 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, A-B. end of tag follows`, () => {
+test(`18 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - double quotes in the value, A-B. end of tag follows`, () => {
   let gathered = [];
-  ct(`<img alt='so-called "artists"!"/>`, {
+  ct('<img alt=\'so-called "artists"!"/>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1185,7 +1185,7 @@ test(`18 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quote
         type: "tag",
         start: 0,
         end: 33,
-        value: `<img alt='so-called "artists"!"/>`,
+        value: '<img alt=\'so-called "artists"!"/>',
         tagNameStartsAt: 1,
         tagNameEndsAt: 4,
         tagName: "img",
@@ -1202,13 +1202,13 @@ test(`18 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quote
             attribNameEndsAt: 8,
             attribOpeningQuoteAt: 9,
             attribClosingQuoteAt: 30,
-            attribValueRaw: `so-called "artists"!`,
+            attribValueRaw: 'so-called "artists"!',
             attribValue: [
               {
                 type: "text",
                 start: 10,
                 end: 30,
-                value: `so-called "artists"!`,
+                value: 'so-called "artists"!',
               },
             ],
             attribValueStartsAt: 10,
@@ -1224,9 +1224,9 @@ test(`18 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quote
   );
 });
 
-test(`19 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, A-B, attr follows`, () => {
+test(`19 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - double quotes in the value, A-B, attr follows`, () => {
   let gathered = [];
-  ct(`<img alt='so-called "artists"!" style="display:block;"/>`, {
+  ct('<img alt=\'so-called "artists"!" style="display:block;"/>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1240,7 +1240,7 @@ test(`19 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quote
         type: "tag",
         start: 0,
         end: 56,
-        value: `<img alt='so-called "artists"!" style="display:block;"/>`,
+        value: '<img alt=\'so-called "artists"!" style="display:block;"/>',
         tagNameStartsAt: 1,
         tagNameEndsAt: 4,
         tagName: "img",
@@ -1257,13 +1257,13 @@ test(`19 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quote
             attribNameEndsAt: 8,
             attribOpeningQuoteAt: 9,
             attribClosingQuoteAt: 30,
-            attribValueRaw: `so-called "artists"!`,
+            attribValueRaw: 'so-called "artists"!',
             attribValue: [
               {
                 type: "text",
                 start: 10,
                 end: 30,
-                value: `so-called "artists"!`,
+                value: 'so-called "artists"!',
               },
             ],
             attribValueStartsAt: 10,
@@ -1303,9 +1303,9 @@ test(`19 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quote
   );
 });
 
-test(`20 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, B-A`, () => {
+test(`20 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - double quotes in the value, B-A`, () => {
   let gathered = [];
-  ct(`<img alt="so-called "artists"!'/>`, {
+  ct('<img alt="so-called "artists"!\'/>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1319,7 +1319,7 @@ test(`20 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quote
         type: "tag",
         start: 0,
         end: 33,
-        value: `<img alt="so-called "artists"!'/>`,
+        value: '<img alt="so-called "artists"!\'/>',
         tagNameStartsAt: 1,
         tagNameEndsAt: 4,
         tagName: "img",
@@ -1336,13 +1336,13 @@ test(`20 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quote
             attribNameEndsAt: 8,
             attribOpeningQuoteAt: 9,
             attribClosingQuoteAt: 30,
-            attribValueRaw: `so-called "artists"!`,
+            attribValueRaw: 'so-called "artists"!',
             attribValue: [
               {
                 type: "text",
                 start: 10,
                 end: 30,
-                value: `so-called "artists"!`,
+                value: 'so-called "artists"!',
               },
             ],
             attribValueStartsAt: 10,
@@ -1357,9 +1357,9 @@ test(`20 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - double quote
   );
 });
 
-test(`21 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, A-B`, () => {
+test(`21 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - single quotes in the value, A-B`, () => {
   let gathered = [];
-  ct(`<img alt="Deal is your's!'/>`, {
+  ct("<img alt=\"Deal is your's!'/>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1373,7 +1373,7 @@ test(`21 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - single quote
         type: "tag",
         start: 0,
         end: 28,
-        value: `<img alt="Deal is your's!'/>`,
+        value: "<img alt=\"Deal is your's!'/>",
         tagNameStartsAt: 1,
         tagNameEndsAt: 4,
         tagName: "img",
@@ -1390,13 +1390,13 @@ test(`21 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - single quote
             attribNameEndsAt: 8,
             attribOpeningQuoteAt: 9,
             attribClosingQuoteAt: 25,
-            attribValueRaw: `Deal is your's!`,
+            attribValueRaw: "Deal is your's!",
             attribValue: [
               {
                 type: "text",
                 start: 10,
                 end: 25,
-                value: `Deal is your's!`,
+                value: "Deal is your's!",
               },
             ],
             attribValueStartsAt: 10,
@@ -1411,9 +1411,9 @@ test(`21 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - single quote
   );
 });
 
-test(`22 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, B-A`, () => {
+test(`22 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - single quotes in the value, B-A`, () => {
   let gathered = [];
-  ct(`<img alt='Deal is your's!"/>`, {
+  ct("<img alt='Deal is your's!\"/>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1427,7 +1427,7 @@ test(`22 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - single quote
         type: "tag",
         start: 0,
         end: 28,
-        value: `<img alt='Deal is your's!"/>`,
+        value: "<img alt='Deal is your's!\"/>",
         tagNameStartsAt: 1,
         tagNameEndsAt: 4,
         tagName: "img",
@@ -1444,13 +1444,13 @@ test(`22 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - single quote
             attribNameEndsAt: 8,
             attribOpeningQuoteAt: 9,
             attribClosingQuoteAt: 25,
-            attribValueRaw: `Deal is your's!`,
+            attribValueRaw: "Deal is your's!",
             attribValue: [
               {
                 type: "text",
                 start: 10,
                 end: 25,
-                value: `Deal is your's!`,
+                value: "Deal is your's!",
               },
             ],
             attribValueStartsAt: 10,
@@ -1468,9 +1468,9 @@ test(`22 - ${`\u001b[${33}m${`mismatching quotes`}\u001b[${39}m`} - single quote
 // 06. terminating unclosed string value (content within quotes)
 // -----------------------------------------------------------------------------
 
-test(`23 - attr value without quotes leads to tag's end`, () => {
+test("23 - attr value without quotes leads to tag's end", () => {
   let gathered = [];
-  ct(`<abc de =">\ntext<div class="z">`, {
+  ct('<abc de =">\ntext<div class="z">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1560,9 +1560,9 @@ test(`23 - attr value without quotes leads to tag's end`, () => {
   );
 });
 
-test(`24 - missing closing quote, cheeky raw text bracket follows`, () => {
+test("24 - missing closing quote, cheeky raw text bracket follows", () => {
   let gathered = [];
-  ct(`<abc de="> "a" > "z"`, {
+  ct('<abc de="> "a" > "z"', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1614,9 +1614,9 @@ test(`24 - missing closing quote, cheeky raw text bracket follows`, () => {
   );
 });
 
-test(`25 - two errors: space before equal and closing quotes missing`, () => {
+test("25 - two errors: space before equal and closing quotes missing", () => {
   let gathered = [];
-  ct(`<input type="radio" checked =">`, {
+  ct('<input type="radio" checked =">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1679,9 +1679,9 @@ test(`25 - two errors: space before equal and closing quotes missing`, () => {
   );
 });
 
-test(`26 - two errors: space before equal and closing quotes missing, text follows`, () => {
+test("26 - two errors: space before equal and closing quotes missing, text follows", () => {
   let gathered = [];
-  ct(`<input type="radio" checked ="> x y z `, {
+  ct('<input type="radio" checked ="> x y z ', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1749,9 +1749,9 @@ test(`26 - two errors: space before equal and closing quotes missing, text follo
   );
 });
 
-test(`27 - two layers of quotes`, () => {
+test("27 - two layers of quotes", () => {
   let gathered = [];
-  ct(`<span width="'100'">`, {
+  ct("<span width=\"'100'\">", {
     tagCb: (obj) => {
       gathered.push(obj);
     },

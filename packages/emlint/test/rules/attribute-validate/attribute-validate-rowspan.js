@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no rowspan, error level 0`, () => {
-  let str = `<td>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no rowspan, error level 0`, () => {
+  let str = "<td>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no rowspan, error le
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no rowspan, error level 1`, () => {
-  let str = `<td>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no rowspan, error level 1`, () => {
+  let str = "<td>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no rowspan, error le
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no rowspan, error level 2`, () => {
-  let str = `<td>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no rowspan, error level 2`, () => {
+  let str = "<td>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no rowspan, error le
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy rowspan, zero`, () => {
-  let str = `<td rowspan='0'>`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy rowspan, zero`, () => {
+  let str = "<td rowspan='0'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -58,8 +58,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy rowspan, zer
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy rowspan, non-zero`, () => {
-  let str = `<td rowspan="3">`;
+test(`05 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy rowspan, non-zero`, () => {
+  let str = '<td rowspan="3">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -73,21 +73,21 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy rowspan, non
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<td rowspan=" 0">`;
+test(`06 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = '<td rowspan=" 0">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-rowspan": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td rowspan="0">`, "06.01");
+  equal(applyFixes(str, messages), '<td rowspan="0">', "06.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-rowspan",
       idxFrom: 13,
       idxTo: 14,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[13, 14]],
       },
@@ -95,21 +95,21 @@ test(`06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   ]);
 });
 
-test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<td rowspan="0 ">`;
+test(`07 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = '<td rowspan="0 ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-rowspan": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td rowspan="0">`, "07.01");
+  equal(applyFixes(str, messages), '<td rowspan="0">', "07.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-rowspan",
       idxFrom: 14,
       idxTo: 15,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[14, 15]],
       },
@@ -117,21 +117,21 @@ test(`07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`, () => {
-  let str = `<td rowspan="  0  ">`;
+test(`08 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around`, () => {
+  let str = '<td rowspan="  0  ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-rowspan": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td rowspan="0">`, "08.01");
+  equal(applyFixes(str, messages), '<td rowspan="0">', "08.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-rowspan",
       idxFrom: 13,
       idxTo: 18,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [13, 15],
@@ -142,8 +142,8 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<td rowspan="  \t">`;
+test(`09 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<td rowspan="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -157,7 +157,7 @@ test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-rowspan",
       idxFrom: 13,
       idxTo: 16,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -166,8 +166,8 @@ test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
 // 03. wrong value
 // -----------------------------------------------------------------------------
 
-test(`10 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - string as value`, () => {
-  let str = `<td rowspan="z">`;
+test(`10 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - string as value`, () => {
+  let str = '<td rowspan="z">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -181,14 +181,14 @@ test(`10 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - string as value`, () => {
       ruleId: "attribute-validate-rowspan",
       idxFrom: 13,
       idxTo: 14,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`11 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - dot as value`, () => {
-  let str = `<td rowspan=".">`;
+test(`11 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - dot as value`, () => {
+  let str = '<td rowspan=".">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -202,14 +202,14 @@ test(`11 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - dot as value`, () => {
       ruleId: "attribute-validate-rowspan",
       idxFrom: 13,
       idxTo: 14,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`12 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - a rational number`, () => {
-  let str = `<td rowspan="1.5">`;
+test(`12 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - a rational number`, () => {
+  let str = '<td rowspan="1.5">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -223,14 +223,14 @@ test(`12 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - a rational number`, () =>
       ruleId: "attribute-validate-rowspan",
       idxFrom: 14, // <--- starts at the first non-digit char
       idxTo: 16,
-      message: `Should be integer, no units.`,
+      message: "Should be integer, no units.",
       fix: null,
     },
   ]);
 });
 
-test(`13 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, () => {
-  let str = `<td rowspan="1px">`;
+test(`13 - ${`\u001b[${35}m${"value"}\u001b[${39}m`} - with units`, () => {
+  let str = '<td rowspan="1px">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -238,13 +238,13 @@ test(`13 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, () => {
     },
   });
   // will fix:
-  equal(applyFixes(str, messages), `<td rowspan="1">`, "13.01");
+  equal(applyFixes(str, messages), '<td rowspan="1">', "13.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-rowspan",
       idxFrom: 14, // <--- starts at the first non-digit char
       idxTo: 16,
-      message: `Remove px.`,
+      message: "Remove px.",
       fix: {
         ranges: [[14, 16]],
       },
@@ -255,8 +255,8 @@ test(`13 - ${`\u001b[${35}m${`value`}\u001b[${39}m`} - with units`, () => {
 // 04. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`14 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div rowspan="0">`;
+test(`14 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div rowspan="0">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -275,8 +275,8 @@ test(`14 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`15 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz rowspan="0" yyy>`;
+test(`15 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz rowspan="0" yyy>';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {

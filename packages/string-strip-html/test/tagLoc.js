@@ -188,7 +188,7 @@ test("06 - tag locations - opts.onlyStripTags", () => {
 });
 
 test("07 - tag locations - closing bracket missing", () => {
-  let input = `<div class="container" <div class="inner"`;
+  let input = '<div class="container" <div class="inner"';
   equal(
     stripHtml(input),
     {
@@ -208,7 +208,7 @@ test("07 - tag locations - closing bracket missing", () => {
 });
 
 test("08 - tag locations - closing bracket missing", () => {
-  let input = `<div class="container" <div class="inner"`;
+  let input = '<div class="container" <div class="inner"';
   equal(
     stripHtml(input, {
       stripTogetherWithTheirContents: "div",
@@ -227,10 +227,10 @@ test("08 - tag locations - closing bracket missing", () => {
 });
 
 test("09 - tag locations - closing bracket missing on ignored tag", () => {
-  let input = `<div class="container" <div class="inner"`;
+  let input = '<div class="container" <div class="inner"';
   equal(
     stripHtml(input, {
-      ignoreTags: `div`,
+      ignoreTags: "div",
     }),
     {
       result: input,

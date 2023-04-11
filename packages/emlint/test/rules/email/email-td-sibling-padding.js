@@ -9,7 +9,7 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. no config
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - all severity levels`, () => {
+test(`01 - ${`\u001b[${33}m${"no config"}\u001b[${39}m`} - all severity levels`, () => {
   let str = `<table>
   <tr>
     <td style="padding-top: 10px;">
@@ -46,7 +46,7 @@ test(`01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - all severity levels`,
         severity: 1,
         idxFrom: 30,
         idxTo: 48,
-        message: `Don't set padding on TD when sibling TD's are present.`,
+        message: "Don't set padding on TD when sibling TD's are present.",
         fix: null,
       },
     ],
@@ -69,7 +69,7 @@ test(`01 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - all severity levels`,
         severity: 2,
         idxFrom: 30,
         idxTo: 48,
-        message: `Don't set padding on TD when sibling TD's are present.`,
+        message: "Don't set padding on TD when sibling TD's are present.",
         fix: null,
       },
     ],

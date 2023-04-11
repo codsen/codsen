@@ -8,8 +8,8 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // false positives
 // -----------------------------------------------------------------------------
 
-test(`01 - one attribute`, () => {
-  let str = `<br class="h"/>`;
+test("01 - one attribute", () => {
+  let str = '<br class="h"/>';
   let messages = verify(not, str, {
     rules: {
       "attribute-on-closing-tag": 2,
@@ -19,8 +19,8 @@ test(`01 - one attribute`, () => {
   equal(messages, [], "01.02");
 });
 
-test(`02 - one attribute`, () => {
-  let str = `<br class="h">`;
+test("02 - one attribute", () => {
+  let str = '<br class="h">';
   let messages = verify(not, str, {
     rules: {
       "attribute-on-closing-tag": 2,
@@ -33,8 +33,8 @@ test(`02 - one attribute`, () => {
 // the cases
 // -----------------------------------------------------------------------------
 
-test(`03 - one attribute`, () => {
-  let str = `<a>z</a class="y">`;
+test("03 - one attribute", () => {
+  let str = '<a>z</a class="y">';
   let messages = verify(not, str, {
     rules: {
       "attribute-on-closing-tag": 2,
@@ -50,7 +50,7 @@ test(`03 - one attribute`, () => {
         severity: 2,
         idxFrom: 8,
         idxTo: 17,
-        message: `Attribute on a closing tag.`,
+        message: "Attribute on a closing tag.",
         fix: null,
       },
     ],

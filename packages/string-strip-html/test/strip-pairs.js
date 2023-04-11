@@ -146,7 +146,7 @@ test("08 - tag pairs including content - healthy, typical style tag pair", () =>
   );
 });
 
-test(`09 - tag pairs including content - mismatching quotes "text/css'`, () => {
+test("09 - tag pairs including content - mismatching quotes \"text/css'", () => {
   // Ranged tags are sensitive to slash detection.
   // Slash detection works checking is slash not within quoted attribute values.
   // Messed up, unmatching attribute quotes can happen too.
@@ -162,11 +162,11 @@ test(`09 - tag pairs including content - mismatching quotes "text/css'`, () => {
 <body>aaa</body>
 </html>`).result,
     "aaa",
-    `09.01`
+    "09.01"
   );
 });
 
-test(`10 - tag pairs including content - mismatching quotes 'text/css"`, () => {
+test("10 - tag pairs including content - mismatching quotes 'text/css\"", () => {
   equal(
     stripHtml(`<html><head>
 <style type='text/css">#outlook a{ padding:0;}

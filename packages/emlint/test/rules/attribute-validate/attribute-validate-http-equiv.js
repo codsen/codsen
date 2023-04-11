@@ -10,8 +10,8 @@ import { applyFixes } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no http-equiv, error level 0`, () => {
-  let str = `<meta>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no http-equiv, error level 0`, () => {
+  let str = "<meta>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no http-equiv, error
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no http-equiv, error level 1`, () => {
-  let str = `<meta>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no http-equiv, error level 1`, () => {
+  let str = "<meta>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -34,8 +34,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no http-equiv, error
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no http-equiv, error level 2`, () => {
-  let str = `<meta>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no http-equiv, error level 2`, () => {
+  let str = "<meta>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -46,8 +46,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no http-equiv, error
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, content-type`, () => {
-  let str = `<meta http-equiv='content-type'>`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, content-type`, () => {
+  let str = "<meta http-equiv='content-type'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -58,8 +58,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, c
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, default-style`, () => {
-  let str = `<meta http-equiv="default-style">`;
+test(`05 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, default-style`, () => {
+  let str = '<meta http-equiv="default-style">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -70,8 +70,8 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, d
   equal(messages, [], "05.02");
 });
 
-test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, refresh`, () => {
-  let str = `<meta http-equiv="refresh">`;
+test(`06 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, refresh`, () => {
+  let str = '<meta http-equiv="refresh">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -82,8 +82,8 @@ test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, r
   equal(messages, [], "06.02");
 });
 
-test(`07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, content-type, first cap`, () => {
-  let str = `<meta http-equiv="Content-Type">`;
+test(`07 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy attribute, content-type, first cap`, () => {
+  let str = '<meta http-equiv="Content-Type">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -97,21 +97,21 @@ test(`07 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy attribute, c
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () => {
-  let str = `<meta http-equiv=' refresh'>`;
+test(`08 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space in front`, () => {
+  let str = "<meta http-equiv=' refresh'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-http-equiv": 2,
     },
   });
-  equal(applyFixes(str, messages), `<meta http-equiv='refresh'>`, "08.01");
+  equal(applyFixes(str, messages), "<meta http-equiv='refresh'>", "08.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-http-equiv",
       idxFrom: 18,
       idxTo: 19,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[18, 19]],
       },
@@ -119,21 +119,21 @@ test(`08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`, () 
   ]);
 });
 
-test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => {
-  let str = `<meta http-equiv="refresh ">`;
+test(`09 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - space after`, () => {
+  let str = '<meta http-equiv="refresh ">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-http-equiv": 2,
     },
   });
-  equal(applyFixes(str, messages), `<meta http-equiv="refresh">`, "09.01");
+  equal(applyFixes(str, messages), '<meta http-equiv="refresh">', "09.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-http-equiv",
       idxFrom: 25,
       idxTo: 26,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[25, 26]],
       },
@@ -141,21 +141,21 @@ test(`09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`, () => 
   ]);
 });
 
-test(`10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`, () => {
-  let str = `<meta http-equiv='  refresh  \t'>`;
+test(`10 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - copious whitespace around`, () => {
+  let str = "<meta http-equiv='  refresh  \t'>";
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
       "attribute-validate-http-equiv": 2,
     },
   });
-  equal(applyFixes(str, messages), `<meta http-equiv='refresh'>`, "10.01");
+  equal(applyFixes(str, messages), "<meta http-equiv='refresh'>", "10.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-http-equiv",
       idxFrom: 18,
       idxTo: 30,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [
           [18, 20],
@@ -166,8 +166,8 @@ test(`10 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace a
   ]);
 });
 
-test(`11 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<meta http-equiv="  \t">`;
+test(`11 - ${`\u001b[${36}m${"whitespace"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<meta http-equiv="  \t">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -181,7 +181,7 @@ test(`11 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-http-equiv",
       idxFrom: 18,
       idxTo: 21,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -190,8 +190,8 @@ test(`11 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable white
 // 03. wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`12 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
-  let str = `<div http-equiv="refresh">`;
+test(`12 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - recognised tag`, () => {
+  let str = '<div http-equiv="refresh">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -210,8 +210,8 @@ test(`12 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`, () => {
   ]);
 });
 
-test(`13 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () => {
-  let str = `<zzz http-equiv="refresh">`;
+test(`13 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - unrecognised tag`, () => {
+  let str = '<zzz http-equiv="refresh">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -233,8 +233,8 @@ test(`13 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - unrecognised tag`, () =>
 // 04. wrong value
 // -----------------------------------------------------------------------------
 
-test(`14 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out of whack value`, () => {
-  let str = `<meta http-equiv="tralala">`;
+test(`14 - ${`\u001b[${35}m${"validation"}\u001b[${39}m`} - out of whack value`, () => {
+  let str = '<meta http-equiv="tralala">';
   let linter = new Linter();
   let messages = linter.verify(str, {
     rules: {
@@ -248,7 +248,7 @@ test(`14 - ${`\u001b[${35}m${`validation`}\u001b[${39}m`} - out of whack value`,
       ruleId: "attribute-validate-http-equiv",
       idxFrom: 18,
       idxTo: 25,
-      message: `Unrecognised value: "tralala".`,
+      message: 'Unrecognised value: "tralala".',
       fix: null,
     },
   ]);

@@ -47,7 +47,7 @@ const cPackageJson = `{
 //                                  *
 //                                  *
 
-test(`01 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - requested package does not exist (ERROR_01)`, async () => {
+test(`01 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - requested package does not exist (ERROR_01)`, async () => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -102,7 +102,7 @@ test(`01 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - requested package does n
 //                                  *
 //                                  *
 
-test(`02 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read a's package.json (ERROR_02)`, async () => {
+test(`02 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - couldn't read a's package.json (ERROR_02)`, async () => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -155,7 +155,7 @@ test(`02 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read a's packag
 //                                  *
 //                                  *
 
-test(`03 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read b's package.json (ERROR_03)`, async () => {
+test(`03 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - couldn't read b's package.json (ERROR_03)`, async () => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -208,7 +208,7 @@ test(`03 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - couldn't read b's packag
 //                                  *
 //                                  *
 
-test(`04 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - normal dep, symlink already exists (ERROR_04)`, async () => {
+test(`04 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - normal dep, symlink already exists (ERROR_04)`, async () => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -273,7 +273,7 @@ test(`04 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - normal dep, symlink alre
 //                                  *
 //                                  *
 
-test(`05 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - error while trying to parse package.json (ERROR_06)`, async () => {
+test(`05 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - error while trying to parse package.json (ERROR_06)`, async () => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -333,7 +333,7 @@ test(`05 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - error while trying to pa
 //                                  *
 //                                  *
 
-test(`06 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - dep is a CLI, one of symlinks already exists (ERROR_08)`, async () => {
+test(`06 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - dep is a CLI, one of symlinks already exists (ERROR_08)`, async () => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -404,7 +404,7 @@ test(`06 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - dep is a CLI, one of sym
 //                                  *
 //                                  *
 
-test(`07 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - package.json had no main/module/browser/bin fields (ERROR_10)`, async () => {
+test(`07 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - package.json had no main/module/browser/bin fields (ERROR_10)`, async () => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -463,7 +463,7 @@ test(`07 - ${`\u001b[${35}m${`errors`}\u001b[${39}m`} - package.json had no main
 //                                  *
 //                                  *
 
-test(`08 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps`, async () => {
+test(`08 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links normal deps`, async () => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -509,7 +509,7 @@ test(`08 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal
   equal(cleanupMsg.exitCode, 0, "08.01");
 });
 
-test(`09 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links CLI deps`, async () => {
+test(`09 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links CLI deps`, async () => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -559,7 +559,7 @@ test(`09 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links CLI de
   equal(cleanupMsg.exitCode, 0, "09.01");
 });
 
-test(`10 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps, adds them as devDependencies, -d flag`, async () => {
+test(`10 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links normal deps, adds them as devDependencies, -d flag`, async () => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
@@ -606,7 +606,7 @@ test(`10 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal
   equal(cleanupMsg.exitCode, 0, "10.01");
 });
 
-test(`11 - ${`\u001b[${33}m${`main functionality`}\u001b[${39}m`} - links normal deps, adds them as devDependencies, --dev flag`, async () => {
+test(`11 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links normal deps, adds them as devDependencies, --dev flag`, async () => {
   // Re-route the test files into `temp/` folder instead for easier access when
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";

@@ -13,7 +13,7 @@ function fail(s) {
 const BACKSLASH = "\u005C";
 
 // 1. basic tests
-test(`01 - a single tag`, () => {
+test("01 - a single tag", () => {
   let str = "< a>";
   let messages = verify(not, str, {
     rules: {
@@ -40,7 +40,7 @@ test(`01 - a single tag`, () => {
   equal(applyFixes(str, messages), "<a>", "01.01");
 });
 
-test(`02 - a single closing tag, space before slash`, () => {
+test("02 - a single closing tag, space before slash", () => {
   let str = "\n<\t\t/a>";
   let messages = verify(not, str, {
     rules: {
@@ -67,7 +67,7 @@ test(`02 - a single closing tag, space before slash`, () => {
   equal(applyFixes(str, messages), "\n</a>", "02.01");
 });
 
-test(`03 - a single closing tag, space after slash`, () => {
+test("03 - a single closing tag, space after slash", () => {
   let str = "\n</\t\ta>";
   let messages = verify(not, str, {
     rules: {
@@ -94,7 +94,7 @@ test(`03 - a single closing tag, space after slash`, () => {
   equal(applyFixes(str, messages), "\n</a>", "03.01");
 });
 
-test(`04 - a single closing tag, space before and after slash`, () => {
+test("04 - a single closing tag, space before and after slash", () => {
   let str = "\n<\t/\ta>";
   let messages = verify(not, str, {
     rules: {
@@ -124,7 +124,7 @@ test(`04 - a single closing tag, space before and after slash`, () => {
   equal(applyFixes(str, messages), "\n</a>", "04.01");
 });
 
-test(`05 - in front of repeated slash`, () => {
+test("05 - in front of repeated slash", () => {
   let str = "< // a>";
   let messages = verify(not, str, {
     rules: {
@@ -154,7 +154,7 @@ test(`05 - in front of repeated slash`, () => {
   equal(applyFixes(str, messages), "<//a>", "05.01");
 });
 
-test(`06 - in front of backslash`, () => {
+test("06 - in front of backslash", () => {
   let str = `< ${BACKSLASH} a>`;
   let messages = verify(not, str, {
     rules: {
@@ -191,11 +191,11 @@ test(`06 - in front of backslash`, () => {
     equal,
     fail
   );
-  equal(applyFixes(str, messages), `<a>`, "06.01");
+  equal(applyFixes(str, messages), "<a>", "06.01");
 });
 
-test(`07 - should not trigger when opening brackets are missing`, () => {
-  let str = `<div> div class="x">`;
+test("07 - should not trigger when opening brackets are missing", () => {
+  let str = '<div> div class="x">';
   let messages = verify(not, str, {
     rules: {
       "tag-space-after-opening-bracket": 2,
@@ -207,8 +207,8 @@ test(`07 - should not trigger when opening brackets are missing`, () => {
 // 02. XML
 // -----------------------------------------------------------------------------
 
-test(`08 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, () => {
-  let str = `< ?xml version="1.0" encoding="UTF-8"?>`;
+test(`08 - ${`\u001b[${36}m${"XML tags"}\u001b[${39}m`} - basic`, () => {
+  let str = '< ?xml version="1.0" encoding="UTF-8"?>';
   let messages = verify(not, str, {
     rules: {
       "tag-space-after-opening-bracket": 2,
@@ -233,7 +233,7 @@ test(`08 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, () => {
   );
   equal(
     applyFixes(str, messages),
-    `<?xml version="1.0" encoding="UTF-8"?>`,
+    '<?xml version="1.0" encoding="UTF-8"?>',
     "08.01"
   );
 });

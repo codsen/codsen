@@ -11,8 +11,8 @@ import { applyFixes, verify } from "../../../t-util/util.js";
 // 01. validation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no style, error level 0`, () => {
-  let str = `<td>`;
+test(`01 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no style, error level 0`, () => {
+  let str = "<td>";
   let messages = verify(not, str, {
     rules: {
       "attribute-validate-style": 0,
@@ -22,8 +22,8 @@ test(`01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no style, error leve
   equal(messages, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no style, error level 1`, () => {
-  let str = `<td>`;
+test(`02 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no style, error level 1`, () => {
+  let str = "<td>";
   let messages = verify(not, str, {
     rules: {
       "attribute-validate-style": 1,
@@ -33,8 +33,8 @@ test(`02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no style, error leve
   equal(messages, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no style, error level 2`, () => {
-  let str = `<td>`;
+test(`03 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no style, error level 2`, () => {
+  let str = "<td>";
   let messages = verify(not, str, {
     rules: {
       "attribute-validate-style": 2,
@@ -44,8 +44,8 @@ test(`03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no style, error leve
   equal(messages, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy style, zero`, () => {
-  let str = `<td style='font-size: 10px;'>`;
+test(`04 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - healthy style, zero`, () => {
+  let str = "<td style='font-size: 10px;'>";
   let messages = verify(not, str, {
     rules: {
       "attribute-validate-style": 2,
@@ -55,8 +55,8 @@ test(`04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy style, zero`
   equal(messages, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no value`, () => {
-  let str = `<td style="">`;
+test(`05 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - no value`, () => {
+  let str = '<td style="">';
   let messages = verify(not, str, {
     rules: {
       "attribute-validate-style": 2,
@@ -68,7 +68,7 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no value`, () => {
       ruleId: "attribute-validate-style",
       idxFrom: 4,
       idxTo: 12,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -76,8 +76,8 @@ test(`05 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no value`, () => {
   equal(messages.length, 1, "05.02");
 });
 
-test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
-  let str = `<td style="  \t">`;
+test(`06 - ${`\u001b[${34}m${"validation"}\u001b[${39}m`} - only trimmable whitespace as a value`, () => {
+  let str = '<td style="  \t">';
   let messages = verify(not, str, {
     rules: {
       "attribute-validate-style": 2,
@@ -90,7 +90,7 @@ test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - only trimmable white
       ruleId: "attribute-validate-style",
       idxFrom: 4,
       idxTo: 15,
-      message: `Missing value.`,
+      message: "Missing value.",
       fix: null,
     },
   ]);
@@ -101,20 +101,20 @@ test(`06 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - only trimmable white
 // 02. rogue whitespace
 // -----------------------------------------------------------------------------
 
-test(`07 - space in front`, () => {
-  let str = `<td style=" font-size: 10px;">`;
+test("07 - space in front", () => {
+  let str = '<td style=" font-size: 10px;">';
   let messages = verify(not, str, {
     rules: {
       "attribute-validate-style": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td style="font-size: 10px;">`, "07.01");
+  equal(applyFixes(str, messages), '<td style="font-size: 10px;">', "07.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-style",
       idxFrom: 11,
       idxTo: 12,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[11, 12]],
       },
@@ -124,20 +124,20 @@ test(`07 - space in front`, () => {
   equal(messages.length, 1, "07.02");
 });
 
-test(`08 - space after`, () => {
-  let str = `<td style="font-size: 10px; ">`;
+test("08 - space after", () => {
+  let str = '<td style="font-size: 10px; ">';
   let messages = verify(not, str, {
     rules: {
       "attribute-validate-style": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td style="font-size: 10px;">`, "08.01");
+  equal(applyFixes(str, messages), '<td style="font-size: 10px;">', "08.01");
   compare(ok, messages, [
     {
       ruleId: "attribute-validate-style",
       idxFrom: 27,
       idxTo: 28,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[27, 28]],
       },
@@ -147,18 +147,18 @@ test(`08 - space after`, () => {
   equal(messages.length, 1, "08.02");
 });
 
-test(`09 - copious whitespace around`, () => {
-  let str = `<td style="  font-size: 10px;  ">`;
+test("09 - copious whitespace around", () => {
+  let str = '<td style="  font-size: 10px;  ">';
   let messages = verify(not, str, {
     rules: {
       "attribute-validate-style": 2,
     },
   });
-  equal(applyFixes(str, messages), `<td style="font-size: 10px;">`, "09.01");
+  equal(applyFixes(str, messages), '<td style="font-size: 10px;">', "09.01");
 });
 
-test(`10 - whitespace inbetween`, () => {
-  let str = `<td style="font-size:  10px;"></td>`;
+test("10 - whitespace inbetween", () => {
+  let str = '<td style="font-size:  10px;"></td>';
   let messages = verify(not, str, {
     rules: {
       "attribute-validate-style": 2,
@@ -166,7 +166,7 @@ test(`10 - whitespace inbetween`, () => {
   });
   equal(
     applyFixes(str, messages),
-    `<td style="font-size: 10px;"></td>`,
+    '<td style="font-size: 10px;"></td>',
     "10.01"
   );
   compare(ok, messages, [
@@ -174,7 +174,7 @@ test(`10 - whitespace inbetween`, () => {
       ruleId: "attribute-validate-style",
       idxFrom: 11,
       idxTo: 28,
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: [[22, 23]],
       },
@@ -184,8 +184,8 @@ test(`10 - whitespace inbetween`, () => {
   equal(messages.length, 1, "10.02");
 });
 
-test(`11 - tab inbetween`, () => {
-  let str = `<td style="font-size:\t10px;"></td>`;
+test("11 - tab inbetween", () => {
+  let str = '<td style="font-size:\t10px;"></td>';
   let messages = verify(not, str, {
     rules: {
       "attribute-validate-style": 2,
@@ -193,7 +193,7 @@ test(`11 - tab inbetween`, () => {
   });
   equal(
     applyFixes(str, messages),
-    `<td style="font-size: 10px;"></td>`,
+    '<td style="font-size: 10px;"></td>',
     "11.01"
   );
   compare(ok, messages, [
@@ -201,7 +201,7 @@ test(`11 - tab inbetween`, () => {
       ruleId: "attribute-validate-style",
       idxFrom: 21,
       idxTo: 22,
-      message: `Replace whitespace.`,
+      message: "Replace whitespace.",
       fix: {
         ranges: [[21, 22, " "]],
       },
@@ -211,9 +211,9 @@ test(`11 - tab inbetween`, () => {
   equal(messages.length, 1, "11.02");
 });
 
-test(`12 - tab inbetween`, () => {
-  let str = `<td style="font-size:\t 10px;"></td>`;
-  let fixed = `<td style="font-size: 10px;"></td>`;
+test("12 - tab inbetween", () => {
+  let str = '<td style="font-size:\t 10px;"></td>';
+  let fixed = '<td style="font-size: 10px;"></td>';
   let messages = verify(not, str, {
     rules: {
       "attribute-validate-style": 2,
@@ -222,9 +222,9 @@ test(`12 - tab inbetween`, () => {
   equal(applyFixes(str, messages), fixed, "12.01");
 });
 
-test(`13 - tab inbetween`, () => {
-  let str = `<td style="font-size: \t10px;"></td>`;
-  let fixed = `<td style="font-size: 10px;"></td>`;
+test("13 - tab inbetween", () => {
+  let str = '<td style="font-size: \t10px;"></td>';
+  let fixed = '<td style="font-size: 10px;"></td>';
   let messages = verify(not, str, {
     rules: {
       "attribute-validate-style": 2,
@@ -236,8 +236,8 @@ test(`13 - tab inbetween`, () => {
 // wrong parent tag
 // -----------------------------------------------------------------------------
 
-test(`14 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - wrong parent tag`, () => {
-  let str = `<html style="font-size: 10px;">`;
+test(`14 - ${`\u001b[${35}m${"parent"}\u001b[${39}m`} - wrong parent tag`, () => {
+  let str = '<html style="font-size: 10px;">';
   let messages = verify(not, str, {
     rules: {
       "attribute-validate-style": 2,
@@ -260,9 +260,9 @@ test(`14 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - wrong parent tag`, () =>
 // rogue semi
 // -----------------------------------------------------------------------------
 
-test(`15 - two semis, tight`, () => {
-  let str = `<div style="float: left;;"></div>`;
-  let fixed = `<div style="float: left;"></div>`;
+test("15 - two semis, tight", () => {
+  let str = '<div style="float: left;;"></div>';
+  let fixed = '<div style="float: left;"></div>';
   let messages = verify(not, str, {
     rules: {
       "attribute-validate-style": 2,
@@ -274,7 +274,7 @@ test(`15 - two semis, tight`, () => {
       ruleId: "attribute-validate-style",
       idxFrom: 24,
       idxTo: 25,
-      message: `Rogue semicolon.`,
+      message: "Rogue semicolon.",
       fix: { ranges: [[24, 25]] },
     },
   ]);
@@ -285,7 +285,7 @@ test(`15 - two semis, tight`, () => {
 // ESP tokens
 // -----------------------------------------------------------------------------
 
-test(`16 - don't add semi after ESP tokens`, () => {
+test("16 - don't add semi after ESP tokens", () => {
   let str = `<td style="color: red;
     {% if so %}text-align: left;{% endif %}
 float: left;">x</td>`;

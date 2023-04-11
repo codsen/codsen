@@ -7,9 +7,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // css comments within inline HTML styles
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline style`, () => {
+test(`01 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - body inline style`, () => {
   let gathered = [];
-  ct(`<div style="/*color: red;*/">z</div>`, {
+  ct('<div style="/*color: red;*/">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -99,9 +99,9 @@ test(`01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline style`, () => 
   );
 });
 
-test(`02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline style, more`, () => {
+test(`02 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - body inline style, more`, () => {
   let gathered = [];
-  ct(`<div style="/*color: red;*/ text-align: left;">z</div>`, {
+  ct('<div style="/*color: red;*/ text-align: left;">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -212,9 +212,9 @@ test(`02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline style, more`, 
   );
 });
 
-test(`03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline css, erroneous line comment`, () => {
+test(`03 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - body inline css, erroneous line comment`, () => {
   let gathered = [];
-  ct(`<div style="//color: red;">z</div>`, {
+  ct('<div style="//color: red;">z</div>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -295,9 +295,9 @@ test(`03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline css, erroneous
   );
 });
 
-test(`04 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - text comment`, () => {
+test(`04 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - text comment`, () => {
   let gathered = [];
-  ct(`<a style="/* zzz */color: red">`, {
+  ct('<a style="/* zzz */color: red">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -381,9 +381,9 @@ test(`04 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - text comment`, () => {
   );
 });
 
-test(`05 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - property terminates comment`, () => {
+test(`05 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - property terminates comment`, () => {
   let gathered = [];
-  ct(`<a style="  /* zzz */color: red;  ">`, {
+  ct('<a style="  /* zzz */color: red;  ">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -479,9 +479,9 @@ test(`05 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - property terminates commen
   );
 });
 
-test(`06 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - property terminates text`, () => {
+test(`06 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - property terminates text`, () => {
   let gathered = [];
-  ct(`<a style="  /* zzz */ color: red;  ">`, {
+  ct('<a style="  /* zzz */ color: red;  ">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -583,9 +583,9 @@ test(`06 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - property terminates text`,
   );
 });
 
-test(`07 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - property (no semi), then comment`, () => {
+test(`07 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - property (no semi), then comment`, () => {
   let gathered = [];
-  ct(`<a style="color: red/* zzz */">`, {
+  ct('<a style="color: red/* zzz */">', {
     tagCb: (obj) => {
       gathered.push(obj);
     },

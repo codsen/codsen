@@ -4,9 +4,9 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 
-test(`01 - perf investigation`, () => {
+test("01 - perf investigation", () => {
   let gathered = [];
-  ct(`<div>Script says hello world and sky and sea</div>`, {
+  ct("<div>Script says hello world and sky and sea</div>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },

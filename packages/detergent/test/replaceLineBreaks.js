@@ -10,7 +10,7 @@ const key = ["crlf", "cr", "lf"];
 // 01. basic tests on opts.replaceLineBreaks
 // -----------------------------------------------------------------------------
 
-test(`01 - minimal example - correct existing linebreaks`, () => {
+test("01 - minimal example - correct existing linebreaks", () => {
   ["\r\n", "\r", "\n"].forEach((requestedEolType, idx1) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx2) => {
       mixer({
@@ -34,7 +34,7 @@ test(`01 - minimal example - correct existing linebreaks`, () => {
   });
 });
 
-test(`02 - minimal example - br`, () => {
+test("02 - minimal example - br", () => {
   mixer({
     replaceLineBreaks: true,
     removeLineBreaks: false,
@@ -42,14 +42,14 @@ test(`02 - minimal example - br`, () => {
     convertEntities: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `a<br/>b`, opt).res,
+      det(ok, not, n, "a<br/>b", opt).res,
       "a<br/>b",
       `${JSON.stringify(opt, null, 0)}`
     );
   });
 });
 
-test(`03 - replace \\n line breaks with BR - useXHTML=on`, () => {
+test("03 - replace \\n line breaks with BR - useXHTML=on", () => {
   ["\r\n", "\r", "\n"].forEach((eolType, i) => {
     mixer({
       replaceLineBreaks: true,
@@ -65,14 +65,14 @@ test(`03 - replace \\n line breaks with BR - useXHTML=on`, () => {
           `${eolType}${eolType}${eolType}tralala${eolType}tralala2${eolType}${eolType}tralala3${eolType}${eolType}${eolType}tralala4${eolType}${eolType}${eolType}`,
           opt
         ).res,
-        `tralala<br/>\ntralala2<br/>\n<br/>\ntralala3<br/>\n<br/>\ntralala4`,
+        "tralala<br/>\ntralala2<br/>\n<br/>\ntralala3<br/>\n<br/>\ntralala4",
         `EOL: ${key[i]} --- ${JSON.stringify(opt, null, 0)}`
       );
     });
   });
 });
 
-test(`04 - replace \\n line breaks with BR - useXHTML=off`, () => {
+test("04 - replace \\n line breaks with BR - useXHTML=off", () => {
   ["\r\n", "\r", "\n"].forEach((eolType) => {
     mixer({
       replaceLineBreaks: true,
@@ -88,14 +88,14 @@ test(`04 - replace \\n line breaks with BR - useXHTML=off`, () => {
           `${eolType}${eolType}tralala${eolType}tralala2${eolType}${eolType}tralala3${eolType}${eolType}${eolType}tralala4${eolType}${eolType}${eolType}${eolType}`,
           opt
         ).res,
-        `tralala<br>\ntralala2<br>\n<br>\ntralala3<br>\n<br>\ntralala4`,
+        "tralala<br>\ntralala2<br>\n<br>\ntralala3<br>\n<br>\ntralala4",
         `${eolType} --- ${JSON.stringify(opt, null, 0)}`
       );
     });
   });
 });
 
-test(`05 - br with attribute, line break present`, () => {
+test("05 - br with attribute, line break present", () => {
   ["\r\n", "\r", "\n"].forEach((eolType) => {
     mixer({
       replaceLineBreaks: true,
@@ -105,7 +105,7 @@ test(`05 - br with attribute, line break present`, () => {
     }).forEach((opt, n) => {
       equal(
         det(ok, not, n, `a<br class="z">${eolType}b`, opt).res,
-        `a<br class="z">\nb`,
+        'a<br class="z">\nb',
         `${JSON.stringify(eolType, null, 4)} --- ${JSON.stringify(
           opt,
           null,
@@ -115,18 +115,18 @@ test(`05 - br with attribute, line break present`, () => {
     });
   });
   equal(
-    det1(`a<br class="z">\r\nb`, {
+    det1('a<br class="z">\r\nb', {
       replaceLineBreaks: true,
       removeLineBreaks: false,
       useXHTML: false,
       convertEntities: true,
     }).res,
-    `a<br class="z">\nb`,
+    'a<br class="z">\nb',
     "05.01"
   );
 });
 
-test(`06 - only adds a slash, respects existing attrs`, () => {
+test("06 - only adds a slash, respects existing attrs", () => {
   ["\r\n", "\r", "\n"].forEach((eolType) => {
     mixer({
       replaceLineBreaks: true,
@@ -136,7 +136,7 @@ test(`06 - only adds a slash, respects existing attrs`, () => {
     }).forEach((opt, n) => {
       equal(
         det(ok, not, n, `a<br class="z">${eolType}b`, opt).res,
-        `a<br class="z"/>\nb`,
+        'a<br class="z"/>\nb',
         `${JSON.stringify(eolType, null, 4)} --- ${JSON.stringify(
           opt,
           null,
@@ -147,7 +147,7 @@ test(`06 - only adds a slash, respects existing attrs`, () => {
   });
 });
 
-test(`07 - br with attribute, no line break, HTML`, () => {
+test("07 - br with attribute, no line break, HTML", () => {
   mixer({
     replaceLineBreaks: true,
     removeLineBreaks: false,
@@ -155,14 +155,14 @@ test(`07 - br with attribute, no line break, HTML`, () => {
     convertEntities: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `a<br class="z">b`, opt).res,
-      `a<br class="z">b`,
+      det(ok, not, n, 'a<br class="z">b', opt).res,
+      'a<br class="z">b',
       `${JSON.stringify(opt, null, 0)}`
     );
   });
 });
 
-test(`08 - br with attribute, no line break, XHTML`, () => {
+test("08 - br with attribute, no line break, XHTML", () => {
   mixer({
     replaceLineBreaks: true,
     removeLineBreaks: false,
@@ -170,8 +170,8 @@ test(`08 - br with attribute, no line break, XHTML`, () => {
     convertEntities: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `a<br class="z">b`, opt).res,
-      `a<br class="z"/>b`,
+      det(ok, not, n, 'a<br class="z">b', opt).res,
+      'a<br class="z"/>b',
       `${JSON.stringify(opt, null, 0)}`
     );
   });
@@ -180,54 +180,54 @@ test(`08 - br with attribute, no line break, XHTML`, () => {
 // 02. consistency in whitespace collapsing across different linebreak-processing settings
 // -----------------------------------------------------------------------------
 
-test(`09 - multiple consecutive line breaks`, () => {
+test("09 - multiple consecutive line breaks", () => {
   mixer({
     replaceLineBreaks: true,
     removeLineBreaks: false,
     useXHTML: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abcd\n\n\n\n\n\n\nefgh`, opt).res,
-      `abcd<br/>\n<br/>\nefgh`,
+      det(ok, not, n, "abcd\n\n\n\n\n\n\nefgh", opt).res,
+      "abcd<br/>\n<br/>\nefgh",
       `${JSON.stringify(opt, null, 0)}`
     );
   });
 });
 
-test(`10 - multiple consecutive line breaks`, () => {
+test("10 - multiple consecutive line breaks", () => {
   mixer({
     replaceLineBreaks: true,
     removeLineBreaks: false,
     useXHTML: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abcd\n\n\n\n\n\n\nefgh`, opt).res,
-      `abcd<br>\n<br>\nefgh`,
+      det(ok, not, n, "abcd\n\n\n\n\n\n\nefgh", opt).res,
+      "abcd<br>\n<br>\nefgh",
       `${JSON.stringify(opt, null, 0)}`
     );
   });
 });
 
-test(`11 - multiple consecutive line breaks`, () => {
+test("11 - multiple consecutive line breaks", () => {
   mixer({
     replaceLineBreaks: false,
     removeLineBreaks: false,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abcd\n\n\n\n\n\n\nefgh`, opt).res,
-      `abcd\n\nefgh`,
+      det(ok, not, n, "abcd\n\n\n\n\n\n\nefgh", opt).res,
+      "abcd\n\nefgh",
       `${JSON.stringify(opt, null, 0)}`
     );
   });
 });
 
-test(`12 - multiple consecutive line breaks`, () => {
+test("12 - multiple consecutive line breaks", () => {
   mixer({
     removeLineBreaks: true,
   }).forEach((opt, n) => {
     equal(
-      det(ok, not, n, `abcd\n\n\n\n\n\n\nefgh`, opt).res,
-      `abcd efgh`,
+      det(ok, not, n, "abcd\n\n\n\n\n\n\nefgh", opt).res,
+      "abcd efgh",
       `${JSON.stringify(opt, null, 0)}`
     );
   });

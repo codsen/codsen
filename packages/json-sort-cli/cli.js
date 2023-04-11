@@ -265,7 +265,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
               log(
                 `${chalk.grey(
                   prefix
-                )}${oneOfPaths} - ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`
+                )}${oneOfPaths} - ${`\u001b[${32}m${"OK"}\u001b[${39}m`}`
               );
             }
             return true;
@@ -274,7 +274,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
     })
     .catch((err) => {
       console.log(
-        `${oneOfPaths} - ${`\u001b[${31}m${`BAD`}\u001b[${39}m`} - ${err}`
+        `${oneOfPaths} - ${`\u001b[${31}m${"BAD"}\u001b[${39}m`} - ${err}`
       );
     });
 }

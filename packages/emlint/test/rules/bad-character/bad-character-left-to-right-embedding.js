@@ -14,7 +14,7 @@ import { applyFixes } from "../../../t-util/util.js";
 // -----------------------------------------------------------------------------
 
 // 1. basic tests
-test(`01 - detects two LEFT-TO-RIGHT EMBEDDING characters`, () => {
+test("01 - detects two LEFT-TO-RIGHT EMBEDDING characters", () => {
   let str = "\u202Adlkgjld\u202Aj";
   let linter = new Linter();
   let messages = linter.verify(str, {

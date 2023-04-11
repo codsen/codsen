@@ -8,9 +8,9 @@ import { tokenizer as ct } from "../dist/codsen-tokenizer.esm.js";
 // 01. empty bracket pair
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - empty`, () => {
+test(`01 - ${`\u001b[${36}m${"empty bracket pair"}\u001b[${39}m`} - empty`, () => {
   let gathered = [];
-  ct(`<>`, {
+  ct("<>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -33,9 +33,9 @@ test(`01 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - empty`, () =
   );
 });
 
-test(`02 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - empty`, () => {
+test(`02 - ${`\u001b[${36}m${"empty bracket pair"}\u001b[${39}m`} - empty`, () => {
   let gathered = [];
-  ct(`<>a`, {
+  ct("<>a", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -63,9 +63,9 @@ test(`02 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - empty`, () =
   );
 });
 
-test(`03 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`, () => {
+test(`03 - ${`\u001b[${36}m${"empty bracket pair"}\u001b[${39}m`} - space`, () => {
   let gathered = [];
-  ct(`< >`, {
+  ct("< >", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -88,9 +88,9 @@ test(`03 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`, () =
   );
 });
 
-test(`04 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`, () => {
+test(`04 - ${`\u001b[${36}m${"empty bracket pair"}\u001b[${39}m`} - space`, () => {
   let gathered = [];
-  ct(`< >< >< >`, {
+  ct("< >< >< >", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -129,9 +129,9 @@ test(`04 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`, () =
   );
 });
 
-test(`05 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`, () => {
+test(`05 - ${`\u001b[${36}m${"empty bracket pair"}\u001b[${39}m`} - space`, () => {
   let gathered = [];
-  ct(` < > < > < > `, {
+  ct(" < > < > < > ", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -190,9 +190,9 @@ test(`05 - ${`\u001b[${36}m${`empty bracket pair`}\u001b[${39}m`} - space`, () =
   );
 });
 
-test(`06`, () => {
+test("06", () => {
   let gathered = [];
-  ct(`<div>some text /div>`, {
+  ct("<div>some text /div>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -246,9 +246,9 @@ test(`06`, () => {
 // 02. comment and comment-like tags
 // -----------------------------------------------------------------------------
 
-test(`07 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`, () => {
+test(`07 - ${`\u001b[${36}m${"comment-like"}\u001b[${39}m`} - one dash`, () => {
   let gathered = [];
-  ct(`<->`, {
+  ct("<->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -270,9 +270,9 @@ test(`07 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`, () => {
   is(gathered.length, 1, "07.01");
 });
 
-test(`08 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`, () => {
+test(`08 - ${`\u001b[${36}m${"comment-like"}\u001b[${39}m`} - one dash`, () => {
   let gathered = [];
-  ct(`<-->`, {
+  ct("<-->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -294,9 +294,9 @@ test(`08 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`, () => {
   is(gathered.length, 1, "08.01");
 });
 
-test(`09 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`, () => {
+test(`09 - ${`\u001b[${36}m${"comment-like"}\u001b[${39}m`} - one dash`, () => {
   let gathered = [];
-  ct(`<----->`, {
+  ct("<----->", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -320,9 +320,9 @@ test(`09 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`, () => {
 // issues with attributes
 // -----------------------------------------------------------------------------
 
-test(`10 - ${`\u001b[${36}m${`comment-like`}\u001b[${39}m`} - one dash`, () => {
+test(`10 - ${`\u001b[${36}m${"comment-like"}\u001b[${39}m`} - one dash`, () => {
   let gathered = [];
-  ct(`<img alt="/>`, {
+  ct('<img alt="/>', {
     tagCb: (obj) => {
       gathered.push(obj);
     },
