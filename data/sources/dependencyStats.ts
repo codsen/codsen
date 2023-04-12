@@ -187,7 +187,7 @@ export const dependencyStats: DependencyStats = {
     "check-types-mini": 4,
     "codsen-parser": 2,
     "codsen-tokenizer": 2,
-    "codsen-utils": 46,
+    "codsen-utils": 51,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -241,7 +241,7 @@ export const dependencyStats: DependencyStats = {
     "lodash.without": 1,
     "log-symbols": 1,
     "log-update": 1,
-    "matcher": 9,
+    "matcher": 10,
     "meow": 11,
     "mime-db": 1,
     "minimist": 1,
@@ -268,7 +268,7 @@ export const dependencyStats: DependencyStats = {
     "ranges-merge": 7,
     "ranges-process-outside": 1,
     "ranges-push": 13,
-    "ranges-sort": 1,
+    "ranges-sort": 2,
     "re2": 1,
     "regex-empty-conditional-comments": 1,
     "regex-is-jinja-nunjucks": 1,
@@ -352,6 +352,7 @@ export const dependencyStats: DependencyStats = {
     "lodash.isequal": 3,
     "map-stream": 1,
     "object-delete-key": 1,
+    "object-path": 1,
     "p-map": 3,
     "ranges-apply": 6,
     "ranges-invert": 1,
@@ -377,7 +378,7 @@ export const dependencyStats: DependencyStats = {
       "meow": 11
     },
     {
-      "matcher": 9
+      "matcher": 10
     },
     {
       "object-path": 7
@@ -400,7 +401,7 @@ export const dependencyStats: DependencyStats = {
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 46
+      "codsen-utils": 51
     },
     {
       "ranges-apply": 17
