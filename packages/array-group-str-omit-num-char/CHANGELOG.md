@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.7](https://github.com/codsen/codsen/compare/array-group-str-omit-num-char@6.0.6...array-group-str-omit-num-char@6.0.7) (2023-04-12)
+
+**Note:** Version bump only for package array-group-str-omit-num-char
+
 ## 6.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

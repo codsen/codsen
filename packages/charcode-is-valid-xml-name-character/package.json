@@ -1,6 +1,6 @@
 {
   "name": "charcode-is-valid-xml-name-character",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "description": "Does a given character belong to XML spec's \"Production 4 OR 4a\" type (is acceptable for XML element's name)",
   "keywords": [
     "4",
@@ -75,6 +75,6 @@
     }
   },
   "dependencies": {
-    "ranges-is-index-within": "^4.0.6"
+    "ranges-is-index-within": "^4.0.7"
   }
 }

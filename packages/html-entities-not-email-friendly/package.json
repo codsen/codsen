@@ -1,6 +1,6 @@
 {
   "name": "html-entities-not-email-friendly",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "description": "All HTML entities which are not email template friendly",
   "keywords": [
     "email",
