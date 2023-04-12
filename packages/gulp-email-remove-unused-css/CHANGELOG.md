@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.0.10](https://github.com/codsen/codsen/compare/gulp-email-remove-unused-css@5.0.9...gulp-email-remove-unused-css@5.0.10) (2023-04-12)
-
-**Note:** Version bump only for package gulp-email-remove-unused-css
-
 ## 5.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
