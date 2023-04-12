@@ -7,7 +7,7 @@ import { convertOne, convertAll } from "../dist/string-apostrophes.esm.js";
 // convertOne()
 // -----------------------------------------------------------------------------
 
-test(`01 - 1st input arg is missing`, () => {
+test("01 - 1st input arg is missing", () => {
   throws(
     () => {
       convertOne();
@@ -17,7 +17,7 @@ test(`01 - 1st input arg is missing`, () => {
   );
 });
 
-test(`02 - 1st input arg wrong type`, () => {
+test("02 - 1st input arg wrong type", () => {
   throws(
     () => {
       convertOne(true);
@@ -27,7 +27,7 @@ test(`02 - 1st input arg wrong type`, () => {
   );
 });
 
-test(`03 - 2nd input arg wrong type`, () => {
+test("03 - 2nd input arg wrong type", () => {
   throws(
     () => {
       convertOne("abc", true);
@@ -37,7 +37,7 @@ test(`03 - 2nd input arg wrong type`, () => {
   );
 });
 
-test(`04 - 2nd input arg wrong type`, () => {
+test("04 - 2nd input arg wrong type", () => {
   throws(
     () => {
       convertOne("abc", []);
@@ -47,7 +47,7 @@ test(`04 - 2nd input arg wrong type`, () => {
   );
 });
 
-test(`05 - opts.to is wrong`, () => {
+test("05 - opts.to is wrong", () => {
   throws(
     () => {
       convertOne("abc", {});
@@ -57,7 +57,7 @@ test(`05 - opts.to is wrong`, () => {
   );
 });
 
-test(`06 - opts.from is wrong`, () => {
+test("06 - opts.from is wrong", () => {
   throws(
     () => {
       convertOne("abc", { from: true });
@@ -67,7 +67,7 @@ test(`06 - opts.from is wrong`, () => {
   );
 });
 
-test(`07 - opts.from is wrong`, () => {
+test("07 - opts.from is wrong", () => {
   throws(
     () => {
       convertOne("a", { from: -1 });
@@ -77,7 +77,7 @@ test(`07 - opts.from is wrong`, () => {
   );
 });
 
-test(`08 - opts.from is at or beyond str.length`, () => {
+test("08 - opts.from is at or beyond str.length", () => {
   throws(
     () => {
       convertOne("a", { from: 1 });
@@ -87,7 +87,7 @@ test(`08 - opts.from is at or beyond str.length`, () => {
   );
 });
 
-test(`09 - opts.from is at or beyond str.length`, () => {
+test("09 - opts.from is at or beyond str.length", () => {
   throws(
     () => {
       convertOne("abc", { from: 999 });
@@ -100,7 +100,7 @@ test(`09 - opts.from is at or beyond str.length`, () => {
 // convertAll()
 // -----------------------------------------------------------------------------
 
-test(`10 - 1st input arg is wrong`, () => {
+test("10 - 1st input arg is wrong", () => {
   throws(
     () => {
       convertAll();
@@ -110,7 +110,7 @@ test(`10 - 1st input arg is wrong`, () => {
   );
 });
 
-test(`11 - 1st input arg is wrong`, () => {
+test("11 - 1st input arg is wrong", () => {
   throws(
     () => {
       convertAll(true);
@@ -120,7 +120,7 @@ test(`11 - 1st input arg is wrong`, () => {
   );
 });
 
-test(`12 - 2nd input arg is wrong`, () => {
+test("12 - 2nd input arg is wrong", () => {
   throws(
     () => {
       convertAll("abc", true);
@@ -130,7 +130,7 @@ test(`12 - 2nd input arg is wrong`, () => {
   );
 });
 
-test(`13 - 2nd input arg is wrong`, () => {
+test("13 - 2nd input arg is wrong", () => {
   throws(
     () => {
       convertAll("abc", []);
@@ -140,7 +140,7 @@ test(`13 - 2nd input arg is wrong`, () => {
   );
 });
 
-test(`14 - early exit`, () => {
+test("14 - early exit", () => {
   equal(
     convertAll("", {}),
     {

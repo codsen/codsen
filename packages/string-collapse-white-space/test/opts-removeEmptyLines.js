@@ -10,7 +10,7 @@ const key = ["crlf", "cr", "lf"];
 // opts.removeEmptyLines
 // -----------------------------------------------------------------------------
 
-test(`01`, () => {
+test("01", () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer().forEach((opt) => {
       equal(
@@ -22,7 +22,7 @@ test(`01`, () => {
   });
 });
 
-test(`02`, () => {
+test("02", () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer({
       removeEmptyLines: false,
@@ -45,31 +45,31 @@ test(`02`, () => {
   });
 });
 
-test(`03`, () => {
+test("03", () => {
   // "a.-.b"
   equal(
-    collapse(`a\n\r\nb`, {
+    collapse("a\n\r\nb", {
       removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
-    `a\nb`,
+    "a\nb",
     "03.01"
   );
 });
 
-test(`04`, () => {
+test("04", () => {
   equal(
-    collapse(`a \r\n \r\n b`, {
+    collapse("a \r\n \r\n b", {
       removeEmptyLines: false,
       limitConsecutiveEmptyLinesTo: 0,
       trimLines: true,
     }).result,
-    `a\r\n\r\nb`,
+    "a\r\n\r\nb",
     "04.01"
   );
 });
 
-test(`05`, () => {
+test("05", () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     // false-0-?
     mixer({
@@ -169,7 +169,7 @@ test(`05`, () => {
   });
 });
 
-test(`06 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - one - remove`, () => {
+test(`06 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - one - remove`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(`a${presentEolType}${presentEolType}b`, {
@@ -192,7 +192,7 @@ test(`06 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - one - rem
   });
 });
 
-test(`07 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - one - don't remove`, () => {
+test(`07 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - one - don't remove`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(`a${presentEolType}${presentEolType}b`, {
@@ -215,7 +215,7 @@ test(`07 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - one - don
   });
 });
 
-test(`08 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - two, spaced - remove`, () => {
+test(`08 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - two, spaced - remove`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(` a ${presentEolType} ${presentEolType} b `, {
@@ -238,7 +238,7 @@ test(`08 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - two, spac
   });
 });
 
-test(`09 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - two, spaced - don't remove`, () => {
+test(`09 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - two, spaced - don't remove`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(` a ${presentEolType} ${presentEolType} b `, {
@@ -261,7 +261,7 @@ test(`09 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - two, spac
   });
 });
 
-test(`10 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - empty lines removal off + per-line trimming off`, () => {
+test(`10 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - empty lines removal off + per-line trimming off`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(` a ${presentEolType} ${presentEolType} b `, {
@@ -284,7 +284,7 @@ test(`10 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - empty lin
   });
 });
 
-test(`11 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - \\n - empty lines removal off + per-line trimming off - multiple spaces`, () => {
+test(`11 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - \\n - empty lines removal off + per-line trimming off - multiple spaces`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(`  a  ${presentEolType}  ${presentEolType}  b  `, {
@@ -307,7 +307,7 @@ test(`11 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - \\n - emp
   });
 });
 
-test(`12 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - advanced`, () => {
+test(`12 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - advanced`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(
@@ -320,7 +320,7 @@ test(`12 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - advanced`
   });
 });
 
-test(`13 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - leading/trailing empty lines`, () => {
+test(`13 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - leading/trailing empty lines`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(

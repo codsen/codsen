@@ -5,7 +5,7 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { m } from "./util/util.js";
 
-test(`01 - ${`\u001b[${33}m${`css line length limit`}\u001b[${39}m`} - basic`, () => {
+test(`01 - ${`\u001b[${33}m${"css line length limit"}\u001b[${39}m`} - basic`, () => {
   compare(
     ok,
     m(

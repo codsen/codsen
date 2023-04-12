@@ -6,18 +6,18 @@ import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { m } from "./util/util.js";
 
 // grouped tests
-test(`01 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - does nothing`, () => {
+test(`01 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - does nothing`, () => {
   [
-    `abc def`,
-    `!--`,
-    `-->`,
-    `abd <!-- def`,
-    `<!--<span>-->`,
-    `<!--a-->`,
-    `<!-->`,
-    `<!--<!---->`,
-    `<!--a b-->`,
-    `<!-- tralala -->`,
+    "abc def",
+    "!--",
+    "-->",
+    "abd <!-- def",
+    "<!--<span>-->",
+    "<!--a-->",
+    "<!-->",
+    "<!--<!---->",
+    "<!--a b-->",
+    "<!-- tralala -->",
   ].forEach((source) => {
     compare(
       ok,

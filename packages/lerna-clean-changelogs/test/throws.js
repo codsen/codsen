@@ -8,7 +8,7 @@ import { cleanChangelogs as c } from "../dist/lerna-clean-changelogs.esm.js";
 const require = createRequire(import.meta.url);
 const { version } = require("../package.json");
 
-test(`01 - missing 1st arg`, () => {
+test("01 - missing 1st arg", () => {
   throws(
     () => {
       c();
@@ -26,7 +26,7 @@ test(`01 - missing 1st arg`, () => {
   );
 });
 
-test(`02 - 1st arg of a wrong type`, () => {
+test("02 - 1st arg of a wrong type", () => {
   throws(
     () => {
       c(1);
@@ -68,7 +68,7 @@ test(`02 - 1st arg of a wrong type`, () => {
   );
 });
 
-test(`03 - 1st arg is empty string`, () => {
+test("03 - 1st arg is empty string", () => {
   equal(
     c(""),
     {

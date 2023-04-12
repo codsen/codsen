@@ -19,8 +19,8 @@ import { m } from "./util/util.js";
 //
 //
 
-test(`01 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment only - 0`, () => {
-  let source = `<!-- remove this -->`;
+test(`01 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - one html comment only - 0`, () => {
+  let source = "<!-- remove this -->";
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 0, // <---
   });
@@ -38,8 +38,8 @@ test(`01 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment 
 });
 
 // removeHTMLComments=1 - only text comments
-test(`02 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment only - 1`, () => {
-  let source = `<!-- remove this -->`;
+test(`02 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - one html comment only - 1`, () => {
+  let source = "<!-- remove this -->";
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 1, // <---
   });
@@ -57,8 +57,8 @@ test(`02 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment 
 });
 
 // removeHTMLComments=2 - includes outlook conditional comments
-test(`03 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment only - 2`, () => {
-  let source = `<!-- remove this -->`;
+test(`03 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - one html comment only - 2`, () => {
+  let source = "<!-- remove this -->";
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 2, // <---
   });
@@ -86,8 +86,8 @@ test(`03 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment 
 //
 
 // removeHTMLComments=0 - off
-test(`04 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment, surrounding whitespace - 0`, () => {
-  let source = `  <!-- remove this -->  `;
+test(`04 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - one html comment, surrounding whitespace - 0`, () => {
+  let source = "  <!-- remove this -->  ";
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 0, // <---
   });
@@ -112,8 +112,8 @@ test(`04 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment,
 });
 
 // removeHTMLComments=1 - only text comments
-test(`05 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment, surrounding whitespace - 1`, () => {
-  let source = `  <!-- remove this -->  `;
+test(`05 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - one html comment, surrounding whitespace - 1`, () => {
+  let source = "  <!-- remove this -->  ";
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 1, // <---
   });
@@ -131,8 +131,8 @@ test(`05 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment,
 });
 
 // removeHTMLComments=2 - includes outlook conditional comments
-test(`06 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment, surrounding whitespace - 2`, () => {
-  let source = `  <!-- remove this -->  `;
+test(`06 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - one html comment, surrounding whitespace - 2`, () => {
+  let source = "  <!-- remove this -->  ";
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 2, // <---
   });
@@ -160,8 +160,8 @@ test(`06 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment,
 //
 
 // removeHTMLComments=0 - off
-test(`07 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag - 0`, () => {
-  let source = `<!--<span>-->`;
+test(`07 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - commented tag - 0`, () => {
+  let source = "<!--<span>-->";
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 0, // <---
   });
@@ -179,8 +179,8 @@ test(`07 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag - 0
 });
 
 // removeHTMLComments=1 - only text comments
-test(`08 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag - 1`, () => {
-  let source = `<!--<span>-->`;
+test(`08 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - commented tag - 1`, () => {
+  let source = "<!--<span>-->";
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 1, // <---
   });
@@ -198,8 +198,8 @@ test(`08 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag - 1
 });
 
 // removeHTMLComments=2 - includes outlook conditional comments
-test(`09 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag - 2`, () => {
-  let source = `<!--<span>-->`;
+test(`09 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - commented tag - 2`, () => {
+  let source = "<!--<span>-->";
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 2, // <---
   });
@@ -227,8 +227,8 @@ test(`09 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag - 2
 //
 
 // removeHTMLComments=0 - off
-test(`10 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length limit is too tight - 0`, () => {
-  let source = `<div><!-- remove this --></div>`;
+test(`10 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - when line length limit is too tight - 0`, () => {
+  let source = "<div><!-- remove this --></div>";
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeLineBreaks: true,
     removeHTMLComments: 0,
@@ -267,14 +267,14 @@ this
 });
 
 // removeHTMLComments=1 - only text comments
-test(`11 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length limit is too tight - 1`, () => {
-  let source = `<div><!-- remove this --></div>`;
+test(`11 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - when line length limit is too tight - 1`, () => {
+  let source = "<div><!-- remove this --></div>";
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 1,
     lineLengthLimit: 2,
   });
 
-  equal(result, `<div>\n</div>`, "11.01");
+  equal(result, "<div>\n</div>", "11.01");
   equal(
     applicableOpts,
     {
@@ -287,14 +287,14 @@ test(`11 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length 
 });
 
 // removeHTMLComments=2 - includes outlook conditional comments
-test(`12 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length limit is too tight - 2`, () => {
-  let source = `<div><!-- remove this --></div>`;
+test(`12 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - when line length limit is too tight - 2`, () => {
+  let source = "<div><!-- remove this --></div>";
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 2,
     lineLengthLimit: 2,
   });
 
-  equal(result, `<div>\n</div>`, "12.01");
+  equal(result, "<div>\n</div>", "12.01");
   equal(
     applicableOpts,
     {

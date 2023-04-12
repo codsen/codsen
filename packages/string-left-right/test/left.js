@@ -7,7 +7,7 @@ import { left } from "../dist/string-left-right.esm.js";
 // left()
 // -----------------------------------------------------------------------------
 
-test(`01 - null result cases`, () => {
+test("01 - null result cases", () => {
   equal(left("abc"), null, "01.01");
   equal(left("abc", 0), null, "01.02");
   equal(left("abc", null), null, "01.03");
@@ -20,7 +20,7 @@ test(`01 - null result cases`, () => {
   equal(left("", 1), null, "01.10");
 });
 
-test(`02 - normal use`, () => {
+test("02 - normal use", () => {
   not.ok(!!left(""), "02.01");
   not.ok(!!left("a"), "02.02");
   equal(left("ab", 1), 0, "02.01");

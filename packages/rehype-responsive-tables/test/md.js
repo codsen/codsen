@@ -13,7 +13,7 @@ import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 // target cells by their thead column's contents
 // -----------------------------------------------------------------------------
 
-test(`01 - markdown input - lifts Bar, text`, () => {
+test("01 - markdown input - lifts Bar, text", () => {
   let input = `
 | Foo | Bar | Baz |
 |-----|-----|-----|

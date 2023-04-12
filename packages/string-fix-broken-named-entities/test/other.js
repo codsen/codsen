@@ -22,7 +22,7 @@ function cb(obj) {
 // 10. not broken HTML entities: unrecognised or recognised and correct
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`unrecognised`}\u001b[${39}m - one`, () => {
+test(`01 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"unrecognised"}\u001b[${39}m - one`, () => {
   let gathered = [];
   let inp1 = "abc &x  y z; def";
   equal(
@@ -34,7 +34,7 @@ test(`01 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`unr
     }),
     [
       {
-        ruleName: `bad-html-entity-unrecognised`,
+        ruleName: "bad-html-entity-unrecognised",
         entityName: null,
         rangeFrom: 4,
         rangeTo: 12,
@@ -47,7 +47,7 @@ test(`01 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`unr
   equal(gathered, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - recognised broken entity`, () => {
+test(`02 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - recognised broken entity`, () => {
   let gathered = [];
   let inp1 = "abc &poumd; def";
   let outp1 = [[4, 11, "&pound;"]];
@@ -67,7 +67,7 @@ test(`02 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "02.04");
 });
 
-test(`03 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - recognised broken entity, cb() separately`, () => {
+test(`03 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - recognised broken entity, cb() separately`, () => {
   let gathered = [];
   let inp1 = "abc &p oumd; def";
   // const outp1 = [[4, 12, "&pound;"]];
@@ -80,7 +80,7 @@ test(`03 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-pound`,
+        ruleName: "bad-html-entity-malformed-pound",
         entityName: "pound",
         rangeFrom: 4,
         rangeTo: 12,
@@ -93,7 +93,7 @@ test(`03 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entity but with capital letter`, () => {
+test(`04 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - legit entity but with capital letter`, () => {
   let gathered = [];
   let inp1 = "x &Pound; y";
   let outp1 = [[2, 9, "&pound;"]];
@@ -112,7 +112,7 @@ test(`04 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "04.04");
 });
 
-test(`05 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit healthy entity should not raise any issues`, () => {
+test(`05 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - legit healthy entity should not raise any issues`, () => {
   let inp1 = "abc &pound; def";
   equal(fix(ok, inp1), [], "05.01");
   equal(
@@ -124,7 +124,7 @@ test(`05 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   );
 });
 
-test(`06 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit healthy entity should not raise any issues`, () => {
+test(`06 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - legit healthy entity should not raise any issues`, () => {
   let gathered = [];
   let inp1 = "abc &pound; def";
   equal(
@@ -140,7 +140,7 @@ test(`06 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "06.02");
 });
 
-test(`07 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - combo of a sneaky legit semicolon and missing semicolon on entity`, () => {
+test(`07 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - combo of a sneaky legit semicolon and missing semicolon on entity`, () => {
   let gathered = [];
   let inp1 = "a&poUnd;b";
   let outp1 = [[1, 8, "&pound;"]];
@@ -157,7 +157,7 @@ test(`07 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "07.03");
 });
 
-test(`08 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - only first two characters match legit entity`, () => {
+test(`08 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - only first two characters match legit entity`, () => {
   let gathered = [];
   let inp1 = "abc &pozzz; def";
   equal(
@@ -166,7 +166,7 @@ test(`08 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-unrecognised`,
+        ruleName: "bad-html-entity-unrecognised",
         entityName: null,
         rangeFrom: 4,
         rangeTo: 11,
@@ -186,7 +186,7 @@ test(`08 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-unrecognised`,
+        ruleName: "bad-html-entity-unrecognised",
         entityName: null,
         rangeFrom: 4,
         rangeTo: 11,
@@ -199,7 +199,7 @@ test(`08 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "08.03");
 });
 
-test(`09 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - case issues`, () => {
+test(`09 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - case issues`, () => {
   let inp1 = "&Poun;";
   let gatheredHealthy = [];
   equal(
@@ -209,7 +209,7 @@ test(`09 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-pound`,
+        ruleName: "bad-html-entity-malformed-pound",
         entityName: "pound",
         rangeFrom: 0,
         rangeTo: 6,
@@ -222,7 +222,7 @@ test(`09 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gatheredHealthy, [], "09.02");
 });
 
-test(`10 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - case issues`, () => {
+test(`10 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - case issues`, () => {
   let gathered = [];
   let inp1 = "&Poun;";
   let gatheredHealthy = [];
@@ -236,7 +236,7 @@ test(`10 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-pound`,
+        ruleName: "bad-html-entity-malformed-pound",
         entityName: "pound",
         rangeFrom: 0,
         rangeTo: 6,
@@ -250,7 +250,7 @@ test(`10 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "10.03");
 });
 
-test(`11 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - space before semicolon`, () => {
+test(`11 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - space before semicolon`, () => {
   let oneOfBrokenEntities = "a&pound ;b";
   equal(
     fix(ok, oneOfBrokenEntities, {
@@ -258,7 +258,7 @@ test(`11 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-pound`,
+        ruleName: "bad-html-entity-malformed-pound",
         entityName: "pound",
         rangeFrom: 1,
         rangeTo: 9,
@@ -270,7 +270,7 @@ test(`11 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   );
 });
 
-test(`12 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - space before semicolon`, () => {
+test(`12 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - space before semicolon`, () => {
   let gathered = [];
   let oneOfBrokenEntities = "a&pound ;b";
   equal(
@@ -282,7 +282,7 @@ test(`12 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-pound`,
+        ruleName: "bad-html-entity-malformed-pound",
         entityName: "pound",
         rangeFrom: 1,
         rangeTo: 9,
@@ -295,7 +295,7 @@ test(`12 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "12.02");
 });
 
-test(`13 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - twoheadrightarrow wrong case only`, () => {
+test(`13 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - twoheadrightarrow wrong case only`, () => {
   let inp1 = "a&twoheadRightarrow;b";
   equal(
     fix(ok, inp1, {
@@ -303,7 +303,7 @@ test(`13 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-twoheadrightarrow`,
+        ruleName: "bad-html-entity-malformed-twoheadrightarrow",
         entityName: "twoheadrightarrow",
         rangeFrom: 1,
         rangeTo: 20,
@@ -315,7 +315,7 @@ test(`13 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   );
 });
 
-test(`14 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - twoheadrightarrow wrong case only`, () => {
+test(`14 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - twoheadrightarrow wrong case only`, () => {
   let gathered = [];
   let inp1 = "a&twoheadRightarrow;b";
   equal(
@@ -327,7 +327,7 @@ test(`14 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-twoheadrightarrow`,
+        ruleName: "bad-html-entity-malformed-twoheadrightarrow",
         entityName: "twoheadrightarrow",
         rangeFrom: 1,
         rangeTo: 20,
@@ -340,7 +340,7 @@ test(`14 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "14.02");
 });
 
-test(`15 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entities with capital letter and known existing alternative with all lowercase`, () => {
+test(`15 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - legit entities with capital letter and known existing alternative with all lowercase`, () => {
   let inp1 = "x&A lpha;y";
   equal(
     fix(ok, inp1, {
@@ -348,7 +348,7 @@ test(`15 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-Alpha`,
+        ruleName: "bad-html-entity-malformed-Alpha",
         entityName: "Alpha",
         rangeFrom: 1,
         rangeTo: 9,
@@ -360,7 +360,7 @@ test(`15 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   );
 });
 
-test(`16 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - legit entities with capital letter and known existing alternative with all lowercase`, () => {
+test(`16 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - legit entities with capital letter and known existing alternative with all lowercase`, () => {
   let gathered = [];
   let inp1 = "x&A lpha;y";
   equal(
@@ -372,7 +372,7 @@ test(`16 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-Alpha`,
+        ruleName: "bad-html-entity-malformed-Alpha",
         entityName: "Alpha",
         rangeFrom: 1,
         rangeTo: 9,
@@ -385,7 +385,7 @@ test(`16 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "16.02");
 });
 
-test(`17 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &ac d;`, () => {
+test(`17 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc - &ac d;`, () => {
   let inp1 = "&ac d;";
   equal(
     fix(ok, inp1, {
@@ -393,7 +393,7 @@ test(`17 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-acd`,
+        ruleName: "bad-html-entity-malformed-acd",
         entityName: "acd",
         rangeFrom: 0,
         rangeTo: 6,
@@ -405,7 +405,7 @@ test(`17 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   );
 });
 
-test(`18 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &ac d;`, () => {
+test(`18 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc - &ac d;`, () => {
   let gathered = [];
   let inp1 = "&ac d;";
   equal(
@@ -417,7 +417,7 @@ test(`18 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-acd`,
+        ruleName: "bad-html-entity-malformed-acd",
         entityName: "acd",
         rangeFrom: 0,
         rangeTo: 6,
@@ -430,7 +430,7 @@ test(`18 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "18.02");
 });
 
-test(`19 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &Acd;`, () => {
+test(`19 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc - &Acd;`, () => {
   let inp1 = "&Acd;";
   equal(
     fix(ok, inp1, {
@@ -438,7 +438,7 @@ test(`19 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-acd`,
+        ruleName: "bad-html-entity-malformed-acd",
         entityName: "acd",
         rangeFrom: 0,
         rangeTo: inp1.length,
@@ -450,7 +450,7 @@ test(`19 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   );
 });
 
-test(`20 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &Acd;`, () => {
+test(`20 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc - &Acd;`, () => {
   let gathered = [];
   let inp1 = "&Acd;";
   equal(
@@ -462,7 +462,7 @@ test(`20 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-acd`,
+        ruleName: "bad-html-entity-malformed-acd",
         entityName: "acd",
         rangeFrom: 0,
         rangeTo: inp1.length,
@@ -475,7 +475,7 @@ test(`20 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "20.02");
 });
 
-test(`21 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &Aelig; - ambiguous case`, () => {
+test(`21 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc - &Aelig; - ambiguous case`, () => {
   let inp1 = "&Aelig;";
   equal(
     fix(ok, inp1, {
@@ -483,7 +483,7 @@ test(`21 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-unrecognised`,
+        ruleName: "bad-html-entity-unrecognised",
         entityName: null,
         rangeFrom: 0,
         rangeTo: inp1.length,
@@ -495,7 +495,7 @@ test(`21 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   );
 });
 
-test(`22 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &Aelig; - ambiguous case`, () => {
+test(`22 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc - &Aelig; - ambiguous case`, () => {
   let gathered = [];
   let inp1 = "&Aelig;";
   equal(
@@ -507,7 +507,7 @@ test(`22 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-unrecognised`,
+        ruleName: "bad-html-entity-unrecognised",
         entityName: null,
         rangeFrom: 0,
         rangeTo: inp1.length,
@@ -520,7 +520,7 @@ test(`22 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "22.02");
 });
 
-test(`23 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &zwjn; - known broken entities come before regular checks where semicol might be missing`, () => {
+test(`23 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc - &zwjn; - known broken entities come before regular checks where semicol might be missing`, () => {
   let inp1 = "&zwjn;";
   equal(
     fix(ok, inp1, {
@@ -528,7 +528,7 @@ test(`23 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-zwnj`,
+        ruleName: "bad-html-entity-malformed-zwnj",
         entityName: "zwnj",
         rangeFrom: 0,
         rangeTo: inp1.length,
@@ -540,7 +540,7 @@ test(`23 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   );
 });
 
-test(`24 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &zwjn; - known broken entities come before regular checks where semicol might be missing`, () => {
+test(`24 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc - &zwjn; - known broken entities come before regular checks where semicol might be missing`, () => {
   let gathered = [];
   let inp1 = "&zwjn;";
   equal(
@@ -552,7 +552,7 @@ test(`24 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-zwnj`,
+        ruleName: "bad-html-entity-malformed-zwnj",
         entityName: "zwnj",
         rangeFrom: 0,
         rangeTo: inp1.length,
@@ -565,7 +565,7 @@ test(`24 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "24.02");
 });
 
-test(`25 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &xcap; - named entity starts with x`, () => {
+test(`25 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc - &xcap; - named entity starts with x`, () => {
   let inp1 = "&xcap;";
   equal(
     fix(ok, inp1, {
@@ -581,7 +581,7 @@ test(`25 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-encoded-xcap`,
+        ruleName: "bad-html-entity-encoded-xcap",
         entityName: "xcap",
         rangeFrom: 0,
         rangeTo: inp1.length,
@@ -593,7 +593,7 @@ test(`25 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   );
 });
 
-test(`26 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &xcap; - named entity starts with x`, () => {
+test(`26 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc - &xcap; - named entity starts with x`, () => {
   let gathered = [];
   let inp1 = "&xcap;";
   equal(
@@ -609,7 +609,7 @@ test(`26 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "26.02");
 });
 
-test(`27 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc - &xcap; - named entity starts with x`, () => {
+test(`27 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc - &xcap; - named entity starts with x`, () => {
   let gathered = [];
   let inp1 = "&xcap;";
   equal(
@@ -622,7 +622,7 @@ test(`27 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
     }),
     [
       {
-        ruleName: `bad-html-entity-encoded-xcap`,
+        ruleName: "bad-html-entity-encoded-xcap",
         entityName: "xcap",
         rangeFrom: 0,
         rangeTo: inp1.length,
@@ -635,7 +635,7 @@ test(`27 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "27.02");
 });
 
-test(`28 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 1`, () => {
+test(`28 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc 1`, () => {
   let inp1 = "&nbsp;&nbsp;";
   equal(
     fix(ok, inp1, {
@@ -646,7 +646,7 @@ test(`28 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   );
 });
 
-test(`29 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 1`, () => {
+test(`29 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc 1`, () => {
   let gathered = [];
   let inp1 = "&nbsp;&nbsp;";
   equal(
@@ -662,7 +662,7 @@ test(`29 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "29.02");
 });
 
-test(`30 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 2`, () => {
+test(`30 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc 2`, () => {
   let gathered = [];
   let inputs = [
     "&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;",
@@ -690,7 +690,7 @@ test(`30 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "30.01");
 });
 
-test(`31 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 3`, () => {
+test(`31 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc 3`, () => {
   let inp1 = "&NBSP;&NBSP;";
   equal(
     fix(ok, inp1),
@@ -702,7 +702,7 @@ test(`31 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   );
 });
 
-test(`32 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 3`, () => {
+test(`32 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc 3`, () => {
   let gathered = [];
   let inp1 = "&NBSP;&NBSP;";
   equal(
@@ -720,7 +720,7 @@ test(`32 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "32.02");
 });
 
-test(`33 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 4`, () => {
+test(`33 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc 4`, () => {
   let inp1 = "&NBSP;&NBSP;&NBSP; a &NBSP;&NBSP;&NBSP;";
   equal(
     fix(ok, inp1),
@@ -736,7 +736,7 @@ test(`33 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   );
 });
 
-test(`34 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 4`, () => {
+test(`34 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc 4`, () => {
   let gathered = [];
   let inp1 = "&NBSP;&NBSP;&NBSP; a &NBSP;&NBSP;&NBSP;";
   equal(
@@ -758,7 +758,7 @@ test(`34 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "34.02");
 });
 
-test(`35 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 5`, () => {
+test(`35 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc 5`, () => {
   let inp1 = "&nbsp;&nbsp;&bsp; a &nbsp;&nnbsp;&nbsp;";
   equal(
     fix(ok, inp1),
@@ -770,7 +770,7 @@ test(`35 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   );
 });
 
-test(`36 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 5`, () => {
+test(`36 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc 5`, () => {
   let gathered = [];
   let inp1 = "&nbsp;&nbsp;&bsp; a &nbsp;&nnbsp;&nbsp;";
   equal(
@@ -788,7 +788,7 @@ test(`36 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "36.02");
 });
 
-test(`37 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 6`, () => {
+test(`37 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc 6`, () => {
   let inp1 = "&nbsp;&bsp;&nnbsp; a &nbsp;&nnbsp;&nnbsp;";
   equal(
     fix(ok, inp1),
@@ -802,7 +802,7 @@ test(`37 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   );
 });
 
-test(`38 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - ad hoc 6`, () => {
+test(`38 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - ad hoc 6`, () => {
   let gathered = [];
   let inp1 = "&nbsp;&bsp;&nnbsp; a &nbsp;&nnbsp;&nnbsp;";
   equal(
@@ -822,7 +822,7 @@ test(`38 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "38.02");
 });
 
-test(`39 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`, () => {
+test(`39 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - overlap`, () => {
   equal(
     fix(ok, "&ang&;ang;"),
     [
@@ -833,7 +833,7 @@ test(`39 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   );
 });
 
-test(`40 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`, () => {
+test(`40 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - overlap`, () => {
   let gathered = [];
   equal(
     fix(ok, "&ang&;ang;", {
@@ -850,11 +850,11 @@ test(`40 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "40.02");
 });
 
-test(`41 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`, () => {
+test(`41 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - overlap`, () => {
   equal(fix(ok, "the &;ang;100"), [[4, 10, "&ang;"]], "41.01");
 });
 
-test(`42 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`recognised`}\u001b[${39}m - overlap`, () => {
+test(`42 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"recognised"}\u001b[${39}m - overlap`, () => {
   let gathered = [];
   equal(
     fix(ok, "the &;ang;100", {
@@ -868,11 +868,11 @@ test(`42 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - \u001b[${32}m${`rec
   equal(gathered, [], "42.02");
 });
 
-test(`43 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`, () => {
+test(`43 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - dubious Levenshtein`, () => {
   equal(fix(ok, "&Ifz;"), [[0, 5, "&Ifr;"]], "43.01");
 });
 
-test(`44 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`, () => {
+test(`44 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - dubious Levenshtein`, () => {
   let gathered = [];
   equal(
     fix(ok, "&Ifz;", {
@@ -886,11 +886,11 @@ test(`44 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein
   equal(gathered, [], "44.02");
 });
 
-test(`45 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`, () => {
+test(`45 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - dubious Levenshtein`, () => {
   equal(fix(ok, "&ifz;"), [[0, 5]], "45.01");
 });
 
-test(`46 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`, () => {
+test(`46 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - dubious Levenshtein`, () => {
   let gathered = [];
   equal(
     fix(ok, "&ifz;", {
@@ -904,11 +904,11 @@ test(`46 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein
   equal(gathered, [], "46.02");
 });
 
-test(`47 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`, () => {
+test(`47 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - dubious Levenshtein`, () => {
   equal(fix(ok, "&ifz;&"), [[0, 5]], "47.01");
 });
 
-test(`48 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein`, () => {
+test(`48 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - dubious Levenshtein`, () => {
   let gathered = [];
   let input = "&ifz;&";
   let result = [[0, 5]];
@@ -931,7 +931,7 @@ test(`48 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - dubious Levenshtein
   equal(gathered, [5], "48.03");
 });
 
-test(`49 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - definitely not an entity`, () => {
+test(`49 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - definitely not an entity`, () => {
   equal(
     fix(ok, "&lhdfgdfgdllkjghlfjjhdkfghkjdfhkghfkhgjkfjhlkfjglhjfgkljhlfjhl;"),
     [],
@@ -939,7 +939,7 @@ test(`49 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - definitely not an e
   );
 });
 
-test(`50 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - definitely not an entity`, () => {
+test(`50 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - definitely not an entity`, () => {
   let gathered = [];
   let input = "&lhdfgdfgdllkjghlfjjhdkfghkjdfhkghfkhgjkfjhlkfjglhjfgkljhlfjhl;";
   let result = [];
@@ -962,7 +962,7 @@ test(`50 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - definitely not an e
   equal(gathered, [0], "50.03");
 });
 
-test(`51 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragraph`, () => {
+test(`51 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - lorem ipsum paragraph`, () => {
   equal(
     fix(
       ok,
@@ -973,7 +973,7 @@ test(`51 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragra
   );
 });
 
-test(`52 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragraph`, () => {
+test(`52 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - lorem ipsum paragraph`, () => {
   let gathered = [];
   let input =
     "&Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;";
@@ -997,7 +997,7 @@ test(`52 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragra
   equal(gathered, [0], "52.03");
 });
 
-test(`53 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragraph`, () => {
+test(`53 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - lorem ipsum paragraph`, () => {
   equal(
     fix(
       ok,
@@ -1008,7 +1008,7 @@ test(`53 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragra
   );
 });
 
-test(`54 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragraph`, () => {
+test(`54 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - lorem ipsum paragraph`, () => {
   let gathered = [];
   equal(
     fix(
@@ -1026,11 +1026,11 @@ test(`54 - ${`\u001b[${34}m${`other cases`}\u001b[${39}m`} - lorem ipsum paragra
   equal(gathered, [], "54.02");
 });
 
-test(`55`, () => {
+test("55", () => {
   equal(fix(ok, "&; &; &;"), [], "55.01");
 });
 
-test(`56`, () => {
+test("56", () => {
   let gathered = [];
   let input = "&; &; &;";
   let result = [];
@@ -1053,9 +1053,9 @@ test(`56`, () => {
   equal(gathered, [0, 3, 6], "56.03");
 });
 
-test(`57 - rsquo, decoding requested`, () => {
+test("57 - rsquo, decoding requested", () => {
   let gathered = [];
-  let inp1 = `&rsquo;`;
+  let inp1 = "&rsquo;";
   equal(
     fix(ok, inp1, {
       cb: (obj) => obj,
@@ -1066,7 +1066,7 @@ test(`57 - rsquo, decoding requested`, () => {
     }),
     [
       {
-        ruleName: `bad-html-entity-encoded-rsquo`,
+        ruleName: "bad-html-entity-encoded-rsquo",
         entityName: "rsquo",
         rangeFrom: 0,
         rangeTo: inp1.length,
@@ -1079,9 +1079,9 @@ test(`57 - rsquo, decoding requested`, () => {
   equal(gathered, [], "57.02");
 });
 
-test(`58 - rsqo, no decoding`, () => {
+test("58 - rsqo, no decoding", () => {
   let gathered = [];
-  let inp1 = `&rsqo;`;
+  let inp1 = "&rsqo;";
   equal(
     fix(ok, inp1, {
       cb: (obj) => obj,
@@ -1091,7 +1091,7 @@ test(`58 - rsqo, no decoding`, () => {
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-rsquo`,
+        ruleName: "bad-html-entity-malformed-rsquo",
         entityName: "rsquo",
         rangeFrom: 0,
         rangeTo: inp1.length,
@@ -1104,14 +1104,14 @@ test(`58 - rsqo, no decoding`, () => {
   equal(gathered, [], "58.02");
 });
 
-test(`59 - rsqo + decoding, no cb`, () => {
-  let inp1 = `&rsqo;`;
+test("59 - rsqo + decoding, no cb", () => {
+  let inp1 = "&rsqo;";
   equal(fix(ok, inp1, {}), [[0, 6, "&rsquo;"]], "59.01");
 });
 
-test(`60 - rsqo + decoding, whole cb`, () => {
+test("60 - rsqo + decoding, whole cb", () => {
   let gathered = [];
-  let inp1 = `&rsqo;`;
+  let inp1 = "&rsqo;";
   equal(
     fix(ok, inp1, {
       cb: (obj) => obj,
@@ -1121,7 +1121,7 @@ test(`60 - rsqo + decoding, whole cb`, () => {
     }),
     [
       {
-        ruleName: `bad-html-entity-malformed-rsquo`,
+        ruleName: "bad-html-entity-malformed-rsquo",
         entityName: "rsquo",
         rangeFrom: 0,
         rangeTo: inp1.length,
@@ -1134,8 +1134,8 @@ test(`60 - rsqo + decoding, whole cb`, () => {
   equal(gathered, [], "60.02");
 });
 
-test(`61 - pound in first capital`, () => {
-  let inp1 = `&Pound;`;
+test("61 - pound in first capital", () => {
+  let inp1 = "&Pound;";
   equal(fix(ok, inp1, {}), [[0, 7, "&pound;"]], "61.01");
 });
 

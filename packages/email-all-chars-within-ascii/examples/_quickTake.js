@@ -5,7 +5,7 @@ import { strict as assert } from "assert";
 import { within } from "../dist/email-all-chars-within-ascii.esm.js";
 
 // enforces all characters to be within ASCII:
-assert.deepEqual(within(`<div>Motörhead</div>`), [
+assert.deepEqual(within("<div>Motörhead</div>"), [
   {
     type: "character",
     line: 1,
@@ -18,7 +18,7 @@ assert.deepEqual(within(`<div>Motörhead</div>`), [
 ]);
 
 // enforces line lengths (500 is best for email):
-assert.deepEqual(within(`abcde`, { lineLength: 3 }), [
+assert.deepEqual(within("abcde", { lineLength: 3 }), [
   {
     type: "line length",
     line: 1,

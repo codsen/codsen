@@ -7,7 +7,7 @@ import { setter } from "./util/util.js";
 // set - editing an existing key
 // -----------------------------------------------------------------------------
 
-test(`01 - key in the root`, () => {
+test("01 - key in the root", () => {
   let source = `{
   "a": "b",
   "c": "d"
@@ -19,7 +19,7 @@ test(`01 - key in the root`, () => {
   setter(equal, source, result, "c", "e", "02.01");
 });
 
-test(`02 - key in the root`, () => {
+test("02 - key in the root", () => {
   let source = `{
   "a": "b",
   "c": "d"
@@ -31,7 +31,7 @@ test(`02 - key in the root`, () => {
   setter(equal, source, result, "c", "1", "02.02");
 });
 
-test(`03 - key in the root`, () => {
+test("03 - key in the root", () => {
   let source = `{
   "a": "b",
   "c": "d"
@@ -43,7 +43,7 @@ test(`03 - key in the root`, () => {
   setter(equal, source, result, "c", 1, "02.03");
 });
 
-test(`04 - key in the root`, () => {
+test("04 - key in the root", () => {
   let source = `{
   "a": "b",
   "c": "d"
@@ -55,7 +55,7 @@ test(`04 - key in the root`, () => {
   setter(equal, source, result, "c", false, "02.04");
 });
 
-test(`05 - second level key`, () => {
+test("05 - second level key", () => {
   let source = `{
   "a": "b",
   "c": {
@@ -71,7 +71,7 @@ test(`05 - second level key`, () => {
   setter(equal, source, result, "c.d", "f", "02.05");
 });
 
-test(`06 - second level key`, () => {
+test("06 - second level key", () => {
   // notice deliberate mis-indentation after "d": "e"
   let source = `{
   "a": "b",
@@ -95,7 +95,7 @@ test(`06 - second level key`, () => {
   setter(equal, source, result, "f.g", "i", "02.06");
 });
 
-test(`07 - value is number`, () => {
+test("07 - value is number", () => {
   let source = `{
   "a": "b",
   "c": 1
@@ -107,7 +107,7 @@ test(`07 - value is number`, () => {
   setter(equal, source, result, "c", 0, "02.07");
 });
 
-test(`08 - null overwritten with null`, () => {
+test("08 - null overwritten with null", () => {
   let source = `{
   "a": "b",
   "c": null
@@ -119,7 +119,7 @@ test(`08 - null overwritten with null`, () => {
   setter(equal, source, result, "c", null, "02.08");
 });
 
-test(`09 - value is object and it leads to contents end`, () => {
+test("09 - value is object and it leads to contents end", () => {
   let input = `{
   "a": "b",
   "x": {"y": "z"}
@@ -131,7 +131,7 @@ test(`09 - value is object and it leads to contents end`, () => {
   setter(equal, input, result, "x", { y: "x" }, "02.09");
 });
 
-test(`10 - value is a stringified object - escapes`, () => {
+test("10 - value is a stringified object - escapes", () => {
   let input = `{
   "a": "b",
   "x": {"y": "z"}
@@ -140,10 +140,10 @@ test(`10 - value is a stringified object - escapes`, () => {
   "a": "b",
   "x": "{ y: \\"x\\" }"
 }`;
-  setter(equal, input, result, "x", `{ y: "x" }`, "02.10");
+  setter(equal, input, result, "x", '{ y: "x" }', "02.10");
 });
 
-test(`11 - difficult characters 1`, () => {
+test("11 - difficult characters 1", () => {
   let input = `{
   "a": {
     "b": "}c"
@@ -151,10 +151,10 @@ test(`11 - difficult characters 1`, () => {
   let result = `{
   "a": "x"
 }`;
-  setter(equal, input, result, "a", `x`, "02.11");
+  setter(equal, input, result, "a", "x", "02.11");
 });
 
-test(`12 - difficult characters 2`, () => {
+test("12 - difficult characters 2", () => {
   let input = `{
   "a": {
     "b": "c '*.{d,e,f,g,md}' --write",
@@ -164,10 +164,10 @@ test(`12 - difficult characters 2`, () => {
   let result = `{
   "a": "x"
 }`;
-  setter(equal, input, result, "a", `x`, "02.12");
+  setter(equal, input, result, "a", "x", "02.12");
 });
 
-test(`13 - nested objects`, () => {
+test("13 - nested objects", () => {
   let input = `{
   "a": {
     "b": {
@@ -180,10 +180,10 @@ test(`13 - nested objects`, () => {
   "a": "x"
 }
 `;
-  setter(equal, input, result, "a", `x`, "02.13");
+  setter(equal, input, result, "a", "x", "02.13");
 });
 
-test(`14 - same-named key is passed through at deeper level while iterating`, () => {
+test("14 - same-named key is passed through at deeper level while iterating", () => {
   let input = `{
   "a": {
     "z": "x"
@@ -204,10 +204,10 @@ test(`14 - same-named key is passed through at deeper level while iterating`, ()
   "z": "y"
 }
 `;
-  setter(equal, input, result, "z", `y`, "02.14");
+  setter(equal, input, result, "z", "y", "02.14");
 });
 
-test(`15 - same-named key is passed through at deeper level while iterating`, () => {
+test("15 - same-named key is passed through at deeper level while iterating", () => {
   let input = `{
   "a": {
     "z": "x",
@@ -228,10 +228,10 @@ test(`15 - same-named key is passed through at deeper level while iterating`, ()
   "z": "y"
 }
 `;
-  setter(equal, input, result, "z", `y`, "02.15", "invalid JSON");
+  setter(equal, input, result, "z", "y", "02.15", "invalid JSON");
 });
 
-test(`16 - non-quoted value replaced with quoted`, () => {
+test("16 - non-quoted value replaced with quoted", () => {
   let input = `{
   "a": {
     "b": false
@@ -244,10 +244,10 @@ test(`16 - non-quoted value replaced with quoted`, () => {
   }
 }
 `;
-  setter(equal, input, result, "a.b", `x`, "02.16");
+  setter(equal, input, result, "a.b", "x", "02.16");
 });
 
-test(`17 - non-quoted value replaced with non-quoted`, () => {
+test("17 - non-quoted value replaced with non-quoted", () => {
   let input = `{
   "a": {
     "b": false
@@ -263,7 +263,7 @@ test(`17 - non-quoted value replaced with non-quoted`, () => {
   setter(equal, input, result, "a.b", true, "02.17");
 });
 
-test(`18 - quoted value replaced with non-quoted`, () => {
+test("18 - quoted value replaced with non-quoted", () => {
   let input = `{
   "a": {
     "b": "c"
@@ -279,7 +279,7 @@ test(`18 - quoted value replaced with non-quoted`, () => {
   setter(equal, input, result, "a.b", true, "02.18");
 });
 
-test(`19 - value empty obj replaced with non-quoted`, () => {
+test("19 - value empty obj replaced with non-quoted", () => {
   let input = `{
   "a": {
     "b": {}
@@ -295,7 +295,7 @@ test(`19 - value empty obj replaced with non-quoted`, () => {
   setter(equal, input, result, "a.b", true, "02.19");
 });
 
-test(`20 - value empty obj replaced with non-quoted`, () => {
+test("20 - value empty obj replaced with non-quoted", () => {
   let input = `{
   "a": {
     "b": []
@@ -311,7 +311,7 @@ test(`20 - value empty obj replaced with non-quoted`, () => {
   setter(equal, input, result, "a.b", true, "02.20");
 });
 
-test(`21 - value empty obj replaced with non-quoted`, () => {
+test("21 - value empty obj replaced with non-quoted", () => {
   let input = `{
   "a": {
     "b": {
@@ -333,7 +333,7 @@ test(`21 - value empty obj replaced with non-quoted`, () => {
   setter(equal, input, result, "a.d", "x", "02.21");
 });
 
-test(`22 - value empty obj replaced with non-quoted`, () => {
+test("22 - value empty obj replaced with non-quoted", () => {
   let input = `{
   "a": {
     "b": {
@@ -355,7 +355,7 @@ test(`22 - value empty obj replaced with non-quoted`, () => {
   setter(equal, input, result, "a.d", "x", "02.22");
 });
 
-test(`23 - middle element in the array`, () => {
+test("23 - middle element in the array", () => {
   let input = `{
   "k": {
     "l": "m",
@@ -383,7 +383,7 @@ test(`23 - middle element in the array`, () => {
   setter(equal, input, result, "r.1", "x", "02.23");
 });
 
-test(`24 - the last element in the array`, () => {
+test("24 - the last element in the array", () => {
   let input = `{
   "k": {
     "l": "m",
@@ -411,7 +411,7 @@ test(`24 - the last element in the array`, () => {
   setter(equal, input, result, "r.2", "x", "02.24");
 });
 
-test(`25 - last value in array, bool replaced with a quoted string`, () => {
+test("25 - last value in array, bool replaced with a quoted string", () => {
   let input = `{
   "a": {
     "b": false,
@@ -433,7 +433,7 @@ test(`25 - last value in array, bool replaced with a quoted string`, () => {
   setter(equal, input, result, "a.b", "x", "02.25");
 });
 
-test(`26 - key in the root`, () => {
+test("26 - key in the root", () => {
   let source = `{
   "a": "b",
   "c": "workspace:d"

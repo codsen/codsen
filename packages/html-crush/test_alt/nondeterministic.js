@@ -2,7 +2,7 @@ import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
-const { crush } = require("../dist/html-crush.esm.js");
+import { crush } from "../dist/html-crush.esm.js";
 
 const c = crush;
 
@@ -68,17 +68,17 @@ function generate() {
         "<div>\n\t\t</div>>",
         "<div>\n\t\t</div>>",
         "<sgfj ldjgkjfgk ghj lf lkgjh lkfjgl gh kgh;l kglhjk ;glhkj >",
-        `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">`,
-        `<html lang="en" xmlns="http://www.w3.org/1999/xhtml"\nxmlns:v="urn:schemas-microsoft-com:vml"\nxmlns:o="urn:schemas-microsoft-com:office:office">`,
+        '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+        '<html lang="en" xmlns="http://www.w3.org/1999/xhtml"\nxmlns:v="urn:schemas-microsoft-com:vml"\nxmlns:o="urn:schemas-microsoft-com:office:office">',
         "<head>",
-        `<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />`,
-        `<!--[if !mso]><!-- -->`,
-        `<meta http-equiv="X-UA-Compatible" content="IE=edge" />`,
-        `<!--<![endif]-->`,
-        `<meta name="format-detection" content="telephone=no" />`,
-        `<meta name="viewport" content="width=device-width, initial-scale=1.0" />`,
-        `<title>Yo</title>`,
-        `<style type="text/css">`
+        '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
+        "<!--[if !mso]><!-- -->",
+        '<meta http-equiv="X-UA-Compatible" content="IE=edge" />',
+        "<!--<![endif]-->",
+        '<meta name="format-detection" content="telephone=no" />',
+        '<meta name="viewport" content="width=device-width, initial-scale=1.0" />',
+        "<title>Yo</title>",
+        '<style type="text/css">'
       )}`,
       ""
     )}${chance(
@@ -142,7 +142,7 @@ function generate() {
       "\t",
       "\n",
       "<a>",
-      `<td align="center" style="padding: 0 30px 0 30px;">`,
+      '<td align="center" style="padding: 0 30px 0 30px;">',
       "<table><tr><td>",
       "<div>\n\t\t<<>>",
       "<div>\n\t\t<<article>>",
@@ -193,7 +193,7 @@ function generate() {
       "<div>\n\t\t</div>>",
       "<div>\n\t\t</div>>",
       "<sgfj ldjgkjfgk ghj lf lkgjh lkfjgl gh kgh;l kglhjk ;glhkj >",
-      `<!--[if (gte mso 9)|(IE)]>\n<table width="50" border="0" cellpadding="0" cellspacing="0" align="center"><tr><td><![endif]-->`
+      '<!--[if (gte mso 9)|(IE)]>\n<table width="50" border="0" cellpadding="0" cellspacing="0" align="center"><tr><td><![endif]-->'
     )}`,
     ""
   )}${chance(
@@ -307,7 +307,7 @@ function generate() {
   )}`;
 }
 
-test(`*** non-deterministic tests`, () => {
+test("*** non-deterministic tests", () => {
   let run = true;
   let counter = 0;
   let startTime = Date.now();

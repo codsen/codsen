@@ -631,7 +631,7 @@ test("30 - opts.nbsp", () => {
       classicTrim: true,
     }),
     {
-      res: `a b c`,
+      res: "a b c",
       ranges: [
         [0, 3],
         [8, 11],

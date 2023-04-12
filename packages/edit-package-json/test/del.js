@@ -8,7 +8,7 @@ import { deleter } from "./util/util.js";
 // del - delete existing key
 // -----------------------------------------------------------------------------
 
-test(`01 - key in the root`, () => {
+test("01 - key in the root", () => {
   let source = `{
   "a": "b",
   "c": "d"
@@ -19,7 +19,7 @@ test(`01 - key in the root`, () => {
   deleter(equal, source, result, "a", "01");
 });
 
-test(`02 - key in the root`, () => {
+test("02 - key in the root", () => {
   let source = `{
   "a": "b",
   "c": "d"
@@ -30,7 +30,7 @@ test(`02 - key in the root`, () => {
   deleter(equal, source, result, "c", "02");
 });
 
-test(`03 - key in the root`, () => {
+test("03 - key in the root", () => {
   let source = `{
   "a": "b",
   "c": "d",
@@ -43,7 +43,7 @@ test(`03 - key in the root`, () => {
   deleter(equal, source, result, "c", "03");
 });
 
-test(`04 - deletes the first array's element`, () => {
+test("04 - deletes the first array's element", () => {
   let source = `{"qwe": [
   "ab",
   "cd",
@@ -56,7 +56,7 @@ test(`04 - deletes the first array's element`, () => {
   deleter(equal, source, result, "qwe.0", "04");
 });
 
-test(`05 - deletes the middle array's element`, () => {
+test("05 - deletes the middle array's element", () => {
   let source = `{"qwe": [
   "ab",
   "cd",
@@ -69,7 +69,7 @@ test(`05 - deletes the middle array's element`, () => {
   deleter(equal, source, result, "qwe.1", "05");
 });
 
-test(`06 - deletes the last array's element`, () => {
+test("06 - deletes the last array's element", () => {
   let source = `{"qwe": [
   "ab",
   "cd",
@@ -82,7 +82,7 @@ test(`06 - deletes the last array's element`, () => {
   deleter(equal, source, result, "qwe.2", "06");
 });
 
-test(`07 - deletes the first array's element`, () => {
+test("07 - deletes the first array's element", () => {
   let source = `{"qwe": [
   true,
   "cd",
@@ -95,7 +95,7 @@ test(`07 - deletes the first array's element`, () => {
   deleter(equal, source, result, "qwe.0", "07");
 });
 
-test(`08 - deletes the middle array's element`, () => {
+test("08 - deletes the middle array's element", () => {
   let source = `{"qwe": [
   "ab",
   true,
@@ -108,7 +108,7 @@ test(`08 - deletes the middle array's element`, () => {
   deleter(equal, source, result, "qwe.1", "08");
 });
 
-test(`09 - deletes the last array's element`, () => {
+test("09 - deletes the last array's element", () => {
   let source = `{"qwe": [
   "ab",
   "cd",
@@ -121,7 +121,7 @@ test(`09 - deletes the last array's element`, () => {
   deleter(equal, source, result, "qwe.2", "09");
 });
 
-test(`10 - dips to root level key before going to second branch`, () => {
+test("10 - dips to root level key before going to second branch", () => {
   let source = `{
   "ab": {
     "cd": {
@@ -158,7 +158,7 @@ test(`10 - dips to root level key before going to second branch`, () => {
   deleter(equal, source, result, "ij.kl.mn.2", "10");
 });
 
-test(`11 - nested arrays`, () => {
+test("11 - nested arrays", () => {
   let source = `{
   "a": {
     "c": [
@@ -189,7 +189,7 @@ test(`11 - nested arrays`, () => {
   deleter(equal, source, result, "a.f.0.h", "11");
 });
 
-test(`12 - nested arrays`, () => {
+test("12 - nested arrays", () => {
   let source = `{
   "a": {
     "c": [
@@ -224,7 +224,7 @@ test(`12 - nested arrays`, () => {
   deleter(equal, source, result, "a.f.0.h", "12");
 });
 
-test(`13 - key for deletion does not exist`, () => {
+test("13 - key for deletion does not exist", () => {
   let source = `{
   "a": "b",
   "c": "d",

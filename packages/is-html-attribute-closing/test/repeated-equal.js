@@ -9,8 +9,8 @@ import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js"
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-test(`01 - ${`\u001b[${90}m${`repeated equal`}\u001b[${39}m`} - one tag, one attr`, () => {
-  let str = `<a b=="c" d=='e'>`;
+test(`01 - ${`\u001b[${90}m${"repeated equal"}\u001b[${39}m`} - one tag, one attr`, () => {
+  let str = "<a b==\"c\" d=='e'>";
 
   // b opening at 6
   not.ok(isCl(str, 6, 6), "01.01");
@@ -27,8 +27,8 @@ test(`01 - ${`\u001b[${90}m${`repeated equal`}\u001b[${39}m`} - one tag, one att
   // fin.
 });
 
-test(`02 - ${`\u001b[${90}m${`repeated equal`}\u001b[${39}m`} - one tag, one attr, three equals`, () => {
-  let str = `<a b==="c" d==='e'>`;
+test(`02 - ${`\u001b[${90}m${"repeated equal"}\u001b[${39}m`} - one tag, one attr, three equals`, () => {
+  let str = "<a b===\"c\" d==='e'>";
 
   // b opening at 7
   not.ok(isCl(str, 7, 7), "02.01");
@@ -45,8 +45,8 @@ test(`02 - ${`\u001b[${90}m${`repeated equal`}\u001b[${39}m`} - one tag, one att
   // fin.
 });
 
-test(`03 - ${`\u001b[${90}m${`repeated equal`}\u001b[${39}m`} - one tag, one attr, three spaced equals`, () => {
-  let str = `<a b = = = "c" d = = = 'e'>`;
+test(`03 - ${`\u001b[${90}m${"repeated equal"}\u001b[${39}m`} - one tag, one attr, three spaced equals`, () => {
+  let str = "<a b = = = \"c\" d = = = 'e'>";
 
   // b opening at 11
   not.ok(isCl(str, 11, 11), "03.01");

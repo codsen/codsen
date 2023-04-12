@@ -8,7 +8,7 @@ assert.deepEqual(isMediaD("screeen"), [
   {
     idxFrom: 0,
     idxTo: 7,
-    message: `Did you mean "screen"?`,
+    message: 'Did you mean "screen"?',
     fix: {
       ranges: [[0, 7, "screen"]],
     },

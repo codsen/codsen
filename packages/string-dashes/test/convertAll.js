@@ -9,10 +9,10 @@ import { mixer } from "./_util.js";
 
 // -----------------------------------------------------------------------------
 
-test(`01 - combo`, () => {
+test("01 - combo", () => {
   // collect everything that will be pinged to our callback function offsetBy:
 
-  let input = `Two sizes - that's all we have. See pages 10-12.`;
+  let input = "Two sizes - that's all we have. See pages 10-12.";
   mixer({
     convertDashes: false,
     offsetBy: () => {

@@ -8,7 +8,7 @@ import {
   allRules,
 } from "../dist/string-fix-broken-named-entities.esm.js";
 
-test(`01 - text amps and a healthy named entity, default settings`, () => {
+test("01 - text amps and a healthy named entity, default settings", () => {
   let gathered = [];
   let res = fixEnt("Let's go to B&Q and buy some&nbsp;M&M's.", {
     cb: (obj) => obj,
@@ -18,7 +18,7 @@ test(`01 - text amps and a healthy named entity, default settings`, () => {
   equal(gathered, [13, 35], "01.02");
 });
 
-test(`02 - text amps and a healthy named entity`, () => {
+test("02 - text amps and a healthy named entity", () => {
   let gathered = [];
   let res = fixEnt("Let's go to B&Q and buy some&nbsp;M&M's.", {
     decode: true,
@@ -32,7 +32,7 @@ test(`02 - text amps and a healthy named entity`, () => {
   equal(gathered, [13, 35], "02.04");
 });
 
-test(`03 - sandwitched, healthy entities`, () => {
+test("03 - sandwitched, healthy entities", () => {
   let gathered = [];
   let res = fixEnt("&&nbsp;&&nbsp;&", {
     cb: (obj) => obj,
@@ -42,7 +42,7 @@ test(`03 - sandwitched, healthy entities`, () => {
   equal(gathered, [0, 7, 14], "03.02");
 });
 
-test(`04 - sandwitched, broken entities`, () => {
+test("04 - sandwitched, broken entities", () => {
   let gathered = [];
   let res = fixEnt("&&nsp;&&nsp;&", {
     cb: (obj) => obj,
@@ -75,7 +75,7 @@ test(`04 - sandwitched, broken entities`, () => {
   equal(gathered, [0, 6, 12], "04.03");
 });
 
-test(`05`, () => {
+test("05", () => {
   let gathered = [];
   let res = fixEnt("<span>&nbsp</span>", {
     cb: (obj) => obj,
@@ -100,7 +100,7 @@ test(`05`, () => {
   equal(gathered, [], "05.03");
 });
 
-test(`06`, () => {
+test("06", () => {
   let gathered = [];
   let res = fixEnt("<span>&&nbsp&</span>", {
     cb: (obj) => obj,
@@ -125,7 +125,7 @@ test(`06`, () => {
   equal(gathered, [6, 12], "06.03");
 });
 
-test(`07`, () => {
+test("07", () => {
   let gathered = [];
   let res = fixEnt("<span>&&nbsp;&</span>", {
     cb: (obj) => obj,
@@ -135,7 +135,7 @@ test(`07`, () => {
   equal(gathered, [6, 13], "07.02");
 });
 
-test(`08`, () => {
+test("08", () => {
   let gathered = [];
   let res = fixEnt("<span>&nbp;</span>", {
     cb: (obj) => obj,
@@ -160,9 +160,9 @@ test(`08`, () => {
   equal(gathered, [], "08.03");
 });
 
-test(`09`, () => {
+test("09", () => {
   let gathered = [];
-  let res = fixEnt(`<span>& nbsp;</span>`, {
+  let res = fixEnt("<span>& nbsp;</span>", {
     cb: (obj) => obj,
     textAmpersandCatcherCb: (idx) => gathered.push(idx),
   });
@@ -185,9 +185,9 @@ test(`09`, () => {
   equal(gathered, [], "09.03");
 });
 
-test(`10`, () => {
+test("10", () => {
   let gathered = [];
-  let res = fixEnt(`<span>&& nbsp;&</span>`, {
+  let res = fixEnt("<span>&& nbsp;&</span>", {
     cb: (obj) => obj,
     textAmpersandCatcherCb: (idx) => gathered.push(idx),
   });

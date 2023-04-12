@@ -8,7 +8,7 @@ import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 
 // -----------------------------------------------------------------------------
 
-test(`01 - 1x2`, () => {
+test("01 - 1x2", () => {
   let input = `
 <table>
   <tbody>

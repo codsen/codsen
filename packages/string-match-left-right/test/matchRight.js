@@ -221,7 +221,7 @@ test(`10 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
 
 test(`11 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, false`, () => {
   equal(
-    matchRight(`a<!--[if gte mso 9]>x<![endif]-->z`, 1, ["![cdata"], {
+    matchRight("a<!--[if gte mso 9]>x<![endif]-->z", 1, ["![cdata"], {
       i: true,
       maxMismatches: 1,
       trimBeforeMatching: true,
@@ -233,7 +233,7 @@ test(`11 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
 
 test(`12 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, adhoc 1`, () => {
   equal(
-    matchRight(`a<!--[if gte mso 9]>x<![endif]-->z`, 19, ["<!-->"], {
+    matchRight("a<!--[if gte mso 9]>x<![endif]-->z", 19, ["<!-->"], {
       trimBeforeMatching: true,
       maxMismatches: 1,
     }),
@@ -244,7 +244,7 @@ test(`12 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
 
 test(`13 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, one mismatch`, () => {
   equal(
-    matchRightIncl(`<!--[if gte mso 9]>x<1[endif]-->`, 20, ["<![endif]"], {
+    matchRightIncl("<!--[if gte mso 9]>x<1[endif]-->", 20, ["<![endif]"], {
       i: true,
       maxMismatches: 2,
       trimBeforeMatching: true,
@@ -256,7 +256,7 @@ test(`13 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
 
 test(`14 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`, () => {
   equal(
-    matchRightIncl(`<!--[if gte mso 9]>x<1[endf]-->`, 20, ["<![endif]"], {
+    matchRightIncl("<!--[if gte mso 9]>x<1[endf]-->", 20, ["<![endif]"], {
       i: true,
       maxMismatches: 2,
       trimBeforeMatching: true,
@@ -268,7 +268,7 @@ test(`14 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
 
 test(`15 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`, () => {
   equal(
-    matchRight(`<!--[if gte mso 9]>x<[endif]-->`, 20, ["![endif]"], {
+    matchRight("<!--[if gte mso 9]>x<[endif]-->", 20, ["![endif]"], {
       i: true,
       maxMismatches: 2,
       trimBeforeMatching: true,
@@ -280,7 +280,7 @@ test(`15 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
 
 test(`16 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`, () => {
   equal(
-    matchRight(`<!--[if gte mso 9]>x<endif]-->`, 20, ["![endif]"], {
+    matchRight("<!--[if gte mso 9]>x<endif]-->", 20, ["![endif]"], {
       i: true,
       maxMismatches: 2,
       trimBeforeMatching: true,
@@ -292,7 +292,7 @@ test(`16 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
 
 test(`17 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`, () => {
   equal(
-    matchRight(`<!--[if gte mso 9]>x<endif-->`, 20, ["![endif]"], {
+    matchRight("<!--[if gte mso 9]>x<endif-->", 20, ["![endif]"], {
       i: true,
       maxMismatches: 2,
       trimBeforeMatching: true,
@@ -304,7 +304,7 @@ test(`17 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
 
 test(`18 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`, () => {
   equal(
-    matchRight(`<!--[if gte mso 9]>x<ndif]-->`, 20, ["![endif]"], {
+    matchRight("<!--[if gte mso 9]>x<ndif]-->", 20, ["![endif]"], {
       i: true,
       maxMismatches: 2,
       trimBeforeMatching: true,
@@ -316,7 +316,7 @@ test(`18 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
 
 test(`19 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`, () => {
   equal(
-    matchRight(`<!--[if gte mso 9]>x<[ndif-->`, 20, ["![endif]"], {
+    matchRight("<!--[if gte mso 9]>x<[ndif-->", 20, ["![endif]"], {
       i: true,
       maxMismatches: 2,
       trimBeforeMatching: true,
@@ -328,7 +328,7 @@ test(`19 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
 
 test(`20 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`, () => {
   equal(
-    matchRight(`abc<!--[if gte mso 9]><xml>`, 3, ["!--"], {
+    matchRight("abc<!--[if gte mso 9]><xml>", 3, ["!--"], {
       maxMismatches: 1,
       firstMustMatch: true,
       trimBeforeMatching: true,
@@ -580,7 +580,7 @@ test(`21 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}     opts.maxMismatch
 
 test(`22 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1 + lastMustMatch`, () => {
   equal(
-    matchRight(`><!--z>`, 0, ["<!-->"], {
+    matchRight("><!--z>", 0, ["<!-->"], {
       trimBeforeMatching: true,
       maxMismatches: 1,
       lastMustMatch: true,

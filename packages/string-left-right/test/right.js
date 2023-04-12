@@ -7,7 +7,7 @@ import { right } from "../dist/string-left-right.esm.js";
 // right()
 // -----------------------------------------------------------------------------
 
-test(`01 - calling at string length`, () => {
+test("01 - calling at string length", () => {
   equal(right(""), null, "01.01");
   equal(right("", null), null, "01.02");
   equal(right("", undefined), null, "01.03");
@@ -18,7 +18,7 @@ test(`01 - calling at string length`, () => {
   equal(right("abc", 99), null, "01.08");
 });
 
-test(`02 - normal use`, () => {
+test("02 - normal use", () => {
   not.ok(!!right(""), "02.01");
   not.ok(!!right("a"), "02.02");
 

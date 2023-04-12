@@ -9,7 +9,7 @@ const RAWNBSP = "\u00A0";
 // leftStopAtRawNbsp()
 // -----------------------------------------------------------------------------
 
-test(`01 - null result cases`, () => {
+test("01 - null result cases", () => {
   equal(leftStopAtRawNbsp("abc"), null, "01.01");
   equal(leftStopAtRawNbsp("abc", -1), null, "01.02");
   equal(leftStopAtRawNbsp("abc", 0), null, "01.03");
@@ -23,7 +23,7 @@ test(`01 - null result cases`, () => {
   equal(leftStopAtRawNbsp("", 1), null, "01.11");
 });
 
-test(`02 - normal use`, () => {
+test("02 - normal use", () => {
   not.ok(!!leftStopAtRawNbsp(""), "02.01");
   not.ok(!!leftStopAtRawNbsp("a"), "02.02");
   equal(leftStopAtRawNbsp("ab", 1), 0, "02.01");

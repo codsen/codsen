@@ -27,8 +27,8 @@ import { findAllIdx, rawNDash } from "codsen-utils";
 // example from Butterick's practical typography
 // http://practicaltypography.com/hyphens-and-dashes.html
 
-test(`01 - digit-dash-digit × 2`, () => {
-  let input = `1880-1912, pages 330-39`;
+test("01 - digit-dash-digit × 2", () => {
+  let input = "1880-1912, pages 330-39";
   // the first dash at 4
   mixer({
     from: 4,
@@ -114,8 +114,8 @@ test(`01 - digit-dash-digit × 2`, () => {
 // example from Oxford A-Z Grammar and Punctuation
 // -----------------------------------------------------------------------------
 
-test(`02 - n-dash minimal`, () => {
-  let input = `An A-Z guide`;
+test("02 - n-dash minimal", () => {
+  let input = "An A-Z guide";
   mixer({
     from: 4,
     convertDashes: false,
@@ -192,7 +192,7 @@ test(`02 - n-dash minimal`, () => {
     mixer({
       from,
     }).forEach((opt, n) => {
-      test(`03 - A-Z false positive`, () => {
+      test("03 - A-Z false positive", () => {
         equal(
           convertOne(input, opt),
           null,

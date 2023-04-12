@@ -7,7 +7,7 @@ import { comb } from "../dist/email-comb.esm.js";
 // opts.reportProgressFunc
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - calls the progress function`, () => {
+test(`01 - ${`\u001b[${36}m${"opts.reportProgressFunc"}\u001b[${39}m`} - calls the progress function`, () => {
   function shouldveBeenCalled(val) {
     throw new Error(val);
   }
@@ -122,7 +122,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
   ok(counter > 50, "01.06");
 });
 
-test(`02 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - reports when passing at 50% only`, () => {
+test(`02 - ${`\u001b[${36}m${"opts.reportProgressFunc"}\u001b[${39}m`} - reports when passing at 50% only`, () => {
   function shouldveBeenCalled(val) {
     throw new Error(val);
   }
@@ -165,7 +165,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
   );
 });
 
-test(`03 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - adjusted from-to range`, () => {
+test(`03 - ${`\u001b[${36}m${"opts.reportProgressFunc"}\u001b[${39}m`} - adjusted from-to range`, () => {
   let gather = [];
   let countingFunction = (val) => {
     // const countingFunction = val => {

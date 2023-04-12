@@ -7,7 +7,7 @@ import {
   fixEnt as fix,
 } from "../dist/string-fix-broken-named-entities.esm.js";
 
-test(`01 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - 1st input arg is wrong`, () => {
+test(`01 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - 1st input arg is wrong`, () => {
   not.throws(() => {
     fix("");
   }, "01.01");
@@ -52,7 +52,7 @@ test(`01 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - 1st input arg is wrong`,
   );
 });
 
-test(`02 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - 2nd input arg is wrong`, () => {
+test(`02 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - 2nd input arg is wrong`, () => {
   throws(
     () => {
       fix("aaa", "bbb");
@@ -78,7 +78,7 @@ test(`02 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - 2nd input arg is wrong`,
   }, "02.04");
 });
 
-test(`03 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.cb is not function`, () => {
+test(`03 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - opts.cb is not function`, () => {
   throws(
     () => {
       fix("aaa", { cb: "bbb" });
@@ -88,7 +88,7 @@ test(`03 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.cb is not function`
   );
 });
 
-test(`04 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.entityCatcherCb is not function`, () => {
+test(`04 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - opts.entityCatcherCb is not function`, () => {
   throws(
     () => {
       fix("aaa", { entityCatcherCb: "bbb" });
@@ -98,7 +98,7 @@ test(`04 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.entityCatcherCb is 
   );
 });
 
-test(`05 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.progressFn is not function`, () => {
+test(`05 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - opts.progressFn is not function`, () => {
   throws(
     () => {
       fix("aaa", { progressFn: "bbb" });
@@ -108,7 +108,7 @@ test(`05 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.progressFn is not f
   );
 });
 
-test(`06 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.textAmpersandCatcherCb is not function`, () => {
+test(`06 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - opts.textAmpersandCatcherCb is not function`, () => {
   throws(
     () => {
       fix("aaa", { textAmpersandCatcherCb: "bbb" });
@@ -118,7 +118,7 @@ test(`06 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.textAmpersandCatche
   );
 });
 
-test(`07 - all callbacks are undefined`, () => {
+test("07 - all callbacks are undefined", () => {
   not.throws(() => {
     fix("&nsp;", {
       cb: undefined,
@@ -129,7 +129,7 @@ test(`07 - all callbacks are undefined`, () => {
   }, "07.01");
 });
 
-test(`08 - all callbacks are nulls`, () => {
+test("08 - all callbacks are nulls", () => {
   not.throws(() => {
     fix("&nsp;", {
       cb: null,
@@ -140,7 +140,7 @@ test(`08 - all callbacks are nulls`, () => {
   }, "08.01");
 });
 
-test(`09 - there are at least twice as many possible rules as there are entities`, () => {
+test("09 - there are at least twice as many possible rules as there are entities", () => {
   ok(allRulesESM.length > 263 * 2, "09.01");
 });
 

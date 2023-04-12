@@ -765,7 +765,7 @@ const datahubLangCodes = [
   "zu-ZA",
 ];
 
-test(`${`\u001b[${32}m${`datahub language codes`}\u001b[${39}m`}`, () => {
+test(`${`\u001b[${32}m${"datahub language codes"}\u001b[${39}m`}`, () => {
   datahubLangCodes.forEach((codeStr) => {
     ok(isLangCode(codeStr), codeStr);
   });

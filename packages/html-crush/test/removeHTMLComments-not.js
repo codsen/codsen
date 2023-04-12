@@ -13,8 +13,8 @@ import { m } from "./util/util.js";
 // <!--<![endif]-->
 
 // removeHTMLComments=0 - off
-test(`01 - outlook "not" type, tight`, () => {
-  let source = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
+test('01 - outlook "not" type, tight', () => {
+  let source = '<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->';
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 0, // <---
   });
@@ -32,8 +32,8 @@ test(`01 - outlook "not" type, tight`, () => {
 });
 
 // removeHTMLComments=1 - only text comments
-test(`02 - outlook "not" type, tight`, () => {
-  let source = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
+test('02 - outlook "not" type, tight', () => {
+  let source = '<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->';
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 1, // <---
   });
@@ -51,13 +51,13 @@ test(`02 - outlook "not" type, tight`, () => {
 });
 
 // removeHTMLComments=2 - includes outlook conditional comments
-test(`03 - outlook "not" type, tight`, () => {
-  let source = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
+test('03 - outlook "not" type, tight', () => {
+  let source = '<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->';
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 2, // <---
   });
 
-  equal(result, `<img src="gif"/>`, "03.01");
+  equal(result, '<img src="gif"/>', "03.01");
   equal(
     applicableOpts,
     {
@@ -77,13 +77,13 @@ test(`03 - outlook "not" type, tight`, () => {
 });
 
 // removeHTMLComments=0 - off
-test(`04 - outlook "not" type, spaced`, () => {
-  let source = `  <!--[if !mso]>  <!-->  <img src="gif"/>  <!--<![endif]-->`;
+test('04 - outlook "not" type, spaced', () => {
+  let source = '  <!--[if !mso]>  <!-->  <img src="gif"/>  <!--<![endif]-->';
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 0, // <---
   });
 
-  equal(result, `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`, "04.01");
+  equal(result, '<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->', "04.01");
   equal(
     applicableOpts,
     {
@@ -105,13 +105,13 @@ test(`04 - outlook "not" type, spaced`, () => {
 });
 
 // removeHTMLComments=1 - only text comments
-test(`05 - outlook "not" type, spaced`, () => {
-  let source = `  <!--[if !mso]>  <!-->  <img src="gif"/>  <!--<![endif]-->`;
+test('05 - outlook "not" type, spaced', () => {
+  let source = '  <!--[if !mso]>  <!-->  <img src="gif"/>  <!--<![endif]-->';
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 1, // <---
   });
 
-  equal(result, `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`, "05.01");
+  equal(result, '<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->', "05.01");
   equal(
     applicableOpts,
     {
@@ -133,13 +133,13 @@ test(`05 - outlook "not" type, spaced`, () => {
 });
 
 // removeHTMLComments=2 - includes outlook conditional comments
-test(`06 - outlook "not" type, spaced`, () => {
-  let source = `  <!--[if !mso]>  <!-->  <img src="gif"/>  <!--<![endif]-->`;
+test('06 - outlook "not" type, spaced', () => {
+  let source = '  <!--[if !mso]>  <!-->  <img src="gif"/>  <!--<![endif]-->';
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 2, // <---
   });
 
-  equal(result, `<img src="gif"/>`, "06.01");
+  equal(result, '<img src="gif"/>', "06.01");
   equal(
     applicableOpts,
     {

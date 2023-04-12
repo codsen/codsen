@@ -12,7 +12,7 @@ import { convertOne } from "../dist/string-apostrophes.esm.js";
 
 // offsetBy increments the index of external iterator
 
-test(`01 - let's skip single quotes`, () => {
+test("01 - let's skip single quotes", () => {
   let str = `Rock ${leftSingleQuote}n${leftSingleQuote} roll`;
   let gathered = [];
   let res = convertOne(str, {
@@ -27,7 +27,7 @@ test(`01 - let's skip single quotes`, () => {
     },
   });
 
-  equal(res, [[5, 8, `'n'`]], "01.01");
+  equal(res, [[5, 8, "'n'"]], "01.01");
   equal(gathered, [2], "01.02");
 });
 

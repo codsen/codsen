@@ -7,13 +7,13 @@ import { collapse } from "../dist/string-collapse-white-space.esm.js";
 // opts.cb
 // -----------------------------------------------------------------------------
 
-test(`01`, () => {
+test("01", () => {
   equal(collapse("a > b  c"), { result: "a > b c", ranges: [[5, 6]] }, "01.01");
 });
 
-test(`02`, () => {
+test("02", () => {
   equal(
-    collapse(`a > b  c`, {
+    collapse("a > b  c", {
       cb: ({ suggested, whiteSpaceStartsAt, whiteSpaceEndsAt, str }) => {
         // console.log("---------");
         // console.log(

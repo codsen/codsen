@@ -13,8 +13,8 @@ import { m } from "./util/util.js";
 // <![endif]-->
 
 // removeHTMLComments=0 - off
-test(`01 - outlook "only" type, tight`, () => {
-  let source = `<!--[if mso]><img src="fallback"/><![endif]-->`;
+test('01 - outlook "only" type, tight', () => {
+  let source = '<!--[if mso]><img src="fallback"/><![endif]-->';
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 0, // <---
   });
@@ -32,8 +32,8 @@ test(`01 - outlook "only" type, tight`, () => {
 });
 
 // removeHTMLComments=1 - only text comments
-test(`02 - outlook "only" type, tight`, () => {
-  let source = `<!--[if mso]><img src="fallback"/><![endif]-->`;
+test('02 - outlook "only" type, tight', () => {
+  let source = '<!--[if mso]><img src="fallback"/><![endif]-->';
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 1, // <---
   });
@@ -52,13 +52,13 @@ test(`02 - outlook "only" type, tight`, () => {
 
 // removeHTMLComments=2 - includes outlook conditional comments
 // eslint-disable-next-line test-num/correct-test-num
-test(`01.02 - outlook "only" type, tight`, () => {
-  let source = `<!--[if mso]><img src="fallback"/><![endif]-->`;
+test('01.02 - outlook "only" type, tight', () => {
+  let source = '<!--[if mso]><img src="fallback"/><![endif]-->';
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 2, // <---
   });
 
-  equal(result, `<img src="fallback"/>`, "03.01");
+  equal(result, '<img src="fallback"/>', "03.01");
   equal(
     applicableOpts,
     {
@@ -78,12 +78,12 @@ test(`01.02 - outlook "only" type, tight`, () => {
 });
 
 // removeHTMLComments=0 - off
-test(`04 - outlook "only" type, spaced`, () => {
-  let source = `  <!--[if mso]>  <img src="fallback"/>  <![endif]-->  `;
+test('04 - outlook "only" type, spaced', () => {
+  let source = '  <!--[if mso]>  <img src="fallback"/>  <![endif]-->  ';
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 0, // <---
   });
-  equal(result, `<!--[if mso]><img src="fallback"/><![endif]-->`, "04.01");
+  equal(result, '<!--[if mso]><img src="fallback"/><![endif]-->', "04.01");
   equal(
     applicableOpts,
     {
@@ -105,13 +105,13 @@ test(`04 - outlook "only" type, spaced`, () => {
 });
 
 // removeHTMLComments=1 - only text comments
-test(`05 - outlook "only" type, spaced`, () => {
-  let source = `  <!--[if mso]>  <img src="fallback"/>  <![endif]-->  `;
+test('05 - outlook "only" type, spaced', () => {
+  let source = '  <!--[if mso]>  <img src="fallback"/>  <![endif]-->  ';
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 1, // <---
   });
 
-  equal(result, `<!--[if mso]><img src="fallback"/><![endif]-->`, "05.01");
+  equal(result, '<!--[if mso]><img src="fallback"/><![endif]-->', "05.01");
   equal(
     applicableOpts,
     {
@@ -133,13 +133,13 @@ test(`05 - outlook "only" type, spaced`, () => {
 });
 
 // removeHTMLComments=2 - includes outlook conditional comments
-test(`06 - outlook "only" type, spaced`, () => {
-  let source = `  <!--[if mso]>  <img src="fallback"/>  <![endif]-->  `;
+test('06 - outlook "only" type, spaced', () => {
+  let source = '  <!--[if mso]>  <img src="fallback"/>  <![endif]-->  ';
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 2, // <---
   });
 
-  equal(result, `<img src="fallback"/>`, "06.01");
+  equal(result, '<img src="fallback"/>', "06.01");
   equal(
     applicableOpts,
     {
@@ -159,8 +159,8 @@ test(`06 - outlook "only" type, spaced`, () => {
 });
 
 // removeHTMLComments=0 - off
-test(`07 - stray opening only`, () => {
-  let source = `abc\n<!--[if (gte mso 9)|(IE)]>\ndef`;
+test("07 - stray opening only", () => {
+  let source = "abc\n<!--[if (gte mso 9)|(IE)]>\ndef";
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 0, // <---
   });
@@ -178,8 +178,8 @@ test(`07 - stray opening only`, () => {
 });
 
 // removeHTMLComments=1 - only text comments
-test(`08 - stray opening only`, () => {
-  let source = `abc\n<!--[if (gte mso 9)|(IE)]>\ndef`;
+test("08 - stray opening only", () => {
+  let source = "abc\n<!--[if (gte mso 9)|(IE)]>\ndef";
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 1, // <---
   });
@@ -197,13 +197,13 @@ test(`08 - stray opening only`, () => {
 });
 
 // removeHTMLComments=2 - includes outlook conditional comments
-test(`09 - stray opening only`, () => {
-  let source = `abc\n<!--[if (gte mso 9)|(IE)]>\ndef`;
+test("09 - stray opening only", () => {
+  let source = "abc\n<!--[if (gte mso 9)|(IE)]>\ndef";
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 2, // <---
   });
 
-  equal(result, `abc\n\ndef`, "09.01");
+  equal(result, "abc\n\ndef", "09.01");
   equal(
     applicableOpts,
     {

@@ -8,7 +8,7 @@ import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 
 // -----------------------------------------------------------------------------
 
-test(`01 - 1x2`, () => {
+test("01 - 1x2", () => {
   let input = `
 <table>
   <tbody>
@@ -45,7 +45,7 @@ test(`01 - 1x2`, () => {
   equal(res, intended, "01.01");
 });
 
-test(`02 - 1x3`, () => {
+test("02 - 1x3", () => {
   let input = `
 <table class="n" border="0">
   <tbody>
@@ -84,7 +84,7 @@ test(`02 - 1x3`, () => {
   equal(res, intended, "02.01");
 });
 
-test(`03 - 1x5`, () => {
+test("03 - 1x5", () => {
   let input = `
 <table>
   <tbody>
@@ -127,7 +127,7 @@ test(`03 - 1x5`, () => {
   equal(res, intended, "03.01");
 });
 
-test(`04 - 2x3`, () => {
+test("04 - 2x3", () => {
   let input = `
 <table>
   <tbody>
@@ -184,7 +184,7 @@ test(`04 - 2x3`, () => {
   equal(res, intended, "04.01");
 });
 
-test(`05 - nested tags inside, no colspan`, () => {
+test("05 - nested tags inside, no colspan", () => {
   let input = `
 <table>
   <thead>
@@ -243,7 +243,7 @@ test(`05 - nested tags inside, no colspan`, () => {
   equal(res, intended, "05.01");
 });
 
-test(`06 - nested tags inside, colspan`, () => {
+test("06 - nested tags inside, colspan", () => {
   let input = `
 <table>
   <thead>

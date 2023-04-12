@@ -9,7 +9,7 @@ import { extract } from "../dist/tsd-extract.esm.js";
 
 test("01 - content missing, semi", () => {
   equal(
-    extract(`interface abc;`, "abc", {
+    extract("interface abc;", "abc", {
       extractAll: true,
       semi: true,
     }),
@@ -20,7 +20,7 @@ test("01 - content missing, semi", () => {
       content: null,
       contentStartsAt: null,
       contentEndsAt: null,
-      value: `interface abc;`,
+      value: "interface abc;",
       valueStartsAt: 0,
       valueEndsAt: 14,
       all: ["abc"],
@@ -29,7 +29,7 @@ test("01 - content missing, semi", () => {
     "01.01"
   );
   equal(
-    extract(`interface abc;`, "abc", {
+    extract("interface abc;", "abc", {
       extractAll: false,
       semi: true,
     }),
@@ -40,7 +40,7 @@ test("01 - content missing, semi", () => {
       content: null,
       contentStartsAt: null,
       contentEndsAt: null,
-      value: `interface abc;`,
+      value: "interface abc;",
       valueStartsAt: 0,
       valueEndsAt: 14,
       all: [],
@@ -49,7 +49,7 @@ test("01 - content missing, semi", () => {
     "01.02"
   );
   equal(
-    extract(`interface abc;`, "abc", {
+    extract("interface abc;", "abc", {
       extractAll: true,
       semi: false,
     }),
@@ -60,7 +60,7 @@ test("01 - content missing, semi", () => {
       content: null,
       contentStartsAt: null,
       contentEndsAt: null,
-      value: `interface abc`,
+      value: "interface abc",
       valueStartsAt: 0,
       valueEndsAt: 13,
       all: ["abc"],
@@ -69,7 +69,7 @@ test("01 - content missing, semi", () => {
     "01.03"
   );
   equal(
-    extract(`interface abc;`, "abc", {
+    extract("interface abc;", "abc", {
       extractAll: false,
       semi: false,
     }),
@@ -80,7 +80,7 @@ test("01 - content missing, semi", () => {
       content: null,
       contentStartsAt: null,
       contentEndsAt: null,
-      value: `interface abc`,
+      value: "interface abc",
       valueStartsAt: 0,
       valueEndsAt: 13,
       all: [],
@@ -92,7 +92,7 @@ test("01 - content missing, semi", () => {
 
 test("02 - content missing, no semi", () => {
   equal(
-    extract(`interface abc`, "abc", {
+    extract("interface abc", "abc", {
       extractAll: true,
       semi: true,
     }),
@@ -103,7 +103,7 @@ test("02 - content missing, no semi", () => {
       content: null,
       contentStartsAt: null,
       contentEndsAt: null,
-      value: `interface abc`,
+      value: "interface abc",
       valueStartsAt: 0,
       valueEndsAt: 13,
       all: ["abc"],
@@ -112,7 +112,7 @@ test("02 - content missing, no semi", () => {
     "02.01"
   );
   equal(
-    extract(`interface abc`, "abc", {
+    extract("interface abc", "abc", {
       extractAll: false,
       semi: true,
     }),
@@ -123,7 +123,7 @@ test("02 - content missing, no semi", () => {
       content: null,
       contentStartsAt: null,
       contentEndsAt: null,
-      value: `interface abc`,
+      value: "interface abc",
       valueStartsAt: 0,
       valueEndsAt: 13,
       all: [],
@@ -132,7 +132,7 @@ test("02 - content missing, no semi", () => {
     "02.02"
   );
   equal(
-    extract(`interface abc`, "abc", {
+    extract("interface abc", "abc", {
       extractAll: true,
       semi: false,
     }),
@@ -143,7 +143,7 @@ test("02 - content missing, no semi", () => {
       content: null,
       contentStartsAt: null,
       contentEndsAt: null,
-      value: `interface abc`,
+      value: "interface abc",
       valueStartsAt: 0,
       valueEndsAt: 13,
       all: ["abc"],
@@ -152,7 +152,7 @@ test("02 - content missing, no semi", () => {
     "02.03"
   );
   equal(
-    extract(`interface abc`, "abc", {
+    extract("interface abc", "abc", {
       extractAll: false,
       semi: false,
     }),
@@ -163,7 +163,7 @@ test("02 - content missing, no semi", () => {
       content: null,
       contentStartsAt: null,
       contentEndsAt: null,
-      value: `interface abc`,
+      value: "interface abc",
       valueStartsAt: 0,
       valueEndsAt: 13,
       all: [],

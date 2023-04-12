@@ -9,8 +9,8 @@ import { mixer } from "./_util.js";
 
 // -----------------------------------------------------------------------------
 
-test(`01 - m-dash minimal`, () => {
-  let input = `Dashes come in two sizes - the en dash and the em dash.`;
+test("01 - m-dash minimal", () => {
+  let input = "Dashes come in two sizes - the en dash and the em dash.";
   mixer({
     from: 25,
     convertDashes: false,
@@ -53,7 +53,7 @@ test(`01 - m-dash minimal`, () => {
   });
 });
 
-test(`02 - n-dash instead of m-dash`, () => {
+test("02 - n-dash instead of m-dash", () => {
   let input = `Dashes come in two sizes ${rawNDash} the en dash and the em dash.`;
   mixer({
     from: 25,
@@ -97,7 +97,7 @@ test(`02 - n-dash instead of m-dash`, () => {
   });
 });
 
-test(`03 - already m-dash, spaced`, () => {
+test("03 - already m-dash, spaced", () => {
   let input = `Dashes come in two sizes ${rawMDash} the en dash and the em dash.`;
   mixer({
     from: 25,
@@ -126,8 +126,8 @@ test(`03 - already m-dash, spaced`, () => {
   });
 });
 
-test(`04 - edge case - one dash`, () => {
-  let input = `-`;
+test("04 - edge case - one dash", () => {
+  let input = "-";
   mixer({
     from: 0,
   }).forEach((opt, n) => {
@@ -135,7 +135,7 @@ test(`04 - edge case - one dash`, () => {
   });
 });
 
-test(`05 - edge case - one m-dash`, () => {
+test("05 - edge case - one m-dash", () => {
   let input = rawMDash;
   mixer({
     from: 0,
@@ -144,7 +144,7 @@ test(`05 - edge case - one m-dash`, () => {
   });
 });
 
-test(`06 - edge case - one n-dash`, () => {
+test("06 - edge case - one n-dash", () => {
   let input = rawNDash;
   mixer({
     from: 0,
@@ -153,7 +153,7 @@ test(`06 - edge case - one n-dash`, () => {
   });
 });
 
-test(`07 - already m-dash, tight`, () => {
+test("07 - already m-dash, tight", () => {
   let input = `Dashes come in two sizes${rawMDash}the en dash and the em dash.`;
   mixer({
     from: 24,
@@ -182,8 +182,8 @@ test(`07 - already m-dash, tight`, () => {
   });
 });
 
-test(`08 - math, spaces`, () => {
-  let input = `5 - 2 = 3`;
+test("08 - math, spaces", () => {
+  let input = "5 - 2 = 3";
   mixer({
     from: 2,
     convertDashes: false,
@@ -206,8 +206,8 @@ test(`08 - math, spaces`, () => {
   });
 });
 
-test(`09 - math, one tab`, () => {
-  let input = `5\t-\t2\t=\t3`;
+test("09 - math, one tab", () => {
+  let input = "5\t-\t2\t=\t3";
   mixer({
     from: 2,
     convertDashes: false,
@@ -230,8 +230,8 @@ test(`09 - math, one tab`, () => {
   });
 });
 
-test(`10 - math, lots of whitespace`, () => {
-  let input = `5\r\n\t\t\t-\r\n\t\t\t2\r\n\t\t\t=\r\n\t\t\t3`;
+test("10 - math, lots of whitespace", () => {
+  let input = "5\r\n\t\t\t-\r\n\t\t\t2\r\n\t\t\t=\r\n\t\t\t3";
   mixer({
     from: 6,
     convertDashes: false,
@@ -254,8 +254,8 @@ test(`10 - math, lots of whitespace`, () => {
   });
 });
 
-test(`11 - currencies, usual position, one space`, () => {
-  let input = `$5 - $2 = $3`;
+test("11 - currencies, usual position, one space", () => {
+  let input = "$5 - $2 = $3";
   mixer({
     from: 3,
     convertDashes: false,
@@ -278,8 +278,8 @@ test(`11 - currencies, usual position, one space`, () => {
   });
 });
 
-test(`12 - currencies, usual position, lots of whitespace`, () => {
-  let input = `$5\n\n\n-\n\n\n$2\n\n\n=\n\n\n$3`;
+test("12 - currencies, usual position, lots of whitespace", () => {
+  let input = "$5\n\n\n-\n\n\n$2\n\n\n=\n\n\n$3";
   mixer({
     from: 5,
     convertDashes: false,
@@ -302,8 +302,8 @@ test(`12 - currencies, usual position, lots of whitespace`, () => {
   });
 });
 
-test(`13 - currencies, unusual position, one space`, () => {
-  let input = `5$ - 2$ = 3$`;
+test("13 - currencies, unusual position, one space", () => {
+  let input = "5$ - 2$ = 3$";
   mixer({
     from: 3,
     convertDashes: false,
@@ -326,8 +326,8 @@ test(`13 - currencies, unusual position, one space`, () => {
   });
 });
 
-test(`14 - currencies, unusual position, lots of whitespace`, () => {
-  let input = `5$\n\n\n-\n\n\n2$\n\n\n=\n\n\n3$`;
+test("14 - currencies, unusual position, lots of whitespace", () => {
+  let input = "5$\n\n\n-\n\n\n2$\n\n\n=\n\n\n3$";
   mixer({
     from: 5,
     convertDashes: false,
@@ -350,8 +350,8 @@ test(`14 - currencies, unusual position, lots of whitespace`, () => {
   });
 });
 
-test(`15 - m-dash, sentence with digits`, () => {
-  let input = `My earnings today - 1.234,56 zł!`;
+test("15 - m-dash, sentence with digits", () => {
+  let input = "My earnings today - 1.234,56 zł!";
   mixer({
     from: 18,
     convertDashes: false,
@@ -374,8 +374,8 @@ test(`15 - m-dash, sentence with digits`, () => {
   });
 });
 
-test(`16 - cut-off in citation`, () => {
-  let input = `I smiled and she said, 'You mean you want me to-'`;
+test("16 - cut-off in citation", () => {
+  let input = "I smiled and she said, 'You mean you want me to-'";
   mixer({
     from: 47,
     convertDashes: false,
@@ -398,8 +398,8 @@ test(`16 - cut-off in citation`, () => {
   });
 });
 
-test(`17 - vague case`, () => {
-  let input = `m-m`;
+test("17 - vague case", () => {
+  let input = "m-m";
   mixer({
     from: 1,
   }).forEach((opt, n) => {

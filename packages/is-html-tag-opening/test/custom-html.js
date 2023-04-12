@@ -7,13 +7,13 @@ import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 // custom HTML tag names
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`custom`}\u001b[${39}m`} - starts with dash, allowCustomTagNames=off`, () => {
-  let s1 = `<-a-b>`;
+test(`01 - ${`\u001b[${36}m${"custom"}\u001b[${39}m`} - starts with dash, allowCustomTagNames=off`, () => {
+  let s1 = "<-a-b>";
   not.ok(isOpening(s1, 0), "01.01");
 });
 
-test(`02 - ${`\u001b[${36}m${`custom`}\u001b[${39}m`} - starts with dash, allowCustomTagNames=on`, () => {
-  let s1 = `<-a-b>`;
+test(`02 - ${`\u001b[${36}m${"custom"}\u001b[${39}m`} - starts with dash, allowCustomTagNames=on`, () => {
+  let s1 = "<-a-b>";
   not.ok(
     isOpening(s1, 0, {
       allowCustomTagNames: true,
@@ -22,8 +22,8 @@ test(`02 - ${`\u001b[${36}m${`custom`}\u001b[${39}m`} - starts with dash, allowC
   );
 });
 
-test(`03 - ${`\u001b[${36}m${`custom`}\u001b[${39}m`} - dash between chars`, () => {
-  let s1 = `<a-b>`;
+test(`03 - ${`\u001b[${36}m${"custom"}\u001b[${39}m`} - dash between chars`, () => {
+  let s1 = "<a-b>";
   ok(isOpening(s1, 0), "03.01");
   ok(
     isOpening(s1, 0, {
@@ -33,8 +33,8 @@ test(`03 - ${`\u001b[${36}m${`custom`}\u001b[${39}m`} - dash between chars`, () 
   );
 });
 
-test(`04 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - one letter tag, allowCustomTagNames=off`, () => {
-  let s1 = `<c>`;
+test(`04 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - one letter tag, allowCustomTagNames=off`, () => {
+  let s1 = "<c>";
   not.ok(
     isOpening(s1, 0, {
       allowCustomTagNames: false,
@@ -43,8 +43,8 @@ test(`04 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - one letter tag, all
   );
 });
 
-test(`05 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - one letter tag, allowCustomTagNames=on`, () => {
-  let s1 = `<c>`;
+test(`05 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - one letter tag, allowCustomTagNames=on`, () => {
+  let s1 = "<c>";
   ok(
     isOpening(s1, 0, {
       allowCustomTagNames: true,

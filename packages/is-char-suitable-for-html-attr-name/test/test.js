@@ -9,30 +9,30 @@ const BACKSLASH = "\u005C";
 // 00. Weird cases
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - no input`, () => {
+test(`01 - ${`\u001b[${34}m${"weird cases"}\u001b[${39}m`} - no input`, () => {
   equal(is(), false, "01.01");
 });
 
-test(`02 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - input is not a string`, () => {
+test(`02 - ${`\u001b[${34}m${"weird cases"}\u001b[${39}m`} - input is not a string`, () => {
   equal(is(2), false, "02.01");
 });
 
-test(`03 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - empty string`, () => {
+test(`03 - ${`\u001b[${34}m${"weird cases"}\u001b[${39}m`} - empty string`, () => {
   equal(is(""), false, "03.01");
 });
 
-test(`04 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - more than 1 long - first char is picked`, () => {
+test(`04 - ${`\u001b[${34}m${"weird cases"}\u001b[${39}m`} - more than 1 long - first char is picked`, () => {
   equal(is("aa"), true, "04.01");
 });
 
-test(`05 - ${`\u001b[${34}m${`weird cases`}\u001b[${39}m`} - more than 1 long - first char is picked`, () => {
+test(`05 - ${`\u001b[${34}m${"weird cases"}\u001b[${39}m`} - more than 1 long - first char is picked`, () => {
   equal(is(" a"), false, "05.01");
 });
 
 // 01. B.A.U.
 // -----------------------------------------------------------------------------
 
-test(`06 - true`, () => {
+test("06 - true", () => {
   equal(is("a"), true, "06.01");
   equal(is("A"), true, "06.02");
   equal(is("1"), true, "06.03");
@@ -40,7 +40,7 @@ test(`06 - true`, () => {
   equal(is(":"), true, "06.05");
 });
 
-test(`07 - false`, () => {
+test("07 - false", () => {
   equal(is("_"), false, "07.01");
   equal(is("!"), false, "07.02");
   equal(is("@"), false, "07.03");
@@ -54,8 +54,8 @@ test(`07 - false`, () => {
   equal(is(")"), false, "07.11");
   equal(is("["), false, "07.12");
   equal(is("]"), false, "07.13");
-  equal(is(`'`), false, "07.14");
-  equal(is(`"`), false, "07.15");
+  equal(is("'"), false, "07.14");
+  equal(is('"'), false, "07.15");
   equal(is("`"), false, "07.16");
   equal(is(" "), false, "07.17");
   equal(is("/"), false, "07.18");

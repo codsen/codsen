@@ -41,7 +41,7 @@ function nothingToCollapseGenerator() {
 // check a ten thousand randomly-generated strings that don't need collapsing
 // -----------------------------------------------------------------------------
 
-test(`01.XX - ${`\u001b[${36}m${`GENERATED TESTS`}\u001b[${39}m`}`, () => {
+test(`01.XX - ${`\u001b[${36}m${"GENERATED TESTS"}\u001b[${39}m`}`, () => {
   for (let i = 10000; i--; ) {
     let temp = nothingToCollapseGenerator();
     equal(collapse(temp), { result: temp, ranges: null });

@@ -7,7 +7,7 @@ import { collapse } from "../dist/string-collapse-white-space.esm.js";
 // various throws
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - wrong/missing input = throw`, () => {
+test(`01 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - wrong/missing input = throw`, () => {
   throws(
     () => {
       collapse();
@@ -45,7 +45,7 @@ test(`01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - wrong/missing input = th
   );
 });
 
-test(`02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - wrong opts = throw`, () => {
+test(`02 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - wrong opts = throw`, () => {
   throws(
     () => {
       collapse("aaaa", true); // not object but bool
@@ -76,15 +76,15 @@ test(`02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - wrong opts = throw`, () 
   );
 });
 
-test(`03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - empty string`, () => {
+test(`03 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - empty string`, () => {
   equal(collapse(""), { result: "", ranges: null }, "03.01");
 });
 
-test(`04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - only letter characters, no white space`, () => {
+test(`04 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - only letter characters, no white space`, () => {
   equal(collapse("aaa"), { result: "aaa", ranges: null }, "04.01");
 });
 
-test(`05 - cb is null`, () => {
+test("05 - cb is null", () => {
   equal(
     collapse("aaa", { cb: null }),
     { result: "aaa", ranges: null },

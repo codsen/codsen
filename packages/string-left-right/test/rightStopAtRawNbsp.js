@@ -9,7 +9,7 @@ const RAWNBSP = "\u00A0";
 // rightStopAtRawNbsp()
 // -----------------------------------------------------------------------------
 
-test(`01 - calling at string length`, () => {
+test("01 - calling at string length", () => {
   equal(rightStopAtRawNbsp(""), null, "01.01");
   equal(rightStopAtRawNbsp("", null), null, "01.02");
   equal(rightStopAtRawNbsp("", undefined), null, "01.03");
@@ -20,7 +20,7 @@ test(`01 - calling at string length`, () => {
   equal(rightStopAtRawNbsp("abc", 99), null, "01.08");
 });
 
-test(`02 - normal use`, () => {
+test("02 - normal use", () => {
   not.ok(!!rightStopAtRawNbsp(""), "02.01");
   not.ok(!!rightStopAtRawNbsp("a"), "02.02");
 

@@ -8,7 +8,7 @@ import { m, mixer } from "./util/util.js";
 // https://github.com/codsen/codsen/issues/16
 // https://github.com/hteumeuleu/email-bugs/issues/92
 
-test(`01 - sampler`, () => {
+test("01 - sampler", () => {
   equal(
     crush(
       `<style>
@@ -32,7 +32,7 @@ test(`01 - sampler`, () => {
   );
 });
 
-test(`02 - spaced`, () => {
+test("02 - spaced", () => {
   mixer({
     removeLineBreaks: true,
   }).forEach((opt) => {
@@ -59,7 +59,7 @@ test(`02 - spaced`, () => {
   });
 });
 
-test(`03 - already come tight`, () => {
+test("03 - already come tight", () => {
   mixer({
     removeLineBreaks: true,
   }).forEach((opt) => {
@@ -86,7 +86,7 @@ test(`03 - already come tight`, () => {
   });
 });
 
-test(`04 - already come tight, vs. Nunjucks`, () => {
+test("04 - already come tight, vs. Nunjucks", () => {
   mixer({
     removeLineBreaks: true,
   }).forEach((opt) => {
@@ -106,7 +106,7 @@ test(`04 - already come tight, vs. Nunjucks`, () => {
   });
 });
 
-test(`05 - line break falls between two curlies, #1`, () => {
+test("05 - line break falls between two curlies, #1", () => {
   equal(
     crush(
       `<style>
@@ -132,7 +132,7 @@ test(`05 - line break falls between two curlies, #1`, () => {
   );
 });
 
-test(`06 - line break falls between two curlies, #2`, () => {
+test("06 - line break falls between two curlies, #2", () => {
   equal(
     crush(
       `<style>
@@ -158,7 +158,7 @@ test(`06 - line break falls between two curlies, #2`, () => {
   );
 });
 
-test(`07 - line break falls between two curlies, #3`, () => {
+test("07 - line break falls between two curlies, #3", () => {
   equal(
     crush(
       `<style>
@@ -184,7 +184,7 @@ test(`07 - line break falls between two curlies, #3`, () => {
   );
 });
 
-test(`08 - line break falls between two curlies, #4`, () => {
+test("08 - line break falls between two curlies, #4", () => {
   equal(
     crush(
       `<style>

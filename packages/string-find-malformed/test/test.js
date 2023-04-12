@@ -98,7 +98,7 @@ test("05 - throws when opts.stringOffset is not a number", () => {
   );
 });
 
-test(`06 - empty string`, () => {
+test("06 - empty string", () => {
   let gathered = [];
   findMalformed("", "bde", (obj) => {
     gathered.push(obj);
@@ -106,7 +106,7 @@ test(`06 - empty string`, () => {
   equal(gathered, [], "06.01");
 });
 
-test(`07 - empty string`, () => {
+test("07 - empty string", () => {
   let gathered = [];
   findMalformed("abc", "", (obj) => {
     gathered.push(obj);
@@ -118,7 +118,7 @@ test(`07 - empty string`, () => {
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-test(`08 - rogue character, "c"`, () => {
+test('08 - rogue character, "c"', () => {
   let gathered = [];
   findMalformed("abcdef", "bde", (obj) => {
     gathered.push(obj);
@@ -135,7 +135,7 @@ test(`08 - rogue character, "c"`, () => {
   );
 });
 
-test(`09 - overlapping and extended maxDistance`, () => {
+test("09 - overlapping and extended maxDistance", () => {
   let gathered = [];
   findMalformed(
     "abcabcd.f",
@@ -159,7 +159,7 @@ test(`09 - overlapping and extended maxDistance`, () => {
   );
 });
 
-test(`10 - with opts.stringOffset`, () => {
+test("10 - with opts.stringOffset", () => {
   let gathered = [];
   findMalformed(
     "<div><!-something--></div>",
@@ -184,7 +184,7 @@ test(`10 - with opts.stringOffset`, () => {
   );
 });
 
-test(`11 - correct, fully matching value is not pinged`, () => {
+test("11 - correct, fully matching value is not pinged", () => {
   let gathered = [];
   findMalformed(
     "<div><!--something--></div>",
@@ -200,7 +200,7 @@ test(`11 - correct, fully matching value is not pinged`, () => {
   equal(gathered, [], "11.01");
 });
 
-test(`12 - like before but strings in opts`, () => {
+test("12 - like before but strings in opts", () => {
   let gathered = [];
   findMalformed(
     "<div><!-\n\n\n-something--></div>",
@@ -225,7 +225,7 @@ test(`12 - like before but strings in opts`, () => {
   );
 });
 
-test(`13 - whitespace`, () => {
+test("13 - whitespace", () => {
   let gathered = [];
   findMalformed(
     "<div>< ! - -something--></div>",
@@ -247,7 +247,7 @@ test(`13 - whitespace`, () => {
   );
 });
 
-test(`14 - repeated characters after failed match`, () => {
+test("14 - repeated characters after failed match", () => {
   let gathered = [];
   findMalformed(
     "<--z",
@@ -269,7 +269,7 @@ test(`14 - repeated characters after failed match`, () => {
   );
 });
 
-test(`15 - repeated characters after failed match`, () => {
+test("15 - repeated characters after failed match", () => {
   let gathered = [];
   findMalformed(
     "<!-[if mso]>",

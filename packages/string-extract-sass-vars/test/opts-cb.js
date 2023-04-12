@@ -8,10 +8,10 @@ import { extractVars as e } from "../dist/string-extract-sass-vars.esm.js";
 
 test("01 - opts.cb - custom override of a value", () => {
   equal(
-    e(`$grey: #ccc;`, {
+    e("$grey: #ccc;", {
       cb: (val) => {
         if (val === "#ccc") {
-          return `#cccccc`;
+          return "#cccccc";
         }
         return val;
       },

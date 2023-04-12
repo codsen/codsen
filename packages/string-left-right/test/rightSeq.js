@@ -7,7 +7,7 @@ import { rightSeq } from "../dist/string-left-right.esm.js";
 // rightSeq()
 // -----------------------------------------------------------------------------
 
-test(`01 - normal use`, () => {
+test("01 - normal use", () => {
   // starts at "c":
   equal(
     rightSeq("abcdefghijklmnop", 2, "d"),
@@ -42,11 +42,11 @@ test(`01 - normal use`, () => {
   );
 });
 
-test(`02 - no findings`, () => {
+test("02 - no findings", () => {
   equal(rightSeq("abcdefghijklmnop", 0, "d", "e", "f"), null, "02.01");
 });
 
-test(`03 - absent skips to right()`, () => {
+test("03 - absent skips to right()", () => {
   equal(rightSeq("abcdefghijklmnop", 0, "", ""), null, "03.01");
   equal(
     rightSeq("abcdefghijklmnop", 0, "b", ""),
@@ -68,11 +68,11 @@ test(`03 - absent skips to right()`, () => {
   );
 });
 
-test(`04 - starting point outside of the range`, () => {
+test("04 - starting point outside of the range", () => {
   equal(rightSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "04.01");
 });
 
-test(`05 - optional - existing`, () => {
+test("05 - optional - existing", () => {
   equal(
     rightSeq("abcdefghijklmnop", 2, "d?", "e?", "f"),
     {
@@ -84,7 +84,7 @@ test(`05 - optional - existing`, () => {
   );
 });
 
-test(`06 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, no whitespace`, () => {
+test(`06 - ${`\u001b[${31}m${"optional"}\u001b[${39}m`} - 1 not existing, no whitespace`, () => {
   equal(
     rightSeq("abcefghijklmnop", 2, "d?", "e", "f"),
     {
@@ -96,7 +96,7 @@ test(`06 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, no whi
   );
 });
 
-test(`07 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, with whitespace`, () => {
+test(`07 - ${`\u001b[${31}m${"optional"}\u001b[${39}m`} - 1 not existing, with whitespace`, () => {
   equal(
     rightSeq("abc  e   f   g   hijklmnop", 2, "d?", "e", "f"),
     {
@@ -111,7 +111,7 @@ test(`07 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, with w
   );
 });
 
-test(`08 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - ends with non-existing optional`, () => {
+test(`08 - ${`\u001b[${31}m${"optional"}\u001b[${39}m`} - ends with non-existing optional`, () => {
   equal(
     rightSeq("abc  e   f   g   hijklmnop", 2, "y?", "e", "z?"),
     {
@@ -123,7 +123,7 @@ test(`08 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - ends with non-existing
   );
 });
 
-test(`09 - all optional, existing`, () => {
+test("09 - all optional, existing", () => {
   equal(
     rightSeq("abcdefghijklmnop", 2, "d?", "e?", "f?"),
     {
@@ -135,13 +135,13 @@ test(`09 - all optional, existing`, () => {
   );
 });
 
-test(`10 - all optional, not existing`, () => {
+test("10 - all optional, not existing", () => {
   equal(rightSeq("abcdefghijklmnop", 2, "x?"), null, "10.01");
   equal(rightSeq("abcdefghijklmnop", 2, "x?", "y?"), null, "10.02");
   equal(rightSeq("abcdefghijklmnop", 2, "x?", "y?", "z?"), null, "10.03");
 });
 
-test(`11 - no findings`, () => {
+test("11 - no findings", () => {
   equal(rightSeq("ABCDEFGHIJKLMNOP", 0, "b", "c", "d"), null, "11.01");
   equal(
     rightSeq("ABCDEFGHIJKLMNOP", 0, { i: true }, "b", "c", "d"),

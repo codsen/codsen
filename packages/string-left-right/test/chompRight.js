@@ -7,7 +7,7 @@ import { chompRight } from "../dist/string-left-right.esm.js";
 // chompRight()
 // -----------------------------------------------------------------------------
 
-test(`01`, () => {
+test("01", () => {
   equal(chompRight("a b c d  c dx", 2, "c", "d"), 12, "01.01");
   equal(chompRight("a b c d  c d x", 2, "c", "d"), 12, "01.02");
   equal(chompRight("a b c d  c d  x", 2, "c", "d"), 13, "01.03");
@@ -42,7 +42,7 @@ test(`01`, () => {
   );
 });
 
-test(`02`, () => {
+test("02", () => {
   // mode 1: stop at first space, leave the whitespace alone
   let o = { mode: 1 };
   equal(chompRight("a b c d  c dx", 2, o, "c", "d"), 12, "02.01");
@@ -58,7 +58,7 @@ test(`02`, () => {
   );
 });
 
-test(`03`, () => {
+test("03", () => {
   // mode 2: hungrily chomp all whitespace except newlines
   let o = { mode: 2 };
   equal(chompRight("a b c d  c dx", 2, o, "c", "d"), 12, "03.01");
@@ -74,7 +74,7 @@ test(`03`, () => {
   );
 });
 
-test(`04`, () => {
+test("04", () => {
   // mode 3: aggressively chomp all whitespace
   let o = { mode: 3 };
   equal(chompRight("a b c d  c dx", 2, o, "c", "d"), 12, "04.01");
@@ -90,7 +90,7 @@ test(`04`, () => {
   );
 });
 
-test(`05`, () => {
+test("05", () => {
   equal(chompRight("a b c d  c dx", 2), null, "05.01");
   equal(chompRight("a b c d  c dx", 2, "z", "x"), null, "05.02");
   equal(chompRight("a b c d  c dx", 2, { mode: 0 }, "z", "x"), null, "05.03");
@@ -119,7 +119,7 @@ test(`05`, () => {
   equal(chompRight("a b c d  c d  \nx", 0, "m?", "n?"), null, "05.18");
 });
 
-test(`06`, () => {
+test("06", () => {
   throws(
     () => {
       chompRight("a b c d  c dx", 2, { mode: "z" }, "k", "l");
@@ -129,21 +129,21 @@ test(`06`, () => {
   );
 });
 
-test(`07`, () => {
+test("07", () => {
   // stop at \n
   equal(chompRight("a b c d  c d    \n", 2, null, "c", "d"), 16, "07.01");
 });
 
-test(`08`, () => {
+test("08", () => {
   // stop at \n
   equal(chompRight("a", 0, null, "x"), null, "08.01");
 });
 
-test(`09`, () => {
+test("09", () => {
   equal(chompRight(1, 0, null, "x"), null, "09.01");
 });
 
-test(`10`, () => {
+test("10", () => {
   equal(
     chompRight("a b c d  c d    \t", 2, { mode: 0 }, "c", "d"),
     17,
@@ -161,50 +161,50 @@ test(`10`, () => {
   );
 });
 
-test(`11`, () => {
-  equal(chompRight(`<a bcd="ef">`, 6, "="), null, "11.01");
-  equal(chompRight(`<a bcd=="ef">`, 6, "="), 8, "11.02");
-  equal(chompRight(`<a bcd==="ef">`, 6, "="), 9, "11.03");
-  equal(chompRight(`<a bcd= ="ef">`, 6, "="), 9, "11.04");
-  equal(chompRight(`<a bcd= =="ef">`, 6, "="), 10, "11.05");
-  equal(chompRight(`<a bcd= = "ef">`, 6, "="), 9, "11.06");
-  equal(chompRight(`<a bcd= == "ef">`, 6, "="), 10, "11.07");
+test("11", () => {
+  equal(chompRight('<a bcd="ef">', 6, "="), null, "11.01");
+  equal(chompRight('<a bcd=="ef">', 6, "="), 8, "11.02");
+  equal(chompRight('<a bcd==="ef">', 6, "="), 9, "11.03");
+  equal(chompRight('<a bcd= ="ef">', 6, "="), 9, "11.04");
+  equal(chompRight('<a bcd= =="ef">', 6, "="), 10, "11.05");
+  equal(chompRight('<a bcd= = "ef">', 6, "="), 9, "11.06");
+  equal(chompRight('<a bcd= == "ef">', 6, "="), 10, "11.07");
 
   // hardcoded defaults mode === 0
-  equal(chompRight(`<a bcd="ef">`, 6, { mode: 0 }, "="), null, "11.08");
-  equal(chompRight(`<a bcd=="ef">`, 6, { mode: 0 }, "="), 8, "11.09");
-  equal(chompRight(`<a bcd==="ef">`, 6, { mode: 0 }, "="), 9, "11.10");
-  equal(chompRight(`<a bcd= ="ef">`, 6, { mode: 0 }, "="), 9, "11.11");
-  equal(chompRight(`<a bcd= =="ef">`, 6, { mode: 0 }, "="), 10, "11.12");
-  equal(chompRight(`<a bcd= = "ef">`, 6, { mode: 0 }, "="), 9, "11.13");
-  equal(chompRight(`<a bcd= == "ef">`, 6, { mode: 0 }, "="), 10, "11.14");
+  equal(chompRight('<a bcd="ef">', 6, { mode: 0 }, "="), null, "11.08");
+  equal(chompRight('<a bcd=="ef">', 6, { mode: 0 }, "="), 8, "11.09");
+  equal(chompRight('<a bcd==="ef">', 6, { mode: 0 }, "="), 9, "11.10");
+  equal(chompRight('<a bcd= ="ef">', 6, { mode: 0 }, "="), 9, "11.11");
+  equal(chompRight('<a bcd= =="ef">', 6, { mode: 0 }, "="), 10, "11.12");
+  equal(chompRight('<a bcd= = "ef">', 6, { mode: 0 }, "="), 9, "11.13");
+  equal(chompRight('<a bcd= == "ef">', 6, { mode: 0 }, "="), 10, "11.14");
 
   // mode === 1
-  equal(chompRight(`<a bcd="ef">`, 6, { mode: 1 }, "="), null, "11.15");
-  equal(chompRight(`<a bcd=="ef">`, 6, { mode: 1 }, "="), 8, "11.16");
-  equal(chompRight(`<a bcd==="ef">`, 6, { mode: 1 }, "="), 9, "11.17");
-  equal(chompRight(`<a bcd= ="ef">`, 6, { mode: 1 }, "="), 9, "11.18");
-  equal(chompRight(`<a bcd= =="ef">`, 6, { mode: 1 }, "="), 10, "11.19");
-  equal(chompRight(`<a bcd= = "ef">`, 6, { mode: 1 }, "="), 9, "11.20");
-  equal(chompRight(`<a bcd= == "ef">`, 6, { mode: 1 }, "="), 10, "11.21");
+  equal(chompRight('<a bcd="ef">', 6, { mode: 1 }, "="), null, "11.15");
+  equal(chompRight('<a bcd=="ef">', 6, { mode: 1 }, "="), 8, "11.16");
+  equal(chompRight('<a bcd==="ef">', 6, { mode: 1 }, "="), 9, "11.17");
+  equal(chompRight('<a bcd= ="ef">', 6, { mode: 1 }, "="), 9, "11.18");
+  equal(chompRight('<a bcd= =="ef">', 6, { mode: 1 }, "="), 10, "11.19");
+  equal(chompRight('<a bcd= = "ef">', 6, { mode: 1 }, "="), 9, "11.20");
+  equal(chompRight('<a bcd= == "ef">', 6, { mode: 1 }, "="), 10, "11.21");
 
   // mode === 2
-  equal(chompRight(`<a bcd="ef">`, 6, { mode: 2 }, "="), null, "11.22");
-  equal(chompRight(`<a bcd=="ef">`, 6, { mode: 2 }, "="), 8, "11.23");
-  equal(chompRight(`<a bcd==="ef">`, 6, { mode: 2 }, "="), 9, "11.24");
-  equal(chompRight(`<a bcd= ="ef">`, 6, { mode: 2 }, "="), 9, "11.25");
-  equal(chompRight(`<a bcd= =="ef">`, 6, { mode: 2 }, "="), 10, "11.26");
-  equal(chompRight(`<a bcd= = "ef">`, 6, { mode: 2 }, "="), 10, "11.27");
-  equal(chompRight(`<a bcd= == "ef">`, 6, { mode: 2 }, "="), 11, "11.28");
+  equal(chompRight('<a bcd="ef">', 6, { mode: 2 }, "="), null, "11.22");
+  equal(chompRight('<a bcd=="ef">', 6, { mode: 2 }, "="), 8, "11.23");
+  equal(chompRight('<a bcd==="ef">', 6, { mode: 2 }, "="), 9, "11.24");
+  equal(chompRight('<a bcd= ="ef">', 6, { mode: 2 }, "="), 9, "11.25");
+  equal(chompRight('<a bcd= =="ef">', 6, { mode: 2 }, "="), 10, "11.26");
+  equal(chompRight('<a bcd= = "ef">', 6, { mode: 2 }, "="), 10, "11.27");
+  equal(chompRight('<a bcd= == "ef">', 6, { mode: 2 }, "="), 11, "11.28");
 
   // mode === 3
-  equal(chompRight(`<a bcd="ef">`, 6, { mode: 3 }, "="), null, "11.29");
-  equal(chompRight(`<a bcd=="ef">`, 6, { mode: 3 }, "="), 8, "11.30");
-  equal(chompRight(`<a bcd==="ef">`, 6, { mode: 3 }, "="), 9, "11.31");
-  equal(chompRight(`<a bcd= ="ef">`, 6, { mode: 3 }, "="), 9, "11.32");
-  equal(chompRight(`<a bcd= =="ef">`, 6, { mode: 3 }, "="), 10, "11.33");
-  equal(chompRight(`<a bcd= = "ef">`, 6, { mode: 3 }, "="), 10, "11.34");
-  equal(chompRight(`<a bcd= == "ef">`, 6, { mode: 3 }, "="), 11, "11.35");
+  equal(chompRight('<a bcd="ef">', 6, { mode: 3 }, "="), null, "11.29");
+  equal(chompRight('<a bcd=="ef">', 6, { mode: 3 }, "="), 8, "11.30");
+  equal(chompRight('<a bcd==="ef">', 6, { mode: 3 }, "="), 9, "11.31");
+  equal(chompRight('<a bcd= ="ef">', 6, { mode: 3 }, "="), 9, "11.32");
+  equal(chompRight('<a bcd= =="ef">', 6, { mode: 3 }, "="), 10, "11.33");
+  equal(chompRight('<a bcd= = "ef">', 6, { mode: 3 }, "="), 10, "11.34");
+  equal(chompRight('<a bcd= == "ef">', 6, { mode: 3 }, "="), 11, "11.35");
 });
 
 test.run();

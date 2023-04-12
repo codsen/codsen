@@ -255,7 +255,7 @@ test("05 - zero-length ranges array", () => {
 // 01. BAU - inverting
 // ==============================
 
-test(`06 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - zero length given`, () => {
+test(`06 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - zero length given`, () => {
   equal(i(null, 0), null, "06.01");
   equal(i([], 0), null, "06.02");
   equal(i([null], 0), null, "06.03");
@@ -276,7 +276,7 @@ test(`06 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - zero length given`, (
   equal(i([[1, 2], null, [2, 4]], 0), null, "06.08");
 });
 
-test(`07 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - reference string covers the range`, () => {
+test(`07 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - reference string covers the range`, () => {
   let ref = "abcdefghij";
   let range1 = [1, 3];
   let range2p1 = [0, 1];
@@ -293,19 +293,19 @@ test(`07 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - reference string cove
   equal(i([range1], ref.length), [range2p1, range2p2], "07.05");
 });
 
-test(`08 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - is one too short`, () => {
+test(`08 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - is one too short`, () => {
   // good:
   equal(i([[1, 3]], 3), [[0, 1]], "08.01");
   // one too short - will crop:
   equal(i([[1, 3]], 2), [[0, 1]], "08.02");
 });
 
-test(`09 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - same element range invert - yields everything`, () => {
+test(`09 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - same element range invert - yields everything`, () => {
   equal(i([[0, 0]], 3), [[0, 3]], "09.01");
   equal(i([[1, 1]], 3), [[0, 3]], "09.02");
 });
 
-test(`10 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - reference string covers the ranges`, () => {
+test(`10 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - reference string covers the ranges`, () => {
   let ref = "abcdefghij";
   let range1 = [1, 3];
   let range2 = [5, 6];
@@ -333,7 +333,7 @@ test(`10 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - reference string cov
   );
 });
 
-test(`11 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each other`, () => {
+test(`11 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - ranges touch each other`, () => {
   equal(
     i(
       [
@@ -468,7 +468,7 @@ test(`11 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each ot
   );
 });
 
-test(`12 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - input was given not merged`, () => {
+test(`12 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - input was given not merged`, () => {
   equal(
     i(
       [
@@ -526,7 +526,7 @@ test(`12 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - input was given not 
   );
 });
 
-test(`13 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - third argument present`, () => {
+test(`13 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - third argument present`, () => {
   equal(
     i(
       [
@@ -540,16 +540,16 @@ test(`13 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - third argument prese
   );
 });
 
-test(`14 - ${`\u001b[${32}m${`null instead of ranges`}\u001b[${39}m`}`, () => {
+test(`14 - ${`\u001b[${32}m${"null instead of ranges"}\u001b[${39}m`}`, () => {
   equal(i(null, 0), null, "14.01");
   equal(i(null, 3), [[0, 3]], "14.02");
 });
 
-test(`15 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - range to invert is far outside #1`, () => {
+test(`15 - ${`\u001b[${35}m${"ad hoc"}\u001b[${39}m`} - range to invert is far outside #1`, () => {
   equal(i([[100, 200]], 10), [[0, 10]], "15.01");
 });
 
-test(`16 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far outside #2`, () => {
+test(`16 - ${`\u001b[${35}m${"ad hoc"}\u001b[${39}m`} - ranges to invert is far outside #2`, () => {
   equal(
     i(
       [
@@ -563,7 +563,7 @@ test(`16 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far 
   );
 });
 
-test(`17 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far outside #3`, () => {
+test(`17 - ${`\u001b[${35}m${"ad hoc"}\u001b[${39}m`} - ranges to invert is far outside #3`, () => {
   equal(
     i(
       [

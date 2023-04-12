@@ -66,26 +66,26 @@ test("02 - the opts.returnRangesOnly is present", () => {
   );
 });
 
-test(`03 - empty string`, () => {
+test("03 - empty string", () => {
   let { result, ranges } = fixRowNums("");
   equal(result, "", "03.01");
   equal(ranges, null, "03.02");
 });
 
-test(`04 - exports defaults`, () => {
+test("04 - exports defaults", () => {
   equal(
     defaults,
     {
       padStart: 3,
       overrideRowNum: null,
-      triggerKeywords: [`console.log`],
+      triggerKeywords: ["console.log"],
       extractedLogContentsWereGiven: false,
     },
     "04.01"
   );
 });
 
-test(`05 - exports version`, () => {
+test("05 - exports version", () => {
   match(version, /\d+\.\d+\.\d+/g, "05.01");
 });
 

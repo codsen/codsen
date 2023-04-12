@@ -9,8 +9,8 @@ import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js"
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-test(`01 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
-  let str = `<img src="xyz" alt="="/>`;
+test(`01 - ${`\u001b[${33}m${"cheeky cases"}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+  let str = '<img src="xyz" alt="="/>';
 
   // src opening at 9
   not.ok(isCl(str, 9, 9), "01.01");
@@ -27,8 +27,8 @@ test(`01 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character
   // fin.
 });
 
-test(`02 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
-  let str = `<img src="xyz" alt='='/>`;
+test(`02 - ${`\u001b[${33}m${"cheeky cases"}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+  let str = "<img src=\"xyz\" alt='='/>";
 
   // src opening at 9
   not.ok(isCl(str, 9, 9), "02.01");
@@ -45,8 +45,8 @@ test(`02 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character
   // fin.
 });
 
-test(`03 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
-  let str = `<img src="xyz" alt="='/>`;
+test(`03 - ${`\u001b[${33}m${"cheeky cases"}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+  let str = '<img src="xyz" alt="=\'/>';
 
   // src opening at 9
   not.ok(isCl(str, 9, 9), "03.01");
@@ -63,8 +63,8 @@ test(`03 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character
   // fin.
 });
 
-test(`04 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
-  let str = `<img src="xyz" alt='="/>`;
+test(`04 - ${`\u001b[${33}m${"cheeky cases"}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+  let str = '<img src="xyz" alt=\'="/>';
 
   // src opening at 9
   not.ok(isCl(str, 9, 9), "04.01");
@@ -85,8 +85,8 @@ test(`04 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character
 //                               three attributes
 //
 
-test(`05 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
-  let str = `<img src="xyz" alt="=" class="klm"/>`;
+test(`05 - ${`\u001b[${33}m${"cheeky cases"}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+  let str = '<img src="xyz" alt="=" class="klm"/>';
 
   // src opening at 9
   not.ok(isCl(str, 9, 9), "05.01");
@@ -115,8 +115,8 @@ test(`05 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character
   // fin.
 });
 
-test(`06 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
-  let str = `<img src="xyz" alt='=' class="klm'/>`;
+test(`06 - ${`\u001b[${33}m${"cheeky cases"}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+  let str = "<img src=\"xyz\" alt='=' class=\"klm'/>";
 
   // src opening at 9
   not.ok(isCl(str, 9, 9), "06.01");
@@ -145,8 +145,8 @@ test(`06 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character
   // fin.
 });
 
-test(`07 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
-  let str = `<img src="xyz" alt='=' class='klm"/>`;
+test(`07 - ${`\u001b[${33}m${"cheeky cases"}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+  let str = "<img src=\"xyz\" alt='=' class='klm\"/>";
 
   // src opening at 9
   not.ok(isCl(str, 9, 9), "07.01");
@@ -175,8 +175,8 @@ test(`07 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character
   // fin.
 });
 
-test(`08 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
-  let str = `<img src="xyz" alt='=" class="klm"/>`;
+test(`08 - ${`\u001b[${33}m${"cheeky cases"}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+  let str = '<img src="xyz" alt=\'=" class="klm"/>';
 
   // src opening at 9
   not.ok(isCl(str, 9, 9), "08.01");
@@ -205,8 +205,8 @@ test(`08 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character
   // fin.
 });
 
-test(`09 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
-  let str = `<img src="xyz" alt='=" class="klm'/>`;
+test(`09 - ${`\u001b[${33}m${"cheeky cases"}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+  let str = '<img src="xyz" alt=\'=" class="klm\'/>';
 
   // src opening at 9
   not.ok(isCl(str, 9, 9), "09.01");
@@ -235,8 +235,8 @@ test(`09 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character
   // fin.
 });
 
-test(`10 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
-  let str = `<img src="xyz" alt='=" class='klm"/>`;
+test(`10 - ${`\u001b[${33}m${"cheeky cases"}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+  let str = '<img src="xyz" alt=\'=" class=\'klm"/>';
 
   // src opening at 9
   not.ok(isCl(str, 9, 9), "10.01");
@@ -265,8 +265,8 @@ test(`10 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character
   // fin.
 });
 
-test(`11 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
-  let str = `<img src="xyz" alt='=" class='klm'/>`;
+test(`11 - ${`\u001b[${33}m${"cheeky cases"}\u001b[${39}m`} - the last character in the attr value is "equal", \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+  let str = "<img src=\"xyz\" alt='=\" class='klm'/>";
 
   // src opening at 9
   not.ok(isCl(str, 9, 9), "11.01");
@@ -295,20 +295,20 @@ test(`11 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - the last character
   // fin.
 });
 
-test(`12 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - repeated and dodgy`, () => {
-  ok(isCl(`<a class="" class= class"">`, 9, 10), "12.01");
+test(`12 - ${`\u001b[${33}m${"cheeky cases"}\u001b[${39}m`} - repeated and dodgy`, () => {
+  ok(isCl('<a class="" class= class"">', 9, 10), "12.01");
 });
 
-test(`13 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - repeated and dodgy`, () => {
-  not.ok(isCl(`<a class="" class= class"">`, 9, 24), "13.01");
+test(`13 - ${`\u001b[${33}m${"cheeky cases"}\u001b[${39}m`} - repeated and dodgy`, () => {
+  not.ok(isCl('<a class="" class= class"">', 9, 24), "13.01");
 });
 
-test(`14 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - repeated and dodgy`, () => {
-  not.ok(isCl(`<a class="" class= class"">`, 9, 25), "14.01");
+test(`14 - ${`\u001b[${33}m${"cheeky cases"}\u001b[${39}m`} - repeated and dodgy`, () => {
+  not.ok(isCl('<a class="" class= class"">', 9, 25), "14.01");
 });
 
-test(`15 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - repeated and dodgy`, () => {
-  ok(isCl(`<a class="" class= class"">`, 24, 25), "15.01");
+test(`15 - ${`\u001b[${33}m${"cheeky cases"}\u001b[${39}m`} - repeated and dodgy`, () => {
+  ok(isCl('<a class="" class= class"">', 24, 25), "15.01");
 });
 
 test.run();

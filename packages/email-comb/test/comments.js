@@ -268,8 +268,8 @@ test("08 - trims commented-out HTML", () => {
 });
 
 test("09 - outer trims - single leading space", () => {
-  let source = ` <body>`;
-  let intended = `<body>`;
+  let source = " <body>";
+  let intended = "<body>";
 
   equal(comb(source).result, intended, "09.01");
 });
@@ -289,7 +289,7 @@ test("10 - outer trims - doctype with leading line break", () => {
 });
 
 test("11 - outer trims - trailing line breaks", () => {
-  let source = ` <body>\n\n\n`;
+  let source = " <body>\n\n\n";
   let intended = `<body>
 `;
 
@@ -297,22 +297,22 @@ test("11 - outer trims - trailing line breaks", () => {
 });
 
 test("12 - comment surrounded by tags", () => {
-  let source = ` <strong><!-- --></strong> `;
-  let intended = `<strong></strong>`;
+  let source = " <strong><!-- --></strong> ";
+  let intended = "<strong></strong>";
 
   equal(comb(source).result, intended, "12.01");
 });
 
 test("13 - leading comment", () => {
-  let source = `<!-- something -->zzz`;
-  let intended = `zzz`;
+  let source = "<!-- something -->zzz";
+  let intended = "zzz";
 
   equal(comb(source).result, intended, "13.01");
 });
 
 test("14 - leading spaces #1 - just text", () => {
-  let source = `  a`;
-  let intended = `a`;
+  let source = "  a";
+  let intended = "a";
 
   equal(comb(source).result, intended, "14.01");
 });
@@ -337,15 +337,15 @@ test("15 - leading spaces #2 - no body", () => {
 });
 
 test("16 - outer trims - some leading tabs", () => {
-  let source = `\n\t\t<body>`;
-  let intended = `<body>`;
+  let source = "\n\t\t<body>";
+  let intended = "<body>";
 
   equal(comb(source).result, intended, "16.01");
 });
 
 test("17 - outer trims - doctype with leading space", () => {
-  let source = ` <!DOCTYPE>`;
-  let intended = `<!DOCTYPE>`;
+  let source = " <!DOCTYPE>";
+  let intended = "<!DOCTYPE>";
 
   equal(comb(source).result, intended, "17.01");
 });

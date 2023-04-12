@@ -16,7 +16,7 @@ import { convertAll } from "../dist/string-apostrophes.esm.js";
 // https://github.com/kemitchell/straight-to-curly-quotes.json/
 // License CC0-1.0
 
-test(`01 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - one word wrapped with double quotes`, () => {
+test(`01 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - one word wrapped with double quotes`, () => {
   equal(
     convertAll('"Hello!"', {
       convertApostrophes: 1,
@@ -27,9 +27,9 @@ test(`01 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`02 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single quote surrounded by letters`, () => {
+test(`02 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single quote surrounded by letters`, () => {
   equal(
-    convertAll(`ain't`, {
+    convertAll("ain't", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -38,9 +38,9 @@ test(`02 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`03 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single quote surrounded by letters 2`, () => {
+test(`03 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single quote surrounded by letters 2`, () => {
   equal(
-    convertAll(`ma'am`, {
+    convertAll("ma'am", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -49,9 +49,9 @@ test(`03 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`04 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - leading single quote`, () => {
+test(`04 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - leading single quote`, () => {
   equal(
-    convertAll(`'Twas the night`, {
+    convertAll("'Twas the night", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -60,9 +60,9 @@ test(`04 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`05 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - mixed quotes within a single sentence`, () => {
+test(`05 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - mixed quotes within a single sentence`, () => {
   equal(
-    convertAll(`"Hello," said the spider. "'Shelob' is my name."`, {
+    convertAll('"Hello," said the spider. "\'Shelob\' is my name."', {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -71,9 +71,9 @@ test(`05 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`06 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single letters wrapped with single quotes`, () => {
+test(`06 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single letters wrapped with single quotes`, () => {
   equal(
-    convertAll(`'A', 'B', and 'C' are letters.`, {
+    convertAll("'A', 'B', and 'C' are letters.", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -82,9 +82,9 @@ test(`06 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`07 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - words wrapped with single quotes`, () => {
+test(`07 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - words wrapped with single quotes`, () => {
   equal(
-    convertAll(`'Oak,' 'elm,' and 'beech' are names of trees. So is 'pine.'`, {
+    convertAll("'Oak,' 'elm,' and 'beech' are names of trees. So is 'pine.'", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -93,9 +93,9 @@ test(`07 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`08 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - double quotes within single quotes`, () => {
+test(`08 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - double quotes within single quotes`, () => {
   equal(
-    convertAll(`'He said, "I want to go."' Were you alive in the 70's?`, {
+    convertAll("'He said, \"I want to go.\"' Were you alive in the 70's?", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -104,9 +104,9 @@ test(`08 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`09 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - double quotes within single quotes`, () => {
+test(`09 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - double quotes within single quotes`, () => {
   equal(
-    convertAll(`"That's a 'magic' sock."`, {
+    convertAll("\"That's a 'magic' sock.\"", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -115,10 +115,10 @@ test(`09 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`10 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - double quotes within double quotes`, () => {
+test(`10 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - double quotes within double quotes`, () => {
   equal(
     convertAll(
-      `Welcome to Website Name! Company Name, Inc. ("Company Name" or "Company") recommends that you read the following terms and conditions carefully.`,
+      'Welcome to Website Name! Company Name, Inc. ("Company Name" or "Company") recommends that you read the following terms and conditions carefully.',
       {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -129,10 +129,10 @@ test(`10 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`11 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single quotes within double quotes`, () => {
+test(`11 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single quotes within double quotes`, () => {
   equal(
     convertAll(
-      `Welcome to Website Name! Company Name, Inc. ('Company Name' or 'Company') recommends that you read the following terms and conditions carefully.`,
+      "Welcome to Website Name! Company Name, Inc. ('Company Name' or 'Company') recommends that you read the following terms and conditions carefully.",
       {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -143,9 +143,9 @@ test(`11 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`12 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - plural`, () => {
+test(`12 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - plural`, () => {
   equal(
-    convertAll(`'85 was a good year. (The entire '80s were.)`, {
+    convertAll("'85 was a good year. (The entire '80s were.)", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -154,9 +154,9 @@ test(`12 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`13 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single quote in the end of a word`, () => {
+test(`13 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single quote in the end of a word`, () => {
   equal(
-    convertAll(`Workin' hard`, {
+    convertAll("Workin' hard", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -165,9 +165,9 @@ test(`13 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`14 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single quote in the front of a word`, () => {
+test(`14 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single quote in the front of a word`, () => {
   equal(
-    convertAll(`'Twas the night before Christmas.`, {
+    convertAll("'Twas the night before Christmas.", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -176,9 +176,9 @@ test(`14 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`15 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single quote in the front of a word plus in the middle`, () => {
+test(`15 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single quote in the front of a word plus in the middle`, () => {
   equal(
-    convertAll(`'Twasn't the night before Christmas.`, {
+    convertAll("'Twasn't the night before Christmas.", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -187,9 +187,9 @@ test(`15 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`16 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single quote in the front of a word plus in the middle`, () => {
+test(`16 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single quote in the front of a word plus in the middle`, () => {
   equal(
-    convertAll(`'Tis the night before Christmas.`, {
+    convertAll("'Tis the night before Christmas.", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -198,9 +198,9 @@ test(`16 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`17 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single quote in the front of a word plus in the middle`, () => {
+test(`17 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single quote in the front of a word plus in the middle`, () => {
   equal(
-    convertAll(`'Tisn't the night before Christmas.`, {
+    convertAll("'Tisn't the night before Christmas.", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -209,9 +209,9 @@ test(`17 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`18 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single quote in the front of a string`, () => {
+test(`18 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single quote in the front of a string`, () => {
   equal(
-    convertAll(`'Twill be the night before Christmas.`, {
+    convertAll("'Twill be the night before Christmas.", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -220,9 +220,9 @@ test(`18 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`19 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single quote in the front of a string`, () => {
+test(`19 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single quote in the front of a string`, () => {
   equal(
-    convertAll(`'Twould be the night before Christmas.`, {
+    convertAll("'Twould be the night before Christmas.", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -231,9 +231,9 @@ test(`19 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`20 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single quote in the front of a string`, () => {
+test(`20 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single quote in the front of a string`, () => {
   equal(
-    convertAll(`'Twere the night before Christmas, I would be happy.`, {
+    convertAll("'Twere the night before Christmas, I would be happy.", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -242,9 +242,9 @@ test(`20 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`21 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single quote in the front of a string`, () => {
+test(`21 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single quote in the front of a string`, () => {
   equal(
-    convertAll(`'Tweren't the night before Christmas, I would be happy.`, {
+    convertAll("'Tweren't the night before Christmas, I would be happy.", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -253,9 +253,9 @@ test(`21 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`22 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single quotes wrapping word, ending in the middle`, () => {
+test(`22 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single quotes wrapping word, ending in the middle`, () => {
   equal(
-    convertAll(`'Twon't be the night before Christmas.`, {
+    convertAll("'Twon't be the night before Christmas.", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -264,9 +264,9 @@ test(`22 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`23 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single quotes wrapping a word, ending in between words`, () => {
+test(`23 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single quotes wrapping a word, ending in between words`, () => {
   equal(
-    convertAll(`'70s are my favorite numbers,' she said.`, {
+    convertAll("'70s are my favorite numbers,' she said.", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -275,9 +275,9 @@ test(`23 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`24 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - single quote on years`, () => {
+test(`24 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - single quote on years`, () => {
   equal(
-    convertAll(`'70s fashion was weird.`, {
+    convertAll("'70s fashion was weird.", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -286,7 +286,7 @@ test(`24 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`25 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - prime - inches`, () => {
+test(`25 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - prime - inches`, () => {
   equal(
     convertAll('12" record, 5\'10" height', {
       convertApostrophes: 1,
@@ -297,7 +297,7 @@ test(`25 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`26 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - prime - left type quote used`, () => {
+test(`26 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - prime - left type quote used`, () => {
   equal(
     convertAll(`12" record, 5${leftSingleQuote}10${leftDoubleQuote} height`, {
       convertApostrophes: 1,
@@ -308,7 +308,7 @@ test(`26 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`27 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - prime - right type quote used`, () => {
+test(`27 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - prime - right type quote used`, () => {
   equal(
     convertAll(`12" record, 5${rightSingleQuote}10${rightDoubleQuote} height`, {
       convertApostrophes: 1,
@@ -319,7 +319,7 @@ test(`27 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`28 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - word wrapped with double quotes in the end of a string`, () => {
+test(`28 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - word wrapped with double quotes in the end of a string`, () => {
   equal(
     convertAll('Model "T2000"', {
       convertApostrophes: 1,
@@ -330,9 +330,9 @@ test(`28 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`29 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - plural`, () => {
+test(`29 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - plural`, () => {
   equal(
-    convertAll(`iPad 3's battery life is not great.`, {
+    convertAll("iPad 3's battery life is not great.", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -341,9 +341,9 @@ test(`29 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`30 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - plural`, () => {
+test(`30 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - plural`, () => {
   equal(
-    convertAll(`Book 'em, Danno. Rock 'n' roll. 'Cause 'twas the season.`, {
+    convertAll("Book 'em, Danno. Rock 'n' roll. 'Cause 'twas the season.", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -352,7 +352,7 @@ test(`30 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`31 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - left type used`, () => {
+test(`31 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - left type used`, () => {
   equal(
     convertAll(
       `Book ${leftSingleQuote}em, Danno. Rock ${leftSingleQuote}n${leftSingleQuote} roll. ${leftSingleQuote}Cause ${leftSingleQuote}twas the season.`,
@@ -366,7 +366,7 @@ test(`31 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`32 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - right type used`, () => {
+test(`32 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - right type used`, () => {
   equal(
     convertAll(
       `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`,
@@ -380,7 +380,7 @@ test(`32 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
   );
 });
 
-test(`33 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - left type used`, () => {
+test(`33 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - left type used`, () => {
   equal(
     convertAll(
       `Book ${leftSingleQuote}em, Danno. Rock ${leftSingleQuote}n${leftSingleQuote} roll. ${leftSingleQuote}Cause ${leftSingleQuote}twas the season.`,
@@ -389,12 +389,12 @@ test(`33 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
         convertEntities: 1,
       }
     ).result,
-    `Book &rsquo;em, Danno. Rock &rsquo;n&rsquo; roll. &rsquo;Cause &rsquo;twas the season.`,
+    "Book &rsquo;em, Danno. Rock &rsquo;n&rsquo; roll. &rsquo;Cause &rsquo;twas the season.",
     "33.01"
   );
 });
 
-test(`34 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - right type used`, () => {
+test(`34 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - right type used`, () => {
   equal(
     convertAll(
       `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`,
@@ -403,24 +403,27 @@ test(`34 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m
         convertEntities: 1,
       }
     ).result,
-    `Book &rsquo;em, Danno. Rock &rsquo;n&rsquo; roll. &rsquo;Cause &rsquo;twas the season.`,
+    "Book &rsquo;em, Danno. Rock &rsquo;n&rsquo; roll. &rsquo;Cause &rsquo;twas the season.",
     "34.01"
   );
 });
 
-test(`35 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - mixed quotes within a single sentence`, () => {
+test(`35 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - mixed quotes within a single sentence`, () => {
   equal(
-    convertAll(`"Hello," said the spider. "'Shelob'" abruptly she announced.`, {
-      convertApostrophes: 1,
-      convertEntities: 0,
-    }).result,
+    convertAll(
+      '"Hello," said the spider. "\'Shelob\'" abruptly she announced.',
+      {
+        convertApostrophes: 1,
+        convertEntities: 0,
+      }
+    ).result,
     `${leftDoubleQuote}Hello,${rightDoubleQuote} said the spider. ${leftDoubleQuote}${leftSingleQuote}Shelob${rightSingleQuote}${rightDoubleQuote} abruptly she announced.`,
     "35.01"
   );
 });
 
-test(`36 - ${`\u001b[${32}m${`kemitchell/straight-to-curly-quotes`}\u001b[${39}m`} - all off, nothing fancy to start with`, () => {
-  let input = `"Hello," said the spider. "'Shelob'" abruptly she announced.`;
+test(`36 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m`} - all off, nothing fancy to start with`, () => {
+  let input = '"Hello," said the spider. "\'Shelob\'" abruptly she announced.';
   equal(
     convertAll(input, {
       convertApostrophes: 0,

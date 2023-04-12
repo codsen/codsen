@@ -8,7 +8,7 @@ import { mixer } from "./util/util.js";
 // Line trimming
 // -----------------------------------------------------------------------------
 
-test(`01`, () => {
+test("01", () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer({
       trimStart: false,
@@ -45,7 +45,7 @@ test(`01`, () => {
   });
 });
 
-test(`02`, () => {
+test("02", () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer({
       trimStart: false,
@@ -86,7 +86,7 @@ test("03", () => {
   // "     .    aaa   bbb    .    -     .     ccc   ddd   .   "
   equal(
     collapse(
-      `     \xa0    aaa   bbb    \xa0    \n     \xa0     ccc   ddd   \xa0   `,
+      "     \xa0    aaa   bbb    \xa0    \n     \xa0     ccc   ddd   \xa0   ",
       {
         removeEmptyLines: false,
         trimStart: false,
@@ -98,7 +98,7 @@ test("03", () => {
       }
     ),
     {
-      result: `\xa0 aaa bbb \xa0\n\xa0 ccc ddd \xa0`,
+      result: "\xa0 aaa bbb \xa0\n\xa0 ccc ddd \xa0",
       ranges: [
         [0, 5],
         [6, 9],
@@ -119,7 +119,7 @@ test("03", () => {
 test("04", () => {
   // "a  .  -  .  b"
   equal(
-    collapse(`a  \xa0  \n  \xa0  b`, {
+    collapse("a  \xa0  \n  \xa0  b", {
       removeEmptyLines: false,
       trimStart: false,
       trimEnd: false,
@@ -129,7 +129,7 @@ test("04", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }),
     {
-      result: `a \xa0\n\xa0 b`,
+      result: "a \xa0\n\xa0 b",
       ranges: [
         [1, 2],
         [4, 6],
@@ -144,19 +144,19 @@ test("04", () => {
 test("05", () => {
   // "   .   aaa   .   "
   equal(
-    collapse(`   \xa0   aaa   \xa0   `, {
+    collapse("   \xa0   aaa   \xa0   ", {
       trimStart: false,
       trimEnd: false,
       trimLines: true,
       trimnbsp: false,
       enforceSpacesOnly: false,
     }).result,
-    `\xa0 aaa \xa0`,
+    "\xa0 aaa \xa0",
     "05.01"
   );
 });
 
-test(`06`, () => {
+test("06", () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     equal(
       collapse(
@@ -182,7 +182,7 @@ test(`06`, () => {
   });
 });
 
-test(`07`, () => {
+test("07", () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer({
       trimStart: true,
@@ -210,8 +210,8 @@ test("08", () => {
     trimLines: false,
   }).forEach((opt) => {
     equal(
-      collapse(`a \n \n b`, opt).result,
-      `a \n \n b`,
+      collapse("a \n \n b", opt).result,
+      "a \n \n b",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -220,8 +220,8 @@ test("08", () => {
     trimLines: true,
   }).forEach((opt) => {
     equal(
-      collapse(`a \n \n b`, opt).result,
-      `a\n\nb`,
+      collapse("a \n \n b", opt).result,
+      "a\n\nb",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -231,8 +231,8 @@ test("08", () => {
     trimLines: false,
   }).forEach((opt) => {
     equal(
-      collapse(`a \n \n b`, opt).result,
-      `a \n b`,
+      collapse("a \n \n b", opt).result,
+      "a \n b",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -241,8 +241,8 @@ test("08", () => {
     trimLines: true,
   }).forEach((opt) => {
     equal(
-      collapse(`a \n \n b`, opt).result,
-      `a\nb`,
+      collapse("a \n \n b", opt).result,
+      "a\nb",
       JSON.stringify(opt, null, 0)
     );
   });

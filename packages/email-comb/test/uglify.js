@@ -58,7 +58,7 @@ test("01 - removes unused classes and uglifies at the same time", () => {
   equal(actual5, uglified, "01.06");
 });
 
-test(`02 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores`, () => {
+test(`02 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - ignores`, () => {
   let source = `<head>
 <style>
 .abc { w:1; }
@@ -122,7 +122,7 @@ test(`02 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores`, () => {
   );
 });
 
-test(`03 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - class name exceeds library's length (all 26 letters used up)`, () => {
+test(`03 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - class name exceeds library's length (all 26 letters used up)`, () => {
   let actual = `<head>
 <style>
 .aaa01,
@@ -240,7 +240,7 @@ test(`03 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - class name exceeds libra
   );
 });
 
-test(`04 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outlook conditionals, used CSS`, () => {
+test(`04 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - style tag within Outlook conditionals, used CSS`, () => {
   let source = `<html>
 <head>
 <!--[if mso]>
@@ -297,7 +297,7 @@ test(`04 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outlook
   );
 });
 
-test(`05 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outlook conditionals, unused CSS`, () => {
+test(`05 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - style tag within Outlook conditionals, unused CSS`, () => {
   let source = `<html>
 <head>
 <!--[if mso]>
@@ -378,7 +378,7 @@ test(`05 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - style tag within Outlook
   );
 });
 
-test(`06 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used id's`, () => {
+test(`06 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - ignores on used id's`, () => {
   let source = `<html>
 <head>
 <style>
@@ -405,7 +405,7 @@ test(`06 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used id's`, (
   );
 });
 
-test(`07 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used classes`, () => {
+test(`07 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - ignores on used classes`, () => {
   let source = `<html>
 <head>
 <style>
@@ -432,7 +432,7 @@ test(`07 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignores on used classes`
   );
 });
 
-test(`08 - ${`\u001b[${31}m${`uglify`}\u001b[${39}m`} - ignored values don't appear among uglified legend entries`, () => {
+test(`08 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - ignored values don't appear among uglified legend entries`, () => {
   let actual = comb(
     `<html lang="en">
 <head>

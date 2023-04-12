@@ -84,32 +84,32 @@ function compare(name) {
   );
 }
 
-test(`01 - deletes bump-only entries together with their headings`, () => {
+test("01 - deletes bump-only entries together with their headings", () => {
   compare("01_deletes_bump-only");
 });
 
-test(`02 - turns h1 headings within body into h2`, () => {
+test("02 - turns h1 headings within body into h2", () => {
   compare("02_remove_h1_tags_in_body");
 });
 
-test(`03 - cleans whitespace and replaces bullet dashes with asterisks`, () => {
+test("03 - cleans whitespace and replaces bullet dashes with asterisks", () => {
   compare("03_whitespace");
 });
 
-test(`04 - removes WIP entries`, () => {
+test("04 - removes WIP entries", () => {
   compare("04_wip");
 });
 
-test(`05 - fixes plural in sourcehut links`, () => {
+test("05 - fixes plural in sourcehut links", () => {
   compare("05_sourcehut");
 });
 
 if (!hashesPresent) {
   writeFileSync(
-    path.resolve(`test/fixture_hashes.json`),
+    path.resolve("test/fixture_hashes.json"),
     JSON.stringify(hashes, null, 4)
   );
-  console.log(`wrote new hashes`);
+  console.log("wrote new hashes");
 }
 
 test.run();

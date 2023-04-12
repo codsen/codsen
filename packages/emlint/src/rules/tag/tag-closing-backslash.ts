@@ -1,7 +1,7 @@
 import { left } from "string-left-right";
 
 import { Linter, RuleObjType } from "../../linter";
-import { Range } from "../../../../../scripts/common";
+import { Range } from "ranges-merge";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare let DEV: boolean;

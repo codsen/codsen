@@ -9,7 +9,7 @@ import { mixer } from "./util/util.js";
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-test(`01`, () => {
+test("01", () => {
   mixer().forEach((opt) => {
     equal(
       collapse("a b", {
@@ -34,7 +34,7 @@ test(`01`, () => {
   });
 });
 
-test(`02`, () => {
+test("02", () => {
   mixer().forEach((opt) => {
     equal(
       collapse("a  b", {
@@ -59,7 +59,7 @@ test(`02`, () => {
   });
 });
 
-test(`03`, () => {
+test("03", () => {
   equal(
     mixer().forEach((opt) => {
       equal(
@@ -93,7 +93,7 @@ test(`03`, () => {
   );
 });
 
-test(`04 - sequences of spaces outside of string - defaults`, () => {
+test("04 - sequences of spaces outside of string - defaults", () => {
   mixer({
     trimStart: true,
     trimEnd: true,
@@ -224,7 +224,7 @@ test(`04 - sequences of spaces outside of string - defaults`, () => {
   });
 });
 
-test(`05 - sequences of spaces outside of string - defaults`, () => {
+test("05 - sequences of spaces outside of string - defaults", () => {
   mixer({
     trimStart: true,
     trimEnd: true,
@@ -346,7 +346,7 @@ test(`05 - sequences of spaces outside of string - defaults`, () => {
   });
 });
 
-test(`06 - sequences of spaces outside of string - defaults`, () => {
+test("06 - sequences of spaces outside of string - defaults", () => {
   //
   // enforceSpacesOnly off
   // =====================
@@ -581,7 +581,7 @@ test(`06 - sequences of spaces outside of string - defaults`, () => {
   });
 });
 
-test(`07 - double inner space`, () => {
+test("07 - double inner space", () => {
   mixer().forEach((opt) => {
     equal(
       collapse("a  b", {
@@ -609,7 +609,7 @@ test(`07 - double inner space`, () => {
   });
 });
 
-test(`08 - sequences of spaces outside of string - defaults`, () => {
+test("08 - sequences of spaces outside of string - defaults", () => {
   mixer().forEach((opt) => {
     equal(
       collapse("aaa     bbb    ccc   dddd", {
@@ -641,7 +641,7 @@ test(`08 - sequences of spaces outside of string - defaults`, () => {
   });
 });
 
-test(`09 - sequences of spaces outside of string - opts.trimStart`, () => {
+test("09 - sequences of spaces outside of string - opts.trimStart", () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     //
     // trims 0-0
@@ -758,14 +758,14 @@ test(`09 - sequences of spaces outside of string - opts.trimStart`, () => {
       // ". :a b: ."
       equal(
         collapse(`${eol} \ta b\t ${eol}`, opt).result,
-        `a b`,
+        "a b",
         JSON.stringify(opt, null, 0)
       );
     });
   });
 });
 
-test(`10 - sequences of line breaks`, () => {
+test("10 - sequences of line breaks", () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer({
       removeEmptyLines: false,
@@ -858,7 +858,7 @@ test(`10 - sequences of line breaks`, () => {
   });
 });
 
-test(`11 - sequences of line breaks`, () => {
+test("11 - sequences of line breaks", () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer({
       removeEmptyLines: false,
@@ -992,7 +992,7 @@ test(`11 - sequences of line breaks`, () => {
   });
 });
 
-test(`12 - tag and linebreak chain`, () => {
+test("12 - tag and linebreak chain", () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType) => {
     mixer().forEach((opt) => {
       equal(
@@ -1004,7 +1004,7 @@ test(`12 - tag and linebreak chain`, () => {
   });
 });
 
-test(`13 - tag and linebreak chain`, () => {
+test("13 - tag and linebreak chain", () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType) => {
     mixer().forEach((opt) => {
       equal(
@@ -1016,7 +1016,7 @@ test(`13 - tag and linebreak chain`, () => {
   });
 });
 
-test(`14 - tag and linebreak chain`, () => {
+test("14 - tag and linebreak chain", () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType) => {
     mixer().forEach((opt) => {
       equal(

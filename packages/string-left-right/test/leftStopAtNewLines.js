@@ -7,7 +7,7 @@ import { leftStopAtNewLines } from "../dist/string-left-right.esm.js";
 // leftStopAtNewLines()
 // -----------------------------------------------------------------------------
 
-test(`01 - null result cases`, () => {
+test("01 - null result cases", () => {
   equal(leftStopAtNewLines("abc"), null, "01.01");
   equal(leftStopAtNewLines("abc", 0), null, "01.02");
   equal(leftStopAtNewLines("abc", null), null, "01.03");
@@ -20,7 +20,7 @@ test(`01 - null result cases`, () => {
   equal(leftStopAtNewLines("", 1), null, "01.10");
 });
 
-test(`02 - normal use`, () => {
+test("02 - normal use", () => {
   not.ok(!!leftStopAtNewLines(""), "02.01");
   not.ok(!!leftStopAtNewLines("a"), "02.02");
   equal(leftStopAtNewLines("ab", 1), 0, "02.01");

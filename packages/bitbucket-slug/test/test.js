@@ -202,12 +202,12 @@ test("41 - Three digits in the h2", () => {
 // -----------------------------------------------------------------------------
 
 test("42 - Word with double quotes ends the H2", () => {
-  equal(s(`## So-called "music"`), "markdown-header-so-called-music", "42.01");
+  equal(s('## So-called "music"'), "markdown-header-so-called-music", "42.01");
 });
 
 test("43 - Double quotes mid-sentence", () => {
   equal(
-    s(`## So-called "music" is being played`),
+    s('## So-called "music" is being played'),
     "markdown-header-so-called-music-is-being-played",
     "43.01"
   );
@@ -215,7 +215,7 @@ test("43 - Double quotes mid-sentence", () => {
 
 test("44 - Double quotes starting the H2", () => {
   equal(
-    s(`## "Music" is being played`),
+    s('## "Music" is being played'),
     "markdown-header-music-is-being-played",
     "44.01"
   );
@@ -583,7 +583,7 @@ test("93 - Single pipe", () => {
 
 test("94 - Double pipe", () => {
   equal(
-    s(`## Something || something means "or"`),
+    s('## Something || something means "or"'),
     "markdown-header-something-something-means-or",
     "94.01"
   );

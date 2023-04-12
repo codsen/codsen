@@ -14,11 +14,11 @@ function prep(obj) {
 // 00. api bits
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - exports a function`, () => {
+test(`01 - ${`\u001b[${33}m${"api bits"}\u001b[${39}m`} - exports a function`, () => {
   equal(typeof editor, "function", "01.01");
 });
 
-test(`02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - exported version is a semver version`, () => {
+test(`02 - ${`\u001b[${33}m${"api bits"}\u001b[${39}m`} - exported version is a semver version`, () => {
   equal(String(version).match(/\d+\.\d+\.\d+/gi).length, 1, "02.01");
 });
 
@@ -26,7 +26,7 @@ test(`02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - exported version is a 
 // 01. normal use
 // -----------------------------------------------------------------------------
 
-test(`03 - one copy chunk`, () => {
+test("03 - one copy chunk", () => {
   equal(
     prep(
       editor(
@@ -62,7 +62,7 @@ I ate a banana and a cucumber.
   );
 });
 
-test(`04 - two copy chunks, whitespaced`, () => {
+test("04 - two copy chunks, whitespaced", () => {
   equal(
     prep(
       editor(
@@ -112,7 +112,7 @@ So, I ate a banana and then, after five minutes, another banana. Then, I thought
   );
 });
 
-test(`05 - two copy chunks, tight`, () => {
+test("05 - two copy chunks, tight", () => {
   equal(
     prep(
       editor(
@@ -154,7 +154,7 @@ So, I ate a banana and then, after five minutes, another banana. Then, I thought
   );
 });
 
-test(`06 - both todo and copy are empty`, () => {
+test("06 - both todo and copy are empty", () => {
   equal(
     prep(editor("", "")),
     {
@@ -179,7 +179,7 @@ test(`06 - both todo and copy are empty`, () => {
   );
 });
 
-test(`07 - nothing todo`, () => {
+test("07 - nothing todo", () => {
   equal(
     prep(editor("tralala", "")),
     {
@@ -269,7 +269,7 @@ test(`07 - nothing todo`, () => {
   );
 });
 
-test(`08 - three dashes in the text`, () => {
+test("08 - three dashes in the text", () => {
   equal(
     prep(
       editor(
@@ -285,7 +285,7 @@ test(`08 - three dashes in the text`, () => {
   );
 });
 
-test(`09 - todo singular, copy plural`, () => {
+test("09 - todo singular, copy plural", () => {
   equal(
     prep(
       editor(

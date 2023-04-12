@@ -8,8 +8,8 @@ import { m } from "./util/util.js";
 // within head styles
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - in head styles`, () => {
-  let source = `<style>/* remove this */</style><body>z</body>`;
+test(`01 - ${`\u001b[${33}m${"css comments"}\u001b[${39}m`} - in head styles`, () => {
+  let source = "<style>/* remove this */</style><body>z</body>";
 
   // off
   compare(
@@ -34,7 +34,7 @@ test(`01 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - in head styles`, (
       removeCSSComments: true,
     }),
     {
-      result: `<style></style><body>z</body>`,
+      result: "<style></style><body>z</body>",
       applicableOpts: {
         removeCSSComments: true,
         removeHTMLComments: false,
@@ -44,7 +44,7 @@ test(`01 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - in head styles`, (
   );
 });
 
-test(`02 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - in head styles`, () => {
+test(`02 - ${`\u001b[${33}m${"css comments"}\u001b[${39}m`} - in head styles`, () => {
   let source = `<style>
 .a { font-size: 1px; }/* remove this */
 .b { /* remove this */
@@ -121,8 +121,9 @@ margin: 3px; /* remove this */
 // within HTML body, inline
 // -----------------------------------------------------------------------------
 
-test(`03 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - within body`, () => {
-  let source = `<div style="display:block;/*font-size: 1px;*/width:100px;"></div>`;
+test(`03 - ${`\u001b[${33}m${"css comments"}\u001b[${39}m`} - within body`, () => {
+  let source =
+    '<div style="display:block;/*font-size: 1px;*/width:100px;"></div>';
 
   // off
   compare(
@@ -147,7 +148,7 @@ test(`03 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - within body`, () =
       removeCSSComments: true,
     }),
     {
-      result: `<div style="display:block;width:100px;"></div>`,
+      result: '<div style="display:block;width:100px;"></div>',
       applicableOpts: {
         removeCSSComments: true,
         removeHTMLComments: false,

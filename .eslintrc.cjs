@@ -229,7 +229,11 @@ module.exports = {
       },
     },
     {
-      files: ["**/examples/**/*.*", "**/rollup.config.js"],
+      files: [
+        "**/examples/**/*.*",
+        "**/test_alt/**/*.*",
+        "**/rollup.config.js",
+      ],
       rules: {
         "n/no-extraneous-import": "off",
       },

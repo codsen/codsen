@@ -7,7 +7,7 @@ import { deepContains } from "../dist/ast-deep-contains.esm.js";
 // 01. basic functionality
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - second is a subset of the first`, () => {
+test(`01 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - second is a subset of the first`, () => {
   let gathered = [];
   let errors = [];
 
@@ -33,7 +33,7 @@ test(`01 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - second is a subset of th
   equal(errors, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - first is a subset of the second (error)`, () => {
+test(`02 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - first is a subset of the second (error)`, () => {
   let gathered = [];
   let errors = [];
 
@@ -60,7 +60,7 @@ test(`02 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - first is a subset of the
   match(errors[0], /does not have the path "c"/g, "02.03");
 });
 
-test(`03 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - types mismatch`, () => {
+test(`03 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - types mismatch`, () => {
   let gathered = [];
   let errors = [];
 
@@ -81,7 +81,7 @@ test(`03 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - types mismatch`, () => {
   match(errors[0], /object/g, "03.04");
 });
 
-test(`04 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with string values, OK`, () => {
+test(`04 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - arrays with string values, OK`, () => {
   let gathered = [];
   let errors = [];
 
@@ -108,7 +108,7 @@ test(`04 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with string value
   equal(errors, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with string values, not OK`, () => {
+test(`05 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - arrays with string values, not OK`, () => {
   let gathered = [];
   let errors = [];
 
@@ -135,7 +135,7 @@ test(`05 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with string value
   match(errors[0], /does not have the path/g, "05.03");
 });
 
-test(`06 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with objects, opts.skipContainers=on (default)`, () => {
+test(`06 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - arrays with objects, opts.skipContainers=on (default)`, () => {
   let gathered = [];
   let errors = [];
 
@@ -160,7 +160,7 @@ test(`06 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with objects, opt
   equal(errors, [], "06.02");
 });
 
-test(`07 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with objects, opts.skipContainers=off`, () => {
+test(`07 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - arrays with objects, opts.skipContainers=off`, () => {
   let gathered = [];
   let errors = [];
 
@@ -190,7 +190,7 @@ test(`07 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with objects, opt
 // 02. opts.arrayStrictComparison
 // -----------------------------------------------------------------------------
 
-test(`08 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${32}m${`NOT STRICT`}\u001b[${39}m`} + ${`\u001b[${31}m${`skipContainers`}\u001b[${39}m`}`, () => {
+test(`08 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${32}m${"NOT STRICT"}\u001b[${39}m`} + ${`\u001b[${31}m${"skipContainers"}\u001b[${39}m`}`, () => {
   let gathered = [];
   let errors = [];
 
@@ -227,7 +227,7 @@ test(`08 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elem
   equal(errors, [], "08.02");
 });
 
-test(`09 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${31}m${`STRICT`}\u001b[${39}m`}     + ${`\u001b[${31}m${`skipContainers`}\u001b[${39}m`}`, () => {
+test(`09 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${31}m${"STRICT"}\u001b[${39}m`}     + ${`\u001b[${31}m${"skipContainers"}\u001b[${39}m`}`, () => {
   let gathered = [];
   let errors = [];
 
@@ -284,7 +284,7 @@ test(`09 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elem
   );
 });
 
-test(`10 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${32}m${`NOT STRICT`}\u001b[${39}m`} + ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`, () => {
+test(`10 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${32}m${"NOT STRICT"}\u001b[${39}m`} + ${`\u001b[${32}m${"skipContainers"}\u001b[${39}m`}`, () => {
   let gathered = [];
   let errors = [];
 
@@ -321,7 +321,7 @@ test(`10 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elem
   equal(errors, [], "10.02");
 });
 
-test(`11 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${31}m${`STRICT`}\u001b[${39}m`}     + ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`, () => {
+test(`11 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - elements are objects, order is wrong, ${`\u001b[${31}m${"STRICT"}\u001b[${39}m`}     + ${`\u001b[${32}m${"skipContainers"}\u001b[${39}m`}`, () => {
   let gathered = [];
   let errors = [];
 
@@ -361,7 +361,7 @@ test(`11 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - elem
 // 03. further combinations
 // -----------------------------------------------------------------------------
 
-test(`12 - ${`\u001b[${36}m${`deeper nested`}\u001b[${39}m`} - ${`\u001b[${31}m${`skipContainers`}\u001b[${39}m`}`, () => {
+test(`12 - ${`\u001b[${36}m${"deeper nested"}\u001b[${39}m`} - ${`\u001b[${31}m${"skipContainers"}\u001b[${39}m`}`, () => {
   let gathered = [];
   let errors = [];
 
@@ -420,7 +420,7 @@ test(`12 - ${`\u001b[${36}m${`deeper nested`}\u001b[${39}m`} - ${`\u001b[${31}m$
   equal(errors, [], "12.02");
 });
 
-test(`13 - ${`\u001b[${36}m${`deeper nested`}\u001b[${39}m`} - ${`\u001b[${32}m${`skipContainers`}\u001b[${39}m`}`, () => {
+test(`13 - ${`\u001b[${36}m${"deeper nested"}\u001b[${39}m`} - ${`\u001b[${32}m${"skipContainers"}\u001b[${39}m`}`, () => {
   let gathered = [];
   let errors = [];
 
@@ -457,7 +457,7 @@ test(`13 - ${`\u001b[${36}m${`deeper nested`}\u001b[${39}m`} - ${`\u001b[${32}m$
   equal(errors, [], "13.02");
 });
 
-test(`14 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - one object inside each array`, () => {
+test(`14 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - one object inside each array`, () => {
   let gathered = [];
   let errors = [];
 
@@ -484,7 +484,7 @@ test(`14 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - one 
   equal(errors, [], "14.02");
 });
 
-test(`15 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - one object inside each array`, () => {
+test(`15 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - one object inside each array`, () => {
   let gathered = [];
   let errors = [];
 
@@ -638,7 +638,7 @@ test(`15 - ${`\u001b[${36}m${`opts.arrayStrictComparison`}\u001b[${39}m`} - one 
 // 05. tree1 is superset
 // -----------------------------------------------------------------------------
 
-test(`16 - ${`\u001b[${35}m${`continuing`}\u001b[${39}m`} - tree 1 has one more than tree 2`, () => {
+test(`16 - ${`\u001b[${35}m${"continuing"}\u001b[${39}m`} - tree 1 has one more than tree 2`, () => {
   let gathered = [];
   let errors = [];
 

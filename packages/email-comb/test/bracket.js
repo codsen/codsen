@@ -7,7 +7,7 @@ import { comb } from "./util/util.js";
 // bracket notation
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - classes`, () => {
+test(`01 - ${`\u001b[${34}m${"bracket notation"}\u001b[${39}m`} - classes`, () => {
   let source = `<head>
 <style type="text/css">
   a[class="used"]{x:1;}
@@ -30,7 +30,7 @@ test(`01 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - classes`, () =
   equal(comb(source).result, intended, "01.01");
 });
 
-test(`02 - ${`\u001b[${34}m${`bracket notation`}\u001b[${39}m`} - bracket notation - id's`, () => {
+test(`02 - ${`\u001b[${34}m${"bracket notation"}\u001b[${39}m`} - bracket notation - id's`, () => {
   let source = `<head>
 <style type="text/css">
   a[id="used"]{x:1;}

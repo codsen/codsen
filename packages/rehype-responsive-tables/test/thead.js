@@ -8,7 +8,7 @@ import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 
 // -----------------------------------------------------------------------------
 
-test(`01 - thead, 2x3`, () => {
+test("01 - thead, 2x3", () => {
   let input = `
 <table>
   <thead>
@@ -79,7 +79,7 @@ test(`01 - thead, 2x3`, () => {
   equal(res, intended, "01.01");
 });
 
-test(`02 - empty thead, 2x2`, () => {
+test("02 - empty thead, 2x2", () => {
   let input = `
 <table>
   <thead></thead>
@@ -134,7 +134,7 @@ test(`02 - empty thead, 2x2`, () => {
   equal(res, intended, "02.01");
 });
 
-test(`03 - empty thead tr, 2x2`, () => {
+test("03 - empty thead tr, 2x2", () => {
   let input = `
 <table>
   <thead>
@@ -193,7 +193,7 @@ test(`03 - empty thead tr, 2x2`, () => {
   equal(res, intended, "03.01");
 });
 
-test(`04 - thead, td with children`, () => {
+test("04 - thead, td with children", () => {
   let input = `
 <table>
   <thead>

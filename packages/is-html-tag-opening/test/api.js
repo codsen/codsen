@@ -7,7 +7,7 @@ import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 // API
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
+test(`01 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
   throws(
     () => {
       isOpening();
@@ -17,7 +17,7 @@ test(`01 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
   );
 });
 
-test(`02 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
+test(`02 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
   throws(
     () => {
       isOpening(true);
@@ -27,7 +27,7 @@ test(`02 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
   );
 });
 
-test(`03 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
+test(`03 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
   throws(
     () => {
       isOpening({ a: 1 });
@@ -37,7 +37,7 @@ test(`03 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
   );
 });
 
-test(`04 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
+test(`04 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
   throws(
     () => {
       isOpening("z", true);
@@ -47,7 +47,7 @@ test(`04 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
   );
 });
 
-test(`05 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
+test(`05 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
   throws(
     () => {
       isOpening("z", false);
@@ -57,7 +57,7 @@ test(`05 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
   );
 });
 
-test(`06 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - throws`, () => {
+test(`06 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
   throws(
     () => {
       isOpening("z", null);

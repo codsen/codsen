@@ -1,4 +1,3 @@
-/* eslint-disable node/no-extraneous-require */
 /* eslint-disable no-prototype-builtins */
 import fs from "fs";
 import path from "path";
@@ -25,7 +24,7 @@ test.after(() => {
 
 // -----------------------------------------------------------------------------
 
-test(`01 - a function is exported`, () => {
+test("01 - a function is exported", () => {
   equal(typeof api, "function", "01.01");
 });
 

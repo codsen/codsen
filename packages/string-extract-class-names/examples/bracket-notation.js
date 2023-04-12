@@ -8,7 +8,7 @@ import { extract } from "../dist/string-extract-class-names.esm.js";
 // must be really arcane to contain this notation
 // https://github.com/hteumeuleu/email-bugs/issues/49
 
-assert.deepEqual(extract(`td[id=" abc-def "]`), {
+assert.deepEqual(extract('td[id=" abc-def "]'), {
   res: ["#abc-def"],
   ranges: [[8, 15]],
 });

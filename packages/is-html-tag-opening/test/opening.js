@@ -8,63 +8,63 @@ import { mixer } from "./util/util.js";
 // opening tag
 // -----------------------------------------------------------------------------
 
-test(`01 - recognised opening tag`, () => {
+test("01 - recognised opening tag", () => {
   [
     // opening
-    `<a>`,
-    `<p>`,
-    `<img>`,
-    `<img alt>`,
-    `<img alt=>`,
-    `<img alt=">`,
-    `<img alt="">`,
-    `<img alt="z">`,
-    `<img alt="zz">`,
-    `<img alt='>`,
-    `<img alt=''>`,
-    `<img alt='z'>`,
+    "<a>",
+    "<p>",
+    "<img>",
+    "<img alt>",
+    "<img alt=>",
+    '<img alt=">',
+    '<img alt="">',
+    '<img alt="z">',
+    '<img alt="zz">',
+    "<img alt='>",
+    "<img alt=''>",
+    "<img alt='z'>",
 
     // self closing
-    `<a/>`,
-    `<p/>`,
-    `<img/>`,
-    `<img alt/>`,
-    `<img alt=/>`,
-    `<img alt="/>`,
-    `<img alt=""/>`,
-    `<img alt="z"/>`,
-    `<img alt="zz"/>`,
-    `<img alt='/>`,
-    `<img alt=''/>`,
-    `<img alt='z'/>`,
+    "<a/>",
+    "<p/>",
+    "<img/>",
+    "<img alt/>",
+    "<img alt=/>",
+    '<img alt="/>',
+    '<img alt=""/>',
+    '<img alt="z"/>',
+    '<img alt="zz"/>',
+    "<img alt='/>",
+    "<img alt=''/>",
+    "<img alt='z'/>",
 
     // boolean attributes
-    `<td nowrap>`,
-    `<td nowrap nowrap>`,
-    `<td class="a" nowrap>`,
-    `<td class="a" nowrap nowrap>`,
-    `<td class="a" nowrap nowrap nowrap>`,
-    `<td nowrap class="a">`,
-    `<td nowrap nowrap class="a">`,
-    `<td nowrap nowrap nowrap class="a">`,
-    `<td nowrap/>`,
-    `<td nowrap nowrap/>`,
-    `<td class="a" nowrap/>`,
-    `<td class="a" nowrap nowrap/>`,
-    `<td class="a" nowrap nowrap nowrap/>`,
-    `<td nowrap class="a"/>`,
-    `<td nowrap nowrap class="a"/>`,
-    `<td nowrap nowrap nowrap class="a"/>`,
+    "<td nowrap>",
+    "<td nowrap nowrap>",
+    '<td class="a" nowrap>',
+    '<td class="a" nowrap nowrap>',
+    '<td class="a" nowrap nowrap nowrap>',
+    '<td nowrap class="a">',
+    '<td nowrap nowrap class="a">',
+    '<td nowrap nowrap nowrap class="a">',
+    "<td nowrap/>",
+    "<td nowrap nowrap/>",
+    '<td class="a" nowrap/>',
+    '<td class="a" nowrap nowrap/>',
+    '<td class="a" nowrap nowrap nowrap/>',
+    '<td nowrap class="a"/>',
+    '<td nowrap nowrap class="a"/>',
+    '<td nowrap nowrap nowrap class="a"/>',
 
     // mismatching quote pairs
-    `<img alt="'>`,
-    `<img alt='">`,
-    `<img alt="z'>`,
-    `<img alt='z">`,
-    `<img alt="'/>`,
-    `<img alt='"/>`,
-    `<img alt="z'/>`,
-    `<img alt='z"/>`,
+    "<img alt=\"'>",
+    "<img alt='\">",
+    "<img alt=\"z'>",
+    "<img alt='z\">",
+    "<img alt=\"'/>",
+    "<img alt='\"/>",
+    "<img alt=\"z'/>",
+    "<img alt='z\"/>",
   ].forEach((str) => {
     mixer({
       skipOpeningBracket: false,
@@ -85,79 +85,79 @@ test(`01 - recognised opening tag`, () => {
   });
 });
 
-test(`02 - recognised closing tag`, () => {
+test("02 - recognised closing tag", () => {
   [
-    `</a>`,
-    `</a >`,
-    `</ a>`,
-    `</ a >`,
-    `</p>`,
-    `</p >`,
-    `</ p>`,
-    `</ p >`,
-    `</a/>`,
-    `</a />`,
-    `</ a/>`,
-    `</ a />`,
-    `</img>`,
-    `</img/>`,
-    `</ img/>`,
-    `</ img />`,
-    `</img alt>`,
-    `</img alt >`,
-    `</img alt=>`,
-    `</img alt= >`,
-    `</img alt=">`,
-    `</img alt=" >`,
-    `</img alt="">`,
-    `</img alt="" >`,
-    `</img alt="z">`,
-    `</img alt="z" >`,
-    `</img alt="zz">`,
-    `</img alt="zz" >`,
-    `</img alt='>`,
-    `</img alt=' >`,
-    `</img alt=''>`,
-    `</img alt='' >`,
-    `</img alt='z'>`,
-    `</img alt='z' >`,
+    "</a>",
+    "</a >",
+    "</ a>",
+    "</ a >",
+    "</p>",
+    "</p >",
+    "</ p>",
+    "</ p >",
+    "</a/>",
+    "</a />",
+    "</ a/>",
+    "</ a />",
+    "</img>",
+    "</img/>",
+    "</ img/>",
+    "</ img />",
+    "</img alt>",
+    "</img alt >",
+    "</img alt=>",
+    "</img alt= >",
+    '</img alt=">',
+    '</img alt=" >',
+    '</img alt="">',
+    '</img alt="" >',
+    '</img alt="z">',
+    '</img alt="z" >',
+    '</img alt="zz">',
+    '</img alt="zz" >',
+    "</img alt='>",
+    "</img alt=' >",
+    "</img alt=''>",
+    "</img alt='' >",
+    "</img alt='z'>",
+    "</img alt='z' >",
 
     // boolean attributes
-    `</td nowrap>`,
-    `</td nowrap >`,
-    `</td nowrap nowrap>`,
-    `</td nowrap nowrap >`,
-    `</td class="a" nowrap>`,
-    `</td class="a" nowrap >`,
-    `</td class="a" nowrap nowrap>`,
-    `</td class="a" nowrap nowrap >`,
-    `</td class="a" nowrap nowrap nowrap>`,
-    `</td class="a" nowrap nowrap nowrap >`,
-    `</td class='a' nowrap>`,
-    `</td class='a' nowrap >`,
-    `</td class='a' nowrap nowrap>`,
-    `</td class='a' nowrap nowrap >`,
-    `</td class='a' nowrap nowrap nowrap>`,
-    `</td class='a' nowrap nowrap nowrap >`,
+    "</td nowrap>",
+    "</td nowrap >",
+    "</td nowrap nowrap>",
+    "</td nowrap nowrap >",
+    '</td class="a" nowrap>',
+    '</td class="a" nowrap >',
+    '</td class="a" nowrap nowrap>',
+    '</td class="a" nowrap nowrap >',
+    '</td class="a" nowrap nowrap nowrap>',
+    '</td class="a" nowrap nowrap nowrap >',
+    "</td class='a' nowrap>",
+    "</td class='a' nowrap >",
+    "</td class='a' nowrap nowrap>",
+    "</td class='a' nowrap nowrap >",
+    "</td class='a' nowrap nowrap nowrap>",
+    "</td class='a' nowrap nowrap nowrap >",
 
-    `</td nowrap class="a">`,
-    `</td nowrap class="a" >`,
-    `</td nowrap nowrap class="a">`,
-    `</td nowrap nowrap class="a" >`,
-    `</td nowrap nowrap nowrap class="a">`,
-    `</td nowrap nowrap nowrap class="a" >`,
-    `</td nowrap class='a'>`,
-    `</td nowrap class='a' >`,
-    `</td nowrap nowrap class='a'>`,
-    `</td nowrap nowrap class='a' >`,
-    `</td nowrap nowrap nowrap class='a'>`,
-    `</td nowrap nowrap nowrap class='a' >`,
+    '</td nowrap class="a">',
+    '</td nowrap class="a" >',
+    '</td nowrap nowrap class="a">',
+    '</td nowrap nowrap class="a" >',
+    '</td nowrap nowrap nowrap class="a">',
+    '</td nowrap nowrap nowrap class="a" >',
+    "</td nowrap class='a'>",
+    "</td nowrap class='a' >",
+    "</td nowrap nowrap class='a'>",
+    "</td nowrap nowrap class='a' >",
+    "</td nowrap nowrap nowrap class='a'>",
+    "</td nowrap nowrap nowrap class='a' >",
 
     // mismatching quote pairs
-    `</img alt="'>`,
-    `</img alt='">`,
-    `</img alt="z'>`,
-    `</img alt='z">`,
+    "</img alt=\"'>",
+    "</img alt='\">",
+    "</img alt=\"z'>",
+    "</img alt='z\">",
   ].forEach((str) => {
     mixer().forEach((opt) => {
       ok(
@@ -208,54 +208,54 @@ test(`02 - recognised closing tag`, () => {
   });
 });
 
-test(`03 - unrecognised opening tag`, () => {
+test("03 - unrecognised opening tag", () => {
   [
-    `<x>`,
-    `<xy>`,
+    "<x>",
+    "<xy>",
 
     // recognised attr name
-    `<xy alt>`,
-    `<xy alt=>`,
-    `<xy alt=">`,
-    `<xy alt="">`,
-    `<xy alt="z">`,
-    `<xy alt="zz">`,
-    `<xy alt='>`,
-    `<xy alt=''>`,
-    `<xy alt='z'>`,
+    "<xy alt>",
+    "<xy alt=>",
+    '<xy alt=">',
+    '<xy alt="">',
+    '<xy alt="z">',
+    '<xy alt="zz">',
+    "<xy alt='>",
+    "<xy alt=''>",
+    "<xy alt='z'>",
 
     // unrecognised attr name
-    `<xy klm>`,
-    `<xy klm=>`,
-    `<xy klm=">`,
-    `<xy klm="">`,
-    `<xy klm="z">`,
-    `<xy klm="zz">`,
-    `<xy klm='>`,
-    `<xy klm=''>`,
-    `<xy klm='z'>`,
+    "<xy klm>",
+    "<xy klm=>",
+    '<xy klm=">',
+    '<xy klm="">',
+    '<xy klm="z">',
+    '<xy klm="zz">',
+    "<xy klm='>",
+    "<xy klm=''>",
+    "<xy klm='z'>",
 
     // boolean attributes
-    `<xy nowrap>`,
-    `<xy nowrap nowrap>`,
-    `<xy class="a" nowrap>`,
-    `<xy class="a" nowrap nowrap>`,
-    `<xy class="a" nowrap nowrap nowrap>`,
-    `<xy nowrap class="a">`,
-    `<xy nowrap nowrap class="a">`,
-    `<xy nowrap nowrap nowrap class="a">`,
+    "<xy nowrap>",
+    "<xy nowrap nowrap>",
+    '<xy class="a" nowrap>',
+    '<xy class="a" nowrap nowrap>',
+    '<xy class="a" nowrap nowrap nowrap>',
+    '<xy nowrap class="a">',
+    '<xy nowrap nowrap class="a">',
+    '<xy nowrap nowrap nowrap class="a">',
 
     // mismatching quote pairs, recognised attr name
-    `<xy alt="'>`,
-    `<xy alt='">`,
-    `<xy alt="z'>`,
-    `<xy alt='z">`,
+    "<xy alt=\"'>",
+    "<xy alt='\">",
+    "<xy alt=\"z'>",
+    "<xy alt='z\">",
 
     // mismatching quote pairs, unrecognised attr name
-    `<xy alt="'>`,
-    `<xy alt='">`,
-    `<xy alt="z'>`,
-    `<xy alt='z">`,
+    "<xy alt=\"'>",
+    "<xy alt='\">",
+    "<xy alt=\"z'>",
+    "<xy alt='z\">",
   ].forEach((str) => {
     mixer({
       allowCustomTagNames: true,
@@ -318,54 +318,54 @@ test(`03 - unrecognised opening tag`, () => {
   });
 });
 
-test(`04 - unrecognised closing tag`, () => {
+test("04 - unrecognised closing tag", () => {
   [
-    `</x>`,
-    `</xy>`,
+    "</x>",
+    "</xy>",
 
     // recognised attr name
-    `</xy alt>`,
-    `</xy alt=>`,
-    `</xy alt=">`,
-    `</xy alt="">`,
-    `</xy alt="z">`,
-    `</xy alt="zz">`,
-    `</xy alt='>`,
-    `</xy alt=''>`,
-    `</xy alt='z'>`,
+    "</xy alt>",
+    "</xy alt=>",
+    '</xy alt=">',
+    '</xy alt="">',
+    '</xy alt="z">',
+    '</xy alt="zz">',
+    "</xy alt='>",
+    "</xy alt=''>",
+    "</xy alt='z'>",
 
     // unrecognised attr name
-    `</xy klm>`,
-    `</xy klm=>`,
-    `</xy klm=">`,
-    `</xy klm="">`,
-    `</xy klm="z">`,
-    `</xy klm="zz">`,
-    `</xy klm='>`,
-    `</xy klm=''>`,
-    `</xy klm='z'>`,
+    "</xy klm>",
+    "</xy klm=>",
+    '</xy klm=">',
+    '</xy klm="">',
+    '</xy klm="z">',
+    '</xy klm="zz">',
+    "</xy klm='>",
+    "</xy klm=''>",
+    "</xy klm='z'>",
 
     // boolean attributes
-    `</xy nowrap>`,
-    `</xy nowrap nowrap>`,
-    `</xy class="a" nowrap>`,
-    `</xy class="a" nowrap nowrap>`,
-    `</xy class="a" nowrap nowrap nowrap>`,
-    `</xy nowrap class="a">`,
-    `</xy nowrap nowrap class="a">`,
-    `</xy nowrap nowrap nowrap class="a">`,
+    "</xy nowrap>",
+    "</xy nowrap nowrap>",
+    '</xy class="a" nowrap>',
+    '</xy class="a" nowrap nowrap>',
+    '</xy class="a" nowrap nowrap nowrap>',
+    '</xy nowrap class="a">',
+    '</xy nowrap nowrap class="a">',
+    '</xy nowrap nowrap nowrap class="a">',
 
     // mismatching quote pairs, recognised attr name
-    `</xy alt="'>`,
-    `</xy alt='">`,
-    `</xy alt="z'>`,
-    `</xy alt='z">`,
+    "</xy alt=\"'>",
+    "</xy alt='\">",
+    "</xy alt=\"z'>",
+    "</xy alt='z\">",
 
     // mismatching quote pairs, unrecognised attr name
-    `</xy alt="'>`,
-    `</xy alt='">`,
-    `</xy alt="z'>`,
-    `</xy alt='z">`,
+    "</xy alt=\"'>",
+    "</xy alt='\">",
+    "</xy alt=\"z'>",
+    "</xy alt='z\">",
   ].forEach((str) => {
     mixer({
       allowCustomTagNames: true,
@@ -438,8 +438,8 @@ test(`04 - unrecognised closing tag`, () => {
   });
 });
 
-test(`05`, () => {
-  let str = `<html dir="ltr">`;
+test("05", () => {
+  let str = '<html dir="ltr">';
   mixer().forEach((opt) => {
     ok(isOpening(str, 0, opt), opt);
   });
@@ -448,8 +448,8 @@ test(`05`, () => {
   });
 });
 
-test(`06`, () => {
-  let str = `<img alt="click here >">`;
+test("06", () => {
+  let str = '<img alt="click here >">';
   mixer().forEach((opt) => {
     ok(isOpening(str, 0, opt), opt);
   });
@@ -466,8 +466,8 @@ test(`06`, () => {
   });
 });
 
-test(`07`, () => {
-  let str = `<img alt="< click here">`;
+test("07", () => {
+  let str = '<img alt="< click here">';
   mixer().forEach((opt) => {
     ok(isOpening(str, 0, opt), opt);
   });

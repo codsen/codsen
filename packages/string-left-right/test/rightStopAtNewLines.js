@@ -7,7 +7,7 @@ import { rightStopAtNewLines } from "../dist/string-left-right.esm.js";
 // rightStopAtNewLines()
 // -----------------------------------------------------------------------------
 
-test(`01 - calling at string length`, () => {
+test("01 - calling at string length", () => {
   equal(rightStopAtNewLines(""), null, "01.01");
   equal(rightStopAtNewLines("", null), null, "01.02");
   equal(rightStopAtNewLines("", undefined), null, "01.03");
@@ -18,7 +18,7 @@ test(`01 - calling at string length`, () => {
   equal(rightStopAtNewLines("abc", 99), null, "01.08");
 });
 
-test(`02 - normal use`, () => {
+test("02 - normal use", () => {
   not.ok(!!rightStopAtNewLines(""), "02.01");
   not.ok(!!rightStopAtNewLines("a"), "02.02");
 

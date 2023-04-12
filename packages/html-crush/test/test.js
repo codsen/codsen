@@ -18,23 +18,23 @@ function strip(str) {
 // B.A.U.
 // -----------------------------------------------------------------------------
 
-test(`01 - nothing to minify, empty`, () => {
-  let source = ``;
+test("01 - nothing to minify, empty", () => {
+  let source = "";
   mixer({}).forEach((opt) => {
-    equal(m(equal, source, opt).result, ``, JSON.stringify(opt, null, 4));
+    equal(m(equal, source, opt).result, "", JSON.stringify(opt, null, 4));
     equal(m(equal, source, opt).ranges, null, JSON.stringify(opt, null, 4));
   });
 });
 
-test(`02 - nothing to minify, non-empty`, () => {
-  let source = `zzzz`;
+test("02 - nothing to minify, non-empty", () => {
+  let source = "zzzz";
   mixer({}).forEach((opt) => {
-    equal(m(equal, source, opt).result, `zzzz`, JSON.stringify(opt, null, 4));
+    equal(m(equal, source, opt).result, "zzzz", JSON.stringify(opt, null, 4));
     equal(m(equal, source, opt).ranges, null, JSON.stringify(opt, null, 4));
   });
 });
 
-test(`03 - minimal string of few words`, () => {
+test("03 - minimal string of few words", () => {
   let source = ` \t
 <x>\t\t
   <y>\t
@@ -48,7 +48,7 @@ test(`03 - minimal string of few words`, () => {
   }).forEach((opt) => {
     equal(
       m(equal, source, opt).result,
-      `<x><y> c </y></x>\n`,
+      "<x><y> c </y></x>\n",
       JSON.stringify(opt, null, 4)
     );
   });
@@ -87,13 +87,13 @@ c
   });
 });
 
-test(`04 - trailing linebreaks (or their absence) at the EOF are respected`, () => {
+test("04 - trailing linebreaks (or their absence) at the EOF are respected", () => {
   mixer({
     removeLineBreaks: true,
   }).forEach((opt) => {
     equal(
-      m(equal, `\n<x>\n  <y>\n    c\n  </y>\n</x>\n`, opt).result,
-      `<x><y> c </y></x>\n`,
+      m(equal, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n", opt).result,
+      "<x><y> c </y></x>\n",
       `${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`
     );
   });
@@ -102,8 +102,8 @@ test(`04 - trailing linebreaks (or their absence) at the EOF are respected`, () 
     removeIndentations: true,
   }).forEach((opt) => {
     equal(
-      m(equal, `\n<x>\n  <y>\n    c\n  </y>\n</x>\n`, opt).result,
-      `<x>\n<y>\nc\n</y>\n</x>\n`,
+      m(equal, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n", opt).result,
+      "<x>\n<y>\nc\n</y>\n</x>\n",
       `${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`
     );
   });
@@ -114,38 +114,38 @@ test(`04 - trailing linebreaks (or their absence) at the EOF are respected`, () 
     removeIndentations: false,
   }).forEach((opt) => {
     equal(
-      m(equal, `\n<x>\n  <y>\n    c\n  </y>\n</x>\n`, opt).result,
-      `\n<x>\n  <y>\n    c\n  </y>\n</x>\n`,
+      m(equal, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n", opt).result,
+      "\n<x>\n  <y>\n    c\n  </y>\n</x>\n",
       `${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`
     );
   });
 });
 
-test(`05 - trailing linebreaks (or their absence) at the EOF are respected`, () => {
+test("05 - trailing linebreaks (or their absence) at the EOF are respected", () => {
   mixer({
     removeLineBreaks: true,
   }).forEach((opt) => {
     equal(
-      m(equal, `\n<x>\n  <y>\n    c\n  </y>\n</x>\n\n`, opt).result,
-      `<x><y> c </y></x>\n`,
+      m(equal, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n\n", opt).result,
+      "<x><y> c </y></x>\n",
       `${JSON.stringify(opt, null, 4)} - double trailing line breaks at EOF`
     );
   });
 });
 
-test(`06 - trailing linebreaks (or their absence) at the EOF are respected`, () => {
+test("06 - trailing linebreaks (or their absence) at the EOF are respected", () => {
   mixer({
     removeLineBreaks: true,
   }).forEach((opt) => {
     equal(
-      m(equal, `\n<x>\n  <y>\n    c\n  </y>\n</x>`, opt).result,
-      `<x><y> c </y></x>`,
+      m(equal, "\n<x>\n  <y>\n    c\n  </y>\n</x>", opt).result,
+      "<x><y> c </y></x>",
       `${JSON.stringify(opt, null, 4)} - no trailing line breaks at EOF`
     );
   });
 });
 
-test(`07 - opts.lineLengthLimit`, () => {
+test("07 - opts.lineLengthLimit", () => {
   // the following piece of HTML will render as having spaces between C's:
   let original = `  <x>
      <y>
@@ -214,7 +214,7 @@ test(`07 - opts.lineLengthLimit`, () => {
   });
 });
 
-test(`08 - when chunk of characters without break points is longer than line limit - spaces`, () => {
+test("08 - when chunk of characters without break points is longer than line limit - spaces", () => {
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
       removeLineBreaks: false,
@@ -385,7 +385,7 @@ test(`08 - when chunk of characters without break points is longer than line lim
   );
 });
 
-test(`09 - when chunk of characters without break points is longer than line limit - linebreaks`, () => {
+test("09 - when chunk of characters without break points is longer than line limit - linebreaks", () => {
   equal(
     m(equal, "aaaaaa\nbbbbbb\ncccccc", {
       removeLineBreaks: true,
@@ -500,7 +500,7 @@ test(`09 - when chunk of characters without break points is longer than line lim
   );
 });
 
-test(`10 - when chunk of characters without break points is longer than line limit - double linebreaks`, () => {
+test("10 - when chunk of characters without break points is longer than line limit - double linebreaks", () => {
   equal(
     m(equal, "aaaaaa\n\nbbbbbb\n\ncccccc", {
       removeLineBreaks: true,
@@ -607,7 +607,7 @@ test(`10 - when chunk of characters without break points is longer than line lim
   );
 });
 
-test(`11 - tags with single space between them`, () => {
+test("11 - tags with single space between them", () => {
   equal(
     m(equal, "<aaaa> <bbbb> <cccc>", {
       removeLineBreaks: true,
@@ -682,7 +682,7 @@ test(`11 - tags with single space between them`, () => {
   );
 });
 
-test(`12 - breaking between tags`, () => {
+test("12 - breaking between tags", () => {
   equal(
     m(equal, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 0 }).result,
     "<aa><bb>",
@@ -747,7 +747,7 @@ test(`12 - breaking between tags`, () => {
   );
 });
 
-test(`13 - break-position-friendly characters, not suitable for break yet - line limit 8`, () => {
+test("13 - break-position-friendly characters, not suitable for break yet - line limit 8", () => {
   //
   // line limit 8
   // ============
@@ -801,7 +801,7 @@ test(`13 - break-position-friendly characters, not suitable for break yet - line
   );
 });
 
-test(`14 - break-position-friendly characters, not suitable for break yet - line limit 12`, () => {
+test("14 - break-position-friendly characters, not suitable for break yet - line limit 12", () => {
   //
   // line limit 12
   // =============
@@ -945,7 +945,7 @@ test(`14 - break-position-friendly characters, not suitable for break yet - line
   );
 });
 
-test(`15 - script tags are skipped`, () => {
+test("15 - script tags are skipped", () => {
   equal(
     m(equal, "a <script>\n \t\t   na\n  \tz</script> z    ", {
       removeLineBreaks: false,
@@ -980,7 +980,7 @@ test(`15 - script tags are skipped`, () => {
   );
 });
 
-test(`16 - unfinished script tags are skipped too`, () => {
+test("16 - unfinished script tags are skipped too", () => {
   equal(
     m(equal, "a <script>\n \t\t   na\n  \tz    z    ", {
       removeLineBreaks: false,
@@ -1015,8 +1015,9 @@ test(`16 - unfinished script tags are skipped too`, () => {
   );
 });
 
-test(`17 - code-pre blocks are not touched`, () => {
-  let preBlock = `<pre id="lalalaa"><code class="tralalaa">    \n    \t   zz    z  \n  \t  r  r  \n \t  </code></pre>`;
+test("17 - code-pre blocks are not touched", () => {
+  let preBlock =
+    '<pre id="lalalaa"><code class="tralalaa">    \n    \t   zz    z  \n  \t  r  r  \n \t  </code></pre>';
   equal(
     m(equal, preBlock, {
       removeLineBreaks: false,
@@ -1051,8 +1052,9 @@ test(`17 - code-pre blocks are not touched`, () => {
   );
 });
 
-test(`18 - CDATA blocks are not touched`, () => {
-  let preBlock = `<![CDATA[          \n     \t   \n  a  a \r     \n a    \t    \t\t\t\t\t  a   \n     \t\t\t    ]]>`;
+test("18 - CDATA blocks are not touched", () => {
+  let preBlock =
+    "<![CDATA[          \n     \t   \n  a  a \r     \n a    \t    \t\t\t\t\t  a   \n     \t\t\t    ]]>";
   equal(
     m(equal, preBlock, {
       removeLineBreaks: false,
@@ -1087,7 +1089,7 @@ test(`18 - CDATA blocks are not touched`, () => {
   );
 });
 
-test(`19 - whitespace in front of </script>`, () => {
+test("19 - whitespace in front of </script>", () => {
   // 0. baseline - no whitespace in front of </script>
   let code1 = 'a\n<script>const a = "test";</script> b';
   equal(
@@ -1178,7 +1180,7 @@ test(`19 - whitespace in front of </script>`, () => {
   );
 });
 
-test(`20 - single linebreak is not replaced with a single space`, () => {
+test("20 - single linebreak is not replaced with a single space", () => {
   equal(m(equal, "a\nb", { removeLineBreaks: true }).result, "a\nb", "20.01");
   equal(
     m(equal, "a\nb", { removeLineBreaks: true, lineLengthLimit: 0 }).result,
@@ -1197,7 +1199,7 @@ test(`20 - single linebreak is not replaced with a single space`, () => {
   );
 });
 
-test(`21 - single linebreak is deleted though`, () => {
+test("21 - single linebreak is deleted though", () => {
   equal(
     m(equal, "<x>\n<y>", { removeLineBreaks: true }).result,
     "<x><y>",
@@ -1220,7 +1222,7 @@ test(`21 - single linebreak is deleted though`, () => {
   );
 });
 
-test(`22 - breaking to the right of style tag`, () => {
+test("22 - breaking to the right of style tag", () => {
   let source = `<html>
   <head>
     <style type="text/css">
@@ -1331,7 +1333,7 @@ test(`22 - breaking to the right of style tag`, () => {
   );
 });
 
-test(`23 - doesn't delete whitespace with linebreaks between curlies`, () => {
+test("23 - doesn't delete whitespace with linebreaks between curlies", () => {
   let source = "{% a %}\n\n\n{% a %}";
   equal(m(equal, source, { removeLineBreaks: true }).result, source, "23.01");
   equal(
@@ -1341,22 +1343,22 @@ test(`23 - doesn't delete whitespace with linebreaks between curlies`, () => {
   );
 });
 
-test(`24 - does not mangle different-type line endings, LF`, () => {
+test("24 - does not mangle different-type line endings, LF", () => {
   let source = "a\n";
   equal(m(equal, source).result, source, "24.01");
 });
 
-test(`25 - does not mangle different-type line endings, CR`, () => {
+test("25 - does not mangle different-type line endings, CR", () => {
   let source = "a\r";
   equal(m(equal, source).result, source, "25.01");
 });
 
-test(`26 - does not mangle different-type line endings, CRLF`, () => {
+test("26 - does not mangle different-type line endings, CRLF", () => {
   let source = "a\r\n";
   equal(m(equal, source).result, source, "26.01");
 });
 
-test(`line break into space`, () => {
+test("line break into space", () => {
   equal(
     m(equal, "abc\ndef", {
       removeLineBreaks: true,
@@ -1391,7 +1393,7 @@ test(`line break into space`, () => {
   );
 });
 
-test(`tab into space`, () => {
+test("tab into space", () => {
   equal(
     m(equal, "abc\tdef", {
       removeLineBreaks: true,
@@ -1410,32 +1412,33 @@ test(`tab into space`, () => {
   );
 });
 
-test(`29 - issue #5, minimal`, () => {
+test("29 - issue #5, minimal", () => {
   equal(
-    crush(`<!DOCTYPE html>\r\n<html lang="en">\r\n`, {
+    crush('<!DOCTYPE html>\r\n<html lang="en">\r\n', {
       removeLineBreaks: true,
       removeIndentations: true,
     }).result,
-    `<!DOCTYPE html>\r\n<html lang="en">\r\n`,
+    '<!DOCTYPE html>\r\n<html lang="en">\r\n',
     "29.01"
   );
 });
 
-test(`30 - issue #5, minimal`, () => {
-  let input = `<!DOCTYPE html>\r\n<html lang="en">\r\n<head>\r\n  <meta charset="UTF-8">`;
+test("30 - issue #5, minimal", () => {
+  let input =
+    '<!DOCTYPE html>\r\n<html lang="en">\r\n<head>\r\n  <meta charset="UTF-8">';
   equal(
     crush(input, {
       removeLineBreaks: true,
       removeHTMLComments: false,
       removeCSSComments: false,
     }).result,
-    `<!DOCTYPE html>\r\n<html lang="en">\r\n<head>\r\n<meta charset="UTF-8">`,
+    '<!DOCTYPE html>\r\n<html lang="en">\r\n<head>\r\n<meta charset="UTF-8">',
     "30.01"
   );
 });
 
-test(`31 - issue #5, minimal`, () => {
-  let eols = [`\r\n`, `\n`, `\r`];
+test("31 - issue #5, minimal", () => {
+  let eols = ["\r\n", "\n", "\r"];
   let sources = eols.map(
     (eol) => `<!DOCTYPE html>${eol}<html lang="en">${eol}`
   );
@@ -1452,8 +1455,8 @@ test(`31 - issue #5, minimal`, () => {
   });
 });
 
-test(`32 - issue #5`, () => {
-  let eols = [`\r\n`, `\n`, `\r`];
+test("32 - issue #5", () => {
+  let eols = ["\r\n", "\n", "\r"];
   let sources = eols.map(
     (eol) =>
       `<!DOCTYPE html>${eol}<html lang="en">${eol}<head>${eol}<meta charset="UTF-8">${eol}<meta http-equiv="X-UA-Compatible" content="IE=edge">${eol}<meta name="viewport" content="width=device-width, initial-scale=1.0">${eol}  <title>Document</title>${eol}</head>${eol}<body>${eol}<div>Hello</div>${eol}</body>${eol}</html>${eol}`

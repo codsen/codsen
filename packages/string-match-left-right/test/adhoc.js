@@ -89,9 +89,9 @@ test(`09 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, set #02`, () => {
   );
 });
 
-test(`10`, () => {
+test("10", () => {
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 23, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !important}", 23, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 1,
@@ -100,7 +100,7 @@ test(`10`, () => {
     "10.01"
   );
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 23, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !important}", 23, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 1,
@@ -110,7 +110,7 @@ test(`10`, () => {
   );
 
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 23, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !important}", 23, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -119,7 +119,7 @@ test(`10`, () => {
     "10.03"
   );
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 23, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !important}", 23, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 2,
@@ -129,9 +129,9 @@ test(`10`, () => {
   );
 });
 
-test(`11`, () => {
+test("11", () => {
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !important}", 24, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 0,
@@ -140,7 +140,7 @@ test(`11`, () => {
     "11.01"
   );
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !important}", 24, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 0,
@@ -150,7 +150,7 @@ test(`11`, () => {
   );
 
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !important}", 24, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 1,
@@ -159,7 +159,7 @@ test(`11`, () => {
     "11.03"
   );
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !important}", 24, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 1,
@@ -169,7 +169,7 @@ test(`11`, () => {
   );
 
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !important}", 24, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -178,7 +178,7 @@ test(`11`, () => {
     "11.05"
   );
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !important}", 24, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 2,
@@ -188,9 +188,9 @@ test(`11`, () => {
   );
 });
 
-test(`12`, () => {
+test("12", () => {
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !impotant}", 26, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 0,
@@ -199,7 +199,7 @@ test(`12`, () => {
     "12.01"
   );
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !impotant}", 26, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 0,
@@ -209,7 +209,7 @@ test(`12`, () => {
   );
 
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !impotant}", 26, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 1,
@@ -218,7 +218,7 @@ test(`12`, () => {
     "12.03"
   );
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !impotant}", 26, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 1,
@@ -228,7 +228,7 @@ test(`12`, () => {
   );
 
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !impotant}", 26, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -237,7 +237,7 @@ test(`12`, () => {
     "12.05"
   );
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !impotant}", 26, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 2,
@@ -247,9 +247,9 @@ test(`12`, () => {
   );
 });
 
-test(`13`, () => {
+test("13", () => {
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !IMPOR.TANT}", 26, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 0,
@@ -258,7 +258,7 @@ test(`13`, () => {
     "13.01"
   );
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !IMPOR.TANT}", 26, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 0,
@@ -268,7 +268,7 @@ test(`13`, () => {
   );
 
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !IMPOR.TANT}", 26, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 1,
@@ -277,7 +277,7 @@ test(`13`, () => {
     "13.03"
   );
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !IMPOR.TANT}", 26, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 1,
@@ -287,7 +287,7 @@ test(`13`, () => {
   );
 
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !IMPOR.TANT}", 26, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -296,7 +296,7 @@ test(`13`, () => {
     "13.05"
   );
   equal(
-    matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
+    matchRight(".a{padding:1px 2px 3px 4px !IMPOR.TANT}", 26, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 2,
@@ -306,9 +306,9 @@ test(`13`, () => {
   );
 });
 
-test(`14`, () => {
+test("14", () => {
   equal(
-    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 18, ["!important"], {
+    matchRightIncl("<style>.a{color:red!IMPOTANT;}", 18, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 2,
@@ -317,7 +317,7 @@ test(`14`, () => {
     "14.01"
   );
   equal(
-    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 19, ["!important"], {
+    matchRightIncl("<style>.a{color:red!IMPOTANT;}", 19, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 2,
@@ -326,7 +326,7 @@ test(`14`, () => {
     "14.02"
   );
   equal(
-    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 18, ["!important"], {
+    matchRightIncl("<style>.a{color:red!IMPOTANT;}", 18, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -335,7 +335,7 @@ test(`14`, () => {
     "14.03"
   );
   equal(
-    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 19, ["!important"], {
+    matchRightIncl("<style>.a{color:red!IMPOTANT;}", 19, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -345,7 +345,7 @@ test(`14`, () => {
   );
 
   equal(
-    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 18, ["!important"], {
+    matchRightIncl("<style>.a{color:red!IMPOTANT;}", 18, ["!important"], {
       i: false,
       trimBeforeMatching: true,
       maxMismatches: 2,
@@ -354,7 +354,7 @@ test(`14`, () => {
     "14.05"
   );
   equal(
-    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 19, ["!important"], {
+    matchRightIncl("<style>.a{color:red!IMPOTANT;}", 19, ["!important"], {
       i: false,
       trimBeforeMatching: true,
       maxMismatches: 2,
@@ -363,7 +363,7 @@ test(`14`, () => {
     "14.06"
   );
   equal(
-    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 18, ["!important"], {
+    matchRightIncl("<style>.a{color:red!IMPOTANT;}", 18, ["!important"], {
       i: false,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -372,7 +372,7 @@ test(`14`, () => {
     "14.07"
   );
   equal(
-    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 19, ["!important"], {
+    matchRightIncl("<style>.a{color:red!IMPOTANT;}", 19, ["!important"], {
       i: false,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -382,9 +382,9 @@ test(`14`, () => {
   );
 });
 
-test(`15`, () => {
+test("15", () => {
   equal(
-    matchRightIncl(`abc important}`, 2, ["!important"], {
+    matchRightIncl("abc important}", 2, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 0,
@@ -393,7 +393,7 @@ test(`15`, () => {
     "15.01"
   );
   equal(
-    matchRightIncl(`abc important}`, 2, ["!important"], {
+    matchRightIncl("abc important}", 2, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 1,
@@ -402,7 +402,7 @@ test(`15`, () => {
     "15.02"
   );
   equal(
-    matchRightIncl(`abc important}`, 2, ["!important"], {
+    matchRightIncl("abc important}", 2, ["!important"], {
       i: true,
       trimBeforeMatching: true,
       maxMismatches: 2,
@@ -412,7 +412,7 @@ test(`15`, () => {
   );
 
   equal(
-    matchRightIncl(`abc important}`, 2, ["!important"], {
+    matchRightIncl("abc important}", 2, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 0,
@@ -421,7 +421,7 @@ test(`15`, () => {
     "15.04"
   );
   equal(
-    matchRightIncl(`abc important}`, 2, ["!important"], {
+    matchRightIncl("abc important}", 2, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 1,
@@ -430,7 +430,7 @@ test(`15`, () => {
     "15.05"
   );
   equal(
-    matchRightIncl(`abc important}`, 2, ["!important"], {
+    matchRightIncl("abc important}", 2, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -440,9 +440,9 @@ test(`15`, () => {
   );
 });
 
-test(`16 - tight`, () => {
+test("16 - tight", () => {
   equal(
-    matchRight(`1px!important}`, 0, ["!important"], {
+    matchRight("1px!important}", 0, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -451,7 +451,7 @@ test(`16 - tight`, () => {
     "16.01"
   );
   equal(
-    matchRight(`1px!important}`, 1, ["!important"], {
+    matchRight("1px!important}", 1, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -460,7 +460,7 @@ test(`16 - tight`, () => {
     "16.02"
   );
   equal(
-    matchRight(`1px!important}`, 2, ["!important"], {
+    matchRight("1px!important}", 2, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -470,9 +470,9 @@ test(`16 - tight`, () => {
   );
 });
 
-test(`17 - tight`, () => {
+test("17 - tight", () => {
   equal(
-    matchRight(`1pximportant}`, 0, ["!important"], {
+    matchRight("1pximportant}", 0, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -481,7 +481,7 @@ test(`17 - tight`, () => {
     "17.01"
   );
   equal(
-    matchRight(`1pximportant}`, 1, ["!important"], {
+    matchRight("1pximportant}", 1, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -490,7 +490,7 @@ test(`17 - tight`, () => {
     "17.02"
   );
   equal(
-    matchRight(`1pximportant}`, 2, ["!important"], {
+    matchRight("1pximportant}", 2, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -500,9 +500,9 @@ test(`17 - tight`, () => {
   );
 });
 
-test(`18 - tight`, () => {
+test("18 - tight", () => {
   equal(
-    matchRightIncl(`1pximportant}`, 0, ["!important"], {
+    matchRightIncl("1pximportant}", 0, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -511,7 +511,7 @@ test(`18 - tight`, () => {
     "18.01"
   );
   equal(
-    matchRightIncl(`1pximportant}`, 1, ["!important"], {
+    matchRightIncl("1pximportant}", 1, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -520,7 +520,7 @@ test(`18 - tight`, () => {
     "18.02"
   );
   equal(
-    matchRightIncl(`1pximportant}`, 2, ["!important"], {
+    matchRightIncl("1pximportant}", 2, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,
@@ -529,7 +529,7 @@ test(`18 - tight`, () => {
     "18.03"
   );
   equal(
-    matchRightIncl(`1pximportant}`, 3, ["!important"], {
+    matchRightIncl("1pximportant}", 3, ["!important"], {
       i: true,
       trimBeforeMatching: false,
       maxMismatches: 2,

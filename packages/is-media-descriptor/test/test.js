@@ -25,11 +25,11 @@ for (let i = 0, len = filesInSamples.length; i < len; i++) {
 // 00. API bits
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - non-string`, () => {
+test(`01 - ${`\u001b[${33}m${"api bits"}\u001b[${39}m`} - non-string`, () => {
   equal(isMediaD(), [], "01.01");
 });
 
-test(`02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - empty string`, () => {
+test(`02 - ${`\u001b[${33}m${"api bits"}\u001b[${39}m`} - empty string`, () => {
   let str = "";
   equal(isMediaD(str), [], "02.01");
   writeSample({
@@ -39,7 +39,7 @@ test(`02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - empty string`, () => {
   });
 });
 
-test(`03 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - space character`, () => {
+test(`03 - ${`\u001b[${33}m${"api bits"}\u001b[${39}m`} - space character`, () => {
   let str = " ";
   equal(isMediaD(str), [], "03.01");
   writeSample({
@@ -49,7 +49,7 @@ test(`03 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - space character`, () =
   });
 });
 
-test(`04 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - trimmable to zero`, () => {
+test(`04 - ${`\u001b[${33}m${"api bits"}\u001b[${39}m`} - trimmable to zero`, () => {
   let str = "\n\n\n";
   equal(isMediaD(str), [], "04.01");
   writeSample({
@@ -59,7 +59,7 @@ test(`04 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - trimmable to zero`, ()
   });
 });
 
-test(`05 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - weird offset`, () => {
+test(`05 - ${`\u001b[${33}m${"api bits"}\u001b[${39}m`} - weird offset`, () => {
   throws(
     () => {
       isMediaD("", { offset: true });
@@ -72,7 +72,7 @@ test(`05 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - weird offset`, () => {
 // 01. single-string values
 // -----------------------------------------------------------------------------
 
-test(`06 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`}`, () => {
+test(`06 - ${`\u001b[${31}m${"single-string values"}\u001b[${39}m`}`, () => {
   [
     "all",
     "aural",
@@ -90,7 +90,7 @@ test(`06 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`}`, () => {
   });
 });
 
-test(`07 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - with offset`, () => {
+test(`07 - ${`\u001b[${31}m${"single-string values"}\u001b[${39}m`} - with offset`, () => {
   [
     "all",
     "aural",
@@ -108,8 +108,8 @@ test(`07 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - with offse
   });
 });
 
-test(`08 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognised string`, () => {
-  let str = ` zzz`;
+test(`08 - ${`\u001b[${31}m${"single-string values"}\u001b[${39}m`} - unrecognised string`, () => {
+  let str = " zzz";
   writeSample({
     id: "01.03",
     str,
@@ -130,17 +130,17 @@ test(`08 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognis
       {
         idxFrom: 1 + offset,
         idxTo: 4 + offset,
-        message: `Unrecognised media type "zzz".`,
+        message: 'Unrecognised media type "zzz".',
         fix: null,
       },
     ],
     "08.01"
   );
-  equal(applyFixes(str, res, offset), `zzz`, "08.02");
+  equal(applyFixes(str, res, offset), "zzz", "08.02");
 });
 
-test(`09 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognised string`, () => {
-  let str = `only`;
+test(`09 - ${`\u001b[${31}m${"single-string values"}\u001b[${39}m`} - unrecognised string`, () => {
+  let str = "only";
   writeSample({
     id: "01.04",
     str,
@@ -161,8 +161,8 @@ test(`09 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognis
   );
 });
 
-test(`10 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognised string`, () => {
-  let str = `not`;
+test(`10 - ${`\u001b[${31}m${"single-string values"}\u001b[${39}m`} - unrecognised string`, () => {
+  let str = "not";
   writeSample({
     id: "01.05",
     str,
@@ -186,9 +186,9 @@ test(`10 - ${`\u001b[${31}m${`single-string values`}\u001b[${39}m`} - unrecognis
 // 02. whitespace related errors
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading`, () => {
-  let str = `\tall`;
-  let fixed = `all`;
+test(`11 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - leading`, () => {
+  let str = "\tall";
+  let fixed = "all";
   writeSample({
     id: "02.01",
     str,
@@ -213,9 +213,9 @@ test(`11 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - leading`, () => 
   );
 });
 
-test(`12 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - trailing`, () => {
-  let str = `all\t`;
-  let fixed = `all`;
+test(`12 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - trailing`, () => {
+  let str = "all\t";
+  let fixed = "all";
   writeSample({
     id: "02.02",
     str,
@@ -239,9 +239,9 @@ test(`12 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - trailing`, () =>
   );
 });
 
-test(`13 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed, leading and trailing`, () => {
-  let str = `\t\t\tall\t\n`;
-  let fixed = `all`;
+test(`13 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - mixed, leading and trailing`, () => {
+  let str = "\t\t\tall\t\n";
+  let fixed = "all";
   writeSample({
     id: "02.03",
     str,
@@ -268,9 +268,9 @@ test(`13 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed, leading a
   );
 });
 
-test(`14 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - single tab whitespace chunk`, () => {
-  let str = `only\tscreen`;
-  let fixed = `only screen`;
+test(`14 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - single tab whitespace chunk`, () => {
+  let str = "only\tscreen";
+  let fixed = "only screen";
   writeSample({
     id: "02.04",
     str,
@@ -295,9 +295,9 @@ test(`14 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - single tab white
   equal(applyFixes(str, res, offset), fixed, "14.02");
 });
 
-test(`15 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - multiple tab whitespace chunk`, () => {
-  let str = `only\t\tscreen`;
-  let fixed = `only screen`;
+test(`15 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - multiple tab whitespace chunk`, () => {
+  let str = "only\t\tscreen";
+  let fixed = "only screen";
   writeSample({
     id: "02.05",
     str,
@@ -322,9 +322,9 @@ test(`15 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - multiple tab whi
   equal(applyFixes(str, res, offset), fixed, "15.02");
 });
 
-test(`16 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace chunk, tab end`, () => {
-  let str = `only  \tscreen`;
-  let fixed = `only screen`;
+test(`16 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - mixed whitespace chunk, tab end`, () => {
+  let str = "only  \tscreen";
+  let fixed = "only screen";
   writeSample({
     id: "02.06",
     str,
@@ -349,9 +349,9 @@ test(`16 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace
   equal(applyFixes(str, res, offset), fixed, "16.02");
 });
 
-test(`17 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace chunk, tab start and end`, () => {
-  let str = `only\t \tscreen`;
-  let fixed = `only screen`;
+test(`17 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - mixed whitespace chunk, tab start and end`, () => {
+  let str = "only\t \tscreen";
+  let fixed = "only screen";
   writeSample({
     id: "02.07",
     str,
@@ -376,9 +376,9 @@ test(`17 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace
   equal(applyFixes(str, res, offset), fixed, "17.02");
 });
 
-test(`18 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace chunk, tab start`, () => {
-  let str = `only\t  screen`;
-  let fixed = `only screen`;
+test(`18 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - mixed whitespace chunk, tab start`, () => {
+  let str = "only\t  screen";
+  let fixed = "only screen";
   writeSample({
     id: "02.08",
     str,
@@ -400,11 +400,11 @@ test(`18 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - mixed whitespace
     ],
     "18.01"
   );
-  equal(applyFixes(str, res, offset), `only screen`, "18.02");
+  equal(applyFixes(str, res, offset), "only screen", "18.02");
 });
 
-test(`19 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing type`, () => {
-  let str = `not (monochrome)`;
+test(`19 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - not, missing type`, () => {
+  let str = "not (monochrome)";
   writeSample({
     id: "02.09",
     str,
@@ -418,7 +418,7 @@ test(`19 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing typ
       {
         idxFrom: 4 + offset,
         idxTo: 16 + offset,
-        message: `"not" can be only in front of media type.`,
+        message: '"not" can be only in front of media type.',
         fix: null,
       },
     ],
@@ -427,8 +427,8 @@ test(`19 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing typ
   equal(applyFixes(str, res, offset), str, "19.02");
 });
 
-test(`20 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing type`, () => {
-  let str = `not (width <= -100px)`;
+test(`20 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - not, missing type`, () => {
+  let str = "not (width <= -100px)";
   writeSample({
     id: "02.10",
     str,
@@ -442,7 +442,7 @@ test(`20 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing typ
       {
         idxFrom: 4 + offset,
         idxTo: 21 + offset,
-        message: `"not" can be only in front of media type.`,
+        message: '"not" can be only in front of media type.',
         fix: null,
       },
     ],
@@ -451,9 +451,9 @@ test(`20 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing typ
   equal(applyFixes(str, res, offset), str, "20.02");
 });
 
-test(`21 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing type, whitespace`, () => {
-  let str = `not ( monochrome )`;
-  let fixed = `not (monochrome)`;
+test(`21 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - not, missing type, whitespace`, () => {
+  let str = "not ( monochrome )";
+  let fixed = "not (monochrome)";
   writeSample({
     id: "02.10",
     str,
@@ -483,7 +483,7 @@ test(`21 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing typ
       {
         idxFrom: 4 + offset,
         idxTo: 18 + offset,
-        message: `"not" can be only in front of media type.`,
+        message: '"not" can be only in front of media type.',
         fix: null,
       },
     ],
@@ -492,9 +492,9 @@ test(`21 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - not, missing typ
   equal(applyFixes(str, res, offset), fixed, "21.02");
 });
 
-test(`22 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - trailing space`, () => {
-  let str = `screen `;
-  let fixed = `screen`;
+test(`22 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - trailing space`, () => {
+  let str = "screen ";
+  let fixed = "screen";
   writeSample({
     id: "02.12",
     str,
@@ -521,9 +521,9 @@ test(`22 - ${`\u001b[${32}m${`bad whitespace`}\u001b[${39}m`} - trailing space`,
 // 03. levenshtein distance 1 on single-string values
 // -----------------------------------------------------------------------------
 
-test(`23 - ${`\u001b[${36}m${`levenshtein`}\u001b[${39}m`} - minimal case`, () => {
-  let str = `screeen`;
-  let fixed = `screen`;
+test(`23 - ${`\u001b[${36}m${"levenshtein"}\u001b[${39}m`} - minimal case`, () => {
+  let str = "screeen";
+  let fixed = "screen";
   writeSample({
     id: "03.01",
     str,
@@ -538,7 +538,7 @@ test(`23 - ${`\u001b[${36}m${`levenshtein`}\u001b[${39}m`} - minimal case`, () =
       {
         idxFrom: 10,
         idxTo: 17,
-        message: `Did you mean "screen"?`,
+        message: 'Did you mean "screen"?',
         fix: {
           ranges: [[10, 17, "screen"]],
         },
@@ -548,9 +548,9 @@ test(`23 - ${`\u001b[${36}m${`levenshtein`}\u001b[${39}m`} - minimal case`, () =
   );
 });
 
-test(`24 - ${`\u001b[${36}m${`levenshtein`}\u001b[${39}m`} - leading and trailing`, () => {
-  let str = `\t\t\tal\t\n`;
-  let fixed = `all`;
+test(`24 - ${`\u001b[${36}m${"levenshtein"}\u001b[${39}m`} - leading and trailing`, () => {
+  let str = "\t\t\tal\t\n";
+  let fixed = "all";
   writeSample({
     id: "03.02",
     str,
@@ -575,7 +575,7 @@ test(`24 - ${`\u001b[${36}m${`levenshtein`}\u001b[${39}m`} - leading and trailin
       {
         idxFrom: 3, // first element of the first range
         idxTo: 5, // last element of the last range
-        message: `Did you mean "all"?`,
+        message: 'Did you mean "all"?',
         fix: {
           ranges: [[3, 5, "all"]],
         },
@@ -588,8 +588,8 @@ test(`24 - ${`\u001b[${36}m${`levenshtein`}\u001b[${39}m`} - leading and trailin
 // 04. preliminary checks
 // -----------------------------------------------------------------------------
 
-test(`25 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - mismatching bracket count 1`, () => {
-  let str = `only (screen))`;
+test(`25 - ${`\u001b[${34}m${"preliminary checks"}\u001b[${39}m`} - mismatching bracket count 1`, () => {
+  let str = "only (screen))";
   writeSample({
     id: "04.01",
     str,
@@ -611,8 +611,8 @@ test(`25 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - mismatching 
   equal(applyFixes(str, res, offset), str, "25.02");
 });
 
-test(`26 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - mismatching bracket count 2`, () => {
-  let str = `only ((screen)`;
+test(`26 - ${`\u001b[${34}m${"preliminary checks"}\u001b[${39}m`} - mismatching bracket count 2`, () => {
+  let str = "only ((screen)";
   writeSample({
     id: "04.02",
     str,
@@ -634,8 +634,8 @@ test(`26 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - mismatching 
   equal(applyFixes(str, res, offset), str, "26.02");
 });
 
-test(`27 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`, () => {
-  let str = `only ())screen(()`;
+test(`27 - ${`\u001b[${34}m${"preliminary checks"}\u001b[${39}m`} - three brackets of each type, but wrong order`, () => {
+  let str = "only ())screen(()";
   writeSample({
     id: "04.03",
     str,
@@ -657,8 +657,8 @@ test(`27 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three bracke
   equal(applyFixes(str, res, offset), str, "27.02");
 });
 
-test(`28 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`, () => {
-  let str = `only )))))`;
+test(`28 - ${`\u001b[${34}m${"preliminary checks"}\u001b[${39}m`} - three brackets of each type, but wrong order`, () => {
+  let str = "only )))))";
   writeSample({
     id: "04.04",
     str,
@@ -680,10 +680,10 @@ test(`28 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three bracke
   equal(applyFixes(str, res, offset), str, "28.02");
 });
 
-test(`29 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - semicolon present`, () => {
+test(`29 - ${`\u001b[${34}m${"preliminary checks"}\u001b[${39}m`} - semicolon present`, () => {
   // for example
   // @media test;,all { body { background:lime } }
-  let str = `test;,all`;
+  let str = "test;,all";
   writeSample({
     id: "04.05",
     str,
@@ -705,8 +705,8 @@ test(`29 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - semicolon pr
   equal(applyFixes(str, res, offset), str, "29.02");
 });
 
-test(`30 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - empty pair`, () => {
-  let str = `screen and ()`;
+test(`30 - ${`\u001b[${34}m${"preliminary checks"}\u001b[${39}m`} - empty pair`, () => {
+  let str = "screen and ()";
   writeSample({
     id: "04.06",
     str,
@@ -728,8 +728,8 @@ test(`30 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - empty pair`,
   equal(applyFixes(str, res, offset), str, "30.02");
 });
 
-test(`31 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three brackets of each type, but wrong order`, () => {
-  let str = `screen and (\t\r)`;
+test(`31 - ${`\u001b[${34}m${"preliminary checks"}\u001b[${39}m`} - three brackets of each type, but wrong order`, () => {
+  let str = "screen and (\t\r)";
   writeSample({
     id: "04.07",
     str,
@@ -754,8 +754,8 @@ test(`31 - ${`\u001b[${34}m${`preliminary checks`}\u001b[${39}m`} - three bracke
 // 05. composed values
 // -----------------------------------------------------------------------------
 
-test(`32 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healthy "only"`, () => {
-  let str = `only screen`;
+test(`32 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - composed of one, healthy "only"`, () => {
+  let str = "only screen";
   writeSample({
     id: "05.01",
     str,
@@ -766,8 +766,8 @@ test(`32 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healt
   equal(applyFixes(str, res, offset), str, "32.02");
 });
 
-test(`33 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healthy "only"`, () => {
-  let str = `onlies screen`;
+test(`33 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - composed of one, healthy "only"`, () => {
+  let str = "onlies screen";
   writeSample({
     id: "05.02",
     str,
@@ -780,7 +780,7 @@ test(`33 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healt
       {
         idxFrom: 0 + offset,
         idxTo: 6 + offset,
-        message: `Unrecognised "onlies".`,
+        message: 'Unrecognised "onlies".',
         fix: null,
       },
     ],
@@ -789,8 +789,8 @@ test(`33 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healt
   equal(applyFixes(str, res, offset), str, "33.02");
 });
 
-test(`34 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healthy "not"`, () => {
-  let str = `not (monochrome)`;
+test(`34 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - composed of one, healthy "not"`, () => {
+  let str = "not (monochrome)";
   writeSample({
     id: "05.03",
     str,
@@ -803,7 +803,7 @@ test(`34 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healt
       {
         idxFrom: 4 + offset,
         idxTo: 16 + offset,
-        message: `"not" can be only in front of media type.`,
+        message: '"not" can be only in front of media type.',
         fix: null,
       },
     ],
@@ -812,8 +812,8 @@ test(`34 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of one, healt
   equal(applyFixes(str, res, offset), str, "34.02");
 });
 
-test(`35 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only dot`, () => {
-  let str = `only .`;
+test(`35 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - only dot`, () => {
+  let str = "only .";
   writeSample({
     id: "05.04",
     str,
@@ -826,7 +826,7 @@ test(`35 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only dot`, () => {
       {
         idxFrom: 5 + offset,
         idxTo: 6 + offset,
-        message: `Strange symbol ".".`,
+        message: 'Strange symbol ".".',
         fix: null,
       },
     ],
@@ -835,8 +835,8 @@ test(`35 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only dot`, () => {
   equal(applyFixes(str, res, offset), str, "35.02");
 });
 
-test(`36 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only dot`, () => {
-  let str = `only --`;
+test(`36 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - only dot`, () => {
+  let str = "only --";
   writeSample({
     id: "05.05",
     str,
@@ -849,7 +849,7 @@ test(`36 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only dot`, () => {
       {
         idxFrom: 5 + offset,
         idxTo: 7 + offset,
-        message: `Strange symbols "--".`,
+        message: 'Strange symbols "--".',
         fix: null,
       },
     ],
@@ -858,8 +858,8 @@ test(`36 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only dot`, () => {
   equal(applyFixes(str, res, offset), str, "36.02");
 });
 
-test(`37 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`, () => {
-  let str = `only and`;
+test(`37 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - only and`, () => {
+  let str = "only and";
   writeSample({
     id: "05.06",
     str,
@@ -872,7 +872,7 @@ test(`37 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`, () => {
       {
         idxFrom: 5 + offset,
         idxTo: 8 + offset,
-        message: `"and" instead of a media type.`,
+        message: '"and" instead of a media type.',
         fix: null,
       },
     ],
@@ -881,8 +881,8 @@ test(`37 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`, () => {
   equal(applyFixes(str, res, offset), str, "37.02");
 });
 
-test(`38 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`, () => {
-  let str = `only only`;
+test(`38 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - only and`, () => {
+  let str = "only only";
   writeSample({
     id: "05.07",
     str,
@@ -895,7 +895,7 @@ test(`38 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`, () => {
       {
         idxFrom: 5 + offset,
         idxTo: 9 + offset,
-        message: `"only" instead of a media type.`,
+        message: '"only" instead of a media type.',
         fix: null,
       },
     ],
@@ -904,8 +904,8 @@ test(`38 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`, () => {
   equal(applyFixes(str, res, offset), str, "38.02");
 });
 
-test(`39 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`, () => {
-  let str = `only not`;
+test(`39 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - only and`, () => {
+  let str = "only not";
   writeSample({
     id: "05.08",
     str,
@@ -918,7 +918,7 @@ test(`39 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`, () => {
       {
         idxFrom: 5 + offset,
         idxTo: 8 + offset,
-        message: `"not" instead of a media type.`,
+        message: '"not" instead of a media type.',
         fix: null,
       },
     ],
@@ -927,9 +927,9 @@ test(`39 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - only and`, () => {
   equal(applyFixes(str, res, offset), str, "39.02");
 });
 
-test(`40 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healthy`, () => {
+test(`40 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - composed of two, healthy`, () => {
   // const str = `screen and (color)`;
-  let str = `screen and (max-width: 100px)`;
+  let str = "screen and (max-width: 100px)";
   writeSample({
     id: "05.09",
     str,
@@ -939,8 +939,8 @@ test(`40 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healt
   equal(res, [], "40.01");
 });
 
-test(`41 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healthy`, () => {
-  let str = `not (monochrome)`;
+test(`41 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - composed of two, healthy`, () => {
+  let str = "not (monochrome)";
   writeSample({
     id: "05.10",
     str,
@@ -953,7 +953,7 @@ test(`41 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healt
       {
         idxFrom: 4 + offset,
         idxTo: 16 + offset,
-        message: `"not" can be only in front of media type.`,
+        message: '"not" can be only in front of media type.',
         fix: null,
       },
     ],
@@ -961,9 +961,9 @@ test(`41 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, healt
   );
 });
 
-test(`42 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missing brackets`, () => {
-  let str = `not screen and color`;
-  let fixed = `not screen and (color)`;
+test(`42 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - composed of two, missing brackets`, () => {
+  let str = "not screen and color";
+  let fixed = "not screen and (color)";
   writeSample({
     id: "05.11",
     str,
@@ -977,7 +977,7 @@ test(`42 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missi
       {
         idxFrom: 15 + offset,
         idxTo: 20 + offset,
-        message: `Missing brackets.`,
+        message: "Missing brackets.",
         fix: {
           ranges: [
             [15 + offset, 15 + offset, "("],
@@ -991,8 +991,8 @@ test(`42 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missi
   equal(applyFixes(str, res, offset), fixed, "42.02");
 });
 
-test(`43 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missing brackets`, () => {
-  let str = `not screen and screen`;
+test(`43 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - composed of two, missing brackets`, () => {
+  let str = "not screen and screen";
   writeSample({
     id: "05.12",
     str,
@@ -1006,7 +1006,7 @@ test(`43 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missi
       {
         idxFrom: 15 + offset,
         idxTo: 21 + offset,
-        message: `Unexpected media type, try using a comma.`,
+        message: "Unexpected media type, try using a comma.",
         fix: null,
       },
     ],
@@ -1015,9 +1015,9 @@ test(`43 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - composed of two, missi
   equal(applyFixes(str, res, offset), str, "43.02");
 });
 
-test(`44 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - dangling "and"`, () => {
-  let str = `not screen and (monochrome) \tand`;
-  let fixed = `not screen and (monochrome)`;
+test(`44 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - dangling "and"`, () => {
+  let str = "not screen and (monochrome) \tand";
+  let fixed = "not screen and (monochrome)";
   writeSample({
     id: "05.13",
     str,
@@ -1031,7 +1031,7 @@ test(`44 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - dangling "and"`, () =>
       {
         idxFrom: 27 + offset,
         idxTo: 29 + offset,
-        message: `Bad whitespace.`,
+        message: "Bad whitespace.",
         fix: {
           ranges: [[28 + offset, 29 + offset]],
         },
@@ -1039,7 +1039,7 @@ test(`44 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - dangling "and"`, () =>
       {
         idxFrom: 29 + offset,
         idxTo: 32 + offset,
-        message: `Dangling "and".`,
+        message: 'Dangling "and".',
         fix: {
           ranges: [[27 + offset, 32 + offset]],
         },
@@ -1050,8 +1050,8 @@ test(`44 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - dangling "and"`, () =>
   equal(applyFixes(str, res, offset), fixed, "44.02");
 });
 
-test(`45 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - dangling "and"`, () => {
-  let str = `screeen and (color), projection and (color)`;
+test(`45 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - dangling "and"`, () => {
+  let str = "screeen and (color), projection and (color)";
   writeSample({
     id: "05.14",
     str,
@@ -1065,7 +1065,7 @@ test(`45 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - dangling "and"`, () =>
       {
         idxFrom: 0 + offset,
         idxTo: 7 + offset,
-        message: `Unrecognised "screeen".`,
+        message: 'Unrecognised "screeen".',
         fix: null,
       },
     ],
@@ -1077,8 +1077,8 @@ test(`45 - ${`\u001b[${35}m${`composed`}\u001b[${39}m`} - dangling "and"`, () =>
 // 06. brackets
 // -----------------------------------------------------------------------------
 
-test(`46 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type and one condition, healthy`, () => {
-  let str = `speech and (device-aspect-ratio: 16/9)`;
+test(`46 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - composed of one type and one condition, healthy`, () => {
+  let str = "speech and (device-aspect-ratio: 16/9)";
   writeSample({
     id: "06.01",
     str,
@@ -1090,8 +1090,8 @@ test(`46 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type a
   equal(applyFixes(str, res, offset), str, "46.02");
 });
 
-test(`47 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type and one condition, no brackets`, () => {
-  let str = `speech and device-aspect-ratio : 16/9`;
+test(`47 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - composed of one type and one condition, no brackets`, () => {
+  let str = "speech and device-aspect-ratio : 16/9";
   writeSample({
     id: "06.02",
     str,
@@ -1105,7 +1105,7 @@ test(`47 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type a
       {
         idxFrom: 11 + offset,
         idxTo: 30 + offset,
-        message: `Expected brackets on "device-aspect-ratio" and its value.`,
+        message: 'Expected brackets on "device-aspect-ratio" and its value.',
         fix: null,
       },
     ],
@@ -1114,8 +1114,8 @@ test(`47 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type a
   equal(applyFixes(str, res, offset), str, "47.02");
 });
 
-test(`48 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type and one condition, no brackets`, () => {
-  let str = `speech and device-aspect-ratio`;
+test(`48 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - composed of one type and one condition, no brackets`, () => {
+  let str = "speech and device-aspect-ratio";
   writeSample({
     id: "06.03",
     str,
@@ -1129,7 +1129,7 @@ test(`48 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type a
       {
         idxFrom: 11 + offset,
         idxTo: 30 + offset,
-        message: `Expected brackets on "device-aspect-ratio".`,
+        message: 'Expected brackets on "device-aspect-ratio".',
         fix: null,
       },
     ],
@@ -1138,8 +1138,8 @@ test(`48 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - composed of one type a
   equal(applyFixes(str, res, offset), str, "48.02");
 });
 
-test(`49 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`, () => {
-  let str = `screen and not (print)`;
+test(`49 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - nested brackets, one condition is unrecognised`, () => {
+  let str = "screen and not (print)";
   writeSample({
     id: "06.04",
     str,
@@ -1153,7 +1153,7 @@ test(`49 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one c
       {
         idxFrom: 11 + offset,
         idxTo: 14 + offset,
-        message: `"not" can't be here.`,
+        message: '"not" can\'t be here.',
         fix: null,
       },
     ],
@@ -1162,8 +1162,8 @@ test(`49 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one c
   equal(applyFixes(str, res, offset), str, "49.02");
 });
 
-test(`50 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`, () => {
-  let str = `screen and (not print)`;
+test(`50 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - nested brackets, one condition is unrecognised`, () => {
+  let str = "screen and (not print)";
   writeSample({
     id: "06.05",
     str,
@@ -1177,7 +1177,7 @@ test(`50 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one c
       {
         idxFrom: 16 + offset,
         idxTo: 21 + offset,
-        message: `Media type "print" inside brackets.`,
+        message: 'Media type "print" inside brackets.',
         fix: null,
       },
     ],
@@ -1186,8 +1186,8 @@ test(`50 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one c
   equal(applyFixes(str, res, offset), str, "50.02");
 });
 
-test(`51 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`, () => {
-  let str = `screen and (print and (zzz))`;
+test(`51 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - nested brackets, one condition is unrecognised`, () => {
+  let str = "screen and (print and (zzz))";
   writeSample({
     id: "06.06",
     str,
@@ -1201,13 +1201,13 @@ test(`51 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one c
       {
         idxFrom: 23 + offset,
         idxTo: 26 + offset,
-        message: `Unrecognised "zzz".`,
+        message: 'Unrecognised "zzz".',
         fix: null,
       },
       {
         idxFrom: 12 + offset,
         idxTo: 17 + offset,
-        message: `Media type "print" inside brackets.`,
+        message: 'Media type "print" inside brackets.',
         fix: null,
       },
     ],
@@ -1216,8 +1216,8 @@ test(`51 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one c
   equal(applyFixes(str, res, offset), str, "51.02");
 });
 
-test(`52 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one condition is unrecognised`, () => {
-  let str = `screen and not (print and (zzz))`;
+test(`52 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - nested brackets, one condition is unrecognised`, () => {
+  let str = "screen and not (print and (zzz))";
   writeSample({
     id: "06.07",
     str,
@@ -1231,7 +1231,7 @@ test(`52 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one c
       {
         idxFrom: 11 + offset,
         idxTo: 14 + offset,
-        message: `"not" can't be here.`,
+        message: '"not" can\'t be here.',
         fix: null,
       },
     ],
@@ -1240,8 +1240,8 @@ test(`52 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - nested brackets, one c
   equal(applyFixes(str, res, offset), str, "52.02");
 });
 
-test(`53 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - everything in brackets`, () => {
-  let str = `(screen and (color))`;
+test(`53 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - everything in brackets`, () => {
+  let str = "(screen and (color))";
   writeSample({
     id: "06.08",
     str,
@@ -1255,7 +1255,7 @@ test(`53 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - everything in brackets
       {
         idxFrom: 1 + offset,
         idxTo: 7 + offset,
-        message: `Media type "screen" inside brackets.`,
+        message: 'Media type "screen" inside brackets.',
         fix: null,
       },
     ],
@@ -1264,8 +1264,9 @@ test(`53 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - everything in brackets
   equal(applyFixes(str, res, offset), str, "53.02");
 });
 
-test(`54 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - everything in brackets, chained`, () => {
-  let str = `(screen and (color)) and (print and (color)) and (speech and (update))`;
+test(`54 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - everything in brackets, chained`, () => {
+  let str =
+    "(screen and (color)) and (print and (color)) and (speech and (update))";
   writeSample({
     id: "06.09",
     str,
@@ -1303,8 +1304,8 @@ test(`54 - ${`\u001b[${90}m${`brackets`}\u001b[${39}m`} - everything in brackets
 // 07. comma
 // -----------------------------------------------------------------------------
 
-test(`55 - ${`\u001b[${36}m${`comma`}\u001b[${39}m`} - healthy`, () => {
-  let str = `screen, print`;
+test(`55 - ${`\u001b[${36}m${"comma"}\u001b[${39}m`} - healthy`, () => {
+  let str = "screen, print";
   writeSample({
     id: "07.01",
     str,
@@ -1319,9 +1320,9 @@ test(`55 - ${`\u001b[${36}m${`comma`}\u001b[${39}m`} - healthy`, () => {
 // 08. space missing
 // -----------------------------------------------------------------------------
 
-test(`56 - space after "and" missing`, () => {
-  let str = `screen and(min-width: 100px)`;
-  let fixed = `screen and (min-width: 100px)`;
+test('56 - space after "and" missing', () => {
+  let str = "screen and(min-width: 100px)";
+  let fixed = "screen and (min-width: 100px)";
   writeSample({
     id: "08.01",
     str,
@@ -1334,7 +1335,7 @@ test(`56 - space after "and" missing`, () => {
       {
         idxFrom: 7,
         idxTo: 10,
-        message: `Space after "and" missing.`,
+        message: 'Space after "and" missing.',
         fix: { ranges: [[10, 10, " "]] },
       },
     ],

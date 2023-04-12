@@ -8,7 +8,7 @@ import { mixer } from "./util/util.js";
 // More tests on trimming, targetting algorithm's weakest spots
 // -----------------------------------------------------------------------------
 
-test(`01 - trimming mixed lumps of trimmable characters`, () => {
+test("01 - trimming mixed lumps of trimmable characters", () => {
   // "ttt   tttaaattt   ttt"
 
   /// //////////              trimLines = off
@@ -21,7 +21,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: false, // <---
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
+      collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -37,7 +37,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      `\t\t\t \t\t\taaa\t\t\t \t\t\t`,
+      "\t\t\t \t\t\taaa\t\t\t \t\t\t",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -48,7 +48,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: false, // <---
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
+      collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -64,7 +64,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      `\t\t\t \t\t\taaa`,
+      "\t\t\t \t\t\taaa",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -75,7 +75,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: false, // <---
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
+      collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -91,7 +91,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      `aaa\t\t\t \t\t\t`,
+      "aaa\t\t\t \t\t\t",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -104,7 +104,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: true, // <---
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
+      collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -120,7 +120,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      ` aaa `,
+      " aaa ",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -131,7 +131,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: true, // <---
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
+      collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -147,7 +147,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      ` aaa`,
+      " aaa",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -158,7 +158,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: true, // <---
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
+      collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -174,7 +174,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      `aaa `,
+      "aaa ",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -186,7 +186,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
     // enforceSpacesOnly doesn't matter now
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
+      collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -202,7 +202,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      `aaa`,
+      "aaa",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -214,7 +214,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
     // all other settings are irrelevant
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
+      collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -238,7 +238,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      `aaa`,
+      "aaa",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -246,7 +246,7 @@ test(`01 - trimming mixed lumps of trimmable characters`, () => {
 
 test("02", () => {
   equal(
-    collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
+    collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
       trimStart: false,
       trimEnd: false,
       trimnbsp: false,
@@ -265,12 +265,12 @@ test("02", () => {
         return props.suggested;
       },
     }).result,
-    `aaa`,
+    "aaa",
     "02.01"
   );
 });
 
-test(`03 - trimming mixed lumps of trimmable characters`, () => {
+test("03 - trimming mixed lumps of trimmable characters", () => {
   // "   ttt   aaa   ttt   "
 
   /// //////////              trimLines = off
@@ -284,7 +284,7 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: false,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t\t\t   aaa   \t\t\t   `, {
+      collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -300,7 +300,7 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      ` \t\t\t aaa \t\t\t `,
+      " \t\t\t aaa \t\t\t ",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -311,7 +311,7 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: false,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t\t\t   aaa   \t\t\t   `, {
+      collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -327,7 +327,7 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      ` \t\t\t aaa`,
+      " \t\t\t aaa",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -338,7 +338,7 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: false,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t\t\t   aaa   \t\t\t   `, {
+      collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -354,7 +354,7 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      `aaa \t\t\t `,
+      "aaa \t\t\t ",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -368,7 +368,7 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: true,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t\t\t   aaa   \t\t\t   `, {
+      collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -384,7 +384,7 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      ` aaa `,
+      " aaa ",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -395,7 +395,7 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: true,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t\t\t   aaa   \t\t\t   `, {
+      collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -411,7 +411,7 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      ` aaa`,
+      " aaa",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -422,7 +422,7 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: true,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t\t\t   aaa   \t\t\t   `, {
+      collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -438,7 +438,7 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      `aaa `,
+      "aaa ",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -448,7 +448,7 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
     trimEnd: true,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t\t\t   aaa   \t\t\t   `, {
+      collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -464,7 +464,7 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      `aaa`,
+      "aaa",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -475,7 +475,7 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
     trimLines: true,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t\t\t   aaa   \t\t\t   `, {
+      collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -491,13 +491,13 @@ test(`03 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      `aaa`,
+      "aaa",
       JSON.stringify(opt, null, 0)
     );
   });
 });
 
-test(`04 - trimming mixed lumps of trimmable characters`, () => {
+test("04 - trimming mixed lumps of trimmable characters", () => {
   // "   t t t   aaa   t t t   "
 
   /// //////////              trimLines = off
@@ -511,7 +511,7 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: false,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t \t \t   aaa   \t \t \t   `, {
+      collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -527,7 +527,7 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      ` \t \t \t aaa \t \t \t `,
+      " \t \t \t aaa \t \t \t ",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -538,7 +538,7 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: false,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t \t \t   aaa   \t \t \t   `, {
+      collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -554,7 +554,7 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      ` \t \t \t aaa`,
+      " \t \t \t aaa",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -565,7 +565,7 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: false,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t \t \t   aaa   \t \t \t   `, {
+      collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -581,7 +581,7 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      `aaa \t \t \t `,
+      "aaa \t \t \t ",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -595,7 +595,7 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: true,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t \t \t   aaa   \t \t \t   `, {
+      collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -611,7 +611,7 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      ` aaa `,
+      " aaa ",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -622,7 +622,7 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: true,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t \t \t   aaa   \t \t \t   `, {
+      collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -638,7 +638,7 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      ` aaa`,
+      " aaa",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -649,7 +649,7 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
     enforceSpacesOnly: true,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t \t \t   aaa   \t \t \t   `, {
+      collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -665,7 +665,7 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      `aaa `,
+      "aaa ",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -675,7 +675,7 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
     trimEnd: true,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t \t \t   aaa   \t \t \t   `, {
+      collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -691,7 +691,7 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      `aaa`,
+      "aaa",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -702,7 +702,7 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
     trimLines: true,
   }).forEach((opt) => {
     equal(
-      collapse(`   \t \t \t   aaa   \t \t \t   `, {
+      collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -718,13 +718,13 @@ test(`04 - trimming mixed lumps of trimmable characters`, () => {
           return props.suggested;
         },
       }).result,
-      `aaa`,
+      "aaa",
       JSON.stringify(opt, null, 0)
     );
   });
 });
 
-test(`05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false`, () => {
+test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false", () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     /// //////////              trimLines = off
 
@@ -789,7 +789,7 @@ test(`05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false`
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
           opt
         ).result,
-        `aaa`,
+        "aaa",
         JSON.stringify(opt, null, 0)
       );
     });
@@ -908,7 +908,7 @@ test(`05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false`
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
           opt
         ).result,
-        `aaa`,
+        "aaa",
         JSON.stringify(opt, null, 0)
       );
     });
@@ -966,13 +966,13 @@ test(`05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false`
   });
 });
 
-test(`06`, () => {
+test("06", () => {
   equal(collapse("      "), { result: "", ranges: [[0, 6]] }, "06.01");
   mixer({
     trimStart: true,
   }).forEach((opt) => {
     equal(
-      collapse(`      `, {
+      collapse("      ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -988,7 +988,7 @@ test(`06`, () => {
           return props.suggested;
         },
       }).result,
-      ``,
+      "",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -996,7 +996,7 @@ test(`06`, () => {
     trimEnd: true,
   }).forEach((opt) => {
     equal(
-      collapse(`      `, {
+      collapse("      ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1012,7 +1012,7 @@ test(`06`, () => {
           return props.suggested;
         },
       }).result,
-      ``,
+      "",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -1020,7 +1020,7 @@ test(`06`, () => {
     trimLines: true,
   }).forEach((opt) => {
     equal(
-      collapse(`      `, {
+      collapse("      ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1036,7 +1036,7 @@ test(`06`, () => {
           return props.suggested;
         },
       }).result,
-      ``,
+      "",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -1046,7 +1046,7 @@ test(`06`, () => {
     trimLines: false,
   }).forEach((opt) => {
     equal(
-      collapse(`      `, {
+      collapse("      ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1062,19 +1062,19 @@ test(`06`, () => {
           return props.suggested;
         },
       }).result,
-      ` `,
+      " ",
       JSON.stringify(opt, null, 0)
     );
   });
 });
 
-test(`07`, () => {
+test("07", () => {
   // "ttt   ttt"
   mixer({
     trimStart: true,
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t   \t\t\t`, {
+      collapse("\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1098,7 +1098,7 @@ test(`07`, () => {
     trimEnd: true,
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t   \t\t\t`, {
+      collapse("\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1122,7 +1122,7 @@ test(`07`, () => {
     trimLines: true,
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t   \t\t\t`, {
+      collapse("\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1149,7 +1149,7 @@ test(`07`, () => {
     enforceSpacesOnly: false,
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t   \t\t\t`, {
+      collapse("\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1165,7 +1165,7 @@ test(`07`, () => {
           return props.suggested;
         },
       }),
-      { result: `\t\t\t \t\t\t`, ranges: [[3, 5]] },
+      { result: "\t\t\t \t\t\t", ranges: [[3, 5]] },
       JSON.stringify(opt, null, 0)
     );
   });
@@ -1176,7 +1176,7 @@ test(`07`, () => {
     enforceSpacesOnly: true,
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t   \t\t\t`, {
+      collapse("\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1192,19 +1192,19 @@ test(`07`, () => {
           return props.suggested;
         },
       }),
-      { result: ` `, ranges: [[0, 9, " "]] },
+      { result: " ", ranges: [[0, 9, " "]] },
       JSON.stringify(opt, null, 0)
     );
   });
 });
 
-test(`08`, () => {
+test("08", () => {
   // "ttt"
   mixer({
     trimStart: true,
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t`, {
+      collapse("\t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1220,7 +1220,7 @@ test(`08`, () => {
           return props.suggested;
         },
       }),
-      { result: ``, ranges: [[0, 3]] },
+      { result: "", ranges: [[0, 3]] },
       JSON.stringify(opt, null, 0)
     );
   });
@@ -1228,7 +1228,7 @@ test(`08`, () => {
     trimEnd: true,
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t`, {
+      collapse("\t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1244,7 +1244,7 @@ test(`08`, () => {
           return props.suggested;
         },
       }),
-      { result: ``, ranges: [[0, 3]] },
+      { result: "", ranges: [[0, 3]] },
       JSON.stringify(opt, null, 0)
     );
   });
@@ -1252,7 +1252,7 @@ test(`08`, () => {
     trimLines: true,
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t`, {
+      collapse("\t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1268,7 +1268,7 @@ test(`08`, () => {
           return props.suggested;
         },
       }),
-      { result: ``, ranges: [[0, 3]] },
+      { result: "", ranges: [[0, 3]] },
       JSON.stringify(opt, null, 0)
     );
   });
@@ -1279,7 +1279,7 @@ test(`08`, () => {
     enforceSpacesOnly: false,
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t`, {
+      collapse("\t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1295,7 +1295,7 @@ test(`08`, () => {
           return props.suggested;
         },
       }),
-      { result: `\t\t\t`, ranges: null },
+      { result: "\t\t\t", ranges: null },
       JSON.stringify(opt, null, 0)
     );
   });
@@ -1306,7 +1306,7 @@ test(`08`, () => {
     enforceSpacesOnly: true,
   }).forEach((opt) => {
     equal(
-      collapse(`\t\t\t`, {
+      collapse("\t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1322,13 +1322,13 @@ test(`08`, () => {
           return props.suggested;
         },
       }),
-      { result: ` `, ranges: [[0, 3, " "]] },
+      { result: " ", ranges: [[0, 3, " "]] },
       JSON.stringify(opt, null, 0)
     );
   });
 });
 
-test(`09`, () => {
+test("09", () => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     // removeEmptyLines=off
     mixer({
@@ -1361,7 +1361,7 @@ test(`09`, () => {
             return props.suggested;
           },
         }).result,
-        ``,
+        "",
         JSON.stringify(opt, null, 0)
       );
     });
@@ -1395,7 +1395,7 @@ test(`09`, () => {
             return props.suggested;
           },
         }).result,
-        ``,
+        "",
         JSON.stringify(opt, null, 0)
       );
     });
@@ -1619,30 +1619,30 @@ test(`09`, () => {
   });
 });
 
-test(`10`, () => {
+test("10", () => {
   equal(
-    collapse(`\r\n\r\n\r\n\r\n\r\n\n\n\n\n\n\n`, {
+    collapse("\r\n\r\n\r\n\r\n\r\n\n\n\n\n\n\n", {
       trimStart: false,
       trimEnd: false,
       removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: true,
     }).result,
-    `\r\n\r\n`,
+    "\r\n\r\n",
     "10.01"
   );
   equal(
-    collapse(`\r\n\r\n\r\n\r\n\r\n\n\n\n\n\n\n`, {
+    collapse("\r\n\r\n\r\n\r\n\r\n\n\n\n\n\n\n", {
       trimStart: false,
       trimEnd: false,
       removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 2,
     }).result,
-    `\r\n\r\n\r\n`,
+    "\r\n\r\n\r\n",
     "10.02"
   );
 });
 
-test(`11 - trim involving non-breaking spaces`, () => {
+test("11 - trim involving non-breaking spaces", () => {
   // ".   a   ."
   mixer({
     trimStart: true,
@@ -1650,7 +1650,7 @@ test(`11 - trim involving non-breaking spaces`, () => {
     trimnbsp: true,
   }).forEach((opt) => {
     equal(
-      collapse(`\xa0   a   \xa0`, {
+      collapse("\xa0   a   \xa0", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1666,7 +1666,7 @@ test(`11 - trim involving non-breaking spaces`, () => {
           return props.suggested;
         },
       }).result,
-      `a`,
+      "a",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -1675,7 +1675,7 @@ test(`11 - trim involving non-breaking spaces`, () => {
     trimnbsp: true,
   }).forEach((opt) => {
     equal(
-      collapse(`\xa0   a   \xa0`, {
+      collapse("\xa0   a   \xa0", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1691,7 +1691,7 @@ test(`11 - trim involving non-breaking spaces`, () => {
           return props.suggested;
         },
       }).result,
-      `a`,
+      "a",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -1701,7 +1701,7 @@ test(`11 - trim involving non-breaking spaces`, () => {
     enforceSpacesOnly: false,
   }).forEach((opt) => {
     equal(
-      collapse(`\xa0   a   \xa0`, {
+      collapse("\xa0   a   \xa0", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1717,7 +1717,7 @@ test(`11 - trim involving non-breaking spaces`, () => {
           return props.suggested;
         },
       }).result,
-      `\xa0 a \xa0`,
+      "\xa0 a \xa0",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -1730,7 +1730,7 @@ test(`11 - trim involving non-breaking spaces`, () => {
     enforceSpacesOnly: true,
   }).forEach((opt) => {
     equal(
-      collapse(`\xa0   a   \xa0`, {
+      collapse("\xa0   a   \xa0", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1746,7 +1746,7 @@ test(`11 - trim involving non-breaking spaces`, () => {
           return props.suggested;
         },
       }).result,
-      ` a `,
+      " a ",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -1758,7 +1758,7 @@ test(`11 - trim involving non-breaking spaces`, () => {
     enforceSpacesOnly: true,
   }).forEach((opt) => {
     equal(
-      collapse(`\xa0   a   \xa0`, {
+      collapse("\xa0   a   \xa0", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -1774,7 +1774,7 @@ test(`11 - trim involving non-breaking spaces`, () => {
           return props.suggested;
         },
       }).result,
-      `a`,
+      "a",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -1782,7 +1782,7 @@ test(`11 - trim involving non-breaking spaces`, () => {
 
 test("12", () => {
   equal(
-    collapse(`\xa0   a   \xa0`, {
+    collapse("\xa0   a   \xa0", {
       trimStart: true,
       trimEnd: false,
       removeEmptyLines: false,
@@ -1791,7 +1791,7 @@ test("12", () => {
       enforceSpacesOnly: true,
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
-    `a `,
+    "a ",
     "12.01"
   );
 });
@@ -1799,7 +1799,7 @@ test("12", () => {
 test("13", () => {
   // ".   a   ."
   equal(
-    collapse(`\xa0   a   \xa0`, {
+    collapse("\xa0   a   \xa0", {
       trimStart: false,
       trimEnd: false,
       removeEmptyLines: false,
@@ -1808,7 +1808,7 @@ test("13", () => {
       enforceSpacesOnly: true,
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
-    `a`,
+    "a",
     "13.01"
   );
 });
@@ -1816,7 +1816,7 @@ test("13", () => {
 test("14", () => {
   // ".   a   ."
   equal(
-    collapse(`\xa0   a   \xa0`, {
+    collapse("\xa0   a   \xa0", {
       trimStart: true,
       trimEnd: false,
       removeEmptyLines: false,
@@ -1825,7 +1825,7 @@ test("14", () => {
       enforceSpacesOnly: true,
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
-    `a `,
+    "a ",
     "14.01"
   );
 });
@@ -1833,7 +1833,7 @@ test("14", () => {
 test("15", () => {
   // ".   a   ."
   equal(
-    collapse(`\xa0   a   \xa0`, {
+    collapse("\xa0   a   \xa0", {
       trimStart: false,
       trimEnd: true,
       removeEmptyLines: false,
@@ -1842,7 +1842,7 @@ test("15", () => {
       enforceSpacesOnly: true,
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
-    ` a`,
+    " a",
     "15.01"
   );
 });
@@ -1850,7 +1850,7 @@ test("15", () => {
 test("16", () => {
   // ".   a   ."
   equal(
-    collapse(`\xa0a\xa0`, {
+    collapse("\xa0a\xa0", {
       trimStart: true,
       trimEnd: true,
       removeEmptyLines: false,
@@ -1859,7 +1859,7 @@ test("16", () => {
       enforceSpacesOnly: true,
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
-    `a`,
+    "a",
     "16.01"
   );
 });
@@ -1867,7 +1867,7 @@ test("16", () => {
 test("17", () => {
   // "   .a.   "
   equal(
-    collapse(`   \xa0a\xa0   `, {
+    collapse("   \xa0a\xa0   ", {
       trimStart: true,
       trimEnd: true,
       removeEmptyLines: false,
@@ -1876,14 +1876,14 @@ test("17", () => {
       enforceSpacesOnly: true,
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
-    `a`,
+    "a",
     "17.01"
   );
 });
 
 test("18", () => {
   equal(
-    collapse(`\xa0   a   \xa0`, {
+    collapse("\xa0   a   \xa0", {
       trimStart: false,
       trimEnd: false,
       removeEmptyLines: false,
@@ -1892,7 +1892,7 @@ test("18", () => {
       enforceSpacesOnly: true,
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
-    `a`,
+    "a",
     "18.01"
   );
 });
@@ -1900,7 +1900,7 @@ test("18", () => {
 test("19", () => {
   // "   .a.   "
   equal(
-    collapse(`   \xa0a\xa0   `, {
+    collapse("   \xa0a\xa0   ", {
       trimStart: false,
       trimEnd: false,
       removeEmptyLines: false,
@@ -1909,14 +1909,14 @@ test("19", () => {
       enforceSpacesOnly: true,
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
-    `a`,
+    "a",
     "19.01"
   );
 });
 
 test("20", () => {
   equal(
-    collapse(`\xa0\na\n\xa0`, {
+    collapse("\xa0\na\n\xa0", {
       trimStart: false,
       trimEnd: false,
       removeEmptyLines: false,
@@ -1925,11 +1925,11 @@ test("20", () => {
       enforceSpacesOnly: true,
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
-    ` \na\n `,
+    " \na\n ",
     "20.01"
   );
   equal(
-    collapse(`\t\na\n\t`, {
+    collapse("\t\na\n\t", {
       trimStart: false,
       trimEnd: false,
       removeEmptyLines: false,
@@ -1938,31 +1938,31 @@ test("20", () => {
       enforceSpacesOnly: true,
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
-    ` \na\n `,
+    " \na\n ",
     "20.02"
   );
 });
 
 test("21", () => {
   equal(
-    collapse(`\xa0\t\xa0a\xa0\t\xa0b\xa0\t\xa0`, {
+    collapse("\xa0\t\xa0a\xa0\t\xa0b\xa0\t\xa0", {
       trimStart: false,
       trimEnd: false,
       trimLines: false,
       trimnbsp: false,
       enforceSpacesOnly: true,
     }).result,
-    ` a b `,
+    " a b ",
     "21.01"
   );
 });
 
-test(`22 - trim involving non-breaking spaces`, () => {
+test("22 - trim involving non-breaking spaces", () => {
   // ".   .   a   .   ."
   equal(
-    collapse(`\xa0   \xa0   a   \xa0   \xa0`),
+    collapse("\xa0   \xa0   a   \xa0   \xa0"),
     {
-      result: `\xa0 \xa0 a \xa0 \xa0`,
+      result: "\xa0 \xa0 a \xa0 \xa0",
       ranges: [
         [1, 3],
         [5, 7],
@@ -1974,12 +1974,12 @@ test(`22 - trim involving non-breaking spaces`, () => {
   );
 });
 
-test(`23 - trim involving non-breaking spaces`, () => {
+test("23 - trim involving non-breaking spaces", () => {
   // ".   .   a   .   ."
   equal(
-    collapse(`\xa0   \xa0   a   \xa0   \xa0`, { trimnbsp: true }),
+    collapse("\xa0   \xa0   a   \xa0   \xa0", { trimnbsp: true }),
     {
-      result: `a`,
+      result: "a",
       ranges: [
         [0, 8],
         [9, 17],
@@ -1989,12 +1989,12 @@ test(`23 - trim involving non-breaking spaces`, () => {
   );
 });
 
-test(`24 - trim involving non-breaking spaces`, () => {
+test("24 - trim involving non-breaking spaces", () => {
   // "    .     a     .      "
   equal(
-    collapse(`    \xa0     a     \xa0      `),
+    collapse("    \xa0     a     \xa0      "),
     {
-      result: `\xa0 a \xa0`,
+      result: "\xa0 a \xa0",
       ranges: [
         [0, 4],
         [5, 9],
@@ -2006,18 +2006,18 @@ test(`24 - trim involving non-breaking spaces`, () => {
   );
 });
 
-test(`25 - trim involving non-breaking spaces`, () => {
+test("25 - trim involving non-breaking spaces", () => {
   equal(
-    collapse(` \xa0 `, {
+    collapse(" \xa0 ", {
       trimStart: false,
       trimEnd: false,
     }).result,
-    ` \xa0 `,
+    " \xa0 ",
     "25.01"
   );
 });
 
-test(`26 - trim involving non-breaking spaces`, () => {
+test("26 - trim involving non-breaking spaces", () => {
   mixer({
     trimStart: false,
     trimEnd: false,
@@ -2025,7 +2025,7 @@ test(`26 - trim involving non-breaking spaces`, () => {
     enforceSpacesOnly: false,
   }).forEach((opt) => {
     equal(
-      collapse(`  \xa0  `, {
+      collapse("  \xa0  ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -2041,7 +2041,7 @@ test(`26 - trim involving non-breaking spaces`, () => {
           return props.suggested;
         },
       }).result,
-      ` \xa0 `,
+      " \xa0 ",
       JSON.stringify(opt, null, 0)
     );
   });
@@ -2052,7 +2052,7 @@ test(`26 - trim involving non-breaking spaces`, () => {
     enforceSpacesOnly: true,
   }).forEach((opt) => {
     equal(
-      collapse(`  \xa0  `, {
+      collapse("  \xa0  ", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -2068,16 +2068,16 @@ test(`26 - trim involving non-breaking spaces`, () => {
           return props.suggested;
         },
       }).result,
-      ` `,
+      " ",
       JSON.stringify(opt, null, 0)
     );
   });
 });
 
-test(`27 - bracket`, () => {
+test("27 - bracket", () => {
   mixer().forEach((opt) => {
     equal(
-      collapse(`a > b`, {
+      collapse("a > b", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -2093,16 +2093,16 @@ test(`27 - bracket`, () => {
           return props.suggested;
         },
       }).result,
-      `a > b`,
+      "a > b",
       "27.01"
     );
   });
 });
 
-test(`28 - bracket`, () => {
+test("28 - bracket", () => {
   mixer().forEach((opt) => {
     equal(
-      collapse(`<span>zzz</span> abc def ghij klm`, {
+      collapse("<span>zzz</span> abc def ghij klm", {
         ...opt,
         cb: ({ ...props }) => {
           equal(Object.keys(props), cbSchema);
@@ -2118,7 +2118,7 @@ test(`28 - bracket`, () => {
           return props.suggested;
         },
       }).result,
-      `<span>zzz</span> abc def ghij klm`,
+      "<span>zzz</span> abc def ghij klm",
       "28.01"
     );
   });

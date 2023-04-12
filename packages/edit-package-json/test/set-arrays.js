@@ -9,27 +9,27 @@ import { setter } from "./util/util.js";
 // 06. set - on arrays, existing path
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`, () => {
-  let input = `[[]]`;
-  let result = `[true]`;
+test(`01 - ${`\u001b[${34}m${"set"}\u001b[${39}m`} - ${`\u001b[${36}m${"existing path"}\u001b[${39}m`} - nested arrays 1`, () => {
+  let input = "[[]]";
+  let result = "[true]";
   setter(equal, input, result, "0", true, "06.01");
 });
 
-test(`02 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`, () => {
-  let input = `[{}]`;
-  let result = `[true]`;
+test(`02 - ${`\u001b[${34}m${"set"}\u001b[${39}m`} - ${`\u001b[${36}m${"existing path"}\u001b[${39}m`} - nested arrays 1`, () => {
+  let input = "[{}]";
+  let result = "[true]";
   setter(equal, input, result, "0", true, "06.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`, () => {
-  let input = `[false]`;
-  let result = `[true]`;
+test(`03 - ${`\u001b[${34}m${"set"}\u001b[${39}m`} - ${`\u001b[${36}m${"existing path"}\u001b[${39}m`} - nested arrays 1`, () => {
+  let input = "[false]";
+  let result = "[true]";
   setter(equal, input, result, "0", true, "06.03");
 });
 
-test(`04 - ${`\u001b[${34}m${`set`}\u001b[${39}m`} - ${`\u001b[${36}m${`existing path`}\u001b[${39}m`} - nested arrays 1`, () => {
-  let input = `["z"]`;
-  let result = `[true]`;
+test(`04 - ${`\u001b[${34}m${"set"}\u001b[${39}m`} - ${`\u001b[${36}m${"existing path"}\u001b[${39}m`} - nested arrays 1`, () => {
+  let input = '["z"]';
+  let result = "[true]";
   setter(equal, input, result, "0", true, "06.04");
 });
 

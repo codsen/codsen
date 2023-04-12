@@ -122,7 +122,7 @@ test("05 - third input argument is present and is not string", () => {
 // 01. B.A.U.
 // ==============================
 
-test(`06 - crops out few ranges outside the strlen`, () => {
+test("06 - crops out few ranges outside the strlen", () => {
   equal(
     rRegex(/def/g, "abcdefghij_abcdefghij"),
     [
@@ -157,13 +157,13 @@ test(`06 - crops out few ranges outside the strlen`, () => {
   );
 });
 
-test(`07 - nothing found`, () => {
+test("07 - nothing found", () => {
   equal(rRegex(/def/g, ""), null, "07.01");
   equal(rRegex(/def/g, "", "yo"), null, "07.02");
   equal(rRegex(/def/g, "", null), null, "07.03");
 });
 
-test(`08 - result ranges are consecutive so their ranges are merged into one`, () => {
+test("08 - result ranges are consecutive so their ranges are merged into one", () => {
   let reg = /def/g;
   let str = "abcdefdefghij_abcdefghij";
   equal(
@@ -177,7 +177,7 @@ test(`08 - result ranges are consecutive so their ranges are merged into one`, (
   equal(rApply(str, rRegex(reg, str)), str.replace(reg, ""), "08.02");
 });
 
-test(`09 - no findings - returns null`, () => {
+test("09 - no findings - returns null", () => {
   let reg = /yyy/g;
   let str = "zzzzzzzz";
   equal(rRegex(reg, str), null, "09.01");

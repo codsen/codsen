@@ -9,7 +9,7 @@ import { rIterate as iterate } from "../dist/ranges-iterate.esm.js";
 // 0. THROWS
 // ==============================
 
-test(`01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 1st arg not string`, () => {
+test(`01 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - 1st arg not string`, () => {
   throws(
     () => {
       iterate(1);
@@ -19,7 +19,7 @@ test(`01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 1st arg not string`, () 
   );
 });
 
-test(`02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 1st arg empty string`, () => {
+test(`02 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - 1st arg empty string`, () => {
   throws(
     () => {
       iterate("");
@@ -29,7 +29,7 @@ test(`02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 1st arg empty string`, (
   );
 });
 
-test(`03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 2nd arg not array`, () => {
+test(`03 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - 2nd arg not array`, () => {
   throws(
     () => {
       iterate("z", 1);
@@ -39,7 +39,7 @@ test(`03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 2nd arg not array`, () =
   );
 });
 
-test(`04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 3rd arg missing`, () => {
+test(`04 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - 3rd arg missing`, () => {
   throws(
     () => {
       iterate("z", [[0, 1]]);
@@ -49,7 +49,7 @@ test(`04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 3rd arg missing`, () => 
   );
 });
 
-test(`05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 3rd arg not a callback function`, () => {
+test(`05 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - 3rd arg not a callback function`, () => {
   throws(
     () => {
       iterate("z", [[0, 1]], 1);
@@ -63,7 +63,7 @@ test(`05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - 3rd arg not a callback f
 // 01. ITERATING ONLY
 // ==============================
 
-test(`06 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to replace range, middle`, () => {
+test(`06 - \u001b[${33}m${"iterating"}\u001b[${39}m - range with characters to replace range, middle`, () => {
   // we'll concatenate all pinged characters into one string, then compare
   // were all intended characters pinged
   let pinged = "";
@@ -76,10 +76,10 @@ test(`06 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to r
     equal(i, index);
     index += 1;
   });
-  equal(pinged, `abxyzhij`, "06.01");
+  equal(pinged, "abxyzhij", "06.01");
 });
 
-test(`07 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to insert, middle`, () => {
+test(`07 - \u001b[${33}m${"iterating"}\u001b[${39}m - range with characters to insert, middle`, () => {
   let pinged = "";
   let index = 0;
   iterate("abcdefghij", [[2, 2, "xyz"]], ({ i, val }) => {
@@ -90,10 +90,10 @@ test(`07 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to i
     equal(i, index);
     index += 1;
   });
-  equal(pinged, `abxyzcdefghij`, "07.01");
+  equal(pinged, "abxyzcdefghij", "07.01");
 });
 
-test(`08 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to replace range, start`, () => {
+test(`08 - \u001b[${33}m${"iterating"}\u001b[${39}m - range with characters to replace range, start`, () => {
   // we'll concatenate all pinged characters into one string, then compare
   // were all intended characters pinged
   let pinged = "";
@@ -106,10 +106,10 @@ test(`08 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to r
     equal(i, index);
     index += 1;
   });
-  equal(pinged, `xyzhij`, "08.01");
+  equal(pinged, "xyzhij", "08.01");
 });
 
-test(`09 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to insert at the end`, () => {
+test(`09 - \u001b[${33}m${"iterating"}\u001b[${39}m - range with characters to insert at the end`, () => {
   // we'll concatenate all pinged characters into one string, then compare
   // were all intended characters pinged
   let pinged = "";
@@ -122,10 +122,10 @@ test(`09 - \u001b[${33}m${`iterating`}\u001b[${39}m - range with characters to i
     equal(i, index);
     index += 1;
   });
-  equal(pinged, `abcdefghijxyz`, "09.01");
+  equal(pinged, "abcdefghijxyz", "09.01");
 });
 
-test(`10 - \u001b[${33}m${`iterating`}\u001b[${39}m - inserting over undefined character that is located just after end`, () => {
+test(`10 - \u001b[${33}m${"iterating"}\u001b[${39}m - inserting over undefined character that is located just after end`, () => {
   // still fine
   let pinged = "";
   let index = 0;
@@ -137,10 +137,10 @@ test(`10 - \u001b[${33}m${`iterating`}\u001b[${39}m - inserting over undefined c
     equal(i, index);
     index += 1;
   });
-  equal(pinged, `abcdefghijxyz`, "10.01");
+  equal(pinged, "abcdefghijxyz", "10.01");
 });
 
-test(`11 - \u001b[${33}m${`iterating`}\u001b[${39}m - inserting beyond string end`, () => {
+test(`11 - \u001b[${33}m${"iterating"}\u001b[${39}m - inserting beyond string end`, () => {
   // not fine, won't be inserted because it's not clear what to put at str[10]
   let pinged = "";
   let index = 0;
@@ -152,10 +152,10 @@ test(`11 - \u001b[${33}m${`iterating`}\u001b[${39}m - inserting beyond string en
     equal(i, index);
     index += 1;
   });
-  equal(pinged, `abcdefghij`, "11.01");
+  equal(pinged, "abcdefghij", "11.01");
 });
 
-test(`12 - \u001b[${33}m${`iterating`}\u001b[${39}m - multiple ranges`, () => {
+test(`12 - \u001b[${33}m${"iterating"}\u001b[${39}m - multiple ranges`, () => {
   let pinged = "";
   let index = 0;
   iterate(
@@ -173,10 +173,10 @@ test(`12 - \u001b[${33}m${`iterating`}\u001b[${39}m - multiple ranges`, () => {
       index += 1;
     }
   );
-  equal(pinged, `abxyzhi_`, "12.01");
+  equal(pinged, "abxyzhi_", "12.01");
 });
 
-test(`13 - \u001b[${33}m${`iterating`}\u001b[${39}m - replace whole thing`, () => {
+test(`13 - \u001b[${33}m${"iterating"}\u001b[${39}m - replace whole thing`, () => {
   let pinged = "";
   let index = 0;
   iterate("abcdefghij", [[0, 10, "xyz"]], ({ i, val }) => {
@@ -187,10 +187,10 @@ test(`13 - \u001b[${33}m${`iterating`}\u001b[${39}m - replace whole thing`, () =
     equal(i, index);
     index += 1;
   });
-  equal(pinged, `xyz`, "13.01");
+  equal(pinged, "xyz", "13.01");
 });
 
-test(`14 - \u001b[${33}m${`iterating`}\u001b[${39}m - delete whole thing`, () => {
+test(`14 - \u001b[${33}m${"iterating"}\u001b[${39}m - delete whole thing`, () => {
   let pinged = "";
   let index = 0;
   iterate("abcdefghij", [[0, 10]], ({ i, val }) => {
@@ -204,7 +204,7 @@ test(`14 - \u001b[${33}m${`iterating`}\u001b[${39}m - delete whole thing`, () =>
   equal(pinged, "", "14.01");
 });
 
-test(`15 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges array is empty`, () => {
+test(`15 - \u001b[${33}m${"iterating"}\u001b[${39}m - ranges array is empty`, () => {
   let pinged = "";
   let index = 0;
   iterate("abcdefghij", [], ({ i, val }) => {
@@ -218,7 +218,7 @@ test(`15 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges array is empty`, ()
   equal(pinged, "abcdefghij", "15.01");
 });
 
-test(`16 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges array is null`, () => {
+test(`16 - \u001b[${33}m${"iterating"}\u001b[${39}m - ranges array is null`, () => {
   let pinged = "";
   let index = 0;
   iterate("abcdefghij", null, ({ i, val }) => {
@@ -232,7 +232,7 @@ test(`16 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges array is null`, () 
   equal(pinged, "abcdefghij", "16.01");
 });
 
-test(`17 - \u001b[${33}m${`iterating`}\u001b[${39}m - touching ranges to delete, adding up to everything`, () => {
+test(`17 - \u001b[${33}m${"iterating"}\u001b[${39}m - touching ranges to delete, adding up to everything`, () => {
   // this should not happen, two ranges have not been merged, it's not a clean
   // input
   let pinged = "";
@@ -255,7 +255,7 @@ test(`17 - \u001b[${33}m${`iterating`}\u001b[${39}m - touching ranges to delete,
   equal(pinged, "", "17.01");
 });
 
-test(`18 - \u001b[${33}m${`iterating`}\u001b[${39}m - overlapping ranges to delete, adding up to everything`, () => {
+test(`18 - \u001b[${33}m${"iterating"}\u001b[${39}m - overlapping ranges to delete, adding up to everything`, () => {
   // this should not happen, two ranges have not been merged, it's not a clean
   // input
   let pinged = "";
@@ -278,7 +278,7 @@ test(`18 - \u001b[${33}m${`iterating`}\u001b[${39}m - overlapping ranges to dele
   equal(pinged, "", "18.01");
 });
 
-test(`19 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges exclude single character`, () => {
+test(`19 - \u001b[${33}m${"iterating"}\u001b[${39}m - ranges exclude single character`, () => {
   iterate(
     "abcdefghij",
     [
@@ -295,7 +295,7 @@ test(`19 - \u001b[${33}m${`iterating`}\u001b[${39}m - ranges exclude single char
   );
 });
 
-test(`20 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty ranges`, () => {
+test(`20 - \u001b[${33}m${"iterating"}\u001b[${39}m - two empty ranges`, () => {
   // not fine, won't be inserted because it's not clear what to put at str[10]
   let pinged = "";
   let index = 0;
@@ -318,7 +318,7 @@ test(`20 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty ranges`, () => {
   equal(pinged, source, "20.01");
 });
 
-test(`21 - \u001b[${33}m${`iterating`}\u001b[${39}m - two empty non-existent ranges`, () => {
+test(`21 - \u001b[${33}m${"iterating"}\u001b[${39}m - two empty non-existent ranges`, () => {
   let pinged = "";
   let index = 0;
   let source = "abcdefghij";

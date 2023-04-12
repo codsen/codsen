@@ -7,8 +7,8 @@ import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 // self-closing tag
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, () => {
-  let str = `<br/>`;
+test(`01 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, () => {
+  let str = "<br/>";
   ok(isOpening(str), "01.01");
   ok(isOpening(str, 0), "01.02");
   ok(
@@ -27,8 +27,8 @@ test(`01 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, 
   );
 });
 
-test(`02 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, () => {
-  let str = `< br/>`;
+test(`02 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, () => {
+  let str = "< br/>";
   ok(isOpening(str), "02.01");
   ok(isOpening(str, 0), "02.02");
   ok(
@@ -47,8 +47,8 @@ test(`02 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, 
   );
 });
 
-test(`03 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, () => {
-  let str = `<br />`;
+test(`03 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, () => {
+  let str = "<br />";
   ok(isOpening(str), "03.01");
   ok(isOpening(str, 0), "03.02");
   ok(
@@ -67,8 +67,8 @@ test(`03 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, 
   );
 });
 
-test(`04 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, () => {
-  let str = `<br/ >`;
+test(`04 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, () => {
+  let str = "<br/ >";
   ok(isOpening(str), "04.01");
   ok(isOpening(str, 0), "04.02");
   ok(
@@ -87,8 +87,8 @@ test(`04 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, 
   );
 });
 
-test(`05 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, () => {
-  let str = `<br / >`;
+test(`05 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, () => {
+  let str = "<br / >";
   ok(isOpening(str), "05.01");
   ok(isOpening(str, 0), "05.02");
   ok(
@@ -107,8 +107,8 @@ test(`05 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, 
   );
 });
 
-test(`06 - ${`\u001b[${32}m${`isOpening()`}\u001b[${39}m`} - self-closing tag`, () => {
-  let str = `< br / >`;
+test(`06 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, () => {
+  let str = "< br / >";
   ok(isOpening(str), "06.01");
   ok(isOpening(str, 0), "06.02");
   ok(

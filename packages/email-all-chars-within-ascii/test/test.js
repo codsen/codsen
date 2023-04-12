@@ -5,8 +5,8 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { within } from "../dist/email-all-chars-within-ascii.esm.js";
 
 const ETX = String.fromCodePoint(3); // #003
-const CAPITALOWITHSTROKE = `\u00D8`; // #216
-const SMALLOWITHDIAERESIS = `\u00F6`; // #246
+const CAPITALOWITHSTROKE = "\u00D8"; // #216
+const SMALLOWITHDIAERESIS = "\u00F6"; // #246
 const NONEXISTING = String.fromCodePoint(896); // #003
 
 test("01 - empty", () => {
@@ -89,7 +89,7 @@ test("06 - illegal low ASCII, ETX", () => {
 // https://unicode-table.com/en/#0380
 test("07 - non-existent outside ASCII, #896 or u0380", () => {
   equal(
-    within(`a\u0380b`),
+    within("a\u0380b"),
     [
       {
         type: "character",

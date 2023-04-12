@@ -8,7 +8,7 @@ import { mixer } from "./util/util.js";
 // -----------------------------------------------------------------------------
 
 test("01 - export from, one line", () => {
-  let source = `export { x } from "y";`;
+  let source = 'export { x } from "y";';
   mixer({
     semi: false,
     extractAll: false,
@@ -287,7 +287,7 @@ declare const c: string;
 });
 
 test("04 - re-exports", () => {
-  let source = `export { x as y } from "z";`;
+  let source = 'export { x as y } from "z";';
   // 4x semi=false
   mixer({
     semi: false,
@@ -752,7 +752,7 @@ test("05 - re-exports, more realistic", () => {
 });
 
 test("06 - sorting, minimal - no custom sort function", () => {
-  let source = `export { b, a, c };`;
+  let source = "export { b, a, c };";
   mixer({
     semi: true,
     extractAll: false,
@@ -912,7 +912,7 @@ test("06 - sorting, minimal - no custom sort function", () => {
 });
 
 test("07 - places defaults and version after any other lowercase names", () => {
-  let source = `export { b, a, defaults, c, version, };`;
+  let source = "export { b, a, defaults, c, version, };";
   mixer({
     semi: false,
     extractAll: false,
@@ -923,10 +923,10 @@ test("07 - places defaults and version after any other lowercase names", () => {
         identifiers: ["export"],
         identifiersStartAt: 0,
         identifiersEndAt: 6,
-        content: `{ b, a, defaults, c, version, }`,
+        content: "{ b, a, defaults, c, version, }",
         contentStartsAt: 7,
         contentEndsAt: 38,
-        value: `export { b, a, defaults, c, version, }`,
+        value: "export { b, a, defaults, c, version, }",
         valueStartsAt: 0,
         valueEndsAt: 38,
         all: [],
@@ -940,10 +940,10 @@ test("07 - places defaults and version after any other lowercase names", () => {
         identifiers: ["export"],
         identifiersStartAt: 0,
         identifiersEndAt: 6,
-        content: `{ a, b, c, defaults, version, }`,
+        content: "{ a, b, c, defaults, version, }",
         contentStartsAt: 7,
         contentEndsAt: 38,
-        value: `export { b, a, defaults, c, version, }`,
+        value: "export { b, a, defaults, c, version, }",
         valueStartsAt: 0,
         valueEndsAt: 38,
         all: [],
@@ -962,10 +962,10 @@ test("07 - places defaults and version after any other lowercase names", () => {
         identifiers: ["export"],
         identifiersStartAt: 0,
         identifiersEndAt: 6,
-        content: `{ b, a, defaults, c, version, }`,
+        content: "{ b, a, defaults, c, version, }",
         contentStartsAt: 7,
         contentEndsAt: 38,
-        value: `export { b, a, defaults, c, version, }`,
+        value: "export { b, a, defaults, c, version, }",
         valueStartsAt: 0,
         valueEndsAt: 38,
         all: ["export"],
@@ -979,10 +979,10 @@ test("07 - places defaults and version after any other lowercase names", () => {
         identifiers: ["export"],
         identifiersStartAt: 0,
         identifiersEndAt: 6,
-        content: `{ a, b, c, defaults, version, }`,
+        content: "{ a, b, c, defaults, version, }",
         contentStartsAt: 7,
         contentEndsAt: 38,
-        value: `export { b, a, defaults, c, version, }`,
+        value: "export { b, a, defaults, c, version, }",
         valueStartsAt: 0,
         valueEndsAt: 38,
         all: ["export"],
@@ -1001,10 +1001,10 @@ test("07 - places defaults and version after any other lowercase names", () => {
         identifiers: ["export"],
         identifiersStartAt: 0,
         identifiersEndAt: 6,
-        content: `{ b, a, defaults, c, version, };`,
+        content: "{ b, a, defaults, c, version, };",
         contentStartsAt: 7,
         contentEndsAt: 39,
-        value: `export { b, a, defaults, c, version, };`,
+        value: "export { b, a, defaults, c, version, };",
         valueStartsAt: 0,
         valueEndsAt: 39,
         all: [],
@@ -1018,10 +1018,10 @@ test("07 - places defaults and version after any other lowercase names", () => {
         identifiers: ["export"],
         identifiersStartAt: 0,
         identifiersEndAt: 6,
-        content: `{ a, b, c, defaults, version, };`,
+        content: "{ a, b, c, defaults, version, };",
         contentStartsAt: 7,
         contentEndsAt: 39,
-        value: `export { b, a, defaults, c, version, };`,
+        value: "export { b, a, defaults, c, version, };",
         valueStartsAt: 0,
         valueEndsAt: 39,
         all: [],
@@ -1040,10 +1040,10 @@ test("07 - places defaults and version after any other lowercase names", () => {
         identifiers: ["export"],
         identifiersStartAt: 0,
         identifiersEndAt: 6,
-        content: `{ b, a, defaults, c, version, };`,
+        content: "{ b, a, defaults, c, version, };",
         contentStartsAt: 7,
         contentEndsAt: 39,
-        value: `export { b, a, defaults, c, version, };`,
+        value: "export { b, a, defaults, c, version, };",
         valueStartsAt: 0,
         valueEndsAt: 39,
         all: ["export"],
@@ -1057,10 +1057,10 @@ test("07 - places defaults and version after any other lowercase names", () => {
         identifiers: ["export"],
         identifiersStartAt: 0,
         identifiersEndAt: 6,
-        content: `{ a, b, c, defaults, version, };`,
+        content: "{ a, b, c, defaults, version, };",
         contentStartsAt: 7,
         contentEndsAt: 39,
-        value: `export { b, a, defaults, c, version, };`,
+        value: "export { b, a, defaults, c, version, };",
         valueStartsAt: 0,
         valueEndsAt: 39,
         all: ["export"],
@@ -1072,7 +1072,7 @@ test("07 - places defaults and version after any other lowercase names", () => {
 });
 
 test("08 - lowercase and uppercase", () => {
-  let source = `export { b, B, a, A, C, c, 1, _ };`;
+  let source = "export { b, B, a, A, C, c, 1, _ };";
   mixer({
     semi: false,
     extractAll: false,
@@ -1232,7 +1232,8 @@ test("08 - lowercase and uppercase", () => {
 });
 
 test("09 - lowercase and uppercase - one line", () => {
-  let source = `export { bananas, Broccoli, apples, Apricots, Cucumbers, celery, 123, _ };`;
+  let source =
+    "export { bananas, Broccoli, apples, Apricots, Cucumbers, celery, 123, _ };";
   mixer({
     semi: false,
     extractAll: false,

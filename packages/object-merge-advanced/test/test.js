@@ -2492,8 +2492,8 @@ test("61 - values as arrays that contain strings", () => {
 // ==============================
 
 test("62", () => {
-  let date1 = new Date(`2020-02-08T12:32:00`);
-  let date2 = new Date(`2020-02-10T02:32:00`);
+  let date1 = new Date("2020-02-08T12:32:00");
+  let date2 = new Date("2020-02-10T02:32:00");
   let o1 = { a: date1 };
   let o2 = { a: date2 };
 
@@ -2544,7 +2544,7 @@ test("62", () => {
 });
 
 test("63", () => {
-  let o1 = { a: new Date(`2020-02-08T12:32:00`) };
+  let o1 = { a: new Date("2020-02-08T12:32:00") };
   let o2 = { a: "zzz" };
 
   equal(mergeAdvanced(equal, o1, o2), o2, "63.01");
@@ -2552,7 +2552,7 @@ test("63", () => {
 });
 
 test("64", () => {
-  let o1 = { a: new Date(`2020-02-08T12:32:00`) };
+  let o1 = { a: new Date("2020-02-08T12:32:00") };
   let o2 = { a: null };
 
   equal(mergeAdvanced(equal, o1, o2), o1, "64.01");
@@ -2560,7 +2560,7 @@ test("64", () => {
 });
 
 test("65", () => {
-  let o1 = { a: new Date(`2020-02-08T12:32:00`) };
+  let o1 = { a: new Date("2020-02-08T12:32:00") };
   let o2 = { a: { b: "c" } };
 
   equal(mergeAdvanced(equal, o1, o2), o2, "65.01");
@@ -2568,8 +2568,8 @@ test("65", () => {
 });
 
 test("66 - not finite date", () => {
-  let o1 = { a: new Date(`z`) };
-  let o2 = { a: new Date(`2020-02-08T12:32:00`) };
+  let o1 = { a: new Date("z") };
+  let o2 = { a: new Date("2020-02-08T12:32:00") };
 
   // don't use the wrapper, call dist/ exported function directly
   equal(m(o1, o2), o2, "66.01");

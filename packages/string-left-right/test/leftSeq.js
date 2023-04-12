@@ -7,7 +7,7 @@ import { leftSeq } from "../dist/string-left-right.esm.js";
 // leftSeq()
 // -----------------------------------------------------------------------------
 
-test(`01 - normal use`, () => {
+test("01 - normal use", () => {
   // starts at "f":
   equal(
     leftSeq("abcdefghijk", 5, "c", "d", "e"),
@@ -59,7 +59,7 @@ test(`01 - normal use`, () => {
   );
 });
 
-test(`02 - no findings`, () => {
+test("02 - no findings", () => {
   equal(leftSeq("abcdefghijklmnop", 0, "d", "e", "f"), null, "02.01");
   equal(leftSeq("abcdefghijklmnop", 2, "d", "e", "f"), null, "02.02");
   equal(leftSeq("abcdefghijklmnop", 2, "", ""), null, "02.03");
@@ -83,11 +83,11 @@ test(`02 - no findings`, () => {
   );
 });
 
-test(`03 - starting point outside of the range`, () => {
+test("03 - starting point outside of the range", () => {
   equal(leftSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "03.01");
 });
 
-test(`04 - case insensitive`, () => {
+test("04 - case insensitive", () => {
   equal(leftSeq("abcdefghijk", 5, "C", "D", "E"), null, "04.01");
   equal(
     leftSeq("abcdefghijk", 5, { i: true }, "C", "D", "E"),

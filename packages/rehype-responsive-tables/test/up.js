@@ -9,7 +9,7 @@ import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 // target cells by their thead column's contents
 // -----------------------------------------------------------------------------
 
-test(`01 - lifts Bar, text`, () => {
+test("01 - lifts Bar, text", () => {
   let input = `
 <table>
   <thead>
@@ -82,7 +82,7 @@ test(`01 - lifts Bar, text`, () => {
   equal(res, intended, "01.01");
 });
 
-test(`02 - lifts Bar, code`, () => {
+test("02 - lifts Bar, code", () => {
   let input = `
 <table>
   <thead>
@@ -179,7 +179,7 @@ test(`02 - lifts Bar, code`, () => {
   equal(res, intended, "02.01");
 });
 
-test(`03 - wildcard`, () => {
+test("03 - wildcard", () => {
   let input = `
 <table>
   <thead>

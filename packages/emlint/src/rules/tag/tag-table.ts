@@ -1,4 +1,4 @@
-import { TagTokenWithChildren } from "packages/codsen-parser/types";
+import { TagTokenWithChildren } from "codsen-parser";
 
 import { Linter, RuleObjType } from "../../linter";
 import { Attrib } from "../../util/commonTypes";

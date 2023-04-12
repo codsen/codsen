@@ -347,7 +347,7 @@ test("16 - bug #36", () => {
 });
 
 test("17 - bug #45 - id", () => {
-  let input = `<body><div>https://x?id=z</div>`;
+  let input = "<body><div>https://x?id=z</div>";
   let { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
     comb(input);
 
@@ -359,7 +359,7 @@ test("17 - bug #45 - id", () => {
 });
 
 test("18 - bug #45 - class", () => {
-  let input = `<body><div>https://x?class=z</div>`;
+  let input = "<body><div>https://x?class=z</div>";
   let { allInBody, allInHead, result, deletedFromHead, deletedFromBody } =
     comb(input);
 
@@ -379,7 +379,7 @@ test("19 - issue #35 - 8MB file", () => {
     @media y z (a-a:0px){.col-1,.col-2,.zz{m:100%!n}}
   </style>
   </head>
-  <body><br class="  zz   bb  cc  "/>${`<a>z</a>`.repeat(20000)}
+  <body><br class="  zz   bb  cc  "/>${"<a>z</a>".repeat(20000)}
   </body>
   `.replace(/>/g, `>${chunkOfWhitespace}`);
 

@@ -6,9 +6,9 @@ import { truncate } from "../dist/string-truncator.esm.js";
 import { mixer } from "./util/util.js";
 
 const dashes = [
-  { name: "hyphen", dash: `-` },
-  { name: "n-dash", dash: `–` },
-  { name: "m-dash", dash: `—` },
+  { name: "hyphen", dash: "-" },
+  { name: "n-dash", dash: "–" },
+  { name: "m-dash", dash: "—" },
 ];
 
 test("01 - space+dash+space", () => {
@@ -153,53 +153,53 @@ test("04 - tight dash", () => {
 
 test("adhoc - maxLines=1", () => {
   equal(
-    truncate(`API - INCLUDESWITHGLOB()`, {
+    truncate("API - INCLUDESWITHGLOB()", {
       monospace: false,
       maxLen: 10,
       maxLines: 1,
       ellipsisLen: 155,
     }),
-    { result: `API - INCLUDES`, addEllipsis: true },
-    `d1`
+    { result: "API - INCLUDES", addEllipsis: true },
+    "d1"
   );
 });
 
 test("adhoc - maxLines=2", () => {
   equal(
-    truncate(`API - INCLUDESWITHGLOB()`, {
+    truncate("API - INCLUDESWITHGLOB()", {
       monospace: false,
       maxLen: 10,
       maxLines: 2,
       ellipsisLen: 155,
     }),
-    { result: `API - INCLUDESWITH`, addEllipsis: true },
-    `d1`
+    { result: "API - INCLUDESWITH", addEllipsis: true },
+    "d1"
   );
 });
 
 test("adhoc - maxLines=3", () => {
   equal(
-    truncate(`API - INCLUDESWITHGLOB()`, {
+    truncate("API - INCLUDESWITHGLOB()", {
       monospace: false,
       maxLen: 10,
       maxLines: 3,
       ellipsisLen: 155,
     }),
-    { result: `API - INCLUDESWITH`, addEllipsis: true },
-    `d1`
+    { result: "API - INCLUDESWITH", addEllipsis: true },
+    "d1"
   );
 });
 
 test("adhoc - maxLines=4", () => {
   equal(
-    truncate(`API - INCLUDESWITHGLOB()`, {
+    truncate("API - INCLUDESWITHGLOB()", {
       monospace: false,
       maxLen: 10,
       maxLines: 4,
       ellipsisLen: 155,
     }),
-    { result: `API - INCLUDESWITH`, addEllipsis: true },
-    `d1`
+    { result: "API - INCLUDESWITH", addEllipsis: true },
+    "d1"
   );
 });
 

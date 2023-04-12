@@ -4,7 +4,7 @@ import { strict as assert } from "assert";
 
 import { isAttrClosing } from "../dist/is-html-attribute-closing.esm.js";
 
-const str = `<a href="zzz" target="_blank" style="color: black;">`;
+const str = '<a href="zzz" target="_blank" style="color: black;">';
 
 // <a href="zzz" target="_blank" ...
 //                      ^

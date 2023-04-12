@@ -5,7 +5,7 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import fix from "./util/util.js";
 import { fixEnt } from "../dist/string-fix-broken-named-entities.esm.js";
 
-test(`01 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - in front of semicolon - no decode`, () => {
+test(`01 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - in front of semicolon - no decode`, () => {
   equal(fix(ok, "&pound1;", { decode: false }), [[0, 8, "&pound;"]], "01.01");
 
   let gathered = [];
@@ -22,7 +22,7 @@ test(`01 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - in front of sem
   equal(gathered, [], "01.03");
 });
 
-test(`02 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - in front of semicolon - decode`, () => {
+test(`02 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - in front of semicolon - decode`, () => {
   equal(fix(ok, "&pound1;", { decode: true }), [[0, 8, "\xA3"]], "02.01");
 
   let gathered = [];
@@ -39,7 +39,7 @@ test(`02 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - in front of sem
   equal(gathered, [], "02.03");
 });
 
-test(`03 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - no semi - no decode`, () => {
+test(`03 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - no semi - no decode`, () => {
   equal(fix(ok, "&puvaaa", { decode: false }), [], "03.01");
 
   let gathered = [];
@@ -64,7 +64,7 @@ test(`03 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - no semi - no de
   equal(gathered, [0], "03.04");
 });
 
-test(`04 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - with semi - no decode`, () => {
+test(`04 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - with semi - no decode`, () => {
   equal(fix(ok, "&puv;aaa", { decode: false }), [[0, 5, "&piv;"]], "04.01");
 
   let gathered = [];
@@ -83,7 +83,7 @@ test(`04 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - with semi - no 
 
 // Levenshtein distance 1 - rogue char
 
-test(`05 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - with semi - no decode - an extra rogue char`, () => {
+test(`05 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - with semi - no decode - an extra rogue char`, () => {
   equal(fix(ok, "&nbsdp;aaa", { decode: false }), [[0, 7, "&nbsp;"]], "05.01");
 
   let gathered = [];
@@ -100,7 +100,7 @@ test(`05 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - with semi - no 
   equal(gathered, [], "05.03");
 });
 
-test(`06 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - with semi - no decode - an extra rogue char`, () => {
+test(`06 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - with semi - no decode - an extra rogue char`, () => {
   equal(
     fix(ok, "&bigtrianglesup;aaa", { decode: false }),
     [[0, 16, "&bigtriangleup;"]],
@@ -123,7 +123,7 @@ test(`06 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - with semi - no 
 
 // Levenshtein distance 1 - replaced char
 
-test(`07 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - with semi - no decode - a replaced char`, () => {
+test(`07 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - with semi - no decode - a replaced char`, () => {
   equal(fix(ok, "&npsp;aaa", { decode: false }), [[0, 6, "&nbsp;"]], "07.01");
 
   let gathered = [];
@@ -140,7 +140,7 @@ test(`07 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - with semi - no 
   equal(gathered, [], "07.03");
 });
 
-test(`08 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - with semi - no decode - a replaced char`, () => {
+test(`08 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - with semi - no decode - a replaced char`, () => {
   equal(
     fix(ok, "&bigtrangleup;aaa", { decode: false }),
     [[0, 14, "&bigtriangleup;"]],

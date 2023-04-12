@@ -11,7 +11,7 @@ import fix from "./util/util.js";
 
 test(`${
   Object.keys(allNamedEntities).length
-} - ${`\u001b[${36}m${`programmatic tests`}\u001b[${39}m`}`, () => {
+} - ${`\u001b[${36}m${"programmatic tests"}\u001b[${39}m`}`, () => {
   Object.keys(allNamedEntities)
     .filter((entity) => entity !== "nbsp")
     .forEach((singleEntity, i, arr) => {
@@ -38,10 +38,10 @@ test(`${
     });
 });
 
-test(`02 - ${`\u001b[${36}m${`decode`}\u001b[${39}m`} - one of entities`, () => {
+test(`02 - ${`\u001b[${36}m${"decode"}\u001b[${39}m`} - one of entities`, () => {
   let gathered = [];
   equal(
-    fix(ok, `&EmptyVerySmallSquare;`, {
+    fix(ok, "&EmptyVerySmallSquare;", {
       decode: true,
       cb: (obj) => obj,
       textAmpersandCatcherCb: (idx) => {
@@ -50,15 +50,15 @@ test(`02 - ${`\u001b[${36}m${`decode`}\u001b[${39}m`} - one of entities`, () => 
     }),
     [
       {
-        ruleName: `bad-html-entity-encoded-EmptyVerySmallSquare`,
+        ruleName: "bad-html-entity-encoded-EmptyVerySmallSquare",
         entityName: "EmptyVerySmallSquare",
         rangeFrom: 0,
         rangeTo: 22,
-        rangeValEncoded: `&EmptyVerySmallSquare;`,
-        rangeValDecoded: decode(`&EmptyVerySmallSquare;`),
+        rangeValEncoded: "&EmptyVerySmallSquare;",
+        rangeValDecoded: decode("&EmptyVerySmallSquare;"),
       },
     ],
-    `02.01`
+    "02.01"
   );
   equal(gathered, [], "02.02");
 });

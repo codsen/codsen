@@ -7,7 +7,7 @@ import { m } from "./util/util.js";
 // opts.removeIndentations
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - collapses whitespace on removeIndentations`, () => {
+test(`01 - ${`\u001b[${33}m${"opts.removeIndentations"}\u001b[${39}m`} - collapses whitespace on removeIndentations`, () => {
   equal(
     m(equal, "a   b\nc    d", {
       removeLineBreaks: false,
@@ -18,7 +18,7 @@ test(`01 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - collaps
   );
 });
 
-test(`02 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - trailing whitespace on removeIndentations`, () => {
+test(`02 - ${`\u001b[${33}m${"opts.removeIndentations"}\u001b[${39}m`} - trailing whitespace on removeIndentations`, () => {
   equal(
     m(equal, "a   \nb    ", {
       removeLineBreaks: false,
@@ -29,7 +29,7 @@ test(`02 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - trailin
   );
 });
 
-test(`03 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - leading whitespace`, () => {
+test(`03 - ${`\u001b[${33}m${"opts.removeIndentations"}\u001b[${39}m`} - leading whitespace`, () => {
   equal(
     m(
       equal,

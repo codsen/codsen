@@ -7,239 +7,239 @@ import { m } from "./util/util.js";
 // minification within style tags
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - minifies around class names - minimal`, () => {
+test(`01 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies around class names - minimal`, () => {
   equal(
-    m(equal, `<style>\n\ta {\ndisplay:block;\n}`, {
+    m(equal, "<style>\n\ta {\ndisplay:block;\n}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a{display:block;}`,
+    "<style>a{display:block;}",
     "01.01"
   );
   equal(
-    m(equal, `<style>\na{\ndisplay:block;\n}`, {
+    m(equal, "<style>\na{\ndisplay:block;\n}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a{display:block;}`,
+    "<style>a{display:block;}",
     "01.02"
   );
   equal(
-    m(equal, `<style> \t\t\t      a    {     display:block;     }`, {
+    m(equal, "<style> \t\t\t      a    {     display:block;     }", {
       removeLineBreaks: true,
     }).result,
-    `<style>a{display:block;}`,
+    "<style>a{display:block;}",
     "01.03"
   );
   equal(
-    m(equal, `<style>a{display:block;}`, {
+    m(equal, "<style>a{display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a{display:block;}`,
+    "<style>a{display:block;}",
     "01.04"
   );
 });
 
-test(`02 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - minifies around class names - spaces`, () => {
+test(`02 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies around class names - spaces`, () => {
   equal(
-    m(equal, `<style>\na something here {display:block;}`, {
+    m(equal, "<style>\na something here {display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a something here{display:block;}`,
+    "<style>a something here{display:block;}",
     "02.01"
   );
   equal(
-    m(equal, `<style>\na.something.here {display:block;}`, {
+    m(equal, "<style>\na.something.here {display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a.something.here{display:block;}`,
+    "<style>a.something.here{display:block;}",
     "02.02"
   );
   equal(
-    m(equal, `<style>\na something#here {display:block;}`, {
+    m(equal, "<style>\na something#here {display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a something#here{display:block;}`,
+    "<style>a something#here{display:block;}",
     "02.03"
   );
   equal(
-    m(equal, `<style>\na  something#here {display:block;}`, {
+    m(equal, "<style>\na  something#here {display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a something#here{display:block;}`,
+    "<style>a something#here{display:block;}",
     "02.04"
   );
 });
 
-test(`03 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - minifies around class names - element > element`, () => {
+test(`03 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies around class names - element > element`, () => {
   equal(
-    m(equal, `<style>\na>something#here {display:block;}`, {
+    m(equal, "<style>\na>something#here {display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a>something#here{display:block;}`,
+    "<style>a>something#here{display:block;}",
     "03.01"
   );
   equal(
-    m(equal, `<style>\na > something#here {display:block;}`, {
+    m(equal, "<style>\na > something#here {display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a>something#here{display:block;}`,
+    "<style>a>something#here{display:block;}",
     "03.02"
   );
   equal(
-    m(equal, `<style>\na> something#here {display:block;}`, {
+    m(equal, "<style>\na> something#here {display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a>something#here{display:block;}`,
+    "<style>a>something#here{display:block;}",
     "03.03"
   );
   equal(
-    m(equal, `<style>\na> something #here {display:block;}`, {
+    m(equal, "<style>\na> something #here {display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a>something #here{display:block;}`,
+    "<style>a>something #here{display:block;}",
     "03.04"
   );
   equal(
-    m(equal, `<style>\na> something  #here {display:block;}`, {
+    m(equal, "<style>\na> something  #here {display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a>something #here{display:block;}`,
+    "<style>a>something #here{display:block;}",
     "03.05"
   );
 });
 
-test(`04 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - minifies around class names - element + element`, () => {
+test(`04 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies around class names - element + element`, () => {
   equal(
-    m(equal, `<style>\na+something#here+there {display:block;}`, {
+    m(equal, "<style>\na+something#here+there {display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a+something#here+there{display:block;}`,
+    "<style>a+something#here+there{display:block;}",
     "04.01"
   );
   equal(
-    m(equal, `<style>\na + something#here + there {display:block;}`, {
+    m(equal, "<style>\na + something#here + there {display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a+something#here+there{display:block;}`,
+    "<style>a+something#here+there{display:block;}",
     "04.02"
   );
   equal(
-    m(equal, `<style>\na + something #here + there {display:block;}`, {
+    m(equal, "<style>\na + something #here + there {display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a+something #here+there{display:block;}`,
+    "<style>a+something #here+there{display:block;}",
     "04.03"
   );
   equal(
-    m(equal, `<style>\na  +  something#here  +  there  {\ndisplay:block;\n}`, {
+    m(equal, "<style>\na  +  something#here  +  there  {\ndisplay:block;\n}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a+something#here+there{display:block;}`,
+    "<style>a+something#here+there{display:block;}",
     "04.04"
   );
   equal(
     m(
       equal,
-      `<style>\n   a   +    something  #here   +   there   {\n   display: block;   \n}`,
+      "<style>\n   a   +    something  #here   +   there   {\n   display: block;   \n}",
       {
         removeLineBreaks: true,
       }
     ).result,
-    `<style>a+something #here+there{display:block;}`,
+    "<style>a+something #here+there{display:block;}",
     "04.05"
   );
 });
 
-test(`05 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - minifies around class names - element ~ element`, () => {
+test(`05 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies around class names - element ~ element`, () => {
   equal(
-    m(equal, `<style>\na~something#here~there {display:block;}`, {
+    m(equal, "<style>\na~something#here~there {display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a~something#here~there{display:block;}`,
+    "<style>a~something#here~there{display:block;}",
     "05.01"
   );
   equal(
-    m(equal, `<style>\na ~ something#here ~ there {display:block;}`, {
+    m(equal, "<style>\na ~ something#here ~ there {display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a~something#here~there{display:block;}`,
+    "<style>a~something#here~there{display:block;}",
     "05.02"
   );
   equal(
-    m(equal, `<style>\na ~ something #here ~ there {display:block;}`, {
+    m(equal, "<style>\na ~ something #here ~ there {display:block;}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a~something #here~there{display:block;}`,
+    "<style>a~something #here~there{display:block;}",
     "05.03"
   );
   equal(
-    m(equal, `<style>\na  ~  something#here  ~  there  {\ndisplay:block;\n}`, {
+    m(equal, "<style>\na  ~  something#here  ~  there  {\ndisplay:block;\n}", {
       removeLineBreaks: true,
     }).result,
-    `<style>a~something#here~there{display:block;}`,
+    "<style>a~something#here~there{display:block;}",
     "05.04"
   );
   equal(
     m(
       equal,
-      `<style>\n   a   ~    something  #here   ~   there   {\n   display: block;   \n}`,
+      "<style>\n   a   ~    something  #here   ~   there   {\n   display: block;   \n}",
       {
         removeLineBreaks: true,
       }
     ).result,
-    `<style>a~something #here~there{display:block;}`,
+    "<style>a~something #here~there{display:block;}",
     "05.05"
   );
 });
 
-test(`06 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes CSS comments`, () => {
+test(`06 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - removes CSS comments`, () => {
   equal(
-    m(equal, `<style> a { display:block; } /* TAB STYLES */`, {
+    m(equal, "<style> a { display:block; } /* TAB STYLES */", {
       removeLineBreaks: true,
     }).result,
-    `<style>a{display:block;}`,
+    "<style>a{display:block;}",
     "06.01"
   );
   equal(
-    m(equal, `<style> a { display:block; } /* TAB STYLES */`, {
+    m(equal, "<style> a { display:block; } /* TAB STYLES */", {
       removeLineBreaks: false,
     }).result,
-    `<style> a { display:block; }`,
+    "<style> a { display:block; }",
     "06.02"
   );
 });
 
-test(`07 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whitespace in front of !important`, () => {
+test(`07 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - removes whitespace in front of !important`, () => {
   equal(
-    m(equal, `<style>\n  a { display:block!important; }`, {
+    m(equal, "<style>\n  a { display:block!important; }", {
       removeLineBreaks: true,
     }).result,
-    `<style>a{display:block!important;}`,
+    "<style>a{display:block!important;}",
     "07.01"
   );
   equal(
-    m(equal, `<style>\n  a { display:block !important; }`, {
+    m(equal, "<style>\n  a { display:block !important; }", {
       removeLineBreaks: true,
     }).result,
-    `<style>a{display:block!important;}`,
+    "<style>a{display:block!important;}",
     "07.02"
   );
   equal(
-    m(equal, `<style>\n  a { display:block  !important; }`, {
+    m(equal, "<style>\n  a { display:block  !important; }", {
       removeLineBreaks: true,
     }).result,
-    `<style>a{display:block!important;}`,
+    "<style>a{display:block!important;}",
     "07.03"
   );
   equal(
-    m(equal, `<style>/*  `, {
+    m(equal, "<style>/*  ", {
       removeLineBreaks: true,
     }).result,
-    `<style>`,
+    "<style>",
     "07.04"
   );
 });
 
-test(`08 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whitespace in front of <script>`, () => {
+test(`08 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - removes whitespace in front of <script>`, () => {
   let source =
     'a\n    <script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\n    b';
 
@@ -276,7 +276,7 @@ test(`08 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whites
   );
 });
 
-test(`09 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals`, () => {
+test(`09 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals`, () => {
   equal(
     m(
       equal,
@@ -298,7 +298,7 @@ test(`09 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remov
   );
 });
 
-test(`10 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals, lineLengthLimit=off`, () => {
+test(`10 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals, lineLengthLimit=off`, () => {
   equal(
     m(
       equal,
@@ -321,7 +321,7 @@ test(`10 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remov
   );
 });
 
-test(`11 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals, mix`, () => {
+test(`11 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals, mix`, () => {
   equal(
     m(
       equal,
@@ -365,7 +365,7 @@ test(`11 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remov
   );
 });
 
-test(`12 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals, mix, lineLengthLimit=off`, () => {
+test(`12 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals, mix, lineLengthLimit=off`, () => {
   equal(
     m(
       equal,

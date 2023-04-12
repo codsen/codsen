@@ -16,11 +16,11 @@ function rand(from, to) {
 // 00. api bits
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - exported uglify is a function`, () => {
+test(`01 - ${`\u001b[${33}m${"api bits"}\u001b[${39}m`} - exported uglify is a function`, () => {
   equal(typeof uglifyById, "function", "01.01");
 });
 
-test(`02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - exported version is a semver version`, () => {
+test(`02 - ${`\u001b[${33}m${"api bits"}\u001b[${39}m`} - exported version is a semver version`, () => {
   equal(String(version).match(/\d+\.\d+\.\d+/gi).length, 1, "02.01");
 });
 
@@ -44,7 +44,7 @@ function makeRandomArr(len = 500, dotshashes = true) {
   return randomArr;
 }
 
-test(`03 - generates unique and short class names`, () => {
+test("03 - generates unique and short class names", () => {
   let randomArr = makeRandomArr();
   randomArr.forEach((key, idx) => {
     ok(typeof uglifyById(randomArr, idx) === "string", "01.01 - it exists");
@@ -60,12 +60,12 @@ test(`03 - generates unique and short class names`, () => {
   });
 });
 
-test(`04 - ${`\u001b[${35}m${`makeRandomArr`}\u001b[${39}m`} - generates uglified array from reference array`, () => {
+test(`04 - ${`\u001b[${35}m${"makeRandomArr"}\u001b[${39}m`} - generates uglified array from reference array`, () => {
   let generated = makeRandomArr(5000);
   equal(generated.length, uglifyArr(generated).length, "04.01");
 });
 
-test(`05 - ${`\u001b[${35}m${`makeRandomArr`}\u001b[${39}m`} - generates unique elements array`, () => {
+test(`05 - ${`\u001b[${35}m${"makeRandomArr"}\u001b[${39}m`} - generates unique elements array`, () => {
   // all are unique
   let length = 1000;
   let generated = uglifyArr(makeRandomArr(length));
@@ -79,7 +79,7 @@ test(`05 - ${`\u001b[${35}m${`makeRandomArr`}\u001b[${39}m`} - generates unique 
   );
 });
 
-test(`06 - ${`\u001b[${31}m${`wrong cases`}\u001b[${39}m`} - bypasses for everything else`, () => {
+test(`06 - ${`\u001b[${31}m${"wrong cases"}\u001b[${39}m`} - bypasses for everything else`, () => {
   equal(uglifyArr(true), true, "06.01");
   equal(uglifyArr("z"), "z", "06.02");
   equal(uglifyArr(1), 1, "06.03");
@@ -90,7 +90,7 @@ test(`06 - ${`\u001b[${31}m${`wrong cases`}\u001b[${39}m`} - bypasses for everyt
 // -----------------------------------------------------------------------------
 
 const howMany = 5000;
-test(`07 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - ${howMany} random string array should be 99% resilient`, () => {
+test(`07 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - ${howMany} random string array should be 99% resilient`, () => {
   // generate two arrays: {howMany}-long random class/id names array and clone of it
   // where there's extra thing on top.
   let randArr1 = makeRandomArr(howMany);
@@ -120,7 +120,7 @@ test(`07 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - ${howMany} random string a
   ok(counter < generated2.length * 0.001, "07.03");
 });
 
-test(`08 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - repetitions should be OK`, () => {
+test(`08 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - repetitions should be OK`, () => {
   let randArr1 = makeRandomArr(1);
 
   for (let i = 0; i < 100; i++) {
@@ -135,7 +135,7 @@ test(`08 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - repetitions should be OK`,
   });
 });
 
-test(`09 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - should work if strings don't have hashes/dots`, () => {
+test(`09 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - should work if strings don't have hashes/dots`, () => {
   // all are still unique
   let length = 1000;
   let generated = uglifyArr(makeRandomArr(length, false));
@@ -149,7 +149,7 @@ test(`09 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - should work if strings don
   );
 });
 
-test(`10 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - should work if strings don't have hashes/dots`, () => {
+test(`10 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - should work if strings don't have hashes/dots`, () => {
   equal(
     uglifyArr([
       ".class1",
@@ -170,7 +170,7 @@ test(`10 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - should work if strings don
   );
 });
 
-test(`11 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - bunch of identical just-names should be turned into single letter`, () => {
+test(`11 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - bunch of identical just-names should be turned into single letter`, () => {
   equal(
     uglifyArr([
       "zzz",
@@ -191,7 +191,7 @@ test(`11 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - bunch of identical just-na
   );
 });
 
-test(`12 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - single and double letter name, repeating, cross-type`, () => {
+test(`12 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - single and double letter name, repeating, cross-type`, () => {
   equal(
     uglifyArr([
       "a",
@@ -243,7 +243,7 @@ test(`12 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - single and double letter n
   );
 });
 
-test(`13 - readme examples`, () => {
+test("13 - readme examples", () => {
   let input1 = [
     ".alpha",
     ".bravo",

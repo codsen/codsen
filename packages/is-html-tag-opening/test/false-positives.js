@@ -20,21 +20,21 @@ import { isOpening } from "../dist/is-html-tag-opening.esm.js";
   );
 });*/
 
-test(`01 - ${`\u001b[${32}m${`false positives`}\u001b[${39}m`} - last letter`, () => {
+test(`01 - ${`\u001b[${32}m${"false positives"}\u001b[${39}m`} - last letter`, () => {
   mixer().forEach((opt) => {
-    not.ok(isOpening(`> x`, 2, opt), opt);
+    not.ok(isOpening("> x", 2, opt), opt);
     //            ^
   });
   mixer().forEach((opt) => {
-    not.ok(isOpening(`> b`, 2, opt), opt);
+    not.ok(isOpening("> b", 2, opt), opt);
     //            ^
   });
   mixer().forEach((opt) => {
-    not.ok(isOpening(`> div`, 2, opt), opt);
+    not.ok(isOpening("> div", 2, opt), opt);
     //            ^
   });
   mixer().forEach((opt) => {
-    not.ok(isOpening(`> div class`, 2, opt), opt);
+    not.ok(isOpening("> div class", 2, opt), opt);
     //            ^
   });
 
@@ -42,20 +42,20 @@ test(`01 - ${`\u001b[${32}m${`false positives`}\u001b[${39}m`} - last letter`, (
   mixer({
     skipOpeningBracket: true,
   }).forEach((opt) => {
-    ok(isOpening(`> div class="z"`, 2, opt), opt);
+    ok(isOpening('> div class="z"', 2, opt), opt);
     //           ^
   });
   mixer({
     skipOpeningBracket: false,
   }).forEach((opt) => {
-    not.ok(isOpening(`> div class="z"`, 2, opt), opt);
+    not.ok(isOpening('> div class="z"', 2, opt), opt);
     //            ^
   });
 });
 
-test(`02 - starting at unrecognised tag`, () => {
+test("02 - starting at unrecognised tag", () => {
   // idx = 0
-  let input = `bc img src="z"/>`;
+  let input = 'bc img src="z"/>';
   //             ^
   mixer({
     skipOpeningBracket: true,
@@ -75,9 +75,9 @@ test(`02 - starting at unrecognised tag`, () => {
   });
 });
 
-test(`03 - starting at recognised tag`, () => {
+test("03 - starting at recognised tag", () => {
   // idx = 3
-  let input = `bc img src="z"/>`;
+  let input = 'bc img src="z"/>';
   //                ^
   mixer({
     skipOpeningBracket: false,
@@ -91,28 +91,28 @@ test(`03 - starting at recognised tag`, () => {
   });
 });
 
-test(`04`, () => {
+test("04", () => {
   mixer({
     skipOpeningBracket: false,
   }).forEach((opt) => {
-    not.ok(isOpening(`img bc src="z"/>`, 0, opt), opt);
+    not.ok(isOpening('img bc src="z"/>', 0, opt), opt);
   });
   mixer({
     skipOpeningBracket: true,
   }).forEach((opt) => {
-    ok(isOpening(`img bc src="z"/>`, 0, opt), opt);
+    ok(isOpening('img bc src="z"/>', 0, opt), opt);
   });
 });
 
-test(`05 one-letter-name recognised tag`, () => {
+test("05 one-letter-name recognised tag", () => {
   mixer().forEach((opt) => {
-    ok(isOpening(`<p>`, 0, opt), opt);
+    ok(isOpening("<p>", 0, opt), opt);
     //         ^
   });
 });
 
-test(`06 one-letter-name unrecognised tag`, () => {
-  let input = `<x>`;
+test("06 one-letter-name unrecognised tag", () => {
+  let input = "<x>";
   //             ^
   //           idx 0
   mixer({
@@ -127,14 +127,14 @@ test(`06 one-letter-name unrecognised tag`, () => {
   });
 });
 
-test(`07`, () => {
+test("07", () => {
   [
-    `<x src="b" a>`,
-    `<x src="b" a >`,
-    `<x src="b" a/>`,
-    `<x src="b" a />`,
-    `<x src="b" a/ >`,
-    `<x src="b" a / >`,
+    '<x src="b" a>',
+    '<x src="b" a >',
+    '<x src="b" a/>',
+    '<x src="b" a />',
+    '<x src="b" a/ >',
+    '<x src="b" a / >',
     //          ^
     //        idx 11
   ].forEach((input) => {
@@ -147,14 +147,14 @@ test(`07`, () => {
   });
 });
 
-test(`08`, () => {
+test("08", () => {
   [
-    `<x src="b" a class="">`,
-    `<x src="b" a class="" >`,
-    `<x src="b" a class=""/>`,
-    `<x src="b" a class="" />`,
-    `<x src="b" a class=""/ >`,
-    `<x src="b" a class="" / >`,
+    '<x src="b" a class="">',
+    '<x src="b" a class="" >',
+    '<x src="b" a class=""/>',
+    '<x src="b" a class="" />',
+    '<x src="b" a class=""/ >',
+    '<x src="b" a class="" / >',
     //          ^
     //        idx 11
   ].forEach((input) => {
@@ -177,29 +177,29 @@ test(`08`, () => {
   });
 });
 
-test(`09`, () => {
+test("09", () => {
   mixer().forEach((opt) => {
     [
-      `<x src="b" <a>`,
-      `<x src="b" <a >`,
-      `<x src="b" <a/>`,
-      `<x src="b" <a />`,
-      `<x src="b" <a/ >`,
-      `<x src="b" <a class>`,
-      `<x src="b" <a class=>`,
-      `<x src="b" <a class='>`,
-      `<x src="b" <a class=''>`,
-      `<x src="b" <a class=''/>`,
-      `<x src="b" <a class=">`,
-      `<x src="b" <a class=" >`,
-      `<x src="b" <a class="">`,
-      `<x src="b" <a class="" >`,
-      `<x src="b" <a class="z">`,
-      `<x src="b" <a class="z" >`,
-      `<x src="b" <a class="z" />`,
-      `<x src="b" <a class="z" id>`,
-      `<x src="b" <a class="z" id=>`,
-      `<x src="b" <a class="z" id="">`,
+      '<x src="b" <a>',
+      '<x src="b" <a >',
+      '<x src="b" <a/>',
+      '<x src="b" <a />',
+      '<x src="b" <a/ >',
+      '<x src="b" <a class>',
+      '<x src="b" <a class=>',
+      '<x src="b" <a class=\'>',
+      "<x src=\"b\" <a class=''>",
+      "<x src=\"b\" <a class=''/>",
+      '<x src="b" <a class=">',
+      '<x src="b" <a class=" >',
+      '<x src="b" <a class="">',
+      '<x src="b" <a class="" >',
+      '<x src="b" <a class="z">',
+      '<x src="b" <a class="z" >',
+      '<x src="b" <a class="z" />',
+      '<x src="b" <a class="z" id>',
+      '<x src="b" <a class="z" id=>',
+      '<x src="b" <a class="z" id="">',
       //          ^
       //        idx 11
     ].forEach((str) => {
@@ -213,93 +213,93 @@ test(`09`, () => {
   // but opening bracket means it's a tag, no matter what
 });
 
-test(`10`, () => {
+test("10", () => {
   mixer().forEach((opt) => {
-    not.ok(isOpening(`<img src="b" img />`, 13, opt), opt);
+    not.ok(isOpening('<img src="b" img />', 13, opt), opt);
   });
 
   // that's as far as it goes...
   // a bracket changes the whole situation:
   mixer().forEach((opt) => {
-    ok(isOpening(`<img src="b" <img />`, 13, opt), opt);
+    ok(isOpening('<img src="b" <img />', 13, opt), opt);
   });
 });
 
-test(`11 known tag name + an attribute`, () => {
+test("11 known tag name + an attribute", () => {
   mixer().forEach((opt) => {
     [
-      `<img src="b" <img src="" />`,
-      `<img src="b" < img src="" />`,
-      `<img src="b" < img src='' />`,
+      '<img src="b" <img src="" />',
+      '<img src="b" < img src="" />',
+      "<img src=\"b\" < img src='' />",
 
-      `<img src="b" <img src='' class>`,
-      `<img src="b" <img src='' class >`,
-      `<img src="b" <img src='' class/>`,
-      `<img src="b" <img src='' class />`,
-      `<img src="b" <img src='' class=>`,
-      `<img src="b" <img src='' class= >`,
-      `<img src="b" <img src='' class=/>`,
-      `<img src="b" <img src='' class= />`,
-      `<img src="b" <img src='' class=''>`,
-      `<img src="b" <img src='' class='' >`,
-      `<img src="b" <img src='' class="">`,
-      `<img src="b" <img src='' class="" >`,
-      `<img src="b" <img src='' class=''/>`,
-      `<img src="b" <img src='' class='' />`,
-      `<img src="b" <img src='' class="" />`,
-      `<img src="b" <img src='' class="" / >`,
-      `<img src="b" <img src='' class='' / >`,
-      `<img src="b" <img src='' class="z">`,
-      `<img src="b" <img src='' class="z" >`,
-      `<img src="b" <img src='' class="z"/>`,
-      `<img src="b" <img src='' class="z" />`,
-      `<img src="b" <img src='' class="z" / >`,
+      "<img src=\"b\" <img src='' class>",
+      "<img src=\"b\" <img src='' class >",
+      "<img src=\"b\" <img src='' class/>",
+      "<img src=\"b\" <img src='' class />",
+      "<img src=\"b\" <img src='' class=>",
+      "<img src=\"b\" <img src='' class= >",
+      "<img src=\"b\" <img src='' class=/>",
+      "<img src=\"b\" <img src='' class= />",
+      "<img src=\"b\" <img src='' class=''>",
+      "<img src=\"b\" <img src='' class='' >",
+      '<img src="b" <img src=\'\' class="">',
+      '<img src="b" <img src=\'\' class="" >',
+      "<img src=\"b\" <img src='' class=''/>",
+      "<img src=\"b\" <img src='' class='' />",
+      '<img src="b" <img src=\'\' class="" />',
+      '<img src="b" <img src=\'\' class="" / >',
+      "<img src=\"b\" <img src='' class='' / >",
+      '<img src="b" <img src=\'\' class="z">',
+      '<img src="b" <img src=\'\' class="z" >',
+      '<img src="b" <img src=\'\' class="z"/>',
+      '<img src="b" <img src=\'\' class="z" />',
+      '<img src="b" <img src=\'\' class="z" / >',
 
-      `<img src="b" <img src=''class>`,
-      `<img src="b" <img src=''class >`,
-      `<img src="b" <img src=''class/>`,
-      `<img src="b" <img src=''class />`,
-      `<img src="b" <img src=''class=>`,
-      `<img src="b" <img src=''class= >`,
-      `<img src="b" <img src=''class=/>`,
-      `<img src="b" <img src=''class= />`,
-      `<img src="b" <img src=''class=''>`,
-      `<img src="b" <img src=''class='' >`,
-      `<img src="b" <img src=''class="">`,
-      `<img src="b" <img src=''class="" >`,
-      `<img src="b" <img src=''class=''/>`,
-      `<img src="b" <img src=''class='' />`,
-      `<img src="b" <img src=''class="" />`,
-      `<img src="b" <img src=''class="" / >`,
-      `<img src="b" <img src=''class='' / >`,
-      `<img src="b" <img src=''class="z">`,
-      `<img src="b" <img src=''class="z" >`,
-      `<img src="b" <img src=''class="z"/>`,
-      `<img src="b" <img src=''class="z" />`,
-      `<img src="b" <img src=''class="z" / >`,
+      "<img src=\"b\" <img src=''class>",
+      "<img src=\"b\" <img src=''class >",
+      "<img src=\"b\" <img src=''class/>",
+      "<img src=\"b\" <img src=''class />",
+      "<img src=\"b\" <img src=''class=>",
+      "<img src=\"b\" <img src=''class= >",
+      "<img src=\"b\" <img src=''class=/>",
+      "<img src=\"b\" <img src=''class= />",
+      "<img src=\"b\" <img src=''class=''>",
+      "<img src=\"b\" <img src=''class='' >",
+      '<img src="b" <img src=\'\'class="">',
+      '<img src="b" <img src=\'\'class="" >',
+      "<img src=\"b\" <img src=''class=''/>",
+      "<img src=\"b\" <img src=''class='' />",
+      '<img src="b" <img src=\'\'class="" />',
+      '<img src="b" <img src=\'\'class="" / >',
+      "<img src=\"b\" <img src=''class='' / >",
+      '<img src="b" <img src=\'\'class="z">',
+      '<img src="b" <img src=\'\'class="z" >',
+      '<img src="b" <img src=\'\'class="z"/>',
+      '<img src="b" <img src=\'\'class="z" />',
+      '<img src="b" <img src=\'\'class="z" / >',
 
-      `<img src="b" < img src='' class>`,
-      `<img src="b" < img src='' class >`,
-      `<img src="b" < img src='' class/>`,
-      `<img src="b" < img src='' class />`,
-      `<img src="b" < img src='' class=>`,
-      `<img src="b" < img src='' class= >`,
-      `<img src="b" < img src='' class=/>`,
-      `<img src="b" < img src='' class= />`,
-      `<img src="b" < img src='' class=''>`,
-      `<img src="b" < img src='' class='' >`,
-      `<img src="b" < img src='' class="">`,
-      `<img src="b" < img src='' class="" >`,
-      `<img src="b" < img src='' class=''/>`,
-      `<img src="b" < img src='' class='' />`,
-      `<img src="b" < img src='' class="" />`,
-      `<img src="b" < img src='' class="" / >`,
-      `<img src="b" < img src='' class='' / >`,
-      `<img src="b" < img src='' class="z">`,
-      `<img src="b" < img src='' class="z" >`,
-      `<img src="b" < img src='' class="z"/>`,
-      `<img src="b" < img src='' class="z" />`,
-      `<img src="b" < img src='' class="z" / >`,
+      "<img src=\"b\" < img src='' class>",
+      "<img src=\"b\" < img src='' class >",
+      "<img src=\"b\" < img src='' class/>",
+      "<img src=\"b\" < img src='' class />",
+      "<img src=\"b\" < img src='' class=>",
+      "<img src=\"b\" < img src='' class= >",
+      "<img src=\"b\" < img src='' class=/>",
+      "<img src=\"b\" < img src='' class= />",
+      "<img src=\"b\" < img src='' class=''>",
+      "<img src=\"b\" < img src='' class='' >",
+      '<img src="b" < img src=\'\' class="">',
+      '<img src="b" < img src=\'\' class="" >',
+      "<img src=\"b\" < img src='' class=''/>",
+      "<img src=\"b\" < img src='' class='' />",
+      '<img src="b" < img src=\'\' class="" />',
+      '<img src="b" < img src=\'\' class="" / >',
+      "<img src=\"b\" < img src='' class='' / >",
+      '<img src="b" < img src=\'\' class="z">',
+      '<img src="b" < img src=\'\' class="z" >',
+      '<img src="b" < img src=\'\' class="z"/>',
+      '<img src="b" < img src=\'\' class="z" />',
+      '<img src="b" < img src=\'\' class="z" / >',
       //            ^
       //          idx 13
     ].forEach((str) => {

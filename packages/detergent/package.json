@@ -94,6 +94,7 @@
   },
   "devDependencies": {
     "lodash.clonedeep": "^4.5.0",
+    "object-path": "^0.11.8",
     "test-mixer": "^4.1.6"
   }
 }

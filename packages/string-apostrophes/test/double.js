@@ -13,7 +13,7 @@ import { convertOne, convertAll } from "../dist/string-apostrophes.esm.js";
 // DOUBLE APOSTROPHES
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quotation marks: +entities`, () => {
+test(`01 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - converts quotation marks: +entities`, () => {
   let str = 'this is "citation"';
   let gatheredRes = []
     .concat(
@@ -38,7 +38,7 @@ test(`01 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quo
   );
 });
 
-test(`02 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quotation marks: -entities`, () => {
+test(`02 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - converts quotation marks: -entities`, () => {
   let str = 'this is "citation"';
   let gatheredRes = []
     .concat(
@@ -63,7 +63,7 @@ test(`02 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quo
   );
 });
 
-test(`03 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quotation marks: killswitch`, () => {
+test(`03 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - converts quotation marks: killswitch`, () => {
   let str = 'this is "citation"';
   let gatheredRes = []
     .concat(
@@ -81,7 +81,7 @@ test(`03 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - converts quo
   equal(gatheredRes, [], "03.01");
 });
 
-test(`04 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - exclamation mark`, () => {
+test(`04 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - exclamation mark`, () => {
   equal(
     convertAll('"What!" he said', {
       convertApostrophes: 1,
@@ -92,7 +92,7 @@ test(`04 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - exclamation 
   );
 });
 
-test(`05 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - full stop`, () => {
+test(`05 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - full stop`, () => {
   equal(
     convertAll('"What." he said', {
       convertApostrophes: 1,
@@ -103,7 +103,7 @@ test(`05 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - full stop`, 
   );
 });
 
-test(`06 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - comma`, () => {
+test(`06 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - comma`, () => {
   equal(
     convertAll('"What," he said', {
       convertApostrophes: 1,
@@ -114,7 +114,7 @@ test(`06 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - comma`, () =
   );
 });
 
-test(`07 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - semicolon`, () => {
+test(`07 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - semicolon`, () => {
   equal(
     convertAll('"What;" he said', {
       convertApostrophes: 1,
@@ -125,7 +125,7 @@ test(`07 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - semicolon`, 
   );
 });
 
-test(`08 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - question mark`, () => {
+test(`08 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - question mark`, () => {
   equal(
     convertAll('"What?" he said', {
       convertApostrophes: 1,
@@ -136,9 +136,9 @@ test(`08 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - question mar
   );
 });
 
-test(`09 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - exclamation mark`, () => {
+test(`09 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - exclamation mark`, () => {
   equal(
-    convertAll(`'"What!"' he said`, {
+    convertAll("'\"What!\"' he said", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -147,9 +147,9 @@ test(`09 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - exclamation 
   );
 });
 
-test(`10 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quotes, full stop`, () => {
+test(`10 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - mix of quotes, full stop`, () => {
   equal(
-    convertAll(`'"What."' he said`, {
+    convertAll("'\"What.\"' he said", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -158,9 +158,9 @@ test(`10 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quote
   );
 });
 
-test(`11 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quotes, full stop`, () => {
+test(`11 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - mix of quotes, full stop`, () => {
   equal(
-    convertAll(`'"What,"' he said`, {
+    convertAll("'\"What,\"' he said", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -169,9 +169,9 @@ test(`11 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quote
   );
 });
 
-test(`12 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quotes, full stop`, () => {
+test(`12 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - mix of quotes, full stop`, () => {
   equal(
-    convertAll(`'"What;"' he said`, {
+    convertAll("'\"What;\"' he said", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -180,9 +180,9 @@ test(`12 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quote
   );
 });
 
-test(`13 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quotes, full stop`, () => {
+test(`13 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - mix of quotes, full stop`, () => {
   equal(
-    convertAll(`'"What?"' he said`, {
+    convertAll("'\"What?\"' he said", {
       convertApostrophes: 1,
       convertEntities: 0,
     }).result,
@@ -191,9 +191,9 @@ test(`13 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quote
   );
 });
 
-test(`14 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - with entities`, () => {
+test(`14 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - with entities`, () => {
   equal(
-    convertOne(`"`, {
+    convertOne('"', {
       from: 0,
       convertApostrophes: 1,
       convertEntities: 1,
@@ -203,29 +203,29 @@ test(`14 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - with entitie
   );
 });
 
-test(`15 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - one, off`, () => {
+test(`15 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - one, off`, () => {
   equal(
     convertOne(`${leftDoubleQuote}developers${rightDoubleQuote}`, {
       from: 0,
       convertApostrophes: false,
       convertEntities: 1,
     }),
-    [[0, 1, `"`]],
+    [[0, 1, '"']],
     "15.01"
   );
 });
 
-test(`16 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - all, off`, () => {
+test(`16 - ${`\u001b[${36}m${"double apostrophes"}\u001b[${39}m`} - all, off`, () => {
   equal(
     convertAll(` ${leftDoubleQuote}developers${rightDoubleQuote} `, {
       convertApostrophes: false,
       convertEntities: 1,
     }),
     {
-      result: ` "developers" `,
+      result: ' "developers" ',
       ranges: [
-        [1, 2, `"`],
-        [12, 13, `"`],
+        [1, 2, '"'],
+        [12, 13, '"'],
       ],
     },
     "16.01"

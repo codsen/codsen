@@ -7,7 +7,7 @@ import { set, del } from "../dist/edit-package-json.esm.js";
 // various throws
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - ${`\u001b[${33}m${`set`}\u001b[${39}m`} - wrong/missing 1st arg = throw`, () => {
+test(`01 - ${`\u001b[${31}m${"api"}\u001b[${39}m`} - ${`\u001b[${33}m${"set"}\u001b[${39}m`} - wrong/missing 1st arg = throw`, () => {
   // throw test pinning:
   throws(
     () => {
@@ -50,7 +50,7 @@ test(`01 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - ${`\u001b[${33}m${`set`}\u0
   );
 });
 
-test(`02 - ${`\u001b[${31}m${`api`}\u001b[${39}m`} - ${`\u001b[${32}m${`del`}\u001b[${39}m`} - wrong/missing 1st arg = throw`, () => {
+test(`02 - ${`\u001b[${31}m${"api"}\u001b[${39}m`} - ${`\u001b[${32}m${"del"}\u001b[${39}m`} - wrong/missing 1st arg = throw`, () => {
   // throw test pinning:
   throws(
     () => {

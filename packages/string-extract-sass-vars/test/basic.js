@@ -53,7 +53,7 @@ test("05 - api - opts.throwIfEmpty", () => {
 // -----------------------------------------------------------------------------
 
 test("06 - basics - one pair, value without quotes", () => {
-  let source = `$blue: #08f0fd;`;
+  let source = "$blue: #08f0fd;";
   equal(
     e(source),
     {
@@ -64,7 +64,7 @@ test("06 - basics - one pair, value without quotes", () => {
 });
 
 test("07 - basics - one pair, value with quotes", () => {
-  let source = `$blue: "#08f0fd";`;
+  let source = '$blue: "#08f0fd";';
   equal(
     e(source),
     {
@@ -75,7 +75,7 @@ test("07 - basics - one pair, value with quotes", () => {
 });
 
 test("08 - basics - two pairs", () => {
-  let source = `$red: #ff6565;\n$blue: #08f0fd;`;
+  let source = "$red: #ff6565;\n$blue: #08f0fd;";
   equal(
     e(source),
     {
@@ -87,7 +87,7 @@ test("08 - basics - two pairs", () => {
 });
 
 test("09 - basics - quoted value with semicolon", () => {
-  let source = `$red: "a; b";`;
+  let source = '$red: "a; b";';
   equal(
     e(source),
     {
@@ -98,7 +98,7 @@ test("09 - basics - quoted value with semicolon", () => {
 });
 
 test("10 - basics - value with colon", () => {
-  let source = `$red: "a: b";`;
+  let source = '$red: "a: b";';
   equal(
     e(source),
     {
@@ -109,32 +109,32 @@ test("10 - basics - value with colon", () => {
 });
 
 test("11 - basics - value as positive integer", () => {
-  let source = `$abc: 9;`;
+  let source = "$abc: 9;";
   is(e(source).abc, 9, "11.01");
 });
 
 test("12 - basics - value as positive integer", () => {
-  let source = `$abc: 0;`;
+  let source = "$abc: 0;";
   is(e(source).abc, 0, "12.01");
 });
 
 test("13 - basics - value as negative integer", () => {
-  let source = `$abc: -9;`;
+  let source = "$abc: -9;";
   is(e(source).abc, -9, "13.01");
 });
 
 test("14 - basics - value as positive float", () => {
-  let source = `$abc: 1.333;`;
+  let source = "$abc: 1.333;";
   is(e(source).abc, 1.333, "14.01");
 });
 
 test("15 - basics - value as negative float", () => {
-  let source = `$abc: -1.333;`;
+  let source = "$abc: -1.333;";
   is(e(source).abc, -1.333, "15.01");
 });
 
 test("16 - basics - value as digit", () => {
-  let source = `$a: bcd: ef;`;
+  let source = "$a: bcd: ef;";
   equal(
     e(source),
     {
@@ -187,7 +187,7 @@ test("19 - basics - slash-excl. mark-asterisk comments", () => {
 });
 
 test("20 - basics - nothing", () => {
-  let source = `   \t\t\t`;
+  let source = "   \t\t\t";
   equal(Object.keys(e(source)).length, 0, "20.01");
 });
 

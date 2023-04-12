@@ -9,7 +9,7 @@ const key = ["crlf", "cr", "lf"];
 // opts.limitConsecutiveEmptyLinesTo
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, removeEmptyLines=off`, () => {
+test(`01 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`} - three lines, removeEmptyLines=off`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(`a${presentEolType}${presentEolType}b`, {
@@ -21,7 +21,7 @@ test(`01 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`}
   });
 });
 
-test(`02 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines, removeEmptyLines=on`, () => {
+test(`02 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`} - three lines, removeEmptyLines=on`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(`a${presentEolType}${presentEolType}b`, {
@@ -33,7 +33,7 @@ test(`02 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`}
   });
 });
 
-test(`03 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - three lines,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, () => {
+test(`03 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`} - three lines,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(
@@ -49,7 +49,7 @@ test(`03 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`}
   });
 });
 
-test(`04 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, () => {
+test(`04 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`} - four lines, removeEmptyLines=on, limitConsecutiveEmptyLinesTo=1`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
@@ -62,7 +62,7 @@ test(`04 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`}
   });
 });
 
-test(`05 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=2`, () => {
+test(`05 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=2`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
@@ -75,7 +75,7 @@ test(`05 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`}
   });
 });
 
-test(`06 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=3`, () => {
+test(`06 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=3`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
@@ -88,7 +88,7 @@ test(`06 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`}
   });
 });
 
-test(`07 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=99`, () => {
+test(`07 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`} - four lines,  LF,   removeEmptyLines=on, limitConsecutiveEmptyLinesTo=99`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(`a${presentEolType}${presentEolType}${presentEolType}b`, {
@@ -101,7 +101,7 @@ test(`07 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`}
   });
 });
 
-test(`08 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=off`, () => {
+test(`08 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`} - space on a blank line, LF, trimLines=off`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(`a${presentEolType} ${presentEolType}b`, {
@@ -115,7 +115,7 @@ test(`08 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`}
   });
 });
 
-test(`09 - ${`\u001b[${34}m${`opts.limitConsecutiveEmptyLinesTo`}\u001b[${39}m`} - space on a blank line, LF, trimLines=on`, () => {
+test(`09 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`} - space on a blank line, LF, trimLines=on`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(`a${presentEolType} ${presentEolType}b`, {

@@ -7,7 +7,7 @@ import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { crush, defaults, version } from "../dist/html-crush.esm.js";
 import { m } from "./util/util.js";
 
-test(`01 - full`, () => {
+test("01 - full", () => {
   let { result, applicableOpts, ranges } = m(equal, " <a> \n <b> ", {
     removeLineBreaks: true,
   });
@@ -32,7 +32,7 @@ test(`01 - full`, () => {
   );
 });
 
-test(`02 - deletes trailing space`, () => {
+test("02 - deletes trailing space", () => {
   compare(
     ok,
     m(equal, " <a> \n <b> ", {
@@ -77,7 +77,7 @@ test(`02 - deletes trailing space`, () => {
   );
 });
 
-test(`03 - retains trailing linebreak`, () => {
+test("03 - retains trailing linebreak", () => {
   compare(
     ok,
     m(equal, " <a> \n <b> \n", {
@@ -94,7 +94,7 @@ test(`03 - retains trailing linebreak`, () => {
   );
 });
 
-test(`04 - trailing line break`, () => {
+test("04 - trailing line break", () => {
   compare(
     ok,
     m(equal, " a \n b \n", {
@@ -111,7 +111,7 @@ test(`04 - trailing line break`, () => {
   );
 });
 
-test(`05 - multiple line breaks`, () => {
+test("05 - multiple line breaks", () => {
   compare(
     ok,
     m(equal, " a \n b\n\n\nc ", {
@@ -128,7 +128,7 @@ test(`05 - multiple line breaks`, () => {
   );
 });
 
-test(`06 - ends with character`, () => {
+test("06 - ends with character", () => {
   compare(
     ok,
     m(equal, " a \n b\n\n\nc", {
@@ -145,7 +145,7 @@ test(`06 - ends with character`, () => {
   );
 });
 
-test(`07 - tags, end with character`, () => {
+test("07 - tags, end with character", () => {
   compare(
     ok,
     m(equal, " <x> \n <y>\n\n\n<z>", {
@@ -176,8 +176,8 @@ test(`07 - tags, end with character`, () => {
   );
 });
 
-test(`08 - comments`, () => {
-  let src = `<!--<![endif]-->`;
+test("08 - comments", () => {
+  let src = "<!--<![endif]-->";
   compare(
     ok,
     m(equal, src, {
@@ -194,14 +194,14 @@ test(`08 - comments`, () => {
   );
 });
 
-test(`09 - CRLF`, () => {
-  let src = `<table>\r\n<tr>`;
+test("09 - CRLF", () => {
+  let src = "<table>\r\n<tr>";
   compare(
     ok,
     m(equal, src, {
       removeLineBreaks: true,
     }).result,
-    `<table><tr>`,
+    "<table><tr>",
     "08"
   );
 });

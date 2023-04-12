@@ -1549,22 +1549,22 @@ test("58 - old bracket notation - classes", () => {
     "58.03"
   );
   equal(
-    e(`td [ class = "abc-def" ]`),
+    e('td [ class = "abc-def" ]'),
     { res: [".abc-def"], ranges: [[14, 21]] },
     "58.04"
   );
   equal(
-    e(`td [ class = 'abc-def' ]`),
+    e("td [ class = 'abc-def' ]"),
     { res: [".abc-def"], ranges: [[14, 21]] },
     "58.05"
   );
   equal(
-    e(`td[class="abc-def"]`),
+    e('td[class="abc-def"]'),
     { res: [".abc-def"], ranges: [[10, 17]] },
     "58.06"
   );
   equal(
-    e(`td[class='abc-def']`),
+    e("td[class='abc-def']"),
     { res: [".abc-def"], ranges: [[10, 17]] },
     "58.07"
   );
@@ -1572,22 +1572,22 @@ test("58 - old bracket notation - classes", () => {
 
 test("59 - old bracket notation - classes that need trimming", () => {
   equal(
-    e(`td [ class = " abc-def " ]`),
+    e('td [ class = " abc-def " ]'),
     { res: [".abc-def"], ranges: [[15, 22]] },
     "59.01"
   );
   equal(
-    e(`td [ class = ' abc-def ' ]`),
+    e("td [ class = ' abc-def ' ]"),
     { res: [".abc-def"], ranges: [[15, 22]] },
     "59.02"
   );
   equal(
-    e(`td[class=" abc-def "]`),
+    e('td[class=" abc-def "]'),
     { res: [".abc-def"], ranges: [[11, 18]] },
     "59.03"
   );
   equal(
-    e(`td[class=' abc-def ']`),
+    e("td[class=' abc-def ']"),
     { res: [".abc-def"], ranges: [[11, 18]] },
     "59.04"
   );
@@ -1602,22 +1602,22 @@ test("60 - old bracket notation - ids", () => {
     "60.03"
   );
   equal(
-    e(`td [ id = "abc-def" ]`),
+    e('td [ id = "abc-def" ]'),
     { res: ["#abc-def"], ranges: [[11, 18]] },
     "60.04"
   );
   equal(
-    e(`td [ id = 'abc-def' ]`),
+    e("td [ id = 'abc-def' ]"),
     { res: ["#abc-def"], ranges: [[11, 18]] },
     "60.05"
   );
   equal(
-    e(`td[id="abc-def"]`),
+    e('td[id="abc-def"]'),
     { res: ["#abc-def"], ranges: [[7, 14]] },
     "60.06"
   );
   equal(
-    e(`td[id='abc-def']`),
+    e("td[id='abc-def']"),
     { res: ["#abc-def"], ranges: [[7, 14]] },
     "60.07"
   );
@@ -1625,22 +1625,22 @@ test("60 - old bracket notation - ids", () => {
 
 test("61 - old bracket notation - ids that need trimming", () => {
   equal(
-    e(`td [ id = " abc-def " ]`),
+    e('td [ id = " abc-def " ]'),
     { res: ["#abc-def"], ranges: [[12, 19]] },
     "61.01"
   );
   equal(
-    e(`td [ id = ' abc-def ' ]`),
+    e("td [ id = ' abc-def ' ]"),
     { res: ["#abc-def"], ranges: [[12, 19]] },
     "61.02"
   );
   equal(
-    e(`td[id=" abc-def "]`),
+    e('td[id=" abc-def "]'),
     { res: ["#abc-def"], ranges: [[8, 15]] },
     "61.03"
   );
   equal(
-    e(`td[id=' abc-def ']`),
+    e("td[id=' abc-def ']"),
     { res: ["#abc-def"], ranges: [[8, 15]] },
     "61.04"
   );
@@ -1648,25 +1648,25 @@ test("61 - old bracket notation - ids that need trimming", () => {
 
 test("62 - old bracket notation - empty values", () => {
   // .
-  equal(e(`td[class=']`), { res: [], ranges: null }, "62.01");
-  equal(e(`td[class='']`), { res: [], ranges: null }, "62.02");
-  equal(e(`td[class="]`), { res: [], ranges: null }, "62.03");
-  equal(e(`td[class=""]`), { res: [], ranges: null }, "62.04");
+  equal(e("td[class=']"), { res: [], ranges: null }, "62.01");
+  equal(e("td[class='']"), { res: [], ranges: null }, "62.02");
+  equal(e('td[class="]'), { res: [], ranges: null }, "62.03");
+  equal(e('td[class=""]'), { res: [], ranges: null }, "62.04");
 
-  equal(e(`td [ class= ' ]`), { res: [], ranges: null }, "62.05");
-  equal(e(`td [ class= '' ]`), { res: [], ranges: null }, "62.06");
-  equal(e(`td [ class= " ]`), { res: [], ranges: null }, "62.07");
-  equal(e(`td [ class= "" ]`), { res: [], ranges: null }, "62.08");
+  equal(e("td [ class= ' ]"), { res: [], ranges: null }, "62.05");
+  equal(e("td [ class= '' ]"), { res: [], ranges: null }, "62.06");
+  equal(e('td [ class= " ]'), { res: [], ranges: null }, "62.07");
+  equal(e('td [ class= "" ]'), { res: [], ranges: null }, "62.08");
   // #
-  equal(e(`td[id=']`), { res: [], ranges: null }, "62.09");
-  equal(e(`td[id='']`), { res: [], ranges: null }, "62.10");
-  equal(e(`td[id="]`), { res: [], ranges: null }, "62.11");
-  equal(e(`td[id=""]`), { res: [], ranges: null }, "62.12");
+  equal(e("td[id=']"), { res: [], ranges: null }, "62.09");
+  equal(e("td[id='']"), { res: [], ranges: null }, "62.10");
+  equal(e('td[id="]'), { res: [], ranges: null }, "62.11");
+  equal(e('td[id=""]'), { res: [], ranges: null }, "62.12");
 
-  equal(e(`td [ id= ' ]`), { res: [], ranges: null }, "62.13");
-  equal(e(`td [ id= '' ]`), { res: [], ranges: null }, "62.14");
-  equal(e(`td [ id= " ]`), { res: [], ranges: null }, "62.15");
-  equal(e(`td [ id= "" ]`), { res: [], ranges: null }, "62.16");
+  equal(e("td [ id= ' ]"), { res: [], ranges: null }, "62.13");
+  equal(e("td [ id= '' ]"), { res: [], ranges: null }, "62.14");
+  equal(e('td [ id= " ]'), { res: [], ranges: null }, "62.15");
+  equal(e('td [ id= "" ]'), { res: [], ranges: null }, "62.16");
 });
 
 // ==============================

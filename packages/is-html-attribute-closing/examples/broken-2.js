@@ -6,7 +6,7 @@ import { isAttrClosing } from "../dist/is-html-attribute-closing.esm.js";
 
 assert.equal(
   isAttrClosing(
-    `<a b = = = "c" d = = = 'e'>`,
+    "<a b = = = \"c\" d = = = 'e'>",
     //          ^ ^
     //          | |
     //          | L_______________________________

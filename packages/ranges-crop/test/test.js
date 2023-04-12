@@ -146,7 +146,7 @@ test("06 - null means absence of ranges", () => {
 // 01. crop, two arguments only
 // ==============================
 
-test(`07 - crops out few ranges outside the strlen`, () => {
+test("07 - crops out few ranges outside the strlen", () => {
   let length = 7;
   let testStr = "z".repeat(length);
   let sourceRange = [[1, 3], null, [4, 6], [8, 10]];
@@ -167,7 +167,7 @@ test(`07 - crops out few ranges outside the strlen`, () => {
   equal(resRange, resRangeBackup, "07.04");
 });
 
-test(`08 - overlap on one of ranges`, () => {
+test("08 - overlap on one of ranges", () => {
   let length = 8;
   let testStr = "z".repeat(length);
   let sourceRange = [
@@ -190,7 +190,7 @@ test(`08 - overlap on one of ranges`, () => {
   equal(resRange, resRangeBackup, "08.04");
 });
 
-test(`09 - overlap on one of ranges plus some extra ranges`, () => {
+test("09 - overlap on one of ranges plus some extra ranges", () => {
   let length = 8;
   let testStr = "z".repeat(length);
   let sourceRange = [
@@ -216,7 +216,7 @@ test(`09 - overlap on one of ranges plus some extra ranges`, () => {
   equal(resRange, resRangeBackup, "09.04");
 });
 
-test(`10 - string length on the beginning of one of ranges`, () => {
+test("10 - string length on the beginning of one of ranges", () => {
   let length = 12;
   let testStr = "z".repeat(length);
   let sourceRange = [
@@ -242,7 +242,7 @@ test(`10 - string length on the beginning of one of ranges`, () => {
   equal(resRange, resRangeBackup, "10.04");
 });
 
-test(`11 - string length on the ending of one of ranges`, () => {
+test("11 - string length on the ending of one of ranges", () => {
   let length = 15;
   let testStr = "z".repeat(length);
   let sourceRange = [
@@ -269,7 +269,7 @@ test(`11 - string length on the ending of one of ranges`, () => {
   equal(resRange, resRangeBackup, "11.04");
 });
 
-test(`12 - string length beyond any of given ranges`, () => {
+test("12 - string length beyond any of given ranges", () => {
   let length = 99;
   let testStr = "z".repeat(length);
   let sourceRange = [
@@ -292,7 +292,7 @@ test(`12 - string length beyond any of given ranges`, () => {
   equal(resRange, resRangeBackup, "12.04");
 });
 
-test(`13 - no ranges`, () => {
+test("13 - no ranges", () => {
   let length = 99;
   let testStr = "z".repeat(length);
   let sourceRange = [];
@@ -312,7 +312,7 @@ test(`13 - no ranges`, () => {
 
 // now, exact the same tests but with ranges not in sorted order:
 
-test(`14 - unsorted ranges`, () => {
+test("14 - unsorted ranges", () => {
   let length = 8;
   let testStr = "z".repeat(length);
   let sourceRange = [
@@ -335,7 +335,7 @@ test(`14 - unsorted ranges`, () => {
   equal(resRange, resRangeBackup, "14.04");
 });
 
-test(`15 - lots of overlapping, unsorted and futile ranges`, () => {
+test("15 - lots of overlapping, unsorted and futile ranges", () => {
   let length = 8;
   let testStr = "z".repeat(length);
   let sourceRange = [
@@ -372,7 +372,7 @@ test(`15 - lots of overlapping, unsorted and futile ranges`, () => {
 // 02. crop, three arguments only
 // ==============================
 
-test(`16 - strlen matches the middle of some range's indexes, there's content to add (3rd arg.)`, () => {
+test("16 - strlen matches the middle of some range's indexes, there's content to add (3rd arg.)", () => {
   let length = 14;
   let testStr = "z".repeat(length);
   let sourceRange = [
@@ -399,7 +399,7 @@ test(`16 - strlen matches the middle of some range's indexes, there's content to
   equal(resRange, resRangeBackup, "16.04");
 });
 
-test(`17 - strlen matches the beginning of some range's indexes, there's content to add (3rd arg.)`, () => {
+test("17 - strlen matches the beginning of some range's indexes, there's content to add (3rd arg.)", () => {
   let length = 12;
   let testStr = "z".repeat(length);
   let sourceRange = [
@@ -426,7 +426,7 @@ test(`17 - strlen matches the beginning of some range's indexes, there's content
   equal(resRange, resRangeBackup, "17.04");
 });
 
-test(`18 - strlen matches the ending of some range's indexes, there's content to add (3rd arg.)`, () => {
+test("18 - strlen matches the ending of some range's indexes, there's content to add (3rd arg.)", () => {
   let length = 15;
   let testStr = "z".repeat(length);
   let sourceRange = [

@@ -6,19 +6,19 @@ import { emptyCondCommentRegex } from "../dist/regex-empty-conditional-comments.
 
 const fixture = [
   // outlook-only:
-  `<![if mso]><![endif]>`,
-  `<![if gte mso 9]><![endif]>`,
-  `<![if (gte mso 9)|(IE)]><![endif]>`,
-  `<!--[if (gte mso 9)|(IE)]><![endif]-->`,
-  `<!--[if (gte mso 9)|(IE)]> <![endif]-->`,
-  `<!--[if (gte mso 9)|(IE)]>\t<![endif]-->`,
-  `<!--[if (gte mso 9)|(IE)]>\n<![endif]-->`,
-  `<!--[if !mso]><!-- --><!--<![endif]-->`,
+  "<![if mso]><![endif]>",
+  "<![if gte mso 9]><![endif]>",
+  "<![if (gte mso 9)|(IE)]><![endif]>",
+  "<!--[if (gte mso 9)|(IE)]><![endif]-->",
+  "<!--[if (gte mso 9)|(IE)]> <![endif]-->",
+  "<!--[if (gte mso 9)|(IE)]>\t<![endif]-->",
+  "<!--[if (gte mso 9)|(IE)]>\n<![endif]-->",
+  "<!--[if !mso]><!-- --><!--<![endif]-->",
   `<!--[if (gte mso 9)|(IE)]>
 
 <![endif]-->`,
-  `<!--[if mso]><![endif]-->`,
-  `<!--[if mso]> <![endif]-->`,
+  "<!--[if mso]><![endif]-->",
+  "<!--[if mso]> <![endif]-->",
   `<!--[if mso]>
 
 <![endif]-->`,
@@ -41,9 +41,9 @@ test("matches each of comments", () => {
     match(comment, emptyCondCommentRegex());
   }
 
-  not.match(`<!--a-->`, emptyCondCommentRegex(), "01.01");
+  not.match("<!--a-->", emptyCondCommentRegex(), "01.01");
   not.match(
-    `<!--[if (gte mso 9)|(IE)]>z<![endif]-->`,
+    "<!--[if (gte mso 9)|(IE)]>z<![endif]-->",
     emptyCondCommentRegex(),
     "01.02"
   );
@@ -116,7 +116,7 @@ test("returns comment on match", () => {
 
 test("deletes comments from code", () => {
   equal(
-    `zzz <!--[if (gte mso 9)|(IE)]>\t<![endif]--> yyy <!-- does not touch this -->`.replace(
+    "zzz <!--[if (gte mso 9)|(IE)]>\t<![endif]--> yyy <!-- does not touch this -->".replace(
       emptyCondCommentRegex(),
       ""
     ),

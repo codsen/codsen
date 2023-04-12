@@ -6,5 +6,5 @@ import { isRel } from "../dist/is-relative-uri.esm.js";
 
 assert.deepEqual(isRel(".../resource.txt"), {
   res: false,
-  message: `Three consecutive dots.`,
+  message: "Three consecutive dots.",
 });

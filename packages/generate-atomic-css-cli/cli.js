@@ -48,14 +48,14 @@ function readUpdateAndWriteOverFile(oneOfPaths) {
     .then((filesContent) => {
       return write(oneOfPaths, genAtomic(filesContent).result).then(() => {
         log(
-          `${messagePrefix}${oneOfPaths} - ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`
+          `${messagePrefix}${oneOfPaths} - ${`\u001b[${32}m${"OK"}\u001b[${39}m`}`
         );
         return true;
       });
     })
     .catch((err) => {
       console.log(
-        `${oneOfPaths} - ${`\u001b[${31}m${`BAD`}\u001b[${39}m`} - ${err}`
+        `${oneOfPaths} - ${`\u001b[${31}m${"BAD"}\u001b[${39}m`} - ${err}`
       );
     });
 }
@@ -106,7 +106,7 @@ function processPaths(incomingPaths) {
               )
               .catch((err) => {
                 log(
-                  `${messagePrefix}${`\u001b[${31}m${`Could not write out the file:`}\u001b[${39}m`}\n${err}`
+                  `${messagePrefix}${`\u001b[${31}m${"Could not write out the file:"}\u001b[${39}m`}\n${err}`
                 );
                 return counter;
               }),
@@ -117,7 +117,7 @@ function processPaths(incomingPaths) {
             (!counter.bad || !counter.bad.length) &&
             (!counter.good || !counter.good.length)
           ) {
-            message = `Nothing to process.`;
+            message = "Nothing to process.";
           } else {
             message = `${`\u001b[${32}m${`${
               counter.bad &&

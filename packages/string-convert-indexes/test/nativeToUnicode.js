@@ -13,7 +13,8 @@ test("01 - one letter string", () => {
 });
 
 test("02 - non-emoji indexes match completely", () => {
-  let source = `  \n\n\r \t\t\t\t \r\r sljg dflgfhkf23647834563iuerhgkdjgxkf \n \r      \r sljl djflkgjd \r slfslj \n\n\n\n\n\n\n....`;
+  let source =
+    "  \n\n\r \t\t\t\t \r\r sljg dflgfhkf23647834563iuerhgkdjgxkf \n \r      \r sljl djflkgjd \r slfslj \n\n\n\n\n\n\n....";
   source.split("").forEach((char, idx) => {
     is(nativeToUnicode(source, idx), idx, `02/${idx}`);
   });
@@ -75,7 +76,8 @@ test("06 - two astral characters offsetting the rest", () => {
 });
 
 test("07 - non-emoji indexes match completely", () => {
-  let source = `  \n\n\r \t\t\t\t \r\r sljg dflgfhkf23647834563iuerhgkdjgxkf \n \r      \r sljl djflkgjd \r slfslj \n\n\n\n\n\n\n....`;
+  let source =
+    "  \n\n\r \t\t\t\t \r\r sljg dflgfhkf23647834563iuerhgkdjgxkf \n \r      \r sljl djflkgjd \r slfslj \n\n\n\n\n\n\n....";
   source.split("").forEach((char, idx) => {
     is(nativeToUnicode(source, idx), idx, "01");
   });

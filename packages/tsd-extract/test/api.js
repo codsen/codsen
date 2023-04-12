@@ -240,10 +240,10 @@ test("08 - unclosed comment range - found", () => {
       identifiers: ["interface", "x"],
       identifiersStartAt: 0,
       identifiersEndAt: 11,
-      content: `{ y: boolean };`,
+      content: "{ y: boolean };",
       contentStartsAt: 12,
       contentEndsAt: 27,
-      value: `interface x { y: boolean };`,
+      value: "interface x { y: boolean };",
       valueStartsAt: 0,
       valueEndsAt: 27,
       error: null,
@@ -280,7 +280,7 @@ test("09 - unclosed comment range - not found", () => {
 
 test("10 - unclosed line comment", () => {
   equal(
-    extract(`//`, "x", { extractAll: true }),
+    extract("//", "x", { extractAll: true }),
     {
       identifiers: [],
       identifiersStartAt: null,
@@ -301,7 +301,7 @@ test("10 - unclosed line comment", () => {
 test("11 - supports CR line endings", () => {
   equal(
     extract(
-      `interface a { b: boolean }; //\rinterface c { d: boolean };`,
+      "interface a { b: boolean }; //\rinterface c { d: boolean };",
       "a",
       { extractAll: true }
     ),
@@ -322,7 +322,7 @@ test("11 - supports CR line endings", () => {
   );
   equal(
     extract(
-      `interface a { b: boolean }; //\rinterface c { d: boolean };`,
+      "interface a { b: boolean }; //\rinterface c { d: boolean };",
       "c",
       { extractAll: true }
     ),

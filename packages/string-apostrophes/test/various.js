@@ -5,8 +5,8 @@ import { leftDoubleQuote, rightDoubleQuote } from "codsen-utils";
 
 import { convertAll } from "../dist/string-apostrophes.esm.js";
 
-test(`01 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
-  let input = `" " `;
+test(`01 - ${`\u001b[${35}m${"various"}\u001b[${39}m`} - edge cases`, () => {
+  let input = '" " ';
   equal(
     convertAll(input, {
       convertApostrophes: 0,
@@ -17,8 +17,8 @@ test(`01 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
   );
 });
 
-test(`02 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
-  let input = ` " " `;
+test(`02 - ${`\u001b[${35}m${"various"}\u001b[${39}m`} - edge cases`, () => {
+  let input = ' " " ';
   equal(
     convertAll(input, {
       convertApostrophes: 0,
@@ -29,8 +29,8 @@ test(`02 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
   );
 });
 
-test(`03 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
-  let input = ` " "`;
+test(`03 - ${`\u001b[${35}m${"various"}\u001b[${39}m`} - edge cases`, () => {
+  let input = ' " "';
   equal(
     convertAll(input, {
       convertApostrophes: 0,
@@ -41,26 +41,26 @@ test(`03 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
   );
 });
 
-test(`04 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`, () => {
+test(`04 - ${`\u001b[${35}m${"various"}\u001b[${39}m`} - edge cases`, () => {
   let input = ` ${leftDoubleQuote}-${rightDoubleQuote} `;
   equal(
     convertAll(input, {
       convertApostrophes: 0,
       convertEntities: 0,
     }).result,
-    ` "-" `,
+    ' "-" ',
     "04.01"
   );
 });
 
-test(`05 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - target 776`, () => {
+test(`05 - ${`\u001b[${35}m${"various"}\u001b[${39}m`} - target 776`, () => {
   let input = ` a${rightDoubleQuote}`;
   equal(
     convertAll(input, {
       convertApostrophes: 0,
       convertEntities: 0,
     }).result,
-    ` a"`,
+    ' a"',
     "05.01"
   );
 });

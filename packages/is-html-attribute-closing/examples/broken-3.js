@@ -8,7 +8,7 @@ import { isAttrClosing } from "../dist/is-html-attribute-closing.esm.js";
 // <img class="so-called" alt="!" border='10'/>
 
 // Broken code:
-const str = `<img class="so-called "alt !' border 10'/>`;
+const str = "<img class=\"so-called \"alt !' border 10'/>";
 //                      ^
 //                known opening at idx 11
 

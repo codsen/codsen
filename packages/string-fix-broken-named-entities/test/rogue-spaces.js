@@ -11,7 +11,7 @@ import fix from "./util/util.js";
 
 test(`${
   Object.keys(allNamedEntities).length
-} - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`}`, () => {
+} - ${`\u001b[${36}m${"rogue-spaces"}\u001b[${39}m`}`, () => {
   Object.keys(allNamedEntities)
     .filter(
       (entity) => entity !== "nbsp" && !Object.keys(uncertain).includes(entity)
@@ -56,7 +56,7 @@ test(`${
     });
 });
 
-test(`02 - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space after ampersand`, () => {
+test(`02 - ${`\u001b[${36}m${"rogue-spaces"}\u001b[${39}m`} - \u001b[${36}m${"nbsp"}\u001b[${39}m - space after ampersand`, () => {
   let inp1 = "& nbsp;";
   let outp1 = [
     {
@@ -85,7 +85,7 @@ test(`02 - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`} - \u001b[${36}m${`nb
   equal(gathered, [], "02.03");
 });
 
-test(`03 - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before semicolon`, () => {
+test(`03 - ${`\u001b[${36}m${"rogue-spaces"}\u001b[${39}m`} - \u001b[${36}m${"nbsp"}\u001b[${39}m - space before semicolon`, () => {
   let inp5 = "&nbsp ;";
   let outp5 = [
     {
@@ -113,7 +113,7 @@ test(`03 - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`} - \u001b[${36}m${`nb
   equal(gathered, [], "03.03");
 });
 
-test(`04 - ${`\u001b[${36}m${`rogue-spaces`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before and after semicolon`, () => {
+test(`04 - ${`\u001b[${36}m${"rogue-spaces"}\u001b[${39}m`} - \u001b[${36}m${"nbsp"}\u001b[${39}m - space before and after semicolon`, () => {
   let inp5 = "& nbsp ;";
   let outp5 = [
     {

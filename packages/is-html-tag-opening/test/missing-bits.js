@@ -7,8 +7,8 @@ import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 // missing bits
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`broken code`}\u001b[${39}m`} - quotes missing`, () => {
-  let s1 = `<abc de=fg hi="jkl">`;
+test(`01 - ${`\u001b[${36}m${"broken code"}\u001b[${39}m`} - quotes missing`, () => {
+  let s1 = '<abc de=fg hi="jkl">';
   not.ok(isOpening(s1, 0), "01.01");
   ok(
     isOpening(s1, 0, {

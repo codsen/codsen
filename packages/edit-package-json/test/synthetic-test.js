@@ -52,7 +52,7 @@ globby([
         try {
           calculated = JSON.parse(amended);
         } catch (e) {
-          test(`failure in set()`, () => {
+          test("failure in set()", () => {
             not.ok(
               `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path
@@ -66,7 +66,7 @@ globby([
           editedRefObj = clone(obj);
           objectPath.set(editedRefObj, innerObj.path, "x");
         } catch (e) {
-          test(`failure in objectPath.set():`, () => {
+          test("failure in objectPath.set():", () => {
             not.ok(
               `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path

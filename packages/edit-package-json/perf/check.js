@@ -8,7 +8,7 @@ import { set } from "../dist/edit-package-json.esm.js";
 
 const callerDir = path.resolve(".");
 
-const testme = () => set(`{ "a": "b", "c": { "d": ["e"] } }`, "c.d", 1);
+const testme = () => set('{ "a": "b", "c": { "d": ["e"] } }', "c.d", 1);
 
 // action
 runPerf(testme, callerDir);

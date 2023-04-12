@@ -9,8 +9,8 @@ import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js"
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-test(`01 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - one tag, three attrs`, () => {
-  let str = `<a class "c" id 'e' href "www">`;
+test(`01 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - one tag, three attrs`, () => {
+  let str = '<a class "c" id \'e\' href "www">';
 
   // class opening at 9
   not.ok(isCl(str, 9, 9), "01.01");
@@ -52,8 +52,8 @@ test(`01 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - one tag,
 
 // S-S follows
 
-test(`02 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
-  let str = `<z bbb"c" ddd'e'>.<z fff"g">`;
+test(`02 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+  let str = '<z bbb"c" ddd\'e\'>.<z fff"g">';
 
   // bbb opening at 6
   not.ok(isCl(str, 6, 6), "02.01");
@@ -74,8 +74,8 @@ test(`02 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecogn
   // fin.
 });
 
-test(`03 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
-  let str = `<a class"c" id'e'>`;
+test(`03 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - recognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+  let str = "<a class\"c\" id'e'>";
 
   // bbb opening at 8
   not.ok(isCl(str, 8, 8), "03.01");
@@ -94,8 +94,8 @@ test(`03 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognis
 
 // S-D follows
 
-test(`04 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
-  let str = `<z bbb"c" ddd'e">`;
+test(`04 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+  let str = '<z bbb"c" ddd\'e">';
 
   // 1. the bracket that follows is the last non-whitespace character in string:
 
@@ -113,7 +113,7 @@ test(`04 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecogn
 
   // 2. even if more tags follow, result's the same:
 
-  let str2 = `<z bbb"c" ddd'e">something's here<z id='x'>`;
+  let str2 = "<z bbb\"c\" ddd'e\">something's here<z id='x'>";
   ok(isCl(str2, 13, 15), "04.03"); // <--
   not.ok(isCl(str2, 13, 26), "04.10");
   not.ok(isCl(str2, 13, 39), "04.11");
@@ -122,8 +122,8 @@ test(`04 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecogn
   // fin.
 });
 
-test(`05 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
-  let str = `<a class"c" id'e">`;
+test(`05 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - recognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+  let str = '<a class"c" id\'e">';
 
   // bbb opening at 8
   not.ok(isCl(str, 8, 8), "05.01");
@@ -142,8 +142,8 @@ test(`05 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognis
 
 // D-S follows
 
-test(`06 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
-  let str = `<z bbb"c" ddd"e'>`;
+test(`06 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+  let str = '<z bbb"c" ddd"e\'>';
 
   // bbb opening at 6
   not.ok(isCl(str, 6, 6), "06.01");
@@ -160,8 +160,8 @@ test(`06 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecogn
   // fin.
 });
 
-test(`07 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
-  let str = `<a class"c" id"e'>`;
+test(`07 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - recognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+  let str = '<a class"c" id"e\'>';
 
   // bbb opening at 8
   not.ok(isCl(str, 8, 8), "07.01");
@@ -180,8 +180,8 @@ test(`07 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognis
 
 // D-D follows
 
-test(`08 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
-  let str = `<z bbb"c" ddd"e">`;
+test(`08 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+  let str = '<z bbb"c" ddd"e">';
 
   // bbb opening at 6
   not.ok(isCl(str, 6, 6), "08.01");
@@ -198,8 +198,8 @@ test(`08 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - unrecogn
   // fin.
 });
 
-test(`09 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognised everything - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
-  let str = `<a class"c" id"e">`;
+test(`09 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - recognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+  let str = '<a class"c" id"e">';
 
   // bbb opening at 8
   not.ok(isCl(str, 8, 8), "09.01");
@@ -218,8 +218,8 @@ test(`09 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - recognis
 
 // counter-cases, false positives
 
-test(`10 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
-  let str1 = `<z bbb"c" ddd'e>`;
+test(`10 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+  let str1 = '<z bbb"c" ddd\'e>';
 
   // algorithm picks the 13 because it is matching and 13 is unmatched
 
@@ -229,7 +229,7 @@ test(`10 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-
 
   // also,
 
-  let str2 = `<z bbb"c" ddd'e'>`;
+  let str2 = "<z bbb\"c\" ddd'e'>";
 
   // bbb opening at 6
   ok(isCl(str2, 6, 8), "10.02"); // <--
@@ -239,7 +239,7 @@ test(`10 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-
   // also, even though href is suspicious, it's wrapped with a matching
   // quote pair so we take it as value, not attribute name
 
-  let str3 = `<z alt"href" www'/>`;
+  let str3 = '<z alt"href" www\'/>';
 
   // bbb opening at 6
   ok(isCl(str3, 6, 11), "10.03"); // <--
@@ -247,7 +247,7 @@ test(`10 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-
 
   // but it's enough to mismatch the pair and it becomes...
 
-  let str4 = `<z alt"href=' www'/>`;
+  let str4 = "<z alt\"href=' www'/>";
   // Algorithm sees this as:
   // <z alt="" href=' ddd'/>
 
@@ -257,14 +257,14 @@ test(`10 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-
   not.ok(isCl(str4, 6, 17), "10.09");
 
   // but doubles in front:
-  let str5 = `<z alt""href' www'/>`;
+  let str5 = "<z alt\"\"href' www'/>";
   ok(isCl(str5, 6, 7), "10.04"); // <--
   not.ok(isCl(str5, 6, 12), "10.11");
   not.ok(isCl(str5, 6, 17), "10.12");
 
   // even doubles can follow,
 
-  let str6 = `<z alt"href' www' id=z"/>`;
+  let str6 = "<z alt\"href' www' id=z\"/>";
   // Algorithm sees this as:
   // <z alt="" href=' ddd'/>
 
@@ -277,8 +277,8 @@ test(`10 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-
   // fin.
 });
 
-test(`11 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
-  let str = `<z bbb"c' ddd"e>`;
+test(`11 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+  let str = '<z bbb"c\' ddd"e>';
 
   // but if 13 is mismatching, it will jump to 13 because count of doubles is
   // an even number
@@ -293,8 +293,8 @@ test(`11 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-
   // fin.
 });
 
-test(`12 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
-  let str = `<z bbb"c' href"e>`;
+test(`12 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+  let str = '<z bbb"c\' href"e>';
 
   // but if 13 is mismatching, it will jump to 13 because count of doubles is
   // an even number
@@ -309,8 +309,8 @@ test(`12 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-
   // fin.
 });
 
-test(`13 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
-  let str = `<z bbb"c' z href"e>`;
+test(`13 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+  let str = '<z bbb"c\' z href"e>';
 
   // z ruins everything, if it's not a known void attribute name
 
@@ -321,8 +321,8 @@ test(`13 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-
   // fin.
 });
 
-test(`14 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
-  let str = `<z bbb"c' nowrap href"e>`;
+test(`14 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+  let str = '<z bbb"c\' nowrap href"e>';
 
   // nowrap is recognised void attribute
 
@@ -333,8 +333,8 @@ test(`14 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-
   // fin.
 });
 
-test(`15 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
-  let str = `<z href"href' href href"href>`;
+test(`15 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+  let str = '<z href"href\' href href"href>';
 
   // program perceives it as:
   // <z href"href' href href" href>
@@ -348,9 +348,9 @@ test(`15 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-
   // fin.
 });
 
-test(`16 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-case - \u001b[${31}m${`D`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
+test(`16 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   // no closing slash on img
-  let str1 = `<img alt="somethin' fishy going on' class=">z<a class="y">`;
+  let str1 = '<img alt="somethin\' fishy going on\' class=">z<a class="y">';
 
   // alt opening at 9
   not.ok(isCl(str1, 9, 18), "16.01");
@@ -360,7 +360,7 @@ test(`16 - ${`\u001b[${34}m${`space instead of equal`}\u001b[${39}m`} - counter-
   not.ok(isCl(str1, 9, 56), "16.05");
 
   // closing slash on img present
-  let str2 = `<img alt="somethin' fishy going on' class="/>z<a class="y">`;
+  let str2 = '<img alt="somethin\' fishy going on\' class="/>z<a class="y">';
 
   // alt opening at 9
   not.ok(isCl(str2, 9, 18), "16.06");

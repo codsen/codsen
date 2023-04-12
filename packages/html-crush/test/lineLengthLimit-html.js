@@ -5,7 +5,7 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { m } from "./util/util.js";
 
-test(`01 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - inline tags are not separated`, () => {
+test(`01 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - inline tags are not separated`, () => {
   compare(
     ok,
     m(equal, "<a><a>", {
@@ -56,10 +56,10 @@ test(`01 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - inline tags are not
   );
 });
 
-test(`02 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - inline tags are not separated`, () => {
+test(`02 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - inline tags are not separated`, () => {
   compare(
     ok,
-    m(equal, `let me tell you <a><span>something</span></a> new`, {
+    m(equal, "let me tell you <a><span>something</span></a> new", {
       lineLengthLimit: 2,
       removeIndentations: true,
       removeLineBreaks: true,
@@ -80,13 +80,13 @@ new`,
   );
   compare(
     ok,
-    m(equal, `let me tell you <a><span>something</span></a> new`, {
+    m(equal, "let me tell you <a><span>something</span></a> new", {
       lineLengthLimit: 2,
       removeIndentations: true,
       removeLineBreaks: false,
     }),
     {
-      result: `let me tell you <a><span>something</span></a> new`,
+      result: "let me tell you <a><span>something</span></a> new",
       applicableOpts: {
         removeHTMLComments: false,
         removeCSSComments: false,
@@ -96,13 +96,13 @@ new`,
   );
   compare(
     ok,
-    m(equal, `let me tell you <a><span>something</span></a> new`, {
+    m(equal, "let me tell you <a><span>something</span></a> new", {
       lineLengthLimit: 2,
       removeIndentations: false,
       removeLineBreaks: false,
     }),
     {
-      result: `let me tell you <a><span>something</span></a> new`,
+      result: "let me tell you <a><span>something</span></a> new",
       applicableOpts: {
         removeHTMLComments: false,
         removeCSSComments: false,
@@ -112,7 +112,7 @@ new`,
   );
 });
 
-test(`03 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - non-inline tags are separated`, () => {
+test(`03 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - non-inline tags are separated`, () => {
   compare(
     ok,
     m(equal, "<div><div>", {
@@ -163,7 +163,7 @@ test(`03 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - non-inline tags are
   );
 });
 
-test(`04 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - string sequence breaks in front of space`, () => {
+test(`04 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - string sequence breaks in front of space`, () => {
   compare(
     ok,
     m(equal, "<aa><bb>\t<cc><dd>", {
@@ -214,7 +214,7 @@ test(`04 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - string sequence bre
   );
 });
 
-test(`05 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - what happens when it's impossible to break and exceeding line length limit is inevitable`, () => {
+test(`05 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - what happens when it's impossible to break and exceeding line length limit is inevitable`, () => {
   compare(
     ok,
     m(equal, "abc ghijklmnop xyz", {
@@ -265,7 +265,7 @@ test(`05 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - what happens when i
   );
 });
 
-test(`06 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks lines when limiter is on`, () => {
+test(`06 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks lines when limiter is on`, () => {
   compare(
     ok,
     m(equal, "aa bb cc\n", {
@@ -316,7 +316,7 @@ test(`06 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks lines when l
   );
 });
 
-test(`07 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks along with wiping whitespace`, () => {
+test(`07 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks along with wiping whitespace`, () => {
   compare(
     ok,
     m(equal, "aa   \n \t  bb   \n \t    cc", {
@@ -367,7 +367,7 @@ test(`07 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks along with w
   );
 });
 
-test(`08 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks unbreakable chunks, each over limit`, () => {
+test(`08 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks unbreakable chunks, each over limit`, () => {
   compare(
     ok,
     m(equal, "abcde   \n \t  fghij   \n \t    klmno", {
@@ -418,7 +418,7 @@ test(`08 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks unbreakable 
   );
 });
 
-test(`09 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks tags, wipes whitespace - inline tags`, () => {
+test(`09 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks tags, wipes whitespace - inline tags`, () => {
   compare(
     ok,
     m(equal, "    \n    <a>\n\n   <b>\n  <c>", {
@@ -469,7 +469,7 @@ test(`09 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks tags, wipes 
   );
 });
 
-test(`10 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks tags, wipes whitespace - not inline tags`, () => {
+test(`10 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks tags, wipes whitespace - not inline tags`, () => {
   compare(
     ok,
     m(equal, "    \n    <x>\n\n   <y>\n  <z>", {
@@ -520,7 +520,7 @@ test(`10 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks tags, wipes 
   );
 });
 
-test(`11 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting - inline tags`, () => {
+test(`11 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting - inline tags`, () => {
   compare(
     ok,
     m(equal, "  <a>\n     <b>\n   c </b>\n   </a>", {
@@ -571,7 +571,7 @@ test(`11 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting -
   );
 });
 
-test(`12 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting - not inline tags`, () => {
+test(`12 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting - not inline tags`, () => {
   compare(
     ok,
     m(equal, "  <x>\n     <y>\n   c </y>\n   </x>", {
@@ -622,7 +622,7 @@ test(`12 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting -
   );
 });
 
-test(`13 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - more tags and limiting - inline tags`, () => {
+test(`13 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - more tags and limiting - inline tags`, () => {
   compare(
     ok,
     m(
@@ -705,7 +705,7 @@ c </b>
   );
 });
 
-test(`14 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - more tags and limiting - non-inline tags`, () => {
+test(`14 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - more tags and limiting - non-inline tags`, () => {
   compare(
     ok,
     m(
@@ -788,7 +788,7 @@ c </y>
   );
 });
 
-test(`15 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting = 8`, () => {
+test(`15 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting = 8`, () => {
   compare(
     ok,
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -839,7 +839,7 @@ test(`15 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting =
   );
 });
 
-test(`16 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting = 10`, () => {
+test(`16 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting = 10`, () => {
   compare(
     ok,
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -890,7 +890,7 @@ test(`16 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting =
   );
 });
 
-test(`17 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting = 14`, () => {
+test(`17 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting = 14`, () => {
   compare(
     ok,
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -941,7 +941,7 @@ test(`17 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting =
   );
 });
 
-test(`18 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tag sequence without whitespace is wrapped`, () => {
+test(`18 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tag sequence without whitespace is wrapped`, () => {
   compare(
     ok,
     m(equal, "<aa><bb><cc>", {
@@ -992,7 +992,7 @@ test(`18 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tag sequence withou
   );
 });
 
-test(`19 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tag sequence completely wrapped`, () => {
+test(`19 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tag sequence completely wrapped`, () => {
   compare(
     ok,
     m(equal, "<aa><bb><cc>", {
@@ -1043,7 +1043,7 @@ test(`19 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tag sequence comple
   );
 });
 
-test(`20 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - string sequence breaks in front of space`, () => {
+test(`20 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - string sequence breaks in front of space`, () => {
   compare(
     ok,
     m(equal, "aaaaaa bbbbbb cccccc", {

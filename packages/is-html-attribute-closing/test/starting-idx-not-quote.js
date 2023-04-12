@@ -9,8 +9,8 @@ import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js"
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-test(`01 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - control`, () => {
-  let str = `<a href="www" class=e'>`;
+test(`01 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - control`, () => {
+  let str = '<a href="www" class=e\'>';
 
   // href opening at 8
   ok(isCl(str, 8, 12), "01.01"); // <--
@@ -25,9 +25,9 @@ test(`01 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - control`
 
 //              finally, the bizness
 
-test(`02 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, two attrs`, () => {
+test(`02 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - one tag, two attrs`, () => {
   // D-D
-  let str1 = `<a href=www" class=e">`;
+  let str1 = '<a href=www" class=e">';
 
   // href opening at 8
   ok(isCl(str1, 8, 11), "02.01"); // <--
@@ -38,7 +38,7 @@ test(`02 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   ok(isCl(str1, 19, 20), "02.02"); // <--
 
   // D-S
-  let str2 = `<a href=www" class=e'>`;
+  let str2 = "<a href=www\" class=e'>";
 
   // href opening at 8
   ok(isCl(str2, 8, 11), "02.03"); // <--
@@ -49,7 +49,7 @@ test(`02 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   ok(isCl(str2, 19, 20), "02.04"); // <--
 
   // S-D
-  let str3 = `<a href=www' class=e">`;
+  let str3 = "<a href=www' class=e\">";
 
   // href opening at 8
   ok(isCl(str3, 8, 11), "02.05"); // <--
@@ -60,7 +60,7 @@ test(`02 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   ok(isCl(str3, 19, 20), "02.06"); // <--
 
   // S-S
-  let str4 = `<a href=www' class=e'>`;
+  let str4 = "<a href=www' class=e'>";
 
   // href opening at 8
   ok(isCl(str4, 8, 11), "02.07"); // <--
@@ -74,9 +74,9 @@ test(`02 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
 });
 
 // "X" meaning absent
-test(`03 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m + \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
+test(`03 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m + \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   // X-D + X-D + D-D
-  let str1 = `<a href=www" class=e" id="f">`;
+  let str1 = '<a href=www" class=e" id="f">';
 
   // href opening at 8
   ok(isCl(str1, 8, 11), "03.01"); // <--
@@ -91,7 +91,7 @@ test(`03 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str1, 19, 27), "03.08");
 
   // X-D + X-D + D-S
-  let str2 = `<a href=www" class=e" id="f'>`;
+  let str2 = '<a href=www" class=e" id="f\'>';
 
   // href opening at 8
   ok(isCl(str2, 8, 11), "03.03"); // <--
@@ -106,7 +106,7 @@ test(`03 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str2, 19, 27), "03.16");
 
   // X-D + X-D + S-D
-  let str3 = `<a href=www" class=e" id='f">`;
+  let str3 = '<a href=www" class=e" id=\'f">';
 
   // href opening at 8
   ok(isCl(str3, 8, 11), "03.05"); // <--
@@ -121,7 +121,7 @@ test(`03 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str3, 19, 27), "03.24");
 
   // X-D + X-D + S-S
-  let str4 = `<a href=www" class=e" id='f'>`;
+  let str4 = "<a href=www\" class=e\" id='f'>";
 
   // href opening at 8
   ok(isCl(str4, 8, 11), "03.07"); // <--
@@ -136,7 +136,7 @@ test(`03 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str4, 19, 27), "03.32");
 
   // X-D + X-D + S-X
-  let str5 = `<a href=www" class=e" id='f>`;
+  let str5 = '<a href=www" class=e" id=\'f>';
 
   // href opening at 8
   ok(isCl(str5, 8, 11), "03.09"); // <--
@@ -149,7 +149,7 @@ test(`03 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str5, 19, 25), "03.38");
 
   // X-D + X-D + D-X
-  let str6 = `<a href=www" class=e" id="f>`;
+  let str6 = '<a href=www" class=e" id="f>';
 
   // href opening at 8
   ok(isCl(str6, 8, 11), "03.11"); // <--
@@ -162,7 +162,7 @@ test(`03 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str6, 19, 25), "03.44");
 
   // X-D + X-D + X-S
-  let str7 = `<a href=www" class=e" id=f'>`;
+  let str7 = '<a href=www" class=e" id=f\'>';
 
   // href opening at 8
   ok(isCl(str7, 8, 11), "03.13"); // <--
@@ -175,7 +175,7 @@ test(`03 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str7, 19, 26), "03.50");
 
   // X-D + X-D + X-D
-  let str8 = `<a href=www" class=e" id=f">`;
+  let str8 = '<a href=www" class=e" id=f">';
 
   // href opening at 8
   ok(isCl(str8, 8, 11), "03.15"); // <--
@@ -190,9 +190,9 @@ test(`03 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   // fin.
 });
 
-test(`04 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m + \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
+test(`04 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m + \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   // X-D + X-S + D-D
-  let str1 = `<a href=www" class=e' id="f">`;
+  let str1 = '<a href=www" class=e\' id="f">';
 
   // href opening at 8
   ok(isCl(str1, 8, 11), "04.01"); // <--
@@ -207,7 +207,7 @@ test(`04 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str1, 19, 27), "04.08");
 
   // X-D + X-S + D-S
-  let str2 = `<a href=www" class=e' id="f'>`;
+  let str2 = "<a href=www\" class=e' id=\"f'>";
 
   // href opening at 8
   ok(isCl(str2, 8, 11), "04.03"); // <--
@@ -222,7 +222,7 @@ test(`04 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str2, 19, 27), "04.16");
 
   // X-D + X-S + S-D
-  let str3 = `<a href=www" class=e' id='f">`;
+  let str3 = "<a href=www\" class=e' id='f\">";
 
   // href opening at 8
   ok(isCl(str3, 8, 11), "04.05"); // <--
@@ -237,7 +237,7 @@ test(`04 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str3, 19, 27), "04.24");
 
   // X-D + X-S + S-S
-  let str4 = `<a href=www" class=e' id='f'>`;
+  let str4 = "<a href=www\" class=e' id='f'>";
 
   // href opening at 8
   ok(isCl(str4, 8, 11), "04.07"); // <--
@@ -252,7 +252,7 @@ test(`04 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str4, 19, 27), "04.32");
 
   // X-D + X-S + S-X
-  let str5 = `<a href=www" class=e' id='f>`;
+  let str5 = "<a href=www\" class=e' id='f>";
 
   // href opening at 8
   ok(isCl(str5, 8, 11), "04.09"); // <--
@@ -265,7 +265,7 @@ test(`04 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str5, 19, 25), "04.38");
 
   // X-D + X-S + D-X
-  let str6 = `<a href=www" class=e' id="f>`;
+  let str6 = '<a href=www" class=e\' id="f>';
 
   // href opening at 8
   ok(isCl(str6, 8, 11), "04.11"); // <--
@@ -278,7 +278,7 @@ test(`04 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str6, 19, 25), "04.44");
 
   // X-D + X-S + X-S
-  let str7 = `<a href=www" class=e' id=f'>`;
+  let str7 = "<a href=www\" class=e' id=f'>";
 
   // href opening at 8
   ok(isCl(str7, 8, 11), "04.13"); // <--
@@ -291,7 +291,7 @@ test(`04 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str7, 19, 26), "04.50");
 
   // X-D + X-S + X-D
-  let str8 = `<a href=www" class=e' id=f">`;
+  let str8 = '<a href=www" class=e\' id=f">';
 
   // href opening at 8
   ok(isCl(str8, 8, 11), "04.15"); // <--
@@ -306,9 +306,9 @@ test(`04 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   // fin.
 });
 
-test(`05 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m + \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${31}m${`D`}\u001b[${39}m`, () => {
+test(`05 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m + \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   // X-S + X-D + D-D
-  let str1 = `<a href=www' class=e" id="f">`;
+  let str1 = '<a href=www\' class=e" id="f">';
 
   // href opening at 8
   ok(isCl(str1, 8, 11), "05.01"); // <--
@@ -323,7 +323,7 @@ test(`05 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str1, 19, 27), "05.08");
 
   // X-S + X-D + D-S
-  let str2 = `<a href=www' class=e" id="f'>`;
+  let str2 = "<a href=www' class=e\" id=\"f'>";
 
   // href opening at 8
   ok(isCl(str2, 8, 11), "05.03"); // <--
@@ -338,7 +338,7 @@ test(`05 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str2, 19, 27), "05.16");
 
   // X-S + X-D + S-D
-  let str3 = `<a href=www' class=e" id='f">`;
+  let str3 = "<a href=www' class=e\" id='f\">";
 
   // href opening at 8
   ok(isCl(str3, 8, 11), "05.05"); // <--
@@ -353,7 +353,7 @@ test(`05 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str3, 19, 27), "05.24");
 
   // X-S + X-D + S-S
-  let str4 = `<a href=www' class=e" id='f'>`;
+  let str4 = "<a href=www' class=e\" id='f'>";
 
   // href opening at 8
   ok(isCl(str4, 8, 11), "05.07"); // <--
@@ -368,7 +368,7 @@ test(`05 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str4, 19, 27), "05.32");
 
   // X-S + X-D + S-X
-  let str5 = `<a href=www' class=e" id='f>`;
+  let str5 = "<a href=www' class=e\" id='f>";
 
   // href opening at 8
   ok(isCl(str5, 8, 11), "05.09"); // <--
@@ -381,7 +381,7 @@ test(`05 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str5, 19, 25), "05.38");
 
   // X-S + X-D + D-X
-  let str6 = `<a href=www' class=e" id="f>`;
+  let str6 = '<a href=www\' class=e" id="f>';
 
   // href opening at 8
   ok(isCl(str6, 8, 11), "05.11"); // <--
@@ -394,7 +394,7 @@ test(`05 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str6, 19, 25), "05.44");
 
   // X-S + X-D + X-S
-  let str7 = `<a href=www' class=e" id=f'>`;
+  let str7 = "<a href=www' class=e\" id=f'>";
 
   // href opening at 8
   ok(isCl(str7, 8, 11), "05.13"); // <--
@@ -407,7 +407,7 @@ test(`05 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str7, 19, 26), "05.50");
 
   // X-S + X-D + X-D
-  let str8 = `<a href=www' class=e" id=f">`;
+  let str8 = '<a href=www\' class=e" id=f">';
 
   // href opening at 8
   ok(isCl(str8, 8, 11), "05.15"); // <--
@@ -422,9 +422,9 @@ test(`05 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   // fin.
 });
 
-test(`06 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m + \u001b[${90}m${`X`}\u001b[${39}m-\u001b[${33}m${`S`}\u001b[${39}m`, () => {
+test(`06 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m + \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   // X-S + X-S + D-D
-  let str1 = `<a href=www' class=e' id="f">`;
+  let str1 = "<a href=www' class=e' id=\"f\">";
 
   // href opening at 8
   ok(isCl(str1, 8, 11), "06.01"); // <--
@@ -439,7 +439,7 @@ test(`06 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str1, 19, 27), "06.08");
 
   // X-S + X-S + D-S
-  let str2 = `<a href=www' class=e' id="f'>`;
+  let str2 = "<a href=www' class=e' id=\"f'>";
 
   // href opening at 8
   ok(isCl(str2, 8, 11), "06.03"); // <--
@@ -454,7 +454,7 @@ test(`06 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str2, 19, 27), "06.16");
 
   // X-S + X-S + S-D
-  let str3 = `<a href=www' class=e' id='f">`;
+  let str3 = "<a href=www' class=e' id='f\">";
 
   // href opening at 8
   ok(isCl(str3, 8, 11), "06.05"); // <--
@@ -469,7 +469,7 @@ test(`06 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str3, 19, 27), "06.24");
 
   // X-S + X-S + S-S
-  let str4 = `<a href=www' class=e' id='f'>`;
+  let str4 = "<a href=www' class=e' id='f'>";
 
   // href opening at 8
   ok(isCl(str4, 8, 11), "06.07"); // <--
@@ -484,7 +484,7 @@ test(`06 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str4, 19, 27), "06.32");
 
   // X-S + X-S + S-X
-  let str5 = `<a href=www' class=e' id='f>`;
+  let str5 = "<a href=www' class=e' id='f>";
 
   // href opening at 8
   ok(isCl(str5, 8, 11), "06.09"); // <--
@@ -497,7 +497,7 @@ test(`06 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str5, 19, 25), "06.38");
 
   // X-S + X-S + D-X
-  let str6 = `<a href=www' class=e' id="f>`;
+  let str6 = "<a href=www' class=e' id=\"f>";
 
   // href opening at 8
   ok(isCl(str6, 8, 11), "06.11"); // <--
@@ -510,7 +510,7 @@ test(`06 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str6, 19, 25), "06.44");
 
   // X-S + X-S + X-S
-  let str7 = `<a href=www' class=e' id=f'>`;
+  let str7 = "<a href=www' class=e' id=f'>";
 
   // href opening at 8
   ok(isCl(str7, 8, 11), "06.13"); // <--
@@ -523,7 +523,7 @@ test(`06 - ${`\u001b[${36}m${`starting quote missing`}\u001b[${39}m`} - one tag,
   not.ok(isCl(str7, 19, 26), "06.50");
 
   // X-S + X-S + X-D
-  let str8 = `<a href=www' class=e' id=f">`;
+  let str8 = "<a href=www' class=e' id=f\">";
 
   // href opening at 8
   ok(isCl(str8, 8, 11), "06.15"); // <--

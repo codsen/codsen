@@ -10,7 +10,7 @@ import { traverse } from "../dist/ast-monkey-traverse-with-lookahead.esm.js";
 // traverse
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 0`, () => {
+test(`01 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of objects, lookahead === 0`, () => {
   let input = [
     {
       a: "b",
@@ -158,7 +158,7 @@ test(`01 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of obj
   );
 });
 
-test(`02 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 1`, () => {
+test(`02 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of objects, lookahead === 1`, () => {
   let input = [
     {
       a: "b",
@@ -395,7 +395,7 @@ test(`02 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of obj
   );
 });
 
-test(`03 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 2`, () => {
+test(`03 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of objects, lookahead === 2`, () => {
   let input = [
     {
       a: "b",
@@ -700,7 +700,7 @@ test(`03 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of obj
   );
 });
 
-test(`04 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 3`, () => {
+test(`04 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of objects, lookahead === 3`, () => {
   let input = [
     {
       a: "b",
@@ -1051,7 +1051,7 @@ test(`04 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of obj
   );
 });
 
-test(`05 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 5`, () => {
+test(`05 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of objects, lookahead === 5`, () => {
   let input = [
     {
       a: "b",
@@ -1448,7 +1448,7 @@ test(`05 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of obj
   );
 });
 
-test(`06 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 6`, () => {
+test(`06 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of objects, lookahead === 6`, () => {
   let input = [
     {
       a: "b",
@@ -1845,7 +1845,7 @@ test(`06 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of obj
   );
 });
 
-test(`07 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of objects, lookahead === 99`, () => {
+test(`07 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of objects, lookahead === 99`, () => {
   let input = [
     {
       a: "b",
@@ -2245,7 +2245,7 @@ test(`07 - ${`\u001b[${35}m${`traverse`}\u001b[${39}m`} - traverses array of obj
 // 02. arrays
 // -----------------------------------------------------------------------------
 
-test(`08 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays`, () => {
+test(`08 - ${`\u001b[${31}m${"arrays"}\u001b[${39}m`} - traverses and pings all the holes in arrays`, () => {
   let input = ["a", undefined, "b"];
   let gathered = [];
 
@@ -2301,7 +2301,7 @@ test(`08 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all 
   );
 });
 
-test(`09 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 1`, () => {
+test(`09 - ${`\u001b[${31}m${"arrays"}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 1`, () => {
   let input = ["a", undefined, "b"];
   let gathered = [];
 
@@ -2383,7 +2383,7 @@ test(`09 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all 
   );
 });
 
-test(`10 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 2`, () => {
+test(`10 - ${`\u001b[${31}m${"arrays"}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 2`, () => {
   let input = ["a", undefined, "b"];
   let gathered = [];
 
@@ -2475,7 +2475,7 @@ test(`10 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all 
   );
 });
 
-test(`11 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 3`, () => {
+test(`11 - ${`\u001b[${31}m${"arrays"}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 3`, () => {
   let input = ["a", undefined, "b"];
   let gathered = [];
 
@@ -2567,7 +2567,7 @@ test(`11 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all 
   );
 });
 
-test(`12 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 4`, () => {
+test(`12 - ${`\u001b[${31}m${"arrays"}\u001b[${39}m`} - traverses and pings all the holes in arrays, lookahead = 4`, () => {
   let input = ["a", undefined, "b"];
   let gathered = [];
 
@@ -2662,7 +2662,7 @@ test(`12 - ${`\u001b[${31}m${`arrays`}\u001b[${39}m`} - traverses and pings all 
 // 03. objects-only
 // -----------------------------------------------------------------------------
 
-test(`13 - traverses plain objects`, () => {
+test("13 - traverses plain objects", () => {
   let input = {
     a: "k",
     b: "l",
@@ -2741,7 +2741,7 @@ test(`13 - traverses plain objects`, () => {
   );
 });
 
-test(`14 - object key's value is an array`, () => {
+test("14 - object key's value is an array", () => {
   let input = {
     a: ["1", "2", "3"],
   };
@@ -2819,7 +2819,7 @@ test(`14 - object key's value is an array`, () => {
 // 04. more complex AST
 // -----------------------------------------------------------------------------
 
-test(`15 - ${`\u001b[${32}m${`complex`}\u001b[${39}m`} - only traversal, #2`, () => {
+test(`15 - ${`\u001b[${32}m${"complex"}\u001b[${39}m`} - only traversal, #2`, () => {
   let input = {
     a: {
       b: {
@@ -3309,7 +3309,7 @@ test(`15 - ${`\u001b[${32}m${`complex`}\u001b[${39}m`} - only traversal, #2`, ()
   );
 });
 
-test(`16 - ${`\u001b[${32}m${`complex`}\u001b[${39}m`} - only traversal, #3`, () => {
+test(`16 - ${`\u001b[${32}m${"complex"}\u001b[${39}m`} - only traversal, #3`, () => {
   let input = ["1", "2", { a: "3" }];
   let gathered = [];
   traverse(input, (key1, val1, innerObj) => {
@@ -3400,7 +3400,7 @@ test(`16 - ${`\u001b[${32}m${`complex`}\u001b[${39}m`} - only traversal, #3`, ()
 // 05. stopping the traversal upon request
 // -----------------------------------------------------------------------------
 
-test(`17 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - objects - a reference traversal`, () => {
+test(`17 - ${`\u001b[${36}m${"stopping"}\u001b[${39}m`} - objects - a reference traversal`, () => {
   let input = { a: "1", b: { c: "2" } };
   let gathered = [];
   traverse(input, (key1, val1, innerObj) => {
@@ -3411,7 +3411,7 @@ test(`17 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - objects - a reference 
   equal(gathered, ["a", "b", "b.c"], "17.01");
 });
 
-test(`18 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - objects - after "b"`, () => {
+test(`18 - ${`\u001b[${36}m${"stopping"}\u001b[${39}m`} - objects - after "b"`, () => {
   let input = { a: "1", b: { c: "2" } };
   let gathered = [];
   traverse(input, (key1, val1, innerObj, stop) => {
@@ -3425,7 +3425,7 @@ test(`18 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - objects - after "b"`, 
   equal(gathered, ["a", "b"], "18.01");
 });
 
-test(`19 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - arrays - a reference traversal`, () => {
+test(`19 - ${`\u001b[${36}m${"stopping"}\u001b[${39}m`} - arrays - a reference traversal`, () => {
   let input = ["a", ["b", "c"]];
   let gathered = [];
   traverse(input, (key1, val1, innerObj) => {
@@ -3436,7 +3436,7 @@ test(`19 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - arrays - a reference t
   equal(gathered, ["0", "1", "1.0", "1.1"], "19.01");
 });
 
-test(`20 - ${`\u001b[${36}m${`stopping`}\u001b[${39}m`} - arrays - after "b"`, () => {
+test(`20 - ${`\u001b[${36}m${"stopping"}\u001b[${39}m`} - arrays - after "b"`, () => {
   let input = ["a", ["b", "c"]];
   let gathered = [];
   traverse(input, (key1, val1, innerObj, stop) => {

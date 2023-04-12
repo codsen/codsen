@@ -5,7 +5,7 @@ import { strict as assert } from "assert";
 import { convertOne, convertAll } from "../dist/string-apostrophes.esm.js";
 
 assert.deepEqual(
-  convertAll(`In the '60s, rock 'n' roll`, {
+  convertAll("In the '60s, rock 'n' roll", {
     convertApostrophes: true,
     convertEntities: false,
   }),
@@ -19,7 +19,7 @@ assert.deepEqual(
 );
 
 assert.deepEqual(
-  convertOne(`test's`, {
+  convertOne("test's", {
     from: 4,
     to: 5,
     convertApostrophes: true,

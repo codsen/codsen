@@ -4,7 +4,7 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { m } from "./util/util.js";
 
-test(`01 - ${`\u001b[${90}m${`adhoc 1`}\u001b[${39}m`} - a peculiar set of characters`, () => {
+test(`01 - ${`\u001b[${90}m${"adhoc 1"}\u001b[${39}m`} - a peculiar set of characters`, () => {
   equal(
     m(equal, "<a>\n<<>", { removeLineBreaks: true }).result,
     "<a><<>",
@@ -12,11 +12,11 @@ test(`01 - ${`\u001b[${90}m${`adhoc 1`}\u001b[${39}m`} - a peculiar set of chara
   );
 });
 
-test(`02 - ${`\u001b[${90}m${`adhoc 2`}\u001b[${39}m`} - another peculiar set of characters`, () => {
+test(`02 - ${`\u001b[${90}m${"adhoc 2"}\u001b[${39}m`} - another peculiar set of characters`, () => {
   equal(m(equal, "You&rsquo;ve").result, "You&rsquo;ve", "02.01");
 });
 
-test(`03 - ${`\u001b[${90}m${`adhoc 3`}\u001b[${39}m`} - yet another peculiar set of chars`, () => {
+test(`03 - ${`\u001b[${90}m${"adhoc 3"}\u001b[${39}m`} - yet another peculiar set of chars`, () => {
   let input = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 xmlns:v="urn:schemas-microsoft-com:vml"
@@ -40,7 +40,7 @@ name="viewport" zzz`;
   );
 });
 
-test(`04 - ${`\u001b[${90}m${`adhoc 4`}\u001b[${39}m`} - result's keyset is consistent`, () => {
+test(`04 - ${`\u001b[${90}m${"adhoc 4"}\u001b[${39}m`} - result's keyset is consistent`, () => {
   equal(
     Object.keys(m(equal, "")).length,
     Object.keys(m(equal, "zzz")).length,
@@ -48,7 +48,7 @@ test(`04 - ${`\u001b[${90}m${`adhoc 4`}\u001b[${39}m`} - result's keyset is cons
   );
 });
 
-test(`05 - ${`\u001b[${90}m${`adhoc 5`}\u001b[${39}m`} - raw non-breaking spaces`, () => {
+test(`05 - ${`\u001b[${90}m${"adhoc 5"}\u001b[${39}m`} - raw non-breaking spaces`, () => {
   equal(
     m(equal, "\u00A0<x>\n\u00A0\u00A0<y>\u00A0", { removeLineBreaks: true })
       .result,
@@ -99,7 +99,7 @@ test(`05 - ${`\u001b[${90}m${`adhoc 5`}\u001b[${39}m`} - raw non-breaking spaces
   );
 });
 
-test(`06 - ${`\u001b[${90}m${`adhoc 6`}\u001b[${39}m`} - raw non-breaking spaces`, () => {
+test(`06 - ${`\u001b[${90}m${"adhoc 6"}\u001b[${39}m`} - raw non-breaking spaces`, () => {
   let chunk = "    <script >   >]] > < div>";
   let res = "<script >   >]] > < div>";
   equal(m(equal, chunk, { removeLineBreaks: true }).result, res, "06.01");
@@ -121,7 +121,7 @@ test(`06 - ${`\u001b[${90}m${`adhoc 6`}\u001b[${39}m`} - raw non-breaking spaces
   );
 });
 
-test(`07 - ${`\u001b[${90}m${`adhoc 7`}\u001b[${39}m`} - line length control`, () => {
+test(`07 - ${`\u001b[${90}m${"adhoc 7"}\u001b[${39}m`} - line length control`, () => {
   let input = `<m>
 <n>
 <o>
@@ -133,7 +133,7 @@ z>
 <x>
 <y>
 <z klm`;
-  let output = `<m><n><o><p><x y z>\n<t><x><y><z klm`;
+  let output = "<m><n><o><p><x y z>\n<t><x><y><z klm";
   equal(
     m(equal, input, {
       lineLengthLimit: 20,
@@ -145,7 +145,7 @@ z>
   );
 });
 
-test(`08 - ${`\u001b[${90}m${`adhoc 8`}\u001b[${39}m`} - nunjucks`, () => {
+test(`08 - ${`\u001b[${90}m${"adhoc 8"}\u001b[${39}m`} - nunjucks`, () => {
   equal(
     m(equal, "{%- length > 1 or length > 2 -%}", {
       removeLineBreaks: true,
@@ -155,7 +155,7 @@ test(`08 - ${`\u001b[${90}m${`adhoc 8`}\u001b[${39}m`} - nunjucks`, () => {
   );
 });
 
-test(`09 - ${`\u001b[${90}m${`adhoc 9`}\u001b[${39}m`} - nunjucks`, () => {
+test(`09 - ${`\u001b[${90}m${"adhoc 9"}\u001b[${39}m`} - nunjucks`, () => {
   let source =
     '{%- if (((not a.b) and (a.b | c("d") | e > 1)) or ((a.b) and (a.f | c("d") | e > 2))) -%}';
   equal(

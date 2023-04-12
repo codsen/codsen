@@ -10,7 +10,7 @@ import { traverse } from "../dist/ast-monkey-traverse.esm.js";
 // traverse
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse to delete one key from an array`, () => {
+test(`01 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - use traverse to delete one key from an array`, () => {
   let input = [
     {
       a: "b",
@@ -74,7 +74,7 @@ test(`01 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse to delete
   equal(actual03, intended03, "01.03");
 });
 
-test(`02 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more deletion from arrays`, () => {
+test(`02 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - more deletion from arrays`, () => {
   let input = [
     {
       a: "b",
@@ -102,7 +102,7 @@ test(`02 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more deletion from arr
   equal(actual01, intended01, "02.01");
 });
 
-test(`03 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse, passing null, write over values`, () => {
+test(`03 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - use traverse, passing null, write over values`, () => {
   let input = [
     {
       a: "b",
@@ -136,7 +136,7 @@ test(`03 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse, passing 
   equal(actual01, intended01, "03.01");
 });
 
-test(`04 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse, passing undefined, write over values`, () => {
+test(`04 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - use traverse, passing undefined, write over values`, () => {
   let input = [
     {
       a: "b",
@@ -171,7 +171,7 @@ test(`04 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - use traverse, passing 
   equal(actual01, intended01, "04.01");
 });
 
-test(`05 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traverse automatically patches up holes in arrays`, () => {
+test(`05 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - traverse automatically patches up holes in arrays`, () => {
   let input = ["a", undefined, "b"];
 
   let actual01 = traverse(input, (key1, val1) => {
@@ -183,7 +183,7 @@ test(`05 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traverse automatically
   equal(actual01, intended01, "05.01");
 });
 
-test(`06 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - delete key-value pair from plain object in root`, () => {
+test(`06 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - delete key-value pair from plain object in root`, () => {
   let input = {
     a: "a",
     b: "b",
@@ -205,7 +205,7 @@ test(`06 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - delete key-value pair 
   equal(actual, intended, "06.01");
 });
 
-test(`07 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #1`, () => {
+test(`07 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - only traversal, #1`, () => {
   let input = {
     a: ["1", "2", "3"],
   };
@@ -217,7 +217,7 @@ test(`07 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #1`, (
   ok(actual, "07.01");
 });
 
-test(`08 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #2`, () => {
+test(`08 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - only traversal, #2`, () => {
   let input = {
     a: {
       b: {
@@ -250,7 +250,7 @@ test(`08 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #2`, (
   ok(actual, "08.01");
 });
 
-test(`09 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #3`, () => {
+test(`09 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - only traversal, #3`, () => {
   let input = ["1", "2", { a: "3" }];
   let actual = traverse(input, (key1, val1, innerObj) => {
     let current = val1 !== undefined ? val1 : key1;
@@ -263,7 +263,7 @@ test(`09 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - only traversal, #3`, (
 // 02. stopping the traversal upon request
 // -----------------------------------------------------------------------------
 
-test(`10 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - objects - a reference traversal`, () => {
+test(`10 - ${`\u001b[${31}m${"stopping"}\u001b[${39}m`} - objects - a reference traversal`, () => {
   let input = { a: "1", b: { c: "2" } };
   let gathered = [];
   traverse(input, (key1, val1, innerObj) => {
@@ -315,7 +315,7 @@ test(`10 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - objects - a reference 
   );
 });
 
-test(`11 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - objects - after "b"`, () => {
+test(`11 - ${`\u001b[${31}m${"stopping"}\u001b[${39}m`} - objects - after "b"`, () => {
   let input = { a: "1", b: { c: "2" } };
   let gathered = [];
   traverse(input, (key1, val1, innerObj, stop) => {
@@ -330,7 +330,7 @@ test(`11 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - objects - after "b"`, 
   equal(gathered, ["a", "b"], "11.01");
 });
 
-test(`12 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - arrays - a reference traversal`, () => {
+test(`12 - ${`\u001b[${31}m${"stopping"}\u001b[${39}m`} - arrays - a reference traversal`, () => {
   let input = ["a", ["b", "c"]];
   let gathered = [];
   traverse(input, (key1, val1, innerObj) => {
@@ -341,7 +341,7 @@ test(`12 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - arrays - a reference t
   equal(gathered, ["0", "1", "1.0", "1.1"], "12.01");
 });
 
-test(`13 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - arrays - after "b"`, () => {
+test(`13 - ${`\u001b[${31}m${"stopping"}\u001b[${39}m`} - arrays - after "b"`, () => {
   let input = ["a", ["b", "c"]];
   let gathered = [];
   traverse(input, (key1, val1, innerObj, stop) => {
@@ -359,7 +359,7 @@ test(`13 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - arrays - after "b"`, (
 // 03. traversal reporting
 // -----------------------------------------------------------------------------
 
-test(`14 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - array of objects, just traversing`, () => {
+test(`14 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - array of objects, just traversing`, () => {
   let input = [
     {
       a: "b",
@@ -500,7 +500,7 @@ test(`14 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - array of objects, just
   );
 });
 
-test(`15 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`, () => {
+test(`15 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - traversal continues after the hole`, () => {
   let input = {
     a: "k",
     b: "l",
@@ -568,7 +568,7 @@ test(`15 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues af
   );
 });
 
-test(`16 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues after the hole`, () => {
+test(`16 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - traversal continues after the hole`, () => {
   let input = {
     a: ["1", "2", "3"],
   };
@@ -636,7 +636,7 @@ test(`16 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - traversal continues af
   );
 });
 
-test(`17 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more complex AST`, () => {
+test(`17 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - more complex AST`, () => {
   let input = {
     a: {
       b: {
@@ -1120,7 +1120,7 @@ test(`17 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more complex AST`, () 
   );
 });
 
-test(`18 - ${`\u001b[${36}m${`traverse`}\u001b[${39}m`} - more traversal`, () => {
+test(`18 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - more traversal`, () => {
   let input = ["1", "2", { a: "3" }];
   let gathered = [];
   traverse(input, (key1, val1, internalObj) => {

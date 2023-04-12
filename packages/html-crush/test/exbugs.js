@@ -8,7 +8,7 @@ import { m } from "./util/util.js";
 // pre + code
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${`ex-bugs`}\u001b[${39}m`} - does not mangle pre/code`, () => {
+test(`01 - ${`\u001b[${33}m${"ex-bugs"}\u001b[${39}m`} - does not mangle pre/code`, () => {
   is(
     m(
       equal,
@@ -42,7 +42,7 @@ More content
   );
 });
 
-test(`02`, () => {
+test("02", () => {
   let input = `  <a>
      <b>
    c </b>

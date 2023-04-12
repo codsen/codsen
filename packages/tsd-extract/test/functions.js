@@ -5,17 +5,19 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { extract } from "../dist/tsd-extract.esm.js";
 
 test("01 - minimal", () => {
-  let source = `declare function comb(str: string, originalOpts?: Partial<Opts>): Res;`;
+  let source =
+    "declare function comb(str: string, originalOpts?: Partial<Opts>): Res;";
   equal(
     extract(source, "comb", { extractAll: true, semi: true }),
     {
       identifiers: ["declare", "function", "comb"],
       identifiersStartAt: 0,
       identifiersEndAt: 21,
-      content: `(str: string, originalOpts?: Partial<Opts>): Res;`,
+      content: "(str: string, originalOpts?: Partial<Opts>): Res;",
       contentStartsAt: 21,
       contentEndsAt: 70,
-      value: `declare function comb(str: string, originalOpts?: Partial<Opts>): Res;`,
+      value:
+        "declare function comb(str: string, originalOpts?: Partial<Opts>): Res;",
       valueStartsAt: 0,
       valueEndsAt: 70,
       error: null,
@@ -29,10 +31,11 @@ test("01 - minimal", () => {
       identifiers: ["declare", "function", "comb"],
       identifiersStartAt: 0,
       identifiersEndAt: 21,
-      content: `(str: string, originalOpts?: Partial<Opts>): Res;`,
+      content: "(str: string, originalOpts?: Partial<Opts>): Res;",
       contentStartsAt: 21,
       contentEndsAt: 70,
-      value: `declare function comb(str: string, originalOpts?: Partial<Opts>): Res;`,
+      value:
+        "declare function comb(str: string, originalOpts?: Partial<Opts>): Res;",
       valueStartsAt: 0,
       valueEndsAt: 70,
       error: null,
@@ -46,10 +49,11 @@ test("01 - minimal", () => {
       identifiers: ["declare", "function", "comb"],
       identifiersStartAt: 0,
       identifiersEndAt: 21,
-      content: `(str: string, originalOpts?: Partial<Opts>): Res`,
+      content: "(str: string, originalOpts?: Partial<Opts>): Res",
       contentStartsAt: 21,
       contentEndsAt: 69,
-      value: `declare function comb(str: string, originalOpts?: Partial<Opts>): Res`,
+      value:
+        "declare function comb(str: string, originalOpts?: Partial<Opts>): Res",
       valueStartsAt: 0,
       valueEndsAt: 69,
       error: null,
@@ -63,10 +67,11 @@ test("01 - minimal", () => {
       identifiers: ["declare", "function", "comb"],
       identifiersStartAt: 0,
       identifiersEndAt: 21,
-      content: `(str: string, originalOpts?: Partial<Opts>): Res`,
+      content: "(str: string, originalOpts?: Partial<Opts>): Res",
       contentStartsAt: 21,
       contentEndsAt: 69,
-      value: `declare function comb(str: string, originalOpts?: Partial<Opts>): Res`,
+      value:
+        "declare function comb(str: string, originalOpts?: Partial<Opts>): Res",
       valueStartsAt: 0,
       valueEndsAt: 69,
       error: null,
@@ -77,17 +82,17 @@ test("01 - minimal", () => {
 });
 
 test("02 - generics - minimal", () => {
-  let source = `declare function a<b>(c: d): e;`;
+  let source = "declare function a<b>(c: d): e;";
   equal(
     extract(source, "a", { extractAll: false, semi: true }),
     {
       identifiers: ["declare", "function", "a"],
       identifiersStartAt: 0,
       identifiersEndAt: 18,
-      content: `(c: d): e;`,
+      content: "(c: d): e;",
       contentStartsAt: 21,
       contentEndsAt: 31,
-      value: `declare function a<b>(c: d): e;`,
+      value: "declare function a<b>(c: d): e;",
       valueStartsAt: 0,
       valueEndsAt: 31,
       error: null,
@@ -152,18 +157,18 @@ export {
   `;
 
   equal(
-    extract(source, `version`, { extractAll: false, semi: true }).value,
-    `declare const version: string;`,
+    extract(source, "version", { extractAll: false, semi: true }).value,
+    "declare const version: string;",
     "03.01"
   );
   equal(
-    extract(source, `sortAllObjectsSync`, { extractAll: false, semi: true })
+    extract(source, "sortAllObjectsSync", { extractAll: false, semi: true })
       .value,
-    `declare function sortAllObjectsSync(input: any): any;`,
+    "declare function sortAllObjectsSync(input: any): any;",
     "03.02"
   );
   equal(
-    extract(source, `getKeyset`, { extractAll: false, semi: true }).value,
+    extract(source, "getKeyset", { extractAll: false, semi: true }).value,
     `declare function getKeyset<ValueType>(
   arrOfPromises: Iterable<PromiseLike<ValueType> | ValueType>,
   opts?: {
@@ -173,7 +178,7 @@ export {
     "03.03"
   );
   equal(
-    extract(source, `getKeysetSync`, { extractAll: false, semi: true }).value,
+    extract(source, "getKeysetSync", { extractAll: false, semi: true }).value,
     `declare function getKeysetSync(
   arrOriginal: Obj[],
   opts?: {
@@ -183,7 +188,7 @@ export {
     "03.04"
   );
   equal(
-    extract(source, `EnforceKeysetOpts`, { extractAll: false, semi: true })
+    extract(source, "EnforceKeysetOpts", { extractAll: false, semi: true })
       .value,
     `interface EnforceKeysetOpts {
   doNotFillThesePathsIfTheyContainPlaceholders: string[];
@@ -193,7 +198,7 @@ export {
     "03.05"
   );
   equal(
-    extract(source, `enforceKeyset`, { extractAll: false, semi: true }).value,
+    extract(source, "enforceKeyset", { extractAll: false, semi: true }).value,
     `declare function enforceKeyset(
   obj: Obj,
   schemaKeyset: Obj,
@@ -202,7 +207,7 @@ export {
     "03.06"
   );
   equal(
-    extract(source, `enforceKeysetSync`, { extractAll: false, semi: true })
+    extract(source, "enforceKeysetSync", { extractAll: false, semi: true })
       .value,
     `declare function enforceKeysetSync(
   obj: Obj,
@@ -212,12 +217,12 @@ export {
     "03.07"
   );
   equal(
-    extract(source, `noNewKeysSync`, { extractAll: false, semi: true }).value,
-    `declare function noNewKeysSync(obj: Obj, schemaKeyset: Obj): any;`,
+    extract(source, "noNewKeysSync", { extractAll: false, semi: true }).value,
+    "declare function noNewKeysSync(obj: Obj, schemaKeyset: Obj): any;",
     "03.08"
   );
   equal(
-    extract(source, `findUnusedSync`, { extractAll: false, semi: true }).value,
+    extract(source, "findUnusedSync", { extractAll: false, semi: true }).value,
     `declare function findUnusedSync(
   arrOriginal: any[],
   opts?: {
@@ -228,7 +233,7 @@ export {
     "03.09"
   );
   equal(
-    extract(source, `export`, { extractAll: false, semi: true }).value,
+    extract(source, "export", { extractAll: false, semi: true }).value,
     `export {
   enforceKeyset,
   enforceKeysetSync,

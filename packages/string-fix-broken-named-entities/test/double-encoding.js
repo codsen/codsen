@@ -18,7 +18,7 @@ function cb(obj) {
 // 05. multiple encoding
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - no consecutive &amp;`, () => {
+test(`01 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"&amp;"}\u001b[${39}m - no consecutive &amp;`, () => {
   let inp1 = "&amp;";
   let gathered = [];
   equal(
@@ -33,7 +33,7 @@ test(`01 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - consecutive &amp;`, () => {
+test(`02 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"&amp;"}\u001b[${39}m - consecutive &amp;`, () => {
   let gathered = [];
   let inp1 = "&amp; &amp; &amp;";
   equal(
@@ -48,7 +48,7 @@ test(`02 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - consecutive &amp; tight`, () => {
+test(`03 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"&amp;"}\u001b[${39}m - consecutive &amp; tight`, () => {
   let gathered = [];
   let inp1 = "&amp;&amp;&amp;";
   equal(
@@ -63,7 +63,7 @@ test(`03 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "03.02");
 });
 
-test(`04 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - consecutive &amp; tight`, () => {
+test(`04 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"&amp;"}\u001b[${39}m - consecutive &amp; tight`, () => {
   let gathered = [];
   let inp1 = "abc&amp;&amp;&amp;xyz";
   equal(
@@ -78,7 +78,7 @@ test(`04 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - B&Q #1`, () => {
+test(`05 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"&amp;"}\u001b[${39}m - B&Q #1`, () => {
   let gathered = [];
   let inp1 = "B&amp;Q";
   equal(
@@ -93,7 +93,7 @@ test(`05 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "05.02");
 });
 
-test(`06 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - B&Q #2`, () => {
+test(`06 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"&amp;"}\u001b[${39}m - B&Q #2`, () => {
   let gathered = [];
   let inp1 = "text B&amp;Q text";
   equal(
@@ -108,7 +108,7 @@ test(`06 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "06.02");
 });
 
-test(`07 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - double encoded - no cb`, () => {
+test(`07 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"nbsp"}\u001b[${39}m - combo with malformed nbsp - double encoded - no cb`, () => {
   let gathered = [];
   let inp1 = "text&amp;nbsp;text";
   equal(
@@ -123,7 +123,7 @@ test(`07 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "07.02");
 });
 
-test(`08 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - double encoded - with cb`, () => {
+test(`08 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"nbsp"}\u001b[${39}m - combo with malformed nbsp - double encoded - with cb`, () => {
   let gathered = [];
   let inp1 = "text&amp;nbsp;text";
   equal(
@@ -157,7 +157,7 @@ test(`08 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "08.02");
 });
 
-test(`09 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - triple encoded`, () => {
+test(`09 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"nbsp"}\u001b[${39}m - combo with malformed nbsp - triple encoded`, () => {
   let gathered1 = [];
   let inp1 = "text&amp;amp;nbsp;text";
   equal(
@@ -185,7 +185,7 @@ test(`09 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered2, [], "09.04");
 });
 
-test(`10 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand - no cb`, () => {
+test(`10 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"nbsp"}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand - no cb`, () => {
   let gathered1 = [];
   let inp1 = "textamp;nbsp;text";
   equal(
@@ -239,7 +239,7 @@ test(`10 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered4, [], "10.08");
 });
 
-test(`11 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand`, () => {
+test(`11 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"nbsp"}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand`, () => {
   let gathered = [];
   let inp1 = "textamp;nbsp;text";
   equal(
@@ -254,7 +254,7 @@ test(`11 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "11.02");
 });
 
-test(`12 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #1`, () => {
+test(`12 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"isolated nbs"}\u001b[${39}m - simple case #1`, () => {
   let gathered = [];
   let inp1 = "abc &nbs;";
   equal(
@@ -269,7 +269,7 @@ test(`12 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "12.02");
 });
 
-test(`13 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #2`, () => {
+test(`13 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"isolated nbs"}\u001b[${39}m - simple case #2`, () => {
   let gathered = [];
   let inp1 = "abc &nbs;";
   equal(
@@ -299,7 +299,7 @@ test(`13 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "13.02");
 });
 
-test(`14 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #3`, () => {
+test(`14 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"isolated nbs"}\u001b[${39}m - simple case #3`, () => {
   let gathered = [];
   let inp1 = "abc &nbs; xyz";
   equal(fix(ok, inp1), [[4, 9, "&nbsp;"]], "14.01");
@@ -330,7 +330,7 @@ test(`14 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "14.03");
 });
 
-test(`15 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #3`, () => {
+test(`15 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"isolated nbs"}\u001b[${39}m - simple case #3`, () => {
   let gathered = [];
   let inp1 = "&nbs; xyz";
   equal(fix(ok, inp1), [[0, 5, "&nbsp;"]], "15.01");
@@ -361,7 +361,7 @@ test(`15 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "15.03");
 });
 
-test(`16 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #4`, () => {
+test(`16 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"isolated nbs"}\u001b[${39}m - simple case #4`, () => {
   let gathered = [];
   let inp1 = "abc&nbs;";
   equal(
@@ -376,7 +376,7 @@ test(`16 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "16.02");
 });
 
-test(`17 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #5`, () => {
+test(`17 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"isolated nbs"}\u001b[${39}m - simple case #5`, () => {
   let gathered = [];
   let inp1 = "abc&nbs;";
   equal(
@@ -406,7 +406,7 @@ test(`17 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "17.02");
 });
 
-test(`18 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #6-1`, () => {
+test(`18 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"isolated nbs"}\u001b[${39}m - simple case #6-1`, () => {
   let gathered = [];
   let inp1 = "abc&nbs; xyz";
   equal(fix(ok, inp1), [[3, 8, "&nbsp;"]], "18.01");
@@ -437,14 +437,14 @@ test(`18 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${
   equal(gathered, [], "18.03");
 });
 
-test(`19 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #6-2`, () => {
+test(`19 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"isolated nbs"}\u001b[${39}m - simple case #6-2`, () => {
   let gathered = [];
   let inp1 = "&nbs; xyz";
   equal(fix(ok, inp1), [[0, 5, "&nbsp;"]], "19.01");
   equal(gathered, [], "19.02");
 });
 
-test(`20 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #6-3`, () => {
+test(`20 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${"isolated nbs"}\u001b[${39}m - simple case #6-3`, () => {
   let gathered = [];
   let inp1 = "&nbs; xyz";
   equal(

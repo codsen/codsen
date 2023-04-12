@@ -134,7 +134,7 @@ test("04 - letters follow tightly", () => {
   equal(gathered, [], "04.03");
 });
 
-test(`05 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - control`, () => {
+test(`05 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"ang"}\u001b[${39}m - control`, () => {
   let gathered = [];
   equal(
     fix(ok, "z &ang; y", {
@@ -148,7 +148,7 @@ test(`05 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "05.02");
 });
 
-test(`06 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - control`, () => {
+test(`06 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"angst"}\u001b[${39}m - control`, () => {
   let gathered = [];
   equal(
     fix(ok, "z &angst; y", {
@@ -162,7 +162,7 @@ test(`06 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "06.02");
 });
 
-test(`07 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, spaced`, () => {
+test(`07 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"ang"}\u001b[${39}m - no decode, spaced`, () => {
   let gathered = [];
   let res = [[2, 6, "&ang;"]];
   equal(
@@ -184,7 +184,7 @@ test(`07 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "07.03");
 });
 
-test(`08 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, spaced`, () => {
+test(`08 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"ang"}\u001b[${39}m - no decode, spaced`, () => {
   let gathered = [];
   let res = [[2, 8, "&ang;"]];
   equal(
@@ -208,7 +208,7 @@ test(`08 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "08.03");
 });
 
-test(`09 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, spaced`, () => {
+test(`09 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"ang"}\u001b[${39}m - no decode, spaced`, () => {
   let gathered = [];
   let res = [[2, 6, "&ang;"]];
   equal(
@@ -230,7 +230,7 @@ test(`09 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "09.03");
 });
 
-test(`10 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, spaced`, () => {
+test(`10 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"ang"}\u001b[${39}m - no decode, spaced`, () => {
   let gathered = [];
   let res = [[2, 6, "&ang;"]];
   equal(
@@ -252,7 +252,7 @@ test(`10 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "10.03");
 });
 
-test(`11 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, spaced`, () => {
+test(`11 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"ang"}\u001b[${39}m - no decode, spaced`, () => {
   let gathered = [];
   let res = [[2, 8, "&angst;"]];
   equal(
@@ -276,7 +276,7 @@ test(`11 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "11.03");
 });
 
-test(`12 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, spaced`, () => {
+test(`12 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"ang"}\u001b[${39}m - no decode, spaced`, () => {
   let gathered = [];
   let res = [
     [2, 6, "&ang;"],
@@ -301,7 +301,7 @@ test(`12 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "12.03");
 });
 
-test(`13 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, tight`, () => {
+test(`13 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"ang"}\u001b[${39}m - no decode, tight`, () => {
   let gathered = [];
   let res = [
     [0, 4, "&ang;"],
@@ -326,7 +326,7 @@ test(`13 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "13.03");
 });
 
-test(`14 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, tight`, () => {
+test(`14 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"ang"}\u001b[${39}m - no decode, tight`, () => {
   let gathered = [];
   let res = [
     [4, 8, "&ang;"],
@@ -351,7 +351,7 @@ test(`14 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "14.03");
 });
 
-test(`15 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - no decode, tight`, () => {
+test(`15 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"angst"}\u001b[${39}m - no decode, tight`, () => {
   let gathered = [];
   let res = [
     [4, 10, "&angst;"],
@@ -376,7 +376,7 @@ test(`15 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "15.03");
 });
 
-test(`16 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - no decode, tight`, () => {
+test(`16 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"angst"}\u001b[${39}m - no decode, tight`, () => {
   let gathered = [];
   let input = "text&angst";
   let res = [[4, 10, "&angst;"]];
@@ -399,7 +399,7 @@ test(`16 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "16.03");
 });
 
-test(`17 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - no decode, tight`, () => {
+test(`17 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"angst"}\u001b[${39}m - no decode, tight`, () => {
   let gathered = [];
   let input = "text&angst text&angst text";
   let res = [
@@ -425,7 +425,7 @@ test(`17 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "17.03");
 });
 
-test(`18 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`pi`}\u001b[${39}m - no decode, tight`, () => {
+test(`18 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"pi"}\u001b[${39}m - no decode, tight`, () => {
   let gathered = [];
   let input = "text&pitext&pitext";
   equal(
@@ -447,7 +447,7 @@ test(`18 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [4, 11], "18.03");
 });
 
-test(`19 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`piv`}\u001b[${39}m - no decode, tight`, () => {
+test(`19 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"piv"}\u001b[${39}m - no decode, tight`, () => {
   let gathered = [];
   let input = "text&pivtext&pivtext";
   let res = [
@@ -473,7 +473,7 @@ test(`19 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "19.03");
 });
 
-test(`20 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`Pi`}\u001b[${39}m - no decode, tight`, () => {
+test(`20 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"Pi"}\u001b[${39}m - no decode, tight`, () => {
   let gathered = [];
   let input = "text&Pitext&Pitext";
   let res = [];
@@ -496,7 +496,7 @@ test(`20 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [4, 11], "20.03");
 });
 
-test(`21 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sigma`}\u001b[${39}m - not conclusive`, () => {
+test(`21 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"sigma"}\u001b[${39}m - not conclusive`, () => {
   let gathered = [];
   let input = "text&sigma text&sigma text";
   let res = [];
@@ -519,7 +519,7 @@ test(`21 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [4, 15], "21.03");
 });
 
-test(`22 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sub`}\u001b[${39}m - no decode, tight`, () => {
+test(`22 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"sub"}\u001b[${39}m - no decode, tight`, () => {
   let gathered = [];
   equal(
     fixEnt("text&sub text&sub text", {
@@ -540,7 +540,7 @@ test(`22 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [4, 13], "22.03");
 });
 
-test(`23 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sup`}\u001b[${39}m - no decode, tight`, () => {
+test(`23 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"sup"}\u001b[${39}m - no decode, tight`, () => {
   let gathered = [];
   let input = "text&suptext&suptext";
   let res = [
@@ -568,7 +568,7 @@ test(`23 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "23.03");
 });
 
-test(`24 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`theta`}\u001b[${39}m - no decode, tight`, () => {
+test(`24 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"theta"}\u001b[${39}m - no decode, tight`, () => {
   let gathered = [];
   let input = "text&theta text&theta text";
   let res = [];
@@ -591,7 +591,7 @@ test(`24 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [4, 15], "24.03");
 });
 
-test(`25 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - no decode, linebreaked`, () => {
+test(`25 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"thinsp"}\u001b[${39}m - no decode, linebreaked`, () => {
   let gathered = [];
   let input = "a &thinsp b\n&thinsp\nc";
   let result = [
@@ -617,7 +617,7 @@ test(`25 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "25.03");
 });
 
-test(`26 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - joins 1`, () => {
+test(`26 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"thinsp"}\u001b[${39}m - joins 1`, () => {
   let gathered = [];
   let input = "&thinsp";
   let result = [[0, 7, "&thinsp;"]];
@@ -640,7 +640,7 @@ test(`26 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "26.03");
 });
 
-test(`27 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - joins 2`, () => {
+test(`27 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"thinsp"}\u001b[${39}m - joins 2`, () => {
   let gathered = [];
   let input = "&thinsp&thinsp";
   let result = [
@@ -669,7 +669,7 @@ test(`27 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
 // with decode
 // -----------------------------------------------------------------------------
 
-test(`28 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - with decode, spaced`, () => {
+test(`28 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"ang"}\u001b[${39}m - with decode, spaced`, () => {
   let gathered = [];
   let input = "text &ang text&ang text";
   let result = [
@@ -697,7 +697,7 @@ test(`28 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "28.03");
 });
 
-test(`29 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - with decode, tight`, () => {
+test(`29 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"ang"}\u001b[${39}m - with decode, tight`, () => {
   let gathered = [];
   let input = "text&angtext&angtext";
   let result = [
@@ -725,7 +725,7 @@ test(`29 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "29.03");
 });
 
-test(`30 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - with decode, tight`, () => {
+test(`30 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"angst"}\u001b[${39}m - with decode, tight`, () => {
   let gathered = [];
   let input = "text&angst";
   let result = [[4, 10, "\xC5"]];
@@ -750,7 +750,7 @@ test(`30 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "30.03");
 });
 
-test(`31 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - with decode, tight`, () => {
+test(`31 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"angst"}\u001b[${39}m - with decode, tight`, () => {
   let gathered = [];
   let input = "text&angst text&angst text";
   let result = [
@@ -778,7 +778,7 @@ test(`31 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "31.03");
 });
 
-test(`32 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - with decode, tight`, () => {
+test(`32 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"angst"}\u001b[${39}m - with decode, tight`, () => {
   let gathered = [];
   let input = "text&angsttext&angsttext";
   let result = [
@@ -806,7 +806,7 @@ test(`32 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "32.03");
 });
 
-test(`33 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`pi`}\u001b[${39}m - with decode, tight`, () => {
+test(`33 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"pi"}\u001b[${39}m - with decode, tight`, () => {
   let gathered = [];
   let input = "text&pi text&pi text";
   let result = [];
@@ -831,7 +831,7 @@ test(`33 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [4, 12], "33.03");
 });
 
-test(`34 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`piv`}\u001b[${39}m - with decode, tight`, () => {
+test(`34 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"piv"}\u001b[${39}m - with decode, tight`, () => {
   let gathered = [];
   let input = "text&pivtext&pivtext";
   let result = [
@@ -859,7 +859,7 @@ test(`34 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "34.03");
 });
 
-test(`35 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`Pi`}\u001b[${39}m - with decode, tight`, () => {
+test(`35 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"Pi"}\u001b[${39}m - with decode, tight`, () => {
   let gathered = [];
   let input = "text&Pi text&Pi text";
   let result = [];
@@ -884,7 +884,7 @@ test(`35 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [4, 12], "35.03");
 });
 
-test(`36 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sigma`}\u001b[${39}m - with decode, tight`, () => {
+test(`36 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"sigma"}\u001b[${39}m - with decode, tight`, () => {
   let gathered = [];
   let input = "text&sigma text&sigma text";
   let result = [];
@@ -909,7 +909,7 @@ test(`36 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [4, 15], "36.03");
 });
 
-test(`37 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sub`}\u001b[${39}m - with decode, tight`, () => {
+test(`37 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"sub"}\u001b[${39}m - with decode, tight`, () => {
   let gathered = [];
   let input = "text&sub text&sub text";
   let result = [];
@@ -934,7 +934,7 @@ test(`37 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [4, 13], "37.03");
 });
 
-test(`38 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sup`}\u001b[${39}m - with decode, tight`, () => {
+test(`38 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"sup"}\u001b[${39}m - with decode, tight`, () => {
   let gathered = [];
   let input = "text&suptext&suptext";
   let result = [
@@ -962,7 +962,7 @@ test(`38 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "38.03");
 });
 
-test(`39 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`theta`}\u001b[${39}m - with decode, tight`, () => {
+test(`39 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"theta"}\u001b[${39}m - with decode, tight`, () => {
   let gathered = [];
   let input = "text&theta text&theta text";
   let result = [];
@@ -987,7 +987,7 @@ test(`39 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [4, 15], "39.03");
 });
 
-test(`40 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - with decode, line breaked`, () => {
+test(`40 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"thinsp"}\u001b[${39}m - with decode, line breaked`, () => {
   let gathered = [];
   let input = "a &thinsp b\n&thinsp\nc";
   let result = [
@@ -1015,7 +1015,7 @@ test(`40 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "40.03");
 });
 
-test(`41 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - with decode, isolated`, () => {
+test(`41 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"thinsp"}\u001b[${39}m - with decode, isolated`, () => {
   let gathered = [];
   let input = "&thinsp";
   let result = [[0, 7, "\u2009"]];
@@ -1040,7 +1040,7 @@ test(`41 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m
   equal(gathered, [], "41.03");
 });
 
-test(`42 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - joins`, () => {
+test(`42 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m${"thinsp"}\u001b[${39}m - joins`, () => {
   let gathered = [];
   let input = "&thinsp&thinsp";
   let result = [

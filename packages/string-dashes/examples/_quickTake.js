@@ -5,7 +5,7 @@ import { strict as assert } from "assert";
 import { convertOne, convertAll } from "../dist/string-dashes.esm.js";
 
 assert.deepEqual(
-  convertAll(`Dashes come in two sizes - the en dash and the em dash.`, {
+  convertAll("Dashes come in two sizes - the en dash and the em dash.", {
     convertDashes: true,
     convertEntities: true,
   }),
@@ -16,7 +16,7 @@ assert.deepEqual(
 );
 
 assert.deepEqual(
-  convertOne(`Dashes come in two sizes - the en dash and the em dash.`, {
+  convertOne("Dashes come in two sizes - the en dash and the em dash.", {
     from: 25,
     convertDashes: true,
     convertEntities: true,

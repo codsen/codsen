@@ -937,7 +937,7 @@ test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
 // 02. opts.ifLeftSideIncludesThisThenCropTightly
 // -----------------------------------------------------------------------------
 
-test(`20 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, both sides extended`, () => {
+test(`20 - ${`\u001b[${33}m${"opts.ifLeftSideIncludesThisThenCropTightly"}\u001b[${39}m`} - normal use, both sides extended`, () => {
   equal(
     e({
       str: "a>     <b",
@@ -980,7 +980,7 @@ test(`20 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b
   );
 });
 
-test(`21 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, mismatching value`, () => {
+test(`21 - ${`\u001b[${33}m${"opts.ifLeftSideIncludesThisThenCropTightly"}\u001b[${39}m`} - normal use, mismatching value`, () => {
   equal(
     e({
       str: "a>     <b",
@@ -1043,7 +1043,7 @@ test(`21 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b
   );
 });
 
-test(`22 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b[${39}m`} - range within characters, no whitespace`, () => {
+test(`22 - ${`\u001b[${33}m${"opts.ifLeftSideIncludesThisThenCropTightly"}\u001b[${39}m`} - range within characters, no whitespace`, () => {
   equal(
     e({
       str: "aaaaaaaaaaaaa",
@@ -1079,7 +1079,7 @@ test(`22 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b
 // 03. opts.ifRightSideIncludesThisThenCropTightly
 // -----------------------------------------------------------------------------
 
-test(`23 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, both sides extended`, () => {
+test(`23 - ${`\u001b[${33}m${"opts.ifRightSideIncludesThisThenCropTightly"}\u001b[${39}m`} - normal use, both sides extended`, () => {
   equal(
     e({
       str: "a>     <b",
@@ -1122,7 +1122,7 @@ test(`23 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001
   );
 });
 
-test(`24 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, mismatching value`, () => {
+test(`24 - ${`\u001b[${33}m${"opts.ifRightSideIncludesThisThenCropTightly"}\u001b[${39}m`} - normal use, mismatching value`, () => {
   equal(
     e({
       str: "a>     <b",
@@ -1185,7 +1185,7 @@ test(`24 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001
   );
 });
 
-test(`25 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001b[${39}m`} - range within characters, no whitespace`, () => {
+test(`25 - ${`\u001b[${33}m${"opts.ifRightSideIncludesThisThenCropTightly"}\u001b[${39}m`} - range within characters, no whitespace`, () => {
   equal(
     e({
       str: "aaaaaaaaaaaaa",
@@ -1221,7 +1221,7 @@ test(`25 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001
 // 04. combos with opts.if***SideIncludesThisCropItToo
 // -----------------------------------------------------------------------------
 
-test(`26 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisCropItToo`}\u001b[${39}m`} - combo with tight crop`, () => {
+test(`26 - ${`\u001b[${33}m${"opts.ifLeftSideIncludesThisCropItToo"}\u001b[${39}m`} - combo with tight crop`, () => {
   equal(
     e({
       str: "something>\n\t    zzzz <here",
@@ -1292,7 +1292,7 @@ test(`26 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisCropItToo`}\u001b[${39}
 // 05. extendToOneSide
 // -----------------------------------------------------------------------------
 
-test(`27 - ${`\u001b[${33}m${`opts.extendToOneSide`}\u001b[${39}m`} - one side only`, () => {
+test(`27 - ${`\u001b[${33}m${"opts.extendToOneSide"}\u001b[${39}m`} - one side only`, () => {
   equal(
     e({
       str: "a>     <b",
@@ -1337,7 +1337,7 @@ test(`27 - ${`\u001b[${33}m${`opts.extendToOneSide`}\u001b[${39}m`} - one side o
 // 06. opts.wipeAllWhitespaceOnLeft & opts.wipeAllWhitespaceOnRight
 // -----------------------------------------------------------------------------
 
-test(`28 - ${`\u001b[${33}m${`opts.wipeAllWhitespaceOnLeft`}\u001b[${39}m`} - extends to both sides`, () => {
+test(`28 - ${`\u001b[${33}m${"opts.wipeAllWhitespaceOnLeft"}\u001b[${39}m`} - extends to both sides`, () => {
   equal(
     e({
       str: "a>     <b",
@@ -1383,7 +1383,7 @@ test(`28 - ${`\u001b[${33}m${`opts.wipeAllWhitespaceOnLeft`}\u001b[${39}m`} - ex
 // 07. Various
 // -----------------------------------------------------------------------------
 
-test(`29 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #1`, () => {
+test(`29 - ${`\u001b[${36}m${"various"}\u001b[${39}m`} - adhoc #1`, () => {
   let str = `<head>
 <style type="text/css">
   aa, .unused[z], bb {z:2;}
@@ -1405,7 +1405,7 @@ test(`29 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #1`, () => {
   );
 });
 
-test(`30 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #2`, () => {
+test(`30 - ${`\u001b[${36}m${"various"}\u001b[${39}m`} - adhoc #2`, () => {
   let str = `<head>
 <style>
   @media screen {.col-1,.col-2 {z: y;}}
@@ -1428,7 +1428,7 @@ test(`30 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #2`, () => {
   );
 });
 
-test(`31 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #3`, () => {
+test(`31 - ${`\u001b[${36}m${"various"}\u001b[${39}m`} - adhoc #3`, () => {
   let str = `<head>
 <style>
   @media screen {.col-1,.col-2 {z: y;}}

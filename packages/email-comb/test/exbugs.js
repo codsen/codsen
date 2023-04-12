@@ -465,8 +465,8 @@ test("11 - checking whole results object, all its keys #2", () => {
 
 test("12 - Cosmin's reported bug", () => {
   let srcs = [
-    `<body><a href="http://a.b/c?d=2&id=xyz&e=0">\n`,
-    `<body><a href="http://a.b/c?d=2&class=xyz&e=0">\n`,
+    '<body><a href="http://a.b/c?d=2&id=xyz&e=0">\n',
+    '<body><a href="http://a.b/c?d=2&class=xyz&e=0">\n',
   ];
   srcs.forEach((src) => {
     equal(comb(src).result, src);

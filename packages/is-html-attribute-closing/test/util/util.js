@@ -13,7 +13,7 @@ function generateVariations(parts, n) {
 }
 
 // extracts quotes and generates all variations of them
-function combinations(str = "", quotesRef = `'"`) {
+function combinations(str = "", quotesRef = "'\"") {
   let arr = str.trim().split(new RegExp(quotesRef.split("").join("|")));
   return generateVariations(quotesRef.split(""), arr.length - 1).map(
     (quotesArr) => {
