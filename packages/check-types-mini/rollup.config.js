@@ -1,3 +1,4 @@
+/* eslint-disable n/no-extraneous-import */
 import json from "@rollup/plugin-json";
 import dts from "rollup-plugin-dts";
 
