@@ -87,7 +87,7 @@
     "codsen-parser": "^0.14.10",
     "codsen-utils": "^1.3.0",
     "define-lazy-prop": "^3.0.0",
-    "globby": "^13.1.3",
+    "globby": "^13.1.4",
     "he": "^1.2.0",
     "html-all-known-attributes": "^6.0.4",
     "html-entities-not-email-friendly": "^0.8.4",

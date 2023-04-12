@@ -78,7 +78,7 @@
     "ansi-diff-stream": "^1.2.1",
     "codsen-utils": "^1.3.0",
     "edit-package-json": "^0.8.10",
-    "globby": "^13.1.3",
+    "globby": "^13.1.4",
     "is-online": "^10.0.0",
     "log-update": "^5.0.1",
     "meow": "^11.0.0",

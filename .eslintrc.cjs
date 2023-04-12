@@ -6,6 +6,7 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
+    "plugin:n/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended",
   ],
@@ -15,7 +16,7 @@ module.exports = {
   },
   plugins: [
     "import",
-    "node",
+    "n",
     "prefer-let",
     "jsx-a11y",
     "jest",
@@ -33,23 +34,24 @@ module.exports = {
   ],
   rules: {
     quotes: ["error", "double", { avoidEscape: true }],
-    "node/no-unsupported-features/node-builtins": [
+    "n/no-unsupported-features/node-builtins": [
       "error",
       {
         ignores: ["worker_threads"],
       },
     ],
-    "node/no-unsupported-features/es-builtins": "error",
-    "node/no-unsupported-features/es-syntax": [
+    "n/no-unsupported-features/es-builtins": "error",
+    "n/no-unsupported-features/es-syntax": [
       "error",
       {
         ignores: ["modules", "dynamicImport"],
       },
     ],
-    "node/no-unpublished-require": "error",
-    "node/no-extraneous-require": "error",
-    "node/no-missing-require": "error",
-    "node/global-require": "error",
+    "n/no-unpublished-import": "off",
+    "n/no-unpublished-require": "error",
+    "n/no-extraneous-require": "error",
+    "n/no-missing-require": "error",
+    "n/global-require": "error",
 
     "prefer-let/prefer-let": "error",
 
@@ -67,6 +69,23 @@ module.exports = {
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/prefer-optional-chain": "off",
+    "n/shebang": "off",
+
+    // disabled in favour of eslint-plugin-import + eslint-import-resolver-typescript:
+    "n/no-missing-import": "off",
+    // turn on errors for missing imports:
+    "import/no-unresolved": "error",
+  },
+  settings: {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"],
+    },
+    "import/resolver": {
+      typescript: {
+        alwaysTryTypes: true, // always try to resolve types under `<root>@types` directory even it doesn't contain any source code, like `@types/unist`
+        project: ["packages/*/tsconfig.json", "data/tsconfig.json"],
+      },
+    },
   },
   overrides: [
     {
@@ -198,6 +217,8 @@ module.exports = {
         "jest/valid-expect": "error",
         "jest/valid-expect-in-promise": "error",
         "jest/valid-title": "warn",
+        // also
+        "n/no-extraneous-import": "off",
       },
     },
     {
@@ -205,6 +226,18 @@ module.exports = {
       rules: {
         "@typescript-eslint/unbound-method": "off",
         "jest/unbound-method": "error",
+      },
+    },
+    {
+      files: ["**/examples/**/*.*", "**/rollup.config.js"],
+      rules: {
+        "n/no-extraneous-import": "off",
+      },
+    },
+    {
+      files: ["**/cli.*", "ops/scripts/*.js"],
+      rules: {
+        "n/no-process-exit": "off",
       },
     },
   ],

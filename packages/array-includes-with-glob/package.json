@@ -72,5 +72,8 @@
         ""
       ]
     }
+  },
+  "dependencies": {
+    "matcher": "^5.0.0"
   }
 }
