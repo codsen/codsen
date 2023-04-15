@@ -74,6 +74,8 @@ const cli = meow(
     -d, --dry              Only list all the files about to be processed
     -p, --pack             Exclude all package.json files
     -c, --ci               Only exits with non-zero code if files COULD BE sorted
+    -l, --lineEnding       Use different EOL charactar. Default is /n.
+                           Write "a" for autodetect or "rn" for Windows line ending.
 
   Example
     Call anywhere using glob patterns. If you put them as string, this library
@@ -131,6 +133,10 @@ const cli = meow(
         type: "number",
         alias: "i",
       },
+      lineEnding: {
+        type: "string",
+        alias: "l",
+      }
     },
   }
 );
@@ -160,6 +166,29 @@ if (cli.flags.indentationCount) {
 
 // FUNCTIONS
 // -----------------------------------------------------------------------------
+
+function getLineEnding(filesContent) {
+  // detect used line ending
+  if (cli.flags.lineEnding === "a") {
+    const index = filesContent.indexOf('\n', 1);
+    if (index === -1 && filesContent.indexOf('\r') !== -1) {
+        return '\r';
+    }
+    if (filesContent[index - 1] === '\r') {
+      return '\r\n'
+    }
+    return undefined; // /n is default line ending, do nothing.
+  }
+
+  if (cli.flags.lineEnding === "n") {
+    return undefined;
+  }
+
+  // force specific line ending
+  if (cli.flags.lineEnding) {
+    return cli.flags.lineEnding.replace('n','\n').replace('r', '\r');
+  }
+}
 
 function readSortAndWriteOverFile(oneOfPaths) {
   return fs
@@ -194,7 +223,8 @@ function readSortAndWriteOverFile(oneOfPaths) {
             spaces: cli.flags.tabs
               ? "\t".repeat(indentationCount)
               : indentationCount,
-          }
+          },
+          { EOL: getLineEnding(filesContent) }
         );
       } else {
         result = parsedJson;
@@ -231,6 +261,8 @@ function readSortAndWriteOverFile(oneOfPaths) {
             null,
             cli.flags.tabs ? "\t".repeat(indentationCount) : indentationCount
           );
+          let lineEnding = getLineEnding(filesContent);
+          lineEnding && (stringified = stringified.replaceAll('\n', lineEnding));
           return stringified.trimEnd() !== filesContent.trimEnd();
         }
 
@@ -258,6 +290,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
               spaces: cli.flags.tabs
                 ? "\t".repeat(indentationCount)
                 : indentationCount,
+              EOL: getLineEnding(filesContent),
             }
           )
           .then(() => {
