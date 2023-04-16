@@ -20,6 +20,7 @@ interface Obj {
   [key: string]: any;
 }
 type EolChar = "\n" | "\r" | "\r\n";
+type EolSetting = "lf" | "crlf" | "cr";
 declare function isNumberChar(value: unknown): boolean;
 declare function isCurrencyChar(value: unknown): boolean;
 declare function isCurrencySymbol(value: unknown): boolean;
@@ -80,13 +81,19 @@ declare function existy(x: unknown): boolean;
  * @returns de-duped array
  */
 declare function uniq<T>(input: T[]): T[];
-declare function detectEol(str: string): EolChar | undefined;
+declare function detectEol(str: string | unknown): EolChar | undefined;
+declare function resolveEolSetting(
+  str: string | unknown,
+  eolSetting: EolSetting | unknown,
+  defaultEolChar?: EolChar
+): EolChar;
 declare function hasOwnProp(obj: unknown, prop: string): boolean;
 declare const voidTags: string[];
 declare const inlineTags: Set<string>;
 
 export {
   EolChar,
+  EolSetting,
   Obj,
   backslash,
   backtick,
@@ -123,6 +130,7 @@ export {
   rawNbsp,
   rawReplacementMark,
   removeTrailingSlash,
+  resolveEolSetting,
   rightDoubleQuote,
   rightSingleQuote,
   singlePrime,

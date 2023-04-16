@@ -49,6 +49,7 @@
     "node": ">=14.18.0"
   },
   "c8": {
+    "branches": 100,
     "check-coverage": true,
     "exclude": [
       "**/test/**/*.*"

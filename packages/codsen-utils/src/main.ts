@@ -26,6 +26,7 @@ export interface Obj {
 }
 
 export type EolChar = "\n" | "\r" | "\r\n";
+export type EolSetting = "lf" | "crlf" | "cr";
 
 export function isNumberChar(value: unknown): boolean {
   return isStr(value) && value.charCodeAt(0) >= 48 && value.charCodeAt(0) <= 57;
@@ -279,7 +280,7 @@ export function uniq<T>(input: T[]): T[] {
 
 // ----------------------------------------------------------------
 
-export function detectEol(str: string): EolChar | undefined {
+export function detectEol(str: string | unknown): EolChar | undefined {
   if (typeof str !== "string" || !str) {
     return;
   }
@@ -296,6 +297,38 @@ export function detectEol(str: string): EolChar | undefined {
     return "\r";
   }
   return;
+}
+
+// ----------------------------------------------------------------
+
+export function resolveEolSetting(
+  str: string | unknown,
+  eolSetting: EolSetting | unknown,
+  defaultEolChar: EolChar = "\n"
+): EolChar {
+  // insurance
+  if (!["\r\n", "\r", "\n"].includes(defaultEolChar)) {
+    throw new Error(
+      `codsen-utils/resolveEolSetting(): the input argument defaultEolChar should be one of EOL values: "\\n", "\\r", or "\\r\\n", but it was given as ${JSON.stringify(
+        defaultEolChar,
+        null,
+        0
+      )}`
+    );
+  }
+
+  // explicit setting requests take priority:
+  if (eolSetting === "crlf") {
+    return "\r\n";
+  } else if (eolSetting === "cr") {
+    return "\r";
+  } else if (eolSetting === "lf") {
+    return "\n";
+  } else {
+    // in all other cases...
+    // we try to detect the EOL in the input string first, then fall back to default:
+    return detectEol(str) || defaultEolChar;
+  }
 }
 
 // ----------------------------------------------------------------
