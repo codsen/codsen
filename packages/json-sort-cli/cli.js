@@ -12,7 +12,7 @@ import pReduce from "p-reduce";
 import pFilter from "p-filter";
 import { globby } from "globby";
 import { createRequire } from "module";
-import { isPlainObject } from "codsen-utils";
+import { isPlainObject, resolveEolSetting } from "codsen-utils";
 import updateNotifier from "update-notifier";
 import { traverse } from "ast-monkey-traverse";
 import sortPackageJson, { sortOrder } from "sort-package-json";
@@ -66,7 +66,7 @@ const cli = meow(
   Options
     -n, --nodemodules      Don't ignore any node_modules folders
     -t, --tabs             Use tabs for JSON file indentation
-    -i, --indentationCount How many spaces or tabs to use (default = 2 spaces or 1 tab)
+    -i, --indentationCount How many spaces/tabs to use (default: 2 for spaces or 1 for tabs)
     -s, --silent           Does not show the result per-file, only totals in the end
     -h, --help             Shows this help
     -v, --version          Shows the current version
@@ -74,6 +74,8 @@ const cli = meow(
     -d, --dry              Only list all the files about to be processed
     -p, --pack             Exclude all package.json files
     -c, --ci               Only exits with non-zero code if files COULD BE sorted
+    -l, --lineEnding       Set to "cr", "crlf" or "lf" to override the default
+                           (which is either EOL format used in the file, or Mac LF)
 
   Example
     Call anywhere using glob patterns. If you put them as string, this library
@@ -130,6 +132,10 @@ const cli = meow(
       indentationCount: {
         type: "number",
         alias: "i",
+      },
+      lineEnding: {
+        type: "string",
+        alias: "l",
       },
     },
   }
@@ -194,6 +200,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
             spaces: cli.flags.tabs
               ? "\t".repeat(indentationCount)
               : indentationCount,
+            EOL: resolveEolSetting(filesContent, cli.flags.lineEnding),
           }
         );
       } else {
@@ -258,6 +265,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
               spaces: cli.flags.tabs
                 ? "\t".repeat(indentationCount)
                 : indentationCount,
+              EOL: resolveEolSetting(filesContent, cli.flags.lineEnding),
             }
           )
           .then(() => {
@@ -318,8 +326,8 @@ globby(input, { dot: true })
   .then((paths) =>
     pReduce(
       paths,
-      (concattedTotal, singleDirOrFilePath) =>
-        concattedTotal.concat(
+      (concatTotal, singleDirOrFilePath) =>
+        concatTotal.concat(
           isDirectory(singleDirOrFilePath).then((bool) =>
             bool
               ? globby(
