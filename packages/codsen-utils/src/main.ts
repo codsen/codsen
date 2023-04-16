@@ -25,6 +25,8 @@ export interface Obj {
   [key: string]: any;
 }
 
+export type EolChar = "\n" | "\r" | "\r\n";
+
 export function isNumberChar(value: unknown): boolean {
   return isStr(value) && value.charCodeAt(0) >= 48 && value.charCodeAt(0) <= 57;
 }
@@ -273,6 +275,27 @@ export function existy(x: unknown): boolean {
  */
 export function uniq<T>(input: T[]): T[] {
   return [...new Set(input)];
+}
+
+// ----------------------------------------------------------------
+
+export function detectEol(str: string): EolChar | undefined {
+  if (typeof str !== "string" || !str) {
+    return;
+  }
+  // windows ending
+  if (str.includes("\r\n")) {
+    return "\r\n";
+  }
+  // modern mac ending
+  if (str.includes("\n")) {
+    return "\n";
+  }
+  // old mac ending
+  if (str.includes("\r")) {
+    return "\r";
+  }
+  return;
 }
 
 // ----------------------------------------------------------------
