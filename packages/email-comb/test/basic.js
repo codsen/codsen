@@ -98,7 +98,7 @@ test("04 - mixed classes and non-classes", () => {
   equal(comb(source).result, intended, "04.01");
 });
 
-test("05 - sandwitched used and unused", () => {
+test("05 - both, used and unused", () => {
   let source = `<head>
 <style type="text/css">
   .used1 {z:1;}
@@ -121,7 +121,7 @@ test("05 - sandwitched used and unused", () => {
   equal(comb(source).result, intended, "05.01");
 });
 
-test("06 - sandwitched used and unused", () => {
+test("06 - both, used and unused", () => {
   let actual = comb(
     `<head>
   <style>
@@ -145,7 +145,7 @@ test("06 - sandwitched used and unused", () => {
   equal(actual, intended, "06.01");
 });
 
-test("07 - sandwitched used and unused", () => {
+test("07 - both, used and unused", () => {
   let actual = comb(
     `<head>
   <style>
@@ -168,7 +168,7 @@ test("07 - sandwitched used and unused", () => {
   equal(actual, intended, "07.01");
 });
 
-test("08 - sandwitched used and unused", () => {
+test("08 - both, used and unused", () => {
   let actual = comb(
     `<head>
   <style>

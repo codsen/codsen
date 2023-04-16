@@ -619,7 +619,9 @@ test("21 - comments in the inline styles", () => {
 <style>
   .aa, .bb { w:1; }
 </style>
-<body><br class="bb" style="font-size: 10px;/*\r\ncolor:#333333;\r\n*/line-height: 14px;">
+<body><br class="bb" style="font-size: 10px;/*
+  color:#333333;
+*/line-height: 14px;">
 </body>
 `
   ).result;
@@ -634,5 +636,27 @@ test("21 - comments in the inline styles", () => {
 
   equal(actual, intended, "21.01");
 });
+
+// test("22 - comments in the inline styles", () => {
+//   let actual = comb(
+//     `<head>
+// <style>
+//   .aa, .bb { w:1; }
+// </style>
+// <body><br class="bb" style="font-size: 10px;/*\r\ncolor:#333333;\r\n*/line-height: 14px;">
+// </body>
+// `
+//   ).result;
+
+//   let intended = `<head>
+// <style>
+//   .bb { w:1; }
+// </style>
+// <body><br class="bb" style="font-size: 10px;line-height: 14px;">
+// </body>
+// `;
+
+//   equal(actual, intended, "22.01");
+// });
 
 test.run();
