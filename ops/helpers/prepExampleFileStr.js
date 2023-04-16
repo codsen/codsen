@@ -3,7 +3,7 @@ function removeRelPaths(str) {
   let res = str
     .replace(/(?:\.\.\/)+dist\/([^.]+)\.esm(\.\w+)?/, "$1")
     .replace(/(?:\.\.\/)+[^/]+\/dist\/([^.]+)\.esm(\.\w+)?/, "$1")
-    .replace(/"(?:\.\.\/)+/g, `"`)
+    .replace(/"(?:\.\.\/)+/g, '"')
     .replace(/\/dist\/[^.]+\.esm\.js/g, "");
   // console.log(`008 removeRelPaths OUT: ${res}`);
   return res;
