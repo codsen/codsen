@@ -9,7 +9,7 @@ import {
 } from "../dist/detergent.esm.js";
 import { det } from "../t-util/util.js";
 
-test(`01 - ${`\u001b[${31}m${"api"}\u001b[${39}m`} - throws when the first argument is not string`, () => {
+test("01 - throws when the first argument is not string", () => {
   throws(
     () => {
       det(ok, not, 0, 1, "zzz");
@@ -54,7 +54,7 @@ test(`01 - ${`\u001b[${31}m${"api"}\u001b[${39}m`} - throws when the first argum
   );
 });
 
-test(`02 - ${`\u001b[${31}m${"api"}\u001b[${39}m`} - throws when the second argument is truthy yet not a plain object`, () => {
+test("02 - throws when the second argument is truthy yet not a plain object", () => {
   throws(
     () => {
       det(ok, not, 0, "zzz", "zzz");
@@ -64,15 +64,15 @@ test(`02 - ${`\u001b[${31}m${"api"}\u001b[${39}m`} - throws when the second argu
   );
 });
 
-test(`03 - ${`\u001b[${31}m${"api"}\u001b[${39}m`} - default opts object is exported`, () => {
+test("03 - default opts object is exported", () => {
   ok(Object.keys(exportedOptsObj).length > 10, "03.01");
 });
 
-test(`04 - ${`\u001b[${31}m${"api"}\u001b[${39}m`} - version is exported`, () => {
+test("04 - version is exported", () => {
   match(version, /\d+\.\d+\.\d+/g, "04.01");
 });
 
-test(`05 - ${`\u001b[${31}m${"api"}\u001b[${39}m`} - throws when opts.cb is truthy and not a function`, () => {
+test("05 - throws when opts.cb is truthy and not a function", () => {
   throws(
     () => {
       det(ok, not, 0, "zzz", { cb: true });
@@ -82,7 +82,7 @@ test(`05 - ${`\u001b[${31}m${"api"}\u001b[${39}m`} - throws when opts.cb is trut
   );
 });
 
-test(`06 - ${`\u001b[${31}m${"api"}\u001b[${39}m`} - not throws when opts.cb is falsey`, () => {
+test("06 - not throws when opts.cb is falsey", () => {
   // original function det1():
   not.throws(() => {
     det1("zzz", { cb: null });
@@ -104,6 +104,37 @@ test(`06 - ${`\u001b[${31}m${"api"}\u001b[${39}m`} - not throws when opts.cb is 
   not.throws(() => {
     det(ok, not, 0, "zzz", { cb: false });
   }, "06.06");
+});
+
+test("07 - throws when opts.cb.eol is truthy and invalid", () => {
+  throws(
+    () => {
+      det(ok, not, 0, "zzz", { eol: true });
+    },
+    /THROW_ID_04/gm,
+    "07.01"
+  );
+  throws(
+    () => {
+      det(ok, not, 0, "zzz", { eol: "a" });
+    },
+    /THROW_ID_04/gm,
+    "07.02"
+  );
+  throws(
+    () => {
+      det(ok, not, 0, "zzz", { eol: 1 });
+    },
+    /THROW_ID_04/gm,
+    "07.03"
+  );
+  throws(
+    () => {
+      det(ok, not, 0, "zzz", { eol: "LF" });
+    },
+    /THROW_ID_04/gm,
+    "07.04"
+  );
 });
 
 test.run();

@@ -1,4 +1,5 @@
-type EndOfLine = "lf" | "crlf" | "cr";
+import { EolSetting } from "codsen-utils";
+
 interface Opts {
   fixBrokenEntities: boolean;
   removeWidows: boolean;
@@ -12,7 +13,7 @@ interface Opts {
   addMissingSpaces: boolean;
   convertDotsToEllipsis: boolean;
   stripHtml: boolean;
-  eol: EndOfLine;
+  eol: EolSetting;
   stripHtmlButIgnoreTags: string[];
   stripHtmlAddNewLine: string[];
   cb: null | ((str: string) => string);

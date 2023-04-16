@@ -102,10 +102,11 @@ test("05 - br with attribute, line break present", () => {
       removeLineBreaks: false,
       useXHTML: false,
       convertEntities: true,
+      eol: undefined,
     }).forEach((opt, n) => {
       equal(
         det(ok, not, n, `a<br class="z">${eolType}b`, opt).res,
-        'a<br class="z">\nb',
+        `a<br class="z">${eolType}b`,
         `${JSON.stringify(eolType, null, 4)} --- ${JSON.stringify(
           opt,
           null,
@@ -114,6 +115,12 @@ test("05 - br with attribute, line break present", () => {
       );
     });
   });
+});
+
+//                           1 x 4
+// --------------------------------------------------------
+
+test("06 - br with attribute, line break present - no eol setting", () => {
   equal(
     det1('a<br class="z">\r\nb', {
       replaceLineBreaks: true,
@@ -121,12 +128,56 @@ test("05 - br with attribute, line break present", () => {
       useXHTML: false,
       convertEntities: true,
     }).res,
-    'a<br class="z">\nb',
-    "05.01"
+    'a<br class="z">\r\nb',
+    "06.01"
   );
 });
 
-test("06 - only adds a slash, respects existing attrs", () => {
+test("07 - br with attribute, line break present - eol setting CRLF", () => {
+  equal(
+    det1('a<br class="z">\r\nb', {
+      replaceLineBreaks: true,
+      removeLineBreaks: false,
+      useXHTML: false,
+      convertEntities: true,
+      eol: "crlf",
+    }).res,
+    'a<br class="z">\r\nb',
+    "07.01"
+  );
+});
+
+test("08 - br with attribute, line break present - eol setting CR", () => {
+  equal(
+    det1('a<br class="z">\r\nb', {
+      replaceLineBreaks: true,
+      removeLineBreaks: false,
+      useXHTML: false,
+      convertEntities: true,
+      eol: "cr",
+    }).res,
+    'a<br class="z">\rb',
+    "08.01"
+  );
+});
+
+test("09 - br with attribute, line break present - eol setting LF", () => {
+  equal(
+    det1('a<br class="z">\r\nb', {
+      replaceLineBreaks: true,
+      removeLineBreaks: false,
+      useXHTML: false,
+      convertEntities: true,
+      eol: "lf",
+    }).res,
+    'a<br class="z">\nb',
+    "09.01"
+  );
+});
+
+// --------------------------------------------------------
+
+test("10 - only adds a slash, respects existing attrs", () => {
   ["\r\n", "\r", "\n"].forEach((eolType) => {
     mixer({
       replaceLineBreaks: true,
@@ -147,7 +198,7 @@ test("06 - only adds a slash, respects existing attrs", () => {
   });
 });
 
-test("07 - br with attribute, no line break, HTML", () => {
+test("11 - br with attribute, no line break, HTML", () => {
   mixer({
     replaceLineBreaks: true,
     removeLineBreaks: false,
@@ -162,7 +213,7 @@ test("07 - br with attribute, no line break, HTML", () => {
   });
 });
 
-test("08 - br with attribute, no line break, XHTML", () => {
+test("12 - br with attribute, no line break, XHTML", () => {
   mixer({
     replaceLineBreaks: true,
     removeLineBreaks: false,
@@ -180,7 +231,7 @@ test("08 - br with attribute, no line break, XHTML", () => {
 // 02. consistency in whitespace collapsing across different linebreak-processing settings
 // -----------------------------------------------------------------------------
 
-test("09 - multiple consecutive line breaks", () => {
+test("13 - multiple consecutive line breaks", () => {
   mixer({
     replaceLineBreaks: true,
     removeLineBreaks: false,
@@ -194,7 +245,7 @@ test("09 - multiple consecutive line breaks", () => {
   });
 });
 
-test("10 - multiple consecutive line breaks", () => {
+test("14 - multiple consecutive line breaks", () => {
   mixer({
     replaceLineBreaks: true,
     removeLineBreaks: false,
@@ -208,7 +259,7 @@ test("10 - multiple consecutive line breaks", () => {
   });
 });
 
-test("11 - multiple consecutive line breaks", () => {
+test("15 - multiple consecutive line breaks", () => {
   mixer({
     replaceLineBreaks: false,
     removeLineBreaks: false,
@@ -221,7 +272,7 @@ test("11 - multiple consecutive line breaks", () => {
   });
 });
 
-test("12 - multiple consecutive line breaks", () => {
+test("16 - multiple consecutive line breaks", () => {
   mixer({
     removeLineBreaks: true,
   }).forEach((opt, n) => {

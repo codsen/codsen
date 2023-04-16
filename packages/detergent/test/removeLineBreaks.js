@@ -3,7 +3,7 @@ import { test } from "uvu";
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { compare } from "../../../ops/helpers/shallow-compare.js";
-import { det as det1 } from "../dist/detergent.esm.js";
+import { det as realDet } from "../dist/detergent.esm.js";
 import { det, mixer } from "../t-util/util.js";
 import {
   // rawReplacementMark,
@@ -31,11 +31,22 @@ test(`01 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - minimal, 
 });
 
 test(`02 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - minimal, removeLineBreaks=off`, () => {
+  equal(
+    realDet("a\rb", {
+      removeLineBreaks: false,
+      replaceLineBreaks: false,
+    }).res,
+    "a\rb",
+    "02.01"
+  );
   mixer({
     removeLineBreaks: false,
     replaceLineBreaks: false,
+    eol: undefined,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "a\nb", opt).res, "a\nb", "02.01");
+    equal(det(ok, not, n, "a\nb", opt).res, "a\nb", "02.02");
+    equal(det(ok, not, n, "a\rb", opt).res, "a\rb", "02.03");
+    equal(det(ok, not, n, "a\r\nb", opt).res, "a\r\nb", "02.04");
   });
 });
 
@@ -63,6 +74,7 @@ test(`04 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix styl
     removeLineBreaks: true,
     removeWidows: true,
     convertEntities: true,
+    eol: undefined,
   }).forEach((opt, n) => {
     equal(
       det(
@@ -77,24 +89,8 @@ test(`04 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix styl
     );
   });
 
-  equal(
-    det1("\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n", {
-      removeLineBreaks: true,
-      removeWidows: true,
-      convertEntities: true,
-      eol: true,
-    }).res,
-    det1("\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n", {
-      removeLineBreaks: true,
-      removeWidows: true,
-      convertEntities: true,
-      eol: false,
-    }).res,
-    "04.02"
-  );
-
   not.ok(
-    det1("\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n", {
+    realDet("\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n", {
       removeLineBreaks: true,
       removeWidows: true,
       convertEntities: true,
@@ -103,7 +99,7 @@ test(`04 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix styl
   );
 
   not.ok(
-    det1("\n\n\na\nb\nc\n\n\nd\n\n\n", {
+    realDet("\n\n\na\nb\nc\n\n\nd\n\n\n", {
       removeLineBreaks: true,
       removeWidows: true,
       convertEntities: true,
@@ -112,7 +108,7 @@ test(`04 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix styl
   );
 
   not.ok(
-    det1("\n\n\na\nb\nc\n\n\nd\n\n\n", {
+    realDet("\n\n\na\nb\nc\n\n\nd\n\n\n", {
       removeLineBreaks: true,
       removeWidows: true,
       convertEntities: true,
@@ -122,7 +118,7 @@ test(`04 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix styl
 
   compare(
     ok,
-    det1("\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n", {
+    realDet("\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n", {
       removeLineBreaks: true,
       removeWidows: true,
       convertEntities: true,

@@ -1,4 +1,5 @@
 import clone from "lodash.clonedeep";
+// eslint-disable-next-line n/no-extraneous-import
 import objectPath from "object-path";
 import { mixer as originalMixer } from "test-mixer";
 
@@ -516,7 +517,6 @@ export function det(ok, not, n, src, opts = {}) {
       } else if (key !== "cb") {
         //
         //
-        //                      IT'S NOT opts.eol
         //
         //
         //

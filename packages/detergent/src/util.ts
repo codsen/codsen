@@ -1,9 +1,7 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import he from "he";
-
-export type EndOfLine = "lf" | "crlf" | "cr";
-export type EndOfLineVal = "\n" | "\r\n" | "\r";
+import { EolSetting } from "codsen-utils";
 
 interface Opts {
   fixBrokenEntities: boolean;
@@ -18,7 +16,7 @@ interface Opts {
   addMissingSpaces: boolean;
   convertDotsToEllipsis: boolean;
   stripHtml: boolean;
-  eol: EndOfLine;
+  eol: EolSetting;
   stripHtmlButIgnoreTags: string[];
   stripHtmlAddNewLine: string[];
   cb: null | ((str: string) => string);
