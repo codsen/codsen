@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.11](https://github.com/codsen/codsen/compare/string-truncator@2.0.10...string-truncator@2.0.11) (2023-04-16)
-
-**Note:** Version bump only for package string-truncator
-
 ## 2.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

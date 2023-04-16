@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [7.0.11](https://github.com/codsen/codsen/compare/object-flatten-all-arrays@7.0.10...object-flatten-all-arrays@7.0.11) (2023-04-16)
-
-**Note:** Version bump only for package object-flatten-all-arrays
-
 ## 7.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
