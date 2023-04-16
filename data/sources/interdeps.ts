@@ -47,7 +47,7 @@ export const interdeps = [
   },
   {
     "name": "ast-deep-contains",
-    "size": 2087,
+    "size": 2089,
     "imports": [
       "ast-monkey-traverse"
     ]
