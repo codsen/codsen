@@ -23,6 +23,9 @@
       "path": "../check-types-mini"
     },
     {
+      "path": "../codsen-utils"
+    },
+    {
       "path": "../util-array-object-or-both"
     }
   ]

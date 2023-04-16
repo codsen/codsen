@@ -14,6 +14,9 @@
   ],
   "references": [
     {
+      "path": "../codsen-utils"
+    },
+    {
       "path": "../ranges-apply"
     },
     {

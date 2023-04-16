@@ -20,6 +20,9 @@
       "path": "../codsen-tokenizer"
     },
     {
+      "path": "../codsen-utils"
+    },
+    {
       "path": "../string-find-malformed"
     },
     {

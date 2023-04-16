@@ -17,6 +17,9 @@
       "path": "../codsen-utils"
     },
     {
+      "path": "../ranges-sort"
+    },
+    {
       "path": "../string-collapse-leading-whitespace"
     },
     {
