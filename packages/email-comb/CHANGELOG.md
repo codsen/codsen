@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.11](https://github.com/codsen/codsen/compare/email-comb@7.0.10...email-comb@7.0.11) (2023-04-16)
+
+### Bug Fixes
+
+- trailing line break to be correctly set in CR files ([849ff16](https://github.com/codsen/codsen/commit/849ff161033f73e3e3057ce1543b0442930a31c0))
+
 ## 7.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

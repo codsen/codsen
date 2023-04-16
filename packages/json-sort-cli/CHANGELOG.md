@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/codsen/codsen/compare/json-sort-cli@3.0.12...json-sort-cli@3.1.0) (2023-04-16)
+
+### Features
+
+- `-l` or `--lineEnding` flag to override the default - the EOL format found in file (or LF) ([1788a77](https://github.com/codsen/codsen/commit/1788a7701629713a1b9ad9b992ad01aa7d456068))
+
 ## 3.0.7 (2023-01-06)
 
 ### Bug Fixes

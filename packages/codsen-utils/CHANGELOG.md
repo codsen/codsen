@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/codsen/codsen/compare/codsen-utils@1.3.1...codsen-utils@1.4.0) (2023-04-16)
+
+### Features
+
+- add `detectEol()` ([04d2f3d](https://github.com/codsen/codsen/commit/04d2f3d36963e1b1729887098126cba5719d97c0))
+- add `resolveEolSetting()` and type `EolSetting` ([ceae282](https://github.com/codsen/codsen/commit/ceae282e1f9240638e0aefc57eab48dde9de6ba1))
+
 # [1.3.0](https://github.com/codsen/codsen/compare/codsen-utils@1.2.0...codsen-utils@1.3.0) (2023-03-12)
 
 ### Features

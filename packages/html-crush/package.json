@@ -1,6 +1,6 @@
 {
   "name": "html-crush",
-  "version": "6.0.10",
+  "version": "6.0.11",
   "description": "Minify email templates",
   "keywords": [
     "breaks",
@@ -80,12 +80,12 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.3.1",
-    "ranges-apply": "^7.0.7",
-    "ranges-push": "^7.0.7",
-    "string-left-right": "^6.0.10",
-    "string-match-left-right": "^9.0.10",
-    "string-range-expander": "^4.0.7",
-    "test-mixer": "^4.1.7"
+    "codsen-utils": "^1.4.0",
+    "ranges-apply": "^7.0.8",
+    "ranges-push": "^7.0.8",
+    "string-left-right": "^6.0.11",
+    "string-match-left-right": "^9.0.11",
+    "string-range-expander": "^4.0.8",
+    "test-mixer": "^4.1.8"
   }
 }
