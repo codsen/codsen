@@ -187,7 +187,7 @@ export const dependencyStats: DependencyStats = {
     "check-types-mini": 4,
     "codsen-parser": 2,
     "codsen-tokenizer": 2,
-    "codsen-utils": 51,
+    "codsen-utils": 52,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -352,7 +352,6 @@ export const dependencyStats: DependencyStats = {
     "lodash.isequal": 3,
     "map-stream": 1,
     "object-delete-key": 1,
-    "object-path": 1,
     "p-map": 3,
     "ranges-apply": 6,
     "ranges-invert": 1,
@@ -401,7 +400,7 @@ export const dependencyStats: DependencyStats = {
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 51
+      "codsen-utils": 52
     },
     {
       "ranges-apply": 17

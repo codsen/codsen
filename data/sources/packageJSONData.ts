@@ -2139,6 +2139,7 @@ export const packageJSONData = {
       "node": ">=14.18.0"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
@@ -2731,7 +2732,6 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "lodash.clonedeep": "^4.5.0",
-      "object-path": "^0.11.8",
       "test-mixer": "^4.1.7"
     }
   },
@@ -5354,6 +5354,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "dependencies": {
+      "codsen-utils": "^1.3.1"
     }
   },
   "lerna-clean-changelogs-cli": {

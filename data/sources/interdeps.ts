@@ -164,7 +164,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-utils",
-    "size": 3616,
+    "size": 4097,
     "imports": []
   },
   {
@@ -207,7 +207,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "size": 24154,
+    "size": 24399,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -254,7 +254,7 @@ export const interdeps = [
   },
   {
     "name": "email-comb",
-    "size": 20270,
+    "size": 20151,
     "imports": [
       "array-pull-all-with-glob",
       "codsen-utils",
@@ -465,7 +465,7 @@ export const interdeps = [
   },
   {
     "name": "json-sort-cli",
-    "size": 13176,
+    "size": 13576,
     "imports": [
       "ast-monkey-traverse",
       "codsen-utils"
@@ -488,8 +488,10 @@ export const interdeps = [
   },
   {
     "name": "lerna-clean-changelogs",
-    "size": 1655,
-    "imports": []
+    "size": 1596,
+    "imports": [
+      "codsen-utils"
+    ]
   },
   {
     "name": "lerna-clean-changelogs-cli",
