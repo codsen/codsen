@@ -32,5 +32,6 @@ test("02", () => {
 });
 
 test("03", () => {
-  equal(findAllIdx(""), [], "03.01");
+  equal(findAllIdx("abc def", "a"), [0], "03.01");
+  equal(findAllIdx("abc def aaa", "a"), [0, 8, 9, 10], "03.02");
 });

@@ -19,6 +19,7 @@ declare const punctuationChars: string[];
 interface Obj {
   [key: string]: any;
 }
+type EolChar = "\n" | "\r" | "\r\n";
 declare function isNumberChar(value: unknown): boolean;
 declare function isCurrencyChar(value: unknown): boolean;
 declare function isCurrencySymbol(value: unknown): boolean;
@@ -79,14 +80,17 @@ declare function existy(x: unknown): boolean;
  * @returns de-duped array
  */
 declare function uniq<T>(input: T[]): T[];
+declare function detectEol(str: string): EolChar | undefined;
 declare function hasOwnProp(obj: unknown, prop: string): boolean;
 declare const voidTags: string[];
 declare const inlineTags: Set<string>;
 
 export {
+  EolChar,
   Obj,
   backslash,
   backtick,
+  detectEol,
   doublePrime,
   ellipsis,
   existy,

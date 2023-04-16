@@ -20,8 +20,20 @@ test("03", () => {
   );
 });
 
-test("04", () => {
-  equal(stringSplice("a", 0, 0, "x"), "xa", "04.01");
+test("04 - index is negative number", () => {
+  equal(
+    stringSplice("the quick brown fox", -3, 3, "dog"),
+    "the quick brown dog",
+    "04.01"
+  );
+});
+
+test("05 - empty string, negative index", () => {
+  equal(stringSplice("", -3, 3, "dog"), "dog", "05.01");
+});
+
+test("06", () => {
+  equal(stringSplice("a", 0, 0, "x"), "xa", "06.01");
 });
 
 test.run();
