@@ -17,6 +17,15 @@
         "doc",
         "review"
       ]
+    },
+    {
+      "login": "dspaethe",
+      "name": "David Späthe",
+      "avatar_url": "https://avatars.githubusercontent.com/u/102162542?v=4",
+      "profile": "https://github.com/dspaethe",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
