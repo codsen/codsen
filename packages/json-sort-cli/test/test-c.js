@@ -18,27 +18,156 @@ import { temporaryDirectory } from "tempy";
 
 // -----------------------------------------------------------------------------
 
-test("01 - one sorted file", async () => {
-  let sortedFile = '{\n  "a": 1,\n  "z": 2\n}\n';
+// SORTED
 
-  let tempFolder = temporaryDirectory();
-  // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
-  fs.writeFileSync(path.join(tempFolder, "sortme.json"), sortedFile);
+[
+  [], // no -l flag
+  ["-l", "lf"],
+  ["-l", "crlf"],
+  ["-l", "cr"],
+].forEach((ciLFlag, ciLFlagIdx) => {
+  test(`01 - one sorted file, LF, --lineEnding === ${JSON.stringify(
+    ciLFlag,
+    null,
+    0
+  )}`, async () => {
+    let sortedFile = '{\n  "a": 1,\n  "z": 2\n}\n';
+    // prove the file is of the right format, LF
+    ok(sortedFile.includes("\n"), "01.01");
+    not.ok(sortedFile.includes("\r"), "01.03"); // <-- covers CRLF too
 
-  let output = await execa("./cli.js", [tempFolder, "-c"]).catch((err) => {
-    throw new Error(err);
+    let tempFolder = temporaryDirectory();
+    // const tempFolder = "temp";
+    fs.ensureDirSync(path.resolve(tempFolder));
+    fs.writeFileSync(path.join(tempFolder, "sortme.json"), sortedFile);
+
+    if (ciLFlagIdx < 2) {
+      // happy path cases, LF will be good
+      let output = await execa("./cli.js", [
+        tempFolder,
+        "-c",
+        ...ciLFlag,
+      ]).catch((err) => {
+        throw new Error(err);
+      });
+      equal(output.exitCode, 0, "01.04");
+    } else {
+      // should throw, so we need to catch
+      await execa("./cli.js", [tempFolder, "-c", ...ciLFlag])
+        .then(() => {
+          // this clause should never be reached
+          not.ok("execa should have exited with non-zero code");
+        })
+        .catch((err) => equal(err.exitCode, 9, "01.03"));
+    }
+
+    equal(
+      fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
+      sortedFile,
+      "01.02"
+    );
   });
-  equal(output.exitCode, 0, "01.01");
-
-  equal(
-    fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
-    sortedFile,
-    "01.02"
-  );
 });
 
-test("02 - one unsorted file", async () => {
+[
+  [], // no -l flag
+  ["-l", "crlf"],
+  ["-l", "lf"],
+  ["-l", "cr"],
+].forEach((ciLFlag, ciLFlagIdx) => {
+  test(`02 - one sorted file, CRLF, --lineEnding === ${JSON.stringify(
+    ciLFlag,
+    null,
+    0
+  )}`, async () => {
+    let sortedFile = '{\r\n  "a": 1,\r\n  "z": 2\r\n}\r\n';
+    // prove the file is of the right format, CRLF
+    ok(sortedFile.includes("\r\n"), "02.01");
+
+    let tempFolder = temporaryDirectory();
+    // const tempFolder = "temp";
+    fs.ensureDirSync(path.resolve(tempFolder));
+    fs.writeFileSync(path.join(tempFolder, "sortme.json"), sortedFile);
+
+    if (ciLFlagIdx < 2) {
+      // happy-path cases, CRLF
+      let output = await execa("./cli.js", [
+        tempFolder,
+        "-c",
+        ...ciLFlag,
+      ]).catch((err) => {
+        throw new Error(err);
+      });
+      equal(output.exitCode, 0, "02.04");
+    } else {
+      // should throw, so we need to catch
+      await execa("./cli.js", [tempFolder, "-c", ...ciLFlag])
+        .then(() => {
+          // this clause should never be reached
+          not.ok("execa should have exited with non-zero code");
+        })
+        .catch((err) => equal(err.exitCode, 9, "02.03"));
+    }
+
+    equal(
+      fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
+      sortedFile,
+      "02.02"
+    );
+  });
+});
+
+[
+  [], // no -l flag
+  ["-l", "cr"],
+  ["-l", "crlf"],
+  ["-l", "lf"],
+].forEach((ciLFlag, ciLFlagIdx) => {
+  test(`03 - one sorted file, CR, --lineEnding === ${JSON.stringify(
+    ciLFlag,
+    null,
+    0
+  )}`, async () => {
+    let sortedFile = '{\r  "a": 1,\r  "z": 2\r}\r';
+    // prove the file is of the right format, CR
+    ok(sortedFile.includes("\r"), "03.01");
+    not.ok(sortedFile.includes("\n"), "01.03"); // <-- covers CRLF too
+
+    let tempFolder = temporaryDirectory();
+    // const tempFolder = "temp";
+    fs.ensureDirSync(path.resolve(tempFolder));
+    fs.writeFileSync(path.join(tempFolder, "sortme.json"), sortedFile);
+
+    if (ciLFlagIdx < 2) {
+      let output = await execa("./cli.js", [
+        tempFolder,
+        "-c",
+        ...ciLFlag,
+      ]).catch((err) => {
+        throw new Error(err);
+      });
+      equal(output.exitCode, 0, "03.04");
+    } else {
+      // should throw, so we need to catch
+      await execa("./cli.js", [tempFolder, "-c", ...ciLFlag])
+        .then(() => {
+          // this clause should never be reached
+          not.ok("execa should have exited with non-zero code");
+        })
+        .catch((err) => equal(err.exitCode, 9, "03.03"));
+    }
+
+    equal(
+      fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
+      sortedFile,
+      "03.02"
+    );
+  });
+});
+
+// UNSORTED
+
+test("04 - one unsorted file", async () => {
   let unsortedFile = '{\n  "z": 1,\n  "a": 2\n}\n';
 
   let tempFolder = temporaryDirectory();
@@ -56,11 +185,11 @@ test("02 - one unsorted file", async () => {
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "02.01"
+    "04.01"
   );
 });
 
-test("03 - 'dry' flag trumps 'ci' flag", async () => {
+test("05 - 'dry' flag trumps 'ci' flag", async () => {
   let unsortedFile = '{\n  "z": 1,\n  "a": 2\n}\n';
 
   let tempFolder = temporaryDirectory();
@@ -74,16 +203,16 @@ test("03 - 'dry' flag trumps 'ci' flag", async () => {
     }
   );
 
-  match(output.stdout, /try to sort/, "03.01");
-  equal(output.exitCode, 0, "03.02");
+  match(output.stdout, /try to sort/, "05.01");
+  equal(output.exitCode, 0, "05.02");
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "03.03"
+    "05.03"
   );
 });
 
-test("04 - 'dry', arg order is backwards", async () => {
+test("06 - 'dry', arg order is backwards", async () => {
   let unsortedFile = '{\n  "z": 1,\n  "a": 2\n}\n';
 
   let tempFolder = temporaryDirectory();
@@ -95,16 +224,16 @@ test("04 - 'dry', arg order is backwards", async () => {
     throw new Error(err);
   });
 
-  match(output.stdout, /try to sort/, "04.01");
-  equal(output.exitCode, 0, "04.02");
+  match(output.stdout, /try to sort/, "06.01");
+  equal(output.exitCode, 0, "06.02");
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "04.03"
+    "06.03"
   );
 });
 
-test("05 - errors out when unsorted array within json, --ci & --arrays flags", async () => {
+test("07 - errors out when unsorted array within json, --ci & --arrays flags", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -131,11 +260,11 @@ test("05 - errors out when unsorted array within json, --ci & --arrays flags", a
     throw new Error(err);
   });
 
-  equal(output.exitCode, 9, "05.01");
-  match(output.stdout, /Unsorted files:/, "05.02");
+  equal(output.exitCode, 9, "07.01");
+  match(output.stdout, /Unsorted files:/, "07.02");
 });
 
-test("06 - unsorted array within json, --ci flag", async () => {
+test("08 - unsorted array within json, --ci flag", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -159,11 +288,11 @@ test("06 - unsorted array within json, --ci flag", async () => {
     throw new Error(err);
   });
 
-  equal(output.exitCode, 0, "06.01");
-  match(output.stdout, /All files were already sorted/, "06.02");
+  equal(output.exitCode, 0, "08.01");
+  match(output.stdout, /All files were already sorted/, "08.02");
 });
 
-test("07 - sorted nested plain object, --ci flag", async () => {
+test("09 - sorted nested plain object, --ci flag", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -186,11 +315,11 @@ test("07 - sorted nested plain object, --ci flag", async () => {
     throw new Error(err);
   });
 
-  equal(output.exitCode, 0, "07.01");
-  match(output.stdout, /All files were already sorted/, "07.02");
+  equal(output.exitCode, 0, "09.01");
+  match(output.stdout, /All files were already sorted/, "09.02");
 });
 
-test("08 - unsorted nested plain object, --ci flag", async () => {
+test("10 - unsorted nested plain object, --ci flag", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -214,12 +343,12 @@ test("08 - unsorted nested plain object, --ci flag", async () => {
     .catch((err) => err);
   // await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {throw new Error(err)});
 
-  equal(output.exitCode, 9, "08.01");
-  match(output.stdout, /Unsorted files/, "08.02");
-  match(output.stdout, /sortme\.json/, "08.03");
+  equal(output.exitCode, 9, "10.01");
+  match(output.stdout, /Unsorted files/, "10.02");
+  match(output.stdout, /sortme\.json/, "10.03");
 });
 
-test("09 - but requested copious tabs, --ci flag", async () => {
+test("11 - but requested copious tabs, --ci flag", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -243,9 +372,9 @@ test("09 - but requested copious tabs, --ci flag", async () => {
     .catch((err) => err);
   // await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {throw new Error(err)});
 
-  equal(output.exitCode, 9, "09.01");
-  match(output.stdout, /Unsorted files/, "09.02");
-  match(output.stdout, /sortme\.json/, "09.03");
+  equal(output.exitCode, 9, "11.01");
+  match(output.stdout, /Unsorted files/, "11.02");
+  match(output.stdout, /sortme\.json/, "11.03");
 });
 
 test.run();

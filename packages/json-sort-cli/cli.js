@@ -171,6 +171,8 @@ function readSortAndWriteOverFile(oneOfPaths) {
   return fs
     .readFile(oneOfPaths, "utf8")
     .then((filesContent) => {
+      let eolChar = resolveEolSetting(filesContent, cli.flags.lineEnding);
+
       let parsedJson;
       try {
         // try to parse JSON
@@ -200,7 +202,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
             spaces: cli.flags.tabs
               ? "\t".repeat(indentationCount)
               : indentationCount,
-            EOL: resolveEolSetting(filesContent, cli.flags.lineEnding),
+            EOL: eolChar,
           }
         );
       } else {
@@ -219,6 +221,8 @@ function readSortAndWriteOverFile(oneOfPaths) {
           // we read it, now we return true if result differs after processing
 
           let stringified = JSON.stringify(
+            // The traversal below will mutate, not just traverse, -
+            // whatever you return from the callback below, gets written
             traverse(obj, (key, val) => {
               let current = val !== undefined ? val : key;
               if (isPlainObject(current)) {
@@ -230,7 +234,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
                 current.length > 1 &&
                 current.every(isStr)
               ) {
-                // alphabetical sort
+                // alphabetical sort, this value gets written
                 return current.sort((a, b) => a.localeCompare(b));
               }
               return current;
@@ -238,7 +242,25 @@ function readSortAndWriteOverFile(oneOfPaths) {
             null,
             cli.flags.tabs ? "\t".repeat(indentationCount) : indentationCount
           );
-          return stringified.trimEnd() !== filesContent.trimEnd();
+
+          if (eolChar === "\r\n") {
+            // CRLF
+            stringified = stringified
+              .replaceAll(/(?<!\r)\n/g, "\r\n")
+              .replaceAll(/\r(?!\n)/g, "\n");
+          } else {
+            // LF or CR
+            stringified = stringified.replaceAll(/(?:\r?\n)|\r/g, eolChar);
+          }
+
+          return (
+            stringified
+              .replaceAll(
+                /\r\n/g,
+                resolveEolSetting(filesContent, cli.flags.lineEnding)
+              )
+              .trimEnd() !== filesContent.trimEnd()
+          );
         }
 
         // ELSE,
