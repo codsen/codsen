@@ -10139,7 +10139,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/isstream": "^0.1.0",
-      "@types/split2": "^3.2.1",
+      "@types/split2": "^4.2.0",
       "@types/through2": "^2.0.38",
       "fs-extra": "^11.1.1"
     }

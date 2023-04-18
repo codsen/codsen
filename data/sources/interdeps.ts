@@ -465,7 +465,7 @@ export const interdeps = [
   },
   {
     "name": "json-sort-cli",
-    "size": 13576,
+    "size": 14273,
     "imports": [
       "ast-monkey-traverse",
       "codsen-utils"
