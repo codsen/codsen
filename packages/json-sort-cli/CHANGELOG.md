@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/codsen/codsen/compare/json-sort-cli@3.1.0...json-sort-cli@3.1.1) (2023-04-18)
+
+### Bug Fixes
+
+- fix `-c` flag to correctly recognise different EOLs as per `-l` ([5af3ba1](https://github.com/codsen/codsen/commit/5af3ba16962c2dd001005780a3843ecf675389f4)), closes [#73](https://github.com/codsen/codsen/issues/73)
+
 # [3.1.0](https://github.com/codsen/codsen/compare/json-sort-cli@3.0.12...json-sort-cli@3.1.0) (2023-04-16)
 
 ### Features
