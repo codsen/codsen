@@ -5106,7 +5106,7 @@ export const packageJSONData = {
   },
   "json-sort-cli": {
     "name": "json-sort-cli",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "description": "Command line app to deep sort JSON files, retains package.json special key order",
     "keywords": [
       "app",
@@ -10060,7 +10060,7 @@ export const packageJSONData = {
   },
   "tap-parse-string-to-object": {
     "name": "tap-parse-string-to-object",
-    "version": "4.0.8",
+    "version": "4.0.9",
     "description": "Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object",
     "keywords": [
       "contents",
