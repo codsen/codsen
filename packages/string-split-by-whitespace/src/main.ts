@@ -43,9 +43,7 @@ function splitByW(str: string, opts?: Partial<Opts>): string[] {
     if (
       nonWhitespaceSubStringStartsAt === null &&
       str[i].trim() &&
-      (!resolvedOpts ||
-        !resolvedOpts.ignoreRanges ||
-        !resolvedOpts.ignoreRanges.length ||
+      (!resolvedOpts?.ignoreRanges?.length ||
         (resolvedOpts.ignoreRanges.length &&
           !isIndexWithin(
             i,

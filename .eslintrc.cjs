@@ -151,7 +151,7 @@ module.exports = {
         ],
         "@typescript-eslint/array-type": "error",
         "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/prefer-optional-chain": "off",
+        "@typescript-eslint/prefer-optional-chain": "error",
         "@typescript-eslint/no-unnecessary-condition": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
 

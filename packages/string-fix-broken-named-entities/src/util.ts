@@ -267,9 +267,7 @@ function removeGappedFromMixedCases(str: string, temp1: TempObj[]) {
       !(
         copy.every(
           (entObj) =>
-            !entObj ||
-            !entObj.tempRes ||
-            !entObj.tempRes.gaps ||
+            !entObj?.tempRes?.gaps ||
             !Array.isArray(entObj.tempRes.gaps) ||
             !entObj.tempRes.gaps.length
         ) ||

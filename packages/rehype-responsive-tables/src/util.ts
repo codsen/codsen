@@ -41,7 +41,7 @@ export const contains = (
   let result: string | undefined = undefined;
 
   // early exit
-  if (!something || !something.length) {
+  if (!something?.length) {
     DEV &&
       console.log(
         `047 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${31}m${`early return`}\u001b[${39}m`}`

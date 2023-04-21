@@ -43,13 +43,10 @@ const attributeRequired: AttributeRequired = (context, opts) => {
           })
           // check is each one present
           .forEach((attr) => {
-            if (
-              !node.attribs ||
-              !node.attribs.some((attrObj) => attrObj.attribName === attr)
-            ) {
+            if (!node.attribs?.some((attrObj) => attrObj.attribName === attr)) {
               DEV &&
                 console.log(
-                  `052 attributeRequired(): ${`\u001b[${31}m${`${attr} missing`}\u001b[${39}m`}`
+                  `049 attributeRequired(): ${`\u001b[${31}m${`${attr} missing`}\u001b[${39}m`}`
                 );
               context.report({
                 ruleId: "attribute-required",

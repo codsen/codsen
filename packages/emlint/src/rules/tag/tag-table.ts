@@ -334,7 +334,7 @@ function tagTable(context: Linter): RuleObjType {
                       attrib.attribValue &&
                       attrib.attribValue.length &&
                       attrib.attribValue.some((valObjNode) => {
-                        if (valObjNode.type === "text") {
+                        if ((valObjNode as any).type === "text") {
                           if (Number.isInteger(+valObjNode.value)) {
                             // drill through and also extract the value
                             temp = +valObjNode.value;
@@ -632,8 +632,7 @@ function tagTable(context: Linter): RuleObjType {
             )}`
           );
         if (
-          !node.children ||
-          !node.children.length ||
+          !node?.children?.length ||
           !node.children.some((n) => n.type !== "text" || n.value.trim())
         ) {
           context.report({

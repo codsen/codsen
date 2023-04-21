@@ -44,12 +44,8 @@ function rApply(
       )}`
     );
   }
-  if (
-    !originalRangesArr ||
-    // insurance against array of nulls
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    !originalRangesArr.filter((range) => range).length
-  ) {
+  // insurance against array of nulls
+  if (!originalRangesArr?.filter((range) => range).length) {
     // quick ending - no ranges passed
     return str;
   }
