@@ -55,7 +55,7 @@
   "devDependencies": {
     "@monorepo-utils/workspaces-to-typescript-project-references": "^2.9.0",
     "@rollup/plugin-json": "^6.0.0",
-    "@types/node": "^18.15.11",
+    "@types/node": "^18.15.13",
     "@types/tap": "^15.0.8",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
@@ -100,7 +100,7 @@
     "remark-rehype": "^10.1.0",
     "remark-typography": "^0.6.7",
     "rimraf": "^5.0.0",
-    "rollup": "^3.20.6",
+    "rollup": "^3.20.7",
     "rollup-plugin-dts": "^5.3.0",
     "simple-git": "^3.17.0",
     "sort-package-json": "^2.4.1",

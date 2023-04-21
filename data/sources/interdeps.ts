@@ -151,7 +151,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-tokenizer",
-    "size": 39721,
+    "size": 39700,
     "imports": [
       "codsen-utils",
       "html-all-known-attributes",
@@ -278,7 +278,7 @@ export const interdeps = [
   },
   {
     "name": "emlint",
-    "size": 175783,
+    "size": 175744,
     "imports": [
       "ast-monkey-traverse",
       "ast-monkey-util",
@@ -417,7 +417,7 @@ export const interdeps = [
   },
   {
     "name": "is-media-descriptor",
-    "size": 6049,
+    "size": 6036,
     "imports": [
       "string-process-comma-separated"
     ]
@@ -577,7 +577,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-apply",
-    "size": 2451,
+    "size": 2448,
     "imports": [
       "ranges-merge"
     ]
@@ -752,7 +752,7 @@ export const interdeps = [
   },
   {
     "name": "string-fix-broken-named-entities",
-    "size": 11098,
+    "size": 11084,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -820,14 +820,14 @@ export const interdeps = [
   },
   {
     "name": "string-split-by-whitespace",
-    "size": 1168,
+    "size": 1149,
     "imports": [
       "ranges-is-index-within"
     ]
   },
   {
     "name": "string-strip-html",
-    "size": 20517,
+    "size": 20464,
     "imports": [
       "codsen-utils",
       "ranges-apply",

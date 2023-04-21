@@ -7768,7 +7768,7 @@ export const packageJSONData = {
     "dependencies": {
       "@types/hast": "^2.3.4",
       "codsen-utils": "^1.4.0",
-      "fp-ts": "^2.13.1",
+      "fp-ts": "^2.14.0",
       "string-apostrophes": "^4.0.11",
       "string-dashes": "^1.2.5",
       "string-remove-widows": "^4.0.11",
@@ -10389,7 +10389,7 @@ export const packageJSONData = {
       "p-map": "^5.5.0",
       "p-progress": "^0.6.0",
       "p-reduce": "^3.0.0",
-      "pacote": "^15.1.1",
+      "pacote": "^15.1.2",
       "update-notifier": "^6.0.2",
       "write-file-atomic": "^5.0.0"
     },
