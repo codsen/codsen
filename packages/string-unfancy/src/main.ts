@@ -1,7 +1,7 @@
 /* eslint quote-props:0 */
 
 import he from "he";
-import { hasOwnProp, Obj, isStr } from "codsen-utils";
+import { Obj, isStr } from "codsen-utils";
 
 import { version as v } from "../package.json";
 
@@ -43,8 +43,8 @@ function unfancy(str: string): string {
     res = he.decode(res);
   }
   for (let i = 0, len = res.length; i < len; i++) {
-    if (hasOwnProp(CHARS, res[i])) {
-      res = `${res.slice(0, i)}${CHARS[res[i]]}${res.slice(i + 1)}`;
+    if (res[i] in CHARS) {
+      res = `${res.slice(0, i)}${CHARS[res[i]] as string}${res.slice(i + 1)}`;
     }
   }
   return res;
