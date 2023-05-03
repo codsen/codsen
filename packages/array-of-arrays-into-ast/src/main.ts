@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { mergeAdvanced } from "object-merge-advanced";
 
 import { version as v } from "../package.json";
@@ -19,9 +21,11 @@ const defaults: Opts = {
 };
 
 function sortObject(obj: PlainObj): PlainObj {
+  // eslint-disable-next-line @typescript-eslint/require-array-sort-compare
   return Object.keys(obj)
     .sort()
     .reduce((result: PlainObj, key) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       result[key] = obj[key];
       return result;
     }, {});
@@ -50,6 +54,7 @@ function generateAst(inputArr: any[], opts?: Partial<Opts>): PlainObj {
   inputArr.forEach((arr) => {
     DEV &&
       console.log(
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         `${`\u001b[${36}m${`================================================ ${arr}`}\u001b[${39}m`}`
       );
 
