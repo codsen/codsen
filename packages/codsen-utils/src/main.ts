@@ -21,9 +21,21 @@ export const multiplicationSign = "\u00D7"; // https://www.fileformat.info/info/
 
 export const punctuationChars = [".", ",", ";", "!", "?"];
 
-export interface Obj {
-  [key: string]: any;
+// From "type-fest" by Sindre Sorhus:
+export type JSONValue =
+  | string
+  | number
+  | boolean
+  | null
+  | JSONObject
+  | JSONArray;
+export type JsonObject = { [Key in string]?: JSONValue };
+export type JSONArray = JSONValue[];
+export interface JSONObject {
+  [key: string]: JSONValue;
 }
+
+export type Obj = JSONObject;
 
 export type EolChar = "\n" | "\r" | "\r\n";
 export type EolSetting = "lf" | "crlf" | "cr";
@@ -152,11 +164,11 @@ export const removeTrailingSlash = <T>(value: T) => {
  * @param value unknown
  * @returns boolean
  */
-export function isPlainObject(value: unknown): boolean {
+export function isPlainObject(value: unknown): value is JSONObject {
   if (value == null || typeof value !== "object") {
     return false;
   }
-  let proto = Object.getPrototypeOf(value);
+  let proto: unknown = Object.getPrototypeOf(value);
   if (
     proto !== null &&
     proto !== Object.prototype &&
@@ -249,7 +261,7 @@ export function findAllIdx(value: unknown, substring: unknown) {
 export function pullAll<T, U>(input: T[] = [], remove: U[] = []) {
   // early exit
   if (!input || !Array.isArray(input) || !input.length) {
-    // result is always an array
+    // always return an array:
     return [];
   }
   if (!remove || !Array.isArray(remove) || !remove.length) {
@@ -257,6 +269,7 @@ export function pullAll<T, U>(input: T[] = [], remove: U[] = []) {
     return input;
   }
   // actual filtration
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   return input.filter((val) => !remove.includes(val as any));
 }
 
@@ -334,11 +347,7 @@ export function resolveEolSetting(
 // ----------------------------------------------------------------
 
 export function hasOwnProp(obj: unknown, prop: string): boolean {
-  return (
-    isPlainObject(obj) &&
-    isStr(prop) &&
-    Object.prototype.hasOwnProperty.call(obj, prop)
-  );
+  return isPlainObject(obj) && isStr(prop) && prop in obj;
 }
 
 // ----------------------------------------------------------------

@@ -16,9 +16,15 @@ declare const rawReplacementMark = "\uFFFD";
 declare const backtick = "`";
 declare const multiplicationSign = "\u00D7";
 declare const punctuationChars: string[];
-interface Obj {
-  [key: string]: any;
+type JSONValue = string | number | boolean | null | JSONObject | JSONArray;
+type JsonObject = {
+  [Key in string]?: JSONValue;
+};
+type JSONArray = JSONValue[];
+interface JSONObject {
+  [key: string]: JSONValue;
 }
+type Obj = JSONObject;
 type EolChar = "\n" | "\r" | "\r\n";
 type EolSetting = "lf" | "crlf" | "cr";
 declare function isNumberChar(value: unknown): boolean;
@@ -37,7 +43,7 @@ declare const removeTrailingSlash: <T>(value: T) => string | T;
  * @param value unknown
  * @returns boolean
  */
-declare function isPlainObject(value: unknown): boolean;
+declare function isPlainObject(value: unknown): value is JSONObject;
 /**
  * @param str input string
  * @param index starting index
@@ -94,6 +100,10 @@ declare const inlineTags: Set<string>;
 export {
   EolChar,
   EolSetting,
+  JSONArray,
+  JSONObject,
+  JSONValue,
+  JsonObject,
   Obj,
   backslash,
   backtick,
