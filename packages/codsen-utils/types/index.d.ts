@@ -105,7 +105,10 @@ declare const inlineTags: Set<string>;
  * @param whatToMatch - string to match
  * @returns boolean
  */
-declare function includes(arr: unknown, whatToMatch: string | RegExp): boolean;
+declare function includes(
+  arr: (string | RegExp)[],
+  whatToMatch: string
+): boolean;
 
 export {
   EolChar,

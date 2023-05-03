@@ -446,13 +446,16 @@ export const inlineTags = new Set([
  * @param whatToMatch - string to match
  * @returns boolean
  */
-export function includes(arr: unknown, whatToMatch: string | RegExp): boolean {
+export function includes(
+  arr: (string | RegExp)[],
+  whatToMatch: string
+): boolean {
   if (!Array.isArray(arr) || !arr.length) {
     return false;
   }
   return arr.some(
     (val) =>
-      (isRegExp(val) && (whatToMatch as string).match(val)) ||
+      (isRegExp(val) && whatToMatch.match(val)) ||
       (typeof val === "string" && whatToMatch === val)
   );
 }
