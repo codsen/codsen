@@ -231,6 +231,12 @@ export function isNull(something: unknown): something is null {
 
 // ----------------------------------------------------------------
 
+export function isRegExp(something: any): something is RegExp {
+  return something instanceof RegExp;
+}
+
+// ----------------------------------------------------------------
+
 /**
  * Gives array of indexes of all found substring occurrences
  * @param string source string
@@ -429,3 +435,24 @@ export const inlineTags = new Set([
   "video",
   "wbr",
 ]);
+
+// -----------------------------------------------------------------
+
+/**
+ * Like Array.prototype.includes() but it takes a mix of strings and/or
+ * regex'es, and matches that against a string. It's also a friendly API,
+ * it will not throw if the inputs are wrong.
+ * @param arr - array of zero or more strings or regex'es
+ * @param whatToMatch - string to match
+ * @returns boolean
+ */
+export function includes(arr: unknown, whatToMatch: string | RegExp): boolean {
+  if (!Array.isArray(arr) || !arr.length) {
+    return false;
+  }
+  return arr.some(
+    (val) =>
+      (isRegExp(val) && (whatToMatch as string).match(val)) ||
+      (typeof val === "string" && whatToMatch === val)
+  );
+}

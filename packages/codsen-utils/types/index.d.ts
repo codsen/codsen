@@ -63,6 +63,7 @@ declare function isNum(something: unknown): something is number;
 declare function isInt(something: unknown): something is number;
 declare function isBool(something: unknown): something is boolean;
 declare function isNull(something: unknown): something is null;
+declare function isRegExp(something: any): something is RegExp;
 /**
  * Gives array of indexes of all found substring occurrences
  * @param string source string
@@ -96,6 +97,15 @@ declare function resolveEolSetting(
 declare function hasOwnProp(obj: unknown, prop: string): boolean;
 declare const voidTags: string[];
 declare const inlineTags: Set<string>;
+/**
+ * Like Array.prototype.includes() but it takes a mix of strings and/or
+ * regex'es, and matches that against a string. It's also a friendly API,
+ * it will not throw if the inputs are wrong.
+ * @param arr - array of zero or more strings or regex'es
+ * @param whatToMatch - string to match
+ * @returns boolean
+ */
+declare function includes(arr: unknown, whatToMatch: string | RegExp): boolean;
 
 export {
   EolChar,
@@ -114,6 +124,7 @@ export {
   findAllIdx,
   hairspace,
   hasOwnProp,
+  includes,
   inlineTags,
   isBool,
   isCurrencyChar,
@@ -127,6 +138,7 @@ export {
   isNumberChar,
   isPlainObject,
   isQuote,
+  isRegExp,
   isStr,
   isUppercaseLetter,
   isWhitespaceChar,
