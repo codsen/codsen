@@ -2068,7 +2068,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
             console.log(
               `2069 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} THIS UNFINISHED COMMENT`
             );
-          (finalIndexesToDelete as any).push(
+          finalIndexesToDelete.push([
             ...expander({
               str,
               from: styleCommentStartedAt,
@@ -2077,8 +2077,8 @@ function crush(str: string, opts?: Partial<Opts>): Res {
                 DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS || "",
               ifRightSideIncludesThisThenCropTightly:
                 DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || "",
-            })
-          );
+            }),
+          ]);
         } else if (whitespaceStartedAt && str[i] !== "\n" && str[i] !== "\r") {
           // catch trailing whitespace at the end of the string which is not legit
           // trailing linebreak
