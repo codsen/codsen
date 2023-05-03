@@ -496,8 +496,8 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
 
       // 2. add the current-one since breakpoint
       if (str[i]?.trim().length) {
-        lengthSinceTheLastSuitableBreakpoint += (resolvedOpts as any)
-          .letterWidths[deburr(str[i])];
+        lengthSinceTheLastSuitableBreakpoint +=
+          resolvedOpts.letterWidths[deburr(str[i])];
         DEV &&
           console.log(
             `503 ${`\u001b[${32}m${`INCREASE`}\u001b[${39}m`} ${`\u001b[${33}m${`lengthSinceTheLastSuitableBreakpoint`}\u001b[${39}m`} now = ${lengthSinceTheLastSuitableBreakpoint}`
