@@ -1,4 +1,5 @@
 import { version as v } from "../package.json";
+import { includes } from "codsen-utils";
 import languageJson from "./tag_language.json";
 import extlangJson from "./tag_extlang.json";
 import grandfatheredJson from "./tag_grandfathered.json";
@@ -11,22 +12,6 @@ const version: string = v;
 
 declare let DEV: boolean;
 // import ranged from "./tag_ranged.json";
-
-function isRegExp(something: any): boolean {
-  return something instanceof RegExp;
-}
-
-// Array.prototype.includes() beefed up to support regexp too
-function includes(arr: string[] | any, whatToMatch: string | RegExp): boolean {
-  if (!Array.isArray(arr) || !arr.length) {
-    return false;
-  }
-  return arr.some(
-    (val) =>
-      (isRegExp(val) && (whatToMatch as string).match(val)) ||
-      (typeof val === "string" && whatToMatch === val)
-  );
-}
 
 type Res =
   | {
@@ -105,7 +90,7 @@ function isLangCode(str: string): Res {
   if (!str.match(r1)) {
     DEV &&
       console.log(
-        `108 isLangCode(): ${`\u001b[${31}m${`R1`}\u001b[${39}m`} failed`
+        `093 isLangCode(): ${`\u001b[${31}m${`R1`}\u001b[${39}m`} failed`
       );
 
     // wipe all arrays:
@@ -126,7 +111,7 @@ function isLangCode(str: string): Res {
   if (includes(grandfathered, str)) {
     DEV &&
       console.log(
-        `129 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} grandfathered tag`
+        `114 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} grandfathered tag`
       );
 
     // wipe all arrays:
@@ -150,7 +135,7 @@ function isLangCode(str: string): Res {
   let split: string[] | undefined = str.toLowerCase().split("-");
   DEV &&
     console.log(
-      `153 isLangCode(): ${`\u001b[${32}m${`THE SPLIT`}\u001b[${39}m`} ${`\u001b[${33}m${`split`}\u001b[${39}m`} = ${JSON.stringify(
+      `138 isLangCode(): ${`\u001b[${32}m${`THE SPLIT`}\u001b[${39}m`} ${`\u001b[${33}m${`split`}\u001b[${39}m`} = ${JSON.stringify(
         split,
         null,
         4
@@ -218,7 +203,7 @@ function isLangCode(str: string): Res {
     if (split[i] === "x") {
       if (!split[i + 1]) {
         DEV &&
-          console.log(`221 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
+          console.log(`206 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
 
         // wipe all arrays:
         language = undefined;
@@ -240,9 +225,9 @@ function isLangCode(str: string): Res {
 
       DEV &&
         console.log(
-          `243 PRIVATE SUBTAG DETECTED, skipping checks for subsequent subtags`
+          `228 PRIVATE SUBTAG DETECTED, skipping checks for subsequent subtags`
         );
-      DEV && console.log(`245 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} true`);
+      DEV && console.log(`230 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} true`);
       // TODO - add more logic
 
       // wipe all arrays:
@@ -262,9 +247,9 @@ function isLangCode(str: string): Res {
 
     // catch multiple recognised region tags
     if (regionMatched && region.includes(split[i])) {
-      DEV && console.log(`265 multiple recognised region subtags`);
+      DEV && console.log(`250 multiple recognised region subtags`);
       DEV &&
-        console.log(`267 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
+        console.log(`252 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
 
       let message = `Two region subtags, "${regionMatched}" and "${split[i]}".`;
 
@@ -310,11 +295,11 @@ function isLangCode(str: string): Res {
 
     // validate the first element
     if (i === 0) {
-      DEV && console.log(`313 isLangCode(): first element, LANGUAGE, clauses`);
+      DEV && console.log(`298 isLangCode(): first element, LANGUAGE, clauses`);
 
       DEV &&
         console.log(
-          `317 isLangCode(): ${`\u001b[${33}m${`split[0]`}\u001b[${39}m`} = ${JSON.stringify(
+          `302 isLangCode(): ${`\u001b[${33}m${`split[0]`}\u001b[${39}m`} = ${JSON.stringify(
             split[0],
             null,
             4
@@ -326,110 +311,110 @@ function isLangCode(str: string): Res {
         if (includes(language, split[i])) {
           DEV &&
             console.log(
-              `329 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`language`}\u001b[${39}m`} subtag`
+              `314 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`language`}\u001b[${39}m`} subtag`
             );
 
           languageMatched = split[i];
           DEV &&
             console.log(
-              `335 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`languageMatched`}\u001b[${39}m`} = ${languageMatched}`
+              `320 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`languageMatched`}\u001b[${39}m`} = ${languageMatched}`
             );
 
           allOK = true;
           DEV &&
             console.log(
-              `341 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
+              `326 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
             );
         } else {
           DEV &&
             console.log(
-              `346 ${`\u001b[${31}m${`language subtag not recognised`}\u001b[${39}m`} - ${`\u001b[${31}m${`allOK not set`}\u001b[${39}m`}`
+              `331 ${`\u001b[${31}m${`language subtag not recognised`}\u001b[${39}m`} - ${`\u001b[${31}m${`allOK not set`}\u001b[${39}m`}`
             );
         }
       }
     } else if (i === 1) {
       DEV &&
         console.log(
-          `353 isLangCode(): second element, either EXTENSION or SCRIPT, clauses`
+          `338 isLangCode(): second element, either EXTENSION or SCRIPT, clauses`
         );
       // validate
       if (type === "normal") {
         if (includes(script, split[i])) {
           DEV &&
             console.log(
-              `360 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`script`}\u001b[${39}m`} subtag`
+              `345 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`script`}\u001b[${39}m`} subtag`
             );
 
           scriptMatched = split[i];
           DEV &&
             console.log(
-              `366 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`scriptMatched`}\u001b[${39}m`} = ${scriptMatched}`
+              `351 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`scriptMatched`}\u001b[${39}m`} = ${scriptMatched}`
             );
 
           allOK = true;
           DEV &&
             console.log(
-              `372 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
+              `357 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
             );
         } else if (includes(extlang, split[i])) {
           DEV &&
             console.log(
-              `377 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`extlang`}\u001b[${39}m`} subtag`
+              `362 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`extlang`}\u001b[${39}m`} subtag`
             );
 
           extlangMatched = split[i];
           DEV &&
             console.log(
-              `383 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`extlangMatched`}\u001b[${39}m`} = ${extlangMatched}`
+              `368 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`extlangMatched`}\u001b[${39}m`} = ${extlangMatched}`
             );
 
           allOK = true;
           DEV &&
             console.log(
-              `389 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
+              `374 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
             );
         } else if (includes(region, split[i])) {
           DEV &&
             console.log(
-              `394 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`region`}\u001b[${39}m`} subtag`
+              `379 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`region`}\u001b[${39}m`} subtag`
             );
 
           regionMatched = split[i];
           DEV &&
             console.log(
-              `400 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`regionMatched`}\u001b[${39}m`} = ${regionMatched}`
+              `385 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`regionMatched`}\u001b[${39}m`} = ${regionMatched}`
             );
 
           allOK = true;
           DEV &&
             console.log(
-              `406 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
+              `391 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
             );
         } else if (includes(variant, split[i])) {
           DEV &&
             console.log(
-              `411 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`variant`}\u001b[${39}m`} subtag`
+              `396 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`variant`}\u001b[${39}m`} subtag`
             );
 
           variantMatched = split[i];
           DEV &&
             console.log(
-              `417 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`variantMatched`}\u001b[${39}m`} = ${variantMatched}`
+              `402 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`variantMatched`}\u001b[${39}m`} = ${variantMatched}`
             );
 
           allOK = true;
           DEV &&
             console.log(
-              `423 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
+              `408 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
             );
 
           if (!variantGathered.includes(split[i])) {
             variantGathered.push(split[i]);
           } else {
-            DEV && console.log(`429 ERROR! Repeated variant!`);
+            DEV && console.log(`414 ERROR! Repeated variant!`);
             DEV &&
               console.log(
-                `432 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`
+                `417 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`
               );
 
             let message = `Repeated variant subtag, "${split[i]}".`;
@@ -455,7 +440,7 @@ function isLangCode(str: string): Res {
           // neither extlang nor script
           DEV &&
             console.log(
-              `458 ${`\u001b[${31}m${`script subtag not recognised`}\u001b[${39}m`}`
+              `443 ${`\u001b[${31}m${`script subtag not recognised`}\u001b[${39}m`}`
             );
         }
       }
@@ -469,72 +454,72 @@ function isLangCode(str: string): Res {
         // * region (language-extlang-region)
         if (languageMatched && extlangMatched) {
           // similar to language-extlang-script-region
-          DEV && console.log(`472 inside language + extlang matched`);
+          DEV && console.log(`457 inside language + extlang matched`);
 
           // match script
           if (includes(script, split[i])) {
             DEV &&
               console.log(
-                `478 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`script`}\u001b[${39}m`} subtag`
+                `463 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`script`}\u001b[${39}m`} subtag`
               );
 
             scriptMatched = split[i];
             DEV &&
               console.log(
-                `484 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`scriptMatched`}\u001b[${39}m`} = ${scriptMatched}`
+                `469 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`scriptMatched`}\u001b[${39}m`} = ${scriptMatched}`
               );
 
             allOK = true;
             DEV &&
               console.log(
-                `490 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
+                `475 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
               );
           } else if (includes(region, split[i])) {
             // language-extlang-region
             // match region
             DEV &&
               console.log(
-                `497 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`region`}\u001b[${39}m`} subtag`
+                `482 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`region`}\u001b[${39}m`} subtag`
               );
 
             regionMatched = split[i];
             DEV &&
               console.log(
-                `503 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`regionMatched`}\u001b[${39}m`} = ${regionMatched}`
+                `488 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`regionMatched`}\u001b[${39}m`} = ${regionMatched}`
               );
 
             allOK = true;
             DEV &&
               console.log(
-                `509 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
+                `494 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
               );
           }
         } else if (languageMatched && scriptMatched) {
           // similar to language-script-region
-          DEV && console.log(`514 inside language + script matched`);
+          DEV && console.log(`499 inside language + script matched`);
 
           // match region
           if (includes(region, split[i])) {
             DEV &&
               console.log(
-                `520 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`region`}\u001b[${39}m`} subtag`
+                `505 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`region`}\u001b[${39}m`} subtag`
               );
 
             regionMatched = split[i];
             DEV &&
               console.log(
-                `526 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`regionMatched`}\u001b[${39}m`} = ${regionMatched}`
+                `511 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`regionMatched`}\u001b[${39}m`} = ${regionMatched}`
               );
 
             allOK = true;
             DEV &&
               console.log(
-                `532 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
+                `517 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
               );
           }
         } else if (languageMatched && regionMatched) {
           // language-region-variant
-          DEV && console.log(`537 inside language + region matched`);
+          DEV && console.log(`522 inside language + region matched`);
 
           // similar to de-CH-1901 or ca-ES-VALENCIA
 
@@ -542,28 +527,28 @@ function isLangCode(str: string): Res {
           if (includes(variant, split[i])) {
             DEV &&
               console.log(
-                `545 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`variant`}\u001b[${39}m`} subtag`
+                `530 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`variant`}\u001b[${39}m`} subtag`
               );
 
             variantMatched = split[i];
             DEV &&
               console.log(
-                `551 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`variantMatched`}\u001b[${39}m`} = ${variantMatched}`
+                `536 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`variantMatched`}\u001b[${39}m`} = ${variantMatched}`
               );
 
             allOK = true;
             DEV &&
               console.log(
-                `557 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
+                `542 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
               );
 
             if (!variantGathered.includes(split[i])) {
               variantGathered.push(split[i]);
             } else {
-              DEV && console.log(`563 ERROR! Repeated variant!`);
+              DEV && console.log(`548 ERROR! Repeated variant!`);
               DEV &&
                 console.log(
-                  `566 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`
+                  `551 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`
                 );
 
               let message = `Repeated variant subtag, "${split[i]}".`;
@@ -598,19 +583,19 @@ function isLangCode(str: string): Res {
           if (includes(region, split[i])) {
             DEV &&
               console.log(
-                `601 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`region`}\u001b[${39}m`} subtag`
+                `586 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`region`}\u001b[${39}m`} subtag`
               );
 
             regionMatched = split[i];
             DEV &&
               console.log(
-                `607 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`regionMatched`}\u001b[${39}m`} = ${regionMatched}`
+                `592 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`regionMatched`}\u001b[${39}m`} = ${regionMatched}`
               );
 
             allOK = true;
             DEV &&
               console.log(
-                `613 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
+                `598 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
               );
           }
         } else if (languageMatched && scriptMatched && regionMatched) {
@@ -618,26 +603,26 @@ function isLangCode(str: string): Res {
           if (includes(variant, split[i])) {
             DEV &&
               console.log(
-                `621 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`variant`}\u001b[${39}m`} subtag`
+                `606 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`variant`}\u001b[${39}m`} subtag`
               );
 
             variantMatched = split[i];
             DEV &&
               console.log(
-                `627 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`variantMatched`}\u001b[${39}m`} = ${variantMatched}`
+                `612 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`variantMatched`}\u001b[${39}m`} = ${variantMatched}`
               );
 
             allOK = true;
             DEV &&
               console.log(
-                `633 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
+                `618 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
               );
           }
         }
       }
     }
 
-    DEV && console.log(`640 non-positional clauses`);
+    DEV && console.log(`625 non-positional clauses`);
 
     //
     //
@@ -652,7 +637,7 @@ function isLangCode(str: string): Res {
     // catch the singleton-extension
     if (split[i].match(singletonRegex)) {
       if (i === 0) {
-        DEV && console.log(`655 starts with singleton!`);
+        DEV && console.log(`640 starts with singleton!`);
 
         let message = `Starts with singleton, "${split[i]}".`;
 
@@ -674,10 +659,10 @@ function isLangCode(str: string): Res {
         };
       }
       // ELSE - continue the checks
-      DEV && console.log(`677 continue checks`);
+      DEV && console.log(`662 continue checks`);
       if (!languageMatched) {
         DEV &&
-          console.log(`680 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
+          console.log(`665 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
 
         // wipe all arrays:
         language = undefined;
@@ -699,12 +684,12 @@ function isLangCode(str: string): Res {
       if (!singletonGathered.includes(split[i])) {
         DEV &&
           console.log(
-            `702 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${split[i]}`
+            `687 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${split[i]}`
           );
         singletonGathered.push(split[i]);
         DEV &&
           console.log(
-            `707 ${`\u001b[${32}m${`NOW`}\u001b[${39}m`} ${`\u001b[${33}m${`singletonGathered`}\u001b[${39}m`} = ${JSON.stringify(
+            `692 ${`\u001b[${32}m${`NOW`}\u001b[${39}m`} ${`\u001b[${33}m${`singletonGathered`}\u001b[${39}m`} = ${JSON.stringify(
               singletonGathered,
               null,
               4
@@ -712,7 +697,7 @@ function isLangCode(str: string): Res {
           );
       } else {
         DEV &&
-          console.log(`715 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
+          console.log(`700 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
 
         let message = `Two extensions with same single-letter prefix "${split[i]}".`;
 
@@ -735,10 +720,10 @@ function isLangCode(str: string): Res {
       }
 
       if (split[i + 1]) {
-        DEV && console.log(`738`);
+        DEV && console.log(`723`);
         DEV &&
           console.log(
-            `741 split[i + 1].match(singletonRegex) = ${split[i + 1].match(
+            `726 split[i + 1].match(singletonRegex) = ${split[i + 1].match(
               singletonRegex
             )}`
           );
@@ -747,15 +732,15 @@ function isLangCode(str: string): Res {
           extlangMatched = split[i];
           DEV &&
             console.log(
-              `750 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}; ${`\u001b[${33}m${`extlangMatched`}\u001b[${39}m`} = ${extlangMatched}`
+              `735 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}; ${`\u001b[${33}m${`extlangMatched`}\u001b[${39}m`} = ${extlangMatched}`
             );
           i += 1;
-          DEV && console.log(`753 SET i++, now i = ${i}; then CONTINUE`);
+          DEV && console.log(`738 SET i++, now i = ${i}; then CONTINUE`);
           continue;
         } else {
-          DEV && console.log(`756 singleton sequence caught`);
+          DEV && console.log(`741 singleton sequence caught`);
           DEV &&
-            console.log(`758 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
+            console.log(`743 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
 
           let message = `Multiple singleton sequence "${split[i]}", "${
             split[i + 1]
@@ -780,7 +765,7 @@ function isLangCode(str: string): Res {
         }
       } else {
         DEV &&
-          console.log(`783 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
+          console.log(`768 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
 
         let message = `Ends with singleton, "${split[i]}".`;
 
@@ -807,18 +792,18 @@ function isLangCode(str: string): Res {
     if (!allOK && variantMatched && includes(variant, split[i])) {
       DEV &&
         console.log(
-          `810 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`variant`}\u001b[${39}m`} subtag`
+          `795 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} ${`\u001b[${36}m${`variant`}\u001b[${39}m`} subtag`
         );
 
       if (i && includes(variant, split[i - 1])) {
-        DEV && console.log(`814 variant subtag in front of this confirmed`);
+        DEV && console.log(`799 variant subtag in front of this confirmed`);
 
         if (!variantGathered.includes(split[i])) {
           variantGathered.push(split[i]);
         } else {
-          DEV && console.log(`819 ERROR! Repeated variant!`);
+          DEV && console.log(`804 ERROR! Repeated variant!`);
           DEV &&
-            console.log(`821 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
+            console.log(`806 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
 
           let message = `Repeated variant subtag, "${split[i]}".`;
 
@@ -843,16 +828,16 @@ function isLangCode(str: string): Res {
         allOK = true;
         DEV &&
           console.log(
-            `846 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
+            `831 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
           );
       } else {
         DEV &&
           console.log(
-            `851 ${`\u001b[${31}m${`multiple variant subtags must be consecutive!`}\u001b[${39}m`}`
+            `836 ${`\u001b[${31}m${`multiple variant subtags must be consecutive!`}\u001b[${39}m`}`
           );
         variantGathered.push(split[i]);
         DEV &&
-          console.log(`855 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
+          console.log(`840 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
 
         let message = `Variant subtags ${variantGathered
           .map((val) => `"${val}"`)
@@ -882,13 +867,13 @@ function isLangCode(str: string): Res {
       if (split[i].length > 1) {
         DEV &&
           console.log(
-            `885 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
+            `870 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${allOK}`
           );
         allOK = true;
       }
     }
 
-    DEV && console.log(`891`);
+    DEV && console.log(`876`);
 
     //
     //
@@ -913,9 +898,9 @@ function isLangCode(str: string): Res {
     //
 
     if (!allOK) {
-      DEV && console.log(`916 bottom reached, ${split[i]} was not matched!`);
+      DEV && console.log(`901 bottom reached, ${split[i]} was not matched!`);
       DEV &&
-        console.log(`918 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
+        console.log(`903 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
 
       let message = `Unrecognised language subtag, "${split[i]}".`;
 
@@ -980,14 +965,14 @@ function isLangCode(str: string): Res {
       );
   }
 
-  DEV && console.log(`983 end reached`);
+  DEV && console.log(`968 end reached`);
 
   // ---------------------------------------------------------------------------
 
   // default answer is true, but we'll make
   // hell of a check obstacles to reach this point
 
-  DEV && console.log(`990 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} true`);
+  DEV && console.log(`975 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} true`);
 
   // wipe all arrays:
   language = undefined;
