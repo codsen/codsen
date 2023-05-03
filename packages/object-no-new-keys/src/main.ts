@@ -1,19 +1,8 @@
-import { hasOwnProp, isPlainObject as isObj, Obj } from "codsen-utils";
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { hasOwnProp, isPlainObject as isObj, JSONValue } from "codsen-utils";
 import { version as v } from "../package.json";
 
 const version: string = v;
-
-/* eslint no-use-before-define: 0 */
-// From "type-fest" by Sindre Sorhus:
-export type JsonValue =
-  | string
-  | number
-  | boolean
-  | null
-  | JsonObject
-  | JsonArray;
-export type JsonObject = { [Key in string]?: JsonValue };
-export type JsonArray = JsonValue[];
 
 interface InnerVar {
   path: string;
@@ -28,8 +17,8 @@ const defaults: Opts = {
 };
 
 function noNewKeys(
-  input: JsonValue,
-  reference: JsonValue,
+  input: JSONValue,
+  reference: JSONValue,
   opts?: Partial<Opts>
 ): string[] {
   if (opts && !isObj(opts)) {
@@ -56,7 +45,7 @@ function noNewKeys(
   function objectNoNewKeysInternal(
     resolvedInput: any,
     resolvedRef: any,
-    resolvedOpts: Obj,
+    resolvedOpts: Opts,
     innerVar: InnerVar
   ) {
     let temp;
