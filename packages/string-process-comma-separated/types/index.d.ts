@@ -1,6 +1,8 @@
+import { JSONValue } from "codsen-utils";
+
 declare const version: string;
 type ErrCb = (
-  indexes: [from: number, to: number][],
+  indexes: [from: number, to: number, whatToAdd?: JSONValue][],
   explanation: string,
   isFixable: boolean
 ) => void;
