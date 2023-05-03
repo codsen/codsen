@@ -1,7 +1,4 @@
 declare const version: string;
-interface Obj {
-  [key: string]: any;
-}
 interface Opts {
   targetJSON: boolean;
 }
@@ -16,4 +13,4 @@ declare function helga(
   beautified: string;
 };
 
-export { Obj, Opts, defaults, helga, version };
+export { Opts, defaults, helga, version };

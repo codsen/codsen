@@ -4,9 +4,6 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-export interface Obj {
-  [key: string]: any;
-}
 export interface Opts {
   targetJSON: boolean;
 }
@@ -14,7 +11,7 @@ const defaults = {
   targetJSON: false,
 };
 
-const escapes: Obj = {
+const escapes = {
   b: "\b",
   f: "\f",
   n: "\n",
@@ -30,8 +27,11 @@ const escapes: Obj = {
 function unescape(str: string): string {
   return str.replace(/\\([bfnrtv'"\\0])/g, (match) => {
     DEV && console.log(`${`\u001b[${33}m${`match`}\u001b[${39}m`} = ${match}`);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return (
-      escapes[match] ||
+      match in escapes ||
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       (match && (match.startsWith(`\\`) ? escapes[match.slice(1)] : ""))
     );
   });
