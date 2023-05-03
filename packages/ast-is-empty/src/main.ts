@@ -9,7 +9,7 @@ const version: string = v;
 /**
  * Find out, is nested array/object/string/AST tree is empty
  */
-function isEmpty(input: any): boolean | null {
+function isEmpty(input: unknown): boolean | null {
   let i;
   let len;
   let res: boolean | null = true;
