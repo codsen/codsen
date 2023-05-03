@@ -41,7 +41,7 @@ function parseTap(something: string | StreamInterface): Res | Promise<Res> {
           //     4
           //   )}`
           // );
-          counter.readLine(line);
+          counter.readLine(line as string);
           next();
         })
       );
