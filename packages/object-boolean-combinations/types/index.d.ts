@@ -1,13 +1,9 @@
+import { Obj } from "codsen-utils";
+
 declare const version: string;
 interface BoolObj {
   [key: string]: boolean;
 }
-interface Obj {
-  [key: string]: any;
-}
-declare function combinations(
-  input: Obj,
-  Override?: undefined | Obj
-): BoolObj[];
+declare function combinations(input: Obj, Override?: undefined | Obj): Obj[];
 
-export { BoolObj, Obj, combinations, version };
+export { BoolObj, combinations, version };

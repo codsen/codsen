@@ -2,7 +2,7 @@
 
 import intersection from "lodash.intersection";
 import pull from "lodash.pull";
-import { isPlainObject as isObj } from "codsen-utils";
+import { isPlainObject as isObj, Obj } from "codsen-utils";
 import clone from "lodash.clonedeep";
 
 import { version as v } from "../package.json";
@@ -12,11 +12,8 @@ const version: string = v;
 export interface BoolObj {
   [key: string]: boolean;
 }
-export interface Obj {
-  [key: string]: any;
-}
 
-function combinations(input: Obj, Override: undefined | Obj = {}): BoolObj[] {
+function combinations(input: Obj, Override: undefined | Obj = {}): Obj[] {
   //
   // FUNCTIONS
   // =========
@@ -44,12 +41,12 @@ function combinations(input: Obj, Override: undefined | Obj = {}): BoolObj[] {
   }
   if (!isObj(input)) {
     throw new Error(
-      "[THROW_ID_02] the first input object must be a true object"
+      "[THROW_ID_02] the first input object must be a plain object"
     );
   }
   if (Override && !isObj(Override)) {
     throw new Error(
-      "[THROW_ID_03] the second override object must be a true object"
+      "[THROW_ID_03] the second override object must be a plain object"
     );
   }
 
@@ -60,7 +57,7 @@ function combinations(input: Obj, Override: undefined | Obj = {}): BoolObj[] {
   // =====
 
   let propertiesToMix = Object.keys(incomingObject);
-  let outcomingObjectsArray: BoolObj[] = [];
+  let outgoingObjectsArray: Obj[] = [];
   let propertiesToBeOverridden: string[] = [];
 
   // if there's override, prepare an alternative (a subset) array propertiesToMix
@@ -83,22 +80,22 @@ function combinations(input: Obj, Override: undefined | Obj = {}): BoolObj[] {
   let boolCombinations = combi(Object.keys(propertiesToMix).length);
 
   let tempObject: BoolObj;
-  boolCombinations.forEach((_elem1, index1) => {
+  boolCombinations.forEach((_el1, index1) => {
     tempObject = {};
-    propertiesToMix.forEach((elem2, index2) => {
-      tempObject[elem2] = boolCombinations[index1][index2] === 1;
+    propertiesToMix.forEach((el2, index2) => {
+      tempObject[el2] = boolCombinations[index1][index2] === 1;
     });
-    outcomingObjectsArray.push(tempObject);
+    outgoingObjectsArray.push(tempObject);
   });
 
   // if there's override, append the static override values on each property of the
   // propertiesToMix array:
   // ------------------------------------------------------------------------------
   if (isObj(overrideObject) && Object.keys(overrideObject).length) {
-    outcomingObjectsArray.forEach((elem3) => {
-      propertiesToBeOverridden.forEach((elem4) => {
-        // eslint-disable-next-line no-param-reassign
-        elem3[elem4] = overrideObject[elem4];
+    outgoingObjectsArray.forEach((el3) => {
+      propertiesToBeOverridden.forEach((el4) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        el3[el4] = overrideObject[el4];
       });
     });
   }
@@ -106,7 +103,7 @@ function combinations(input: Obj, Override: undefined | Obj = {}): BoolObj[] {
   // RETURN
   // ======
 
-  return outcomingObjectsArray;
+  return outgoingObjectsArray;
 }
 
 export { combinations, version };
