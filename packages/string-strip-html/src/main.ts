@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { isPlainObject as isObj, hasOwnProp } from "codsen-utils";
-import trim from "lodash.trim";
-import without from "lodash.without";
+import { trim, without } from "lodash";
 import { decode } from "html-entities";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
