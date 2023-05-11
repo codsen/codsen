@@ -1,11 +1,12 @@
-import clone from "lodash.clonedeep";
+import rfdc from "rfdc";
 import { compare } from "ast-compare";
 import { traverse } from "ast-monkey-traverse";
-import { isPlainObject as isObj } from "codsen-utils";
+import { isPlainObject as isObj, JSONValue } from "codsen-utils";
 
 import { version as v } from "../package.json";
 
 const version: string = v;
+const clone = rfdc();
 
 // From "type-fest" by Sindre Sorhus:
 export type JsonValue =
@@ -66,32 +67,35 @@ function deleteObj<T extends JsonValue>(
       matchStrictly: resolvedOpts.matchKeysStrictly,
     })
   ) {
-    return {} as any;
+    return {} as T;
   }
 
   // traversal
-  resolvedInput = traverse(resolvedInput, (key, val) => {
-    current = val !== undefined ? val : key;
-    if (isObj(current)) {
-      if (
-        isObj(objToDelete) &&
-        isObj(current) &&
-        !Object.keys(objToDelete).length &&
-        !Object.keys(current).length
-      ) {
-        return NaN;
+  resolvedInput = traverse(
+    resolvedInput,
+    (key: string, val: JSONValue | undefined) => {
+      current = val !== undefined ? val : key;
+      if (isObj(current)) {
+        if (
+          isObj(objToDelete) &&
+          isObj(current) &&
+          !Object.keys(objToDelete).length &&
+          !Object.keys(current).length
+        ) {
+          return NaN;
+        }
+        if (
+          compare(current, objToDelete, {
+            hungryForWhitespace: resolvedOpts.hungryForWhitespace,
+            matchStrictly: resolvedOpts.matchKeysStrictly,
+          })
+        ) {
+          return NaN;
+        }
       }
-      if (
-        compare(current, objToDelete, {
-          hungryForWhitespace: resolvedOpts.hungryForWhitespace,
-          matchStrictly: resolvedOpts.matchKeysStrictly,
-        })
-      ) {
-        return NaN;
-      }
+      return current;
     }
-    return current;
-  });
+  );
   return resolvedInput;
 }
 
