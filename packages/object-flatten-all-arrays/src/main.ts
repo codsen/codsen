@@ -1,5 +1,7 @@
-import merge from "lodash.merge";
-import clone from "lodash.clonedeep";
+import { merge } from "lodash-es";
+import rfdc from "rfdc";
+
+const clone = rfdc();
 import { isPlainObject as isObj } from "codsen-utils";
 
 import { version as v } from "../package.json";
