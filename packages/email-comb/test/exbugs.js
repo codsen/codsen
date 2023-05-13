@@ -235,7 +235,7 @@ test("06 - color code hashes interpreted correctly, not as id's", () => {
 `
   );
 
-  let intended = ["#head-only-id1", ".mobile_link"];
+  let intended = [".mobile_link", "#head-only-id1"];
 
   equal(actual.deletedFromHead, intended, "06.01");
 });

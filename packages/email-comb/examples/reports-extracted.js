@@ -30,19 +30,19 @@ table#other div#non-existent-id{width:100%; display: inline-block;}
 );
 
 assert.deepEqual(allInHead, [
+  ".non-existent-class",
   "#non-existent-id",
   "#other",
-  ".non-existent-class",
 ]);
-assert.deepEqual(allInBody, ["#unused4", ".unused1", ".unused2", ".unused3"]);
+assert.deepEqual(allInBody, [".unused1", ".unused2", ".unused3", "#unused4"]);
 assert.deepEqual(deletedFromHead, [
+  ".non-existent-class",
   "#non-existent-id",
   "#other",
-  ".non-existent-class",
 ]);
 assert.deepEqual(deletedFromBody, [
-  "#unused4",
   ".unused1",
   ".unused2",
   ".unused3",
+  "#unused4",
 ]);

@@ -31,13 +31,13 @@ test("01 - returned correct info object, nothing to delete from body, damaged HT
 
   equal(
     actual.allInHead,
-    ["#non-existent-id", "#other", ".non-existent-class"],
+    [".non-existent-class", "#non-existent-id", "#other"],
     "01.01"
   );
   equal(actual.allInBody, [], "01.02");
   equal(
     actual.deletedFromHead,
-    ["#non-existent-id", "#other", ".non-existent-class"],
+    [".non-existent-class", "#non-existent-id", "#other"],
     "01.03"
   );
   equal(actual.deletedFromBody, [], "01.04");
@@ -72,22 +72,22 @@ test("02 - returned correct info object, clean HTML", () => {
 
   equal(
     actual.allInHead,
-    ["#non-existent-id", "#other", ".non-existent-class"],
+    [".non-existent-class", "#non-existent-id", "#other"],
     "02.01"
   );
   equal(
     actual.allInBody,
-    ["#unused4", ".unused1", ".unused2", ".unused3"],
+    [".unused1", ".unused2", ".unused3", "#unused4"],
     "02.02"
   );
   equal(
     actual.deletedFromHead,
-    ["#non-existent-id", "#other", ".non-existent-class"],
+    [".non-existent-class", "#non-existent-id", "#other"],
     "02.03"
   );
   equal(
     actual.deletedFromBody,
-    ["#unused4", ".unused1", ".unused2", ".unused3"],
+    [".unused1", ".unused2", ".unused3", "#unused4"],
     "02.04"
   );
 });
@@ -123,7 +123,7 @@ test("03 - as 06.02 but now with whitelist, dirty HTML", () => {
   );
   equal(
     actual.allInHead,
-    ["#non-existent-id", "#other", ".non-existent-class"],
+    [".non-existent-class", "#non-existent-id", "#other"],
     "03.01"
   );
   equal(
@@ -193,16 +193,16 @@ test("05 - more sandwitched classes/ids cases", () => {
 
   equal(
     actual.allInHead,
-    ["#unused-id", "#used-id", ".unused-class", ".used-class"],
+    [".unused-class", ".used-class", "#unused-id", "#used-id"],
     "05.01"
   );
-  equal(actual.allInBody, ["#used-id", ".used-class"], "05.02");
+  equal(actual.allInBody, [".used-class", "#used-id"], "05.02");
   equal(
     actual.deletedFromHead,
-    ["#unused-id", "#used-id", ".unused-class", ".used-class"],
+    [".unused-class", ".used-class", "#unused-id", "#used-id"],
     "05.03"
   );
-  equal(actual.deletedFromBody, ["#used-id", ".used-class"], "05.04");
+  equal(actual.deletedFromBody, [".used-class", "#used-id"], "05.04");
 });
 
 test.run();

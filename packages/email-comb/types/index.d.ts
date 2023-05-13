@@ -1,5 +1,4 @@
 import { Opts as Opts$1 } from "html-crush";
-import { Obj } from "codsen-utils";
 
 declare const version: string;
 interface HeadsAndTailsObj {
@@ -18,6 +17,7 @@ interface Opts {
   reportProgressFuncFrom: number;
   reportProgressFuncTo: number;
 }
+type StringifiedLegend = [string, string];
 interface Res {
   log: {
     timeTakenInMilliseconds: number;
@@ -31,7 +31,7 @@ interface Res {
     nonIndentationsTakeUpPercentageOfOriginal: number;
     commentsLength: number;
     commentsTakeUpPercentageOfOriginal: number;
-    uglified: null | Obj;
+    uglified: null | StringifiedLegend[];
   };
   result: string;
   countAfterCleaning: number;
