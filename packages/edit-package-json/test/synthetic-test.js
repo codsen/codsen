@@ -7,9 +7,10 @@ import { traverse } from "ast-monkey-traverse";
 import { globby } from "globby";
 import path from "path";
 import pMap from "p-map";
-import clone from "lodash.clonedeep";
-
+import rfdc from "rfdc";
 import { set } from "../dist/edit-package-json.esm.js";
+
+const clone = rfdc();
 
 function isStr(something) {
   return typeof something === "string";

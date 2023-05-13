@@ -78,27 +78,27 @@ function compare(eq, testName, pathToProcess, val) {
 
 // if there's fourth input argument, it's SET(), if not, it's DEL()
 
-test("deletes a key from package.json - scenario from update-versions package", () => {
+test("01 - deletes a key from package.json - scenario from update-versions package", () => {
   compare(equal, "upd", "lect.various.devDependencies.4");
 });
 
-test("deletes a key from key which has a value with escaped quotes - minified", () => {
+test("02 - deletes a key from key which has a value with escaped quotes - minified", () => {
   compare(equal, "escaped-quotes-minified", "a");
 });
 
-test("deletes a key from key which has a value with escaped quotes - normal", () => {
+test("03 - deletes a key from key which has a value with escaped quotes - normal", () => {
   compare(equal, "escaped-quotes", "a");
 });
 
-test("updates a key 1", () => {
+test("04 - updates a key 1", () => {
   compare(equal, "bug1", "dependencies.yz", "^1.2.17");
 });
 
-test("updates a key 2", () => {
+test("05 - updates a key 2", () => {
   compare(equal, "bug2", "gh.yz", "3");
 });
 
-test("updates a key 3", () => {
+test("06 - updates a key 3", () => {
   compare(equal, "bug3", "gh.yz", "3");
 });
 
