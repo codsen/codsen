@@ -71,11 +71,9 @@
     }
   },
   "dependencies": {
-    "lodash.trim": "^4.5.1",
+    "@types/lodash-es": "^4.17.7",
+    "lodash-es": "^4.17.21",
     "ranges-apply": "^7.0.8",
     "ranges-push": "^7.0.8"
-  },
-  "devDependencies": {
-    "@types/lodash.trim": "^4.5.7"
   }
 }

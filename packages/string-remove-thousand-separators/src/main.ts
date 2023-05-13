@@ -1,6 +1,6 @@
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
-import trimChars from "lodash.trim";
+import { trim } from "lodash-es";
 
 import { version as v } from "../package.json";
 
@@ -47,7 +47,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
   let resolvedOpts: Opts = { ...defaults, ...opts };
 
   // trim whitespace and wrapping double quotes:
-  let res = trimChars(str.trim(), '"');
+  let res = trim(str.trim(), '"');
 
   // end sooner if it's an empty string:
   if (res === "") {
