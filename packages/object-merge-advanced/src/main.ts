@@ -1,8 +1,6 @@
-import lodashIncludes from "lodash.includes";
+import { includes as lodashIncludes, isDate, isFinite } from "lodash-es";
 import { nonEmpty } from "util-nonempty";
-import isFinite from "lodash.isfinite";
-import clone from "lodash.clonedeep";
-import isDate from "lodash.isdate";
+import rfdc from "rfdc";
 import {
   isPlainObject as isObj,
   hasOwnProp,
@@ -10,11 +8,13 @@ import {
   isStr,
   isNum,
   isBool,
+  compareFn,
 } from "codsen-utils";
 
 import { version as v } from "../package.json";
 import { includesWithGlob } from "./includesWithGlob";
 
+const clone = rfdc();
 const version: string = v;
 
 declare let DEV: boolean;
@@ -318,7 +318,7 @@ function mergeAdvanced(
         }
         // optionally dedupe:
         if (opts.dedupeStringsInArrayValues && temp.every((el) => isStr(el))) {
-          temp = [...new Set(temp)].sort();
+          temp = [...new Set(temp)].sort(compareFn);
         }
         i1 = clone(temp);
       } else {

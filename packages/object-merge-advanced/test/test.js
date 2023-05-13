@@ -3,10 +3,11 @@
 import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import clone from "lodash.clonedeep";
-
+import rfdc from "rfdc";
 import { mergeAdvanced as m } from "../dist/object-merge-advanced.esm.js";
 import { mergeAdvanced } from "./util.js";
+
+const clone = rfdc();
 
 // There should be two (or more) tests in each, with input args swapped, in order to
 // guarantee that there are no sneaky things happening when argument order is backwards
