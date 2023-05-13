@@ -1,4 +1,4 @@
-import pull from "lodash.pull";
+import { pull } from "lodash-es";
 import { splitEasy } from "csv-split-easy";
 import currency from "currency.js";
 
