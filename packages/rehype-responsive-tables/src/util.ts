@@ -1,5 +1,5 @@
 import { visit, EXIT } from "unist-util-visit";
-import iteratee from "lodash.iteratee";
+import { iteratee } from "lodash-es";
 import type {
   Root,
   Element,
