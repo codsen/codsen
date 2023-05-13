@@ -1,6 +1,6 @@
 import { version as v } from "../package.json";
 import { left, right } from "string-left-right";
-import deburr from "lodash.deburr";
+import { deburr } from "lodash-es";
 
 const version: string = v;
 declare let DEV: boolean;
