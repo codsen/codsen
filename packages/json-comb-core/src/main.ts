@@ -8,8 +8,10 @@ import { mergeAdvanced } from "object-merge-advanced";
 import { noNewKeys } from "object-no-new-keys";
 import { existy, isStr, isPlainObject as isObj, Obj } from "codsen-utils";
 import semverCompare from "semver-compare";
-import includes from "lodash.includes";
-import clone from "lodash.clonedeep";
+import { includes } from "lodash-es";
+import rfdc from "rfdc";
+
+const clone = rfdc();
 import sortKeys from "sort-keys";
 import pReduce from "p-reduce";
 import typ from "type-detect";
@@ -110,7 +112,7 @@ function getKeyset(
   let resolvedOpts: GetKeysetOpts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `113 CALLING check-types-mini:\nopts = ${JSON.stringify(
+      `115 CALLING check-types-mini:\nopts = ${JSON.stringify(
         resolvedOpts,
         null,
         4
@@ -549,7 +551,7 @@ function findUnusedSync(
         });
       }
     } else if (arr1.every((el) => Array.isArray(el))) {
-      (arr1 as any[][]).forEach((singleArray, i) => {
+      (arr1 as any as any[][]).forEach((singleArray, i) => {
         res = findUnusedSyncInner(singleArray, opts1, res, `${path}[${i}]`);
       });
     }
