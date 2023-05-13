@@ -435,16 +435,6 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
           res
         );
       },
-      errCb: (ranges: Ranges, message: string) => {
-        DEV &&
-          console.log(
-            `441 isMediaD(): received error range ${JSON.stringify(
-              ranges,
-              null,
-              4
-            )} and message: "${message}"`
-          );
-      },
     });
 
     // PART 3.
@@ -468,11 +458,11 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
 
   DEV &&
     console.log(
-      `471 isMediaD(): ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`
+      `461 isMediaD(): ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`
     );
   DEV &&
     console.log(
-      `475 isMediaD(): ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+      `465 isMediaD(): ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
         res,
         null,
         4
