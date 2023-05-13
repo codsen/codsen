@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.0.9 (2023-05-13)
+
+### Bug Fixes
+
+- correct `opts.ifRightSideIncludesThisCropItToo` edge cases ([49bd408](https://github.com/codsen/codsen/commit/49bd4085167116d30f631ffc45388083becf903e))
+
 ## 4.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

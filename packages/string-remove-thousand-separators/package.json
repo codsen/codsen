@@ -1,6 +1,6 @@
 {
   "name": "string-remove-thousand-separators",
-  "version": "7.0.8",
+  "version": "7.0.9",
   "description": "Detects and removes thousand separators (dot/comma/quote/space) from string-type digits",
   "keywords": [
     "amount",
@@ -73,7 +73,7 @@
   "dependencies": {
     "@types/lodash-es": "^4.17.7",
     "lodash-es": "^4.17.21",
-    "ranges-apply": "^7.0.8",
-    "ranges-push": "^7.0.8"
+    "ranges-apply": "^7.0.9",
+    "ranges-push": "^7.0.9"
   }
 }

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.0.12 (2023-05-13)
+
+### Bug Fixes
+
+- make strict type-aware lint checks pass ([a14e1dc](https://github.com/codsen/codsen/commit/a14e1dc030bef789e75203aa91cbd69e4d90b59c))
+
 ## 4.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

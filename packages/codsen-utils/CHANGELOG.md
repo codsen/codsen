@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.5.0 (2023-05-13)
+
+### Bug Fixes
+
+- type improvements ([6847c21](https://github.com/codsen/codsen/commit/6847c21ce33b36e56b767ef63504d9233810d2e9))
+- type tweaks ([8173408](https://github.com/codsen/codsen/commit/8173408b57f963055cca991a0cb697c9d2d664e4))
+
+### Features
+
+- add `compareFn()` to tackle `@typescript-eslint/require-array-sort-compare` lint rule ([a25524a](https://github.com/codsen/codsen/commit/a25524a027067208b8e94b30b6745790ec278fbe))
+- add `includes()` ([c6cf14e](https://github.com/codsen/codsen/commit/c6cf14e8a7f3fb2a063fcec3381700798341ad42))
+
 # [1.4.0](https://github.com/codsen/codsen/compare/codsen-utils@1.3.1...codsen-utils@1.4.0) (2023-04-16)
 
 ### Features

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 6.1.0 (2023-05-13)
+
+### Features
+
+- correct the type definitions ([7dd8452](https://github.com/codsen/codsen/commit/7dd8452887634e4ff3175ba489c63a011cc60d37))
+
 ## 6.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

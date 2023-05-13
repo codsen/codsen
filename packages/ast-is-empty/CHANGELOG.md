@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.0.10 (2023-05-13)
+
+### Bug Fixes
+
+- type tweaks ([0b924a8](https://github.com/codsen/codsen/commit/0b924a8f8146c750988c1ed921bafb04f564e9fb))
+
 ## 4.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

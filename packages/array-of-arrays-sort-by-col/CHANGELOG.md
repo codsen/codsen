@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.8 (2023-05-13)
+
+### Bug Fixes
+
+- correct the types ([461d902](https://github.com/codsen/codsen/commit/461d9020c8d0f2df1fd28b4d3928e056ab7bc26c))
+
 ## 5.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
