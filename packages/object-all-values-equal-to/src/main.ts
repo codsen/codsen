@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import { isPlainObject as isObj } from "codsen-utils";
-import isEq from "lodash.isequal";
+import { isEqual } from "lodash-es";
 
 import { version as v } from "../package.json";
 
@@ -24,7 +24,7 @@ function allValuesEqualTo(input: any, value: any, resolvedOpts: Opts): boolean {
     if (
       resolvedOpts.arraysMustNotContainPlaceholders &&
       input.length &&
-      input.some((el) => isEq(el, value))
+      input.some((el) => isEqual(el, value))
     ) {
       return false;
     }
@@ -49,7 +49,7 @@ function allValuesEqualTo(input: any, value: any, resolvedOpts: Opts): boolean {
     }
     return true;
   }
-  return isEq(input, value);
+  return isEqual(input, value);
 }
 
 // T H E   E X P O S E D   W R A P P E R   F U N C T I O N
