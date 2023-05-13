@@ -1,7 +1,7 @@
 import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import isEqual from "lodash.isequal";
+import isEqual from "deep-equal";
 import objectPath from "object-path";
 
 import { traverse } from "../dist/ast-monkey-traverse.esm.js";
