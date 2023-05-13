@@ -70,9 +70,7 @@
     "various": {}
   },
   "dependencies": {
-    "lodash.includes": "^4.3.0"
-  },
-  "devDependencies": {
-    "@types/lodash.includes": "^4.3.7"
+    "@types/lodash-es": "^4.17.7",
+    "lodash-es": "^4.17.21"
   }
 }
