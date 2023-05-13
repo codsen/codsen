@@ -75,17 +75,15 @@
     }
   },
   "dependencies": {
+    "@types/lodash-es": "^4.17.7",
     "codsen-utils": "^1.4.0",
     "html-entities": "^2.3.3",
-    "lodash.trim": "^4.5.1",
-    "lodash.without": "^4.4.0",
+    "lodash-es": "^4.17.21",
     "ranges-apply": "^7.0.8",
     "ranges-push": "^7.0.8",
     "string-left-right": "^6.0.11"
   },
   "devDependencies": {
-    "@types/lodash.trim": "^4.5.7",
-    "@types/lodash.without": "^4.4.7",
     "ast-monkey-traverse": "^4.0.9",
     "ranges-invert": "^6.0.8",
     "title": "^3.5.3"
