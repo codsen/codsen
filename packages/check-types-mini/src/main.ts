@@ -1,6 +1,6 @@
 import typ from "type-detect";
 import { traverse } from "ast-monkey-traverse";
-import intersection from "lodash.intersection";
+import { intersection } from "lodash-es";
 import { arrayiffy } from "arrayiffy-if-string";
 import objectPath from "object-path";
 import { isMatch } from "matcher";
