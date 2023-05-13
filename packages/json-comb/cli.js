@@ -43,25 +43,25 @@ const cli = meow(
     flags: {
       normalise: {
         type: "boolean",
-        alias: "n",
+        shortFlag: "n",
         default: false,
       },
       ignore: {
         type: "string",
-        alias: "i",
+        shortFlag: "i",
         isMultiple: true,
       },
       tabs: {
         type: "boolean",
-        alias: "t",
+        shortFlag: "t",
       },
       version: {
         type: "boolean",
-        alias: "v",
+        shortFlag: "v",
       },
       help: {
         type: "boolean",
-        alias: "h",
+        shortFlag: "h",
       },
     },
   }

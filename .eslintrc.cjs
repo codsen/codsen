@@ -152,8 +152,10 @@ module.exports = {
         "@typescript-eslint/array-type": "error",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/prefer-optional-chain": "error",
+        "@typescript-eslint/require-array-sort-compare": "error",
         "@typescript-eslint/no-unnecessary-condition": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/restrict-template-expressions": "off",
 
         "lines-between-class-members": "off",
         "no-useless-constructor": "off",

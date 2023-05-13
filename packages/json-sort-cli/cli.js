@@ -86,56 +86,56 @@ const cli = meow(
     flags: {
       nodemodules: {
         type: "boolean",
-        alias: "n",
+        shortFlag: "n",
         default: false,
       },
       tabs: {
         type: "boolean",
-        alias: "t",
+        shortFlag: "t",
         default: false,
       },
       silent: {
         type: "boolean",
-        alias: "s",
+        shortFlag: "s",
         default: false,
       },
       arrays: {
         type: "boolean",
-        alias: "a",
+        shortFlag: "a",
         default: false,
       },
       pack: {
         type: "boolean",
-        alias: "p",
+        shortFlag: "p",
         default: false,
       },
       dry: {
         type: "boolean",
-        alias: "d",
+        shortFlag: "d",
         default: false,
       },
       ci: {
         type: "boolean",
-        alias: "c",
+        shortFlag: "c",
         default: false,
       },
       help: {
         type: "boolean",
-        alias: "h",
+        shortFlag: "h",
         default: false,
       },
       version: {
         type: "boolean",
-        alias: "v",
+        shortFlag: "v",
         default: false,
       },
       indentationCount: {
         type: "number",
-        alias: "i",
+        shortFlag: "i",
       },
       lineEnding: {
         type: "string",
-        alias: "l",
+        shortFlag: "l",
       },
     },
   }

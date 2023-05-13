@@ -38,7 +38,7 @@ import { isRel } from "is-relative-uri";
 
 assert.deepEqual(isRel(".../resource.txt"), {
   res: false,
-  message: `Three consecutive dots.`,
+  message: "Three consecutive dots.",
 });
 ```
 

@@ -36,7 +36,7 @@ import { strict as assert } from "assert";
 
 import { isOpening } from "is-html-tag-opening";
 
-const text = `<span>a < b<span>`;
+const text = "<span>a < b<span>";
 
 // opening span tag's opening
 assert.equal(isOpening(text, 0), true);

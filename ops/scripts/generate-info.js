@@ -14,6 +14,7 @@ import path from "path";
 import git from "simple-git";
 import { sortAllObjectsSync } from "json-comb-core";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
+// eslint-disable-next-line n/no-extraneous-import
 import { programClassification } from "@codsen/data";
 import { det } from "detergent";
 import { removeTbc } from "../lect/plugins/_util.js";
@@ -32,6 +33,13 @@ const packagesOutsideMonorepoObj = {
   },
   lect: {
     description: "Maintenance CLI for internal consumption",
+  },
+  emlint: {
+    description: "Pluggable email template code linter",
+  },
+  "remark-conventional-commit-changelog-timeline": {
+    description:
+      "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline",
   },
 };
 
@@ -309,7 +317,7 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
   let size = 0;
   if (pack.bin && !programPackages.includes(packageName)) {
     // cli's
-    size = readFileSync(path.join("packages", packageName, `cli.js`)).length;
+    size = readFileSync(path.join("packages", packageName, "cli.js")).length;
   } else {
     try {
       // normal libs
@@ -323,7 +331,7 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
       try {
         // gulp plugins etc. don't have "dist/*"
         size = readFileSync(
-          path.join("packages", packageName, `index.js`)
+          path.join("packages", packageName, "index.js")
         ).length;
       } catch (error) {
         // let's ignore all other unique ad-hoc packages like perf-ref
@@ -433,7 +441,7 @@ writeFile(
     if (err) {
       throw err;
     }
-    console.log(`\u001b[${32}m${`interdeps.ts written OK`}\u001b[${39}m`);
+    console.log(`\u001b[${32}m${"interdeps.ts written OK"}\u001b[${39}m`);
   }
 );
 
@@ -521,7 +529,7 @@ export const packages = {
     if (err) {
       throw err;
     }
-    console.log(`\u001b[${32}m${`packages.ts written OK`}\u001b[${39}m`);
+    console.log(`\u001b[${32}m${"packages.ts written OK"}\u001b[${39}m`);
   }
 );
 
@@ -536,7 +544,7 @@ writeFile(
     if (err) {
       throw err;
     }
-    console.log(`\u001b[${32}m${`dependencyStats.ts written OK`}\u001b[${39}m`);
+    console.log(`\u001b[${32}m${"dependencyStats.ts written OK"}\u001b[${39}m`);
   }
 );
 
@@ -551,7 +559,7 @@ writeFile(
     if (err) {
       throw err;
     }
-    console.log(`\u001b[${32}m${`packageJSONData.ts written OK`}\u001b[${39}m`);
+    console.log(`\u001b[${32}m${"packageJSONData.ts written OK"}\u001b[${39}m`);
   }
 );
 
@@ -562,7 +570,7 @@ writeFile(
     if (err) {
       throw err;
     }
-    console.log(`\u001b[${32}m${`allDTS.ts written OK`}\u001b[${39}m`);
+    console.log(`\u001b[${32}m${"allDTS.ts written OK"}\u001b[${39}m`);
   }
 );
 
@@ -578,7 +586,7 @@ writeFile(
       throw err;
     }
     console.log(
-      `\u001b[${32}m${`exportedDefaults.ts written OK`}\u001b[${39}m`
+      `\u001b[${32}m${"exportedDefaults.ts written OK"}\u001b[${39}m`
     );
   }
 );
@@ -590,7 +598,7 @@ writeFile(
     if (err) {
       throw err;
     }
-    console.log(`\u001b[${32}m${`examples.ts written OK`}\u001b[${39}m`);
+    console.log(`\u001b[${32}m${"examples.ts written OK"}\u001b[${39}m`);
   }
 );
 
@@ -614,7 +622,7 @@ if (!isCI) {
         if (err) {
           throw err;
         }
-        console.log(`\u001b[${32}m${`gitStats.ts written OK`}\u001b[${39}m`);
+        console.log(`\u001b[${32}m${"gitStats.ts written OK"}\u001b[${39}m`);
       }
     );
   } catch (e) {

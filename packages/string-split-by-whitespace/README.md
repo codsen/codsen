@@ -39,7 +39,7 @@ import { splitByW } from "string-split-by-whitespace";
 // Split by whitespace is easy - use native String.prototype.split()
 assert.deepEqual("abc  def ghi".split(/\s+/), ["abc", "def", "ghi"]);
 
-const source = `\n     \n    a\t \nb    \n      \t`;
+const source = "\n     \n    a\t \nb    \n      \t";
 
 // this program is nearly equivalent to regex-based split:
 assert.deepEqual(source.split(/\s+/), ["", "a", "b", ""]);

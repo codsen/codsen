@@ -37,7 +37,7 @@ import { strict as assert } from "assert";
 import { extract } from "extract-search-index";
 
 assert.equal(
-  extract(`The quick brown fox jumps over the lazy dog.`),
+  extract("The quick brown fox jumps over the lazy dog."),
   "quick brown fox jumps over lazy dog"
 );
 

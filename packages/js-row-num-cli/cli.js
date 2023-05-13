@@ -59,11 +59,11 @@ const cli = meow(
     flags: {
       pad: {
         type: "number",
-        alias: "p",
+        shortFlag: "p",
       },
       trigger: {
         type: "string",
-        alias: "t",
+        shortFlag: "t",
       },
     },
   }

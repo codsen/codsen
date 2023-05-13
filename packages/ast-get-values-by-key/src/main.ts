@@ -2,10 +2,10 @@
 
 import { traverse } from "ast-monkey-traverse";
 import { isMatch } from "matcher";
-import clone from "lodash.clonedeep";
-
+import rfdc from "rfdc";
 import { version as v } from "../package.json";
 
+const clone = rfdc();
 const version: string = v;
 
 export interface Findings {

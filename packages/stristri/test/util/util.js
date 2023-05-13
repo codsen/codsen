@@ -1,8 +1,9 @@
 import { mixer } from "test-mixer";
-import clone from "lodash.clonedeep";
+import rfdc from "rfdc";
 import objectPath from "object-path";
-
 import { stri as striApi, defaults } from "../../dist/stristri.esm.js";
+
+const clone = rfdc();
 
 function mixerToExport(ref) {
   return mixer(ref, defaults);

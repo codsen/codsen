@@ -1,9 +1,10 @@
 import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import clone from "lodash.clonedeep";
-
+import rfdc from "rfdc";
 import { rMerge } from "../dist/ranges-merge.esm.js";
+
+const clone = rfdc();
 
 // 00. throws
 // ==========================

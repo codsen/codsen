@@ -1,9 +1,11 @@
-import clone from "lodash.clonedeep";
+import rfdc from "rfdc";
 // eslint-disable-next-line n/no-extraneous-import
 import objectPath from "object-path";
 import { mixer as originalMixer } from "test-mixer";
 
 import { det as det1, opts as defaults } from "../dist/detergent.esm.js";
+
+const clone = rfdc();
 
 export const widowRegexTest = /. ./g;
 export const latinAndNonNonLatinRanges = [

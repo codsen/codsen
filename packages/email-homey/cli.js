@@ -38,7 +38,7 @@ const cli = meow(
 `,
   {
     importMeta: import.meta,
-    alias: {
+    shortFlag: {
       l: "loud",
     },
   }

@@ -39,17 +39,17 @@ const cli = meow(
     flags: {
       dev: {
         type: "boolean",
-        alias: "d",
+        shortFlag: "d",
         default: false,
       },
       help: {
         type: "boolean",
-        alias: "h",
+        shortFlag: "h",
         default: false,
       },
       version: {
         type: "boolean",
-        alias: "v",
+        shortFlag: "v",
         default: false,
       },
     },

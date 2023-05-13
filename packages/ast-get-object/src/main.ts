@@ -1,11 +1,12 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import clone from "lodash.clonedeep";
+import rfdc from "rfdc";
 import { isPlainObject as isObj } from "codsen-utils";
 import { compare } from "ast-compare";
 
 import { version as v } from "../package.json";
 
+const clone = rfdc();
 const version: string = v;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

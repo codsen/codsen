@@ -39,7 +39,7 @@ import { rApply } from "ranges-apply";
 
 const gatheredRanges = new Ranges();
 
-const oldString = `The quick brown fox jumps over the lazy dog.`;
+const oldString = "The quick brown fox jumps over the lazy dog.";
 
 // push the ranges
 gatheredRanges.push(35, 43, "little Red Riding Hood");

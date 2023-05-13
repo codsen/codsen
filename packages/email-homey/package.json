@@ -74,7 +74,7 @@
     "codsen-utils": "^1.4.0",
     "globby": "^13.1.4",
     "log-symbols": "^5.1.0",
-    "meow": "^11.0.0",
+    "meow": "^12.0.1",
     "update-notifier": "^6.0.2"
   }
 }

@@ -44,7 +44,7 @@ const cli = meow(
     flags: {
       overwrite: {
         type: "boolean",
-        alias: "o",
+        shortFlag: "o",
         default: false,
       },
     },

@@ -293,7 +293,6 @@ const cli = [
   "csv-sort-cli",
   "email-all-chars-within-ascii-cli",
   "email-homey",
-  "emlint",
   "generate-atomic-css-cli",
   "js-row-num-cli",
   "json-comb",
@@ -358,7 +357,6 @@ const programs = [
   "edit-package-json",
   "email-all-chars-within-ascii",
   "email-comb",
-  "emlint",
   "eslint-plugin-row-num-tbc",
   "eslint-plugin-test-num-tbc",
   "extract-search-index",
@@ -406,7 +404,6 @@ const programs = [
   "regex-is-jsp",
   "regex-jinja-specific",
   "rehype-responsive-tables",
-  "remark-conventional-commit-changelog-timeline",
   "remark-typography",
   "seo-editor",
   "str-indexes-of-plus",
@@ -561,8 +558,10 @@ const script = [
   "util-nonempty"
 ] as const;
 const packagesOutsideMonorepo = [
+  "emlint",
   "lect",
   "perf-ref",
+  "remark-conventional-commit-changelog-timeline",
   "tsd-extract-noesm"
 ] as const;
 const splitListFlagshipLibs = [
@@ -592,7 +591,6 @@ const splitListHtmlLibs = [
   "color-shorthand-hex-to-six-digit",
   "detect-is-it-html-or-xhtml",
   "detect-templating-language",
-  "emlint",
   "generate-atomic-css",
   "gulp-email-remove-unused-css",
   "html-all-known-attributes",
@@ -704,7 +702,6 @@ const splitListMiscLibs = [
   "regex-is-jsp",
   "regex-jinja-specific",
   "rehype-responsive-tables",
-  "remark-conventional-commit-changelog-timeline",
   "remark-typography",
   "seo-editor",
   "tap-parse-string-to-object",
@@ -726,11 +723,11 @@ export const packages = {
     packagesOutsideMonorepo,
     totalPackageCount: 152,
     currentPackagesCount: 134,
-    cliCount: 12,
-    programsCount: 119,
+    cliCount: 11,
+    programsCount: 117,
     specialCount: 1,
     scriptCount: 112,
-    packagesOutsideMonorepoCount: 3,
+    packagesOutsideMonorepoCount: 5,
     splitListFlagshipLibs,
     splitListRangeLibs,
     splitListHtmlLibs,

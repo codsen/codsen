@@ -2,7 +2,9 @@ import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { rApply } from "ranges-apply";
-import clone from "lodash.clonedeep";
+import rfdc from "rfdc";
+
+const clone = rfdc();
 
 import { rCrop } from "../dist/ranges-crop.esm.js";
 

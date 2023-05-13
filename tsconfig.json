@@ -107,9 +107,6 @@
       "path": "packages/email-comb"
     },
     {
-      "path": "packages/emlint"
-    },
-    {
       "path": "packages/eslint-plugin-row-num-tbc"
     },
     {
@@ -249,9 +246,6 @@
     },
     {
       "path": "packages/rehype-responsive-tables"
-    },
-    {
-      "path": "packages/remark-conventional-commit-changelog-timeline"
     },
     {
       "path": "packages/remark-typography"

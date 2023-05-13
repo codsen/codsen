@@ -38,15 +38,13 @@ import { detectLang } from "detect-templating-language";
 
 // detects Nunjucks
 assert.deepEqual(
-  detectLang(`<div>{% if something %}x{% else %}y{% endif %}</div>`),
+  detectLang("<div>{% if something %}x{% else %}y{% endif %}</div>"),
   { name: "Nunjucks" }
 );
 
 // detects JSP (Java Server Pages)
 assert.deepEqual(
-  detectLang(
-    `<div><c:set var="someList" value="\${jspProp.someList}" /></div>`
-  ),
+  detectLang('<div><c:set var="someList" value="${jspProp.someList}" /></div>'),
   { name: "JSP" }
 );
 ```

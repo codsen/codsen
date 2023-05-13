@@ -2,10 +2,10 @@
 
 import r from "hex-color-regex";
 import { isPlainObject } from "codsen-utils";
-import clone from "lodash.clonedeep";
-
+import rfdc from "rfdc";
 import { version as v } from "../package.json";
 
+const clone = rfdc();
 const version: string = v;
 
 /**

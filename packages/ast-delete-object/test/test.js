@@ -1,9 +1,10 @@
 import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import clone from "lodash.clonedeep";
-
+import rfdc from "rfdc";
 import { deleteObj } from "../dist/ast-delete-object.esm.js";
+
+const clone = rfdc();
 
 // (input, objToDelete, strictOrNot)
 

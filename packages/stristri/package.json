@@ -81,7 +81,7 @@
     "string-collapse-white-space": "^11.0.11"
   },
   "devDependencies": {
-    "lodash.clonedeep": "^4.5.0",
+    "rfdc": "^1.3.0",
     "test-mixer": "^4.1.8"
   }
 }

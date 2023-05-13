@@ -70,7 +70,7 @@
   "dependencies": {
     "@types/hast": "^2.3.4",
     "codsen-utils": "^1.4.0",
-    "fp-ts": "^2.14.0",
+    "fp-ts": "^2.15.0",
     "string-apostrophes": "^4.0.11",
     "string-dashes": "^1.2.5",
     "string-remove-widows": "^4.0.11",

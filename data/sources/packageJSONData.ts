@@ -8,6 +8,12 @@ export const packageJSONData = {
   "lect": {
     "description": "Maintenance CLI for internal consumption"
   },
+  "emlint": {
+    "description": "Pluggable email template code linter"
+  },
+  "remark-conventional-commit-changelog-timeline": {
+    "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline"
+  },
   "all-named-html-entities": {
     "name": "all-named-html-entities",
     "version": "3.0.7",
@@ -629,7 +635,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.1",
-      "type-fest": "^3.8.0"
+      "type-fest": "^3.10.0"
     }
   },
   "ast-contains-only-empty-space": {
@@ -891,10 +897,7 @@ export const packageJSONData = {
       "ast-compare": "^4.0.12",
       "ast-monkey-traverse": "^4.0.9",
       "codsen-utils": "^1.4.0",
-      "lodash.clonedeep": "^4.5.0"
-    },
-    "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7"
+      "rfdc": "^1.3.0"
     }
   },
   "ast-get-object": {
@@ -981,10 +984,7 @@ export const packageJSONData = {
     "dependencies": {
       "ast-compare": "^4.0.12",
       "codsen-utils": "^1.4.0",
-      "lodash.clonedeep": "^4.5.0"
-    },
-    "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7"
+      "rfdc": "^1.3.0"
     }
   },
   "ast-get-values-by-key": {
@@ -1070,11 +1070,8 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-monkey-traverse": "^4.0.9",
-      "lodash.clonedeep": "^4.5.0",
-      "matcher": "^5.0.0"
-    },
-    "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7"
+      "matcher": "^5.0.0",
+      "rfdc": "^1.3.0"
     }
   },
   "ast-is-empty": {
@@ -1423,11 +1420,10 @@ export const packageJSONData = {
     "dependencies": {
       "ast-monkey-util": "^3.0.5",
       "codsen-utils": "^1.4.0",
-      "lodash.clonedeep": "^4.5.0"
+      "rfdc": "^1.3.0"
     },
     "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7",
-      "lodash.isequal": "^4.5.0"
+      "deep-equal": "^2.2.1"
     }
   },
   "ast-monkey-traverse-with-lookahead": {
@@ -1516,11 +1512,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.4.0",
-      "lodash.clonedeep": "^4.5.0"
-    },
-    "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7",
-      "lodash.isequal": "^4.5.0"
+      "rfdc": "^1.3.0"
     }
   },
   "ast-monkey-util": {
@@ -1599,9 +1591,6 @@ export const packageJSONData = {
           ""
         ]
       }
-    },
-    "devDependencies": {
-      "lodash.isequal": "^4.5.0"
     }
   },
   "bitbucket-slug": {
@@ -1686,10 +1675,8 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "lodash.deburr": "^4.1.0"
-    },
-    "devDependencies": {
-      "@types/lodash.deburr": "^4.1.7"
+      "@types/lodash-es": "^4.17.7",
+      "lodash-es": "^4.17.21"
     }
   },
   "charcode-is-valid-xml-name-character": {
@@ -1846,16 +1833,14 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "@types/lodash-es": "^4.17.7",
       "arrayiffy-if-string": "^5.0.5",
       "ast-monkey-traverse": "^4.0.9",
       "codsen-utils": "^1.4.0",
-      "lodash.intersection": "^4.4.0",
+      "lodash-es": "^4.17.21",
       "matcher": "^5.0.0",
       "object-path": "^0.11.8",
       "type-detect": "^4.0.8"
-    },
-    "devDependencies": {
-      "@types/lodash.intersection": "^4.4.7"
     }
   },
   "codsen": {
@@ -1918,7 +1903,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "meow": "^11.0.0",
+      "meow": "^12.0.1",
       "update-notifier": "^6.0.2"
     }
   },
@@ -2079,12 +2064,11 @@ export const packageJSONData = {
       "is-char-suitable-for-html-attr-name": "^4.0.5",
       "is-html-attribute-closing": "^4.0.11",
       "is-html-tag-opening": "^4.0.11",
-      "lodash.clonedeep": "^4.5.0",
+      "rfdc": "^1.3.0",
       "string-left-right": "^6.0.11",
       "string-match-left-right": "^9.0.11"
     },
     "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7",
       "ast-compare": "^4.0.12"
     }
   },
@@ -2232,11 +2216,10 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.4.0",
       "hex-color-regex": "^1.1.0",
-      "lodash.clonedeep": "^4.5.0"
+      "rfdc": "^1.3.0"
     },
     "devDependencies": {
-      "@types/hex-color-regex": "^1.1.1",
-      "@types/lodash.clonedeep": "^4.5.7"
+      "@types/hex-color-regex": "^1.1.1"
     }
   },
   "csv-sort": {
@@ -2317,12 +2300,10 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "@types/lodash-es": "^4.17.7",
       "csv-split-easy": "^7.0.8",
       "currency.js": "^2.0.4",
-      "lodash.pull": "^4.1.0"
-    },
-    "devDependencies": {
-      "@types/lodash.pull": "^4.1.7"
+      "lodash-es": "^4.17.21"
     }
   },
   "csv-sort-cli": {
@@ -2403,8 +2384,8 @@ export const packageJSONData = {
       "codsen-utils": "^1.4.0",
       "csv-sort": "^7.0.8",
       "globby": "^13.1.4",
-      "inquirer": "^9.1.5",
-      "meow": "^11.0.0",
+      "inquirer": "^9.2.2",
+      "meow": "^12.0.1",
       "update-notifier": "^6.0.2"
     }
   },
@@ -2731,7 +2712,7 @@ export const packageJSONData = {
       "string-trim-spaces-only": "^5.0.7"
     },
     "devDependencies": {
-      "lodash.clonedeep": "^4.5.0",
+      "rfdc": "^1.3.0",
       "test-mixer": "^4.1.8"
     }
   },
@@ -2889,8 +2870,8 @@ export const packageJSONData = {
     "devDependencies": {
       "ast-monkey-traverse": "^4.0.9",
       "globby": "^13.1.4",
-      "lodash.clonedeep": "^4.5.0",
-      "p-map": "^5.5.0"
+      "p-map": "^6.0.0",
+      "rfdc": "^1.3.0"
     }
   },
   "email-all-chars-within-ascii": {
@@ -3042,7 +3023,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.4.0",
       "email-all-chars-within-ascii": "^5.0.11",
       "globby": "^13.1.4",
-      "inquirer": "^9.1.5",
+      "inquirer": "^9.2.2",
       "minimist": "^1.2.8",
       "string-left-right": "^6.0.11",
       "update-notifier": "^6.0.2"
@@ -3120,10 +3101,11 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "@types/lodash-es": "^4.17.7",
       "array-pull-all-with-glob": "^7.0.7",
       "codsen-utils": "^1.4.0",
       "html-crush": "^6.0.11",
-      "lodash.intersection": "^4.4.0",
+      "lodash-es": "^4.17.21",
       "matcher": "^5.0.0",
       "ranges-apply": "^7.0.8",
       "ranges-push": "^7.0.8",
@@ -3133,9 +3115,6 @@ export const packageJSONData = {
       "string-match-left-right": "^9.0.11",
       "string-range-expander": "^4.0.8",
       "string-uglify": "^3.0.7"
-    },
-    "devDependencies": {
-      "@types/lodash.intersection": "^4.4.7"
     }
   },
   "email-homey": {
@@ -3214,137 +3193,8 @@ export const packageJSONData = {
       "codsen-utils": "^1.4.0",
       "globby": "^13.1.4",
       "log-symbols": "^5.1.0",
-      "meow": "^11.0.0",
+      "meow": "^12.0.1",
       "update-notifier": "^6.0.2"
-    }
-  },
-  "emlint": {
-    "name": "emlint",
-    "version": "6.0.12",
-    "description": "Pluggable email template code linter",
-    "keywords": [
-      "analysis",
-      "automatic",
-      "automatically",
-      "broken",
-      "check",
-      "code",
-      "css",
-      "development",
-      "email",
-      "errors",
-      "fix",
-      "html",
-      "lint",
-      "linter",
-      "linting",
-      "static",
-      "template",
-      "tool",
-      "utility",
-      "xhtml"
-    ],
-    "homepage": "https://codsen.com/os/emlint",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/emlint"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "default": "./dist/emlint.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "bin": {
-      "emlint": "bin/cli.js"
-    },
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts && node './bin/helper.js'",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --loglevel 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --ext .js --ext .ts --fix",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    },
-    "dependencies": {
-      "ast-monkey-traverse": "^4.0.9",
-      "ast-monkey-util": "^3.0.5",
-      "codsen-parser": "^0.14.12",
-      "codsen-utils": "^1.4.0",
-      "define-lazy-prop": "^3.0.0",
-      "globby": "^13.1.4",
-      "he": "^1.2.0",
-      "html-all-known-attributes": "^6.0.5",
-      "html-entities-not-email-friendly": "^0.8.5",
-      "is-d": "^1.0.0",
-      "is-language-code": "^5.0.5",
-      "is-media-descriptor": "^5.0.8",
-      "is-relative-uri": "^5.0.8",
-      "is-url-superb": "^6.1.0",
-      "leven": "^4.0.0",
-      "line-column-mini": "^3.0.7",
-      "lodash.clonedeep": "^4.5.0",
-      "lodash.isregexp": "^4.0.1",
-      "matcher": "^5.0.0",
-      "meow": "^11.0.0",
-      "mime-db": "^1.52.0",
-      "object-path": "^0.11.8",
-      "p-reduce": "^3.0.0",
-      "ranges-merge": "^9.0.8",
-      "re2": "^1.18.0",
-      "rgba-regex": "^1.0.0",
-      "string-find-malformed": "^4.0.11",
-      "string-fix-broken-named-entities": "^7.0.11",
-      "string-left-right": "^6.0.11",
-      "string-match-left-right": "^9.0.11",
-      "string-process-comma-separated": "^4.0.7",
-      "tiny-typed-emitter": "^2.1.0",
-      "update-notifier": "^6.0.2",
-      "url-regex-safe": "^3.0.0"
-    },
-    "devDependencies": {
-      "@types/he": "^1.2.0",
-      "@types/lodash.clonedeep": "^4.5.7",
-      "@types/lodash.isregexp": "^4.0.7",
-      "@types/mime-db": "^1.43.1",
-      "@types/url-regex-safe": "^1.0.0",
-      "ast-deep-contains": "^5.0.10",
-      "ranges-apply": "^7.0.8"
     }
   },
   "eslint-plugin-row-num": {
@@ -3733,10 +3583,10 @@ export const packageJSONData = {
       "generate-atomic-css": "^3.0.11",
       "globby": "^13.1.4",
       "is-d": "^1.0.0",
-      "meow": "^11.0.0",
+      "meow": "^12.0.1",
       "p-reduce": "^3.0.0",
       "update-notifier": "^6.0.2",
-      "write-file-atomic": "^5.0.0"
+      "write-file-atomic": "^5.0.1"
     }
   },
   "gulp-email-remove-unused-css": {
@@ -4606,6 +4456,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "dependencies": {
+      "codsen-utils": "^1.4.0"
     }
   },
   "is-media-descriptor": {
@@ -4923,10 +4776,10 @@ export const packageJSONData = {
       "globby": "^13.1.4",
       "is-d": "^1.0.0",
       "js-row-num": "^7.0.8",
-      "meow": "^11.0.0",
+      "meow": "^12.0.1",
       "p-reduce": "^3.0.0",
       "update-notifier": "^6.0.2",
-      "write-file-atomic": "^5.0.0"
+      "write-file-atomic": "^5.0.1"
     }
   },
   "json-comb": {
@@ -5004,8 +4857,8 @@ export const packageJSONData = {
       "globby": "^13.1.4",
       "is-d": "^1.0.0",
       "json-comb-core": "^8.0.11",
-      "meow": "^11.0.0",
-      "p-map": "^5.5.0",
+      "meow": "^12.0.1",
+      "p-map": "^6.0.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^6.0.2"
     }
@@ -5083,25 +4936,22 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
+      "@types/lodash-es": "^4.17.7",
+      "@types/semver-compare": "^1.0.1",
       "codsen-utils": "^1.4.0",
-      "lodash.clonedeep": "^4.5.0",
-      "lodash.includes": "^4.3.0",
+      "lodash-es": "^4.17.21",
       "object-fill-missing-keys": "^11.0.11",
       "object-flatten-all-arrays": "^7.0.11",
       "object-merge-advanced": "^14.0.11",
       "object-no-new-keys": "^5.0.8",
       "object-set-all-values-to": "^6.0.9",
-      "p-map": "^5.5.0",
+      "p-map": "^6.0.0",
       "p-one": "^2.0.0",
       "p-reduce": "^3.0.0",
+      "rfdc": "^1.3.0",
       "semver-compare": "^1.0.0",
       "sort-keys": "^5.0.0",
       "type-detect": "^4.0.8"
-    },
-    "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7",
-      "@types/lodash.includes": "^4.3.7",
-      "@types/semver-compare": "^1.0.1"
     }
   },
   "json-sort-cli": {
@@ -5179,14 +5029,14 @@ export const packageJSONData = {
       "fs-extra": "^11.1.1",
       "globby": "^13.1.4",
       "is-d": "^1.0.0",
-      "meow": "^11.0.0",
+      "meow": "^12.0.1",
       "p-filter": "^3.0.0",
       "p-reduce": "^3.0.0",
       "sort-package-json": "^2.4.1",
       "update-notifier": "^6.0.2"
     },
     "devDependencies": {
-      "p-map": "^5.5.0"
+      "p-map": "^6.0.0"
     }
   },
   "json-variables": {
@@ -5436,14 +5286,14 @@ export const packageJSONData = {
       "fs-extra": "^11.1.1",
       "globby": "^13.1.4",
       "lerna-clean-changelogs": "^5.0.8",
-      "meow": "^11.0.0",
+      "meow": "^12.0.1",
       "p-filter": "^3.0.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^6.0.2",
-      "write-file-atomic": "^5.0.0"
+      "write-file-atomic": "^5.0.1"
     },
     "devDependencies": {
-      "p-map": "^5.5.0"
+      "p-map": "^6.0.0"
     }
   },
   "lerna-link-dep": {
@@ -5525,7 +5375,7 @@ export const packageJSONData = {
     "dependencies": {
       "execa": "^7.1.1",
       "fs-extra": "^11.1.1",
-      "meow": "^11.0.0",
+      "meow": "^12.0.1",
       "update-notifier": "^6.0.2"
     }
   },
@@ -5670,11 +5520,9 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "@types/lodash-es": "^4.17.7",
       "codsen-utils": "^1.4.0",
-      "lodash.isequal": "^4.5.0"
-    },
-    "devDependencies": {
-      "@types/lodash.isequal": "^4.5.6"
+      "lodash-es": "^4.17.21"
     }
   },
   "object-boolean-combinations": {
@@ -5746,15 +5594,10 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "@types/lodash-es": "^4.17.7",
       "codsen-utils": "^1.4.0",
-      "lodash.clonedeep": "^4.5.0",
-      "lodash.intersection": "^4.4.0",
-      "lodash.pull": "^4.1.0"
-    },
-    "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7",
-      "@types/lodash.intersection": "^4.4.7",
-      "@types/lodash.pull": "^4.1.7"
+      "lodash-es": "^4.17.21",
+      "rfdc": "^1.3.0"
     }
   },
   "object-delete-key": {
@@ -5837,11 +5680,8 @@ export const packageJSONData = {
     "dependencies": {
       "ast-is-empty": "^4.0.9",
       "ast-monkey": "^9.0.12",
-      "lodash.clonedeep": "^4.5.0",
+      "rfdc": "^1.3.0",
       "util-array-object-or-both": "^5.0.7"
-    },
-    "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7"
     }
   },
   "object-fill-missing-keys": {
@@ -5922,12 +5762,9 @@ export const packageJSONData = {
     "dependencies": {
       "arrayiffy-if-string": "^5.0.5",
       "codsen-utils": "^1.4.0",
-      "lodash.clonedeep": "^4.5.0",
       "object-all-values-equal-to": "^4.0.11",
-      "object-merge-advanced": "^14.0.11"
-    },
-    "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7"
+      "object-merge-advanced": "^14.0.11",
+      "rfdc": "^1.3.0"
     }
   },
   "object-flatten-all-arrays": {
@@ -6003,13 +5840,10 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "@types/lodash-es": "^4.17.7",
       "codsen-utils": "^1.4.0",
-      "lodash.clonedeep": "^4.5.0",
-      "lodash.merge": "^4.6.2"
-    },
-    "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7",
-      "@types/lodash.merge": "^4.6.7"
+      "lodash-es": "^4.17.21",
+      "rfdc": "^1.3.0"
     }
   },
   "object-flatten-referencing": {
@@ -6084,13 +5918,11 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "arrayiffy-if-string": "^5.0.5",
       "codsen-utils": "^1.4.0",
-      "lodash.clonedeep": "^4.5.0",
       "matcher": "^5.0.0",
+      "rfdc": "^1.3.0",
       "str-indexes-of-plus": "^5.0.5"
-    },
-    "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7"
     }
   },
   "object-merge-advanced": {
@@ -6168,20 +6000,15 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "@types/lodash-es": "^4.17.7",
       "codsen-utils": "^1.4.0",
-      "lodash.clonedeep": "^4.5.0",
-      "lodash.includes": "^4.3.0",
-      "lodash.isdate": "^4.0.1",
-      "lodash.isfinite": "^3.3.2",
+      "lodash-es": "^4.17.21",
       "matcher": "^5.0.0",
+      "rfdc": "^1.3.0",
       "util-nonempty": "^5.0.9"
     },
     "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7",
-      "@types/lodash.includes": "^4.3.7",
-      "@types/lodash.isdate": "^4.0.7",
-      "@types/lodash.isfinite": "^3.3.7",
-      "deep-equal": "^2.2.0"
+      "deep-equal": "^2.2.1"
     }
   },
   "object-no-new-keys": {
@@ -6335,10 +6162,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.4.0",
-      "lodash.clonedeep": "^4.5.0"
-    },
-    "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7"
+      "rfdc": "^1.3.0"
     }
   },
   "ranges-apply": {
@@ -6491,8 +6315,8 @@ export const packageJSONData = {
       "ranges-merge": "^9.0.8"
     },
     "devDependencies": {
-      "lodash.clonedeep": "^4.5.0",
-      "ranges-apply": "^7.0.8"
+      "ranges-apply": "^7.0.8",
+      "rfdc": "^1.3.0"
     }
   },
   "ranges-ent-decode": {
@@ -6867,7 +6691,7 @@ export const packageJSONData = {
       "ranges-sort": "^6.0.7"
     },
     "devDependencies": {
-      "lodash.clonedeep": "^4.5.0"
+      "rfdc": "^1.3.0"
     }
   },
   "ranges-offset": {
@@ -7166,11 +6990,11 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "lodash.isregexp": "^4.0.1",
+      "@types/lodash-es": "^4.17.7",
+      "lodash-es": "^4.17.21",
       "ranges-merge": "^9.0.8"
     },
     "devDependencies": {
-      "@types/lodash.isregexp": "^4.0.7",
       "ranges-apply": "^7.0.8"
     }
   },
@@ -7572,85 +7396,6 @@ export const packageJSONData = {
       "cjs-off": "node '../../ops/scripts/cjs-off.js'",
       "cjs-on": "node '../../ops/scripts/cjs-on.js'",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 yarn run unit && yarn run examples && yarn run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --loglevel 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' --write --loglevel 'silent'",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --ext .js --ext .ts --fix",
-      "perf": "echo 'skip perf'",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      },
-      "various": {}
-    },
-    "dependencies": {
-      "@types/hast": "^2.3.4",
-      "@types/lodash.iteratee": "^4.7.7",
-      "lodash.iteratee": "^4.7.0",
-      "unified": "^10.1.2",
-      "unist-util-visit": "^4.1.2"
-    },
-    "devDependencies": {
-      "rehype": "^12.0.1",
-      "rehype-parse": "^8.0.4"
-    }
-  },
-  "remark-conventional-commit-changelog-timeline": {
-    "name": "remark-conventional-commit-changelog-timeline",
-    "version": "3.0.10",
-    "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
-    "keywords": [
-      "unified",
-      "remark",
-      "remark-plugin",
-      "plugin",
-      "mdast",
-      "markdown",
-      "changelog",
-      "conventional",
-      "commits"
-    ],
-    "homepage": "https://codsen.com/os/remark-conventional-commit-changelog-timeline",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/remark-conventional-commit-changelog-timeline"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "main": "dist/remark-conventional-commit-changelog-timeline.cjs.js",
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && node '../../ops/scripts/fix-cjs.js' && npm run dts",
-      "cjs-off": "node '../../ops/scripts/cjs-off.js'",
-      "cjs-on": "node '../../ops/scripts/cjs-on.js'",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --loglevel 'silent'",
       "examples": "node '../../ops/scripts/run-examples.js'",
@@ -7685,15 +7430,12 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@types/hast": "^2.3.4",
-      "hast-util-raw": "^8.0.0",
-      "semver-regex": "^4.0.5",
+      "@types/lodash-es": "^4.17.7",
+      "lodash-es": "^4.17.21",
+      "rehype": "^12.0.1",
+      "rehype-parse": "^8.0.4",
       "unified": "^10.1.2",
-      "unist-builder": "^3.0.1",
       "unist-util-visit": "^4.1.2"
-    },
-    "devDependencies": {
-      "object-delete-key": "^4.0.12",
-      "remark": "^14.0.2"
     }
   },
   "remark-typography": {
@@ -7768,7 +7510,7 @@ export const packageJSONData = {
     "dependencies": {
       "@types/hast": "^2.3.4",
       "codsen-utils": "^1.4.0",
-      "fp-ts": "^2.14.0",
+      "fp-ts": "^2.15.0",
       "string-apostrophes": "^4.0.11",
       "string-dashes": "^1.2.5",
       "string-remove-widows": "^4.0.11",
@@ -8849,11 +8591,8 @@ export const packageJSONData = {
       "all-named-html-entities": "^3.0.7",
       "codsen-utils": "^1.4.0",
       "leven": "^4.0.0",
-      "lodash.clonedeep": "^4.5.0",
+      "rfdc": "^1.3.0",
       "string-left-right": "^6.0.11"
-    },
-    "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7"
     }
   },
   "string-left-right": {
@@ -8932,10 +8671,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.4.0",
-      "lodash.clonedeep": "^4.5.0"
-    },
-    "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7"
+      "rfdc": "^1.3.0"
     }
   },
   "string-match-left-right": {
@@ -9161,6 +8897,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "dependencies": {
+      "codsen-utils": "^1.4.0"
     }
   },
   "string-range-expander": {
@@ -9220,6 +8959,7 @@ export const packageJSONData = {
       "node": ">=14.18.0"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
@@ -9394,12 +9134,10 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "lodash.trim": "^4.5.1",
+      "@types/lodash-es": "^4.17.7",
+      "lodash-es": "^4.17.21",
       "ranges-apply": "^7.0.8",
       "ranges-push": "^7.0.8"
-    },
-    "devDependencies": {
-      "@types/lodash.trim": "^4.5.7"
     }
   },
   "string-remove-widows": {
@@ -9648,17 +9386,15 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "@types/lodash-es": "^4.17.7",
       "codsen-utils": "^1.4.0",
       "html-entities": "^2.3.3",
-      "lodash.trim": "^4.5.1",
-      "lodash.without": "^4.4.0",
+      "lodash-es": "^4.17.21",
       "ranges-apply": "^7.0.8",
       "ranges-push": "^7.0.8",
       "string-left-right": "^6.0.11"
     },
     "devDependencies": {
-      "@types/lodash.trim": "^4.5.7",
-      "@types/lodash.without": "^4.4.7",
       "ast-monkey-traverse": "^4.0.9",
       "ranges-invert": "^6.0.8",
       "title": "^3.5.3"
@@ -9802,11 +9538,9 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "lodash.deburr": "^4.1.0",
+      "@types/lodash-es": "^4.17.7",
+      "lodash-es": "^4.17.21",
       "string-left-right": "^6.0.11"
-    },
-    "devDependencies": {
-      "@types/lodash.deburr": "^4.1.7"
     }
   },
   "string-uglify": {
@@ -10054,7 +9788,7 @@ export const packageJSONData = {
       "string-collapse-white-space": "^11.0.11"
     },
     "devDependencies": {
-      "lodash.clonedeep": "^4.5.0",
+      "rfdc": "^1.3.0",
       "test-mixer": "^4.1.8"
     }
   },
@@ -10214,11 +9948,8 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "lodash.clonedeep": "^4.5.0",
-      "object-boolean-combinations": "^6.0.11"
-    },
-    "devDependencies": {
-      "@types/lodash.clonedeep": "^4.5.7"
+      "object-boolean-combinations": "^6.0.11",
+      "rfdc": "^1.3.0"
     }
   },
   "tsd-extract": {
@@ -10384,18 +10115,18 @@ export const packageJSONData = {
       "globby": "^13.1.4",
       "is-online": "^10.0.0",
       "log-update": "^5.0.1",
-      "meow": "^11.0.0",
+      "meow": "^12.0.1",
       "object-path": "^0.11.8",
-      "p-map": "^5.5.0",
+      "p-map": "^6.0.0",
       "p-progress": "^0.6.0",
       "p-reduce": "^3.0.0",
-      "pacote": "^15.1.2",
+      "pacote": "^15.1.3",
       "update-notifier": "^6.0.2",
-      "write-file-atomic": "^5.0.0"
+      "write-file-atomic": "^5.0.1"
     },
     "devDependencies": {
       "fs-extra": "^11.1.1",
-      "lodash.clonedeep": "^4.5.0"
+      "rfdc": "^1.3.0"
     }
   },
   "util-array-object-or-both": {
@@ -10470,10 +10201,8 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "lodash.includes": "^4.3.0"
-    },
-    "devDependencies": {
-      "@types/lodash.includes": "^4.3.7"
+      "@types/lodash-es": "^4.17.7",
+      "lodash-es": "^4.17.21"
     }
   },
   "util-nonempty": {

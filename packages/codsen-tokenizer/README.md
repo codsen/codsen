@@ -39,7 +39,7 @@ import { tokenizer } from "codsen-tokenizer";
 const gathered = [];
 
 // it operates from a callback, like Array.prototype.forEach()
-tokenizer(`<td nowrap>`, {
+tokenizer("<td nowrap>", {
   tagCb: (obj) => {
     gathered.push(obj);
   },

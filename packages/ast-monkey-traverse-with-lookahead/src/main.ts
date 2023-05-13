@@ -1,10 +1,10 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import clone from "lodash.clonedeep";
+import rfdc from "rfdc";
 import { isPlainObject as isObj } from "codsen-utils";
-
 import { version as v } from "../package.json";
 
+const clone = rfdc();
 const version: string = v;
 
 declare let DEV: boolean;

@@ -8,9 +8,11 @@ import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa, execaCommand } from "execa";
 import { temporaryDirectory } from "tempy";
 import pMap from "p-map";
-import clone from "lodash.clonedeep";
+import rfdc from "rfdc";
 import { createRequire } from "module";
 import { fileURLToPath } from "url";
+
+const clone = rfdc();
 
 const read = promisify(fs.readFile);
 const require = createRequire(import.meta.url);
