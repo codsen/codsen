@@ -583,10 +583,13 @@ function resolveString(
             4
           )}`}\u001b[${39}m`
         );
-      let varName = string.slice(obj.headsEndAt, obj.tailsStartAt);
+      let varName = string.slice(
+        obj.headsEndAt as number,
+        obj.tailsStartAt as number
+      );
       DEV &&
         console.log(
-          `589 ${`\u001b[${33}m${`varName`}\u001b[${39}m`} = ${JSON.stringify(
+          `592 ${`\u001b[${33}m${`varName`}\u001b[${39}m`} = ${JSON.stringify(
             varName,
             null,
             4
@@ -594,19 +597,19 @@ function resolveString(
         );
       if (varName.length === 0) {
         finalRangesArr.push(
-          obj.headsStartAt, // replace from index
-          obj.tailsEndAt // replace upto index - no third argument, just deletion of heads/tails
+          obj.headsStartAt as number, // replace from index
+          obj.tailsEndAt as number // replace upto index - no third argument, just deletion of heads/tails
         );
       } else if (
         has.call(secretResolvedVarsStash, varName) &&
         isStr(secretResolvedVarsStash[varName])
       ) {
         // check, maybe the value was already resolved before and present in secret stash:
-        DEV && console.log("605 Yay! Value taken from stash!");
+        DEV && console.log("608 Yay! Value taken from stash!");
         finalRangesArr.push(
-          obj.headsStartAt, // replace from index
-          obj.tailsEndAt, // replace upto index
-          secretResolvedVarsStash[varName] // replacement value
+          obj.headsStartAt as number, // replace from index
+          obj.tailsEndAt as number, // replace upto index
+          secretResolvedVarsStash[varName] as any // replacement value
         );
       } else {
         // it's not in the stash unfortunately, so let's search for it then:
@@ -624,8 +627,8 @@ function resolveString(
           } else {
             throw new Error(
               `json-variables/processHeadsAndTails(): [THROW_ID_18] We couldn't find the value to resolve the variable ${string.slice(
-                obj.headsEndAt,
-                obj.tailsStartAt
+                obj.headsEndAt as number,
+                obj.tailsStartAt as number
               )}. We're at path: "${path}".`
             );
           }
@@ -637,8 +640,8 @@ function resolveString(
         ) {
           throw new Error(
             `json-variables/processHeadsAndTails(): [THROW_ID_23] While resolving the variable ${string.slice(
-              obj.headsEndAt,
-              obj.tailsStartAt
+              obj.headsEndAt as number,
+              obj.tailsStartAt as number
             )} at path ${path}, it resolved into a non-string value, ${JSON.stringify(
               resolvedValue,
               null,
@@ -698,8 +701,8 @@ function resolveString(
           );
           if (isStr(replacementVal)) {
             finalRangesArr.push(
-              obj.headsStartAt, // replace from index
-              obj.tailsEndAt, // replace upto index
+              obj.headsStartAt as number, // replace from index
+              obj.tailsEndAt as number, // replace upto index
               replacementVal
             );
           }
@@ -717,8 +720,8 @@ function resolveString(
           if (isStr(replacementVal)) {
             // 2. submit to be replaced
             finalRangesArr.push(
-              obj.headsStartAt, // replace from index
-              obj.tailsEndAt, // replace upto index
+              obj.headsStartAt as number, // replace from index
+              obj.tailsEndAt as number, // replace upto index
               replacementVal
             );
           }
@@ -780,7 +783,7 @@ function resolveString(
   }
 
   let temp1 = processHeadsAndTails(
-    foundHeadsAndTails,
+    foundHeadsAndTails as any,
     false,
     wholeValueIsVariable
   );
@@ -820,7 +823,7 @@ function resolveString(
   }
 
   let temp2 = processHeadsAndTails(
-    foundHeadsAndTails,
+    foundHeadsAndTails as any,
     true,
     wholeValueIsVariable
   );
@@ -831,7 +834,7 @@ function resolveString(
     return temp2;
   }
 
-  DEV && console.log(`834 temp2 = ${JSON.stringify(temp2, null, 4)}`);
+  DEV && console.log(`837 temp2 = ${JSON.stringify(temp2, null, 4)}`);
 
   // 3. Then, work the finalRangesArr list
   // ================================
@@ -1001,7 +1004,7 @@ function jVar(input: Obj, opts?: Partial<Opts>): Obj {
     // to mutate it, we return "current". If we want to mutate it, we return a new
     // value (which will get written onto that node, previously equal to "current").
 
-    DEV && console.log(`1004 current = ${JSON.stringify(current, null, 4)}`);
+    DEV && console.log(`1007 current = ${JSON.stringify(current, null, 4)}`);
 
     // *
     // Instantly skip empty strings:
