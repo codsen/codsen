@@ -16,7 +16,7 @@ blocks:
       prologue:
         commands:
           - nvm install node
-          - nvm use 18
+          - nvm use 20
           - node --version
           - npm --version
           # Correct permissions since they are too open by default:
