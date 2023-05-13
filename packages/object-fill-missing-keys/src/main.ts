@@ -1,11 +1,18 @@
-import clone from "lodash.clonedeep";
+import rfdc from "rfdc";
 import { mergeAdvanced } from "object-merge-advanced";
 import { arrayiffy } from "arrayiffy-if-string";
 import { allEq } from "object-all-values-equal-to";
-import { isStr, isPlainObject as isObj, existy, Obj } from "codsen-utils";
+import {
+  isStr,
+  isPlainObject as isObj,
+  existy,
+  Obj,
+  JSONObject,
+} from "codsen-utils";
 
 import { version as v } from "../package.json";
 
+const clone = rfdc();
 const version: string = v;
 
 declare let DEV: boolean;
@@ -43,7 +50,7 @@ function fillMissingKeys(
   resolvedOpts: Opts,
   path = ""
 ): Obj {
-  DEV && console.log(`046 fillMissingKeys() starts`);
+  DEV && console.log(`053 fillMissingKeys() starts`);
   let incomplete = clone(incompleteOriginal);
   if (
     existy(incomplete) ||
@@ -55,9 +62,9 @@ function fillMissingKeys(
       allEq(incomplete, resolvedOpts.placeholder)
     )
   ) {
-    DEV && console.log(`058`);
+    DEV && console.log(`065`);
     if (isObj(schema) && isObj(incomplete)) {
-      DEV && console.log(`060 - it's a plain object`);
+      DEV && console.log(`067 - it's a plain object`);
       // traverse the keys on schema and add them onto incomplete
       Object.keys(schema).forEach((key) => {
         // calculate the path for current key
@@ -87,15 +94,15 @@ function fillMissingKeys(
           )
         ) {
           incomplete[key] = fillMissingKeys(
-            incomplete[key],
-            schema[key],
+            incomplete[key] as JSONObject,
+            schema[key] as JSONObject,
             resolvedOpts,
             currentPath
           );
         }
       });
     } else if (Array.isArray(schema) && Array.isArray(incomplete)) {
-      DEV && console.log(`098 - it's an array`);
+      DEV && console.log(`105 - it's an array`);
       if (incomplete.length === 0) {
         return schema;
       }
@@ -105,7 +112,7 @@ function fillMissingKeys(
           if (isObj(schema[0]) || Array.isArray(schema[0])) {
             incomplete[i] = fillMissingKeys(
               incomplete[i],
-              schema[0],
+              schema[0] as JSONObject,
               resolvedOpts,
               currentPath
             );
@@ -113,7 +120,7 @@ function fillMissingKeys(
         }
       }
     } else {
-      DEV && console.log(`116 - mergeAdvanced()`);
+      DEV && console.log(`123 - mergeAdvanced()`);
       return mergeAdvanced(schema, incomplete, {
         useNullAsExplicitFalse: resolvedOpts.useNullAsExplicitFalse,
         cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
@@ -172,7 +179,7 @@ function fillMissing(incomplete: Obj, schema: Obj, opts?: Partial<Opts>): Obj {
   let resolvedOpts: Opts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `175 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `182 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4
