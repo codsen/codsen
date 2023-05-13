@@ -358,6 +358,15 @@ export function hasOwnProp(obj: unknown, prop: string): boolean {
 
 // ----------------------------------------------------------------
 
+/**
+ * Related to @typescript-eslint/require-array-sort-compare lint error
+ */
+export function compareFn(a: string, b: string) {
+  return a.localeCompare(b);
+}
+
+// ----------------------------------------------------------------
+
 // https://html.spec.whatwg.org/multipage/syntax.html#elements-2
 export const voidTags = [
   "area",

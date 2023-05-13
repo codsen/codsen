@@ -95,6 +95,10 @@ declare function resolveEolSetting(
   defaultEolChar?: EolChar
 ): EolChar;
 declare function hasOwnProp(obj: unknown, prop: string): boolean;
+/**
+ * Related to @typescript-eslint/require-array-sort-compare lint error
+ */
+declare function compareFn(a: string, b: string): number;
 declare const voidTags: string[];
 declare const inlineTags: Set<string>;
 /**
@@ -120,6 +124,7 @@ export {
   Obj,
   backslash,
   backtick,
+  compareFn,
   detectEol,
   doublePrime,
   ellipsis,
