@@ -72,11 +72,11 @@
     }
   },
   "dependencies": {
-    "lodash.isregexp": "^4.0.1",
+    "@types/lodash-es": "^4.17.7",
+    "lodash-es": "^4.17.21",
     "ranges-merge": "^9.0.8"
   },
   "devDependencies": {
-    "@types/lodash.isregexp": "^4.0.7",
     "ranges-apply": "^7.0.8"
   }
 }

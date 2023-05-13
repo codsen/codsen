@@ -2,7 +2,7 @@ import { Ranges } from "ranges-merge";
 
 declare const version: string;
 declare function rRegex(
-  regx: RegExp,
+  regExp: RegExp,
   str: string,
   replacement?: string | null | undefined
 ): Ranges;

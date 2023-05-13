@@ -1,5 +1,5 @@
 import { rMerge } from "ranges-merge";
-import isregexp from "lodash.isregexp";
+import { isRegExp } from "lodash-es";
 import type { Range, Ranges } from "ranges-merge";
 
 import { version as v } from "../package.json";
@@ -7,19 +7,19 @@ import { version as v } from "../package.json";
 const version: string = v;
 
 function rRegex(
-  regx: RegExp,
+  regExp: RegExp,
   str: string,
   replacement?: string | null | undefined
 ): Ranges {
   // given regx validation
-  if (regx === undefined) {
+  if (regExp === undefined) {
     throw new TypeError(
       `ranges-regex: [THROW_ID_01] The first input's argument must be a regex object! Currently it is missing!`
     );
-  } else if (!isregexp(regx)) {
+  } else if (!isRegExp(regExp)) {
     throw new TypeError(
-      `ranges-regex: [THROW_ID_02] The first input's argument must be a regex object! Currently its type is: ${typeof regx}, equal to: ${JSON.stringify(
-        regx,
+      `ranges-regex: [THROW_ID_02] The first input's argument must be a regex object! Currently its type is: ${typeof regExp}, equal to: ${JSON.stringify(
+        regExp,
         null,
         4
       )}`
@@ -61,17 +61,17 @@ function rRegex(
     (typeof replacement === "string" && replacement.length)
   ) {
     // eslint-disable-next-line no-cond-assign
-    while ((tempArr = regx.exec(str)) !== null) {
+    while ((tempArr = regExp.exec(str)) !== null) {
       resRange.push([
-        regx.lastIndex - tempArr[0].length,
-        regx.lastIndex,
+        regExp.lastIndex - tempArr[0].length,
+        regExp.lastIndex,
         replacement,
       ]);
     }
   } else {
     // eslint-disable-next-line no-cond-assign
-    while ((tempArr = regx.exec(str)) !== null) {
-      resRange.push([regx.lastIndex - tempArr[0].length, regx.lastIndex]);
+    while ((tempArr = regExp.exec(str)) !== null) {
+      resRange.push([regExp.lastIndex - tempArr[0].length, regExp.lastIndex]);
     }
   }
 

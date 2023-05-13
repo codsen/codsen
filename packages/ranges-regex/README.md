@@ -36,7 +36,7 @@ import { strict as assert } from "assert";
 
 import { rRegex } from "ranges-regex";
 
-const oldString = `The quick brown fox jumps over the lazy dog.`;
+const oldString = "The quick brown fox jumps over the lazy dog.";
 const result = rRegex(/the/gi, oldString);
 
 // all regex matches, but in Ranges notation (see codsen.com/ranges/):
