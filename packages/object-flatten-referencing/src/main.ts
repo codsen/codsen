@@ -1,53 +1,60 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import clone from "lodash.clonedeep";
+import rfdc from "rfdc";
 import { strIndexesOfPlus } from "str-indexes-of-plus";
 import { isMatch } from "matcher";
-import { existy, isStr, isPlainObject as isObj, Obj } from "codsen-utils";
-
-import {
-  flattenObject,
-  flattenArr,
-  arrayiffyString,
-  defaults,
-  Opts,
-} from "./util";
+import { arrayiffy } from "arrayiffy-if-string";
+import { existy, isStr, isPlainObject as isObj, JSONValue } from "codsen-utils";
+import { flattenObject, flattenArr, defaults, Opts } from "./util";
 import { version as v } from "../package.json";
 
+const clone = rfdc();
 const version: string = v;
 
 function flattenReferencing(
-  input: any,
-  reference: any,
+  input: JSONValue,
+  reference: JSONValue,
   opts?: Partial<Opts>
 ): any {
-  if (arguments.length === 0) {
+  if (!isObj(input)) {
     throw new Error(
-      "object-flatten-referencing/ofr(): [THROW_ID_01] all inputs missing!"
+      `object-flatten-referencing/ofr(): [THROW_ID_01] the first input argument must be a plain object! It was given as ${JSON.stringify(
+        input,
+        null,
+        4
+      )} (its typeof was ${typeof input}).`
     );
   }
-  if (arguments.length === 1) {
+  if (!isObj(reference)) {
     throw new Error(
-      "object-flatten-referencing/ofr(): [THROW_ID_02] resolvedReference object missing!"
+      `object-flatten-referencing/ofr(): [THROW_ID_02] the second input argument must be a plain object! It was given as ${JSON.stringify(
+        reference,
+        null,
+        4
+      )} (its typeof was ${typeof reference}).`
     );
   }
-  if (existy(opts) && !isObj(opts)) {
+  if (opts && !isObj(opts)) {
     throw new Error(
-      `object-flatten-referencing/ofr(): [THROW_ID_03] third resolvedInput, options object must be a plain object. Currently it's: ${typeof opts}`
+      `object-flatten-referencing/ofr(): [THROW_ID_03] the third input argument must be a plain object! It was given as ${JSON.stringify(
+        opts,
+        null,
+        4
+      )} (its typeof was ${typeof opts}).`
     );
   }
 
   let originalOpts: Opts = { ...defaults, ...opts };
 
-  originalOpts.dontWrapKeys = arrayiffyString(originalOpts.dontWrapKeys);
-  originalOpts.preventWrappingIfContains = arrayiffyString(
+  originalOpts.dontWrapKeys = arrayiffy(originalOpts.dontWrapKeys);
+  originalOpts.preventWrappingIfContains = arrayiffy(
     originalOpts.preventWrappingIfContains
   );
-  originalOpts.dontWrapPaths = arrayiffyString(originalOpts.dontWrapPaths);
-  originalOpts.ignore = arrayiffyString(originalOpts.ignore);
+  originalOpts.dontWrapPaths = arrayiffy(originalOpts.dontWrapPaths);
+  originalOpts.ignore = arrayiffy(originalOpts.ignore);
   if (typeof originalOpts.whatToDoWhenReferenceIsMissing !== "number") {
-    (originalOpts as Obj).whatToDoWhenReferenceIsMissing =
-      +originalOpts.whatToDoWhenReferenceIsMissing || 0;
+    originalOpts.whatToDoWhenReferenceIsMissing =
+      (+originalOpts.whatToDoWhenReferenceIsMissing as 0 | 1 | 2) || 0;
   }
 
   function ofr(
@@ -288,7 +295,7 @@ export {
   flattenReferencing,
   flattenObject,
   flattenArr,
-  arrayiffyString,
+  arrayiffy,
   defaults,
   version,
   Opts,

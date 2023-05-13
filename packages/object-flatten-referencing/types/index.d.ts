@@ -1,4 +1,5 @@
-import { Obj } from "codsen-utils";
+export { arrayiffy } from "arrayiffy-if-string";
+import { JSONObject, JSONValue } from "codsen-utils";
 
 interface Opts {
   wrapHeadsWith: string;
@@ -17,25 +18,23 @@ interface Opts {
   enforceStrictKeyset: boolean;
 }
 declare const defaults: Opts;
-declare function flattenObject(obj: Obj, opts?: Partial<Opts>): any[];
+declare function flattenObject(obj: JSONObject, opts?: Partial<Opts>): any[];
 declare function flattenArr(
   arr: any[],
   opts?: Partial<Opts>,
   wrap?: boolean,
   joinArraysUsingBrs?: boolean
 ): string;
-declare function arrayiffyString(something: string | any): any;
 
 declare const version: string;
 declare function flattenReferencing(
-  input: any,
-  reference: any,
+  input: JSONValue,
+  reference: JSONValue,
   opts?: Partial<Opts>
 ): any;
 
 export {
   Opts,
-  arrayiffyString,
   defaults,
   flattenArr,
   flattenObject,

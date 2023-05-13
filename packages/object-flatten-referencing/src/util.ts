@@ -1,5 +1,12 @@
-import clone from "lodash.clonedeep";
-import { isStr, isPlainObject as isObj, Obj } from "codsen-utils";
+import rfdc from "rfdc";
+import {
+  isStr,
+  isPlainObject as isObj,
+  JSONObject,
+  JSONArray,
+} from "codsen-utils";
+
+const clone = rfdc();
 
 interface Opts {
   wrapHeadsWith: string;
@@ -42,7 +49,7 @@ const defaults: Opts = {
   // keys in an options object?
 };
 
-function flattenObject(obj: Obj, opts?: Partial<Opts>): any[] {
+function flattenObject(obj: JSONObject, opts?: Partial<Opts>): any[] {
   let resolvedOpts: Opts = { ...defaults, ...opts };
   if (arguments.length === 0 || Object.keys(obj).length === 0) {
     return [];
@@ -52,11 +59,14 @@ function flattenObject(obj: Obj, opts?: Partial<Opts>): any[] {
   if (isObj(resolvedObj)) {
     Object.keys(resolvedObj).forEach((key) => {
       if (isObj(resolvedObj[key])) {
-        resolvedObj[key] = flattenObject(resolvedObj[key], resolvedOpts);
+        resolvedObj[key] = flattenObject(
+          resolvedObj[key] as JSONObject,
+          resolvedOpts
+        );
       }
       if (Array.isArray(resolvedObj[key])) {
         res = res.concat(
-          resolvedObj[key].map(
+          (resolvedObj[key] as JSONArray).map(
             (el: any) => `${key}${resolvedOpts.objectKeyAndValueJoinChar}${el}`
           )
         );
