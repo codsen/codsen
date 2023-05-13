@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 14.0.12 (2023-05-13)
-
-**Note:** Version bump only for package object-merge-advanced
-
 ## 14.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
