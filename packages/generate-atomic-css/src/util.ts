@@ -118,7 +118,7 @@ function extractConfig(
         // if there are opening or closing comments, don't include those
         if (leftSeq(str, sliceTo, "/", "*")) {
           DEV && console.log(`120`);
-          sliceTo = (leftSeq(str, sliceTo, "/", "*") as Obj).leftmostChar;
+          sliceTo = (leftSeq(str, sliceTo, "/", "*") as any).leftmostChar;
         }
         rawContentAbove = sliceTo === 0 ? "" : str.slice(0, sliceTo);
         DEV &&
@@ -146,7 +146,7 @@ function extractConfig(
         );
       if (rightSeq(extractedConfig, sliceFrom - 1, "*", "/")) {
         sliceFrom =
-          ((rightSeq(extractedConfig, sliceFrom - 1, "*", "/") as Obj)
+          ((rightSeq(extractedConfig, sliceFrom - 1, "*", "/") as any)
             .rightmostChar as number) + 1;
       }
       let sliceTo = null;
@@ -258,7 +258,7 @@ function extractConfig(
       let sliceTo = extractedConfig.indexOf(CONTENTTAIL);
 
       if (leftSeq(extractedConfig, sliceTo, "/", "*")) {
-        sliceTo = (leftSeq(extractedConfig, sliceTo, "/", "*") as Obj)
+        sliceTo = (leftSeq(extractedConfig, sliceTo, "/", "*") as any)
           .leftmostChar;
       }
       extractedConfig = extractedConfig.slice(0, sliceTo).trim();
@@ -922,7 +922,7 @@ function prepLine(
       }
     }
     // eslint-disable-next-line no-param-reassign
-    generatedCount.count += 1;
+    (generatedCount.count as number) += 1;
 
     if (typeof progressFn === "function") {
       currentPercentageDone = Math.floor(
@@ -941,7 +941,7 @@ function prepLine(
 function bump(str: string, thingToBump: Obj): string {
   if (/\.\w/g.test(str)) {
     // eslint-disable-next-line no-param-reassign
-    thingToBump.count += 1;
+    (thingToBump.count as number) += 1;
   }
   return str;
 }
