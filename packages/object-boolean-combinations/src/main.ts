@@ -1,12 +1,11 @@
 /* eslint no-bitwise:0, @typescript-eslint/explicit-module-boundary-types:0, @typescript-eslint/ban-types:0 */
 
-import intersection from "lodash.intersection";
-import pull from "lodash.pull";
+import { pull, intersection } from "lodash-es";
 import { isPlainObject as isObj, Obj } from "codsen-utils";
-import clone from "lodash.clonedeep";
-
+import rfdc from "rfdc";
 import { version as v } from "../package.json";
 
+const clone = rfdc();
 const version: string = v;
 
 export interface BoolObj {
