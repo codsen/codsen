@@ -1,6 +1,6 @@
 {
   "name": "detergent",
-  "version": "9.2.1",
+  "version": "9.2.2",
   "description": "Extract, clean, encode text and fix English style",
   "keywords": [
     "brief",
@@ -88,8 +88,8 @@
     "string-fix-broken-named-entities": "^7.0.12",
     "string-left-right": "^6.0.12",
     "string-range-expander": "^4.0.9",
-    "string-remove-widows": "^4.0.12",
-    "string-strip-html": "^13.2.4",
+    "string-remove-widows": "^4.0.13",
+    "string-strip-html": "^13.3.0",
     "string-trim-spaces-only": "^5.0.7"
   },
   "devDependencies": {

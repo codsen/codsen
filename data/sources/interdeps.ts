@@ -40,7 +40,7 @@ export const interdeps = [
   },
   {
     "name": "ast-contains-only-empty-space",
-    "size": 556,
+    "size": 558,
     "imports": [
       "ast-monkey-traverse"
     ]
@@ -78,14 +78,14 @@ export const interdeps = [
   },
   {
     "name": "ast-is-empty",
-    "size": 712,
+    "size": 714,
     "imports": [
       "codsen-utils"
     ]
   },
   {
     "name": "ast-loose-compare",
-    "size": 1285,
+    "size": 1287,
     "imports": [
       "ast-contains-only-empty-space",
       "codsen-utils"
@@ -104,7 +104,7 @@ export const interdeps = [
   },
   {
     "name": "ast-monkey-traverse",
-    "size": 1058,
+    "size": 1060,
     "imports": [
       "ast-monkey-util",
       "codsen-utils"
@@ -112,7 +112,7 @@ export const interdeps = [
   },
   {
     "name": "ast-monkey-traverse-with-lookahead",
-    "size": 1181,
+    "size": 1183,
     "imports": [
       "codsen-utils"
     ]
@@ -169,7 +169,7 @@ export const interdeps = [
   },
   {
     "name": "color-shorthand-hex-to-six-digit",
-    "size": 827,
+    "size": 829,
     "imports": [
       "codsen-utils"
     ]
@@ -484,7 +484,7 @@ export const interdeps = [
   },
   {
     "name": "object-boolean-combinations",
-    "size": 1154,
+    "size": 1152,
     "imports": [
       "codsen-utils"
     ]
@@ -541,7 +541,7 @@ export const interdeps = [
   },
   {
     "name": "object-set-all-values-to",
-    "size": 672,
+    "size": 674,
     "imports": [
       "codsen-utils"
     ]
@@ -800,7 +800,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 20463,
+    "size": 20542,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -872,7 +872,7 @@ export const interdeps = [
   },
   {
     "name": "util-nonempty",
-    "size": 462,
+    "size": 464,
     "imports": [
       "codsen-utils"
     ]
