@@ -1,6 +1,6 @@
 {
   "name": "string-strip-html",
-  "version": "13.2.4",
+  "version": "13.3.0",
   "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
   "keywords": [
     "code",
