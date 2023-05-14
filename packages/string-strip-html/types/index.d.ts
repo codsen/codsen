@@ -49,6 +49,7 @@ interface Opts {
     wrapHeads?: string;
     wrapTails?: string;
   };
+  ignoreIndentations: boolean;
   cb: null | ((cbObj: CbObj) => void);
   reportProgressFunc: null | ((percDone: number) => void);
   reportProgressFuncFrom: number;
