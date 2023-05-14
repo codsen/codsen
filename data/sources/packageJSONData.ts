@@ -2384,7 +2384,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.5.0",
       "csv-sort": "^7.0.9",
       "globby": "^13.1.4",
-      "inquirer": "^9.2.2",
+      "inquirer": "^9.2.3",
       "meow": "^12.0.1",
       "update-notifier": "^6.0.2"
     }
@@ -2619,7 +2619,7 @@ export const packageJSONData = {
   },
   "detergent": {
     "name": "detergent",
-    "version": "9.2.1",
+    "version": "9.2.2",
     "description": "Extract, clean, encode text and fix English style",
     "keywords": [
       "brief",
@@ -2707,8 +2707,8 @@ export const packageJSONData = {
       "string-fix-broken-named-entities": "^7.0.12",
       "string-left-right": "^6.0.12",
       "string-range-expander": "^4.0.9",
-      "string-remove-widows": "^4.0.12",
-      "string-strip-html": "^13.2.4",
+      "string-remove-widows": "^4.0.13",
+      "string-strip-html": "^13.3.0",
       "string-trim-spaces-only": "^5.0.7"
     },
     "devDependencies": {
@@ -3023,7 +3023,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.5.0",
       "email-all-chars-within-ascii": "^5.0.12",
       "globby": "^13.1.4",
-      "inquirer": "^9.2.2",
+      "inquirer": "^9.2.3",
       "minimist": "^1.2.8",
       "string-left-right": "^6.0.12",
       "update-notifier": "^6.0.2"
@@ -3355,7 +3355,7 @@ export const packageJSONData = {
   },
   "extract-search-index": {
     "name": "extract-search-index",
-    "version": "2.0.12",
+    "version": "2.0.13",
     "description": "Extract unique keyword input list string for search",
     "keywords": [
       "string",
@@ -3426,7 +3426,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "string-strip-html": "^13.2.4",
+      "string-strip-html": "^13.3.0",
       "string-unfancy": "^6.0.9"
     }
   },
@@ -7440,7 +7440,7 @@ export const packageJSONData = {
   },
   "remark-typography": {
     "name": "remark-typography",
-    "version": "0.6.8",
+    "version": "0.6.9",
     "description": "Remark plugin to fix typography: quotes, dashes and so on.",
     "keywords": [
       "unified",
@@ -7513,7 +7513,7 @@ export const packageJSONData = {
       "fp-ts": "^2.15.0",
       "string-apostrophes": "^4.0.12",
       "string-dashes": "^1.2.6",
-      "string-remove-widows": "^4.0.12",
+      "string-remove-widows": "^4.0.13",
       "unified": "^10.1.2",
       "unist-util-visit": "^4.1.2"
     },
@@ -9142,7 +9142,7 @@ export const packageJSONData = {
   },
   "string-remove-widows": {
     "name": "string-remove-widows",
-    "version": "4.0.12",
+    "version": "4.0.13",
     "description": "Helps to prevent widow words in a text",
     "keywords": [
       "against",
@@ -9224,7 +9224,7 @@ export const packageJSONData = {
       "string-match-left-right": "^9.0.12"
     },
     "devDependencies": {
-      "string-strip-html": "^13.2.4"
+      "string-strip-html": "^13.3.0"
     }
   },
   "string-split-by-whitespace": {
@@ -9311,7 +9311,7 @@ export const packageJSONData = {
   },
   "string-strip-html": {
     "name": "string-strip-html",
-    "version": "13.2.4",
+    "version": "13.3.0",
     "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
     "keywords": [
       "code",
