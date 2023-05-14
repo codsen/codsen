@@ -3,25 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [13.4.0](https://github.com/codsen/codsen/compare/string-strip-html@13.3.0...string-strip-html@13.4.0) (2023-05-14)
+## 8.5.0 (2023-05-14)
+
+### Features
+
+- back-porting the latest v13.4.0 to CJS and releasing as non-pure ESM (no `type: module` in package.json).
+
+## 13.4.0 (2023-05-14)
 
 ### Features
 
 - add `opts.ignoreIndentations` (useful when stripping tags from markdown) ([70a8e69](https://github.com/codsen/codsen/commit/70a8e69ffca71d621a208677f16322fcba81ea40)), closes [#71](https://github.com/codsen/codsen/issues/71)
 
-# [13.3.0](https://github.com/codsen/codsen/compare/string-strip-html@13.2.4...string-strip-html@13.3.0) (2023-05-14)
+## 13.3.0 (2023-05-14)
 
 ### Features
 
 - improve breadcrumb pattern recognition ([bc05dcb](https://github.com/codsen/codsen/commit/bc05dcb02c9492839e3e551c84ab984e7b06ef70)), closes [#78](https://github.com/codsen/codsen/issues/78)
 
-# [13.2.0](https://github.com/codsen/codsen/compare/string-strip-html@13.1.0...string-strip-html@13.2.0) (2023-02-22)
+## 13.2.0 (2023-02-22)
 
 ### Features
 
 - make `ignoreTagsWithTheirContents` to recognise self-closing tags ([7946d68](https://github.com/codsen/codsen/commit/7946d685cf882b4e0e6157522e2dd23655616d66)), closes [#66](https://github.com/codsen/codsen/issues/66)
 
-# [13.1.0](https://github.com/codsen/codsen/compare/string-strip-html@13.0.6...string-strip-html@13.1.0) (2023-02-04)
+## 13.1.0 (2023-02-04)
 
 ### Features
 
