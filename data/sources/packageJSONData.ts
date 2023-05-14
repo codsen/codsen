@@ -2308,7 +2308,7 @@ export const packageJSONData = {
   },
   "csv-sort-cli": {
     "name": "csv-sort-cli",
-    "version": "3.0.10",
+    "version": "3.0.11",
     "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
     "keywords": [
       "accountancy",
@@ -2619,7 +2619,7 @@ export const packageJSONData = {
   },
   "detergent": {
     "name": "detergent",
-    "version": "9.2.2",
+    "version": "9.2.3",
     "description": "Extract, clean, encode text and fix English style",
     "keywords": [
       "brief",
@@ -2707,8 +2707,8 @@ export const packageJSONData = {
       "string-fix-broken-named-entities": "^7.0.12",
       "string-left-right": "^6.0.12",
       "string-range-expander": "^4.0.9",
-      "string-remove-widows": "^4.0.13",
-      "string-strip-html": "^13.3.0",
+      "string-remove-widows": "^4.0.14",
+      "string-strip-html": "^13.4.0",
       "string-trim-spaces-only": "^5.0.7"
     },
     "devDependencies": {
@@ -2950,7 +2950,7 @@ export const packageJSONData = {
   },
   "email-all-chars-within-ascii-cli": {
     "name": "email-all-chars-within-ascii-cli",
-    "version": "3.0.13",
+    "version": "3.0.14",
     "description": "Command line app to scan email templates, are all their characters within ASCII range",
     "keywords": [
       "7bit",
@@ -3355,7 +3355,7 @@ export const packageJSONData = {
   },
   "extract-search-index": {
     "name": "extract-search-index",
-    "version": "2.0.13",
+    "version": "2.0.14",
     "description": "Extract unique keyword input list string for search",
     "keywords": [
       "string",
@@ -3426,7 +3426,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "string-strip-html": "^13.3.0",
+      "string-strip-html": "^13.4.0",
       "string-unfancy": "^6.0.9"
     }
   },
@@ -7440,7 +7440,7 @@ export const packageJSONData = {
   },
   "remark-typography": {
     "name": "remark-typography",
-    "version": "0.6.9",
+    "version": "0.6.10",
     "description": "Remark plugin to fix typography: quotes, dashes and so on.",
     "keywords": [
       "unified",
@@ -7513,7 +7513,7 @@ export const packageJSONData = {
       "fp-ts": "^2.15.0",
       "string-apostrophes": "^4.0.12",
       "string-dashes": "^1.2.6",
-      "string-remove-widows": "^4.0.13",
+      "string-remove-widows": "^4.0.14",
       "unified": "^10.1.2",
       "unist-util-visit": "^4.1.2"
     },
@@ -9142,7 +9142,7 @@ export const packageJSONData = {
   },
   "string-remove-widows": {
     "name": "string-remove-widows",
-    "version": "4.0.13",
+    "version": "4.0.14",
     "description": "Helps to prevent widow words in a text",
     "keywords": [
       "against",
@@ -9224,7 +9224,7 @@ export const packageJSONData = {
       "string-match-left-right": "^9.0.12"
     },
     "devDependencies": {
-      "string-strip-html": "^13.3.0"
+      "string-strip-html": "^13.4.0"
     }
   },
   "string-split-by-whitespace": {
@@ -9311,7 +9311,7 @@ export const packageJSONData = {
   },
   "string-strip-html": {
     "name": "string-strip-html",
-    "version": "13.3.0",
+    "version": "13.4.0",
     "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
     "keywords": [
       "code",
