@@ -102,6 +102,7 @@
     "rimraf": "^5.0.0",
     "rollup": "^3.21.7",
     "rollup-plugin-dts": "^5.3.0",
+    "semver-regex": "^4.0.5",
     "simple-git": "^3.18.0",
     "sort-package-json": "^2.4.1",
     "tempy": "^3.0.0",
