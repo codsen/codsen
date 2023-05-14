@@ -10,7 +10,7 @@ if (name.endsWith("-tbc")) {
   name = name.slice(0, -4);
 }
 
-const pkg = require(path.join(path.resolve("./"), `package.json`));
+const pkg = require(path.join(path.resolve("./"), "package.json"));
 
 const isCJS = (str) => typeof str === "string" && str.endsWith(".cjs.js");
 
