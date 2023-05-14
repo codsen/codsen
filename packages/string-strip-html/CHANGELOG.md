@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- add `opts.ignoreIndentations` (useful when stripping tags from markdown) ([70a8e69](https://github.com/codsen/codsen/commit/70a8e69ffca71d621a208677f16322fcba81ea40))
+- add `opts.ignoreIndentations` (useful when stripping tags from markdown) ([70a8e69](https://github.com/codsen/codsen/commit/70a8e69ffca71d621a208677f16322fcba81ea40)), closes [#71](https://github.com/codsen/codsen/issues/71)
 
 # [13.3.0](https://github.com/codsen/codsen/compare/string-strip-html@13.2.4...string-strip-html@13.3.0) (2023-05-14)
 
