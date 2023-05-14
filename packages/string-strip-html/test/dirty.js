@@ -125,20 +125,20 @@ test("05 - missing closing brackets, multiple tags", () => {
 
 test("06 - missing opening bracket, but recognised tag name", () => {
   equal(
-    stripHtml("body>zzz</body>"),
+    stripHtml('body class="x">zzz</body>'),
     {
       result: "zzz",
       allTagLocations: [
-        [0, 5],
-        [8, 15],
+        [0, 15],
+        [18, 25],
       ],
       filteredTagLocations: [
-        [0, 5],
-        [8, 15],
+        [0, 15],
+        [18, 25],
       ],
       ranges: [
-        [0, 5],
-        [8, 15],
+        [0, 15],
+        [18, 25],
       ],
     },
     "06.01"
@@ -147,20 +147,20 @@ test("06 - missing opening bracket, but recognised tag name", () => {
 
 test("07 - missing opening bracket, but recognised tag name, inner whitespace", () => {
   equal(
-    stripHtml("body >zzz</body>"),
+    stripHtml('BODY class="x" >zzz</body>'),
     {
       result: "zzz",
       allTagLocations: [
-        [0, 6],
-        [9, 16],
+        [0, 16],
+        [19, 26],
       ],
       filteredTagLocations: [
-        [0, 6],
-        [9, 16],
+        [0, 16],
+        [19, 26],
       ],
       ranges: [
-        [0, 6],
-        [9, 16],
+        [0, 16],
+        [19, 26],
       ],
     },
     "07.01"
@@ -274,20 +274,20 @@ test("12 - missing opening bracket, but recognised tag name - at index position 
 
 test("13 - missing opening bracket, but recognised tag name - all caps, recognised", () => {
   equal(
-    stripHtml("BODY>zzz</BODY>"),
+    stripHtml("BODY/>zzz</BODY>"),
     {
       result: "zzz",
       allTagLocations: [
-        [0, 5],
-        [8, 15],
+        [0, 6],
+        [9, 16],
       ],
       filteredTagLocations: [
-        [0, 5],
-        [8, 15],
+        [0, 6],
+        [9, 16],
       ],
       ranges: [
-        [0, 5],
-        [8, 15],
+        [0, 6],
+        [9, 16],
       ],
     },
     "13.01"

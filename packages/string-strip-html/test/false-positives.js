@@ -206,4 +206,68 @@ test("32", () => {
   equal(stripHtml(input).result, "H4", "32.01");
 });
 
+test("33", () => {
+  let input = "head > shoulders > knees > toes";
+  equal(stripHtml(input).result, input, "33.01");
+});
+
+test("34", () => {
+  let input = "hat > head > shoulders > knees > toes";
+  equal(stripHtml(input).result, input, "34.01");
+});
+
+// https://github.com/codsen/codsen/issues/78
+// presence of closing slash is a sign of being a tag:
+test("35", () => {
+  let input = "head /> shoulders > knees > toes";
+  equal(stripHtml(input).result, "shoulders > knees > toes", "35.01");
+});
+test("36", () => {
+  let input = "head / > shoulders > knees > toes";
+  equal(stripHtml(input).result, "shoulders > knees > toes", "36.01");
+});
+test("37", () => {
+  let input = "head/ > shoulders > knees > toes";
+  equal(stripHtml(input).result, "shoulders > knees > toes", "37.01");
+});
+test("38", () => {
+  let input = "head/> shoulders > knees > toes";
+  equal(stripHtml(input).result, "shoulders > knees > toes", "38.01");
+});
+
+test("39", () => {
+  let input = "hat > head /> shoulders > knees > toes";
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "39.01");
+});
+test("40", () => {
+  let input = "hat > head / > shoulders > knees > toes";
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "40.01");
+});
+test("41", () => {
+  let input = "hat > head/ > shoulders > knees > toes";
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "41.01");
+});
+test("42", () => {
+  let input = "hat > head/> shoulders > knees > toes";
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "42.01");
+});
+
+// HTML attribute presence incriminates being a tag
+test("43 - double quotes", () => {
+  let input = 'hat > head class="z"> shoulders > knees > toes';
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "43.01");
+});
+test("44 - double quotes", () => {
+  let input = 'hat > head class="z"/> shoulders > knees > toes';
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "44.01");
+});
+test("45 - single quotes", () => {
+  let input = "hat > head class='z'> shoulders > knees > toes";
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "45.01");
+});
+test("46 - single quotes", () => {
+  let input = "hat > head class='z'/> shoulders > knees > toes";
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "46.01");
+});
+
 test.run();

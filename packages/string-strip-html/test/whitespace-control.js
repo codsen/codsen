@@ -117,18 +117,94 @@ test("13 - whitespace control - multiple tag combo case #2", () => {
 });
 
 test("14 - whitespace control - dirty html, trailing space", () => {
+  // first tag is not self-closing
   equal(
     stripHtml("something <article>article> here").result,
-    "something here",
+    "something article> here",
     "14.01"
+  );
+  equal(
+    stripHtml("something <article>article/> here").result,
+    "something here",
+    "14.02"
+  );
+  equal(
+    stripHtml('something <article>article class="z"> here').result,
+    "something here",
+    "14.03"
+  );
+  equal(
+    stripHtml('something <article>article class="z"/> here').result,
+    "something here",
+    "14.04"
+  );
+
+  // first tag is self-closing
+  equal(
+    stripHtml("something <article/>article> here").result,
+    "something article> here",
+    "14.05"
+  );
+  equal(
+    stripHtml("something <article/>article/> here").result,
+    "something here",
+    "14.06"
+  );
+  equal(
+    stripHtml('something <article/>article class="z"> here').result,
+    "something here",
+    "14.07"
+  );
+  equal(
+    stripHtml('something <article/>article class="z"/> here').result,
+    "something here",
+    "14.08"
   );
 });
 
 test("15 - whitespace control - dirty html, few trailing spaces", () => {
+  // first tag is not self-closing
   equal(
     stripHtml("something <article>article>   here").result,
-    "something here",
+    "something article>   here",
     "15.01"
+  );
+  equal(
+    stripHtml("something <article>article/>   here").result,
+    "something here",
+    "15.02"
+  );
+  equal(
+    stripHtml('something <article>article class="z">   here').result,
+    "something here",
+    "15.03"
+  );
+  equal(
+    stripHtml('something <article>article class="z"/>   here').result,
+    "something here",
+    "15.04"
+  );
+
+  // first tag is self-closing
+  equal(
+    stripHtml("something <article/>article>   here").result,
+    "something article>   here",
+    "15.05"
+  );
+  equal(
+    stripHtml("something <article/>article/>   here").result,
+    "something here",
+    "15.06"
+  );
+  equal(
+    stripHtml('something <article/>article class="z">   here').result,
+    "something here",
+    "15.07"
+  );
+  equal(
+    stripHtml('something <article/>article class="z"/>   here').result,
+    "something here",
+    "15.08"
   );
 });
 
