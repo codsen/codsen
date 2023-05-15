@@ -758,7 +758,33 @@ test("24 - DW reported - deletes 2 x [class]", () => {
   equal(actual.result, intended, "24.01");
 });
 
-/*test("25 - #68 leftover commas", () => {
+test("25 - #68 leftover commas - class+tag+class+class", () => {
+  let actual = comb(
+    `<head>
+<style>
+.a, li, .b, .c {}
+</style>
+</head>
+<body class="a">
+x
+</body>
+`
+  );
+
+  let intended = `<head>
+<style>
+.a, li  {}
+</style>
+</head>
+<body class="a">
+x
+</body>
+`;
+
+  equal(actual.result, intended, "25.01");
+});
+
+test("26 - #68 leftover commas - tag+tag+class+class", () => {
   let actual = comb(
     `<head>
 <style>
@@ -773,7 +799,7 @@ x
 
   let intended = `<head>
 <style>
-p, li {}
+p, li  {}
 </style>
 </head>
 <body>
@@ -781,7 +807,111 @@ x
 </body>
 `;
 
-  equal(actual.result, intended, "25.01");
-});*/
+  equal(actual.result, intended, "26.01");
+});
+
+test("27 - #68 leftover commas - 1", () => {
+  let actual = comb(
+    `<head>
+<style>
+.a, li, .b, .c {}
+</style>
+</head>
+<body class="a">
+x
+</body>
+`
+  );
+
+  let intended = `<head>
+<style>
+.a, li  {}
+</style>
+</head>
+<body class="a">
+x
+</body>
+`;
+
+  equal(actual.result, intended, "27.01");
+});
+
+test("28 - #68 leftover commas - 2", () => {
+  let actual = comb(
+    `<head>
+<style>
+.c, .a, li, .b {}
+</style>
+</head>
+<body class="a">
+x
+</body>
+`
+  );
+
+  let intended = `<head>
+<style>
+.a, li {}
+</style>
+</head>
+<body class="a">
+x
+</body>
+`;
+
+  equal(actual.result, intended, "28.01");
+});
+
+test("29 - #68 leftover commas - 3", () => {
+  let actual = comb(
+    `<head>
+<style>
+.b, .c, .a, li {}
+</style>
+</head>
+<body class="a">
+x
+</body>
+`
+  );
+
+  let intended = `<head>
+<style>
+.a, li {}
+</style>
+</head>
+<body class="a">
+x
+</body>
+`;
+
+  equal(actual.result, intended, "29.01");
+});
+
+test("30 - #68 leftover commas - 4", () => {
+  let actual = comb(
+    `<head>
+<style>
+li, .b, .c, .a {}
+</style>
+</head>
+<body class="a">
+x
+</body>
+`
+  );
+
+  let intended = `<head>
+<style>
+li, .a {}
+</style>
+</head>
+<body class="a">
+x
+</body>
+`;
+
+  equal(actual.result, intended, "30.01");
+});
 
 test.run();
