@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.13](https://github.com/codsen/codsen/compare/email-comb@7.0.12...email-comb@7.0.13) (2023-05-15)
+
+### Bug Fixes
+
+- fix rogue trailing comma ([2554120](https://github.com/codsen/codsen/commit/2554120de7c2c9755805a694a10c98dc6e173277)), closes [#68](https://github.com/codsen/codsen/issues/68)
+
 ## [7.0.11](https://github.com/codsen/codsen/compare/email-comb@7.0.10...email-comb@7.0.11) (2023-04-16)
 
 ### Bug Fixes
