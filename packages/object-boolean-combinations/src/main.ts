@@ -1,7 +1,6 @@
 /* eslint no-bitwise:0, @typescript-eslint/explicit-module-boundary-types:0, @typescript-eslint/ban-types:0 */
 
-import { pull, intersection } from "lodash-es";
-import { isPlainObject as isObj, Obj } from "codsen-utils";
+import { isPlainObject as isObj, Obj, intersection } from "codsen-utils";
 import rfdc from "rfdc";
 import { version as v } from "../package.json";
 
@@ -70,7 +69,9 @@ function combinations(input: Obj, Override: undefined | Obj = {}): Obj[] {
       Object.keys(incomingObject)
     );
     // propertiesToMix = all incoming object's properties MINUS properties to override
-    propertiesToBeOverridden.forEach((elem) => pull(propertiesToMix, elem));
+    propertiesToMix = propertiesToMix.filter(
+      (val) => !propertiesToBeOverridden.includes(val)
+    );
   }
 
   // mix up whatever propertiesToMix has came to this point
