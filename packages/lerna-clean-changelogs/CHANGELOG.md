@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.0.8](https://github.com/codsen/codsen/compare/lerna-clean-changelogs@5.0.7...lerna-clean-changelogs@5.0.8) (2023-04-16)
+## 5.0.8 (2023-04-16)
 
 ### Bug Fixes
 

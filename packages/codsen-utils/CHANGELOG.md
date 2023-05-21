@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 1.5.0 (2023-05-13)
+## 1.5.0 (2023-05-13)
 
 ### Bug Fixes
 
@@ -15,14 +15,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add `compareFn()` to tackle `@typescript-eslint/require-array-sort-compare` lint rule ([a25524a](https://github.com/codsen/codsen/commit/a25524a027067208b8e94b30b6745790ec278fbe))
 - add `includes()` ([c6cf14e](https://github.com/codsen/codsen/commit/c6cf14e8a7f3fb2a063fcec3381700798341ad42))
 
-# [1.4.0](https://github.com/codsen/codsen/compare/codsen-utils@1.3.1...codsen-utils@1.4.0) (2023-04-16)
+## 1.4.0 (2023-04-16)
 
 ### Features
 
 - add `detectEol()` ([04d2f3d](https://github.com/codsen/codsen/commit/04d2f3d36963e1b1729887098126cba5719d97c0))
 - add `resolveEolSetting()` and type `EolSetting` ([ceae282](https://github.com/codsen/codsen/commit/ceae282e1f9240638e0aefc57eab48dde9de6ba1))
 
-# [1.3.0](https://github.com/codsen/codsen/compare/codsen-utils@1.2.0...codsen-utils@1.3.0) (2023-03-12)
+## 1.3.0 (2023-03-12)
 
 ### Features
 
