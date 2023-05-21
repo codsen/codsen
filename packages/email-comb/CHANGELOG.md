@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.3.0 (2023-05-21)
+
+### Features
+
+- back-porting the latest v7.0.13 to CJS and releasing as non-pure ESM (no `type: module` in package.json).
+
 ## 7.0.13 (2023-05-15)
 
 ### Bug Fixes
