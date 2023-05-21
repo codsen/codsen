@@ -1,6 +1,6 @@
 {
   "name": "ast-is-empty",
-  "version": "4.0.10",
+  "version": "4.0.11",
   "description": "Find out, is nested array/object/string/AST tree is empty",
   "keywords": [
     "array",
@@ -81,6 +81,6 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.5.0"
+    "codsen-utils": "^1.6.0"
   }
 }

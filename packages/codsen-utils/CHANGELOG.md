@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/codsen/codsen/compare/codsen-utils@1.5.0...codsen-utils@1.6.0) (2023-05-21)
+
+### Features
+
+- add `intersection()` and `omit()` ([d71f024](https://github.com/codsen/codsen/commit/d71f024dd3223dfbf2182dbb7c28ac592b13bba2))
+
 ## 1.5.0 (2023-05-13)
 
 ### Bug Fixes

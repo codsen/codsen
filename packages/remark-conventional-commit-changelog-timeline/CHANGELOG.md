@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 3.1.0 (2023-05-21)
+
+### Features
+
+- move the source back to monorepo, update deps ([6f470d9](https://github.com/codsen/codsen/commit/6f470d9d863736fbed9b1fc653421b8ad7c267a1))
+
 ## 3.0.7 (2023-03-12)
 
 ### Bug Fixes

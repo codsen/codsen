@@ -1,6 +1,6 @@
 {
   "name": "check-types-mini",
-  "version": "8.0.12",
+  "version": "8.0.13",
   "description": "Validate options object",
   "keywords": [
     "compare",
@@ -73,8 +73,8 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^5.0.5",
-    "ast-monkey-traverse": "^4.0.10",
-    "codsen-utils": "^1.5.0",
+    "ast-monkey-traverse": "^4.0.11",
+    "codsen-utils": "^1.6.0",
     "matcher": "^5.0.0",
     "object-path": "^0.11.8",
     "type-detect": "^4.0.8"

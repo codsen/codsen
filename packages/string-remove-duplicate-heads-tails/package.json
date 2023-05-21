@@ -1,6 +1,6 @@
 {
   "name": "string-remove-duplicate-heads-tails",
-  "version": "7.0.12",
+  "version": "7.0.13",
   "description": "Detect and (recursively) remove head and tail wrappings around the input string",
   "keywords": [
     "alt",
@@ -75,10 +75,10 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^5.0.5",
-    "codsen-utils": "^1.5.0",
-    "ranges-apply": "^7.0.9",
-    "ranges-push": "^7.0.9",
-    "string-match-left-right": "^9.0.12",
+    "codsen-utils": "^1.6.0",
+    "ranges-apply": "^7.0.10",
+    "ranges-push": "^7.0.10",
+    "string-match-left-right": "^9.0.13",
     "string-trim-spaces-only": "^5.0.7"
   }
 }
