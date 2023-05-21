@@ -1,4 +1,7 @@
 import { version as v } from "../package.json";
+import rfdc from "rfdc";
+
+const clone = rfdc();
 
 export const version: string = v;
 
@@ -467,4 +470,30 @@ export function includes(
       (isRegExp(val) && whatToMatch.match(val)) ||
       (typeof val === "string" && whatToMatch === val)
   );
+}
+
+/** Alternative to lodash.intersection */
+export function intersection<T, U>(a: T[] = [], b: U[] = []): T[] {
+  if (!a || !b) return [];
+  return Array.from(
+    new Set(Array.from(a).filter((x) => new Set(b as any as typeof a).has(x)))
+  );
+}
+
+/** Alternative to lodash.omit */
+export function omit(obj: JSONObject, keysToRemove: string[] = []): JSONObject {
+  if (!obj) return obj;
+  if (!isPlainObject(obj))
+    throw new Error(
+      `codsen-utils/omit(): [THROW_ID_01] Input must be a plain object! It was given as ${JSON.stringify(
+        obj,
+        null,
+        4
+      )} (typeof is "${typeof obj}")`
+    );
+  let res = clone(obj);
+  keysToRemove.forEach((keyToDelete) => {
+    delete res[keyToDelete];
+  });
+  return res;
 }

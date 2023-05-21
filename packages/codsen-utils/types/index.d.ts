@@ -113,6 +113,10 @@ declare function includes(
   arr: (string | RegExp)[],
   whatToMatch: string
 ): boolean;
+/** Alternative to lodash.intersection */
+declare function intersection<T, U>(a?: T[], b?: U[]): T[];
+/** Alternative to lodash.omit */
+declare function omit(obj: JSONObject, keysToRemove?: string[]): JSONObject;
 
 export {
   EolChar,
@@ -134,6 +138,7 @@ export {
   hasOwnProp,
   includes,
   inlineTags,
+  intersection,
   isBool,
   isCurrencyChar,
   isCurrencySymbol,
@@ -153,6 +158,7 @@ export {
   leftDoubleQuote,
   leftSingleQuote,
   multiplicationSign,
+  omit,
   pullAll,
   punctuationChars,
   rawMDash,
