@@ -248,6 +248,9 @@
       "path": "packages/rehype-responsive-tables"
     },
     {
+      "path": "packages/remark-conventional-commit-changelog-timeline"
+    },
+    {
       "path": "packages/remark-typography"
     },
     {

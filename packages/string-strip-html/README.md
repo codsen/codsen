@@ -24,7 +24,7 @@
 
 ## Install
 
-This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). If you're not ready yet, install an older version of this program, 8.4.0 (`npm i string-strip-html@8.4.0`).
+This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). If you're not ready yet, install an older version of this program, 8.5.0 (`npm i string-strip-html@8.5.0`).
 
 ```bash
 npm i string-strip-html

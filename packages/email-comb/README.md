@@ -24,7 +24,7 @@
 
 ## Install
 
-This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). If you're not ready yet, install an older version of this program, 5.2.1 (`npm i email-comb@5.2.1`).
+This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). If you're not ready yet, install an older version of this program, 5.3.1 (`npm i email-comb@5.3.1`).
 
 ```bash
 npm i email-comb

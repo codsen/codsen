@@ -12,7 +12,84 @@ export const packageJSONData = {
     "description": "Pluggable email template code linter"
   },
   "remark-conventional-commit-changelog-timeline": {
-    "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline"
+    "name": "remark-conventional-commit-changelog-timeline",
+    "version": "3.0.10",
+    "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
+    "keywords": [
+      "unified",
+      "remark",
+      "remark-plugin",
+      "plugin",
+      "mdast",
+      "markdown",
+      "changelog",
+      "conventional",
+      "commits"
+    ],
+    "homepage": "https://codsen.com/os/remark-conventional-commit-changelog-timeline",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/codsen/codsen.git",
+      "directory": "packages/remark-conventional-commit-changelog-timeline"
+    },
+    "license": "MIT",
+    "author": {
+      "name": "Roy Revelt",
+      "email": "roy@codsen.com",
+      "url": "https://codsen.com"
+    },
+    "type": "module",
+    "main": "dist/remark-conventional-commit-changelog-timeline.cjs.js",
+    "types": "types/index.d.ts",
+    "scripts": {
+      "build": "node '../../ops/scripts/esbuild.js' && node '../../ops/scripts/fix-cjs.js' && npm run dts",
+      "cjs-off": "node '../../ops/scripts/cjs-off.js'",
+      "cjs-on": "node '../../ops/scripts/cjs-on.js'",
+      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
+      "devtest": "c8 npm run unit && npm run examples && npm run lint",
+      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --loglevel 'silent'",
+      "examples": "node '../../ops/scripts/run-examples.js'",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' --write --loglevel 'silent'",
+      "letspublish": "npm publish || :",
+      "lint": "eslint . --ext .js --ext .ts --fix",
+      "perf": "echo 'skip perf'",
+      "prep": "echo 'ready'",
+      "prettier": "prettier",
+      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
+      "pretest": "npm run lect && npm run build",
+      "test": "npm run devtest",
+      "unit": "uvu test"
+    },
+    "engines": {
+      "node": ">=14.18.0"
+    },
+    "c8": {
+      "check-coverage": true,
+      "exclude": [
+        "**/test/**/*.*"
+      ],
+      "lines": 100
+    },
+    "lect": {
+      "licence": {
+        "extras": [
+          ""
+        ]
+      },
+      "various": {}
+    },
+    "dependencies": {
+      "@types/hast": "^2.3.4",
+      "hast-util-raw": "^8.0.0",
+      "semver-regex": "^4.0.5",
+      "unified": "^10.1.2",
+      "unist-builder": "^3.0.1",
+      "unist-util-visit": "^4.1.2"
+    },
+    "devDependencies": {
+      "object-delete-key": "^4.0.13",
+      "remark": "^14.0.3"
+    }
   },
   "all-named-html-entities": {
     "name": "all-named-html-entities",
@@ -635,7 +712,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.1",
-      "type-fest": "^3.10.0"
+      "type-fest": "^3.11.0"
     }
   },
   "ast-contains-only-empty-space": {
@@ -2384,7 +2461,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.5.0",
       "csv-sort": "^7.0.9",
       "globby": "^13.1.4",
-      "inquirer": "^9.2.3",
+      "inquirer": "^9.2.5",
       "meow": "^12.0.1",
       "update-notifier": "^6.0.2"
     }
@@ -3023,7 +3100,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.5.0",
       "email-all-chars-within-ascii": "^5.0.12",
       "globby": "^13.1.4",
-      "inquirer": "^9.2.3",
+      "inquirer": "^9.2.5",
       "minimist": "^1.2.8",
       "string-left-right": "^6.0.12",
       "update-notifier": "^6.0.2"
@@ -7518,7 +7595,7 @@ export const packageJSONData = {
       "unist-util-visit": "^4.1.2"
     },
     "devDependencies": {
-      "remark": "^14.0.2"
+      "remark": "^14.0.3"
     }
   },
   "seo-editor": {
@@ -10120,7 +10197,7 @@ export const packageJSONData = {
       "p-map": "^6.0.0",
       "p-progress": "^0.6.0",
       "p-reduce": "^3.0.0",
-      "pacote": "^15.1.3",
+      "pacote": "^15.2.0",
       "update-notifier": "^6.0.2",
       "write-file-atomic": "^5.0.1"
     },
