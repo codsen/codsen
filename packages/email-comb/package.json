@@ -70,11 +70,9 @@
     }
   },
   "dependencies": {
-    "@types/lodash-es": "^4.17.7",
     "array-pull-all-with-glob": "^7.0.7",
     "codsen-utils": "^1.5.0",
     "html-crush": "^6.0.12",
-    "lodash-es": "^4.17.21",
     "matcher": "^5.0.0",
     "ranges-apply": "^7.0.9",
     "ranges-push": "^7.0.9",

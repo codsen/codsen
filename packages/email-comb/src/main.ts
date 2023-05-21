@@ -4,7 +4,6 @@ import { emptyCondCommentRegex } from "regex-empty-conditional-comments";
 import { extract } from "string-extract-class-names";
 import { pull } from "array-pull-all-with-glob";
 import { left, right } from "string-left-right";
-import { intersection } from "lodash-es";
 import { expander } from "string-range-expander";
 import type { Range } from "../../../ops/typedefs/common";
 import { uglifyArr } from "string-uglify";
@@ -19,6 +18,7 @@ import {
   isPlainObject as isObj,
   isLatinLetter,
   uniq,
+  intersection,
   pullAll,
   detectEol,
   EolChar,
