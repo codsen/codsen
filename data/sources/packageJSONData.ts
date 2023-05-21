@@ -1910,11 +1910,9 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.7",
       "arrayiffy-if-string": "^5.0.5",
       "ast-monkey-traverse": "^4.0.10",
       "codsen-utils": "^1.5.0",
-      "lodash-es": "^4.17.21",
       "matcher": "^5.0.0",
       "object-path": "^0.11.8",
       "type-detect": "^4.0.8"
@@ -2214,6 +2212,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "dependencies": {
+      "rfdc": "^1.3.0"
     }
   },
   "color-shorthand-hex-to-six-digit": {
@@ -3178,11 +3179,9 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.7",
       "array-pull-all-with-glob": "^7.0.7",
       "codsen-utils": "^1.5.0",
       "html-crush": "^6.0.12",
-      "lodash-es": "^4.17.21",
       "matcher": "^5.0.0",
       "ranges-apply": "^7.0.9",
       "ranges-push": "^7.0.9",
@@ -5671,9 +5670,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.7",
       "codsen-utils": "^1.5.0",
-      "lodash-es": "^4.17.21",
       "rfdc": "^1.3.0"
     }
   },

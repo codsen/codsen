@@ -131,7 +131,7 @@ export const interdeps = [
   },
   {
     "name": "check-types-mini",
-    "size": 5572,
+    "size": 5549,
     "imports": [
       "arrayiffy-if-string",
       "ast-monkey-traverse",
@@ -164,7 +164,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-utils",
-    "size": 4299,
+    "size": 4710,
     "imports": []
   },
   {
@@ -254,7 +254,7 @@ export const interdeps = [
   },
   {
     "name": "email-comb",
-    "size": 20201,
+    "size": 20178,
     "imports": [
       "array-pull-all-with-glob",
       "codsen-utils",
@@ -484,7 +484,7 @@ export const interdeps = [
   },
   {
     "name": "object-boolean-combinations",
-    "size": 1152,
+    "size": 1128,
     "imports": [
       "codsen-utils"
     ]

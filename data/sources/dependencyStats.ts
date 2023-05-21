@@ -147,7 +147,7 @@ export const dependencyStats: DependencyStats = {
     "@sindresorhus/is": 1,
     "@types/hast": 2,
     "@types/json-stringify-safe": 2,
-    "@types/lodash-es": 15,
+    "@types/lodash-es": 12,
     "@types/semver-compare": 1,
     "all-named-html-entities": 2,
     "ansi-diff-stream": 1,
@@ -198,7 +198,7 @@ export const dependencyStats: DependencyStats = {
     "json-stringify-safe": 2,
     "lerna-clean-changelogs": 1,
     "leven": 2,
-    "lodash-es": 15,
+    "lodash-es": 12,
     "log-symbols": 1,
     "log-update": 1,
     "matcher": 9,
@@ -234,7 +234,7 @@ export const dependencyStats: DependencyStats = {
     "regex-jinja-specific": 1,
     "rehype": 1,
     "rehype-parse": 1,
-    "rfdc": 18,
+    "rfdc": 19,
     "runes": 1,
     "semver-compare": 1,
     "sort-keys": 1,
@@ -304,13 +304,13 @@ export const dependencyStats: DependencyStats = {
   },
   "top10ExternalDeps": [
     {
-      "rfdc": 18
+      "rfdc": 19
     },
     {
-      "@types/lodash-es": 15
+      "@types/lodash-es": 12
     },
     {
-      "lodash-es": 15
+      "lodash-es": 12
     },
     {
       "update-notifier": 11
