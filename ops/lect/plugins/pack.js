@@ -2,8 +2,7 @@ import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
 import sortPackageJson, { sortOrder } from "sort-package-json";
 import { dequal } from "dequal";
-import omit from "lodash.omit";
-import intersection from "lodash.intersection";
+import { intersection, omit } from "codsen-utils";
 import { removeTbc } from "./_util.js";
 
 function format(obj) {
@@ -166,7 +165,7 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
     return Promise.resolve(null);
   } catch (err) {
     console.log(
-      `lect: ${`\u001b[${31}m${`ERROR`}\u001b[${39}m`} could not write package.json - ${err}`
+      `lect: ${`\u001b[${31}m${"ERROR"}\u001b[${39}m`} could not write package.json - ${err}`
     );
     return Promise.reject(err);
   }
