@@ -1,8 +1,0 @@
-// plugin should detect cases with args missing and then skip
-tap.test(`01 - a`, (t) => {
-  t.is(true);
-  t.match(z);
-  t.strictSame([]);
-  t.true();
-  t.end();
-});

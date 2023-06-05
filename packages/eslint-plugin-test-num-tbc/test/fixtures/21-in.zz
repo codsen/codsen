@@ -1,9 +1,0 @@
-test(`09 - with entities`, () => {
-  mixer({
-    convertDashes: true,
-    convertEntities: true,
-    removeWidows: false,
-  }).forEach((opt, n) => {
-    equal(convertOne(``, opt), [[4, 5, "&rsquo;"]], `09.${pad(n)}`);
-  });
-});
