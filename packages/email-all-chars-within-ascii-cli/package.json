@@ -73,7 +73,7 @@
     "codsen-utils": "^1.6.0",
     "email-all-chars-within-ascii": "^5.0.13",
     "globby": "^13.1.4",
-    "inquirer": "^9.2.5",
+    "inquirer": "^9.2.7",
     "minimist": "^1.2.8",
     "string-left-right": "^6.0.13",
     "update-notifier": "^6.0.2"

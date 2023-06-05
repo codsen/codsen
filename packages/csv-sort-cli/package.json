@@ -76,7 +76,7 @@
     "codsen-utils": "^1.6.0",
     "csv-sort": "^7.0.10",
     "globby": "^13.1.4",
-    "inquirer": "^9.2.5",
+    "inquirer": "^9.2.7",
     "meow": "^12.0.1",
     "update-notifier": "^6.0.2"
   }

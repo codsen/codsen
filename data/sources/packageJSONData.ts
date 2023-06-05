@@ -712,7 +712,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.1",
-      "type-fest": "^3.11.0"
+      "type-fest": "^3.11.1"
     }
   },
   "ast-contains-only-empty-space": {
@@ -882,7 +882,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@sindresorhus/is": "^5.3.0",
+      "@sindresorhus/is": "^5.4.1",
       "ast-monkey-traverse": "^4.0.11",
       "object-path": "^0.11.8"
     },
@@ -2462,7 +2462,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.0",
       "csv-sort": "^7.0.10",
       "globby": "^13.1.4",
-      "inquirer": "^9.2.5",
+      "inquirer": "^9.2.7",
       "meow": "^12.0.1",
       "update-notifier": "^6.0.2"
     }
@@ -3101,7 +3101,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.0",
       "email-all-chars-within-ascii": "^5.0.13",
       "globby": "^13.1.4",
-      "inquirer": "^9.2.5",
+      "inquirer": "^9.2.7",
       "minimist": "^1.2.8",
       "string-left-right": "^6.0.13",
       "update-notifier": "^6.0.2"
@@ -7584,7 +7584,7 @@ export const packageJSONData = {
     "dependencies": {
       "@types/hast": "^2.3.4",
       "codsen-utils": "^1.6.0",
-      "fp-ts": "^2.15.0",
+      "fp-ts": "^2.16.0",
       "string-apostrophes": "^4.0.13",
       "string-dashes": "^1.2.7",
       "string-remove-widows": "^4.0.15",
