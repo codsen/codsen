@@ -1,6 +1,6 @@
 {
   "name": "remark-typography",
-  "version": "0.6.11",
+  "version": "0.6.12",
   "description": "Remark plugin to fix typography: quotes, dashes and so on.",
   "keywords": [
     "unified",

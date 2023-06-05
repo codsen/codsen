@@ -1,6 +1,6 @@
 {
   "name": "remark-conventional-commit-changelog-timeline",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
   "keywords": [
     "unified",
@@ -74,7 +74,7 @@
     "unist-util-visit": "^4.1.2"
   },
   "devDependencies": {
-    "object-delete-key": "^4.0.14",
+    "object-delete-key": "^4.0.15",
     "remark": "^14.0.3"
   }
 }
