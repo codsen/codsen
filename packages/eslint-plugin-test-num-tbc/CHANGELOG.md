@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.0.16](https://github.com/codsen/codsen/compare/eslint-plugin-test-num-tbc@3.0.15...eslint-plugin-test-num-tbc@3.0.16) (2023-06-05)
-
-**Note:** Version bump only for package eslint-plugin-test-num-tbc
-
 ## 3.0.0 (2022-12-01)
 
 - update the test numbers within test-mixer `forEach` loops ([5905781](https://github.com/codsen/codsen/commit/59057813fd11e776f8662b153812f28ca896d77a))
