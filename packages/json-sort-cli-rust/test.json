@@ -1,0 +1,24 @@
+{
+	"a": {
+		"ca": "string",
+		"cb": false
+	},
+	"b": true,
+	"c": "a string",
+	"d": [
+		"b",
+		"a",
+		{
+			"a": [
+				"a",
+				false,
+				true
+			],
+			"d": {
+				"a": "test",
+				"b": "test",
+				"c": "test"
+			}
+		}
+	]
+}
