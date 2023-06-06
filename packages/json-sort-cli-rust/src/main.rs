@@ -3,14 +3,49 @@ use serde_json::ser::PrettyFormatter;
 use serde_json::{to_string_pretty, Serializer, Map, Value};
 use std::error::Error;
 use std::fs;
+use std::path::Path;
+
+#[derive(Debug)]
+pub enum JsonError {
+    NotFound,
+    ReadError,
+    ParseError,
+    WriteError,
+    Unknown
+}
 
 pub struct Json;
 
 impl Json {
-    fn read_file(path: &str) -> Result<Map<String, Value>, Box<dyn Error>> {
-        let config = fs::read_to_string(path)?;
-        let parsed: Value = serde_json::from_str(&config)?;
-        let obj: Map<String, Value> = parsed.as_object().unwrap().clone();
+    fn read_file(path: &str) -> Result<Map<String, Value>, JsonError> {
+        if !Path::new(path).exists() {
+            return Err(JsonError::NotFound);
+        }
+        
+        let file = match fs::read_to_string(path) {
+            Ok(s) => s,
+            Err(error) => {
+                println!("Failed to read file: {}", error);
+                return Err(JsonError::ReadError);
+            }
+        };
+
+        let parsed: Value = match serde_json::from_str(&file) {
+            Ok(v) => v,
+            Err(error) => {
+                println!("Failed to parse json file. filename: {}, error: {}", path, error);
+                return Err(JsonError::ParseError)
+            }
+        };
+
+        let obj: Map<String, Value> = match parsed.as_object() {
+            Some(m) => m.clone(), // TODO don't clone this
+            None => {
+                println!("Couldn't convert serde Value to Map");
+                return Err(JsonError::Unknown)
+            }
+        };
+
         Ok(obj)
     }
 
@@ -23,19 +58,38 @@ impl Json {
         Ok(String::from_utf8(buf)?)
     }
 
-    pub fn sort_and_save(path: &str, use_spaces: bool) -> Result<(), Box<dyn Error>> {
+    pub fn sort_and_save(path: &str, use_spaces: bool) -> Result<(), JsonError> {
         let json: Map<String, Value> = Json::read_file(path)?;
         
         // Both functions sort as they serialize
         let json_string: String;
         if use_spaces {
-            json_string = to_string_pretty(&json)?;
+            json_string = match to_string_pretty(&json) {
+                Ok(s) => s,
+                Err(error) => {
+                    println!("Serialization error: {}", error);
+                    return Err(JsonError::WriteError);
+                }
+
+            };
         } else {
-            json_string = Json::serialize_with_tabs(&json)?;
+            json_string = match Json::serialize_with_tabs(&json) {
+                Ok(s) => s,
+                Err(error) => {
+                    println!("Serialization error: {}", error);
+                    return Err(JsonError::WriteError);
+                }
+            };
         }
 
         // TODO optimize this by sorting all the file contents in memory first, then saving
-        fs::write(path, json_string)?;
+        match fs::write(path, json_string) {
+            Ok(()) => (),
+            Err(error) => {
+                println!("File write error: {}", error);
+                return Err(JsonError::WriteError);
+            }
+        };
 
         Ok(())
     }
@@ -45,6 +99,6 @@ fn main() {
     
     match Json::sort_and_save("test.json", false) {
         Ok(_) => println!("Completed successfully"),
-        Err(error) => panic!("Failed to sort or write file: {}", error)
+        Err(error) => println!("Failed to sort or write file: {:?}", error)
     }
 }
