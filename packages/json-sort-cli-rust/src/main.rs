@@ -5,6 +5,7 @@ use serde_json::ser::PrettyFormatter;
 use serde_json::{to_string_pretty, Serializer, Map, Value};
 use std::error::Error;
 use std::fs;
+use std::fmt::Display;
 use std::path::Path;
 use std::path::PathBuf;
 
@@ -51,6 +52,27 @@ pub enum JsonError {
     ParseError,
     WriteError,
     Unknown
+}
+
+pub struct SortResult {
+    path: String,
+    error: Option<JsonError>,
+}
+
+impl SortResult {
+    pub fn success(&self) -> bool {
+        self.error.is_none()
+    }
+}
+
+impl Display for SortResult {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        if self.success() {
+            write!(f, "{} - Success", self.path)
+        } else {
+            write!(f, "{} - Failed: {:?}", self.path, self.error.as_ref().expect("Not possible"))
+        }
+    }
 }
 
 pub struct Json;
@@ -151,14 +173,16 @@ fn main() {
 
     // Main loop
     let paths = args.files.iter().map(|p| p.as_path());
+    let mut results: Vec<SortResult> = vec!();
     for path in paths {
         let path_str = path.as_os_str().to_str().unwrap();
-        let result: String;
         match Json::sort_and_save(path, args.spaces) {
-            Ok(_) => result = "Completed successfully".to_string(),
-            Err(error) => result = format!("Failed: {:?}", error)
+            Ok(_) => results.push(SortResult{path : path_str.to_string(), error: None}),
+            Err(error) => results.push(SortResult { path: path_str.to_string(), error: Some(error) })
         }
+    }
 
-        println!("{} -- {}", path_str, result);
+    for result in results.iter() {
+        println!("{}", result)
     }
 }
