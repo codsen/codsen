@@ -1,4 +1,5 @@
 use clap::Parser;
+use log::{Record, LevelFilter, Metadata};
 use serde::ser::Serialize;
 use serde_json::ser::PrettyFormatter;
 use serde_json::{to_string_pretty, Serializer, Map, Value};
@@ -6,6 +7,7 @@ use std::error::Error;
 use std::fs;
 use std::path::Path;
 use std::path::PathBuf;
+
 
 const APP_NAME: &str = "jsonsort";
 const APP_VERSION: &str = "0.1.0";
@@ -18,9 +20,29 @@ pub struct Args {
     #[clap(long, short = 's')]
     spaces: bool,
 
+    #[clap(long, short = 'v')]
+    verbose: bool,
+
     files: Vec<PathBuf>,
 }
 
+
+
+struct SimpleLogger;
+
+impl log::Log for SimpleLogger {
+    fn enabled(&self, metadata: &Metadata) -> bool {
+        metadata.level() <= log::max_level()
+    }
+
+    fn log(&self, record: &Record) {
+        if self.enabled(record.metadata()) {
+            println!("{} - {}", record.level(), record.args());
+        }
+    }
+
+    fn flush(&self) {}
+}
 
 #[derive(Debug)]
 pub enum JsonError {
@@ -36,14 +58,14 @@ pub struct Json;
 impl Json {
     fn read_file(path: &Path) -> Result<Map<String, Value>, JsonError> {
         if !path.exists() {
-            println!("File does not exist");
+            log::debug!("File does not exist");
             return Err(JsonError::NotFound);
         }
 
         let file = match fs::read_to_string(path) {
             Ok(s) => s,
             Err(error) => {
-                println!("Failed to read file: {}", error);
+                log::debug!("Failed to read file: {}", error);
                 return Err(JsonError::ReadError);
             }
         };
@@ -52,7 +74,7 @@ impl Json {
             Ok(v) => v,
             Err(error) => {
                 let filename = path.as_os_str().to_str().unwrap();
-                println!("Failed to parse json file. filename: {}, error: {}", filename, error);
+                log::debug!("Failed to parse json file. filename: {}, error: {}", filename, error);
                 return Err(JsonError::ParseError)
             }
         };
@@ -60,7 +82,7 @@ impl Json {
         let obj: Map<String, Value> = match parsed.as_object() {
             Some(m) => m.clone(), // TODO don't clone this
             None => {
-                println!("Couldn't convert serde Value to Map");
+                log::debug!("Couldn't convert serde Value to Map");
                 return Err(JsonError::Unknown)
             }
         };
@@ -86,7 +108,7 @@ impl Json {
             json_string = match to_string_pretty(&json) {
                 Ok(s) => s,
                 Err(error) => {
-                    println!("Serialization error: {}", error);
+                    log::debug!("Serialization error: {}", error);
                     return Err(JsonError::WriteError);
                 }
 
@@ -95,7 +117,7 @@ impl Json {
             json_string = match Json::serialize_with_tabs(&json) {
                 Ok(s) => s,
                 Err(error) => {
-                    println!("Serialization error: {}", error);
+                    log::debug!("Serialization error: {}", error);
                     return Err(JsonError::WriteError);
                 }
             };
@@ -105,7 +127,7 @@ impl Json {
         match fs::write(path, json_string) {
             Ok(()) => (),
             Err(error) => {
-                println!("File write error: {}", error);
+                log::debug!("File write error: {}", error);
                 return Err(JsonError::WriteError);
             }
         };
@@ -114,10 +136,21 @@ impl Json {
     }
 }
 
-fn main() {
-    let args = Args::parse();
-    let paths = args.files.iter().map(|p| p.as_path());
+static LOGGER: SimpleLogger = SimpleLogger;
 
+fn main() {
+    // CLI args
+    let args = Args::parse();
+    
+    // Configure logging
+    log::set_logger(&LOGGER).unwrap();
+    log::set_max_level(LevelFilter::Info);
+    if args.verbose {
+        log::set_max_level(LevelFilter::Debug);
+    }
+
+    // Main loop
+    let paths = args.files.iter().map(|p| p.as_path());
     for path in paths {
         let path_str = path.as_os_str().to_str().unwrap();
         let result: String;
