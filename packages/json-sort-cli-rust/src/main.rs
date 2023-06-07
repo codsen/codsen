@@ -1,9 +1,26 @@
+use clap::Parser;
 use serde::ser::Serialize;
 use serde_json::ser::PrettyFormatter;
 use serde_json::{to_string_pretty, Serializer, Map, Value};
 use std::error::Error;
 use std::fs;
 use std::path::Path;
+use std::path::PathBuf;
+
+const APP_NAME: &str = "jsonsort";
+const APP_VERSION: &str = "0.1.0";
+const APP_AUTHOR: &str = "Nicholas Kress";
+const APP_ABOUT: &str = "Rust implementation of jsonsort-cli";
+
+#[derive(Debug, Parser)]
+#[command(name = APP_NAME, version = APP_VERSION, author = APP_AUTHOR, about = APP_ABOUT)]
+pub struct Args {
+    #[clap(long, short = 's')]
+    spaces: bool,
+
+    files: Vec<PathBuf>,
+}
+
 
 #[derive(Debug)]
 pub enum JsonError {
@@ -17,11 +34,12 @@ pub enum JsonError {
 pub struct Json;
 
 impl Json {
-    fn read_file(path: &str) -> Result<Map<String, Value>, JsonError> {
-        if !Path::new(path).exists() {
+    fn read_file(path: &Path) -> Result<Map<String, Value>, JsonError> {
+        if !path.exists() {
+            println!("File does not exist");
             return Err(JsonError::NotFound);
         }
-        
+
         let file = match fs::read_to_string(path) {
             Ok(s) => s,
             Err(error) => {
@@ -33,7 +51,8 @@ impl Json {
         let parsed: Value = match serde_json::from_str(&file) {
             Ok(v) => v,
             Err(error) => {
-                println!("Failed to parse json file. filename: {}, error: {}", path, error);
+                let filename = path.as_os_str().to_str().unwrap();
+                println!("Failed to parse json file. filename: {}, error: {}", filename, error);
                 return Err(JsonError::ParseError)
             }
         };
@@ -58,7 +77,7 @@ impl Json {
         Ok(String::from_utf8(buf)?)
     }
 
-    pub fn sort_and_save(path: &str, use_spaces: bool) -> Result<(), JsonError> {
+    pub fn sort_and_save(path: &Path, use_spaces: bool) -> Result<(), JsonError> {
         let json: Map<String, Value> = Json::read_file(path)?;
         
         // Both functions sort as they serialize
@@ -96,9 +115,17 @@ impl Json {
 }
 
 fn main() {
-    
-    match Json::sort_and_save("test.json", false) {
-        Ok(_) => println!("Completed successfully"),
-        Err(error) => println!("Failed to sort or write file: {:?}", error)
+    let args = Args::parse();
+    let paths = args.files.iter().map(|p| p.as_path());
+
+    for path in paths {
+        let path_str = path.as_os_str().to_str().unwrap();
+        let result: String;
+        match Json::sort_and_save(path, args.spaces) {
+            Ok(_) => result = "Completed successfully".to_string(),
+            Err(error) => result = format!("Failed: {:?}", error)
+        }
+
+        println!("{} -- {}", path_str, result);
     }
 }
