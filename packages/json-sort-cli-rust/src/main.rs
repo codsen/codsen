@@ -9,6 +9,7 @@ use std::{fs, env};
 use std::fmt::Display;
 use std::path::Path;
 use std::path::PathBuf;
+use walkdir::WalkDir;
 
 
 const APP_NAME: &str = "jsonsort";
@@ -59,20 +60,20 @@ pub enum JsonError {
     Unknown
 }
 
-pub struct SortResult<'a> {
-    path: &'a Path,
+pub struct SortResult{
+    path: Box<Path>,
     error: Option<JsonError>,
 }
 
-impl<'a> SortResult<'a> {
+impl SortResult {
     pub fn success(&self) -> bool {
         self.error.is_none()
     }
 }
 
-impl<'a> Display for SortResult<'a> {
+impl<'a> Display for SortResult {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let path_str = relative_path_str(self.path);
+        let path_str = relative_path_str(&self.path);
 
         if self.success() {
             write!(f, "{} - OK", path_str)
@@ -235,14 +236,30 @@ fn main() {
 
     let mut results: Vec<SortResult> = vec!();
     for path in paths_santised {
-        let path_str = path.as_os_str().to_str().unwrap();
-
-        if args.dry {
-            println!("{}", path_str);
+        if path.is_dir() {
+            for entry in WalkDir::new(path)
+                                                    .follow_links(true)
+                                                    .into_iter()
+                                                    .filter_map(|e| e.ok())
+                                                    .filter(|e| e.path().is_file())                                                      {
+                let entry_path = entry.path();
+                if args.dry {
+                    println!("{}", relative_path_str(entry_path))
+                } else {
+                    match Json::sort_and_save(&entry_path, args.spaces) {
+                        Ok(_) => results.push(SortResult{ path: entry_path.into(), error: None}),
+                        Err(error) => results.push(SortResult { path: entry_path.into(), error: Some(error) })
+                    }
+                }
+            }
         } else {
-            match Json::sort_and_save(path, args.spaces) {
-                Ok(_) => results.push(SortResult{ path: &path, error: None}),
-                Err(error) => results.push(SortResult { path: &path, error: Some(error) })
+            if args.dry {
+                println!("{}", relative_path_str(path))
+            } else {
+                match Json::sort_and_save(path, args.spaces) {
+                    Ok(_) => results.push(SortResult{ path: path.as_path().into(), error: None}),
+                    Err(error) => results.push(SortResult { path: path.as_path().into(), error: Some(error) })
+                }
             }
         }
     }
@@ -250,5 +267,11 @@ fn main() {
     for result in results.iter() {
         println!("{}", result)
     }
-    println!("\n{}", sort_result_output(results))
+
+    println!("");
+    if args.dry {
+        println!("{} - DRY RUN", sort_result_output(results));
+    } else {
+        println!("{}", sort_result_output(results))
+    }
 }
