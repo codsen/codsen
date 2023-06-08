@@ -3,7 +3,7 @@ use log::{Record, LevelFilter, Metadata};
 use regex::Regex;
 use serde::ser::Serialize;
 use serde_json::ser::PrettyFormatter;
-use serde_json::{to_string_pretty, Serializer, Map, Value};
+use serde_json::{to_string_pretty, Serializer, Value};
 use std::error::Error;
 use std::{fs, env};
 use std::fmt::Display;
@@ -90,7 +90,7 @@ impl<'a> Display for SortResult {
 pub struct Json;
 
 impl Json {
-    fn read_file(path: &Path) -> Result<Map<String, Value>, JsonError> {
+    fn read_file(path: &Path) -> Result<Value, JsonError> {
         if !path.exists() {
             log::debug!("File does not exist");
             return Err(JsonError::NotFound);
@@ -113,18 +113,10 @@ impl Json {
             }
         };
 
-        let obj: Map<String, Value> = match parsed.as_object() {
-            Some(m) => m.clone(), // TODO don't clone this
-            None => {
-                log::debug!("Couldn't convert serde Value to Map");
-                return Err(JsonError::Unknown)
-            }
-        };
-
-        Ok(obj)
+        Ok(parsed)
     }
 
-    fn serialize_with_tabs(json: &Map<String, Value>) -> Result<String, Box<dyn Error>> {
+    fn serialize_with_tabs(json: &Value) -> Result<String, Box<dyn Error>> {
         let mut buf = Vec::new();
         let formatter = PrettyFormatter::with_indent(b"\t");
         let mut ser = Serializer::with_formatter(&mut buf, formatter);
@@ -134,7 +126,7 @@ impl Json {
     }
 
     pub fn sort_and_save(path: &Path, use_spaces: bool) -> Result<(), JsonError> {
-        let json: Map<String, Value> = Json::read_file(path)?;
+        let json: Value = Json::read_file(path)?;
         
         // Both functions sort as they serialize
         let json_string: String;
