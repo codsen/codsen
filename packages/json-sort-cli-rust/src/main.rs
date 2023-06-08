@@ -50,6 +50,7 @@ impl log::Log for SimpleLogger {
 
 #[derive(Debug)]
 pub enum JsonError {
+    Ignored,
     NotFound,
     ReadError,
     ParseError,
@@ -163,6 +164,21 @@ impl Json {
 
 static LOGGER: SimpleLogger = SimpleLogger;
 
+const IGNORED_FILES: &'static [&str] = &[
+    "node_modules", 
+    "package.json",
+    "package_lock.json"
+];
+
+fn is_ignored(path: &PathBuf) -> bool {
+    if let Ok(full_path) = path.canonicalize() {
+        if let Some(path_str) = full_path.to_str() {
+            return IGNORED_FILES.iter().any(|f| path_str.contains(f));
+        }
+    }
+    return false;
+}
+
 fn main() {
     // CLI args
     let args = Args::parse();
@@ -175,10 +191,15 @@ fn main() {
     }
 
     // Main loop
-    let paths = args.files.iter().map(|p| p.as_path());
+    let paths_santised = args.files
+        .iter()
+        .filter(|p| !is_ignored(p));
+
+
     let mut results: Vec<SortResult> = vec!();
-    for path in paths {
+    for path in paths_santised {
         let path_str = path.as_os_str().to_str().unwrap();
+        
         if args.dry {
             println!("{}", path_str);
         } else {
