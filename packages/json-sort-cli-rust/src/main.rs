@@ -20,6 +20,9 @@ const APP_ABOUT: &str = "Rust implementation of jsonsort-cli";
 #[derive(Debug, Parser)]
 #[command(name = APP_NAME, version = APP_VERSION, author = APP_AUTHOR, about = APP_ABOUT)]
 pub struct Args {
+    #[clap(long, short = 'a')]
+    arrays: bool,
+
     #[clap(long, short = 'd')]
     dry: bool,
 
@@ -125,8 +128,29 @@ impl Json {
         Ok(String::from_utf8(buf)?)
     }
 
-    pub fn sort_and_save(path: &Path, use_spaces: bool) -> Result<(), JsonError> {
-        let json: Value = Json::read_file(path)?;
+    fn sort_value(head: &mut Value, sort_arrays: bool) {
+        match head {
+            Value::Array(list) => {
+                if sort_arrays {
+                    if list.iter().all(|f| f.is_string()) {
+                        list.sort_by(|a, b| 
+                            a.as_str().unwrap().cmp(b.as_str().unwrap())
+                        );
+                        log::debug!("Sorted array")
+                    }
+                    else {
+                        log::debug!("Cannot sort array containing non-strings");
+                    }
+                }
+                
+            }
+            _ => log::debug!("type '{:?}' already sorted", head)
+        }
+    }
+
+    pub fn sort_and_save(path: &Path, use_spaces: bool, sort_arrays: bool) -> Result<(), JsonError> {
+        let mut json: Value = Json::read_file(path)?;
+        Json::sort_value(&mut json, sort_arrays);
         
         // Both functions sort as they serialize
         let json_string: String;
@@ -213,6 +237,7 @@ fn sort_result_output(results: Vec<SortResult>) -> String {
     out
 }
 
+
 fn main() {
     // CLI args
     let args = Args::parse();
@@ -242,7 +267,7 @@ fn main() {
                 if args.dry {
                     println!("{}", relative_path_str(entry_path))
                 } else {
-                    match Json::sort_and_save(&entry_path, args.spaces) {
+                    match Json::sort_and_save(&entry_path, args.spaces, args.arrays) {
                         Ok(_) => results.push(SortResult{ path: entry_path.into(), error: None}),
                         Err(error) => results.push(SortResult { path: entry_path.into(), error: Some(error) })
                     }
@@ -252,7 +277,7 @@ fn main() {
             if args.dry {
                 println!("{}", relative_path_str(path))
             } else {
-                match Json::sort_and_save(path, args.spaces) {
+                match Json::sort_and_save(path, args.spaces, args.arrays) {
                     Ok(_) => results.push(SortResult{ path: path.as_path().into(), error: None}),
                     Err(error) => results.push(SortResult { path: path.as_path().into(), error: Some(error) })
                 }
