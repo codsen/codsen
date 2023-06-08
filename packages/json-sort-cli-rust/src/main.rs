@@ -18,6 +18,9 @@ const APP_ABOUT: &str = "Rust implementation of jsonsort-cli";
 #[derive(Debug, Parser)]
 #[command(name = APP_NAME, version = APP_VERSION, author = APP_AUTHOR, about = APP_ABOUT)]
 pub struct Args {
+    #[clap(long, short = 'd')]
+    dry: bool,
+
     #[clap(long, short = 's')]
     spaces: bool,
 
@@ -176,9 +179,13 @@ fn main() {
     let mut results: Vec<SortResult> = vec!();
     for path in paths {
         let path_str = path.as_os_str().to_str().unwrap();
-        match Json::sort_and_save(path, args.spaces) {
-            Ok(_) => results.push(SortResult{path : path_str.to_string(), error: None}),
-            Err(error) => results.push(SortResult { path: path_str.to_string(), error: Some(error) })
+        if args.dry {
+            println!("{}", path_str);
+        } else {
+            match Json::sort_and_save(path, args.spaces) {
+                Ok(_) => results.push(SortResult{path : path_str.to_string(), error: None}),
+                Err(error) => results.push(SortResult { path: path_str.to_string(), error: Some(error) })
+            }
         }
     }
 
