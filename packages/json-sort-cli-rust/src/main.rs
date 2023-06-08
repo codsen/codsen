@@ -1,10 +1,11 @@
 use clap::Parser;
 use log::{Record, LevelFilter, Metadata};
+use regex::Regex;
 use serde::ser::Serialize;
 use serde_json::ser::PrettyFormatter;
 use serde_json::{to_string_pretty, Serializer, Map, Value};
 use std::error::Error;
-use std::fs;
+use std::{fs, env};
 use std::fmt::Display;
 use std::path::Path;
 use std::path::PathBuf;
@@ -58,23 +59,25 @@ pub enum JsonError {
     Unknown
 }
 
-pub struct SortResult {
-    path: String,
+pub struct SortResult<'a> {
+    path: &'a Path,
     error: Option<JsonError>,
 }
 
-impl SortResult {
+impl<'a> SortResult<'a> {
     pub fn success(&self) -> bool {
         self.error.is_none()
     }
 }
 
-impl Display for SortResult {
+impl<'a> Display for SortResult<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let path_str = relative_path_str(self.path);
+
         if self.success() {
-            write!(f, "{} - Success", self.path)
+            write!(f, "{} - OK", path_str)
         } else {
-            write!(f, "{} - Failed: {:?}", self.path, self.error.as_ref().expect("Not possible"))
+            write!(f, "{} - {:?}", path_str, self.error.as_ref().expect("Not possible"))
         }
     }
 }
@@ -179,6 +182,40 @@ fn is_ignored(path: &PathBuf) -> bool {
     return false;
 }
 
+fn relative_path_str(path: &Path) -> String {
+    let current = env::current_dir()
+                                .expect("Error getting current dir")
+                                .canonicalize()
+                                .unwrap();
+
+    if let Ok(full) = path.canonicalize() {
+        if let Some(full_str) = full.to_str() {
+            return format!(".{}", full_str.replace(current.to_str().unwrap(), ""))
+        }
+    }
+
+    // remove existing './' if exists in current PathBuf
+    let re = Regex::new(r"^\./").unwrap();
+    let _out = path.to_str().unwrap();
+    let out = re.replace_all(_out, "");
+    
+    format!("./{}", out)
+}
+
+fn sort_result_output(results: Vec<SortResult>) -> String {
+    let ok_count = results.iter()
+                                 .filter(|r| r.success())
+                                 .count();
+    let fail_count = results.len() - ok_count;
+    
+    let mut out = format!("{} files sorted", ok_count);
+    if fail_count > 0 {
+        out.push_str(format!("\n{} files could not be sorted", fail_count).as_str())
+    }
+    
+    out
+}
+
 fn main() {
     // CLI args
     let args = Args::parse();
@@ -199,13 +236,13 @@ fn main() {
     let mut results: Vec<SortResult> = vec!();
     for path in paths_santised {
         let path_str = path.as_os_str().to_str().unwrap();
-        
+
         if args.dry {
             println!("{}", path_str);
         } else {
             match Json::sort_and_save(path, args.spaces) {
-                Ok(_) => results.push(SortResult{path : path_str.to_string(), error: None}),
-                Err(error) => results.push(SortResult { path: path_str.to_string(), error: Some(error) })
+                Ok(_) => results.push(SortResult{ path: &path, error: None}),
+                Err(error) => results.push(SortResult { path: &path, error: Some(error) })
             }
         }
     }
@@ -213,4 +250,5 @@ fn main() {
     for result in results.iter() {
         println!("{}", result)
     }
+    println!("\n{}", sort_result_output(results))
 }
