@@ -3,7 +3,7 @@ use log::{Record, LevelFilter, Metadata};
 use regex::Regex;
 use serde::ser::Serialize;
 use serde_json::ser::PrettyFormatter;
-use serde_json::{to_string_pretty, Serializer, Value};
+use serde_json::{Serializer, Value};
 use std::error::Error;
 use std::{fs, env};
 use std::fmt::Display;
@@ -26,7 +26,10 @@ pub struct Args {
     #[clap(long, short = 'd')]
     dry: bool,
 
-    #[clap(long = "lineEnding", short = 'l')]
+    #[clap(long = "indentationCount", short = 'i', default_value = "0")]
+    indents: usize,
+
+    #[clap(long = "lineEnding", short = 'l', default_value = LineEnding::SystemDefault.as_str())]
     #[arg(value_parser = LineEnding::from_str)]
     line_ending: LineEnding,
 
@@ -175,9 +178,12 @@ impl Json {
         Ok(parsed)
     }
 
-    fn serialize_with_tabs(json: &Value) -> Result<String, Box<dyn Error>> {
+    fn serialize(json: &Value, whitespace_char: char, indents: usize) -> Result<String, Box<dyn Error>> {
         let mut buf = Vec::new();
-        let formatter = PrettyFormatter::with_indent(b"\t");
+        
+        let indent_size = whitespace_char.to_string().repeat(indents);
+        let formatter = PrettyFormatter::with_indent(indent_size.as_bytes());
+
         let mut ser = Serializer::with_formatter(&mut buf, formatter);
         json.serialize(&mut ser)?;
 
@@ -204,30 +210,18 @@ impl Json {
         }
     }
 
-    fn sort_and_save(path: &Path, use_spaces: bool, sort_arrays: bool, line_ending: &LineEnding) -> Result<(), JsonError> {
+    fn sort_and_save(path: &Path, use_spaces: bool, sort_arrays: bool, line_ending: &LineEnding, indents: usize) -> Result<(), JsonError> {
         let mut json: Value = Json::read_file(path)?;
         Json::sort_value(&mut json, sort_arrays);
         
-        // Both functions sort as they serialize
-        let mut json_string: String;
-        if use_spaces {
-            json_string = match to_string_pretty(&json) {
-                Ok(s) => s,
-                Err(error) => {
-                    log::debug!("Serialization error: {}", error);
-                    return Err(JsonError::WriteError);
-                }
-
-            };
-        } else {
-            json_string = match Json::serialize_with_tabs(&json) {
+        let whitespace_char = if use_spaces { ' ' } else { '\t' };
+        let mut json_string = match Json::serialize(&json, whitespace_char, indents) {
                 Ok(s) => s,
                 Err(error) => {
                     log::debug!("Serialization error: {}", error);
                     return Err(JsonError::WriteError);
                 }
             };
-        }
 
         // TODO optimize - replace in place without allocating new string - [char] maybe
         // Apply desired line ending to output
@@ -248,6 +242,9 @@ impl Json {
 }
 
 static LOGGER: SimpleLogger = SimpleLogger;
+
+const INDENT_SIZE_SPACE: usize = 4;
+const INDENT_SIZE_TAB: usize = 1;
 
 const IGNORED_FILES: &'static [&str] = &[
     "node_modules", 
@@ -298,8 +295,6 @@ fn sort_result_output(results: Vec<SortResult>) -> String {
     out
 }
 
-// fn replace_line_endings(str: expected)
-
 
 fn main() {
     // CLI args
@@ -319,6 +314,16 @@ fn main() {
         .iter()
         .filter(|p| !is_ignored(p));
 
+    let indents: usize = if args.indents == 0 {
+        if args.spaces { 
+            INDENT_SIZE_SPACE
+        } else { 
+            INDENT_SIZE_TAB 
+        }
+    } else {
+        args.indents
+    };
+
 
     let mut results: Vec<SortResult> = vec!();
     for path in paths_santised {
@@ -336,7 +341,8 @@ fn main() {
                         &entry_path, 
                         args.spaces, 
                         args.arrays, 
-                        &args.line_ending
+                        &args.line_ending,
+                        indents
                     ) {
                         Ok(_) => results.push(SortResult{ path: entry_path.into(), error: None}),
                         Err(error) => results.push(SortResult { path: entry_path.into(), error: Some(error) })
@@ -351,7 +357,8 @@ fn main() {
                     path, 
                     args.spaces, 
                     args.arrays, 
-                    &args.line_ending
+                    &args.line_ending,
+                    indents,
                 ) {
                     Ok(_) => results.push(SortResult{ path: path.as_path().into(), error: None}),
                     Err(error) => results.push(SortResult { path: path.as_path().into(), error: Some(error) })
