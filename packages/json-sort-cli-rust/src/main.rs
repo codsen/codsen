@@ -12,7 +12,7 @@ use std::path::PathBuf;
 use walkdir::WalkDir;
 
 
-const APP_NAME: &str = "jsonsort";
+const APP_NAME: &str = "roast";
 const APP_VERSION: &str = "0.1.0";
 const APP_AUTHOR: &str = "Nicholas Kress";
 const APP_ABOUT: &str = "Rust implementation of jsonsort-cli";
