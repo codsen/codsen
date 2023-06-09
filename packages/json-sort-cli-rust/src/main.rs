@@ -309,6 +309,11 @@ fn main() {
 
     log::debug!("{}", args);
 
+    if args.files.is_empty() {
+        println!("No input files specified");
+        std::process::exit(1);
+    }
+
     // Main loop
     let paths_santised = args.files
         .iter()
