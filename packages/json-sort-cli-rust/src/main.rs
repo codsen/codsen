@@ -26,6 +26,10 @@ pub struct Args {
     #[clap(long, short = 'd')]
     dry: bool,
 
+    #[clap(long = "lineEnding", short = 'l')]
+    #[arg(value_parser = LineEnding::from_str)]
+    line_ending: LineEnding,
+
     #[clap(long, short = 's')]
     spaces: bool,
 
@@ -35,6 +39,25 @@ pub struct Args {
     files: Vec<PathBuf>,
 }
 
+impl Display for Args {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
+        write!(
+            f, 
+"Args {{
+    sort arrays: {:?}
+    dry run: {:?}
+    line ending: {:?}
+    use spaces: {:?}
+    verbose output: {:?}
+}}", 
+            self.arrays, 
+            self.dry, 
+            self.line_ending, 
+            self.spaces,
+            self.verbose 
+        )
+    }
+}
 
 
 struct SimpleLogger;
@@ -65,6 +88,39 @@ pub enum JsonError {
     ParseError,
     WriteError,
     Unknown
+}
+
+#[derive(Clone, Debug)]
+enum LineEnding {
+    SystemDefault,
+    LF,
+    CRLF
+}
+
+impl LineEnding {
+    pub fn from_str(s: &str) -> Result<LineEnding, std::string::ParseError> {
+        let result = match s.to_lowercase().as_str() {
+            "lf" => LineEnding::LF,
+            "crlf" => LineEnding::CRLF, 
+            _ => LineEnding::SystemDefault
+        };
+
+        Ok(result)
+    }
+
+    pub fn as_str(&self) -> &str {
+        match self {
+            LineEnding::LF => "\n",
+            LineEnding::CRLF => "\r\n",
+            LineEnding::SystemDefault => {
+                match env::consts::FAMILY {
+                    "linux" => LineEnding::LF.as_str(),
+                    "windows" => LineEnding::CRLF.as_str(),
+                    _ => LineEnding::LF.as_str()
+                }
+            },
+        }
+    }
 }
 
 pub struct SortResult{
@@ -144,16 +200,16 @@ impl Json {
                 }
                 
             }
-            _ => log::debug!("type '{:?}' already sorted", head)
+            _ => log::debug!("type already sorted")
         }
     }
 
-    pub fn sort_and_save(path: &Path, use_spaces: bool, sort_arrays: bool) -> Result<(), JsonError> {
+    fn sort_and_save(path: &Path, use_spaces: bool, sort_arrays: bool, line_ending: &LineEnding) -> Result<(), JsonError> {
         let mut json: Value = Json::read_file(path)?;
         Json::sort_value(&mut json, sort_arrays);
         
         // Both functions sort as they serialize
-        let json_string: String;
+        let mut json_string: String;
         if use_spaces {
             json_string = match to_string_pretty(&json) {
                 Ok(s) => s,
@@ -172,6 +228,11 @@ impl Json {
                 }
             };
         }
+
+        // TODO optimize - replace in place without allocating new string - [char] maybe
+        // Apply desired line ending to output
+        json_string = json_string.replace(LineEnding::CRLF.as_str(), line_ending.as_str());
+        json_string = json_string.replace(LineEnding::LF.as_str(), line_ending.as_str());
 
         // TODO optimize this by sorting all the file contents in memory first, then saving
         match fs::write(path, json_string) {
@@ -237,6 +298,8 @@ fn sort_result_output(results: Vec<SortResult>) -> String {
     out
 }
 
+// fn replace_line_endings(str: expected)
+
 
 fn main() {
     // CLI args
@@ -248,6 +311,8 @@ fn main() {
     if args.verbose {
         log::set_max_level(LevelFilter::Debug);
     }
+
+    log::debug!("{}", args);
 
     // Main loop
     let paths_santised = args.files
@@ -267,7 +332,12 @@ fn main() {
                 if args.dry {
                     println!("{}", relative_path_str(entry_path))
                 } else {
-                    match Json::sort_and_save(&entry_path, args.spaces, args.arrays) {
+                    match Json::sort_and_save(
+                        &entry_path, 
+                        args.spaces, 
+                        args.arrays, 
+                        &args.line_ending
+                    ) {
                         Ok(_) => results.push(SortResult{ path: entry_path.into(), error: None}),
                         Err(error) => results.push(SortResult { path: entry_path.into(), error: Some(error) })
                     }
@@ -277,7 +347,12 @@ fn main() {
             if args.dry {
                 println!("{}", relative_path_str(path))
             } else {
-                match Json::sort_and_save(path, args.spaces, args.arrays) {
+                match Json::sort_and_save(
+                    path, 
+                    args.spaces, 
+                    args.arrays, 
+                    &args.line_ending
+                ) {
                     Ok(_) => results.push(SortResult{ path: path.as_path().into(), error: None}),
                     Err(error) => results.push(SortResult { path: path.as_path().into(), error: Some(error) })
                 }
