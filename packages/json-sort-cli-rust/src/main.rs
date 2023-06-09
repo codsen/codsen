@@ -1,4 +1,5 @@
 use clap::Parser;
+use glob::glob;
 use log::{Record, LevelFilter, Metadata};
 use regex::Regex;
 use serde::ser::Serialize;
@@ -10,8 +11,7 @@ use std::fmt::Display;
 use std::path::Path;
 use std::path::PathBuf;
 use walkdir::WalkDir;
-
-
+ 
 const APP_NAME: &str = "roast";
 const APP_VERSION: &str = "0.1.0";
 const APP_AUTHOR: &str = "Nicholas Kress";
@@ -333,42 +333,9 @@ fn main() {
     let mut results: Vec<SortResult> = vec!();
     for path in paths_santised {
         if path.is_dir() {
-            for entry in WalkDir::new(path)
-                                                    .follow_links(true)
-                                                    .into_iter()
-                                                    .filter_map(|e| e.ok())
-                                                    .filter(|e| e.path().is_file())                                                      {
-                let entry_path = entry.path();
-                if args.dry {
-                    println!("{}", relative_path_str(entry_path))
-                } else {
-                    match Json::sort_and_save(
-                        &entry_path, 
-                        args.spaces, 
-                        args.arrays, 
-                        &args.line_ending,
-                        indents
-                    ) {
-                        Ok(_) => results.push(SortResult{ path: entry_path.into(), error: None}),
-                        Err(error) => results.push(SortResult { path: entry_path.into(), error: Some(error) })
-                    }
-                }
-            }
+            walk_dir(path, &args, indents, &mut results);
         } else {
-            if args.dry {
-                println!("{}", relative_path_str(path))
-            } else {
-                match Json::sort_and_save(
-                    path, 
-                    args.spaces, 
-                    args.arrays, 
-                    &args.line_ending,
-                    indents,
-                ) {
-                    Ok(_) => results.push(SortResult{ path: path.as_path().into(), error: None}),
-                    Err(error) => results.push(SortResult { path: path.as_path().into(), error: Some(error) })
-                }
-            }
+            walk_globs(path, &args, indents, &mut results);
         }
     }
 
@@ -382,4 +349,53 @@ fn main() {
     } else {
         println!("{}", sort_result_output(results))
     }
+}
+
+fn walk_dir(path: &PathBuf, args: &Args, indents: usize, results: &mut Vec<SortResult>) {
+    for entry in WalkDir::new(path).follow_links(true)
+                                                   .into_iter()
+                                                   .filter_map(|e| e.ok())
+                                                   .filter(|e| e.path().is_file())                                                      {
+        let entry_path = entry.path();
+        if args.dry {
+            println!("{}", relative_path_str(entry_path))
+        } else {
+            match Json::sort_and_save(
+                &entry_path, 
+                args.spaces, 
+                args.arrays, 
+                &args.line_ending,
+                indents
+            ) {
+                Ok(_) => results.push(SortResult{ path: entry_path.into(), error: None}),
+                Err(error) => results.push(SortResult { path: entry_path.into(), error: Some(error) })
+            }
+        }
+    }
+}
+
+fn walk_globs(path: &PathBuf, args: &Args, indents: usize, results: &mut Vec<SortResult>) {
+    match glob(path.to_str().unwrap()) {
+        Ok(globs) => {
+            // TODO allow non-ok through and report ReadError
+            for path in globs.filter_map(Result::ok) {
+                if !path.is_dir() {                                            
+                    match Json::sort_and_save(
+                        &path, 
+                        args.spaces, 
+                        args.arrays, 
+                        &args.line_ending,
+                        indents
+                    ) {
+                        Ok(_) => results.push(SortResult{ path: path.into(), error: None}),
+                        Err(error) => results.push(SortResult { path: path.into(), error: Some(error) })
+                    }
+                }
+            }
+        },
+        Err(error) => {
+            log::debug!("Error parsing file path glob: {}", error);
+            results.push(SortResult{ path: path.as_path().into(), error: Some(JsonError::ReadError)});
+        }
+    };
 }
