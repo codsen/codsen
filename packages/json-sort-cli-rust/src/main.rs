@@ -252,6 +252,10 @@ const IGNORED_FILES: &'static [&str] = &[
     "package_lock.json"
 ];
 
+fn already_sorted(path: &Path, results: &Vec<SortResult>) -> bool {
+    results.iter().any(|result| *result.path.canonicalize().unwrap() == *path.canonicalize().unwrap())
+}
+
 fn is_ignored(path: &PathBuf) -> bool {
     if let Ok(full_path) = path.canonicalize() {
         if let Some(path_str) = full_path.to_str() {
@@ -360,15 +364,17 @@ fn walk_dir(path: &PathBuf, args: &Args, indents: usize, results: &mut Vec<SortR
         if args.dry {
             println!("{}", relative_path_str(entry_path))
         } else {
-            match Json::sort_and_save(
-                &entry_path, 
-                args.spaces, 
-                args.arrays, 
-                &args.line_ending,
-                indents
-            ) {
-                Ok(_) => results.push(SortResult{ path: entry_path.into(), error: None}),
-                Err(error) => results.push(SortResult { path: entry_path.into(), error: Some(error) })
+            if !already_sorted(entry_path, results) {
+                match Json::sort_and_save(
+                    &entry_path, 
+                    args.spaces, 
+                    args.arrays, 
+                    &args.line_ending,
+                    indents
+                ) {
+                    Ok(_) => results.push(SortResult{ path: entry_path.into(), error: None}),
+                    Err(error) => results.push(SortResult { path: entry_path.into(), error: Some(error) })
+                }
             }
         }
     }
@@ -379,7 +385,7 @@ fn walk_globs(path: &PathBuf, args: &Args, indents: usize, results: &mut Vec<Sor
         Ok(globs) => {
             // TODO allow non-ok through and report ReadError
             for path in globs.filter_map(Result::ok) {
-                if !path.is_dir() {                                            
+                if !path.is_dir() && !already_sorted(&path, results) {                                            
                     match Json::sort_and_save(
                         &path, 
                         args.spaces, 
