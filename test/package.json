@@ -17,7 +17,8 @@
     "tempy": "^3.0.0"
   },
   "scripts": {
-    "test": "cp ../target/debug/roast ./roast && uvu src"
+    "devTest": "cp ../target/debug/roast ./roast && uvu src",
+    "test": "uvu src"
   },
   "author": "",
   "license": "ISC",
