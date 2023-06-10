@@ -1,0 +1,69 @@
+name: Test
+on:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Run cargo check
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
+
+  test:
+    name: Test Suite
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [18.16.0]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        os:
+          - ubuntu-latest
+          # - macOS-latest
+          # - windows-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Build executable
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release --all-features
+
+      - name: Copy executable to test dir
+        uses: canastro/copy-file-action@master
+        with:
+          source: target/release/roast
+          target: test/roast
+
+      - name: Install Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: Install test dependencies
+        working-directory: ./test
+        run: npm ci
+
+      - name: Run test suite
+        working-directory: ./test
+        run: npm run test
