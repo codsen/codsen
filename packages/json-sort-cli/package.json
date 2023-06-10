@@ -80,6 +80,9 @@
     "update-notifier": "^6.0.2"
   },
   "devDependencies": {
-    "p-map": "^6.0.0"
+    "execa": "^7.1.1",
+    "p-map": "^6.0.0",
+    "tempy": "^3.0.0",
+    "uvu": "^0.5.6"
   }
 }

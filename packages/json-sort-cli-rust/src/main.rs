@@ -226,7 +226,8 @@ impl Json {
         // Apply desired line ending to output
         json_string = json_string.replace(LineEnding::CRLF.as_str(), line_ending.as_str());
         json_string = json_string.replace(LineEnding::LF.as_str(), line_ending.as_str());
-
+        json_string += line_ending.as_str();
+        
         // TODO optimize this by sorting all the file contents in memory first, then saving
         match fs::write(path, json_string) {
             Ok(()) => (),
@@ -248,16 +249,26 @@ const INDENT_SIZE_TAB: usize = 1;
 const IGNORED_FILES: &'static [&str] = &[
     "node_modules", 
     "package.json",
-    "package_lock.json"
+    "package_lock.json",
+    ".DS_Store",
+    "npm-debug.log",
+    ".svn",
+    "CVS",
+    "config.gypi",
+    ".lock-wscript",
+    "package-lock.json",
+    "npm-shrinkwrap.json"
+
 ];
 
 fn already_sorted(path: &Path, results: &Vec<SortResult>) -> bool {
-    results.iter().any(|result| 
+    results.iter().any(|result|
+        result.path.exists() && path.exists() &&
         *result.path.canonicalize().unwrap() == *path.canonicalize().unwrap()
     )
 }
 
-fn is_ignored(path: &PathBuf) -> bool {
+fn is_ignored(path: &Path) -> bool {
     if let Ok(full_path) = path.canonicalize() {
         if let Some(path_str) = full_path.to_str() {
             return IGNORED_FILES.iter().any(|f| path_str.contains(f));
@@ -292,9 +303,11 @@ fn sort_result_output(results: Vec<SortResult>) -> String {
                                  .count();
     let fail_count = results.len() - ok_count;
     
-    let mut out = format!("{} files sorted", ok_count);
+    let out: String;
     if fail_count > 0 {
-        out.push_str(format!("\n{} files could not be sorted", fail_count).as_str())
+        out = format!("{} files sorted\n{} files could not be sorted", ok_count, fail_count);
+    } else {
+        out = "The inputs don't lead to any json files! Exiting.".to_string();
     }
     
     out
@@ -320,10 +333,6 @@ fn main() {
     }
 
     // Main loop
-    let paths_santised = args.files
-        .iter()
-        .filter(|p| !is_ignored(p));
-
     let indents: usize = if args.indents == 0 {
         if args.spaces { 
             INDENT_SIZE_SPACE
@@ -336,7 +345,7 @@ fn main() {
 
 
     let mut results: Vec<SortResult> = vec!();
-    for path in paths_santised {
+    for path in args.files {
 
         if path.is_dir() {
             for entry in WalkDir::new(path)
@@ -345,7 +354,7 @@ fn main() {
                                                     .filter_map(|e| e.ok())
                                                     .filter(|e| e.path().is_file())                                                      {
                 let entry_path = entry.path();
-                if already_sorted(entry_path, &results) {
+                if is_ignored(&entry_path) || already_sorted(entry_path, &results) {
                     continue
                 }
                 if args.dry {
@@ -364,14 +373,18 @@ fn main() {
                 }
             }
         } else {
-            if already_sorted(path, &results) {
+            if !path.exists() {
+                results.push(SortResult {path: path.as_path().into(), error: Some(JsonError::NotFound)});
+            }
+            if is_ignored(&path) || already_sorted(&path, &results) {
                 continue
             }
+
             if args.dry {
-                println!("{}", relative_path_str(path))
+                println!("{}", relative_path_str(&path))
             } else {
                 match Json::sort_and_save(
-                    path, 
+                    &path, 
                     args.spaces, 
                     args.arrays, 
                     &args.line_ending,
