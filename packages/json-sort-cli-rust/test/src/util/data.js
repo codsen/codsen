@@ -137,25 +137,7 @@ export const sortedTabbedTestFileContents = [
   // file5.json
   `{
 \t"package": true
-}`,
-  `{
-\t"name": "tralala",
-\t"version": "99.88.77",
-\t"license": "MIT",
-\t"author": {
-\t\t"email": "roy@codsen.com",
-\t\t"name": "Roy Revelt",
-\t\t"url": "codsen.com"
-\t},
-\t"dependencies": {
-\t\t"a": "0.0.1",
-\t\t"z": "0.0.2"
-\t},
-\t"devDependencies": {
-\t\t"m": "0.0.2",
-\t\t"n": "0.0.3"
-\t}
-}`,
+}`
 ];
 
 export const minifiedContents =
