@@ -29,7 +29,7 @@ test("01 - when asked, sorts arrays which contain only strings", async () => {
       pathOfTheTestfile,
       JSON.stringify(["a", "A", "z", "Z", "m", "M"], null, 2)
     )
-    .then(() => execa("./roast", [tempFolder, "-a", "sortme.json"]))
+    .then(() => execa("./roast", [tempFolder, "-a", "sortme.json", "-s"]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
@@ -62,7 +62,7 @@ test("02 - when not asked, does not sort arrays which contain only strings", asy
 
   let processedFileContents = fs
     .writeFile(pathOfTheTestfile, JSON.stringify(sourceArr, null, 2))
-    .then(() => execa("./roast", [tempFolder, "sortme.json"]))
+    .then(() => execa("./roast", [tempFolder, "sortme.json", "-s"]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
@@ -102,7 +102,7 @@ test("03 - array in deeper levels sorted (upon request)", async () => {
         2
       )
     )
-    .then(() => execa("./roast", [tempFolder, "-a", "sortme.json"]))
+    .then(() => execa("./roast", [tempFolder, "-a", "sortme.json", "-s"]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)

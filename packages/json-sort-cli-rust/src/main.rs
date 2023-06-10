@@ -190,12 +190,13 @@ impl Json {
     }
 
     fn sort_value(head: &mut Value, sort_arrays: bool) {
+        // TODO traverse and sort deep inner arrays
         match head {
             Value::Array(list) => {
                 if sort_arrays {
                     if list.iter().all(|f| f.is_string()) {
                         list.sort_by(|a, b| 
-                            a.as_str().unwrap().cmp(b.as_str().unwrap())
+                            a.as_str().unwrap().to_lowercase().cmp(&b.as_str().unwrap().to_lowercase())
                         );
                         log::debug!("Sorted array")
                     }
@@ -227,7 +228,7 @@ impl Json {
         json_string = json_string.replace(LineEnding::CRLF.as_str(), line_ending.as_str());
         json_string = json_string.replace(LineEnding::LF.as_str(), line_ending.as_str());
         json_string += line_ending.as_str();
-        
+
         // TODO optimize this by sorting all the file contents in memory first, then saving
         match fs::write(path, json_string) {
             Ok(()) => (),
@@ -243,7 +244,7 @@ impl Json {
 
 static LOGGER: SimpleLogger = SimpleLogger;
 
-const INDENT_SIZE_SPACE: usize = 4;
+const INDENT_SIZE_SPACE: usize = 2;
 const INDENT_SIZE_TAB: usize = 1;
 
 const IGNORED_FILES: &'static [&str] = &[
