@@ -48,12 +48,14 @@ impl Display for Args {
 "Args {{
     sort arrays: {:?}
     dry run: {:?}
+    indents: {:?}
     line ending: {:?}
     use spaces: {:?}
     verbose output: {:?}
 }}", 
             self.arrays, 
-            self.dry, 
+            self.dry,
+            self.indents,
             self.line_ending, 
             self.spaces,
             self.verbose 
@@ -71,11 +73,14 @@ impl log::Log for SimpleLogger {
 
     fn log(&self, record: &Record) {
         if self.enabled(record.metadata()) {
-            println!("{}:{} - {}", 
-                record.file().unwrap(), 
-                record.line().unwrap(), 
-                record.args()
-            );
+            if LevelFilter::Info != record.level() {
+                print!("{} - {}:{} - ",
+                    record.level(),
+                    record.file().unwrap(), 
+                    record.line().unwrap()
+                );
+            }
+            println!("{}", record.args());
         }
     }
 
@@ -345,7 +350,7 @@ fn main() {
     log::debug!("{}", args);
 
     if args.files.is_empty() {
-        println!("No input files specified");
+        log::info!("No input files specified");
         std::process::exit(1);
     }
 
@@ -375,7 +380,7 @@ fn main() {
                     continue
                 }
                 if args.dry {
-                    println!("{}", relative_path_str(entry_path))
+                    log::info!("{}", relative_path_str(entry_path))
                 } else {
                     match Json::sort_and_save(
                         &entry_path, 
@@ -398,7 +403,7 @@ fn main() {
             }
 
             if args.dry {
-                println!("{}", relative_path_str(&path))
+                log::info!("{}", relative_path_str(&path))
             } else {
                 match Json::sort_and_save(
                     &path, 
@@ -415,13 +420,13 @@ fn main() {
     }
 
     for result in results.iter() {
-        println!("{}", result)
+        log::info!("{}", result)
     }
 
-    println!("");
+    log::info!("");
     if args.dry {
-        println!("{} - DRY RUN", sort_result_output(results));
+        log::info!("{} - DRY RUN", sort_result_output(results));
     } else {
-        println!("{}", sort_result_output(results))
+        log::info!("{}", sort_result_output(results))
     }
 }
