@@ -346,8 +346,10 @@ fn sort_result_output(results: Vec<SortResult>) -> String {
             "{} files sorted\n{} files could not be sorted",
             ok_count, fail_count
         );
-    } else {
+    } else if ok_count == 0 {
         out = "The inputs don't lead to any json files! Exiting.".to_string();
+    } else {
+        out = format!("{} files sorted", ok_count);
     }
 
     out
