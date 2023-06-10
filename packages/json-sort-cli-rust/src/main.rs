@@ -32,6 +32,9 @@ pub struct Args {
     #[arg(value_parser = LineEnding::from_str)]
     line_ending: LineEnding,
 
+    #[clap(long)]
+    silent: bool,
+    
     #[clap(long, short = 's')]
     spaces: bool,
 
@@ -343,8 +346,11 @@ fn main() {
     // Configure logging
     log::set_logger(&LOGGER).unwrap();
     log::set_max_level(LevelFilter::Info);
+    // --verbose overrides --silent
     if args.verbose {
         log::set_max_level(LevelFilter::Debug);
+    } else if args.silent {
+        log::set_max_level(LevelFilter::Error);
     }
 
     log::debug!("{}", args);
