@@ -192,8 +192,7 @@ impl Json {
         Ok(String::from_utf8(buf)?)
     }
 
-    fn sort_value(head: &mut Value, sort_arrays: bool) {
-        // TODO traverse and sort deep inner arrays
+    fn sort_value(head: &mut Value, sort_arrays: bool) -> &mut Value {
         match head {
             Value::Array(list) => {
                 if sort_arrays {
@@ -201,16 +200,30 @@ impl Json {
                         list.sort_by(|a, b| 
                             a.as_str().unwrap().to_lowercase().cmp(&b.as_str().unwrap().to_lowercase())
                         );
-                        log::debug!("Sorted array")
+                        log::trace!("Sorted array")
                     }
                     else {
-                        log::debug!("Cannot sort array containing non-strings");
+                        log::trace!("Cannot sort array containing non-strings");
                     }
                 }
-                
+                for item in list.iter_mut() {
+                    log::trace!("Sorting inner array of array");
+                    Self::sort_value(item, sort_arrays);
+                }                
+            },
+            Value::Object(obj) => {
+                log::trace!("Sorting object");
+                for (key, val) in obj.iter_mut() {
+                    log::trace!("Sorted object value. key: {}", key);
+                    Self::sort_value(val, sort_arrays);
+                }
+            },
+            _ => {
+                log::trace!("type already sorted")
             }
-            _ => log::debug!("type already sorted")
         }
+
+        head
     }
 
     fn sort_and_save(path: &Path, use_spaces: bool, sort_arrays: bool, line_ending: &LineEnding, indents: usize) -> Result<(), JsonError> {
