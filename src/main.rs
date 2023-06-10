@@ -207,6 +207,10 @@ impl Json {
     }
 
     fn sort_value(head: &mut Value, sort_arrays: bool) -> &mut Value {
+        if !sort_arrays {
+            return head;
+        }
+
         match head {
             Value::Array(list) => {
                 if sort_arrays {
