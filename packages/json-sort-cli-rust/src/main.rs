@@ -95,6 +95,7 @@ pub enum JsonError {
 #[derive(Clone, Debug)]
 enum LineEnding {
     SystemDefault,
+    CR,
     LF,
     CRLF
 }
@@ -102,6 +103,7 @@ enum LineEnding {
 impl LineEnding {
     pub fn from_str(s: &str) -> Result<LineEnding, std::string::ParseError> {
         let result = match s.to_lowercase().as_str() {
+            "cr" => LineEnding::CR,
             "lf" => LineEnding::LF,
             "crlf" => LineEnding::CRLF, 
             _ => LineEnding::SystemDefault
@@ -112,6 +114,7 @@ impl LineEnding {
 
     pub fn as_str(&self) -> &str {
         match self {
+            LineEnding::CR => "\r",
             LineEnding::LF => "\n",
             LineEnding::CRLF => "\r\n",
             LineEnding::SystemDefault => {
