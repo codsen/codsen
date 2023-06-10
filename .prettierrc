@@ -1,8 +1,0 @@
-{
-  "overrides": [
-    {
-      "files": "**/*.all-contributorsrc",
-      "options": { "parser": "json" }
-    }
-  ]
-}
