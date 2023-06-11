@@ -25,6 +25,7 @@ const IGNORED_FILES: &'static [&str] = &[
     "npm-shrinkwrap.json",
 ];
 
+/// Reason why a [Path] could not be JSON sorted
 #[derive(Debug)]
 pub enum JsonError {
     Ignored,
@@ -35,6 +36,11 @@ pub enum JsonError {
     Unknown,
 }
 
+/// Result of a sort operation for a JSON file
+/// 
+///  * `path` - [Path] of the file that was sorted
+///  * `error` - [JsonError] if the sort operation failed 
+/// 
 pub struct SortResult {
     path: Box<Path>,
     error: Option<JsonError>,
@@ -63,6 +69,19 @@ impl<'a> Display for SortResult {
     }
 }
 
+/// Read a list of JSON files, sort the contents of each and save the output to disk.
+/// 
+/// ## Arguments
+///
+/// * `files` - a list of relative or absolute Paths to sort
+/// * `line_ending` - type of line ending/seperator to use for newlines
+/// * `use_spaces` - use _spaces_ for whitespace, instead of default _tabs_
+/// * `sort_arrays` - enable to sort arrays. Only sorts arrays containing all string types
+/// * `indents` - number of whitespace indents to use
+/// * `dry_run` - print files that would be sorted, but do not modify
+/// 
+/// Ignores files that should not be modified. See [IGNORED_FILES]
+/// 
 pub fn sort_files(
     files: &Vec<PathBuf>,
     line_ending: &LineEnding,

@@ -128,7 +128,6 @@ fn main() {
         std::process::exit(1);
     }
 
-    // Main loop
     let indents: usize = if args.indents == 0 {
         if args.spaces {
             INDENT_SIZE_SPACE

@@ -1,5 +1,13 @@
 use std::env;
 
+/// Character to use for newline
+/// 
+/// # System Defaults
+/// 
+/// * `unix` - LF '\n'
+/// * `windows` - CRLF '\r\n'
+/// 
+/// Includes Mac OS CR, but SystemDefault will use LF on Mac OS by default
 #[derive(Clone, Debug)]
 pub enum LineEnding {
     SystemDefault,
