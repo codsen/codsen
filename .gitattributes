@@ -1,0 +1,2 @@
+# Exclude external code from repo statistics
+js/* linguist-vendored

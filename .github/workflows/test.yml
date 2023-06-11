@@ -53,7 +53,7 @@ jobs:
         uses: canastro/copy-file-action@master
         with:
           source: target/release/roast
-          target: test/roast
+          target: tests/roast
 
       - name: Install Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -61,9 +61,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
       
       - name: Install test dependencies
-        working-directory: ./test
+        working-directory: ./tests
         run: npm ci
 
       - name: Run test suite
-        working-directory: ./test
+        working-directory: ./tests
         run: npm run test
