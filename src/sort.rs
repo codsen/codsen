@@ -82,6 +82,7 @@ impl<'a> Display for SortResult {
 /// 
 /// Ignores files that should not be modified. See [IGNORED_FILES]
 /// 
+#[inline]
 pub fn sort_files(
     files: &Vec<PathBuf>,
     line_ending: &LineEnding,
