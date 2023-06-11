@@ -124,7 +124,7 @@ fn main() {
     log::debug!("{}", args);
 
     if args.files.is_empty() {
-        log::info!("No input files specified");
+        log::info!("The inputs don't lead to any json files! Exiting.");
         std::process::exit(1);
     }
 
