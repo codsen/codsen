@@ -1,4 +1,3 @@
-use std::fmt::format;
 use std::path::PathBuf;
 
 use criterion::BenchmarkId;
@@ -51,5 +50,39 @@ fn sort_fn(c: &mut Criterion) {
     group.finish();
 }
 
-criterion_group!(benches, sort_fn);
+fn sort_arrays(c: &mut Criterion) {
+    let files = vec![PathBuf::from("./benches/data/b_5mb.json")];
+    let mut group = c.benchmark_group("sort_arrays");
+    group.significance_level(0.1).sample_size(SAMPLE_SIZE);
+
+    group.bench_function("don't sort arrays", |b| 
+        b.iter(||
+            // Fn being benchmarked
+            sort_files(
+                &files, 
+                black_box(&LineEnding::LF), 
+                black_box(false),
+                black_box(false),
+                black_box(1),
+                black_box(false)
+            )
+        )
+    );
+
+    group.bench_function("do sort arrays", |b| 
+        b.iter(||
+            // Fn being benchmarked
+            sort_files(
+                &files, 
+                black_box(&LineEnding::LF), 
+                black_box(false),
+                black_box(true),
+                black_box(1),
+                black_box(false)
+            )
+        )
+    );
+}
+
+criterion_group!(benches, sort_fn, sort_arrays);
 criterion_main!(benches);
