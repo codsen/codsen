@@ -21,5 +21,15 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: bench
-          args: --verbose
+
+      - name: zip test report
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r perf-report.zip target/criterion
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: perf-report.zip
+          path: ./perf-report.zip
   
