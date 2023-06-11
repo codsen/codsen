@@ -16,6 +16,9 @@ pub enum LineEnding {
     CRLF,
 }
 
+// rustc flags LineEnding::from_str as unused,
+// even though it is used by clap to parse line_ending arg
+#[allow(dead_code)]
 impl LineEnding {
     pub fn from_str(s: &str) -> Result<LineEnding, std::string::ParseError> {
         let result = match s.to_lowercase().as_str() {
