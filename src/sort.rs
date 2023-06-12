@@ -29,7 +29,6 @@ const IGNORED_FILES: &'static [&str] = &[
 /// Reason why a [Path] could not be JSON sorted
 #[derive(Debug)]
 pub enum JsonError {
-    Ignored,
     NotFound,
     ReadError,
     ParseError,
@@ -99,6 +98,7 @@ pub fn sort_files(
             {
                 let entry_path = entry.path();
                 if is_ignored(&entry_path) || is_already_sorted(&entry_path, &results) {
+                    log::debug!("Ignored: {:?}", entry_path.to_str());
                     continue;
                 }
                 if dry_run {
@@ -125,6 +125,7 @@ pub fn sort_files(
                 });
             }
             if is_ignored(&path) || is_already_sorted(&path, &results) {
+                log::debug!("Ignored: {:?}", path.to_str());
                 continue;
             }
 
