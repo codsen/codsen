@@ -1,6 +1,8 @@
 use clap::Parser;
 use colored::*;
-use log::{LevelFilter, Metadata, Record};
+use git2::{Repository, Statuses, Status};
+use log::{LevelFilter, Level, Metadata, Record};
+use std::env;
 use std::fmt::Display;
 use std::path::PathBuf;
 
@@ -32,6 +34,10 @@ struct Args {
     /// Only list all the files to be processed
     #[clap(long, short = 'd')]
     dry: bool,
+
+    /// Sort any JSON files tracked by git, that have a modified status. Will not modify any untracked, staged, or ignored files
+    #[clap(long, short = 'g')]
+    git: bool,
 
     /// How many spaces/tabs to use (default: 2 -> spaces, 1 -> tabs)
     #[clap(long = "indentationCount", short = 'i', default_value = "0")]
@@ -84,19 +90,46 @@ impl log::Log for SimpleLogger {
 
     fn log(&self, record: &Record) {
         if self.enabled(record.metadata()) {
-            if LevelFilter::Info != record.level() {
-                print!(
-                    "{} - {}:{} - ",
-                    record.level(),
-                    record.file().unwrap(),
-                    record.line().unwrap()
-                );
+            match record.level() { 
+                Level::Debug | Level::Trace => {
+                    print!(
+                        "{} - {}:{} - ",
+                        record.level(),
+                        record.file().unwrap(),
+                        record.line().unwrap()
+                    );
+                },
+                Level::Info => println!("{}", record.args()),
+                Level::Warn => println!("{}", format!("{}", record.args()).yellow()),
+                Level::Error => println!("{}", format!("{}", record.args()).red())
             }
-            println!("{}", record.args());
         }
     }
 
     fn flush(&self) {}
+}
+
+fn get_git_modified() -> Vec<PathBuf> {
+    let dir = env::current_dir().unwrap();
+    let repo = match Repository::open(dir) {
+        Ok(r) => r,
+        Err(err) => {
+            log::debug!("Error opening git repo: {}", err);
+            log::error!("fatal: not a git repository");
+            std::process::exit(1)
+        }
+    };
+
+    let statuses: Statuses = repo.statuses(None).unwrap();
+
+    statuses.iter()
+            .filter(|se| { 
+                let s :Status = se.status();
+                // index = staged, wt + not new = tracked, unstaged
+                s.is_wt_modified() || s.is_wt_renamed() || s.is_wt_typechange()
+            }) 
+            .map(|s| PathBuf::from(s.path().unwrap()))
+            .collect()
 }
 
 fn sort_result_output(results: Vec<SortResult>) -> String {
@@ -133,7 +166,14 @@ fn main() {
 
     log::debug!("{}", args);
 
-    if args.files.is_empty() {
+    let files: Vec<PathBuf>;
+    if args.git {
+        files = get_git_modified();
+    } else {
+        files = args.files;
+    }
+
+    if files.is_empty() {
         log::info!("{}", "The inputs don't lead to any json files! Exiting.".red());
         std::process::exit(1);
     }
@@ -149,7 +189,7 @@ fn main() {
     };
 
     let results = sort_files(
-        &args.files,
+        &files,
         &args.line_ending,
         args.spaces,
         args.arrays,
