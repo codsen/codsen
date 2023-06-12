@@ -1,6 +1,5 @@
 name: Perfomance test
-on:
-  pull_request:
+on: workflow_dispatch
 
 jobs:
   perf:
