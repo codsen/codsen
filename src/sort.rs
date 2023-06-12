@@ -12,6 +12,7 @@ use walkdir::WalkDir;
 
 pub use crate::lines::LineEnding;
 
+const INVALID_PATH: &'static str = "INVALID_PATH";
 const IGNORED_FILES: &'static [&str] = &[
     "node_modules",
     "package.json",
@@ -54,7 +55,7 @@ impl SortResult {
 
 impl<'a> Display for SortResult {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let path_str = path_to_relative(&self.path);
+        let path_str = path_to_relative(&self.path).unwrap_or(INVALID_PATH.into());
 
         if self.success() {
             write!(f, "{} - {}", path_str, "OK".green().bold())
@@ -102,7 +103,7 @@ pub fn sort_files(
                     continue;
                 }
                 if dry_run {
-                    log::info!("{}", path_to_relative(&entry_path))
+                    log::info!("{}", path_to_relative(&entry_path).unwrap_or(INVALID_PATH.into()))
                 } else {
                     match sort_and_save(&entry_path, use_spaces, sort_arrays, line_ending, indents)
                     {
@@ -130,7 +131,7 @@ pub fn sort_files(
             }
 
             if dry_run {
-                log::info!("{}", path_to_relative(&path))
+                log::info!("{}", path_to_relative(&path).unwrap_or(INVALID_PATH.into()))
             } else {
                 match sort_and_save(&path, use_spaces, sort_arrays, line_ending, indents) {
                     Ok(_) => results.push(SortResult {
@@ -168,24 +169,26 @@ fn is_ignored(path: &Path) -> bool {
     return false;
 }
 
-fn path_to_relative(path: &Path) -> String {
-    let current = env::current_dir()
-        .expect("Error getting current dir")
-        .canonicalize()
-        .unwrap();
+fn path_to_relative(path: &Path) -> Result<String, Box<dyn Error>> {
+    let current = env::current_dir()?.canonicalize()?;
 
     if let Ok(full) = path.canonicalize() {
         if let Some(full_str) = full.to_str() {
-            return format!(".{}", full_str.replace(current.to_str().unwrap(), ""));
+            if let Some(current_str) = current.to_str() {
+                return Ok(format!(".{}", full_str.replace(current_str, "")));
+            }
         }
     }
 
     // remove existing './' if exists in current PathBuf
-    let re = Regex::new(r"^\./").unwrap();
-    let _out = path.to_str().unwrap();
-    let out = re.replace_all(_out, "");
+    let re = Regex::new(r"^\./")?;
+    let out = match path.to_str() {
+        Some(s) => s,
+        None => return Err("Path is not valid unicode")?
+    };
+    let out = re.replace_all(out, "");
 
-    format!("./{}", out)
+    Ok(format!("./{}", out))
 }
 
 fn read_json_file(path: &Path) -> Result<Value, JsonError> {
@@ -205,7 +208,7 @@ fn read_json_file(path: &Path) -> Result<Value, JsonError> {
     let parsed: Value = match serde_json::from_str(&file) {
         Ok(v) => v,
         Err(error) => {
-            let filename = path.as_os_str().to_str().unwrap();
+            let filename = path.as_os_str().to_str().unwrap_or(INVALID_PATH);
             log::debug!(
                 "Failed to parse json file. filename: {}, error: {}",
                 filename,
@@ -245,9 +248,9 @@ fn sort_json_value(head: &mut Value, sort_arrays: bool) -> &mut Value {
                 if list.iter().all(|f| f.is_string()) {
                     list.sort_by(|a, b| {
                         a.as_str()
-                            .unwrap()
+                            .unwrap_or_default()
                             .to_lowercase()
-                            .cmp(&b.as_str().unwrap().to_lowercase())
+                            .cmp(&b.as_str().unwrap_or_default().to_lowercase())
                     });
                     log::trace!("Sorted array")
                 } else {
