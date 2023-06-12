@@ -159,7 +159,8 @@ fn is_already_sorted(path: &Path, results: &Vec<SortResult>) -> bool {
 fn is_ignored(path: &Path) -> bool {
     if let Ok(full_path) = path.canonicalize() {
         if let Some(path_str) = full_path.to_str() {
-            return IGNORED_FILES.iter().any(|f| path_str.contains(f));
+            return !path_str.to_lowercase().ends_with(".json")
+              || IGNORED_FILES.iter().any(|f: &&str| path_str.contains(f));
         }
     }
     return false;
