@@ -31,10 +31,6 @@ jobs:
 
     runs-on: ${{ matrix.platform.os }}
     steps:
-      - name: Set current date as env variable
-        run: |
-          echo "NOW=$(date +'%Y%m%d%H%M')" >> "$GITHUB_ENV"
-
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -87,7 +83,7 @@ jobs:
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v1
         with:
-          name: "latest-${{ env.NOW }}"
+          name: "latest"
           prerelease: true
           generate_release_notes: true
           tag_name: latest
