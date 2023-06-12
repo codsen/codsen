@@ -1,8 +1,6 @@
 # https://blog.urth.org/2023/03/05/cross-compiling-rust-projects-in-github-actions/
 name: Release
 on:
-  pull_request:
-
   push:
     branches:
       - main
