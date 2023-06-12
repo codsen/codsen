@@ -1,0 +1,98 @@
+# https://blog.urth.org/2023/03/05/cross-compiling-rust-projects-in-github-actions/
+name: Release
+on:
+  pull_request:
+
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Release - ${{ matrix.platform.os_name }}
+    strategy:
+      matrix:
+        platform:
+          - os_name: Linux-x86_64
+            os: ubuntu-20.04
+            target: x86_64-unknown-linux-musl
+            bin: roast
+            name: roast-Linux-x86_64.tar.gz
+            cross: false
+            cargo_command: cargo
+
+          - os_name: Windows-x86_64
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+            bin: roast.exe
+            name: roast-Windows-x86_64.zip
+            cross: false
+            cargo_command: cargo
+
+    runs-on: ${{ matrix.platform.os }}
+    steps:
+      - name: Set current date as env variable
+        run: |
+          echo "NOW=$(date +'%Y%m%d%H%M')" >> "$GITHUB_ENV"
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install toolchain if not cross-compiling
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform.target }}
+        if: ${{ !matrix.platform.cross }}
+
+      - name: Build binary (*nix)
+        shell: bash
+        run: |
+          ${{ matrix.platform.cargo_command }} build --locked --release --target ${{ matrix.platform.target }}
+        if: ${{ !contains(matrix.platform.os, 'windows') }}  
+     
+      - name: Build binary (Windows)
+        # We have to use the platform's native shell. If we use bash on
+        # Windows then OpenSSL complains that the Perl it finds doesn't use
+        # the platform's native paths and refuses to build.
+        shell: powershell
+        run: |
+          & ${{ matrix.platform.cargo_command }} build --locked --release --target ${{ matrix.platform.target }}
+        if: contains(matrix.platform.os, 'windows')
+
+      - name: Strip binary
+        shell: bash
+        run: |
+          strip target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }}
+        # strip doesn't work with cross-arch binaries on Linux or Windows.
+        if: ${{ !(matrix.platform.cross || matrix.platform.target == 'aarch64-pc-windows-msvc') }}
+
+      - name: Package as archive
+        shell: bash
+        run: |
+          cd target/${{ matrix.platform.target }}/release
+          if [[ "${{ matrix.platform.os }}" == "windows-latest" ]]; then
+            7z a ../../../${{ matrix.platform.name }} ${{ matrix.platform.bin }}
+          else
+            tar czvf ../../../${{ matrix.platform.name }} ${{ matrix.platform.bin }}
+          fi
+          cd -
+      
+      - uses: fregante/setup-git-user@v2
+      - name: Tag latest
+        run: |
+          git tag --force -a latest -m "Latest release" ${GITHUB_SHA}
+          git push --force origin latest
+        
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: "latest-${{ env.NOW }}"
+          prerelease: true
+          generate_release_notes: true
+          tag_name: latest
+          files: "roast*"
+          
+            
+      
+
