@@ -1,4 +1,5 @@
 use clap::Parser;
+use colored::*;
 use log::{LevelFilter, Metadata, Record};
 use std::fmt::Display;
 use std::path::PathBuf;
@@ -104,14 +105,13 @@ fn sort_result_output(results: Vec<SortResult>) -> String {
 
     let out: String;
     if fail_count > 0 {
-        out = format!(
-            "{} files sorted\n{} files could not be sorted",
-            ok_count, fail_count
-        );
+        let ok = format!("{} files sorted", ok_count).green();
+        let fail = format!("{} files could not be sorted", fail_count).red();
+        out = format!("{}\n{}", ok, fail).bold().to_string();
     } else if ok_count == 0 {
-        out = "The inputs don't lead to any json files! Exiting.".to_string();
+        out = "The inputs don't lead to any json files! Exiting.".red().to_string();
     } else {
-        out = format!("{} files sorted", ok_count);
+        out = format!("{} files sorted", ok_count).green().bold().to_string();
     }
 
     out
@@ -134,7 +134,7 @@ fn main() {
     log::debug!("{}", args);
 
     if args.files.is_empty() {
-        log::info!("The inputs don't lead to any json files! Exiting.");
+        log::info!("{}", "The inputs don't lead to any json files! Exiting.".red());
         std::process::exit(1);
     }
 
@@ -163,7 +163,7 @@ fn main() {
 
     log::info!("");
     if args.dry {
-        log::info!("{} - DRY RUN", sort_result_output(results));
+        log::info!("{}\n{}", "--- DRY RUN ---".yellow().bold(), sort_result_output(results));
     } else {
         log::info!("{}", sort_result_output(results))
     }

@@ -1,3 +1,4 @@
+use colored::*;
 use regex::Regex;
 use serde::ser::Serialize;
 use serde_json::ser::PrettyFormatter;
@@ -57,14 +58,10 @@ impl<'a> Display for SortResult {
         let path_str = path_to_relative(&self.path);
 
         if self.success() {
-            write!(f, "{} - OK", path_str)
+            write!(f, "{} - {}", path_str, "OK".green().bold())
         } else {
-            write!(
-                f,
-                "{} - {:?}",
-                path_str,
-                self.error.as_ref().expect("Not possible")
-            )
+            let err_msg = format!("{:?}", self.error.as_ref().expect("Not possible")).red().bold();
+            write!(f, "{} - {}", path_str, err_msg)
         }
     }
 }
