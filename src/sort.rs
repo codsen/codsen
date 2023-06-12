@@ -150,9 +150,12 @@ pub fn sort_files(
 
 fn is_already_sorted(path: &Path, results: &Vec<SortResult>) -> bool {
     results.iter().any(|result| {
-        result.path.exists()
-            && path.exists()
-            && *result.path.canonicalize().unwrap() == *path.canonicalize().unwrap()
+        if !result.path.exists() || !path.exists() {
+            return false;
+        }
+        let result_str = result.path.canonicalize().unwrap_or_default();
+        let path_str = path.canonicalize().unwrap_or_default();
+        result_str == path_str
     })
 }
 
@@ -307,4 +310,3 @@ fn sort_and_save(
 
     Ok(())
 }
-
