@@ -95,8 +95,8 @@ impl log::Log for SimpleLogger {
                     print!(
                         "{} - {}:{} - ",
                         record.level(),
-                        record.file().unwrap(),
-                        record.line().unwrap()
+                        record.file().unwrap_or("unknown_file"),
+                        record.line().unwrap_or(0)
                     );
                 },
                 Level::Info => println!("{}", record.args()),
@@ -109,27 +109,23 @@ impl log::Log for SimpleLogger {
     fn flush(&self) {}
 }
 
-fn get_git_modified() -> Vec<PathBuf> {
-    let dir = env::current_dir().unwrap();
-    let repo = match Repository::open(dir) {
-        Ok(r) => r,
-        Err(err) => {
-            log::debug!("Error opening git repo: {}", err);
-            log::error!("fatal: not a git repository");
-            std::process::exit(1)
-        }
-    };
+fn get_git_modified() -> Result<Vec<PathBuf>, git2::Error> {
+    let dir = env::current_dir().unwrap_or(PathBuf::from("."));
+    let repo = Repository::open(dir)?;
+    let statuses = repo.statuses(None)?;
 
-    let statuses: Statuses = repo.statuses(None).unwrap();
-
-    statuses.iter()
+    let res = statuses.iter()
             .filter(|se| { 
-                let s :Status = se.status();
+                let s: Status = se.status();
                 // index = staged, wt + not new = tracked, unstaged
                 s.is_wt_modified() || s.is_wt_renamed() || s.is_wt_typechange()
-            }) 
-            .map(|s| PathBuf::from(s.path().unwrap()))
-            .collect()
+            })
+            .filter_map(|s| {
+                s.path().and_then(|path| Some(PathBuf::from(path)))
+            })
+            .collect();
+
+    Ok(res)
 }
 
 fn sort_result_output(results: Vec<SortResult>) -> String {
@@ -155,7 +151,7 @@ fn main() {
     let args = Args::parse();
 
     // Configure logging
-    log::set_logger(&LOGGER).unwrap();
+    let _ = log::set_logger(&LOGGER);
     log::set_max_level(LevelFilter::Info);
     // --verbose overrides --silent
     if args.verbose {
@@ -168,7 +164,14 @@ fn main() {
 
     let files: Vec<PathBuf>;
     if args.git {
-        files = get_git_modified();
+        files = match get_git_modified() {
+            Ok(f) => f,
+            Err(err) => {
+                log::debug!("Error reading git repo status: {}", err);
+                log::error!("fatal: not a git repository");
+                std::process::exit(1);
+            } 
+        }
     } else {
         files = args.files;
     }
