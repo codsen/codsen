@@ -12,7 +12,8 @@ use crate::sort::{sort_files, SortResult};
 const APP_NAME: &str = "roast";
 const APP_VERSION: &str = "0.1.0";
 const APP_AUTHOR: &str = "Nicholas Kress";
-const APP_ABOUT: &str = "Rust implementation of jsonsort-cli";
+const APP_ABOUT: &str = "Sort JSON files by key.
+Rust implementation of the npm package: json-sort-cli.";
 
 const INDENT_SIZE_SPACE: usize = 2;
 const INDENT_SIZE_TAB: usize = 1;
@@ -22,28 +23,37 @@ static LOGGER: SimpleLogger = SimpleLogger;
 #[derive(Debug, Parser)]
 #[command(name = APP_NAME, version = APP_VERSION, author = APP_AUTHOR, about = APP_ABOUT)]
 struct Args {
+
+    /// Also sort any arrays if they contain only string elements
     #[clap(long, short = 'a')]
     arrays: bool,
 
+    /// Only list all the files to be processed
     #[clap(long, short = 'd')]
     dry: bool,
 
+    /// How many spaces/tabs to use (default: 2 -> spaces, 1 -> tabs)
     #[clap(long = "indentationCount", short = 'i', default_value = "0")]
     indents: usize,
 
+    /// Set to "cr", "crlf" or "lf" to override the default
     #[clap(long = "lineEnding", short = 'l', default_value = LineEnding::SystemDefault.as_str())]
     #[arg(value_parser = LineEnding::from_str)]
     line_ending: LineEnding,
 
+    /// Suppress output
     #[clap(long)]
     silent: bool,
 
+    /// Use spaces for JSON file indentation (default uses tabs)
     #[clap(long, short = 's')]
     spaces: bool,
 
+    /// Enable verbose output for debugging
     #[clap(long, short = 'v')]
     verbose: bool,
 
+    /// Space separated list of file paths to sort. Glob patterns (files/*.json) should be expanded by your shell
     files: Vec<PathBuf>,
 }
 
