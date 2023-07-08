@@ -75,7 +75,7 @@ Use \`email-comb\` to delete unused CSS from an HTML email template to reduce th
 By erasing the unneeded and unnecessary CSS classes and IDs, you make the code more readable and reduce your mail server's bandwidth.
 
 Unlike web page-oriented competitor tools, we tailored \`email-comb\` to cater to email development specifics: limit the line length to 500 characters (best practice), retain Outlook conditional if comment tags and minify and uglify class and id selector names.
-`
+`,
   );
 
 // action

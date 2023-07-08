@@ -31,12 +31,12 @@ declare let DEV: boolean;
 export function extractAllTestAsserts(nodes: Obj[], type: TestType): Obj[] {
   DEV &&
     console.log(
-      `034 ${`\u001b[${32}m${`████████████████████ extractAllTestAsserts() start`}\u001b[${39}m`}`
+      `034 ${`\u001b[${32}m${`████████████████████ extractAllTestAsserts() start`}\u001b[${39}m`}`,
     );
 
   DEV &&
     console.log(
-      `${`\u001b[${33}m${`nodes`}\u001b[${39}m`} = ${stringify(nodes)}`
+      `${`\u001b[${33}m${`nodes`}\u001b[${39}m`} = ${stringify(nodes)}`,
     );
 
   return nodes.reduce<Obj[]>((acc, curr) => {
@@ -65,8 +65,8 @@ export function extractAllTestAsserts(nodes: Obj[], type: TestType): Obj[] {
       return acc.concat(
         extractAllTestAsserts(
           op.get(curr, "expression.arguments.0.body.body"),
-          type
-        )
+          type,
+        ),
       );
     }
 
@@ -85,8 +85,8 @@ export function extractAllTestAsserts(nodes: Obj[], type: TestType): Obj[] {
         `${`\u001b[${33}m${`type`}\u001b[${39}m`} = ${JSON.stringify(
           type,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     DEV &&
@@ -94,8 +94,8 @@ export function extractAllTestAsserts(nodes: Obj[], type: TestType): Obj[] {
         `${`\u001b[${33}m${`op.get(curr, "expression.callee.name")`}\u001b[${39}m`} = ${JSON.stringify(
           op.get(curr, "expression.callee.name"),
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     if (

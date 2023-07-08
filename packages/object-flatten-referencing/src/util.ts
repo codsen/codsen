@@ -61,19 +61,19 @@ function flattenObject(obj: JSONObject, opts?: Partial<Opts>): any[] {
       if (isObj(resolvedObj[key])) {
         resolvedObj[key] = flattenObject(
           resolvedObj[key] as JSONObject,
-          resolvedOpts
+          resolvedOpts,
         );
       }
       if (Array.isArray(resolvedObj[key])) {
         res = res.concat(
           (resolvedObj[key] as JSONArray).map(
-            (el: any) => `${key}${resolvedOpts.objectKeyAndValueJoinChar}${el}`
-          )
+            (el: any) => `${key}${resolvedOpts.objectKeyAndValueJoinChar}${el}`,
+          ),
         );
       }
       if (isStr(resolvedObj[key])) {
         res.push(
-          `${key}${resolvedOpts.objectKeyAndValueJoinChar}${resolvedObj[key]}`
+          `${key}${resolvedOpts.objectKeyAndValueJoinChar}${resolvedObj[key]}`,
         );
       }
     });
@@ -85,7 +85,7 @@ function flattenArr(
   arr: any[],
   opts?: Partial<Opts>,
   wrap = false,
-  joinArraysUsingBrs = false
+  joinArraysUsingBrs = false,
 ): string {
   let resolvedOpts: Opts = { ...defaults, ...opts };
   if (arguments.length === 0 || arr.length === 0) {
@@ -134,7 +134,7 @@ function flattenArr(
                   trailingSpace
                 );
               },
-              res
+              res,
             );
           }
         }

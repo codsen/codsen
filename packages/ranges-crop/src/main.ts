@@ -17,8 +17,8 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
       `ranges-crop: [THROW_ID_01] The first input's argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(
         arrOfRanges,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   // strLen validation
@@ -27,8 +27,8 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
       `ranges-crop: [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof strLen}, equal to: ${JSON.stringify(
         strLen,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   if (!arrOfRanges.filter((range) => range).length) {
@@ -58,8 +58,8 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
         `ranges-crop: [THROW_ID_03] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(
           arrOfRanges,
           null,
-          0
-        )}!`
+          0,
+        )}!`,
       );
     }
 
@@ -67,8 +67,8 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
       `ranges-crop: [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${culpritsIndex}th range (${JSON.stringify(
         arrOfRanges[culpritsIndex],
         null,
-        0
-      )}) does not consist of only natural numbers!`
+        0,
+      )}) does not consist of only natural numbers!`,
     );
   }
 
@@ -88,10 +88,10 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
       `ranges-crop: [THROW_ID_05] The third argument, if present at all, should be of a string-type or null. Currently the ${culpritsIndex}th range ${JSON.stringify(
         arrOfRanges[culpritsIndex],
         null,
-        0
+        0,
       )} has a argument in the range of a type ${typeof arrOfRanges[
         culpritsIndex
-      ][2]}`
+      ][2]}`,
     );
   }
 
@@ -103,14 +103,14 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
       `103 ${`\u001b[${33}m${`arrOfRanges`}\u001b[${39}m`} = ${JSON.stringify(
         arrOfRanges,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   let res = (rMerge(arrOfRanges) || [])
     .filter(
       (singleRangeArr) =>
         singleRangeArr[0] <= strLen &&
-        (singleRangeArr[2] != null || singleRangeArr[0] < strLen)
+        (singleRangeArr[2] != null || singleRangeArr[0] < strLen),
     )
     .map((singleRangeArr) => {
       if (singleRangeArr[1] > strLen) {
@@ -119,25 +119,25 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
             `119 - we will process the ${JSON.stringify(
               singleRangeArr,
               null,
-              0
-            )}`
+              0,
+            )}`,
           );
         if (singleRangeArr[2] != null) {
           DEV &&
             console.log(
-              `128 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`
+              `128 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`,
             );
           return [singleRangeArr[0], strLen, singleRangeArr[2]];
         }
         DEV &&
           console.log(
-            `134 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`
+            `134 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`,
           );
         return [singleRangeArr[0], strLen];
       }
       DEV &&
         console.log(
-          `140 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`
+          `140 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`,
         );
       return singleRangeArr;
     });
@@ -146,8 +146,8 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
       `146 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
         res,
         null,
-        4
-      )}\n\n\n`
+        4,
+      )}\n\n\n`,
     );
 
   return !res.length ? null : (res as Ranges);

@@ -41,7 +41,7 @@ assert.equal(
     [1, 2],
     [5, 10],
   ]),
-  true
+  true,
 );
 
 assert.equal(
@@ -49,7 +49,7 @@ assert.equal(
     [1, 2],
     [5, 10],
   ]),
-  false
+  false,
 );
 ```
 

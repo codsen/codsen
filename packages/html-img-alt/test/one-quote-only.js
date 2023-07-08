@@ -55,7 +55,7 @@ test("12 - alt with only one double quote, one HTML tag", () => {
   equal(
     alts('<img alt="legit quote: \'" >'),
     '<img alt="legit quote: \'" >',
-    "12.01"
+    "12.01",
   );
 });
 

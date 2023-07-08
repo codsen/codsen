@@ -23,7 +23,7 @@ test(`01 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${leftDoubleQuote}Hello!${rightDoubleQuote}`,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -34,7 +34,7 @@ test(`02 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `ain${rightSingleQuote}t`,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -45,7 +45,7 @@ test(`03 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `ma${rightSingleQuote}am`,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -56,7 +56,7 @@ test(`04 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${rightSingleQuote}Twas the night`,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -67,7 +67,7 @@ test(`05 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${leftDoubleQuote}Hello,${rightDoubleQuote} said the spider. ${leftDoubleQuote}${leftSingleQuote}Shelob${rightSingleQuote} is my name.${rightDoubleQuote}`,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -78,7 +78,7 @@ test(`06 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${leftSingleQuote}A${rightSingleQuote}, ${leftSingleQuote}B${rightSingleQuote}, and ${leftSingleQuote}C${rightSingleQuote} are letters.`,
-    "06.01"
+    "06.01",
   );
 });
 
@@ -89,7 +89,7 @@ test(`07 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${leftSingleQuote}Oak,${rightSingleQuote} ${leftSingleQuote}elm,${rightSingleQuote} and ${leftSingleQuote}beech${rightSingleQuote} are names of trees. So is ${leftSingleQuote}pine.${rightSingleQuote}`,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -100,7 +100,7 @@ test(`08 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${leftSingleQuote}He said, ${leftDoubleQuote}I want to go.${rightDoubleQuote}${rightSingleQuote} Were you alive in the 70${rightSingleQuote}s?`,
-    "08.01"
+    "08.01",
   );
 });
 
@@ -111,7 +111,7 @@ test(`09 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${leftDoubleQuote}That${rightSingleQuote}s a ${leftSingleQuote}magic${rightSingleQuote} sock.${rightDoubleQuote}`,
-    "09.01"
+    "09.01",
   );
 });
 
@@ -122,10 +122,10 @@ test(`10 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       {
         convertApostrophes: 1,
         convertEntities: 0,
-      }
+      },
     ).result,
     `Welcome to Website Name! Company Name, Inc. (${leftDoubleQuote}Company Name${rightDoubleQuote} or ${leftDoubleQuote}Company${rightDoubleQuote}) recommends that you read the following terms and conditions carefully.`,
-    "10.01"
+    "10.01",
   );
 });
 
@@ -136,10 +136,10 @@ test(`11 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       {
         convertApostrophes: 1,
         convertEntities: 0,
-      }
+      },
     ).result,
     `Welcome to Website Name! Company Name, Inc. (${leftSingleQuote}Company Name${rightSingleQuote} or ${leftSingleQuote}Company${rightSingleQuote}) recommends that you read the following terms and conditions carefully.`,
-    "11.01"
+    "11.01",
   );
 });
 
@@ -150,7 +150,7 @@ test(`12 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${rightSingleQuote}85 was a good year. (The entire ${rightSingleQuote}80s were.)`,
-    "12.01"
+    "12.01",
   );
 });
 
@@ -161,7 +161,7 @@ test(`13 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `Workin${rightSingleQuote} hard`,
-    "13.01"
+    "13.01",
   );
 });
 
@@ -172,7 +172,7 @@ test(`14 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${rightSingleQuote}Twas the night before Christmas.`,
-    "14.01"
+    "14.01",
   );
 });
 
@@ -183,7 +183,7 @@ test(`15 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${rightSingleQuote}Twasn${rightSingleQuote}t the night before Christmas.`,
-    "15.01"
+    "15.01",
   );
 });
 
@@ -194,7 +194,7 @@ test(`16 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${rightSingleQuote}Tis the night before Christmas.`,
-    "16.01"
+    "16.01",
   );
 });
 
@@ -205,7 +205,7 @@ test(`17 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${rightSingleQuote}Tisn${rightSingleQuote}t the night before Christmas.`,
-    "17.01"
+    "17.01",
   );
 });
 
@@ -216,7 +216,7 @@ test(`18 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${rightSingleQuote}Twill be the night before Christmas.`,
-    "18.01"
+    "18.01",
   );
 });
 
@@ -227,7 +227,7 @@ test(`19 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${rightSingleQuote}Twould be the night before Christmas.`,
-    "19.01"
+    "19.01",
   );
 });
 
@@ -238,7 +238,7 @@ test(`20 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${rightSingleQuote}Twere the night before Christmas, I would be happy.`,
-    "20.01"
+    "20.01",
   );
 });
 
@@ -249,7 +249,7 @@ test(`21 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${rightSingleQuote}Tweren${rightSingleQuote}t the night before Christmas, I would be happy.`,
-    "21.01"
+    "21.01",
   );
 });
 
@@ -260,7 +260,7 @@ test(`22 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${rightSingleQuote}Twon${rightSingleQuote}t be the night before Christmas.`,
-    "22.01"
+    "22.01",
   );
 });
 
@@ -271,7 +271,7 @@ test(`23 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${rightSingleQuote}70s are my favorite numbers,${rightSingleQuote} she said.`,
-    "23.01"
+    "23.01",
   );
 });
 
@@ -282,7 +282,7 @@ test(`24 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `${rightSingleQuote}70s fashion was weird.`,
-    "24.01"
+    "24.01",
   );
 });
 
@@ -293,7 +293,7 @@ test(`25 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `12${doublePrime} record, 5${singlePrime}10${doublePrime} height`,
-    "25.01"
+    "25.01",
   );
 });
 
@@ -304,7 +304,7 @@ test(`26 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `12${doublePrime} record, 5${singlePrime}10${doublePrime} height`,
-    "26.01"
+    "26.01",
   );
 });
 
@@ -315,7 +315,7 @@ test(`27 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `12${doublePrime} record, 5${singlePrime}10${doublePrime} height`,
-    "27.01"
+    "27.01",
   );
 });
 
@@ -326,7 +326,7 @@ test(`28 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `Model ${leftDoubleQuote}T2000${rightDoubleQuote}`,
-    "28.01"
+    "28.01",
   );
 });
 
@@ -337,7 +337,7 @@ test(`29 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `iPad 3${rightSingleQuote}s battery life is not great.`,
-    "29.01"
+    "29.01",
   );
 });
 
@@ -348,7 +348,7 @@ test(`30 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`,
-    "30.01"
+    "30.01",
   );
 });
 
@@ -359,10 +359,10 @@ test(`31 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       {
         convertApostrophes: 1,
         convertEntities: 0,
-      }
+      },
     ).result,
     `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`,
-    "31.01"
+    "31.01",
   );
 });
 
@@ -373,10 +373,10 @@ test(`32 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       {
         convertApostrophes: 1,
         convertEntities: 0,
-      }
+      },
     ).result,
     `Book ${rightSingleQuote}em, Danno. Rock ${rightSingleQuote}n${rightSingleQuote} roll. ${rightSingleQuote}Cause ${rightSingleQuote}twas the season.`,
-    "32.01"
+    "32.01",
   );
 });
 
@@ -387,10 +387,10 @@ test(`33 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       {
         convertApostrophes: 1,
         convertEntities: 1,
-      }
+      },
     ).result,
     "Book &rsquo;em, Danno. Rock &rsquo;n&rsquo; roll. &rsquo;Cause &rsquo;twas the season.",
-    "33.01"
+    "33.01",
   );
 });
 
@@ -401,10 +401,10 @@ test(`34 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       {
         convertApostrophes: 1,
         convertEntities: 1,
-      }
+      },
     ).result,
     "Book &rsquo;em, Danno. Rock &rsquo;n&rsquo; roll. &rsquo;Cause &rsquo;twas the season.",
-    "34.01"
+    "34.01",
   );
 });
 
@@ -415,10 +415,10 @@ test(`35 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       {
         convertApostrophes: 1,
         convertEntities: 0,
-      }
+      },
     ).result,
     `${leftDoubleQuote}Hello,${rightDoubleQuote} said the spider. ${leftDoubleQuote}${leftSingleQuote}Shelob${rightSingleQuote}${rightDoubleQuote} abruptly she announced.`,
-    "35.01"
+    "35.01",
   );
 });
 
@@ -430,7 +430,7 @@ test(`36 - ${`\u001b[${32}m${"kemitchell/straight-to-curly-quotes"}\u001b[${39}m
       convertEntities: 0,
     }).result,
     input,
-    "36.01"
+    "36.01",
   );
 });
 

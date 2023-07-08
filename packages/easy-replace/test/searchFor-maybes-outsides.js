@@ -21,10 +21,10 @@ test("01 - maybes and outsides, emoji - full set", () => {
         rightOutside: "b",
         rightOutsideNot: "",
       },
-      "🌟"
+      "🌟",
     ),
     "a🌟b",
-    "test 6.1"
+    "test 6.1",
   );
 });
 
@@ -41,10 +41,10 @@ test("02 - maybes + outsides - 1 of maybes not found #1", () => {
         rightOutside: "b",
         rightOutsideNot: "",
       },
-      "🌟"
+      "🌟",
     ),
     "a🌟b",
-    "test 6.2"
+    "test 6.2",
   );
 });
 
@@ -61,10 +61,10 @@ test("03 - maybes + outsides - 1 of maybes not found #2", () => {
         rightOutside: "b",
         rightOutsideNot: "",
       },
-      "🌟"
+      "🌟",
     ),
     "a🌟b",
-    "test 6.3"
+    "test 6.3",
   );
 });
 
@@ -81,10 +81,10 @@ test("04 - maybes and outsides, emoji - neither of maybes", () => {
         rightOutside: "b",
         rightOutsideNot: "",
       },
-      "🌟"
+      "🌟",
     ),
     "a🌟b",
-    "test 6.4"
+    "test 6.4",
   );
 });
 
@@ -101,10 +101,10 @@ test("05 - multiple findings with maybes and outsides", () => {
         rightOutside: "b",
         rightOutsideNot: "",
       },
-      "🌟"
+      "🌟",
     ),
     "a🌟b a🌟b a🌟b",
-    "test 6.5"
+    "test 6.5",
   );
 });
 
@@ -121,10 +121,10 @@ test("06 - multiple findings with maybes and not-outsides", () => {
         rightOutside: "",
         rightOutsideNot: "b",
       },
-      "🌟"
+      "🌟",
     ),
     "z🦄🐴💘b a🦄🐴💘z a🦄🐴💘b z🌟z",
-    "test 6.6"
+    "test 6.6",
   );
 });
 
@@ -141,10 +141,10 @@ test("07 - maybes and outsides, arrays", () => {
         rightOutside: "b",
         rightOutsideNot: "",
       },
-      "🌟"
+      "🌟",
     ),
     "a🌟b a🌟b a🌟b a🌟b",
-    "test 6.7"
+    "test 6.7",
   );
 });
 

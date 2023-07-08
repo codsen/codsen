@@ -16,13 +16,13 @@ declare class Ranges {
   add(
     originalFrom: number,
     originalTo?: number,
-    addVal?: undefined | null | string
+    addVal?: undefined | null | string,
   ): void;
   add(originalFrom: Range[] | Range | null): void;
   push(
     originalFrom: number,
     originalTo?: number,
-    addVal?: undefined | null | string
+    addVal?: undefined | null | string,
   ): void;
   push(originalFrom: Range[] | Range | null): void;
   current(): null | Range[];

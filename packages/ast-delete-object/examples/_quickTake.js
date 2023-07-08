@@ -20,7 +20,7 @@ assert.deepEqual(
     {
       findme1: "zzz",
       findme2: "yyy",
-    }
+    },
   ),
-  ["elem1", "elem2"]
+  ["elem1", "elem2"],
 );

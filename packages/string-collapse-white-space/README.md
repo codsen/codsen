@@ -38,28 +38,28 @@ import { collapse } from "string-collapse-white-space";
 
 assert.equal(
   collapse("  aaa     bbb    ccc   dddd  ").result,
-  "aaa bbb ccc dddd"
+  "aaa bbb ccc dddd",
 );
 
 assert.equal(collapse("   \t\t\t   aaa   \t\t\t   ").result, "aaa");
 
 assert.equal(
   collapse("   aaa   bbb  \n    ccc   ddd   ", { trimLines: false }).result,
-  "aaa bbb \n ccc ddd"
+  "aaa bbb \n ccc ddd",
 );
 
 assert.equal(
   collapse("   aaa   bbb  \n    ccc   ddd   ", { trimLines: true }).result,
-  "aaa bbb\nccc ddd"
+  "aaa bbb\nccc ddd",
 );
 
 // \xa0 is an unencoded non-breaking space:
 assert.equal(
   collapse(
     "     \xa0    aaa   bbb    \xa0    \n     \xa0     ccc   ddd   \xa0   ",
-    { trimLines: true, trimnbsp: true }
+    { trimLines: true, trimnbsp: true },
   ).result,
-  "aaa bbb\nccc ddd"
+  "aaa bbb\nccc ddd",
 );
 ```
 

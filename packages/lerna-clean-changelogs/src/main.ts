@@ -15,7 +15,7 @@ const defaults: Opts = {
 
 function cleanChangelogs(
   changelog: string,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): {
   version: string;
   res: string;
@@ -23,13 +23,13 @@ function cleanChangelogs(
   // validate the first input argument:
   if (changelog === undefined) {
     throw new Error(
-      `lerna-clean-changelogs: [THROW_ID_01] The first input argument is missing!`
+      `lerna-clean-changelogs: [THROW_ID_01] The first input argument is missing!`,
     );
   } else if (!isStr(changelog)) {
     throw new Error(
       `lerna-clean-changelogs: [THROW_ID_02] The first input argument must be a string! It was given as ${
         Array.isArray(changelog) ? "array" : typeof changelog
-      }, equal to:\n${JSON.stringify(changelog, null, 4)}`
+      }, equal to:\n${JSON.stringify(changelog, null, 4)}`,
     );
   }
 
@@ -43,8 +43,8 @@ function cleanChangelogs(
       `043 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentLineBreakStyle`}\u001b[${39}m`} = ${JSON.stringify(
         currentLineBreakStyle,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   let final;
@@ -64,7 +64,7 @@ function cleanChangelogs(
       ?.trim()
       .replace(
         /(https:\/\/git\.sr\.ht\/~[^/]+\/[^/]+\/)commits\//g,
-        "$1commit/"
+        "$1commit/",
       );
     let linesArr = changelog.split(/\r?\n/);
     DEV &&
@@ -72,8 +72,8 @@ function cleanChangelogs(
         `072 ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
           linesArr,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     if (resolvedOpts.extras) {
@@ -86,7 +86,7 @@ function cleanChangelogs(
         if (line?.startsWith("#")) {
           linesArr[i] = line.replace(
             /(#+) \[?(\d+\.\d+\.\d+)\s?\]\([^)]*\)/g,
-            "$1 $2"
+            "$1 $2",
           );
         }
         if (i && linesArr[i]?.startsWith("# ")) {
@@ -98,8 +98,8 @@ function cleanChangelogs(
           `098 AFTER STEP 1, ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
             linesArr,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -118,8 +118,8 @@ function cleanChangelogs(
           `----------------${`\u001b[${36}m${i}\u001b[${39}m`}\n${`\u001b[${33}m${`linesArr[i]`}\u001b[${39}m`} = ${JSON.stringify(
             linesArr[i],
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       if (
         linesArr[i]?.startsWith("**Note:** Version bump only") ||
@@ -150,7 +150,7 @@ function cleanChangelogs(
           lastLineWasEmpty = true;
           DEV &&
             console.log(
-              `153 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+              `153 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`,
             );
         }
       }
@@ -166,7 +166,7 @@ function cleanChangelogs(
         lastLineWasEmpty = false;
         DEV &&
           console.log(
-            `169 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+            `169 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`,
           );
       }
     }

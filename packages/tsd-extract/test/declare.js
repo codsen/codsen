@@ -25,7 +25,7 @@ declare type Token2 = "ef" | "gh";`;
       error: null,
       all: ["Token1", "Token2"],
     },
-    "01.01"
+    "01.01",
   );
   equal(
     extract(source, "Token2", { extractAll: true }),
@@ -42,7 +42,7 @@ declare type Token2 = "ef" | "gh";`;
       error: null,
       all: ["Token1", "Token2"],
     },
-    "01.02"
+    "01.02",
   );
 
   // extractAll == false
@@ -62,7 +62,7 @@ declare type Token2 = "ef" | "gh";`;
       error: null,
       all: [],
     },
-    "01.03"
+    "01.03",
   );
   equal(
     extract(source, "Token2", { extractAll: false }),
@@ -79,7 +79,7 @@ declare type Token2 = "ef" | "gh";`;
       error: null,
       all: [],
     },
-    "01.04"
+    "01.04",
   );
 });
 
@@ -107,7 +107,7 @@ test("02 - declare const typeof", () => {
       error: null,
       all: ["util"],
     },
-    "02.01"
+    "02.01",
   );
 
   // extractAll == false
@@ -129,7 +129,7 @@ test("02 - declare const typeof", () => {
       error: null,
       all: [],
     },
-    "02.02"
+    "02.02",
   );
 });
 
@@ -155,7 +155,7 @@ declare const xy: {
       error: null,
       all: ["abc", "xy"],
     },
-    "03.01"
+    "03.01",
   );
   equal(
     extract(source, "xy", { extractAll: true }),
@@ -176,7 +176,7 @@ declare const xy: {
       error: null,
       all: ["abc", "xy"],
     },
-    "03.02"
+    "03.02",
   );
 
   // extractAll == false
@@ -195,7 +195,7 @@ declare const xy: {
       error: null,
       all: [],
     },
-    "03.03"
+    "03.03",
   );
   equal(
     extract(source, "xy", { extractAll: false }),
@@ -216,7 +216,7 @@ declare const xy: {
       error: null,
       all: [],
     },
-    "03.04"
+    "03.04",
   );
 });
 
@@ -233,7 +233,7 @@ declare const xy: {
       "",
       {
         extractAll: true,
-      }
+      },
     ),
     {
       identifiers: [],
@@ -248,7 +248,7 @@ declare const xy: {
       all: ["abc", "xy"],
       error: "not found",
     },
-    "04.01"
+    "04.01",
   );
 });
 
@@ -276,7 +276,7 @@ interface C {
       all: ["a", "C"],
       error: null,
     },
-    "05.01"
+    "05.01",
   );
   equal(
     extract(source, "C", {
@@ -299,7 +299,7 @@ interface C {
       all: ["a", "C"],
       error: null,
     },
-    "05.02"
+    "05.02",
   );
 });
 

@@ -12,7 +12,7 @@ test(`01 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - healthy tag pair`, (
     equal(
       det(ok, not, n, "text <a>text</a> text", opt).res,
       "text text text",
-      "01.01"
+      "01.01",
     );
   });
   mixer({
@@ -21,7 +21,7 @@ test(`01 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - healthy tag pair`, (
     equal(
       det(ok, not, n, "text <a>text</a> text", opt).res,
       "text <a>text</a> text",
-      "01.02"
+      "01.02",
     );
   });
 });
@@ -159,7 +159,7 @@ test(`12 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - opts.useXHTML - mini
     equal(
       det(ok, not, n, "a<div>b</div>c", opt).res,
       "a<div>b</div>c",
-      "12.01"
+      "12.01",
     );
   });
 });
@@ -172,7 +172,7 @@ test(`13 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - opts.useXHTML - mini
       det(ok, not, n, "\u0000a\u0001<div>\u0002b\u0002</div>\u0004c\u0005", opt)
         .res,
       "a<div>b</div>c",
-      "13.01"
+      "13.01",
     );
   });
 });
@@ -186,7 +186,7 @@ test(`14 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - opts.useXHTML - mini
       det(ok, not, n, "\u00A3a\u00A3<div>\u00A3b\u00A3</div>\u00A3c\u00A3", opt)
         .res,
       "&pound;a&pound;<div>&pound;b&pound;</div>&pound;c&pound;",
-      "14.01"
+      "14.01",
     );
   });
 });
@@ -197,7 +197,7 @@ test(`15 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - single tag`, () => {
       stripHtml: false,
     }).res,
     "<div>",
-    "15.01"
+    "15.01",
   );
 });
 
@@ -207,7 +207,7 @@ test(`16 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - single tag`, () => {
       stripHtml: false,
     }).res,
     "<a>",
-    "16.01"
+    "16.01",
   );
 });
 
@@ -217,7 +217,7 @@ test(`17 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - single tag`, () => {
       stripHtml: false,
     }).res,
     '<a style="font-size: red;">',
-    "17.01"
+    "17.01",
   );
 });
 
@@ -227,7 +227,7 @@ test(`18 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - single tag`, () => {
       stripHtml: true,
     }).res,
     "",
-    "18.01"
+    "18.01",
   );
 });
 
@@ -237,7 +237,7 @@ test(`19 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - single tag, lowercas
       stripHtml: true,
     }).res,
     "",
-    "19.01"
+    "19.01",
   );
 });
 
@@ -261,7 +261,7 @@ test(`21 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - single tag`, () => {
       stripHtml: true,
     }).res,
     "",
-    "21.01"
+    "21.01",
   );
 });
 
@@ -272,7 +272,7 @@ test(`22 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - strips <script> tags
     equal(
       det(ok, not, n, "a<script>var i = 0;</script>b", opt).res,
       "a b",
-      "22.01"
+      "22.01",
     );
   });
 });
@@ -284,7 +284,7 @@ test(`23 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - strips <script> tags
     equal(
       det(ok, not, n, "<script>var i = 0;</script>b", opt).res,
       "b",
-      "23.01"
+      "23.01",
     );
   });
 });
@@ -296,7 +296,7 @@ test(`24 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - strips <script> tags
     equal(
       det(ok, not, n, "a<script>var i = 0;</script>", opt).res,
       "a",
-      "24.01"
+      "24.01",
     );
   });
 });
@@ -316,7 +316,7 @@ test(`26 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - <script> tags with w
     equal(
       det(ok, not, n, "a<script>var i = 0;</script        >b", opt).res,
       "a b",
-      "26.01"
+      "26.01",
     );
   });
 });
@@ -330,7 +330,7 @@ test(`27 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - <script> sneaky case
     equal(
       det(ok, not, n, "a<script>var i = 0;</script        ", opt).res,
       "a",
-      "27.01"
+      "27.01",
     );
   });
 });
@@ -344,7 +344,7 @@ test(`28 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - <script> sneaky case
     equal(
       det(ok, not, n, "a<script>var i = 0;</script", opt).res,
       "a",
-      "28.01"
+      "28.01",
     );
   });
 });
@@ -359,10 +359,10 @@ test(`29 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining b tags by 
         not,
         n,
         'test text is being <b class="test" id="br">set in bold</b> here',
-        opt
+        opt,
       ).res,
       'test text is being <b class="test" id="br">set in bold</b> here',
-      "29.01"
+      "29.01",
     );
   });
 });
@@ -377,10 +377,10 @@ test(`30 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining b tags by 
         not,
         n,
         'test text is being < b class="test" >set in bold< /  b > here',
-        opt
+        opt,
       ).res,
       'test text is being <b class="test">set in bold</b> here',
-      "30.01"
+      "30.01",
     );
   });
 });
@@ -392,7 +392,7 @@ test(`31 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - tag pair's closing t
     equal(
       det(ok, not, n, "a <sup>c<sup/> d", opt).res,
       "a <sup>c</sup> d",
-      "31.01"
+      "31.01",
     );
   });
 });
@@ -405,7 +405,7 @@ test(`32 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - tag pair's closing t
       det(ok, not, n, "test text is being < b >set in bold< b /> here", opt)
         .res,
       "test text is being <b>set in bold</b> here",
-      "32.01"
+      "32.01",
     );
   });
 });
@@ -417,7 +417,7 @@ test(`33 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - tag pair's closing t
     equal(
       det(ok, not, n, "test text is being <B>set in bold<B/> here", opt).res,
       "test text is being <B>set in bold</B> here",
-      "33.01"
+      "33.01",
     );
   });
 });
@@ -432,10 +432,10 @@ test(`34 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - tag pair's closing t
         not,
         n,
         'test text is being <b class="h">set in bold<b/> here',
-        opt
+        opt,
       ).res,
       'test text is being <b class="h">set in bold</b> here',
-      "34.01"
+      "34.01",
     );
   });
 });
@@ -447,7 +447,7 @@ test(`35 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining i tags by 
     equal(
       det(ok, not, n, "test text is being <i>set in italic</i> here", opt).res,
       "test text is being <i>set in italic</i> here",
-      "35.01"
+      "35.01",
     );
   });
 });
@@ -460,7 +460,7 @@ test(`36 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining i tags by 
       det(ok, not, n, "test text is being < i >set in italic< /  i > here", opt)
         .res,
       "test text is being <i>set in italic</i> here",
-      "36.01"
+      "36.01",
     );
   });
 });
@@ -473,7 +473,7 @@ test(`37 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining i tags by 
       det(ok, not, n, "test text is being < I >set in italic<   I /> here", opt)
         .res,
       "test text is being <I>set in italic</I> here",
-      "37.01"
+      "37.01",
     );
   });
 });
@@ -488,10 +488,10 @@ test(`38 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tag
         not,
         n,
         'test text is being <strong id="main">set in bold</ strong> here',
-        opt
+        opt,
       ).res,
       'test text is being <strong id="main">set in bold</strong> here',
-      "38.01"
+      "38.01",
     );
   });
 });
@@ -506,10 +506,10 @@ test(`39 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tag
         not,
         n,
         'test text is being <strong id="main">set in bold<strong/> here',
-        opt
+        opt,
       ).res,
       'test text is being <strong id="main">set in bold</strong> here',
-      "39.01"
+      "39.01",
     );
   });
 });
@@ -524,10 +524,10 @@ test(`40 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tag
         not,
         n,
         'test text is being < StRoNg >set in bold<StRoNg class="z1" / > here',
-        opt
+        opt,
       ).res,
       'test text is being <StRoNg>set in bold</StRoNg class="z1"> here',
-      "40.01"
+      "40.01",
     );
   });
 });
@@ -540,7 +540,7 @@ test(`41 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tag
       det(ok, not, n, "test text is being <em>set in emphasis</em> here", opt)
         .res,
       "test text is being <em>set in emphasis</em> here",
-      "41.01"
+      "41.01",
     );
   });
 });
@@ -555,10 +555,10 @@ test(`42 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tag
         not,
         n,
         'test text is being <em id="main">set in emphasis<em/> here',
-        opt
+        opt,
       ).res,
       'test text is being <em id="main">set in emphasis</em> here',
-      "42.01"
+      "42.01",
     );
   });
 });
@@ -573,10 +573,10 @@ test(`43 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tag
         not,
         n,
         "test text is being < em >set in emphasis<  em  / > here",
-        opt
+        opt,
       ).res,
       "test text is being <em>set in emphasis</em> here",
-      "43.01"
+      "43.01",
     );
   });
 });
@@ -625,7 +625,7 @@ test("46 - a JSX pattern", () => {
       det(ok, not, n, input, opt).res,
       `<A b>c</A>
 </></></></>`,
-      "46.02"
+      "46.02",
     );
   });
 });

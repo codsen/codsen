@@ -16,9 +16,9 @@ export const stringify = (obj: Obj) => {
       }),
       {
         key: "loc",
-      }
+      },
     ),
     null,
-    4
+    4,
   );
 };

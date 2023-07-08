@@ -30,7 +30,7 @@ function getLineStartIndexes(str: string): number[] {
       acc.push(acc[acc.length - 1] + curr.length + 1);
       return acc;
     },
-    [0]
+    [0],
   );
 }
 
@@ -45,7 +45,7 @@ export interface Res {
 function lineCol(
   input: string | number[],
   idx: number,
-  skipChecks = false
+  skipChecks = false,
 ): Res | null {
   DEV && console.log(`050`);
   if (
@@ -77,8 +77,8 @@ function lineCol(
         `077 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startIndexesOfEachLine`}\u001b[${39}m`} = ${JSON.stringify(
           startIndexesOfEachLine,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     let line = binarySearch(idx, startIndexesOfEachLine);
     DEV &&
@@ -86,8 +86,8 @@ function lineCol(
         `086 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
           line,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     return {
       col: idx - startIndexesOfEachLine[line] + 1,
@@ -102,8 +102,8 @@ function lineCol(
       `102 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
         line,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   return {
     col: idx - input[line] + 1,

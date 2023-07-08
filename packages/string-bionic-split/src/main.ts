@@ -16,8 +16,8 @@ function split(str: string, opts?: Partial<Opts>): number {
       `string-bionic-split: [THROW_ID_01] The input should be a string! We received ${JSON.stringify(
         str,
         null,
-        4
-      )} (typeof is ${typeof str})`
+        4,
+      )} (typeof is ${typeof str})`,
     );
   }
   if (opts && (Array.isArray(opts) || typeof opts !== "object")) {
@@ -25,8 +25,8 @@ function split(str: string, opts?: Partial<Opts>): number {
       `string-bionic-split: [THROW_ID_02] The options object should be a plain object! We received ${JSON.stringify(
         opts,
         null,
-        4
-      )} (typeof is ${typeof opts})`
+        4,
+      )} (typeof is ${typeof opts})`,
     );
   }
 
@@ -42,17 +42,17 @@ function split(str: string, opts?: Partial<Opts>): number {
       `042 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   if (resolvedOpts.throwIfEdgeWhitespace) {
     if (!str[0].trim()) {
       throw new Error(
-        "string-bionic-split: [THROW_ID_03] Leading whitespace detected!"
+        "string-bionic-split: [THROW_ID_03] Leading whitespace detected!",
       );
     } else if (!str[~-str.length].trim()) {
       throw new Error(
-        "string-bionic-split: [THROW_ID_04] Trailing whitespace detected!"
+        "string-bionic-split: [THROW_ID_04] Trailing whitespace detected!",
       );
     }
   }
@@ -101,7 +101,7 @@ function split(str: string, opts?: Partial<Opts>): number {
   } else if (str.length === 4) {
     DEV &&
       console.log(
-        `104 length 4 - ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} 2`
+        `104 length 4 - ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} 2`,
       );
     return 2;
   } else if (str.length % 2 === 1) {
@@ -111,13 +111,13 @@ function split(str: string, opts?: Partial<Opts>): number {
       console.log(
         `112 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`middle`}\u001b[${39}m`} = ${middle} (${
           str[middle]
-        })`
+        })`,
       );
 
     // vowel on the left, vowel on the right - go left
     DEV &&
       console.log(
-        `120 on the left: ${str[middle - 1]}; on the right: ${str[middle + 1]}`
+        `120 on the left: ${str[middle - 1]}; on the right: ${str[middle + 1]}`,
       );
 
     if (vowels.includes(str[middle].toLowerCase())) {
@@ -130,8 +130,8 @@ function split(str: string, opts?: Partial<Opts>): number {
       console.log(
         `131 ${`\u001b[${32}m${`RETURN ${str.slice(
           0,
-          middle + 1
-        )} + ${str.slice(middle + 1)}`}\u001b[${39}m`}`
+          middle + 1,
+        )} + ${str.slice(middle + 1)}`}\u001b[${39}m`}`,
       );
     return middle + 1;
   }
@@ -140,8 +140,8 @@ function split(str: string, opts?: Partial<Opts>): number {
     console.log(
       `141 final default ${`\u001b[${32}m${`RETURN ${str.slice(
         0,
-        Math.floor(str.length / 2)
-      )} + ${str.slice(Math.floor(str.length / 2))}`}\u001b[${39}m`}`
+        Math.floor(str.length / 2),
+      )} + ${str.slice(Math.floor(str.length / 2))}`}\u001b[${39}m`}`,
     );
   return Math.floor(str.length / 2);
 }

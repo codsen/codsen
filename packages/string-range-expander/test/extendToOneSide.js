@@ -14,7 +14,7 @@ test("01 - one side only", () => {
       to: 5,
     }),
     [3, 6],
-    "01.01"
+    "01.01",
   );
   equal(
     e({
@@ -24,7 +24,7 @@ test("01 - one side only", () => {
       extendToOneSide: false,
     }),
     [3, 6],
-    "01.02"
+    "01.02",
   );
   equal(
     e({
@@ -34,7 +34,7 @@ test("01 - one side only", () => {
       extendToOneSide: "right",
     }),
     [4, 6],
-    "01.03"
+    "01.03",
   );
   equal(
     e({
@@ -44,7 +44,7 @@ test("01 - one side only", () => {
       extendToOneSide: "left",
     }),
     [3, 5],
-    "01.04"
+    "01.04",
   );
 });
 

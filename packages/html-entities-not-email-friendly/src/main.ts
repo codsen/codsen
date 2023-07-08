@@ -5297,15 +5297,15 @@ DEV &&
   console.log(
     `5298 notEmailFriendly - total keys: ${
       Object.keys(notEmailFriendly).length
-    }`
+    }`,
   );
 DEV &&
   console.log(
-    `5304 notEmailFriendlySetOnly - total size: ${notEmailFriendlySetOnly.size}`
+    `5304 notEmailFriendlySetOnly - total size: ${notEmailFriendlySetOnly.size}`,
   );
 DEV &&
   console.log(
-    `5308 notEmailFriendlyLowercaseSetOnly - total size: ${notEmailFriendlyLowercaseSetOnly.size}`
+    `5308 notEmailFriendlyLowercaseSetOnly - total size: ${notEmailFriendlyLowercaseSetOnly.size}`,
   );
 
 // -------------------------------------------------------------------------

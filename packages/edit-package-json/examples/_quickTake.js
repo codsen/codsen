@@ -16,7 +16,7 @@ assert.equal(
   "devDependencies": {}
 }`,
     "dependencies.ranges-apply", // path to amend
-    "^3.2.2" // new value
+    "^3.2.2", // new value
   ),
   `{
   "name": "test",
@@ -25,7 +25,7 @@ assert.equal(
     "string-left-right": "^2.3.30"
   },
   "devDependencies": {}
-}`
+}`,
 );
 
 // delete from JSON string
@@ -39,7 +39,7 @@ assert.equal(
   },
   "devDependencies": {}
 }`,
-    "devDependencies" // path to delete
+    "devDependencies", // path to delete
   ),
   `{
   "name": "test",
@@ -47,5 +47,5 @@ assert.equal(
     "ranges-apply": "^2.0.0",
     "string-left-right": "^2.3.30"
   }
-}`
+}`,
 );

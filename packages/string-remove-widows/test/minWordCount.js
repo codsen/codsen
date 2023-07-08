@@ -27,7 +27,7 @@ test(`01 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - opts.minWordC
       minCharCount: 5,
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -39,7 +39,7 @@ test(`02 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - opts.minWordC
       minCharCount: 5,
     }).res,
     `aaa${encodedNbspCss}bbb`,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -51,7 +51,7 @@ test(`03 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - opts.minWordC
       minCharCount: 5,
     }).res,
     `aaa${encodedNbspCss}bbb`,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -62,7 +62,7 @@ test(`04 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - setting is le
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd`,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -73,7 +73,7 @@ test(`05 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - setting is eq
       minCharCount: 5,
     }).res,
     `aaa bbb ccc${encodedNbspHtml}ddd`,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -84,7 +84,7 @@ test(`06 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - setting is mo
       minCharCount: 5,
     }).res,
     "aaa bbb ccc ddd",
-    "06.01"
+    "06.01",
   );
 });
 

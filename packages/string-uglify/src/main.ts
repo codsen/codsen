@@ -122,7 +122,7 @@ function uglifyArr(arr: string[]): string[] {
     let prefix = `.#`.includes(arr[id][0]) ? arr[id][0] : "";
     let codePointSum = Array.from(arr[id]).reduce(
       (acc, curr) => acc + tellcp(curr),
-      0
+      0,
     );
 
     if (
@@ -175,7 +175,7 @@ function uglifyArr(arr: string[]): string[] {
           acc < 200
             ? acc + tellcp(curr)
             : (acc + tellcp(curr)) % lettersAndNumbers.length,
-        0
+        0,
       );
       let magicNumber = Array.from(arr[id])
         .map((val) => tellcp(val))
@@ -235,16 +235,16 @@ function uglifyArr(arr: string[]): string[] {
       `235 ${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
         singleClasses,
         null,
-        4
+        4,
       )}\n${`\u001b[${33}m${`singleIds`}\u001b[${39}m`} = ${JSON.stringify(
         singleIds,
         null,
-        4
+        4,
       )}\n${`\u001b[${33}m${`singleNameonly`}\u001b[${39}m`} = ${JSON.stringify(
         singleNameonly,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   // loop through all uglified values again and if the one letter name that
@@ -254,7 +254,7 @@ function uglifyArr(arr: string[]): string[] {
     DEV && console.log("----------------------------------------");
     DEV &&
       console.log(
-        `257 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`
+        `257 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`,
       );
     if (res[i].startsWith(".")) {
       // if particular class name starts with a letter which hasn't been taken
@@ -266,12 +266,12 @@ function uglifyArr(arr: string[]): string[] {
               res[i]
             }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
               0,
-              2
+              2,
             )}\u001b[${39}m`}; set ${`\u001b[${33}m${`singleClasses[${res[
               i
             ].slice(1, 2)}]`}\u001b[${39}m`} = ${
               singleClasses[res[i].slice(1, 2)]
-            }`
+            }`,
           );
         res[i] = res[i].slice(0, 2);
       } else if (singleClasses[res[i].slice(1, 2)] === res[i]) {
@@ -279,8 +279,8 @@ function uglifyArr(arr: string[]): string[] {
           console.log(
             `280 res[i] = ${res[i]} will also be shortened to ${res[i].slice(
               0,
-              2
-            )}`
+              2,
+            )}`,
           );
         // This means, particular class name was repeated in the list and
         // was shortened. We must shorten it to the same value.
@@ -295,8 +295,8 @@ function uglifyArr(arr: string[]): string[] {
               res[i]
             }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
               0,
-              2
-            )}\u001b[${39}m`};`
+              2,
+            )}\u001b[${39}m`};`,
           );
         res[i] = res[i].slice(0, 2);
       } else if (singleIds[res[i].slice(1, 2)] === res[i]) {
@@ -313,8 +313,8 @@ function uglifyArr(arr: string[]): string[] {
               res[i]
             }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
               0,
-              1
-            )}\u001b[${39}m`}`
+              1,
+            )}\u001b[${39}m`}`,
           );
         res[i] = res[i].slice(0, 1);
       } else if (singleNameonly[res[i].slice(0, 1)] === res[i]) {

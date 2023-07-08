@@ -19,7 +19,7 @@ test("01 - plain object - true", () => {
       b: "",
     }),
     true,
-    "01.01"
+    "01.01",
   );
   equal(isEmpty({}), true, "01.02");
 });
@@ -31,7 +31,7 @@ test("02 - plain object - false", () => {
       b: "a",
     }),
     false,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -59,7 +59,7 @@ test("07 - nested plain object - true", () => {
       b: { c: "" },
     }),
     true,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -70,7 +70,7 @@ test("08 - nested plain object - true", () => {
       b: { c: "" },
     }),
     true,
-    "08.01"
+    "08.01",
   );
 });
 
@@ -83,7 +83,7 @@ test("09 - nested many things - true", () => {
       },
     ]),
     true,
-    "09.01"
+    "09.01",
   );
 });
 
@@ -96,7 +96,7 @@ test("10 - nested many things - true", () => {
       },
     ]),
     false,
-    "10.01"
+    "10.01",
   );
 });
 

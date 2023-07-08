@@ -7,7 +7,7 @@ declare const headsAndTails: {
 declare function extractFromToSource(
   str: string,
   fromDefault?: number,
-  toDefault?: number
+  toDefault?: number,
 ): [from: number, to: number, source: string];
 
 declare const version: string;

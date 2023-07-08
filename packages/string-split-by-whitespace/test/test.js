@@ -15,14 +15,14 @@ test("01 - wrong/missing input = throw", () => {
       split();
     },
     /THROW_ID_01/g,
-    "01.01"
+    "01.01",
   );
   throws(
     () => {
       split(undefined);
     },
     /THROW_ID_01/g,
-    "01.02"
+    "01.02",
   );
 
   equal(split(1), 1, "01.03");
@@ -40,7 +40,7 @@ test("03 - opts contain non-array elements", () => {
       split("a b", { ignoreRanges: ["a"] });
     },
     /THROW_ID_03/g,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -58,10 +58,10 @@ test("04 - splits two", () => {
   equal(split("0\t0\t"), ["0", "0"], "04.07");
   equal(
     split(
-      "\n\n\n a      \n\n\n \t\t\t\t       b  \n\n\n \t\t\t\t   c   \n\n\n\n \t\t\t\t "
+      "\n\n\n a      \n\n\n \t\t\t\t       b  \n\n\n \t\t\t\t   c   \n\n\n\n \t\t\t\t ",
     ),
     ["a", "b", "c"],
-    "04.08"
+    "04.08",
   );
   equal(split("  some   text"), ["some", "text"], "04.09");
 });
@@ -85,7 +85,7 @@ test("06 - opts.ignoreRanges offset the start", () => {
       ignoreRanges: [[0, 2]],
     }),
     ["b", "c", "d", "e"],
-    "06.01"
+    "06.01",
   );
 });
 
@@ -95,7 +95,7 @@ test("07 - starts from the middle of a string", () => {
       ignoreRanges: [[1, 5]],
     }),
     ["a", "f"],
-    "07.01"
+    "07.01",
   );
 });
 
@@ -104,7 +104,7 @@ test('08 - in tandem with package "strFindHeadsTails" - ignores heads and tails'
   let headsAndTails = strFindHeadsTails(
     input,
     ["{{", "{%"],
-    ["}}", "%}"]
+    ["}}", "%}"],
   ).reduce((acc, curr) => {
     acc.push([curr.headsStartAt, curr.headsEndAt]);
     acc.push([curr.tailsStartAt, curr.tailsEndAt]);
@@ -115,7 +115,7 @@ test('08 - in tandem with package "strFindHeadsTails" - ignores heads and tails'
       ignoreRanges: headsAndTails,
     }),
     ["some", "interesting", "text", "and", "some", "more", "text."],
-    "08.01"
+    "08.01",
   );
 });
 
@@ -124,7 +124,7 @@ test('09 - in tandem with package "strFindHeadsTails" - ignores whole variables'
   let wholeVariables = strFindHeadsTails(
     input,
     ["{{", "{%"],
-    ["}}", "%}"]
+    ["}}", "%}"],
   ).reduce((acc, curr) => {
     acc.push([curr.headsStartAt, curr.tailsEndAt]);
     return acc;
@@ -134,7 +134,7 @@ test('09 - in tandem with package "strFindHeadsTails" - ignores whole variables'
       ignoreRanges: wholeVariables,
     }),
     ["some", "interesting", "text."],
-    "09.01"
+    "09.01",
   );
 });
 

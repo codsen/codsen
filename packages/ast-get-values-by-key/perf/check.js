@@ -20,7 +20,7 @@ const testme = () =>
       {
         c: "d",
       },
-    ]
+    ],
   );
 
 // action

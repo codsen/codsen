@@ -21,10 +21,10 @@ test("01 - both outsides only, emoji, found", () => {
         rightOutside: " 🦄",
         rightOutsideNot: "",
       },
-      "z"
+      "z",
     ),
     "🦄 z 🦄",
-    "test 5.1.1"
+    "test 5.1.1",
   );
   equal(
     er(
@@ -38,10 +38,10 @@ test("01 - both outsides only, emoji, found", () => {
         rightOutside: [" 🦄"],
         rightOutsideNot: "",
       },
-      "z"
+      "z",
     ),
     "🦄 z 🦄",
-    "test 5.1.2"
+    "test 5.1.2",
   );
 });
 
@@ -58,10 +58,10 @@ test("02 - both outsides only, emoji, not found", () => {
         rightOutside: "🦄",
         rightOutsideNot: "",
       },
-      "z"
+      "z",
     ),
     "a 🐴 a",
-    "test 5.2"
+    "test 5.2",
   );
 });
 
@@ -78,10 +78,10 @@ test("03 - both outsides, emoji, not found", () => {
         rightOutside: "🦄",
         rightOutsideNot: "",
       },
-      "z"
+      "z",
     ),
     "🦄 🐴 a",
-    "test 5.3"
+    "test 5.3",
   );
 });
 
@@ -98,10 +98,10 @@ test("04 - both outsides, emoji, not found #1", () => {
         rightOutside: "🦄",
         rightOutsideNot: "",
       },
-      "z"
+      "z",
     ),
     "a 🐴 a🦄",
-    "test 5.4"
+    "test 5.4",
   );
 });
 
@@ -118,10 +118,10 @@ test("05 - both outsides, emoji, not found #2", () => {
         rightOutside: "🦄",
         rightOutsideNot: "",
       },
-      "z"
+      "z",
     ),
     "kgldfj lkfjkl jfk \ng \t;lgkh a 🐴 a🦄 slkgj fhjf jkghljk",
-    "test 5.5"
+    "test 5.5",
   );
 });
 
@@ -138,10 +138,10 @@ test("06 - line break as rightOutside, found", () => {
         rightOutside: "\n",
         rightOutsideNot: "",
       },
-      "c"
+      "c",
     ),
     "aaac\n",
-    "test 5.6"
+    "test 5.6",
   );
 });
 
@@ -158,10 +158,10 @@ test("07 - line breaks as both outsides", () => {
         rightOutside: "\n",
         rightOutsideNot: "",
       },
-      "c"
+      "c",
     ),
     "aaa\nc\n",
-    "test 5.7"
+    "test 5.7",
   );
 });
 
@@ -178,10 +178,10 @@ test("08 - \\n as outsides, replacement = undefined", () => {
         rightOutside: "\n",
         rightOutsideNot: "",
       },
-      undefined
+      undefined,
     ),
     "aaa\n\n",
-    "test 5.8"
+    "test 5.8",
   );
 });
 
@@ -198,10 +198,10 @@ test("09 - line breaks as outsides, replacement = Bool", () => {
         rightOutside: "\n",
         rightOutsideNot: "",
       },
-      true
+      true,
     ),
     "aaa\n\n",
-    "test 5.9"
+    "test 5.9",
   );
 });
 
@@ -218,10 +218,10 @@ test("10 - line breaks as outsides, replacement = null", () => {
         rightOutside: "\n",
         rightOutsideNot: "",
       },
-      null
+      null,
     ),
     "aaa\n\n",
-    "test 5.10"
+    "test 5.10",
   );
 });
 
@@ -241,7 +241,7 @@ test("11 - left outside requirement not satisfied for replacement to happen", ()
       },
     }),
     "aaaBBBccc",
-    "test 5.11 - did not replace because of o.leftOutside"
+    "test 5.11 - did not replace because of o.leftOutside",
   );
 });
 
@@ -261,7 +261,7 @@ test("12 - right outside requirement not satisfied for replacement to happen", (
       },
     }),
     "aaaBBBccc",
-    "test 5.12 - did not replace because of o.rightOutside"
+    "test 5.12 - did not replace because of o.rightOutside",
   );
 });
 

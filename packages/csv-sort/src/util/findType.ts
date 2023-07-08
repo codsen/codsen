@@ -152,7 +152,7 @@ function findType(something: string): string {
     currencySigns.some((singleSign) =>
       // We remove all known currency symbols one by one from this input string.
       // If at least one passes as numeric after the currency symbol-removing, it's numeric.
-      isNumeric(something.replace(singleSign, "").replace(/[,.]/g, ""))
+      isNumeric(something.replace(singleSign, "").replace(/[,.]/g, "")),
     )
   ) {
     return "numeric";

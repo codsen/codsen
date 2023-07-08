@@ -41,16 +41,16 @@ export type PlainObjectOfBool = { [name: string]: boolean };
 
 function mixer(
   ref: PlainObject = {},
-  defaultsObj: PlainObject = {}
+  defaultsObj: PlainObject = {},
 ): PlainObjectOfBool[] {
   if (ref && typeof ref !== "object") {
     throw new Error(
-      `test-mixer: [THROW_ID_01] the first input arg is missing!`
+      `test-mixer: [THROW_ID_01] the first input arg is missing!`,
     );
   }
   if (defaultsObj && typeof defaultsObj !== "object") {
     throw new Error(
-      `test-mixer: [THROW_ID_02] the second input arg is missing!`
+      `test-mixer: [THROW_ID_02] the second input arg is missing!`,
     );
   }
   let caught;
@@ -79,7 +79,7 @@ function mixer(
       })
   ) {
     throw new Error(
-      `test-mixer: [THROW_ID_03] the second input arg object should be defaults; it should be a superset of 1st input arg object. However, 1st input arg object contains key "${caught}" which 2nd input arg object doesn't have.`
+      `test-mixer: [THROW_ID_03] the second input arg object should be defaults; it should be a superset of 1st input arg object. However, 1st input arg object contains key "${caught}" which 2nd input arg object doesn't have.`,
     );
   }
 
@@ -111,24 +111,24 @@ function mixer(
       `111 ${`\u001b[${33}m${`refClone`}\u001b[${39}m`} = ${JSON.stringify(
         refClone,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   DEV &&
     console.log(
       `119 ${`\u001b[${33}m${`defaultsObjClone`}\u001b[${39}m`} = ${JSON.stringify(
         defaultsObjClone,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   DEV &&
     console.log(
       `127 ${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} = ${JSON.stringify(
         optsWithBoolValues,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   // calculate combinations using combinations() - object-boolean-combinations

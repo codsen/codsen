@@ -61,19 +61,19 @@ test(`01 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - requested package does n
   let cleanupMsg = await fs
     .writeFile(path.join(tempFolder, "a", "package.json"), aPackageJson)
     .then(() =>
-      fs.writeFile(path.join(tempFolder, "b", "package.json"), bPackageJson)
+      fs.writeFile(path.join(tempFolder, "b", "package.json"), bPackageJson),
     )
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
           __dirname,
           "../",
-          "cli.js"
+          "cli.js",
         )} oodles`, // requesting to link monorepo package "oodles"
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then((execasMsg) => {
       match(execasMsg.stdout, /ERROR_01/, "01.01.01");
@@ -82,7 +82,7 @@ test(`01 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - requested package does n
     .then(() =>
       execaCommand(`rm -rf ${tempFolder}`, {
         shell: true,
-      })
+      }),
     );
 
   equal(cleanupMsg.exitCode, 0, "01.01");
@@ -120,12 +120,12 @@ test(`02 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - couldn't read a's packag
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
           __dirname,
           "../",
-          "cli.js"
+          "cli.js",
         )} b`,
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then((execasMsg) => {
       match(execasMsg.stdout, /ERROR_02/, "01.02.01");
@@ -135,7 +135,7 @@ test(`02 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - couldn't read a's packag
     .then(() =>
       execaCommand(`rm -rf ${tempFolder}`, {
         shell: true,
-      })
+      }),
     );
 
   equal(cleanupMsg.exitCode, 0, "02.01");
@@ -173,12 +173,12 @@ test(`03 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - couldn't read b's packag
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
           __dirname,
           "../",
-          "cli.js"
+          "cli.js",
         )} b`,
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then((execasMsg) => {
       match(execasMsg.stdout, /ERROR_03/, "01.03.01");
@@ -188,7 +188,7 @@ test(`03 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - couldn't read b's packag
     .then(() =>
       execaCommand(`rm -rf ${tempFolder}`, {
         shell: true,
-      })
+      }),
     );
 
   equal(cleanupMsg.exitCode, 0, "03.01");
@@ -222,29 +222,29 @@ test(`04 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - normal dep, symlink alre
   let cleanupMsg = await fs
     .writeFile(path.join(tempFolder, "a", "package.json"), aPackageJson)
     .then(() =>
-      fs.writeFile(path.join(tempFolder, "b", "package.json"), bPackageJson)
+      fs.writeFile(path.join(tempFolder, "b", "package.json"), bPackageJson),
     )
     .then(() =>
       execa(
         `ln -s ${path.resolve(path.join(tempFolder, "b"))} ${path.resolve(
-          path.join(tempFolder, "a", "node_modules", "b")
+          path.join(tempFolder, "a", "node_modules", "b"),
         )}`,
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
           __dirname,
           "../",
-          "cli.js"
+          "cli.js",
         )} b`, // requesting to link monorepo package "b"
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then((execasMsg) => {
       match(execasMsg.stdout, /ERROR_05/, "01.04.01");
@@ -253,7 +253,7 @@ test(`04 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - normal dep, symlink alre
     .then(() =>
       execaCommand(`rm -rf ${tempFolder}`, {
         shell: true,
-      })
+      }),
     );
 
   equal(cleanupMsg.exitCode, 0, "04.01");
@@ -287,19 +287,19 @@ test(`05 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - error while trying to pa
   let cleanupMsg = await fs
     .writeFile(path.join(tempFolder, "a", "package.json"), aPackageJson)
     .then(() =>
-      fs.writeFile(path.join(tempFolder, "b", "package.json"), "{{{{{")
+      fs.writeFile(path.join(tempFolder, "b", "package.json"), "{{{{{"),
     )
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
           __dirname,
           "../",
-          "cli.js"
+          "cli.js",
         )} b`,
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then((execasMsg) => {
       match(execasMsg.stdout, /ERROR_06/, "01.05.01");
@@ -307,13 +307,13 @@ test(`05 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - error while trying to pa
       match(
         execasMsg.stdout,
         /Something went wrong trying to read/,
-        "01.05.03"
+        "01.05.03",
       );
     })
     .then(() =>
       execaCommand(`rm -rf ${tempFolder}`, {
         shell: true,
-      })
+      }),
     );
 
   equal(cleanupMsg.exitCode, 0, "05.01");
@@ -347,33 +347,33 @@ test(`06 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - dep is a CLI, one of sym
   let cleanupMsg = await fs
     .writeFile(path.join(tempFolder, "a", "package.json"), aPackageJson)
     .then(() =>
-      fs.writeFile(path.join(tempFolder, "c", "package.json"), cPackageJson)
+      fs.writeFile(path.join(tempFolder, "c", "package.json"), cPackageJson),
     )
     .then(() =>
-      fs.writeFile(path.join(tempFolder, "c", "cli.js"), "this is c's cli.js")
+      fs.writeFile(path.join(tempFolder, "c", "cli.js"), "this is c's cli.js"),
     )
     .then(() =>
       execa(
         `ln -s ${path.resolve(
-          path.join(tempFolder, "c", "cli.js")
+          path.join(tempFolder, "c", "cli.js"),
         )} ${path.resolve(
-          path.join(tempFolder, "a", "node_modules", ".bin", "launchc")
+          path.join(tempFolder, "a", "node_modules", ".bin", "launchc"),
         )}`,
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
           __dirname,
-          "../"
+          "../",
         )}/cli.js c`, // requesting to link monorepo package "b"
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then((execasMsg) => {
       match(execasMsg.stdout, /ERROR_08/, "01.06.01");
@@ -384,7 +384,7 @@ test(`06 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - dep is a CLI, one of sym
     .then(() =>
       execaCommand(`rm -rf ${tempFolder}`, {
         shell: true,
-      })
+      }),
     );
 
   equal(cleanupMsg.exitCode, 0, "06.01");
@@ -420,20 +420,20 @@ test(`07 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - package.json had no main
     .then(() =>
       fs.writeFile(
         path.join(tempFolder, "b", "package.json"),
-        '{"tralla": true}'
-      )
+        '{"tralla": true}',
+      ),
     )
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
           __dirname,
           "../",
-          "cli.js"
+          "cli.js",
         )} b`,
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then((execasMsg) => {
       match(execasMsg.stdout, /ERROR_10/, "01.07.01");
@@ -443,7 +443,7 @@ test(`07 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - package.json had no main
     .then(() =>
       execaCommand(`rm -rf ${tempFolder}`, {
         shell: true,
-      })
+      }),
     );
 
   equal(cleanupMsg.exitCode, 0, "07.01");
@@ -477,19 +477,19 @@ test(`08 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links normal
   let cleanupMsg = await fs
     .writeFile(path.join(tempFolder, "a", "package.json"), aPackageJson)
     .then(() =>
-      fs.writeFile(path.join(tempFolder, "b", "package.json"), bPackageJson)
+      fs.writeFile(path.join(tempFolder, "b", "package.json"), bPackageJson),
     )
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
           __dirname,
           "../",
-          "cli.js"
+          "cli.js",
         )} b`,
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then((execasMsg) => {
       match(execasMsg.stdout, /Success/, "02.01.01");
@@ -503,7 +503,7 @@ test(`08 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links normal
     .then(() =>
       execaCommand(`rm -rf ${tempFolder}`, {
         shell: true,
-      })
+      }),
     );
 
   equal(cleanupMsg.exitCode, 0, "08.01");
@@ -523,22 +523,22 @@ test(`09 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links CLI de
   let cleanupMsg = await fs
     .writeFile(path.join(tempFolder, "a", "package.json"), aPackageJson)
     .then(() =>
-      fs.writeFile(path.join(tempFolder, "c", "cli.js"), "this is c's cli.js")
+      fs.writeFile(path.join(tempFolder, "c", "cli.js"), "this is c's cli.js"),
     )
     .then(() =>
-      fs.writeFile(path.join(tempFolder, "c", "package.json"), cPackageJson)
+      fs.writeFile(path.join(tempFolder, "c", "package.json"), cPackageJson),
     )
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
           __dirname,
           "../",
-          "cli.js"
+          "cli.js",
         )} c`,
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then((execasMsg) => {
       match(execasMsg.stdout, /Success/, "02.02.01");
@@ -553,7 +553,7 @@ test(`09 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links CLI de
     .then(() =>
       execaCommand(`rm -rf ${tempFolder}`, {
         shell: true,
-      })
+      }),
     );
 
   equal(cleanupMsg.exitCode, 0, "09.01");
@@ -573,19 +573,19 @@ test(`10 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links normal
   let cleanupMsg = await fs
     .writeFile(path.join(tempFolder, "a", "package.json"), aPackageJson)
     .then(() =>
-      fs.writeFile(path.join(tempFolder, "b", "package.json"), bPackageJson)
+      fs.writeFile(path.join(tempFolder, "b", "package.json"), bPackageJson),
     )
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
           __dirname,
           "../",
-          "cli.js"
+          "cli.js",
         )} b -d`,
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then((execasMsg) => {
       match(execasMsg.stdout, /Success/, "02.03.01");
@@ -600,7 +600,7 @@ test(`10 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links normal
     .then(() =>
       execaCommand(`rm -rf ${tempFolder}`, {
         shell: true,
-      })
+      }),
     );
 
   equal(cleanupMsg.exitCode, 0, "10.01");
@@ -620,19 +620,19 @@ test(`11 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links normal
   let cleanupMsg = await fs
     .writeFile(path.join(tempFolder, "a", "package.json"), aPackageJson)
     .then(() =>
-      fs.writeFile(path.join(tempFolder, "b", "package.json"), bPackageJson)
+      fs.writeFile(path.join(tempFolder, "b", "package.json"), bPackageJson),
     )
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
           __dirname,
           "../",
-          "cli.js"
+          "cli.js",
         )} b --dev`,
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then((execasMsg) => {
       match(execasMsg.stdout, /Success/, "02.04.01");
@@ -647,7 +647,7 @@ test(`11 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links normal
     .then(() =>
       execaCommand(`rm -rf ${tempFolder}`, {
         shell: true,
-      })
+      }),
     );
 
   equal(cleanupMsg.exitCode, 0, "11.01");

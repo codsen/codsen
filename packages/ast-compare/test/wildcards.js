@@ -13,71 +13,71 @@ test("01 - wildcards against values within object", () => {
   equal(
     compare({ a: "1", b: "2a", c: "3" }, { a: "1", b: "2*" }),
     false,
-    "01.01"
+    "01.01",
   );
   equal(
     compare(
       { a: "1", b: "2a", c: "3" },
       { a: "1", b: "2*" },
-      { useWildcards: false }
+      { useWildcards: false },
     ),
     false,
-    "01.02"
+    "01.02",
   );
   equal(
     compare(
       { a: "1", b: "2a", c: "3" },
       { a: "1", b: "2*" },
-      { useWildcards: true }
+      { useWildcards: true },
     ),
     true,
-    "01.03"
+    "01.03",
   );
   equal(
     compare(
       { a: "1", b: "za", c: "3" },
       { a: "1", b: "z*" },
-      { useWildcards: true }
+      { useWildcards: true },
     ),
     true,
-    "01.04"
+    "01.04",
   );
   equal(
     compare(
       { a: "1", b: "Za", c: "3" },
       { a: "1", b: "z*" },
-      { useWildcards: true }
+      { useWildcards: true },
     ),
     false,
-    "01.05"
+    "01.05",
   );
   equal(
     compare(
       { a: "1", b: "Za", c: "3" },
       { a: "1", b: "Z*" },
-      { useWildcards: true }
+      { useWildcards: true },
     ),
     true,
-    "01.06"
+    "01.06",
   );
 
   equal(
     compare(
       { a: "1", b: "2*" },
       { a: "1", b: "2a", c: "3" },
-      { useWildcards: true }
+      { useWildcards: true },
     ),
     false,
-    "01.07"
+    "01.07",
   );
   equal(
     compare(
       { a: "1", b: "2*" },
       { a: "1", b: "2a", c: "3" },
-      { useWildcards: false }
+      { useWildcards: false },
     ),
     false,
-    "01.08"
+    "01.08",
   );
 });
 
@@ -85,30 +85,30 @@ test("02 - wildcards against keys within object", () => {
   equal(
     compare({ az: "1", bz: "2a", cz: "3" }, { "a*": "1", "b*": "2*" }),
     false,
-    "02.01"
+    "02.01",
   );
   equal(
     compare(
       { az: "1", bz: "2a", cz: "3" },
       { "a*": "1", "b*": "2a" },
-      { useWildcards: true }
+      { useWildcards: true },
     ),
     true,
-    "02.02"
+    "02.02",
   );
   equal(
     compare({ az: "1", bz: "2a", cz: "3" }, { "x*": "1", "b*": "2*" }),
     false,
-    "02.03"
+    "02.03",
   );
   equal(
     compare(
       { az: "1", bz: "2a", cz: "3" },
       { "x*": "1", "b*": "2a" },
-      { useWildcards: true }
+      { useWildcards: true },
     ),
     false,
-    "02.04"
+    "02.04",
   );
 });
 
@@ -129,10 +129,10 @@ test("03 - wildcards in deeper levels", () => {
           },
         ],
       },
-      { useWildcards: false }
+      { useWildcards: false },
     ),
     false,
-    "03.01"
+    "03.01",
   );
   equal(
     compare(
@@ -150,10 +150,10 @@ test("03 - wildcards in deeper levels", () => {
           },
         ],
       },
-      { useWildcards: true }
+      { useWildcards: true },
     ),
     true,
-    "03.02"
+    "03.02",
   );
 });
 
@@ -177,10 +177,10 @@ test("04 - wildcards in deeper levels within arrays", () => {
           },
         ],
       },
-      { useWildcards: false }
+      { useWildcards: false },
     ),
     false,
-    "04.01"
+    "04.01",
   );
   equal(
     compare(
@@ -201,10 +201,10 @@ test("04 - wildcards in deeper levels within arrays", () => {
           },
         ],
       },
-      { useWildcards: true }
+      { useWildcards: true },
     ),
     true,
-    "04.02"
+    "04.02",
   );
   equal(
     compare(
@@ -225,10 +225,10 @@ test("04 - wildcards in deeper levels within arrays", () => {
           },
         ],
       },
-      { useWildcards: true }
+      { useWildcards: true },
     ),
     false,
-    "04.03"
+    "04.03",
   );
   equal(
     compare(
@@ -249,10 +249,10 @@ test("04 - wildcards in deeper levels within arrays", () => {
           },
         ],
       },
-      { useWildcards: false }
+      { useWildcards: false },
     ),
     false,
-    "04.04"
+    "04.04",
   );
   equal(
     compare(
@@ -273,10 +273,10 @@ test("04 - wildcards in deeper levels within arrays", () => {
           },
         ],
       },
-      { useWildcards: true }
+      { useWildcards: true },
     ),
     true,
-    "04.05"
+    "04.05",
   );
 });
 

@@ -28,7 +28,7 @@ interface def {
       all: [],
       error: null,
     },
-    "01.01"
+    "01.01",
   );
   equal(
     extract(source, "abc", {
@@ -47,7 +47,7 @@ interface def {
       all: ["abc", "def"],
       error: null,
     },
-    "01.02"
+    "01.02",
   );
 });
 
@@ -75,7 +75,7 @@ interface def {
       all: ["abc", "def"],
       error: null,
     },
-    "02.01"
+    "02.01",
   );
   equal(
     extract(source, "def", {
@@ -94,7 +94,7 @@ interface def {
       all: [],
       error: null,
     },
-    "02.02"
+    "02.02",
   );
 });
 
@@ -132,7 +132,7 @@ interface Res {
       all: ["HeadsAndTailsObj", "Opts", "Res"],
       error: null,
     },
-    "03.01"
+    "03.01",
   );
   equal(
     extract(source, "Opts", {
@@ -152,7 +152,7 @@ interface Res {
       all: [],
       error: null,
     },
-    "03.02"
+    "03.02",
   );
 });
 
@@ -246,7 +246,7 @@ export {
       all: [],
       error: null,
     },
-    "04.01"
+    "04.01",
   );
 });
 
@@ -274,7 +274,7 @@ interface def {
       all: [],
       error: "not found",
     },
-    "05.01"
+    "05.01",
   );
 });
 

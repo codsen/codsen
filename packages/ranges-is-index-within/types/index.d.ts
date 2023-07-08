@@ -12,7 +12,7 @@ declare const defaults: Opts;
 declare function isIndexWithin(
   index: number,
   rangesArr: Ranges,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): boolean | Range;
 
 export { Opts, Range, Ranges, defaults, isIndexWithin, version };

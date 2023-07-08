@@ -21,10 +21,10 @@ test("01 - nested objects", () => {
           },
         ],
       },
-      false
+      false,
     ),
     true,
-    "01.01"
+    "01.01",
   );
   equal(
     allEq(
@@ -39,10 +39,10 @@ test("01 - nested objects", () => {
           },
         ],
       },
-      false
+      false,
     ),
     false,
-    "01.02"
+    "01.02",
   );
 });
 
@@ -57,10 +57,10 @@ test("02 - nested array", () => {
           b: false,
         },
       ],
-      false
+      false,
     ),
     true,
-    "02.01"
+    "02.01",
   );
   equal(
     allEq(
@@ -73,10 +73,10 @@ test("02 - nested array", () => {
         },
         1,
       ],
-      false
+      false,
     ),
     false,
-    "02.02"
+    "02.02",
   );
   equal(allEq(["a"], false), false, "02.03");
   equal(allEq([[]], false), true, "02.04");
@@ -87,7 +87,7 @@ test("03 - nulls", () => {
   equal(
     allEq([null], null, { arraysMustNotContainPlaceholders: false }),
     true,
-    "03.02"
+    "03.02",
   );
 });
 
@@ -106,7 +106,7 @@ test("05 - various throws", () => {
       allEq();
     },
     /THROW_ID_01/,
-    "05.01"
+    "05.01",
   ); // first arg missing - will throw
 
   throws(
@@ -114,7 +114,7 @@ test("05 - various throws", () => {
       allEq(1);
     },
     /THROW_ID_02/,
-    "05.02"
+    "05.02",
   ); // second arg missing
 
   throws(
@@ -122,7 +122,7 @@ test("05 - various throws", () => {
       allEq(["a"], false, "zzz");
     },
     /THROW_ID_03/,
-    "05.03"
+    "05.03",
   ); // third arg is not a plain obj
 });
 

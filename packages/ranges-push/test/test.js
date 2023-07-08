@@ -48,7 +48,7 @@ test("06 - ADD() - wrong input args", () => {
       ranges.add("a");
     },
     /THROW_ID_12/g,
-    "06.01"
+    "06.01",
   );
 });
 
@@ -59,7 +59,7 @@ test("07 - ADD() - wrong types", () => {
       ranges.add("a", "a");
     },
     /THROW_ID_09/g,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -70,7 +70,7 @@ test("08 - ADD() - wrong types", () => {
       ranges.add(1, "a");
     },
     /THROW_ID_10/g,
-    "08.01"
+    "08.01",
   );
 });
 
@@ -81,7 +81,7 @@ test("09 - ADD() - wrong types", () => {
       ranges.add("a", 1);
     },
     /THROW_ID_09/g,
-    "09.01"
+    "09.01",
   );
 });
 
@@ -100,7 +100,7 @@ test("11 - ADD() - wrong input args", () => {
       ranges.add(1.2, 1);
     },
     /THROW_ID_09/g,
-    "11.01"
+    "11.01",
   );
 });
 
@@ -111,7 +111,7 @@ test("12 - ADD() - wrong input args", () => {
       ranges.add(1, 1.3);
     },
     /THROW_ID_10/,
-    "12.01"
+    "12.01",
   );
 });
 
@@ -128,7 +128,7 @@ test("14 - PUSH() - wrong inputs", () => {
       ranges.push("a");
     },
     /THROW_ID_12/,
-    "14.01"
+    "14.01",
   );
 });
 
@@ -139,7 +139,7 @@ test("15 - PUSH() - wrong inputs", () => {
       ranges.push("a", "a");
     },
     /THROW_ID_09/,
-    "15.01"
+    "15.01",
   );
 });
 
@@ -150,7 +150,7 @@ test("16 - PUSH() - wrong inputs", () => {
       ranges.push(1, "a");
     },
     /THROW_ID_10/,
-    "16.01"
+    "16.01",
   );
 });
 
@@ -161,7 +161,7 @@ test("17 - PUSH() - wrong inputs", () => {
       ranges.push("a", 1);
     },
     /THROW_ID_09/,
-    "17.01"
+    "17.01",
   );
 });
 
@@ -179,7 +179,7 @@ test("19 - PUSH() - wrong inputs", () => {
       ranges.push(undefined, 1);
     },
     /THROW_ID_13/,
-    "19.01"
+    "19.01",
   );
 });
 
@@ -190,7 +190,7 @@ test("20 - PUSH() - wrong inputs", () => {
       ranges.push(null, 1);
     },
     /THROW_ID_13/,
-    "20.01"
+    "20.01",
   );
 });
 
@@ -201,7 +201,7 @@ test("21 - PUSH() - wrong inputs", () => {
       ranges.push(1, undefined);
     },
     /THROW_ID_12/,
-    "21.01"
+    "21.01",
   );
 });
 
@@ -212,7 +212,7 @@ test("22 - PUSH() - wrong inputs", () => {
       ranges.push(1, null);
     },
     /THROW_ID_12/,
-    "22.01"
+    "22.01",
   );
 });
 
@@ -223,7 +223,7 @@ test("23 - PUSH() - numbers but not natural integers", () => {
       ranges.push(1.2, 1);
     },
     /THROW_ID_09/,
-    "23.01"
+    "23.01",
   );
 });
 
@@ -234,7 +234,7 @@ test("24 - PUSH() - numbers but not natural integers", () => {
       ranges.push(1, 1.3);
     },
     /THROW_ID_10/,
-    "24.01"
+    "24.01",
   );
 });
 
@@ -251,7 +251,7 @@ test("26 - ADD() - first argument is .current() output of ranges", () => {
       ranges.add([[1, "z"]]);
     },
     /THROW_ID_10/,
-    "26.01"
+    "26.01",
   );
 });
 
@@ -262,7 +262,7 @@ test("27 - ADD() - first argument is .current() output of ranges", () => {
       ranges.add([["z", 1]]);
     },
     /THROW_ID_09/,
-    "27.01"
+    "27.01",
   );
 });
 
@@ -273,7 +273,7 @@ test("28 - ADD() - first argument is .current() output of ranges", () => {
       ranges.add([["z", 1], 1]);
     },
     /THROW_ID_09/,
-    "28.01"
+    "28.01",
   );
 });
 
@@ -299,7 +299,7 @@ test("30 - ADD() - adds two non-overlapping ranges", () => {
       [1, 2],
       [3, 4],
     ],
-    "30.01"
+    "30.01",
   );
 });
 
@@ -330,7 +330,7 @@ test("33 - ADD() - new range bypasses the last range completely", () => {
       [1, 5],
       [6, 30],
     ],
-    "33.01"
+    "33.01",
   );
 });
 
@@ -344,7 +344,7 @@ test("34 - ADD() - head and tail markers in new are smaller than last one's", ()
       [1, 5],
       [10, 20],
     ],
-    "34.01"
+    "34.01",
   );
 });
 
@@ -390,7 +390,7 @@ test("38 - ADD() - inputs as numeric strings - all OK", () => {
       [1, 2],
       [3, 4],
     ],
-    "38.01"
+    "38.01",
   );
 });
 
@@ -404,7 +404,7 @@ test("39 - ADD() - wrong order is fine", () => {
       [1, 2],
       [3, 4],
     ],
-    "39.01"
+    "39.01",
   );
 });
 
@@ -418,7 +418,7 @@ test("40 - PUSH() - adds two non-overlapping ranges", () => {
       [1, 2],
       [3, 4],
     ],
-    "40.01"
+    "40.01",
   );
 });
 
@@ -464,7 +464,7 @@ test("45 - ADD() - adds third argument onto existing and stops", () => {
       [1, 2],
       [3, 4, "zzz"],
     ],
-    "45.01"
+    "45.01",
   );
 });
 
@@ -480,7 +480,7 @@ test("46 - ADD() - adds third argument onto existing and adds more", () => {
       [3, 4, "zzz"],
       [5, 6],
     ],
-    "46.01"
+    "46.01",
   );
 });
 
@@ -495,7 +495,7 @@ test('47 - ADD() - existing "add" values get concatenated with incoming-ones', (
       [1, 4, "aaazzz"],
       [5, 6],
     ],
-    "47.01"
+    "47.01",
   );
 });
 
@@ -512,7 +512,7 @@ test("48 - ADD() - jumped over values have third args and they get concatenated"
       [1, 5],
       [6, 30],
     ],
-    "48.01"
+    "48.01",
   );
 });
 
@@ -526,7 +526,7 @@ test("49 - ADD() - combo of third arg and jumping behind previous range", () => 
       [3, 4, "zzz"],
       [10, 11, "aaa"],
     ],
-    "49.01"
+    "49.01",
   );
 });
 
@@ -548,7 +548,7 @@ test("51 - ADD() - v1.1.0 - do not merge add-only entries with deletion entries 
       [1, 3, "zzz"],
       [4, 10],
     ],
-    "51.01"
+    "51.01",
   );
 });
 
@@ -571,7 +571,7 @@ test("53 - ADD() - adds third argument with null", () => {
       [3, 4, null],
       [5, 6],
     ],
-    "53.01"
+    "53.01",
   );
 });
 
@@ -618,7 +618,7 @@ test("58 - ADD() - empty string to add", () => {
       [1, 2],
       [3, 4],
     ],
-    "58.01"
+    "58.01",
   );
 });
 
@@ -654,7 +654,7 @@ test("61 - ADD() - whole ranges array is pushed", () => {
       [3, 4],
       [5, 6],
     ],
-    "61.01"
+    "61.01",
   );
 });
 
@@ -724,7 +724,7 @@ test("68 - CURRENT() - multiple calls on the same should yield the same", () => 
       [24, 28, " "],
       [29, 31],
     ],
-    "68.01"
+    "68.01",
   );
 });
 
@@ -869,7 +869,7 @@ test("86 - opts.limitToBeAddedWhitespace - null negates 3rd arg #1", () => {
       [1, 4, null],
       [10, 20, " x  "],
     ],
-    "86.01"
+    "86.01",
   );
 });
 
@@ -899,7 +899,7 @@ test("89 - opts.limitToBeAddedWhitespace - adds two non-overlapping ranges", () 
       [1, 2],
       [3, 4],
     ],
-    "89.01"
+    "89.01",
   );
 });
 
@@ -939,7 +939,7 @@ test("93 - opts.limitToBeAddedWhitespace - leading whitespace #3", () => {
       [4, 4, null],
       [7, 14, ' alt=""'],
     ],
-    "93.01"
+    "93.01",
   );
 });
 
@@ -973,7 +973,7 @@ test("96 - opts.limitLinebreaksCount #1 - control", () => {
       [4, 4, null],
       [7, 14, '\n\n\n alt=""'],
     ],
-    "96.01"
+    "96.01",
   );
 });
 
@@ -989,7 +989,7 @@ test("97 - opts.limitLinebreaksCount #2 - hardcoded defaults", () => {
       [4, 4, null],
       [7, 14, '\n\n\n alt=""'],
     ],
-    "97.01"
+    "97.01",
   );
 });
 
@@ -1008,7 +1008,7 @@ test("98 - opts.limitLinebreaksCount #3 - hardcoded defaults", () => {
       [4, 4, null],
       [7, 14, '\nalt=""'],
     ],
-    "98.01"
+    "98.01",
   );
 });
 
@@ -1027,7 +1027,7 @@ test("99 - opts.limitLinebreaksCount #4 - hardcoded defaults", () => {
       [4, 4, null],
       [7, 14, '\n\nalt=""'],
     ],
-    "99.01"
+    "99.01",
   );
 });
 
@@ -1049,7 +1049,7 @@ test("100 - REPLACE() - replaces ranges with ranges", () => {
       [3, 4, "b"],
       [9, 10],
     ],
-    "100.01"
+    "100.01",
   );
 
   newRanges.add(5, 6, "x");
@@ -1063,7 +1063,7 @@ test("100 - REPLACE() - replaces ranges with ranges", () => {
       [7, 8, "y"],
       [11, 12],
     ],
-    "100.02"
+    "100.02",
   );
 
   // replace:
@@ -1081,7 +1081,7 @@ test("100 - REPLACE() - replaces ranges with ranges", () => {
       [7, 8, "y"],
       [11, 12],
     ],
-    "100.03"
+    "100.03",
   );
 });
 
@@ -1099,7 +1099,7 @@ test("101 - REPLACE() - replaces ranges with null", () => {
       [3, 4, "b"],
       [9, 10],
     ],
-    "101.01"
+    "101.01",
   );
 
   // replace:
@@ -1126,7 +1126,7 @@ test("102 - REPLACE() - replaces ranges with empty array", () => {
       [3, 4, "b"],
       [9, 10],
     ],
-    "102.01"
+    "102.01",
   );
 
   // replace:
@@ -1148,7 +1148,7 @@ test("103 - REPLACE() - replaces ranges with single range (throws)", () => {
       oldRanges.replace([6, 8]);
     },
     /THROW_ID_11/,
-    "103.01"
+    "103.01",
   );
 
   // with third element, "what to insert"
@@ -1157,7 +1157,7 @@ test("103 - REPLACE() - replaces ranges with single range (throws)", () => {
       oldRanges.replace([6, 8, "zzz"]);
     },
     /THROW_ID_11/,
-    "103.02"
+    "103.02",
   );
 
   // but range or ranges does work fine:

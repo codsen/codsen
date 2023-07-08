@@ -35,7 +35,7 @@ interface Opts {
       all: ["Opts"],
       error: null,
     },
-    "01.01"
+    "01.01",
   );
   equal(
     extract(source, "Opts.bar", {
@@ -55,7 +55,7 @@ interface Opts {
       all: ["Opts"],
       error: null,
     },
-    "01.02"
+    "01.02",
   );
 });
 
@@ -88,7 +88,7 @@ interface Opts {
       all: ["Opts"],
       error: "not found",
     },
-    "02.01"
+    "02.01",
   );
   equal(
     extract(source, "Opts.zzz", {
@@ -108,7 +108,7 @@ interface Opts {
       all: ["Opts"],
       error: "not found",
     },
-    "02.02"
+    "02.02",
   );
 });
 
@@ -141,7 +141,7 @@ interface Opts {
       all: ["Opts"],
       error: "not found",
     },
-    "03.01"
+    "03.01",
   );
   equal(
     extract(source, "zzz.yyy", {
@@ -161,7 +161,7 @@ interface Opts {
       all: ["Opts"],
       error: "not found",
     },
-    "03.02"
+    "03.02",
   );
 });
 

@@ -472,7 +472,7 @@ test("13 - xhtml doctype", () => {
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(ok, gathered, [
     {
@@ -516,7 +516,7 @@ test("14 - xhtml DTD doctype", () => {
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(ok, gathered, [
     {
@@ -657,7 +657,7 @@ test("20 - correct HTML5 doctype", () => {
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(ok, gathered, [
     {

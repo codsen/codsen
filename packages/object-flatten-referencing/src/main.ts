@@ -14,15 +14,15 @@ const version: string = v;
 function flattenReferencing(
   input: JSONValue,
   reference: JSONValue,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): any {
   if (!isObj(input)) {
     throw new Error(
       `object-flatten-referencing/ofr(): [THROW_ID_01] the first input argument must be a plain object! It was given as ${JSON.stringify(
         input,
         null,
-        4
-      )} (its typeof was ${typeof input}).`
+        4,
+      )} (its typeof was ${typeof input}).`,
     );
   }
   if (!isObj(reference)) {
@@ -30,8 +30,8 @@ function flattenReferencing(
       `object-flatten-referencing/ofr(): [THROW_ID_02] the second input argument must be a plain object! It was given as ${JSON.stringify(
         reference,
         null,
-        4
-      )} (its typeof was ${typeof reference}).`
+        4,
+      )} (its typeof was ${typeof reference}).`,
     );
   }
   if (opts && !isObj(opts)) {
@@ -39,8 +39,8 @@ function flattenReferencing(
       `object-flatten-referencing/ofr(): [THROW_ID_03] the third input argument must be a plain object! It was given as ${JSON.stringify(
         opts,
         null,
-        4
-      )} (its typeof was ${typeof opts}).`
+        4,
+      )} (its typeof was ${typeof opts}).`,
     );
   }
 
@@ -48,7 +48,7 @@ function flattenReferencing(
 
   originalOpts.dontWrapKeys = arrayiffy(originalOpts.dontWrapKeys);
   originalOpts.preventWrappingIfContains = arrayiffy(
-    originalOpts.preventWrappingIfContains
+    originalOpts.preventWrappingIfContains,
   );
   originalOpts.dontWrapPaths = arrayiffy(originalOpts.dontWrapPaths);
   originalOpts.ignore = arrayiffy(originalOpts.ignore);
@@ -63,7 +63,7 @@ function flattenReferencing(
     opts2: Opts,
     wrap = true,
     joinArraysUsingBrs = true,
-    currentRoot = ""
+    currentRoot = "",
   ): string {
     // DEV && console.log(`\n\n* originalInput = ${JSON.stringify(originalInput, null, 4)}`)
     // DEV && console.log(`* originalReference = ${JSON.stringify(originalReference, null, 4)}`)
@@ -86,7 +86,7 @@ function flattenReferencing(
               wrap =
                 wrap &&
                 !opts2.dontWrapKeys.some((elem) =>
-                  isMatch(key, elem, { caseSensitive: true })
+                  isMatch(key, elem, { caseSensitive: true }),
                 );
             }
             if (opts2.dontWrapPaths.length) {
@@ -101,7 +101,7 @@ function flattenReferencing(
               wrap =
                 wrap &&
                 !opts2.preventWrappingIfContains.some((elem) =>
-                  resolvedInput[key].includes(elem)
+                  resolvedInput[key].includes(elem),
                 );
             }
           }
@@ -122,7 +122,7 @@ function flattenReferencing(
                   resolvedInput[key],
                   opts2,
                   wrap,
-                  joinArraysUsingBrs
+                  joinArraysUsingBrs,
                 );
               } else {
                 // resolvedReference is array as well
@@ -147,7 +147,7 @@ function flattenReferencing(
                 // ['xxxx', [...], 'yyyy', 'zzzz'] should be joined by BR's
                 if (
                   resolvedInput[key].every(
-                    (el: any) => typeof el === "string" || Array.isArray(el)
+                    (el: any) => typeof el === "string" || Array.isArray(el),
                   )
                 ) {
                   // check that those array elements contain only string elements:
@@ -171,7 +171,7 @@ function flattenReferencing(
                   opts2,
                   wrap,
                   joinArraysUsingBrs,
-                  currentPath
+                  currentPath,
                 );
               }
             } else if (isObj(resolvedInput[key])) {
@@ -183,7 +183,7 @@ function flattenReferencing(
                   flattenObject(resolvedInput[key], opts2),
                   opts2,
                   wrap,
-                  joinArraysUsingBrs
+                  joinArraysUsingBrs,
                 );
               } else if (!wrap) {
                 // when calling recursively, the parent key might get
@@ -199,7 +199,7 @@ function flattenReferencing(
                   { ...opts2, wrapGlobalFlipSwitch: false },
                   wrap,
                   joinArraysUsingBrs,
-                  currentPath
+                  currentPath,
                 );
               } else {
                 resolvedInput[key] = ofr(
@@ -208,7 +208,7 @@ function flattenReferencing(
                   opts2,
                   wrap,
                   joinArraysUsingBrs,
-                  currentPath
+                  currentPath,
                 );
               }
             } else if (isStr(resolvedInput[key])) {
@@ -218,7 +218,7 @@ function flattenReferencing(
                 opts2,
                 wrap,
                 joinArraysUsingBrs,
-                currentPath
+                currentPath,
               );
             }
           } else if (
@@ -226,7 +226,7 @@ function flattenReferencing(
           ) {
             if (opts2.whatToDoWhenReferenceIsMissing === 1) {
               throw new Error(
-                `object-flatten-referencing/ofr(): [THROW_ID_06] resolvedReference object does not have the key ${key} and we need it. TIP: Turn off throwing via opts2.whatToDoWhenReferenceIsMissing.`
+                `object-flatten-referencing/ofr(): [THROW_ID_06] resolvedReference object does not have the key ${key} and we need it. TIP: Turn off throwing via opts2.whatToDoWhenReferenceIsMissing.`,
               );
             }
             // when opts2.whatToDoWhenReferenceIsMissing === 2, library does nothing,
@@ -244,7 +244,7 @@ function flattenReferencing(
               opts2,
               wrap,
               joinArraysUsingBrs,
-              `${currentRoot}[${i}]`
+              `${currentRoot}[${i}]`,
             );
           } else {
             resolvedInput[i] = ofr(
@@ -253,7 +253,7 @@ function flattenReferencing(
               opts2,
               wrap,
               joinArraysUsingBrs,
-              `${currentRoot}[${i}]`
+              `${currentRoot}[${i}]`,
             );
           }
         });
@@ -262,7 +262,7 @@ function flattenReferencing(
           resolvedInput,
           opts2,
           wrap,
-          joinArraysUsingBrs
+          joinArraysUsingBrs,
         );
       }
     } else if (isStr(resolvedInput)) {

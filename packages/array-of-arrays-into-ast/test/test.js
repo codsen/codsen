@@ -20,7 +20,7 @@ test("01 - three elements", () => {
       ],
       5: [null],
     },
-    "01.01"
+    "01.01",
   );
   equal(
     generateAst([[5], [1, 2, 3], [1, 2]]),
@@ -37,7 +37,7 @@ test("01 - three elements", () => {
       ],
       5: [null],
     },
-    "01.02"
+    "01.02",
   );
   equal(
     generateAst([[1, 2], [5], [1, 2, 3]]),
@@ -54,7 +54,7 @@ test("01 - three elements", () => {
       ],
       5: [null],
     },
-    "01.03"
+    "01.03",
   );
   equal(
     generateAst([[1], [5], [1, 2, 3]]),
@@ -71,7 +71,7 @@ test("01 - three elements", () => {
       ],
       5: [null],
     },
-    "01.04"
+    "01.04",
   );
 });
 
@@ -81,14 +81,14 @@ test("02 - opts.dedupe", () => {
     {
       1: [null],
     },
-    "02.01"
+    "02.01",
   );
   equal(
     generateAst([[1], [1], [1]], { dedupe: false }),
     {
       1: [null, null, null],
     },
-    "02.02"
+    "02.02",
   );
 });
 
@@ -98,7 +98,7 @@ test("03 - throws", () => {
       generateAst(true);
     },
     /THROW_ID_01/g,
-    "03.01"
+    "03.01",
   );
 });
 

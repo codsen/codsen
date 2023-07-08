@@ -18,7 +18,7 @@ test("01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix", () 
       a: false,
       b: false,
     },
-    "01.01"
+    "01.01",
   );
   equal(
     jVar(
@@ -28,13 +28,13 @@ test("01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix", () 
       },
       {
         resolveToBoolIfAnyValuesContainBool: true,
-      }
+      },
     ),
     {
       a: false,
       b: false,
     },
-    "01.02"
+    "01.02",
   );
   equal(
     jVar(
@@ -44,13 +44,13 @@ test("01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix", () 
       },
       {
         resolveToBoolIfAnyValuesContainBool: false,
-      }
+      },
     ),
     {
       a: "zzz  zzz",
       b: false,
     },
-    "01.03"
+    "01.03",
   );
 
   // True
@@ -64,14 +64,14 @@ test("01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix", () 
       },
       {
         resolveToFalseIfAnyValuesContainBool: false,
-      }
+      },
     ),
     {
       a: true, // because first encountered value to be resolved was Boolean True
       b: true,
       c: false,
     },
-    "01.04"
+    "01.04",
   );
   equal(
     jVar(
@@ -83,14 +83,14 @@ test("01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix", () 
       {
         resolveToBoolIfAnyValuesContainBool: true,
         resolveToFalseIfAnyValuesContainBool: false,
-      }
+      },
     ),
     {
       a: true,
       b: true,
       c: false,
     },
-    "01.05"
+    "01.05",
   );
   equal(
     jVar(
@@ -102,14 +102,14 @@ test("01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix", () 
       {
         resolveToBoolIfAnyValuesContainBool: true,
         resolveToFalseIfAnyValuesContainBool: true,
-      }
+      },
     ),
     {
       a: false,
       b: true,
       c: false,
     },
-    "01.06"
+    "01.06",
   );
 });
 

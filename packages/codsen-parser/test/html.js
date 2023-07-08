@@ -29,7 +29,7 @@ test("01 - basics - two tags", () => {
         ],
       },
     ],
-    "01"
+    "01",
   );
 });
 
@@ -51,7 +51,7 @@ test("02 - basics - text and tag", () => {
         children: [],
       },
     ],
-    "02"
+    "02",
   );
 });
 
@@ -81,7 +81,7 @@ test("03 - basics - tag text tag", () => {
         ],
       },
     ],
-    "03"
+    "03",
   );
 });
 
@@ -135,7 +135,7 @@ test("04 - basics - two div pairs", () => {
         children: [],
       },
     ],
-    "04"
+    "04",
   );
 });
 
@@ -166,7 +166,7 @@ test("05 - basics - mixed combo", () => {
         children: [],
       },
     ],
-    "05"
+    "05",
   );
 });
 
@@ -225,7 +225,7 @@ test("06 - basics - two nested pairs", () => {
         children: [],
       },
     ],
-    "06"
+    "06",
   );
 });
 
@@ -339,7 +339,7 @@ test("07 - basics - three nested pairs, empty", () => {
         children: [],
       },
     ],
-    "07"
+    "07",
   );
 });
 
@@ -428,7 +428,7 @@ test("08 - basics - single text node is not nested after closing tag", () => {
         children: [],
       },
     ],
-    "08"
+    "08",
   );
 });
 

@@ -33,20 +33,20 @@ function stri(assert, n, src, opts) {
   "${`\u001b[${33}m${JSON.stringify(
     striApi(src, obj1).result,
     null,
-    4
+    4,
   )}\u001b[${39}m`}" (opts.${key}=true) and "${`\u001b[${33}m${JSON.stringify(
-            striApi(src, obj2).result,
-            null,
-            4
-          )}\u001b[${39}m`}" (opts.${key}=false). Input was:\n${JSON.stringify(
-            src,
-            null,
-            4
-          )}. Opts objects:\n\nobj1:\n${JSON.stringify(
-            obj1,
-            null,
-            4
-          )}\nobj2:${JSON.stringify(obj2, null, 4)}\n`
+    striApi(src, obj2).result,
+    null,
+    4,
+  )}\u001b[${39}m`}" (opts.${key}=false). Input was:\n${JSON.stringify(
+    src,
+    null,
+    4,
+  )}. Opts objects:\n\nobj1:\n${JSON.stringify(
+    obj1,
+    null,
+    4,
+  )}\nobj2:${JSON.stringify(obj2, null, 4)}\n`,
         );
       } else {
         assert.not.ok(
@@ -55,16 +55,16 @@ function stri(assert, n, src, opts) {
   "${`\u001b[${33}m${JSON.stringify(
     striApi(src, obj1).result,
     null,
-    4
+    4,
   )}\u001b[${39}m`}". Input was:\n${JSON.stringify(
-            src,
-            null,
-            4
-          )}. Opts objects:\n\nobj1:\n${JSON.stringify(
-            obj1,
-            null,
-            4
-          )}\nobj2:${JSON.stringify(obj2, null, 4)}\n`
+    src,
+    null,
+    4,
+  )}. Opts objects:\n\nobj1:\n${JSON.stringify(
+    obj1,
+    null,
+    4,
+  )}\nobj2:${JSON.stringify(obj2, null, 4)}\n`,
         );
       }
     }

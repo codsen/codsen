@@ -19,7 +19,7 @@ const testme = () =>
     {
       a: "a",
       b: undefined,
-    }
+    },
   );
 
 // action

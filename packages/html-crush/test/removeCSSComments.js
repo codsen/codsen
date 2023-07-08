@@ -24,7 +24,7 @@ test(`01 - ${`\u001b[${33}m${"css comments"}\u001b[${39}m`} - in head styles`, (
         removeHTMLComments: false,
       },
     },
-    "01.01"
+    "01.01",
   );
 
   // on
@@ -40,7 +40,7 @@ test(`01 - ${`\u001b[${33}m${"css comments"}\u001b[${39}m`} - in head styles`, (
         removeHTMLComments: false,
       },
     },
-    "01.02"
+    "01.02",
   );
 });
 
@@ -76,7 +76,7 @@ margin: 3px; /* remove this */
         removeHTMLComments: false,
       },
     },
-    "02.01"
+    "02.01",
   );
 
   // on - removeLineBreaks=off
@@ -95,7 +95,7 @@ margin: 3px; /* remove this */
         removeHTMLComments: false,
       },
     },
-    "02.02"
+    "02.02",
   );
 
   // on - removeLineBreaks=on
@@ -114,7 +114,7 @@ margin: 3px; /* remove this */
         removeHTMLComments: false,
       },
     },
-    "02.03"
+    "02.03",
   );
 });
 
@@ -138,7 +138,7 @@ test(`03 - ${`\u001b[${33}m${"css comments"}\u001b[${39}m`} - within body`, () =
         removeHTMLComments: false,
       },
     },
-    "03.01"
+    "03.01",
   );
 
   // on
@@ -154,7 +154,7 @@ test(`03 - ${`\u001b[${33}m${"css comments"}\u001b[${39}m`} - within body`, () =
         removeHTMLComments: false,
       },
     },
-    "03.02"
+    "03.02",
   );
 });
 

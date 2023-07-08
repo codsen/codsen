@@ -326,7 +326,7 @@ export function detectEol(str: string | unknown): EolChar | undefined {
 export function resolveEolSetting(
   str: string | unknown,
   eolSetting: EolSetting | unknown,
-  defaultEolChar: EolChar = "\n"
+  defaultEolChar: EolChar = "\n",
 ): EolChar {
   // insurance
   if (!["\r\n", "\r", "\n"].includes(defaultEolChar)) {
@@ -334,8 +334,8 @@ export function resolveEolSetting(
       `codsen-utils/resolveEolSetting(): the input argument defaultEolChar should be one of EOL values: "\\n", "\\r", or "\\r\\n", but it was given as ${JSON.stringify(
         defaultEolChar,
         null,
-        0
-      )}`
+        0,
+      )}`,
     );
   }
 
@@ -460,7 +460,7 @@ export const inlineTags = new Set([
  */
 export function includes(
   arr: (string | RegExp)[],
-  whatToMatch: string
+  whatToMatch: string,
 ): boolean {
   if (!Array.isArray(arr) || !arr.length) {
     return false;
@@ -468,7 +468,7 @@ export function includes(
   return arr.some(
     (val) =>
       (isRegExp(val) && whatToMatch.match(val)) ||
-      (typeof val === "string" && whatToMatch === val)
+      (typeof val === "string" && whatToMatch === val),
   );
 }
 
@@ -476,7 +476,7 @@ export function includes(
 export function intersection<T, U>(a: T[] = [], b: U[] = []): T[] {
   if (!a || !b) return [];
   return Array.from(
-    new Set(Array.from(a).filter((x) => new Set(b as any as typeof a).has(x)))
+    new Set(Array.from(a).filter((x) => new Set(b as any as typeof a).has(x))),
   );
 }
 
@@ -488,8 +488,8 @@ export function omit(obj: JSONObject, keysToRemove: string[] = []): JSONObject {
       `codsen-utils/omit(): [THROW_ID_01] Input must be a plain object! It was given as ${JSON.stringify(
         obj,
         null,
-        4
-      )} (typeof is "${typeof obj}")`
+        4,
+      )} (typeof is "${typeof obj}")`,
     );
   let res = clone(obj);
   keysToRemove.forEach((keyToDelete) => {

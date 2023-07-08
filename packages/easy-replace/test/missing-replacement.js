@@ -21,10 +21,10 @@ test("01 - empty string as replacement = deletion mode", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      ""
+      "",
     ),
     "aa",
-    "test 10.1"
+    "test 10.1",
   );
 });
 
@@ -41,10 +41,10 @@ test("02 - null as replacement = deletion mode", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      null
+      null,
     ),
     "aa",
-    "test 10.2"
+    "test 10.2",
   );
 });
 
@@ -61,10 +61,10 @@ test("03 - replacement bool, nothing left", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      true
+      true,
     ),
     "",
-    "test 10.3"
+    "test 10.3",
   );
 });
 
@@ -81,10 +81,10 @@ test("04 - replacement Bool, nothing left, searchFor Integer", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      false
+      false,
     ),
     "",
-    "test 10.4"
+    "test 10.4",
   );
 });
 
@@ -101,10 +101,10 @@ test("05 - nothing left, replacement undefined", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      undefined
+      undefined,
     ),
     "",
-    "test 10.5"
+    "test 10.5",
   );
 });
 
@@ -121,10 +121,10 @@ test("06 - nothing left - more undefined", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      undefined
+      undefined,
     ),
     "",
-    "test 10.6"
+    "test 10.6",
   );
 });
 
@@ -141,10 +141,10 @@ test("07 - emoji, null replacement, both outsides found", () => {
         rightOutside: "🦄",
         rightOutsideNot: "",
       },
-      null
+      null,
     ),
     "a🦄🦄a",
-    "test 10.7"
+    "test 10.7",
   );
 });
 
@@ -161,10 +161,10 @@ test("08 - raw integers everywhere must work too", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      9
+      9,
     ),
     "9",
-    "test 10.8"
+    "test 10.8",
   );
 });
 
@@ -181,10 +181,10 @@ test("09 - searchFor is an array of 1 element", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "d"
+      "d",
     ),
     "a d c",
-    "test 10.9"
+    "test 10.9",
   );
 });
 
@@ -201,10 +201,10 @@ test("10 - searchFor is an array of few elements (no find)", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "d"
+      "d",
     ),
     "a b c",
-    "test 10.10"
+    "test 10.10",
   );
 });
 
@@ -221,10 +221,10 @@ test("11 - searchFor is an array of few elements (won't work)", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "d"
+      "d",
     ),
     "a bx c",
-    "test 10.11"
+    "test 10.11",
   );
 });
 

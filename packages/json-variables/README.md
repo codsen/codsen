@@ -48,7 +48,7 @@ assert.deepEqual(
     b: "something",
     var1: { key1: ["value1"] },
     var2: { key2: { key3: ["", "value2"] } },
-  }
+  },
 );
 ```
 

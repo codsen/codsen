@@ -18,7 +18,7 @@ test("01 - not ranges", () => {
       rCrop(NaN, null);
     },
     /THROW_ID_01/,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -28,7 +28,7 @@ test("02 - str len is not a number", () => {
       rCrop([[1, 2]], null);
     },
     /THROW_ID_02/,
-    "02.01"
+    "02.01",
   );
 
   throws(
@@ -36,7 +36,7 @@ test("02 - str len is not a number", () => {
       rCrop([[1, 2]], "2");
     },
     /THROW_ID_02/,
-    "02.02"
+    "02.02",
   );
 
   throws(
@@ -44,7 +44,7 @@ test("02 - str len is not a number", () => {
       rCrop([[1, 2]], [2]);
     },
     /THROW_ID_02/,
-    "02.03"
+    "02.03",
   );
 
   throws(
@@ -52,7 +52,7 @@ test("02 - str len is not a number", () => {
       rCrop([[1, 2]], false);
     },
     /THROW_ID_02/,
-    "02.04"
+    "02.04",
   );
 });
 
@@ -62,7 +62,7 @@ test("03 - array of ranges is actually a single range", () => {
       rCrop([1, 2], 3);
     },
     /THROW_ID_03/,
-    "03.01"
+    "03.01",
   );
 
   throws(
@@ -70,7 +70,7 @@ test("03 - array of ranges is actually a single range", () => {
       rCrop([1, 2, "zzzz"], 3);
     },
     /THROW_ID_03/,
-    "03.02"
+    "03.02",
   );
 });
 
@@ -80,7 +80,7 @@ test("04 - something's wrong with range arrays's contents", () => {
       rCrop([[1, "2"]], 3);
     },
     /THROW_ID_04/,
-    "04.01"
+    "04.01",
   );
 
   throws(
@@ -90,11 +90,11 @@ test("04 - something's wrong with range arrays's contents", () => {
           [1, 2],
           ["4", 5],
         ],
-        3
+        3,
       );
     },
     /THROW_ID_04/,
-    "04.02"
+    "04.02",
   );
 
   throws(
@@ -102,7 +102,7 @@ test("04 - something's wrong with range arrays's contents", () => {
       rCrop([[1, 2], [4, 5], "zzz"], 3);
     },
     /THROW_ID_04/,
-    "04.03"
+    "04.03",
   );
 
   throws(
@@ -112,11 +112,11 @@ test("04 - something's wrong with range arrays's contents", () => {
           [1, 2],
           [null, 5],
         ],
-        3
+        3,
       );
     },
     /THROW_ID_04/,
-    "04.04"
+    "04.04",
   );
 
   throws(
@@ -124,7 +124,7 @@ test("04 - something's wrong with range arrays's contents", () => {
       rCrop([[1, 2], [true]], 3);
     },
     /THROW_ID_04/,
-    "04.05"
+    "04.05",
   );
 });
 
@@ -134,7 +134,7 @@ test("05 - third argument within one of given ranges if of a wrong type", () => 
       rCrop([[1, 2, 1]], 3);
     },
     /THROW_ID_05/,
-    "05.01"
+    "05.01",
   );
 });
 

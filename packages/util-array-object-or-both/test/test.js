@@ -48,7 +48,7 @@ test("04 - opts.msg", () => {
       msg: "z",
     }),
     "object",
-    "04.01"
+    "04.01",
   );
   throws(
     () => {
@@ -57,7 +57,7 @@ test("04 - opts.msg", () => {
       });
     },
     "z The given variable was customised to an unrecognised value: aaa. Please check it against the API documentation.",
-    "04.02"
+    "04.02",
   );
   throws(
     () => {
@@ -66,7 +66,7 @@ test("04 - opts.msg", () => {
       });
     },
     "some-library/some-function(): [THROW_ID_99] The given variable was customised to an unrecognised value: aaa. Please check it against the API documentation.",
-    "04.03"
+    "04.03",
   );
   throws(
     () => {
@@ -76,7 +76,7 @@ test("04 - opts.msg", () => {
       });
     },
     'some-library/some-function(): [THROW_ID_99] The variable "only" was customised to an unrecognised value: bbb. Please check it against the API documentation.',
-    "04.04"
+    "04.04",
   );
 });
 

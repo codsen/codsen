@@ -19,5 +19,5 @@ assert.equal(
   isOpening('<a>div class="w-64 h-3">', 3, {
     skipOpeningBracket: true,
   }),
-  true
+  true,
 );

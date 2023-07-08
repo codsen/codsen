@@ -30,5 +30,5 @@ assert.deepEqual(
         d: "d",
       },
     ],
-  }
+  },
 );

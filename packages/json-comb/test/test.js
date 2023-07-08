@@ -162,26 +162,26 @@ test("04 - normalisation, called on the directory with subdirectories", async ()
     (oneOfTestFilePaths, testIndex) =>
       fs.writeJson(
         path.join(tempFolder, oneOfTestFilePaths),
-        testFileContents[testIndex]
-      )
+        testFileContents[testIndex],
+      ),
   )
     .then(() =>
       fs.writeFile(
         path.join(tempFolder, "test1/.something.yml"), //  - dotfile in yml with yml extension
-        "foo:\n  bar"
-      )
+        "foo:\n  bar",
+      ),
     )
     .then(() =>
       fs.writeFile(
         path.join(tempFolder, "test1/.somethinginyml"), // - dotfile in yml without yml extension
-        "foo:\n  bar"
-      )
+        "foo:\n  bar",
+      ),
     )
     .then(() => execa("./cli.js", ["-n", tempFolder]))
     .then(() =>
       pMap(testFilePaths, (oneOfPaths) =>
-        fs.readFile(path.join(tempFolder, oneOfPaths), "utf8")
-      )
+        fs.readFile(path.join(tempFolder, oneOfPaths), "utf8"),
+      ),
     )
     .catch((err) => {
       throw new Error(err);

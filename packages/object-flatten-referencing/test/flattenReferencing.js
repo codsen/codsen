@@ -15,21 +15,21 @@ test("01 - throws when inputs are missing/wrong", () => {
       ofr();
     },
     /THROW_ID_01/g,
-    "01.01"
+    "01.01",
   );
   throws(
     () => {
       ofr({ a: "a" });
     },
     /THROW_ID_02/g,
-    "01.02"
+    "01.02",
   );
   throws(
     () => {
       ofr({ a: "a" }, { a: "a" }, 1);
     },
     /THROW_ID_03/g,
-    "01.03"
+    "01.03",
   );
 });
 
@@ -47,13 +47,13 @@ test("02 - defaults - objects, one level", () => {
       {
         key1: "Contact us",
         key2: "Tel. 0123456789",
-      }
+      },
     ),
     {
       key1: "%%_val11.val12_%%",
       key2: "%%_val21.val22_%%",
     },
-    "02.01"
+    "02.01",
   );
   equal(
     ofr(
@@ -68,13 +68,13 @@ test("02 - defaults - objects, one level", () => {
       {
         wrapHeadsWith: "",
         wrapTailsWith: "",
-      }
+      },
     ),
     {
       key1: "val11.val12",
       key2: "val21.val22",
     },
-    "02.02"
+    "02.02",
   );
   equal(
     ofr(
@@ -89,13 +89,13 @@ test("02 - defaults - objects, one level", () => {
       {
         wrapHeadsWith: "{",
         wrapTailsWith: "",
-      }
+      },
     ),
     {
       key1: "{val11.val12",
       key2: "{val21.val22",
     },
-    "02.03"
+    "02.03",
   );
   equal(
     ofr(
@@ -110,13 +110,13 @@ test("02 - defaults - objects, one level", () => {
       {
         wrapHeadsWith: "",
         wrapTailsWith: "}",
-      }
+      },
     ),
     {
       key1: "val11.val12}",
       key2: "val21.val22}",
     },
-    "02.04"
+    "02.04",
   );
   equal(
     ofr(
@@ -130,13 +130,13 @@ test("02 - defaults - objects, one level", () => {
       },
       {
         dontWrapKeys: "key*",
-      }
+      },
     ),
     {
       key1: "val11.val12",
       key2: "val21.val22",
     },
-    "02.05"
+    "02.05",
   );
   equal(
     ofr(
@@ -150,13 +150,13 @@ test("02 - defaults - objects, one level", () => {
       },
       {
         dontWrapKeys: ["key*"],
-      }
+      },
     ),
     {
       key1: "val11.val12",
       key2: "val21.val22",
     },
-    "02.06"
+    "02.06",
   );
   equal(
     ofr(
@@ -170,13 +170,13 @@ test("02 - defaults - objects, one level", () => {
       },
       {
         dontWrapKeys: ["*1", "*2", "*3"],
-      }
+      },
     ),
     {
       key1: "val11.val12",
       key2: "val21.val22",
     },
-    "02.07"
+    "02.07",
   );
   equal(
     ofr(
@@ -190,13 +190,13 @@ test("02 - defaults - objects, one level", () => {
       },
       {
         dontWrapKeys: ["a*", "*1", "*3"],
-      }
+      },
     ),
     {
       thekey1: "val11.val12",
       akey2: "val21.val22",
     },
-    "02.08"
+    "02.08",
   );
   equal(
     ofr(
@@ -210,13 +210,13 @@ test("02 - defaults - objects, one level", () => {
       },
       {
         dontWrapKeys: ["a*", "*1", "*3"],
-      }
+      },
     ),
     {
       thekey1: "val11.val12",
       akey2: "val21.val22",
     },
-    "02.09"
+    "02.09",
   );
   equal(
     ofr(
@@ -230,13 +230,13 @@ test("02 - defaults - objects, one level", () => {
       },
       {
         dontWrapKeys: "key*",
-      }
+      },
     ),
     {
       KEY1: "val11.val12",
       KEY2: "val21.val22",
     },
-    "02.10"
+    "02.10",
   );
 });
 
@@ -250,13 +250,13 @@ test("03 - opts.preventDoubleWrapping", () => {
       {
         key1: "Contact us",
         key2: "Tel. 0123456789",
-      }
+      },
     ),
     {
       key1: "%%_val11.val12_%%",
       key2: "%%_val21.val22_%%",
     },
-    "03.01"
+    "03.01",
   );
   equal(
     ofr(
@@ -270,13 +270,13 @@ test("03 - opts.preventDoubleWrapping", () => {
       },
       {
         preventDoubleWrapping: false,
-      }
+      },
     ),
     {
       key1: "%%_%%_val11.val12_%%_%%",
       key2: "%%_val21.val22_%%",
     },
-    "03.02"
+    "03.02",
   );
   equal(
     ofr(
@@ -291,13 +291,13 @@ test("03 - opts.preventDoubleWrapping", () => {
       {
         wrapHeadsWith: "{",
         wrapTailsWith: "}",
-      }
+      },
     ),
     {
       key1: "{val11.val12}",
       key2: "{val21.val22}",
     },
-    "03.03"
+    "03.03",
   );
   equal(
     ofr(
@@ -312,13 +312,13 @@ test("03 - opts.preventDoubleWrapping", () => {
       {
         wrapHeadsWith: "%%",
         wrapTailsWith: "%%",
-      }
+      },
     ),
     {
       key1: "aaa %%val11.val12%% bbb",
       key2: "%%val21.val22%%",
     },
-    "03.04"
+    "03.04",
   );
 });
 
@@ -338,7 +338,7 @@ test("04 - flattens an array value but doesn't touch other one", () => {
         key3: {
           key4: ["val4", "val5", "val6"],
         },
-      }
+      },
     ),
     {
       key1: "%%_key2.val1_%%<br />%%_key2.val2_%%<br />%%_key2.val3_%%",
@@ -346,7 +346,7 @@ test("04 - flattens an array value but doesn't touch other one", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "04.01"
+    "04.01",
   );
   equal(
     ofr(
@@ -366,7 +366,7 @@ test("04 - flattens an array value but doesn't touch other one", () => {
       },
       {
         xhtml: false,
-      }
+      },
     ),
     {
       key1: "%%_key2.val1_%%<br>%%_key2.val2_%%<br>%%_key2.val3_%%",
@@ -374,7 +374,7 @@ test("04 - flattens an array value but doesn't touch other one", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "04.02"
+    "04.02",
   );
   equal(
     ofr(
@@ -395,7 +395,7 @@ test("04 - flattens an array value but doesn't touch other one", () => {
       {
         wrapHeadsWith: "%%_",
         wrapTailsWith: "_%%",
-      }
+      },
     ),
     {
       key1: "%%_key2.val1_%%<br />%%_key2.val2_%%<br />%%_key2.val3_%%",
@@ -403,7 +403,7 @@ test("04 - flattens an array value but doesn't touch other one", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "04.03"
+    "04.03",
   );
   equal(
     ofr(
@@ -425,7 +425,7 @@ test("04 - flattens an array value but doesn't touch other one", () => {
         wrapHeadsWith: "%%_",
         wrapTailsWith: "_%%",
         xhtml: false,
-      }
+      },
     ),
     {
       key1: "%%_key2.val1_%%<br>%%_key2.val2_%%<br>%%_key2.val3_%%",
@@ -433,7 +433,7 @@ test("04 - flattens an array value but doesn't touch other one", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "04.04"
+    "04.04",
   );
   equal(
     ofr(
@@ -453,7 +453,7 @@ test("04 - flattens an array value but doesn't touch other one", () => {
       },
       {
         mergeArraysWithLineBreaks: false,
-      }
+      },
     ),
     {
       key1: "%%_key2.val1_%%%%_key2.val2_%%%%_key2.val3_%%",
@@ -461,7 +461,7 @@ test("04 - flattens an array value but doesn't touch other one", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "04.05"
+    "04.05",
   );
 });
 
@@ -484,7 +484,7 @@ test("05 - wildcards in opts.dontWrapKeys", () => {
       },
       {
         dontWrapKeys: "*1",
-      }
+      },
     ),
     {
       key1: "key2.val1<br />key2.val2<br />key2.val3",
@@ -492,7 +492,7 @@ test("05 - wildcards in opts.dontWrapKeys", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "05.01"
+    "05.01",
   );
   equal(
     ofr(
@@ -512,7 +512,7 @@ test("05 - wildcards in opts.dontWrapKeys", () => {
       },
       {
         dontWrapKeys: "*1",
-      }
+      },
     ),
     {
       key1: "key2.val1<br />key2.val2<br />key2.val3",
@@ -520,7 +520,7 @@ test("05 - wildcards in opts.dontWrapKeys", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "05.02"
+    "05.02",
   );
   equal(
     ofr(
@@ -541,7 +541,7 @@ test("05 - wildcards in opts.dontWrapKeys", () => {
       {
         xhtml: false,
         dontWrapKeys: "*3",
-      }
+      },
     ),
     {
       key1: "%%_key2.val1_%%<br>%%_key2.val2_%%<br>%%_key2.val3_%%",
@@ -549,7 +549,7 @@ test("05 - wildcards in opts.dontWrapKeys", () => {
         key4: ["val4", "val5", "val6"],
       },
     },
-    "05.03"
+    "05.03",
   );
   equal(
     ofr(
@@ -571,7 +571,7 @@ test("05 - wildcards in opts.dontWrapKeys", () => {
         wrapHeadsWith: "%%_",
         wrapTailsWith: "_%%",
         dontWrapKeys: "key3*",
-      }
+      },
     ),
     {
       key1: "%%_key2.val1_%%<br />%%_key2.val2_%%<br />%%_key2.val3_%%",
@@ -579,7 +579,7 @@ test("05 - wildcards in opts.dontWrapKeys", () => {
         key4: ["val4", "val5", "val6"],
       },
     },
-    "05.04"
+    "05.04",
   );
   equal(
     ofr(
@@ -602,7 +602,7 @@ test("05 - wildcards in opts.dontWrapKeys", () => {
         wrapTailsWith: "_%%",
         xhtml: false,
         dontWrapKeys: "key4*",
-      }
+      },
     ),
     {
       key1: "%%_key2.val1_%%<br>%%_key2.val2_%%<br>%%_key2.val3_%%",
@@ -610,7 +610,7 @@ test("05 - wildcards in opts.dontWrapKeys", () => {
         key4: ["val4", "val5", "val6"],
       },
     },
-    "05.05"
+    "05.05",
   );
 });
 
@@ -628,7 +628,7 @@ test("06 - array of input vs string of reference", () => {
         key3: {
           key4: ["aaa", "zzz"],
         },
-      }
+      },
     ),
     {
       key1: "%%_val1_%%<br />%%_val2_%%<br />%%_val3_%%",
@@ -636,7 +636,7 @@ test("06 - array of input vs string of reference", () => {
         key4: ["%%_val4_%%", "%%_val5_%%"],
       },
     },
-    "06.01"
+    "06.01",
   );
 });
 
@@ -672,7 +672,7 @@ test("07 - action within an array's contents", () => {
             c: "cc",
           },
         ],
-      }
+      },
     ),
     {
       key1: [
@@ -688,7 +688,7 @@ test("07 - action within an array's contents", () => {
         },
       ],
     },
-    "07.01"
+    "07.01",
   );
 });
 
@@ -706,7 +706,7 @@ test("08 - doesn't wrap empty string values", () => {
         key3: {
           key4: ["aaa", "zzz"],
         },
-      }
+      },
     ),
     {
       key1: "%%_val1_%%<br />%%_val2_%%<br />%%_val3_%%",
@@ -714,7 +714,7 @@ test("08 - doesn't wrap empty string values", () => {
         key4: ["%%_val4_%%", ""],
       },
     },
-    "08.01"
+    "08.01",
   );
 });
 
@@ -732,7 +732,7 @@ test("09 - reference array as value is shorter than input's", () => {
         key3: {
           key4: ["aaa"],
         },
-      }
+      },
     ),
     {
       key1: "%%_val1_%%<br />%%_val2_%%<br />%%_val3_%%",
@@ -740,7 +740,7 @@ test("09 - reference array as value is shorter than input's", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "09.01"
+    "09.01",
   );
 });
 
@@ -760,14 +760,14 @@ test("10 - one ignore works on multiple keys", () => {
         dontWrapKeys: ["key*"],
         wrapHeadsWith: "${",
         wrapTailsWith: "}",
-      }
+      },
     ),
     {
       key_aaaa: "something",
       key_bbbb: "anything",
       wrapme: "oh yes",
     },
-    "10.01"
+    "10.01",
   );
   equal(
     ofr(
@@ -785,14 +785,14 @@ test("10 - one ignore works on multiple keys", () => {
         wrapHeadsWith: "${",
         wrapTailsWith: "}",
         whatToDoWhenReferenceIsMissing: 0,
-      }
+      },
     ),
     {
       key_aaaa: "something",
       key_bbbb: "anything",
       wrapme: "oh yes",
     },
-    "10.02"
+    "10.02",
   );
   equal(
     ofr(
@@ -810,14 +810,14 @@ test("10 - one ignore works on multiple keys", () => {
         wrapHeadsWith: "${",
         wrapTailsWith: "}",
         whatToDoWhenReferenceIsMissing: 2,
-      }
+      },
     ),
     {
       key_aaaa: "something",
       key_bbbb: "anything",
       wrapme: "${oh yes}",
     },
-    "10.03"
+    "10.03",
   );
   equal(
     ofr(
@@ -835,14 +835,14 @@ test("10 - one ignore works on multiple keys", () => {
         dontWrapKeys: ["key*"],
         wrapHeadsWith: "${",
         wrapTailsWith: "}",
-      }
+      },
     ),
     {
       key_aaaa: "something",
       key_bbbb: "anything",
       wrapme: "${oh yes}",
     },
-    "10.04"
+    "10.04",
   );
   equal(
     ofr(
@@ -860,14 +860,14 @@ test("10 - one ignore works on multiple keys", () => {
         dontWrapKeys: ["key*"],
         wrapHeadsWith: "${",
         wrapTailsWith: "}",
-      }
+      },
     ),
     {
       key_aaaa: "a.a",
       key_bbbb: "b.b",
       wrapme: "${c.c}",
     },
-    "10.05"
+    "10.05",
   );
 });
 
@@ -893,7 +893,7 @@ test("11 - deeper level - array VS. string", () => {
           },
         ],
         b_key: "b_val",
-      }
+      },
     ),
     {
       a_key: [
@@ -910,7 +910,7 @@ test("11 - deeper level - array VS. string", () => {
       ],
       b_key: "%%_b_val_%%",
     },
-    "11.01"
+    "11.01",
   );
 });
 
@@ -924,14 +924,14 @@ test("12 - deeper level - array within array VS. string", () => {
       {
         a_key: "a_val",
         b_key: "b_val",
-      }
+      },
     ),
     {
       a_key:
         "%%_xxxx_%%<br />%%_1111_%% %%_2222_%% %%_3333_%%<br />%%_yyyy_%%<br />%%_zzzz_%%",
       b_key: "%%_b_val_%%",
     },
-    "12.01"
+    "12.01",
   );
 });
 
@@ -955,7 +955,7 @@ test("13 - deeper level - array within array VS. string #2", () => {
             m_key: "m_val",
           },
         ],
-      }
+      },
     ),
     {
       a: [
@@ -967,7 +967,7 @@ test("13 - deeper level - array within array VS. string #2", () => {
         },
       ],
     },
-    "13.01"
+    "13.01",
   );
   equal(
     ofr(
@@ -988,7 +988,7 @@ test("13 - deeper level - array within array VS. string #2", () => {
             m_key: "m_val",
           },
         ],
-      }
+      },
     ),
     {
       a: [
@@ -1000,7 +1000,7 @@ test("13 - deeper level - array within array VS. string #2", () => {
         },
       ],
     },
-    "13.02"
+    "13.02",
   );
 });
 
@@ -1064,7 +1064,7 @@ test("14 - one ignore works on multiple keys", () => {
         wrapHeadsWith: "{{ ",
         wrapTailsWith: " }}",
         xhtml: true,
-      }
+      },
     ),
     {
       modules: [
@@ -1092,7 +1092,7 @@ test("14 - one ignore works on multiple keys", () => {
         },
       ],
     },
-    "14.01"
+    "14.01",
   );
 });
 
@@ -1111,12 +1111,12 @@ test("15 - opts.mergeWithoutTrailingBrIfLineContainsBr", () => {
       },
       {
         wrapGlobalFlipSwitch: false,
-      }
+      },
     ),
     {
       key1: "{% if val1 %}{{ val1 }}<br />{% endif %}{% if val2 %}{{ val2 }}<br />{% endif %}{% if val3 %}{{ val3 }}{% endif %}",
     },
-    "15.01"
+    "15.01",
   );
   equal(
     ofr(
@@ -1133,12 +1133,12 @@ test("15 - opts.mergeWithoutTrailingBrIfLineContainsBr", () => {
       {
         wrapGlobalFlipSwitch: false,
         mergeWithoutTrailingBrIfLineContainsBr: true,
-      }
+      },
     ),
     {
       key1: "{% if val1 %}{{ val1 }}<br />{% endif %}{% if val2 %}{{ val2 }}<br />{% endif %}{% if val3 %}{{ val3 }}{% endif %}",
     },
-    "15.02"
+    "15.02",
   );
   equal(
     ofr(
@@ -1155,12 +1155,12 @@ test("15 - opts.mergeWithoutTrailingBrIfLineContainsBr", () => {
       {
         wrapGlobalFlipSwitch: false,
         mergeWithoutTrailingBrIfLineContainsBr: false,
-      }
+      },
     ),
     {
       key1: "{% if val1 %}{{ val1 }}<br />{% endif %}<br />{% if val2 %}{{ val2 }}<br />{% endif %}<br />{% if val3 %}{{ val3 }}{% endif %}",
     },
-    "15.03"
+    "15.03",
   );
 
   // NOW COMBOS:
@@ -1181,12 +1181,12 @@ test("15 - opts.mergeWithoutTrailingBrIfLineContainsBr", () => {
         wrapGlobalFlipSwitch: false,
         xhtml: false,
         mergeWithoutTrailingBrIfLineContainsBr: false,
-      }
+      },
     ),
     {
       key1: "{% if val1 %}{{ val1 }}<br />{% endif %}<br>{% if val2 %}{{ val2 }}<br />{% endif %}<br>{% if val3 %}{{ val3 }}{% endif %}",
     },
-    "15.04"
+    "15.04",
   );
 });
 
@@ -1204,13 +1204,13 @@ test("16 - opts.ignore & wrapping function", () => {
       {
         key1: "Contact us",
         key2: "Tel. 0123456789",
-      }
+      },
     ),
     {
       key1: "%%_val11.val12_%%",
       key2: "%%_val21.val22_%%",
     },
-    "16.01"
+    "16.01",
   );
   equal(
     ofr(
@@ -1224,13 +1224,13 @@ test("16 - opts.ignore & wrapping function", () => {
       },
       {
         ignore: "key1",
-      }
+      },
     ),
     {
       key1: "val11.val12",
       key2: "%%_val21.val22_%%",
     },
-    "16.02"
+    "16.02",
   );
   equal(
     ofr(
@@ -1244,13 +1244,13 @@ test("16 - opts.ignore & wrapping function", () => {
       },
       {
         ignore: ["z", "key1"],
-      }
+      },
     ),
     {
       key1: "val11.val12",
       key2: "%%_val21.val22_%%",
     },
-    "16.03"
+    "16.03",
   );
 });
 
@@ -1270,7 +1270,7 @@ test("17 - flattens an array value but doesn't touch other one", () => {
         key3: {
           key4: ["val4", "val5", "val6"],
         },
-      }
+      },
     ),
     {
       key1: "%%_key2.val1_%%<br />%%_key2.val2_%%<br />%%_key2.val3_%%",
@@ -1278,7 +1278,7 @@ test("17 - flattens an array value but doesn't touch other one", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "17.01"
+    "17.01",
   );
   equal(
     ofr(
@@ -1299,7 +1299,7 @@ test("17 - flattens an array value but doesn't touch other one", () => {
       {
         wrapHeadsWith: "%%_",
         wrapTailsWith: "_%%",
-      }
+      },
     ),
     {
       key1: "%%_key2.val1_%%<br />%%_key2.val2_%%<br />%%_key2.val3_%%",
@@ -1307,7 +1307,7 @@ test("17 - flattens an array value but doesn't touch other one", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "17.02"
+    "17.02",
   );
   equal(
     ofr(
@@ -1327,7 +1327,7 @@ test("17 - flattens an array value but doesn't touch other one", () => {
       },
       {
         ignore: "key1",
-      }
+      },
     ),
     {
       key1: {
@@ -1337,7 +1337,7 @@ test("17 - flattens an array value but doesn't touch other one", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "17.03"
+    "17.03",
   );
   equal(
     ofr(
@@ -1359,7 +1359,7 @@ test("17 - flattens an array value but doesn't touch other one", () => {
         wrapHeadsWith: "%%_",
         wrapTailsWith: "_%%",
         ignore: "key1",
-      }
+      },
     ),
     {
       key1: {
@@ -1369,7 +1369,7 @@ test("17 - flattens an array value but doesn't touch other one", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "17.04"
+    "17.04",
   );
   equal(
     ofr(
@@ -1395,7 +1395,7 @@ test("17 - flattens an array value but doesn't touch other one", () => {
         wrapHeadsWith: "%%_",
         wrapTailsWith: "_%%",
         ignore: "key0",
-      }
+      },
     ),
     {
       key0: {
@@ -1406,7 +1406,7 @@ test("17 - flattens an array value but doesn't touch other one", () => {
         key4: ["%%_val4_%%", "%%_val5_%%", "%%_val6_%%"],
       },
     },
-    "17.05"
+    "17.05",
   );
 });
 
@@ -1427,7 +1427,7 @@ test("18 - opts.whatToDoWhenReferenceIsMissing", () => {
       },
       {
         a: "a",
-      }
+      },
     ),
     {
       a: "%%_c.d_%%",
@@ -1435,7 +1435,7 @@ test("18 - opts.whatToDoWhenReferenceIsMissing", () => {
         e: "f",
       },
     },
-    "18.01"
+    "18.01",
   );
   equal(
     ofr(
@@ -1449,7 +1449,7 @@ test("18 - opts.whatToDoWhenReferenceIsMissing", () => {
       },
       {
         a: "a",
-      }
+      },
     ),
     {
       a: "%%_c.d_%%",
@@ -1457,7 +1457,7 @@ test("18 - opts.whatToDoWhenReferenceIsMissing", () => {
         e: "f",
       },
     },
-    "18.02"
+    "18.02",
   );
   throws(
     () => {
@@ -1475,11 +1475,11 @@ test("18 - opts.whatToDoWhenReferenceIsMissing", () => {
         },
         {
           whatToDoWhenReferenceIsMissing: 1,
-        }
+        },
       );
     },
     "18.03",
-    "18.03"
+    "18.03",
   );
   equal(
     ofr(
@@ -1496,13 +1496,13 @@ test("18 - opts.whatToDoWhenReferenceIsMissing", () => {
       },
       {
         whatToDoWhenReferenceIsMissing: 2,
-      }
+      },
     ),
     {
       a: "%%_c.d_%%",
       b: "%%_e.f_%%",
     },
-    "18.04"
+    "18.04",
   );
 });
 
@@ -1520,13 +1520,13 @@ test("19 - double-wrapping prevention when markers have white space", () => {
       {
         key1: "Contact us",
         key2: "Tel. 0123456789",
-      }
+      },
     ),
     {
       key1: "%%_val11.val12_%%",
       key2: "%%_val21.val22_%%",
     },
-    "19.01"
+    "19.01",
   );
   equal(
     ofr(
@@ -1541,13 +1541,13 @@ test("19 - double-wrapping prevention when markers have white space", () => {
       {
         wrapHeadsWith: "%%_ ", // << notice the white space around markers
         wrapTailsWith: " _%%",
-      }
+      },
     ),
     {
       key1: "%%_val11.val12_%%",
       key2: "%%_ val21.val22 _%%",
     },
-    "19.02"
+    "19.02",
   );
   equal(
     ofr(
@@ -1562,13 +1562,13 @@ test("19 - double-wrapping prevention when markers have white space", () => {
       {
         wrapHeadsWith: "{ ", // << notice the white space around markers
         wrapTailsWith: " }",
-      }
+      },
     ),
     {
       key1: "{val11.val12}", // << not { {val11.val12} }
       key2: "{ val21.val22 }",
     },
-    "19.03"
+    "19.03",
   );
 });
 
@@ -1586,13 +1586,13 @@ test("20 - double-wrapping prevention from setting opts.preventWrappingIfContain
       {
         wrapHeadsWith: "{{ ",
         wrapTailsWith: " }}",
-      }
+      },
     ),
     {
       key1: "{{ {% if some_module.some_special_value %}some text{% endif %} }}",
       key2: "{{ val21.val22 }}",
     },
-    "20.01"
+    "20.01",
   );
   equal(
     ofr(
@@ -1608,13 +1608,13 @@ test("20 - double-wrapping prevention from setting opts.preventWrappingIfContain
         wrapHeadsWith: "{{ ",
         wrapTailsWith: " }}",
         preventWrappingIfContains: "{%",
-      }
+      },
     ),
     {
       key1: "{% if some_module.some_special_value %}some text{% endif %}",
       key2: "{{ val21.val22 }}",
     },
-    "20.02"
+    "20.02",
   );
   equal(
     ofr(
@@ -1630,13 +1630,13 @@ test("20 - double-wrapping prevention from setting opts.preventWrappingIfContain
         wrapHeadsWith: "{{ ",
         wrapTailsWith: " }}",
         preventWrappingIfContains: ["zzz", "{%"],
-      }
+      },
     ),
     {
       key1: "{% if some_module.some_special_value %}some text{% endif %}",
       key2: "{{ val21.val22 }}",
     },
-    "20.03"
+    "20.03",
   );
   equal(
     ofr(
@@ -1652,13 +1652,13 @@ test("20 - double-wrapping prevention from setting opts.preventWrappingIfContain
         wrapHeadsWith: "{{ ",
         wrapTailsWith: " }}",
         preventWrappingIfContains: ["yyy", "zzz"],
-      }
+      },
     ),
     {
       key1: "{{ {% if some_module.some_special_value %}some text{% endif %} }}",
       key2: "{{ val21.val22 }}",
     },
-    "20.04"
+    "20.04",
   );
   equal(
     ofr(
@@ -1675,13 +1675,13 @@ test("20 - double-wrapping prevention from setting opts.preventWrappingIfContain
         wrapTailsWith: " }}",
         preventWrappingIfContains: ["yyy", "zzz"],
         wrapGlobalFlipSwitch: false,
-      }
+      },
     ),
     {
       key1: "{% if some_module.some_special_value %}some text{% endif %}",
       key2: "val21.val22",
     },
-    "20.05"
+    "20.05",
   );
 });
 

@@ -41,7 +41,7 @@ test(`01 - ${`\u001b[${36}m${"edge cases"}\u001b[${39}m`} - empty string`, () =>
       to: null, // <-- implied to process the whole string
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(gatheredChunks.length, 0, "01.01");
@@ -60,7 +60,7 @@ test(`03 - ${`\u001b[${36}m${"edge cases"}\u001b[${39}m`} - not a string`, () =>
       processCommaSep(true);
     },
     /THROW_ID_01/,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -77,7 +77,7 @@ test(`04 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - one chunk`, () => {
       to: null, // <-- implied to process the whole string
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(gatheredChunks, [[0, 3]], "04.01");
@@ -94,7 +94,7 @@ test(`05 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - two chunks`, () => {
       to: null, // <-- implied to process the whole string
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(
@@ -103,7 +103,7 @@ test(`05 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - two chunks`, () => {
       [0, 3],
       [4, 7],
     ],
-    "05.01"
+    "05.01",
   );
   equal(gatheredErrors, [], "05.02");
 });
@@ -118,7 +118,7 @@ test(`06 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - space after comma, d
       to: 24,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(
@@ -127,12 +127,12 @@ test(`06 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - space after comma, d
       [16, 19],
       [21, 24],
     ],
-    "06.01"
+    "06.01",
   );
   equal(
     gatheredErrors,
     [{ ranges: [[20, 21]], message: "Remove whitespace.", fixable: true }],
-    "06.02"
+    "06.02",
   );
 });
 
@@ -147,7 +147,7 @@ test(`07 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - starts with separato
       separator: ".",
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(
@@ -156,7 +156,7 @@ test(`07 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - starts with separato
       [17, 20],
       [21, 24],
     ],
-    "07.01"
+    "07.01",
   );
   equal(
     gatheredErrors,
@@ -166,7 +166,7 @@ test(`07 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - starts with separato
       { ranges: [[24, 25]], message: "Remove separator.", fixable: true },
       { ranges: [[27, 28]], message: "Remove separator.", fixable: true },
     ],
-    "07.02"
+    "07.02",
   );
 });
 
@@ -181,7 +181,7 @@ test(`08 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - starts with separato
       separator: ",",
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(
@@ -190,7 +190,7 @@ test(`08 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - starts with separato
       [20, 23],
       [27, 30],
     ],
-    "08.01"
+    "08.01",
   );
   equal(
     gatheredErrors,
@@ -206,7 +206,7 @@ test(`08 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - starts with separato
       { ranges: [[31, 32]], message: "Remove separator.", fixable: true },
       { ranges: [[34, 35]], message: "Remove separator.", fixable: true },
     ],
-    "08.02"
+    "08.02",
   );
 });
 
@@ -220,7 +220,7 @@ test(`09 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - 2 spaces after comma
       to: 25,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(
@@ -229,7 +229,7 @@ test(`09 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - 2 spaces after comma
       [16, 19],
       [22, 25],
     ],
-    "09.01"
+    "09.01",
   );
   equal(
     gatheredErrors,
@@ -240,7 +240,7 @@ test(`09 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - 2 spaces after comma
         fixable: true,
       },
     ],
-    "09.02"
+    "09.02",
   );
 });
 
@@ -255,7 +255,7 @@ test(`10 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - 2 spaces after comma
       oneSpaceAfterCommaOK: true,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(
@@ -264,7 +264,7 @@ test(`10 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - 2 spaces after comma
       [16, 19],
       [22, 25],
     ],
-    "10.01"
+    "10.01",
   );
   // not indexes 20-22 but 21-22 because of opts.oneSpaceAfterCommaOK
   equal(
@@ -276,7 +276,7 @@ test(`10 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - 2 spaces after comma
         fixable: true,
       },
     ],
-    "10.02"
+    "10.02",
   );
 });
 
@@ -291,7 +291,7 @@ test(`11 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - 2 spaces after comma
       oneSpaceAfterCommaOK: true,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(
@@ -300,7 +300,7 @@ test(`11 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - 2 spaces after comma
       [16, 19],
       [22, 25],
     ],
-    "11.01"
+    "11.01",
   );
   // not indexes 20-22 but 21-22 because of opts.oneSpaceAfterCommaOK
   equal(
@@ -312,7 +312,7 @@ test(`11 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - 2 spaces after comma
         fixable: true,
       },
     ],
-    "11.02"
+    "11.02",
   );
 });
 
@@ -327,7 +327,7 @@ test(`12 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - with URL, offset`, (
       oneSpaceAfterCommaOK: false,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(
@@ -336,7 +336,7 @@ test(`12 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - with URL, offset`, (
       [18, 35],
       [37, 44],
     ],
-    "12.01"
+    "12.01",
   );
   equal(
     gatheredErrors,
@@ -362,7 +362,7 @@ test(`12 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - with URL, offset`, (
         fixable: true,
       },
     ],
-    "12.02"
+    "12.02",
   );
 });
 
@@ -375,7 +375,7 @@ test(`13 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - with URL, offset`, (
       oneSpaceAfterCommaOK: false,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(
@@ -384,7 +384,7 @@ test(`13 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - with URL, offset`, (
       [1, 18],
       [20, 27],
     ],
-    "13.01"
+    "13.01",
   );
   equal(
     gatheredErrors,
@@ -410,7 +410,7 @@ test(`13 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - with URL, offset`, (
         fixable: true,
       },
     ],
-    "13.02"
+    "13.02",
   );
 });
 
@@ -428,7 +428,7 @@ test(`14 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - from-to ranges`, () 
       leadingWhitespaceOK: true,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(gatheredChunks, [[16, 20]], "14.01");
@@ -444,7 +444,7 @@ test(`15 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - whole string`, () =>
       leadingWhitespaceOK: true,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(gatheredChunks, [[1, 5]], "15.01");
@@ -461,7 +461,7 @@ test(`16 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - whole string + offse
       offset: 15,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(gatheredChunks, [[16, 20]], "16.01");
@@ -479,7 +479,7 @@ test(`17 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
       leadingWhitespaceOK: true,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(gatheredChunks, [[16, 20]], "17.01");
@@ -492,7 +492,7 @@ test(`17 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
         fixable: true,
       },
     ],
-    "17.02"
+    "17.02",
   );
 });
 
@@ -508,7 +508,7 @@ test(`18 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
       trailingWhitespaceOK: true,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(gatheredChunks, [[16, 20]], "18.01");
@@ -526,7 +526,7 @@ test(`19 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
       trailingWhitespaceOK: true,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(gatheredChunks, [[16, 20]], "19.01");
@@ -539,7 +539,7 @@ test(`19 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
         fixable: true,
       },
     ],
-    "19.02"
+    "19.02",
   );
 });
 
@@ -554,7 +554,7 @@ test(`20 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
       leadingWhitespaceOK: true,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(gatheredChunks, [[16, 20]], "20.01");
@@ -567,7 +567,7 @@ test(`20 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
         fixable: true,
       },
     ],
-    "20.02"
+    "20.02",
   );
 });
 
@@ -585,7 +585,7 @@ test(`21 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - more complex`, () =>
       innerWhitespaceAllowed: false,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(
@@ -594,7 +594,7 @@ test(`21 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - more complex`, () =>
       [offset + 1, offset + 18],
       [offset + 20, offset + 27],
     ],
-    "21.01"
+    "21.01",
   );
   equal(
     gatheredErrors,
@@ -620,7 +620,7 @@ test(`21 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - more complex`, () =>
         fixable: true,
       },
     ],
-    "21.02"
+    "21.02",
   );
 });
 
@@ -638,7 +638,7 @@ test(`22 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
       truetrailingWhitespaceOK: true,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(
@@ -648,7 +648,7 @@ test(`22 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
       [19, 26],
       [28, 31],
     ],
-    "22.01"
+    "22.01",
   );
   equal(
     gatheredErrors,
@@ -669,7 +669,7 @@ test(`22 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
         fixable: true,
       },
     ],
-    "22.02"
+    "22.02",
   );
 });
 
@@ -685,7 +685,7 @@ test(`23 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
       innerWhitespaceAllowed: true,
     },
     gatheredChunks,
-    gatheredErrors
+    gatheredErrors,
   );
 
   equal(
@@ -695,7 +695,7 @@ test(`23 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
       [19, 26],
       [28, 31],
     ],
-    "23.01"
+    "23.01",
   );
   equal(
     gatheredErrors,
@@ -711,7 +711,7 @@ test(`23 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
         fixable: true,
       },
     ],
-    "23.02"
+    "23.02",
   );
 });
 

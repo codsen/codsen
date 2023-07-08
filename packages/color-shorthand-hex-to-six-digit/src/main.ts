@@ -24,7 +24,7 @@ function conv(input: any): any {
     hex: string,
     _findings: any,
     offset: number,
-    string: string
+    string: string,
   ): string {
     if (
       string[offset - 1] !== "&" && // consider false positives like &#124;
@@ -32,7 +32,7 @@ function conv(input: any): any {
       hex.charAt(0) === "#"
     ) {
       return `#${hex.charAt(1)}${hex.charAt(1)}${hex.charAt(2)}${hex.charAt(
-        2
+        2,
       )}${hex.charAt(3)}${hex.charAt(3)}`.toLowerCase();
     }
     return hex.toLowerCase();

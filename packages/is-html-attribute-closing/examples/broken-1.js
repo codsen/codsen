@@ -12,9 +12,9 @@ assert.equal(
     //       |  \_________________________________
     //       |                                   |
     8, // known opening                          |
-    10 // is this an attribute closing at index 10?
+    10, // is this an attribute closing at index 10?
   ),
-  true
+  true,
 );
 // => yes, indeed a closing of an attribute (not counting
 // the code is broken)

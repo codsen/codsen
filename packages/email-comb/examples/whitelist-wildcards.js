@@ -51,5 +51,5 @@ assert.equal(
   comb(someHtml, {
     whitelist: [".module-*", ".particular"],
   }).result,
-  intended
+  intended,
 );

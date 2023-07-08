@@ -10,35 +10,35 @@ test("01 - wrong/missing input", () => {
       split();
     },
     /THROW_ID_01/g,
-    "01.01"
+    "01.01",
   );
   throws(
     () => {
       split(undefined);
     },
     /THROW_ID_01/g,
-    "01.02"
+    "01.02",
   );
   throws(
     () => {
       split(1);
     },
     /THROW_ID_01/g,
-    "01.03"
+    "01.03",
   );
   throws(
     () => {
       split(true);
     },
     /THROW_ID_01/g,
-    "01.04"
+    "01.04",
   );
   throws(
     () => {
       split(null);
     },
     /THROW_ID_01/g,
-    "01.05"
+    "01.05",
   );
 });
 
@@ -52,14 +52,14 @@ test("03 - wrong second arg", () => {
       split("a", true);
     },
     /THROW_ID_02/g,
-    "03.01"
+    "03.01",
   );
   throws(
     () => {
       split("a", "a");
     },
     /THROW_ID_02/g,
-    "03.02"
+    "03.02",
   );
   not.throws(() => {
     split("a", {});
@@ -75,14 +75,14 @@ test("04 - leading whitespace", () => {
       split(" a");
     },
     /THROW_ID_03/g,
-    "04.01"
+    "04.01",
   );
   throws(
     () => {
       split(" a", {});
     },
     /THROW_ID_03/g,
-    "04.02"
+    "04.02",
   );
   throws(
     () => {
@@ -91,7 +91,7 @@ test("04 - leading whitespace", () => {
       });
     },
     /THROW_ID_03/g,
-    "04.03"
+    "04.03",
   );
   not.throws(() => {
     split(" a", {
@@ -106,14 +106,14 @@ test("05 - trailing whitespace", () => {
       split("a ");
     },
     /THROW_ID_04/g,
-    "05.01"
+    "05.01",
   );
   throws(
     () => {
       split("a ", {});
     },
     /THROW_ID_04/g,
-    "05.02"
+    "05.02",
   );
   throws(
     () => {
@@ -122,7 +122,7 @@ test("05 - trailing whitespace", () => {
       });
     },
     /THROW_ID_04/g,
-    "05.03"
+    "05.03",
   );
   not.throws(() => {
     split("a ", {
@@ -137,7 +137,7 @@ test("06 - exports defaults", () => {
     {
       throwIfEdgeWhitespace: true,
     },
-    "06.01"
+    "06.01",
   );
 });
 

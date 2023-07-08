@@ -62,7 +62,7 @@ assert.deepEqual(
         d: "d",
       },
     ],
-  }
+  },
 );
 ```
 

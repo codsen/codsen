@@ -39,9 +39,9 @@ import { isJinjaNunjucksRegex } from "regex-is-jinja-nunjucks";
 // detects Jinja/Nunjucks code
 assert.equal(
   isJinjaNunjucksRegex().test(
-    "<div>{% if data.purchases.count > 1 %}these{% else %}this{% endif %}</div>"
+    "<div>{% if data.purchases.count > 1 %}these{% else %}this{% endif %}</div>",
   ),
-  true
+  true,
 );
 
 // in case if it's not nunjucks

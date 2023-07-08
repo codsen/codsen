@@ -14,7 +14,7 @@ assert.equal(
     {
       a: "a",
       b: "\t\t \t",
-    }
+    },
   ),
-  true
+  true,
 );

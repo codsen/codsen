@@ -25,12 +25,12 @@ test("01 - isProduction4a()", () => {
   equal(
     isProduction4a("\uD800\uDC00"), // #x10000
     true,
-    "01.07"
+    "01.07",
   );
   equal(
     isProduction4a("\uDB7F\uDFFF"), // #xEFFFF
     true,
-    "01.08"
+    "01.08",
   );
 });
 

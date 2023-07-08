@@ -21,10 +21,10 @@ test("02 - util.flattenArr > simple array", () => {
         preventDoubleWrapping: true,
         objectKeyAndValueJoinChar: ".",
       },
-      true
+      true,
     ),
     "%%_a_%% %%_b_%% %%_c_%%",
-    "02.01"
+    "02.01",
   );
   equal(
     flattenArr(
@@ -37,10 +37,10 @@ test("02 - util.flattenArr > simple array", () => {
         preventDoubleWrapping: true,
         objectKeyAndValueJoinChar: ".",
       },
-      false
+      false,
     ),
     "a b c",
-    "02.02"
+    "02.02",
   );
 });
 
@@ -58,10 +58,10 @@ test("03 - util.flattenArr + joinArraysUsingBrs", () => {
         mergeArraysWithLineBreaks: true,
       },
       true,
-      false // joinArraysUsingBrs
+      false, // joinArraysUsingBrs
     ),
     "%%_a_%% %%_b,c,d_%% %%_e_%%",
-    "03.01"
+    "03.01",
   );
   equal(
     flattenArr(
@@ -76,10 +76,10 @@ test("03 - util.flattenArr + joinArraysUsingBrs", () => {
         mergeArraysWithLineBreaks: true,
       },
       false,
-      false // joinArraysUsingBrs
+      false, // joinArraysUsingBrs
     ),
     "a b,c,d e",
-    "03.02"
+    "03.02",
   );
   equal(
     flattenArr(
@@ -94,10 +94,10 @@ test("03 - util.flattenArr + joinArraysUsingBrs", () => {
         mergeArraysWithLineBreaks: false,
       },
       true,
-      false // joinArraysUsingBrs
+      false, // joinArraysUsingBrs
     ),
     "%%_a_%% %%_b,c,d_%% %%_e_%%",
-    "03.03"
+    "03.03",
   );
   equal(
     flattenArr(
@@ -112,10 +112,10 @@ test("03 - util.flattenArr + joinArraysUsingBrs", () => {
         mergeArraysWithLineBreaks: false,
       },
       false,
-      false // joinArraysUsingBrs
+      false, // joinArraysUsingBrs
     ),
     "a b,c,d e",
-    "03.04"
+    "03.04",
   );
 
   // joinArraysUsingBrs = true
@@ -132,10 +132,10 @@ test("03 - util.flattenArr + joinArraysUsingBrs", () => {
         mergeArraysWithLineBreaks: true,
       },
       true,
-      true // joinArraysUsingBrs
+      true, // joinArraysUsingBrs
     ),
     "%%_a_%%<br />%%_b_%% %%_c_%% %%_d_%%<br />%%_e_%%",
-    "03.05"
+    "03.05",
   );
   equal(
     flattenArr(
@@ -150,10 +150,10 @@ test("03 - util.flattenArr + joinArraysUsingBrs", () => {
         mergeArraysWithLineBreaks: true,
       },
       false,
-      true // joinArraysUsingBrs
+      true, // joinArraysUsingBrs
     ),
     "a<br />b c d<br />e",
-    "03.06"
+    "03.06",
   );
   equal(
     flattenArr(
@@ -168,10 +168,10 @@ test("03 - util.flattenArr + joinArraysUsingBrs", () => {
         mergeArraysWithLineBreaks: false,
       },
       true,
-      true // joinArraysUsingBrs
+      true, // joinArraysUsingBrs
     ),
     "%%_a_%%%%_b_%% %%_c_%% %%_d_%%%%_e_%%",
-    "03.07"
+    "03.07",
   );
   equal(
     flattenArr(
@@ -186,10 +186,10 @@ test("03 - util.flattenArr + joinArraysUsingBrs", () => {
         mergeArraysWithLineBreaks: false,
       },
       false,
-      true // joinArraysUsingBrs
+      true, // joinArraysUsingBrs
     ),
     "ab c de",
-    "03.08"
+    "03.08",
   );
 
   // HTML - no slashes
@@ -206,10 +206,10 @@ test("03 - util.flattenArr + joinArraysUsingBrs", () => {
         mergeArraysWithLineBreaks: true,
       },
       true,
-      true // joinArraysUsingBrs
+      true, // joinArraysUsingBrs
     ),
     "%%_a_%%<br>%%_b_%% %%_c_%% %%_d_%%<br>%%_e_%%",
-    "03.09"
+    "03.09",
   );
   equal(
     flattenArr(
@@ -224,10 +224,10 @@ test("03 - util.flattenArr + joinArraysUsingBrs", () => {
         mergeArraysWithLineBreaks: true,
       },
       false,
-      true // joinArraysUsingBrs
+      true, // joinArraysUsingBrs
     ),
     "a<br>b c d<br>e",
-    "03.10"
+    "03.10",
   );
   equal(
     flattenArr(
@@ -242,10 +242,10 @@ test("03 - util.flattenArr + joinArraysUsingBrs", () => {
         mergeArraysWithLineBreaks: true,
       },
       true,
-      false // joinArraysUsingBrs
+      false, // joinArraysUsingBrs
     ),
     "%%_a_%% %%_b,c,d_%% %%_e_%%",
-    "03.11"
+    "03.11",
   );
   equal(
     flattenArr(
@@ -260,10 +260,10 @@ test("03 - util.flattenArr + joinArraysUsingBrs", () => {
         mergeArraysWithLineBreaks: true,
       },
       false,
-      false // joinArraysUsingBrs
+      false, // joinArraysUsingBrs
     ),
     "a b,c,d e",
-    "03.12"
+    "03.12",
   );
 });
 

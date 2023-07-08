@@ -10,7 +10,7 @@ declare const defaults: Opts;
 declare function rInvert(
   arrOfRanges: Ranges,
   strLen: number,
-  originalOptions?: Partial<Opts>
+  originalOptions?: Partial<Opts>,
 ): Ranges;
 
 export { Opts, defaults, rInvert, version };

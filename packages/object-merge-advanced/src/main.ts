@@ -114,7 +114,7 @@ function mergeAdvanced(
   infoObj: InfoObj,
   input1: any,
   input2: any,
-  opts: Opts
+  opts: Opts,
 ): any {
   // DEFAULTS
   // ---------------------------------------------------------------------------
@@ -147,8 +147,8 @@ function mergeAdvanced(
               type: infoObj.type,
             }),
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       return opts.cb(input1, input2, null, {
         path: infoObj.path,
@@ -176,15 +176,15 @@ function mergeAdvanced(
 
   DEV &&
     console.log(
-      `\u001b[${32}m${"========================================================"}\u001b[${39}m`
+      `\u001b[${32}m${"========================================================"}\u001b[${39}m`,
     );
   DEV &&
     console.log(
-      `183 \u001b[${36}m${`i1 = ${JSON.stringify(i1, null, 0)}`}\u001b[${39}m`
+      `183 \u001b[${36}m${`i1 = ${JSON.stringify(i1, null, 0)}`}\u001b[${39}m`,
     );
   DEV &&
     console.log(
-      `187 \u001b[${36}m${`i2 = ${JSON.stringify(i2, null, 0)}`}\u001b[${39}m`
+      `187 \u001b[${36}m${`i2 = ${JSON.stringify(i2, null, 0)}`}\u001b[${39}m`,
     );
   // DEV && console.log(`168 uniRes = ${JSON.stringify(uniRes, null, 4)}`);
   // DEV && console.log(`169 uni = ${JSON.stringify(uni, null, 4)}`);
@@ -194,8 +194,8 @@ function mergeAdvanced(
       `194 received ${`\u001b[${33}m${`infoObj`}\u001b[${39}m`} = ${JSON.stringify(
         infoObj,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   // Now the complex part. By this point we know there's a value clash and we need
@@ -246,7 +246,7 @@ function mergeAdvanced(
             : `${index}`;
           DEV &&
             console.log(
-              `249 ${`\u001b[${35}m${`currPath`}\u001b[${39}m`} = ${currPath}`
+              `249 ${`\u001b[${35}m${`currPath`}\u001b[${39}m`} = ${currPath}`,
             );
 
           // calculate the merge outcome:
@@ -266,8 +266,8 @@ function mergeAdvanced(
                 },
                 i1[index],
                 i2[index],
-                opts
-              )
+                opts,
+              ),
             );
           } else if (
             opts.oneToManyArrayObjectMerge &&
@@ -283,7 +283,7 @@ function mergeAdvanced(
                     },
                     i1[0],
                     i2[index],
-                    opts
+                    opts,
                   )
                 : mergeAdvanced(
                     {
@@ -293,8 +293,8 @@ function mergeAdvanced(
                     },
                     i1[index],
                     i2[0],
-                    opts
-                  )
+                    opts,
+                  ),
             );
           } else if (opts.concatInsteadOfMerging) {
             // case1 - concatenation no matter what contents
@@ -395,7 +395,7 @@ function mergeAdvanced(
           currPath = infoObj.path?.length ? `${infoObj.path}.${key}` : `${key}`;
           DEV &&
             console.log(
-              `398 ${`\u001b[${35}m${`currPath`}\u001b[${39}m`} = ${currPath}`
+              `398 ${`\u001b[${35}m${`currPath`}\u001b[${39}m`} = ${currPath}`,
             );
 
           // calculate the merge outcome:
@@ -416,7 +416,7 @@ function mergeAdvanced(
                 },
                 i1[key],
                 i2[key],
-                { ...opts, ignoreEverything: true }
+                { ...opts, ignoreEverything: true },
               );
             } else if (includesWithGlob(key, opts.hardMergeKeys)) {
               // set the hardMergeEverything for all deeper recursive traversals.
@@ -434,7 +434,7 @@ function mergeAdvanced(
                 },
                 i1[key],
                 i2[key],
-                { ...opts, hardMergeEverything: true }
+                { ...opts, hardMergeEverything: true },
               );
               DEV && console.log(`439 continuing after recursion`);
             } else if (includesWithGlob(key, opts.hardArrayConcatKeys)) {
@@ -451,7 +451,7 @@ function mergeAdvanced(
                 },
                 i1[key],
                 i2[key],
-                { ...opts, hardArrayConcat: true }
+                { ...opts, hardArrayConcat: true },
               );
             } else {
               DEV && console.log("457 regular merge");
@@ -465,16 +465,16 @@ function mergeAdvanced(
                       type: [getType(i1), getType(i2)],
                     },
                     null,
-                    4
+                    4,
                   )}; ${`\u001b[${33}m${`i1[${key}]`}\u001b[${39}m`} = ${JSON.stringify(
                     i1[key],
                     null,
-                    4
+                    4,
                   )}; ${`\u001b[${33}m${`i2[${key}]`}\u001b[${39}m`} = ${JSON.stringify(
                     i2[key],
                     null,
-                    4
-                  )}`
+                    4,
+                  )}`,
                 );
               i1[key] = mergeAdvanced(
                 {
@@ -484,7 +484,7 @@ function mergeAdvanced(
                 },
                 i1[key],
                 i2[key],
-                opts
+                opts,
               );
 
               DEV && console.log(" ");
@@ -496,8 +496,8 @@ function mergeAdvanced(
                   `496 ███████████████████████████████████████ AFTER RECURSION i1[${key}] = ${JSON.stringify(
                     i1[key],
                     null,
-                    4
-                  )}`
+                    4,
+                  )}`,
                 );
             }
             DEV && console.log(`503`);
@@ -761,11 +761,11 @@ function mergeAdvanced(
       let currentResult = uni ? uniRes : i2;
       DEV &&
         console.log(
-          `764 \u001b[${32}m${`currentResult`}\u001b[${39}m = ${currentResult}`
+          `764 \u001b[${32}m${`currentResult`}\u001b[${39}m = ${currentResult}`,
         );
       DEV &&
         console.log(
-          `768 \u001b[${32}m${`opts.cb`}\u001b[${39}m = ${!!opts.cb}`
+          `768 \u001b[${32}m${`opts.cb`}\u001b[${39}m = ${!!opts.cb}`,
         );
       if (typeof opts.cb === "function") {
         return opts.cb(clone(input1), clone(input2), currentResult, {
@@ -809,13 +809,13 @@ function mergeAdvanced(
       `809 FINAL ROW - currentResult = ${JSON.stringify(
         currentResult,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   DEV && console.log(`815 FINAL ROW - uni = ${JSON.stringify(uni, null, 4)}`);
   DEV &&
     console.log(
-      `818 FINAL ROW - uniRes = ${JSON.stringify(uniRes, null, 4)}\n\n\n`
+      `818 FINAL ROW - uniRes = ${JSON.stringify(uniRes, null, 4)}\n\n\n`,
     );
 
   if (typeof opts.cb === "function") {
@@ -837,11 +837,11 @@ function mergeAdvanced(
 function externalApi(
   input1: unknown,
   input2: unknown,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): any {
   if (!arguments.length) {
     throw new TypeError(
-      "object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing"
+      "object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing",
     );
   }
   if (existy(opts) && !isObj(opts)) {
@@ -849,8 +849,8 @@ function externalApi(
       `object-merge-advanced/mergeAdvanced(): [THROW_ID_02] The optional options object should be a plain object, currently it's ${JSON.stringify(
         opts,
         null,
-        4
-      )} (type ${typeof opts})`
+        4,
+      )} (type ${typeof opts})`,
     );
   }
 
@@ -859,16 +859,16 @@ function externalApi(
       `${`\u001b[${33}m${`getType(input1)`}\u001b[${39}m`} = ${JSON.stringify(
         getType(input1),
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   DEV &&
     console.log(
       `${`\u001b[${33}m${`getType(input2)`}\u001b[${39}m`} = ${JSON.stringify(
         getType(input2),
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   let resolvedOpts: Opts = { ...defaults, ...opts };
@@ -897,7 +897,7 @@ function externalApi(
     { key: null, path: "", type: [getType(input1), getType(input2)] },
     input1,
     input2,
-    resolvedOpts
+    resolvedOpts,
   );
 }
 

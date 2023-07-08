@@ -4,7 +4,7 @@ declare const version: string;
 declare function rRegex(
   regExp: RegExp,
   str: string,
-  replacement?: string | null | undefined
+  replacement?: string | null | undefined,
 ): Ranges;
 
 export { rRegex, version };

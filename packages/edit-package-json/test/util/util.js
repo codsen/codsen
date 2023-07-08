@@ -9,13 +9,13 @@ function setter(
   path,
   val,
   idNum,
-  isInvalidJson = false
+  isInvalidJson = false,
 ) {
   // 01.
   equal(
     set(source, path, val),
     result,
-    `${idNum}.01 - string is identical after set`
+    `${idNum}.01 - string is identical after set`,
   );
 
   // we can process invalid JSON too!
@@ -24,7 +24,7 @@ function setter(
     equal(
       JSON.parse(set(source, path, val)),
       JSON.parse(result),
-      `${idNum}.02 - both parsed parties are deep-equal`
+      `${idNum}.02 - both parsed parties are deep-equal`,
     );
 
     // 03. result is equivalent to (JSON.parse + object-path.set())
@@ -33,7 +33,7 @@ function setter(
     equal(
       temp,
       JSON.parse(result),
-      `${idNum}.03 - objectPath set is deep-equal`
+      `${idNum}.03 - objectPath set is deep-equal`,
     );
   }
 }
@@ -43,14 +43,14 @@ function deleter(equal, source, result, path, idNum) {
   equal(
     del(source, path),
     result,
-    `${idNum}.01 - string is identical after set`
+    `${idNum}.01 - string is identical after set`,
   );
 
   // 02. compare parsed
   equal(
     JSON.parse(del(source, path)),
     JSON.parse(result),
-    `${idNum}.02 - both parsed parties are deep-equal`
+    `${idNum}.02 - both parsed parties are deep-equal`,
   );
 
   // 03. if we did the deed manually, it would be the same if both were parsed

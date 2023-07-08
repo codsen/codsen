@@ -16,12 +16,12 @@ test("01 - nunjucks only, one token", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
     assert.equal(
       stri(assert, n, input, opt).templatingLang.name,
       "Nunjucks",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -30,12 +30,12 @@ test("01 - nunjucks only, one token", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       input,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
     assert.equal(
       stri(assert, n, input, opt).templatingLang.name,
       "Nunjucks",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -48,7 +48,7 @@ test("02 - nunjucks only, multiple tokens", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -57,7 +57,7 @@ test("02 - nunjucks only, multiple tokens", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       input,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -73,7 +73,7 @@ test("03 - nunjucks only, one token", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -82,7 +82,7 @@ test("03 - nunjucks only, one token", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       input,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -102,7 +102,7 @@ def`;
     assert.equal(
       stri(assert, n, input, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -112,7 +112,7 @@ def`;
     assert.equal(
       stri(assert, n, input, opt).result,
       "abc\n\ndef",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -123,7 +123,7 @@ def`;
       stri(assert, n, input, opt).result,
       `\${ klm
 nop }$`,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -133,7 +133,7 @@ nop }$`,
     assert.equal(
       stri(assert, n, input, opt).result,
       input,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -148,7 +148,7 @@ test("05 - ERB embedded expressions", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -158,7 +158,7 @@ test("05 - ERB embedded expressions", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       '<a href="https://example.com/test?param1=<%= @param1 %>&param2=<%= @param2 %>"> </a>',
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -168,7 +168,7 @@ test("05 - ERB embedded expressions", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "click me",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -178,7 +178,7 @@ test("05 - ERB embedded expressions", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       input,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });

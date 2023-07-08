@@ -17,7 +17,7 @@ test("01 - unusual inputs", () => {
   equal(
     detectEol(() => {}),
     undefined,
-    "01.10"
+    "01.10",
   );
 });
 
@@ -25,7 +25,7 @@ test("02 - no EOL", () => {
   equal(
     detectEol("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
     undefined,
-    "02.01"
+    "02.01",
   );
   equal(detectEol("a\tb"), undefined, "02.02");
 });

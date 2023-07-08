@@ -63,9 +63,9 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         arrOfRanges[culpritsIndex],
         null,
-        4
+        4,
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      )}) has not two but ${culpritsLen} elements!`
+      )}) has not two but ${culpritsLen} elements!`,
     );
   }
 
@@ -91,8 +91,8 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         arrOfRanges[culpritsIndex],
         null,
-        4
-      )}) does not consist of only natural numbers!`
+        4,
+      )}) does not consist of only natural numbers!`,
     );
   }
 

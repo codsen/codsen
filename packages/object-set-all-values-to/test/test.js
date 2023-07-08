@@ -22,7 +22,7 @@ test("01 - input simple plain object, default", () => {
       c: false,
       d: false,
     },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -50,7 +50,7 @@ test("02 - two level nested plain object, default", () => {
         },
       ],
     },
-    "02.01"
+    "02.01",
   );
 });
 
@@ -82,7 +82,7 @@ test("03 - topmost level input is array, default", () => {
         ],
       },
     ],
-    "03.01"
+    "03.01",
   );
 });
 
@@ -198,7 +198,7 @@ test("04 - many levels of nested arrays, default", () => {
         ],
       ],
     ],
-    "04.01"
+    "04.01",
   );
 });
 
@@ -222,7 +222,7 @@ test("05 - array-object-array-object, default", () => {
         ],
       },
     ],
-    "05.01"
+    "05.01",
   );
 });
 
@@ -256,7 +256,7 @@ test("06 - array has array which has object, default", () => {
         d: [{ e: false }],
       },
     ],
-    "06.01"
+    "06.01",
   );
 });
 
@@ -288,7 +288,7 @@ test("07 - object has object value, default", () => {
         },
       },
     },
-    "07.01"
+    "07.01",
   );
 });
 
@@ -306,7 +306,7 @@ test("08 - input is object with only values — arrays, default", () => {
       c: ["c"],
       d: ["d"],
     },
-    "08.01"
+    "08.01",
   );
 });
 
@@ -314,7 +314,7 @@ test("09 - ops within an array, default", () => {
   equal(
     setAllValuesTo([["a", { b: "b" }, "c"]]),
     [["a", { b: false }, "c"]],
-    "09.01"
+    "09.01",
   );
 });
 
@@ -322,7 +322,7 @@ test("10 - lots of empty things, default", () => {
   equal(
     setAllValuesTo([{}, {}, {}, { a: "a" }, {}]),
     [{}, {}, {}, { a: false }, {}],
-    "10.01"
+    "10.01",
   );
 });
 
@@ -339,7 +339,7 @@ test("11 - input simple plain object, assigning a string", () => {
         c: "c",
         d: "d",
       },
-      "x"
+      "x",
     ),
     {
       a: "x",
@@ -347,7 +347,7 @@ test("11 - input simple plain object, assigning a string", () => {
       c: "x",
       d: "x",
     },
-    "11.01"
+    "11.01",
   );
 });
 
@@ -360,7 +360,7 @@ test("12 - input simple plain object, assigning a plain object", () => {
         c: "c",
         d: "d",
       },
-      { x: "x" }
+      { x: "x" },
     ),
     {
       a: { x: "x" },
@@ -368,7 +368,7 @@ test("12 - input simple plain object, assigning a plain object", () => {
       c: { x: "x" },
       d: { x: "x" },
     },
-    "12.01"
+    "12.01",
   );
 });
 
@@ -381,7 +381,7 @@ test("13 - input simple plain object, assigning an array", () => {
         c: "c",
         d: "d",
       },
-      ["z", "y"]
+      ["z", "y"],
     ),
     {
       a: ["z", "y"],
@@ -389,7 +389,7 @@ test("13 - input simple plain object, assigning an array", () => {
       c: ["z", "y"],
       d: ["z", "y"],
     },
-    "13.01"
+    "13.01",
   );
 });
 
@@ -402,7 +402,7 @@ test("14 - input simple plain object, assigning a null", () => {
         c: "c",
         d: "d",
       },
-      null
+      null,
     ),
     {
       a: null,
@@ -410,7 +410,7 @@ test("14 - input simple plain object, assigning a null", () => {
       c: null,
       d: null,
     },
-    "14.01"
+    "14.01",
   );
 });
 
@@ -423,7 +423,7 @@ test("15 - input simple plain object, assigning a Boolean true", () => {
         c: "c",
         d: "d",
       },
-      true
+      true,
     ),
     {
       a: true,
@@ -431,7 +431,7 @@ test("15 - input simple plain object, assigning a Boolean true", () => {
       c: true,
       d: true,
     },
-    "15.01"
+    "15.01",
   );
 });
 
@@ -452,7 +452,7 @@ test("16 - input simple plain object, assigning a function", () => {
         ],
         { x: "x" },
       ],
-      f
+      f,
     ),
     [
       [
@@ -465,7 +465,7 @@ test("16 - input simple plain object, assigning a function", () => {
       ],
       { x: f },
     ],
-    "16.01"
+    "16.01",
   );
 });
 
@@ -480,7 +480,7 @@ test("17 - input simple plain object, assigning a plain object", () => {
       },
       {
         a: "a",
-      }
+      },
     ),
     {
       a: { a: "a" },
@@ -488,7 +488,7 @@ test("17 - input simple plain object, assigning a plain object", () => {
       c: { a: "a" },
       d: { a: "a" },
     },
-    "17.01"
+    "17.01",
   );
 });
 
@@ -525,7 +525,7 @@ test("21 - does not mutate input args", () => {
       a: "a",
       b: "b",
     },
-    "21.02"
+    "21.02",
   );
 });
 

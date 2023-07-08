@@ -28,7 +28,7 @@ assert.deepEqual(
     {
       c: { d: "x" },
     },
-    schema
+    schema,
   ),
   {
     a: false,
@@ -38,5 +38,5 @@ assert.deepEqual(
       e: false,
       f: false,
     },
-  }
+  },
 );

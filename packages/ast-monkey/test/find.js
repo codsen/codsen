@@ -510,7 +510,7 @@ test("23 - finds multiple nested keys by key and value in mixed #2", () => {
         path: [6, 7, 8],
       },
     ],
-    "23.02"
+    "23.02",
   );
   // ---------------------------
   equal(
@@ -535,7 +535,7 @@ test("23 - finds multiple nested keys by key and value in mixed #2", () => {
         path: [6, 7, 8],
       },
     ],
-    "23.03"
+    "23.03",
   );
   // ---------------------------
   // arrays only:
@@ -549,7 +549,7 @@ test("23 - finds multiple nested keys by key and value in mixed #2", () => {
         path: [6, 7, 8],
       },
     ],
-    "23.04"
+    "23.04",
   );
   // ---------------------------
   // objects only:
@@ -569,7 +569,7 @@ test("23 - finds multiple nested keys by key and value in mixed #2", () => {
         path: [6, 7],
       },
     ],
-    "23.05"
+    "23.05",
   );
   // ---------------------------
   // any:
@@ -595,7 +595,7 @@ test("23 - finds multiple nested keys by key and value in mixed #2", () => {
         path: [6, 7, 8],
       },
     ],
-    "23.06"
+    "23.06",
   );
 });
 
@@ -627,7 +627,7 @@ test("24 - like 02.15, but with sneaky objects where values are null, tricking t
         path: [6, 7, 8],
       },
     ],
-    "24.01"
+    "24.01",
   );
   // ---------------------------
   equal(
@@ -652,7 +652,7 @@ test("24 - like 02.15, but with sneaky objects where values are null, tricking t
         path: [6, 7, 8],
       },
     ],
-    "24.02"
+    "24.02",
   );
   // ---------------------------
   // arrays only:
@@ -666,7 +666,7 @@ test("24 - like 02.15, but with sneaky objects where values are null, tricking t
         path: [6, 7, 8],
       },
     ],
-    "24.03"
+    "24.03",
   );
   // ---------------------------
   // objects only:
@@ -686,7 +686,7 @@ test("24 - like 02.15, but with sneaky objects where values are null, tricking t
         path: [6, 7],
       },
     ],
-    "24.04"
+    "24.04",
   );
   // ---------------------------
   // any:
@@ -712,7 +712,7 @@ test("24 - like 02.15, but with sneaky objects where values are null, tricking t
         path: [6, 7, 8],
       },
     ],
-    "24.05"
+    "24.05",
   );
 });
 

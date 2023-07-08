@@ -22,7 +22,7 @@ color:  black;
 </div>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!doctype html>
@@ -54,7 +54,7 @@ color: black;
 </div>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!doctype html>
@@ -95,7 +95,7 @@ test("03 - nunjucks variable as a class name (simplified version)", () => {
           tails: "%}",
         },
       ],
-    }
+    },
   ).result;
 
   let intended = `</head>
@@ -134,7 +134,7 @@ color:  black;
           tails: "%}",
         },
       ],
-    }
+    },
   ).result;
 
   let intended = `<!doctype html>
@@ -170,7 +170,7 @@ test("05 - nunjucks variables mixed with classes and id's (minimal version)", ()
           tails: "%}",
         },
       ],
-    }
+    },
   ).result;
 
   let intended = `<style>
@@ -217,7 +217,7 @@ test("06 - nunjucks variables mixed with classes and id's (full version)", () =>
           tails: "}}",
         },
       ],
-    }
+    },
   ).result;
 
   let intended = `<!DOCTYPE html>
@@ -273,7 +273,7 @@ test("07 - esp tag at the end of ignored class", () => {
           tails: "%}",
         },
       ],
-    }
+    },
   ).result;
 
   let intended = `<body>
@@ -299,7 +299,7 @@ test("08 - esp tag at the end of ignored class", () => {
           tails: "%}",
         },
       ],
-    }
+    },
   ).result;
 
   let intended = `<body>

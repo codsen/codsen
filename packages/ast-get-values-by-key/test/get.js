@@ -18,7 +18,7 @@ test("01 - just a plain object", () => {
         path: "tag",
       },
     ],
-    "01.01"
+    "01.01",
   );
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
@@ -29,10 +29,10 @@ test("01 - just a plain object", () => {
       {
         Tag: "html",
       },
-      "tag"
+      "tag",
     ),
     [],
-    "01.03"
+    "01.03",
   );
 });
 
@@ -50,7 +50,7 @@ test("02 - single plain object within array", () => {
         path: "0.tag",
       },
     ],
-    "02.01"
+    "02.01",
   );
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
@@ -92,7 +92,7 @@ test("04 - two strings as result", () => {
           content: ["\n"],
         },
       ],
-      "tag"
+      "tag",
     ),
     [
       {
@@ -101,7 +101,7 @@ test("04 - two strings as result", () => {
       },
       { val: "html2", path: "1.tag" },
     ],
-    "04.01"
+    "04.01",
   );
 });
 
@@ -131,14 +131,14 @@ test("05 - query by key, returns mixed results", () => {
           content: ["\n"],
         },
       ],
-      "tag"
+      "tag",
     ),
     [
       { val: ["html1"], path: "0.tag" },
       { val: { html2: "html2" }, path: "1.tag" },
       { val: "html3", path: "2.tag" },
     ],
-    "05.01"
+    "05.01",
   );
 });
 
@@ -176,7 +176,7 @@ test("06 - deep tree", () => {
   equal(
     getByKey(source, "tag"),
     [{ val: "html", path: retrievedPath }],
-    "06.01"
+    "06.01",
   );
 
   // double check, is the result's path pointing to exactly the same value if
@@ -192,10 +192,10 @@ test("07 - query returns an array", () => {
           tag: ["z"],
         },
       ],
-      "tag"
+      "tag",
     ),
     [{ val: ["z"], path: "0.tag" }],
-    "07.01"
+    "07.01",
   );
 });
 
@@ -207,10 +207,10 @@ test("08 - query returns a string", () => {
           tag: "z",
         },
       ],
-      "tag"
+      "tag",
     ),
     [{ val: "z", path: "0.tag" }],
-    "08.01"
+    "08.01",
   );
 });
 
@@ -247,7 +247,7 @@ test("09 - query returns array with two objects", () => {
         path: "0.tag",
       },
     ],
-    "09.01"
+    "09.01",
   );
 
   // double check, is the result's path pointing to exactly the same value if
@@ -261,10 +261,10 @@ test("10 - no results query", () => {
       {
         style: "html",
       },
-      "tag"
+      "tag",
     ),
     [],
-    "10.01"
+    "10.01",
   );
 });
 

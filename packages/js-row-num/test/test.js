@@ -28,7 +28,7 @@ zzz
 ${letterC}onsole.log('005 something')
 ${letterC}onsole.log('006 something')
 `,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -48,7 +48,7 @@ zzz
 ${letterC}onsole.log ( ' 005 456 something 123 ')
 ${letterC}onsole.log('----\n\n\n009 something')
 `,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -66,7 +66,7 @@ zzz
 zzz
 ${letterC}onsole.log('005 something')${letterC}onsole.log('005 something')
 `,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -84,7 +84,7 @@ zzz
 zzz
 ${letterC}onsole.log("005 123 something 456")${letterC}onsole.log("----005 something")${letterC}onsole.log("---- something")
 `,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -102,7 +102,7 @@ zzz
 zzz
 ${letterC}onsole.log("005 123 something 456")${letterC}onsole.log("----\n\n\n008 something")
 `,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -122,7 +122,7 @@ zzz
 ${letterC}onsole.log ( " 005 123 something 456 " )
 ${letterC}onsole.log("----\n\n\n 009 something")
 `,
-    "06.01"
+    "06.01",
   );
 });
 
@@ -140,7 +140,7 @@ zzz
 zzz
 ${letterC}onsole.log(\`005 123 something 456\`)${letterC}onsole.log(\`----005 something\`)${letterC}onsole.log(\`---- something\`)
 `,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -149,47 +149,47 @@ test("08 - console log with ANSI escapes - one ANSI escape chunk in front", () =
     fixRowNums("\x63onsole.log(`\\u001b[${33}m${`999 z`}\\u001b[${39}m`)")
       .result,
     "\x63onsole.log(`\\u001b[${33}m${`001 z`}\\u001b[${39}m`)",
-    "08.01"
+    "08.01",
   );
 });
 
 test("09 - synthetic test where colour is put in deeper curlies for easier visual grepping", () => {
   equal(
     fixRowNums(
-      "\x63onsole.log(`\\u001b[${012399999999}m${`888 z`}\\u001b[${39}m`)"
+      "\x63onsole.log(`\\u001b[${012399999999}m${`888 z`}\\u001b[${39}m`)",
     ).result,
     "\x63onsole.log(`\\u001b[${012399999999}m${`001 z`}\\u001b[${39}m`)",
-    "09.01"
+    "09.01",
   );
 });
 
 test("10 - synthetic test where colour code is put raw", () => {
   equal(
     fixRowNums(
-      "\x63onsole.log(`\\u001b[012399999999m${`888 z`}\\u001b[${39}m`)"
+      "\x63onsole.log(`\\u001b[012399999999m${`888 z`}\\u001b[${39}m`)",
     ).result,
     "\x63onsole.log(`\\u001b[012399999999m${`001 z`}\\u001b[${39}m`)",
-    "10.01"
+    "10.01",
   );
 });
 
 test("11 - bunch of whitespace 1", () => {
   equal(
     fixRowNums(
-      `${letterC}onsole.log(\`\\u001b[$\{012399999999}m$\{\` \t 888 z\`}\\u001b[${39}m\`)`
+      `${letterC}onsole.log(\`\\u001b[$\{012399999999}m$\{\` \t 888 z\`}\\u001b[${39}m\`)`,
     ).result,
     `${letterC}onsole.log(\`\\u001b[$\{012399999999}m$\{\` \t 001 z\`}\\u001b[${39}m\`)`,
-    "11.01"
+    "11.01",
   );
 });
 
 test("12 - bunch of whitespace 2", () => {
   equal(
     fixRowNums(
-      `${letterC}onsole.log(\`\\u001b[012399999999m$\{\` \t 888 z\`}\\u001b[${39}m\`)`
+      `${letterC}onsole.log(\`\\u001b[012399999999m$\{\` \t 888 z\`}\\u001b[${39}m\`)`,
     ).result,
     `${letterC}onsole.log(\`\\u001b[012399999999m$\{\` \t 001 z\`}\\u001b[${39}m\`)`,
-    "12.01"
+    "12.01",
   );
 });
 
@@ -205,7 +205,7 @@ test(`13 - updates ${letterC}onsole.logs within comment blocks`, () => {
 //   \`003 something
 // \`)
 `,
-    "13.01"
+    "13.01",
   );
 });
 
@@ -221,7 +221,7 @@ ${letterC}onsole.log(
   \`${BACKSLASH}n003 something\`
 )
 `,
-    "14.01"
+    "14.01",
   );
 });
 
@@ -239,7 +239,7 @@ ${letterC}onsole.log(
   \`${BACKSLASH}n10004 something\`
 )
 `,
-    "15.01"
+    "15.01",
   );
 });
 
@@ -259,7 +259,7 @@ zzz
 ${letterC}onsole.log('005.1 something')
 ${letterC}onsole.log('006.2 something')
 `,
-    "16.01"
+    "16.01",
   );
 });
 
@@ -279,7 +279,7 @@ zzz
 ${letterC}onsole.log('005: 1 something')
 ${letterC}onsole.log('006: 2 something')
 `,
-    "17.01"
+    "17.01",
   );
 });
 
@@ -362,54 +362,54 @@ test("27 - padding is set to numbers", () => {
   equal(
     fixRowNums(str).result,
     `zzz\n${letterC}onsole.log('002 something')`,
-    "27.01"
+    "27.01",
   );
   equal(
     fixRowNums(str, { padStart: 0 }).result,
     `zzz\n${letterC}onsole.log('2 something')`,
-    "27.02"
+    "27.02",
   );
   equal(
     fixRowNums(str, { padStart: 1 }).result,
     `zzz\n${letterC}onsole.log('2 something')`,
-    "27.03"
+    "27.03",
   );
   equal(
     fixRowNums(str, { padStart: 2 }).result,
     `zzz\n${letterC}onsole.log('02 something')`,
-    "27.04"
+    "27.04",
   );
   equal(
     fixRowNums(str, { padStart: 3 }).result,
     `zzz\n${letterC}onsole.log('002 something')`,
-    "27.05"
+    "27.05",
   );
   equal(
     fixRowNums(str, { padStart: 4 }).result,
     `zzz\n${letterC}onsole.log('0002 something')`,
-    "27.06"
+    "27.06",
   );
   equal(
     fixRowNums(str, { padStart: 9 }).result,
     `zzz\n${letterC}onsole.log('000000002 something')`,
-    "27.07"
+    "27.07",
   );
   equal(
     fixRowNums(str, { padStart: 1 }).result,
     `zzz\n${letterC}onsole.log('2 something')`,
-    "27.08"
+    "27.08",
   );
 
   // opts.overrideRowNum
   equal(
     fixRowNums(str, { padStart: 9, overrideRowNum: 1 }).result,
     `zzz\n${letterC}onsole.log('000000001 something')`,
-    "27.09"
+    "27.09",
   );
   equal(
     fixRowNums(str, { overrideRowNum: null }).result,
     `zzz\n${letterC}onsole.log('002 something')`,
-    "27.10"
+    "27.10",
   );
 });
 
@@ -418,17 +418,17 @@ test("28 - padding is set to be falsey", () => {
   equal(
     fixRowNums(str, { padStart: false }).result,
     `zzz\n${letterC}onsole.log('2 something')`,
-    "28.01"
+    "28.01",
   );
   equal(
     fixRowNums(str, { padStart: null }).result,
     `zzz\n${letterC}onsole.log('2 something')`,
-    "28.02"
+    "28.02",
   );
   equal(
     fixRowNums(str, { padStart: undefined }).result,
     `zzz\n${letterC}onsole.log('2 something')`,
-    "28.03"
+    "28.03",
   );
 });
 
@@ -439,7 +439,7 @@ test("29 - letter then digit", () => {
       padStart: 10,
     }).result,
     str,
-    "29.01"
+    "29.01",
   );
 });
 
@@ -450,7 +450,7 @@ test("30 - opts.overrideRowNum", () => {
       overrideRowNum: 10,
     }).result,
     str,
-    "30.01"
+    "30.01",
   );
 });
 
@@ -461,7 +461,7 @@ test("31 - opts.extractedLogContentsWereGiven", () => {
       extractedLogContentsWereGiven: true,
     }).result,
     str,
-    "31.01"
+    "31.01",
   );
 });
 
@@ -472,7 +472,7 @@ test("32 - opts.extractedLogContentsWereGiven", () => {
       extractedLogContentsWereGiven: true,
     }).result,
     str,
-    "32.01"
+    "32.01",
   );
 });
 
@@ -483,7 +483,7 @@ test("33 - opts.extractedLogContentsWereGiven", () => {
       extractedLogContentsWereGiven: true,
     }).result,
     str,
-    "33.01"
+    "33.01",
   );
 });
 
@@ -494,7 +494,7 @@ test("34 - opts.extractedLogContentsWereGiven", () => {
       extractedLogContentsWereGiven: true,
     }).result,
     str,
-    "34.01"
+    "34.01",
   );
 });
 
@@ -503,7 +503,7 @@ test("35 - opts.overrideRowNum and no opts.padStart", () => {
   equal(
     fixRowNums(str, { padStart: null, overrideRowNum: 0 }).result,
     "console.log('0 something')",
-    "35.01"
+    "35.01",
   );
 });
 
@@ -515,27 +515,27 @@ test(`36 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} - text that uses \\r only 
   equal(
     fixRowNums(`zzzz\ryyyy\r${letterC}onsole.log('1 some text')`).result,
     `zzzz\ryyyy\r${letterC}onsole.log('003 some text')`,
-    "36.01"
+    "36.01",
   );
   equal(
     fixRowNums(`zzzz\nyyyy\n${letterC}onsole.log('1 some text')`).result,
     `zzzz\nyyyy\n${letterC}onsole.log('003 some text')`,
-    "36.02"
+    "36.02",
   );
   equal(
     fixRowNums(`zzzz\r\nyyyy\r\n${letterC}onsole.log('1 some text')`).result,
     `zzzz\r\nyyyy\r\n${letterC}onsole.log('003 some text')`,
-    "36.03"
+    "36.03",
   );
 });
 
 test(`37 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} - broken ANSI - will not update`, () => {
   equal(
     fixRowNums(
-      `${letterC}onsole.log(\`${BACKSLASH}u001b[012399999999$\{\` \t 888 z\`}${BACKSLASH}u001b[$\{39}m\`)`
+      `${letterC}onsole.log(\`${BACKSLASH}u001b[012399999999$\{\` \t 888 z\`}${BACKSLASH}u001b[$\{39}m\`)`,
     ).result,
     `${letterC}onsole.log(\`${BACKSLASH}u001b[012399999999$\{\` \t 888 z\`}${BACKSLASH}u001b[$\{39}m\`)`,
-    "37.01"
+    "37.01",
   );
 });
 
@@ -546,7 +546,7 @@ test(`38 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} - no quotes - no text`, ()
       extractedLogContentsWereGiven: true,
     }).result,
     "124",
-    "38.01"
+    "38.01",
   );
 });
 
@@ -557,7 +557,7 @@ test(`39 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} - no quotes - with text`, 
       extractedLogContentsWereGiven: true,
     }).result,
     "124 something",
-    "39.01"
+    "39.01",
   );
 });
 
@@ -568,7 +568,7 @@ test(`40 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} - with quotes - no text`, 
       extractedLogContentsWereGiven: true,
     }).result,
     '"124"',
-    "40.01"
+    "40.01",
   );
 });
 
@@ -579,7 +579,7 @@ test(`41 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} - with quotes - with text`
       extractedLogContentsWereGiven: true,
     }).result,
     '"124 something"',
-    "41.01"
+    "41.01",
   );
 });
 
@@ -590,7 +590,7 @@ test(`42 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} - with backticks - no text
       extractedLogContentsWereGiven: true,
     }).result,
     "`124`",
-    "42.01"
+    "42.01",
   );
 });
 
@@ -602,7 +602,7 @@ test(`43 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} - insurance 1`, () => {
       extractedLogContentsWereGiven: true,
     }).result,
     source,
-    "43.01"
+    "43.01",
   );
 });
 
@@ -614,7 +614,7 @@ test(`44 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} - insurance 2`, () => {
       extractedLogContentsWereGiven: true,
     }).result,
     source,
-    "44.01"
+    "44.01",
   );
 });
 
@@ -625,7 +625,7 @@ test(`45 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} - extractedLogContentsWere
       extractedLogContentsWereGiven: true,
     }).result,
     source,
-    "45.01"
+    "45.01",
   );
 });
 
@@ -637,7 +637,7 @@ test(`46 - ${`\u001b[${34}m${"opts.triggerKeywords"}\u001b[${39}m`} - baseline`,
   equal(
     fixRowNums("a\nb\nc\nlog(`1 something`)").result,
     "a\nb\nc\nlog(`1 something`)",
-    "46.01"
+    "46.01",
   );
 });
 
@@ -646,7 +646,7 @@ test(`47 - ${`\u001b[${34}m${"opts.triggerKeywords"}\u001b[${39}m`} - works on c
     fixRowNums("a\nb\nc\nlog(`1 something`)", { triggerKeywords: ["log"] })
       .result,
     "a\nb\nc\nlog(`004 something`)",
-    "47.01"
+    "47.01",
   );
 });
 

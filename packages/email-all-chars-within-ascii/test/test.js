@@ -35,14 +35,14 @@ test("04 - illegal", () => {
         UTF32Hex: "00f6",
       },
     ],
-    "04.01"
+    "04.01",
   );
 });
 
 test("05 - multi-line illegal", () => {
   equal(
     within(
-      `My friend ${CAPITALOWITHSTROKE}rjan\nlikes Mot${SMALLOWITHDIAERESIS}rhead!`
+      `My friend ${CAPITALOWITHSTROKE}rjan\nlikes Mot${SMALLOWITHDIAERESIS}rhead!`,
     ),
     [
       {
@@ -64,7 +64,7 @@ test("05 - multi-line illegal", () => {
         UTF32Hex: "00f6",
       },
     ],
-    "05.01"
+    "05.01",
   );
 });
 
@@ -82,7 +82,7 @@ test("06 - illegal low ASCII, ETX", () => {
         UTF32Hex: "0003",
       },
     ],
-    "06.01"
+    "06.01",
   );
 });
 
@@ -101,7 +101,7 @@ test("07 - non-existent outside ASCII, #896 or u0380", () => {
         UTF32Hex: "0380",
       },
     ],
-    "07.01"
+    "07.01",
   );
 });
 

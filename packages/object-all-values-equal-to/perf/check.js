@@ -18,7 +18,7 @@ const testme = () =>
         b: false,
       },
     ],
-    false
+    false,
   );
 
 // action

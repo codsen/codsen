@@ -51,7 +51,7 @@ assert.deepEqual(
     { a: true, b: false, c: true },
     { a: false, b: true, c: true },
     { a: true, b: true, c: true },
-  ]
+  ],
 );
 // you get 2^n plain objects in an array
 ```

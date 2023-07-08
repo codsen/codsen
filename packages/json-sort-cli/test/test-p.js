@@ -25,11 +25,11 @@ test("01 - unsorted package.json, targetting two folders simultaneously", async 
   fs.ensureDirSync(path.resolve(path.join(tempFolder, "fol2")));
   let pathOfTheTestfile1 = path.join(
     path.join(tempFolder, "fol1"),
-    "package.json"
+    "package.json",
   );
   let pathOfTheTestfile2 = path.join(
     path.join(tempFolder, "fol2"),
-    "package.json"
+    "package.json",
   );
   let contents = `{
   "dependencies": {
@@ -61,7 +61,7 @@ test("01 - unsorted package.json, targetting two folders simultaneously", async 
     "ast-monkey-traverse": "^1.11.31"
   }
 }\n`,
-    "01.01"
+    "01.01",
   );
 
   equal(
@@ -72,7 +72,7 @@ test("01 - unsorted package.json, targetting two folders simultaneously", async 
     "ast-monkey-traverse": "^1.11.31"
   }
 }\n`,
-    "01.02"
+    "01.02",
   );
 });
 
@@ -95,7 +95,7 @@ test("02 - already sorted package.json", async () => {
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received),
     )
     .catch((err) => {
       throw new Error(err);
@@ -117,7 +117,7 @@ test("03 - empty array as package.json", async () => {
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received),
     )
     .catch((err) => {
       throw new Error(err);

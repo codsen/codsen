@@ -107,11 +107,11 @@ test("06 - throws when inputs are wrong", () => {
         { a: "a", b: ["c"] },
         {
           index: "1",
-        }
+        },
       );
     },
     /THROW_ID_14/g,
-    "06.01"
+    "06.01",
   );
   throws(
     () => {
@@ -119,11 +119,11 @@ test("06 - throws when inputs are wrong", () => {
         { a: "a" },
         {
           val: "a",
-        }
+        },
       );
     },
     /THROW_ID_15/g,
-    "06.02"
+    "06.02",
   );
   throws(
     () => {
@@ -132,11 +132,11 @@ test("06 - throws when inputs are wrong", () => {
         {
           val: "a",
           index: "a",
-        }
+        },
       );
     },
     /THROW_ID_17/g,
-    "06.03"
+    "06.03",
   );
   throws(
     () => {
@@ -145,11 +145,11 @@ test("06 - throws when inputs are wrong", () => {
         {
           val: "a",
           index: 1.5,
-        }
+        },
       );
     },
     /THROW_ID_17/g,
-    "06.04"
+    "06.04",
   );
 });
 

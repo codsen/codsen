@@ -46,7 +46,7 @@ test(`01 - ${`\u001b[${33}m${"no error"}\u001b[${39}m`} - two tags`, () => {
         attribs: [],
       },
     ],
-    "01"
+    "01",
   );
 });
 
@@ -95,7 +95,7 @@ test(`02 - ${`\u001b[${33}m${"no error"}\u001b[${39}m`} - two tags, whitespace i
         attribs: [],
       },
     ],
-    "02"
+    "02",
   );
 });
 
@@ -144,7 +144,7 @@ test(`03 - ${`\u001b[${33}m${"no error"}\u001b[${39}m`} - two tags, whitespace i
         attribs: [],
       },
     ],
-    "03"
+    "03",
   );
 });
 
@@ -199,7 +199,7 @@ test(`04 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - extra closing tag`, () =>
         closing: true,
       },
     ],
-    "04.01"
+    "04.01",
   );
   compare(
     ok,
@@ -211,7 +211,7 @@ test(`04 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - extra closing tag`, () =>
         idxTo: 25,
       },
     ],
-    "04.02"
+    "04.02",
   );
 });
 
@@ -249,7 +249,7 @@ test(`05 - ${`\u001b[${33}m${'comment "simple"'}\u001b[${39}m`} - basic`, () => 
         value: "z",
       },
     ],
-    "05.01"
+    "05.01",
   );
   compare(
     ok,
@@ -261,7 +261,7 @@ test(`05 - ${`\u001b[${33}m${'comment "simple"'}\u001b[${39}m`} - basic`, () => 
         idxTo: 4,
       },
     ],
-    "05.02"
+    "05.02",
   );
 });
 
@@ -299,7 +299,7 @@ test(`06 - ${`\u001b[${33}m${'conditional "only"'}\u001b[${39}m`} - basic`, () =
         value: "z",
       },
     ],
-    "06.01"
+    "06.01",
   );
   compare(
     ok,
@@ -311,7 +311,7 @@ test(`06 - ${`\u001b[${33}m${'conditional "only"'}\u001b[${39}m`} - basic`, () =
         idxTo: 13,
       },
     ],
-    "06.02"
+    "06.02",
   );
 });
 
@@ -349,7 +349,7 @@ test(`07 - ${`\u001b[${33}m${'conditional "not"'}\u001b[${39}m`} - basic`, () =>
         value: "z",
       },
     ],
-    "07.01"
+    "07.01",
   );
   compare(
     ok,
@@ -361,7 +361,7 @@ test(`07 - ${`\u001b[${33}m${'conditional "not"'}\u001b[${39}m`} - basic`, () =>
         idxTo: 17,
       },
     ],
-    "07.02"
+    "07.02",
   );
 });
 

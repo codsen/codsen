@@ -27,7 +27,7 @@ assert.deepEqual(
     },
     {
       doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"],
-    }
+    },
   ),
   {
     a: {
@@ -35,5 +35,5 @@ assert.deepEqual(
       x: "x",
     },
     z: "z",
-  }
+  },
 );

@@ -11,9 +11,9 @@ assert.equal(
     { a: "\r\r\r", b: "       " },
     {
       hungryForWhitespace: false,
-    }
+    },
   ),
-  false
+  false,
 );
 
 // whitespace is matched leniently with the following option:
@@ -23,9 +23,9 @@ assert.equal(
     { a: "\r\r\r", b: "       " },
     {
       hungryForWhitespace: true,
-    }
+    },
   ),
-  true
+  true,
 );
 
 // the fun doesn't stop here, any "empty" structures will be
@@ -36,9 +36,9 @@ assert.equal(
     { a: [[[[["\r\r\r"]]]]], b: { c: { d: " " } } },
     {
       hungryForWhitespace: true, // <--- !
-    }
+    },
   ),
-  true // <--- !!!
+  true, // <--- !!!
 );
 // "empty" thing is:
 //   - string that trims to zero-length

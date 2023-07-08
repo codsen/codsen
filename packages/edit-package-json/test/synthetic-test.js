@@ -26,14 +26,14 @@ globby([
       return fsp
         .readFile(path2)
         .then((contents) => (contents ? JSON.parse(contents) : {}));
-    })
+    }),
   )
   .then((objectsArr) => {
     // console.log(objectsArr.length);
     test("validate the incoming parsed package.json count", () => {
       ok(
         objectsArr.length,
-        `${objectsArr.length} package.json objects are parsed and fed here`
+        `${objectsArr.length} package.json objects are parsed and fed here`,
       );
     });
     for (let idx = 0, len = objectsArr.length; idx < len; idx++) {
@@ -58,7 +58,7 @@ globby([
               `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path
               } - failure: ${e} - amended:\n${amended}`,
-              "02.01"
+              "02.01",
             );
           });
         }
@@ -72,7 +72,7 @@ globby([
               `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path
               } - failure: ${e}`,
-              "03.01"
+              "03.01",
             );
           });
         }
@@ -86,7 +86,7 @@ globby([
               editedRefObj,
               `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path
-              }`
+              }`,
             );
           });
         }

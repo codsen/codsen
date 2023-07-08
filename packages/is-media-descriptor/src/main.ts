@@ -29,7 +29,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
     throw new Error(
       `is-media-descriptor: [THROW_ID_01] resolvedOpts.offset must be an integer, it was given as ${
         resolvedOpts.offset
-      } (type ${typeof resolvedOpts.offset})`
+      } (type ${typeof resolvedOpts.offset})`,
     );
   }
   if (!resolvedOpts.offset) {
@@ -41,14 +41,14 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
   if (typeof str !== "string") {
     DEV &&
       console.log(
-        `044 isMediaD(): early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
+        `044 isMediaD(): early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`,
       );
     return [];
   }
   if (!str.trim()) {
     DEV &&
       console.log(
-        `051 isMediaD(): early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
+        `051 isMediaD(): early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`,
       );
     return [];
   }
@@ -68,8 +68,8 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
       `068 FINAL ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   // ---------------------------------------------------------------------------
@@ -111,7 +111,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
     }
     DEV &&
       console.log(
-        `114 PUSH [${ranges[0][0]}, ${ranges[ranges.length - 1][1]}]`
+        `114 PUSH [${ranges[0][0]}, ${ranges[ranges.length - 1][1]}]`,
       );
     res.push({
       idxFrom: ranges[0][0],
@@ -127,7 +127,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
 
   DEV &&
     console.log(
-      `130 isMediaD(): ██ working non-whitespace range: [${`\u001b[${35}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${35}m${nonWhitespaceEnd}\u001b[${39}m`}]`
+      `130 isMediaD(): ██ working non-whitespace range: [${`\u001b[${35}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${35}m${nonWhitespaceEnd}\u001b[${39}m`}]`,
     );
 
   // quick checks first - cover the most common cases, to make checks the
@@ -152,7 +152,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
     //
     DEV &&
       console.log(
-        `155 isMediaD(): whole string matched! ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
+        `155 isMediaD(): whole string matched! ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`,
       );
     return res;
   }
@@ -161,7 +161,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
       console.log(
         `162 isMediaD(): PUSH [${nonWhitespaceStart + resolvedOpts.offset}, ${
           nonWhitespaceEnd + resolvedOpts.offset
-        }]`
+        }]`,
       );
     res.push({
       idxFrom: nonWhitespaceStart + resolvedOpts.offset,
@@ -198,13 +198,13 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
         console.log(
           `199 isMediaD(): leven ${recognisedMediaTypes[i]} = ${leven(
             recognisedMediaTypes[i],
-            resolvedStr
-          )}`
+            resolvedStr,
+          )}`,
         );
       if (leven(recognisedMediaTypes[i], resolvedStr) === 1) {
         DEV &&
           console.log(
-            `207 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`
+            `207 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`,
           );
         res.push({
           idxFrom: nonWhitespaceStart + resolvedOpts.offset,
@@ -232,7 +232,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
               nonWhitespaceStart + resolvedOpts.offset
             }\u001b[${39}m`}, ${`\u001b[${33}m${
               nonWhitespaceEnd + resolvedOpts.offset
-            }\u001b[${39}m`}] (not offset [${`\u001b[${33}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${33}m${nonWhitespaceEnd}\u001b[${39}m`}])`
+            }\u001b[${39}m`}] (not offset [${`\u001b[${33}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${33}m${nonWhitespaceEnd}\u001b[${39}m`}])`,
           );
         res.push({
           idxFrom: nonWhitespaceStart + resolvedOpts.offset,
@@ -245,8 +245,8 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
             `245 isMediaD(): ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
               res,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
       }
     }
@@ -274,7 +274,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
 
     DEV &&
       console.log(
-        `277 isMediaD(): ${`\u001b[${36}m${`PART I.`}\u001b[${39}m`} Preliminary checks.`
+        `277 isMediaD(): ${`\u001b[${36}m${`PART I.`}\u001b[${39}m`} Preliminary checks.`,
       );
 
     // Preventive checks will help to simplify the algorithm - we won't need
@@ -282,7 +282,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
 
     let wrongOrder = false;
     let [openingBracketCount, closingBracketCount] = Array.from(
-      resolvedStr
+      resolvedStr,
     ).reduce(
       (acc, curr, idx) => {
         if (curr === ")") {
@@ -291,7 +291,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
           if (!wrongOrder && acc[1] + 1 > acc[0]) {
             DEV &&
               console.log(
-                `294 isMediaD(): set ${`\u001b[${33}m${`wrongOrder`}\u001b[${39}m`} = true`
+                `294 isMediaD(): set ${`\u001b[${33}m${`wrongOrder`}\u001b[${39}m`} = true`,
               );
             wrongOrder = true;
           }
@@ -310,7 +310,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
         }
         return acc;
       },
-      [0, 0]
+      [0, 0],
     );
 
     // we raise this error only when there is equal amount of brackets,
@@ -318,7 +318,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
     if (wrongOrder && openingBracketCount === closingBracketCount) {
       DEV &&
         console.log(
-          `321 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} the wrong order error`
+          `321 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} the wrong order error`,
         );
       res.push({
         idxFrom: nonWhitespaceStart + resolvedOpts.offset,
@@ -332,16 +332,16 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
         `332 isMediaD(): ${`\u001b[${33}m${`openingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
           openingBracketCount,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     DEV &&
       console.log(
         `340 isMediaD(): ${`\u001b[${33}m${`closingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
           closingBracketCount,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     // reporting that there were more one kind
@@ -377,7 +377,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
               console.log(
                 `378 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${lastOpening}, ${
                   i + 1
-                }]`
+                }]`,
               );
             res.push({
               idxFrom: lastOpening + resolvedOpts.offset,
@@ -398,7 +398,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
       // report errors early, save resources
       DEV &&
         console.log(
-          `401 isMediaD(): early ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
+          `401 isMediaD(): early ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`,
         );
       return res;
     }
@@ -408,7 +408,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
 
     DEV &&
       console.log(
-        `411 isMediaD(): ${`\u001b[${36}m${`PART II.`}\u001b[${39}m`} The main loop.`
+        `411 isMediaD(): ${`\u001b[${36}m${`PART II.`}\u001b[${39}m`} The main loop.`,
       );
     // first parse comma-separated chunks
     processCommaSep(resolvedStr, {
@@ -423,7 +423,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
           console.log(
             `424 isMediaD(): chunk [${idxFrom - resolvedOpts.offset}, ${
               idxTo - resolvedOpts.offset
-            }] extracted, passing to loop()`
+            }] extracted, passing to loop()`,
           );
         loop(
           resolvedStr,
@@ -432,7 +432,7 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
             idxFrom: idxFrom - resolvedOpts.offset,
             idxTo: idxTo - resolvedOpts.offset,
           },
-          res
+          res,
         );
       },
     });
@@ -458,15 +458,15 @@ function isMediaD(str: string, opts?: Partial<Opts>): ResObj[] {
 
   DEV &&
     console.log(
-      `461 isMediaD(): ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`
+      `461 isMediaD(): ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`,
     );
   DEV &&
     console.log(
       `465 isMediaD(): ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
         res,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   return res;
 }

@@ -22,7 +22,7 @@ assert.deepEqual(
     {
       // <- search for this object, the second argument
       tag: "meta",
-    }
+    },
   ),
   [
     {
@@ -30,7 +30,7 @@ assert.deepEqual(
       content: "UTF-8",
       something: "else",
     },
-  ]
+  ],
 );
 
 // set - three input arguments
@@ -56,7 +56,7 @@ assert.deepEqual(
         content: "UTF-8",
         something: "else",
       },
-    ]
+    ],
   ),
   [
     {
@@ -68,5 +68,5 @@ assert.deepEqual(
       tag: "title",
       attrs: "Text of the title",
     },
-  ]
+  ],
 );

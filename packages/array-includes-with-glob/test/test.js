@@ -18,7 +18,7 @@ test("02 - no wildcard, fails", () => {
   equal(
     includesWithGlob(["something", "anything", "everything"], "thing"),
     false,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -26,7 +26,7 @@ test("03 - no wildcard, succeeds", () => {
   equal(
     includesWithGlob(["something", "anything", "everything"], "something"),
     true,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -34,17 +34,17 @@ test("04 - wildcard, succeeds", () => {
   equal(
     includesWithGlob(["something", "anything", "everything"], "*thing"),
     true,
-    "04.01"
+    "04.01",
   );
   equal(
     includesWithGlob(["someTHING", "anyTHING", "everyTHING"], "*thing"),
     false,
-    "04.02"
+    "04.02",
   );
   equal(
     includesWithGlob(["someThInG", "anytHInG", "everyThINg"], "*thing"),
     false,
-    "04.03"
+    "04.03",
   );
 });
 
@@ -52,7 +52,7 @@ test("05 - wildcard, fails", () => {
   equal(
     includesWithGlob(["something", "anything", "everything"], "zzz"),
     false,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -60,22 +60,22 @@ test("06 - emoji everywhere", () => {
   equal(
     includesWithGlob(["xxxaxxx", "zxxxzzzzxz", "xxz"], "*a*"),
     true,
-    "06.01"
+    "06.01",
   );
   equal(
     includesWithGlob(["🦄🦄🦄a🦄🦄🦄", "z🦄🦄🦄zzzz🦄z", "🦄🦄z"], "*a*"),
     true,
-    "06.02"
+    "06.02",
   );
   equal(
     includesWithGlob(["🦄🦄🦄a🦄🦄🦄", "z🦄🦄🦄zzzz🦄z", "🦄🦄z"], "*🦄z"),
     true,
-    "06.03"
+    "06.03",
   );
   equal(
     includesWithGlob(["🦄🦄🦄a🦄🦄🦄", "z🦄🦄🦄zzzz🦄z", "🦄🦄z"], "%%%"),
     false,
-    "06.04"
+    "06.04",
   );
 });
 
@@ -83,7 +83,7 @@ test("07 - second arg is empty string", () => {
   equal(
     includesWithGlob(["something", "anything", "everything"], ""),
     false,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -101,10 +101,10 @@ test("09 - both arrays, no wildcards", () => {
   equal(
     includesWithGlob(
       ["something", "anything", "everything"],
-      ["anything", "zzz"]
+      ["anything", "zzz"],
     ),
     true,
-    "09.01"
+    "09.01",
   );
   equal(
     includesWithGlob(
@@ -112,10 +112,10 @@ test("09 - both arrays, no wildcards", () => {
       ["anything", "zzz"],
       {
         arrayVsArrayAllMustBeFound: "any",
-      }
+      },
     ),
     true,
-    "09.02"
+    "09.02",
   );
   equal(
     includesWithGlob(
@@ -123,18 +123,18 @@ test("09 - both arrays, no wildcards", () => {
       ["anything", "zzz"],
       {
         arrayVsArrayAllMustBeFound: "all",
-      }
+      },
     ),
     false,
-    "09.03"
+    "09.03",
   );
   equal(
     includesWithGlob(
       ["something", "anything", "everything"],
-      ["*thing", "zzz"]
+      ["*thing", "zzz"],
     ),
     true,
-    "09.04"
+    "09.04",
   );
   equal(includesWithGlob("something", ["*thing", "zzz"]), true, "09.05");
   equal(includesWithGlob("something", ["thing", "*zzz"]), false, "09.06");
@@ -144,24 +144,24 @@ test("09 - both arrays, no wildcards", () => {
       ["*thing", "zzz"],
       {
         arrayVsArrayAllMustBeFound: "all",
-      }
+      },
     ),
     false,
-    "09.07"
+    "09.07",
   );
   equal(
     includesWithGlob("something", ["*thing", "zzz"], {
       arrayVsArrayAllMustBeFound: "all",
     }),
     false,
-    "09.08"
+    "09.08",
   );
   equal(
     includesWithGlob("something", "*thing", {
       arrayVsArrayAllMustBeFound: "all",
     }),
     true,
-    "09.09"
+    "09.09",
   );
 });
 
@@ -172,14 +172,14 @@ test("10", () => {
       arrayVsArrayAllMustBeFound: "any",
     }),
     true,
-    "10.02"
+    "10.02",
   );
   equal(
     includesWithGlob("zzz", ["*thing", "*zz"], {
       arrayVsArrayAllMustBeFound: "all",
     }),
     false,
-    "10.03"
+    "10.03",
   );
 });
 
@@ -190,21 +190,21 @@ test("11 - opts.caseSensitive", () => {
       caseSensitive: true,
     }),
     false,
-    "11.02"
+    "11.02",
   );
   equal(
     includesWithGlob("something", ["*THING", "zzz"], {
       caseSensitive: false,
     }),
     true,
-    "11.03"
+    "11.03",
   );
   equal(
     includesWithGlob("something", ["*ZING", "zzz"], {
       caseSensitive: false,
     }),
     false,
-    "11.04"
+    "11.04",
   );
 });
 

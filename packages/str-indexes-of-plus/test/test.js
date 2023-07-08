@@ -14,7 +14,7 @@ test("01 - throws when the first argument is not string", () => {
       strIndexesOfPlus(1);
     },
     /first input argument must be a string/,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -24,7 +24,7 @@ test("02 - throws when the second argument is not string", () => {
       strIndexesOfPlus("a", 1);
     },
     /second input argument/,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -34,7 +34,7 @@ test("03 - throws when the third argument is not natural number", () => {
       strIndexesOfPlus("a", "a", "a");
     },
     /third input argument must be a natural number/,
-    "03.01"
+    "03.01",
   );
   not.throws(() => {
     strIndexesOfPlus("a", "a", "1");

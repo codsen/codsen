@@ -16,7 +16,7 @@ const { content: content1 } = extract(dtsSource, "export");
 // The "content" will come as-is:
 assert.equal(
   content1,
-  "{ Attribute, CbObj, Opts, Res, Tag, defaults, stripHtml, version };"
+  "{ Attribute, CbObj, Opts, Res, Tag, defaults, stripHtml, version };",
 );
 
 // -----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ const { content: content2 } = extract(dtsSource, "export", {
 
 assert.equal(
   content2,
-  "{ stripHtml, defaults, version, Attribute, CbObj, Opts, Res, Tag };"
+  "{ stripHtml, defaults, version, Attribute, CbObj, Opts, Res, Tag };",
 );
 // The lower case export go first, then uppercase;
 // also, "defaults" and "version" go last (among lower-case ones)
@@ -60,5 +60,5 @@ const { content: content3 } = extract(dtsSource, "export", {
 
 assert.equal(
   content3,
-  "{ Attribute, CbObj, defaults, Opts, Res, stripHtml, Tag, version };"
+  "{ Attribute, CbObj, defaults, Opts, Res, stripHtml, Tag, version };",
 );

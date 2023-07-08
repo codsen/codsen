@@ -25,11 +25,11 @@ test("02 - throws when opts.progressFn is wrong", () => {
           [1, 2],
           [0, 1],
         ],
-        { progressFn: "z" }
+        { progressFn: "z" },
       );
     },
     /THROW_ID_01/,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -41,11 +41,11 @@ test("03 - throws when opts.mergeType is wrong", () => {
           [1, 2],
           [0, 1],
         ],
-        { mergeType: "z" }
+        { mergeType: "z" },
       );
     },
     /THROW_ID_02/,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -57,11 +57,11 @@ test("04 - throws when the second arg is wrong", () => {
           [1, 2],
           [0, 1],
         ],
-        1
+        1,
       );
     },
     /THROW_ID_03/,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -75,11 +75,11 @@ test("05 - throws when opts.joinRangesThatTouchEdges is wrong", () => {
         ],
         {
           joinRangesThatTouchEdges: "z",
-        }
+        },
       );
     },
     /THROW_ID_04/,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -93,11 +93,11 @@ test("06", () => {
         ],
         {
           mergeType: true,
-        }
+        },
       );
     },
     "06.01",
-    "06.01"
+    "06.01",
   );
   not.throws(() => {
     rMerge(
@@ -107,7 +107,7 @@ test("06", () => {
       ],
       {
         progressFn: {},
-      }
+      },
     );
   }, "06.02");
 });
@@ -128,7 +128,7 @@ test("07 - simples: merges three overlapping ranges", () => {
       joinRangesThatTouchEdges: false,
     }),
     [[1, 8]],
-    "07.02"
+    "07.02",
   );
 
   // input argument mutation checks:
@@ -145,7 +145,7 @@ test("08 - nothing to merge", () => {
       [1, 2],
       [3, 8],
     ],
-    "08.01"
+    "08.01",
   );
   equal(
     rMerge(
@@ -155,13 +155,13 @@ test("08 - nothing to merge", () => {
       ],
       {
         joinRangesThatTouchEdges: false,
-      }
+      },
     ),
     [
       [1, 2],
       [3, 8],
     ],
-    "08.02"
+    "08.02",
   );
 });
 
@@ -172,28 +172,28 @@ test("09 - null input", () => {
       mergeType: 1,
     }),
     null,
-    "09.02"
+    "09.02",
   );
   equal(
     rMerge(null, {
       mergeType: 2,
     }),
     null,
-    "09.03"
+    "09.03",
   );
   equal(
     rMerge(null, {
       mergeType: "1",
     }),
     null,
-    "09.04"
+    "09.04",
   );
   equal(
     rMerge(null, {
       mergeType: "2",
     }),
     null,
-    "09.05"
+    "09.05",
   );
 
   equal(
@@ -201,14 +201,14 @@ test("09 - null input", () => {
       joinRangesThatTouchEdges: true,
     }),
     null,
-    "09.06"
+    "09.06",
   );
   equal(
     rMerge(null, {
       joinRangesThatTouchEdges: false,
     }),
     null,
-    "09.07"
+    "09.07",
   );
 });
 
@@ -219,28 +219,28 @@ test("10 - empty array", () => {
       mergeType: 1,
     }),
     null,
-    "10.02"
+    "10.02",
   );
   equal(
     rMerge([], {
       mergeType: 2,
     }),
     null,
-    "10.03"
+    "10.03",
   );
   equal(
     rMerge([], {
       mergeType: "1",
     }),
     null,
-    "10.04"
+    "10.04",
   );
   equal(
     rMerge([], {
       mergeType: "2",
     }),
     null,
-    "10.05"
+    "10.05",
   );
 
   equal(
@@ -248,14 +248,14 @@ test("10 - empty array", () => {
       joinRangesThatTouchEdges: true,
     }),
     null,
-    "10.06"
+    "10.06",
   );
   equal(
     rMerge([], {
       joinRangesThatTouchEdges: false,
     }),
     null,
-    "10.07"
+    "10.07",
   );
 });
 
@@ -266,28 +266,28 @@ test("11 - empty array with null inside", () => {
       mergeType: 1,
     }),
     null,
-    "11.02"
+    "11.02",
   );
   equal(
     rMerge([null], {
       mergeType: 2,
     }),
     null,
-    "11.03"
+    "11.03",
   );
   equal(
     rMerge([null], {
       mergeType: "1",
     }),
     null,
-    "11.04"
+    "11.04",
   );
   equal(
     rMerge([null], {
       mergeType: "2",
     }),
     null,
-    "11.05"
+    "11.05",
   );
 
   equal(
@@ -295,14 +295,14 @@ test("11 - empty array with null inside", () => {
       joinRangesThatTouchEdges: true,
     }),
     null,
-    "11.06"
+    "11.06",
   );
   equal(
     rMerge([null], {
       joinRangesThatTouchEdges: false,
     }),
     null,
-    "11.07"
+    "11.07",
   );
 });
 
@@ -314,7 +314,7 @@ test("12 - more complex case", () => {
       [1, 5],
       [6, 30],
     ],
-    "12.01"
+    "12.01",
   );
   equal(
     rMerge(
@@ -327,13 +327,13 @@ test("12 - more complex case", () => {
       ],
       {
         mergeType: 1,
-      }
+      },
     ),
     [
       [1, 5],
       [6, 30],
     ],
-    "12.02"
+    "12.02",
   );
   equal(
     rMerge(
@@ -346,13 +346,13 @@ test("12 - more complex case", () => {
       ],
       {
         mergeType: "1",
-      }
+      },
     ),
     [
       [1, 5],
       [6, 30],
     ],
-    "12.03"
+    "12.03",
   );
   equal(
     rMerge(
@@ -369,13 +369,13 @@ test("12 - more complex case", () => {
           type(perc, "number");
           counter += 1;
         },
-      }
+      },
     ),
     [
       [1, 5],
       [6, 30],
     ],
-    "12.04"
+    "12.04",
   );
   ok(counter > 5, "12.05");
 
@@ -391,14 +391,14 @@ test("12 - more complex case", () => {
       ],
       {
         joinRangesThatTouchEdges: false,
-      }
+      },
     ),
     [
       [1, 5],
       [6, 10],
       [10, 30],
     ],
-    "12.06"
+    "12.06",
   );
   equal(
     rMerge(
@@ -412,14 +412,14 @@ test("12 - more complex case", () => {
       {
         mergeType: 1,
         joinRangesThatTouchEdges: false,
-      }
+      },
     ),
     [
       [1, 5],
       [6, 10],
       [10, 30],
     ],
-    "12.07"
+    "12.07",
   );
 });
 
@@ -455,7 +455,7 @@ test("13 - even more complex case", () => {
           ok(perc !== last);
           last = perc;
         },
-      }
+      },
     ),
     [
       [0, 0, "rrr"],
@@ -468,7 +468,7 @@ test("13 - even more complex case", () => {
       [29, 38],
       [40, 40, "rrrr"],
     ],
-    "13.01"
+    "13.01",
   );
   ok(counter < 100, "13.02");
 });
@@ -486,7 +486,7 @@ test("14 - more merging examples", () => {
       [24, 28, "  "],
       [29, 31],
     ],
-    "14.01"
+    "14.01",
   );
 });
 
@@ -497,7 +497,7 @@ test("15 - superset range discards to-add content of their subset ranges #1", ()
       [1, 10],
     ]),
     [[1, 10]],
-    "15.01"
+    "15.01",
   );
 });
 
@@ -510,7 +510,7 @@ test("16 - superset range discards to-add content of their subset ranges #2", ()
       [1, 10],
     ]),
     [[1, 10]],
-    "16.01"
+    "16.01",
   );
 });
 
@@ -524,7 +524,7 @@ test("17 - superset range discards to-add content of their subset ranges #3", ()
       [3, 10],
     ]),
     [[1, 10, " "]],
-    "17.01"
+    "17.01",
   );
   equal(
     rMerge([
@@ -535,7 +535,7 @@ test("17 - superset range discards to-add content of their subset ranges #3", ()
       [7, 9, " "],
     ]),
     [[1, 10, " "]],
-    "17.02"
+    "17.02",
   );
   equal(
     rMerge([
@@ -546,7 +546,7 @@ test("17 - superset range discards to-add content of their subset ranges #3", ()
       [7, 9, " "],
     ]),
     [[1, 10, " "]],
-    "17.03"
+    "17.03",
   );
   equal(
     rMerge([
@@ -560,7 +560,7 @@ test("17 - superset range discards to-add content of their subset ranges #3", ()
       [1, 2, " "],
       [3, 10],
     ],
-    "17.04"
+    "17.04",
   );
 });
 
@@ -572,7 +572,7 @@ test("18 - third arg is null", () => {
       [2, 5, "b"],
     ]),
     [[1, 8, null]],
-    "18.01"
+    "18.01",
   );
   equal(
     rMerge([
@@ -580,7 +580,7 @@ test("18 - third arg is null", () => {
       [1, 4, null],
     ]),
     [[1, 8, null]],
-    "18.02"
+    "18.02",
   );
   equal(
     rMerge([
@@ -588,7 +588,7 @@ test("18 - third arg is null", () => {
       [3, 8, "c"],
     ]),
     [[1, 8, null]],
-    "18.03"
+    "18.03",
   );
   equal(
     rMerge([
@@ -596,7 +596,7 @@ test("18 - third arg is null", () => {
       [3, 8, null],
     ]),
     [[1, 8, null]],
-    "18.04"
+    "18.04",
   );
   equal(
     rMerge([
@@ -604,7 +604,7 @@ test("18 - third arg is null", () => {
       [1, 4, "c"],
     ]),
     [[1, 8, null]],
-    "18.05"
+    "18.05",
   );
 });
 
@@ -638,7 +638,7 @@ test("21 - only two identical args in the range", () => {
       [2, 2, "zzz"],
       [3, 4],
     ],
-    "21.01"
+    "21.01",
   );
   equal(rMerge([[1, 1]]), null, "21.02");
 
@@ -650,13 +650,13 @@ test("21 - only two identical args in the range", () => {
         [3, 4],
         [2, 2, "zzz"],
       ],
-      { mergeType: 2 }
+      { mergeType: 2 },
     ),
     [
       [2, 2, "zzz"],
       [3, 4],
     ],
-    "21.03"
+    "21.03",
   );
   equal(rMerge([[1, 1]], { mergeType: 2 }), null, "21.04");
 });
@@ -670,7 +670,7 @@ test("22 - third arg", () => {
       [2, 5, "b"],
     ]),
     [[1, 8, "abc"]],
-    "22.01"
+    "22.01",
   );
   equal(
     rMerge([
@@ -679,7 +679,7 @@ test("22 - third arg", () => {
       [2, 5, "b"],
     ]),
     [[1, 8, "bc"]],
-    "22.02"
+    "22.02",
   );
   equal(
     rMerge([
@@ -688,7 +688,7 @@ test("22 - third arg", () => {
       [2, 5],
     ]),
     [[1, 8, "ac"]],
-    "22.03"
+    "22.03",
   );
   equal(
     rMerge([
@@ -697,7 +697,7 @@ test("22 - third arg", () => {
       [2, 5, "b"],
     ]),
     [[1, 8, "ab"]],
-    "22.04"
+    "22.04",
   );
 
   // opts.mergeType === 2
@@ -708,10 +708,10 @@ test("22 - third arg", () => {
         [1, 4, "a"],
         [2, 5, "b"],
       ],
-      { mergeType: 2 }
+      { mergeType: 2 },
     ),
     [[1, 8, "abc"]],
-    "22.05"
+    "22.05",
   );
   equal(
     rMerge(
@@ -720,10 +720,10 @@ test("22 - third arg", () => {
         [1, 4],
         [2, 5, "b"],
       ],
-      { mergeType: 2 }
+      { mergeType: 2 },
     ),
     [[1, 8, "bc"]],
-    "22.06"
+    "22.06",
   );
   equal(
     rMerge(
@@ -732,10 +732,10 @@ test("22 - third arg", () => {
         [1, 4, "a"],
         [2, 5],
       ],
-      { mergeType: 2 }
+      { mergeType: 2 },
     ),
     [[1, 8, "ac"]],
-    "22.07"
+    "22.07",
   );
   equal(
     rMerge(
@@ -744,10 +744,10 @@ test("22 - third arg", () => {
         [1, 4, "a"],
         [2, 5, "b"],
       ],
-      { mergeType: 2 }
+      { mergeType: 2 },
     ),
     [[1, 8, "ab"]],
-    "22.08"
+    "22.08",
   );
 });
 
@@ -762,7 +762,7 @@ test("23 - few ranges starting at the same index", () => {
       [3, 12, "zzz"],
     ]),
     [[3, 12, "aaazzz"]],
-    "23.01"
+    "23.01",
   );
   equal(
     rMerge([
@@ -770,7 +770,7 @@ test("23 - few ranges starting at the same index", () => {
       [3, 4, "aaa"],
     ]), // notice order is opposite
     [[3, 12, "aaazzz"]], // <--- order does not matter, ranges are sorted
-    "23.02"
+    "23.02",
   );
   equal(
     rMerge(
@@ -778,10 +778,10 @@ test("23 - few ranges starting at the same index", () => {
         [3, 4, "aaa"],
         [3, 12, "zzz"],
       ],
-      { mergeType: 1 }
+      { mergeType: 1 },
     ),
     [[3, 12, "aaazzz"]],
-    "23.03"
+    "23.03",
   );
   equal(
     rMerge(
@@ -789,10 +789,10 @@ test("23 - few ranges starting at the same index", () => {
         [3, 4, "aaa"],
         [3, 12, "zzz"],
       ],
-      { mergeType: "1" }
+      { mergeType: "1" },
     ),
     [[3, 12, "aaazzz"]],
-    "23.04"
+    "23.04",
   );
 
   // entrée - opts.mergeType === 2
@@ -802,10 +802,10 @@ test("23 - few ranges starting at the same index", () => {
         [3, 4, "aaa"],
         [3, 12, "zzz"],
       ],
-      { mergeType: 2 }
+      { mergeType: 2 },
     ),
     [[3, 12, "zzz"]],
-    "23.05"
+    "23.05",
   );
   equal(
     rMerge(
@@ -813,10 +813,10 @@ test("23 - few ranges starting at the same index", () => {
         [3, 4, "aaa"],
         [3, 12, "zzz"],
       ],
-      { mergeType: "2" }
+      { mergeType: "2" },
     ),
     [[3, 12, "zzz"]],
-    "23.06"
+    "23.06",
   );
   equal(
     rMerge(
@@ -824,10 +824,10 @@ test("23 - few ranges starting at the same index", () => {
         [3, 12, "zzz"],
         [3, 4, "aaa"],
       ],
-      { mergeType: 2 }
+      { mergeType: 2 },
     ),
     [[3, 12, "zzz"]], // ^ order does not matter
-    "23.07"
+    "23.07",
   );
 });
 
@@ -846,14 +846,14 @@ test("24 - third arg", () => {
       joinRangesThatTouchEdges: true,
     }),
     res1,
-    "24.02"
+    "24.02",
   );
   equal(
     rMerge(inp1, {
       joinRangesThatTouchEdges: false,
     }),
     inp1,
-    "24.03"
+    "24.03",
   );
 });
 

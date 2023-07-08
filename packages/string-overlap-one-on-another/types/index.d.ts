@@ -7,7 +7,7 @@ declare const defaults: Opts;
 declare function overlap(
   str1: string,
   str2: string,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): string;
 
 export { Opts, defaults, overlap, version };

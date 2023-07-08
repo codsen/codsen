@@ -23,8 +23,8 @@ function extract(str: string): Result {
       `string-extract-class-names: [THROW_ID_01] first str should be string, not ${typeof str}, currently equal to ${JSON.stringify(
         str,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
 
@@ -62,7 +62,7 @@ function extract(str: string): Result {
       console.log(
         `${`\u001b[${36}m${`============================`}\u001b[${39}m`} ${`\u001b[${33}m${
           str[i]
-        }\u001b[${39}m`} (${`\u001b[${31}m${i}\u001b[${39}m`})`
+        }\u001b[${39}m`} (${`\u001b[${31}m${i}\u001b[${39}m`})`,
       );
 
     // catch the ending of a selector's name:
@@ -87,21 +87,21 @@ function extract(str: string): Result {
           i,
         ]);
         result.res.push(
-          `${stateCurrentlyIs || ""}${str.slice(selectorStartsAt, i)}`
+          `${stateCurrentlyIs || ""}${str.slice(selectorStartsAt, i)}`,
         );
 
         if (stateCurrentlyIs) {
           stateCurrentlyIs = undefined;
           DEV &&
             console.log(
-              `097 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stateCurrentlyIs = undefined`
+              `097 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stateCurrentlyIs = undefined`,
             );
         }
       }
       selectorStartsAt = null;
       DEV &&
         console.log(
-          `104 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`
+          `104 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`,
         );
     }
 
@@ -114,7 +114,7 @@ function extract(str: string): Result {
       selectorStartsAt = i;
       DEV &&
         console.log(
-          `117 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`
+          `117 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`,
         );
     }
 
@@ -174,8 +174,8 @@ function extract(str: string): Result {
         `174 \u001b[${90}m${`ended with: selectorStartsAt = ${selectorStartsAt}; result = ${JSON.stringify(
           result,
           null,
-          0
-        )}`}\u001b[${39}m`
+          0,
+        )}`}\u001b[${39}m`,
       );
   }
 

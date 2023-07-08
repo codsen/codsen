@@ -14,7 +14,7 @@ test("01 - throws when the first argument, source string, is not a string", () =
       findMalformed(1);
     },
     /THROW_ID_01/,
-    "01.01"
+    "01.01",
   );
 
   // more resembling real-life:
@@ -26,11 +26,11 @@ test("01 - throws when the first argument, source string, is not a string", () =
         () => {
           console.log("yo");
         },
-        null
+        null,
       );
     },
     /THROW_ID_01/,
-    "01.02"
+    "01.02",
   );
 });
 
@@ -40,7 +40,7 @@ test("02 - throws when the second argument, ref string, is not a string", () => 
       findMalformed("aaa", 1);
     },
     /THROW_ID_02/,
-    "02.01"
+    "02.01",
   );
 
   // more resembling real-life:
@@ -52,11 +52,11 @@ test("02 - throws when the second argument, ref string, is not a string", () => 
         () => {
           console.log("yo");
         },
-        null
+        null,
       );
     },
     /THROW_ID_02/,
-    "02.02"
+    "02.02",
   );
 });
 
@@ -66,7 +66,7 @@ test("03 - throws when the third argument, callback, is not a function", () => {
       findMalformed("aaa", "zzz", 1);
     },
     /THROW_ID_03/,
-    "03.01"
+    "03.01",
   );
 
   throws(
@@ -74,7 +74,7 @@ test("03 - throws when the third argument, callback, is not a function", () => {
       findMalformed("a", "b", "c", null);
     },
     /THROW_ID_03/,
-    "03.02"
+    "03.02",
   );
 });
 
@@ -84,7 +84,7 @@ test("04 - throws when the fourth argument, optional options object, is not a pl
       findMalformed("aaa", "bbb", () => {}, "ccc");
     },
     /THROW_ID_04/,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -94,7 +94,7 @@ test("05 - throws when opts.stringOffset is not a number", () => {
       findMalformed("aaa", "bbb", () => {}, { stringOffset: "ccc" });
     },
     /THROW_ID_05/,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -131,7 +131,7 @@ test('08 - rogue character, "c"', () => {
         idxTo: 5,
       },
     ],
-    "08.01"
+    "08.01",
   );
 });
 
@@ -145,7 +145,7 @@ test("09 - overlapping and extended maxDistance", () => {
     },
     {
       maxDistance: 2,
-    }
+    },
   );
   equal(
     gathered,
@@ -155,7 +155,7 @@ test("09 - overlapping and extended maxDistance", () => {
         idxTo: 9,
       },
     ],
-    "09.01"
+    "09.01",
   );
 });
 
@@ -170,7 +170,7 @@ test("10 - with opts.stringOffset", () => {
     {
       maxDistance: 1,
       stringOffset: 100,
-    }
+    },
   );
   equal(
     gathered,
@@ -180,7 +180,7 @@ test("10 - with opts.stringOffset", () => {
         idxTo: 108,
       },
     ],
-    "10.01"
+    "10.01",
   );
 });
 
@@ -195,7 +195,7 @@ test("11 - correct, fully matching value is not pinged", () => {
     {
       maxDistance: 1,
       stringOffset: 100,
-    }
+    },
   );
   equal(gathered, [], "11.01");
 });
@@ -211,7 +211,7 @@ test("12 - like before but strings in opts", () => {
     {
       maxDistance: "1",
       stringOffset: "100",
-    }
+    },
   );
   equal(
     gathered,
@@ -221,7 +221,7 @@ test("12 - like before but strings in opts", () => {
         idxTo: 112,
       },
     ],
-    "12.01"
+    "12.01",
   );
 });
 
@@ -233,7 +233,7 @@ test("13 - whitespace", () => {
     (obj) => {
       gathered.push(obj);
     },
-    null
+    null,
   );
   equal(
     gathered,
@@ -243,7 +243,7 @@ test("13 - whitespace", () => {
         idxTo: 12,
       },
     ],
-    "13.01"
+    "13.01",
   );
 });
 
@@ -255,7 +255,7 @@ test("14 - repeated characters after failed match", () => {
     (obj) => {
       gathered.push(obj);
     },
-    null
+    null,
   );
   equal(
     gathered,
@@ -265,7 +265,7 @@ test("14 - repeated characters after failed match", () => {
         idxTo: 3,
       },
     ],
-    "14.01"
+    "14.01",
   );
 });
 
@@ -277,7 +277,7 @@ test("15 - repeated characters after failed match", () => {
     (obj) => {
       gathered.push(obj);
     },
-    null
+    null,
   );
   equal(
     gathered,
@@ -287,7 +287,7 @@ test("15 - repeated characters after failed match", () => {
         idxTo: 4,
       },
     ],
-    "15.01"
+    "15.01",
   );
 });
 

@@ -64,7 +64,7 @@ test(`01 - ${allNamedEntitiesSetOnly.size} programmatic tests in total`, () => {
             rangeValDecoded: decode(`&${singleEntity};`),
           },
         ],
-        `${singleEntity} - 01; ${i + 1}/${arr.length}`
+        `${singleEntity} - 01; ${i + 1}/${arr.length}`,
       );
     });
 });
@@ -93,14 +93,14 @@ test(`04 - ${`\u001b[${33}m${"missing amp"}\u001b[${39}m`} - aacute vs acute`, (
       },
     }),
     result,
-    "04.01"
+    "04.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "04.02"
+    "04.02",
   );
   equal(gathered, [], "04.03");
 });
@@ -116,14 +116,14 @@ test(`05 - ${`\u001b[${33}m${"missing amp"}\u001b[${39}m`} - aacute vs acute`, (
       },
     }),
     result,
-    "05.01"
+    "05.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "05.02"
+    "05.02",
   );
   equal(gathered, [], "05.03");
 });
@@ -132,7 +132,7 @@ test(`06 - ${`\u001b[${33}m${"missing amp"}\u001b[${39}m`} - aacute vs acute, fa
   equal(
     fix(ok, "Diagnosis can be acute; it is up to a doctor to"),
     [],
-    "06.01"
+    "06.01",
   );
 });
 
@@ -160,14 +160,14 @@ test("09 - nbsp", () => {
       },
     }),
     result,
-    "09.01"
+    "09.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "09.02"
+    "09.02",
   );
   equal(gathered, [], "09.03");
 });
@@ -183,14 +183,14 @@ test("10 - red & bull;", () => {
       },
     }),
     result,
-    "10.01"
+    "10.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "10.02"
+    "10.02",
   );
   equal(gathered, [4], "10.03");
 });

@@ -60,7 +60,7 @@ test("06 - testing api directly", () => {
       },
       templatingLang: { name: null },
     },
-    "06.01"
+    "06.01",
   );
   // exact duration is unpredictable, so we check for truthiness only
   assert.ok(log.timeTakenInMilliseconds, "06.02");
@@ -80,7 +80,7 @@ test("09 - ensure mixer is generating variations", () => {
     2 **
       Object.keys(defaults).filter((key) => typeof defaults[key] === "boolean")
         .length,
-    "09.01"
+    "09.01",
   );
 });
 

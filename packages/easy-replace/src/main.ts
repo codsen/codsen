@@ -25,7 +25,7 @@ export interface Opts {
 function astralAwareSearch(
   whereToLook: string,
   whatToLookFor: string,
-  resolvedOpts?: { i?: boolean }
+  resolvedOpts?: { i?: boolean },
 ): number[] {
   function existy(something: any): boolean {
     return something != null;
@@ -117,7 +117,7 @@ function iterateLeft(
   elem: string,
   arrSource: string[],
   foundBeginningIndex: number,
-  i: boolean
+  i: boolean,
 ): boolean {
   let matched = true;
   let charsArray = Array.from(elem);
@@ -148,7 +148,7 @@ function iterateRight(
   elem: string,
   arrSource: string[],
   foundEndingIndex: number,
-  i: boolean
+  i: boolean,
 ): boolean {
   let matched = true;
   let charsArray = Array.from(elem);
@@ -221,7 +221,7 @@ function er(source: string, opts: Opts, replacement: string): string {
     resolvedOpts.searchFor,
     {
       i: resolvedOpts.i.searchFor,
-    }
+    },
   );
 
   for (
@@ -334,7 +334,7 @@ function er(source: string, opts: Opts, replacement: string): string {
           resolvedOpts.leftOutside[i],
           arrSource,
           foundBeginningIndex,
-          resolvedOpts.i.leftOutside
+          resolvedOpts.i.leftOutside,
         );
         if (matched) {
           found = true;
@@ -353,7 +353,7 @@ function er(source: string, opts: Opts, replacement: string): string {
           resolvedOpts.rightOutside[i],
           arrSource,
           foundEndingIndex,
-          resolvedOpts.i.rightOutside
+          resolvedOpts.i.rightOutside,
         );
         if (matched) {
           found = true;
@@ -371,7 +371,7 @@ function er(source: string, opts: Opts, replacement: string): string {
           resolvedOpts.leftOutsideNot[i],
           arrSource,
           foundBeginningIndex,
-          resolvedOpts.i.leftOutsideNot
+          resolvedOpts.i.leftOutsideNot,
         );
         if (matched) {
           foundBeginningIndex = -1;
@@ -391,7 +391,7 @@ function er(source: string, opts: Opts, replacement: string): string {
           resolvedOpts.rightOutsideNot[i],
           arrSource,
           foundEndingIndex,
-          resolvedOpts.i.rightOutsideNot
+          resolvedOpts.i.rightOutsideNot,
         );
         if (matched) {
           foundBeginningIndex = -1;

@@ -15,7 +15,7 @@ test("01 - progress won't be reported under string length 1001", () => {
       reportProgressFunc: thrower,
     }).result,
     "text",
-    "01.01"
+    "01.01",
   );
 });
 
@@ -26,7 +26,7 @@ test("02 - progress won't be reported, length exactly 1000", () => {
       reportProgressFunc: thrower,
     }).result,
     "a".repeat(100),
-    "02.01"
+    "02.01",
   );
 });
 
@@ -39,7 +39,7 @@ test("03 - reports only at 50% if length is between 1000 and 2000", () => {
       });
     },
     /50/,
-    "03.01"
+    "03.01",
   );
 });
 

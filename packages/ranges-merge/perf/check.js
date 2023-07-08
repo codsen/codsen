@@ -15,7 +15,7 @@ const testme = () =>
       [1, 4],
       [2, 5, "b"],
     ],
-    { mergeType: 2 }
+    { mergeType: 2 },
   );
 
 // action

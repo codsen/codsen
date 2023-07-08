@@ -19,7 +19,7 @@ test("02 - basic", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -28,7 +28,7 @@ test("02 - basic", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "<html><div>",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -42,7 +42,7 @@ test("03 - basic", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -52,7 +52,7 @@ test("03 - basic", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "abc def",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -62,7 +62,7 @@ test("03 - basic", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "<!--tralala-->",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -72,7 +72,7 @@ test("03 - basic", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       source,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -90,7 +90,7 @@ test("04 - ensure no accidental text concat", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 
@@ -101,7 +101,7 @@ test("04 - ensure no accidental text concat", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "abc def",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 
@@ -112,7 +112,7 @@ test("04 - ensure no accidental text concat", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "<html><div>",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 
@@ -123,14 +123,14 @@ test("04 - ensure no accidental text concat", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       source,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
 
 test("05", () => {
   let { result, applicableOpts, templatingLang } = stri2(
-    "<div>Script says hello world and sky and sea</div>"
+    "<div>Script says hello world and sky and sea</div>",
   );
   assert.equal(
     { result, applicableOpts, templatingLang },
@@ -147,7 +147,7 @@ test("05", () => {
         name: null,
       },
     },
-    "05.01"
+    "05.01",
   );
 });
 

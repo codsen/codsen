@@ -45,19 +45,19 @@ test("matches each of comments", () => {
   not.match(
     "<!--[if (gte mso 9)|(IE)]>z<![endif]-->",
     emptyCondCommentRegex(),
-    "01.02"
+    "01.02",
   );
   not.match(
     "<!--[if (gte mso 9)|(IE)]>\n\t\tz\n<![endif]-->",
     emptyCondCommentRegex(),
-    "01.03"
+    "01.03",
   );
   not.match(
     `<!--[if !mso]><!-- -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!--<![endif]-->`,
     emptyCondCommentRegex(),
-    "01.04"
+    "01.04",
   );
   not.match(
     `<!--[if (gte mso 9)|(IE)]>
@@ -72,7 +72,7 @@ zzz
   </table>
 <![endif]-->`,
     emptyCondCommentRegex(),
-    "01.05"
+    "01.05",
   );
 
   // as per https://stackoverflow.com/a/5983063/3943954
@@ -81,24 +81,24 @@ zzz
   content targeted at non-outlook users goes here...
 <!--<![endif]-->`,
     emptyCondCommentRegex(),
-    "01.06"
+    "01.06",
   );
 });
 
 test("returns comment on match", () => {
   equal(
     "<html> <!--[if (gte mso 9)|(IE)]><![endif]--> <title>".match(
-      emptyCondCommentRegex()
+      emptyCondCommentRegex(),
     ),
     ["<!--[if (gte mso 9)|(IE)]><![endif]-->"],
-    "02.01"
+    "02.01",
   );
   equal(
     `<html> <!--[if !mso]><![endif]--> <title>text</title> <!--[if gte mso 9]>
   <xml>
   <![endif]-->`.match(emptyCondCommentRegex()),
     ["<!--[if !mso]><![endif]-->"],
-    "02.02"
+    "02.02",
   );
   equal(
     `<html> <!--[if !mso]><![endif]--> <title>text</title> <!--[if !mso]><!-- -->
@@ -110,7 +110,7 @@ test("returns comment on match", () => {
 
 <!--<![endif]-->`,
     ],
-    "02.03"
+    "02.03",
   );
 });
 
@@ -118,10 +118,10 @@ test("deletes comments from code", () => {
   equal(
     "zzz <!--[if (gte mso 9)|(IE)]>\t<![endif]--> yyy <!-- does not touch this -->".replace(
       emptyCondCommentRegex(),
-      ""
+      "",
     ),
     "zzz  yyy <!-- does not touch this -->",
-    "03.01"
+    "03.01",
   );
 });
 

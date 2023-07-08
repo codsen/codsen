@@ -25,7 +25,7 @@ const testme = () =>
     ],
     {
       key: "b",
-    }
+    },
   );
 
 // action

@@ -17,7 +17,7 @@ a[href^="tel"], a[href^="sms"] { text-decoration: none; color: #525252; pointer-
 <body>
   some code
 </body>
-`
+`,
   );
 
   let intended = `<head>
@@ -43,7 +43,7 @@ a {color: #525252;}
 <body>
   some code
 </body>
-`
+`,
   );
 
   let intended = `<head>
@@ -87,7 +87,7 @@ test('03 - sneaky attributes that end with characters "id"', () => {
 </table>
 </body>
 </html>
-`
+`,
   );
 
   let intended = `<!DOCTYPE html>
@@ -127,7 +127,7 @@ test('04 - mini version of 08.05, sneaky attributes ending with "class"', () => 
 <a href="zzz" superclass="26489" >Links</a>
 </body>
 </html>
-`
+`,
   );
 
   let intended = `<body>
@@ -167,7 +167,7 @@ test('05 - sneaky attributes that end with characters "class"', () => {
 </table>
 </body>
 </html>
-`
+`,
   );
 
   let intended = `<!DOCTYPE html>
@@ -232,7 +232,7 @@ test("06 - color code hashes interpreted correctly, not as id's", () => {
 </table>
 </body>
 </html>
-`
+`,
   );
 
   let intended = [".mobile_link", "#head-only-id1"];
@@ -250,7 +250,7 @@ test("07 - one-letter classes (modern notation)", () => {
 <body>
 <span class="h">z</span>
 </body>
-`
+`,
   );
 
   let intended = `<head>
@@ -276,7 +276,7 @@ test("08 - one-letter classes (old notation)", () => {
 <body>
 <span class="h">z</span>
 </body>
-`
+`,
   );
 
   let intended = `<head>
@@ -314,7 +314,7 @@ test("09 - one-letter classes - comprehensive comparison", () => {
     </tr>
   </table>
 </body>
-</html>`
+</html>`,
   );
 
   let intended = {
@@ -346,22 +346,22 @@ test("09 - one-letter classes - comprehensive comparison", () => {
   equal(
     actual.allInHead.sort().join(" - "),
     intended.allInHead.sort().join(" - "),
-    "09.01"
+    "09.01",
   );
   equal(
     actual.allInBody.sort().join(" - "),
     intended.allInBody.sort().join(" - "),
-    "09.02"
+    "09.02",
   );
   equal(
     actual.deletedFromHead.sort().join(" - "),
     intended.deletedFromHead.sort().join(" - "),
-    "09.03"
+    "09.03",
   );
   equal(
     actual.deletedFromBody.sort().join(" - "),
     intended.deletedFromBody.sort().join(" - "),
-    "09.04"
+    "09.04",
   );
   equal(actual.result, intended.result, "09.05");
 });
@@ -379,7 +379,7 @@ test("10 - checking whole results object, all its keys #1", () => {
 <body>
   <span class="used-1 unused-4"></span>
 </body>
-</html>`
+</html>`,
   );
 
   let intended = {
@@ -401,12 +401,12 @@ test("10 - checking whole results object, all its keys #1", () => {
   equal(
     actual.deletedFromHead.sort(),
     intended.deletedFromHead.sort(),
-    "10.03"
+    "10.03",
   );
   equal(
     actual.deletedFromBody.sort(),
     intended.deletedFromBody.sort(),
-    "10.04"
+    "10.04",
   );
   equal(actual.result, intended.result, "10.05");
 });
@@ -425,7 +425,7 @@ test("11 - checking whole results object, all its keys #2", () => {
   <span class="used-1 unused-4"></span>
 </body>
 </html>
-`
+`,
   );
 
   let intended = {
@@ -453,12 +453,12 @@ test("11 - checking whole results object, all its keys #2", () => {
   equal(
     actual.deletedFromHead.sort(),
     intended.deletedFromHead.sort(),
-    "11.03"
+    "11.03",
   );
   equal(
     actual.deletedFromBody.sort(),
     intended.deletedFromBody.sort(),
-    "11.04"
+    "11.04",
   );
   equal(actual.result, intended.result, "11.05");
 });
@@ -631,7 +631,7 @@ a[href^="x-apple-data-detectors:"] { color: inherit; text-decoration: inherit;}
 <body>
 <a class="HOV">some code</a>
 </body>
-`
+`,
   );
 
   let intended = `<head>
@@ -659,7 +659,7 @@ a[href^="x-apple-data-detectors"] { color: inherit; text-decoration: inherit;}
 <body>
 <a class="x">some code</a>
 </body>
-`
+`,
   );
 
   let intended = `<head>
@@ -685,7 +685,7 @@ a[href^="x-apple-data-detectors:"] { color: inherit; text-decoration: inherit;}
 <body>
 <a class="x">some code</a>
 </body>
-`
+`,
   );
 
   let intended = `<head>
@@ -713,7 +713,7 @@ test("23 - DW reported - transition only - used", () => {
 <body>
 <a class="HOV">some code</a>
 </body>
-`
+`,
   );
 
   let intended = `<head>
@@ -742,7 +742,7 @@ test("24 - DW reported - deletes 2 x [class]", () => {
 <body>
 <a class="x">some code</a>
 </body>
-`
+`,
   );
 
   let intended = `<head>
@@ -768,7 +768,7 @@ test("25 - #68 leftover commas - class+tag+class+class", () => {
 <body class="a">
 x
 </body>
-`
+`,
   );
 
   let intended = `<head>
@@ -794,7 +794,7 @@ p, li, .unused-class-1, .unused-class-2 {}
 <body>
 x
 </body>
-`
+`,
   );
 
   let intended = `<head>
@@ -820,7 +820,7 @@ test("27 - #68 leftover commas - 1", () => {
 <body class="a">
 x
 </body>
-`
+`,
   );
 
   let intended = `<head>
@@ -846,7 +846,7 @@ test("28 - #68 leftover commas - 2", () => {
 <body class="a">
 x
 </body>
-`
+`,
   );
 
   let intended = `<head>
@@ -872,7 +872,7 @@ test("29 - #68 leftover commas - 3", () => {
 <body class="a">
 x
 </body>
-`
+`,
   );
 
   let intended = `<head>
@@ -898,7 +898,7 @@ li, .b, .c, .a {}
 <body class="a">
 x
 </body>
-`
+`,
   );
 
   let intended = `<head>

@@ -65,7 +65,7 @@ test(`05 - ${`\u001b[${33}m${"api bits"}\u001b[${39}m`} - weird offset`, () => {
       isMediaD("", { offset: true });
     },
     /THROW_ID_01/gm,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -134,7 +134,7 @@ test(`08 - ${`\u001b[${31}m${"single-string values"}\u001b[${39}m`} - unrecognis
         fix: null,
       },
     ],
-    "08.01"
+    "08.01",
   );
   equal(applyFixes(str, res, offset), "zzz", "08.02");
 });
@@ -157,7 +157,7 @@ test(`09 - ${`\u001b[${31}m${"single-string values"}\u001b[${39}m`} - unrecognis
         fix: null,
       },
     ],
-    "09.02"
+    "09.02",
   );
 });
 
@@ -179,7 +179,7 @@ test(`10 - ${`\u001b[${31}m${"single-string values"}\u001b[${39}m`} - unrecognis
         fix: null,
       },
     ],
-    "10.02"
+    "10.02",
   );
 });
 
@@ -209,7 +209,7 @@ test(`11 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - leading`, () => 
         },
       },
     ],
-    "11.02"
+    "11.02",
   );
 });
 
@@ -235,7 +235,7 @@ test(`12 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - trailing`, () =>
         },
       },
     ],
-    "12.02"
+    "12.02",
   );
 });
 
@@ -264,7 +264,7 @@ test(`13 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - mixed, leading a
         },
       },
     ],
-    "13.02"
+    "13.02",
   );
 });
 
@@ -290,7 +290,7 @@ test(`14 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - single tab white
         },
       },
     ],
-    "14.01"
+    "14.01",
   );
   equal(applyFixes(str, res, offset), fixed, "14.02");
 });
@@ -317,7 +317,7 @@ test(`15 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - multiple tab whi
         },
       },
     ],
-    "15.01"
+    "15.01",
   );
   equal(applyFixes(str, res, offset), fixed, "15.02");
 });
@@ -344,7 +344,7 @@ test(`16 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - mixed whitespace
         },
       },
     ],
-    "16.01"
+    "16.01",
   );
   equal(applyFixes(str, res, offset), fixed, "16.02");
 });
@@ -371,7 +371,7 @@ test(`17 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - mixed whitespace
         },
       },
     ],
-    "17.01"
+    "17.01",
   );
   equal(applyFixes(str, res, offset), fixed, "17.02");
 });
@@ -398,7 +398,7 @@ test(`18 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - mixed whitespace
         },
       },
     ],
-    "18.01"
+    "18.01",
   );
   equal(applyFixes(str, res, offset), "only screen", "18.02");
 });
@@ -422,7 +422,7 @@ test(`19 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - not, missing typ
         fix: null,
       },
     ],
-    "19.01"
+    "19.01",
   );
   equal(applyFixes(str, res, offset), str, "19.02");
 });
@@ -446,7 +446,7 @@ test(`20 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - not, missing typ
         fix: null,
       },
     ],
-    "20.01"
+    "20.01",
   );
   equal(applyFixes(str, res, offset), str, "20.02");
 });
@@ -487,7 +487,7 @@ test(`21 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - not, missing typ
         fix: null,
       },
     ],
-    "21.01"
+    "21.01",
   );
   equal(applyFixes(str, res, offset), fixed, "21.02");
 });
@@ -513,7 +513,7 @@ test(`22 - ${`\u001b[${32}m${"bad whitespace"}\u001b[${39}m`} - trailing space`,
         },
       },
     ],
-    "22.01"
+    "22.01",
   );
   equal(applyFixes(str, res), fixed, "22.02");
 });
@@ -544,7 +544,7 @@ test(`23 - ${`\u001b[${36}m${"levenshtein"}\u001b[${39}m`} - minimal case`, () =
         },
       },
     ],
-    "23.02"
+    "23.02",
   );
 });
 
@@ -581,7 +581,7 @@ test(`24 - ${`\u001b[${36}m${"levenshtein"}\u001b[${39}m`} - leading and trailin
         },
       },
     ],
-    "24.02"
+    "24.02",
   );
 });
 
@@ -606,7 +606,7 @@ test(`25 - ${`\u001b[${34}m${"preliminary checks"}\u001b[${39}m`} - mismatching 
         fix: null,
       },
     ],
-    "25.01"
+    "25.01",
   );
   equal(applyFixes(str, res, offset), str, "25.02");
 });
@@ -629,7 +629,7 @@ test(`26 - ${`\u001b[${34}m${"preliminary checks"}\u001b[${39}m`} - mismatching 
         fix: null,
       },
     ],
-    "26.01"
+    "26.01",
   );
   equal(applyFixes(str, res, offset), str, "26.02");
 });
@@ -652,7 +652,7 @@ test(`27 - ${`\u001b[${34}m${"preliminary checks"}\u001b[${39}m`} - three bracke
         fix: null,
       },
     ],
-    "27.01"
+    "27.01",
   );
   equal(applyFixes(str, res, offset), str, "27.02");
 });
@@ -675,7 +675,7 @@ test(`28 - ${`\u001b[${34}m${"preliminary checks"}\u001b[${39}m`} - three bracke
         fix: null,
       },
     ],
-    "28.01"
+    "28.01",
   );
   equal(applyFixes(str, res, offset), str, "28.02");
 });
@@ -700,7 +700,7 @@ test(`29 - ${`\u001b[${34}m${"preliminary checks"}\u001b[${39}m`} - semicolon pr
         fix: null,
       },
     ],
-    "29.01"
+    "29.01",
   );
   equal(applyFixes(str, res, offset), str, "29.02");
 });
@@ -723,7 +723,7 @@ test(`30 - ${`\u001b[${34}m${"preliminary checks"}\u001b[${39}m`} - empty pair`,
         fix: null,
       },
     ],
-    "30.01"
+    "30.01",
   );
   equal(applyFixes(str, res, offset), str, "30.02");
 });
@@ -746,7 +746,7 @@ test(`31 - ${`\u001b[${34}m${"preliminary checks"}\u001b[${39}m`} - three bracke
         fix: null,
       },
     ],
-    "31.01"
+    "31.01",
   );
   equal(applyFixes(str, res, offset), str, "31.02");
 });
@@ -784,7 +784,7 @@ test(`33 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - composed of one, healt
         fix: null,
       },
     ],
-    "33.01"
+    "33.01",
   );
   equal(applyFixes(str, res, offset), str, "33.02");
 });
@@ -807,7 +807,7 @@ test(`34 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - composed of one, healt
         fix: null,
       },
     ],
-    "34.01"
+    "34.01",
   );
   equal(applyFixes(str, res, offset), str, "34.02");
 });
@@ -830,7 +830,7 @@ test(`35 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - only dot`, () => {
         fix: null,
       },
     ],
-    "35.01"
+    "35.01",
   );
   equal(applyFixes(str, res, offset), str, "35.02");
 });
@@ -853,7 +853,7 @@ test(`36 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - only dot`, () => {
         fix: null,
       },
     ],
-    "36.01"
+    "36.01",
   );
   equal(applyFixes(str, res, offset), str, "36.02");
 });
@@ -876,7 +876,7 @@ test(`37 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - only and`, () => {
         fix: null,
       },
     ],
-    "37.01"
+    "37.01",
   );
   equal(applyFixes(str, res, offset), str, "37.02");
 });
@@ -899,7 +899,7 @@ test(`38 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - only and`, () => {
         fix: null,
       },
     ],
-    "38.01"
+    "38.01",
   );
   equal(applyFixes(str, res, offset), str, "38.02");
 });
@@ -922,7 +922,7 @@ test(`39 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - only and`, () => {
         fix: null,
       },
     ],
-    "39.01"
+    "39.01",
   );
   equal(applyFixes(str, res, offset), str, "39.02");
 });
@@ -957,7 +957,7 @@ test(`41 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - composed of two, healt
         fix: null,
       },
     ],
-    "41.01"
+    "41.01",
   );
 });
 
@@ -986,7 +986,7 @@ test(`42 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - composed of two, missi
         },
       },
     ],
-    "42.01"
+    "42.01",
   );
   equal(applyFixes(str, res, offset), fixed, "42.02");
 });
@@ -1010,7 +1010,7 @@ test(`43 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - composed of two, missi
         fix: null,
       },
     ],
-    "43.01"
+    "43.01",
   );
   equal(applyFixes(str, res, offset), str, "43.02");
 });
@@ -1045,7 +1045,7 @@ test(`44 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - dangling "and"`, () =>
         },
       },
     ],
-    "44.01"
+    "44.01",
   );
   equal(applyFixes(str, res, offset), fixed, "44.02");
 });
@@ -1069,7 +1069,7 @@ test(`45 - ${`\u001b[${35}m${"composed"}\u001b[${39}m`} - dangling "and"`, () =>
         fix: null,
       },
     ],
-    "45.01"
+    "45.01",
   );
   equal(applyFixes(str, res, offset), str, "45.02");
 });
@@ -1109,7 +1109,7 @@ test(`47 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - composed of one type a
         fix: null,
       },
     ],
-    "47.01"
+    "47.01",
   );
   equal(applyFixes(str, res, offset), str, "47.02");
 });
@@ -1133,7 +1133,7 @@ test(`48 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - composed of one type a
         fix: null,
       },
     ],
-    "48.01"
+    "48.01",
   );
   equal(applyFixes(str, res, offset), str, "48.02");
 });
@@ -1157,7 +1157,7 @@ test(`49 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - nested brackets, one c
         fix: null,
       },
     ],
-    "49.01"
+    "49.01",
   );
   equal(applyFixes(str, res, offset), str, "49.02");
 });
@@ -1181,7 +1181,7 @@ test(`50 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - nested brackets, one c
         fix: null,
       },
     ],
-    "50.01"
+    "50.01",
   );
   equal(applyFixes(str, res, offset), str, "50.02");
 });
@@ -1211,7 +1211,7 @@ test(`51 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - nested brackets, one c
         fix: null,
       },
     ],
-    "51.01"
+    "51.01",
   );
   equal(applyFixes(str, res, offset), str, "51.02");
 });
@@ -1235,7 +1235,7 @@ test(`52 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - nested brackets, one c
         fix: null,
       },
     ],
-    "52.01"
+    "52.01",
   );
   equal(applyFixes(str, res, offset), str, "52.02");
 });
@@ -1259,7 +1259,7 @@ test(`53 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - everything in brackets
         fix: null,
       },
     ],
-    "53.01"
+    "53.01",
   );
   equal(applyFixes(str, res, offset), str, "53.02");
 });
@@ -1296,7 +1296,7 @@ test(`54 - ${`\u001b[${90}m${"brackets"}\u001b[${39}m`} - everything in brackets
         fix: null,
       },
     ],
-    "54.01"
+    "54.01",
   );
   equal(applyFixes(str, res, offset), str, "54.02");
 });
@@ -1339,7 +1339,7 @@ test('56 - space after "and" missing', () => {
         fix: { ranges: [[10, 10, " "]] },
       },
     ],
-    "56.01"
+    "56.01",
   );
   equal(applyFixes(str, res), fixed, "56.02");
 });

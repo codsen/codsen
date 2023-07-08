@@ -18,7 +18,7 @@ declare let DEV: boolean;
 function matchLayerLast(
   wholeEspTagLump: string,
   layers: Layer[],
-  matchFirstInstead = false
+  matchFirstInstead = false,
 ): undefined | number {
   if (!layers.length) {
     return;
@@ -48,7 +48,7 @@ function matchLayerLast(
     // match every character from the last "layers" complex-type entry must be
     // present in the extracted lump
     Array.from(wholeEspTagLump).every((char) =>
-      (whichLayerToMatch as LayerEsp).guessedClosingLump.includes(char)
+      (whichLayerToMatch as LayerEsp).guessedClosingLump.includes(char),
     ) ||
     // consider ruby heads, <%# and tails -%>
     (whichLayerToMatch.guessedClosingLump &&
@@ -66,7 +66,7 @@ function matchLayerLast(
       console.log(
         `067 matchLayer(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
           wholeEspTagLump.length
-        }`
+        }`,
       );
     return wholeEspTagLump.length;
   }

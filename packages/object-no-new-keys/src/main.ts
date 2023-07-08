@@ -19,15 +19,15 @@ const defaults: Opts = {
 function noNewKeys(
   input: JSONValue,
   reference: JSONValue,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): string[] {
   if (opts && !isObj(opts)) {
     throw new TypeError(
       `object-no-new-keys/noNewKeys(): [THROW_ID_02] resolvedOpts should be a plain object. It was given as ${JSON.stringify(
         opts,
         null,
-        4
-      )} (type ${typeof opts})`
+        4,
+      )} (type ${typeof opts})`,
     );
   }
   let optsOuter: Opts = { ...defaults, ...opts };
@@ -38,7 +38,7 @@ function noNewKeys(
     optsOuter.mode = +optsOuter.mode as 1 | 2;
   } else if (![1, 2].includes(optsOuter.mode)) {
     throw new TypeError(
-      `object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] resolvedOpts.mode should be "1" or "2" (string or number).`
+      `object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] resolvedOpts.mode should be "1" or "2" (string or number).`,
     );
   }
 
@@ -46,7 +46,7 @@ function noNewKeys(
     resolvedInput: any,
     resolvedRef: any,
     resolvedOpts: Opts,
-    innerVar: InnerVar
+    innerVar: InnerVar,
   ) {
     let temp;
     if (isObj(resolvedInput)) {
@@ -70,7 +70,7 @@ function noNewKeys(
               resolvedInput[key],
               resolvedRef[key],
               resolvedOpts,
-              temp
+              temp,
             ).res;
           }
         });
@@ -79,8 +79,8 @@ function noNewKeys(
         // record all the keys of the resolvedInput, but don't traverse deeper
         innerVar.res = innerVar.res.concat(
           Object.keys(resolvedInput).map((key) =>
-            innerVar.path.length ? `${innerVar.path}.${key}` : key
-          )
+            innerVar.path.length ? `${innerVar.path}.${key}` : key,
+          ),
         );
       }
     } else if (Array.isArray(resolvedInput)) {
@@ -97,14 +97,14 @@ function noNewKeys(
               resolvedInput[i],
               resolvedRef[0],
               resolvedOpts,
-              temp
+              temp,
             ).res;
           } else {
             innerVar.res = objectNoNewKeysInternal(
               resolvedInput[i],
               resolvedRef[i],
               resolvedOpts,
-              temp
+              temp,
             ).res;
           }
         }
@@ -113,8 +113,8 @@ function noNewKeys(
         // traverse all elements of the resolvedInput and put their locations to innerVar.res
         innerVar.res = innerVar.res.concat(
           resolvedInput.map(
-            (_el, i) => `${innerVar.path.length ? innerVar.path : ""}[${i}]`
-          )
+            (_el, i) => `${innerVar.path.length ? innerVar.path : ""}[${i}]`,
+          ),
         );
       }
     }

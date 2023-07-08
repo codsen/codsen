@@ -8,7 +8,7 @@ test(`01 - ${`\u001b[${90}m${"adhoc 1"}\u001b[${39}m`} - a peculiar set of chara
   equal(
     m(equal, "<a>\n<<>", { removeLineBreaks: true }).result,
     "<a><<>",
-    "01.01"
+    "01.01",
   );
 });
 
@@ -36,7 +36,7 @@ name="viewport" zzz`;
       breakToTheLeftOf: [],
     }).result,
     output,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -44,7 +44,7 @@ test(`04 - ${`\u001b[${90}m${"adhoc 4"}\u001b[${39}m`} - result's keyset is cons
   equal(
     Object.keys(m(equal, "")).length,
     Object.keys(m(equal, "zzz")).length,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -53,49 +53,49 @@ test(`05 - ${`\u001b[${90}m${"adhoc 5"}\u001b[${39}m`} - raw non-breaking spaces
     m(equal, "\u00A0<x>\n\u00A0\u00A0<y>\u00A0", { removeLineBreaks: true })
       .result,
     "<x><y>",
-    "05.01"
+    "05.01",
   );
   equal(
     m(equal, "\u00A0<x>\n\u00A0\u00A0<y>\u00A0", { removeLineBreaks: false })
       .result,
     "<x>\n<y>",
-    "05.02"
+    "05.02",
   );
   equal(
     m(equal, "\u00A0<x/>\n\u00A0\u00A0<y/>\u00A0", { removeLineBreaks: true })
       .result,
     "<x/><y/>",
-    "05.03"
+    "05.03",
   );
   equal(
     m(equal, "\u00A0<x/>\n\u00A0\u00A0<y/>\u00A0", { removeLineBreaks: false })
       .result,
     "<x/>\n<y/>",
-    "05.04"
+    "05.04",
   );
   equal(
     m(equal, "\u00A0<x/>\n\u00A0\u00A0</y>\u00A0", { removeLineBreaks: true })
       .result,
     "<x/></y>",
-    "05.05"
+    "05.05",
   );
   equal(
     m(equal, "\u00A0<x/>\n\u00A0\u00A0</y>\u00A0", { removeLineBreaks: false })
       .result,
     "<x/>\n</y>",
-    "05.06"
+    "05.06",
   );
   equal(
     m(equal, "\u00A0</x>\n\u00A0\u00A0</y>\u00A0", { removeLineBreaks: true })
       .result,
     "</x></y>",
-    "05.07"
+    "05.07",
   );
   equal(
     m(equal, "\u00A0</x>\n\u00A0\u00A0</y>\u00A0", { removeLineBreaks: false })
       .result,
     "</x>\n</y>",
-    "05.08"
+    "05.08",
   );
 });
 
@@ -109,7 +109,7 @@ test(`06 - ${`\u001b[${90}m${"adhoc 6"}\u001b[${39}m`} - raw non-breaking spaces
       removeIndentations: true,
     }).result,
     res,
-    "06.02"
+    "06.02",
   );
   equal(
     m(equal, chunk, {
@@ -117,7 +117,7 @@ test(`06 - ${`\u001b[${90}m${"adhoc 6"}\u001b[${39}m`} - raw non-breaking spaces
       removeIndentations: false,
     }).result,
     chunk,
-    "06.03"
+    "06.03",
   );
 });
 
@@ -141,7 +141,7 @@ z>
       breakToTheLeftOf: [],
     }).result,
     output,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -151,7 +151,7 @@ test(`08 - ${`\u001b[${90}m${"adhoc 8"}\u001b[${39}m`} - nunjucks`, () => {
       removeLineBreaks: true,
     }).result,
     "{%- length > 1 or length > 2 -%}",
-    "08.01"
+    "08.01",
   );
 });
 
@@ -163,7 +163,7 @@ test(`09 - ${`\u001b[${90}m${"adhoc 9"}\u001b[${39}m`} - nunjucks`, () => {
       removeLineBreaks: true,
     }).result,
     source,
-    "09.01"
+    "09.01",
   );
 });
 

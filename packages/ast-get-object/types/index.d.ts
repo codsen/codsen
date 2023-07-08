@@ -5,7 +5,7 @@ interface UnknownValueObj {
 declare function getObj(
   originalAst: any,
   keyValPair: UnknownValueObj,
-  replacementContentsArr?: UnknownValueObj[]
+  replacementContentsArr?: UnknownValueObj[],
 ): any;
 
 export { UnknownValueObj, getObj, version };

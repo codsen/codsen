@@ -19,11 +19,11 @@ export function processBlockStatement(
   context: Obj,
   nodes: Obj[],
   testNumber: number,
-  type: TestType
+  type: TestType,
 ) {
   DEV &&
     console.log(
-      `026 ${`\u001b[${34}m${`████████████████████ processBlockStatement() start - testNumber ${testNumber}`}\u001b[${39}m`}`
+      `026 ${`\u001b[${34}m${`████████████████████ processBlockStatement() start - testNumber ${testNumber}`}\u001b[${39}m`}`,
     );
 
   // 1. check the presence (and correctness) of each assert's message,
@@ -41,18 +41,18 @@ export function processBlockStatement(
         testAssert,
         testNumber,
         testAssertIdx + 1,
-        type
+        type,
       );
-    }
+    },
   );
 
   DEV &&
     console.log(
-      `051 ${`\u001b[${32}m${`████████████████████ extractAllTestAsserts() end`}\u001b[${39}m`}`
+      `051 ${`\u001b[${32}m${`████████████████████ extractAllTestAsserts() end`}\u001b[${39}m`}`,
     );
 
   DEV &&
     console.log(
-      `056 ${`\u001b[${34}m${`████████████████████ processBlockStatement() end`}\u001b[${39}m`}`
+      `056 ${`\u001b[${34}m${`████████████████████ processBlockStatement() end`}\u001b[${39}m`}`,
     );
 }

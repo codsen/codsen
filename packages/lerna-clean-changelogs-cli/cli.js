@@ -53,7 +53,7 @@ const cli = meow(
 `,
   {
     importMeta: import.meta,
-  }
+  },
 );
 updateNotifier({ pkg }).notify();
 const signature = chalk.grey("✨ lerna-clean-changelogs-cli: ");
@@ -122,7 +122,7 @@ if (isArr(cli.input) && cli.input.length) {
         return total;
       });
     },
-    []
+    [],
   ).then((preppedPathsArr) => {
     if (!preppedPathsArr.length) {
       log(`${signature}${chalk.red("no changelogs found")}`);
@@ -134,7 +134,7 @@ if (isArr(cli.input) && cli.input.length) {
       (onePath) =>
         fs.stat(path.resolve(onePath)).catch(() => {
           return Promise.resolve(false);
-        })
+        }),
       // eslint-disable-next-line
     ).then((resultArr) => {
       if (!isArr(resultArr) || !resultArr.length) {
@@ -145,7 +145,7 @@ if (isArr(cli.input) && cli.input.length) {
         return resultArr.filter(
           (p) =>
             isStr(path.basename(p)) &&
-            path.basename(p).toLowerCase() === "changelog.md"
+            path.basename(p).toLowerCase() === "changelog.md",
         );
       }
     });
@@ -185,17 +185,17 @@ thePromise.then((received) => {
                 good: counter.good,
                 bad: counter.bad.concat([currentPath]),
                 ignored: counter.ignored,
-              }
+              },
         )
         .catch((err) => {
           log(
             `${signature}${chalk.red(
-              "Could not write the cleaned file:"
-            )} ${err}`
+              "Could not write the cleaned file:",
+            )} ${err}`,
           );
           return counter;
         }),
-    { good: [], bad: [], ignored: [] }
+    { good: [], bad: [], ignored: [] },
   ).then((counter) => {
     // console.log(
     //   `${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
@@ -252,8 +252,8 @@ thePromise.then((received) => {
           ? `${chalk.green(writtenAndSkippedMsg)}${errorredMsg ? " " : ""}`
           : ""
       }${errorredMsg ? chalk.red(errorredMsg) : ""} ${chalk.grey(
-        `(${formatTime(Date.now() - start)})`
-      )}`
+        `(${formatTime(Date.now() - start)})`,
+      )}`,
     );
   });
 });

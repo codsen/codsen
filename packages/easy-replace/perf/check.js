@@ -20,7 +20,7 @@ const testme = () =>
       rightOutside: "",
       rightOutsideNot: ";",
     },
-    "nbsp;"
+    "nbsp;",
   );
 
 // action

@@ -28,7 +28,7 @@ test(`01 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [],
-    "01.01"
+    "01.01",
   );
   equal(gathered, [], "01.02");
 });
@@ -43,7 +43,7 @@ test(`02 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [],
-    "02.01"
+    "02.01",
   );
   equal(gathered, [], "02.02");
 });
@@ -58,7 +58,7 @@ test(`03 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [],
-    "03.01"
+    "03.01",
   );
   equal(gathered, [], "03.02");
 });
@@ -73,7 +73,7 @@ test(`04 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [],
-    "04.01"
+    "04.01",
   );
   equal(gathered, [], "04.02");
 });
@@ -88,7 +88,7 @@ test(`05 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [],
-    "05.01"
+    "05.01",
   );
   equal(gathered, [], "05.02");
 });
@@ -103,7 +103,7 @@ test(`06 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [],
-    "06.01"
+    "06.01",
   );
   equal(gathered, [], "06.02");
 });
@@ -118,7 +118,7 @@ test(`07 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[4, 14, "&nbsp;"]],
-    "07.01"
+    "07.01",
   );
   equal(gathered, [], "07.02");
 });
@@ -139,7 +139,7 @@ test(`08 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
             rangeValEncoded: "&nbsp;",
             rangeValDecoded: "\xA0",
           },
-          "08.01"
+          "08.01",
         );
 
         // same cb() callback as defined at the top of this file:
@@ -152,7 +152,7 @@ test(`08 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[4, 14, "&nbsp;"]],
-    "08.01"
+    "08.01",
   );
   equal(gathered, [], "08.02");
 });
@@ -167,7 +167,7 @@ test(`09 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[4, 18, "&nbsp;"]],
-    "09.01"
+    "09.01",
   );
   equal(gathered1, [], "09.02");
 
@@ -180,7 +180,7 @@ test(`09 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[4, 54, "&nbsp;"]],
-    "09.03"
+    "09.03",
   );
   equal(gathered2, [], "09.04");
 });
@@ -195,7 +195,7 @@ test(`10 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[4, 13, "&nbsp;"]],
-    "10.01"
+    "10.01",
   );
   equal(gathered1, [], "10.02");
 
@@ -208,7 +208,7 @@ test(`10 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[5, 14, "&nbsp;"]],
-    "10.03"
+    "10.03",
   );
   equal(gathered2, [], "10.04");
 
@@ -221,7 +221,7 @@ test(`10 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[5, 14, "&nbsp;"]],
-    "10.05"
+    "10.05",
   );
   equal(gathered3, [], "10.06");
 
@@ -234,7 +234,7 @@ test(`10 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[5, 14, "&nbsp;"]],
-    "10.07"
+    "10.07",
   );
   equal(gathered4, [], "10.08");
 });
@@ -249,7 +249,7 @@ test(`11 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[4, 13, "&nbsp;"]],
-    "11.01"
+    "11.01",
   );
   equal(gathered, [], "11.02");
 });
@@ -264,7 +264,7 @@ test(`12 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[4, 9, "&nbsp;"]],
-    "12.01"
+    "12.01",
   );
   equal(gathered, [], "12.02");
 });
@@ -285,7 +285,7 @@ test(`13 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
             rangeValEncoded: "&nbsp;",
             ruleName: "bad-html-entity-malformed-nbsp",
           },
-          "15.01"
+          "15.01",
         );
         return cb(received);
       },
@@ -294,7 +294,7 @@ test(`13 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[4, 9, "&nbsp;"]],
-    "13.01"
+    "13.01",
   );
   equal(gathered, [], "13.02");
 });
@@ -316,7 +316,7 @@ test(`14 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
             rangeValEncoded: "&nbsp;",
             ruleName: "bad-html-entity-malformed-nbsp",
           },
-          "16.01"
+          "16.01",
         );
         return cb(received);
       },
@@ -325,7 +325,7 @@ test(`14 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[4, 9, "&nbsp;"]],
-    "14.02"
+    "14.02",
   );
   equal(gathered, [], "14.03");
 });
@@ -347,7 +347,7 @@ test(`15 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
             rangeValEncoded: "&nbsp;",
             ruleName: "bad-html-entity-malformed-nbsp",
           },
-          "16.04"
+          "16.04",
         );
         return cb(received);
       },
@@ -356,7 +356,7 @@ test(`15 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[0, 5, "&nbsp;"]],
-    "15.02"
+    "15.02",
   );
   equal(gathered, [], "15.03");
 });
@@ -371,7 +371,7 @@ test(`16 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[3, 8, "&nbsp;"]],
-    "16.01"
+    "16.01",
   );
   equal(gathered, [], "16.02");
 });
@@ -392,7 +392,7 @@ test(`17 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
             rangeValEncoded: "&nbsp;",
             ruleName: "bad-html-entity-malformed-nbsp",
           },
-          "18.01"
+          "18.01",
         );
         return cb(received);
       },
@@ -401,7 +401,7 @@ test(`17 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[3, 8, "&nbsp;"]],
-    "17.01"
+    "17.01",
   );
   equal(gathered, [], "17.02");
 });
@@ -423,7 +423,7 @@ test(`18 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
             rangeValEncoded: "&nbsp;",
             ruleName: "bad-html-entity-malformed-nbsp",
           },
-          "19.02"
+          "19.02",
         );
         return cb(received);
       },
@@ -432,7 +432,7 @@ test(`18 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[3, 8, "&nbsp;"]],
-    "18.02"
+    "18.02",
   );
   equal(gathered, [], "18.03");
 });
@@ -460,7 +460,7 @@ test(`20 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
             rangeValEncoded: "&nbsp;",
             ruleName: "bad-html-entity-malformed-nbsp",
           },
-          "19.05"
+          "19.05",
         );
         return cb(received);
       },
@@ -469,7 +469,7 @@ test(`20 - ${`\u001b[${34}m${"double-encoding"}\u001b[${39}m`} - \u001b[${32}m${
       },
     }),
     [[0, 5, "&nbsp;"]],
-    "20.01"
+    "20.01",
   );
   equal(gathered, [], "20.02");
 });

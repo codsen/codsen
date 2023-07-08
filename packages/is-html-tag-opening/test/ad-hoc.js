@@ -33,11 +33,11 @@ test(`04 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - unrecognised tag`, () =>
   mixer().forEach((opt) => {
     ok(
       isOpening(str, 0, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
     );
     not.ok(
       isOpening(str, 6, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 6`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 6`,
     );
   });
 
@@ -46,7 +46,7 @@ test(`04 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - unrecognised tag`, () =>
   }).forEach((opt) => {
     not.ok(
       isOpening(str, 10, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 10`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 10`,
     );
   });
 
@@ -55,7 +55,7 @@ test(`04 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - unrecognised tag`, () =>
   }).forEach((opt) => {
     ok(
       isOpening(str, 10, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 10`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 10`,
     );
   });
 
@@ -65,7 +65,7 @@ test(`04 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - unrecognised tag`, () =>
   }).forEach((opt) => {
     ok(
       isOpening(str, 11, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 10`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 10`,
     );
   });
   mixer({
@@ -73,7 +73,7 @@ test(`04 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - unrecognised tag`, () =>
   }).forEach((opt) => {
     not.ok(
       isOpening(str, 11, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 10`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 10`,
     );
   });
   mixer({
@@ -81,7 +81,7 @@ test(`04 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - unrecognised tag`, () =>
   }).forEach((opt) => {
     not.ok(
       isOpening(str, 11, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 10`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 10`,
     );
   });
 });
@@ -91,15 +91,15 @@ test(`05 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - recognised tag`, () => {
   mixer().forEach((opt) => {
     ok(
       isOpening(str, 0, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
     );
     not.ok(
       isOpening(str, 6, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 6`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 6`,
     );
     ok(
       isOpening(str, 10, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 10`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 10`,
     );
   });
 
@@ -108,7 +108,7 @@ test(`05 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - recognised tag`, () => {
   }).forEach((opt) => {
     not.ok(
       isOpening(str, 11, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 11`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 11`,
     );
   });
   mixer({
@@ -116,7 +116,7 @@ test(`05 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - recognised tag`, () => {
   }).forEach((opt) => {
     ok(
       isOpening(str, 11, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 11`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 11`,
     );
   });
 });
@@ -132,15 +132,15 @@ test(`07 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   mixer().forEach((opt) => {
     ok(
       isOpening(str, 0, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
     );
     not.ok(
       isOpening(str, 8, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 8`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 8`,
     );
     ok(
       isOpening(str, 11, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 11`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 11`,
     );
   });
 });
@@ -150,7 +150,7 @@ test(`08 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   mixer().forEach((opt) => {
     ok(
       isOpening(str, 1, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`,
     );
   });
 });
@@ -160,7 +160,7 @@ test(`09 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   mixer().forEach((opt) => {
     ok(
       isOpening(str, 0, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
     );
   });
 });
@@ -170,7 +170,7 @@ test(`10 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   mixer().forEach((opt) => {
     ok(
       isOpening(str, 0, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
     );
   });
 });
@@ -180,7 +180,7 @@ test(`11 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   mixer().forEach((opt) => {
     ok(
       isOpening(str, 0, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
     );
   });
 });
@@ -190,19 +190,19 @@ test(`12 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   mixer().forEach((opt) => {
     not.ok(
       isOpening(str, 17, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 17`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 17`,
     );
   });
   mixer().forEach((opt) => {
     not.ok(
       isOpening(str, 19, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 19`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 19`,
     );
   });
   mixer().forEach((opt) => {
     not.ok(
       isOpening(str, 27, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 27`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 27`,
     );
   });
 });
@@ -213,7 +213,7 @@ test(`13 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   mixer({ allowCustomTagNames: false }).forEach((opt) => {
     not.ok(
       isOpening(str, 0, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
     );
   });
 
@@ -221,7 +221,7 @@ test(`13 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   mixer({ allowCustomTagNames: true }).forEach((opt) => {
     ok(
       isOpening(str, 0, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
     );
   });
 });
@@ -231,13 +231,13 @@ test(`14 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   mixer({ allowCustomTagNames: false }).forEach((opt) => {
     not.ok(
       isOpening(str, 0, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
     );
   });
   mixer({ allowCustomTagNames: true }).forEach((opt) => {
     ok(
       isOpening(str, 0, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
     );
   });
 });
@@ -247,13 +247,13 @@ test(`15 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - custom html tags with da
   mixer({ allowCustomTagNames: false }).forEach((opt) => {
     not.ok(
       isOpening(str, 0, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
     );
   });
   mixer({ allowCustomTagNames: true }).forEach((opt) => {
     ok(
       isOpening(str, 0, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
     );
   });
 });
@@ -264,13 +264,13 @@ test(`16 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - custom html tags with da
   mixer({ allowCustomTagNames: false }).forEach((opt) => {
     not.ok(
       isOpening(str, 0, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
     );
   });
   mixer({ allowCustomTagNames: true }).forEach((opt) => {
     ok(
       isOpening(str, 0, opt),
-      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
     );
   });
 });
@@ -281,7 +281,7 @@ test("17 - perf test", () => {
       allowCustomTagNames: false,
       skipOpeningBracket: true,
     }),
-    "17.01"
+    "17.01",
   );
 });
 

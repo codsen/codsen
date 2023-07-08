@@ -46,7 +46,7 @@ test("08. extra column with data there, then an extra empty column everywhere (w
       msgContent: null,
       msgType: null,
     },
-    "08.01"
+    "08.01",
   );
 });
 

@@ -23,5 +23,5 @@ assert.deepEqual(
     a: "a",
     b: "b",
     c: "c",
-  }
+  },
 );

@@ -14,7 +14,7 @@ const testme = () =>
     {
       convertApostrophes: 1,
       convertEntities: 0,
-    }
+    },
   );
 
 // action

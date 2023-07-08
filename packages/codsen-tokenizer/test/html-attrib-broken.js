@@ -82,7 +82,7 @@ test("01 - no equals but quotes present", () => {
         ],
       },
     ],
-    "01"
+    "01",
   );
 });
 
@@ -157,7 +157,7 @@ test("02 - no opening quotes but equals present", () => {
         ],
       },
     ],
-    "02"
+    "02",
   );
 });
 
@@ -221,7 +221,7 @@ test("03 - two equals", () => {
         ],
       },
     ],
-    "03"
+    "03",
   );
 });
 
@@ -268,7 +268,7 @@ test("04 - empty attr value", () => {
         ],
       },
     ],
-    "04.01"
+    "04.01",
   );
 });
 
@@ -320,7 +320,7 @@ test("05 - false alarm, brackets - rgb()", () => {
         ],
       },
     ],
-    "05"
+    "05",
   );
 });
 
@@ -416,7 +416,7 @@ test("06 - space instead of equal", () => {
         ],
       },
     ],
-    "06"
+    "06",
   );
 });
 
@@ -431,7 +431,7 @@ test(`07 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - opening quote re
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   equal(
     gathered,
@@ -496,7 +496,7 @@ test(`07 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - opening quote re
         attribs: [],
       },
     ],
-    "07.01"
+    "07.01",
   );
 });
 
@@ -549,7 +549,7 @@ test(`08 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - opening repeated
         ],
       },
     ],
-    "08"
+    "08",
   );
 });
 
@@ -563,7 +563,7 @@ test(`09 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - opening repeated
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -628,7 +628,7 @@ test(`09 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - opening repeated
         attribs: [],
       },
     ],
-    "09"
+    "09",
   );
 });
 
@@ -642,7 +642,7 @@ test(`10 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - opening repeated
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -707,7 +707,7 @@ test(`10 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - opening repeated
         attribs: [],
       },
     ],
-    "10"
+    "10",
   );
 });
 
@@ -779,7 +779,7 @@ test("11 - attr value without quotes", () => {
         ],
       },
     ],
-    "11"
+    "11",
   );
 });
 
@@ -831,7 +831,7 @@ test("12 - attr value without quotes leads to tag's end", () => {
         ],
       },
     ],
-    "12"
+    "12",
   );
 });
 
@@ -883,7 +883,7 @@ test("13 - attr value without quotes leads to tag's end", () => {
         ],
       },
     ],
-    "13"
+    "13",
   );
 });
 
@@ -961,7 +961,7 @@ test(`14 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - no quotes in
         attribs: [],
       },
     ],
-    "14"
+    "14",
   );
 });
 
@@ -1036,7 +1036,7 @@ test(`15 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - no quotes in
         attribs: [],
       },
     ],
-    "15"
+    "15",
   );
 });
 
@@ -1090,7 +1090,7 @@ test(`16 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - matching quo
         ],
       },
     ],
-    "16.01"
+    "16.01",
   );
 });
 
@@ -1166,7 +1166,7 @@ test(`17 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - matching quo
         ],
       },
     ],
-    "17.01"
+    "17.01",
   );
 });
 
@@ -1220,7 +1220,7 @@ test(`18 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - double quote
         ],
       },
     ],
-    "18.01"
+    "18.01",
   );
 });
 
@@ -1299,7 +1299,7 @@ test(`19 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - double quote
         ],
       },
     ],
-    "19"
+    "19",
   );
 });
 
@@ -1353,7 +1353,7 @@ test(`20 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - double quote
         ],
       },
     ],
-    "20"
+    "20",
   );
 });
 
@@ -1407,7 +1407,7 @@ test(`21 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - single quote
         ],
       },
     ],
-    "21"
+    "21",
   );
 });
 
@@ -1461,7 +1461,7 @@ test(`22 - ${`\u001b[${33}m${"mismatching quotes"}\u001b[${39}m`} - single quote
         ],
       },
     ],
-    "22"
+    "22",
   );
 });
 
@@ -1556,7 +1556,7 @@ test("23 - attr value without quotes leads to tag's end", () => {
         ],
       },
     ],
-    "23"
+    "23",
   );
 });
 
@@ -1610,7 +1610,7 @@ test("24 - missing closing quote, cheeky raw text bracket follows", () => {
         value: ' "a" > "z"',
       },
     ],
-    "24"
+    "24",
   );
 });
 
@@ -1675,7 +1675,7 @@ test("25 - two errors: space before equal and closing quotes missing", () => {
         ],
       },
     ],
-    "25"
+    "25",
   );
 });
 
@@ -1745,7 +1745,7 @@ test("26 - two errors: space before equal and closing quotes missing, text follo
         end: 38,
       },
     ],
-    "26"
+    "26",
   );
 });
 
@@ -1799,7 +1799,7 @@ test("27 - two layers of quotes", () => {
         ],
       },
     ],
-    "27"
+    "27",
   );
 });
 

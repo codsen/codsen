@@ -18,7 +18,7 @@ test(`02 - ${`\u001b[${36}m${"custom"}\u001b[${39}m`} - starts with dash, allowC
     isOpening(s1, 0, {
       allowCustomTagNames: true,
     }),
-    "02.01"
+    "02.01",
   );
 });
 
@@ -29,7 +29,7 @@ test(`03 - ${`\u001b[${36}m${"custom"}\u001b[${39}m`} - dash between chars`, () 
     isOpening(s1, 0, {
       allowCustomTagNames: true,
     }),
-    "03.02"
+    "03.02",
   );
 });
 
@@ -39,7 +39,7 @@ test(`04 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - one letter tag, all
     isOpening(s1, 0, {
       allowCustomTagNames: false,
     }),
-    "04.01"
+    "04.01",
   );
 });
 
@@ -49,7 +49,7 @@ test(`05 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - one letter tag, all
     isOpening(s1, 0, {
       allowCustomTagNames: true,
     }),
-    "05.01"
+    "05.01",
   );
 });
 

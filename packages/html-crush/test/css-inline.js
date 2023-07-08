@@ -15,7 +15,7 @@ test(`01 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - one tag
       removeLineBreaks: true,
     }).result,
     '<a style="a:100%;b:c-d;">',
-    "01.01"
+    "01.01",
   );
   equal(
     m(equal, input1, {
@@ -23,14 +23,14 @@ test(`01 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - one tag
       lineLengthLimit: 0,
     }).result,
     '<a style="a:100%;b:c-d;">',
-    "01.02"
+    "01.02",
   );
   equal(
     m(equal, input1, {
       removeLineBreaks: false,
     }).result,
     indentationsOnly,
-    "01.03"
+    "01.03",
   );
   equal(
     m(equal, input1, {
@@ -38,7 +38,7 @@ test(`01 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - one tag
       removeIndentations: false,
     }).result,
     input1,
-    "01.04"
+    "01.04",
   );
 });
 
@@ -48,7 +48,7 @@ test(`02 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - inline 
       removeLineBreaks: true,
     }).result,
     '<a style="a:100%;e:f;">',
-    "02.01"
+    "02.01",
   );
 });
 
@@ -59,7 +59,7 @@ test(`03 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - line le
       lineLengthLimit: 18,
     }).result,
     '<a style="a:100%;\ne:f;">',
-    "03.01"
+    "03.01",
   );
 });
 
@@ -70,7 +70,7 @@ test(`04 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - line le
       lineLengthLimit: 30,
     }).result,
     '<a style="a:100%;e:f;">',
-    "04.01"
+    "04.01",
   );
 });
 
@@ -80,7 +80,7 @@ test(`05 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - leading
       removeLineBreaks: true,
     }).result,
     '<a href="zzz" style="font-size:1px;">',
-    "05.01"
+    "05.01",
   );
 });
 
@@ -90,7 +90,7 @@ test(`06 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - leading
       removeLineBreaks: true,
     }).result,
     "<a href='zzz' style='font-size:1px;'>",
-    "06.01"
+    "06.01",
   );
 });
 

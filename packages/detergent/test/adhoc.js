@@ -15,7 +15,7 @@ test(`01 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - improvised arrows are no
     equal(
       det(ok, not, n, "something ----> anything", opt).res,
       "something ----> anything",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -29,7 +29,7 @@ test(`02 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - improvised arrows are no
     equal(
       det(ok, not, n, "something ----> anything", opt).res,
       "something ----&gt; anything",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -44,7 +44,7 @@ test(`03 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - improvised arrows are no
       det(ok, not, n, "something ---> anything --> everything -> thing", opt)
         .res,
       "something ---> anything --> everything -> thing",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -57,7 +57,7 @@ test(`04 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - widow removal and single
     equal(
       det(ok, not, n, "aaaaaa bbbbbbb [cccccc] (ddddddd)", opt).res,
       "aaaaaa bbbbbbb [cccccc]&nbsp;(ddddddd)",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -73,10 +73,10 @@ test(`05 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - unlinked .co.uk in the t
         not,
         n,
         "Maybe we should register altenative website address, codsen.co.uk. This may or may not lead to more visitors.",
-        opt
+        opt,
       ).res,
       "Maybe we should register altenative website address, codsen.co.uk. This may or may not lead to more&nbsp;visitors.",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -91,10 +91,10 @@ test(`06 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - unlinked .co.uk in the t
         not,
         n,
         "Maybe we should register altenative website address, codsen.co.uk. This may or may not lead to more visitors.",
-        opt
+        opt,
       ).res,
       "Maybe we should register altenative website address, codsen.co.uk. This may or may not lead to more visitors.",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -110,10 +110,10 @@ test(`07 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - consecutive empty lines 
         not,
         n,
         "Maybe we should register altenative website address, codsen.co.uk. This may or may not lead to more visitors.",
-        opt
+        opt,
       ).res,
       "Maybe we should register altenative website address, codsen.co.uk. This may or may not lead to more&nbsp;visitors.",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -127,7 +127,7 @@ test(`08 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - less than sign`, () => {
     equal(
       det(ok, not, n, "a < b", opt).res,
       "a &lt; b",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -141,7 +141,7 @@ test(`09 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - greater than sign`, () =
     equal(
       det(ok, not, n, "a > b", opt).res,
       "a &gt; b",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 
@@ -168,7 +168,7 @@ test(`09 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - greater than sign`, () =
         eol: false,
       },
     },
-    "09"
+    "09",
   );
 });
 
@@ -180,7 +180,7 @@ test(`10 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - custom EOL - CRLF presen
   equal(
     det(ok, not, 0, source, opts).res,
     "aaa<br/>\r<br/>\rbbb<br/>\r<br/>\rccc",
-    "10.01"
+    "10.01",
   );
   ok(det1(source, opts).applicableOpts.eol, "10.02");
 });
@@ -193,7 +193,7 @@ test(`11 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - custom EOL - CRLF presen
   equal(
     det(ok, not, 0, source, opts).res,
     "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc",
-    "11.01"
+    "11.01",
   );
   ok(det1(source, opts).applicableOpts.eol, "11.02");
 });
@@ -206,7 +206,7 @@ test(`12 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - custom EOL - CRLF presen
   equal(
     det(ok, not, 0, source, opts).res,
     "aaa<br/>\r\n<br/>\r\nbbb<br/>\r\n<br/>\r\nccc",
-    "12.01"
+    "12.01",
   );
   ok(det1(source, opts).applicableOpts.eol, "12.02");
 });
@@ -219,7 +219,7 @@ test(`13 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - custom EOL - LF present,
   equal(
     det(ok, not, 0, source, opts).res,
     "aaa<br/>\r<br/>\rbbb<br/>\r<br/>\rccc",
-    "13.01"
+    "13.01",
   );
   ok(det1(source, opts).applicableOpts.eol, "13.02");
 });
@@ -232,7 +232,7 @@ test(`14 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - custom EOL - LF present,
   equal(
     det(ok, not, 0, source, opts).res,
     "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc",
-    "14.01"
+    "14.01",
   );
   ok(det1(source, opts).applicableOpts.eol, "14.02");
 });
@@ -245,7 +245,7 @@ test(`15 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - custom EOL - LF present,
   equal(
     det(ok, not, 0, source, opts).res,
     "aaa<br/>\r\n<br/>\r\nbbb<br/>\r\n<br/>\r\nccc",
-    "15.01"
+    "15.01",
   );
   ok(det1(source, opts).applicableOpts.eol, "15.02");
 });
@@ -258,7 +258,7 @@ test(`16 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - custom EOL - CR present,
   equal(
     det(ok, not, 0, source, opts).res,
     "aaa<br/>\r<br/>\rbbb<br/>\r<br/>\rccc",
-    "16.01"
+    "16.01",
   );
   ok(det1(source, opts).applicableOpts.eol, "16.02");
 });
@@ -271,7 +271,7 @@ test(`17 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - custom EOL - CR present,
   equal(
     det(ok, not, 0, source, opts).res,
     "aaa<br/>\n<br/>\nbbb<br/>\n<br/>\nccc",
-    "17.01"
+    "17.01",
   );
   ok(det1(source, opts).applicableOpts.eol, "17.02");
 });
@@ -284,7 +284,7 @@ test(`18 - ${`\u001b[${34}m${"ad-hoc"}\u001b[${39}m`} - custom EOL - CR present,
   equal(
     det(ok, not, 0, source, opts).res,
     "aaa<br/>\r\n<br/>\r\nbbb<br/>\r\n<br/>\r\nccc",
-    "18.01"
+    "18.01",
   );
   ok(det1(source, opts).applicableOpts.eol, "18.02");
 });

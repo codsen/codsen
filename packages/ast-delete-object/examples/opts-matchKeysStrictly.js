@@ -24,9 +24,9 @@ assert.deepEqual(
     },
     {
       matchKeysStrictly: true, // <--- strict matching
-    }
+    },
   ),
-  source
+  source,
 );
 
 // but
@@ -39,7 +39,7 @@ assert.deepEqual(
     },
     {
       matchKeysStrictly: false,
-    }
+    },
   ),
-  ["elem1", "elem2"]
+  ["elem1", "elem2"],
 );

@@ -19,7 +19,7 @@ test("01", () => {
       stripHtmlAddNewLine: ["br"], // <---
     }).res,
     "abc\ndef",
-    "01.01"
+    "01.01",
   );
   equal(
     det1("abc<br>def", {
@@ -29,7 +29,7 @@ test("01", () => {
       stripHtmlAddNewLine: [], // <---
     }).res,
     "abc def",
-    "01.02"
+    "01.02",
   );
 
   // replaceLineBreaks=true
@@ -43,7 +43,7 @@ test("01", () => {
       stripHtmlAddNewLine: ["br"], // <---
     }).res,
     "abc<br/>\ndef",
-    "01.03"
+    "01.03",
   );
   // replaceLineBreaks=true
   // useXHTML=true,
@@ -56,7 +56,7 @@ test("01", () => {
       stripHtmlAddNewLine: ["br"], // <---
     }).res,
     "abc<br>\ndef",
-    "01.04"
+    "01.04",
   );
 
   equal(
@@ -66,7 +66,7 @@ test("01", () => {
       stripHtmlAddNewLine: [], // <---
     }).res,
     "abc def",
-    "01.05"
+    "01.05",
   );
 });
 
@@ -81,7 +81,7 @@ test("02", () => {
     equal(
       det(ok, not, n, "abc<br>def", opt).res,
       "abc\ndef",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -95,7 +95,7 @@ test("02", () => {
     equal(
       det(ok, not, n, "abc<br>def", opt).res,
       "abc<br>\ndef",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -109,7 +109,7 @@ test("02", () => {
     equal(
       det(ok, not, n, "abc<br>def", opt).res,
       "abc<br/>\ndef",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 
@@ -123,7 +123,7 @@ test("02", () => {
     equal(
       det(ok, not, n, "abc<br>def", opt).res,
       "abc def",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 
@@ -134,7 +134,7 @@ test("02", () => {
     equal(
       det(ok, not, n, "abc<br>def", opt).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -144,7 +144,7 @@ test("02", () => {
     equal(
       det(ok, not, n, "abc<br>def", opt).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -158,7 +158,7 @@ test("03", () => {
       stripHtmlAddNewLine: ["br"], // <---
     }).res,
     "abc\ndef",
-    "03.01"
+    "03.01",
   );
 });
 
@@ -173,7 +173,7 @@ test("04", () => {
     equal(
       det(ok, not, n, "abc<br/>def", opt).res,
       "abc\ndef",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -186,7 +186,7 @@ test("04", () => {
     equal(
       det(ok, not, n, "abc<br/>def", opt).res,
       "abc def",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -198,7 +198,7 @@ test("04", () => {
     equal(
       det(ok, not, n, "abc<br/>def", opt).res,
       "abc def",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });

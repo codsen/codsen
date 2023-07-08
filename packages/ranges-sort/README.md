@@ -47,7 +47,7 @@ assert.deepEqual(
     [1, 2],
     [2, 3],
     [9, 10, "bad grey wolf"],
-  ]
+  ],
 );
 ```
 

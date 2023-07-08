@@ -153,7 +153,7 @@ interface Opts {
 declare function matchLayerLast(
   wholeEspTagLump: string,
   layers: Layer[],
-  matchFirstInstead?: boolean
+  matchFirstInstead?: boolean,
 ): undefined | number;
 
 declare const version: string;

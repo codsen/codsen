@@ -16,7 +16,7 @@ test("03", () => {
   equal(
     stringSplice("the quick brown fox", 16, 3, "dog"),
     "the quick brown dog",
-    "03.01"
+    "03.01",
   );
 });
 
@@ -24,7 +24,7 @@ test("04 - index is negative number", () => {
   equal(
     stringSplice("the quick brown fox", -3, 3, "dog"),
     "the quick brown dog",
-    "04.01"
+    "04.01",
   );
 });
 

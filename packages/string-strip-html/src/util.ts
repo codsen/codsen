@@ -23,7 +23,7 @@ function prepHopefullyAnArray(something: any, name: string): string[] {
     return something.trim() ? [something] : [];
   }
   throw new TypeError(
-    `string-strip-html/stripHtml(): [THROW_ID_05] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`
+    `string-strip-html/stripHtml(): [THROW_ID_05] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`,
   );
 }
 
@@ -32,7 +32,7 @@ function xBeforeYOnTheRight(
   str: string,
   startingIdx: number,
   x: string,
-  y: string
+  y: string,
 ): boolean {
   DEV && console.log(`037 xBeforeYOnTheRight(): called; x=${x}; y=${y}`);
   for (let i = startingIdx, len = str.length; i < len; i++) {
@@ -66,8 +66,8 @@ function notWithinAttrQuotes(tag: Obj, str: string, i: number): boolean {
       `066 notWithinAttrQuotes(): ${`\u001b[${33}m${`tag`}\u001b[${39}m`} = ${JSON.stringify(
         tag,
         null,
-        4
-      )}; i=${i}`
+        4,
+      )}; i=${i}`,
     );
 
   let R1 = !tag?.quotes;
@@ -80,7 +80,7 @@ function notWithinAttrQuotes(tag: Obj, str: string, i: number): boolean {
     str,
     tag?.quotes?.next - 1,
     tag?.quotes?.value,
-    `>`
+    `>`,
   );
 
   DEV &&
@@ -88,20 +88,20 @@ function notWithinAttrQuotes(tag: Obj, str: string, i: number): boolean {
       `088 notWithinAttrQuotes(): ███████████████████████████████████████ ${`\u001b[${33}m${`R1`}\u001b[${39}m`} = ${JSON.stringify(
         R1,
         null,
-        4
+        4,
       )} || [ ${`\u001b[${33}m${`R2`}\u001b[${39}m`} = ${JSON.stringify(
         R2,
         null,
-        4
+        4,
       )} && (${`\u001b[${33}m${`R31`}\u001b[${39}m`} = ${JSON.stringify(
         R31,
         null,
-        4
+        4,
       )} AND ${`\u001b[${33}m${`R32`}\u001b[${39}m`} = ${JSON.stringify(
         R32,
         null,
-        4
-      )}) ]`
+        4,
+      )}) ]`,
     );
 
   return (

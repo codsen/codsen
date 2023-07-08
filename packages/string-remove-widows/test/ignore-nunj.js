@@ -36,7 +36,7 @@ test(`01 - \u001b[${35}m${"opts.ignore, nunjucks"}\u001b[${39}m - widow removal 
         ignore: "jinja",
       }).res,
       val,
-      `05.01.0${1 + i} - templating chunks`
+      `05.01.0${1 + i} - templating chunks`,
     );
   });
 });
@@ -52,7 +52,7 @@ test(`02 - \u001b[${35}m${"opts.ignore, nunjucks"}\u001b[${39}m - widow removal 
       minCharCount: 5,
     }).res,
     res,
-    "02.02"
+    "02.02",
   );
 });
 
@@ -66,10 +66,10 @@ test(`03 - \u001b[${35}m${"opts.ignore, nunjucks"}\u001b[${39}m - widow removal 
           targetLanguage,
           ignore: ["jinja"],
           minCharCount: 5,
-        }
+        },
       ).res,
       `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${rawnbsp}text.`,
-      `03.03.003.0${1 + i} - min word count threshold + ignore jinja combo`
+      `03.03.003.0${1 + i} - min word count threshold + ignore jinja combo`,
     );
     equal(
       removeWidows(
@@ -79,10 +79,10 @@ test(`03 - \u001b[${35}m${"opts.ignore, nunjucks"}\u001b[${39}m - widow removal 
           targetLanguage,
           ignore: ["jinja"],
           minCharCount: 5,
-        }
+        },
       ).res,
       `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${encodedNbsps[i]}text.`,
-      `03.03.003.0${2 + i} - min word count threshold + ignore jinja combo`
+      `03.03.003.0${2 + i} - min word count threshold + ignore jinja combo`,
     );
     equal(
       removeWidows(
@@ -92,10 +92,10 @@ test(`03 - \u001b[${35}m${"opts.ignore, nunjucks"}\u001b[${39}m - widow removal 
           targetLanguage,
           ignore: "jinja",
           minCharCount: 5,
-        }
+        },
       ).res,
       `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${rawnbsp}text.`,
-      `03.03.003.0${1 + i} - min word count threshold + ignore jinja combo`
+      `03.03.003.0${1 + i} - min word count threshold + ignore jinja combo`,
     );
     equal(
       removeWidows(
@@ -105,10 +105,10 @@ test(`03 - \u001b[${35}m${"opts.ignore, nunjucks"}\u001b[${39}m - widow removal 
           targetLanguage,
           ignore: "jinja",
           minCharCount: 5,
-        }
+        },
       ).res,
       `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${encodedNbsps[i]}text.`,
-      `03.03.003.0${2 + i} - min word count threshold + ignore jinja combo`
+      `03.03.003.0${2 + i} - min word count threshold + ignore jinja combo`,
     );
   });
 });

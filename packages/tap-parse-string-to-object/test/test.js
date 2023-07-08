@@ -17,35 +17,35 @@ test("01 - wrong/missing input = throw", () => {
       parse();
     },
     /THROW_ID_01/g,
-    "01.01"
+    "01.01",
   );
   throws(
     () => {
       parse(1);
     },
     /THROW_ID_01/g,
-    "01.02"
+    "01.02",
   );
   throws(
     () => {
       parse(null);
     },
     /THROW_ID_01/g,
-    "01.03"
+    "01.03",
   );
   throws(
     () => {
       parse(undefined);
     },
     /THROW_ID_01/g,
-    "01.04"
+    "01.04",
   );
   throws(
     () => {
       parse(true);
     },
     /THROW_ID_01/g,
-    "01.05"
+    "01.05",
   );
 });
 
@@ -118,7 +118,7 @@ test("02 - case 01 - arrayiffy-if-string - all pass", () => {
       suitesPassed: 2,
       suitesFailed: 0,
     },
-    "02.01"
+    "02.01",
   );
 });
 
@@ -440,7 +440,7 @@ test("03 - case 01 - arrayiffy-if-string - none pass", () => {
       suitesPassed: 0,
       suitesFailed: 2,
     },
-    "03.01"
+    "03.01",
   );
 });
 
@@ -668,7 +668,7 @@ test("04 - ranges-merge", () => {
       suitesPassed: 1,
       suitesFailed: 0,
     },
-    "04.01"
+    "04.01",
   );
 });
 
@@ -821,7 +821,7 @@ test("05 - object-set-all-values-to", () => {
       suitesPassed: 1,
       suitesFailed: 0,
     },
-    "05.01"
+    "05.01",
   );
 });
 
@@ -899,7 +899,7 @@ ok 1 - UMD build works fine # time=10.033ms
   // );
 
   let contentsAsStream = fs.createReadStream(
-    path.join(tempFolder, "sampleTestStats.md")
+    path.join(tempFolder, "sampleTestStats.md"),
   );
 
   equal(
@@ -913,7 +913,7 @@ ok 1 - UMD build works fine # time=10.033ms
       suitesPassed: 2,
       suitesFailed: 0,
     },
-    "06.01"
+    "06.01",
   );
 });
 

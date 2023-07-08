@@ -63,7 +63,7 @@ test("01 - Remove HTML tags, give me a clean string.", () => {
       allTagLocations,
       filteredTagLocations: allTagLocations,
     },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -84,7 +84,7 @@ The promo is still on!
   equal(
     result,
     "{% if data.customer.purchases[0].spendTotal < 100 %}\nYou earned a discount!\n{% else %}\nThe promo is still on!\n{% endif %}",
-    "02.01"
+    "02.01",
   );
   equal(
     ranges,
@@ -92,7 +92,7 @@ The promo is still on!
       [0, 31],
       [152, 160],
     ],
-    "02.02"
+    "02.02",
   );
   equal(
     allTagLocations,
@@ -100,7 +100,7 @@ The promo is still on!
       [0, 30],
       [153, 159],
     ],
-    "02.03"
+    "02.03",
   );
   equal(
     filteredTagLocations,
@@ -108,12 +108,12 @@ The promo is still on!
       [0, 30],
       [153, 159],
     ],
-    "02.04"
+    "02.04",
   );
   equal(
     rApply(input, rInvert(allTagLocations, input.length)),
     '<div class="module-container"></div>',
-    "02.05"
+    "02.05",
   );
 });
 
@@ -145,7 +145,7 @@ test("03 - Tell me String indexes of where the <tr> tags are.", () => {
       [143, 148],
       [176, 181],
     ],
-    "03.01"
+    "03.01",
   );
   let gatheredExtractedTagStrings = [];
   filteredTagLocations.forEach(([from, to]) => {
@@ -155,7 +155,7 @@ test("03 - Tell me String indexes of where the <tr> tags are.", () => {
   equal(
     gatheredExtractedTagStrings,
     ["<tr>", "<tr>", "</tr>", "</tr>"],
-    "03.02"
+    "03.02",
   );
 });
 

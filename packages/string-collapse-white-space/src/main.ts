@@ -69,8 +69,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       `069 ██ string-collapse-whitespace called: str = ${JSON.stringify(
         str,
         null,
-        4
-      )}; opts = ${JSON.stringify(opts, null, 4)}`
+        4,
+      )}; opts = ${JSON.stringify(opts, null, 4)}`,
     );
 
   // f's
@@ -79,8 +79,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       `string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but ${typeof str}, equal to: ${JSON.stringify(
         str,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   if (opts && typeof opts !== "object") {
@@ -88,8 +88,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       `string-collapse-white-space/collapse(): [THROW_ID_02] The resolvedOpts is not a plain object but ${typeof opts}, equal to:\n${JSON.stringify(
         opts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   if (!str.length) {
@@ -111,8 +111,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       `111 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   function push(something?: any, extras?: Extras): void {
@@ -122,8 +122,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         `122 ${`\u001b[${35}m${`push()`}\u001b[${39}m`} ${`\u001b[${32}m${`extras`}\u001b[${39}m`} = ${JSON.stringify(
           extras,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     if (typeof resolvedOpts.cb === "function") {
@@ -136,13 +136,13 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
           `136 ${`\u001b[${35}m${`push():`}\u001b[${39}m`} ${`\u001b[${33}m${`final`}\u001b[${39}m`} = ${JSON.stringify(
             final,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       if (Array.isArray(final)) {
         DEV &&
           console.log(
-            `145 ${`\u001b[${35}m${`push():`}\u001b[${39}m`} ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`
+            `145 ${`\u001b[${35}m${`push():`}\u001b[${39}m`} ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`,
           );
         (finalIndexesToDelete as any).push(...final);
       }
@@ -206,28 +206,28 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         `${`\u001b[${36}m${`-----------------------------------------------`}\u001b[${39}m`} str[${`\u001b[${35}m${i}\u001b[${39}m`}] = ${JSON.stringify(
           str[i],
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     // line break counting
     if (str[i] === "\r" || (str[i] === "\n" && str[i - 1] !== "\r")) {
       consecutiveLineBreakCount += 1;
       DEV &&
         console.log(
-          `217 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} consecutiveLineBreakCount = ${consecutiveLineBreakCount}`
+          `217 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} consecutiveLineBreakCount = ${consecutiveLineBreakCount}`,
         );
       if (linebreaksStartAt === null) {
         linebreaksStartAt = i;
         DEV &&
           console.log(
-            `223 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} linebreaksStartAt = ${linebreaksStartAt}`
+            `223 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} linebreaksStartAt = ${linebreaksStartAt}`,
           );
       }
 
       linebreaksEndAt = str[i] === "\r" && str[i + 1] === "\n" ? i + 2 : i + 1;
       DEV &&
         console.log(
-          `230 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} linebreaksEndAt = ${linebreaksEndAt}`
+          `230 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} linebreaksEndAt = ${linebreaksEndAt}`,
         );
     }
 
@@ -236,7 +236,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       nbspPresent = true;
       DEV &&
         console.log(
-          `239 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} nbspPresent = ${nbspPresent}`
+          `239 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} nbspPresent = ${nbspPresent}`,
         );
     }
 
@@ -317,7 +317,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
             a3 ? 32 : 31
           }m${!!a3}\u001b[${39}m`} ===> ${`\u001b[${
             spacesStartAt < i - 1 && a1 && a2 && a3 ? 32 : 31
-          }m${!!(spacesStartAt < i - 1 && a1 && a2 && a3)}\u001b[${39}m`}`
+          }m${!!(spacesStartAt < i - 1 && a1 && a2 && a3)}\u001b[${39}m`}`,
         );
 
       if (
@@ -352,8 +352,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
             `352 initial range: [${startIdx}, ${endIdx}, ${JSON.stringify(
               whatToAdd,
               null,
-              0
-            )}]`
+              0,
+            )}]`,
           );
         // the plan is to reuse existing spaces - for example, imagine:
         // "a   b" - three space gap.
@@ -388,8 +388,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
             `388 suggested range: ${`\u001b[${35}m${JSON.stringify(
               whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx],
               null,
-              0
-            )}\u001b[${39}m`}`
+              0,
+            )}\u001b[${39}m`}`,
           );
 
         // Notice we could push ranges to final, using standalone push()
@@ -422,8 +422,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
           `422 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`spacesStartAt`}\u001b[${39}m`} = ${JSON.stringify(
             spacesStartAt,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -441,8 +441,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
           `441 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             whiteSpaceStartsAt,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -516,14 +516,14 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
               `516 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = ${JSON.stringify(
                 whatToAdd,
                 null,
-                4
-              )}`
+                4,
+              )}`,
             );
         }
 
         DEV &&
           console.log(
-            `526 suggested range: ${`\u001b[${35}m${`[${lineWhiteSpaceStartsAt}, ${i}, " "]`}\u001b[${39}m`}`
+            `526 suggested range: ${`\u001b[${35}m${`[${lineWhiteSpaceStartsAt}, ${i}, " "]`}\u001b[${39}m`}`,
           );
         push(whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx], {
           whiteSpaceStartsAt: whiteSpaceStartsAt as number,
@@ -549,7 +549,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       ) {
         DEV &&
           console.log(
-            `552 suggested range: ${`\u001b[${35}m${`[${lineWhiteSpaceStartsAt}, ${i}, " "]`}\u001b[${39}m`}`
+            `552 suggested range: ${`\u001b[${35}m${`[${lineWhiteSpaceStartsAt}, ${i}, " "]`}\u001b[${39}m`}`,
           );
         push([lineWhiteSpaceStartsAt, i], {
           whiteSpaceStartsAt: whiteSpaceStartsAt as number,
@@ -564,8 +564,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
           `564 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`lineWhiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             lineWhiteSpaceStartsAt,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -589,8 +589,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
           `589 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lineWhiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             lineWhiteSpaceStartsAt,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -662,7 +662,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       ) {
         DEV &&
           console.log(
-            `665 suggested range: ${`\u001b[${35}m${`[${whiteSpaceStartsAt}, ${i}]`}\u001b[${39}m`}`
+            `665 suggested range: ${`\u001b[${35}m${`[${whiteSpaceStartsAt}, ${i}]`}\u001b[${39}m`}`,
           );
         push([whiteSpaceStartsAt, i], {
           whiteSpaceStartsAt,
@@ -702,8 +702,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
               `702 FIY, ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = ${JSON.stringify(
                 whatToAdd,
                 null,
-                4
-              )}`
+                4,
+              )}`,
             );
 
           /* c8 ignore next */
@@ -722,8 +722,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
               `722 suggested range: ${`\u001b[${35}m${`[${startIdx}, ${endIdx}, ${JSON.stringify(
                 whatToAdd,
                 null,
-                0
-              )}]`}\u001b[${39}m`}`
+                0,
+              )}]`}\u001b[${39}m`}`,
             );
           /* c8 ignore next */
           push(whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx], {
@@ -750,7 +750,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         if (!somethingPushed) {
           DEV &&
             console.log(
-              `753 suggested range: ${`\u001b[${35}m${`null`}\u001b[${39}m`}`
+              `753 suggested range: ${`\u001b[${35}m${`null`}\u001b[${39}m`}`,
             );
           push(null, {
             whiteSpaceStartsAt,
@@ -767,18 +767,18 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
           `767 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`whiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             whiteSpaceStartsAt,
             null,
-            4
+            4,
           )}; ${`\u001b[${33}m${`lineWhiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             lineWhiteSpaceStartsAt,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
 
       nbspPresent = false;
       DEV &&
         console.log(
-          `781 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nbspPresent`}\u001b[${39}m`} = ${nbspPresent}`
+          `781 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nbspPresent`}\u001b[${39}m`} = ${nbspPresent}`,
         );
 
       // reset line break counts
@@ -786,17 +786,17 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         consecutiveLineBreakCount = 0;
         DEV &&
           console.log(
-            `789 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} consecutiveLineBreakCount = ${consecutiveLineBreakCount}`
+            `789 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} consecutiveLineBreakCount = ${consecutiveLineBreakCount}`,
           );
         linebreaksStartAt = null;
         DEV &&
           console.log(
-            `794 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} linebreaksStartAt = ${linebreaksStartAt}`
+            `794 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} linebreaksStartAt = ${linebreaksStartAt}`,
           );
         linebreaksEndAt = null;
         DEV &&
           console.log(
-            `799 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} linebreaksEndAt = ${linebreaksEndAt}`
+            `799 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} linebreaksEndAt = ${linebreaksEndAt}`,
           );
       }
     }
@@ -809,8 +809,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
           `809 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`spacesStartAt`}\u001b[${39}m`} = ${JSON.stringify(
             spacesStartAt,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -826,15 +826,15 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
 \u001b[${36}m${`linebreaksStartAt`}\u001b[${39}m = ${linebreaksStartAt};
 \u001b[${36}m${`linebreaksEndAt`}\u001b[${39}m = ${linebreaksEndAt};
 \u001b[${36}m${`nbspPresent`}\u001b[${39}m = ${nbspPresent};
-\u001b[${36}m${`consecutiveLineBreakCount`}\u001b[${39}m = ${consecutiveLineBreakCount}`
+\u001b[${36}m${`consecutiveLineBreakCount`}\u001b[${39}m = ${consecutiveLineBreakCount}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${36}m${`staging`}\u001b[${39}m`} = ${JSON.stringify(
           staging,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     //
@@ -866,8 +866,8 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       `866 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`finalIndexesToDelete`}\u001b[${39}m`} = ${JSON.stringify(
         finalIndexesToDelete.current(),
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   return {

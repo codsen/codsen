@@ -15,14 +15,14 @@ test("01 - one property - 1, no override", () => {
       a: 0,
     }),
     [{ a: false }, { a: true }],
-    "01.01"
+    "01.01",
   );
   equal(
     combinations({
       a: 1,
     }),
     [{ a: false }, { a: true }],
-    "01.02"
+    "01.02",
   );
 
   // boolean is supplied:
@@ -31,14 +31,14 @@ test("01 - one property - 1, no override", () => {
       a: false,
     }),
     [{ a: false }, { a: true }],
-    "01.03"
+    "01.03",
   );
   equal(
     combinations({
       a: true,
     }),
     [{ a: false }, { a: true }],
-    "01.04"
+    "01.04",
   );
 });
 
@@ -61,7 +61,7 @@ test("02 - three properties, no override", () => {
       { a: false, b: true, c: true },
       { a: true, b: true, c: true },
     ],
-    "02.01"
+    "02.01",
   );
   equal(
     combinations({
@@ -79,7 +79,7 @@ test("02 - three properties, no override", () => {
       { a: false, b: true, c: true },
       { a: true, b: true, c: true },
     ],
-    "02.02"
+    "02.02",
   );
 });
 
@@ -92,13 +92,13 @@ test("03 - non-boolean object overrides", () => {
         c: false,
         d: false,
       },
-      { a: "1", b: "1", c: "1" }
+      { a: "1", b: "1", c: "1" },
     ),
     [
       { a: "1", b: "1", c: "1", d: false },
       { a: "1", b: "1", c: "1", d: true },
     ],
-    "03.01"
+    "03.01",
   );
 });
 

@@ -45,5 +45,5 @@ ok 1 - UMD build works fine # time=10.033ms
     suitesTotal: 2,
     suitesPassed: 2,
     suitesFailed: 0,
-  }
+  },
 );

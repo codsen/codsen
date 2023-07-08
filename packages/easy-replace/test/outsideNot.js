@@ -21,10 +21,10 @@ test("01 - rightOutsideNot satisfied thus not replaced", () => {
         rightOutside: "",
         rightOutsideNot: "a",
       },
-      "c"
+      "c",
     ),
     "🐴a",
-    "test 12.1.1"
+    "test 12.1.1",
   );
   equal(
     er(
@@ -38,10 +38,10 @@ test("01 - rightOutsideNot satisfied thus not replaced", () => {
         rightOutside: "",
         rightOutsideNot: ["a"],
       },
-      "c"
+      "c",
     ),
     "🐴a",
-    "test 12.1.2"
+    "test 12.1.2",
   );
 });
 
@@ -58,10 +58,10 @@ test("02 - outsideNot left satisfied thus not replaced", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "c"
+      "c",
     ),
     "a🐴",
-    "test 12.2.1"
+    "test 12.2.1",
   );
   equal(
     er(
@@ -75,10 +75,10 @@ test("02 - outsideNot left satisfied thus not replaced", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "c"
+      "c",
     ),
     "a🐴",
-    "test 12.2.2"
+    "test 12.2.2",
   );
 });
 
@@ -95,10 +95,10 @@ test("03 - outsideNot's satisfied thus not replaced", () => {
         rightOutside: "",
         rightOutsideNot: "a",
       },
-      "c"
+      "c",
     ),
     "a🐴a",
-    "test 12.3"
+    "test 12.3",
   );
 });
 
@@ -115,10 +115,10 @@ test("04 - outsideNot's not satisfied, with 1 maybe replaced", () => {
         rightOutside: "",
         rightOutsideNot: "c",
       },
-      "🦄"
+      "🦄",
     ),
     "z🦄y",
-    "test 12.4"
+    "test 12.4",
   );
 });
 
@@ -135,10 +135,10 @@ test("05 - leftOutsideNot blocked positive leftMaybe", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "whatevs"
+      "whatevs",
     ),
     "zb🐴y",
-    "test 12.5"
+    "test 12.5",
   );
 });
 
@@ -155,10 +155,10 @@ test("06 - rightOutsideNot blocked both L-R maybes", () => {
         rightOutside: "",
         rightOutsideNot: ["y", "a"],
       },
-      "whatevs"
+      "whatevs",
     ),
     "zb🐴cy",
-    "test 12.6"
+    "test 12.6",
   );
 });
 
@@ -175,10 +175,10 @@ test("07 - rightOutsideNot last char goes outside", () => {
         rightOutside: "",
         rightOutsideNot: "b",
       },
-      "b"
+      "b",
     ),
     "ccccccccb",
-    "test 12.7"
+    "test 12.7",
   );
 });
 
@@ -195,10 +195,10 @@ test("08 - right maybe is last char, outsideNot satisfied", () => {
         rightOutside: "",
         rightOutsideNot: "c",
       },
-      "c"
+      "c",
     ),
     "cccccccc",
-    "test 12.8"
+    "test 12.8",
   );
 });
 
@@ -215,10 +215,10 @@ test("09 - real life scenario, missing semicol on nbsp #1", () => {
         rightOutside: "",
         rightOutsideNot: ";",
       },
-      "nbsp;"
+      "nbsp;",
     ),
     "&nbsp; &nbsp; &nbsp;",
-    "test 12.9"
+    "test 12.9",
   );
 });
 
@@ -235,10 +235,10 @@ test("10 - real life scenario, missing semicol on nbsp #2", () => {
         rightOutside: "",
         rightOutsideNot: ";",
       },
-      "nbsp;"
+      "nbsp;",
     ),
     "&nbsp;&nbsp;&nbsp;",
-    "test 12.10"
+    "test 12.10",
   );
 });
 
@@ -255,10 +255,10 @@ test("11 - real life scenario, missing ampersand, text", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "&nbsp"
+      "&nbsp",
     ),
     "tralalala&nbsp;&nbsp;&nbsp;",
-    "test 12.11"
+    "test 12.11",
   );
 });
 
@@ -275,10 +275,10 @@ test("12 - as before but with emoji instead", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "🍻"
+      "🍻",
     ),
     "🍻🍻👌🍺",
-    "test 12.12"
+    "test 12.12",
   );
 });
 
@@ -295,10 +295,10 @@ test("13 - rightOutsideNot with L-R maybes", () => {
         rightOutside: "",
         rightOutsideNot: ["c", "a"],
       },
-      "x"
+      "x",
     ),
     "zxy",
-    "test 12.13"
+    "test 12.13",
   );
 });
 
@@ -315,10 +315,10 @@ test("14 - all of 'em #1", () => {
         rightOutside: ["z", "y"],
         rightOutsideNot: ["c", "b"],
       },
-      "x"
+      "x",
     ),
     "zxy",
-    "test 12.14"
+    "test 12.14",
   );
 });
 
@@ -335,10 +335,10 @@ test("15 - all of 'em #2", () => {
         rightOutside: ["z", "y"],
         rightOutsideNot: ["", "", ""],
       },
-      "x"
+      "x",
     ),
     "zxy",
-    "test 12.14"
+    "test 12.14",
   );
 });
 

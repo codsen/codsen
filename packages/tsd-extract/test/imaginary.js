@@ -26,7 +26,7 @@ test("01 - content missing, semi", () => {
       all: ["abc"],
       error: null,
     },
-    "01.01"
+    "01.01",
   );
   equal(
     extract("interface abc;", "abc", {
@@ -46,7 +46,7 @@ test("01 - content missing, semi", () => {
       all: [],
       error: null,
     },
-    "01.02"
+    "01.02",
   );
   equal(
     extract("interface abc;", "abc", {
@@ -66,7 +66,7 @@ test("01 - content missing, semi", () => {
       all: ["abc"],
       error: null,
     },
-    "01.03"
+    "01.03",
   );
   equal(
     extract("interface abc;", "abc", {
@@ -86,7 +86,7 @@ test("01 - content missing, semi", () => {
       all: [],
       error: null,
     },
-    "01.04"
+    "01.04",
   );
 });
 
@@ -109,7 +109,7 @@ test("02 - content missing, no semi", () => {
       all: ["abc"],
       error: null,
     },
-    "02.01"
+    "02.01",
   );
   equal(
     extract("interface abc", "abc", {
@@ -129,7 +129,7 @@ test("02 - content missing, no semi", () => {
       all: [],
       error: null,
     },
-    "02.02"
+    "02.02",
   );
   equal(
     extract("interface abc", "abc", {
@@ -149,7 +149,7 @@ test("02 - content missing, no semi", () => {
       all: ["abc"],
       error: null,
     },
-    "02.03"
+    "02.03",
   );
   equal(
     extract("interface abc", "abc", {
@@ -169,7 +169,7 @@ test("02 - content missing, no semi", () => {
       all: [],
       error: null,
     },
-    "02.04"
+    "02.04",
   );
 });
 

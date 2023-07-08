@@ -13,7 +13,7 @@ test("01 - wrong input type", () => {
       stripHtml(true);
     },
     /THROW_ID_01/,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -23,7 +23,7 @@ test("02 - wrong input type", () => {
       stripHtml(false);
     },
     /THROW_ID_01/,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -33,7 +33,7 @@ test("03 - wrong input type", () => {
       stripHtml(null);
     },
     /THROW_ID_01/,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -43,7 +43,7 @@ test("04 - wrong input type", () => {
       stripHtml(1);
     },
     /THROW_ID_01/,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -53,7 +53,7 @@ test("05 - wrong opts", () => {
       stripHtml("zzz", 1);
     },
     /THROW_ID_02/,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -63,7 +63,7 @@ test("06 - wrong opts", () => {
       stripHtml("zzz", true);
     },
     /THROW_ID_02/,
-    "06.01"
+    "06.01",
   );
 });
 
@@ -73,7 +73,7 @@ test("07 - wrong opts.reportProgressFunc", () => {
       stripHtml("zzz", { reportProgressFunc: 1 });
     },
     /THROW_ID_03/,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -83,7 +83,7 @@ test("08 - wrong opts.dumpLinkHrefsNearby", () => {
       stripHtml("zzz", { dumpLinkHrefsNearby: true });
     },
     /THROW_ID_04/,
-    "08.01"
+    "08.01",
   );
 });
 
@@ -95,7 +95,7 @@ test("09 - wrong opts", () => {
       });
     },
     /THROW_ID_05/,
-    "09.01"
+    "09.01",
   );
   throws(
     () => {
@@ -104,7 +104,7 @@ test("09 - wrong opts", () => {
       });
     },
     /THROW_ID_05/,
-    "09.02"
+    "09.02",
   );
   throws(
     () => {
@@ -113,7 +113,7 @@ test("09 - wrong opts", () => {
       });
     },
     /THROW_ID_05/,
-    "09.03"
+    "09.03",
   );
   throws(
     () => {
@@ -122,7 +122,7 @@ test("09 - wrong opts", () => {
       });
     },
     /THROW_ID_05/,
-    "09.04"
+    "09.04",
   );
 });
 
@@ -135,7 +135,7 @@ test("10 - wrong reportProgressFuncFrom", () => {
       });
     },
     /THROW_ID_06/,
-    "10.01"
+    "10.01",
   );
   throws(
     () => {
@@ -145,7 +145,7 @@ test("10 - wrong reportProgressFuncFrom", () => {
       });
     },
     /THROW_ID_06/,
-    "10.02"
+    "10.02",
   );
 });
 
@@ -161,7 +161,7 @@ test("11 - ignores wrong reportProgressFuncFrom when reportProgressFunc is off",
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "11.01"
+    "11.01",
   );
   equal(
     stripHtml("zzz", {
@@ -173,7 +173,7 @@ test("11 - ignores wrong reportProgressFuncFrom when reportProgressFunc is off",
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "11.02"
+    "11.02",
   );
 });
 
@@ -186,7 +186,7 @@ test("12 - wrong opts.reportProgressFuncTo", () => {
       });
     },
     /THROW_ID_07/,
-    "12.01"
+    "12.01",
   );
   throws(
     () => {
@@ -196,7 +196,7 @@ test("12 - wrong opts.reportProgressFuncTo", () => {
       });
     },
     /THROW_ID_07/,
-    "12.02"
+    "12.02",
   );
 });
 
@@ -212,7 +212,7 @@ test("13 - ignores wrong reportProgressFuncTo when reportProgressFunc is off", (
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "13.01"
+    "13.01",
   );
   equal(
     stripHtml("zzz", {
@@ -224,7 +224,7 @@ test("13 - ignores wrong reportProgressFuncTo when reportProgressFunc is off", (
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "13.02"
+    "13.02",
   );
 });
 
@@ -234,7 +234,7 @@ test("14 - wrong opts.stripTogetherWithTheirContents", () => {
       stripHtml("zzz", { stripTogetherWithTheirContents: ["div", 1] });
     },
     /THROW_ID_08/,
-    "14.01"
+    "14.01",
   );
 });
 
@@ -251,7 +251,7 @@ test("15 - empty input", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "15.01"
+    "15.01",
   );
 });
 
@@ -267,7 +267,7 @@ test("16 - tabs only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "16.01"
+    "16.01",
   );
   equal(
     stripHtml(input, {
@@ -279,7 +279,7 @@ test("16 - tabs only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "16.02"
+    "16.02",
   );
 });
 
@@ -295,7 +295,7 @@ test("17 - spaces only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "17.01"
+    "17.01",
   );
   equal(
     stripHtml(input, {
@@ -307,7 +307,7 @@ test("17 - spaces only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "17.02"
+    "17.02",
   );
 });
 

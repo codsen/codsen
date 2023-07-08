@@ -14,7 +14,7 @@ function existy(x: any): boolean {
 function logArray(
   arr: any[],
   highlightIdx: number,
-  colour?: number | string
+  colour?: number | string,
 ): string {
   return arr
     .map((el, i) => {
@@ -52,8 +52,8 @@ function sortByCol(arr: any[][], axis: number | string = 0): any[] {
       `array-of-arrays-sort-by-col: [THROW_ID_01]: The first input argument was given not as array but as ${typeof arr}, equal to:\n${JSON.stringify(
         arr,
         null,
-        0
-      )}`
+        0,
+      )}`,
     );
   }
   if (isNaN(+axis)) {
@@ -61,8 +61,8 @@ function sortByCol(arr: any[][], axis: number | string = 0): any[] {
       `array-of-arrays-sort-by-col: [THROW_ID_02]: The second input argument, index of the column to sort by (axis), is not integer (incl. zero)! It's currently given as:\n${JSON.stringify(
         axis,
         null,
-        0
-      )} (type ${typeof axis})`
+        0,
+      )} (type ${typeof axis})`,
     );
   }
 
@@ -73,7 +73,7 @@ function sortByCol(arr: any[][], axis: number | string = 0): any[] {
 
   if (+axis >= maxLength) {
     throw new Error(
-      `array-of-arrays-sort-by-col: [THROW_ID_03]: The second input argument, index of the column to sort by (axis), is marking the column which does not exist on any of the input arrays. Axis was given as ${+axis} while highest index goes as far as ${maxLength}.`
+      `array-of-arrays-sort-by-col: [THROW_ID_03]: The second input argument, index of the column to sort by (axis), is marking the column which does not exist on any of the input arrays. Axis was given as ${+axis} while highest index goes as far as ${maxLength}.`,
     );
   }
 
@@ -87,7 +87,7 @@ function sortByCol(arr: any[][], axis: number | string = 0): any[] {
       DEV &&
         console.log(
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-          `\u001b[${33}m${`${arr1[+axis]} vs. ${arr2[+axis]}`}\u001b[${39}m`
+          `\u001b[${33}m${`${arr1[+axis]} vs. ${arr2[+axis]}`}\u001b[${39}m`,
         );
       if (
         (!existy(arr1[+axis]) && existy(arr2[+axis])) ||
@@ -124,7 +124,7 @@ function sortByCol(arr: any[][], axis: number | string = 0): any[] {
     for (let i = 1; i <= maxRipplesLength; i++) {
       DEV &&
         console.log(
-          `${`\u001b[${36}m${` \u00B0\u00BA\u00A4\u00F8,\u00B8\u00B8,\u00F8\u00A4\u00BA\u00B0\u00B0\u00BA\u00A4\u00F8,\u00B8,\u00F8\u00A4\u00B0\u00BA\u00A4\u00F8,\u00B8\u00B8,\u00F8\u00A4\u00BA\u00B0\u00B0\u00BA\u00A4\u00F8,\u00B8`}\u001b[${39}m`}\n`
+          `${`\u001b[${36}m${` \u00B0\u00BA\u00A4\u00F8,\u00B8\u00B8,\u00F8\u00A4\u00BA\u00B0\u00B0\u00BA\u00A4\u00F8,\u00B8,\u00F8\u00A4\u00B0\u00BA\u00A4\u00F8,\u00B8\u00B8,\u00F8\u00A4\u00BA\u00B0\u00B0\u00BA\u00A4\u00F8,\u00B8`}\u001b[${39}m`}\n`,
         );
       if (+axis - i >= 0) {
         // logging:

@@ -90,11 +90,11 @@ function sortAllObjectsSync(input: any): any {
 
 function getKeyset(
   arrOfPromises: Iterable<PromiseLike<Obj> | Obj>,
-  opts?: Partial<GetKeysetOpts>
+  opts?: Partial<GetKeysetOpts>,
 ): Promise<Obj> {
   if (arguments.length === 0) {
     throw new Error(
-      "json-comb-core/getKeyset(): [THROW_ID_11] Inputs missing!"
+      "json-comb-core/getKeyset(): [THROW_ID_11] Inputs missing!",
     );
   }
   if (existy(opts) && !isObj(opts)) {
@@ -102,8 +102,8 @@ function getKeyset(
       `json-comb-core/getKeysetSync(): [THROW_ID_12] Options object must be a plain object! Currently it's: ${typeof opts}, equal to: ${JSON.stringify(
         opts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   let defaults: GetKeysetOpts = {
@@ -115,11 +115,11 @@ function getKeyset(
       `115 CALLING check-types-mini:\nopts = ${JSON.stringify(
         resolvedOpts,
         null,
-        4
+        4,
       )}\ndefaults = ${JSON.stringify(
         defaults,
         null,
-        4
+        4,
       )}\nopts = ${JSON.stringify(
         {
           msg: "json-comb-core/getKeyset(): [THROW_ID_10*]",
@@ -128,8 +128,8 @@ function getKeyset(
           },
         },
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   let culpritIndex: any;
   let culpritVal: any;
@@ -153,9 +153,9 @@ function getKeyset(
             `json-comb-core/getKeyset(): [THROW_ID_13] Oops! ${culpritIndex}th element resolved not to a plain object but to a ${typeof culpritVal}\n${JSON.stringify(
               culpritVal,
               null,
-              4
-            )}`
-          )
+              4,
+            )}`,
+          ),
         );
         return;
       }
@@ -171,9 +171,9 @@ function getKeyset(
             }),
             {
               mergeArraysContainingStringsToBeEmpty: true,
-            }
+            },
           ), // reducer
-        {} // initialValue
+        {}, // initialValue
       ).then((res2) => {
         resolve(setAllValuesTo(res2, resolvedOpts.placeholder));
       });
@@ -189,17 +189,17 @@ interface GetKeysetOpts {
 function getKeysetSync(arr: Obj[], opts?: Partial<GetKeysetOpts>): Obj {
   if (arguments.length === 0) {
     throw new Error(
-      "json-comb-core/getKeysetSync(): [THROW_ID_21] Inputs missing!"
+      "json-comb-core/getKeysetSync(): [THROW_ID_21] Inputs missing!",
     );
   }
   if (!Array.isArray(arr)) {
     throw new Error(
-      `json-comb-core/getKeysetSync(): [THROW_ID_22] Input must be array! Currently it's: ${typeof arr}`
+      `json-comb-core/getKeysetSync(): [THROW_ID_22] Input must be array! Currently it's: ${typeof arr}`,
     );
   }
   if (arr.length === 0) {
     throw new Error(
-      "json-comb-core/getKeysetSync(): [THROW_ID_23] Input array is empty!"
+      "json-comb-core/getKeysetSync(): [THROW_ID_23] Input array is empty!",
     );
   }
   if (existy(opts) && !isObj(opts)) {
@@ -207,8 +207,8 @@ function getKeysetSync(arr: Obj[], opts?: Partial<GetKeysetOpts>): Obj {
       `json-comb-core/getKeysetSync(): [THROW_ID_24] Options object must be a plain object! Currently it's: ${typeof opts}, equal to: ${JSON.stringify(
         opts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
 
@@ -229,8 +229,8 @@ function getKeysetSync(arr: Obj[], opts?: Partial<GetKeysetOpts>): Obj {
         `json-comb-core/getKeysetSync(): [THROW_ID_25] Non-object (${typeof obj}) detected within an array! It's the ${i}th element: ${JSON.stringify(
           obj,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     }
     schemaObj = mergeAdvanced(
@@ -238,11 +238,11 @@ function getKeysetSync(arr: Obj[], opts?: Partial<GetKeysetOpts>): Obj {
       flattenAllArrays(obj, fOpts),
       {
         mergeArraysContainingStringsToBeEmpty: true,
-      }
+      },
     );
   });
   schemaObj = sortAllObjectsSync(
-    setAllValuesTo(schemaObj, resolvedOpts.placeholder)
+    setAllValuesTo(schemaObj, resolvedOpts.placeholder),
   );
   return schemaObj;
 }
@@ -257,16 +257,16 @@ interface EnforceKeysetOpts {
 function enforceKeyset(
   obj: Obj,
   schemaKeyset: Obj,
-  opts?: Partial<EnforceKeysetOpts>
+  opts?: Partial<EnforceKeysetOpts>,
 ): Promise<Obj> {
   if (arguments.length === 0) {
     throw new Error(
-      "json-comb-core/enforceKeyset(): [THROW_ID_31] Inputs missing!"
+      "json-comb-core/enforceKeyset(): [THROW_ID_31] Inputs missing!",
     );
   }
   if (arguments.length === 1) {
     throw new Error(
-      "json-comb-core/enforceKeyset(): [THROW_ID_32] Second arg missing!"
+      "json-comb-core/enforceKeyset(): [THROW_ID_32] Second arg missing!",
     );
   }
   let defaults: EnforceKeysetOpts = {
@@ -278,15 +278,15 @@ function enforceKeyset(
   if (
     resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.length &&
     !resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
-      isStr(val)
+      isStr(val),
     )
   ) {
     throw new Error(
       `json-comb-core/enforceKeyset(): [THROW_ID_33] Array resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${JSON.stringify(
         resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   return new Promise((resolve, reject) => {
@@ -298,9 +298,9 @@ function enforceKeyset(
               `json-comb-core/enforceKeyset(): [THROW_ID_34] Input must resolve to a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
                 obj,
                 null,
-                4
-              )}`
-            )
+                4,
+              )}`,
+            ),
           );
           return;
         }
@@ -310,9 +310,9 @@ function enforceKeyset(
               `json-comb-core/enforceKeyset(): [THROW_ID_35] Schema, 2nd arg, must resolve to a plain object! Currently it's resolving to: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
                 schemaKeyset,
                 null,
-                4
-              )}`
-            )
+                4,
+              )}`,
+            ),
           );
           return;
         }
@@ -322,12 +322,12 @@ function enforceKeyset(
               fillMissing(
                 clone(objResolved),
                 clone(schemaKeysetResolved),
-                resolvedOpts
-              )
-            )
-          )
+                resolvedOpts,
+              ),
+            ),
+          ),
         );
-      }
+      },
     );
   });
 }
@@ -337,16 +337,16 @@ function enforceKeyset(
 function enforceKeysetSync(
   obj: Obj,
   schemaKeyset: Obj,
-  opts?: Partial<EnforceKeysetOpts>
+  opts?: Partial<EnforceKeysetOpts>,
 ): Obj {
   if (arguments.length === 0) {
     throw new Error(
-      "json-comb-core/enforceKeysetSync(): [THROW_ID_41] Inputs missing!"
+      "json-comb-core/enforceKeysetSync(): [THROW_ID_41] Inputs missing!",
     );
   }
   if (arguments.length === 1) {
     throw new Error(
-      "json-comb-core/enforceKeysetSync(): [THROW_ID_42] Second arg missing!"
+      "json-comb-core/enforceKeysetSync(): [THROW_ID_42] Second arg missing!",
     );
   }
   if (!isObj(obj)) {
@@ -354,8 +354,8 @@ function enforceKeysetSync(
       `json-comb-core/enforceKeysetSync(): [THROW_ID_43] Input must be a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
         obj,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   if (!isObj(schemaKeyset)) {
@@ -363,8 +363,8 @@ function enforceKeysetSync(
       `json-comb-core/enforceKeysetSync(): [THROW_ID_44] Schema object must be a plain object! Currently it's: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
         schemaKeyset,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   let defaults: EnforceKeysetOpts = {
@@ -376,19 +376,19 @@ function enforceKeysetSync(
   if (
     resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.length &&
     !resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.every((val) =>
-      isStr(val)
+      isStr(val),
     )
   ) {
     throw new Error(
       `json-comb-core/enforceKeyset(): [THROW_ID_45] Array resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${JSON.stringify(
         resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   return sortAllObjectsSync(
-    fillMissing(clone(obj), schemaKeyset, resolvedOpts)
+    fillMissing(clone(obj), schemaKeyset, resolvedOpts),
   );
 }
 
@@ -400,12 +400,12 @@ type NoNewKeysSyncRes = string[];
 function noNewKeysSync(obj: Obj, schemaKeyset: Obj): NoNewKeysSyncRes {
   if (arguments.length === 0) {
     throw new Error(
-      "json-comb-core/noNewKeysSync(): [THROW_ID_51] All inputs missing!"
+      "json-comb-core/noNewKeysSync(): [THROW_ID_51] All inputs missing!",
     );
   }
   if (arguments.length === 1) {
     throw new Error(
-      "json-comb-core/noNewKeysSync(): [THROW_ID_52] Schema object is missing!"
+      "json-comb-core/noNewKeysSync(): [THROW_ID_52] Schema object is missing!",
     );
   }
   if (!isObj(obj)) {
@@ -413,8 +413,8 @@ function noNewKeysSync(obj: Obj, schemaKeyset: Obj): NoNewKeysSyncRes {
       `json-comb-core/noNewKeysSync(): [THROW_ID_53] Main input (1st arg.) must be a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
         obj,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   if (!isObj(schemaKeyset)) {
@@ -422,8 +422,8 @@ function noNewKeysSync(obj: Obj, schemaKeyset: Obj): NoNewKeysSyncRes {
       `json-comb-core/noNewKeysSync(): [THROW_ID_54] Schema input (2nd arg.) must be a plain object! Currently it's: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
         schemaKeyset,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   return noNewKeys(obj, schemaKeyset);
@@ -437,7 +437,7 @@ interface FindUnusedSyncOpts {
 }
 function findUnusedSync(
   arr: any[],
-  opts?: Partial<FindUnusedSyncOpts>
+  opts?: Partial<FindUnusedSyncOpts>,
 ): string[] {
   //
   // PREPARATIONS AND TYPE CHECKS
@@ -449,12 +449,12 @@ function findUnusedSync(
     }
   } else {
     throw new TypeError(
-      `json-comb-core/findUnusedSync(): [THROW_ID_61] The first argument should be an array. Currently it's: ${typeof arr}`
+      `json-comb-core/findUnusedSync(): [THROW_ID_61] The first argument should be an array. Currently it's: ${typeof arr}`,
     );
   }
   if (arguments.length > 1 && !isObj(opts)) {
     throw new TypeError(
-      `json-comb-core/findUnusedSync(): [THROW_ID_62] The second argument, options object, must be a plain object, not ${typeof opts}`
+      `json-comb-core/findUnusedSync(): [THROW_ID_62] The second argument, options object, must be a plain object, not ${typeof opts}`,
     );
   }
   let defaults = {
@@ -471,7 +471,7 @@ function findUnusedSync(
 
   function removeLeadingDot(something: string[]) {
     return something.map((finding) =>
-      finding.charAt(0) === "." ? finding.slice(1) : finding
+      finding.charAt(0) === "." ? finding.slice(1) : finding,
     );
   }
 
@@ -479,7 +479,7 @@ function findUnusedSync(
     arr1: Obj[],
     opts1: FindUnusedSyncOpts,
     res: string[] = [],
-    path = ""
+    path = "",
   ) {
     if (Array.isArray(arr1) && arr1.length === 0) {
       return res;
@@ -497,8 +497,8 @@ function findUnusedSync(
             (obj) =>
               ((opts1 && obj[key] === opts1.placeholder) ||
                 obj[key] === undefined) &&
-              (!opts1?.comments || !includes(key, opts1.comments))
-          )
+              (!opts1?.comments || !includes(key, opts1.comments)),
+          ),
         );
         // DEV && console.log(`unusedKeys = ${JSON.stringify(unusedKeys, null, 4)}`)
         res = res.concat(unusedKeys.map((el) => `${path}.${el}`));
@@ -510,8 +510,8 @@ function findUnusedSync(
       //
       let keys: string[] = [].concat(
         ...(Object.keys(keySet) as any[]).filter(
-          (key) => isObj(keySet[key]) || Array.isArray(keySet[key])
-        )
+          (key) => isObj(keySet[key]) || Array.isArray(keySet[key]),
+        ),
       );
       let keysContents = keys.map((key) => typ(keySet[key]));
 
@@ -530,8 +530,8 @@ function findUnusedSync(
               }
             }
             return res1;
-          }, [])
-        )
+          }, []),
+        ),
       );
       let appendix = "";
       let innerDot = "";
@@ -546,7 +546,7 @@ function findUnusedSync(
             singleExtra,
             opts1,
             res,
-            path + innerDot + keys[i] + appendix
+            path + innerDot + keys[i] + appendix,
           );
         });
       }

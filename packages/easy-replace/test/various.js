@@ -21,10 +21,10 @@ test("01 - special case #1", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "&nbsp;"
+      "&nbsp;",
     ),
     "&fnof;",
-    "test 14.1"
+    "test 14.1",
   );
 });
 
@@ -41,10 +41,10 @@ test("02 - special case #2", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "b a🦄b🍺c a🦄b🦄c a🦄bc abc b",
-    "test 14.1"
+    "test 14.1",
   );
 });
 

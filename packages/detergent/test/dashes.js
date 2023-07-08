@@ -30,7 +30,7 @@ test(`01 - \u001b[${33}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"n
     equal(
       det(ok, not, n, "1880-1912, pages 330-39", opt).res,
       "1880&ndash;1912, pages 330&ndash;39",
-      "01.01"
+      "01.01",
     );
   });
 });
@@ -44,7 +44,7 @@ test(`02 - \u001b[${33}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"n
     equal(
       det(ok, not, n, "1880-1912, pages 330-39", opt).res,
       "1880\u20131912, pages 330\u201339",
-      "02.01"
+      "02.01",
     );
   });
 });
@@ -57,7 +57,7 @@ test(`03 - \u001b[${33}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"n
     equal(
       det(ok, not, n, "1880-1912, pages 330-39", opt).res,
       "1880-1912, pages 330-39",
-      "03.01"
+      "03.01",
     );
   });
 });
@@ -71,7 +71,7 @@ test(`04 - \u001b[${33}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"n
     equal(
       det(ok, not, n, "An A-Z guide", opt).res,
       "An A&ndash;Z guide",
-      "04.01"
+      "04.01",
     );
   });
   mixer({
@@ -81,7 +81,7 @@ test(`04 - \u001b[${33}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"n
     equal(
       det(ok, not, n, "An A-Z guide", opt).res,
       "An A\u2013Z guide",
-      "04.02"
+      "04.02",
     );
   });
   mixer({
@@ -100,7 +100,7 @@ test(`05 - \u001b[${33}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"n
     equal(
       det(ok, not, n, `An A${rawNDash}Z guide`, opt).res,
       "An A&ndash;Z guide",
-      "05.01"
+      "05.01",
     );
   });
   mixer({
@@ -110,7 +110,7 @@ test(`05 - \u001b[${33}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"n
     equal(
       det(ok, not, n, `An A${rawNDash}Z guide`, opt).res,
       `An A${rawNDash}Z guide`,
-      "05.02"
+      "05.02",
     );
   });
   mixer({
@@ -120,7 +120,7 @@ test(`05 - \u001b[${33}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"n
     equal(
       det(ok, not, n, `An A${rawNDash}Z guide`, opt).res,
       "An A-Z guide",
-      "05.03"
+      "05.03",
     );
   });
 });
@@ -133,7 +133,7 @@ test(`06 - \u001b[${33}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"n
     equal(
       det(ok, not, n, "An A&ndash;Z guide", opt).res,
       "An A&ndash;Z guide",
-      "06.01"
+      "06.01",
     );
   });
   mixer({
@@ -143,7 +143,7 @@ test(`06 - \u001b[${33}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"n
     equal(
       det(ok, not, n, "An A&ndash;Z guide", opt).res,
       `An A${rawNDash}Z guide`,
-      "06.02"
+      "06.02",
     );
   });
   mixer({
@@ -152,7 +152,7 @@ test(`06 - \u001b[${33}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"n
     equal(
       det(ok, not, n, "An A&ndash;Z guide", opt).res,
       "An A-Z guide",
-      "06.03"
+      "06.03",
     );
   });
 });
@@ -169,7 +169,7 @@ test(`07 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
     equal(
       det(ok, not, n, "some text - some more text", opt).res,
       "some text &mdash; some more text",
-      "07.01"
+      "07.01",
     );
   });
 });
@@ -183,7 +183,7 @@ test(`08 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
     equal(
       det(ok, not, n, "some text - some more text", opt).res,
       `some text ${rawMDash} some more text`,
-      "08.01"
+      "08.01",
     );
   });
 });
@@ -196,7 +196,7 @@ test(`09 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
     equal(
       det(ok, not, n, "some text - some more text", opt).res,
       "some text - some more text",
-      "09.01"
+      "09.01",
     );
   });
 });
@@ -214,10 +214,10 @@ test(`10 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
         not,
         n,
         "In brute material terms, he was an accomplice - in fact, a conspirator - to the clearing of the ice-cream fridge.",
-        opt
+        opt,
       ).res,
       `In brute material terms, he was an accomplice ${rawMDash} in fact, a conspirator ${rawMDash} to the clearing of the ice-cream fridge.`,
-      "10.01"
+      "10.01",
     );
   });
 });
@@ -235,10 +235,10 @@ test(`11 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
         not,
         n,
         `I smiled and she said, ${leftSingleQuote}You mean you want me to-${rightSingleQuote}`,
-        opt
+        opt,
       ).res,
       "I smiled and she said, &lsquo;You mean you want me to&mdash;&rsquo;",
-      "11.01"
+      "11.01",
     );
   });
 });
@@ -256,10 +256,10 @@ test(`12 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
         not,
         n,
         `I smiled and she said, ${leftSingleQuote}You mean you want me to-${rightSingleQuote}`,
-        opt
+        opt,
       ).res,
       `I smiled and she said, ${leftSingleQuote}You mean you want me to${rawMDash}${rightSingleQuote}`,
-      "12.01"
+      "12.01",
     );
   });
 });
@@ -277,10 +277,10 @@ test(`13 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
         not,
         n,
         `I smiled and she said, ${leftSingleQuote}You mean you want me to-${rightSingleQuote}`,
-        opt
+        opt,
       ).res,
       "I smiled and she said, 'You mean you want me to&mdash;'",
-      "13.01"
+      "13.01",
     );
   });
 });
@@ -298,10 +298,10 @@ test(`14 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
         not,
         n,
         `I smiled and she said, ${leftSingleQuote}You mean you want me to-${rightSingleQuote}`,
-        opt
+        opt,
       ).res,
       `I smiled and she said, 'You mean you want me to${rawMDash}'`,
-      "14.01"
+      "14.01",
     );
   });
 });
@@ -317,7 +317,7 @@ test(`15 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
       det(ok, not, n, "I smiled and she said, 'You mean you want me to-'", opt)
         .res,
       "I smiled and she said, &lsquo;You mean you want me to&mdash;&rsquo;",
-      "15.01"
+      "15.01",
     );
   });
 });
@@ -333,7 +333,7 @@ test(`16 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
       det(ok, not, n, "I smiled and she said, 'You mean you want me to-'", opt)
         .res,
       "I smiled and she said, 'You mean you want me to&mdash;'",
-      "16.01"
+      "16.01",
     );
   });
 });
@@ -349,7 +349,7 @@ test(`17 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
       det(ok, not, n, "I smiled and she said, 'You mean you want me to-'", opt)
         .res,
       "I smiled and she said, &lsquo;You mean you want me to-&rsquo;",
-      "17.01"
+      "17.01",
     );
   });
 });
@@ -365,7 +365,7 @@ test(`18 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
       det(ok, not, n, "I smiled and she said, 'You mean you want me to-'", opt)
         .res,
       "I smiled and she said, 'You mean you want me to-'",
-      "18.01"
+      "18.01",
     );
   });
 });
@@ -381,7 +381,7 @@ test(`19 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
       det(ok, not, n, "I smiled and she said, 'You mean you want me to-'", opt)
         .res,
       `I smiled and she said, ${leftSingleQuote}You mean you want me to${rawMDash}${rightSingleQuote}`,
-      "19.01"
+      "19.01",
     );
   });
 });
@@ -397,7 +397,7 @@ test(`20 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
       det(ok, not, n, "I smiled and she said, 'You mean you want me to-'", opt)
         .res,
       `I smiled and she said, 'You mean you want me to${rawMDash}'`,
-      "20.01"
+      "20.01",
     );
   });
 });
@@ -413,7 +413,7 @@ test(`21 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
       det(ok, not, n, "I smiled and she said, 'You mean you want me to-'", opt)
         .res,
       `I smiled and she said, ${leftSingleQuote}You mean you want me to-${rightSingleQuote}`,
-      "21.01"
+      "21.01",
     );
   });
 });
@@ -429,7 +429,7 @@ test(`22 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
       det(ok, not, n, "I smiled and she said, 'You mean you want me to-'", opt)
         .res,
       "I smiled and she said, 'You mean you want me to-'",
-      "22.01"
+      "22.01",
     );
   });
 });
@@ -478,7 +478,7 @@ test(`26 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &ndash; b", opt).applicableOpts.convertDashes,
-      "26.01"
+      "26.01",
     );
   });
 });
@@ -502,7 +502,7 @@ test(`28 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &mdash; b", opt).applicableOpts.convertDashes,
-      "28.01"
+      "28.01",
     );
   });
 });
@@ -526,7 +526,7 @@ test(`30 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, `a ${rawNDash} b`, opt).applicableOpts.convertDashes,
-      "30.01"
+      "30.01",
     );
   });
 });
@@ -550,7 +550,7 @@ test(`32 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, `a ${rawMDash} b`, opt).applicableOpts.convertDashes,
-      "32.01"
+      "32.01",
     );
   });
 });
@@ -575,7 +575,7 @@ test(`34 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &#x2D; b", opt).applicableOpts.convertDashes,
-      "34.01"
+      "34.01",
     );
   });
 });
@@ -600,7 +600,7 @@ test(`36 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &#x2013; b", opt).applicableOpts.convertDashes,
-      "36.01"
+      "36.01",
     );
   });
 });
@@ -625,7 +625,7 @@ test(`38 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &#x2014; b", opt).applicableOpts.convertDashes,
-      "38.01"
+      "38.01",
     );
   });
 });
@@ -670,7 +670,7 @@ test(`42 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &ndash; b", opt).applicableOpts.convertDashes,
-      "42.01"
+      "42.01",
     );
   });
 });
@@ -694,7 +694,7 @@ test(`44 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &mdash; b", opt).applicableOpts.convertDashes,
-      "44.01"
+      "44.01",
     );
   });
 });
@@ -718,7 +718,7 @@ test(`46 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, `a ${rawNDash} b`, opt).applicableOpts.convertDashes,
-      "46.01"
+      "46.01",
     );
   });
 });
@@ -742,7 +742,7 @@ test(`48 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, `a ${rawMDash} b`, opt).applicableOpts.convertDashes,
-      "48.01"
+      "48.01",
     );
   });
 });
@@ -766,7 +766,7 @@ test(`50 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &#x2D; b", opt).applicableOpts.convertDashes,
-      "50.01"
+      "50.01",
     );
   });
 });
@@ -791,7 +791,7 @@ test(`52 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &#x2013; b", opt).applicableOpts.convertDashes,
-      "52.01"
+      "52.01",
     );
   });
 });
@@ -816,7 +816,7 @@ test(`54 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &#x2014; b", opt).applicableOpts.convertDashes,
-      "54.01"
+      "54.01",
     );
   });
 });
@@ -833,7 +833,7 @@ test(`56 - \u001b[${32}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${31}m${"m
       convertDashes: false,
     }).res,
     "a&nbsp;- b",
-    "56.01"
+    "56.01",
   );
 });
 
@@ -845,7 +845,7 @@ test(`57 - \u001b[${36}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"i
     equal(
       det(ok, not, n, "zzz{% if something %}yyy", opt).res,
       "zzz{% if something %}yyy",
-      "57.01"
+      "57.01",
     );
   });
 });
@@ -855,7 +855,7 @@ test(`58 - \u001b[${36}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"i
     equal(
       det(ok, not, n, "zzz{{ something }}yyy", opt).res,
       "zzz{{ something }}yyy",
-      "58.01"
+      "58.01",
     );
   });
 });
@@ -866,7 +866,7 @@ test(`59 - \u001b[${36}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"i
     equal(
       det(ok, not, n, "zzz{%- if something -%}yyy", opt).res,
       "zzz{%- if something -%}yyy",
-      "59.01"
+      "59.01",
     );
   });
 });
@@ -876,7 +876,7 @@ test(`60 - \u001b[${36}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"i
     equal(
       det(ok, not, n, "zzz{{- something -}}yyy", opt).res,
       "zzz{{- something -}}yyy",
-      "60.01"
+      "60.01",
     );
   });
 });
@@ -929,12 +929,12 @@ test(`64 - \u001b[${36}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"i
     equal(
       det1(source, opt).res,
       "{% if x %}a{% endif %} a&nbsp;&mdash;&nbsp;b",
-      "64.01"
+      "64.01",
     );
     equal(
       det(ok, not, n, source, opt).res,
       "{% if x %}a{% endif %} a&nbsp;&mdash;&nbsp;b",
-      "64.02"
+      "64.02",
     );
     ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "64.03");
   });
@@ -962,7 +962,7 @@ test(`66 - \u001b[${36}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"i
     equal(
       det(ok, not, n, source, opt).res,
       `{% if x %}a{% endif %} a${rawNbsp}${rawMDash}${rawNbsp}b`,
-      "66.01"
+      "66.01",
     );
     ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "66.02");
   });
@@ -978,7 +978,7 @@ test(`67 - \u001b[${36}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"i
     equal(
       det(ok, not, n, source, opt).res,
       `{% if x %}a{% endif %} a ${rawMDash} b`,
-      "67.01"
+      "67.01",
     );
     ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "67.02");
   });
@@ -994,7 +994,7 @@ test(`68 - \u001b[${36}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"i
     equal(
       det(ok, not, n, source, opt).res,
       "{% if x %}a{% endif %} a&nbsp;-&nbsp;b",
-      "68.01"
+      "68.01",
     );
     ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "68.02");
   });
@@ -1010,7 +1010,7 @@ test(`69 - \u001b[${36}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"i
     equal(
       det(ok, not, n, source, opt).res,
       "{% if x %}a{% endif %} a - b",
-      "69.01"
+      "69.01",
     );
     ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "69.02");
   });
@@ -1026,7 +1026,7 @@ test(`70 - \u001b[${36}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"i
     equal(
       det(ok, not, n, source, opt).res,
       `{% if x %}a{% endif %} a${rawNbsp}-${rawNbsp}b`,
-      "70.01"
+      "70.01",
     );
     ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "70.02");
   });
@@ -1042,7 +1042,7 @@ test(`71 - \u001b[${36}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${33}m${"i
     equal(
       det(ok, not, n, source, opt).res,
       "{% if x %}a{% endif %} a - b",
-      "71.01"
+      "71.01",
     );
     ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "71.02");
   });
@@ -1069,7 +1069,7 @@ test(`73 - \u001b[${34}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"m
       // nothing to convert:
       det(ok, not, n, "1 - 2 = 3", opt).res,
       "1 &ndash; 2 = 3",
-      "73.01"
+      "73.01",
     );
   });
   mixer({
@@ -1081,7 +1081,7 @@ test(`73 - \u001b[${34}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"m
       // nothing to convert:
       det(ok, not, n, "1 - 2 = 3", opt).res,
       `1 ${rawNDash} 2 = 3`,
-      "73.02"
+      "73.02",
     );
   });
   mixer({
@@ -1092,7 +1092,7 @@ test(`73 - \u001b[${34}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"m
       // nothing to convert:
       det(ok, not, n, "1 - 2 = 3", opt).res,
       "1 - 2 = 3",
-      "73.03"
+      "73.03",
     );
   });
 });
@@ -1105,7 +1105,7 @@ test(`74 - \u001b[${34}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"m
     equal(
       det(ok, not, n, "Temperatures of -20°C", opt).res,
       "Temperatures of -20°C",
-      "74.01"
+      "74.01",
     );
     equal(det(ok, not, n, "-20°C", opt).res, "-20°C", "74.02");
   });
@@ -1119,7 +1119,7 @@ test(`75 - \u001b[${34}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"m
     equal(
       det(ok, not, n, "Temperatures of -20°C", opt).res,
       "Temperatures of -20&deg;C",
-      "75.01"
+      "75.01",
     );
     equal(det(ok, not, n, "-20°C", opt).res, "-20&deg;C", "75.02");
   });
@@ -1136,10 +1136,10 @@ test(`76 - \u001b[${34}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"m
         not,
         n,
         "The records show that there were temperatures as low as -20°C",
-        opt
+        opt,
       ).res,
       "The records show that there were temperatures as low as&nbsp;-20&deg;C",
-      "76.01"
+      "76.01",
     );
   });
 });
@@ -1155,10 +1155,10 @@ test(`77 - \u001b[${34}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"m
         not,
         n,
         "The records show that there were temperatures as low as -20°C",
-        opt
+        opt,
       ).res,
       "The records show that there were temperatures as low as -20&deg;C",
-      "77.01"
+      "77.01",
     );
   });
 });
@@ -1174,10 +1174,10 @@ test(`78 - \u001b[${34}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"m
         not,
         n,
         "The records show that there were temperatures as low as -20°C",
-        opt
+        opt,
       ).res,
       "The records show that there were temperatures as low as\u00A0-20°C",
-      "78.01"
+      "78.01",
     );
   });
 });
@@ -1193,10 +1193,10 @@ test(`79 - \u001b[${34}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"m
         not,
         n,
         "The records show that there were temperatures as low as -20°C",
-        opt
+        opt,
       ).res,
       "The records show that there were temperatures as low as -20°C",
-      "79.01"
+      "79.01",
     );
   });
 });
@@ -1209,7 +1209,7 @@ test(`80 - \u001b[${35}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"h
     equal(
       det(ok, not, n, "Stratford-upon-Avon", opt).res,
       "Stratford-upon-Avon",
-      "80.01"
+      "80.01",
     );
   });
 });
@@ -1222,7 +1222,7 @@ test(`81 - \u001b[${35}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"h
     equal(
       det(ok, not, n, "One day we should visit Stratford-upon-Avon", opt).res,
       "One day we should visit&nbsp;Stratford-upon-Avon",
-      "81.01"
+      "81.01",
     );
   });
 });
@@ -1235,7 +1235,7 @@ test(`82 - \u001b[${35}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"h
     equal(
       det(ok, not, n, "One day we should visit Stratford-upon-Avon.", opt).res,
       "One day we should visit&nbsp;Stratford-upon-Avon.",
-      "82.01"
+      "82.01",
     );
   });
 });
@@ -1247,7 +1247,7 @@ test(`83 - \u001b[${35}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"h
     equal(
       det(ok, not, n, "One day we should visit Stratford-upon-Avon", opt).res,
       "One day we should visit Stratford-upon-Avon",
-      "83.01"
+      "83.01",
     );
   });
 });
@@ -1259,7 +1259,7 @@ test(`84 - \u001b[${35}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"h
     equal(
       det(ok, not, n, "One day we should visit Stratford-upon-Avon.", opt).res,
       "One day we should visit Stratford-upon-Avon.",
-      "84.01"
+      "84.01",
     );
   });
 });
@@ -1272,7 +1272,7 @@ test.skip(`85 - \u001b[${35}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}
       convertDashes: false,
     }).res,
     "a&nbsp;- b",
-    "85.01"
+    "85.01",
   );
   ok(
     det1("a - b", {
@@ -1280,7 +1280,7 @@ test.skip(`85 - \u001b[${35}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}
       convertEntities: false,
       convertDashes: false,
     }).applicableOpts.removeWidows,
-    "85.02"
+    "85.02",
   );
 
   mixer({
@@ -1292,7 +1292,7 @@ test.skip(`85 - \u001b[${35}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}
       det(ok, not, n, "One day - and I mean some day - we will travel", opt)
         .res,
       "One day&nbsp;- and I mean some day&nbsp;- we will&nbsp;travel",
-      "85.03"
+      "85.03",
     );
   });
 });

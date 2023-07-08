@@ -19,12 +19,12 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
       },
       {
         a: null,
-      }
+      },
     ),
     {
       a: false,
     },
-    "01.01"
+    "01.01",
   );
   equal(
     mergeAdvanced(
@@ -33,12 +33,12 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
       },
       {
         a: null,
-      }
+      },
     ),
     {
       a: true,
     },
-    "01.02"
+    "01.02",
   );
 
   // ===
@@ -50,12 +50,12 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
       },
       {
         a: false,
-      }
+      },
     ),
     {
       a: false,
     },
-    "01.03"
+    "01.03",
   );
   equal(
     mergeAdvanced(
@@ -64,12 +64,12 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
       },
       {
         a: true,
-      }
+      },
     ),
     {
       a: true,
     },
-    "01.04"
+    "01.04",
   );
 
   // ===
@@ -88,12 +88,12 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "01.05"
+    "01.05",
   );
   equal(
     mergeAdvanced(
@@ -105,12 +105,12 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "01.06"
+    "01.06",
   );
 
   // ===
@@ -125,12 +125,12 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "01.07"
+    "01.07",
   );
   equal(
     mergeAdvanced(
@@ -142,12 +142,12 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "01.08"
+    "01.08",
   );
 });
 
@@ -162,12 +162,12 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "02.01"
+    "02.01",
   );
   equal(
     mergeAdvanced(
@@ -179,12 +179,12 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "02.02"
+    "02.02",
   );
   equal(
     mergeAdvanced(
@@ -196,12 +196,12 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "02.03"
+    "02.03",
   );
   equal(
     mergeAdvanced(
@@ -213,12 +213,12 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "02.04"
+    "02.04",
   );
   equal(
     mergeAdvanced(
@@ -230,12 +230,12 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "02.05"
+    "02.05",
   );
   equal(
     mergeAdvanced(
@@ -247,12 +247,12 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "02.06"
+    "02.06",
   );
   equal(
     mergeAdvanced(
@@ -264,12 +264,12 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "02.07"
+    "02.07",
   );
   equal(
     mergeAdvanced(
@@ -281,12 +281,12 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "02.08"
+    "02.08",
   );
   equal(
     mergeAdvanced(
@@ -298,12 +298,12 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "02.09"
+    "02.09",
   );
   equal(
     mergeAdvanced(
@@ -315,12 +315,12 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "02.10"
+    "02.10",
   );
   equal(
     mergeAdvanced(
@@ -332,12 +332,12 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "02.11"
+    "02.11",
   );
 });
 
@@ -352,12 +352,12 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "03.01"
+    "03.01",
   );
   equal(
     mergeAdvanced(
@@ -369,12 +369,12 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "03.02"
+    "03.02",
   );
   equal(
     mergeAdvanced(
@@ -386,12 +386,12 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "03.03"
+    "03.03",
   );
   equal(
     mergeAdvanced(
@@ -403,12 +403,12 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "03.04"
+    "03.04",
   );
   equal(
     mergeAdvanced(
@@ -420,12 +420,12 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "03.05"
+    "03.05",
   );
   equal(
     mergeAdvanced(
@@ -437,12 +437,12 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "03.06"
+    "03.06",
   );
   equal(
     mergeAdvanced(
@@ -454,12 +454,12 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "03.07"
+    "03.07",
   );
   equal(
     mergeAdvanced(
@@ -471,12 +471,12 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "03.08"
+    "03.08",
   );
   equal(
     mergeAdvanced(
@@ -488,12 +488,12 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "03.09"
+    "03.09",
   );
   equal(
     mergeAdvanced(
@@ -505,12 +505,12 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "03.10"
+    "03.10",
   );
   equal(
     mergeAdvanced(
@@ -522,12 +522,12 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans 
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "03.11"
+    "03.11",
   );
 });
 
@@ -542,12 +542,12 @@ test("04 - \u001b[33mOPTS\u001b[39m - opts.hardConcatKeys - basic cases", () => 
       },
       {
         hardArrayConcatKeys: ["a"],
-      }
+      },
     ),
     {
       a: [0, 1, 2, 3, 4, 5],
     },
-    "04.01"
+    "04.01",
   );
   equal(
     mergeAdvanced(
@@ -559,12 +559,12 @@ test("04 - \u001b[33mOPTS\u001b[39m - opts.hardConcatKeys - basic cases", () => 
       },
       {
         hardArrayConcatKeys: ["a"],
-      }
+      },
     ),
     {
       a: [{ a: 0 }, { a: 1 }, { a: 2 }, { a: 0 }, { a: 1 }, { a: 2 }],
     },
-    "04.02"
+    "04.02",
   );
   equal(
     mergeAdvanced(
@@ -580,14 +580,14 @@ test("04 - \u001b[33mOPTS\u001b[39m - opts.hardConcatKeys - basic cases", () => 
       },
       {
         hardArrayConcatKeys: ["a"],
-      }
+      },
     ),
     {
       a: [1, 2, 3, 4, 5, 6],
       b: [1, 4, 2, 5, 3, 6], // no objects, so an "orderer" concat happend
       c: [{ a: 4 }, { a: 5 }, { a: 6 }], // objects so
     },
-    "04.03"
+    "04.03",
   );
   equal(
     mergeAdvanced(
@@ -603,14 +603,14 @@ test("04 - \u001b[33mOPTS\u001b[39m - opts.hardConcatKeys - basic cases", () => 
       },
       {
         hardArrayConcat: true,
-      }
+      },
     ),
     {
       a: [1, 2, 3, 4, 5, 6],
       b: [1, 2, 3, 4, 5, 6],
       c: [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }, { a: 5 }, { a: 6 }], // objects so
     },
-    "04.04"
+    "04.04",
   );
 });
 

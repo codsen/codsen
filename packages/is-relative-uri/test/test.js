@@ -15,7 +15,7 @@ test(`01 - ${`\u001b[${32}m${"api bits"}\u001b[${39}m`} - 1st arg wrong`, () => 
       isRel();
     },
     /THROW_ID_01/gm,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -25,7 +25,7 @@ test(`02 - ${`\u001b[${32}m${"api bits"}\u001b[${39}m`} - 1st arg wrong`, () => 
       isRel(true);
     },
     /THROW_ID_01/gm,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -35,7 +35,7 @@ test(`03 - ${`\u001b[${32}m${"api bits"}\u001b[${39}m`} - 1st arg wrong`, () => 
       isRel(1);
     },
     /THROW_ID_01/gm,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -45,7 +45,7 @@ test(`04 - ${`\u001b[${32}m${"api bits"}\u001b[${39}m`} - 2nd arg wrong`, () => 
       isRel("", true);
     },
     /THROW_ID_02/gm,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -55,7 +55,7 @@ test(`05 - ${`\u001b[${32}m${"api bits"}\u001b[${39}m`} - 2nd arg wrong`, () => 
       isRel("", 1);
     },
     /THROW_ID_02/gm,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -178,7 +178,7 @@ test(`20 - ${`\u001b[${33}m${"incorrect values"}\u001b[${39}m`} - default`, () =
     isRel("mailto:John.Doe@example.com", {
       flagUpUrisWithSchemes: false,
     }).res,
-    "20.01"
+    "20.01",
   );
 });
 

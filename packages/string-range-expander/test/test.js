@@ -15,7 +15,7 @@ test("01 - nothing to expand", () => {
       to: 5,
     }),
     [2, 5],
-    "01.01"
+    "01.01",
   );
   equal(
     e({
@@ -25,7 +25,7 @@ test("01 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [2, 5],
-    "01.02"
+    "01.02",
   );
   equal(
     e({
@@ -35,7 +35,7 @@ test("01 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [2, 5],
-    "01.03"
+    "01.03",
   );
 
   //
@@ -48,7 +48,7 @@ test("01 - nothing to expand", () => {
       to: 5,
     }),
     [2, 5],
-    "01.04"
+    "01.04",
   );
   equal(
     e({
@@ -58,7 +58,7 @@ test("01 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [2, 5],
-    "01.05"
+    "01.05",
   );
   equal(
     e({
@@ -68,7 +68,7 @@ test("01 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [2, 5, " "],
-    "01.06"
+    "01.06",
   );
 
   //
@@ -81,7 +81,7 @@ test("01 - nothing to expand", () => {
       to: 5,
     }),
     [0, 5],
-    "01.07"
+    "01.07",
   );
   equal(
     e({
@@ -91,7 +91,7 @@ test("01 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [0, 5],
-    "01.08"
+    "01.08",
   );
   equal(
     e({
@@ -101,7 +101,7 @@ test("01 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [0, 5],
-    "01.09"
+    "01.09",
   );
 
   //
@@ -114,7 +114,7 @@ test("01 - nothing to expand", () => {
       to: 12,
     }),
     [2, 12],
-    "01.10"
+    "01.10",
   );
   equal(
     e({
@@ -124,7 +124,7 @@ test("01 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [2, 12],
-    "01.11"
+    "01.11",
   );
   equal(
     e({
@@ -134,7 +134,7 @@ test("01 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [2, 12],
-    "01.12"
+    "01.12",
   );
 
   //
@@ -147,7 +147,7 @@ test("01 - nothing to expand", () => {
       to: 12,
     }),
     [12, 12],
-    "01.13"
+    "01.13",
   );
   equal(
     e({
@@ -157,7 +157,7 @@ test("01 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [12, 12],
-    "01.14"
+    "01.14",
   );
   equal(
     e({
@@ -167,7 +167,7 @@ test("01 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [12, 12],
-    "01.15"
+    "01.15",
   );
 
   //
@@ -181,7 +181,7 @@ test("01 - nothing to expand", () => {
       wipeAllWhitespaceOnLeft: true,
     }),
     [2, 5],
-    "01.16"
+    "01.16",
   );
   equal(
     e({
@@ -192,7 +192,7 @@ test("01 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [2, 5],
-    "01.17"
+    "01.17",
   );
   equal(
     e({
@@ -203,7 +203,7 @@ test("01 - nothing to expand", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [2, 5, " "],
-    "01.18"
+    "01.18",
   );
 });
 
@@ -215,7 +215,7 @@ test("02 - expanding from the middle of a gap", () => {
       to: 3,
     }),
     [2, 5],
-    "02.01"
+    "02.01",
   );
   equal(
     e({
@@ -224,7 +224,7 @@ test("02 - expanding from the middle of a gap", () => {
       to: 3,
     }),
     [2, 5],
-    "02.02"
+    "02.02",
   );
   equal(
     e({
@@ -233,7 +233,7 @@ test("02 - expanding from the middle of a gap", () => {
       to: 5,
     }),
     [2, 5],
-    "02.03"
+    "02.03",
   );
   equal(
     e({
@@ -242,7 +242,7 @@ test("02 - expanding from the middle of a gap", () => {
       to: 3,
     }),
     [1, 5],
-    "02.04"
+    "02.04",
   );
   equal(
     e({
@@ -251,7 +251,7 @@ test("02 - expanding from the middle of a gap", () => {
       to: 6,
     }),
     [2, 6],
-    "02.05"
+    "02.05",
   );
   equal(
     e({
@@ -261,7 +261,7 @@ test("02 - expanding from the middle of a gap", () => {
       wipeAllWhitespaceOnLeft: false,
     }),
     [2, 6],
-    "02.06"
+    "02.06",
   );
   equal(
     e({
@@ -271,7 +271,7 @@ test("02 - expanding from the middle of a gap", () => {
       wipeAllWhitespaceOnLeft: true,
     }),
     [1, 5],
-    "02.07"
+    "02.07",
   );
   equal(
     e({
@@ -281,7 +281,7 @@ test("02 - expanding from the middle of a gap", () => {
       wipeAllWhitespaceOnLeft: true,
     }),
     [1, 6],
-    "02.08"
+    "02.08",
   );
   equal(
     e({
@@ -291,7 +291,7 @@ test("02 - expanding from the middle of a gap", () => {
       wipeAllWhitespaceOnRight: true,
     }),
     [2, 6],
-    "02.09"
+    "02.09",
   );
   equal(
     e({
@@ -301,7 +301,7 @@ test("02 - expanding from the middle of a gap", () => {
       wipeAllWhitespaceOnRight: true,
     }),
     [2, 6],
-    "02.10"
+    "02.10",
   );
   equal(
     e({
@@ -312,7 +312,7 @@ test("02 - expanding from the middle of a gap", () => {
       wipeAllWhitespaceOnRight: true,
     }),
     [1, 6],
-    "02.11"
+    "02.11",
   );
   equal(
     e({
@@ -323,7 +323,7 @@ test("02 - expanding from the middle of a gap", () => {
       wipeAllWhitespaceOnRight: true,
     }),
     [1, 6],
-    "02.12"
+    "02.12",
   );
   equal(
     e({
@@ -334,7 +334,7 @@ test("02 - expanding from the middle of a gap", () => {
       wipeAllWhitespaceOnRight: false,
     }),
     [1, 6],
-    "02.13"
+    "02.13",
   );
 });
 
@@ -346,7 +346,7 @@ test("03 - starting point is touching the edge (non-whitespace) even though tigh
       to: 3,
     }),
     [1, 5],
-    "03.01"
+    "03.01",
   );
   equal(
     e({
@@ -355,7 +355,7 @@ test("03 - starting point is touching the edge (non-whitespace) even though tigh
       to: 6,
     }),
     [2, 6],
-    "03.02"
+    "03.02",
   );
   equal(
     e({
@@ -364,7 +364,7 @@ test("03 - starting point is touching the edge (non-whitespace) even though tigh
       to: 6,
     }),
     [2, 6],
-    "03.03"
+    "03.03",
   );
   equal(
     e({
@@ -373,7 +373,7 @@ test("03 - starting point is touching the edge (non-whitespace) even though tigh
       to: 6,
     }),
     [1, 6],
-    "03.04"
+    "03.04",
   );
 });
 
@@ -385,7 +385,7 @@ test("04 - both ends are equal", () => {
       to: 1,
     }),
     [1, 1],
-    "04.01"
+    "04.01",
   );
   equal(
     e({
@@ -394,7 +394,7 @@ test("04 - both ends are equal", () => {
       to: 2,
     }),
     [2, 2],
-    "04.02"
+    "04.02",
   );
 });
 
@@ -406,7 +406,7 @@ test("05 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       to: 6,
     }),
     [5, 6],
-    "05.01"
+    "05.01",
   );
 
   // wipeAllWhitespaceOnLeft
@@ -418,7 +418,7 @@ test("05 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       wipeAllWhitespaceOnLeft: false,
     }),
     [5, 6],
-    "05.02"
+    "05.02",
   );
   equal(
     e({
@@ -428,7 +428,7 @@ test("05 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       wipeAllWhitespaceOnLeft: true,
     }),
     [5, 6],
-    "05.03"
+    "05.03",
   );
 
   // addSingleSpaceToPreventAccidentalConcatenation
@@ -440,7 +440,7 @@ test("05 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [5, 6],
-    "05.04"
+    "05.04",
   );
   equal(
     e({
@@ -450,7 +450,7 @@ test("05 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [5, 6, " "],
-    "05.05"
+    "05.05",
   );
 
   // combo
@@ -463,7 +463,7 @@ test("05 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [5, 6, " "],
-    "05.06"
+    "05.06",
   );
   equal(
     e({
@@ -474,7 +474,7 @@ test("05 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [5, 6],
-    "05.07"
+    "05.07",
   );
   equal(
     e({
@@ -485,7 +485,7 @@ test("05 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [5, 6, " "],
-    "05.08"
+    "05.08",
   );
   equal(
     e({
@@ -496,7 +496,7 @@ test("05 - addSingleSpaceToPreventAccidentalConcatenation", () => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [5, 6],
-    "05.09"
+    "05.09",
   );
 });
 
@@ -510,7 +510,7 @@ test("06 - wipeAllWhitespaceOnLeft + addSingleSpaceToPreventAccidentalConcatenat
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [6, 7],
-    "06.01"
+    "06.01",
   );
   equal(
     e({
@@ -521,7 +521,7 @@ test("06 - wipeAllWhitespaceOnLeft + addSingleSpaceToPreventAccidentalConcatenat
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [6, 7],
-    "06.02"
+    "06.02",
   );
   equal(
     e({
@@ -532,7 +532,7 @@ test("06 - wipeAllWhitespaceOnLeft + addSingleSpaceToPreventAccidentalConcatenat
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [5, 7],
-    "06.03"
+    "06.03",
   );
   equal(
     e({
@@ -543,7 +543,7 @@ test("06 - wipeAllWhitespaceOnLeft + addSingleSpaceToPreventAccidentalConcatenat
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [5, 7, " "],
-    "06.04"
+    "06.04",
   );
 });
 
@@ -557,7 +557,7 @@ test("07 - wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatena
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [5, 6],
-    "07.01"
+    "07.01",
   );
   equal(
     e({
@@ -568,7 +568,7 @@ test("07 - wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatena
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [5, 6],
-    "07.02"
+    "07.02",
   );
   equal(
     e({
@@ -579,7 +579,7 @@ test("07 - wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatena
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [5, 7],
-    "07.03"
+    "07.03",
   );
   equal(
     e({
@@ -590,7 +590,7 @@ test("07 - wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatena
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [5, 7, " "],
-    "07.04"
+    "07.04",
   );
 });
 
@@ -604,7 +604,7 @@ test("08 - wipeAllWhitespaceOnLeft + wipeAllWhitespaceOnRight + addSingleSpaceTo
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [6, 7],
-    "08.01"
+    "08.01",
   );
   equal(
     e({
@@ -615,7 +615,7 @@ test("08 - wipeAllWhitespaceOnLeft + wipeAllWhitespaceOnRight + addSingleSpaceTo
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [5, 7],
-    "08.02"
+    "08.02",
   );
   equal(
     e({
@@ -626,7 +626,7 @@ test("08 - wipeAllWhitespaceOnLeft + wipeAllWhitespaceOnRight + addSingleSpaceTo
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [6, 8],
-    "08.03"
+    "08.03",
   );
 
   // both on result in tight crop:
@@ -640,7 +640,7 @@ test("08 - wipeAllWhitespaceOnLeft + wipeAllWhitespaceOnRight + addSingleSpaceTo
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [5, 8],
-    "08.04"
+    "08.04",
   );
 
   equal(
@@ -653,7 +653,7 @@ test("08 - wipeAllWhitespaceOnLeft + wipeAllWhitespaceOnRight + addSingleSpaceTo
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [5, 8, " "],
-    "08.05"
+    "08.05",
   );
 });
 
@@ -666,7 +666,7 @@ test("09 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
       addSingleSpaceToPreventAccidentalConcatenation: false,
     }),
     [8, 16],
-    "09.01"
+    "09.01",
   );
   equal(
     e({
@@ -676,7 +676,7 @@ test("09 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [8, 16],
-    "09.02"
+    "09.02",
   );
   equal(
     e({
@@ -686,7 +686,7 @@ test("09 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [1, 9, " "],
-    "09.03"
+    "09.03",
   );
   equal(
     e({
@@ -696,7 +696,7 @@ test("09 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
       addSingleSpaceToPreventAccidentalConcatenation: true,
     }),
     [5, 13, " "],
-    "09.04"
+    "09.04",
   );
   equal(
     e({
@@ -708,7 +708,7 @@ test("09 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
       ifRightSideIncludesThisThenCropTightly: "<",
     }),
     [8, 16],
-    "09.05"
+    "09.05",
   );
   equal(
     e({
@@ -720,7 +720,7 @@ test("09 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
       ifRightSideIncludesThisThenCropTightly: "<",
     }),
     [8, 16, " "],
-    "09.06"
+    "09.06",
   );
   equal(
     e({
@@ -732,7 +732,7 @@ test("09 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
       ifRightSideIncludesThisThenCropTightly: "<",
     }),
     [9, 17, " "],
-    "09.07"
+    "09.07",
   );
   equal(
     e({
@@ -744,7 +744,7 @@ test("09 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
       ifRightSideIncludesThisThenCropTightly: "<",
     }),
     [9, 17, " "],
-    "09.08"
+    "09.08",
   );
 
   // AND...
@@ -759,7 +759,7 @@ test("09 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
       ifRightSideIncludesThisThenCropTightly: "<",
     }),
     [8, 20],
-    "09.09"
+    "09.09",
   );
   equal(
     e({
@@ -771,7 +771,7 @@ test("09 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
       ifRightSideIncludesThisThenCropTightly: "<",
     }),
     [8, 18],
-    "09.10"
+    "09.10",
   );
   equal(
     e({
@@ -783,7 +783,7 @@ test("09 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
       ifRightSideIncludesThisThenCropTightly: "<",
     }),
     [8, 18],
-    "09.11"
+    "09.11",
   );
 });
 
@@ -798,7 +798,7 @@ test(`10 - ${`\u001b[${33}m${"opts.wipeAllWhitespaceOnLeft"}\u001b[${39}m`} - ex
       to: 5,
     }),
     [3, 6],
-    "10.01"
+    "10.01",
   );
   equal(
     e({
@@ -808,7 +808,7 @@ test(`10 - ${`\u001b[${33}m${"opts.wipeAllWhitespaceOnLeft"}\u001b[${39}m`} - ex
       wipeAllWhitespaceOnLeft: true,
     }),
     [2, 6],
-    "10.02"
+    "10.02",
   );
   equal(
     e({
@@ -818,7 +818,7 @@ test(`10 - ${`\u001b[${33}m${"opts.wipeAllWhitespaceOnLeft"}\u001b[${39}m`} - ex
       wipeAllWhitespaceOnRight: true,
     }),
     [3, 7],
-    "10.03"
+    "10.03",
   );
   equal(
     e({
@@ -829,7 +829,7 @@ test(`10 - ${`\u001b[${33}m${"opts.wipeAllWhitespaceOnLeft"}\u001b[${39}m`} - ex
       wipeAllWhitespaceOnRight: true,
     }),
     [2, 7],
-    "10.04"
+    "10.04",
   );
 });
 
@@ -854,7 +854,7 @@ test(`11 - ${`\u001b[${36}m${"various"}\u001b[${39}m`} - adhoc #1`, () => {
       wipeAllWhitespaceOnLeft: true,
     }),
     [81, 95],
-    "11.01"
+    "11.01",
   );
 });
 
@@ -877,7 +877,7 @@ test(`12 - ${`\u001b[${36}m${"various"}\u001b[${39}m`} - adhoc #2`, () => {
       extendToOneSide: "right",
     }),
     [32, 39],
-    "12.01"
+    "12.01",
   );
 });
 
@@ -900,7 +900,7 @@ test(`13 - ${`\u001b[${36}m${"various"}\u001b[${39}m`} - adhoc #3`, () => {
       extendToOneSide: "left",
     }),
     [38, 45],
-    "13.01"
+    "13.01",
   );
 });
 

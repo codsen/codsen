@@ -14,7 +14,7 @@ const defaults: Opts = {
 
 function arrObjOrBoth(
   str: string,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): "array" | "object" | "any" {
   let onlyObjectValues = ["object", "objects", "obj", "ob", "o"];
   let onlyArrayValues = ["array", "arrays", "arr", "aray", "arr", "a"];
@@ -49,7 +49,7 @@ function arrObjOrBoth(
     return "any";
   }
   throw new TypeError(
-    `${resolvedOpts.msg}The ${resolvedOpts.optsVarName} was customised to an unrecognised value: ${str}. Please check it against the API documentation.`
+    `${resolvedOpts.msg}The ${resolvedOpts.optsVarName} was customised to an unrecognised value: ${str}. Please check it against the API documentation.`,
   );
 }
 

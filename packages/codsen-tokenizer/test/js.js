@@ -55,7 +55,7 @@ test("01 - an obvious nunjucks, but within a script", () => {
         attribs: [],
       },
     ],
-    "01.01"
+    "01.01",
   );
 });
 
@@ -67,7 +67,7 @@ test("02", () => {
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
 
   equal(
@@ -161,7 +161,7 @@ test("02", () => {
         attribs: [],
       },
     ],
-    "02.01"
+    "02.01",
   );
 });
 
@@ -243,7 +243,7 @@ test("03 - tag within script", () => {
         attribs: [],
       },
     ],
-    "03.01"
+    "03.01",
   );
 });
 

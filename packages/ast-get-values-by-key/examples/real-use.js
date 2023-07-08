@@ -27,7 +27,7 @@ const source = {
 // first GET
 const findings = getByKey(
   source, // what to process
-  "amount" // what to look for
+  "amount", // what to look for
 );
 assert.deepEqual(findings, [
   { val: null, path: "orders.0.amount" },
@@ -43,7 +43,7 @@ assert.deepEqual(replacement, [0, 2, 0]);
 const result = getByKey(
   source, // what to process
   "amount", // what to look for
-  replacement // pot of replacement values to consume (single-use, FIFO stack)
+  replacement, // pot of replacement values to consume (single-use, FIFO stack)
 );
 assert.deepEqual(result, {
   orders: [

@@ -19,7 +19,7 @@ test("03 - alt with two double quotes, excessive whitespace, HTML, 1 img tag", (
   equal(
     alts('zzz<img     alt    =    ""    >zzz'),
     'zzz<img alt="" >zzz',
-    "03.01"
+    "03.01",
   );
 });
 
@@ -35,7 +35,7 @@ test("06 - alt with two double quotes, excessive whitespace, HTML, 1 img tag", (
   equal(
     alts('zzz<img     alt    ="   "    >zzz'),
     'zzz<img alt="" >zzz',
-    "06.01"
+    "06.01",
   );
 });
 
@@ -43,7 +43,7 @@ test("07 - alt with two double quotes, excessive whitespace, HTML, 1 img tag", (
   equal(
     alts('zzz<img     alt    =    "   "    >zzz'),
     'zzz<img alt="" >zzz',
-    "07.01"
+    "07.01",
   );
 });
 
@@ -51,7 +51,7 @@ test("08 - alt with two double quotes, excessive whitespace, HTML, 1 img tag", (
   equal(
     alts('zzz<img     alt    =    "   ">zzz'),
     'zzz<img alt="" >zzz',
-    "08.01"
+    "08.01",
   );
 });
 
@@ -59,97 +59,97 @@ test("09 - alt with two double quotes, excessive whitespace, HTML, 1 img tag", (
   equal(
     alts('zzz<img     alt    =    "   ">zzz'),
     'zzz<img alt="" >zzz',
-    "09.01"
+    "09.01",
   );
 });
 
 test("10 - alt with two double quotes, excessive whitespace, HTML, 3 img tags", () => {
   equal(
     alts(
-      'zzz<img     alt=""    >zzz<img     alt=""    >zzz<img     alt=""    >zzz'
+      'zzz<img     alt=""    >zzz<img     alt=""    >zzz<img     alt=""    >zzz',
     ),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "10.01"
+    "10.01",
   );
 });
 
 test("11 - alt with two double quotes, excessive whitespace, HTML, 3 img tags", () => {
   equal(
     alts(
-      'zzz<img     alt    =""    >zzz<img     alt    =""    >zzz<img     alt    =""    >zzz'
+      'zzz<img     alt    =""    >zzz<img     alt    =""    >zzz<img     alt    =""    >zzz',
     ),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "11.01"
+    "11.01",
   );
 });
 
 test("12 - alt with two double quotes, excessive whitespace, HTML, 3 img tags", () => {
   equal(
     alts(
-      'zzz<img     alt    =    ""    >zzz<img     alt    =    ""    >zzz<img     alt    =    ""    >zzz'
+      'zzz<img     alt    =    ""    >zzz<img     alt    =    ""    >zzz<img     alt    =    ""    >zzz',
     ),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "12.01"
+    "12.01",
   );
 });
 
 test("13 - alt with two double quotes, excessive whitespace, HTML, 3 img tags", () => {
   equal(
     alts(
-      'zzz<img     alt    =    "">zzz<img     alt    =    "">zzz<img     alt    =    "">zzz'
+      'zzz<img     alt    =    "">zzz<img     alt    =    "">zzz<img     alt    =    "">zzz',
     ),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "13.01"
+    "13.01",
   );
 });
 
 test("14 - alt with two double quotes, excessive whitespace, HTML, 3 img tags", () => {
   equal(
     alts(
-      'zzz<img     alt="   "    >zzz<img     alt="   "    >zzz<img     alt="   "    >zzz'
+      'zzz<img     alt="   "    >zzz<img     alt="   "    >zzz<img     alt="   "    >zzz',
     ),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "14.01"
+    "14.01",
   );
 });
 
 test("15 - alt with two double quotes, excessive whitespace, HTML, 3 img tags", () => {
   equal(
     alts(
-      'zzz<img     alt    ="   "    >zzz<img     alt    ="   "    >zzz<img     alt    ="   "    >zzz'
+      'zzz<img     alt    ="   "    >zzz<img     alt    ="   "    >zzz<img     alt    ="   "    >zzz',
     ),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "15.01"
+    "15.01",
   );
 });
 
 test("16 - alt with two double quotes, excessive whitespace, HTML, 3 img tags", () => {
   equal(
     alts(
-      'zzz<img     alt    =    "   "    >zzz<img     alt    =    "   "    >zzz<img     alt    =    "   "    >zzz'
+      'zzz<img     alt    =    "   "    >zzz<img     alt    =    "   "    >zzz<img     alt    =    "   "    >zzz',
     ),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "16.01"
+    "16.01",
   );
 });
 
 test("17 - alt with two double quotes, excessive whitespace, HTML, 3 img tags", () => {
   equal(
     alts(
-      'zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz'
+      'zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz',
     ),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "17.01"
+    "17.01",
   );
 });
 
 test("18 - alt with two double quotes, excessive whitespace, HTML, 3 img tags", () => {
   equal(
     alts(
-      'zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz'
+      'zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz',
     ),
     'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
-    "18.01"
+    "18.01",
   );
 });
 

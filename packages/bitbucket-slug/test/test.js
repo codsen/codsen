@@ -31,7 +31,7 @@ test("06 - h1 slug", () => {
   equal(
     s("# Let's backwards-engineer BitBucket anchor link slug algorithm"),
     "markdown-header-lets-backwards-engineer-bitbucket-anchor-link-slug-algorithm",
-    "06.01"
+    "06.01",
   );
 });
 
@@ -155,7 +155,7 @@ test("33 - Three words, first capital, ends with ellipsis", () => {
   equal(
     s("## Three words here..."),
     "markdown-header-three-words-here",
-    "33.01"
+    "33.01",
   );
 });
 
@@ -171,7 +171,7 @@ test("36 - Three words, first lowercase, ends with ellipsis", () => {
   equal(
     s("## three words here..."),
     "markdown-header-three-words-here",
-    "36.01"
+    "36.01",
   );
 });
 
@@ -209,7 +209,7 @@ test("43 - Double quotes mid-sentence", () => {
   equal(
     s('## So-called "music" is being played'),
     "markdown-header-so-called-music-is-being-played",
-    "43.01"
+    "43.01",
   );
 });
 
@@ -217,7 +217,7 @@ test("44 - Double quotes starting the H2", () => {
   equal(
     s('## "Music" is being played'),
     "markdown-header-music-is-being-played",
-    "44.01"
+    "44.01",
   );
 });
 
@@ -231,7 +231,7 @@ test("46 - Title ends with word that starts with hash", () => {
   equal(
     s("## Let's tag the #hashtag"),
     "markdown-header-lets-tag-the-hashtag",
-    "46.01"
+    "46.01",
   );
 });
 
@@ -264,7 +264,7 @@ test("51 - Standalone ampersand", () => {
   equal(
     s("## Ampersand & ampersand"),
     "markdown-header-ampersand-ampersand",
-    "51.01"
+    "51.01",
   );
 });
 
@@ -272,7 +272,7 @@ test("52 - No space around ampersand", () => {
   equal(
     s("## Something&something"),
     "markdown-header-somethingsomething",
-    "52.01"
+    "52.01",
   );
 });
 
@@ -294,7 +294,7 @@ test("55 - Words with brackets", () => {
   equal(
     s("## Music (not this) is pleasure"),
     "markdown-header-music-not-this-is-pleasure",
-    "55.01"
+    "55.01",
   );
 });
 
@@ -317,7 +317,7 @@ test("59 - Asterisk surrounded by spaces", () => {
   equal(
     s("## Something * Something"),
     "markdown-header-something-something",
-    "59.01"
+    "59.01",
   );
 });
 
@@ -328,7 +328,7 @@ test("60 - Plus sign, spaces", () => {
   equal(
     s("## Something + anything"),
     "markdown-header-something-anything",
-    "60.01"
+    "60.01",
   );
 });
 
@@ -336,7 +336,7 @@ test("61 - Plus sign, tight", () => {
   equal(
     s("## Something+anything"),
     "markdown-header-somethinganything",
-    "61.01"
+    "61.01",
   );
 });
 
@@ -347,7 +347,7 @@ test("62 - Comma, space", () => {
   equal(
     s("## Something, anything"),
     "markdown-header-something-anything",
-    "62.01"
+    "62.01",
   );
 });
 
@@ -355,7 +355,7 @@ test("63 - Comma, no space", () => {
   equal(
     s("## Something,anything"),
     "markdown-header-somethinganything",
-    "63.01"
+    "63.01",
   );
 });
 
@@ -377,7 +377,7 @@ test("66 - All digits", () => {
   equal(
     s("## 1 2 3 4 5 6 7 8 9 0"),
     "markdown-header-1-2-3-4-5-6-7-8-9-0",
-    "66.01"
+    "66.01",
   );
 });
 
@@ -385,7 +385,7 @@ test("67 - All digits surrounded by letters", () => {
   equal(
     s("## aaa 1 2 3 4 5 6 7 8 9 0 bbb"),
     "markdown-header-aaa-1-2-3-4-5-6-7-8-9-0-bbb",
-    "67.01"
+    "67.01",
   );
 });
 
@@ -404,7 +404,7 @@ test("70 - Colon follows the word in h2", () => {
   equal(
     s("## Colons: practical, useful and, of course, legible"),
     "markdown-header-colons-practical-useful-and-of-course-legible",
-    "70.01"
+    "70.01",
   );
 });
 
@@ -415,7 +415,7 @@ test("71 - Semicolon after word", () => {
   equal(
     s("## Semicolons; What not follows"),
     "markdown-header-semicolons-what-not-follows",
-    "71.01"
+    "71.01",
   );
 });
 
@@ -453,7 +453,7 @@ test("78 - Question mark in the end", () => {
   equal(
     s("## What is the point of testing this?"),
     "markdown-header-what-is-the-point-of-testing-this",
-    "78.01"
+    "78.01",
   );
 });
 
@@ -461,7 +461,7 @@ test("79 - Two question marks in H2", () => {
   equal(
     s("## What? Don't we need to test?"),
     "markdown-header-what-dont-we-need-to-test",
-    "79.01"
+    "79.01",
   );
 });
 
@@ -472,7 +472,7 @@ test("80 - Email address in the H2", () => {
   equal(
     s("## Email is: roy@domain.com"),
     "markdown-header-email-is-roydomaincom",
-    "80.01"
+    "80.01",
   );
 });
 
@@ -480,7 +480,7 @@ test("81 - @ sign surrounded with spaces", () => {
   equal(
     s("## Something @ something"),
     "markdown-header-something-something",
-    "81.01"
+    "81.01",
   );
 });
 
@@ -491,7 +491,7 @@ test("82 - Link in the H2", () => {
   equal(
     s("## [Something](https://codsen.com) link"),
     "markdown-header-something-link",
-    "82.01"
+    "82.01",
   );
 });
 
@@ -524,7 +524,7 @@ test("87 - Underscore surrounded by spaces", () => {
   equal(
     s("## something _ something"),
     "markdown-header-something-_-something",
-    "87.01"
+    "87.01",
   );
 });
 
@@ -535,7 +535,7 @@ test("88 - Starts with backtick", () => {
   equal(
     s("## `variable` is in the beginning"),
     "markdown-header-variable-is-in-the-beginning",
-    "88.01"
+    "88.01",
   );
 });
 
@@ -543,7 +543,7 @@ test("89 - Middle", () => {
   equal(
     s("## Middle `variable` is here"),
     "markdown-header-middle-variable-is-here",
-    "89.01"
+    "89.01",
   );
 });
 
@@ -551,7 +551,7 @@ test("90 - Backtick in the end of H2", () => {
   equal(
     s("## Ends with `variable`"),
     "markdown-header-ends-with-variable",
-    "90.01"
+    "90.01",
   );
 });
 
@@ -562,7 +562,7 @@ test("91 - Curly braces", () => {
   equal(
     s("## Curlies {like this}"),
     "markdown-header-curlies-like-this",
-    "91.01"
+    "91.01",
   );
 });
 
@@ -570,7 +570,7 @@ test("92 - And with spaces", () => {
   equal(
     s("## Curlies { and like this }"),
     "markdown-header-curlies-and-like-this",
-    "92.01"
+    "92.01",
   );
 });
 
@@ -585,7 +585,7 @@ test("94 - Double pipe", () => {
   equal(
     s('## Something || something means "or"'),
     "markdown-header-something-something-means-or",
-    "94.01"
+    "94.01",
   );
 });
 
@@ -596,7 +596,7 @@ test("95 - Single tilde in front of digit", () => {
   equal(
     s("## Tilde means approximately ~100"),
     "markdown-header-tilde-means-approximately-100",
-    "95.01"
+    "95.01",
   );
 });
 
@@ -615,7 +615,7 @@ test("98 - Lithuanian", () => {
   equal(
     s("## Some Lithuanian - Ąžuolynas"),
     "markdown-header-some-lithuanian-azuolynas",
-    "98.01"
+    "98.01",
   );
 });
 
@@ -657,22 +657,22 @@ test("106 - Multiple consecutive dashes surrounded by spaces", () => {
   equal(
     s("## Title -- is the best"),
     "markdown-header-title-is-the-best",
-    "106.01"
+    "106.01",
   );
   equal(
     s("## Title --- is the best"),
     "markdown-header-title-is-the-best",
-    "106.02"
+    "106.02",
   );
 });
 
 test("107 - A bug from real life, #1", () => {
   equal(
     s(
-      "## Example - treating the image alt attributes - Gulp and stream-tapping"
+      "## Example - treating the image alt attributes - Gulp and stream-tapping",
     ),
     "markdown-header-example-treating-the-image-alt-attributes-gulp-and-stream-tapping",
-    "107.01"
+    "107.01",
   );
 });
 

@@ -10,7 +10,7 @@ export interface Obj {
 const create = (context: Obj): Obj => {
   DEV &&
     console.log(
-      `013 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
+      `013 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`,
     );
 
   return {
@@ -54,7 +54,7 @@ const create = (context: Obj): Obj => {
           ) {
             DEV &&
               console.log(
-                `057 ${`\u001b[${32}m${`we have console.log with single or double quotes`}\u001b[${39}m`}`
+                `057 ${`\u001b[${32}m${`we have console.log with single or double quotes`}\u001b[${39}m`}`,
               );
             context.report({
               node,
@@ -69,16 +69,16 @@ const create = (context: Obj): Obj => {
                     `069 ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
                       ranges,
                       null,
-                      4
-                    )}`
+                      4,
+                    )}`,
                   );
                 DEV &&
                   console.log(
                     `077 ${`\u001b[${33}m${`arg.start`}\u001b[${39}m`} = ${JSON.stringify(
                       arg.start,
                       null,
-                      4
-                    )} (type ${typeof arg.start})`
+                      4,
+                    )} (type ${typeof arg.start})`,
                   );
                 if (Array.isArray(ranges) && ranges.length) {
                   let offset: number = arg.start as number;
@@ -99,8 +99,8 @@ const create = (context: Obj): Obj => {
                       `099 ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
                         preppedRanges,
                         null,
-                        4
-                      )}`
+                        4,
+                      )}`,
                     );
                   return fixerObj.replaceTextRange(preppedRanges, ranges[0][2]);
                 }
@@ -122,7 +122,7 @@ const create = (context: Obj): Obj => {
           ) {
             DEV &&
               console.log(
-                `125 ${`\u001b[${32}m${`we have console.log with backticks`}\u001b[${39}m`}`
+                `125 ${`\u001b[${32}m${`we have console.log with backticks`}\u001b[${39}m`}`,
               );
             context.report({
               node,
@@ -137,8 +137,8 @@ const create = (context: Obj): Obj => {
                     `137 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
                       ranges,
                       null,
-                      4
-                    )}`
+                      4,
+                    )}`,
                   );
                 if (ranges) {
                   let offset = (arg.quasis[0].range[0] as number) + 1;
@@ -147,8 +147,8 @@ const create = (context: Obj): Obj => {
                       `147 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`offset`}\u001b[${39}m`} = ${JSON.stringify(
                         offset,
                         null,
-                        4
-                      )}`
+                        4,
+                      )}`,
                     );
                   if (
                     !offset &&
@@ -161,8 +161,8 @@ const create = (context: Obj): Obj => {
                         `161 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`offset`}\u001b[${39}m`} = ${JSON.stringify(
                           offset,
                           null,
-                          4
-                        )}`
+                          4,
+                        )}`,
                       );
                   }
 
@@ -175,8 +175,8 @@ const create = (context: Obj): Obj => {
                       `175 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
                         preppedRanges,
                         null,
-                        4
-                      )}`
+                        4,
+                      )}`,
                     );
 
                   return fixerObj.replaceTextRange(preppedRanges, ranges[0][2]);

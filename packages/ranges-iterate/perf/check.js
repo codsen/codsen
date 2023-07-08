@@ -21,7 +21,7 @@ const testme = () =>
     ({ i, val }) => {
       pinged += val;
       index += 1;
-    }
+    },
   );
 
 // action

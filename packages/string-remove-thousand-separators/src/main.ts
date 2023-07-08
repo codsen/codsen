@@ -29,8 +29,8 @@ function remSep(str: string, opts?: Partial<Opts>): string {
       `string-remove-thousand-separators/remSep(): [THROW_ID_01] Input must be string! Currently it's: ${typeof str}, equal to:\n${JSON.stringify(
         str,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   if (opts && typeof opts !== "object") {
@@ -38,8 +38,8 @@ function remSep(str: string, opts?: Partial<Opts>): string {
       `string-remove-thousand-separators/remSep(): [THROW_ID_02] Options object must be a plain object! Currently it's: ${typeof opts}, equal to:\n${JSON.stringify(
         opts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
 
@@ -71,7 +71,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
       console.log(
         `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
-        }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
+        }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`,
       );
 
     // -------------------------------------------------------------------------
@@ -82,7 +82,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
     ) {
       DEV &&
         console.log(
-          `085 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${i + 1}]`
+          `085 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${i + 1}]`,
         );
       rangesToDelete.add(i, i + 1);
     }
@@ -93,7 +93,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
       rangesToDelete.add(i, i + 1);
       DEV &&
         console.log(
-          `096 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${i + 1}]`
+          `096 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${i + 1}]`,
         );
       // but if single quote follows this, that's dodgy and let's bail
       if (res[i + 1] === "'") {
@@ -123,8 +123,8 @@ function remSep(str: string, opts?: Partial<Opts>): string {
                       `123 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${JSON.stringify(
                         allOK,
                         null,
-                        4
-                      )}; break`
+                        4,
+                      )}; break`,
                     );
                   break;
                 } else {
@@ -138,7 +138,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
                       console.log(
                         `139 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${
                           i + 1
-                        }]`
+                        }]`,
                       );
                   }
 
@@ -175,7 +175,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
                 console.log(
                   `176 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${
                     i + 1
-                  }, "."]`
+                  }, "."]`,
                 );
             }
           } else {
@@ -196,7 +196,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
               console.log(
                 `197 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${
                   i + 1
-                }, "."]`
+                }, "."]`,
               );
           }
           // Pad it with zero if requested:
@@ -206,7 +206,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
               console.log(
                 `207 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i + 2}, ${
                   i + 2
-                }, "0"]`
+                }, "0"]`,
               );
           }
         }
@@ -222,8 +222,8 @@ function remSep(str: string, opts?: Partial<Opts>): string {
           `222 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${JSON.stringify(
             allOK,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       break;
     }

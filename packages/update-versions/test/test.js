@@ -134,13 +134,13 @@ test("01 - monorepo", async () => {
   await pMap(test1FilePaths, (oneOfTestFilePaths, testIndex) =>
     write(
       path.join(tempFolder, oneOfTestFilePaths),
-      JSON.stringify(test1FileContents[testIndex], null, 2)
-    )
+      JSON.stringify(test1FileContents[testIndex], null, 2),
+    ),
   )
     .then(() =>
       execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
         shell: true,
-      })
+      }),
     )
     .then((received) => {
       if (
@@ -153,8 +153,8 @@ test("01 - monorepo", async () => {
     })
     .then(() =>
       pMap(test1FilePaths, (oneOfPaths) =>
-        read(path.join(tempFolder, oneOfPaths), "utf8")
-      )
+        read(path.join(tempFolder, oneOfPaths), "utf8"),
+      ),
     )
     // .then(received =>
     //   execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
@@ -179,7 +179,7 @@ test("01 - monorepo", async () => {
       // workspace: should be retained
       match(
         contents[1].devDependencies["cz-conventional-changelog"],
-        /workspace:\^\d+\.\d+\.\d+/
+        /workspace:\^\d+\.\d+\.\d+/,
       );
 
       // lib3 in node_modules should be intact:
@@ -193,7 +193,8 @@ test("01 - monorepo", async () => {
       // version in root as ^1.0.0, so check is, is the second digit greater than
       // or equal to 4.
       ok(
-        Number.parseInt(contents[3].dependencies.detergent.slice(1, 2), 10) >= 4
+        Number.parseInt(contents[3].dependencies.detergent.slice(1, 2), 10) >=
+          4,
       );
     })
     .catch((err) => {
@@ -212,13 +213,13 @@ test("02 - normal repo", async () => {
   await pMap(test2FilePaths, (oneOfTestFilePaths, testIndex) =>
     write(
       path.join(tempFolder, oneOfTestFilePaths),
-      JSON.stringify(test2FileContents[testIndex], null, 2)
-    )
+      JSON.stringify(test2FileContents[testIndex], null, 2),
+    ),
   )
     .then(() =>
       execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
         shell: true,
-      })
+      }),
     )
     .then((received) => {
       if (
@@ -231,13 +232,13 @@ test("02 - normal repo", async () => {
     })
     .then(() =>
       pMap(test2FilePaths, (oneOfPaths) =>
-        read(path.join(tempFolder, oneOfPaths), "utf8")
-      )
+        read(path.join(tempFolder, oneOfPaths), "utf8"),
+      ),
     )
     .then((received) =>
       execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
-        () => received
-      )
+        () => received,
+      ),
     )
     .then((incomingContents) => {
       // array comes in, but each JSON inside in unparsed and in string format:
@@ -276,13 +277,13 @@ test("03 - deletes deps from devdeps if they are among normal deps", async () =>
   await pMap(test2FilePaths, (oneOfTestFilePaths, testIndex) =>
     write(
       path.join(tempFolder, oneOfTestFilePaths),
-      JSON.stringify(tweakedContents[testIndex], null, 2)
-    )
+      JSON.stringify(tweakedContents[testIndex], null, 2),
+    ),
   )
     .then(() =>
       execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
         shell: true,
-      })
+      }),
     )
     .then((received) => {
       if (
@@ -295,13 +296,13 @@ test("03 - deletes deps from devdeps if they are among normal deps", async () =>
     })
     .then(() =>
       pMap(test2FilePaths, (oneOfPaths) =>
-        read(path.join(tempFolder, oneOfPaths), "utf8")
-      )
+        read(path.join(tempFolder, oneOfPaths), "utf8"),
+      ),
     )
     .then((received) =>
       execa(`rm -rf ${path.join(__dirname, "../temp")}`, {
         shell: true,
-      }).then(() => received)
+      }).then(() => received),
     )
     .then((incomingContents) => {
       // array comes in, but each JSON inside in unparsed and in string format:
@@ -340,7 +341,7 @@ test("06 - no files found in the given directory", async () => {
   // call execa on that empty folder
   let stdOutContents = await execa(
     `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`,
-    { shell: true }
+    { shell: true },
   );
 
   // CLI should exit with a non-error code zero:

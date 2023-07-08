@@ -23,12 +23,12 @@ test(`01 - ${`\u001b[${36}m${"opts.reportProgressFunc"}\u001b[${39}m`} - calls t
   equal(
     comb("aaaaaaaaaa", { reportProgressFunc: null }).result,
     "aaaaaaaaaa",
-    "01.02"
+    "01.02",
   );
   equal(
     comb("aaaaaaaaaa", { reportProgressFunc: false }).result,
     "aaaaaaaaaa",
-    "01.03"
+    "01.03",
   );
 
   // short input string should report only when passing at 50%:
@@ -57,11 +57,11 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-        { reportProgressFunc: shouldveBeenCalled }
+        { reportProgressFunc: shouldveBeenCalled },
       );
     },
     /50/,
-    "01.04"
+    "01.04",
   );
 
   // long input (>1000 chars long) should report at each natural number percentage passed:
@@ -113,9 +113,9 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-      { reportProgressFunc: countingFunction }
+      { reportProgressFunc: countingFunction },
     ),
-    "01.05"
+    "01.05",
   );
 
   // 2. check the counter variable:
@@ -157,11 +157,11 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
           reportProgressFunc: shouldveBeenCalled,
           reportProgressFuncFrom: 21,
           reportProgressFuncTo: 86,
-        }
+        },
       );
     },
     /32/,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -419,9 +419,9 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
         reportProgressFunc: countingFunction,
         reportProgressFuncFrom: 21,
         reportProgressFuncTo: 86,
-      }
+      },
     ),
-    "03.01"
+    "03.01",
   );
 
   // 2. check the counter variable:

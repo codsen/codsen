@@ -26,7 +26,7 @@ test(`01 - ${`\u001b[${33}m${"opts.minCharCount"}\u001b[${39}m`} - opts.minCharC
       minCharCount: 0,
     }).res,
     "aaa bbb",
-    "01.01"
+    "01.01",
   );
   equal(
     removeWidows("aaa bbb", {
@@ -34,7 +34,7 @@ test(`01 - ${`\u001b[${33}m${"opts.minCharCount"}\u001b[${39}m`} - opts.minCharC
       minWordCount: 0,
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "01.02"
+    "01.02",
   );
   equal(
     removeWidows("aaa bbb", {
@@ -42,7 +42,7 @@ test(`01 - ${`\u001b[${33}m${"opts.minCharCount"}\u001b[${39}m`} - opts.minCharC
       minWordCount: 0,
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "01.03"
+    "01.03",
   );
   equal(
     removeWidows("aaa bbb", {
@@ -50,7 +50,7 @@ test(`01 - ${`\u001b[${33}m${"opts.minCharCount"}\u001b[${39}m`} - opts.minCharC
       minWordCount: 0,
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "01.04"
+    "01.04",
   );
   equal(
     removeWidows("aaa bbb", {
@@ -58,7 +58,7 @@ test(`01 - ${`\u001b[${33}m${"opts.minCharCount"}\u001b[${39}m`} - opts.minCharC
       minWordCount: 0,
     }).res,
     "aaa bbb",
-    "01.05"
+    "01.05",
   );
   equal(
     removeWidows("aaa bbb", {
@@ -66,7 +66,7 @@ test(`01 - ${`\u001b[${33}m${"opts.minCharCount"}\u001b[${39}m`} - opts.minCharC
       minWordCount: 0,
     }).res,
     "aaa bbb",
-    "01.06"
+    "01.06",
   );
 });
 
@@ -76,7 +76,7 @@ test(`02 - ${`\u001b[${33}m${"opts.minCharCount"}\u001b[${39}m`} - opts.minCharC
       minCharCount: false,
     }).res,
     "aaa bbb",
-    "02.01"
+    "02.01",
   );
   equal(
     removeWidows("aaa bbb", {
@@ -84,7 +84,7 @@ test(`02 - ${`\u001b[${33}m${"opts.minCharCount"}\u001b[${39}m`} - opts.minCharC
       minWordCount: 0,
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "02.02"
+    "02.02",
   );
   equal(
     removeWidows("aaa bbb", {
@@ -92,7 +92,7 @@ test(`02 - ${`\u001b[${33}m${"opts.minCharCount"}\u001b[${39}m`} - opts.minCharC
       minWordCount: false,
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "02.03"
+    "02.03",
   );
   equal(
     removeWidows("aaa bbb", {
@@ -100,7 +100,7 @@ test(`02 - ${`\u001b[${33}m${"opts.minCharCount"}\u001b[${39}m`} - opts.minCharC
       minWordCount: null,
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "02.04"
+    "02.04",
   );
   equal(
     removeWidows("aaa bbb", {
@@ -108,7 +108,7 @@ test(`02 - ${`\u001b[${33}m${"opts.minCharCount"}\u001b[${39}m`} - opts.minCharC
       minWordCount: 0,
     }).res,
     `aaa${encodedNbspHtml}bbb`,
-    "02.05"
+    "02.05",
   );
 });
 

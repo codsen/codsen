@@ -109,7 +109,7 @@ test(`02 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - ignores`, () => {
       whitelist: ".zzz*",
     }).result,
     ignores,
-    "02.03"
+    "02.03",
   );
 
   equal(
@@ -118,7 +118,7 @@ test(`02 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - ignores`, () => {
       whitelist: ".zzz*",
     }).result,
     ignoresUglified,
-    "02.04"
+    "02.04",
   );
 });
 
@@ -236,7 +236,7 @@ test(`03 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - class name exceeds libra
       [".aaa29", ".c"],
       [".aaa30", ".ueq6m"],
     ],
-    "03.03"
+    "03.03",
   );
 });
 
@@ -286,14 +286,14 @@ test(`04 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - style tag within Outlook
       uglify: false,
     }).result,
     intended,
-    "04.01"
+    "04.01",
   );
   equal(
     comb(source, {
       uglify: true,
     }).result,
     uglified,
-    "04.02"
+    "04.02",
   );
 });
 
@@ -350,14 +350,14 @@ test(`05 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - style tag within Outlook
       uglify: false,
     }).result,
     intended,
-    "05.01"
+    "05.01",
   );
   equal(
     comb(source, {
       uglify: true,
     }).result,
     uglified,
-    "05.02"
+    "05.02",
   );
   // now ignores are set, so deletion is prevented:
   equal(
@@ -366,7 +366,7 @@ test(`05 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - style tag within Outlook
       whitelist: ["#outlook", ".myclass"],
     }).result,
     ignored,
-    "05.03"
+    "05.03",
   );
   equal(
     comb(source, {
@@ -374,7 +374,7 @@ test(`05 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - style tag within Outlook
       whitelist: ["#outlook", ".myclass"],
     }).result,
     ignored,
-    "05.04"
+    "05.04",
   );
 });
 
@@ -393,7 +393,7 @@ test(`06 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - ignores on used id's`, (
       whitelist: ["#mn", ".op"],
     }).result,
     source,
-    "06.01"
+    "06.01",
   );
   equal(
     comb(source, {
@@ -401,7 +401,7 @@ test(`06 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - ignores on used id's`, (
       whitelist: ["#mn"],
     }).result,
     source,
-    "06.02"
+    "06.02",
   );
 });
 
@@ -420,7 +420,7 @@ test(`07 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - ignores on used classes`
       whitelist: [".mn", ".op"],
     }).result,
     source,
-    "07.01"
+    "07.01",
   );
   equal(
     comb(source, {
@@ -428,7 +428,7 @@ test(`07 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - ignores on used classes`
       whitelist: [".mn"],
     }).result,
     source,
-    "07.02"
+    "07.02",
   );
 });
 
@@ -459,7 +459,7 @@ zzz
         ".yshortcuts",
       ],
       uglify: true,
-    }
+    },
   );
 
   let intended = `<html lang="en">

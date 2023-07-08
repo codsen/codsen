@@ -13,7 +13,7 @@ test("01 - throws if encounters img tag within img tag", () => {
       alts('zzz<img alt="  <img />zzz');
     },
     /THROW_ID_02/g,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -23,35 +23,35 @@ test("02 - throws if input is not string", () => {
       alts(null);
     },
     /THROW_ID_01/g,
-    "02.01"
+    "02.01",
   );
   throws(
     () => {
       alts();
     },
     /THROW_ID_01/g,
-    "02.02"
+    "02.02",
   );
   throws(
     () => {
       alts(undefined);
     },
     /THROW_ID_01/g,
-    "02.03"
+    "02.03",
   );
   throws(
     () => {
       alts(111);
     },
     /THROW_ID_01/g,
-    "02.04"
+    "02.04",
   );
   throws(
     () => {
       alts(true);
     },
     /THROW_ID_01/g,
-    "02.05"
+    "02.05",
   );
 });
 
@@ -61,7 +61,7 @@ test("03 - throws if opts is not a plain object", () => {
       alts("zzz", ["aaa"]);
     },
     /THROW_ID_02/g,
-    "03.01"
+    "03.01",
   );
   not.throws(() => {
     alts("zzz", null); // it can be falsey, - we'll interpret as hardcoded choice of NO opts.
@@ -74,7 +74,7 @@ test("03 - throws if opts is not a plain object", () => {
       alts("zzz", 1);
     },
     /THROW_ID_02/g,
-    "03.02"
+    "03.02",
   );
   not.throws(() => {
     alts("zzz", {});
@@ -84,7 +84,7 @@ test("03 - throws if opts is not a plain object", () => {
       alts("zzz", { zzz: "yyy" }); // rogue keys - throws. WTF?
     },
     /THROW_ID_03/g,
-    "03.03"
+    "03.03",
   );
 });
 

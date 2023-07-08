@@ -28,7 +28,7 @@ test("01 - export from, one line", () => {
         all: [],
         error: null,
       },
-      "01.01"
+      "01.01",
     );
   });
   mixer({
@@ -50,7 +50,7 @@ test("01 - export from, one line", () => {
         all: ["export"],
         error: null,
       },
-      "01.02"
+      "01.02",
     );
   });
   mixer({
@@ -72,7 +72,7 @@ test("01 - export from, one line", () => {
         all: [],
         error: null,
       },
-      "01.03"
+      "01.03",
     );
   });
   mixer({
@@ -94,7 +94,7 @@ test("01 - export from, one line", () => {
         all: ["export"],
         error: null,
       },
-      "01.04"
+      "01.04",
     );
   });
 });
@@ -121,7 +121,7 @@ export { c } from "d";`;
         all: [],
         error: null,
       },
-      "02.01"
+      "02.01",
     );
   });
   mixer({
@@ -143,7 +143,7 @@ export { c } from "d";`;
         all: ["export"],
         error: null,
       },
-      "02.02"
+      "02.02",
     );
   });
   mixer({
@@ -165,7 +165,7 @@ export { c } from "d";`;
         all: [],
         error: null,
       },
-      "02.03"
+      "02.03",
     );
   });
   mixer({
@@ -187,7 +187,7 @@ export { c } from "d";`;
         all: ["export"],
         error: null,
       },
-      "02.04"
+      "02.04",
     );
   });
 });
@@ -215,7 +215,7 @@ declare const c: string;
         all: [],
         error: null,
       },
-      "03.01"
+      "03.01",
     );
   });
   mixer({
@@ -237,7 +237,7 @@ declare const c: string;
         all: ["export", "c"],
         error: null,
       },
-      "03.02"
+      "03.02",
     );
   });
   mixer({
@@ -259,7 +259,7 @@ declare const c: string;
         all: [],
         error: null,
       },
-      "03.03"
+      "03.03",
     );
   });
   mixer({
@@ -281,7 +281,7 @@ declare const c: string;
         all: ["export", "c"],
         error: null,
       },
-      "03.04"
+      "03.04",
     );
   });
 });
@@ -309,7 +309,7 @@ test("04 - re-exports", () => {
         all: [],
         error: null,
       },
-      "04.01"
+      "04.01",
     );
   });
   mixer({
@@ -332,7 +332,7 @@ test("04 - re-exports", () => {
         all: [],
         error: null,
       },
-      "04.02"
+      "04.02",
     );
   });
   mixer({
@@ -355,7 +355,7 @@ test("04 - re-exports", () => {
         all: ["export"],
         error: null,
       },
-      "04.03"
+      "04.03",
     );
   });
   mixer({
@@ -378,7 +378,7 @@ test("04 - re-exports", () => {
         all: ["export"],
         error: null,
       },
-      "04.04"
+      "04.04",
     );
   });
   // 4x semi=true
@@ -402,7 +402,7 @@ test("04 - re-exports", () => {
         all: [],
         error: null,
       },
-      "04.05"
+      "04.05",
     );
   });
   mixer({
@@ -425,7 +425,7 @@ test("04 - re-exports", () => {
         all: [],
         error: null,
       },
-      "04.06"
+      "04.06",
     );
   });
   mixer({
@@ -448,7 +448,7 @@ test("04 - re-exports", () => {
         all: ["export"],
         error: null,
       },
-      "04.07"
+      "04.07",
     );
   });
   mixer({
@@ -471,7 +471,7 @@ test("04 - re-exports", () => {
         all: ["export"],
         error: null,
       },
-      "04.08"
+      "04.08",
     );
   });
 });
@@ -514,7 +514,7 @@ test("05 - re-exports, more realistic", () => {
         all: [],
         error: null,
       },
-      "05.01"
+      "05.01",
     );
   });
   mixer({
@@ -547,7 +547,7 @@ test("05 - re-exports, more realistic", () => {
         all: [],
         error: null,
       },
-      "05.02"
+      "05.02",
     );
   });
   mixer({
@@ -580,7 +580,7 @@ test("05 - re-exports, more realistic", () => {
         all: ["export"],
         error: null,
       },
-      "05.03"
+      "05.03",
     );
   });
   mixer({
@@ -613,7 +613,7 @@ test("05 - re-exports, more realistic", () => {
         all: ["export"],
         error: null,
       },
-      "05.04"
+      "05.04",
     );
   });
   // 4x semi=true
@@ -647,7 +647,7 @@ test("05 - re-exports, more realistic", () => {
         all: [],
         error: null,
       },
-      "05.05"
+      "05.05",
     );
   });
   mixer({
@@ -680,7 +680,7 @@ test("05 - re-exports, more realistic", () => {
         all: [],
         error: null,
       },
-      "05.06"
+      "05.06",
     );
   });
   mixer({
@@ -713,7 +713,7 @@ test("05 - re-exports, more realistic", () => {
         all: ["export"],
         error: null,
       },
-      "05.07"
+      "05.07",
     );
   });
   mixer({
@@ -746,7 +746,7 @@ test("05 - re-exports, more realistic", () => {
         all: ["export"],
         error: null,
       },
-      "05.08"
+      "05.08",
     );
   });
 });
@@ -772,7 +772,7 @@ test("06 - sorting, minimal - no custom sort function", () => {
         all: [],
         error: null,
       },
-      "06.01"
+      "06.01",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -789,7 +789,7 @@ test("06 - sorting, minimal - no custom sort function", () => {
         all: [],
         error: null,
       },
-      "06.02"
+      "06.02",
     );
   });
   mixer({
@@ -811,7 +811,7 @@ test("06 - sorting, minimal - no custom sort function", () => {
         all: [],
         error: null,
       },
-      "06.03"
+      "06.03",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -828,7 +828,7 @@ test("06 - sorting, minimal - no custom sort function", () => {
         all: [],
         error: null,
       },
-      "06.04"
+      "06.04",
     );
   });
   mixer({
@@ -850,7 +850,7 @@ test("06 - sorting, minimal - no custom sort function", () => {
         all: ["export"],
         error: null,
       },
-      "06.05"
+      "06.05",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -867,7 +867,7 @@ test("06 - sorting, minimal - no custom sort function", () => {
         all: ["export"],
         error: null,
       },
-      "06.06"
+      "06.06",
     );
   });
   mixer({
@@ -889,7 +889,7 @@ test("06 - sorting, minimal - no custom sort function", () => {
         all: ["export"],
         error: null,
       },
-      "06.07"
+      "06.07",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -906,7 +906,7 @@ test("06 - sorting, minimal - no custom sort function", () => {
         all: ["export"],
         error: null,
       },
-      "06.08"
+      "06.08",
     );
   });
 });
@@ -932,7 +932,7 @@ test("07 - places defaults and version after any other lowercase names", () => {
         all: [],
         error: null,
       },
-      "07.01"
+      "07.01",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -949,7 +949,7 @@ test("07 - places defaults and version after any other lowercase names", () => {
         all: [],
         error: null,
       },
-      "07.02"
+      "07.02",
     );
   });
   mixer({
@@ -971,7 +971,7 @@ test("07 - places defaults and version after any other lowercase names", () => {
         all: ["export"],
         error: null,
       },
-      "07.03"
+      "07.03",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -988,7 +988,7 @@ test("07 - places defaults and version after any other lowercase names", () => {
         all: ["export"],
         error: null,
       },
-      "07.04"
+      "07.04",
     );
   });
   mixer({
@@ -1010,7 +1010,7 @@ test("07 - places defaults and version after any other lowercase names", () => {
         all: [],
         error: null,
       },
-      "07.05"
+      "07.05",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1027,7 +1027,7 @@ test("07 - places defaults and version after any other lowercase names", () => {
         all: [],
         error: null,
       },
-      "07.06"
+      "07.06",
     );
   });
   mixer({
@@ -1049,7 +1049,7 @@ test("07 - places defaults and version after any other lowercase names", () => {
         all: ["export"],
         error: null,
       },
-      "07.07"
+      "07.07",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1066,7 +1066,7 @@ test("07 - places defaults and version after any other lowercase names", () => {
         all: ["export"],
         error: null,
       },
-      "07.08"
+      "07.08",
     );
   });
 });
@@ -1092,7 +1092,7 @@ test("08 - lowercase and uppercase", () => {
         all: [],
         error: null,
       },
-      "08.01"
+      "08.01",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1109,7 +1109,7 @@ test("08 - lowercase and uppercase", () => {
         all: [],
         error: null,
       },
-      "08.02"
+      "08.02",
     );
   });
   mixer({
@@ -1131,7 +1131,7 @@ test("08 - lowercase and uppercase", () => {
         all: ["export"],
         error: null,
       },
-      "08.03"
+      "08.03",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1148,7 +1148,7 @@ test("08 - lowercase and uppercase", () => {
         all: ["export"],
         error: null,
       },
-      "08.04"
+      "08.04",
     );
   });
   mixer({
@@ -1170,7 +1170,7 @@ test("08 - lowercase and uppercase", () => {
         all: [],
         error: null,
       },
-      "08.05"
+      "08.05",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1187,7 +1187,7 @@ test("08 - lowercase and uppercase", () => {
         all: [],
         error: null,
       },
-      "08.06"
+      "08.06",
     );
   });
   mixer({
@@ -1209,7 +1209,7 @@ test("08 - lowercase and uppercase", () => {
         all: ["export"],
         error: null,
       },
-      "08.07"
+      "08.07",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1226,7 +1226,7 @@ test("08 - lowercase and uppercase", () => {
         all: ["export"],
         error: null,
       },
-      "08.08"
+      "08.08",
     );
   });
 });
@@ -1255,7 +1255,7 @@ test("09 - lowercase and uppercase - one line", () => {
         all: [],
         error: null,
       },
-      "09.01"
+      "09.01",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1274,7 +1274,7 @@ test("09 - lowercase and uppercase - one line", () => {
         all: [],
         error: null,
       },
-      "09.02"
+      "09.02",
     );
   });
   mixer({
@@ -1298,7 +1298,7 @@ test("09 - lowercase and uppercase - one line", () => {
         all: ["export"],
         error: null,
       },
-      "09.03"
+      "09.03",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1317,7 +1317,7 @@ test("09 - lowercase and uppercase - one line", () => {
         all: ["export"],
         error: null,
       },
-      "09.04"
+      "09.04",
     );
   });
   mixer({
@@ -1341,7 +1341,7 @@ test("09 - lowercase and uppercase - one line", () => {
         all: [],
         error: null,
       },
-      "09.05"
+      "09.05",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1360,7 +1360,7 @@ test("09 - lowercase and uppercase - one line", () => {
         all: [],
         error: null,
       },
-      "09.06"
+      "09.06",
     );
   });
   mixer({
@@ -1384,7 +1384,7 @@ test("09 - lowercase and uppercase - one line", () => {
         all: ["export"],
         error: null,
       },
-      "09.07"
+      "09.07",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1403,7 +1403,7 @@ test("09 - lowercase and uppercase - one line", () => {
         all: ["export"],
         error: null,
       },
-      "09.08"
+      "09.08",
     );
   });
 });
@@ -1462,7 +1462,7 @@ test("10 - lowercase and uppercase - one per line", () => {
         all: [],
         error: null,
       },
-      "10.01"
+      "10.01",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1501,7 +1501,7 @@ test("10 - lowercase and uppercase - one per line", () => {
         all: [],
         error: null,
       },
-      "10.02"
+      "10.02",
     );
   });
   mixer({
@@ -1545,7 +1545,7 @@ test("10 - lowercase and uppercase - one per line", () => {
         all: ["export"],
         error: null,
       },
-      "10.03"
+      "10.03",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1584,7 +1584,7 @@ test("10 - lowercase and uppercase - one per line", () => {
         all: ["export"],
         error: null,
       },
-      "10.04"
+      "10.04",
     );
   });
   mixer({
@@ -1628,7 +1628,7 @@ test("10 - lowercase and uppercase - one per line", () => {
         all: [],
         error: null,
       },
-      "10.05"
+      "10.05",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1667,7 +1667,7 @@ test("10 - lowercase and uppercase - one per line", () => {
         all: [],
         error: null,
       },
-      "10.06"
+      "10.06",
     );
   });
   mixer({
@@ -1711,7 +1711,7 @@ test("10 - lowercase and uppercase - one per line", () => {
         all: ["export"],
         error: null,
       },
-      "10.07"
+      "10.07",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1750,7 +1750,7 @@ test("10 - lowercase and uppercase - one per line", () => {
         all: ["export"],
         error: null,
       },
-      "10.08"
+      "10.08",
     );
   });
 });
@@ -1794,7 +1794,7 @@ test("11 - mixed 'as' and mixed indentation", () => {
         all: [],
         error: null,
       },
-      "11.01"
+      "11.01",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1820,7 +1820,7 @@ test("11 - mixed 'as' and mixed indentation", () => {
         all: [],
         error: null,
       },
-      "11.02"
+      "11.02",
     );
   });
   mixer({
@@ -1860,7 +1860,7 @@ test("11 - mixed 'as' and mixed indentation", () => {
         all: [],
         error: null,
       },
-      "11.03"
+      "11.03",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1895,7 +1895,7 @@ test("11 - mixed 'as' and mixed indentation", () => {
         all: [],
         error: null,
       },
-      "11.04"
+      "11.04",
     );
   });
   mixer({
@@ -1926,7 +1926,7 @@ test("11 - mixed 'as' and mixed indentation", () => {
         all: ["export"],
         error: null,
       },
-      "11.05"
+      "11.05",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -1952,7 +1952,7 @@ test("11 - mixed 'as' and mixed indentation", () => {
         all: ["export"],
         error: null,
       },
-      "11.06"
+      "11.06",
     );
   });
   mixer({
@@ -1992,7 +1992,7 @@ test("11 - mixed 'as' and mixed indentation", () => {
         all: ["export"],
         error: null,
       },
-      "11.07"
+      "11.07",
     );
     equal(
       extract(source, "export", { ...opt, contentSort }),
@@ -2027,7 +2027,7 @@ test("11 - mixed 'as' and mixed indentation", () => {
         all: ["export"],
         error: null,
       },
-      "11.08"
+      "11.08",
     );
   });
 });

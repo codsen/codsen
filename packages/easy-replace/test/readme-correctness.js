@@ -21,10 +21,10 @@ test("01 - readme example #1", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "🦄"
+      "🦄",
     ),
     "a 🦄 c 🦄 d",
-    "test 13.1"
+    "test 13.1",
   );
 });
 
@@ -41,10 +41,10 @@ test("02 - readme example #2", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "x"
+      "x",
     ),
     "x x x x",
-    "test 13.2"
+    "test 13.2",
   );
 });
 
@@ -61,10 +61,10 @@ test("03 - readme example #3", () => {
         rightOutside: "",
         rightOutsideNot: ["c", "d"],
       },
-      "🐴"
+      "🐴",
     ),
     "a🦄c x🐴x",
-    "test 13.3"
+    "test 13.3",
   );
 });
 
@@ -81,10 +81,10 @@ test("04 - readme example #4", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      ""
+      "",
     ),
     "zzzzz zzzzzz zzzzzz",
-    "test 13.4"
+    "test 13.4",
   );
 });
 
@@ -101,10 +101,10 @@ test("05 - readme example #5", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      " />"
+      " />",
     ),
     "<br /><br /><br />",
-    "test 13.5"
+    "test 13.5",
   );
 });
 
@@ -121,10 +121,10 @@ test("06 - readme example #6", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "&nbsp;"
+      "&nbsp;",
     ),
     "&nbsp; &nbsp; &nbsp; &nbsp;",
-    "test 13.6"
+    "test 13.6",
   );
 });
 

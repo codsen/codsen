@@ -49,7 +49,7 @@ assert.deepEqual(
         x1: "y1",
       },
     },
-    { key: "a*" }
+    { key: "a*" },
   ),
   [
     {
@@ -68,7 +68,7 @@ assert.deepEqual(
       },
       path: [3],
     },
-  ]
+  ],
 );
 ```
 

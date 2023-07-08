@@ -18,7 +18,7 @@ test(`01 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          on a simple 
   equal(
     matchLeft("abcdefghi", 3, ["c", "bc"]),
     "c", // first one matched returned, although both did match
-    "01.03"
+    "01.03",
   );
   equal(matchLeft("abcdefghi", 3, ["aaa", "bc"]), "bc", "01.04");
   equal(matchLeft("abcdefghi", 3, ["aaa", "zzz"]), false, "01.05");
@@ -42,7 +42,7 @@ test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       hungry: false,
     }),
     false,
-    "03.01"
+    "03.01",
   );
   equal(
     matchLeft("_abc.efghi", 5, ["bcd"], {
@@ -52,7 +52,7 @@ test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       hungry: true,
     }),
     "bcd",
-    "03.02"
+    "03.02",
   );
   equal(
     matchLeft("_abc.efghi", 5, ["bcd"], {
@@ -61,7 +61,7 @@ test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: false, // that's "b"
     }),
     false, // because "d" was not matched
-    "03.03"
+    "03.03",
   );
   equal(
     matchLeft("_abc.efghi", 5, ["bcd"], {
@@ -71,7 +71,7 @@ test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       hungry: false,
     }),
     false,
-    "03.04"
+    "03.04",
   );
   equal(
     matchLeft("_abc.efghi", 5, ["bcd"], {
@@ -81,7 +81,7 @@ test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       hungry: true,
     }),
     "bcd",
-    "03.05"
+    "03.05",
   );
   equal(
     matchLeft("_abc.efghi", 5, ["bcd"], {
@@ -90,7 +90,7 @@ test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: true, // that's "b"
     }),
     false,
-    "03.06"
+    "03.06",
   );
 
   //
@@ -102,7 +102,7 @@ test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: false, // that's "b"
     }),
     "bcd",
-    "03.07"
+    "03.07",
   );
   equal(
     matchLeft("_ab.defghi", 5, ["bcd"], {
@@ -111,7 +111,7 @@ test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: false, // that's "b"
     }),
     "bcd",
-    "03.08"
+    "03.08",
   );
   equal(
     matchLeft("_ab.defghi", 5, ["bcd"], {
@@ -120,7 +120,7 @@ test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: true, // that's "b"
     }),
     "bcd",
-    "03.09"
+    "03.09",
   );
   equal(
     matchLeft("_ab.defghi", 5, ["bcd"], {
@@ -129,7 +129,7 @@ test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: true, // that's "b"
     }),
     "bcd",
-    "03.10"
+    "03.10",
   );
 
   //
@@ -141,7 +141,7 @@ test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: true, // that's "b"
     }),
     false,
-    "03.11"
+    "03.11",
   );
   equal(
     matchLeft("_a.cdefghi", 5, ["bcd"], {
@@ -150,7 +150,7 @@ test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: true, // that's "b"
     }),
     false,
-    "03.12"
+    "03.12",
   );
   equal(
     matchLeft("_a.cdefghi", 5, ["bcd"], {
@@ -159,7 +159,7 @@ test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: false, // that's "b"
     }),
     "bcd",
-    "03.13"
+    "03.13",
   );
   equal(
     matchLeft("_a.cdefghi", 5, ["bcd"], {
@@ -168,7 +168,7 @@ test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: false, // that's "b"
     }),
     "bcd",
-    "03.14"
+    "03.14",
   );
 });
 
@@ -181,7 +181,7 @@ test(`04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: false,
     }),
     false,
-    "04.01"
+    "04.01",
   );
   equal(
     matchLeft("_abc.efghi", 4, ["zc"], {
@@ -190,7 +190,7 @@ test(`04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: false,
     }),
     "zc",
-    "04.02"
+    "04.02",
   );
   equal(
     matchLeft("_abc.efghi", 5, ["cz"], {
@@ -199,7 +199,7 @@ test(`04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: false,
     }),
     false,
-    "04.03"
+    "04.03",
   );
   equal(
     matchLeft("_abc.efghi", 5, ["cz"], {
@@ -208,7 +208,7 @@ test(`04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: false,
     }),
     false,
-    "04.04"
+    "04.04",
   );
   equal(
     matchLeft("_abc.efghi", 5, ["cz"], {
@@ -218,7 +218,7 @@ test(`04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       hungry: false,
     }),
     false,
-    "04.05"
+    "04.05",
   );
   equal(
     matchLeft("_abc.efghi", 5, ["cz"], {
@@ -228,7 +228,7 @@ test(`04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       hungry: true,
     }),
     "cz",
-    "04.06"
+    "04.06",
   );
 
   // lastMustMatch=true
@@ -239,7 +239,7 @@ test(`04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: true,
     }),
     false,
-    "04.07"
+    "04.07",
   );
   equal(
     matchLeft("_abc.efghi", 4, ["zc"], {
@@ -248,7 +248,7 @@ test(`04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: true,
     }),
     false,
-    "04.08"
+    "04.08",
   );
   equal(
     matchLeft("_abc.efghi", 5, ["cz"], {
@@ -257,7 +257,7 @@ test(`04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: true,
     }),
     false,
-    "04.09"
+    "04.09",
   );
   equal(
     matchLeft("_abc.efghi", 5, ["cz"], {
@@ -266,7 +266,7 @@ test(`04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       lastMustMatch: true,
     }),
     false,
-    "04.10"
+    "04.10",
   );
   equal(
     matchLeft("_abc.efghi", 5, ["cz"], {
@@ -276,7 +276,7 @@ test(`04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       hungry: false,
     }),
     false,
-    "04.11"
+    "04.11",
   );
   equal(
     matchLeft("_abc.efghi", 5, ["cz"], {
@@ -286,7 +286,7 @@ test(`04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       hungry: true,
     }),
     "cz",
-    "04.12"
+    "04.12",
   );
 });
 
@@ -299,7 +299,7 @@ test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: true,
     }),
     false,
-    "05.01"
+    "05.01",
   );
   equal(
     matchLeft("_abcdef", 5, [".....d"], {
@@ -307,7 +307,7 @@ test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: true,
     }),
     false,
-    "05.02"
+    "05.02",
   );
   equal(
     matchLeft("_abcdef", 5, [".....d"], {
@@ -315,7 +315,7 @@ test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: true,
     }),
     false,
-    "05.03"
+    "05.03",
   );
   equal(
     matchLeft("_abcdef", 5, [".....d"], {
@@ -323,7 +323,7 @@ test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: true,
     }),
     false,
-    "05.04"
+    "05.04",
   );
   equal(
     matchLeft("_abcdef", 5, [".....d"], {
@@ -331,7 +331,7 @@ test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: true,
     }),
     ".....d",
-    "05.05"
+    "05.05",
   );
   equal(
     matchLeft("_abcdef", 5, [".....d"], {
@@ -339,7 +339,7 @@ test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: true,
     }),
     ".....d",
-    "05.06"
+    "05.06",
   );
   equal(
     matchLeft("_abcdef", 5, [".....d"], {
@@ -347,7 +347,7 @@ test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: true,
     }),
     false,
-    "05.07"
+    "05.07",
   );
 
   //
@@ -358,7 +358,7 @@ test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: false,
     }),
     false,
-    "05.08"
+    "05.08",
   );
   equal(
     matchLeft("_abcdef", 5, [".....d"], {
@@ -366,7 +366,7 @@ test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: false,
     }),
     false,
-    "05.09"
+    "05.09",
   );
   equal(
     matchLeft("_abcdef", 5, [".....d"], {
@@ -374,7 +374,7 @@ test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: false,
     }),
     false,
-    "05.10"
+    "05.10",
   );
   equal(
     matchLeft("_abcdef", 5, [".....d"], {
@@ -382,7 +382,7 @@ test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: false,
     }),
     false,
-    "05.11"
+    "05.11",
   );
   equal(
     matchLeft("_abcdef", 5, [".....d"], {
@@ -390,7 +390,7 @@ test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: false,
     }),
     ".....d",
-    "05.12"
+    "05.12",
   );
   equal(
     matchLeft("_abcdef", 5, [".....d"], {
@@ -398,7 +398,7 @@ test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: false,
     }),
     ".....d",
-    "05.13"
+    "05.13",
   );
   equal(
     matchLeft("_abcdef", 5, [".....d"], {
@@ -406,7 +406,7 @@ test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: false,
     }),
     false,
-    "05.14"
+    "05.14",
   );
 });
 
@@ -417,7 +417,7 @@ test(`06 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: true,
     }),
     false,
-    "06.01"
+    "06.01",
   );
   equal(
     matchLeft("_abcdef", 5, ["....d"], {
@@ -425,7 +425,7 @@ test(`06 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: true,
     }),
     false,
-    "06.02"
+    "06.02",
   );
   equal(
     matchLeft("_abcdef", 5, ["....d"], {
@@ -433,7 +433,7 @@ test(`06 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: true,
     }),
     false,
-    "06.03"
+    "06.03",
   );
   equal(
     matchLeft("_abcdef", 5, ["....d"], {
@@ -441,7 +441,7 @@ test(`06 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: true,
     }),
     "....d",
-    "06.04"
+    "06.04",
   );
   equal(
     matchLeft("_abcdef", 5, ["....d"], {
@@ -449,7 +449,7 @@ test(`06 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: true,
     }),
     "....d",
-    "06.05"
+    "06.05",
   );
   equal(
     matchLeft("_abcdef", 5, ["....d"], {
@@ -457,7 +457,7 @@ test(`06 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: true,
     }),
     "....d",
-    "06.06"
+    "06.06",
   );
   equal(
     matchLeft("_abcdef", 5, ["....d"], {
@@ -465,7 +465,7 @@ test(`06 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
       firstMustMatch: true,
     }),
     false,
-    "06.07"
+    "06.07",
   );
 });
 

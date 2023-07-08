@@ -38,7 +38,7 @@ test("01 - simple plain object, one array", () => {
       ],
       d: "d",
     },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -88,7 +88,7 @@ test("02 - simple plain object, two arrays", () => {
         },
       ],
     },
-    "02.01"
+    "02.01",
   );
 });
 
@@ -126,7 +126,7 @@ test("03 - nested simple plain object, one array", () => {
         d: "d",
       },
     ],
-    "03.01"
+    "03.01",
   );
 });
 
@@ -154,7 +154,7 @@ test("04 - nested objects", () => {
       },
       "z2",
     ],
-    "04.01"
+    "04.01",
   );
 });
 
@@ -220,7 +220,7 @@ test("05 - multiple nested arrays", () => {
         ],
       ],
     ],
-    "05.01"
+    "05.01",
   );
 });
 
@@ -256,7 +256,7 @@ test("06 - array contents are not of the same type", () => {
         "z",
       ],
     },
-    "06.01"
+    "06.01",
   );
   equal(
     flattenAllArrays(
@@ -278,7 +278,7 @@ test("06 - array contents are not of the same type", () => {
       },
       {
         flattenArraysContainingStringsToBeEmpty: true,
-      }
+      },
     ),
     {
       d: "d",
@@ -286,7 +286,7 @@ test("06 - array contents are not of the same type", () => {
       a: "a",
       c: [],
     },
-    "06.02"
+    "06.02",
   );
 });
 
@@ -338,7 +338,7 @@ test("07 - multiple types in an array #1", () => {
       ],
       d: "d",
     },
-    "07.01"
+    "07.01",
   );
 });
 
@@ -376,7 +376,7 @@ test("08 - multiple types in an array #2", () => {
       ],
       a: "aaa",
     },
-    "08.01"
+    "08.01",
   );
 });
 
@@ -396,7 +396,7 @@ test("09 - simple array, two ojects", () => {
         b: "b",
       },
     ],
-    "09.01"
+    "09.01",
   );
 });
 
@@ -416,7 +416,7 @@ test("10 - simple array, two nested ojects", () => {
         b: { b: "b" },
       },
     ],
-    "10.01"
+    "10.01",
   );
 });
 
@@ -440,7 +440,7 @@ test("11 - array, mix of ojects, arrays and strings", () => {
       },
       ["yyy"],
     ],
-    "11.01"
+    "11.01",
   );
   equal(
     flattenAllArrays(
@@ -456,10 +456,10 @@ test("11 - array, mix of ojects, arrays and strings", () => {
       ],
       {
         flattenArraysContainingStringsToBeEmpty: true,
-      }
+      },
     ),
     [],
-    "11.02"
+    "11.02",
   );
 });
 
@@ -475,7 +475,7 @@ test("12 - arrays within objects, strings as elements", () => {
         b: ["c", "d"],
       },
     },
-    "12.01"
+    "12.01",
   );
   equal(
     flattenAllArrays(
@@ -486,14 +486,14 @@ test("12 - arrays within objects, strings as elements", () => {
       },
       {
         flattenArraysContainingStringsToBeEmpty: true,
-      }
+      },
     ),
     {
       a: {
         b: [],
       },
     },
-    "12.02"
+    "12.02",
   );
 });
 
@@ -564,7 +564,7 @@ test("19 - does not mutate input args", () => {
         },
       ],
     },
-    "19.02"
+    "19.02",
   );
 });
 

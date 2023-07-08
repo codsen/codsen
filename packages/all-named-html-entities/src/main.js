@@ -3950,7 +3950,7 @@ function decode(ent) {
     !ent.endsWith(";")
   ) {
     throw new Error(
-      `all-named-html-entities/decode(): [THROW_ID_01] Input must be an HTML entity with leading ampersand and trailing semicolon, but "${ent}" was given`
+      `all-named-html-entities/decode(): [THROW_ID_01] Input must be an HTML entity with leading ampersand and trailing semicolon, but "${ent}" was given`,
     );
   }
   let val = ent.slice(1, ent.length - 1);

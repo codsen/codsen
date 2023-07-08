@@ -14,7 +14,7 @@ test(`01 - ${`\u001b[${32}m${"simple"}\u001b[${39}m`} - German`, () => {
       res: true,
       message: null,
     },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -25,7 +25,7 @@ test(`02 - ${`\u001b[${32}m${"simple"}\u001b[${39}m`} - French`, () => {
       res: true,
       message: null,
     },
-    "02.01"
+    "02.01",
   );
 });
 
@@ -36,7 +36,7 @@ test(`03 - ${`\u001b[${32}m${"simple"}\u001b[${39}m`} - Japanese`, () => {
       res: true,
       message: null,
     },
-    "03.01"
+    "03.01",
   );
 });
 
@@ -50,7 +50,7 @@ test(`04 - ${`\u001b[${32}m${"grandfathered"}\u001b[${39}m`} - Enochian`, () => 
       res: true,
       message: null,
     },
-    "04.01"
+    "04.01",
   );
   // Deprecated in 2015-03-29
 });
@@ -62,7 +62,7 @@ test(`05 - ${`\u001b[${32}m${"grandfathered"}\u001b[${39}m`} - Klingon`, () => {
       res: true,
       message: null,
     },
-    "05.01"
+    "05.01",
   );
 });
 
@@ -76,7 +76,7 @@ test(`06 - ${`\u001b[${32}m${"language + script"}\u001b[${39}m`} - Chinese writt
       res: true,
       message: null,
     },
-    "06.01"
+    "06.01",
   );
 });
 
@@ -87,7 +87,7 @@ test(`07 - ${`\u001b[${32}m${"language + script"}\u001b[${39}m`} - Chinese writt
       res: true,
       message: null,
     },
-    "07.01"
+    "07.01",
   );
 });
 
@@ -98,7 +98,7 @@ test(`08 - ${`\u001b[${32}m${"language + script"}\u001b[${39}m`} - Serbian writt
       res: true,
       message: null,
     },
-    "08.01"
+    "08.01",
   );
 });
 
@@ -109,7 +109,7 @@ test(`09 - ${`\u001b[${32}m${"language + script"}\u001b[${39}m`} - Serbian writt
       res: true,
       message: null,
     },
-    "09.01"
+    "09.01",
   );
 });
 
@@ -123,7 +123,7 @@ test(`10 - ${`\u001b[${32}m${"language + primary language"}\u001b[${39}m`} - Chi
       res: true,
       message: null,
     },
-    "10.01"
+    "10.01",
   );
 });
 
@@ -134,7 +134,7 @@ test(`11 - ${`\u001b[${32}m${"language + primary language"}\u001b[${39}m`} - Man
       res: true,
       message: null,
     },
-    "11.01"
+    "11.01",
   );
 });
 
@@ -145,7 +145,7 @@ test(`12 - ${`\u001b[${32}m${"language + primary language"}\u001b[${39}m`} - Chi
       res: true,
       message: null,
     },
-    "12.01"
+    "12.01",
   );
 });
 
@@ -156,7 +156,7 @@ test(`13 - ${`\u001b[${32}m${"language + primary language"}\u001b[${39}m`} - Can
       res: true,
       message: null,
     },
-    "13.01"
+    "13.01",
   );
 });
 
@@ -170,7 +170,7 @@ test(`14 - ${`\u001b[${32}m${"language + script + region"}\u001b[${39}m`} - Chin
       res: true,
       message: null,
     },
-    "14.01"
+    "14.01",
   );
 });
 
@@ -181,7 +181,7 @@ test(`15 - ${`\u001b[${32}m${"language + script + region"}\u001b[${39}m`} - Serb
       res: true,
       message: null,
     },
-    "15.01"
+    "15.01",
   );
 });
 
@@ -195,7 +195,7 @@ test(`16 - ${`\u001b[${32}m${"language + variant"}\u001b[${39}m`} - Resian diale
       res: true,
       message: null,
     },
-    "16.01"
+    "16.01",
   );
 });
 
@@ -206,7 +206,7 @@ test(`17 - ${`\u001b[${32}m${"language + variant"}\u001b[${39}m`} - two variants
       res: true,
       message: null,
     },
-    "17.01"
+    "17.01",
   );
 });
 
@@ -217,7 +217,7 @@ test(`18 - ${`\u001b[${32}m${"language + variant"}\u001b[${39}m`} - Nadiza diale
       res: true,
       message: null,
     },
-    "18.01"
+    "18.01",
   );
 });
 
@@ -228,7 +228,7 @@ test(`19 - ${`\u001b[${32}m${"language + variant"}\u001b[${39}m`} - repeated var
       res: false,
       message: 'Repeated variant subtag, "1901".',
     },
-    "19.01"
+    "19.01",
   );
 });
 
@@ -239,7 +239,7 @@ test(`20 - ${`\u001b[${32}m${"language + variant"}\u001b[${39}m`} - multiple var
       res: false,
       message: 'Unrecognised language subtag, "sl".',
     },
-    "20.01"
+    "20.01",
   );
 });
 
@@ -253,7 +253,7 @@ test(`21 - ${`\u001b[${32}m${"language + region + variant"}\u001b[${39}m`} - Ger
       res: true,
       message: null,
     },
-    "21.01"
+    "21.01",
   );
 });
 
@@ -264,7 +264,7 @@ test(`22 - ${`\u001b[${32}m${"language + region + variant"}\u001b[${39}m`} - Slo
       res: true,
       message: null,
     },
-    "22.01"
+    "22.01",
   );
 });
 
@@ -275,7 +275,7 @@ test(`23 - ${`\u001b[${32}m${"language + region + variant"}\u001b[${39}m`} - Cat
       res: true,
       message: null,
     },
-    "23.01"
+    "23.01",
   );
 });
 
@@ -289,7 +289,7 @@ test(`24 - ${`\u001b[${32}m${"language + script + region + variant"}\u001b[${39}
       res: true,
       message: null,
     },
-    "24.01"
+    "24.01",
   );
 });
 
@@ -303,7 +303,7 @@ test(`25 - ${`\u001b[${32}m${"language - region"}\u001b[${39}m`} - German for Ge
       res: true,
       message: null,
     },
-    "25.01"
+    "25.01",
   );
 });
 
@@ -314,7 +314,7 @@ test(`26 - ${`\u001b[${32}m${"language - region"}\u001b[${39}m`} - English as us
       res: true,
       message: null,
     },
-    "26.01"
+    "26.01",
   );
 });
 
@@ -325,7 +325,7 @@ test(`27 - ${`\u001b[${32}m${"language - region"}\u001b[${39}m`} - Spanish appro
       res: true,
       message: null,
     },
-    "27.01"
+    "27.01",
   );
 });
 
@@ -339,7 +339,7 @@ test(`28 - ${`\u001b[${32}m${"private use subtags"}\u001b[${39}m`} - 1`, () => {
       res: true,
       message: null,
     },
-    "28.01"
+    "28.01",
   );
 });
 
@@ -350,7 +350,7 @@ test(`29 - ${`\u001b[${32}m${"private use subtags"}\u001b[${39}m`} - 2`, () => {
       res: true,
       message: null,
     },
-    "29.01"
+    "29.01",
   );
 });
 
@@ -364,7 +364,7 @@ test(`30 - ${`\u001b[${32}m${"private use registry values"}\u001b[${39}m`} - pri
       res: true,
       message: null,
     },
-    "30.01"
+    "30.01",
   );
 });
 
@@ -375,7 +375,7 @@ test(`31 - ${`\u001b[${32}m${"private use registry values"}\u001b[${39}m`} - all
       res: true,
       message: null,
     },
-    "31.01"
+    "31.01",
   );
 });
 
@@ -386,7 +386,7 @@ test(`32 - ${`\u001b[${32}m${"private use registry values"}\u001b[${39}m`} - Ger
       res: true,
       message: null,
     },
-    "32.01"
+    "32.01",
   );
 });
 
@@ -397,7 +397,7 @@ test(`33 - ${`\u001b[${32}m${"private use registry values"}\u001b[${39}m`} - Ser
       res: true,
       message: null,
     },
-    "33.01"
+    "33.01",
   );
 });
 
@@ -408,7 +408,7 @@ test(`34 - ${`\u001b[${32}m${"private use registry values"}\u001b[${39}m`} - Ser
       res: true,
       message: null,
     },
-    "34.01"
+    "34.01",
   );
 });
 
@@ -422,7 +422,7 @@ test(`35 - ${`\u001b[${32}m${"tags that use extensions"}\u001b[${39}m`} - 1`, ()
       res: true,
       message: null,
     },
-    "35.01"
+    "35.01",
   );
 });
 
@@ -433,7 +433,7 @@ test(`36 - ${`\u001b[${32}m${"tags that use extensions"}\u001b[${39}m`} - 2`, ()
       res: true,
       message: null,
     },
-    "36.01"
+    "36.01",
   );
 });
 
@@ -444,7 +444,7 @@ test(`37 - ${`\u001b[${32}m${"tags that use extensions"}\u001b[${39}m`} - 3`, ()
       res: true,
       message: null,
     },
-    "37.01"
+    "37.01",
   );
 });
 
@@ -458,7 +458,7 @@ test(`38 - ${`\u001b[${32}m${"failing"}\u001b[${39}m`} - two region tags`, () =>
       res: false,
       message: 'Two region subtags, "419" and "de".',
     },
-    "38.01"
+    "38.01",
   );
 });
 
@@ -473,7 +473,7 @@ test(`39 - ${`\u001b[${32}m${"failing"}\u001b[${39}m`} - use of a single-charact
       res: false,
       message: 'Starts with singleton, "a".',
     },
-    "39.01"
+    "39.01",
   );
 });
 
@@ -484,7 +484,7 @@ test(`40 - ${`\u001b[${32}m${"failing"}\u001b[${39}m`} - two extensions with sam
       res: false,
       message: 'Two extensions with same single-letter prefix "a".',
     },
-    "40.01"
+    "40.01",
   );
 });
 
@@ -495,7 +495,7 @@ test(`41 - ${`\u001b[${32}m${"failing"}\u001b[${39}m`} - failing initial regex`,
       res: false,
       message: "Does not resemble a language tag.",
     },
-    "41.01"
+    "41.01",
   );
 });
 
@@ -506,7 +506,7 @@ test(`42 - ${`\u001b[${32}m${"failing"}\u001b[${39}m`} - two singletons repeated
       res: false,
       message: 'Multiple singleton sequence "a", "b".',
     },
-    "42.01"
+    "42.01",
   );
 });
 
@@ -517,7 +517,7 @@ test(`43 - ${`\u001b[${32}m${"failing"}\u001b[${39}m`} - language tag unrecognis
       res: false,
       message: 'Unrecognised language subtag, "html".',
     },
-    "43.01"
+    "43.01",
   );
 });
 
@@ -528,7 +528,7 @@ test(`44 - ${`\u001b[${32}m${"failing"}\u001b[${39}m`} - language tag unrecognis
       res: false,
       message: 'Unrecognised language subtag, "zzz".',
     },
-    "44.01"
+    "44.01",
   );
 });
 
@@ -539,7 +539,7 @@ test(`45 - ${`\u001b[${32}m${"failing"}\u001b[${39}m`}`, () => {
       res: false,
       message: "Empty language tag string given.",
     },
-    "45.01"
+    "45.01",
   );
 });
 
@@ -550,7 +550,7 @@ test(`46 - ${`\u001b[${32}m${"failing"}\u001b[${39}m`}`, () => {
       res: false,
       message: "Empty language tag string given.",
     },
-    "46.01"
+    "46.01",
   );
 });
 
@@ -561,7 +561,7 @@ test(`47 - ${`\u001b[${32}m${"failing"}\u001b[${39}m`} - ends with private use s
       res: false,
       message: 'Ends with private use subtag, "x".',
     },
-    "47.01"
+    "47.01",
   );
 });
 
@@ -572,7 +572,7 @@ test(`48 - ${`\u001b[${32}m${"failing"}\u001b[${39}m`} - ends with private use s
       res: false,
       message: 'Ends with singleton, "a".',
     },
-    "48.01"
+    "48.01",
   );
 });
 
@@ -586,7 +586,7 @@ test(`49 - ${`\u001b[${32}m${"adhoc"}\u001b[${39}m`} - Windows XP is not legal b
       res: false,
       message: 'Unrecognised language subtag, "windows".',
     },
-    "49.01"
+    "49.01",
   );
 });
 
@@ -597,7 +597,7 @@ test(`50 - ${`\u001b[${32}m${"adhoc"}\u001b[${39}m`} - POSIX is not registered w
       res: false,
       message: 'Unrecognised language subtag, "posix".',
     },
-    "50.01"
+    "50.01",
   );
 });
 
@@ -608,7 +608,7 @@ test(`51 - ${`\u001b[${32}m${"adhoc"}\u001b[${39}m`}`, () => {
       res: true,
       message: null,
     },
-    "51.01"
+    "51.01",
   );
 });
 
@@ -620,7 +620,7 @@ test(`52 - ${`\u001b[${32}m${"adhoc"}\u001b[${39}m`}`, () => {
       res: true,
       message: null,
     },
-    "52.01"
+    "52.01",
   );
 });
 
@@ -632,7 +632,7 @@ test(`53 - ${`\u001b[${32}m${"adhoc"}\u001b[${39}m`}`, () => {
       res: true,
       message: null,
     },
-    "53.01"
+    "53.01",
   );
 });
 
@@ -644,7 +644,7 @@ test(`54 - ${`\u001b[${32}m${"adhoc"}\u001b[${39}m`}`, () => {
       res: false,
       message: 'Starts with singleton, "a".',
     },
-    "54.01"
+    "54.01",
   );
 });
 
@@ -656,7 +656,7 @@ test(`55 - ${`\u001b[${32}m${"adhoc"}\u001b[${39}m`}`, () => {
       res: false,
       message: 'Ends with singleton, "r".',
     },
-    "55.01"
+    "55.01",
   );
 });
 

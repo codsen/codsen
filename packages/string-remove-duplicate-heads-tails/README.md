@@ -41,7 +41,7 @@ assert.equal(
     heads: "{{ ",
     tails: " }}",
   }),
-  "Hi {{ first_name }}!"
+  "Hi {{ first_name }}!",
 );
 ```
 

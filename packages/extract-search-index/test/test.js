@@ -16,35 +16,35 @@ test("02 - wrong/missing input = throw", () => {
       extract();
     },
     /THROW_ID_01/g,
-    "02.01"
+    "02.01",
   );
   throws(
     () => {
       extract(1);
     },
     /THROW_ID_01/g,
-    "02.02"
+    "02.02",
   );
   throws(
     () => {
       extract(null);
     },
     /THROW_ID_01/g,
-    "02.03"
+    "02.03",
   );
   throws(
     () => {
       extract(undefined);
     },
     /THROW_ID_01/g,
-    "02.04"
+    "02.04",
   );
   throws(
     () => {
       extract(true);
     },
     /THROW_ID_01/g,
-    "02.05"
+    "02.05",
   );
 });
 

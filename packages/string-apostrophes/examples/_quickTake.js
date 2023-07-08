@@ -15,7 +15,7 @@ assert.deepEqual(
       [7, 8, "’"],
       [18, 21, "’n’"],
     ],
-  }
+  },
 );
 
 assert.deepEqual(
@@ -25,5 +25,5 @@ assert.deepEqual(
     convertApostrophes: true,
     convertEntities: true,
   }),
-  [[4, 5, "&rsquo;"]]
+  [[4, 5, "&rsquo;"]],
 );

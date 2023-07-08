@@ -56,7 +56,7 @@ test(`01 - ${`\u001b[${33}m${"exact key set matching"}\u001b[${39}m`}`, () => {
         attribs: [],
       },
     ],
-    "01.01"
+    "01.01",
   );
 });
 
@@ -130,7 +130,7 @@ test(`02 - ${`\u001b[${33}m${"exact key set matching"}\u001b[${39}m`}`, () => {
         attribs: [],
       },
     ],
-    "02.01"
+    "02.01",
   );
 });
 
@@ -165,7 +165,7 @@ test(`03 - ${`\u001b[${33}m${"tag pair"}\u001b[${39}m`} - space is melded into t
         type: "tag",
       },
     ],
-    "03"
+    "03",
   );
 });
 
@@ -197,7 +197,7 @@ test(`04 - ${`\u001b[${33}m${"tag pair"}\u001b[${39}m`} - two spaces`, () => {
         type: "tag",
       },
     ],
-    "04"
+    "04",
   );
 });
 
@@ -228,7 +228,7 @@ test(`05 - ${`\u001b[${33}m${"tag pair"}\u001b[${39}m`} - no spaces`, () => {
         type: "tag",
       },
     ],
-    "05"
+    "05",
   );
 });
 
@@ -313,7 +313,7 @@ test(`06 - ${`\u001b[${36}m${"tag follows"}\u001b[${39}m`} - tight`, () => {
         attribs: [],
       },
     ],
-    "06"
+    "06",
   );
 });
 
@@ -358,7 +358,7 @@ test(`07 - ${`\u001b[${36}m${"tag follows"}\u001b[${39}m`} - void tag without sl
         attribs: [],
       },
     ],
-    "07.01"
+    "07.01",
   );
 });
 
@@ -403,7 +403,7 @@ test(`08 - ${`\u001b[${36}m${"tag follows"}\u001b[${39}m`} - void tag without sl
         attribs: [],
       },
     ],
-    "08.01"
+    "08.01",
   );
 });
 
@@ -454,7 +454,7 @@ test(`09 - ${`\u001b[${36}m${"tag follows"}\u001b[${39}m`} - void tag without sl
         attribs: [],
       },
     ],
-    "09.01"
+    "09.01",
   );
 });
 
@@ -488,7 +488,7 @@ test("10 - abruptly ended after tag name", () => {
         attribs: [],
       },
     ],
-    "10.01"
+    "10.01",
   );
 });
 

@@ -10,7 +10,7 @@ type NextToken = [
     path: string;
     parent: any;
     parentType: string;
-  }
+  },
 ];
 interface InnerObj {
   depth: number;
@@ -26,7 +26,7 @@ type Callback = (
   innerObj: InnerObj,
   stop: {
     now: boolean;
-  }
+  },
 ) => any;
 declare function traverse(tree1: any, cb1: Callback, lookahead?: number): void;
 

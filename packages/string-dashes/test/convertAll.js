@@ -25,7 +25,7 @@ test("01 - combo", () => {
         result: input,
         ranges: [],
       },
-      `01.01.${pad(n)}`
+      `01.01.${pad(n)}`,
     );
   });
   mixer({
@@ -41,7 +41,7 @@ test("01 - combo", () => {
           [44, 45, "&ndash;"],
         ],
       },
-      `01.03.${pad(n)}`
+      `01.03.${pad(n)}`,
     );
     // nothing to offset, we're processing only one character, so callback is not called,
     // we're not pinging zero to callback:
@@ -59,7 +59,7 @@ test("01 - combo", () => {
           [44, 45, rawNDash],
         ],
       },
-      `01.05.${pad(n)}`
+      `01.05.${pad(n)}`,
     );
     // nothing to offset, we're processing only one character, so callback is not called,
     // we're not pinging zero to callback:

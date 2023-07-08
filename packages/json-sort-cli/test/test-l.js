@@ -40,14 +40,14 @@ test("01 - array, CRLF line endings, no setting", async () => {
           },
         ],
         null,
-        2
-      ).replace(/\n/g, "\r\n")
+        2,
+      ).replace(/\n/g, "\r\n"),
     )
     .then(() => execa("./cli.js", [tempFolder, "sortme.json"]))
     .then(() => fs.readFile(pathOfTheTestFile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received),
     )
     .catch((err) => {
       throw new Error(err);
@@ -65,7 +65,7 @@ test("01 - array, CRLF line endings, no setting", async () => {
     "p": "r"
   }
 ]\n`.replace(/\n/g, "\r\n"),
-    "01.01"
+    "01.01",
   );
 });
 
@@ -90,14 +90,14 @@ test("02 - CRLF in, CR out", async () => {
           },
         ],
         null,
-        2
-      ).replace(/\n/g, "\r\n")
+        2,
+      ).replace(/\n/g, "\r\n"),
     )
     .then(() => execa("./cli.js", [tempFolder, "sortme.json", "-l", "cr"]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received),
     )
     .catch((err) => {
       throw new Error(err);
@@ -115,7 +115,7 @@ test("02 - CRLF in, CR out", async () => {
     "p": "r"
   }
 ]\n`.replace(/\n/g, "\r"),
-    "02.01"
+    "02.01",
   );
 });
 

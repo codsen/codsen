@@ -14,7 +14,7 @@ test("01 - testing escape latch for missing second double quote cases", () => {
   equal(
     alts('zzz<img alt="  class="" />zzz'),
     'zzz<img alt="  class="" />zzz',
-    "01.01"
+    "01.01",
   );
 });
 
@@ -27,7 +27,7 @@ test("02 - testing seriously messed up code", () => {
   equal(
     alts("zzz<><><<>><<<>>>><img >>zzz"),
     'zzz<><><<>><<<>>>><img alt="" >>zzz',
-    "02.03"
+    "02.03",
   );
 });
 
@@ -42,7 +42,7 @@ test("03 - other attributes don't have equal and value", () => {
   equal(
     alts('<img something alt="" /     >'),
     '<img something alt="" />',
-    "03.07"
+    "03.07",
   );
   equal(alts("<img something/     >"), '<img something alt="" />', "03.08");
   equal(alts("<img something /     >"), '<img something alt="" />', "03.09");

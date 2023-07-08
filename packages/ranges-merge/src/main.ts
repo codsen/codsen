@@ -62,8 +62,8 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
           `ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: "${typeof opts.progressFn}", equal to ${JSON.stringify(
             opts.progressFn,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       }
       // 2. validate opts.mergeType
@@ -72,8 +72,8 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
           `ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(
             opts.mergeType,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       }
       // 3. validate opts.joinRangesThatTouchEdges
@@ -82,8 +82,8 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
           `ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof opts.joinRangesThatTouchEdges}", equal to ${JSON.stringify(
             opts.joinRangesThatTouchEdges,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       }
     } else {
@@ -91,8 +91,8 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
         `emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(
           originalOpts,
           null,
-          4
-        )} (type ${typeof originalOpts})`
+          4,
+        )} (type ${typeof originalOpts})`,
       );
     }
   } else {
@@ -111,7 +111,7 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
     .filter(
       // filter out futile ranges with identical starting and ending points with
       // nothing to add (no 3rd argument)
-      (rangeArr) => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]
+      (rangeArr) => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1],
     );
 
   let sortedRanges;
@@ -146,8 +146,8 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
         `\u001b[${36}m${`137 -------------- sortedRanges[${i}] = ${JSON.stringify(
           sortedRanges[i],
           null,
-          0
-        )} --------------`}\u001b[${39}m\n`
+          0,
+        )} --------------`}\u001b[${39}m\n`,
       );
 
     if (opts.progressFn) {
@@ -179,18 +179,18 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
           i - 1
         }][0] = ${`\u001b[${33}m${sortedRanges[i - 1][0]}\u001b[${39}m`} ||
      sortedRanges[${i}][0] = ${`\u001b[${33}m${
-          sortedRanges[i][0]
-        }\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${
-          i - 1
-        }][1] = ${`\u001b[${33}m${sortedRanges[i - 1][1]}\u001b[${39}m`}
+       sortedRanges[i][0]
+     }\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${
+       i - 1
+     }][1] = ${`\u001b[${33}m${sortedRanges[i - 1][1]}\u001b[${39}m`}
 `);
       sortedRanges[i - 1][0] = Math.min(
         sortedRanges[i][0],
-        sortedRanges[i - 1][0]
+        sortedRanges[i - 1][0],
       );
       sortedRanges[i - 1][1] = Math.max(
         sortedRanges[i][1],
-        sortedRanges[i - 1][1]
+        sortedRanges[i - 1][1],
       );
       DEV &&
         console.log(
@@ -198,7 +198,7 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
             i - 1
           }][0] = ${sortedRanges[i - 1][0]}; sortedRanges[${i - 1}][1] = ${
             sortedRanges[i - 1][1]
-          }`
+          }`,
         );
 
       // tend the third argument, "what to insert"
@@ -234,15 +234,15 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
       // get rid of the second element:
       DEV &&
         console.log(
-          "237 --------------------------------------------------------"
+          "237 --------------------------------------------------------",
         );
       DEV &&
         console.log(
           `241 before splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
             sortedRanges,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       sortedRanges.splice(i, 1);
       DEV &&
@@ -250,14 +250,14 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
           `250 after splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
             sortedRanges,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       // reset the traversal, start from the end again
       i = sortedRanges.length;
       DEV &&
         console.log(
-          `260 in the end, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} i = ${i}`
+          `260 in the end, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} i = ${i}`,
         );
     }
   }
@@ -266,8 +266,8 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
       `266 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} sortedRanges = ${JSON.stringify(
         sortedRanges,
         null,
-        4
-      )}\n`
+        4,
+      )}\n`,
     );
   return sortedRanges.length ? sortedRanges : null;
 }

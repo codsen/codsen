@@ -70,7 +70,7 @@ test("04 - sandwitched, broken entities", () => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "04.02"
+    "04.02",
   );
   equal(gathered, [0, 6, 12], "04.03");
 });
@@ -95,7 +95,7 @@ test("05", () => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "05.02"
+    "05.02",
   );
   equal(gathered, [], "05.03");
 });
@@ -120,7 +120,7 @@ test("06", () => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "06.02"
+    "06.02",
   );
   equal(gathered, [6, 12], "06.03");
 });
@@ -155,7 +155,7 @@ test("08", () => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "08.02"
+    "08.02",
   );
   equal(gathered, [], "08.03");
 });
@@ -180,7 +180,7 @@ test("09", () => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "09.02"
+    "09.02",
   );
   equal(gathered, [], "09.03");
 });
@@ -205,7 +205,7 @@ test("10", () => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "10.02"
+    "10.02",
   );
   equal(gathered, [6, 14], "10.03");
 });

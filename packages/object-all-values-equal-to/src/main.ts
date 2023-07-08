@@ -61,12 +61,12 @@ function allEq(input: any, value: any, opts?: Partial<Opts>): boolean {
   // precautions:
   if (input === undefined) {
     throw new Error(
-      "object-all-values-equal-to: [THROW_ID_01] The first input is undefined! Please provide the first argument."
+      "object-all-values-equal-to: [THROW_ID_01] The first input is undefined! Please provide the first argument.",
     );
   }
   if (value === undefined) {
     throw new Error(
-      "object-all-values-equal-to: [THROW_ID_02] The second input is undefined! Please provide the second argument."
+      "object-all-values-equal-to: [THROW_ID_02] The second input is undefined! Please provide the second argument.",
     );
   }
   if (opts && !isObj(opts)) {
@@ -74,8 +74,8 @@ function allEq(input: any, value: any, opts?: Partial<Opts>): boolean {
       `object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ${typeof opts}, equal to:\n${JSON.stringify(
         opts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
 

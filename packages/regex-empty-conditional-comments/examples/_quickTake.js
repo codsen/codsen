@@ -8,21 +8,21 @@ import { emptyCondCommentRegex } from "../dist/regex-empty-conditional-comments.
 assert.equal(
   emptyCondCommentRegex().test(`<!--[if !mso]>
 <![endif]-->`),
-  true
+  true,
 );
 
 // empty comment which was meant to target non-Outlook-only
 assert.equal(
   emptyCondCommentRegex().test(`<!--[if !mso]><!-- -->
 <!--<![endif]-->`),
-  true
+  true,
 );
 
 assert.equal(
   emptyCondCommentRegex().test(`<!--[if !mso]><!-- -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!--<![endif]-->`),
-  false
+  false,
 );
 
 assert.equal(
@@ -32,17 +32,17 @@ assert.equal(
 <o:PixelsPerInch>96</o:PixelsPerInch>
 </o:OfficeDocumentSettings>
 </xml><![endif]-->`),
-  false
+  false,
 );
 
 assert.equal(
   emptyCondCommentRegex().exec("<html><!--[if !mso]><![endif]--><title>")[0],
-  "<!--[if !mso]><![endif]-->"
+  "<!--[if !mso]><![endif]-->",
 );
 
 assert.deepEqual(
   `<html> <!--[if !mso]><![endif]--> <title>text</title> <!--[if gte mso 9]>
 <xml>
 <![endif]-->`.match(emptyCondCommentRegex()),
-  ["<!--[if !mso]><![endif]-->"]
+  ["<!--[if !mso]><![endif]-->"],
 );

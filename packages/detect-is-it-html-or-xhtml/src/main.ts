@@ -21,8 +21,8 @@ function detectIsItHTMLOrXhtml(input: string): Output {
       `detect-is-it-html-or-xhtml: [THROW_ID_01] Input must be a string! It was given as ${JSON.stringify(
         input,
         null,
-        4
-      )} (type ${typeof input})`
+        4,
+      )} (type ${typeof input})`,
     );
   }
 

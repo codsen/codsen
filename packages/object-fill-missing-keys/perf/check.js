@@ -28,7 +28,7 @@ const testme = () =>
     },
     {
       doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"],
-    }
+    },
   );
 
 // action

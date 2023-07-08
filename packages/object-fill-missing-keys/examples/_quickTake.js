@@ -16,12 +16,12 @@ assert.deepEqual(
       a: false,
       b: false,
       c: false,
-    }
+    },
   ),
   {
     // patched result
     a: false,
     b: "b",
     c: false,
-  }
+  },
 );

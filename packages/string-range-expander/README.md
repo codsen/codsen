@@ -50,7 +50,7 @@ assert.deepEqual(
     to: 20,
     ifRightSideIncludesThisThenCropTightly: "<",
   }),
-  [10, 21]
+  [10, 21],
 );
 ```
 

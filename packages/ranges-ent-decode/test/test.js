@@ -14,7 +14,7 @@ test("01 - throws when first input argument is missing", () => {
       decode();
     },
     /THROW_ID_01/,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -24,7 +24,7 @@ test("02 - throws when first input argument is not string", () => {
       decode(true);
     },
     /THROW_ID_01/,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -34,7 +34,7 @@ test("03 - throws when second input argument is not a plain object", () => {
       decode("zzz", "tralala");
     },
     /THROW_ID_02/,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -58,7 +58,7 @@ test("05 - decodes multiple entities within a string, entities surrounded by oth
       [2, 9, "£"],
       [12, 19, "‘"],
     ],
-    "05.01"
+    "05.01",
   );
 });
 
@@ -69,7 +69,7 @@ test("06 - decodes double-encoded entities", () => {
       [2, 13, "£"],
       [16, 27, "‘"],
     ],
-    "06.01"
+    "06.01",
   );
   equal(
     decode("a &#x26;pound; b &#x26;lsquo; c"),
@@ -77,7 +77,7 @@ test("06 - decodes double-encoded entities", () => {
       [2, 14, "£"],
       [17, 29, "‘"],
     ],
-    "06.02"
+    "06.02",
   );
 });
 
@@ -88,7 +88,7 @@ test("07 - decodes triple-encoded entities", () => {
       [2, 17, "£"],
       [20, 35, "‘"],
     ],
-    "07.01"
+    "07.01",
   );
   equal(
     decode("a &#x26;#x26;pound; b &#x26;#x26;lsquo; c"),
@@ -96,7 +96,7 @@ test("07 - decodes triple-encoded entities", () => {
       [2, 19, "£"],
       [22, 39, "‘"],
     ],
-    "07.02"
+    "07.02",
   );
   equal(
     decode("a &#x26;amp;pound; b &#x26;amp;lsquo; c"),
@@ -104,7 +104,7 @@ test("07 - decodes triple-encoded entities", () => {
       [2, 18, "£"],
       [21, 37, "‘"],
     ],
-    "07.03"
+    "07.03",
   );
 });
 
@@ -115,7 +115,7 @@ test("08 - ampersand entity", () => {
       [2, 8, "&"],
       [11, 16, "&"],
     ],
-    "08.01"
+    "08.01",
   );
   equal(
     decode("a &#x26;amp; b &amp;#x26; c"),
@@ -123,7 +123,7 @@ test("08 - ampersand entity", () => {
       [2, 12, "&"],
       [15, 25, "&"],
     ],
-    "08.02"
+    "08.02",
   );
   equal(
     decode("a &#x26;amp;#x26; b &amp;#x26;amp; c"),
@@ -131,7 +131,7 @@ test("08 - ampersand entity", () => {
       [2, 17, "&"],
       [20, 34, "&"],
     ],
-    "08.03"
+    "08.03",
   );
 });
 

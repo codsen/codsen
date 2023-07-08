@@ -28,7 +28,7 @@ test("06", () => {
   equal(
     pathPrev("9.children.1.children.2"),
     "9.children.1.children.1",
-    "06.01"
+    "06.01",
   );
 });
 

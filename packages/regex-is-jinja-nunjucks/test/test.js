@@ -27,7 +27,7 @@ test("variables", () => {
   match(
     '{{ foo | replace("foo", "bar") | capitalize }}',
     isJinjaNunjucksRegex(),
-    "02.11"
+    "02.11",
   );
 });
 
@@ -55,7 +55,7 @@ This is the default content
 </section>
 `,
     isJinjaNunjucksRegex(),
-    "04.01"
+    "04.01",
   );
 });
 

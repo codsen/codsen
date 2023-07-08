@@ -19,7 +19,7 @@ const defaults: Opts = {
 function pull(
   strArr: string[],
   toBeRemoved: string | string[],
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): string[] {
   // insurance
   if (!strArr.length) {
@@ -37,8 +37,8 @@ function pull(
       !resolvedToBeRemoved.some((remVal) =>
         isMatch(originalVal, remVal, {
           caseSensitive: resolvedOpts.caseSensitive,
-        })
-      )
+        }),
+      ),
   );
   return res;
 }

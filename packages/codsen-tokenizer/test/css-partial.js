@@ -62,7 +62,7 @@ test("no throwing on partial inputs, anywhere", () => {
         ct(str.slice(0, i), {
           tagCb: () => {},
         }),
-      `${str.slice(0, i)}`
+      `${str.slice(0, i)}`,
     );
   }
 });
@@ -73,7 +73,7 @@ test("02 isolated", () => {
       ct('<body id="l" style="', {
         tagCb: () => {},
       }),
-    "02.01"
+    "02.01",
   );
 });
 

@@ -167,10 +167,10 @@ test("35 - block - inline - spaced all around - mini", () => {
 test("36 - block - inline - spaced all around - more realistic", () => {
   equal(
     stripHtml(
-      '\n\n<div class="xy yx zy" style="color:red!important;">\n\n\n  foo\n  <b class="xy">\n\n    bar\n  </b>\n\n\n</div>\n\n'
+      '\n\n<div class="xy yx zy" style="color:red!important;">\n\n\n  foo\n  <b class="xy">\n\n    bar\n  </b>\n\n\n</div>\n\n',
     ).result,
     "foo\n\nbar",
-    "36.01"
+    "36.01",
   );
 });
 
@@ -208,10 +208,10 @@ test("43 - block - inline - spaced all around - mini", () => {
 test("44 - block - inline - spaced all around - more realistic", () => {
   equal(
     stripHtml(
-      '\n  <div class="xy yx zy" style="color:red!important;">\n\n   <b class="xy">    \n\n       foo\n\n   </b>\n   bar\n    </div>\n\n\n'
+      '\n  <div class="xy yx zy" style="color:red!important;">\n\n   <b class="xy">    \n\n       foo\n\n   </b>\n   bar\n    </div>\n\n\n',
     ).result,
     "foo\n\nbar",
-    "44.01"
+    "44.01",
   );
 });
 
@@ -237,7 +237,7 @@ test("49 - space in front of block tag, front-of string", () => {
   equal(
     stripHtml(" <div>foo—<div>bar</div></div>").result,
     "foo— bar",
-    "49.01"
+    "49.01",
   );
 });
 
@@ -245,7 +245,7 @@ test("50 - LF in front of block tag, front-of string", () => {
   equal(
     stripHtml("\n<div>foo—<div>bar</div></div>").result,
     "foo— bar",
-    "50.01"
+    "50.01",
   );
 });
 

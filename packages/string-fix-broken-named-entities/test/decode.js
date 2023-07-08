@@ -33,7 +33,7 @@ test(`${
             rangeValDecoded: decode(`&${singleEntity};`),
           },
         ],
-        `${singleEntity} - 05; ${i + 1}/${arr.length}`
+        `${singleEntity} - 05; ${i + 1}/${arr.length}`,
       );
     });
 });
@@ -58,7 +58,7 @@ test(`02 - ${`\u001b[${36}m${"decode"}\u001b[${39}m`} - one of entities`, () => 
         rangeValDecoded: decode("&EmptyVerySmallSquare;"),
       },
     ],
-    "02.01"
+    "02.01",
   );
   equal(gathered, [], "02.02");
 });

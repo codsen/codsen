@@ -39,7 +39,7 @@ import { stripHtml } from "string-strip-html";
 
 assert.equal(
   stripHtml("Some text <b>and</b> text.").result,
-  "Some text and text."
+  "Some text and text.",
 );
 
 // prevents accidental string concatenation
@@ -55,7 +55,7 @@ assert.equal(
       "pre", // <-- custom-added
     ],
   }).result,
-  "a b"
+  "a b",
 );
 
 // detects raw, legit brackets:

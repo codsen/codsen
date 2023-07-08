@@ -30,8 +30,8 @@ function alts(str: string, opts?: Partial<Opts>): string {
       `html-img-alt/alts(): [THROW_ID_01] Input must be string! Currently its type is: ${typeof str}, equal to: ${JSON.stringify(
         str,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   if (opts && !isObj(opts)) {
@@ -39,8 +39,8 @@ function alts(str: string, opts?: Partial<Opts>): string {
       `html-img-alt/alts(): [THROW_ID_02] Options object must be a plain object! Currently its type is: ${typeof opts}, equal to: ${JSON.stringify(
         opts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
 
@@ -86,7 +86,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
       console.log(
         `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i].trim() ? str[i] : JSON.stringify(str[i], null, 0)
-        }`}\u001b[${39}m ${`\u001b[${90}m#${charcode}\u001b[${39}m`} \u001b[${36}m${`===============================`}\u001b[${39}m`
+        }`}\u001b[${39}m ${`\u001b[${90}m#${charcode}\u001b[${39}m`} \u001b[${36}m${`===============================`}\u001b[${39}m`,
       );
 
     // catch the beginning of the IMG tag:
@@ -99,11 +99,11 @@ function alts(str: string, opts?: Partial<Opts>): string {
         throw new TypeError(
           `html-img-alt/alts(): [THROW_ID_02] Something is wrong with the code - there's an image tag within an image tag. First image tag was: ${str.slice(
             imageTagStartedAt - 20,
-            imageTagStartedAt + 20
+            imageTagStartedAt + 20,
           )}, then before it was closed, we've got this: ${str.slice(
             i - 20,
-            i + 20
-          )}`
+            i + 20,
+          )}`,
         );
       }
 
@@ -187,7 +187,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
 
       DEV &&
         console.log(
-          `190 withinQuotes = ${JSON.stringify(withinQuotes, null, 4)}`
+          `190 withinQuotes = ${JSON.stringify(withinQuotes, null, 4)}`,
         );
       if (
         whitespaceStarted <
@@ -216,7 +216,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
                 thereShouldBeTheSecondDoubleQuoteHere
                   ? 1
                   : 0)
-              }]`
+              }]`,
             );
 
           rangesArr.add(
@@ -230,7 +230,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
               thereShouldBeTheFirstDoubleQuoteHere ||
               thereShouldBeTheSecondDoubleQuoteHere
                 ? 1
-                : 0)
+                : 0),
           );
         } else {
           DEV &&
@@ -246,7 +246,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
                 thereShouldBeTheSecondDoubleQuoteHere
                   ? 1
                   : 0)
-              }]`
+              }]`,
             );
 
           plausibleWithinQuotesRanges.add(
@@ -260,7 +260,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
               thereShouldBeTheFirstDoubleQuoteHere ||
               thereShouldBeTheSecondDoubleQuoteHere
                 ? 1
-                : 0)
+                : 0),
           );
         }
 
@@ -293,7 +293,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
             rangesArr.add(
               location,
               location,
-              `${thingToAdd}""${missingTrailingSpace}`
+              `${thingToAdd}""${missingTrailingSpace}`,
             );
           } // else {
           // it might be that first double quote in alt=" is unclosed, and closing bracket follows.
@@ -331,7 +331,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
       ) {
         DEV &&
           console.log(
-            "334 TRUE for: i >= thereShouldBeTheFirstDoubleQuoteHere"
+            "334 TRUE for: i >= thereShouldBeTheFirstDoubleQuoteHere",
           );
         thereShouldBeTheSecondDoubleQuoteHere =
           thereShouldBeTheFirstDoubleQuoteHere;
@@ -357,7 +357,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
       ) {
         DEV &&
           console.log(
-            "360 TRUE for: i >= thereShouldBeTheSecondDoubleQuoteHere"
+            "360 TRUE for: i >= thereShouldBeTheSecondDoubleQuoteHere",
           );
         // If double quotes are closed properly, wipe the plausibles
         // that practically means we don't delete the whitespace within double quotes.
@@ -382,7 +382,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
           console.log(
             `383 ALT TAG CONTENTS: >>>${str.slice(altContentsStart, i)}<<< (${
               str.slice(altContentsStart, i).length
-            })`
+            })`,
           );
 
         if (altContentsStart && resolvedOpts.unfancyTheAltContents) {
@@ -410,23 +410,23 @@ function alts(str: string, opts?: Partial<Opts>): string {
     if (withinImageTag && str[i] === ">") {
       DEV &&
         console.log(
-          `413 complete img tag: ${str.slice(imageTagStartedAt, i + 1)}`
+          `413 complete img tag: ${str.slice(imageTagStartedAt, i + 1)}`,
         );
       DEV &&
         console.log(
           `417 thereShouldBeTheFirstDoubleQuoteHere = ${JSON.stringify(
             thereShouldBeTheFirstDoubleQuoteHere,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       DEV &&
         console.log(
           `425 thereShouldBeTheSecondDoubleQuoteHere = ${JSON.stringify(
             thereShouldBeTheSecondDoubleQuoteHere,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
 
       imageTagStartedAt = 0;
@@ -437,13 +437,13 @@ function alts(str: string, opts?: Partial<Opts>): string {
         DEV && console.log("437 NO ALT ATTR!");
         DEV &&
           console.log(
-            `440 slashStartedAt = ${JSON.stringify(slashStartedAt, null, 4)}`
+            `440 slashStartedAt = ${JSON.stringify(slashStartedAt, null, 4)}`,
           );
         if (slashStartedAt) {
           // XHTML.
           DEV &&
             console.log(
-              `446 add no.3 - adding >>>alt="" <<< at slashStartedAt=${slashStartedAt}`
+              `446 add no.3 - adding >>>alt="" <<< at slashStartedAt=${slashStartedAt}`,
             );
           rangesArr.add(slashStartedAt, slashStartedAt, ' alt="" ');
         } else {
@@ -495,7 +495,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
       ) {
         DEV &&
           console.log(
-            "498 add no.9 - adding the missing double quote before HTML closing bracket"
+            "498 add no.9 - adding the missing double quote before HTML closing bracket",
           );
         // HTML
         rangesArr.add(i, i, '"');
@@ -504,8 +504,8 @@ function alts(str: string, opts?: Partial<Opts>): string {
             `504 rangesArr.current() = ${JSON.stringify(
               rangesArr.current(),
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
         addSpaceInTheFutureBeforeSlashOrBracket = true;
         // so if the second double quote is missing, merge in the plausible ranges, if any
@@ -531,22 +531,22 @@ function alts(str: string, opts?: Partial<Opts>): string {
       ) {
         DEV &&
           console.log(
-            "534 add no.10 - adding the missing double quote before XHTML closing slash"
+            "534 add no.10 - adding the missing double quote before XHTML closing slash",
           );
         // XHTML
 
         rangesArr.add(
           thereShouldBeTheSecondDoubleQuoteHere + 1,
           thereShouldBeTheSecondDoubleQuoteHere + 1,
-          '"'
+          '"',
         );
         DEV &&
           console.log(
             `545 UPDATED rangesArr.current(): ${JSON.stringify(
               rangesArr.current(),
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
 
         // so if the second double quote is missing, merge in the plausible ranges, if any
@@ -567,19 +567,23 @@ function alts(str: string, opts?: Partial<Opts>): string {
         if (slashStartedAt) {
           DEV &&
             console.log(
-              "570 add no.12.1 - FINAL - adding missing space at slashStartedAt (XHTML)"
+              "570 add no.12.1 - FINAL - adding missing space at slashStartedAt (XHTML)",
             );
           rangesArr.add(slashStartedAt, slashStartedAt, " ");
         } else {
           DEV &&
             console.log(
-              "576 add no.12.2 - FINAL - adding missing space at i (HTML)"
+              "576 add no.12.2 - FINAL - adding missing space at i (HTML)",
             );
           rangesArr.add(i, i, " ");
         }
         DEV &&
           console.log(
-            `582 new rangesArr: ${JSON.stringify(rangesArr.current(), null, 4)}`
+            `582 new rangesArr: ${JSON.stringify(
+              rangesArr.current(),
+              null,
+              4,
+            )}`,
           );
       }
 
@@ -597,7 +601,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
     if (slashStartedAt && str[i] !== "/" && str[i].trim() !== "") {
       DEV &&
         console.log(
-          "600 setting slashStartedAt,\naltContentsStart,\nthereShouldBeEqualCharacterHere,\nthereShouldBeTheFirstDoubleQuoteHere,\nthereShouldBeTheSecondDoubleQuoteHere\nall to zero\n"
+          "604 setting slashStartedAt,\naltContentsStart,\nthereShouldBeEqualCharacterHere,\nthereShouldBeTheFirstDoubleQuoteHere,\nthereShouldBeTheSecondDoubleQuoteHere\nall to zero\n",
         );
       slashStartedAt = 0;
       // altContentsStart = 0
@@ -641,11 +645,11 @@ ${`\u001b[${90}m${`plausibleWithinQuotesRanges.current() = ${plausibleWithinQuot
   DEV && console.log("\n\n\n=============\n\n");
   DEV &&
     console.log(
-      `644 FINAL rangesArr.current() = ${JSON.stringify(
+      `648 FINAL rangesArr.current() = ${JSON.stringify(
         rangesArr.current(),
         null,
-        4
-      )}\n\n\n\n\n\n`
+        4,
+      )}\n\n\n\n\n\n`,
     );
   if (rangesArr.current() && (rangesArr.current() as any[]).length) {
     return rApply(str, rangesArr.current());

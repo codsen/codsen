@@ -119,11 +119,11 @@ test("08 - index is real number as string - throws", () => {
         },
         {
           index: "2.1",
-        }
+        },
       );
     },
     /THROW_ID_11/g,
-    "08.01"
+    "08.01",
   );
 });
 

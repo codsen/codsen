@@ -25,7 +25,7 @@ export interface UnknownValueObj {
 function internalCompare(
   bigObj: JsonValue,
   smallObj: JsonValue,
-  res?: boolean
+  res?: boolean,
 ): boolean | undefined {
   function existy(x: any): boolean {
     return x != null;
@@ -89,7 +89,7 @@ function internalCompare(
           res = internalCompare(
             (bigObj as UnknownValueObj)[keysArr[i]],
             (smallObj as UnknownValueObj)[keysArr[i]],
-            res
+            res,
           );
           if (!res) {
             return false;
@@ -140,7 +140,7 @@ function internalCompare(
  */
 function looseCompare(
   bigObj: JsonValue,
-  smallObj: JsonValue
+  smallObj: JsonValue,
 ): boolean | undefined {
   return internalCompare(bigObj, smallObj);
 }

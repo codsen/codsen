@@ -42,7 +42,7 @@ const cli = meow(
 `,
   {
     importMeta: import.meta,
-  }
+  },
 );
 updateNotifier({ pkg }).notify();
 
@@ -101,7 +101,7 @@ if (cli.flags) {
   let online = await isOnline();
   if (!online) {
     console.error(
-      `\n${messagePrefix}${`\u001b[${31}m${"Please check your internet connection."}\u001b[${39}m`}\n`
+      `\n${messagePrefix}${`\u001b[${31}m${"Please check your internet connection."}\u001b[${39}m`}\n`,
     );
     process.exit(1);
   }
@@ -111,7 +111,7 @@ if (cli.flags) {
     newConfig = JSON.parse(readFileSync(confLocation, "utf8"));
   } catch (err) {
     console.log(
-      `\n${messagePrefix}${`\u001b[${90}m${"No config found, moving on."}\u001b[${39}m`}\n`
+      `\n${messagePrefix}${`\u001b[${90}m${"No config found, moving on."}\u001b[${39}m`}\n`,
     );
   }
 
@@ -135,7 +135,7 @@ if (cli.flags) {
           })
           .catch((err) => {
             log(
-              `${messagePrefix}${`\u001b[${31}m${`Couldn't read and parse the package.json at "${currentPath}": (${err})`}\u001b[${39}m`}`
+              `${messagePrefix}${`\u001b[${31}m${`Couldn't read and parse the package.json at "${currentPath}": (${err})`}\u001b[${39}m`}`,
             );
             return mapReceived;
           }),
@@ -145,8 +145,8 @@ if (cli.flags) {
         pathsByName: {},
         contentsObj: {},
         contentsStr: {},
-      }
-    )
+      },
+    ),
   );
 
   let allProgressPromise = PProgress.all(
@@ -165,7 +165,7 @@ if (cli.flags) {
         ).concat(
           isPlainObject(parsedContents.devDependencies)
             ? Object.keys(parsedContents.devDependencies)
-            : []
+            : [],
         );
 
         //
@@ -209,7 +209,7 @@ if (cli.flags) {
                 .then((pkg1) => {
                   if (pkg1.version === null) {
                     throw new Error(
-                      `${messagePrefix}${singleDepName} version from npm came as null, CLI will exit now, nothing was written.`
+                      `${messagePrefix}${singleDepName} version from npm came as null, CLI will exit now, nothing was written.`,
                     );
                   } else {
                     compiledDepNameVersionPairs[singleDepName] = pkg1.version;
@@ -226,7 +226,7 @@ if (cli.flags) {
               // no response from npm
               compiledDepNameVersionPairs[singleDepName] = null;
             }
-          })
+          }),
         );
         allProgressPromise2.onProgress((val) => {
           // console.log(
@@ -277,12 +277,12 @@ if (cli.flags) {
                     return false;
                   }
                   return true;
-                }
+                },
               );
               parsedContents.lect.various.devDependencies = newVal;
               finalContents = del(
                 finalContents,
-                `lect.various.devDependencies.${foundIdx}`
+                `lect.various.devDependencies.${foundIdx}`,
               );
             }
 
@@ -302,13 +302,13 @@ if (cli.flags) {
               finalContents = set(
                 finalContents,
                 `dependencies.${singleDepName}`,
-                newConfig.pin[singleDepName]
+                newConfig.pin[singleDepName],
               );
               amended = true;
               if (
                 !Object.prototype.hasOwnProperty.call(
                   updatedPackages,
-                  singleDepName
+                  singleDepName,
                 )
               ) {
                 updatedPackages[singleDepName] = newConfig.pin[singleDepName];
@@ -326,13 +326,13 @@ if (cli.flags) {
               finalContents = set(
                 finalContents,
                 `dependencies.${singleDepName}`,
-                `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}`
+                `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}`,
               );
               amended = true;
               if (
                 !Object.prototype.hasOwnProperty.call(
                   updatedPackages,
-                  singleDepName
+                  singleDepName,
                 )
               ) {
                 updatedPackages[singleDepName] =
@@ -374,7 +374,7 @@ if (cli.flags) {
                 // 1. delete devdep entry on JSON string
                 finalContents = del(
                   finalContents,
-                  `devDependencies.${depName}`
+                  `devDependencies.${depName}`,
                 );
                 // 2. delete the devdep from parsedContents.devDependencies
                 // key array which will be used to traverse in the loop later
@@ -398,13 +398,13 @@ if (cli.flags) {
               finalContents = set(
                 finalContents,
                 `dependencies.${singleDepName}`,
-                newConfig.pin[singleDepName]
+                newConfig.pin[singleDepName],
               );
               amended = true;
               if (
                 !Object.prototype.hasOwnProperty.call(
                   updatedPackages,
-                  singleDepName
+                  singleDepName,
                 )
               ) {
                 updatedPackages[singleDepName] = newConfig.pin[singleDepName];
@@ -422,7 +422,7 @@ if (cli.flags) {
               finalContents = set(
                 finalContents,
                 `devDependencies.${singleDepName}`,
-                `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}`
+                `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}`,
               );
               amended = true;
 
@@ -430,7 +430,7 @@ if (cli.flags) {
               if (
                 !Object.prototype.hasOwnProperty.call(
                   updatedPackages,
-                  singleDepName
+                  singleDepName,
                 )
               ) {
                 updatedPackages[
@@ -440,7 +440,7 @@ if (cli.flags) {
             }
 
             progress(
-              0.75 + 0.24 * ((totalDeps.length - len2 + y) / totalDeps.length)
+              0.75 + 0.24 * ((totalDeps.length - len2 + y) / totalDeps.length),
             );
           }
         }
@@ -457,12 +457,12 @@ if (cli.flags) {
             await write(oneOfPaths, finalContents);
           } catch (e) {
             console.error(
-              `${messagePrefix}error happened when writing package.json:\n${e}`
+              `${messagePrefix}error happened when writing package.json:\n${e}`,
             );
           }
         }
-      })
-    )
+      }),
+    ),
   );
 
   allProgressPromise.onProgress((val) =>
@@ -477,8 +477,8 @@ if (cli.flags) {
             Object.keys(updatedPackages).length
               ? `updated:\n${printUpdated()}`
               : "done"
-          }`
-    )
+          }`,
+    ),
   );
   diff.pipe(process.stdout);
 

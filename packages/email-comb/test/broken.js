@@ -14,7 +14,7 @@ test("01 - missing closing TD, TR, TABLE will not throw", () => {
 <tr>
   <td>
     some text
-`
+`,
   ).result;
 
   let intended = `<table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -35,7 +35,7 @@ test("02 - doesn't remove any other empty attributes besides class/id (mini)", (
 <img alt=""/>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<html>
@@ -63,7 +63,7 @@ test("03 - doesn't remove any other empty attributes besides class/id", () => {
   </table>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<html>
@@ -103,7 +103,7 @@ test("04 - removes classes and id's from HTML even if it's heavily messed up", (
     </td>
   </tr>
 </table>
-</body>`
+</body>`,
   ).result;
 
   let intended = `<title>Dummy HTML</title>
@@ -160,7 +160,7 @@ test("06 - dirty code - blank class attribute name", () => {
 </head>
 <body>
 zzz
-</body>`
+</body>`,
   ).result;
   let intended1 = `<head>
 </head>
@@ -179,7 +179,7 @@ test("07 - dirty code - space between class and =", () => {
 </style>
 <body><br class ="bb" align="left">
 </body>
-`
+`,
   ).result;
 
   let intended = `<head>

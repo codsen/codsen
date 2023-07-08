@@ -27,13 +27,13 @@ test("01 - when asked, sorts arrays which contain only strings", async () => {
   let processedFileContents = fs
     .writeFile(
       pathOfTheTestfile,
-      JSON.stringify(["a", "A", "z", "Z", "m", "M"], null, 2)
+      JSON.stringify(["a", "A", "z", "Z", "m", "M"], null, 2),
     )
     .then(() => execa("./cli.js", [tempFolder, "-a", "sortme.json"]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received),
     )
     .catch((err) => {
       throw new Error(err);
@@ -49,7 +49,7 @@ test("01 - when asked, sorts arrays which contain only strings", async () => {
   "z",
   "Z"
 ]\n`,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -66,7 +66,7 @@ test("02 - when not asked, does not sort arrays which contain only strings", asy
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received),
     )
     .catch((err) => {
       throw new Error(err);
@@ -74,7 +74,7 @@ test("02 - when not asked, does not sort arrays which contain only strings", asy
   equal(
     await processedFileContents,
     `${JSON.stringify(sourceArr, null, 2)}\n`,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -99,14 +99,14 @@ test("03 - array in deeper levels sorted (upon request)", async () => {
           },
         },
         null,
-        2
-      )
+        2,
+      ),
     )
     .then(() => execa("./cli.js", [tempFolder, "-a", "sortme.json"]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received),
     )
     .catch((err) => {
       throw new Error(err);
@@ -128,7 +128,7 @@ test("03 - array in deeper levels sorted (upon request)", async () => {
     ]
   }
 }\n`,
-    "03.01"
+    "03.01",
   );
 });
 

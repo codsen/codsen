@@ -42,7 +42,7 @@ assert.deepEqual(
           b: false,
         },
       ],
-    }
+    },
   ),
-  ["z[0].c", "z[1].c"]
+  ["z[0].c", "z[1].c"],
 );

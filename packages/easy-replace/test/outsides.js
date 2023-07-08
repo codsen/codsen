@@ -21,10 +21,10 @@ test("01 - left and right outsides as arrays (majority found)", () => {
         rightOutside: ["more stuff here", "and here", "🦄", "💘"],
         rightOutsideNot: "",
       },
-      "c"
+      "c",
     ),
     "🐴 a🦄c💘a a💘c🦄a a💘c💘a a🦄c🦄a 🐴",
-    "test 11.1"
+    "test 11.1",
   );
 });
 
@@ -41,10 +41,10 @@ test("02 - left and right outsides as arrays (one found)", () => {
         rightOutside: ["more stuff here", "and here", "💘"],
         rightOutsideNot: "",
       },
-      "c"
+      "c",
     ),
     "🐴 a🦄c💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴",
-    "test 11.2"
+    "test 11.2",
   );
 });
 
@@ -61,10 +61,10 @@ test("03 - outsides as arrays, beyond found maybes", () => {
         rightOutside: ["a"],
         rightOutsideNot: "",
       },
-      "c"
+      "c",
     ),
     "🦄🐴 aca aca aca aca 🐴🦄",
-    "test 11.3"
+    "test 11.3",
   );
 });
 
@@ -81,10 +81,10 @@ test("04 - outsides as arrays blocking maybes", () => {
         rightOutside: ["b"],
         rightOutsideNot: "",
       },
-      "whatevs"
+      "whatevs",
     ),
     "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
-    "test 11.4"
+    "test 11.4",
   );
 });
 
@@ -101,10 +101,10 @@ test("05 - maybes matching outsides, blocking them", () => {
         rightOutside: ["🦄", "💘"],
         rightOutsideNot: "",
       },
-      "whatevs"
+      "whatevs",
     ),
     "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
-    "test 11.5"
+    "test 11.5",
   );
 });
 
@@ -121,10 +121,10 @@ test("06 - maybes matching outsides, blocking them", () => {
         rightOutside: ["🦄", "💘"],
         rightOutsideNot: "",
       },
-      "whatevs"
+      "whatevs",
     ),
     "🦄🐴 a🦄🐴💘a a💘🐴🦄a a💘🐴💘a a🦄🐴🦄a 🐴🦄",
-    "test 11.6"
+    "test 11.6",
   );
 });
 
@@ -141,10 +141,10 @@ test("07 - maybes matching outsides, found", () => {
         rightOutside: ["🦄", "💘"],
         rightOutsideNot: "",
       },
-      "c"
+      "c",
     ),
     "🦄🐴🦄 a💘c🦄a a🦄c💘a a💘c💘a a🦄c🦄a 🦄🐴🦄",
-    "test 11.6"
+    "test 11.6",
   );
 });
 
@@ -161,10 +161,10 @@ test("08 - maybes matching outsides, mismatching", () => {
         rightOutside: ["🦄", "💘"],
         rightOutsideNot: "",
       },
-      "c"
+      "c",
     ),
     "🍺🐴🍺 a💘c🦄a a🦄c💘a a💘c💘a a🦄c🦄a 🌟🐴🌟",
-    "test 11.6"
+    "test 11.6",
   );
 });
 
@@ -181,10 +181,10 @@ test("09 - rightOutside & with case-insensitive flag", () => {
         rightOutside: "u",
         rightOutsideNot: "",
       },
-      "!"
+      "!",
     ),
     "aaaBBBccc aaazzzCCC aaaCCC",
-    "test 11.7.1 - nothing matches, without flag"
+    "test 11.7.1 - nothing matches, without flag",
   );
   equal(
     er(
@@ -201,10 +201,10 @@ test("09 - rightOutside & with case-insensitive flag", () => {
           rightOutside: true,
         },
       },
-      "!"
+      "!",
     ),
     "aaaBBBccc aaazzzCCC aaaCCC",
-    "test 11.7.2 - nothing matches, with flag"
+    "test 11.7.2 - nothing matches, with flag",
   );
   equal(
     er(
@@ -221,10 +221,10 @@ test("09 - rightOutside & with case-insensitive flag", () => {
           rightOutside: true,
         },
       },
-      "!"
+      "!",
     ),
     "aaaBBBccc aaazzzCCC !CCC",
-    "test 11.7.3 - one match, with flag"
+    "test 11.7.3 - one match, with flag",
   );
 });
 

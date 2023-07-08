@@ -26,7 +26,7 @@ More content
       `,
       {
         removeLineBreaks: true,
-      }
+      },
     ).result,
     `<html>
 <body><pre class="language-html">
@@ -38,7 +38,7 @@ More content
   </pre>
 </body>
 </html>`,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -69,7 +69,7 @@ test("02", () => {
 c </b>
 </a> <b>`,
     },
-    "02"
+    "02",
   );
 });
 

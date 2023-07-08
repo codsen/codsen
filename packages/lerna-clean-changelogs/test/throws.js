@@ -14,7 +14,7 @@ test("01 - missing 1st arg", () => {
       c();
     },
     /THROW_ID_01/g,
-    "01.01"
+    "01.01",
   );
 
   throws(
@@ -22,7 +22,7 @@ test("01 - missing 1st arg", () => {
       c(undefined);
     },
     /THROW_ID_01/g,
-    "01.02"
+    "01.02",
   );
 });
 
@@ -32,7 +32,7 @@ test("02 - 1st arg of a wrong type", () => {
       c(1);
     },
     /THROW_ID_02/g,
-    "02.01"
+    "02.01",
   );
 
   throws(
@@ -40,7 +40,7 @@ test("02 - 1st arg of a wrong type", () => {
       c(true);
     },
     /THROW_ID_02/g,
-    "02.02"
+    "02.02",
   );
 
   throws(
@@ -48,7 +48,7 @@ test("02 - 1st arg of a wrong type", () => {
       c([]);
     },
     /THROW_ID_02/g,
-    "02.03"
+    "02.03",
   );
 
   throws(
@@ -56,7 +56,7 @@ test("02 - 1st arg of a wrong type", () => {
       c(null);
     },
     /THROW_ID_02/g,
-    "02.04"
+    "02.04",
   );
 
   throws(
@@ -64,7 +64,7 @@ test("02 - 1st arg of a wrong type", () => {
       c({});
     },
     /THROW_ID_02/g,
-    "02.05"
+    "02.05",
   );
 });
 
@@ -75,7 +75,7 @@ test("03 - 1st arg is empty string", () => {
       res: "",
       version,
     },
-    "03.01"
+    "03.01",
   );
 });
 

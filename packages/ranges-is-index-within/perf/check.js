@@ -22,7 +22,7 @@ const testme = () =>
     ],
     {
       returnMatchedRangeInsteadOfTrue: true,
-    }
+    },
   );
 
 // action

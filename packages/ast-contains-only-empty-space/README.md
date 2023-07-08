@@ -53,7 +53,7 @@ assert.equal(
     c: ["\n \n\n"],
     d: ["\t   "],
   }),
-  true
+  true,
 );
 ```
 

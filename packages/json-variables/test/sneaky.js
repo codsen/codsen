@@ -18,7 +18,7 @@ test("01 - two-level variables resolved", () => {
       b: "val",
       c: "val",
     },
-    "01.01"
+    "01.01",
   );
   equal(
     jVar({
@@ -31,7 +31,7 @@ test("01 - two-level variables resolved", () => {
       b: { c_key: "val" },
       c: "val",
     },
-    "01.02"
+    "01.02",
   );
 });
 
@@ -47,7 +47,7 @@ test("02 - two-level redirects, backwards order", () => {
       y: "val",
       z: "val",
     },
-    "02.01"
+    "02.01",
   );
   equal(
     jVar({
@@ -60,7 +60,7 @@ test("02 - two-level redirects, backwards order", () => {
       y: { key2: "val" },
       z: "val",
     },
-    "02.02"
+    "02.02",
   );
 });
 
@@ -78,7 +78,7 @@ test("03 - two-level variables resolved, mixed", () => {
       c: "val1",
       d: "val2",
     },
-    "03.01"
+    "03.01",
   );
   equal(
     jVar({
@@ -93,7 +93,7 @@ test("03 - two-level variables resolved, mixed", () => {
       c: { key1: "val1" },
       d: { key2: "val2" },
     },
-    "03.02"
+    "03.02",
   );
 });
 
@@ -111,7 +111,7 @@ test("04 - three-level variables resolved", () => {
       c: "val",
       d: "val",
     },
-    "04.01"
+    "04.01",
   );
   equal(
     jVar({
@@ -126,7 +126,7 @@ test("04 - three-level variables resolved", () => {
       c: { e: { f: { g: "val" } } },
       h: "val",
     },
-    "04.02"
+    "04.02",
   );
 });
 
@@ -144,7 +144,7 @@ test("05 - another three-level var resolving", () => {
       c: "val",
       d: "val",
     },
-    "05.01"
+    "05.01",
   );
 });
 
@@ -166,7 +166,7 @@ test("06 - multiple variables resolved", () => {
       e: "c",
       f: "c c",
     },
-    "06.01"
+    "06.01",
   );
   throws(
     () => {
@@ -180,7 +180,7 @@ test("06 - multiple variables resolved", () => {
       });
     },
     /THROW_ID_19/,
-    "06.02"
+    "06.02",
   );
 
   throws(
@@ -195,7 +195,7 @@ test("06 - multiple variables resolved", () => {
       });
     },
     /THROW_ID_19/,
-    "06.03"
+    "06.03",
   );
 });
 
@@ -207,14 +207,14 @@ test("07 - preventDoubleWrapping: on & off", () => {
         b: "%%_c_%%",
         c: "val",
       },
-      { wrapHeadsWith: "{", wrapTailsWith: "}", preventDoubleWrapping: false }
+      { wrapHeadsWith: "{", wrapTailsWith: "}", preventDoubleWrapping: false },
     ),
     {
       a: "{{val}}",
       b: "{val}",
       c: "val",
     },
-    "07.01"
+    "07.01",
   );
   equal(
     jVar(
@@ -223,14 +223,14 @@ test("07 - preventDoubleWrapping: on & off", () => {
         b: "%%_c_%%",
         c: "val",
       },
-      { wrapHeadsWith: "{", wrapTailsWith: "}", preventDoubleWrapping: true }
+      { wrapHeadsWith: "{", wrapTailsWith: "}", preventDoubleWrapping: true },
     ),
     {
       a: "{val}",
       b: "{val}",
       c: "val",
     },
-    "07.02"
+    "07.02",
   );
 
   // here values come already wrapped:
@@ -242,14 +242,14 @@ test("07 - preventDoubleWrapping: on & off", () => {
         b: "%%_c_%%",
         c: "{val}",
       },
-      { wrapHeadsWith: "{", wrapTailsWith: "}", preventDoubleWrapping: false }
+      { wrapHeadsWith: "{", wrapTailsWith: "}", preventDoubleWrapping: false },
     ),
     {
       a: "{{{val}}}",
       b: "{{val}}",
       c: "{val}",
     },
-    "07.03"
+    "07.03",
   );
   equal(
     jVar(
@@ -258,14 +258,14 @@ test("07 - preventDoubleWrapping: on & off", () => {
         b: "%%_c_%%",
         c: "{val}",
       },
-      { wrapHeadsWith: "{", wrapTailsWith: "}", preventDoubleWrapping: true }
+      { wrapHeadsWith: "{", wrapTailsWith: "}", preventDoubleWrapping: true },
     ),
     {
       a: "{val}",
       b: "{val}",
       c: "{val}",
     },
-    "07.04"
+    "07.04",
   );
 
   equal(
@@ -275,14 +275,14 @@ test("07 - preventDoubleWrapping: on & off", () => {
         b: "%%_c_%%",
         c: "Some text {val} and another {val}",
       },
-      { wrapHeadsWith: "{", wrapTailsWith: "}", preventDoubleWrapping: false }
+      { wrapHeadsWith: "{", wrapTailsWith: "}", preventDoubleWrapping: false },
     ),
     {
       a: "{{Some text {val} and another {val}}}",
       b: "{Some text {val} and another {val}}",
       c: "Some text {val} and another {val}",
     },
-    "07.05"
+    "07.05",
   );
   equal(
     jVar(
@@ -291,14 +291,14 @@ test("07 - preventDoubleWrapping: on & off", () => {
         b: "%%_c_%%",
         c: "Some text {val} and another {val}",
       },
-      { wrapHeadsWith: "{", wrapTailsWith: "}", preventDoubleWrapping: true }
+      { wrapHeadsWith: "{", wrapTailsWith: "}", preventDoubleWrapping: true },
     ),
     {
       a: "Some text {val} and another {val}",
       b: "Some text {val} and another {val}",
       c: "Some text {val} and another {val}",
     },
-    "07.06"
+    "07.06",
   );
 
   equal(
@@ -308,14 +308,14 @@ test("07 - preventDoubleWrapping: on & off", () => {
         b: "%%_c.d_%%",
         c: { d: "val" },
       },
-      { wrapHeadsWith: "{", wrapTailsWith: "}", preventDoubleWrapping: true }
+      { wrapHeadsWith: "{", wrapTailsWith: "}", preventDoubleWrapping: true },
     ),
     {
       a: "{val}",
       b: "{val}",
       c: { d: "val" },
     },
-    "07.07"
+    "07.07",
   );
 });
 
@@ -329,7 +329,7 @@ test("08 - empty variable", () => {
       a: "",
       b: "bbb",
     },
-    "08.01"
+    "08.01",
   );
 });
 

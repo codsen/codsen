@@ -32,7 +32,7 @@ const testme = () =>
       dontWrapVars: ["*zzz", "*le", "*yyy"],
       preventDoubleWrapping: true,
       wrapGlobalFlipSwitch: true,
-    }
+    },
   );
 
 // action

@@ -51,9 +51,9 @@ assert.equal(
         b: "d",
         c: [],
       },
-    }
+    },
   ),
-  true
+  true,
 );
 ```
 

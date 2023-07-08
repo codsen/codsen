@@ -50,7 +50,7 @@ test(`01 - ${`\u001b[${36}m${"simple"}\u001b[${39}m`} - simple case`, () => {
         end: 10,
       },
     ],
-    "01"
+    "01",
   );
 });
 
@@ -96,7 +96,7 @@ test(`02 - ${`\u001b[${36}m${"simple"}\u001b[${39}m`} - broken simple case, with
         end: 12,
       },
     ],
-    "02"
+    "02",
   );
 });
 
@@ -133,7 +133,7 @@ test(`03 - ${`\u001b[${36}m${"simple"}\u001b[${39}m`} - dash missing`, () => {
         value: "b->c",
       },
     ],
-    "03"
+    "03",
   );
 });
 
@@ -184,7 +184,7 @@ test(`04 - ${`\u001b[${36}m${"simple"}\u001b[${39}m`} - dash missing`, () => {
         value: "c",
       },
     ],
-    "04"
+    "04",
   );
 });
 
@@ -221,7 +221,7 @@ test(`05 - ${`\u001b[${36}m${"simple"}\u001b[${39}m`} - dash missing`, () => {
         value: "c",
       },
     ],
-    "05"
+    "05",
   );
 });
 
@@ -258,7 +258,7 @@ test(`06 - ${`\u001b[${36}m${"simple"}\u001b[${39}m`} - dash missing`, () => {
         value: "b--!>c",
       },
     ],
-    "06"
+    "06",
   );
 });
 
@@ -297,7 +297,7 @@ test(`07 - ${`\u001b[${36}m${"simple"}\u001b[${39}m`} - dash missing`, () => {
         closing: true,
       },
     ],
-    "07"
+    "07",
   );
 });
 
@@ -346,7 +346,7 @@ test(`08 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - outlook conditionals
         end: 34,
       },
     ],
-    "08"
+    "08",
   );
 });
 
@@ -363,7 +363,7 @@ test(`09 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - outlook conditionals
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
 
   compare(
@@ -414,7 +414,7 @@ test(`09 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - outlook conditionals
         end: 156,
       },
     ],
-    "09"
+    "09",
   );
 });
 
@@ -460,7 +460,7 @@ test(`10 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - outlook conditionals
         end: 40,
       },
     ],
-    "10"
+    "10",
   );
 });
 
@@ -499,7 +499,7 @@ test(`11 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - missing excl. mark`,
         closing: true,
       },
     ],
-    "11"
+    "11",
   );
 });
 
@@ -530,7 +530,7 @@ test(`12 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - empty conditional`, 
         closing: true,
       },
     ],
-    "12"
+    "12",
   );
 });
 
@@ -566,7 +566,7 @@ test(`13 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - swapped excl. mark`,
         closing: true,
       },
     ],
-    "13"
+    "13",
   );
 });
 
@@ -603,7 +603,7 @@ test(`14 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - 1 instead of !`, () 
         closing: true,
       },
     ],
-    "14"
+    "14",
   );
 });
 
@@ -634,7 +634,7 @@ test(`15 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - missing closing brac
         value: "a",
       },
     ],
-    "15"
+    "15",
   );
 });
 
@@ -658,7 +658,7 @@ test(`16 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - opening square brack
         closing: false,
       },
     ],
-    "16"
+    "16",
   );
 });
 
@@ -689,7 +689,7 @@ test(`17 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - opening square brack
         language: "html",
       },
     ],
-    "17.01"
+    "17.01",
   );
 });
 
@@ -727,7 +727,7 @@ test(`18 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - curly brackets`, () 
         closing: true,
       },
     ],
-    "18"
+    "18",
   );
 });
 
@@ -765,7 +765,7 @@ test(`19 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - parentheses`, () => 
         closing: true,
       },
     ],
-    "19"
+    "19",
   );
 });
 
@@ -820,7 +820,7 @@ test(`20 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - comment nested`, () 
         closing: true,
       },
     ],
-    "20"
+    "20",
   );
 });
 
@@ -859,7 +859,7 @@ test(`21 - ${`\u001b[${35}m${"kind: only"}\u001b[${39}m`} - no brackets`, () => 
         closing: true,
       },
     ],
-    "21"
+    "21",
   );
 });
 
@@ -910,7 +910,7 @@ test(`22 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - simplet following "no
         value: "y",
       },
     ],
-    "22"
+    "22",
   );
 });
 
@@ -959,7 +959,7 @@ test(`23 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - outlook conditionals 
         end: 38,
       },
     ],
-    "23"
+    "23",
   );
 });
 
@@ -993,7 +993,7 @@ test(`24 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - missing dash in the o
         end: 20,
       },
     ],
-    "24"
+    "24",
   );
 });
 
@@ -1017,7 +1017,7 @@ test(`25 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - missing dash in the o
         closing: false,
       },
     ],
-    "25"
+    "25",
   );
 });
 
@@ -1046,7 +1046,7 @@ test(`26 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - expanded notation, no
         end: 22,
       },
     ],
-    "26"
+    "26",
   );
 });
 
@@ -1075,7 +1075,7 @@ test(`27 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - expanded notation, wi
         end: 23,
       },
     ],
-    "27"
+    "27",
   );
 });
 
@@ -1121,7 +1121,7 @@ test(`28 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - brackets missing`, ()
         end: 34,
       },
     ],
-    "28"
+    "28",
   );
 });
 
@@ -1167,7 +1167,7 @@ test(`29 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - brackets missing, spa
         end: 37,
       },
     ],
-    "29"
+    "29",
   );
 });
 
@@ -1212,7 +1212,7 @@ test(`30 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - simplet following "no
         value: "y",
       },
     ],
-    "30"
+    "30",
   );
 });
 
@@ -1226,7 +1226,7 @@ test(`31 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - simplet following "no
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
 
   compare(
@@ -1307,7 +1307,7 @@ test(`31 - ${`\u001b[${33}m${"kind: not"}\u001b[${39}m`} - simplet following "no
         closing: true,
       },
     ],
-    "31"
+    "31",
   );
 });
 
@@ -1335,7 +1335,7 @@ test(`32 - ${`\u001b[${36}m${"simplet"}\u001b[${39}m`} - one instance, nothing a
         language: "html",
       },
     ],
-    "32.01"
+    "32.01",
   );
 });
 
@@ -1378,7 +1378,7 @@ test(`33 - ${`\u001b[${36}m${"simplet"}\u001b[${39}m`} - one instance, nothing a
         language: "html",
       },
     ],
-    "33.01"
+    "33.01",
   );
 });
 
@@ -1411,7 +1411,7 @@ test(`34 - ${`\u001b[${36}m${"simplet"}\u001b[${39}m`} - one instance`, () => {
         end: 7,
       },
     ],
-    "34"
+    "34",
   );
 });
 
@@ -1446,7 +1446,7 @@ test(`35 - ${`\u001b[${36}m${"simplet"}\u001b[${39}m`} - three instances`, () =>
         kind: "simplet",
       },
     ],
-    "35"
+    "35",
   );
 });
 

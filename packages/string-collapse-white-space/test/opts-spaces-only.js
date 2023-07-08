@@ -16,7 +16,7 @@ test("01", () => {
         result: "a b",
         ranges: null,
       },
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -41,7 +41,7 @@ test("03", () => {
     equal(
       collapse("a \t\tb", opt),
       { result: "a \t\tb", ranges: null },
-      "03.01"
+      "03.01",
     );
   });
   mixer({
@@ -50,7 +50,7 @@ test("03", () => {
     equal(
       collapse("a \t\tb", opt),
       { result: "a b", ranges: [[2, 4]] },
-      "03.02"
+      "03.02",
     );
   });
 });
@@ -67,7 +67,7 @@ test("04", () => {
     equal(
       collapse("a\t\tb", opt),
       { result: "a b", ranges: [[1, 3, " "]] },
-      "04.02"
+      "04.02",
     );
   });
 });
@@ -81,7 +81,7 @@ test("05", () => {
     equal(
       collapse("a  \tb", opt),
       { result: "a \tb", ranges: [[1, 2]] },
-      "05.01"
+      "05.01",
     );
   });
   mixer({
@@ -90,7 +90,7 @@ test("05", () => {
     equal(
       collapse("a  \tb", opt),
       { result: "a b", ranges: [[2, 4]] },
-      "05.02"
+      "05.02",
     );
   });
 });
@@ -102,7 +102,7 @@ test("06 - reuse the last space", () => {
     equal(
       collapse("a\t  b", opt),
       { result: "a\t b", ranges: [[2, 3]] },
-      "06.01"
+      "06.01",
     );
   });
   mixer({
@@ -111,7 +111,7 @@ test("06 - reuse the last space", () => {
     equal(
       collapse("a\t  b", opt),
       { result: "a b", ranges: [[1, 3]] },
-      "06.02"
+      "06.02",
     );
   });
 });
@@ -123,7 +123,7 @@ test("07", () => {
     equal(
       collapse("a\t\t\tb", opt),
       { result: "a\t\t\tb", ranges: null },
-      "07.01"
+      "07.01",
     );
   });
   mixer({
@@ -132,7 +132,7 @@ test("07", () => {
     equal(
       collapse("a\t\t\tb", opt),
       { result: "a b", ranges: [[1, 4, " "]] },
-      "07.02"
+      "07.02",
     );
   });
 });
@@ -146,7 +146,7 @@ test("08", () => {
       trimStart: false,
     }),
     { result: " \tx", ranges: [[0, 1]] },
-    "08.01"
+    "08.01",
   );
 });
 
@@ -157,7 +157,7 @@ test("09 - reuse the space", () => {
       trimStart: false,
     }),
     { result: " x", ranges: [[1, 3]] },
-    "09.01"
+    "09.01",
   );
 });
 
@@ -168,7 +168,7 @@ test("10 - full replace", () => {
       trimStart: false,
     }),
     { result: " x", ranges: [[0, 3, " "]] },
-    "10.01"
+    "10.01",
   );
 });
 
@@ -179,7 +179,7 @@ test("11", () => {
       trimStart: true,
     }),
     { result: "x", ranges: [[0, 3]] },
-    "11.01"
+    "11.01",
   );
 });
 
@@ -190,7 +190,7 @@ test("12", () => {
       trimStart: true,
     }),
     { result: "x", ranges: [[0, 3]] },
-    "12.01"
+    "12.01",
   );
 });
 
@@ -201,7 +201,7 @@ test("13", () => {
       trimStart: true,
     }),
     { result: "x", ranges: [[0, 3]] },
-    "13.01"
+    "13.01",
   );
 });
 
@@ -212,7 +212,7 @@ test("14", () => {
       trimStart: true,
     }),
     { result: "x", ranges: [[0, 3]] },
-    "14.01"
+    "14.01",
   );
 });
 
@@ -225,7 +225,7 @@ test("15", () => {
       trimEnd: false,
     }),
     { result: "x\t ", ranges: [[2, 3]] },
-    "15.01"
+    "15.01",
   );
 });
 
@@ -236,7 +236,7 @@ test("16 - reuse", () => {
       trimEnd: false,
     }),
     { result: "x ", ranges: [[1, 3]] },
-    "16.01"
+    "16.01",
   );
 });
 
@@ -247,7 +247,7 @@ test("17 - replace", () => {
       trimEnd: false,
     }),
     { result: "x ", ranges: [[1, 4, " "]] },
-    "17.01"
+    "17.01",
   );
 });
 
@@ -258,7 +258,7 @@ test("18", () => {
       trimEnd: true,
     }),
     { result: "x", ranges: [[1, 4]] },
-    "18.01"
+    "18.01",
   );
 });
 
@@ -269,7 +269,7 @@ test("19", () => {
       trimEnd: true,
     }),
     { result: "x", ranges: [[1, 4]] },
-    "19.01"
+    "19.01",
   );
 });
 
@@ -281,7 +281,7 @@ test("20", () => {
       enforceSpacesOnly: false,
     }),
     { result: "a\t b", ranges: null },
-    "20.01"
+    "20.01",
   );
 });
 
@@ -291,7 +291,7 @@ test("21", () => {
       enforceSpacesOnly: true,
     }),
     { result: "a b", ranges: [[1, 2]] },
-    "21.01"
+    "21.01",
   );
 });
 
@@ -301,7 +301,7 @@ test("22", () => {
       enforceSpacesOnly: true,
     }),
     { result: "a b", ranges: [[1, 3, " "]] },
-    "22.01"
+    "22.01",
   );
 });
 
@@ -313,7 +313,7 @@ test("23", () => {
       enforceSpacesOnly: false,
     }),
     { result: "a\tb", ranges: null },
-    "23.01"
+    "23.01",
   );
 });
 
@@ -323,7 +323,7 @@ test("24", () => {
       enforceSpacesOnly: true,
     }),
     { result: "a b", ranges: [[1, 2, " "]] },
-    "24.01"
+    "24.01",
   );
 });
 
@@ -335,7 +335,7 @@ test("25", () => {
       enforceSpacesOnly: false,
     }),
     { result: "a\t\tb", ranges: null },
-    "25.01"
+    "25.01",
   );
 });
 
@@ -345,7 +345,7 @@ test("26", () => {
       enforceSpacesOnly: true,
     }),
     { result: "a b", ranges: [[1, 3, " "]] },
-    "26.01"
+    "26.01",
   );
 });
 
@@ -357,7 +357,7 @@ test("27", () => {
       enforceSpacesOnly: false,
     }),
     { result: "a\nb", ranges: null },
-    "27.01"
+    "27.01",
   );
 });
 
@@ -367,7 +367,7 @@ test("28", () => {
       enforceSpacesOnly: true,
     }),
     { result: "a\nb", ranges: null },
-    "28.01"
+    "28.01",
   );
 });
 
@@ -379,7 +379,7 @@ test("29", () => {
       enforceSpacesOnly: false,
     }),
     { result: "a\r\nb", ranges: null },
-    "29.01"
+    "29.01",
   );
 });
 
@@ -389,7 +389,7 @@ test("30", () => {
       enforceSpacesOnly: true,
     }),
     { result: "a\r\nb", ranges: null },
-    "30.01"
+    "30.01",
   );
 });
 
@@ -407,7 +407,7 @@ test("31", () => {
     equal(
       collapse("a\n\nb", opt),
       { result: "a\nb", ranges: [[1, 2]] },
-      "31.02"
+      "31.02",
     );
   });
 });
@@ -422,7 +422,7 @@ test("32", () => {
     equal(
       collapse("a \t \n \t b", opt),
       { result: "a \t \n \t b", ranges: null },
-      "32.01"
+      "32.01",
     );
   });
   mixer({

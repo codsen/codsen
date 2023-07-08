@@ -16,7 +16,7 @@ test("01", () => {
       equal(
         collapse(`a${eol}b`, opt).result,
         `a${eol}b`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
   });
@@ -30,7 +30,7 @@ test("02", () => {
       equal(
         collapse(`a${eol}${eol}b`, opt).result,
         `a${eol}${eol}b`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -39,7 +39,7 @@ test("02", () => {
       equal(
         collapse(`a${eol}${eol}b`, opt).result,
         `a${eol}b`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
   });
@@ -53,7 +53,7 @@ test("03", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     "a\nb",
-    "03.01"
+    "03.01",
   );
 });
 
@@ -65,7 +65,7 @@ test("04", () => {
       trimLines: true,
     }).result,
     "a\r\n\r\nb",
-    "04.01"
+    "04.01",
   );
 });
 
@@ -80,7 +80,7 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a ${eol} ${eol} b`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -91,7 +91,7 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a${eol}${eol}b`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
 
@@ -104,7 +104,7 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a ${eol} b`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -115,7 +115,7 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a${eol}b`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
 
@@ -128,7 +128,7 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a ${eol} ${eol} b`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -139,7 +139,7 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a${eol}${eol}b`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
 
@@ -152,7 +152,7 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a ${eol} ${eol} b`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -163,7 +163,7 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a${eol}${eol}b`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
   });
@@ -178,7 +178,7 @@ test(`06 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - one - rem
         removeEmptyLines: true,
       }).result,
       `a${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
     equal(
       collapse(`a${presentEolType}${presentEolType}b`, {
@@ -187,7 +187,7 @@ test(`06 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - one - rem
         removeEmptyLines: true,
       }).result,
       `a${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });
@@ -201,7 +201,7 @@ test(`07 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - one - don
         removeEmptyLines: false,
       }).result,
       `a${presentEolType}${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
     equal(
       collapse(`a${presentEolType}${presentEolType}b`, {
@@ -210,7 +210,7 @@ test(`07 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - one - don
         removeEmptyLines: false,
       }).result,
       `a${presentEolType}${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });
@@ -224,7 +224,7 @@ test(`08 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - two, spac
         removeEmptyLines: true,
       }).result,
       `a${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
     equal(
       collapse(` a ${presentEolType} ${presentEolType} b `, {
@@ -233,7 +233,7 @@ test(`08 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - two, spac
         removeEmptyLines: true,
       }).result,
       `a${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });
@@ -247,7 +247,7 @@ test(`09 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - two, spac
         removeEmptyLines: false,
       }).result,
       `a${presentEolType}${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
     equal(
       collapse(` a ${presentEolType} ${presentEolType} b `, {
@@ -256,7 +256,7 @@ test(`09 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - two, spac
         removeEmptyLines: false,
       }).result,
       `a${presentEolType}${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });
@@ -270,7 +270,7 @@ test(`10 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - empty lin
         removeEmptyLines: false,
       }).result,
       `a ${presentEolType} ${presentEolType} b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
     equal(
       collapse(` a ${presentEolType} ${presentEolType} b `, {
@@ -279,7 +279,7 @@ test(`10 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - empty lin
         removeEmptyLines: false,
       }).result,
       `a ${presentEolType} ${presentEolType} b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });
@@ -293,7 +293,7 @@ test(`11 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - \\n - emp
         removeEmptyLines: false,
       }).result,
       `a ${presentEolType} ${presentEolType} b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
     equal(
       collapse(`  a  ${presentEolType}  ${presentEolType}  b  `, {
@@ -302,7 +302,7 @@ test(`11 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - \\n - emp
         removeEmptyLines: false,
       }).result,
       `a ${presentEolType} ${presentEolType} b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });
@@ -312,10 +312,10 @@ test(`12 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - advanced`
     equal(
       collapse(
         `\xa0${presentEolType}${presentEolType}  \xa0   a    b   \xa0 \r\n  \xa0  c    d   \xa0\xa0   \r  \xa0\xa0   e     f  \xa0\xa0   ${presentEolType}${presentEolType}${presentEolType} \xa0\xa0    g    h    \r\xa0\xa0`,
-        { trimLines: true, trimnbsp: true, removeEmptyLines: true }
+        { trimLines: true, trimnbsp: true, removeEmptyLines: true },
       ).result,
       `a b\r\nc d\re f${presentEolType}g h`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });
@@ -329,10 +329,10 @@ test(`13 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - leading/t
           trimLines: true,
           trimnbsp: true,
           removeEmptyLines: true,
-        }
+        },
       ).result,
       `a${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });

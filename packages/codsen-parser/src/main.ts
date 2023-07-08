@@ -86,7 +86,7 @@ function isObj(something: unknown): boolean {
 }
 function layerPending(
   layers: TokenWithChildren[],
-  tokenObj: TokenWithChildren
+  tokenObj: TokenWithChildren,
 ): boolean {
   DEV && console.log(`091 layerPending() received: `);
   DEV &&
@@ -94,16 +94,16 @@ function layerPending(
       `094 - 1.${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
         layers,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   DEV &&
     console.log(
       `102 - 2. ${`\u001b[${33}m${`tokenObj`}\u001b[${39}m`} = ${JSON.stringify(
         tokenObj,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   DEV &&
     console.log(
@@ -114,16 +114,16 @@ function layerPending(
           ? (layers[layers.length - 1] as any).tagName
           : null,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   DEV &&
     console.log(
       `122 >>>>>> ${`\u001b[${33}m${`tokenObj.tagName`}\u001b[${39}m`} = ${JSON.stringify(
         (tokenObj as any).tagName,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   return (
     // usual closing case
@@ -148,7 +148,7 @@ function layerPending(
         layers.some(
           (layerObjToken) =>
             hasOwnProp(layerObjToken, "closing") &&
-            !(layerObjToken as CommentToken).closing
+            !(layerObjToken as CommentToken).closing,
         )))
   );
 }
@@ -169,15 +169,15 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
   if (typeof str !== "string") {
     if (str === undefined) {
       throw new Error(
-        "codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string."
+        "codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.",
       );
     } else {
       throw new Error(
         `codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(
           str,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     }
   }
@@ -186,8 +186,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
       `codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type ${typeof opts}, equal to ${JSON.stringify(
         opts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   if (opts && isObj(opts) && opts.tagCb && typeof opts.tagCb !== "function") {
@@ -195,8 +195,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
       `codsen-tokenizer: [THROW_ID_04] the resolvedOpts.tagCb, callback function, should be a function but it was given as type ${typeof opts.tagCb}, equal to ${JSON.stringify(
         opts.tagCb,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   if (opts && isObj(opts) && opts.charCb && typeof opts.charCb !== "function") {
@@ -204,8 +204,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
       `codsen-tokenizer: [THROW_ID_05] the resolvedOpts.charCb, callback function, should be a function but it was given as type ${typeof opts.charCb}, equal to ${JSON.stringify(
         opts.charCb,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   if (
@@ -218,8 +218,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
       `codsen-tokenizer: [THROW_ID_06] the resolvedOpts.reportProgressFunc, callback function, should be a function but it was given as type ${typeof opts.reportProgressFunc}, equal to ${JSON.stringify(
         opts.reportProgressFunc,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   if (opts && isObj(opts) && opts.errCb && typeof opts.errCb !== "function") {
@@ -227,8 +227,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
       `codsen-tokenizer: [THROW_ID_07] the resolvedOpts.errCb, callback function, should be a function but it was given as type ${typeof opts.errCb}, equal to ${JSON.stringify(
         opts.errCb,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
 
@@ -320,24 +320,24 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
               closing: (tokenObj as any).closing,
             },
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       DEV &&
         console.log(
           `328 FIY, ${`\u001b[${33}m${`NEXT`}\u001b[${39}m`} = ${JSON.stringify(
             next,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       DEV &&
         console.log(
           `336 FIY, STARTING ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
             layers,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       // pass the token to the 3rd parties through resolvedOpts.tagCb
       if (typeof resolvedOpts.tagCb === "function") {
@@ -366,16 +366,16 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
             `366 FIY, ${`\u001b[${33}m${`prevToken`}\u001b[${39}m`} = ${JSON.stringify(
               prevToken,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
         DEV &&
           console.log(
             `374 FIY, ${`\u001b[${33}m${`lastProcessedToken`}\u001b[${39}m`} = ${JSON.stringify(
               lastProcessedToken,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
 
         if (
@@ -448,12 +448,12 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                 `448 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`count`}\u001b[${39}m`} = ${JSON.stringify(
                   count,
                   null,
-                  4
+                  4,
                 )}; ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
                   path,
                   null,
-                  4
-                )}`
+                  4,
+                )}`,
               );
           } else {
             DEV && console.log(`459 standard comment path bump clauses`);
@@ -463,7 +463,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
           if (layerPending(layers, tokenObj as TokenWithChildren)) {
             DEV &&
               console.log(
-                `466 current token was pending, so we pop() it from layers`
+                `466 current token was pending, so we pop() it from layers`,
               );
             //
             // in case of comment layers, there can be more layers leading
@@ -485,23 +485,23 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                 `485 POP layers, now equals to: ${JSON.stringify(
                   layers,
                   null,
-                  4
-                )}`
+                  4,
+                )}`,
               );
 
             nestNext = false;
             DEV &&
               console.log(
-                `495 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nestNext`}\u001b[${39}m`}: ${nestNext}`
+                `495 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nestNext`}\u001b[${39}m`}: ${nestNext}`,
               );
           } else {
             DEV &&
               console.log(
-                `500 ${`\u001b[${31}m${`layer for "${tokenObj.value}" was not pending!`}\u001b[${39}m`}`
+                `500 ${`\u001b[${31}m${`layer for "${tokenObj.value}" was not pending!`}\u001b[${39}m`}`,
               );
             DEV &&
               console.log(
-                `504 ${`\u001b[${31}m${`yet this was a closing token`}\u001b[${39}m`}`
+                `504 ${`\u001b[${31}m${`yet this was a closing token`}\u001b[${39}m`}`,
               );
 
             if (
@@ -512,27 +512,27 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
               layers.some(
                 (layerObj) =>
                   layerObj.type === "tag" &&
-                  layerObj.tagName === (tokenObj as TagToken).tagName
+                  layerObj.tagName === (tokenObj as TagToken).tagName,
               )
             ) {
               // if this is a gap and current token closes parent token,
               // go another level up
               DEV &&
                 console.log(
-                  `522 ${`\u001b[${32}m${`THIS WAS A GAP`}\u001b[${39}m`}`
+                  `522 ${`\u001b[${32}m${`THIS WAS A GAP`}\u001b[${39}m`}`,
                 );
               DEV &&
                 console.log(
                   `526 FIY, ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
                     path,
                     null,
-                    4
-                  )}`
+                    4,
+                  )}`,
                 );
 
               DEV &&
                 console.log(
-                  `535 ${`\u001b[${36}m${`███████████████████████████████████████ WHILE STARTS`}\u001b[${39}m`} `
+                  `535 ${`\u001b[${36}m${`███████████████████████████████████████ WHILE STARTS`}\u001b[${39}m`} `,
                 );
 
               let lastLayer = layers.pop();
@@ -541,7 +541,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
               while (currTagName !== (tokenObj as TagToken).tagName) {
                 DEV &&
                   console.log(
-                    `544 ${`\u001b[${36}m${`==================`}\u001b[${39}m`}`
+                    `544 ${`\u001b[${36}m${`==================`}\u001b[${39}m`}`,
                   );
                 // i++;
 
@@ -555,7 +555,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                         lastLayer.type === "comment" ? `-${lastLayer.kind}` : ""
                       }-missing-closing at [${lastLayer.start}, ${
                         lastLayer.end
-                      }]`
+                      }]`,
                     );
                   resolvedOpts.errCb({
                     ruleId: `${lastLayer.type}${
@@ -577,12 +577,12 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                     `577 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastLayer`}\u001b[${39}m`} = ${JSON.stringify(
                       lastLayer,
                       null,
-                      4
+                      4,
                     )}; ${`\u001b[${33}m${`currTagName`}\u001b[${39}m`} = ${JSON.stringify(
                       currTagName,
                       null,
-                      4
-                    )}`
+                      4,
+                    )}`,
                   );
 
                 DEV &&
@@ -590,18 +590,18 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                     `590 ${`\u001b[${36}m${`ENDING`}\u001b[${39}m`} ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
                       layers,
                       null,
-                      4
-                    )}`
+                      4,
+                    )}`,
                   );
               }
               DEV &&
                 console.log(
-                  `599 ${`\u001b[${36}m${`███████████████████████████████████████ WHILE ENDS`}\u001b[${39}m`} `
+                  `599 ${`\u001b[${36}m${`███████████████████████████████████████ WHILE ENDS`}\u001b[${39}m`} `,
                 );
 
               DEV &&
                 console.log(
-                  `604 layers now: ${JSON.stringify(layers, null, 4)}`
+                  `604 layers now: ${JSON.stringify(layers, null, 4)}`,
                 );
             } else if (
               // so it's a closing tag (</table> in example below)
@@ -622,7 +622,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
             ) {
               DEV &&
                 console.log(
-                  `625 ${`\u001b[${32}m${`PREVIOUS TAG WAS ROGUE CLOSING`}\u001b[${39}m`}`
+                  `625 ${`\u001b[${32}m${`PREVIOUS TAG WAS ROGUE CLOSING`}\u001b[${39}m`}`,
                 );
 
               // 1. don't amend the path, because this rogue closing tag has
@@ -636,7 +636,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                   console.log(
                     `637 ${`\u001b[${31}m${`██ RAISE ERROR`}\u001b[${39}m`} tag-rogue [${
                       lastLayersToken.start
-                    }, ${lastLayersToken.end}]`
+                    }, ${lastLayersToken.end}]`,
                   );
                 (resolvedOpts.errCb as any)({
                   ruleId: `tag-rogue`,
@@ -671,15 +671,15 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                 `671 POP layers, now equals to: ${JSON.stringify(
                   layers,
                   null,
-                  4
-                )}`
+                  4,
+                )}`,
               );
           }
         }
 
         DEV &&
           console.log(
-            `${`\u001b[${90}m${`----------------- path calculations done -----------------`}\u001b[${39}m`}`
+            `${`\u001b[${90}m${`----------------- path calculations done -----------------`}\u001b[${39}m`}`,
           );
 
         // activate the nestNext
@@ -692,7 +692,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
           nestNext = true;
           DEV &&
             console.log(
-              `695 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nestNext`}\u001b[${39}m`} = true`
+              `695 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nestNext`}\u001b[${39}m`} = true`,
             );
 
           if (
@@ -705,15 +705,15 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                 `705 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to layers, which is now: ${JSON.stringify(
                   layers,
                   null,
-                  4
-                )}`
+                  4,
+                )}`,
               );
           }
         }
 
         DEV &&
           console.log(
-            `716 FIY, ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+            `716 FIY, ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`,
           );
 
         // check, does this closing tag have an
@@ -732,8 +732,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
             `732 ${`\u001b[${33}m${`parentPath`}\u001b[${39}m`} = ${JSON.stringify(
               parentPath,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
 
         let parentTagsToken;
@@ -747,8 +747,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                 ? { ...parentTagsToken, children: "..." }
                 : parentTagsToken,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
 
         let previousTagsToken;
@@ -760,16 +760,16 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
             `760 NOW ${`\u001b[${33}m${`previousTagsToken`}\u001b[${39}m`} at path "${`\u001b[${33}m${previousPath}\u001b[${39}m`}" - ${JSON.stringify(
               previousTagsToken,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
         DEV &&
           console.log(
             `768 FIY, ${`\u001b[${33}m${`tokenObj.closing`}\u001b[${39}m`} = ${JSON.stringify(
               (tokenObj as any).closing,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
 
         //
@@ -783,8 +783,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
             `783 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
               res,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
 
         // case of "a<!--b->c", current token being "text" type, value "b->c"
@@ -812,8 +812,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
             `812 FIY, ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
               layers,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
         if (
           tokenObj.type === "text" &&
@@ -825,10 +825,10 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
         ) {
           DEV &&
             console.log(
-              `828 ${`\u001b[${31}m${`██ intervention needed`}\u001b[${39}m`}`
+              `828 ${`\u001b[${31}m${`██ intervention needed`}\u001b[${39}m`}`,
             );
           let suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(
-            tokenObj.value
+            tokenObj.value,
           )?.index;
 
           let suspiciousEndingEndsAt =
@@ -840,15 +840,15 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
               `840 SUSPICIOUS ENDING: [${`\u001b[${33}m${`suspiciousEndingStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
                 suspiciousEndingStartsAt,
                 null,
-                4
+                4,
               )}, ${`\u001b[${33}m${`suspiciousEndingEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
                 suspiciousEndingEndsAt,
                 null,
-                4
+                4,
               )}] - value: "${tokenObj.value.slice(
                 suspiciousEndingStartsAt,
-                suspiciousEndingEndsAt
-              )}"`
+                suspiciousEndingEndsAt,
+              )}"`,
             );
 
           // part 1.
@@ -857,15 +857,15 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
           if (suspiciousEndingStartsAt && suspiciousEndingStartsAt > 0) {
             DEV &&
               console.log(
-                `860 ${`\u001b[${32}m${`ADD`}\u001b[${39}m`} text leading up to "->"`
+                `860 ${`\u001b[${32}m${`ADD`}\u001b[${39}m`} text leading up to "->"`,
               );
             DEV &&
               console.log(
                 `864 ${`\u001b[${33}m${`res`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
                   res,
                   null,
-                  4
-                )}`
+                  4,
+                )}`,
               );
             op.set(res, path, {
               ...tokenObj,
@@ -880,8 +880,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                 `880 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
                   res,
                   null,
-                  4
-                )}`
+                  4,
+                )}`,
               );
           }
 
@@ -889,12 +889,12 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
           // further, the "->" goes as closing token at parent level
           DEV &&
             console.log(
-              `892 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+              `892 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`,
             );
           path = pathNext(pathUp(path));
           DEV &&
             console.log(
-              `897 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+              `897 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`,
             );
           op.set(res, path, {
             type: "comment",
@@ -904,7 +904,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
             end: tokenObj.start + suspiciousEndingEndsAt,
             value: tokenObj.value.slice(
               suspiciousEndingStartsAt,
-              suspiciousEndingEndsAt
+              suspiciousEndingEndsAt,
             ),
             children: [],
           });
@@ -913,8 +913,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
               `913 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
                 res,
                 null,
-                4
-              )}`
+                4,
+              )}`,
             );
 
           // part 3.
@@ -922,12 +922,12 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
           if (suspiciousEndingEndsAt < tokenObj.value.length) {
             DEV &&
               console.log(
-                `925 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+                `925 OLD ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`,
               );
             path = pathNext(path);
             DEV &&
               console.log(
-                `930 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`
+                `930 NEW ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${path}`,
               );
             op.set(res, path, {
               type: "text",
@@ -940,8 +940,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                 `940 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
                   res,
                   null,
-                  4
-                )}`
+                  4,
+                )}`,
               );
           }
 
@@ -956,7 +956,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
         ) {
           DEV &&
             console.log(
-              `959 ${`\u001b[${31}m${`██ intervention needed`}\u001b[${39}m`}`
+              `959 ${`\u001b[${31}m${`██ intervention needed`}\u001b[${39}m`}`,
             );
           // check "only" kind comment-type tokens for malformed front parts,
           // "<!--", which would turn them into "not" kind comment-type tokens
@@ -967,9 +967,9 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
               previousTagsToken.value[
                 left(
                   previousTagsToken.value,
-                  previousTagsToken.value.length
+                  previousTagsToken.value.length,
                 ) as number
-              ]
+              ],
             )
           ) {
             // if "only" kind token is preceded by something that resembles
@@ -981,7 +981,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
             //      excl. mark missing on the first part ("<!--")
             DEV &&
               console.log(
-                `984 ${`\u001b[${31}m${`MALFORMED "NOT" COMMENT`}\u001b[${39}m`}`
+                `984 ${`\u001b[${31}m${`MALFORMED "NOT" COMMENT`}\u001b[${39}m`}`,
               );
             // findMalformed
             let capturedMalformedTagRanges: IdxRangeObj[] = [];
@@ -998,15 +998,15 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
               },
               {
                 maxDistance: 2,
-              }
+              },
             );
             DEV &&
               console.log(
                 `1005 ${`\u001b[${33}m${`capturedMalformedTagRanges`}\u001b[${39}m`} = ${JSON.stringify(
                   capturedMalformedTagRanges,
                   null,
-                  4
-                )}`
+                  4,
+                )}`,
               );
             if (
               capturedMalformedTagRanges.length &&
@@ -1014,7 +1014,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                 previousTagsToken.value,
                 capturedMalformedTagRanges[
                   capturedMalformedTagRanges.length - 1
-                ].idxTo - 1
+                ].idxTo - 1,
               )
             ) {
               DEV && console.log(`1020 picking the last malformed range`);
@@ -1028,8 +1028,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                   `1028 ${`\u001b[${33}m${`malformedRange`}\u001b[${39}m`} = ${JSON.stringify(
                     malformedRange,
                     null,
-                    4
-                  )}`
+                    4,
+                  )}`,
                 );
 
               // is the whole text token to be merged into the closing comment token,
@@ -1076,7 +1076,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                     (previousTagsToken.start as number),
                   value: previousTagsToken.value.slice(
                     0,
-                    malformedRange.idxFrom
+                    malformedRange.idxFrom,
                   ),
                 });
 
@@ -1091,7 +1091,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                     (previousTagsToken.start as number),
                   kind: "not",
                   value: `${previousTagsToken.value.slice(
-                    malformedRange.idxFrom
+                    malformedRange.idxFrom,
                   )}${tokenObj.value}`,
                 });
 
@@ -1107,9 +1107,9 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
               parentsLastChildTokenValue.value[
                 left(
                   parentsLastChildTokenValue.value,
-                  parentsLastChildTokenValue.value.length
+                  parentsLastChildTokenValue.value.length,
                 ) as number
-              ]
+              ],
             )
           ) {
             // the text token might be in parent token's children array, as
@@ -1118,7 +1118,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
             //
             DEV &&
               console.log(
-                `1121 ${`\u001b[${31}m${`MALFORMED "NOT" COMMENT`}\u001b[${39}m`}`
+                `1121 ${`\u001b[${31}m${`MALFORMED "NOT" COMMENT`}\u001b[${39}m`}`,
               );
             // findMalformed
             let capturedMalformedTagRanges: IdxRangeObj[] = [];
@@ -1135,15 +1135,15 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
               },
               {
                 maxDistance: 2,
-              }
+              },
             );
             DEV &&
               console.log(
                 `1142 ${`\u001b[${33}m${`capturedMalformedTagRanges`}\u001b[${39}m`} = ${JSON.stringify(
                   capturedMalformedTagRanges,
                   null,
-                  4
-                )}`
+                  4,
+                )}`,
               );
             if (
               capturedMalformedTagRanges.length &&
@@ -1151,7 +1151,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                 parentsLastChildTokenValue.value,
                 capturedMalformedTagRanges[
                   capturedMalformedTagRanges.length - 1
-                ].idxTo - 1
+                ].idxTo - 1,
               )
             ) {
               DEV && console.log(`1157 picking the last malformed range`);
@@ -1165,8 +1165,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                   `1165 ${`\u001b[${33}m${`malformedRange`}\u001b[${39}m`} = ${JSON.stringify(
                     malformedRange,
                     null,
-                    4
-                  )}`
+                    4,
+                  )}`,
                 );
 
               // is the whole text token to be merged into the closing comment token,
@@ -1176,7 +1176,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
               if (
                 !left(
                   parentsLastChildTokenValue.value,
-                  malformedRange.idxFrom
+                  malformedRange.idxFrom,
                 ) &&
                 previousPath &&
                 isObj(parentsLastChildTokenValue)
@@ -1207,30 +1207,30 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                     `1207 ██ ${`\u001b[${33}m${`previousPath`}\u001b[${39}m`} = ${JSON.stringify(
                       previousPath,
                       null,
-                      4
-                    )}`
+                      4,
+                    )}`,
                   );
                 DEV &&
                   console.log(
                     `1215 DELETING TEXT NODE - RES BEFORE: ${JSON.stringify(
                       res,
                       null,
-                      4
-                    )}`
+                      4,
+                    )}`,
                   );
                 op.del(
                   res,
                   `${previousPath}.children.${
                     op.get(res, previousPath).children.length - 1
-                  }`
+                  }`,
                 );
                 DEV &&
                   console.log(
                     `1229 DELETING TEXT NODE - RES AFTER: ${JSON.stringify(
                       res,
                       null,
-                      4
-                    )}`
+                      4,
+                    )}`,
                   );
 
                 // stop token from being pushed in the ELSE clauses below
@@ -1249,8 +1249,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                     `1249 FIY, ${`\u001b[${33}m${`parentsLastChildTokenPath`}\u001b[${39}m`} = ${JSON.stringify(
                       parentsLastChildTokenPath,
                       null,
-                      4
-                    )}`
+                      4,
+                    )}`,
                   );
 
                 // 1. tweak the "text" token
@@ -1261,7 +1261,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                     (parentsLastChildTokenValue.start as number),
                   value: parentsLastChildTokenValue.value.slice(
                     0,
-                    malformedRange.idxFrom
+                    malformedRange.idxFrom,
                   ),
                 });
 
@@ -1276,7 +1276,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                     (parentsLastChildTokenValue.start as number),
                   kind: "not",
                   value: `${parentsLastChildTokenValue.value.slice(
-                    malformedRange.idxFrom
+                    malformedRange.idxFrom,
                   )}${tokenObj.value}`,
                 });
 
@@ -1289,23 +1289,23 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
 
         DEV &&
           console.log(
-            `1292 ███████████████████████████████████████ the bottom clauses`
+            `1292 ███████████████████████████████████████ the bottom clauses`,
           );
         DEV &&
           console.log(
             `1296 FIY, ${`\u001b[${33}m${`next`}\u001b[${39}m`} = ${JSON.stringify(
               next,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
         DEV &&
           console.log(
             `1304 FIY, ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
               layers,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
 
         // if token was not pushed yet, push it
@@ -1322,8 +1322,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
             `1322 ${`\u001b[${33}m${`res`}\u001b[${39}m`} AFTER: ${JSON.stringify(
               res,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
 
         DEV &&
@@ -1331,8 +1331,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
             `1331 ENDING ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
               path,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
 
         //
@@ -1351,12 +1351,12 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
           if ((tokenObj as any).void) {
             DEV &&
               console.log(
-                `1354 frontal slash must be removed because it's a void tag`
+                `1354 frontal slash must be removed because it's a void tag`,
               );
             if (typeof resolvedOpts.errCb === "function") {
               DEV &&
                 console.log(
-                  `1359 ${`\u001b[${31}m${`██ RAISE ERROR tag-void-frontal-slash`}\u001b[${39}m`}`
+                  `1359 ${`\u001b[${31}m${`██ RAISE ERROR tag-void-frontal-slash`}\u001b[${39}m`}`,
                 );
               (resolvedOpts.errCb as any)({
                 ruleId: `tag-void-frontal-slash`,
@@ -1379,7 +1379,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
                     tokenObj.type
                   }${
                     tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
-                  }-missing-opening`
+                  }-missing-opening`,
                 );
               (resolvedOpts.errCb as any)({
                 ruleId: `${tokenObj.type}${
@@ -1404,15 +1404,15 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
           console.log(
             `${`\u001b[${90}m${`██ nestNext = ${`\u001b[${
               nestNext ? 32 : 31
-            }m${nestNext}\u001b[${39}m`}`}\u001b[${39}m`}`
+            }m${nestNext}\u001b[${39}m`}`}\u001b[${39}m`}`,
           );
         DEV &&
           console.log(
             `${`\u001b[${90}m${`██ layers = ${JSON.stringify(
               layers,
               null,
-              4
-            )}`}\u001b[${39}m`}`
+              4,
+            )}`}\u001b[${39}m`}`,
           );
       }
 
@@ -1443,8 +1443,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
       `1443 FIY, ENDING ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
         layers,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   // if there are some unclosed layer tokens, raise errors about them all:
   if (layers.length) {
@@ -1456,7 +1456,7 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
               tokenObj.type
             }${
               tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""
-            }-missing-closing`
+            }-missing-closing`,
           );
         (resolvedOpts.errCb as any)({
           ruleId: `${tokenObj.type}${
@@ -1475,8 +1475,8 @@ function cparser(str: string, opts?: Partial<Opts>): any[] {
       `1475 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`} ${JSON.stringify(
         res,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   return res;
 }

@@ -13,35 +13,35 @@ test("01 - wrong input type", () => {
       fixRowNums();
     },
     /THROW_ID_01/,
-    "01.01"
+    "01.01",
   );
   throws(
     () => {
       fixRowNums(true);
     },
     /THROW_ID_01/,
-    "01.02"
+    "01.02",
   );
   throws(
     () => {
       fixRowNums(false);
     },
     /THROW_ID_01/,
-    "01.03"
+    "01.03",
   );
   throws(
     () => {
       fixRowNums({});
     },
     /THROW_ID_01/,
-    "01.04"
+    "01.04",
   );
   throws(
     () => {
       fixRowNums(NaN);
     },
     /THROW_ID_01/,
-    "01.05"
+    "01.05",
   );
 });
 
@@ -53,7 +53,7 @@ test("02 - the opts.returnRangesOnly is present", () => {
       });
     },
     /THROW_ID_02/,
-    "02.01"
+    "02.01",
   );
   throws(
     () => {
@@ -62,7 +62,7 @@ test("02 - the opts.returnRangesOnly is present", () => {
       });
     },
     /THROW_ID_02/,
-    "02.02"
+    "02.02",
   );
 });
 
@@ -81,7 +81,7 @@ test("04 - exports defaults", () => {
       triggerKeywords: ["console.log"],
       extractedLogContentsWereGiven: false,
     },
-    "04.01"
+    "04.01",
   );
 });
 

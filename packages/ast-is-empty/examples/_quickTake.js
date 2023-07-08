@@ -8,7 +8,7 @@ assert.equal(
   isEmpty({
     a: "",
   }),
-  true
+  true,
 );
 
 assert.equal(
@@ -20,7 +20,7 @@ assert.equal(
       },
     },
   }),
-  true
+  true,
 );
 
 assert.equal(
@@ -32,5 +32,5 @@ assert.equal(
     "",
     ["", "", ""],
   ]),
-  true
+  true,
 );

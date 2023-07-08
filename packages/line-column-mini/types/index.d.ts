@@ -10,7 +10,7 @@ interface Res {
 declare function lineCol(
   input: string | number[],
   idx: number,
-  skipChecks?: boolean
+  skipChecks?: boolean,
 ): Res | null;
 
 export { Res, getLineStartIndexes, lineCol, version };

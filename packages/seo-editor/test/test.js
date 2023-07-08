@@ -37,8 +37,8 @@ test("03 - one copy chunk", () => {
 `,
         `
 I ate a banana and a cucumber.
-    `
-      )
+    `,
+      ),
     ),
     {
       todoLines: [
@@ -58,7 +58,7 @@ I ate a banana and a cucumber.
       chunkWordCounts: [7],
       chunkLengths: [30],
     },
-    "03.01"
+    "03.01",
   );
 });
 
@@ -77,8 +77,8 @@ I ate a banana and a cucumber.
 ---
 
 So, I ate a banana and then, after five minutes, another banana. Then, I thought, it's so close to five-a-day! So I are another banana. My belly started to swell and refused to collaborate further, growling silently. I went to the gym in the evening and came back hungry and ate one more banana. That was my five-a-day day.
-    `
-      )
+    `,
+      ),
     ),
     {
       todoLines: [
@@ -108,7 +108,7 @@ So, I ate a banana and then, after five minutes, another banana. Then, I thought
       chunkWordCounts: [7, 63],
       chunkLengths: [30, 323],
     },
-    "04.01"
+    "04.01",
   );
 });
 
@@ -121,8 +121,8 @@ test("05 - two copy chunks, tight", () => {
 - cucumber`,
         `I ate a banana and a cucumber.
 ----
-So, I ate a banana and then, after five minutes, another banana. Then, I thought, it's so close to five-a-day! So I are another banana. My belly started to swell and refused to collaborate further, growling silently. I went to the gym in the evening and came back hungry and ate one more banana. That was my five-a-day day.`
-      )
+So, I ate a banana and then, after five minutes, another banana. Then, I thought, it's so close to five-a-day! So I are another banana. My belly started to swell and refused to collaborate further, growling silently. I went to the gym in the evening and came back hungry and ate one more banana. That was my five-a-day day.`,
+      ),
     ),
     {
       todoLines: [
@@ -150,7 +150,7 @@ So, I ate a banana and then, after five minutes, another banana. Then, I thought
       chunkWordCounts: [7, 63],
       chunkLengths: [30, 323],
     },
-    "05.01"
+    "05.01",
   );
 });
 
@@ -164,7 +164,7 @@ test("06 - both todo and copy are empty", () => {
       chunkWordCounts: [],
       chunkLengths: [],
     },
-    "06.01"
+    "06.01",
   );
   equal(
     prep(editor("", ",")),
@@ -175,7 +175,7 @@ test("06 - both todo and copy are empty", () => {
       chunkWordCounts: [0],
       chunkLengths: [1],
     },
-    "06.02"
+    "06.02",
   );
 });
 
@@ -191,7 +191,7 @@ test("07 - nothing todo", () => {
       chunkWordCounts: [],
       chunkLengths: [],
     },
-    "07.01"
+    "07.01",
   );
   equal(
     prep(editor("tralala", "\t\t\t\t\t\t")),
@@ -204,7 +204,7 @@ test("07 - nothing todo", () => {
       chunkWordCounts: [],
       chunkLengths: [],
     },
-    "07.02"
+    "07.02",
   );
   equal(
     prep(editor("tralala", ",")),
@@ -217,7 +217,7 @@ test("07 - nothing todo", () => {
       chunkWordCounts: [0],
       chunkLengths: [1],
     },
-    "07.03"
+    "07.03",
   );
   equal(
     prep(editor("", "tralala")),
@@ -228,7 +228,7 @@ test("07 - nothing todo", () => {
       chunkWordCounts: [1],
       chunkLengths: [7],
     },
-    "07.04"
+    "07.04",
   );
   equal(
     prep(editor("\t\t\t\t\t\t", "tralala")),
@@ -239,7 +239,7 @@ test("07 - nothing todo", () => {
       chunkWordCounts: [1],
       chunkLengths: [7],
     },
-    "07.05"
+    "07.05",
   );
   equal(
     prep(editor("tralala", "tralala")),
@@ -252,7 +252,7 @@ test("07 - nothing todo", () => {
       chunkWordCounts: [1],
       chunkLengths: [7],
     },
-    "07.06"
+    "07.06",
   );
   equal(
     prep(editor("tralala", ",")),
@@ -265,7 +265,7 @@ test("07 - nothing todo", () => {
       chunkWordCounts: [0],
       chunkLengths: [1],
     },
-    "07.07"
+    "07.07",
   );
 });
 
@@ -277,11 +277,11 @@ test("08 - three dashes in the text", () => {
 - a
 - b
 - c`,
-        "some text `---` like this"
-      )
+        "some text `---` like this",
+      ),
     ).chunkWordCounts.length,
     1,
-    "08.01"
+    "08.01",
   );
 });
 
@@ -296,8 +296,8 @@ test("09 - todo singular, copy plural", () => {
 `,
         `
 I ate bananas and cucumbers.
-    `
-      )
+    `,
+      ),
     ),
     {
       todoLines: [
@@ -317,7 +317,7 @@ I ate bananas and cucumbers.
       chunkWordCounts: [5],
       chunkLengths: [28],
     },
-    "09.01"
+    "09.01",
   );
 });
 

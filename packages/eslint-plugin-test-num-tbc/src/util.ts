@@ -146,25 +146,25 @@ export const stringify = (obj: Obj) => {
         }) || {},
         {
           key: "loc",
-        }
+        },
       ),
       null,
-      4
+      4,
     );
   } catch (error) {
     console.log(
       `${`\u001b[${33}m${`stringify() error`}\u001b[${39}m`} = ${JSON.stringify(
         error,
         null,
-        4
-      )}; input was: ${JSON.stringify(obj, null, 4)}`
+        4,
+      )}; input was: ${JSON.stringify(obj, null, 4)}`,
     );
   }
   return res;
 };
 
 export function identifyAssertsMessageArgPos(
-  assertsName: string
+  assertsName: string,
 ): "" | "1" | "2" {
   if (messageIsThirdArg.has(assertsName)) {
     return "2"; // argument at zero-indexed third position

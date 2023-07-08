@@ -21,10 +21,10 @@ test("01 - source present, missing searchFor", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      ""
+      "",
     ),
     "aaa",
-    "test 9.1"
+    "test 9.1",
   );
 });
 
@@ -41,10 +41,10 @@ test("02 - everything is missing", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      ""
+      "",
     ),
     "",
-    "test 9.2"
+    "test 9.2",
   );
 });
 
@@ -77,10 +77,10 @@ test("07 - leftOutsideNot blocking rightOutsideNot being empty", () => {
         rightOutside: "",
         rightOutsideNot: "b",
       },
-      "x"
+      "x",
     ),
     "ab x",
-    "test 9.7"
+    "test 9.7",
   );
 });
 
@@ -97,10 +97,10 @@ test("08 - leftOutsideNot is blank array", () => {
         rightOutside: "",
         rightOutsideNot: "b",
       },
-      "x"
+      "x",
     ),
     "ab x",
-    "test 9.8"
+    "test 9.8",
   );
 });
 
@@ -116,10 +116,10 @@ test("09 - missing key in properties obj", () => {
         rightOutside: "",
         rightOutsideNot: "b",
       },
-      "x"
+      "x",
     ),
     "ab x",
-    "test 9.9"
+    "test 9.9",
   );
 });
 

@@ -16,14 +16,14 @@ test("01 - no 1st arg - unicodeToNative()", () => {
       unicodeToNative();
     },
     /THROW_ID_01/g,
-    "01.01"
+    "01.01",
   );
   throws(
     () => {
       unicodeToNative(undefined);
     },
     /THROW_ID_01/g,
-    "01.02"
+    "01.02",
   );
 });
 
@@ -33,14 +33,14 @@ test("02 - no 1st arg - nativeToUnicode()", () => {
       nativeToUnicode();
     },
     /THROW_ID_01/g,
-    "02.01"
+    "02.01",
   );
   throws(
     () => {
       nativeToUnicode(undefined);
     },
     /THROW_ID_01/g,
-    "02.02"
+    "02.02",
   );
 });
 
@@ -50,7 +50,7 @@ test("03 - empty string - unicodeToNative()", () => {
       unicodeToNative("", 0);
     },
     /THROW_ID_01/g,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -60,7 +60,7 @@ test("04 - empty string - nativeToUnicode()", () => {
       nativeToUnicode("", 0);
     },
     /THROW_ID_01/g,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -73,21 +73,21 @@ test("05 - indexes, 2nd arg. is wrong - nativeToUnicode()", () => {
       nativeToUnicode("abcde", 1.2);
     },
     /THROW_ID_02/g,
-    "05.01"
+    "05.01",
   );
   throws(
     () => {
       nativeToUnicode("abcde", -2);
     },
     /THROW_ID_02/g,
-    "05.02"
+    "05.02",
   );
   throws(
     () => {
       nativeToUnicode("abcde", "1.2");
     },
     /THROW_ID_02/g,
-    "05.03"
+    "05.03",
   );
 });
 
@@ -97,21 +97,21 @@ test("06 - indexes, 2nd arg. is wrong - unicodeToNative()", () => {
       unicodeToNative("abcde", 1.2);
     },
     /THROW_ID_02/g,
-    "06.01"
+    "06.01",
   );
   throws(
     () => {
       unicodeToNative("abcde", -2);
     },
     /THROW_ID_02/g,
-    "06.02"
+    "06.02",
   );
   throws(
     () => {
       unicodeToNative("abcde", "1.2");
     },
     /THROW_ID_02/g,
-    "06.03"
+    "06.03",
   );
 });
 
@@ -121,14 +121,14 @@ test("07 - indexes, 2nd arg. is wrong - nativeToUnicode()", () => {
       nativeToUnicode("abcde", -2);
     },
     /THROW_ID_02/g,
-    "07.01"
+    "07.01",
   );
   throws(
     () => {
       nativeToUnicode("abcde", "-2");
     },
     /THROW_ID_02/g,
-    "07.02"
+    "07.02",
   );
 });
 
@@ -138,14 +138,14 @@ test("08 - indexes, 2nd arg. is wrong - unicodeToNative()", () => {
       unicodeToNative("abcde", -2);
     },
     /THROW_ID_02/g,
-    "08.01"
+    "08.01",
   );
   throws(
     () => {
       unicodeToNative("abcde", "-2");
     },
     /THROW_ID_02/g,
-    "08.02"
+    "08.02",
   );
 });
 
@@ -158,14 +158,14 @@ test("09 - real number in AST - unicodeToNative()", () => {
       unicodeToNative("abcdef", [[1.2]]);
     },
     /THROW_ID_03/g,
-    "09.01"
+    "09.01",
   );
   throws(
     () => {
       unicodeToNative("abcdef", { a: 1.2 });
     },
     /THROW_ID_03/g,
-    "09.02"
+    "09.02",
   );
 });
 
@@ -178,14 +178,14 @@ test("10 - real number in AST - unicodeToNative()", () => {
       nativeToUnicode("abcdef", [[1.2]]);
     },
     /THROW_ID_04/g,
-    "10.01"
+    "10.01",
   );
   throws(
     () => {
       nativeToUnicode("abcdef", { a: 1.2 });
     },
     /THROW_ID_04/g,
-    "10.02"
+    "10.02",
   );
 });
 
@@ -198,21 +198,21 @@ test("11 - oneNativeToUnicode() length exceeded", () => {
       nativeToUnicode("abcdef", 6);
     },
     /THROW_ID_05/g,
-    "11.01"
+    "11.01",
   );
   throws(
     () => {
       nativeToUnicode("abcdef", [[6]]);
     },
     /THROW_ID_05/g,
-    "11.02"
+    "11.02",
   );
   throws(
     () => {
       nativeToUnicode("abcdef", { a: 6 });
     },
     /THROW_ID_05/g,
-    "11.03"
+    "11.03",
   );
 
   throws(
@@ -220,21 +220,21 @@ test("11 - oneNativeToUnicode() length exceeded", () => {
       nativeToUnicode("abcdef", 99);
     },
     /THROW_ID_05/g,
-    "11.04"
+    "11.04",
   );
   throws(
     () => {
       nativeToUnicode("abcdef", [[99]]);
     },
     /THROW_ID_05/g,
-    "11.05"
+    "11.05",
   );
   throws(
     () => {
       nativeToUnicode("abcdef", { a: 99 });
     },
     /THROW_ID_05/g,
-    "11.06"
+    "11.06",
   );
 });
 
@@ -247,21 +247,21 @@ test("12 - oneUnicodeToNative() length exceeded", () => {
       unicodeToNative("abcd👍", 5);
     },
     /THROW_ID_06/g,
-    "12.01"
+    "12.01",
   );
   throws(
     () => {
       unicodeToNative("abcd👍", [[5]]);
     },
     /THROW_ID_06/g,
-    "12.02"
+    "12.02",
   );
   throws(
     () => {
       unicodeToNative("abcd👍", { a: 5 });
     },
     /THROW_ID_06/g,
-    "12.03"
+    "12.03",
   );
 
   throws(
@@ -269,21 +269,21 @@ test("12 - oneUnicodeToNative() length exceeded", () => {
       unicodeToNative("abcd👍", 99);
     },
     /THROW_ID_06/g,
-    "12.04"
+    "12.04",
   );
   throws(
     () => {
       unicodeToNative("abcd👍", [[99]]);
     },
     /THROW_ID_06/g,
-    "12.05"
+    "12.05",
   );
   throws(
     () => {
       unicodeToNative("abcd👍", { a: 99 });
     },
     /THROW_ID_06/g,
-    "12.06"
+    "12.06",
   );
 });
 
@@ -300,14 +300,14 @@ test("13 - 2nd arg, 'indexes' type is wrong", () => {
       unicodeToNative("abcdef", testFunction);
     },
     /THROW_ID_07/g,
-    "13.01"
+    "13.01",
   );
   throws(
     () => {
       nativeToUnicode("abcdef", testFunction);
     },
     /THROW_ID_07/g,
-    "13.02"
+    "13.02",
   );
 
   throws(
@@ -315,14 +315,14 @@ test("13 - 2nd arg, 'indexes' type is wrong", () => {
       unicodeToNative("abcdef", null);
     },
     /THROW_ID_07/g,
-    "13.03"
+    "13.03",
   );
   throws(
     () => {
       nativeToUnicode("abcdef", null);
     },
     /THROW_ID_07/g,
-    "13.04"
+    "13.04",
   );
 });
 

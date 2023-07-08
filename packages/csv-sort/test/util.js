@@ -61,7 +61,7 @@ function compare(equal, name, throws) {
   equal(
     sha256(testSource),
     hashes[name],
-    `inputs were mangled for fixture "${name}"`
+    `inputs were mangled for fixture "${name}"`,
   );
 
   // then get onto real bizness
@@ -73,7 +73,7 @@ function compare(equal, name, throws) {
   let actual = sort(testSource, "utf8").res;
   let expected = readFileSync(
     path.join(fixtures, `${name}.expected.csv`),
-    "utf8"
+    "utf8",
   );
   return equal(actual, splitEasy(expected));
 }

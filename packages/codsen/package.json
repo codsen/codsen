@@ -36,7 +36,7 @@
     "perf": "exit 0",
     "prep": "echo 'ready'",
     "prettier": "prettier",
-    "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
+    "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
     "pretest": "exit 0",
     "test": "c8 npm run unit && npm run lint",
     "unit": "uvu test"

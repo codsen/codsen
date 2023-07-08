@@ -14,7 +14,7 @@ test("01 - wrong inputs", () => {
       comb();
     },
     /THROW_ID_01/,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -24,7 +24,7 @@ test("02 - wrong inputs", () => {
       comb(true);
     },
     /THROW_ID_01/,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -34,7 +34,7 @@ test("03 - wrong inputs", () => {
       comb(null);
     },
     /THROW_ID_01/,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -44,7 +44,7 @@ test("04 - wrong inputs", () => {
       comb({ a: "b" });
     },
     /THROW_ID_01/,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -66,7 +66,7 @@ test("07 - wrong opts", () => {
       comb("", 1);
     },
     /THROW_ID_02/,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -76,7 +76,7 @@ test("08 - wrong inputs", () => {
       comb("", true);
     },
     /THROW_ID_02/,
-    "08.01"
+    "08.01",
   );
 });
 
@@ -86,7 +86,7 @@ test("09 - wrong inputs", () => {
       comb("", { whitelist: 1 });
     },
     /THROW_ID_03/,
-    "09.01"
+    "09.01",
   );
 });
 
@@ -114,7 +114,7 @@ test("13 - wrong inputs", () => {
       comb("zzz", { whitelist: true });
     },
     /THROW_ID_03/,
-    "13.01"
+    "13.01",
   );
 });
 
@@ -142,7 +142,7 @@ test("17 - wrong inputs", () => {
       comb("zzz", { whitelist: [true] });
     },
     /THROW_ID_04/,
-    "17.01"
+    "17.01",
   );
 });
 
@@ -152,7 +152,7 @@ test("18 - wrong inputs, opts.backend", () => {
       comb("zzz", { backend: 1 });
     },
     /THROW_ID_05/,
-    "18.01"
+    "18.01",
   );
 });
 
@@ -162,7 +162,7 @@ test("19 - wrong inputs, opts.backend", () => {
       comb("zzz", { backend: "a" });
     },
     /THROW_ID_05/,
-    "19.01"
+    "19.01",
   );
 });
 
@@ -172,7 +172,7 @@ test("20 - wrong inputs, opts.backend", () => {
       comb("zzz", { backend: ["a"] }); // sneaky
     },
     /THROW_ID_06/,
-    "20.01"
+    "20.01",
   );
 });
 
@@ -182,7 +182,7 @@ test("21 - wrong inputs, opts.backend", () => {
       comb("zzz", { backend: [{}] }); // objects have to have consistent schema: "heads" and "tails" keys
     },
     "21.01",
-    "21.01"
+    "21.01",
   );
 });
 
@@ -192,7 +192,7 @@ test("22 - wrong inputs, opts.backend", () => {
       comb("zzz", { backend: [{ a: "b" }] }); // unrecognised keys
     },
     /THROW_ID_07/,
-    "22.01"
+    "22.01",
   );
 });
 
@@ -214,7 +214,7 @@ test("25 - wrong inputs, opts.uglify", () => {
       comb("z", { uglify: "z" });
     },
     /THROW_ID_08/,
-    "25.01"
+    "25.01",
   );
 });
 
@@ -236,7 +236,7 @@ test("28 - wrong inputs, opts.reportProgressFunc", () => {
       comb("z", { reportProgressFunc: "z" });
     },
     /THROW_ID_09/,
-    "28.01"
+    "28.01",
   );
 });
 

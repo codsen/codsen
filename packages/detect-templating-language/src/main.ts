@@ -16,8 +16,8 @@ function detectLang(str: string): { name: Output } {
       `detect-templating-language: [THROW_ID_01] Input must be string! It was given as ${JSON.stringify(
         str,
         null,
-        4
-      )} (type ${typeof str}).`
+        4,
+      )} (type ${typeof str}).`,
     );
   }
 

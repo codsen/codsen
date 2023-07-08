@@ -14,7 +14,7 @@ test("01", () => {
   equal(
     isStr(() => {}),
     false,
-    "01.07"
+    "01.07",
   );
   equal(isStr({}), false, "01.08");
   equal(isStr(NaN), false, "01.09");
@@ -22,7 +22,7 @@ test("01", () => {
   equal(
     isStr(() => {}),
     false,
-    "01.11"
+    "01.11",
   );
   equal(isStr(""), true, "01.12");
   equal(isStr("a"), true, "01.13");

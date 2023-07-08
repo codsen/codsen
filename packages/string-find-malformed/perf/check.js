@@ -18,7 +18,7 @@ const testme = () =>
     },
     {
       maxDistance: 2,
-    }
+    },
   );
 
 // action

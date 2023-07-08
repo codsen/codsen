@@ -14,9 +14,9 @@ assert.deepEqual(
     {
       key: "c",
       val: "d",
-    }
+    },
   ),
-  { a: "b" }
+  { a: "b" },
 );
 
 // deleting key 'b' with value - array ['c', 'd']
@@ -29,8 +29,8 @@ assert.deepEqual(
     {
       key: "b",
       val: ["c", "d"],
-    }
+    },
   ),
-  {}
+  {},
 );
 // notice program cleaned after itself, it didn't leave empty "a" key

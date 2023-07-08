@@ -11,7 +11,7 @@ interface Opts {
 declare function isOpening(
   str: string,
   idx?: number,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): boolean;
 
 export { Opts, defaultOpts as defaults, isOpening, version };

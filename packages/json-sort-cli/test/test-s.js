@@ -40,39 +40,39 @@ test("01 - sort, -s (silent) mode", async () => {
     (oneOfTestFilePaths, testIndex) =>
       fs.writeJson(
         path.join(tempFolder, oneOfTestFilePaths),
-        testFileContents[testIndex]
-      )
+        testFileContents[testIndex],
+      ),
   )
     .then(() =>
       fs.writeFile(
         path.join(tempFolder, "test1/.something.yml"), // - dotfile in yml with yml extension
-        "foo:\n  bar"
-      )
+        "foo:\n  bar",
+      ),
     )
     .then(() =>
       fs.writeFile(
         path.join(tempFolder, "test1/.somethinginyml"), // - dotfile in yml without yml extension
-        "foo:\n  bar"
-      )
+        "foo:\n  bar",
+      ),
     )
     .then(() =>
-      fs.writeFile(path.join(tempFolder, "test1/broken.json"), '{a": "b"}\n')
+      fs.writeFile(path.join(tempFolder, "test1/broken.json"), '{a": "b"}\n'),
     )
     .then(() => execa("./cli.js", [tempFolder, "-s"]))
     .then(() => {
       // not.match(receivedStdOut.stdout, /OK/);
       // not.match(receivedStdOut.stdout, /sorted/);
       return pMap(testFilePaths, (oneOfPaths) =>
-        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
+        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8"),
       ).then((contentsArray) => {
         return pMap(contentsArray, (oneOfArrays) =>
-          JSON.stringify(oneOfArrays, null, 2)
+          JSON.stringify(oneOfArrays, null, 2),
         );
       });
     })
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received),
     )
     .catch((err) => {
       throw new Error(err);

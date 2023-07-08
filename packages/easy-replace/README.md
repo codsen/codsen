@@ -51,9 +51,9 @@ assert.equal(
         searchFor: true,
       },
     },
-    "&nbsp;"
+    "&nbsp;",
   ),
-  "&nbsp; &nbsp; &nbsp; &nbsp;"
+  "&nbsp; &nbsp; &nbsp; &nbsp;",
 );
 ```
 

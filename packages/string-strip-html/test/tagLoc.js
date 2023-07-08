@@ -25,7 +25,7 @@ test("01 - tag locations - anchor wrapping text", () => {
         [14, 18],
       ],
     },
-    "01.01"
+    "01.01",
   );
   equal(
     stripHtml("abc<div>click me</div>def"),
@@ -44,7 +44,7 @@ test("01 - tag locations - anchor wrapping text", () => {
         [16, 22],
       ],
     },
-    "01.02"
+    "01.02",
   );
 });
 
@@ -57,7 +57,7 @@ test("02 - tag locations - no tags were present at all", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "02.01"
+    "02.01",
   );
 });
 
@@ -83,7 +83,7 @@ test("03 - tag locations - opts.ignoreTags", () => {
         [10, 17],
       ],
     },
-    "03.01"
+    "03.01",
   );
   equal(
     stripHtml("<div><span>z</span></div>", {
@@ -106,7 +106,7 @@ test("03 - tag locations - opts.ignoreTags", () => {
         [12, 19],
       ],
     },
-    "03.02"
+    "03.02",
   );
 });
 
@@ -127,7 +127,7 @@ test("04 - tag locations - opts.ignoreTags", () => {
       ],
       filteredTagLocations: [],
     },
-    "04.01"
+    "04.01",
   );
 });
 
@@ -154,7 +154,7 @@ test("05 - tag locations - opts.onlyStripTags", () => {
         [10, 17],
       ],
     },
-    "05.01"
+    "05.01",
   );
 });
 
@@ -183,7 +183,7 @@ test("06 - tag locations - opts.onlyStripTags", () => {
         [17, 21],
       ],
     },
-    "06.01"
+    "06.01",
   );
 });
 
@@ -203,7 +203,7 @@ test("07 - tag locations - closing bracket missing", () => {
         [23, 41],
       ],
     },
-    "07.01"
+    "07.01",
   );
 });
 
@@ -222,7 +222,7 @@ test("08 - tag locations - closing bracket missing", () => {
       ],
       filteredTagLocations: [[0, 41]],
     },
-    "08.01"
+    "08.01",
   );
 });
 
@@ -241,7 +241,7 @@ test("09 - tag locations - closing bracket missing on ignored tag", () => {
       ],
       filteredTagLocations: [],
     },
-    "09.01"
+    "09.01",
   );
 });
 

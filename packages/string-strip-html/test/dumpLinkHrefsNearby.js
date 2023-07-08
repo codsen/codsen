@@ -13,10 +13,10 @@ test("01 - null", () => {
       'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
       {
         dumpLinkHrefsNearby: null,
-      }
+      },
     ).result,
     "Let's watch news this evening",
-    "01.01"
+    "01.01",
   );
 });
 
@@ -26,10 +26,10 @@ test("02 - undefined", () => {
       'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
       {
         dumpLinkHrefsNearby: undefined,
-      }
+      },
     ).result,
     "Let's watch news this evening",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -39,10 +39,10 @@ test("03 - {}", () => {
       'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
       {
         dumpLinkHrefsNearby: {},
-      }
+      },
     ).result,
     "Let's watch news this evening",
-    "03.01"
+    "03.01",
   );
 });
 
@@ -53,11 +53,11 @@ test("04 - {}", () => {
         'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
         {
           dumpLinkHrefsNearby: true,
-        }
+        },
       );
     },
     /THROW_ID_04/,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -67,10 +67,10 @@ test("04 - {}", () => {
 test("05 - clean code, double quotes", () => {
   equal(
     stripHtml(
-      'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening'
+      'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
     ).result,
     "Let's watch news this evening",
-    "05.01"
+    "05.01",
   );
 });
 
@@ -80,50 +80,50 @@ test("06 - clean code, double quotes", () => {
       'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
       {
         dumpLinkHrefsNearby: { enabled: false },
-      }
+      },
     ).result,
     "Let's watch news this evening",
-    "06.01"
+    "06.01",
   );
   equal(
     stripHtml(
       'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
       {
         dumpLinkHrefsNearby: { putOnNewLine: true },
-      }
+      },
     ).result,
     "Let's watch news this evening",
-    "06.02"
+    "06.02",
   );
   equal(
     stripHtml(
       'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
       {
         dumpLinkHrefsNearby: { wrapHeads: "z" },
-      }
+      },
     ).result,
     "Let's watch news this evening",
-    "06.03"
+    "06.03",
   );
   equal(
     stripHtml(
       'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
       {
         dumpLinkHrefsNearby: { wrapTails: "z" },
-      }
+      },
     ).result,
     "Let's watch news this evening",
-    "06.04"
+    "06.04",
   );
   equal(
     stripHtml(
       'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
       {
         dumpLinkHrefsNearby: { wrapHeads: "|", wrapTails: "|" },
-      }
+      },
     ).result,
     "Let's watch news this evening",
-    "06.05"
+    "06.05",
   );
   equal(
     stripHtml(
@@ -134,10 +134,10 @@ test("06 - clean code, double quotes", () => {
           wrapHeads: "|",
           wrapTails: "|",
         },
-      }
+      },
     ).result,
     "Let's watch news this evening",
-    "06.06"
+    "06.06",
   );
 });
 
@@ -147,10 +147,10 @@ test("07 - clean code, double quotes", () => {
       'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
       {
         dumpLinkHrefsNearby: { enabled: true },
-      }
+      },
     ).result,
     "Let's watch news https://www.news.com/ this evening",
-    "07.01"
+    "07.01",
   );
 });
 
@@ -158,18 +158,18 @@ test("08 - clean code, double quotes", () => {
   equal(
     stripHtml(
       'Let\'s sell some juicy gossip to the <a href="mailto:gossip@codsen.com" target="_blank">Roy</a> right now!',
-      { dumpLinkHrefsNearby: { enabled: true } }
+      { dumpLinkHrefsNearby: { enabled: true } },
     ).result,
     "Let's sell some juicy gossip to the Roy mailto:gossip@codsen.com right now!",
-    "08.01"
+    "08.01",
   );
   equal(
     stripHtml(
       'Let\'s sell some juicy gossip to the <a href="mailto:gossip@codsen.com" target="_blank">Roy</a> right now!',
-      { dumpLinkHrefsNearby: { enabled: true, wrapHeads: "|" } }
+      { dumpLinkHrefsNearby: { enabled: true, wrapHeads: "|" } },
     ).result,
     "Let's sell some juicy gossip to the Roy |mailto:gossip@codsen.com right now!",
-    "08.02"
+    "08.02",
   );
 });
 
@@ -177,20 +177,20 @@ test("09 - clean code, double quotes", () => {
   equal(
     stripHtml(
       'Here\'s the <a href="mailto:bob@codsen.com?cc=gossip@codsen.com&subject=look%20what%20Kate%20did%20last%20night" target="_blank">chief editor\'s</a> email.',
-      { dumpLinkHrefsNearby: { enabled: true } }
+      { dumpLinkHrefsNearby: { enabled: true } },
     ).result,
     "Here's the chief editor's mailto:bob@codsen.com?cc=gossip@codsen.com&subject=look%20what%20Kate%20did%20last%20night email.",
-    "09.01"
+    "09.01",
   );
 });
 
 test("10 - clean code, single quotes", () => {
   equal(
     stripHtml(
-      "Let's watch <a href='https://www.news.com/' target='_blank'>news</a> this evening"
+      "Let's watch <a href='https://www.news.com/' target='_blank'>news</a> this evening",
     ).result,
     "Let's watch news this evening",
-    "10.01"
+    "10.01",
   );
 });
 
@@ -200,10 +200,10 @@ test("11 - clean code, single quotes", () => {
       "Let's watch <a href='https://www.news.com/' target='_blank'>news</a> this evening",
       {
         dumpLinkHrefsNearby: { enabled: false },
-      }
+      },
     ).result,
     "Let's watch news this evening",
-    "11.01"
+    "11.01",
   );
 });
 
@@ -213,10 +213,10 @@ test("12 - clean code, single quotes", () => {
       "Let's watch <a href='https://www.news.com/' target='_blank'>news</a> this evening",
       {
         dumpLinkHrefsNearby: { enabled: true },
-      }
+      },
     ).result,
     "Let's watch news https://www.news.com/ this evening",
-    "12.01"
+    "12.01",
   );
 });
 
@@ -224,10 +224,10 @@ test("13 - clean code, single quotes", () => {
   equal(
     stripHtml(
       "Let's sell some juicy gossip to the <a href='mailto:gossip@codsen.com' target='_blank'>Roy</a> right now!",
-      { dumpLinkHrefsNearby: { enabled: true } }
+      { dumpLinkHrefsNearby: { enabled: true } },
     ).result,
     "Let's sell some juicy gossip to the Roy mailto:gossip@codsen.com right now!",
-    "13.01"
+    "13.01",
   );
 });
 
@@ -235,10 +235,10 @@ test("14 - clean code, single quotes", () => {
   equal(
     stripHtml(
       "Here's the <a href='mailto:bob@codsen.com?cc=gossip@codsen.com&subject=look%20what%20Kate%20did%20last%20night' target='_blank'>chief editor's</a> email.",
-      { dumpLinkHrefsNearby: { enabled: true } }
+      { dumpLinkHrefsNearby: { enabled: true } },
     ).result,
     "Here's the chief editor's mailto:bob@codsen.com?cc=gossip@codsen.com&subject=look%20what%20Kate%20did%20last%20night email.",
-    "14.01"
+    "14.01",
   );
 });
 
@@ -246,7 +246,7 @@ test("15 - dirty code, HTML is chopped but href captured", () => {
   equal(
     stripHtml('Let\'s watch <a href="https://www.news.com/" targ').result,
     "Let's watch",
-    "15.01"
+    "15.01",
   );
 });
 
@@ -256,17 +256,17 @@ test("16 - dirty code, HTML is chopped but href captured", () => {
       dumpLinkHrefsNearby: { enabled: true },
     }).result,
     "Let's watch https://www.news.com/",
-    "16.01"
+    "16.01",
   );
 });
 
 test("17 - linked image", () => {
   equal(
     stripHtml(
-      'a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b'
+      'a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b',
     ).result,
     "a b",
-    "17.01"
+    "17.01",
   );
 });
 
@@ -274,10 +274,10 @@ test("18 - linked image, dumpLinkHrefsNearby=off", () => {
   equal(
     stripHtml(
       'a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b',
-      { dumpLinkHrefsNearby: { enabled: false } }
+      { dumpLinkHrefsNearby: { enabled: false } },
     ).result,
     "a b",
-    "18.01"
+    "18.01",
   );
 });
 
@@ -285,20 +285,20 @@ test("19 - linked image, dumpLinkHrefsNearby=on", () => {
   equal(
     stripHtml(
       'a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b',
-      { dumpLinkHrefsNearby: { enabled: true } }
+      { dumpLinkHrefsNearby: { enabled: true } },
     ).result,
     "a https://codsen.com b",
-    "19.01"
+    "19.01",
   );
 });
 
 test("20 - .putOnNewLine, control", () => {
   equal(
     stripHtml(
-      'a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b'
+      'a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b',
     ).result,
     "a b",
-    "20.01"
+    "20.01",
   );
 });
 
@@ -311,10 +311,10 @@ test("21 - .putOnNewLine, control", () => {
           enabled: true,
           putOnNewLine: false, // <-------------   !
         },
-      }
+      },
     ).result,
     "a https://codsen.com b",
-    "21.01"
+    "21.01",
   );
 });
 
@@ -327,10 +327,10 @@ test("22 - .putOnNewLine, control", () => {
           enabled: true,
           putOnNewLine: true, // <-------------   !
         },
-      }
+      },
     ).result,
     "a\n\nhttps://codsen.com\n\nb",
-    "22.01"
+    "22.01",
   );
 });
 
@@ -345,10 +345,10 @@ test("23 - .putOnNewLine", () => {
           wrapHeads: "[", // <-------------  !
           wrapTails: "]", // <-------------  !
         },
-      }
+      },
     ).result,
     "a\n\n[https://codsen.com]\n\nb",
-    "23.01"
+    "23.01",
   );
 });
 
@@ -357,7 +357,7 @@ test("24 - wrapHeads/wrapTails - control", () => {
     stripHtml('a<a href="https://codsen.com" target="_blank"><div>z</div></a>b')
       .result,
     "a z b",
-    "24.01"
+    "24.01",
   );
 });
 
@@ -369,10 +369,10 @@ test("25 - wrapHeads/wrapTails - default dump", () => {
         dumpLinkHrefsNearby: {
           enabled: true,
         },
-      }
+      },
     ).result,
     "a z https://codsen.com b",
-    "25.01"
+    "25.01",
   );
 });
 
@@ -385,10 +385,10 @@ test("26 - wrapHeads/wrapTails wrap heads only", () => {
           enabled: true,
           wrapHeads: "[",
         },
-      }
+      },
     ).result,
     "a z [https://codsen.com b",
-    "26.01"
+    "26.01",
   );
 });
 
@@ -401,10 +401,10 @@ test("27 - wrapHeads/wrapTails wrap teads only", () => {
           enabled: true,
           wrapTails: "]",
         },
-      }
+      },
     ).result,
     "a z https://codsen.com] b",
-    "27.01"
+    "27.01",
   );
 });
 
@@ -418,10 +418,10 @@ test("28 - wrapHeads/wrapTails wrap both", () => {
           wrapHeads: "[",
           wrapTails: "]",
         },
-      }
+      },
     ).result,
     "a z [https://codsen.com] b",
-    "28.01"
+    "28.01",
   );
 });
 
@@ -436,10 +436,10 @@ test("29 - wrapHeads/wrapTails + ignoreTags", () => {
           wrapHeads: "[",
           wrapTails: "]",
         },
-      }
+      },
     ).result,
     "a<div>z</div> [https://codsen.com] b",
-    "29.01"
+    "29.01",
   );
 });
 
@@ -454,10 +454,10 @@ test("30 - wrapHeads/wrapTails + ignoreTags", () => {
           wrapHeads: "[",
           wrapTails: "]",
         },
-      }
+      },
     ).result,
     "a z [https://codsen.com] b",
-    "30.01"
+    "30.01",
   );
 });
 
@@ -472,10 +472,10 @@ test("31 - wrapHeads/wrapTails + stripTogetherWithTheirContents", () => {
           wrapHeads: "[",
           wrapTails: "]",
         },
-      }
+      },
     ).result,
     "a [https://codsen.com] b",
-    "31.01"
+    "31.01",
   );
 });
 
@@ -485,7 +485,7 @@ test("32 - ends with URL - enabled=true, putOnNewLine=false", () => {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "click me https://example.com/",
-    "32.01"
+    "32.01",
   );
 });
 
@@ -495,7 +495,7 @@ test("33 - ends with URL - enabled=true, putOnNewLine=true", () => {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "click me\n\nhttps://example.com/",
-    "33.01"
+    "33.01",
   );
 });
 
@@ -505,7 +505,7 @@ test("34 - ends with URL - disabled", () => {
       dumpLinkHrefsNearby: { enabled: false },
     }).result,
     "click me",
-    "34.01"
+    "34.01",
   );
 });
 
@@ -515,7 +515,7 @@ test("35 - ends with URL - enabled=true, putOnNewLine=false", () => {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "click me https://example.com/",
-    "35.01"
+    "35.01",
   );
 });
 
@@ -525,7 +525,7 @@ test("36 - ends with URL - enabled=true, putOnNewLine=true", () => {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "click me\n\nhttps://example.com/",
-    "36.01"
+    "36.01",
   );
 });
 
@@ -536,35 +536,35 @@ test("37 - trailing dot + end", () => {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "Here's a link https://codsen.com",
-    "37.01"
+    "37.01",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>,', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "Here's a link https://codsen.com",
-    "37.02"
+    "37.02",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>;', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "Here's a link https://codsen.com",
-    "37.03"
+    "37.03",
   );
   equal(
     stripHtml('A <a href="https://codsen.com">link</a>!', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "A link https://codsen.com",
-    "37.04"
+    "37.04",
   );
   equal(
     stripHtml('Is this a <a href="https://codsen.com">link</a>?', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "Is this a link https://codsen.com",
-    "37.05"
+    "37.05",
   );
   // putOnNewLine=true
   equal(
@@ -572,35 +572,35 @@ test("37 - trailing dot + end", () => {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "Here's a link.\n\nhttps://codsen.com",
-    "37.06"
+    "37.06",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>,', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "Here's a link,\n\nhttps://codsen.com",
-    "37.07"
+    "37.07",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>;', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "Here's a link;\n\nhttps://codsen.com",
-    "37.08"
+    "37.08",
   );
   equal(
     stripHtml('A <a href="https://codsen.com">link</a>!', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "A link!\n\nhttps://codsen.com",
-    "37.09"
+    "37.09",
   );
   equal(
     stripHtml('Is this a <a href="https://codsen.com">link</a>?', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "Is this a link?\n\nhttps://codsen.com",
-    "37.10"
+    "37.10",
   );
 });
 
@@ -611,35 +611,35 @@ test("38 - trailing dot + new line", () => {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "Here's a link https://codsen.com\nText.",
-    "38.01"
+    "38.01",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>,\ntext.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "Here's a link https://codsen.com\ntext.",
-    "38.02"
+    "38.02",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>;\ntext.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "Here's a link https://codsen.com\ntext.",
-    "38.03"
+    "38.03",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>!\ntext.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "Here's a link https://codsen.com\ntext.",
-    "38.04"
+    "38.04",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>?\ntext.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "Here's a link https://codsen.com\ntext.",
-    "38.05"
+    "38.05",
   );
   // putOnNewLine=true
   equal(
@@ -647,35 +647,35 @@ test("38 - trailing dot + new line", () => {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "Here's a link.\n\nhttps://codsen.com\n\nText.",
-    "38.06"
+    "38.06",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>,\ntext.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "Here's a link,\n\nhttps://codsen.com\n\ntext.",
-    "38.07"
+    "38.07",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>;\ntext.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "Here's a link;\n\nhttps://codsen.com\n\ntext.",
-    "38.08"
+    "38.08",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>!\ntext.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "Here's a link!\n\nhttps://codsen.com\n\ntext.",
-    "38.09"
+    "38.09",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>?\ntext.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "Here's a link?\n\nhttps://codsen.com\n\ntext.",
-    "38.10"
+    "38.10",
   );
 });
 
@@ -686,35 +686,35 @@ test("39 - trailing dot + space + text", () => {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "Here's a link https://codsen.com Text.",
-    "39.01"
+    "39.01",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>, text.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "Here's a link https://codsen.com text.",
-    "39.02"
+    "39.02",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>; text.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "Here's a link https://codsen.com text.",
-    "39.03"
+    "39.03",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>! Text.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "Here's a link https://codsen.com Text.",
-    "39.04"
+    "39.04",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>? Text.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: false },
     }).result,
     "Here's a link https://codsen.com Text.",
-    "39.05"
+    "39.05",
   );
   // putOnNewLine=true
   equal(
@@ -722,35 +722,35 @@ test("39 - trailing dot + space + text", () => {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "Here's a link.\n\nhttps://codsen.com\n\nText.",
-    "39.06"
+    "39.06",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>, text.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "Here's a link,\n\nhttps://codsen.com\n\ntext.",
-    "39.07"
+    "39.07",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>; text.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "Here's a link;\n\nhttps://codsen.com\n\ntext.",
-    "39.08"
+    "39.08",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>! Text.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "Here's a link!\n\nhttps://codsen.com\n\nText.",
-    "39.09"
+    "39.09",
   );
   equal(
     stripHtml('Here\'s a <a href="https://codsen.com">link</a>? Text.', {
       dumpLinkHrefsNearby: { enabled: true, putOnNewLine: true },
     }).result,
     "Here's a link?\n\nhttps://codsen.com\n\nText.",
-    "39.10"
+    "39.10",
   );
 });
 
@@ -767,7 +767,7 @@ test("40 - html tag - in tandem with stripTogetherWithTheirContents, bug #54", (
   equal(
     stripHtml(source, { stripTogetherWithTheirContents: ["div"] }).result,
     "Show in plaintext\n\nLegit link? Click here.\nMore text",
-    "40.01"
+    "40.01",
   );
   equal(
     stripHtml(source, {
@@ -777,7 +777,7 @@ test("40 - html tag - in tandem with stripTogetherWithTheirContents, bug #54", (
       },
     }).result,
     "Show in plaintext\n\nLegit link? Click here url\nMore text",
-    "40.02"
+    "40.02",
   );
 });
 
@@ -793,7 +793,7 @@ test("41 - custom tag - in tandem with stripTogetherWithTheirContents, bug #54",
     stripHtml(source, { stripTogetherWithTheirContents: ["not-plaintext"] })
       .result,
     "Show in plaintext",
-    "41.01"
+    "41.01",
   );
   equal(
     stripHtml(source, {
@@ -803,7 +803,7 @@ test("41 - custom tag - in tandem with stripTogetherWithTheirContents, bug #54",
       },
     }).result,
     "Show in plaintext",
-    "41.02"
+    "41.02",
   );
 });
 
@@ -819,7 +819,7 @@ test("42 - in combo with broken case, missing opening bracket + double quote att
       },
     }).result,
     "",
-    "42.01"
+    "42.01",
   );
   equal(
     stripHtml(source, {
@@ -828,7 +828,7 @@ test("42 - in combo with broken case, missing opening bracket + double quote att
       },
     }).result,
     "",
-    "42.02"
+    "42.02",
   );
 });
 
@@ -844,7 +844,7 @@ test("43", () => {
       },
     }).result,
     "",
-    "43.01"
+    "43.01",
   );
   equal(
     stripHtml(source, {
@@ -853,7 +853,7 @@ test("43", () => {
       },
     }).result,
     "",
-    "43.02"
+    "43.02",
   );
 });
 
@@ -867,7 +867,7 @@ test("44", () => {
       },
     }).result,
     "z",
-    "44.01"
+    "44.01",
   );
   equal(
     stripHtml(source, {
@@ -876,7 +876,7 @@ test("44", () => {
       },
     }).result,
     "z",
-    "44.02"
+    "44.02",
   );
 });
 

@@ -49,7 +49,7 @@ test("03 - minimal string of few words", () => {
     equal(
       m(equal, source, opt).result,
       "<x><y> c </y></x>\n",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 
@@ -65,7 +65,7 @@ c
 </y>
 </x>
 `,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 
@@ -82,7 +82,7 @@ c
   </y>
 </x>
 `,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -94,7 +94,7 @@ test("04 - trailing linebreaks (or their absence) at the EOF are respected", () 
     equal(
       m(equal, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n", opt).result,
       "<x><y> c </y></x>\n",
-      `${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`
+      `${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`,
     );
   });
   mixer({
@@ -104,7 +104,7 @@ test("04 - trailing linebreaks (or their absence) at the EOF are respected", () 
     equal(
       m(equal, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n", opt).result,
       "<x>\n<y>\nc\n</y>\n</x>\n",
-      `${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`
+      `${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`,
     );
   });
   // with both settings off, frontal trimming won't happen, notice
@@ -116,7 +116,7 @@ test("04 - trailing linebreaks (or their absence) at the EOF are respected", () 
     equal(
       m(equal, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n", opt).result,
       "\n<x>\n  <y>\n    c\n  </y>\n</x>\n",
-      `${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`
+      `${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`,
     );
   });
 });
@@ -128,7 +128,7 @@ test("05 - trailing linebreaks (or their absence) at the EOF are respected", () 
     equal(
       m(equal, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n\n", opt).result,
       "<x><y> c </y></x>\n",
-      `${JSON.stringify(opt, null, 4)} - double trailing line breaks at EOF`
+      `${JSON.stringify(opt, null, 4)} - double trailing line breaks at EOF`,
     );
   });
 });
@@ -140,7 +140,7 @@ test("06 - trailing linebreaks (or their absence) at the EOF are respected", () 
     equal(
       m(equal, "\n<x>\n  <y>\n    c\n  </y>\n</x>", opt).result,
       "<x><y> c </y></x>",
-      `${JSON.stringify(opt, null, 4)} - no trailing line breaks at EOF`
+      `${JSON.stringify(opt, null, 4)} - no trailing line breaks at EOF`,
     );
   });
 });
@@ -165,7 +165,7 @@ test("07 - opts.lineLengthLimit", () => {
   equal(
     m(equal, original, { removeLineBreaks: true }).result,
     minified,
-    "07.01"
+    "07.01",
   );
   equal(strip(original), strip(minified), "07.02");
 
@@ -182,7 +182,7 @@ test("07 - opts.lineLengthLimit", () => {
       lineLengthLimit: 8,
     }).result,
     minified8,
-    "07.03"
+    "07.03",
   );
 
   m(equal, original, {
@@ -221,7 +221,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 0,
     }).result,
     "aaaaaa bbbbbb cccccc",
-    "08.01"
+    "08.01",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -229,7 +229,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 0,
     }).result,
     "aaaaaa bbbbbb cccccc",
-    "08.02"
+    "08.02",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -237,7 +237,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 1,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "08.03"
+    "08.03",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -245,7 +245,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 2,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "08.04"
+    "08.04",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -253,7 +253,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 3,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "08.05"
+    "08.05",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -261,7 +261,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 4,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "08.06"
+    "08.06",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -269,7 +269,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 5,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "08.07"
+    "08.07",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -277,7 +277,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 6,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "08.08"
+    "08.08",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -285,7 +285,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 7,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "08.09"
+    "08.09",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -293,7 +293,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 8,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "08.10"
+    "08.10",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -301,7 +301,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 9,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "08.11"
+    "08.11",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -309,7 +309,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 10,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "08.12"
+    "08.12",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -317,7 +317,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 11,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "08.13"
+    "08.13",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -325,7 +325,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 12,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "08.14"
+    "08.14",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -333,7 +333,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 13,
     }).result,
     "aaaaaa bbbbbb\ncccccc",
-    "08.15"
+    "08.15",
   );
   equal(
     m(equal, "aaaaaa  bbbbbb cccccc", {
@@ -341,7 +341,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 13,
     }).result,
     "aaaaaa bbbbbb\ncccccc",
-    "08.16"
+    "08.16",
   );
   equal(
     m(equal, "aaaaaa\n\nbbbbbb cccccc", {
@@ -349,7 +349,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 13,
     }).result,
     "aaaaaa bbbbbb\ncccccc",
-    "08.17"
+    "08.17",
   );
   equal(
     m(equal, "aaaaaa \n \n bbbbbb cccccc", {
@@ -357,7 +357,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 13,
     }).result,
     "aaaaaa bbbbbb\ncccccc",
-    "08.18"
+    "08.18",
   );
   equal(
     m(equal, "aaaaaa\t\n\t\n\tbbbbbb cccccc", {
@@ -365,7 +365,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 13,
     }).result,
     "aaaaaa bbbbbb\ncccccc",
-    "08.19"
+    "08.19",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -373,7 +373,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 14,
     }).result,
     "aaaaaa bbbbbb\ncccccc",
-    "08.20"
+    "08.20",
   );
   equal(
     m(equal, "aaaaaa bbbbbb cccccc", {
@@ -381,7 +381,7 @@ test("08 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 15,
     }).result,
     "aaaaaa bbbbbb\ncccccc",
-    "08.21"
+    "08.21",
   );
 });
 
@@ -392,7 +392,7 @@ test("09 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 0,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "09.01"
+    "09.01",
   );
   equal(
     m(equal, "aaaaaa\nbbbbbb\ncccccc", {
@@ -400,7 +400,7 @@ test("09 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 1,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "09.02"
+    "09.02",
   );
   equal(
     m(equal, "aaaaaa\nbbbbbb\ncccccc", {
@@ -408,7 +408,7 @@ test("09 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 2,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "09.03"
+    "09.03",
   );
   equal(
     m(equal, "aaaaaa\nbbbbbb\ncccccc", {
@@ -416,7 +416,7 @@ test("09 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 3,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "09.04"
+    "09.04",
   );
   equal(
     m(equal, "aaaaaa\nbbbbbb\ncccccc", {
@@ -424,7 +424,7 @@ test("09 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 4,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "09.05"
+    "09.05",
   );
   equal(
     m(equal, "aaaaaa\nbbbbbb\ncccccc", {
@@ -432,7 +432,7 @@ test("09 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 5,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "09.06"
+    "09.06",
   );
   equal(
     m(equal, "aaaaaa\nbbbbbb\ncccccc", {
@@ -440,7 +440,7 @@ test("09 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 6,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "09.07"
+    "09.07",
   );
   equal(
     m(equal, "aaaaaa\nbbbbbb\ncccccc", {
@@ -448,7 +448,7 @@ test("09 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 7,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "09.08"
+    "09.08",
   );
   equal(
     m(equal, "aaaaaa\nbbbbbb\ncccccc", {
@@ -456,7 +456,7 @@ test("09 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 8,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "09.09"
+    "09.09",
   );
   equal(
     m(equal, "aaaaaa\nbbbbbb\ncccccc", {
@@ -464,7 +464,7 @@ test("09 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 9,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "09.10"
+    "09.10",
   );
   equal(
     m(equal, "aaaaaa\nbbbbbb\ncccccc", {
@@ -472,7 +472,7 @@ test("09 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 10,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "09.11"
+    "09.11",
   );
   equal(
     m(equal, "aaaaaa\nbbbbbb\ncccccc", {
@@ -480,7 +480,7 @@ test("09 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 11,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "09.12"
+    "09.12",
   );
   equal(
     m(equal, "aaaaaa\nbbbbbb\ncccccc", {
@@ -488,7 +488,7 @@ test("09 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 12,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "09.13"
+    "09.13",
   );
   equal(
     m(equal, "aaaaaa\nbbbbbb\ncccccc", {
@@ -496,7 +496,7 @@ test("09 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 100,
     }).result,
     "aaaaaa bbbbbb cccccc",
-    "09.14"
+    "09.14",
   );
 });
 
@@ -507,7 +507,7 @@ test("10 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 0,
     }).result,
     "aaaaaa bbbbbb cccccc",
-    "10.01"
+    "10.01",
   );
   equal(
     m(equal, "aaaaaa\n\nbbbbbb\n\ncccccc", {
@@ -515,7 +515,7 @@ test("10 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 1,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "10.02"
+    "10.02",
   );
   equal(
     m(equal, "aaaaaa\n\nbbbbbb\n\ncccccc", {
@@ -523,7 +523,7 @@ test("10 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 2,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "10.03"
+    "10.03",
   );
   equal(
     m(equal, "aaaaaa\n\nbbbbbb\n\ncccccc", {
@@ -531,7 +531,7 @@ test("10 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 3,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "10.04"
+    "10.04",
   );
   equal(
     m(equal, "aaaaaa\n\nbbbbbb\n\ncccccc", {
@@ -539,7 +539,7 @@ test("10 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 4,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "10.05"
+    "10.05",
   );
   equal(
     m(equal, "aaaaaa\n\nbbbbbb\n\ncccccc", {
@@ -547,7 +547,7 @@ test("10 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 5,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "10.06"
+    "10.06",
   );
   equal(
     m(equal, "aaaaaa\n\nbbbbbb\n\ncccccc", {
@@ -555,7 +555,7 @@ test("10 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 6,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "10.07"
+    "10.07",
   );
   equal(
     m(equal, "aaaaaa\n\nbbbbbb\n\ncccccc", {
@@ -563,7 +563,7 @@ test("10 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 7,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "10.08"
+    "10.08",
   );
   equal(
     m(equal, "aaaaaa\n\nbbbbbb\n\ncccccc", {
@@ -571,7 +571,7 @@ test("10 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 8,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "10.09"
+    "10.09",
   );
   equal(
     m(equal, "aaaaaa\n\nbbbbbb\n\ncccccc", {
@@ -579,7 +579,7 @@ test("10 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 9,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "10.10"
+    "10.10",
   );
   equal(
     m(equal, "aaaaaa\n\nbbbbbb\n\ncccccc", {
@@ -587,7 +587,7 @@ test("10 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 10,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "10.11"
+    "10.11",
   );
   equal(
     m(equal, "aaaaaa\n\nbbbbbb\n\ncccccc", {
@@ -595,7 +595,7 @@ test("10 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 11,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "10.12"
+    "10.12",
   );
   equal(
     m(equal, "aaaaaa\n\nbbbbbb\n\ncccccc", {
@@ -603,7 +603,7 @@ test("10 - when chunk of characters without break points is longer than line lim
       lineLengthLimit: 12,
     }).result,
     "aaaaaa\nbbbbbb\ncccccc",
-    "10.13"
+    "10.13",
   );
 });
 
@@ -614,7 +614,7 @@ test("11 - tags with single space between them", () => {
       lineLengthLimit: 0,
     }).result,
     "<aaaa><bbbb><cccc>",
-    "11.01"
+    "11.01",
   );
   equal(
     m(equal, "<aaaa> <bbbb> <cccc>", {
@@ -622,7 +622,7 @@ test("11 - tags with single space between them", () => {
       lineLengthLimit: 1,
     }).result,
     "<aaaa>\n<bbbb>\n<cccc>",
-    "11.02"
+    "11.02",
   );
   equal(
     m(equal, "<aaaa> <bbbb> <cccc>", {
@@ -630,7 +630,7 @@ test("11 - tags with single space between them", () => {
       lineLengthLimit: 2,
     }).result,
     "<aaaa>\n<bbbb>\n<cccc>",
-    "11.03"
+    "11.03",
   );
   equal(
     m(equal, "<aaaa> <bbbb> <cccc>", {
@@ -638,7 +638,7 @@ test("11 - tags with single space between them", () => {
       lineLengthLimit: 10,
     }).result,
     "<aaaa>\n<bbbb>\n<cccc>",
-    "11.04"
+    "11.04",
   );
   equal(
     m(equal, "<aaaa> <bbbb> <cccc>", {
@@ -646,7 +646,7 @@ test("11 - tags with single space between them", () => {
       lineLengthLimit: 11,
     }).result,
     "<aaaa>\n<bbbb>\n<cccc>",
-    "11.05"
+    "11.05",
   );
   equal(
     m(equal, "<aaaa> <bbbb> <cccc>", {
@@ -654,7 +654,7 @@ test("11 - tags with single space between them", () => {
       lineLengthLimit: 12,
     }).result,
     "<aaaa><bbbb>\n<cccc>",
-    "11.06"
+    "11.06",
   );
   equal(
     m(equal, "<aaaa> <bbbb> <cccc>", {
@@ -662,7 +662,7 @@ test("11 - tags with single space between them", () => {
       lineLengthLimit: 13,
     }).result,
     "<aaaa><bbbb>\n<cccc>",
-    "11.07"
+    "11.07",
   );
   equal(
     m(equal, "<aaaa> <bbbb> <cccc>", {
@@ -670,7 +670,7 @@ test("11 - tags with single space between them", () => {
       lineLengthLimit: 14,
     }).result,
     "<aaaa><bbbb>\n<cccc>",
-    "11.08"
+    "11.08",
   );
   equal(
     m(equal, "<aaaa> <bbbb> <cccc>", {
@@ -678,7 +678,7 @@ test("11 - tags with single space between them", () => {
       lineLengthLimit: 15,
     }).result,
     "<aaaa><bbbb>\n<cccc>",
-    "11.09"
+    "11.09",
   );
 });
 
@@ -686,64 +686,64 @@ test("12 - breaking between tags", () => {
   equal(
     m(equal, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 0 }).result,
     "<aa><bb>",
-    "12.01"
+    "12.01",
   );
   equal(
     m(equal, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 1 }).result,
     "<aa>\n<bb>",
-    "12.02"
+    "12.02",
   );
   equal(
     m(equal, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 2 }).result,
     "<aa>\n<bb>",
-    "12.03"
+    "12.03",
   );
   equal(
     m(equal, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 3 }).result,
     "<aa>\n<bb>",
-    "12.04"
+    "12.04",
   );
   equal(
     m(equal, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 4 }).result,
     "<aa>\n<bb>",
-    "12.05"
+    "12.05",
   );
   equal(
     m(equal, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 5 }).result,
     "<aa>\n<bb>",
-    "12.06"
+    "12.06",
   );
   equal(
     m(equal, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 6 }).result,
     "<aa>\n<bb>",
-    "12.07"
+    "12.07",
   );
   equal(
     m(equal, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 7 }).result,
     "<aa>\n<bb>",
-    "12.08"
+    "12.08",
   );
   equal(
     m(equal, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 8 }).result,
     "<aa><bb>",
-    "12.09"
+    "12.09",
   );
   equal(
     m(equal, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 9 }).result,
     "<aa><bb>",
-    "12.10"
+    "12.10",
   );
   equal(
     m(equal, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 10 })
       .result,
     "<aa><bb>",
-    "12.11"
+    "12.11",
   );
   equal(
     m(equal, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 999 })
       .result,
     "<aa><bb>",
-    "12.12"
+    "12.12",
   );
 });
 
@@ -757,13 +757,13 @@ test("13 - break-position-friendly characters, not suitable for break yet - line
     m(equal, "<aa><bb><cc>", { removeLineBreaks: true, lineLengthLimit: 8 })
       .result,
     "<aa><bb>\n<cc>",
-    "13.01"
+    "13.01",
   );
   equal(
     m(equal, "<aa><bb><cc><dd>", { removeLineBreaks: true, lineLengthLimit: 8 })
       .result,
     "<aa><bb>\n<cc><dd>",
-    "13.02"
+    "13.02",
   );
 
   // same as above, but with whitespace
@@ -771,7 +771,7 @@ test("13 - break-position-friendly characters, not suitable for break yet - line
     m(equal, "<aa>\t<bb>\t<cc>", { removeLineBreaks: true, lineLengthLimit: 8 })
       .result,
     "<aa><bb>\n<cc>",
-    "13.03"
+    "13.03",
   );
   equal(
     m(equal, "<aa>\t\t<bb>\t<cc>\t\t<dd>", {
@@ -779,7 +779,7 @@ test("13 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 8,
     }).result,
     "<aa><bb>\n<cc><dd>",
-    "13.04"
+    "13.04",
   );
 
   // same as above, except with trailing tab
@@ -789,7 +789,7 @@ test("13 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 8,
     }).result,
     "<aa><bb>\n<cc>",
-    "13.05"
+    "13.05",
   );
   equal(
     m(equal, "<aa>\t\t<bb>\t<cc>\t\t<dd>\t", {
@@ -797,7 +797,7 @@ test("13 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 8,
     }).result,
     "<aa><bb>\n<cc><dd>",
-    "13.06"
+    "13.06",
   );
 });
 
@@ -812,7 +812,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd>",
-    "14.01"
+    "14.01",
   );
   equal(
     m(equal, "<aa><bb><cc><dd><ee>", {
@@ -820,7 +820,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd><ee>",
-    "14.02"
+    "14.02",
   );
   equal(
     m(equal, "<aa><bb><cc><dd><ee><ff>", {
@@ -828,7 +828,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd><ee><ff>",
-    "14.03"
+    "14.03",
   );
   equal(
     m(equal, "<aa><bb><cc><dd><ee><ff><gg>", {
@@ -836,7 +836,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd><ee><ff>\n<gg>",
-    "14.04"
+    "14.04",
   );
 
   // tab after first tag:
@@ -847,7 +847,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd>",
-    "14.05"
+    "14.05",
   );
   equal(
     m(equal, "<aa>\t<bb><cc><dd><ee>", {
@@ -855,7 +855,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd><ee>",
-    "14.06"
+    "14.06",
   );
   equal(
     m(equal, "<aa>\t<bb><cc><dd><ee><ff>", {
@@ -863,7 +863,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd><ee><ff>",
-    "14.07"
+    "14.07",
   );
   equal(
     m(equal, "<aa>\t<bb><cc><dd><ee><ff><gg>", {
@@ -871,7 +871,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd><ee><ff>\n<gg>",
-    "14.08"
+    "14.08",
   );
 
   // tab after second tag:
@@ -882,7 +882,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd>",
-    "14.09"
+    "14.09",
   );
   equal(
     m(equal, "<aa><bb>\t<cc><dd><ee>", {
@@ -890,7 +890,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd><ee>",
-    "14.10"
+    "14.10",
   );
   equal(
     m(equal, "<aa><bb>\t<cc><dd><ee><ff>", {
@@ -898,7 +898,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd><ee><ff>",
-    "14.11"
+    "14.11",
   );
   equal(
     m(equal, "<aa><bb>\t<cc><dd><ee><ff><gg>", {
@@ -906,7 +906,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd><ee><ff>\n<gg>",
-    "14.12"
+    "14.12",
   );
 
   // tab after third tag:
@@ -917,7 +917,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd>",
-    "14.13"
+    "14.13",
   );
   equal(
     m(equal, "<aa><bb><cc>\t<dd><ee>", {
@@ -925,7 +925,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd><ee>",
-    "14.14"
+    "14.14",
   );
   equal(
     m(equal, "<aa><bb><cc>\t<dd><ee><ff>", {
@@ -933,7 +933,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd><ee><ff>",
-    "14.15"
+    "14.15",
   );
   equal(
     m(equal, "<aa><bb><cc>\t<dd><ee><ff><gg>", {
@@ -941,7 +941,7 @@ test("14 - break-position-friendly characters, not suitable for break yet - line
       lineLengthLimit: 12,
     }).result,
     "<aa><bb><cc>\n<dd><ee><ff>\n<gg>",
-    "14.16"
+    "14.16",
   );
 });
 
@@ -952,7 +952,7 @@ test("15 - script tags are skipped", () => {
       removeIndentations: false,
     }).result,
     "a <script>\n \t\t   na\n  \tz</script> z",
-    "15.01"
+    "15.01",
   );
   equal(
     m(equal, "a <script>\n \t\t   na\n  \tz</script> z    ", {
@@ -960,7 +960,7 @@ test("15 - script tags are skipped", () => {
       removeIndentations: true,
     }).result,
     "a\n<script>\n \t\t   na\n  \tz</script> z",
-    "15.02"
+    "15.02",
   );
   equal(
     m(equal, "a <script>\n \t\t   na\n  \tz</script> z    ", {
@@ -968,7 +968,7 @@ test("15 - script tags are skipped", () => {
       removeIndentations: false,
     }).result,
     "a\n<script>\n \t\t   na\n  \tz</script> z",
-    "15.03"
+    "15.03",
   );
   equal(
     m(equal, "a <script>\n \t\t   na\n  \tz</script> z    ", {
@@ -976,7 +976,7 @@ test("15 - script tags are skipped", () => {
       removeIndentations: true,
     }).result,
     "a\n<script>\n \t\t   na\n  \tz</script> z",
-    "15.04"
+    "15.04",
   );
 });
 
@@ -987,7 +987,7 @@ test("16 - unfinished script tags are skipped too", () => {
       removeIndentations: false,
     }).result,
     "a <script>\n \t\t   na\n  \tz    z    ",
-    "16.01"
+    "16.01",
   );
   equal(
     m(equal, "a <script>\n \t\t   na\n  \tz    z    ", {
@@ -995,7 +995,7 @@ test("16 - unfinished script tags are skipped too", () => {
       removeIndentations: true,
     }).result,
     "a\n<script>\n \t\t   na\n  \tz    z    ",
-    "16.02"
+    "16.02",
   );
   equal(
     m(equal, "a <script>\n \t\t   na\n  \tz    z    ", {
@@ -1003,7 +1003,7 @@ test("16 - unfinished script tags are skipped too", () => {
       removeIndentations: false,
     }).result,
     "a\n<script>\n \t\t   na\n  \tz    z    ",
-    "16.03"
+    "16.03",
   );
   equal(
     m(equal, "a <script>\n \t\t   na\n  \tz    z    ", {
@@ -1011,7 +1011,7 @@ test("16 - unfinished script tags are skipped too", () => {
       removeIndentations: true,
     }).result,
     "a\n<script>\n \t\t   na\n  \tz    z    ",
-    "16.04"
+    "16.04",
   );
 });
 
@@ -1024,7 +1024,7 @@ test("17 - code-pre blocks are not touched", () => {
       removeIndentations: false,
     }).result,
     preBlock,
-    "17.01"
+    "17.01",
   );
   equal(
     m(equal, preBlock, {
@@ -1032,7 +1032,7 @@ test("17 - code-pre blocks are not touched", () => {
       removeIndentations: true,
     }).result,
     preBlock,
-    "17.02"
+    "17.02",
   );
   equal(
     m(equal, preBlock, {
@@ -1040,7 +1040,7 @@ test("17 - code-pre blocks are not touched", () => {
       removeIndentations: false,
     }).result,
     preBlock,
-    "17.03"
+    "17.03",
   );
   equal(
     m(equal, preBlock, {
@@ -1048,7 +1048,7 @@ test("17 - code-pre blocks are not touched", () => {
       removeIndentations: true,
     }).result,
     preBlock,
-    "17.04"
+    "17.04",
   );
 });
 
@@ -1061,7 +1061,7 @@ test("18 - CDATA blocks are not touched", () => {
       removeIndentations: false,
     }).result,
     preBlock,
-    "18.01"
+    "18.01",
   );
   equal(
     m(equal, preBlock, {
@@ -1069,7 +1069,7 @@ test("18 - CDATA blocks are not touched", () => {
       removeIndentations: true,
     }).result,
     preBlock,
-    "18.02"
+    "18.02",
   );
   equal(
     m(equal, preBlock, {
@@ -1077,7 +1077,7 @@ test("18 - CDATA blocks are not touched", () => {
       removeIndentations: false,
     }).result,
     preBlock,
-    "18.03"
+    "18.03",
   );
   equal(
     m(equal, preBlock, {
@@ -1085,7 +1085,7 @@ test("18 - CDATA blocks are not touched", () => {
       removeIndentations: true,
     }).result,
     preBlock,
-    "18.04"
+    "18.04",
   );
 });
 
@@ -1098,7 +1098,7 @@ test("19 - whitespace in front of </script>", () => {
       removeIndentations: false,
     }).result,
     code1,
-    "19.01"
+    "19.01",
   );
   equal(
     m(equal, code1, {
@@ -1106,7 +1106,7 @@ test("19 - whitespace in front of </script>", () => {
       removeIndentations: true,
     }).result,
     code1,
-    "19.02"
+    "19.02",
   );
   equal(
     m(equal, code1, {
@@ -1114,7 +1114,7 @@ test("19 - whitespace in front of </script>", () => {
       removeIndentations: false,
     }).result,
     code1,
-    "19.03"
+    "19.03",
   );
   equal(
     m(equal, code1, {
@@ -1122,7 +1122,7 @@ test("19 - whitespace in front of </script>", () => {
       removeIndentations: true,
     }).result,
     code1,
-    "19.04"
+    "19.04",
   );
 
   // case 1 - stops at non-whitespace character, ";"
@@ -1134,7 +1134,7 @@ test("19 - whitespace in front of </script>", () => {
       removeIndentations: false,
     }).result,
     code2,
-    "19.05"
+    "19.05",
   );
   equal(
     m(equal, code2, {
@@ -1142,14 +1142,14 @@ test("19 - whitespace in front of </script>", () => {
       removeIndentations: true,
     }).result,
     minified2,
-    "19.06"
+    "19.06",
   );
   equal(
     m(equal, code2, {
       removeLineBreaks: true,
     }).result,
     minified2,
-    "19.07"
+    "19.07",
   );
 
   // case 2 - stops at line break character
@@ -1161,7 +1161,7 @@ test("19 - whitespace in front of </script>", () => {
       removeIndentations: false,
     }).result,
     code3,
-    "19.08"
+    "19.08",
   );
   equal(
     m(equal, code3, {
@@ -1169,14 +1169,14 @@ test("19 - whitespace in front of </script>", () => {
       removeIndentations: true,
     }).result,
     minified3,
-    "19.09"
+    "19.09",
   );
   equal(
     m(equal, code3, {
       removeLineBreaks: true,
     }).result,
     minified3,
-    "19.10"
+    "19.10",
   );
 });
 
@@ -1185,17 +1185,17 @@ test("20 - single linebreak is not replaced with a single space", () => {
   equal(
     m(equal, "a\nb", { removeLineBreaks: true, lineLengthLimit: 0 }).result,
     "a\nb",
-    "20.02"
+    "20.02",
   );
   equal(
     m(equal, "a\nb", { removeLineBreaks: true, lineLengthLimit: 100 }).result,
     "a\nb",
-    "20.03"
+    "20.03",
   );
   equal(
     m(equal, "a\nb", { removeLineBreaks: true, lineLengthLimit: 3 }).result,
     "a\nb",
-    "20.04"
+    "20.04",
   );
 });
 
@@ -1203,22 +1203,22 @@ test("21 - single linebreak is deleted though", () => {
   equal(
     m(equal, "<x>\n<y>", { removeLineBreaks: true }).result,
     "<x><y>",
-    "21.01"
+    "21.01",
   );
   equal(
     m(equal, "<a>\n<y>", { removeLineBreaks: true }).result,
     "<a><y>",
-    "21.02"
+    "21.02",
   );
   equal(
     m(equal, "<x>\n<a>", { removeLineBreaks: true }).result,
     "<x> <a>",
-    "21.03"
+    "21.03",
   );
   equal(
     m(equal, "<a>\n<b>", { removeLineBreaks: true }).result,
     "<a> <b>",
-    "21.04"
+    "21.04",
   );
 });
 
@@ -1303,7 +1303,7 @@ test("22 - breaking to the right of style tag", () => {
       ],
     }).result,
     res2,
-    "22.02"
+    "22.02",
   );
   equal(
     m(equal, source, {
@@ -1329,7 +1329,7 @@ test("22 - breaking to the right of style tag", () => {
       ],
     }).result,
     res3,
-    "22.03"
+    "22.03",
   );
 });
 
@@ -1339,7 +1339,7 @@ test("23 - doesn't delete whitespace with linebreaks between curlies", () => {
   equal(
     m(equal, source, { removeLineBreaks: false }).result,
     "{% a %}\n{% a %}",
-    "23.02"
+    "23.02",
   );
 });
 
@@ -1365,7 +1365,7 @@ test("line break into space", () => {
       lineLengthLimit: 100,
     }).result,
     "abc def",
-    "27.01"
+    "27.01",
   );
   equal(
     m(equal, "abc\n\ndef", {
@@ -1373,7 +1373,7 @@ test("line break into space", () => {
       lineLengthLimit: 100,
     }).result,
     "abc def",
-    "27.02"
+    "27.02",
   );
   equal(
     m(equal, "abc\rdef", {
@@ -1381,7 +1381,7 @@ test("line break into space", () => {
       lineLengthLimit: 100,
     }).result,
     "abc def",
-    "27.03"
+    "27.03",
   );
   equal(
     m(equal, "abc\r\rdef", {
@@ -1389,7 +1389,7 @@ test("line break into space", () => {
       lineLengthLimit: 100,
     }).result,
     "abc def",
-    "27.04"
+    "27.04",
   );
 });
 
@@ -1400,7 +1400,7 @@ test("tab into space", () => {
       lineLengthLimit: 100,
     }).result,
     "abc def",
-    "28.01"
+    "28.01",
   );
   equal(
     m(equal, "abc\t\tdef", {
@@ -1408,7 +1408,7 @@ test("tab into space", () => {
       lineLengthLimit: 100,
     }).result,
     "abc def",
-    "28.02"
+    "28.02",
   );
 });
 
@@ -1419,7 +1419,7 @@ test("29 - issue #5, minimal", () => {
       removeIndentations: true,
     }).result,
     '<!DOCTYPE html>\r\n<html lang="en">\r\n',
-    "29.01"
+    "29.01",
   );
 });
 
@@ -1433,14 +1433,14 @@ test("30 - issue #5, minimal", () => {
       removeCSSComments: false,
     }).result,
     '<!DOCTYPE html>\r\n<html lang="en">\r\n<head>\r\n<meta charset="UTF-8">',
-    "30.01"
+    "30.01",
   );
 });
 
 test("31 - issue #5, minimal", () => {
   let eols = ["\r\n", "\n", "\r"];
   let sources = eols.map(
-    (eol) => `<!DOCTYPE html>${eol}<html lang="en">${eol}`
+    (eol) => `<!DOCTYPE html>${eol}<html lang="en">${eol}`,
   );
   sources.forEach((source, i) => {
     mixer({
@@ -1449,7 +1449,7 @@ test("31 - issue #5, minimal", () => {
       equal(
         m(equal, source, opt).result,
         `<!DOCTYPE html>${eols[i]}<html lang="en">${eols[i]}`,
-        `${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`
+        `${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`,
       );
     });
   });
@@ -1459,7 +1459,7 @@ test("32 - issue #5", () => {
   let eols = ["\r\n", "\n", "\r"];
   let sources = eols.map(
     (eol) =>
-      `<!DOCTYPE html>${eol}<html lang="en">${eol}<head>${eol}<meta charset="UTF-8">${eol}<meta http-equiv="X-UA-Compatible" content="IE=edge">${eol}<meta name="viewport" content="width=device-width, initial-scale=1.0">${eol}  <title>Document</title>${eol}</head>${eol}<body>${eol}<div>Hello</div>${eol}</body>${eol}</html>${eol}`
+      `<!DOCTYPE html>${eol}<html lang="en">${eol}<head>${eol}<meta charset="UTF-8">${eol}<meta http-equiv="X-UA-Compatible" content="IE=edge">${eol}<meta name="viewport" content="width=device-width, initial-scale=1.0">${eol}  <title>Document</title>${eol}</head>${eol}<body>${eol}<div>Hello</div>${eol}</body>${eol}</html>${eol}`,
   );
 
   sources.forEach((source, i) => {
@@ -1472,12 +1472,12 @@ test("32 - issue #5", () => {
         `${JSON.stringify(
           opt,
           null,
-          0
+          0,
         )} - single trailing line breaks at EOF (${JSON.stringify(
           eols[i],
           null,
-          0
-        )})`
+          0,
+        )})`,
       );
     });
   });

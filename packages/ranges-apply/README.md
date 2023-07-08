@@ -43,7 +43,7 @@ const ranges = [
 ];
 assert.equal(
   rApply(oldString, ranges),
-  "The bad grey wolf jumps over the little Red Riding Hood."
+  "The bad grey wolf jumps over the little Red Riding Hood.",
 );
 ```
 

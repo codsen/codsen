@@ -13,14 +13,14 @@ test("01 - opts.ignoreTags - empty string, whitespace string and null in the arr
       ignoreTags: ["", " ", "a", "b", null],
     }).result,
     "<a>",
-    "01.01"
+    "01.01",
   );
   equal(
     stripHtml("zzz", {
       ignoreTags: ["", " ", "a", "b", null],
     }).result,
     "zzz",
-    "01.02"
+    "01.02",
   );
 });
 
@@ -30,14 +30,14 @@ test("02 - opts.ignoreTags - null inside opts.ignoreTags array", () => {
       ignoreTags: [null],
     }).result,
     "",
-    "02.01"
+    "02.01",
   );
   equal(
     stripHtml("zzz", {
       ignoreTags: [null],
     }).result,
     "zzz",
-    "02.02"
+    "02.02",
   );
 });
 
@@ -47,14 +47,14 @@ test("03 - opts.ignoreTags - empty str", () => {
       ignoreTags: [""],
     }).result,
     "",
-    "03.01"
+    "03.01",
   );
   equal(
     stripHtml("zzz", {
       ignoreTags: [""],
     }).result,
     "zzz",
-    "03.02"
+    "03.02",
   );
 });
 
@@ -64,14 +64,14 @@ test("04 - opts.ignoreTags - empty str", () => {
       ignoreTags: "",
     }).result,
     "",
-    "04.01"
+    "04.01",
   );
   equal(
     stripHtml("zz", {
       ignoreTags: "",
     }).result,
     "zz",
-    "04.02"
+    "04.02",
   );
 });
 
@@ -81,14 +81,14 @@ test("05 - opts.ignoreTags - empty str", () => {
       ignoreTags: "a",
     }).result,
     "<a>",
-    "05.01"
+    "05.01",
   );
   equal(
     stripHtml("zzz", {
       ignoreTags: "a",
     }).result,
     "zzz",
-    "05.02"
+    "05.02",
   );
 });
 
@@ -98,14 +98,14 @@ test("06 - opts.ignoreTags - null among opts.ignoreTags values", () => {
       ignoreTags: [null, "a"],
     }).result,
     "<a>",
-    "06.01"
+    "06.01",
   );
   equal(
     stripHtml("zzz", {
       ignoreTags: [null, "a"],
     }).result,
     "zzz",
-    "06.02"
+    "06.02",
   );
 });
 
@@ -115,14 +115,14 @@ test("07 - opts.ignoreTags - whitespace-only blanks inside opts.ignoreTags", () 
       ignoreTags: ["\t", "\n\n"],
     }).result,
     "a",
-    "07.01"
+    "07.01",
   );
   equal(
     stripHtml("a z", {
       ignoreTags: ["\t", "\n\n"],
     }).result,
     "a z",
-    "07.02"
+    "07.02",
   );
 });
 
@@ -132,14 +132,14 @@ test("08 - opts.ignoreTags - tabs", () => {
       ignoreTags: "\t",
     }).result,
     "a",
-    "08.01"
+    "08.01",
   );
   equal(
     stripHtml("a z", {
       ignoreTags: "\t",
     }).result,
     "a z",
-    "08.02"
+    "08.02",
   );
 });
 
@@ -149,14 +149,14 @@ test("09 - opts.ignoreTags - some whitespace-only inside opts.ignoreTags", () =>
       ignoreTags: ["\t", "\n\n", "a", " "],
     }).result,
     "a<a>",
-    "09.01"
+    "09.01",
   );
   equal(
     stripHtml("zzz", {
       ignoreTags: ["\t", "\n\n", "a", " "],
     }).result,
     "zzz",
-    "09.02"
+    "09.02",
   );
 });
 
@@ -164,17 +164,17 @@ test("10 - opts.ignoreTags - space before and after attribute's equal character"
   equal(
     stripHtml("<article  whatnot  =  whatyes = >zzz< / article>").result,
     "zzz",
-    "10.01"
+    "10.01",
   );
 });
 
 test("11 - opts.ignoreTags - space before and after attribute's equal character", () => {
   equal(
     stripHtml(
-      "<article  whatnot  =  whatyes = >xxx< / article> yyy <article  whatnot  =  whatyes = >zzz< / article>"
+      "<article  whatnot  =  whatyes = >xxx< / article> yyy <article  whatnot  =  whatyes = >zzz< / article>",
     ).result,
     "xxx yyy zzz",
-    "11.01"
+    "11.01",
   );
 });
 
@@ -184,7 +184,7 @@ test("12 - opts.ignoreTags - ignores single letter tag", () => {
       ignoreTags: ["b"],
     }).result,
     "Some <b>text</b> and some more text.",
-    "12.01"
+    "12.01",
   );
 });
 
@@ -194,7 +194,7 @@ test("13 - opts.ignoreTags - ignores singleton tag", () => {
       ignoreTags: ["hr"],
     }).result,
     "Some text <hr> some more text.",
-    "13.01"
+    "13.01",
   );
 });
 
@@ -204,7 +204,7 @@ test("14 - opts.ignoreTags - ignores singleton tag, XHTML", () => {
       ignoreTags: ["hr"],
     }).result,
     "Some text <hr/> some more text.",
-    "14.01"
+    "14.01",
   );
 });
 
@@ -214,7 +214,7 @@ test("15 - opts.ignoreTags - ignores singleton tag, spaced XHTML", () => {
       ignoreTags: ["hr"],
     }).result,
     "Some text <hr / > some more text.",
-    "15.01"
+    "15.01",
   );
 });
 
@@ -224,7 +224,7 @@ test("16 - opts.ignoreTags - ignores single zzz tag", () => {
       ignoreTags: ["zzz"],
     }).result,
     "Some <zzz>text</zzz> and some more text.",
-    "16.01"
+    "16.01",
   );
 });
 
@@ -234,7 +234,7 @@ test("17 - opts.ignoreTags - ignores zzz singleton tag", () => {
       ignoreTags: ["zzz"],
     }).result,
     "Some text <zzz> some more text.",
-    "17.01"
+    "17.01",
   );
 });
 
@@ -244,7 +244,7 @@ test("18 - opts.ignoreTags - ignores default ranged tag", () => {
       ignoreTags: ["script"],
     }).result,
     "Some <script>text</script> and some more text.",
-    "18.01"
+    "18.01",
   );
 });
 
@@ -255,7 +255,7 @@ test("19 - opts.ignoreTags - ignored tag unclosed, ending with EOF", () => {
       ignoreTags: ["b"],
     }).result,
     "Some <b>text</b",
-    "19.01"
+    "19.01",
   );
 });
 
@@ -265,7 +265,7 @@ test("20 - opts.ignoreTags - recognised unclosed singleton tag, HTML", () => {
       ignoreTags: ["hr"],
     }).result,
     "Some text <hr",
-    "20.01"
+    "20.01",
   );
 });
 
@@ -275,7 +275,7 @@ test("21 - opts.ignoreTags - recognised unclosed singleton tag, XHTML", () => {
       ignoreTags: ["hr"],
     }).result,
     "Some text <hr/",
-    "21.01"
+    "21.01",
   );
 });
 
@@ -285,7 +285,7 @@ test("22 - opts.ignoreTags - kept the tag and the slash, just trimmed", () => {
       ignoreTags: ["hr"],
     }).result,
     "Some text <hr /",
-    "22.01"
+    "22.01",
   );
 });
 
@@ -295,7 +295,7 @@ test("23 - opts.ignoreTags - ignores unclosed self-closing zzz tag", () => {
       ignoreTags: ["zzz"],
     }).result,
     "Some <zzz>text</zzz",
-    "23.01"
+    "23.01",
   );
 });
 
@@ -305,7 +305,7 @@ test("24 - opts.ignoreTags - ignores unclosed zzz singleton tag", () => {
       ignoreTags: ["zzz"],
     }).result,
     "Some text <zzz",
-    "24.01"
+    "24.01",
   );
 });
 
@@ -315,7 +315,7 @@ test("25 - opts.ignoreTags - ignores default unclosed ranged tag", () => {
       ignoreTags: ["script"],
     }).result,
     "Some <script>text</script",
-    "25.01"
+    "25.01",
   );
 });
 
@@ -327,7 +327,7 @@ test("26 - opts.ignoreTags - throws because of wrong type", () => {
       });
     },
     /THROW_ID_05/,
-    "26.01"
+    "26.01",
   );
 });
 
@@ -337,42 +337,42 @@ test("27 - custom tags, no attrs", () => {
       ignoreTags: ["MyTag"],
     }).result,
     "a<MyTag />b c",
-    "27.01"
+    "27.01",
   );
   equal(
     stripHtml("a<MyTag/>b <div>c</div>", {
       ignoreTags: ["MyTag"],
     }).result,
     "a<MyTag/>b c",
-    "27.02"
+    "27.02",
   );
   equal(
     stripHtml("a<MyTag >b <div>c</div>", {
       ignoreTags: ["MyTag"],
     }).result,
     "a<MyTag >b c",
-    "27.03"
+    "27.03",
   );
   equal(
     stripHtml("a<MyTag>b <div>c</div>", {
       ignoreTags: ["MyTag"],
     }).result,
     "a<MyTag>b c",
-    "27.04"
+    "27.04",
   );
   equal(
     stripHtml("a</MyTag>b <div>c</div>", {
       ignoreTags: ["MyTag"],
     }).result,
     "a</MyTag>b c",
-    "27.05"
+    "27.05",
   );
   equal(
     stripHtml("a</MyTag/>b <div>c</div>", {
       ignoreTags: ["MyTag"],
     }).result,
     "a</MyTag/>b c",
-    "27.06"
+    "27.06",
   );
 });
 
@@ -382,42 +382,42 @@ test("28 - custom tags, with attrs", () => {
       ignoreTags: ["MyTag"],
     }).result,
     "a<MyTag zzz />b c",
-    "28.01"
+    "28.01",
   );
   equal(
     stripHtml("a<MyTag zzz/>b <div>c</div>", {
       ignoreTags: ["MyTag"],
     }).result,
     "a<MyTag zzz/>b c",
-    "28.02"
+    "28.02",
   );
   equal(
     stripHtml("a<MyTag zzz >b <div>c</div>", {
       ignoreTags: ["MyTag"],
     }).result,
     "a<MyTag zzz >b c",
-    "28.03"
+    "28.03",
   );
   equal(
     stripHtml("a<MyTag zzz>b <div>c</div>", {
       ignoreTags: ["MyTag"],
     }).result,
     "a<MyTag zzz>b c",
-    "28.04"
+    "28.04",
   );
   equal(
     stripHtml("a</MyTag zzz>b <div>c</div>", {
       ignoreTags: ["MyTag"],
     }).result,
     "a</MyTag zzz>b c",
-    "28.05"
+    "28.05",
   );
   equal(
     stripHtml("a</MyTag zzz/>b <div>c</div>", {
       ignoreTags: ["MyTag"],
     }).result,
     "a</MyTag zzz/>b c",
-    "28.06"
+    "28.06",
   );
 });
 
@@ -427,42 +427,42 @@ test("29 - custom tags, with proper attrs", () => {
       ignoreTags: ["MyTag"],
     }).result,
     'a<MyTag class="z" />b c',
-    "29.01"
+    "29.01",
   );
   equal(
     stripHtml('a<MyTag class="z"/>b <div>c</div>', {
       ignoreTags: ["MyTag"],
     }).result,
     'a<MyTag class="z"/>b c',
-    "29.02"
+    "29.02",
   );
   equal(
     stripHtml('a<MyTag class="z" >b <div>c</div>', {
       ignoreTags: ["MyTag"],
     }).result,
     'a<MyTag class="z" >b c',
-    "29.03"
+    "29.03",
   );
   equal(
     stripHtml('a<MyTag class="z">b <div>c</div>', {
       ignoreTags: ["MyTag"],
     }).result,
     'a<MyTag class="z">b c',
-    "29.04"
+    "29.04",
   );
   equal(
     stripHtml('a</MyTag class="z">b <div>c</div>', {
       ignoreTags: ["MyTag"],
     }).result,
     'a</MyTag class="z">b c',
-    "29.05"
+    "29.05",
   );
   equal(
     stripHtml('a</MyTag class="z"/>b <div>c</div>', {
       ignoreTags: ["MyTag"],
     }).result,
     'a</MyTag class="z"/>b c',
-    "29.06"
+    "29.06",
   );
 });
 

@@ -31,7 +31,7 @@ test("01 - get with wildcards", () => {
         path: "nested.0.cutticles",
       },
     ],
-    "01.01"
+    "01.01",
   );
 
   equal(
@@ -50,7 +50,7 @@ test("01 - get with wildcards", () => {
         path: "nested.0.cutticles",
       },
     ],
-    "01.02"
+    "01.02",
   );
 });
 

@@ -9,10 +9,10 @@ test("01 - plain objects", () => {
     compare(
       { a: "1", b: "2" },
       { a: "1", b: "2", c: "3" },
-      { verboseWhenMismatches: true }
+      { verboseWhenMismatches: true },
     ),
     "string",
-    "01.01"
+    "01.01",
   );
 });
 
@@ -21,10 +21,10 @@ test("02 - plain objects, useWildcards, key with wildcard", () => {
     compare(
       { a: "1", b: "2" },
       { a: "1", b: "2", "c*": "3" },
-      { verboseWhenMismatches: true, useWildcards: true }
+      { verboseWhenMismatches: true, useWildcards: true },
     ),
     "string",
-    "02.01"
+    "02.01",
   );
 });
 

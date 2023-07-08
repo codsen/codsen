@@ -53,7 +53,7 @@ const testme = () =>
         },
       ],
       j: "j",
-    }
+    },
   );
 
 // action

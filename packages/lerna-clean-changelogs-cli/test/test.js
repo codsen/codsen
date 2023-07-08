@@ -115,20 +115,20 @@ test(`04 - ${`\u001b[${35}m${"functionality"}\u001b[${39}m`} - pointed directly 
     .then(() =>
       execa(`cd ${tempFolder} && ${path.resolve()}/cli.js changelog.md`, {
         shell: true,
-      })
+      }),
     )
     .then((execasMsg) => {
       match(
         execasMsg.stdout,
         /1 updated/,
-        "02.01.01 - prints a message that all went OK"
+        "02.01.01 - prints a message that all went OK",
       );
       return fs.readFile(path.join(tempFolder, "changelog.md"), "utf8");
     })
     .then((received) =>
       execaCommand(`rm -rf ${tempFolder}`, {
         shell: true,
-      }).then(() => received)
+      }).then(() => received),
     );
 
   equal(await processedFileContents, changelog1Fixed, "04.01");
@@ -164,25 +164,25 @@ test(`05 - ${`\u001b[${35}m${"functionality"}\u001b[${39}m`} - globs, multiple w
 
   // 2. asynchronously write test files, all get the same messy changelog:
   await pMap(testFilePaths, (oneOfTestFilePaths) =>
-    fs.writeFile(oneOfTestFilePaths, changelog1)
+    fs.writeFile(oneOfTestFilePaths, changelog1),
   )
     .then(() =>
       fs.writeFile(
         path.join(tempFolder, "fol3/fol31/changelog.md"), // <--- clean file
-        changelog1Fixed
-      )
+        changelog1Fixed,
+      ),
     )
     .then(() =>
       execa(`cd ${tempFolder} && ${path.resolve()}/cli.js "**"`, {
         shell: true,
-      })
+      }),
     )
     .then((execasMsg) =>
       match(
         execasMsg.stdout,
         /5 updated, 1 skipped/,
-        "02.02.01 - prints a message that all went OK"
-      )
+        "02.02.01 - prints a message that all went OK",
+      ),
     )
     // .then(() => execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`))
     .then(() => execaCommand(`rm -rf ${tempFolder}`))

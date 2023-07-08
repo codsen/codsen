@@ -21,10 +21,10 @@ test("01 - left and right maybes as emoji", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "z"
+      "z",
     ),
     "aza",
-    "test 4.1.1"
+    "test 4.1.1",
   );
   equal(
     er(
@@ -38,10 +38,10 @@ test("01 - left and right maybes as emoji", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "z"
+      "z",
     ),
     "aza",
-    "test 4.1.2"
+    "test 4.1.2",
   );
 });
 
@@ -58,10 +58,10 @@ test("02 - left and right maybes as text", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "z"
+      "z",
     ),
     "z z z",
-    "test 4.2.1"
+    "test 4.2.1",
   );
   equal(
     er(
@@ -75,10 +75,10 @@ test("02 - left and right maybes as text", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "z"
+      "z",
     ),
     "z z z",
-    "test 4.2.2"
+    "test 4.2.2",
   );
 });
 
@@ -95,10 +95,10 @@ test("03 - left+right maybes, middle & end of word #1", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "z"
+      "z",
     ),
     "zzzz zzzzzzzz zzzzz",
-    "test 4.3"
+    "test 4.3",
   );
 });
 
@@ -115,10 +115,10 @@ test("04 - left+right maybes, middle & end of word #2", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "z"
+      "z",
     ),
     "zzzz zzzzzzzz zzzzz",
-    "test 4.4"
+    "test 4.4",
   );
 });
 
@@ -135,10 +135,10 @@ test("05 - normal words", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "check"
+      "check",
     ),
     "aaa check check check for somebody",
-    "test 4.5"
+    "test 4.5",
   );
 });
 

@@ -18,14 +18,14 @@ test("01 - filling in missing keys, simple plain object", () => {
         a: false,
         b: false,
         c: false,
-      }
+      },
     ),
     {
       a: "a",
       b: false,
       c: false,
     },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -45,7 +45,7 @@ test("02 - filling in missing keys, nested, with arrays", () => {
         c: {
           y: "y",
         },
-      }
+      },
     ),
     {
       a: "a",
@@ -58,7 +58,7 @@ test("02 - filling in missing keys, nested, with arrays", () => {
         y: "y",
       },
     },
-    "02.01"
+    "02.01",
   );
   equal(
     fillMissing(
@@ -75,7 +75,7 @@ test("02 - filling in missing keys, nested, with arrays", () => {
         c: {
           y: "y",
         },
-      }
+      },
     ),
     {
       a: "a",
@@ -88,7 +88,7 @@ test("02 - filling in missing keys, nested, with arrays", () => {
         y: "y",
       },
     },
-    "02.02"
+    "02.02",
   );
 });
 
@@ -103,14 +103,14 @@ test("03 - multiple values, sorting as well", () => {
         a: false,
         b: false,
         c: false,
-      }
+      },
     ),
     {
       a: "a",
       b: "b",
       c: false,
     },
-    "03.01"
+    "03.01",
   );
 });
 
@@ -126,7 +126,7 @@ test("04 - nested arrays as values (array in schema overwrites Boolean)", () => 
             b: false,
           },
         ],
-      }
+      },
     ),
     {
       a: [
@@ -135,7 +135,7 @@ test("04 - nested arrays as values (array in schema overwrites Boolean)", () => 
         },
       ],
     },
-    "04.01"
+    "04.01",
   );
 });
 
@@ -154,7 +154,7 @@ test("05 - more complex nested arrays", () => {
           },
         ],
         c: false,
-      }
+      },
     ),
     {
       a: false,
@@ -166,7 +166,7 @@ test("05 - more complex nested arrays", () => {
       ],
       c: "c",
     },
-    "05.01"
+    "05.01",
   );
 });
 
@@ -218,7 +218,7 @@ test("06 - ridiculously deep nesting", () => {
             ],
           },
         ],
-      }
+      },
     ),
     {
       a: [
@@ -263,7 +263,7 @@ test("06 - ridiculously deep nesting", () => {
         },
       ],
     },
-    "06.01"
+    "06.01",
   );
 });
 
@@ -277,7 +277,7 @@ test("07 - cheeky case, custom placeholder on schema has value null", () => {
         a: null,
         b: null,
         c: null,
-      }
+      },
     ),
     {
       a: null,
@@ -285,7 +285,7 @@ test("07 - cheeky case, custom placeholder on schema has value null", () => {
       c: null,
       d: null,
     },
-    "07.01"
+    "07.01",
   );
 });
 
@@ -321,7 +321,7 @@ test("08 - array one level-deep", () => {
             e: false,
           },
         ],
-      }
+      },
     ),
     {
       a: [
@@ -351,7 +351,7 @@ test("08 - array one level-deep", () => {
         },
       ],
     },
-    "08.01"
+    "08.01",
   );
 });
 
@@ -376,7 +376,7 @@ test("09 - multiple levels of nested arrays", () => {
           },
         ],
         c: false,
-      }
+      },
     ),
     {
       a: false,
@@ -394,7 +394,7 @@ test("09 - multiple levels of nested arrays", () => {
       ],
       c: "c",
     },
-    "09.01"
+    "09.01",
   );
 });
 
@@ -414,7 +414,7 @@ test("10 - string vs array clash", () => {
             b: false,
           },
         ],
-      }
+      },
     ),
     {
       a: [
@@ -423,7 +423,7 @@ test("10 - string vs array clash", () => {
         },
       ],
     },
-    "10.01"
+    "10.01",
   );
 });
 
@@ -437,14 +437,14 @@ test("11 - string vs object clash", () => {
         a: {
           b: false,
         },
-      }
+      },
     ),
     {
       a: {
         b: false,
       },
     },
-    "11.01"
+    "11.01",
   );
 });
 
@@ -462,7 +462,7 @@ test("12 - object vs array clash", () => {
             b: false,
           },
         ],
-      }
+      },
     ),
     {
       a: [
@@ -471,7 +471,7 @@ test("12 - object vs array clash", () => {
         },
       ],
     },
-    "12.01"
+    "12.01",
   );
 });
 
@@ -491,7 +491,7 @@ test("13 - array vs empty array", () => {
         ],
         b: false,
         c: false,
-      }
+      },
     ),
     {
       a: [
@@ -503,7 +503,7 @@ test("13 - array vs empty array", () => {
       b: "b",
       c: false,
     },
-    "13.01"
+    "13.01",
   );
 });
 
@@ -523,7 +523,7 @@ test("14 - array vs string", () => {
         ],
         b: false,
         c: false,
-      }
+      },
     ),
     {
       a: [
@@ -535,7 +535,7 @@ test("14 - array vs string", () => {
       b: "b",
       c: false,
     },
-    "14.01"
+    "14.01",
   );
 });
 
@@ -555,7 +555,7 @@ test("15 - array vs bool", () => {
         ],
         b: false,
         c: false,
-      }
+      },
     ),
     {
       a: [
@@ -567,7 +567,7 @@ test("15 - array vs bool", () => {
       b: "b",
       c: false,
     },
-    "15.01"
+    "15.01",
   );
 });
 
@@ -593,7 +593,7 @@ test("16 - multiple levels of nested arrays #1", () => {
           },
         ],
         c: false,
-      }
+      },
     ),
     {
       a: false,
@@ -611,7 +611,7 @@ test("16 - multiple levels of nested arrays #1", () => {
       ],
       c: "c",
     },
-    "16.01"
+    "16.01",
   );
 });
 
@@ -649,7 +649,7 @@ test("17 - multiple levels of nested arrays #2", () => {
           },
         ],
         c: false,
-      }
+      },
     ),
     {
       a: false,
@@ -671,7 +671,7 @@ test("17 - multiple levels of nested arrays #2", () => {
       ],
       c: false,
     },
-    "17.01"
+    "17.01",
   );
 });
 
@@ -689,7 +689,7 @@ test("18 - number as input", () => {
       });
     },
     /THROW_ID_02/g,
-    "18.01"
+    "18.01",
   );
 });
 
@@ -703,7 +703,7 @@ test("19 - boolean as input", () => {
       });
     },
     /THROW_ID_02/g,
-    "19.01"
+    "19.01",
   );
 });
 
@@ -717,7 +717,7 @@ test("20 - null as input", () => {
       });
     },
     /THROW_ID_02/g,
-    "20.01"
+    "20.01",
   );
 });
 
@@ -727,7 +727,7 @@ test("21 - both args missing (as in hardcoded undefined)", () => {
       fillMissing(undefined, undefined);
     },
     /THROW_ID_02/g,
-    "21.01"
+    "21.01",
   );
 });
 
@@ -737,7 +737,7 @@ test("22 - both args completely missing", () => {
       fillMissing();
     },
     /THROW_ID_01/g,
-    "22.01"
+    "22.01",
   );
 });
 
@@ -747,7 +747,7 @@ test("23 - second arg is not a plain object", () => {
       fillMissing({ a: "b" }, 1);
     },
     /THROW_ID_03/g,
-    "23.01"
+    "23.01",
   );
 });
 
@@ -757,7 +757,7 @@ test("24 - opts is not a plain object", () => {
       fillMissing({ a: "c" }, { a: "b" }, 1);
     },
     /THROW_ID_04/g,
-    "24.01"
+    "24.01",
   );
   not.throws(() => {
     fillMissing({ a: "c" }, { a: "b" }, null);
@@ -772,11 +772,11 @@ test("25 - opts.doNotFillThesePathsIfTheyContainPlaceholders", () => {
         { a: "b" },
         {
           doNotFillThesePathsIfTheyContainPlaceholders: ["aa.aaa", 1],
-        }
+        },
       );
     },
     /THROW_ID_06/g,
-    "25.01"
+    "25.01",
   );
   throws(
     () => {
@@ -785,7 +785,7 @@ test("25 - opts.doNotFillThesePathsIfTheyContainPlaceholders", () => {
       });
     },
     /THROW_ID_03/g,
-    "25.02"
+    "25.02",
   );
   throws(
     () => {
@@ -794,11 +794,11 @@ test("25 - opts.doNotFillThesePathsIfTheyContainPlaceholders", () => {
         { a: "b" },
         {
           doNotFillThesePathsIfTheyContainPlaceholders: ["aa.aaa", { a: 1 }],
-        }
+        },
       );
     },
     /THROW_ID_06/g,
-    "25.03"
+    "25.03",
   );
 });
 
@@ -821,7 +821,7 @@ test("26 - does not mutate the input args", () => {
     {
       a: "a",
     },
-    "26.02"
+    "26.02",
   ); // real deal
 });
 
@@ -850,7 +850,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
           x: false,
         },
         z: false,
-      }
+      },
     ),
     {
       a: {
@@ -862,7 +862,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       z: "z",
     },
-    "27.01"
+    "27.01",
   );
 
   equal(
@@ -886,7 +886,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       {
         doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"],
-      }
+      },
     ),
     {
       a: {
@@ -895,7 +895,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       z: "z",
     },
-    "27.02"
+    "27.02",
   );
 
   equal(
@@ -920,7 +920,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       {
         doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"],
-      }
+      },
     ),
     {
       a: {
@@ -932,7 +932,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       z: "z",
     },
-    "27.03"
+    "27.03",
   );
 
   equal(
@@ -955,7 +955,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       {
         doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"],
-      }
+      },
     ),
     {
       a: {
@@ -964,7 +964,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       z: "z",
     },
-    "27.04"
+    "27.04",
   );
 
   equal(
@@ -979,13 +979,13 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       {
         doNotFillThesePathsIfTheyContainPlaceholders: ["b"],
-      }
+      },
     ),
     {
       a: "zzz",
       b: false,
     },
-    "27.05"
+    "27.05",
   );
 
   // will also truncate the already normalised branches if they're on the path:
@@ -1015,7 +1015,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       {
         doNotFillThesePathsIfTheyContainPlaceholders: ["lalala", "a.b", "a.x"],
-      }
+      },
     ),
     {
       a: {
@@ -1024,7 +1024,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       z: "z",
     },
-    "27.06"
+    "27.06",
   );
 
   // will also truncate the already normalised branches if they're on the path:
@@ -1054,7 +1054,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       {
         doNotFillThesePathsIfTheyContainPlaceholders: ["lalala", "a.b", "a.x"],
-      }
+      },
     ),
     {
       a: {
@@ -1066,7 +1066,7 @@ test("27 - some keys filled, some ignored because they have placeholders-only", 
       },
       z: "z",
     },
-    "27.07"
+    "27.07",
   );
 });
 
@@ -1096,7 +1096,7 @@ test("28 - opts.useNullAsExplicitFalse - case #1", () => {
       },
       {
         useNullAsExplicitFalse: false,
-      }
+      },
     ),
     {
       a: {
@@ -1108,7 +1108,7 @@ test("28 - opts.useNullAsExplicitFalse - case #1", () => {
       },
       z: "z",
     },
-    "28.01"
+    "28.01",
   );
 
   equal(
@@ -1132,7 +1132,7 @@ test("28 - opts.useNullAsExplicitFalse - case #1", () => {
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: {
@@ -1141,7 +1141,7 @@ test("28 - opts.useNullAsExplicitFalse - case #1", () => {
       },
       z: "z",
     },
-    "28.02"
+    "28.02",
   );
 });
 
@@ -1156,12 +1156,12 @@ test("29 - opts.useNullAsExplicitFalse - case #2", () => {
       },
       {
         useNullAsExplicitFalse: false,
-      }
+      },
     ),
     {
       a: true,
     },
-    "29.01"
+    "29.01",
   );
   equal(
     fillMissing(
@@ -1173,12 +1173,12 @@ test("29 - opts.useNullAsExplicitFalse - case #2", () => {
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "29.02"
+    "29.02",
   );
 });
 
@@ -1193,12 +1193,12 @@ test("30 - opts.useNullAsExplicitFalse - case #3", () => {
       },
       {
         useNullAsExplicitFalse: false,
-      }
+      },
     ),
     {
       a: ["z"],
     },
-    "30.01"
+    "30.01",
   );
   equal(
     fillMissing(
@@ -1210,12 +1210,12 @@ test("30 - opts.useNullAsExplicitFalse - case #3", () => {
       },
       {
         useNullAsExplicitFalse: true,
-      }
+      },
     ),
     {
       a: null,
     },
-    "30.02"
+    "30.02",
   );
 });
 
@@ -1229,12 +1229,12 @@ test("31 - case #51", () => {
       {
         a: true,
       },
-      {}
+      {},
     ),
     {
       a: false,
     },
-    "31.01"
+    "31.01",
   );
   equal(
     fillMissing(
@@ -1244,12 +1244,12 @@ test("31 - case #51", () => {
       {
         a: false,
       },
-      {}
+      {},
     ),
     {
       a: false,
     },
-    "31.02"
+    "31.02",
   );
   equal(
     fillMissing(
@@ -1259,12 +1259,12 @@ test("31 - case #51", () => {
       {
         a: false,
       },
-      {}
+      {},
     ),
     {
       a: true,
     },
-    "31.03"
+    "31.03",
   );
   equal(
     fillMissing(
@@ -1274,12 +1274,12 @@ test("31 - case #51", () => {
       {
         a: true,
       },
-      {}
+      {},
     ),
     {
       a: true,
     },
-    "31.04"
+    "31.04",
   );
 });
 

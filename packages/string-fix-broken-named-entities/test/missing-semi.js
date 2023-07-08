@@ -40,7 +40,7 @@ test(`01 - ${allNamedEntitiesSetOnly.size} programmatic tests in total`, () => {
             rangeValDecoded: decode(`&${singleEntity};`),
           },
         ],
-        `${singleEntity} - 02; ${i + 1}/${arr.length}`
+        `${singleEntity} - 02; ${i + 1}/${arr.length}`,
       );
     });
 });
@@ -62,7 +62,7 @@ test("02 - single pi", () => {
       },
     }),
     res,
-    "02.01"
+    "02.01",
   );
   equal(
     fix(ok, "&pi", {
@@ -73,7 +73,7 @@ test("02 - single pi", () => {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "02.02"
+    "02.02",
   );
   is(gatheredBroken.length, 1, "02.03");
   equal(gatheredHealthy, [], "02.04");
@@ -95,14 +95,14 @@ test("03 - larger set", () => {
       },
     }),
     res,
-    "03.01"
+    "03.01",
   );
   equal(
     fix(ok, "aaa&pi&piv&pi&pivaaa", {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "03.02"
+    "03.02",
   );
   equal(gathered, [], "03.03");
 });
@@ -122,14 +122,14 @@ test("04 - letters follow tightly", () => {
       },
     }),
     res,
-    "04.01"
+    "04.01",
   );
   equal(
     fix(ok, "aaa&ang&angst&ang&angstaaa", {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "04.02"
+    "04.02",
   );
   equal(gathered, [], "04.03");
 });
@@ -143,7 +143,7 @@ test(`05 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     [],
-    "05.01"
+    "05.01",
   );
   equal(gathered, [], "05.02");
 });
@@ -157,7 +157,7 @@ test(`06 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     [],
-    "06.01"
+    "06.01",
   );
   equal(gathered, [], "06.02");
 });
@@ -172,14 +172,14 @@ test(`07 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "07.01"
+    "07.01",
   );
   equal(
     fix(ok, "z &ang y", {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "07.02"
+    "07.02",
   );
   equal(gathered, [], "07.03");
 });
@@ -194,7 +194,7 @@ test(`08 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "08.01"
+    "08.01",
   );
   equal(
     fix(ok, "z &ang ;", {
@@ -203,7 +203,7 @@ test(`08 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "08.02"
+    "08.02",
   );
   equal(gathered, [], "08.03");
 });
@@ -218,14 +218,14 @@ test(`09 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "09.01"
+    "09.01",
   );
   equal(
     fix(ok, "z &ang st", {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "09.02"
+    "09.02",
   );
   equal(gathered, [], "09.03");
 });
@@ -240,14 +240,14 @@ test(`10 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "10.01"
+    "10.01",
   );
   equal(
     fix(ok, "z &ang sx", {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "10.02"
+    "10.02",
   );
   equal(gathered, [], "10.03");
 });
@@ -262,7 +262,7 @@ test(`11 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "11.01"
+    "11.01",
   );
   equal(
     fix(ok, "z &angst y", {
@@ -271,7 +271,7 @@ test(`11 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "11.02"
+    "11.02",
   );
   equal(gathered, [], "11.03");
 });
@@ -289,14 +289,14 @@ test(`12 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "12.01"
+    "12.01",
   );
   equal(
     fix(ok, "x &ang y&ang z", {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "12.02"
+    "12.02",
   );
   equal(gathered, [], "12.03");
 });
@@ -314,14 +314,14 @@ test(`13 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "13.01"
+    "13.01",
   );
   equal(
     fix(ok, "&ang&ang", {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "13.02"
+    "13.02",
   );
   equal(gathered, [], "13.03");
 });
@@ -339,14 +339,14 @@ test(`14 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "14.01"
+    "14.01",
   );
   equal(
     fix(ok, "text&angtext&angtext", {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "14.02"
+    "14.02",
   );
   equal(gathered, [], "14.03");
 });
@@ -364,14 +364,14 @@ test(`15 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "15.01"
+    "15.01",
   );
   equal(
     fix(ok, "text&angsttext&angsttext", {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "15.02"
+    "15.02",
   );
   equal(gathered, [], "15.03");
 });
@@ -387,14 +387,14 @@ test(`16 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "16.01"
+    "16.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "16.02"
+    "16.02",
   );
   equal(gathered, [], "16.03");
 });
@@ -413,14 +413,14 @@ test(`17 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "17.01"
+    "17.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "17.02"
+    "17.02",
   );
   equal(gathered, [], "17.03");
 });
@@ -435,14 +435,14 @@ test(`18 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     [],
-    "18.01"
+    "18.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     [],
-    "18.02"
+    "18.02",
   );
   equal(gathered, [4, 11], "18.03");
 });
@@ -461,14 +461,14 @@ test(`19 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "19.01"
+    "19.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "19.02"
+    "19.02",
   );
   equal(gathered, [], "19.03");
 });
@@ -484,14 +484,14 @@ test(`20 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "20.01"
+    "20.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "20.02"
+    "20.02",
   );
   equal(gathered, [4, 11], "20.03");
 });
@@ -507,14 +507,14 @@ test(`21 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "21.01"
+    "21.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "21.02"
+    "21.02",
   );
   equal(gathered, [4, 15], "21.03");
 });
@@ -528,14 +528,14 @@ test(`22 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     [],
-    "22.01"
+    "22.01",
   );
   equal(
     fix(ok, "text&sub text&sub text", {
       textAmpersandCatcherCb: () => {},
     }),
     [],
-    "22.02"
+    "22.02",
   );
   equal(gathered, [4, 13], "22.03");
 });
@@ -554,7 +554,7 @@ test(`23 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "23.01"
+    "23.01",
   );
   equal(
     fix(ok, input, {
@@ -563,7 +563,7 @@ test(`23 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "23.02"
+    "23.02",
   );
   equal(gathered, [], "23.03");
 });
@@ -579,14 +579,14 @@ test(`24 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     res,
-    "24.01"
+    "24.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     res,
-    "24.02"
+    "24.02",
   );
   equal(gathered, [4, 15], "24.03");
 });
@@ -605,14 +605,14 @@ test(`25 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "25.01"
+    "25.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "25.02"
+    "25.02",
   );
   equal(gathered, [], "25.03");
 });
@@ -628,14 +628,14 @@ test(`26 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "26.01"
+    "26.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "26.02"
+    "26.02",
   );
   equal(gathered, [], "26.03");
 });
@@ -654,14 +654,14 @@ test(`27 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "27.01"
+    "27.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "27.02"
+    "27.02",
   );
   equal(gathered, [], "27.03");
 });
@@ -684,7 +684,7 @@ test(`28 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "28.01"
+    "28.01",
   );
   equal(
     fix(ok, input, {
@@ -692,7 +692,7 @@ test(`28 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "28.02"
+    "28.02",
   );
   equal(gathered, [], "28.03");
 });
@@ -712,7 +712,7 @@ test(`29 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "29.01"
+    "29.01",
   );
   equal(
     fix(ok, input, {
@@ -720,7 +720,7 @@ test(`29 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "29.02"
+    "29.02",
   );
   equal(gathered, [], "29.03");
 });
@@ -737,7 +737,7 @@ test(`30 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "30.01"
+    "30.01",
   );
   equal(
     fix(ok, input, {
@@ -745,7 +745,7 @@ test(`30 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "30.02"
+    "30.02",
   );
   equal(gathered, [], "30.03");
 });
@@ -765,7 +765,7 @@ test(`31 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "31.01"
+    "31.01",
   );
   equal(
     fix(ok, input, {
@@ -773,7 +773,7 @@ test(`31 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "31.02"
+    "31.02",
   );
   equal(gathered, [], "31.03");
 });
@@ -793,7 +793,7 @@ test(`32 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "32.01"
+    "32.01",
   );
   equal(
     fix(ok, input, {
@@ -801,7 +801,7 @@ test(`32 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "32.02"
+    "32.02",
   );
   equal(gathered, [], "32.03");
 });
@@ -818,7 +818,7 @@ test(`33 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "33.01"
+    "33.01",
   );
   equal(
     fix(ok, input, {
@@ -826,7 +826,7 @@ test(`33 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "33.02"
+    "33.02",
   );
   equal(gathered, [4, 12], "33.03");
 });
@@ -846,7 +846,7 @@ test(`34 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "34.01"
+    "34.01",
   );
   equal(
     fix(ok, input, {
@@ -854,7 +854,7 @@ test(`34 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "34.02"
+    "34.02",
   );
   equal(gathered, [], "34.03");
 });
@@ -871,7 +871,7 @@ test(`35 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "35.01"
+    "35.01",
   );
   equal(
     fix(ok, input, {
@@ -879,7 +879,7 @@ test(`35 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "35.02"
+    "35.02",
   );
   equal(gathered, [4, 12], "35.03");
 });
@@ -896,7 +896,7 @@ test(`36 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "36.01"
+    "36.01",
   );
   equal(
     fix(ok, input, {
@@ -904,7 +904,7 @@ test(`36 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "36.02"
+    "36.02",
   );
   equal(gathered, [4, 15], "36.03");
 });
@@ -921,7 +921,7 @@ test(`37 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "37.01"
+    "37.01",
   );
   equal(
     fix(ok, input, {
@@ -929,7 +929,7 @@ test(`37 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "37.02"
+    "37.02",
   );
   equal(gathered, [4, 13], "37.03");
 });
@@ -949,7 +949,7 @@ test(`38 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "38.01"
+    "38.01",
   );
   equal(
     fix(ok, input, {
@@ -957,7 +957,7 @@ test(`38 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "38.02"
+    "38.02",
   );
   equal(gathered, [], "38.03");
 });
@@ -974,7 +974,7 @@ test(`39 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "39.01"
+    "39.01",
   );
   equal(
     fix(ok, input, {
@@ -982,7 +982,7 @@ test(`39 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "39.02"
+    "39.02",
   );
   equal(gathered, [4, 15], "39.03");
 });
@@ -1002,7 +1002,7 @@ test(`40 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "40.01"
+    "40.01",
   );
   equal(
     fix(ok, input, {
@@ -1010,7 +1010,7 @@ test(`40 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "40.02"
+    "40.02",
   );
   equal(gathered, [], "40.03");
 });
@@ -1027,7 +1027,7 @@ test(`41 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "41.01"
+    "41.01",
   );
   equal(
     fix(ok, input, {
@@ -1035,7 +1035,7 @@ test(`41 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "41.02"
+    "41.02",
   );
   equal(gathered, [], "41.03");
 });
@@ -1055,7 +1055,7 @@ test(`42 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       },
     }),
     result,
-    "42.01"
+    "42.01",
   );
   equal(
     fix(ok, input, {
@@ -1063,7 +1063,7 @@ test(`42 - ${`\u001b[${36}m${"semicolon missing"}\u001b[${39}m`} - \u001b[${32}m
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "42.02"
+    "42.02",
   );
   equal(gathered, [], "42.03");
 });
@@ -1079,14 +1079,14 @@ test("43 - single pi - exact value in front", () => {
       },
     }),
     result,
-    "43.01"
+    "43.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "43.02"
+    "43.02",
   );
   equal(gathered, [], "43.03");
 });

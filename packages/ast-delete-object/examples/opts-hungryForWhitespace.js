@@ -16,14 +16,14 @@ assert.deepEqual(
       { c: "" }, // that's empty
     ],
     {}, // empty thing to match again - we match "empty" vs "empty"
-    { matchKeysStrictly: false, hungryForWhitespace: true }
+    { matchKeysStrictly: false, hungryForWhitespace: true },
   ),
   [
     {
       key3: "val3",
       key4: "val4",
     },
-  ]
+  ],
 );
 
 // but
@@ -39,7 +39,7 @@ assert.deepEqual(
       { c: "" }, // that's empty
     ],
     {}, // empty thing to match again - we match "empty" vs "empty"
-    { matchKeysStrictly: false, hungryForWhitespace: false }
+    { matchKeysStrictly: false, hungryForWhitespace: false },
   ),
   [
     { a: "\n" },
@@ -49,6 +49,6 @@ assert.deepEqual(
     },
     { b: "   " },
     { c: "" },
-  ]
+  ],
 );
 // nothing happened because empty things were matched strictly, "==="

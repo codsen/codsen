@@ -26,6 +26,6 @@ assert.deepEqual(
     ],
     msgContent: null,
     msgType: null,
-  }
+  },
 );
 // you'll have to join elements and lines from the array yourself

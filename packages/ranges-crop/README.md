@@ -43,9 +43,9 @@ assert.deepEqual(
       [9, 10, "bad grey wolf"],
       [1, 2],
     ],
-    7
+    7,
   ),
-  [[1, 3]] // sorted, merged and cropped
+  [[1, 3]], // sorted, merged and cropped
 );
 ```
 

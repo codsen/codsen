@@ -15,7 +15,7 @@ test("01 - throws when the first argument is not string", () => {
       det(ok, not, 0, 1, "zzz");
     },
     /THROW_ID_01/gm,
-    "01.01"
+    "01.01",
   );
 
   throws(
@@ -23,7 +23,7 @@ test("01 - throws when the first argument is not string", () => {
       det(ok, not, 0, true, "zzz");
     },
     /THROW_ID_01/gm,
-    "01.02"
+    "01.02",
   );
 
   function fn() {
@@ -34,7 +34,7 @@ test("01 - throws when the first argument is not string", () => {
       det(ok, not, 0, fn, "zzz");
     },
     /THROW_ID_01/gm,
-    "01.03"
+    "01.03",
   );
 
   throws(
@@ -42,7 +42,7 @@ test("01 - throws when the first argument is not string", () => {
       det(ok, not, 0, { a: "b" }, "zzz");
     },
     /THROW_ID_01/gm,
-    "01.04"
+    "01.04",
   );
 
   throws(
@@ -50,7 +50,7 @@ test("01 - throws when the first argument is not string", () => {
       det(ok, not, 0, null, "zzz");
     },
     /THROW_ID_01/gm,
-    "01.05"
+    "01.05",
   );
 });
 
@@ -60,7 +60,7 @@ test("02 - throws when the second argument is truthy yet not a plain object", ()
       det(ok, not, 0, "zzz", "zzz");
     },
     /THROW_ID_02/gm,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -78,7 +78,7 @@ test("05 - throws when opts.cb is truthy and not a function", () => {
       det(ok, not, 0, "zzz", { cb: true });
     },
     /THROW_ID_03/gm,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -112,28 +112,28 @@ test("07 - throws when opts.cb.eol is truthy and invalid", () => {
       det(ok, not, 0, "zzz", { eol: true });
     },
     /THROW_ID_04/gm,
-    "07.01"
+    "07.01",
   );
   throws(
     () => {
       det(ok, not, 0, "zzz", { eol: "a" });
     },
     /THROW_ID_04/gm,
-    "07.02"
+    "07.02",
   );
   throws(
     () => {
       det(ok, not, 0, "zzz", { eol: 1 });
     },
     /THROW_ID_04/gm,
-    "07.03"
+    "07.03",
   );
   throws(
     () => {
       det(ok, not, 0, "zzz", { eol: "LF" });
     },
     /THROW_ID_04/gm,
-    "07.04"
+    "07.04",
   );
 });
 

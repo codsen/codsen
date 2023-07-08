@@ -62,7 +62,7 @@ assert.deepEqual(gatheredRanges.current(), [
 // apply both fixes in one go:
 assert.equal(
   rApply(source, gatheredRanges.current()),
-  "sequence: **** **** **** ****"
+  "sequence: **** **** **** ****",
 );
 
 // hey, the zero chunk deletion range [20, 24] was merged with
@@ -90,6 +90,6 @@ gatheredRanges.push(fix3); // zero chunk
 // apply again:
 assert.equal(
   rApply(source, gatheredRanges.current()),
-  "sequence: **** ****  ****"
+  "sequence: **** ****  ****",
 );
 // null in [20, 24, null] overrode the insertion instruction [20, 24, "****"]

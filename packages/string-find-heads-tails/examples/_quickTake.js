@@ -9,7 +9,7 @@ assert.deepEqual(
   strFindHeadsTails(
     "some text %%_var1-%% more text %%_var2_%%",
     ["%%_", "%%-"], // two flavours of heads
-    ["-%%", "_%%"] // two flavours of tails
+    ["-%%", "_%%"], // two flavours of tails
   ),
   [
     {
@@ -24,5 +24,5 @@ assert.deepEqual(
       tailsStartAt: 38,
       tailsEndAt: 41,
     },
-  ]
+  ],
 );

@@ -11,9 +11,9 @@ assert.equal(
   "a": "b",
   "c": "d"
 }`,
-    "c" // path to delete
+    "c", // path to delete
   ),
   `{
   "a": "b"
-}`
+}`,
 );

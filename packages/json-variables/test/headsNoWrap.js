@@ -18,7 +18,7 @@ test("01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars", () =>
       {
         wrapHeadsWith: "{{ ",
         wrapTailsWith: " }}",
-      }
+      },
     ),
     {
       a: "some text value1 more text {{ value2 }}",
@@ -26,7 +26,7 @@ test("01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars", () =>
       var1: "value1",
       var2: "value2",
     },
-    "01.01"
+    "01.01",
   );
   equal(
     jVar(
@@ -41,7 +41,7 @@ test("01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars", () =>
         wrapTailsWith: " }}",
         headsNoWrap: "(( ",
         tailsNoWrap: " ))",
-      }
+      },
     ),
     {
       a: "some text value1 more text {{ value2 }}",
@@ -49,7 +49,7 @@ test("01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars", () =>
       var1: "value1",
       var2: "value2",
     },
-    "01.02"
+    "01.02",
   );
   equal(
     jVar(
@@ -64,7 +64,7 @@ test("01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars", () =>
         wrapTailsWith: " }}",
         headsNoWrap: "(( ",
         tailsNoWrap: " ))",
-      }
+      },
     ),
     {
       a: "some text value1 more text {{ value2 }}",
@@ -72,7 +72,7 @@ test("01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars", () =>
       var1: "value1",
       var2: "value2",
     },
-    "01.03"
+    "01.03",
   );
   equal(
     jVar(
@@ -87,7 +87,7 @@ test("01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars", () =>
         wrapTailsWith: " }}",
         headsNoWrap: "(( ",
         tailsNoWrap: " ))",
-      }
+      },
     ),
     {
       a: "some text value1 more text {{ value2 }}",
@@ -95,7 +95,7 @@ test("01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars", () =>
       var1: "value1",
       var2: "value2",
     },
-    "01.04"
+    "01.04",
   );
 });
 
@@ -110,14 +110,14 @@ test("02 - opts.headsNoWrap & opts.tailsNoWrap work on multi-level vars", () => 
       {
         wrapHeadsWith: "??",
         wrapTailsWith: "!!",
-      }
+      },
     ),
     {
       a: "text z more text ??z!! and more z text ??z!! more text z",
       b: "??z!!",
       c: "z",
     },
-    "02.01"
+    "02.01",
   );
   equal(
     jVar(
@@ -129,14 +129,14 @@ test("02 - opts.headsNoWrap & opts.tailsNoWrap work on multi-level vars", () => 
       {
         wrapHeadsWith: "??",
         wrapTailsWith: "!!",
-      }
+      },
     ),
     {
       a: "text z more text ??z!! and more z text",
       bbb: "??z!!",
       c: "z",
     },
-    "02.02"
+    "02.02",
   );
   equal(
     jVar(
@@ -152,14 +152,14 @@ test("02 - opts.headsNoWrap & opts.tailsNoWrap work on multi-level vars", () => 
         tailsNoWrap: "-zzz-",
         wrapHeadsWith: "??",
         wrapTailsWith: "!!",
-      }
+      },
     ),
     {
       a: "text z more text ??z!! and more z text",
       bbb: "??z!!",
       c: "z",
     },
-    "02.03"
+    "02.03",
   );
 });
 
@@ -173,13 +173,13 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
       {
         wrapHeadsWith: "{{ ",
         wrapTailsWith: " }}",
-      }
+      },
     ),
     {
       aaa: "ccc\n",
       bbb: "ccc\n",
     },
-    "03.01"
+    "03.01",
   );
 
   equal(
@@ -195,7 +195,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
       {
         wrapHeadsWith: "{{ ",
         wrapTailsWith: " }}",
-      }
+      },
     ),
     {
       aaa: "zzz\nyyy\n",
@@ -205,7 +205,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
         lll: "yyy\n",
       },
     },
-    "03.02"
+    "03.02",
   );
 
   equal(
@@ -221,7 +221,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
       {
         wrapHeadsWith: "{{ ",
         wrapTailsWith: " }}",
-      }
+      },
     ),
     {
       aaa: "zzz\nyyy\n",
@@ -231,7 +231,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
         lll: "yyy",
       },
     },
-    "03.03"
+    "03.03",
   );
 
   equal(
@@ -247,7 +247,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
       {
         wrapHeadsWith: "{{ ",
         wrapTailsWith: " }}",
-      }
+      },
     ),
     {
       aaa: "{{ zzz }}{{ yyy }}",
@@ -257,7 +257,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
         lll: "yyy",
       },
     },
-    "03.04"
+    "03.04",
   );
 
   equal(
@@ -273,7 +273,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
       {
         wrapHeadsWith: "{{ ",
         wrapTailsWith: " }}",
-      }
+      },
     ),
     {
       aaa: "{{ zzz }}{{ yyy }}",
@@ -283,7 +283,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
         lll: "yyy",
       },
     },
-    "03.05"
+    "03.05",
   );
 
   equal(
@@ -301,7 +301,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
       {
         wrapHeadsWith: "{{ ",
         wrapTailsWith: " }}",
-      }
+      },
     ),
     {
       aaa: "{%- if zzz_val -%}{{ zzz_val }}<br />{%- endif -%}\n{%- if yyy_val -%}{{ yyy_val }}<br />{%- endif -%}\n",
@@ -316,7 +316,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
         yyy: "yyy_val",
       },
     },
-    "03.06"
+    "03.06",
   );
 
   equal(
@@ -366,7 +366,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
       {
         wrapHeadsWith: "{{ ",
         wrapTailsWith: " }}",
-      }
+      },
     ),
     {
       shop_info_text:
@@ -412,7 +412,7 @@ test("03 - triple linking with resolving arrays and trailing new lines", () => {
         row8_var: "order.shopInfo.zipCode",
       },
     },
-    "03.07"
+    "03.07",
   );
 });
 

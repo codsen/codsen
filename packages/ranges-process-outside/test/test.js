@@ -17,7 +17,7 @@ test(`01 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - first arg wrong #1`, () 
       p(undefined, [[0, 1]]);
     },
     /THROW_ID_01/g,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -27,7 +27,7 @@ test(`02 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - first arg wrong #2`, () 
       p(null, [[0, 1]]);
     },
     /THROW_ID_02/g,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -37,7 +37,7 @@ test(`03 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - first arg wrong #3`, () 
       p(true, [[0, 1]]);
     },
     /THROW_ID_02/g,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -48,7 +48,7 @@ test(`04 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - second arg wrong #4`, ()
       p("zzz", true);
     },
     /THROW_ID_03/g,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -58,7 +58,7 @@ test(`05 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - second arg wrong #5`, ()
       p("zzz", ["zzz"], () => {});
     },
     /THROW_ID_03/g,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -75,7 +75,7 @@ test(`07 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - third arg wrong`, () => 
       p("zzz", [[0, 1]], null);
     },
     /THROW_ID_04/g,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -99,7 +99,7 @@ test(`09 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges 
     (idx) => {
       gather2.push(idx);
     },
-    true
+    true,
   );
   equal(gather2, [0, 5, 6, 7, 8, 9], "09.01");
 });
@@ -120,7 +120,7 @@ test(`11 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges 
     (idx) => {
       gathe2.push(idx);
     },
-    true
+    true,
   );
   equal(gathe2, [5, 6, 7, 8, 9], "11.01");
 });
@@ -135,7 +135,7 @@ test(`12 - ${`\u001b[${31}m${"few ranges"}\u001b[${39}m`} - string covers ranges
     ],
     (idx) => {
       gather.push(idx);
-    }
+    },
   );
   equal(gather, [5, 6, 8, 9], "12.01");
 });
@@ -155,7 +155,7 @@ test(`13 - ${`\u001b[${31}m${"few ranges"}\u001b[${39}m`} - string covers ranges
       [7, 8],
       [0, 5],
     ],
-    "13.01"
+    "13.01",
   );
   equal(gather2, [5, 6, 8, 9], "13.02");
 });
@@ -174,11 +174,11 @@ test(`14 - ${`\u001b[${31}m${"few ranges"}\u001b[${39}m`} - string covers ranges
         (idx) => {
           gather2.push(idx);
         },
-        true
+        true,
       );
     },
     /THROW_ID_08/g,
-    "14.01"
+    "14.01",
   );
 });
 
@@ -193,7 +193,7 @@ test(`15 - ${`\u001b[${31}m${"few ranges"}\u001b[${39}m`} - string covers ranges
     ],
     (idx) => {
       gather.push(idx);
-    }
+    },
   );
   equal(gather, [5, 6], "15.01");
 });
@@ -217,11 +217,11 @@ test(`16 - ${`\u001b[${31}m${"few ranges"}\u001b[${39}m`} - string covers ranges
         (idx) => {
           gather.push(idx);
         },
-        true
+        true,
       );
     },
     /THROW_ID_08/g,
-    "16.01"
+    "16.01",
   );
 });
 
@@ -249,7 +249,7 @@ test(`19 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - absent ranges - null 
     (idx) => {
       gather.push(idx);
     },
-    true
+    true,
   );
   equal(gather, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "19.01");
 });
@@ -278,7 +278,7 @@ test(`22 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges 
     (idxFrom, idxTo) => {
       gather.push([idxFrom, idxTo]);
     },
-    false // skip=false so checks are on
+    false, // skip=false so checks are on
   );
   equal(
     gather,
@@ -288,7 +288,7 @@ test(`22 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges 
       [8, 9],
       [9, 10],
     ],
-    "22.01"
+    "22.01",
   );
 });
 
@@ -301,7 +301,7 @@ test(`23 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges 
     (idxFrom, idxTo) => {
       gather.push([idxFrom, idxTo]);
     },
-    false // skip=false so checks are on
+    false, // skip=false so checks are on
   );
   equal(
     gather,
@@ -311,7 +311,7 @@ test(`23 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges 
       [13, 14],
       [14, 15],
     ],
-    "23.02"
+    "23.02",
   );
 });
 

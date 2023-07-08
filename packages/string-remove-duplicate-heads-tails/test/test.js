@@ -14,7 +14,7 @@ test("01 - wrong/missing input = throw", () => {
       rem();
     },
     /THROW_ID_01/g,
-    "01.01"
+    "01.01",
   );
   not.throws(() => {
     rem(1);
@@ -27,14 +27,14 @@ test("02 - wrong opts", () => {
       rem("a", "a");
     },
     /THROW_ID_03/g,
-    "02.01"
+    "02.01",
   );
   throws(
     () => {
       rem("a", 1);
     },
     /THROW_ID_03/g,
-    "02.02"
+    "02.02",
   );
   throws(
     () => {
@@ -44,7 +44,7 @@ test("02 - wrong opts", () => {
       });
     },
     /THROW_ID_04/g,
-    "02.03"
+    "02.03",
   );
   throws(
     () => {
@@ -54,7 +54,7 @@ test("02 - wrong opts", () => {
       });
     },
     /THROW_ID_05/g,
-    "02.04"
+    "02.04",
   );
 });
 
@@ -65,7 +65,7 @@ test("03 - empty input string", () => {
       tails: "}}",
     }),
     "",
-    "03.01"
+    "03.01",
   );
   equal(rem(""), "", "03.02");
 });
@@ -77,7 +77,7 @@ test("04 - none of heads or tails found", () => {
       tails: "__",
     }),
     "aaa {{",
-    "04.01"
+    "04.01",
   );
 });
 
@@ -92,7 +92,7 @@ test("05 - trims wrapped heads and tails", () => {
       tails: "}}",
     }),
     "hi {{ name }}!",
-    "05.01"
+    "05.01",
   );
   equal(
     rem("{{ hi }} name {{! }}", {
@@ -100,7 +100,7 @@ test("05 - trims wrapped heads and tails", () => {
       tails: "}}",
     }),
     "{{ hi }} name {{! }}",
-    "05.02"
+    "05.02",
   );
 });
 
@@ -111,7 +111,7 @@ test("06 - trims wrapped heads and tails, with space inside heads/tails", () => 
       tails: " }}",
     }),
     "Hi {{ first_name }}!",
-    "06.01"
+    "06.01",
   );
 });
 
@@ -122,7 +122,7 @@ test("07 - trimmed heads and tails in the source still get caught", () => {
       tails: " }}",
     }),
     "Hi {{ first_name }}!",
-    "07.01"
+    "07.01",
   );
 });
 
@@ -133,7 +133,7 @@ test("08 - excessive whitespace in opts heads/tails doesn't matter", () => {
       tails: "    }}       ",
     }),
     "Hi {{ first_name }}!",
-    "08.01"
+    "08.01",
   );
 });
 
@@ -144,7 +144,7 @@ test("09 - single curly brace heads/tails", () => {
       tails: "}",
     }),
     "Hi { first_name }!",
-    "09.01"
+    "09.01",
   );
 });
 
@@ -155,7 +155,7 @@ test("10 - custom heads and tails, whitespace both sides", () => {
       tails: " } ",
     }),
     "Hi { first_name }!",
-    "10.01"
+    "10.01",
   );
 });
 
@@ -166,7 +166,7 @@ test("11 - ends with tails, doesn't start with heads", () => {
       tails: ["-%%", "}}"],
     }),
     "Hi {{ first_name }}",
-    "11.01"
+    "11.01",
   );
 });
 
@@ -177,7 +177,7 @@ test("12 - starts with heads, doesn't end with tails", () => {
       tails: ["-%%", "}}"],
     }),
     "{{ first_name }}!",
-    "12.01"
+    "12.01",
   );
 });
 
@@ -188,7 +188,7 @@ test("13 - properly wrapped, heads/tails in array, matched", () => {
       tails: ["-%%", "}}"],
     }),
     "{{ first_name }}",
-    "13.01"
+    "13.01",
   );
 });
 
@@ -199,7 +199,7 @@ test("14 - starts with heads, doesn't end with tails", () => {
       tails: ["-%%", "}}"],
     }),
     "{{ a }}{{ b }}",
-    "14.01"
+    "14.01",
   );
 });
 
@@ -210,7 +210,7 @@ test("15 - unclosed heads", () => {
       tails: ["-%%", "}}"],
     }),
     "zzz {{",
-    "15.01"
+    "15.01",
   );
 });
 
@@ -221,7 +221,7 @@ test("16 - unclosed tails", () => {
       tails: ["-%%", "}}"],
     }),
     "zzz }}",
-    "16.01"
+    "16.01",
   );
 });
 
@@ -232,7 +232,7 @@ test("17 - ends with empty variable", () => {
       tails: ["-%%", "}}"],
     }),
     "zzz",
-    "17.01"
+    "17.01",
   );
 });
 
@@ -243,7 +243,7 @@ test("18 - empty variable with text both sides", () => {
       tails: ["-%%", "}}"],
     }),
     "zzz {{}} yyy",
-    "18.01"
+    "18.01",
   );
 });
 
@@ -254,7 +254,7 @@ test("19 - heads/tails in opposite order", () => {
       tails: ["-%%", "}}"],
     }),
     "zzz }}{{ yyy",
-    "19.01"
+    "19.01",
   );
 });
 
@@ -265,7 +265,7 @@ test("20 - tails with text on both sides", () => {
       tails: ["-%%", "}}"],
     }),
     "zzz }} yyy",
-    "20.01"
+    "20.01",
   );
 });
 
@@ -276,7 +276,7 @@ test("21 - heads with text on both sides", () => {
       tails: ["-%%", "}}"],
     }),
     "zzz {{ yyy",
-    "21.01"
+    "21.01",
   );
 });
 
@@ -287,7 +287,7 @@ test("22 - multiple heads, single tails", () => {
       tails: ["-%%", "}}"],
     }),
     "{{{{ first_name }}!",
-    "22.01"
+    "22.01",
   );
 });
 
@@ -298,7 +298,7 @@ test("23 - one set of custom heads and tails, single char string", () => {
       tails: "!!",
     }),
     "??z!!",
-    "23.01"
+    "23.01",
   );
   equal(
     rem("??!! ??z!!", {
@@ -306,7 +306,7 @@ test("23 - one set of custom heads and tails, single char string", () => {
       tails: "!!",
     }),
     "??z!!",
-    "23.02"
+    "23.02",
   );
   equal(
     rem("??z!! ??!!", {
@@ -314,7 +314,7 @@ test("23 - one set of custom heads and tails, single char string", () => {
       tails: "!!",
     }),
     "??z!!",
-    "23.03"
+    "23.03",
   );
   equal(
     rem("??!! ??z!! ??!!", {
@@ -322,7 +322,7 @@ test("23 - one set of custom heads and tails, single char string", () => {
       tails: "!!",
     }),
     "??z!!",
-    "23.04"
+    "23.04",
   );
   equal(
     rem("\t??z!!", {
@@ -330,7 +330,7 @@ test("23 - one set of custom heads and tails, single char string", () => {
       tails: "!!",
     }),
     "??z!!",
-    "23.05"
+    "23.05",
   );
   equal(
     rem("??!!\t??z!!", {
@@ -338,7 +338,7 @@ test("23 - one set of custom heads and tails, single char string", () => {
       tails: "!!",
     }),
     "??z!!",
-    "23.06"
+    "23.06",
   );
   equal(
     rem("??z!! ??!! ", {
@@ -346,7 +346,7 @@ test("23 - one set of custom heads and tails, single char string", () => {
       tails: "!!",
     }),
     "??z!!",
-    "23.07"
+    "23.07",
   );
   equal(
     rem("\t??!! ??z!! ??!!", {
@@ -354,7 +354,7 @@ test("23 - one set of custom heads and tails, single char string", () => {
       tails: "!!",
     }),
     "??z!!",
-    "23.08"
+    "23.08",
   );
   equal(
     rem("{{ z }}", {
@@ -362,7 +362,7 @@ test("23 - one set of custom heads and tails, single char string", () => {
       tails: "!!",
     }),
     "{{ z }}",
-    "23.09"
+    "23.09",
   );
   equal(
     rem("{{{{ z }}}}", {
@@ -370,7 +370,7 @@ test("23 - one set of custom heads and tails, single char string", () => {
       tails: "!!",
     }),
     "{{{{ z }}}}",
-    "23.10"
+    "23.10",
   );
 });
 
@@ -382,7 +382,7 @@ test("24 - two sets of custom heads and tails, single char string", () => {
       tails: "!!",
     }),
     "??z!!",
-    "24.01"
+    "24.01",
   );
 });
 
@@ -393,7 +393,7 @@ test("25 - words with space, single set of custom heads and tails", () => {
       tails: "!!",
     }),
     "??tralalala!lalala!!",
-    "25.01"
+    "25.01",
   );
 });
 
@@ -405,7 +405,7 @@ test("26 - double wrapped with custom heads and tails, with whitespace", () => {
       tails: "!!",
     }),
     "?? x y !!",
-    "26.01"
+    "26.01",
   );
 });
 
@@ -417,7 +417,7 @@ test("27 - mixed sets of heads and tails #1", () => {
       tails: ["!!", ")))"],
     }),
     "?? x !! ?? y !!",
-    "27.01"
+    "27.01",
   );
   equal(
     rem("?? ((( ?? x !! ?? y !! ))) !!", {
@@ -425,7 +425,7 @@ test("27 - mixed sets of heads and tails #1", () => {
       tails: [" !!", " )))"],
     }),
     "?? x !! ?? y !!",
-    "27.02"
+    "27.02",
   );
   equal(
     rem("??(((??x!!??y!!)))!!", {
@@ -433,7 +433,7 @@ test("27 - mixed sets of heads and tails #1", () => {
       tails: [" !!", " )))"],
     }),
     "??x!!??y!!",
-    "27.03"
+    "27.03",
   );
 });
 
@@ -444,7 +444,7 @@ test("28 - mixed sets of heads and tails #2", () => {
       tails: ["!!", ")))"],
     }),
     "??tralalala!!(((lalala)))",
-    "28.01"
+    "28.01",
   );
 });
 
@@ -455,7 +455,7 @@ test("29 - blank heads and tails within second level being removed", () => {
       tails: ["!!", ")))"],
     }),
     "?? a !! ((( b )))",
-    "29.01"
+    "29.01",
   );
   equal(
     rem("?? (((  \n  )))   \t\t\t ((( ?? a !! ((( b )))\n ))) !!", {
@@ -463,7 +463,7 @@ test("29 - blank heads and tails within second level being removed", () => {
       tails: ["!!", ")))"],
     }),
     "?? a !! ((( b )))",
-    "29.02"
+    "29.02",
   );
   equal(
     rem("?? (((  \n  )))   \t\t\t ((( ??  !! (((  )))\n ))) !!", {
@@ -471,7 +471,7 @@ test("29 - blank heads and tails within second level being removed", () => {
       tails: ["!!", ")))"],
     }),
     "",
-    "29.03"
+    "29.03",
   );
 });
 
@@ -482,7 +482,7 @@ test("30 - removing empty head/tail chunks from around the text #1", () => {
       tails: ["!!", ")))"],
     }),
     "a",
-    "30.01"
+    "30.01",
   );
   equal(
     rem("((())) a ((())) b ((()))", {
@@ -490,7 +490,7 @@ test("30 - removing empty head/tail chunks from around the text #1", () => {
       tails: ["!!", ")))"],
     }),
     "a ((())) b",
-    "30.02"
+    "30.02",
   );
   equal(
     rem("((()))((())) a ((()))((()))", {
@@ -498,7 +498,7 @@ test("30 - removing empty head/tail chunks from around the text #1", () => {
       tails: ["!!", ")))"],
     }),
     "a",
-    "30.03"
+    "30.03",
   );
   equal(
     rem("a((()))((()))b((()))((()))((()))", {
@@ -506,7 +506,7 @@ test("30 - removing empty head/tail chunks from around the text #1", () => {
       tails: ["!!", ")))"],
     }),
     "a((()))((()))b",
-    "30.04"
+    "30.04",
   );
   equal(
     rem(
@@ -514,10 +514,10 @@ test("30 - removing empty head/tail chunks from around the text #1", () => {
       {
         heads: ["??", "((("],
         tails: ["!!", ")))"],
-      }
+      },
     ),
     "a((()))((()))b",
-    "30.05"
+    "30.05",
   );
   equal(
     rem("((()))((()))((()))a((()))((()))b((()))((()))((()))", {
@@ -525,7 +525,7 @@ test("30 - removing empty head/tail chunks from around the text #1", () => {
       tails: ["!!", ")))"],
     }),
     "a((()))((()))b",
-    "30.06"
+    "30.06",
   );
 });
 
@@ -536,7 +536,7 @@ test("31 - removing empty head/tail chunks from around the text #2 (touches end)
       tails: ["!!", ")))"],
     }),
     "some (((text)))",
-    "31.01"
+    "31.01",
   );
 });
 
@@ -547,7 +547,7 @@ test("32 - removing empty head/tail chunks from around the text #3 (touches begi
       tails: ["!!", ")))"],
     }),
     "(((some))) text",
-    "32.01"
+    "32.01",
   );
   equal(
     rem("\t((())) (((some))) text ((()))", {
@@ -555,7 +555,7 @@ test("32 - removing empty head/tail chunks from around the text #3 (touches begi
       tails: ["!!", ")))"],
     }),
     "(((some))) text",
-    "32.02"
+    "32.02",
   );
 });
 
@@ -566,7 +566,7 @@ test("33 - leading letter ruins the removal from the front", () => {
       tails: ["!!", ")))"],
     }),
     "\ta ((())) (((some))) text",
-    "33.01"
+    "33.01",
   );
   equal(
     rem(" a ((())) (((some))) text ((()))", {
@@ -574,7 +574,7 @@ test("33 - leading letter ruins the removal from the front", () => {
       tails: ["!!", ")))"],
     }),
     "a ((())) (((some))) text",
-    "33.02"
+    "33.02",
   );
 });
 
@@ -585,7 +585,7 @@ test("34 - leading line break", () => {
       tails: ["!!", ")))"],
     }),
     "aaa\n",
-    "34.01"
+    "34.01",
   );
 });
 
@@ -596,7 +596,7 @@ test("35", () => {
       tails: ["}}"],
     }),
     "{{ items[0].abc }}",
-    "35.01"
+    "35.01",
   );
 });
 
@@ -615,7 +615,7 @@ test("36 - opts are not mutated", () => {
       heads: "{{",
       tails: "}}",
     },
-    "36.02"
+    "36.02",
   );
 });
 

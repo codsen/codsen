@@ -15,7 +15,7 @@ rProcessOutside(
   ],
   (fromIdx, toIdx, offsetValueCb) => {
     gathered.push(fromIdx);
-  }
+  },
 );
 
 assert.deepEqual(gathered, [0, 5, 6, 7, 8, 9]);

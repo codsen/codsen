@@ -21,7 +21,7 @@ test("02 - not two arguments in one of ranges", () => {
       srt([[1, 2, 3]], { strictlyTwoElementsInRangeArrays: true });
     },
     "02.01",
-    "02.01"
+    "02.01",
   );
   throws(
     () => {
@@ -30,11 +30,11 @@ test("02 - not two arguments in one of ranges", () => {
           [1, 2, 3],
           [4, 5, 6],
         ],
-        { strictlyTwoElementsInRangeArrays: true }
+        { strictlyTwoElementsInRangeArrays: true },
       );
     },
     "02.02",
-    "02.02"
+    "02.02",
   );
   throws(
     () => {
@@ -46,11 +46,11 @@ test("02 - not two arguments in one of ranges", () => {
         ],
         {
           strictlyTwoElementsInRangeArrays: true,
-        }
+        },
       );
     },
     "02.03",
-    "02.03"
+    "02.03",
   );
   not.throws(() => {
     srt([
@@ -90,42 +90,42 @@ test("03 - some/all range indexes are not natural numbers", () => {
       srt([[0.2, 3]]);
     },
     "03.02",
-    "03.01"
+    "03.01",
   );
   throws(
     () => {
       srt([[0.2, 3.3]]);
     },
     "03.03",
-    "03.02"
+    "03.02",
   );
   throws(
     () => {
       srt([[2, 3.3]]);
     },
     "03.04",
-    "03.03"
+    "03.03",
   );
   throws(
     () => {
       srt([[0.2, 3.3]]);
     },
     "03.05",
-    "03.04"
+    "03.04",
   );
   throws(
     () => {
       srt([[0.2, 33]]);
     },
     "03.06",
-    "03.05"
+    "03.05",
   );
   throws(
     () => {
       srt([[0.2, 33, 55, 66.7]]);
     },
     "03.07",
-    "03.06"
+    "03.06",
   );
 });
 
@@ -152,7 +152,7 @@ test("06 - two ranges", () => {
       [0, 3],
       [5, 6],
     ],
-    "06.01"
+    "06.01",
   );
   equal(
     srt([
@@ -163,7 +163,7 @@ test("06 - two ranges", () => {
       [0, 3],
       [5, 6],
     ],
-    "06.02"
+    "06.02",
   );
   equal(
     srt([
@@ -174,7 +174,7 @@ test("06 - two ranges", () => {
       [0, 3, "zzz"],
       [5, 6],
     ],
-    "06.03"
+    "06.03",
   );
   equal(
     srt([
@@ -185,7 +185,7 @@ test("06 - two ranges", () => {
       [0, 3, "zzz"],
       [5, 6],
     ],
-    "06.04"
+    "06.04",
   );
 });
 
@@ -201,7 +201,7 @@ test("07 - many ranges", () => {
       [5, 6],
       [5, 8],
     ],
-    "07.01"
+    "07.01",
   );
   equal(
     srt([
@@ -214,7 +214,7 @@ test("07 - many ranges", () => {
       [0, 8],
       [5, 6],
     ],
-    "07.02"
+    "07.02",
   );
   equal(
     srt([
@@ -225,7 +225,7 @@ test("07 - many ranges", () => {
       [5, 6],
       [5, 6],
     ],
-    "07.03"
+    "07.03",
   );
   equal(
     srt([
@@ -236,7 +236,7 @@ test("07 - many ranges", () => {
       [5, 6],
       [5, 6, "zzz"],
     ],
-    "07.04"
+    "07.04",
   );
   throws(
     () => {
@@ -245,11 +245,11 @@ test("07 - many ranges", () => {
           [5, 6],
           [5, 6, "zzz"],
         ],
-        { strictlyTwoElementsInRangeArrays: true }
+        { strictlyTwoElementsInRangeArrays: true },
       );
     },
     "07.05",
-    "07.05"
+    "07.05",
   );
   equal(
     srt([
@@ -260,7 +260,7 @@ test("07 - many ranges", () => {
       [9, 12],
       [9, 15],
     ],
-    "07.06"
+    "07.06",
   );
 });
 
@@ -282,7 +282,7 @@ test("08 - does not mutate the input arg", () => {
       [3, 4],
       [1, 2],
     ],
-    "08.01"
+    "08.01",
   );
 });
 
@@ -300,7 +300,7 @@ test("09 - readme example #1", () => {
       [1, 3],
       [5, 6],
     ],
-    "09.01"
+    "09.01",
   );
 });
 
@@ -316,7 +316,7 @@ test("10 - readme example #2", () => {
       [5, 3],
       [5, 6],
     ],
-    "10.01"
+    "10.01",
   );
 });
 
@@ -326,7 +326,7 @@ test("11 - readme example #3", () => {
       srt([[1, 2], []]); // throws, because there's at least one empty range
     },
     "11.01",
-    "11.01"
+    "11.01",
   );
 });
 
@@ -336,7 +336,7 @@ test("12 - readme example #4", () => {
       srt([["a"]]); // throws, because range is given as string
     },
     "12.01",
-    "12.01"
+    "12.01",
   );
 });
 
@@ -346,7 +346,7 @@ test("13 - an extra for readme example #4", () => {
       srt([[1, "a"]]); // throws, because range is given as string
     },
     "13.01",
-    "13.01"
+    "13.01",
   );
 });
 
@@ -356,7 +356,7 @@ test("14 readme example #5", () => {
       srt([[1], [2]]); // throws, because one index is not a range
     },
     "14.01",
-    "14.01"
+    "14.01",
   );
 });
 
@@ -370,7 +370,7 @@ test("15 readme example #6", () => {
       [1, 2, "zzz"],
       [3, 4, "aaa", "bbb"],
     ],
-    "15.01"
+    "15.01",
   );
 });
 
@@ -388,14 +388,14 @@ test("16 - calls progress callback correctly", () => {
       ],
       {
         progressFn: null,
-      }
+      },
     ),
     [
       [0, 3],
       [5, 6],
       [5, 8],
     ],
-    "16.01"
+    "16.01",
   );
   equal(
     srt(
@@ -406,14 +406,14 @@ test("16 - calls progress callback correctly", () => {
       ],
       {
         progressFn: false,
-      }
+      },
     ),
     [
       [0, 3],
       [5, 6],
       [5, 8],
     ],
-    "16.02"
+    "16.02",
   );
   equal(
     srt(
@@ -422,14 +422,14 @@ test("16 - calls progress callback correctly", () => {
         [5, 8],
         [5, 6],
       ],
-      {}
+      {},
     ),
     [
       [0, 3],
       [5, 6],
       [5, 8],
     ],
-    "16.03"
+    "16.03",
   );
   equal(
     srt(
@@ -443,14 +443,14 @@ test("16 - calls progress callback correctly", () => {
           // console.log(`percentage = ${percentage}`);
           ok(`worked - ${percentage}`);
         },
-      }
+      },
     ),
     [
       [0, 3],
       [5, 6],
       [5, 8],
     ],
-    "16.04"
+    "16.04",
   );
 });
 
@@ -460,7 +460,7 @@ test("17 - gaps in array", () => {
       srt([[0, 3], undefined, [5, 8], [5, 6]]);
     },
     "17.01",
-    "17.01"
+    "17.01",
   );
 });
 
@@ -470,7 +470,7 @@ test("18 - null in array", () => {
       srt([[0, 3], undefined, [5, 8], [5, 6]]);
     },
     "18.01",
-    "18.01"
+    "18.01",
   );
 });
 

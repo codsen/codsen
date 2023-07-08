@@ -6,8 +6,8 @@ function generateVariations(parts, n) {
   let result = arr.reduce((acc1, val1) =>
     acc1.reduce(
       (acc2, val2) => acc2.concat(val1.map((val) => [].concat(val2, val))),
-      []
-    )
+      [],
+    ),
   );
   return result;
 }
@@ -19,9 +19,9 @@ function combinations(str = "", quotesRef = "'\"") {
     (quotesArr) => {
       return arr.reduce(
         (acc, curr, idx) => `${acc}${curr}${quotesArr[idx] || ""}`,
-        ""
+        "",
       );
-    }
+    },
   );
 }
 

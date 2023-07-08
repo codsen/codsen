@@ -21,10 +21,10 @@ test("01 - right maybe found", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "a🦄bc",
-    "test 3.1.1"
+    "test 3.1.1",
   );
   equal(
     er(
@@ -38,10 +38,10 @@ test("01 - right maybe found", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "a🦄bc",
-    "test 3.1.2"
+    "test 3.1.2",
   );
 });
 
@@ -58,10 +58,10 @@ test("02 - two replacements with one rightmaybe, nearby", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "d"
+      "d",
     ),
     "abddc",
-    "test 3.2.1"
+    "test 3.2.1",
   );
   equal(
     er(
@@ -75,10 +75,10 @@ test("02 - two replacements with one rightmaybe, nearby", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "d"
+      "d",
     ),
     "abddc",
-    "test 3.2.2"
+    "test 3.2.2",
   );
 });
 
@@ -95,10 +95,10 @@ test("03 - two consecutive right maybes", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "d"
+      "d",
     ),
     "abddc",
-    "test 3.3.1"
+    "test 3.3.1",
   );
   equal(
     er(
@@ -112,10 +112,10 @@ test("03 - two consecutive right maybes", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "d"
+      "d",
     ),
     "abddc",
-    "test 3.3.2"
+    "test 3.3.2",
   );
 });
 
@@ -132,10 +132,10 @@ test("04 - futile right maybe", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "d"
+      "d",
     ),
     "'d",
-    "test 3.4.1"
+    "test 3.4.1",
   );
   equal(
     er(
@@ -149,10 +149,10 @@ test("04 - futile right maybe", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "d"
+      "d",
     ),
     "'d",
-    "test 3.4.2"
+    "test 3.4.2",
   );
 });
 
@@ -169,10 +169,10 @@ test("05 - \\n as search string plus right maybe", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "a"
+      "a",
     ),
     "aaa",
-    "test 3.5.1"
+    "test 3.5.1",
   );
   equal(
     er(
@@ -186,10 +186,10 @@ test("05 - \\n as search string plus right maybe", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "a"
+      "a",
     ),
     "aaa",
-    "test 3.5.2"
+    "test 3.5.2",
   );
 });
 
@@ -206,10 +206,10 @@ test("06 - \\n as both searchFor and right maybe, replaced", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "a"
+      "a",
     ),
     "aa",
-    "test 3.6.1"
+    "test 3.6.1",
   );
   equal(
     er(
@@ -223,10 +223,10 @@ test("06 - \\n as both searchFor and right maybe, replaced", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "a"
+      "a",
     ),
     "aa",
-    "test 3.6.2"
+    "test 3.6.2",
   );
 });
 
@@ -243,10 +243,10 @@ test("07 - rightMaybe with line breaks", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "b",
-    "test 3.7.1"
+    "test 3.7.1",
   );
   equal(
     er(
@@ -260,10 +260,10 @@ test("07 - rightMaybe with line breaks", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "b",
-    "test 3.7.2"
+    "test 3.7.2",
   );
 });
 
@@ -280,10 +280,10 @@ test("08 - specific case of semi infinite loop with maybe", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "a"
+      "a",
     ),
     "aaaaa",
-    "test 3.8.1"
+    "test 3.8.1",
   );
   equal(
     er(
@@ -297,10 +297,10 @@ test("08 - specific case of semi infinite loop with maybe", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "a"
+      "a",
     ),
     "aaaaa",
-    "test 3.8.2"
+    "test 3.8.2",
   );
 });
 
@@ -317,10 +317,10 @@ test("09 - three right maybes (some found)", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "a🦄bc",
-    "test 3.9"
+    "test 3.9",
   );
 });
 
@@ -337,10 +337,10 @@ test("10 - three right maybes (searchFor not found)", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "a🦄🐴🦄c",
-    "test 3.10"
+    "test 3.10",
   );
 });
 
@@ -357,10 +357,10 @@ test("11 - three right maybes (maybes not found)", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      1
+      1,
     ),
     "1🦄🐴🦄c",
-    "test 3.11"
+    "test 3.11",
   );
 });
 
@@ -377,10 +377,10 @@ test("12 - three right maybes (multiple hungry finds)", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "b ",
-    "test 3.12.1"
+    "test 3.12.1",
   );
 });
 
@@ -397,10 +397,10 @@ test("13 - three right maybes (multiple hungry finds)", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "a🦄b🍺c",
-    "test 3.13"
+    "test 3.13",
   );
 });
 
@@ -417,10 +417,10 @@ test("14 - three right maybes (multiple hungry finds)", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "a🦄b🦄c",
-    "test 3.14"
+    "test 3.14",
   );
 });
 
@@ -437,10 +437,10 @@ test("15 - three right maybes (multiple hungry finds)", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "a🦄bc",
-    "test 3.15"
+    "test 3.15",
   );
 });
 
@@ -457,10 +457,10 @@ test("16 - three right maybes (multiple hungry finds)", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "a🦄b🍺c a🦄b🦄c a🦄bc b",
-    "test 3.16"
+    "test 3.16",
   );
 });
 
@@ -477,10 +477,10 @@ test("17 - three right maybes (multiple hungry finds)", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "🦄b 🦄b 🦄b b",
-    "test 3.17"
+    "test 3.17",
   );
 });
 
@@ -497,10 +497,10 @@ test("18 - three right maybes (multiple hungry finds)", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "🦄b 🦄b 🦄b b",
-    "test 3.18"
+    "test 3.18",
   );
 });
 // if leftMaybe is simply merged and not iterated, and is queried to exist
@@ -520,10 +520,10 @@ test("19 - sneaky array conversion situation", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "a🦄bc",
-    "test 3.19-1"
+    "test 3.19-1",
   );
   equal(
     er(
@@ -537,10 +537,10 @@ test("19 - sneaky array conversion situation", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "a🦄bc",
-    "test 3.19-2"
+    "test 3.19-2",
   );
 });
 
@@ -557,10 +557,10 @@ test("20 - normal words, few of them, rightMaybe as array", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "test"
+      "test",
     ),
     "this test is testing the tester test",
-    "test 3.20"
+    "test 3.20",
   );
 });
 
@@ -577,10 +577,10 @@ test("21 - rightMaybe is array, but with only 1 null value", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "replace with me"
+      "replace with me",
     ),
     "some text",
-    "test 3.21"
+    "test 3.21",
   );
 });
 
@@ -597,10 +597,10 @@ test("22 - rightMaybe is couple integers in an array", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      9
+      9,
     ),
     "194",
-    "test 3.22"
+    "test 3.22",
   );
 });
 
@@ -617,10 +617,10 @@ test("23 - sneaky case of overlapping rightMaybes", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "x"
+      "x",
     ),
     "this is a x searched for",
-    "test 3.23"
+    "test 3.23",
   );
 });
 
@@ -640,10 +640,10 @@ test("24 - case-insensitive flag", () => {
           rightMaybe: true,
         },
       },
-      "x"
+      "x",
     ),
     "xC",
-    "test 3.24"
+    "test 3.24",
   );
 });
 

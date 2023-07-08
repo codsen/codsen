@@ -16,7 +16,7 @@ test("02", () => {
       js: true,
     }).result,
     "<script></script>",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -29,7 +29,7 @@ test("03", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -39,7 +39,7 @@ test("03", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "<script></script>",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -49,7 +49,7 @@ test("03", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "{{",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -59,7 +59,7 @@ test("03", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       source,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -78,7 +78,7 @@ test("04", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -89,7 +89,7 @@ test("04", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       '!function(e){function z{}};return">',
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -100,7 +100,7 @@ test("04", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "real text",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -111,7 +111,7 @@ test("04", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "<html> <script></script></body></html>",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -122,7 +122,7 @@ test("04", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "<html>real text<script></script></body></html>",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -133,7 +133,7 @@ test("04", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       'real text !function(e){function z{}};return">',
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -144,7 +144,7 @@ test("04", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       '<html> <script>!function(e){function z{}};return"></script></body></html>',
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -155,7 +155,7 @@ test("04", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       source,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -172,7 +172,7 @@ test("05", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -182,7 +182,7 @@ test("05", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       'console.log("<html>")',
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -192,7 +192,7 @@ test("05", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "<html> <script></script></html>",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -202,7 +202,7 @@ test("05", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       source,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -217,7 +217,7 @@ test("06 - minimal <script> tags", () => {
     assert.equal(
       stri(assert, n, source, opt).result,
       "abc xyz",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -259,7 +259,7 @@ return null;
 return [d, e ? f : '', g].filter(el => el !== '').join('');
 }
 };`,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });

@@ -60,7 +60,7 @@ $customValue3: 10;`),
     customValue1: "tralala",
     customValue2: "tralala",
     customValue3: 10,
-  }
+  },
 );
 ```
 

@@ -20,7 +20,7 @@ test("02 - second argument can be faulty, opts is simply reset", () => {
       aaa: 1,
       bbb: 1,
     },
-    "02.01"
+    "02.01",
   );
   equal(
     group(["aaa", "bbb"], null),
@@ -28,7 +28,7 @@ test("02 - second argument can be faulty, opts is simply reset", () => {
       aaa: 1,
       bbb: 1,
     },
-    "02.02"
+    "02.02",
   );
   equal(
     group(["aaa", "bbb"], undefined),
@@ -36,7 +36,7 @@ test("02 - second argument can be faulty, opts is simply reset", () => {
       aaa: 1,
       bbb: 1,
     },
-    "02.03"
+    "02.03",
   );
   equal(
     group(["aaa", "bbb"], {}),
@@ -44,7 +44,7 @@ test("02 - second argument can be faulty, opts is simply reset", () => {
       aaa: 1,
       bbb: 1,
     },
-    "02.04"
+    "02.04",
   );
 });
 
@@ -59,7 +59,7 @@ test("03 - groups two kinds", () => {
       "aaaaaa1-*": 3,
       bbbbbb: 1,
     },
-    "03.01"
+    "03.01",
   );
 });
 
@@ -70,7 +70,7 @@ test("04 - sneaky - wildcard pattern changes later in the traverse", () => {
       "aaaaaa*-*": 3,
       bbbbbb: 1,
     },
-    "04.01"
+    "04.01",
   );
 });
 
@@ -83,7 +83,7 @@ test("05 - all contain digits and all are unique", () => {
       "c3-3": 1,
       "d4-4": 1,
     },
-    "05.01"
+    "05.01",
   );
   equal(
     group(["a1-1", "a2-2", "b3-3", "c4-4"]),
@@ -92,7 +92,7 @@ test("05 - all contain digits and all are unique", () => {
       "b3-3": 1,
       "c4-4": 1,
     },
-    "05.02"
+    "05.02",
   );
   equal(
     group(["a1-1", "a1-2", "b3-3", "c4-4"]),
@@ -101,7 +101,7 @@ test("05 - all contain digits and all are unique", () => {
       "b3-3": 1,
       "c4-4": 1,
     },
-    "05.03"
+    "05.03",
   );
 });
 
@@ -112,7 +112,7 @@ test("06 - nothing to group, one character", () => {
       a: 1,
       b: 1,
     },
-    "06.01"
+    "06.01",
   );
 });
 
@@ -122,14 +122,14 @@ test("07 - concerning dedupe", () => {
     {
       "a-1": 1,
     },
-    "07.01"
+    "07.01",
   );
   equal(
     group(["a-1", "a-1", "a-1"], { dedupePlease: false }),
     {
       "a-1": 3,
     },
-    "07.02"
+    "07.02",
   );
 });
 
@@ -160,7 +160,7 @@ test("10 - opts.wildcard", () => {
       "a-*": 3,
       "b-*": 2,
     },
-    "10.01"
+    "10.01",
   );
   equal(
     group(["a-1", "a-2", "a-333333", "b-1", "b-99999"], {
@@ -170,7 +170,7 @@ test("10 - opts.wildcard", () => {
       "a-z": 3,
       "b-z": 2,
     },
-    "10.02"
+    "10.02",
   );
 });
 

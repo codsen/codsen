@@ -13,7 +13,7 @@ test("01 - string is whole (opening) tag - no ignore", () => {
   equal(
     { result, allTagLocations },
     { result: "", allTagLocations: [[0, 3]] },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -22,7 +22,7 @@ test("02 - string is whole (opening) tag - no ignore", () => {
   equal(
     { result, allTagLocations },
     { result: "", allTagLocations: [[0, 4]] },
-    "02.01"
+    "02.01",
   );
 });
 
@@ -31,7 +31,7 @@ test("03 - string is whole (opening) tag - no ignore", () => {
   equal(
     { result, allTagLocations },
     { result: "", allTagLocations: [[0, 5]] },
-    "03.01"
+    "03.01",
   );
 });
 
@@ -150,7 +150,7 @@ test("15 - string is whole (opening) tag - whitespace between tags is deleted to
       [0, 3],
       [12, 15],
     ],
-    "15.03"
+    "15.03",
   );
   validateTagLocations(is, input, [
     [0, 3],
@@ -177,7 +177,7 @@ test("17 - string is whole (opening) tag - leading/trailing spaces", () => {
       [0, 6],
       [10, 17],
     ],
-    "17.02"
+    "17.02",
   );
   equal(
     allTagLocations,
@@ -185,7 +185,7 @@ test("17 - string is whole (opening) tag - leading/trailing spaces", () => {
       [3, 6],
       [10, 14],
     ],
-    "17.03"
+    "17.03",
   );
   validateTagLocations(is, input, [
     [3, 6],
@@ -203,7 +203,7 @@ test("18 - string is whole (opening) tag - but leading/trailing line breaks are 
       [0, 6],
       [10, 17],
     ],
-    "18.02"
+    "18.02",
   );
   equal(
     allTagLocations,
@@ -211,7 +211,7 @@ test("18 - string is whole (opening) tag - but leading/trailing line breaks are 
       [3, 6],
       [10, 14],
     ],
-    "18.03"
+    "18.03",
   );
 
   validateTagLocations(is, input, [
@@ -231,7 +231,7 @@ test("19 - string is whole (opening) tag - HTML tag with attributes", () => {
       [1, 48, " "],
       [49, 81, " "],
     ],
-    "19.02"
+    "19.02",
   );
   equal(
     allTagLocations,
@@ -239,7 +239,7 @@ test("19 - string is whole (opening) tag - HTML tag with attributes", () => {
       [2, 47],
       [50, 80],
     ],
-    "19.03"
+    "19.03",
   );
   validateTagLocations(is, input, [
     [2, 47],
@@ -295,7 +295,7 @@ test("24 - string is whole (opening) tag - multiple custom", () => {
       [8, 16],
       [16, 24],
     ],
-    "24.03"
+    "24.03",
   );
   validateTagLocations(is, input, [
     [0, 8],
@@ -316,7 +316,7 @@ test("25 - string is whole (opening) tag - multiple custom with dashes", () => {
       [12, 24],
       [24, 36],
     ],
-    "25.03"
+    "25.03",
   );
   validateTagLocations(is, input, [
     [0, 12],
@@ -337,7 +337,7 @@ test("26 - string is whole (opening) tag - multiple custom with names starting w
       [6, 12],
       [12, 18],
     ],
-    "26.03"
+    "26.03",
   );
   validateTagLocations(is, input, [
     [0, 6],
@@ -358,7 +358,7 @@ test("27 - string is whole (opening) tag - multiple custom with surroundings", (
       [9, 17],
       [17, 25],
     ],
-    "27.03"
+    "27.03",
   );
   validateTagLocations(is, input, [
     [1, 9],
@@ -379,7 +379,7 @@ test("28 - string is whole (opening) tag - multiple custom with surroundings wit
       [13, 25],
       [25, 37],
     ],
-    "28.03"
+    "28.03",
   );
   validateTagLocations(is, input, [
     [1, 13],
@@ -400,7 +400,7 @@ test("29 - string is whole (opening) tag - multiple custom with surroundings sta
       [7, 13],
       [13, 19],
     ],
-    "29.03"
+    "29.03",
   );
   validateTagLocations(is, input, [
     [1, 7],
@@ -421,7 +421,7 @@ test("30 - string is whole (opening) tag - self-closing - multiple with surround
       [10, 20],
       [20, 29],
     ],
-    "30.03"
+    "30.03",
   );
   validateTagLocations(is, input, [
     [1, 10],
@@ -442,7 +442,7 @@ test("31 - string is whole (opening) tag - self-closing - multiple", () => {
       [15, 29],
       [29, 43],
     ],
-    "31.03"
+    "31.03",
   );
   validateTagLocations(is, input, [
     [1, 15],
@@ -463,7 +463,7 @@ test("32 - string is whole (opening) tag - self-closing - multiple names start w
       [9, 17],
       [17, 26],
     ],
-    "32.03"
+    "32.03",
   );
   validateTagLocations(is, input, [
     [1, 9],
@@ -484,7 +484,7 @@ test("33 - string is whole (opening) tag - custom, outer whitespace", () => {
       [12, 22],
       [22, 31],
     ],
-    "33.03"
+    "33.03",
   );
   validateTagLocations(is, input, [
     [3, 12],
@@ -505,7 +505,7 @@ test("34 - string is whole (opening) tag - custom, line breaks", () => {
       [16, 30],
       [31, 45],
     ],
-    "34.03"
+    "34.03",
   );
   validateTagLocations(is, input, [
     [2, 16],
@@ -526,7 +526,7 @@ test("35 - string is whole (opening) tag - custom, outer tabs", () => {
       [11, 19],
       [19, 28],
     ],
-    "35.03"
+    "35.03",
   );
   validateTagLocations(is, input, [
     [3, 11],
@@ -676,7 +676,7 @@ test("51 - minimal, doctype", () => {
   equal(
     { result, allTagLocations },
     { result: "z", allTagLocations: [[0, 15]] },
-    "51.01"
+    "51.01",
   );
 });
 
@@ -686,7 +686,7 @@ test("52 - invisibles from email templates", () => {
   // hex &#x34f;
   // raw \u034F
   let { result, allTagLocations } = stripHtml(
-    'z<span class="emailPreviewText" style="display:none;font-size:0px;line-height:0px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;visibility:hidden;mso-hide:all;" aria-hidden="true"> &#847; &#x34f; \u034F &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;&#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;&#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;&#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;&#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;&#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; </span>'
+    'z<span class="emailPreviewText" style="display:none;font-size:0px;line-height:0px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;visibility:hidden;mso-hide:all;" aria-hidden="true"> &#847; &#x34f; \u034F &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;&#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;&#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;&#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;&#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847;&#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; &#847; </span>',
   );
   equal(
     { result, allTagLocations },
@@ -697,7 +697,7 @@ test("52 - invisibles from email templates", () => {
         [505, 512],
       ],
     },
-    "52.01"
+    "52.01",
   );
 });
 

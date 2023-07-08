@@ -9,7 +9,7 @@ declare const defaults: Opts;
 declare function pull(
   strArr: string[],
   toBeRemoved: string | string[],
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): string[];
 
 export { Opts, defaults, pull, version };

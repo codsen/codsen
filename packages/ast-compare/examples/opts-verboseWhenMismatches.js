@@ -11,9 +11,9 @@ assert.equal(
     { a: "1", b: "2", c: "3" },
     {
       verboseWhenMismatches: false, // <---
-    }
+    },
   ),
-  false
+  false,
 );
 
 assert.equal(
@@ -22,9 +22,9 @@ assert.equal(
     { a: "1", b: "2", c: "3" },
     {
       verboseWhenMismatches: true, // <---
-    }
+    },
   ),
-  'The given object has key "c" which the other-one does not have.'
+  'The given object has key "c" which the other-one does not have.',
 );
 
 // when opts.verboseWhenMismatches is enabled, a negative result is
@@ -35,7 +35,7 @@ assert.equal(
     { a: "1", b: "2" },
     {
       verboseWhenMismatches: true, // <---
-    }
+    },
   ),
-  true
+  true,
 );

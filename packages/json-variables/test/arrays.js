@@ -20,7 +20,7 @@ test("01 - arrays referencing values which are strings", () => {
       c: "cval",
       d: "dval",
     },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -42,7 +42,7 @@ test("02 - arrays referencing values which are arrays", () => {
       c: ["c1", "c2"],
       d: "dval",
     },
-    "02.01"
+    "02.01",
   );
 });
 
@@ -69,14 +69,14 @@ test("03 - arrays, whitelisting as string", () => {
         dontWrapVars: [],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       title: ["something", "Some text {text}", "{ship}", "anything"],
       subtitle: "text",
       submarine: "ship",
     },
-    "03.01"
+    "03.01",
   );
   equal(
     jVar(
@@ -100,14 +100,14 @@ test("03 - arrays, whitelisting as string", () => {
         dontWrapVars: "sub*",
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       title: ["something", "Some text text", "ship", "anything"],
       subtitle: "text",
       submarine: "ship",
     },
-    "03.02"
+    "03.02",
   );
 });
 
@@ -134,14 +134,14 @@ test("04 - arrays, whitelisting as array #1", () => {
         dontWrapVars: ["subt*"],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       title: ["something", "Some text text", "{ship}", "anything"],
       subtitle: "text",
       submarine: "ship",
     },
-    "04.01"
+    "04.01",
   );
   equal(
     jVar(
@@ -165,14 +165,14 @@ test("04 - arrays, whitelisting as array #1", () => {
         dontWrapVars: ["zzz*", "subt*", "subm*"],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       title: ["something", "Some text text", "ship", "anything"],
       subtitle: "text",
       submarine: "ship",
     },
-    "04.02"
+    "04.02",
   );
   equal(
     jVar(
@@ -196,14 +196,14 @@ test("04 - arrays, whitelisting as array #1", () => {
         dontWrapVars: ["*zzz", "*le", "*ne"],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       title: ["something", "Some text text", "ship", "anything"],
       subtitle: "text",
       submarine: "ship",
     },
-    "04.03"
+    "04.03",
   );
   equal(
     jVar(
@@ -227,14 +227,14 @@ test("04 - arrays, whitelisting as array #1", () => {
         dontWrapVars: ["*zzz", "*le", "*yyy"],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       title: ["something", "Some text text", "{ship}", "anything"],
       subtitle: "text",
       submarine: "ship",
     },
-    "04.04"
+    "04.04",
   );
 });
 
@@ -263,7 +263,7 @@ test("05 - arrays, whitelisting as array #2", () => {
         dontWrapVars: ["*zzz", "*le", "*yyy"],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       title: ["something", "Some text text", "{ship}", "anything"],
@@ -272,7 +272,7 @@ test("05 - arrays, whitelisting as array #2", () => {
         submarine: "ship",
       },
     },
-    "05.01"
+    "05.01",
   );
   equal(
     jVar(
@@ -298,7 +298,7 @@ test("05 - arrays, whitelisting as array #2", () => {
         dontWrapVars: ["*zzz", "*le", "*yyy"],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       a: {
@@ -312,7 +312,7 @@ test("05 - arrays, whitelisting as array #2", () => {
         },
       },
     },
-    "05.02"
+    "05.02",
   );
   equal(
     jVar(
@@ -343,7 +343,7 @@ test("05 - arrays, whitelisting as array #2", () => {
         dontWrapVars: ["*zzz", "*le", "*yyy"],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       a: {
@@ -357,7 +357,7 @@ test("05 - arrays, whitelisting as array #2", () => {
         },
       },
     },
-    "05.03"
+    "05.03",
   );
   equal(
     jVar(
@@ -386,7 +386,7 @@ test("05 - arrays, whitelisting as array #2", () => {
         dontWrapVars: ["*zzz", "*yyy"],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       title: ["something", "Some text {SUB}", "{ship}", "anything"],
@@ -398,7 +398,7 @@ test("05 - arrays, whitelisting as array #2", () => {
         submarine: "ship",
       },
     },
-    "05.04"
+    "05.04",
   );
 
   throws(
@@ -429,11 +429,11 @@ test("05 - arrays, whitelisting as array #2", () => {
           dontWrapVars: ["*zzz", "*yyy"],
           preventDoubleWrapping: true,
           wrapGlobalFlipSwitch: true,
-        }
+        },
       );
     },
     /THROW_ID_18/,
-    "05.05"
+    "05.05",
   );
 });
 

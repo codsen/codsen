@@ -14,7 +14,7 @@ function isHighSurrogate(something: string | undefined): boolean {
     return false;
   }
   throw new TypeError(
-    `string-character-is-astral-surrogate/isHighSurrogate(): the input is not string but ${typeof something}`
+    `string-character-is-astral-surrogate/isHighSurrogate(): the input is not string but ${typeof something}`,
   );
 }
 function isLowSurrogate(something: string | undefined): boolean {
@@ -31,7 +31,7 @@ function isLowSurrogate(something: string | undefined): boolean {
     return false;
   }
   throw new TypeError(
-    `string-character-is-astral-surrogate/isLowSurrogate(): the input is not string but ${typeof something}`
+    `string-character-is-astral-surrogate/isLowSurrogate(): the input is not string but ${typeof something}`,
   );
 }
 

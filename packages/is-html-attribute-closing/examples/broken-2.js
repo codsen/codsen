@@ -12,9 +12,9 @@ assert.equal(
     //          | L_______________________________
     //          |                                |
     11, // known opening                         |
-    13 // is this an attribute closing at index 13?
+    13, // is this an attribute closing at index 13?
   ),
-  true
+  true,
 );
 // => true - indeed a closing of an attribute (not counting
 // the code is broken)

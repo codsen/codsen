@@ -30,8 +30,8 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
       `string-extract-sass-vars: [THROW_ID_01] the second input argument should be a plain object but it was given as ${JSON.stringify(
         opts,
         null,
-        4
-      )} (type ${typeof opts})`
+        4,
+      )} (type ${typeof opts})`,
     );
   }
   let resolvedOpts: Opts = { ...defaults, ...opts };
@@ -40,16 +40,16 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
       `040 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`}: ${JSON.stringify(
         resolvedOpts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   if (resolvedOpts.cb && typeof resolvedOpts.cb !== "function") {
     throw new Error(
       `string-extract-sass-vars: [THROW_ID_02] resolvedOpts.cb should be function! But it was given as ${JSON.stringify(
         opts,
         null,
-        4
-      )} (type ${typeof opts})`
+        4,
+      )} (type ${typeof opts})`,
     );
   }
 
@@ -91,8 +91,8 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
           `091 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinQuotes`}\u001b[${39}m`} = ${JSON.stringify(
             withinQuotes,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -109,8 +109,8 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
           `109 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinQuotes`}\u001b[${39}m`} = ${JSON.stringify(
             withinQuotes,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -122,8 +122,8 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
           `122 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashSlashComment`}\u001b[${39}m`} = ${JSON.stringify(
             withinSlashSlashComment,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -135,8 +135,8 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
           `135 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashSlashComment`}\u001b[${39}m`} = ${JSON.stringify(
             withinSlashSlashComment,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -152,8 +152,8 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
           `152 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashAsteriskComment`}\u001b[${39}m`} = ${JSON.stringify(
             withinSlashAsteriskComment,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -166,8 +166,8 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
           `166 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashAsteriskComment`}\u001b[${39}m`} = ${JSON.stringify(
             withinSlashAsteriskComment,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -182,7 +182,7 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
           withinComments ? 90 : 35
         }m${`str[ ${i} ] = ${
           str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
-        }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
+        }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`,
       );
 
     //
@@ -205,8 +205,8 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
           `205 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varNameStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             varNameStartsAt,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -223,15 +223,15 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
         !`"'`.includes(str[varValueStartsAt])
           ? varValueStartsAt
           : varValueStartsAt + 1,
-        (lastNonQuoteCharAt || 0) + 1
+        (lastNonQuoteCharAt || 0) + 1,
       );
       DEV &&
         console.log(
           `230 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varValue`}\u001b[${39}m`} = ${JSON.stringify(
             varValue,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
 
       if (/^-?\d*\.?\d*$/.test(varValue)) {
@@ -265,8 +265,8 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
           `265 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varValueStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             varValueStartsAt,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -285,8 +285,8 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
           `285 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varName`}\u001b[${39}m`} = ${JSON.stringify(
             varName,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -311,41 +311,41 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
       console.log(
         `${`\u001b[${90}m${`██ withinComments`}\u001b[${39}m`} = ${`\u001b[${
           withinComments ? 32 : 31
-        }m${withinComments}\u001b[${39}m`}`
+        }m${withinComments}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${90}m${`██ withinQuotes`}\u001b[${39}m`} = ${`\u001b[${
           withinQuotes ? 32 : 31
-        }m${withinQuotes}\u001b[${39}m`}`
+        }m${withinQuotes}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${90}m${`██ withinSlashSlashComment`}\u001b[${39}m`} = ${`\u001b[${
           withinSlashSlashComment ? 32 : 31
-        }m${withinSlashSlashComment}\u001b[${39}m`}`
+        }m${withinSlashSlashComment}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${90}m${`██ withinSlashAsteriskComment`}\u001b[${39}m`} = ${`\u001b[${
           withinSlashAsteriskComment ? 32 : 31
-        }m${withinSlashAsteriskComment}\u001b[${39}m`}`
+        }m${withinSlashAsteriskComment}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ varNameStartsAt`}\u001b[${39}m`} = ${varNameStartsAt}`
+        `${`\u001b[${90}m${`██ varNameStartsAt`}\u001b[${39}m`} = ${varNameStartsAt}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ varValueStartsAt`}\u001b[${39}m`} = ${varValueStartsAt}`
+        `${`\u001b[${90}m${`██ varValueStartsAt`}\u001b[${39}m`} = ${varValueStartsAt}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${90}m${`██ lastNonQuoteCharAt`}\u001b[${39}m`} = ${JSON.stringify(
           lastNonQuoteCharAt,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     DEV &&
       console.log(
@@ -357,7 +357,7 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
           varValue
             ? `${`\u001b[${33}m${`varValue`}\u001b[${39}m`} = ${varValue}; `
             : ""
-        }`
+        }`,
       );
   }
 
@@ -366,15 +366,15 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
       `366 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
         res,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   // resolvedOpts.throwIfEmpty
   if (!Object.keys(res).length && resolvedOpts.throwIfEmpty) {
     DEV && console.log(`375 ${`\u001b[${31}m${`throw`}\u001b[${39}m`}`);
     throw new Error(
-      `string-extract-sass-vars: [THROW_ID_03] no keys extracted! (setting resolvedOpts.opts)`
+      `string-extract-sass-vars: [THROW_ID_03] no keys extracted! (setting resolvedOpts.opts)`,
     );
   }
 

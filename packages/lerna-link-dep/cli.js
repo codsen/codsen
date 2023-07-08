@@ -53,7 +53,7 @@ const cli = meow(
         default: false,
       },
     },
-  }
+  },
 );
 updateNotifier({ pkg }).notify();
 
@@ -107,7 +107,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     console.log(
       `${messagePrefix} ${`\u001b[${31}m${'[ERROR_01] Error! A package with name "'}\u001b[${39}m`}${`\u001b[${33}m${
         cli.input[i]
-      }\u001b[${39}m`}${`\u001b[${31}m${'" not found!'}\u001b[${39}m`}`
+      }\u001b[${39}m`}${`\u001b[${31}m${'" not found!'}\u001b[${39}m`}`,
     );
     continue;
   }
@@ -123,8 +123,8 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           path.resolve(),
           "../",
           cli.input[i],
-          "package.json"
-        )}\u001b[${39}m`}`
+          "package.json",
+        )}\u001b[${39}m`}`,
       );
       continue;
     }
@@ -139,8 +139,8 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           path.resolve(),
           "../",
           cli.input[i],
-          "package.json"
-        )}\u001b[${39}m`}`
+          "package.json",
+        )}\u001b[${39}m`}`,
       );
       continue;
     }
@@ -160,13 +160,13 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     try {
       askerPackageJsonContents = fs.readJsonSync(
         path.resolve("package.json"),
-        "utf8"
+        "utf8",
       );
     } catch (e1) {
       console.log(
         `${messagePrefix} ${`\u001b[${31}m${"[ERROR_04] Something went wrong trying to read package.json at path:"}\u001b[${39}m`}\n${path.resolve(
-          "package.json"
-        )}\n\n${`\u001b[${31}m${"error:"}\u001b[${39}m`}\n${e1}`
+          "package.json",
+        )}\n\n${`\u001b[${31}m${"error:"}\u001b[${39}m`}\n${e1}`,
       );
       continue;
     }
@@ -176,7 +176,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     try {
       requestedPackageJsonContents = fs.readJsonSync(
         path.resolve("../", cli.input[i], "package.json"),
-        "utf8"
+        "utf8",
       );
 
       // if it's normal dep:
@@ -184,7 +184,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
         typeof requestedPackageJsonContents === "object" &&
         Object.prototype.hasOwnProperty.call(
           requestedPackageJsonContents,
-          "main"
+          "main",
         )
       ) {
         isNormalDep = true;
@@ -196,8 +196,8 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
               `${messagePrefix} ${`\u001b[${33}m${"[ERROR_05] Skipped! A symlink already exists:"}\u001b[${39}m`}\n${`\u001b[${90}m${path.resolve(
                 "./",
                 "node_modules",
-                cli.input[i]
-              )}\u001b[${39}m`}`
+                cli.input[i],
+              )}\u001b[${39}m`}`,
             );
             continue;
           }
@@ -209,7 +209,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
         typeof requestedPackageJsonContents === "object" &&
         Object.prototype.hasOwnProperty.call(
           requestedPackageJsonContents,
-          "bin"
+          "bin",
         ) &&
         Object.keys(requestedPackageJsonContents.bin).length
       ) {
@@ -221,8 +221,8 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           path.resolve(),
           "../",
           cli.input[i],
-          "package.json"
-        )}\n\n${`\u001b[${31}m${"error:"}\u001b[${39}m`}\n${e1}`
+          "package.json",
+        )}\n\n${`\u001b[${31}m${"error:"}\u001b[${39}m`}\n${e1}`,
       );
       continue;
     }
@@ -236,11 +236,11 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           `ln -s ${path.resolve("../", cli.input[i])} ${path.resolve(
             "./",
             "node_modules",
-            cli.input[i]
+            cli.input[i],
           )}`,
           {
             shell: true,
-          }
+          },
         );
 
         console.log(
@@ -249,12 +249,12 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           }\u001b[${39}m`} ${`\u001b[${32}m${"linked!"}\u001b[${39}m`}\n${`\u001b[${90}mNew symlink created at: ${path.resolve(
             "./",
             "node_modules",
-            cli.input[i]
-          )}\u001b[${39}m`}`
+            cli.input[i],
+          )}\u001b[${39}m`}`,
         );
       } catch (err) {
         console.log(
-          `${messagePrefix} ${`\u001b[${31}m${"[ERROR_07] Execa failed when running shell command to create a symlink:"}\u001b[${39}m`}\n${err}`
+          `${messagePrefix} ${`\u001b[${31}m${"[ERROR_07] Execa failed when running shell command to create a symlink:"}\u001b[${39}m`}\n${err}`,
         );
         continue;
       }
@@ -266,7 +266,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
         console.log(
           `${messagePrefix} processing ${`\u001b[${33}m${binName}\u001b[${39}m`} bin entry of a ${`\u001b[${35}m${
             cli.input[i]
-          }\u001b[${39}m`} (${y + 1}/${isCLI.length})`
+          }\u001b[${39}m`} (${y + 1}/${isCLI.length})`,
         );
         // 1. check does the symlink exist already
         // check if symlink already exists
@@ -279,8 +279,8 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
                 "./",
                 "node_modules",
                 ".bin",
-                binName
-              )} already exists!`}\u001b[${39}m`}`
+                binName,
+              )} already exists!`}\u001b[${39}m`}`,
             );
             continue;
           }
@@ -299,11 +299,11 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
             `ln -s ${path.resolve(
               "../",
               cli.input[i],
-              requestedPackageJsonContents.bin[binName]
+              requestedPackageJsonContents.bin[binName],
             )} ${path.resolve("./", "node_modules", ".bin", binName)}`,
             {
               shell: true,
-            }
+            },
           );
 
           console.log(
@@ -313,18 +313,18 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
               "./",
               "node_modules",
               ".bin",
-              binName
-            )}\u001b[${39}m`}`
+              binName,
+            )}\u001b[${39}m`}`,
           );
         } catch (e2) {
           console.log(
-            `${messagePrefix} ${`\u001b[${31}m${"[ERROR_09] Execa failed when running shell command to create a symlink:"}\u001b[${39}m`}\n${e2}`
+            `${messagePrefix} ${`\u001b[${31}m${"[ERROR_09] Execa failed when running shell command to create a symlink:"}\u001b[${39}m`}\n${e2}`,
           );
         }
       }
     } else if (!isNormalDep && !isCLI.length) {
       console.log(
-        `${messagePrefix} ${`\u001b[${31}m${`[ERROR_10] The package.json of the package "${cli.input[i]}" didn't have any of the keys: "main", "module", "browser" or "bin"`}\u001b[${39}m`}`
+        `${messagePrefix} ${`\u001b[${31}m${`[ERROR_10] The package.json of the package "${cli.input[i]}" didn't have any of the keys: "main", "module", "browser" or "bin"`}\u001b[${39}m`}`,
       );
       continue;
     }
@@ -356,7 +356,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           fs.writeJsonSync(
             path.resolve("package.json"),
             askerPackageJsonContents,
-            { spaces: 2 }
+            { spaces: 2 },
           );
         } else {
           // user wants normal dep added in package.json
@@ -369,14 +369,14 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           fs.writeJsonSync(
             path.resolve("package.json"),
             askerPackageJsonContents,
-            { spaces: 2 }
+            { spaces: 2 },
           );
         }
       } catch (e1) {
         console.log(
           `${messagePrefix} ${`\u001b[${31}m${"[ERROR_11] Something went wrong trying to write package.json at path:"}\u001b[${39}m`}\n${path.resolve(
-            "package.json"
-          )}\n\n${`\u001b[${31}m${"error:"}\u001b[${39}m`}\n${e1}`
+            "package.json",
+          )}\n\n${`\u001b[${31}m${"error:"}\u001b[${39}m`}\n${e1}`,
         );
         continue;
       }
@@ -385,7 +385,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     console.log(
       `${messagePrefix} ${`\u001b[${31}m${'[ERROR_12] Error! A package with name "'}\u001b[${39}m`}${`\u001b[${33}m${
         cli.input[i]
-      }\u001b[${39}m`}${`\u001b[${31}m${'" not found!'}\u001b[${39}m`}`
+      }\u001b[${39}m`}${`\u001b[${31}m${'" not found!'}\u001b[${39}m`}`,
     );
     continue;
   }

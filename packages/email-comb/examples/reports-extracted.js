@@ -26,7 +26,7 @@ table#other div#non-existent-id{width:100%; display: inline-block;}
 </table>
 </body>
 </html>
-`
+`,
 );
 
 assert.deepEqual(allInHead, [

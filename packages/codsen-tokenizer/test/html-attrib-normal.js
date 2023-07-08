@@ -70,7 +70,7 @@ test(`01 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - single- and double-quoted
         ],
       },
     ],
-    "01"
+    "01",
   );
 });
 
@@ -127,7 +127,7 @@ test(`02 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - value-less attribute`, ()
         ],
       },
     ],
-    "02"
+    "02",
   );
 });
 
@@ -158,7 +158,7 @@ test(`03 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - a closing tag`, () => {
         attribs: [],
       },
     ],
-    "03"
+    "03",
   );
 });
 
@@ -190,7 +190,7 @@ test(`04 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - a closing tag`, () => {
         attribs: [],
       },
     ],
-    "04"
+    "04",
   );
 });
 
@@ -255,7 +255,7 @@ test(`05 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - single- and double-quoted
         ],
       },
     ],
-    "05.01"
+    "05.01",
   );
   equal(gathered.length, 1, "05.01");
 });
@@ -304,7 +304,7 @@ test("06", () => {
         ],
       },
     ],
-    "06"
+    "06",
   );
 });
 
@@ -349,7 +349,7 @@ test("07 - slash in the end", () => {
         ],
       },
     ],
-    "07"
+    "07",
   );
 });
 
@@ -394,7 +394,7 @@ test("08 - slash in front", () => {
         ],
       },
     ],
-    "08"
+    "08",
   );
 });
 
@@ -465,7 +465,7 @@ test("09 - now crazier", () => {
         ],
       },
     ],
-    "09"
+    "09",
   );
 });
 
@@ -530,7 +530,7 @@ test("10 - unrecognised tag", () => {
         ],
       },
     ],
-    "10"
+    "10",
   );
 });
 
@@ -585,7 +585,7 @@ test("11 - two asterisks as an attribute's value", () => {
         ],
       },
     ],
-    "11"
+    "11",
   );
 });
 
@@ -637,7 +637,7 @@ test("12 - many asterisks as an attribute's value", () => {
         ],
       },
     ],
-    "12"
+    "12",
   );
 });
 
@@ -691,7 +691,7 @@ test("13 - unescaped bracket as value, one tag", () => {
         ],
       },
     ],
-    "13"
+    "13",
   );
 });
 
@@ -766,7 +766,7 @@ test("14 - unescaped bracket as value, few tags", () => {
         ],
       },
     ],
-    "14"
+    "14",
   );
 });
 
@@ -778,7 +778,7 @@ test("15 - unescaped bracket as value, more tags", () => {
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
 
   compare(
@@ -912,7 +912,7 @@ test("15 - unescaped bracket as value, more tags", () => {
         ],
       },
     ],
-    "15"
+    "15",
   );
 });
 
@@ -953,7 +953,7 @@ test("16 - two attrs, one recognised one not", () => {
         ],
       },
     ],
-    "16"
+    "16",
   );
 });
 
@@ -970,7 +970,7 @@ test(`17 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - missing opening 
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -1035,7 +1035,7 @@ test(`17 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - missing opening 
         attribs: [],
       },
     ],
-    "17"
+    "17",
   );
 });
 
@@ -1126,7 +1126,7 @@ test(`18 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - mismatching quot
         ],
       },
     ],
-    "18.01"
+    "18.01",
   );
 });
 
@@ -1201,7 +1201,7 @@ test(`19 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - false positives`
         ],
       },
     ],
-    "19.01"
+    "19.01",
   );
 });
 
@@ -1292,7 +1292,7 @@ test(`20 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - mismatching quot
         ],
       },
     ],
-    "20.01"
+    "20.01",
   );
 });
 
@@ -1382,7 +1382,7 @@ test(`21 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quoteless attrib
         attribs: [],
       },
     ],
-    "21.01"
+    "21.01",
   );
 });
 
@@ -1473,7 +1473,7 @@ test(`22 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - mismatching quot
         ],
       },
     ],
-    "22.01"
+    "22.01",
   );
 });
 
@@ -1487,7 +1487,7 @@ test(`23 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - whitespace chunk
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -1552,7 +1552,7 @@ test(`23 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - whitespace chunk
         attribs: [],
       },
     ],
-    "23"
+    "23",
   );
 });
 
@@ -1566,7 +1566,7 @@ test(`24 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing c
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -1631,7 +1631,7 @@ test(`24 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing c
         attribs: [],
       },
     ],
-    "24"
+    "24",
   );
 });
 
@@ -1645,7 +1645,7 @@ test(`25 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing c
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -1710,7 +1710,7 @@ test(`25 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing c
         attribs: [],
       },
     ],
-    "25"
+    "25",
   );
 });
 
@@ -1724,7 +1724,7 @@ test(`26 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing c
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -1810,7 +1810,7 @@ test(`26 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing c
         attribs: [],
       },
     ],
-    "26"
+    "26",
   );
 });
 
@@ -1824,7 +1824,7 @@ test(`27 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing c
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -1910,7 +1910,7 @@ test(`27 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing c
         attribs: [],
       },
     ],
-    "27"
+    "27",
   );
 });
 
@@ -1999,7 +1999,7 @@ test(`28 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing c
         attribs: [],
       },
     ],
-    "28"
+    "28",
   );
 });
 
@@ -2013,7 +2013,7 @@ test(`29 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - attr equals attr
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -2092,7 +2092,7 @@ test(`29 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - attr equals attr
         attribs: [],
       },
     ],
-    "29"
+    "29",
   );
 });
 
@@ -2106,7 +2106,7 @@ test(`30 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes present, 
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -2176,7 +2176,7 @@ test(`30 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes present, 
         value: "</span>",
       },
     ],
-    "30"
+    "30",
   );
 });
 
@@ -2190,7 +2190,7 @@ test(`31 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - unrecognised tex
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -2246,7 +2246,7 @@ test(`31 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - unrecognised tex
         value: "</span>",
       },
     ],
-    "31"
+    "31",
   );
 });
 
@@ -2260,7 +2260,7 @@ test(`32 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - pattern equal - 
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -2339,7 +2339,7 @@ test(`32 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - pattern equal - 
         attribs: [],
       },
     ],
-    "32"
+    "32",
   );
 });
 
@@ -2353,7 +2353,7 @@ test(`33 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - attr equals attr
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -2423,7 +2423,7 @@ test(`33 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - attr equals attr
         value: "</span>",
       },
     ],
-    "33"
+    "33",
   );
 });
 
@@ -2437,7 +2437,7 @@ test(`34 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - attr equals spac
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -2507,7 +2507,7 @@ test(`34 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - attr equals spac
         value: "</span>",
       },
     ],
-    "34"
+    "34",
   );
 });
 
@@ -2623,7 +2623,7 @@ test(`35 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing, 
         ],
       },
     ],
-    "35"
+    "35",
   );
 });
 
@@ -2732,7 +2732,7 @@ test(`36 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing, 
         ],
       },
     ],
-    "36"
+    "36",
   );
 });
 
@@ -2848,7 +2848,7 @@ test(`37 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - only opening quo
         ],
       },
     ],
-    "37"
+    "37",
   );
 });
 
@@ -2964,7 +2964,7 @@ test(`38 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - only closing quo
         ],
       },
     ],
-    "38"
+    "38",
   );
 });
 
@@ -3080,7 +3080,7 @@ test(`39 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - sneaky inner/out
         ],
       },
     ],
-    "39"
+    "39",
   );
 });
 
@@ -3094,7 +3094,7 @@ test(`40 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - opening consists
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -3150,7 +3150,7 @@ test(`40 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - opening consists
         value: "</span>",
       },
     ],
-    "40"
+    "40",
   );
 });
 
@@ -3164,7 +3164,7 @@ test(`41 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - rogue character`
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -3229,7 +3229,7 @@ test(`41 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - rogue character`
         attribs: [],
       },
     ],
-    "41"
+    "41",
   );
 });
 
@@ -3243,7 +3243,7 @@ test(`42 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - many dots`, () =
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -3299,7 +3299,7 @@ test(`42 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - many dots`, () =
         value: "</span>",
       },
     ],
-    "42"
+    "42",
   );
 });
 
@@ -3313,7 +3313,7 @@ test(`43 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - all spaced`, () 
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -3378,7 +3378,7 @@ test(`43 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - all spaced`, () 
         attribs: [],
       },
     ],
-    "43"
+    "43",
   );
 });
 
@@ -3392,7 +3392,7 @@ test(`44 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing c
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -3457,7 +3457,7 @@ test(`44 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing c
         attribs: [],
       },
     ],
-    "44"
+    "44",
   );
 });
 
@@ -3471,7 +3471,7 @@ test(`45 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing, 
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -3527,7 +3527,7 @@ test(`45 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - quotes missing, 
         value: "</span>",
       },
     ],
-    "45"
+    "45",
   );
 });
 
@@ -3602,7 +3602,7 @@ test(`46 - ${`\u001b[${33}m${"broken opening"}\u001b[${39}m`} - mismatching quot
         ],
       },
     ],
-    "46.01"
+    "46.01",
   );
 });
 
@@ -3679,7 +3679,7 @@ test(`47 - ${`\u001b[${33}m${"broken closing"}\u001b[${39}m`} - missing closing 
         attribs: [],
       },
     ],
-    "47"
+    "47",
   );
 });
 
@@ -3753,7 +3753,7 @@ test(`48 - ${`\u001b[${33}m${"broken closing"}\u001b[${39}m`} - missing closing 
         ],
       },
     ],
-    "48"
+    "48",
   );
 });
 
@@ -3822,7 +3822,7 @@ test("49 - last attr empty, XHML", () => {
         ],
       },
     ],
-    "49"
+    "49",
   );
 });
 
@@ -3876,7 +3876,7 @@ test("50 - uri with query params", () => {
         ],
       },
     ],
-    "50"
+    "50",
   );
 });
 
@@ -3906,7 +3906,7 @@ test("51 - more uris with query params", () => {
         ],
       },
     ],
-    "51"
+    "51",
   );
 });
 

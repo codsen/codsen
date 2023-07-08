@@ -21,10 +21,10 @@ test("01 - case-insensitive flag works", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "yyy"
+      "yyy",
     ),
     "zzz yyy zzz",
-    "test 15.1.1 - all ok, flag off"
+    "test 15.1.1 - all ok, flag off",
   );
   equal(
     er(
@@ -38,10 +38,10 @@ test("01 - case-insensitive flag works", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "yyy"
+      "yyy",
     ),
     "zzz aBBB zzz",
-    "test 15.1.2 - case mismatch, nothing replaced because flag's off"
+    "test 15.1.2 - case mismatch, nothing replaced because flag's off",
   );
   equal(
     er(
@@ -58,10 +58,10 @@ test("01 - case-insensitive flag works", () => {
           searchFor: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz yyy zzz",
-    "test 15.1.3 - case mismatch, but flag allows it, so replace happens"
+    "test 15.1.3 - case mismatch, but flag allows it, so replace happens",
   );
   equal(
     er(
@@ -78,10 +78,10 @@ test("01 - case-insensitive flag works", () => {
           searchFor: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz yyy zzz yyy zzz yyy zzz",
-    "test 15.1.4 - case-insensitive flag, multiple replacements"
+    "test 15.1.4 - case-insensitive flag, multiple replacements",
   );
 });
 
@@ -98,10 +98,10 @@ test("02 - case-insensitive leftMaybe", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "yyy"
+      "yyy",
     ),
     "zzz Ayyy zzz",
-    "02.01"
+    "02.01",
   );
   equal(
     er(
@@ -118,10 +118,10 @@ test("02 - case-insensitive leftMaybe", () => {
           leftMaybe: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz yyy zzz",
-    "02.02"
+    "02.02",
   );
   equal(
     er(
@@ -138,10 +138,10 @@ test("02 - case-insensitive leftMaybe", () => {
           leftMaybe: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz Abbb zzz",
-    "02.03"
+    "02.03",
   );
   equal(
     er(
@@ -159,10 +159,10 @@ test("02 - case-insensitive leftMaybe", () => {
           searchFor: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz yyy zzz",
-    "02.04"
+    "02.04",
   );
 });
 
@@ -179,10 +179,10 @@ test("03 - case-insensitive rightMaybe", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "yyy"
+      "yyy",
     ),
     "zzz yyyC zzz",
-    "03.01"
+    "03.01",
   );
   equal(
     er(
@@ -199,10 +199,10 @@ test("03 - case-insensitive rightMaybe", () => {
           rightMaybe: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz yyy zzz",
-    "03.02"
+    "03.02",
   );
   equal(
     er(
@@ -219,10 +219,10 @@ test("03 - case-insensitive rightMaybe", () => {
           rightMaybe: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz bbbC zzz",
-    "03.03"
+    "03.03",
   );
   equal(
     er(
@@ -240,10 +240,10 @@ test("03 - case-insensitive rightMaybe", () => {
           searchFor: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz yyy zzz",
-    "03.04"
+    "03.04",
   );
 });
 
@@ -260,10 +260,10 @@ test("04 - case-insensitive leftOutside", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "yyy"
+      "yyy",
     ),
     "zzz Abbb zzz",
-    "04.01"
+    "04.01",
   );
   equal(
     er(
@@ -280,10 +280,10 @@ test("04 - case-insensitive leftOutside", () => {
           leftOutside: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz Ayyy zzz",
-    "04.02"
+    "04.02",
   );
   equal(
     er(
@@ -300,10 +300,10 @@ test("04 - case-insensitive leftOutside", () => {
           leftOutside: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz Abbb zzz",
-    "04.03"
+    "04.03",
   );
   equal(
     er(
@@ -321,10 +321,10 @@ test("04 - case-insensitive leftOutside", () => {
           searchFor: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz Ayyy zzz",
-    "04.04"
+    "04.04",
   );
 });
 
@@ -341,10 +341,10 @@ test("05 - case-insensitive rightOutside", () => {
         rightOutside: "c",
         rightOutsideNot: "",
       },
-      "yyy"
+      "yyy",
     ),
     "zzz bbbC zzz",
-    "05.01"
+    "05.01",
   );
   equal(
     er(
@@ -361,10 +361,10 @@ test("05 - case-insensitive rightOutside", () => {
           rightOutside: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz yyyC zzz",
-    "05.02"
+    "05.02",
   );
   equal(
     er(
@@ -381,10 +381,10 @@ test("05 - case-insensitive rightOutside", () => {
           rightOutside: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz bbbC zzz",
-    "05.03"
+    "05.03",
   );
   equal(
     er(
@@ -402,10 +402,10 @@ test("05 - case-insensitive rightOutside", () => {
           searchFor: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz yyyC zzz",
-    "05.04"
+    "05.04",
   );
 });
 
@@ -422,10 +422,10 @@ test("06 - case-insensitive leftOutsideNot", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "yyy"
+      "yyy",
     ),
     "zzz Ayyy zzz",
-    "06.01"
+    "06.01",
   );
   equal(
     er(
@@ -442,10 +442,10 @@ test("06 - case-insensitive leftOutsideNot", () => {
           leftOutsideNot: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz Abbb zzz",
-    "06.02"
+    "06.02",
   );
   equal(
     er(
@@ -462,10 +462,10 @@ test("06 - case-insensitive leftOutsideNot", () => {
           leftOutsideNot: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz Abbb zzz",
-    "06.03"
+    "06.03",
   );
   equal(
     er(
@@ -483,10 +483,10 @@ test("06 - case-insensitive leftOutsideNot", () => {
           searchFor: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz Abbb zzz",
-    "06.04"
+    "06.04",
   );
   equal(
     er(
@@ -504,10 +504,10 @@ test("06 - case-insensitive leftOutsideNot", () => {
           searchFor: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz Ayyy zzz",
-    "06.05"
+    "06.05",
   );
 });
 
@@ -524,10 +524,10 @@ test("07 - case-insensitive rightOutsideNot", () => {
         rightOutside: "",
         rightOutsideNot: "c",
       },
-      "yyy"
+      "yyy",
     ),
     "zzz yyyC zzz",
-    "07.01"
+    "07.01",
   );
   equal(
     er(
@@ -544,10 +544,10 @@ test("07 - case-insensitive rightOutsideNot", () => {
           rightOutsideNot: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz bbbC zzz",
-    "07.02"
+    "07.02",
   );
   equal(
     er(
@@ -564,10 +564,10 @@ test("07 - case-insensitive rightOutsideNot", () => {
           rightOutsideNot: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz bbbC zzz",
-    "07.03"
+    "07.03",
   );
   equal(
     er(
@@ -585,10 +585,10 @@ test("07 - case-insensitive rightOutsideNot", () => {
           searchFor: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz bbbC zzz",
-    "07.04"
+    "07.04",
   );
   equal(
     er(
@@ -606,10 +606,10 @@ test("07 - case-insensitive rightOutsideNot", () => {
           searchFor: true,
         },
       },
-      "yyy"
+      "yyy",
     ),
     "zzz yyyC zzz",
-    "07.05"
+    "07.05",
   );
 });
 

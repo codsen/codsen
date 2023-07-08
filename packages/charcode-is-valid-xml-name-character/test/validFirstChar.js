@@ -26,12 +26,12 @@ test("01 - validFirstChar() same as isProduction4()", () => {
   equal(
     validFirstChar("\uD800\uDC00"), // #x10000
     true,
-    "01.08"
+    "01.08",
   );
   equal(
     validFirstChar("\uDB7F\uDFFF"), // #xEFFFF
     true,
-    "01.09"
+    "01.09",
   );
 });
 

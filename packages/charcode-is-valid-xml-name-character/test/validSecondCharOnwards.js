@@ -25,12 +25,12 @@ test("01 - validSecondCharOnwards() same as isProduction4a()", () => {
   equal(
     validSecondCharOnwards("\uD800\uDC00"), // #x10000
     true,
-    "01.07"
+    "01.07",
   );
   equal(
     validSecondCharOnwards("\uDB7F\uDFFF"), // #xEFFFF
     true,
-    "01.08"
+    "01.08",
   );
 });
 

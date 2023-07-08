@@ -23,7 +23,7 @@ function startsEsp(
   i: number,
   token: Token,
   layers: Layer[],
-  withinStyle: boolean
+  withinStyle: boolean,
 ): boolean {
   let res =
     // 1. two consecutive esp characters - Liquid, Mailchimp etc.
@@ -105,7 +105,7 @@ function startsEsp(
       layers.length &&
       layers[layers.length - 1].type === "esp" &&
       (layers[layers.length - 1] as LayerEsp).openingLump.includes(
-        flipEspTag(str[i])
+        flipEspTag(str[i]),
       ) &&
       // insurance against "greater than", as in:
       // <#if product.weight > 100>

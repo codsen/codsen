@@ -4,7 +4,7 @@ declare const version: string;
 declare function sortAllObjectsSync(input: any): any;
 declare function getKeyset(
   arrOfPromises: Iterable<PromiseLike<Obj> | Obj>,
-  opts?: Partial<GetKeysetOpts>
+  opts?: Partial<GetKeysetOpts>,
 ): Promise<Obj>;
 interface GetKeysetOpts {
   placeholder: any;
@@ -18,12 +18,12 @@ interface EnforceKeysetOpts {
 declare function enforceKeyset(
   obj: Obj,
   schemaKeyset: Obj,
-  opts?: Partial<EnforceKeysetOpts>
+  opts?: Partial<EnforceKeysetOpts>,
 ): Promise<Obj>;
 declare function enforceKeysetSync(
   obj: Obj,
   schemaKeyset: Obj,
-  opts?: Partial<EnforceKeysetOpts>
+  opts?: Partial<EnforceKeysetOpts>,
 ): Obj;
 type NoNewKeysSyncRes = string[];
 declare function noNewKeysSync(obj: Obj, schemaKeyset: Obj): NoNewKeysSyncRes;
@@ -33,7 +33,7 @@ interface FindUnusedSyncOpts {
 }
 declare function findUnusedSync(
   arr: any[],
-  opts?: Partial<FindUnusedSyncOpts>
+  opts?: Partial<FindUnusedSyncOpts>,
 ): string[];
 
 export {

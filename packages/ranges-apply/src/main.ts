@@ -9,7 +9,7 @@ const version: string = v;
 function rApply(
   str: string,
   originalRangesArr: Ranges,
-  progressFn?: (percentageDone: number) => void
+  progressFn?: (percentageDone: number) => void,
 ): string {
   let percentageDone = 0;
   let lastPercentageDone = 0;
@@ -22,8 +22,8 @@ function rApply(
       `ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(
         str,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   if (originalRangesArr && !Array.isArray(originalRangesArr)) {
@@ -31,8 +31,8 @@ function rApply(
       `ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(
         originalRangesArr,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   if (progressFn && typeof progressFn !== "function") {
@@ -40,8 +40,8 @@ function rApply(
       `ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(
         progressFn,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   // insurance against array of nulls
@@ -85,8 +85,8 @@ function rApply(
           `ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${i}th element not an array: ${JSON.stringify(
             el,
             null,
-            4
-          )}, which is ${typeof el}`
+            4,
+          )}, which is ${typeof el}`,
         );
       }
       if (!Number.isInteger(el[0])) {
@@ -95,12 +95,12 @@ function rApply(
             `ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${i}th element, array ${JSON.stringify(
               el,
               null,
-              0
+              0,
             )}. Its first element is not an integer, string index, but ${typeof el[0]}, equal to: ${JSON.stringify(
               el[0],
               null,
-              4
-            )}.`
+              4,
+            )}.`,
           );
         } else {
           (rangesArr as any)[i][0] = +(rangesArr as any)[i][0];
@@ -112,12 +112,12 @@ function rApply(
             `ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${i}th element, array ${JSON.stringify(
               el,
               null,
-              0
+              0,
             )}. Its second element is not an integer, string index, but ${typeof el[1]}, equal to: ${JSON.stringify(
               el[1],
               null,
-              4
-            )}.`
+              4,
+            )}.`,
           );
         } else {
           (rangesArr as any)[i][1] = +(rangesArr as any)[i][1];

@@ -14,12 +14,12 @@ declare let DEV: boolean;
 export function isUvu(node: Obj): boolean {
   DEV &&
     console.log(
-      `017 is-uvu.ts: ${`\u001b[${33}m${`isUvu()`}\u001b[${39}m`} called`
+      `017 is-uvu.ts: ${`\u001b[${33}m${`isUvu()`}\u001b[${39}m`} called`,
     );
 
   DEV &&
     console.log(
-      `${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${stringify(node)}`
+      `${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${stringify(node)}`,
     );
 
   return (

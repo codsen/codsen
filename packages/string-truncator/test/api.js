@@ -13,7 +13,7 @@ test("01 - no 1st arg", () => {
       truncate();
     },
     /THROW_ID_01/g,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -23,7 +23,7 @@ test("02 - 1st arg null", () => {
       truncate(null);
     },
     /THROW_ID_01/g,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -33,7 +33,7 @@ test("03 - 1st arg undefined", () => {
       truncate(undefined);
     },
     /THROW_ID_01/g,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -46,7 +46,7 @@ test("04 - 1st arg bool", () => {
       truncate(true);
     },
     /THROW_ID_02/g,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -56,7 +56,7 @@ test("05 - 1st arg number", () => {
       truncate(1);
     },
     /THROW_ID_02/g,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -69,19 +69,19 @@ test("06 - opts.noEmpty", () => {
       truncate("");
     },
     /THROW_ID_03/g,
-    "06.01"
+    "06.01",
   );
   throws(
     () => {
       truncate("", { noEmpty: true });
     },
     /THROW_ID_03/g,
-    "06.02"
+    "06.02",
   );
   equal(
     truncate("", { noEmpty: false }),
     { result: "", addEllipsis: false }, // length limit is 11 chars!
-    "06.03"
+    "06.03",
   );
 });
 
@@ -96,7 +96,7 @@ test("07 - opts.maxLen", () => {
       });
     },
     /THROW_ID_04/g,
-    "07.01"
+    "07.01",
   );
   throws(
     () => {
@@ -105,7 +105,7 @@ test("07 - opts.maxLen", () => {
       });
     },
     /THROW_ID_04/g,
-    "07.02"
+    "07.02",
   );
 });
 
@@ -120,7 +120,7 @@ test("08 - opts.maxLines wrong type", () => {
       });
     },
     /THROW_ID_05/g,
-    "08.01"
+    "08.01",
   );
   throws(
     () => {
@@ -129,7 +129,7 @@ test("08 - opts.maxLines wrong type", () => {
       });
     },
     /THROW_ID_05/g,
-    "08.02"
+    "08.02",
   );
 });
 
@@ -144,7 +144,7 @@ test("09 - opts.maxLines === 0", () => {
       });
     },
     /THROW_ID_06/g,
-    "09.01"
+    "09.01",
   );
 });
 

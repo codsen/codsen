@@ -13,28 +13,28 @@ test(`01 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies aroun
       removeLineBreaks: true,
     }).result,
     "<style>a{display:block;}",
-    "01.01"
+    "01.01",
   );
   equal(
     m(equal, "<style>\na{\ndisplay:block;\n}", {
       removeLineBreaks: true,
     }).result,
     "<style>a{display:block;}",
-    "01.02"
+    "01.02",
   );
   equal(
     m(equal, "<style> \t\t\t      a    {     display:block;     }", {
       removeLineBreaks: true,
     }).result,
     "<style>a{display:block;}",
-    "01.03"
+    "01.03",
   );
   equal(
     m(equal, "<style>a{display:block;}", {
       removeLineBreaks: true,
     }).result,
     "<style>a{display:block;}",
-    "01.04"
+    "01.04",
   );
 });
 
@@ -44,28 +44,28 @@ test(`02 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies aroun
       removeLineBreaks: true,
     }).result,
     "<style>a something here{display:block;}",
-    "02.01"
+    "02.01",
   );
   equal(
     m(equal, "<style>\na.something.here {display:block;}", {
       removeLineBreaks: true,
     }).result,
     "<style>a.something.here{display:block;}",
-    "02.02"
+    "02.02",
   );
   equal(
     m(equal, "<style>\na something#here {display:block;}", {
       removeLineBreaks: true,
     }).result,
     "<style>a something#here{display:block;}",
-    "02.03"
+    "02.03",
   );
   equal(
     m(equal, "<style>\na  something#here {display:block;}", {
       removeLineBreaks: true,
     }).result,
     "<style>a something#here{display:block;}",
-    "02.04"
+    "02.04",
   );
 });
 
@@ -75,35 +75,35 @@ test(`03 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies aroun
       removeLineBreaks: true,
     }).result,
     "<style>a>something#here{display:block;}",
-    "03.01"
+    "03.01",
   );
   equal(
     m(equal, "<style>\na > something#here {display:block;}", {
       removeLineBreaks: true,
     }).result,
     "<style>a>something#here{display:block;}",
-    "03.02"
+    "03.02",
   );
   equal(
     m(equal, "<style>\na> something#here {display:block;}", {
       removeLineBreaks: true,
     }).result,
     "<style>a>something#here{display:block;}",
-    "03.03"
+    "03.03",
   );
   equal(
     m(equal, "<style>\na> something #here {display:block;}", {
       removeLineBreaks: true,
     }).result,
     "<style>a>something #here{display:block;}",
-    "03.04"
+    "03.04",
   );
   equal(
     m(equal, "<style>\na> something  #here {display:block;}", {
       removeLineBreaks: true,
     }).result,
     "<style>a>something #here{display:block;}",
-    "03.05"
+    "03.05",
   );
 });
 
@@ -113,28 +113,28 @@ test(`04 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies aroun
       removeLineBreaks: true,
     }).result,
     "<style>a+something#here+there{display:block;}",
-    "04.01"
+    "04.01",
   );
   equal(
     m(equal, "<style>\na + something#here + there {display:block;}", {
       removeLineBreaks: true,
     }).result,
     "<style>a+something#here+there{display:block;}",
-    "04.02"
+    "04.02",
   );
   equal(
     m(equal, "<style>\na + something #here + there {display:block;}", {
       removeLineBreaks: true,
     }).result,
     "<style>a+something #here+there{display:block;}",
-    "04.03"
+    "04.03",
   );
   equal(
     m(equal, "<style>\na  +  something#here  +  there  {\ndisplay:block;\n}", {
       removeLineBreaks: true,
     }).result,
     "<style>a+something#here+there{display:block;}",
-    "04.04"
+    "04.04",
   );
   equal(
     m(
@@ -142,10 +142,10 @@ test(`04 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies aroun
       "<style>\n   a   +    something  #here   +   there   {\n   display: block;   \n}",
       {
         removeLineBreaks: true,
-      }
+      },
     ).result,
     "<style>a+something #here+there{display:block;}",
-    "04.05"
+    "04.05",
   );
 });
 
@@ -155,28 +155,28 @@ test(`05 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies aroun
       removeLineBreaks: true,
     }).result,
     "<style>a~something#here~there{display:block;}",
-    "05.01"
+    "05.01",
   );
   equal(
     m(equal, "<style>\na ~ something#here ~ there {display:block;}", {
       removeLineBreaks: true,
     }).result,
     "<style>a~something#here~there{display:block;}",
-    "05.02"
+    "05.02",
   );
   equal(
     m(equal, "<style>\na ~ something #here ~ there {display:block;}", {
       removeLineBreaks: true,
     }).result,
     "<style>a~something #here~there{display:block;}",
-    "05.03"
+    "05.03",
   );
   equal(
     m(equal, "<style>\na  ~  something#here  ~  there  {\ndisplay:block;\n}", {
       removeLineBreaks: true,
     }).result,
     "<style>a~something#here~there{display:block;}",
-    "05.04"
+    "05.04",
   );
   equal(
     m(
@@ -184,10 +184,10 @@ test(`05 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies aroun
       "<style>\n   a   ~    something  #here   ~   there   {\n   display: block;   \n}",
       {
         removeLineBreaks: true,
-      }
+      },
     ).result,
     "<style>a~something #here~there{display:block;}",
-    "05.05"
+    "05.05",
   );
 });
 
@@ -197,14 +197,14 @@ test(`06 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - removes CSS co
       removeLineBreaks: true,
     }).result,
     "<style>a{display:block;}",
-    "06.01"
+    "06.01",
   );
   equal(
     m(equal, "<style> a { display:block; } /* TAB STYLES */", {
       removeLineBreaks: false,
     }).result,
     "<style> a { display:block; }",
-    "06.02"
+    "06.02",
   );
 });
 
@@ -214,28 +214,28 @@ test(`07 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - removes whites
       removeLineBreaks: true,
     }).result,
     "<style>a{display:block!important;}",
-    "07.01"
+    "07.01",
   );
   equal(
     m(equal, "<style>\n  a { display:block !important; }", {
       removeLineBreaks: true,
     }).result,
     "<style>a{display:block!important;}",
-    "07.02"
+    "07.02",
   );
   equal(
     m(equal, "<style>\n  a { display:block  !important; }", {
       removeLineBreaks: true,
     }).result,
     "<style>a{display:block!important;}",
-    "07.03"
+    "07.03",
   );
   equal(
     m(equal, "<style>/*  ", {
       removeLineBreaks: true,
     }).result,
     "<style>",
-    "07.04"
+    "07.04",
   );
 });
 
@@ -249,7 +249,7 @@ test(`08 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - removes whites
       removeIndentations: false,
     }).result,
     source,
-    "08.01"
+    "08.01",
   );
   equal(
     m(equal, source, {
@@ -257,14 +257,14 @@ test(`08 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - removes whites
       removeIndentations: true,
     }).result,
     'a\n<script src="tralala.js">    \n    \t    a  a   \n</script>\nb',
-    "08.02"
+    "08.02",
   );
   equal(
     m(equal, source, {
       removeLineBreaks: true,
     }).result,
     'a\n<script src="tralala.js">    \n    \t    a  a   \n</script> b',
-    "08.03"
+    "08.03",
   );
   equal(
     m(equal, source, {
@@ -272,7 +272,7 @@ test(`08 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - removes whites
       lineLengthLimit: 10,
     }).result,
     'a\n<script src="tralala.js">    \n    \t    a  a   \n</script> b',
-    "08.04"
+    "08.04",
   );
 });
 
@@ -287,14 +287,14 @@ test(`09 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remov
 <![endif]-->`,
       {
         removeLineBreaks: true,
-      }
+      },
     ).result,
     `<!--[if lte mso 11]>
 <style type="text/css">
 .class{width:100% !important;}
 </style>
 <![endif]-->`,
-    "09.01"
+    "09.01",
   );
 });
 
@@ -310,14 +310,14 @@ test(`10 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remov
       {
         removeLineBreaks: true,
         lineLengthLimit: 0,
-      }
+      },
     ).result,
     `<!--[if lte mso 11]>
 <style type="text/css">
 .class{width:100% !important;}
 </style>
 <![endif]-->`,
-    "10.01"
+    "10.01",
   );
 });
 
@@ -343,7 +343,7 @@ test(`11 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remov
 </style>`,
       {
         removeLineBreaks: true,
-      }
+      },
     ).result,
     `<!--[if lte mso 11]>
 <style type="text/css">
@@ -361,7 +361,7 @@ test(`11 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remov
 <style type="text/css">
 .class{width:100%!important;}
 </style>`,
-    "11.01"
+    "11.01",
   );
 });
 
@@ -388,7 +388,7 @@ test(`12 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remov
       {
         removeLineBreaks: true,
         lineLengthLimit: 0,
-      }
+      },
     ).result,
     `<!--[if lte mso 11]>
 <style type="text/css">
@@ -406,7 +406,7 @@ test(`12 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remov
 <style type="text/css">
 .class{width:100%!important;}
 </style>`,
-    "12.01"
+    "12.01",
   );
 });
 

@@ -24,5 +24,5 @@ assert.equal(
   `next non-whitespace character to the left of ${str[6]} (index 6) is ${
     str[left(str, 6)]
   } (index ${left(str, 6)})`,
-  "next non-whitespace character to the left of d (index 6) is c (index 2)"
+  "next non-whitespace character to the left of d (index 6) is c (index 2)",
 );

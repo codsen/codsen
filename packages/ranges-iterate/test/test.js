@@ -15,7 +15,7 @@ test(`01 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - 1st arg not string`, () 
       iterate(1);
     },
     /THROW_ID_01/,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -25,7 +25,7 @@ test(`02 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - 1st arg empty string`, (
       iterate("");
     },
     /THROW_ID_02/,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -35,7 +35,7 @@ test(`03 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - 2nd arg not array`, () =
       iterate("z", 1);
     },
     /THROW_ID_03/,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -45,7 +45,7 @@ test(`04 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - 3rd arg missing`, () => 
       iterate("z", [[0, 1]]);
     },
     /THROW_ID_04/,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -55,7 +55,7 @@ test(`05 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - 3rd arg not a callback f
       iterate("z", [[0, 1]], 1);
     },
     /THROW_ID_05/,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -171,7 +171,7 @@ test(`12 - \u001b[${33}m${"iterating"}\u001b[${39}m - multiple ranges`, () => {
       pinged += val;
       equal(i, index);
       index += 1;
-    }
+    },
   );
   equal(pinged, "abxyzhi_", "12.01");
 });
@@ -250,7 +250,7 @@ test(`17 - \u001b[${33}m${"iterating"}\u001b[${39}m - touching ranges to delete,
       pinged += val;
       equal(i, index);
       index += 1;
-    }
+    },
   );
   equal(pinged, "", "17.01");
 });
@@ -273,7 +273,7 @@ test(`18 - \u001b[${33}m${"iterating"}\u001b[${39}m - overlapping ranges to dele
       pinged += val;
       equal(i, index);
       index += 1;
-    }
+    },
   );
   equal(pinged, "", "18.01");
 });
@@ -291,7 +291,7 @@ test(`19 - \u001b[${33}m${"iterating"}\u001b[${39}m - ranges exclude single char
       // );
       equal(i, 0);
       equal(val, "f");
-    }
+    },
   );
 });
 
@@ -313,7 +313,7 @@ test(`20 - \u001b[${33}m${"iterating"}\u001b[${39}m - two empty ranges`, () => {
       pinged += val;
       equal(i, index);
       index += 1;
-    }
+    },
   );
   equal(pinged, source, "20.01");
 });
@@ -335,7 +335,7 @@ test(`21 - \u001b[${33}m${"iterating"}\u001b[${39}m - two empty non-existent ran
       pinged += val;
       equal(i, index);
       index += 1;
-    }
+    },
   );
   equal(pinged, source, "21.01");
 });

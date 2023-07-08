@@ -16,7 +16,7 @@ test("02 - plain object with keys", () => {
       a: 1,
     }),
     true,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -38,7 +38,7 @@ test("06 - function", () => {
   equal(
     isPlainObject(() => {}),
     false,
-    "06.01"
+    "06.01",
   );
 });
 

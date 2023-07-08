@@ -14,7 +14,7 @@ const testme = () =>
     ["anything", "zzz"],
     {
       arrayVsArrayAllMustBeFound: "any",
-    }
+    },
   );
 
 // action

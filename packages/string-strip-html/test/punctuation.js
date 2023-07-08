@@ -16,7 +16,7 @@ test("01 - punctuation after tag - simplified, question mark", () => {
       [1, 4],
       [5, 10, " "],
     ],
-    "01.02"
+    "01.02",
   );
 });
 
@@ -24,7 +24,7 @@ test("02 - punctuation after tag - simplified, question mark", () => {
   equal(
     stripHtml("a<b>?</b> c", { trimOnlySpaces: true }).result,
     "a? c",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -32,7 +32,7 @@ test("03 - punctuation after tag - simplified, question mark", () => {
   equal(
     stripHtml("a<b>?</b> c", { dumpLinkHrefsNearby: { enabled: true } }).result,
     "a? c",
-    "03.01"
+    "03.01",
   );
 });
 
@@ -40,7 +40,7 @@ test("04 - punctuation after tag - simplified, question mark", () => {
   equal(
     stripHtml("a<b>?</b> c", { stripTogetherWithTheirContents: false }).result,
     "a? c",
-    "04.01"
+    "04.01",
   );
 });
 
@@ -48,7 +48,7 @@ test("05 - punctuation after tag - simplified, question mark", () => {
   equal(
     stripHtml("a<b>?</b> c", { ignoreTags: ["zzz"] }).result,
     "a? c",
-    "05.01"
+    "05.01",
   );
 });
 
@@ -64,7 +64,7 @@ test("07 - punctuation after tag - simplified, exclamation mark", () => {
       [1, 4],
       [5, 10, " "],
     ],
-    "07.01"
+    "07.01",
   );
   equal(result, "a! c", "07.02");
 });
@@ -78,7 +78,7 @@ test("08 - punctuation after tag - simplified, exclamation mark", () => {
       [1, 4],
       [5, 10, " "],
     ],
-    "08.02"
+    "08.02",
   );
 });
 
@@ -95,7 +95,7 @@ test("09 - punctuation after tag - simplified, exclamation mark", () => {
       [8, 13, " "],
       [16, 17],
     ],
-    "09.02"
+    "09.02",
   );
 });
 
@@ -103,7 +103,7 @@ test("10 - punctuation after tag - simplified, exclamation mark", () => {
   equal(
     stripHtml("a<b>!</b> c", { dumpLinkHrefsNearby: { enabled: true } }).result,
     "a! c",
-    "10.01"
+    "10.01",
   );
 });
 
@@ -111,7 +111,7 @@ test("11 - punctuation after tag - simplified, exclamation mark", () => {
   equal(
     stripHtml("a<b>!</b> c", { stripTogetherWithTheirContents: false }).result,
     "a! c",
-    "11.01"
+    "11.01",
   );
 });
 
@@ -124,7 +124,7 @@ test("12 - punctuation after tag - simplified, exclamation mark", () => {
       [1, 4],
       [5, 10, " "],
     ],
-    "12.02"
+    "12.02",
   );
 });
 
@@ -142,7 +142,7 @@ test("14 - punctuation after tag - simplified, ellipsis", () => {
       [1, 4],
       [7, 12, " "],
     ],
-    "14.02"
+    "14.02",
   );
 });
 
@@ -155,7 +155,7 @@ test("15 - punctuation after tag - simplified, ellipsis", () => {
       [1, 4],
       [7, 12, " "],
     ],
-    "15.02"
+    "15.02",
   );
 });
 
@@ -170,7 +170,7 @@ test("16 - punctuation after tag - simplified, ellipsis", () => {
       [1, 4],
       [7, 12, " "],
     ],
-    "16.02"
+    "16.02",
   );
 });
 
@@ -185,7 +185,7 @@ test("17 - punctuation after tag - simplified, ellipsis", () => {
       [1, 4],
       [7, 12, " "],
     ],
-    "17.02"
+    "17.02",
   );
 });
 
@@ -198,7 +198,7 @@ test("18 - punctuation after tag - simplified, ellipsis", () => {
       [1, 4],
       [7, 12, " "],
     ],
-    "18.02"
+    "18.02",
   );
 });
 
@@ -206,20 +206,20 @@ test("19 - punctuation after tag - real-life", () => {
   // control
   equal(
     stripHtml(
-      '      &nbsp;     Hi! Would you like to <a href="/">shop now</a>?      &nbsp;      '
+      '      &nbsp;     Hi! Would you like to <a href="/">shop now</a>?      &nbsp;      ',
     ).result,
     "Hi! Would you like to shop now?",
-    "19.01"
+    "19.01",
   );
 });
 
 test("20 - punctuation after tag - real-life", () => {
   equal(
     stripHtml(
-      "      &nbsp;     Hi! Please <div>shop now</div>!      &nbsp;      "
+      "      &nbsp;     Hi! Please <div>shop now</div>!      &nbsp;      ",
     ).result,
     "Hi! Please shop now!",
-    "20.01"
+    "20.01",
   );
 });
 
@@ -230,10 +230,10 @@ test("21 - punctuation after tag - real-life", () => {
       '      &nbsp;     Hi! Would you like to <a href="/">shop now</a>?      &nbsp;      ',
       {
         trimOnlySpaces: true,
-      }
+      },
     ).result,
     "\u00A0     Hi! Would you like to shop now?      \u00A0",
-    "21.01"
+    "21.01",
   );
 });
 
@@ -241,10 +241,10 @@ test("22 - punctuation after tag - real-life", () => {
   equal(
     stripHtml(
       "      &nbsp;     Hi! Please <div>shop now</div>!      &nbsp;      ",
-      { trimOnlySpaces: true }
+      { trimOnlySpaces: true },
     ).result,
     "\u00A0     Hi! Please shop now!      \u00A0",
-    "22.01"
+    "22.01",
   );
 });
 
@@ -252,7 +252,7 @@ test("23 - quotes - surrounded", () => {
   equal(
     stripHtml('<li>"<a href="/Foo/bar">zzz</a>"</li>').result,
     '"zzz"',
-    "23.01"
+    "23.01",
   );
 });
 
@@ -264,7 +264,7 @@ test("25 - quotes - surrounded tags in vicinity", () => {
   equal(
     stripHtml("<ul> <li>(<strong>zzz</strong>)</li> </ul>").result,
     "(zzz)",
-    "25.01"
+    "25.01",
   );
 });
 
@@ -275,10 +275,10 @@ test("26 - quotes - surrounded tags in vicinity", () => {
 test("27 - examples - c-plus-us", () => {
   equal(
     stripHtml(
-      "<code>#include <stdio.h>;</code> and <code>#include &lt;stdio.h&gt;</code>"
+      "<code>#include <stdio.h>;</code> and <code>#include &lt;stdio.h&gt;</code>",
     ).result,
     "#include; and #include",
-    "27.01"
+    "27.01",
   );
 });
 

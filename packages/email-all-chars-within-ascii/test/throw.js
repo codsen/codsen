@@ -10,35 +10,35 @@ test("01 - wrong/missing input = throw", () => {
       within();
     },
     /THROW_ID_01/g,
-    "01.01"
+    "01.01",
   );
   throws(
     () => {
       within(1);
     },
     /THROW_ID_01/g,
-    "01.02"
+    "01.02",
   );
   throws(
     () => {
       within(null);
     },
     /THROW_ID_01/g,
-    "01.03"
+    "01.03",
   );
   throws(
     () => {
       within(undefined);
     },
     /THROW_ID_01/g,
-    "01.04"
+    "01.04",
   );
   throws(
     () => {
       within(true);
     },
     /THROW_ID_01/g,
-    "01.05"
+    "01.05",
   );
 });
 
@@ -48,14 +48,14 @@ test("02 - wrong opts = throw", () => {
       within("aaaa", true); // not object but bool
     },
     /THROW_ID_02/g,
-    "02.01"
+    "02.01",
   );
   throws(
     () => {
       within("aaaa", 1); // not object but number
     },
     /THROW_ID_02/g,
-    "02.02"
+    "02.02",
   );
   not.throws(() => {
     within("aaaa", undefined); // hardcoded "nothing" is ok!

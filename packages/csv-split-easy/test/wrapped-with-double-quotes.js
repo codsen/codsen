@@ -11,17 +11,17 @@ test("01 - breaks lines correctly leaving no empty lines", () => {
       ["a,b", "c", "d"],
       ["e", "f", "g"],
     ],
-    "01.01"
+    "01.01",
   );
   equal(
     splitEasy(
-      '"apples, and some other fruits",bananas,cherries\ndonuts,eclairs,froyos'
+      '"apples, and some other fruits",bananas,cherries\ndonuts,eclairs,froyos',
     ),
     [
       ["apples, and some other fruits", "bananas", "cherries"],
       ["donuts", "eclairs", "froyos"],
     ],
-    "01.02"
+    "01.02",
   );
 });
 
@@ -32,7 +32,7 @@ test("02 - particular attention of combos of line breaks and double quotes", () 
       ["a,b", "c", "d"],
       ["e,f", "g", "h"],
     ],
-    "02.01"
+    "02.01",
   );
 });
 
@@ -43,20 +43,20 @@ test("03 - particular attention of double quotes at the end", () => {
       ["a,b", "c", "d"],
       ["e", "f", "g,h"],
     ],
-    "03.01"
+    "03.01",
   );
 });
 
 test("04 - all values are wrapped with double quotes, some trailing white space", () => {
   equal(
     splitEasy(
-      '"Something here","And something there"," Notice space in front"\n"And here","This is wrapped as well","And this too"'
+      '"Something here","And something there"," Notice space in front"\n"And here","This is wrapped as well","And this too"',
     ),
     [
       ["Something here", "And something there", "Notice space in front"],
       ["And here", "This is wrapped as well", "And this too"],
     ],
-    "04.01"
+    "04.01",
   );
 });
 
@@ -67,7 +67,7 @@ test("05 - values wrapped in double quotes that contain double quotes", () => {
       ['a,"b"', "c", "d"],
       ["e", "f", 'g "G"'],
     ],
-    "05.01"
+    "05.01",
   );
 });
 

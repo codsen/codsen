@@ -22,7 +22,7 @@ test(`01 - ${`\u001b[${34}m${"Buttericks Practical Typography"}\u001b[${39}m`} -
         [18, 21, `${rightSingleQuote}n${rightSingleQuote}`],
       ],
     },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -33,7 +33,7 @@ test(`02 - ${`\u001b[${34}m${"Buttericks Practical Typography"}\u001b[${39}m`} -
       convertEntities: 0,
     }).result,
     "In the '60s, rock 'n' roll",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -44,7 +44,7 @@ test(`03 - ${`\u001b[${34}m${"Buttericks Practical Typography"}\u001b[${39}m`} -
       convertEntities: 0,
     }).result,
     `Hawai${leftSingleQuote}i`,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -55,7 +55,7 @@ test(`04 - ${`\u001b[${34}m${"Buttericks Practical Typography"}\u001b[${39}m`} -
       convertEntities: 0,
     }).result,
     `O${leftSingleQuote}ahu`,
-    "04.01"
+    "04.01",
   );
 });
 

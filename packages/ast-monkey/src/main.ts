@@ -62,8 +62,8 @@ function monkey(originalInput: JsonValue, opts: InternalOpts) {
       `062 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   // ---------------------------------------------------------------------------
@@ -91,12 +91,12 @@ function monkey(originalInput: JsonValue, opts: InternalOpts) {
       `091 ${`\u001b[${33}m${`keyOnly, ko`}\u001b[${39}m`} = ${JSON.stringify(
         ko,
         null,
-        4
+        4,
       )}; ${`\u001b[${33}m${`valueOnly, vo`}\u001b[${39}m`} = ${JSON.stringify(
         vo,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   let input = originalInput;
@@ -121,16 +121,16 @@ function monkey(originalInput: JsonValue, opts: InternalOpts) {
         `121 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${JSON.stringify(
           key,
           null,
-          4
+          4,
         )}; ${`\u001b[${33}m${`val`}\u001b[${39}m`} = ${JSON.stringify(
           val,
           null,
-          4
+          4,
         )}; ${`\u001b[${33}m${`innerObj`}\u001b[${39}m`} = ${JSON.stringify(
           innerObj,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     let temp: Finding;
     data.count += 1;
@@ -217,12 +217,12 @@ export interface FindOpts {
 function find(input: JsonValue, opts: FindOpts): Finding[] {
   if (!existy(input)) {
     throw new Error(
-      "ast-monkey/main.js/find(): [THROW_ID_02] Please provide the input"
+      "ast-monkey/main.js/find(): [THROW_ID_02] Please provide the input",
     );
   }
   if (!isObj(opts) || (opts.key === undefined && opts.val === undefined)) {
     throw new Error(
-      "ast-monkey/main.js/find(): [THROW_ID_03] Please provide resolvedOpts.key or resolvedOpts.val"
+      "ast-monkey/main.js/find(): [THROW_ID_03] Please provide resolvedOpts.key or resolvedOpts.val",
     );
   }
   let resolvedOpts = { ...opts };
@@ -252,17 +252,17 @@ export interface GetOpts {
 function get(input: JsonValue, opts: GetOpts): JsonValue {
   if (!existy(input)) {
     throw new Error(
-      "ast-monkey/main.js/get(): [THROW_ID_06] Please provide the input"
+      "ast-monkey/main.js/get(): [THROW_ID_06] Please provide the input",
     );
   }
   if (!isObj(opts)) {
     throw new Error(
-      "ast-monkey/main.js/get(): [THROW_ID_07] Please provide the resolvedOpts"
+      "ast-monkey/main.js/get(): [THROW_ID_07] Please provide the resolvedOpts",
     );
   }
   if (!existy(opts.index)) {
     throw new Error(
-      "ast-monkey/main.js/get(): [THROW_ID_08] Please provide resolvedOpts.index"
+      "ast-monkey/main.js/get(): [THROW_ID_08] Please provide resolvedOpts.index",
     );
   }
   let resolvedOpts = { ...opts };
@@ -272,7 +272,7 @@ function get(input: JsonValue, opts: GetOpts): JsonValue {
     throw new Error(
       `ast-monkey/main.js/get(): [THROW_ID_11] resolvedOpts.index must be a natural number. It was given as: ${
         resolvedOpts.index
-      } (type ${typeof resolvedOpts.index})`
+      } (type ${typeof resolvedOpts.index})`,
     );
   }
   return monkey(input, { ...resolvedOpts, mode: "get" });
@@ -286,22 +286,22 @@ export interface SetOpts {
 function set(input: JsonValue, opts: SetOpts): JsonValue {
   if (!existy(input)) {
     throw new Error(
-      "ast-monkey/main.js/set(): [THROW_ID_12] Please provide the input"
+      "ast-monkey/main.js/set(): [THROW_ID_12] Please provide the input",
     );
   }
   if (!isObj(opts)) {
     throw new Error(
-      "ast-monkey/main.js/set(): [THROW_ID_13] Please provide the input"
+      "ast-monkey/main.js/set(): [THROW_ID_13] Please provide the input",
     );
   }
   if (!existy(opts.key) && opts.val === undefined) {
     throw new Error(
-      "ast-monkey/main.js/set(): [THROW_ID_14] Please provide resolvedOpts.val"
+      "ast-monkey/main.js/set(): [THROW_ID_14] Please provide resolvedOpts.val",
     );
   }
   if (!existy(opts.index)) {
     throw new Error(
-      "ast-monkey/main.js/set(): [THROW_ID_15] Please provide resolvedOpts.index"
+      "ast-monkey/main.js/set(): [THROW_ID_15] Please provide resolvedOpts.index",
     );
   }
   let resolvedOpts = { ...opts };
@@ -309,7 +309,7 @@ function set(input: JsonValue, opts: SetOpts): JsonValue {
     resolvedOpts.index = +resolvedOpts.index;
   } else if (!Number.isInteger(resolvedOpts.index)) {
     throw new Error(
-      `ast-monkey/main.js/set(): [THROW_ID_17] resolvedOpts.index must be a natural number. It was given as: ${resolvedOpts.index}`
+      `ast-monkey/main.js/set(): [THROW_ID_17] resolvedOpts.index must be a natural number. It was given as: ${resolvedOpts.index}`,
     );
   }
   if (existy(resolvedOpts.key) && resolvedOpts.val === undefined) {
@@ -332,17 +332,17 @@ export interface DropOpts {
 function drop(input: JsonValue, opts: DropOpts): JsonValue {
   if (!existy(input)) {
     throw new Error(
-      "ast-monkey/main.js/drop(): [THROW_ID_19] Please provide the input"
+      "ast-monkey/main.js/drop(): [THROW_ID_19] Please provide the input",
     );
   }
   if (!isObj(opts)) {
     throw new Error(
-      "ast-monkey/main.js/drop(): [THROW_ID_20] Please provide the input"
+      "ast-monkey/main.js/drop(): [THROW_ID_20] Please provide the input",
     );
   }
   if (!existy(opts.index)) {
     throw new Error(
-      "ast-monkey/main.js/drop(): [THROW_ID_21] Please provide resolvedOpts.index"
+      "ast-monkey/main.js/drop(): [THROW_ID_21] Please provide resolvedOpts.index",
     );
   }
   let resolvedOpts = { ...opts };
@@ -350,7 +350,7 @@ function drop(input: JsonValue, opts: DropOpts): JsonValue {
     resolvedOpts.index = +resolvedOpts.index;
   } else if (!Number.isInteger(resolvedOpts.index)) {
     throw new Error(
-      `ast-monkey/main.js/drop(): [THROW_ID_23] resolvedOpts.index must be a natural number. It was given as: ${resolvedOpts.index}`
+      `ast-monkey/main.js/drop(): [THROW_ID_23] resolvedOpts.index must be a natural number. It was given as: ${resolvedOpts.index}`,
     );
   }
   return monkey(input, { ...resolvedOpts, mode: "drop" });
@@ -364,17 +364,17 @@ export interface DelOpts {
 function del(input: JsonValue, opts: DelOpts): JsonValue {
   if (!existy(input)) {
     throw new Error(
-      "ast-monkey/main.js/del(): [THROW_ID_26] Please provide the input"
+      "ast-monkey/main.js/del(): [THROW_ID_26] Please provide the input",
     );
   }
   if (!isObj(opts)) {
     throw new Error(
-      "ast-monkey/main.js/del(): [THROW_ID_27] Please provide the resolvedOpts object"
+      "ast-monkey/main.js/del(): [THROW_ID_27] Please provide the resolvedOpts object",
     );
   }
   if (!existy(opts.key) && opts.val === undefined) {
     throw new Error(
-      "ast-monkey/main.js/del(): [THROW_ID_28] Please provide resolvedOpts.key or resolvedOpts.val"
+      "ast-monkey/main.js/del(): [THROW_ID_28] Please provide resolvedOpts.key or resolvedOpts.val",
     );
   }
   let resolvedOpts = { ...opts };
@@ -400,7 +400,7 @@ function del(input: JsonValue, opts: DelOpts): JsonValue {
 function arrayFirstOnly(input: JsonValue): JsonValue {
   if (!existy(input)) {
     throw new Error(
-      "ast-monkey/main.js/arrayFirstOnly(): [THROW_ID_31] Please provide the input"
+      "ast-monkey/main.js/arrayFirstOnly(): [THROW_ID_31] Please provide the input",
     );
   }
   return monkey(input, { mode: "arrayFirstOnly" });

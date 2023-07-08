@@ -86,14 +86,14 @@ test("02 - sorts a file", async () => {
   // );
   let generatedCSVFile = fs.readFileSync(
     path.join(tempFolder, "testfile-1.csv"),
-    "utf8"
+    "utf8",
   );
   equal(generatedCSVFile, intendedCSV, "02.01");
 
   // 3. check, is original file intact
   let originalCsvFile = fs.readFileSync(
     path.join(tempFolder, "testfile.csv"),
-    "utf8"
+    "utf8",
   );
   equal(originalCsvFile, originalCSV, "02.02");
 });

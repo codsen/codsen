@@ -98,7 +98,7 @@ test("01 - two tags", () => {
         attribs: [],
       },
     ],
-    "01"
+    "01",
   );
 });
 
@@ -215,7 +215,7 @@ test(`02 - ${`\u001b[${36}m${"media"}\u001b[${39}m`} - two selectors with empty 
         children: [],
       },
     ],
-    "02"
+    "02",
   );
 });
 

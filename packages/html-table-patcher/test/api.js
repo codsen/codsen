@@ -28,21 +28,21 @@ test(`04 - ${`\u001b[${34}m${"API bits"}\u001b[${39}m`} - opts.opts.cssStylesCon
       cssStylesContent: 9,
     }).result,
     "<a>",
-    "04.01"
+    "04.01",
   );
   is(
     patcher(false, {
       cssStylesContent: "",
     }).result,
     false,
-    "04.02"
+    "04.02",
   );
   is(
     patcher(null, {
       cssStylesContent: 9,
     }).result,
     null,
-    "04.03"
+    "04.03",
   );
 });
 

@@ -28,8 +28,8 @@ function within(str: string, opts?: Partial<Opts>): Res[] {
       `email-all-chars-within-ascii/within(): [THROW_ID_01] The input is not string but ${typeof str}, equal to: ${JSON.stringify(
         str,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   if (opts && typeof opts !== "object") {
@@ -37,8 +37,8 @@ function within(str: string, opts?: Partial<Opts>): Res[] {
       `email-all-chars-within-ascii/within(): [THROW_ID_02] The resolvedOpts is not a plain object but ${typeof opts}, equal to:\n${JSON.stringify(
         opts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   // quick ending
@@ -109,7 +109,7 @@ function within(str: string, opts?: Partial<Opts>): Res[] {
       console.log(
         `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
-        }; column = ${column}; line = ${currLine}`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
+        }; column = ${column}; line = ${currLine}`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`,
       );
 
     // track non-ASCII
@@ -160,8 +160,8 @@ function within(str: string, opts?: Partial<Opts>): Res[] {
       `160 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
         res,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   return res;
 }

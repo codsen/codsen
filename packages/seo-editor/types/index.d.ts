@@ -18,7 +18,7 @@ interface Res {
 declare function isLetter(str: unknown): boolean;
 declare function setLengthCompensation(
   resultArr: Res["todoLines"],
-  receivedMaxLen: number
+  receivedMaxLen: number,
 ): {
   extracted: string;
   counts: number[];

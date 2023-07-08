@@ -28,13 +28,13 @@ test("01 - simple objects, no key clash", () => {
       },
       {
         b: "b",
-      }
+      },
     ),
     {
       a: "a",
       b: "b",
     },
-    "01.01"
+    "01.01",
   );
   equal(
     mergeAdvanced(
@@ -43,13 +43,13 @@ test("01 - simple objects, no key clash", () => {
       },
       {
         a: "a",
-      }
+      },
     ),
     {
       a: "a",
       b: "b",
     },
-    "01.02"
+    "01.02",
   );
 
   // https://stackoverflow.com/a/51148924/3943954
@@ -63,7 +63,7 @@ test("01 - simple objects, no key clash", () => {
         b: 1,
       },
     },
-    "01.03"
+    "01.03",
   );
 });
 
@@ -77,7 +77,7 @@ test("02 - different types, no key clash", () => {
       {
         d: null,
         c: { c: "c" },
-      }
+      },
     ),
     {
       a: "a",
@@ -85,7 +85,7 @@ test("02 - different types, no key clash", () => {
       c: { c: "c" },
       d: null,
     },
-    "02.01"
+    "02.01",
   );
   equal(
     mergeAdvanced(
@@ -96,7 +96,7 @@ test("02 - different types, no key clash", () => {
       {
         b: ["b1", "b2", "b3"],
         a: "a",
-      }
+      },
     ),
     {
       a: "a",
@@ -104,7 +104,7 @@ test("02 - different types, no key clash", () => {
       c: { c: "c" },
       d: null,
     },
-    "02.02"
+    "02.02",
   );
 });
 
@@ -117,13 +117,13 @@ test("03 - string vs string value clash", () => {
       },
       {
         a: "c",
-      }
+      },
     ),
     {
       a: "c",
       b: "b",
     },
-    "03.01"
+    "03.01",
   );
   equal(
     mergeAdvanced(
@@ -133,13 +133,13 @@ test("03 - string vs string value clash", () => {
       {
         b: "b",
         a: "a",
-      }
+      },
     ),
     {
       a: "a",
       b: "b",
     },
-    "03.02"
+    "03.02",
   );
 });
 
@@ -152,13 +152,13 @@ test("04 - array vs array value clash", () => {
       },
       {
         a: ["c"],
-      }
+      },
     ),
     {
       a: ["a", "c"],
       b: "b",
     },
-    "04.01"
+    "04.01",
   );
   equal(
     mergeAdvanced(
@@ -168,13 +168,13 @@ test("04 - array vs array value clash", () => {
       {
         b: "b",
         a: ["a"],
-      }
+      },
     ),
     {
       a: ["c", "a"],
       b: "b",
     },
-    "04.02"
+    "04.02",
   );
 });
 
@@ -187,7 +187,7 @@ test("05 - object vs object value clash", () => {
       {
         b: "b",
         a: { a: "a" },
-      }
+      },
     ),
     {
       a: {
@@ -196,7 +196,7 @@ test("05 - object vs object value clash", () => {
       },
       b: "b",
     },
-    "05.01"
+    "05.01",
   );
 });
 
@@ -209,13 +209,13 @@ test("06 - array vs empty array", () => {
       },
       {
         a: [],
-      }
+      },
     ),
     {
       a: ["a1", "a2"],
       b: "b",
     },
-    "06.01"
+    "06.01",
   );
   equal(
     mergeAdvanced(
@@ -225,13 +225,13 @@ test("06 - array vs empty array", () => {
       {
         b: "b",
         a: ["a1", "a2"],
-      }
+      },
     ),
     {
       a: ["a1", "a2"],
       b: "b",
     },
-    "06.02"
+    "06.02",
   );
 });
 
@@ -244,13 +244,13 @@ test("07 - object vs empty array - object wins", () => {
       },
       {
         a: [],
-      }
+      },
     ),
     {
       a: { x: "y" },
       b: "b",
     },
-    "07.01"
+    "07.01",
   );
   equal(
     mergeAdvanced(
@@ -260,13 +260,13 @@ test("07 - object vs empty array - object wins", () => {
       {
         b: "b",
         a: { x: "y" },
-      }
+      },
     ),
     {
       a: { x: "y" },
       b: "b",
     },
-    "07.02"
+    "07.02",
   );
 });
 
@@ -279,13 +279,13 @@ test("08 - string vs empty array - string wins", () => {
       },
       {
         a: [],
-      }
+      },
     ),
     {
       a: "a",
       b: "b",
     },
-    "08.01"
+    "08.01",
   );
   equal(
     mergeAdvanced(
@@ -295,13 +295,13 @@ test("08 - string vs empty array - string wins", () => {
       {
         b: "b",
         a: "a",
-      }
+      },
     ),
     {
       a: "a",
       b: "b",
     },
-    "08.02"
+    "08.02",
   );
 });
 
@@ -314,13 +314,13 @@ test("09 - empty array vs empty array", () => {
       },
       {
         a: [],
-      }
+      },
     ),
     {
       a: [],
       b: "b",
     },
-    "09.01"
+    "09.01",
   );
   equal(
     mergeAdvanced(
@@ -330,13 +330,13 @@ test("09 - empty array vs empty array", () => {
       {
         b: "b",
         a: [],
-      }
+      },
     ),
     {
       a: [],
       b: "b",
     },
-    "09.02"
+    "09.02",
   );
 });
 
@@ -349,13 +349,13 @@ test("10 - string vs array", () => {
       },
       {
         a: "a",
-      }
+      },
     ),
     {
       a: ["a"],
       b: "b",
     },
-    "10.01"
+    "10.01",
   );
   equal(
     mergeAdvanced(
@@ -365,13 +365,13 @@ test("10 - string vs array", () => {
       {
         b: "b",
         a: ["a"],
-      }
+      },
     ),
     {
       a: ["a"],
       b: "b",
     },
-    "10.02"
+    "10.02",
   );
   equal(
     mergeAdvanced(
@@ -381,13 +381,13 @@ test("10 - string vs array", () => {
       },
       {
         a: ["a"],
-      }
+      },
     ),
     {
       a: ["a"],
       b: "b",
     },
-    "10.03"
+    "10.03",
   );
   equal(
     mergeAdvanced(
@@ -397,13 +397,13 @@ test("10 - string vs array", () => {
       {
         b: "b",
         a: "a",
-      }
+      },
     ),
     {
       a: ["a"],
       b: "b",
     },
-    "10.04"
+    "10.04",
   );
 });
 
@@ -416,13 +416,13 @@ test("11 - string vs object", () => {
       },
       {
         a: { c: "c" },
-      }
+      },
     ),
     {
       a: { c: "c" },
       b: "b",
     },
-    "11.01"
+    "11.01",
   );
   equal(
     mergeAdvanced(
@@ -432,13 +432,13 @@ test("11 - string vs object", () => {
       {
         b: "b",
         a: "a",
-      }
+      },
     ),
     {
       a: { c: "c" },
       b: "b",
     },
-    "11.02"
+    "11.02",
   );
   equal(
     mergeAdvanced(
@@ -448,13 +448,13 @@ test("11 - string vs object", () => {
       },
       {
         a: "a",
-      }
+      },
     ),
     {
       a: { c: "c" },
       b: "b",
     },
-    "11.03"
+    "11.03",
   );
   equal(
     mergeAdvanced(
@@ -464,13 +464,13 @@ test("11 - string vs object", () => {
       {
         b: "b",
         a: { c: "c" },
-      }
+      },
     ),
     {
       a: { c: "c" },
       b: "b",
     },
-    "11.04"
+    "11.04",
   );
 });
 
@@ -485,13 +485,13 @@ test("12 - object vs array", () => {
       },
       {
         a: ["c"],
-      }
+      },
     ),
     {
       a: ["c"],
       b: "b",
     },
-    "12.01"
+    "12.01",
   );
   equal(
     mergeAdvanced(
@@ -503,13 +503,13 @@ test("12 - object vs array", () => {
         a: {
           c: "c",
         },
-      }
+      },
     ),
     {
       a: ["c"],
       b: "b",
     },
-    "12.02"
+    "12.02",
   );
   equal(
     mergeAdvanced(
@@ -521,13 +521,13 @@ test("12 - object vs array", () => {
         a: {
           c: "c",
         },
-      }
+      },
     ),
     {
       a: ["c"],
       b: "b",
     },
-    "12.03"
+    "12.03",
   );
   equal(
     mergeAdvanced(
@@ -539,13 +539,13 @@ test("12 - object vs array", () => {
       {
         b: "b",
         a: ["c"],
-      }
+      },
     ),
     {
       a: ["c"],
       b: "b",
     },
-    "12.04"
+    "12.04",
   );
 });
 
@@ -558,13 +558,13 @@ test("13 - empty object vs empty array", () => {
       },
       {
         a: {},
-      }
+      },
     ),
     {
       a: [],
       b: "b",
     },
-    "13.01"
+    "13.01",
   );
   equal(
     mergeAdvanced(
@@ -574,13 +574,13 @@ test("13 - empty object vs empty array", () => {
       {
         b: "b",
         a: [],
-      }
+      },
     ),
     {
       a: [],
       b: "b",
     },
-    "13.02"
+    "13.02",
   );
   equal(
     mergeAdvanced(
@@ -590,13 +590,13 @@ test("13 - empty object vs empty array", () => {
       },
       {
         a: [],
-      }
+      },
     ),
     {
       a: [],
       b: "b",
     },
-    "13.03"
+    "13.03",
   );
   equal(
     mergeAdvanced(
@@ -606,13 +606,13 @@ test("13 - empty object vs empty array", () => {
       {
         b: "b",
         a: {},
-      }
+      },
     ),
     {
       a: [],
       b: "b",
     },
-    "13.04"
+    "13.04",
   );
 });
 
@@ -627,7 +627,7 @@ test("14 - empty string vs object", () => {
         a: {
           c: "c",
         },
-      }
+      },
     ),
     {
       a: {
@@ -635,7 +635,7 @@ test("14 - empty string vs object", () => {
       },
       b: "b",
     },
-    "14.01"
+    "14.01",
   );
   equal(
     mergeAdvanced(
@@ -647,7 +647,7 @@ test("14 - empty string vs object", () => {
       {
         b: "b",
         a: "",
-      }
+      },
     ),
     {
       a: {
@@ -655,7 +655,7 @@ test("14 - empty string vs object", () => {
       },
       b: "b",
     },
-    "14.02"
+    "14.02",
   );
   equal(
     mergeAdvanced(
@@ -667,7 +667,7 @@ test("14 - empty string vs object", () => {
       },
       {
         a: "",
-      }
+      },
     ),
     {
       a: {
@@ -675,7 +675,7 @@ test("14 - empty string vs object", () => {
       },
       b: "b",
     },
-    "14.03"
+    "14.03",
   );
   equal(
     mergeAdvanced(
@@ -687,7 +687,7 @@ test("14 - empty string vs object", () => {
         a: {
           c: "c",
         },
-      }
+      },
     ),
     {
       a: {
@@ -695,7 +695,7 @@ test("14 - empty string vs object", () => {
       },
       b: "b",
     },
-    "14.04"
+    "14.04",
   );
 });
 
@@ -722,7 +722,7 @@ test("15 - object values are arrays and get merged", () => {
             d: ["d"],
           },
         ],
-      }
+      },
     ),
     {
       a: [
@@ -735,7 +735,7 @@ test("15 - object values are arrays and get merged", () => {
       ],
       b: "b",
     },
-    "15.01"
+    "15.01",
   );
 });
 
@@ -754,7 +754,7 @@ test("16 - object values are objects and get merged", () => {
           c: ["c", "d", "e"],
           d: "d",
         },
-      }
+      },
     ),
     {
       a: {
@@ -763,7 +763,7 @@ test("16 - object values are objects and get merged", () => {
       },
       b: "b",
     },
-    "16.01"
+    "16.01",
   );
   equal(
     mergeAdvanced(
@@ -779,7 +779,7 @@ test("16 - object values are objects and get merged", () => {
           c: "c",
           d: ["d", "e", "f"],
         },
-      }
+      },
     ),
     {
       a: {
@@ -788,7 +788,7 @@ test("16 - object values are objects and get merged", () => {
       },
       b: "b",
     },
-    "16.02"
+    "16.02",
   );
   equal(
     mergeAdvanced(
@@ -804,7 +804,7 @@ test("16 - object values are objects and get merged", () => {
           d: ["d", "e", "f"],
           c: "c",
         },
-      }
+      },
     ),
     {
       a: {
@@ -813,7 +813,7 @@ test("16 - object values are objects and get merged", () => {
       },
       b: "b",
     },
-    "16.03"
+    "16.03",
   );
   equal(
     mergeAdvanced(
@@ -829,7 +829,7 @@ test("16 - object values are objects and get merged", () => {
           d: "d",
           c: ["c", "d", "e"],
         },
-      }
+      },
     ),
     {
       a: {
@@ -838,7 +838,7 @@ test("16 - object values are objects and get merged", () => {
       },
       b: "b",
     },
-    "16.04"
+    "16.04",
   );
 });
 
@@ -854,7 +854,7 @@ test("17 - merging booleans", () => {
       },
       {
         a: false,
-      }
+      },
     ),
     {
       a: [
@@ -863,7 +863,7 @@ test("17 - merging booleans", () => {
         },
       ],
     },
-    "17.01"
+    "17.01",
   );
   equal(
     mergeAdvanced(
@@ -876,7 +876,7 @@ test("17 - merging booleans", () => {
             b: false,
           },
         ],
-      }
+      },
     ),
     {
       a: [
@@ -885,7 +885,7 @@ test("17 - merging booleans", () => {
         },
       ],
     },
-    "17.02"
+    "17.02",
   );
 });
 
@@ -897,12 +897,12 @@ test("18 - merging undefined", () => {
       },
       {
         a: "a",
-      }
+      },
     ),
     {
       a: "a",
     },
-    "18.01"
+    "18.01",
   );
   equal(
     mergeAdvanced(
@@ -911,12 +911,12 @@ test("18 - merging undefined", () => {
       },
       {
         a: undefined,
-      }
+      },
     ),
     {
       a: "a",
     },
-    "18.02"
+    "18.02",
   );
 });
 
@@ -928,12 +928,12 @@ test("19 - merging null", () => {
       },
       {
         a: "a",
-      }
+      },
     ),
     {
       a: "a",
     },
-    "19.01"
+    "19.01",
   );
   equal(
     mergeAdvanced(
@@ -942,12 +942,12 @@ test("19 - merging null", () => {
       },
       {
         a: null,
-      }
+      },
     ),
     {
       a: "a",
     },
-    "19.02"
+    "19.02",
   );
 });
 
@@ -961,13 +961,13 @@ test("20 - boolean vs boolean merge (#78)", () => {
       },
       {
         a: false,
-      }
+      },
     ),
     {
       a: true,
       b: "b",
     },
-    "20.01"
+    "20.01",
   );
   equal(
     mergeAdvanced(
@@ -977,13 +977,13 @@ test("20 - boolean vs boolean merge (#78)", () => {
       {
         b: "b",
         a: true,
-      }
+      },
     ),
     {
       a: true,
       b: "b",
     },
-    "20.02"
+    "20.02",
   );
   equal(
     mergeAdvanced(
@@ -993,13 +993,13 @@ test("20 - boolean vs boolean merge (#78)", () => {
       {
         b: "b",
         a: false,
-      }
+      },
     ),
     {
       a: false,
       b: "b",
     },
-    "20.03"
+    "20.03",
   );
   equal(
     mergeAdvanced(
@@ -1009,13 +1009,13 @@ test("20 - boolean vs boolean merge (#78)", () => {
       {
         b: "b",
         a: true,
-      }
+      },
     ),
     {
       a: true,
       b: "b",
     },
-    "20.04"
+    "20.04",
   );
   // !opts.mergeBoolsUsingOrNotAnd - AND logical operation
   equal(
@@ -1029,13 +1029,13 @@ test("20 - boolean vs boolean merge (#78)", () => {
       },
       {
         mergeBoolsUsingOrNotAnd: false,
-      }
+      },
     ),
     {
       a: false,
       b: "b",
     },
-    "20.05"
+    "20.05",
   );
   equal(
     mergeAdvanced(
@@ -1048,13 +1048,13 @@ test("20 - boolean vs boolean merge (#78)", () => {
       },
       {
         mergeBoolsUsingOrNotAnd: false,
-      }
+      },
     ),
     {
       a: false,
       b: "b",
     },
-    "20.06"
+    "20.06",
   );
   equal(
     mergeAdvanced(
@@ -1067,13 +1067,13 @@ test("20 - boolean vs boolean merge (#78)", () => {
       },
       {
         mergeBoolsUsingOrNotAnd: false,
-      }
+      },
     ),
     {
       a: false,
       b: "b",
     },
-    "20.07"
+    "20.07",
   );
   equal(
     mergeAdvanced(
@@ -1086,13 +1086,13 @@ test("20 - boolean vs boolean merge (#78)", () => {
       },
       {
         mergeBoolsUsingOrNotAnd: false,
-      }
+      },
     ),
     {
       a: true,
       b: "b",
     },
-    "20.08"
+    "20.08",
   );
 });
 
@@ -1105,13 +1105,13 @@ test("21 - boolean vs undefined merge (#80)", () => {
       },
       {
         a: undefined,
-      }
+      },
     ),
     {
       a: true,
       b: "b",
     },
-    "21.01"
+    "21.01",
   );
   equal(
     mergeAdvanced(
@@ -1121,13 +1121,13 @@ test("21 - boolean vs undefined merge (#80)", () => {
       {
         b: "b",
         a: true,
-      }
+      },
     ),
     {
       a: true,
       b: "b",
     },
-    "21.02"
+    "21.02",
   );
   equal(
     mergeAdvanced(
@@ -1137,13 +1137,13 @@ test("21 - boolean vs undefined merge (#80)", () => {
       },
       {
         a: undefined,
-      }
+      },
     ),
     {
       a: false,
       b: "b",
     },
-    "21.03"
+    "21.03",
   );
   equal(
     mergeAdvanced(
@@ -1153,13 +1153,13 @@ test("21 - boolean vs undefined merge (#80)", () => {
       {
         b: "b",
         a: false,
-      }
+      },
     ),
     {
       a: false,
       b: "b",
     },
-    "21.04"
+    "21.04",
   );
 });
 
@@ -1172,13 +1172,13 @@ test("22 - null vs empty object merge (#84)", () => {
       },
       {
         a: null,
-      }
+      },
     ),
     {
       a: {},
       b: "b",
     },
-    "22.01"
+    "22.01",
   );
   equal(
     mergeAdvanced(
@@ -1188,13 +1188,13 @@ test("22 - null vs empty object merge (#84)", () => {
       {
         b: "b",
         a: {},
-      }
+      },
     ),
     {
       a: {},
       b: "b",
     },
-    "22.02"
+    "22.02",
   );
 });
 
@@ -1207,13 +1207,13 @@ test("23 - null vs. undefined (#90)", () => {
       },
       {
         a: undefined,
-      }
+      },
     ),
     {
       a: null,
       b: "b",
     },
-    "23.01"
+    "23.01",
   );
   equal(
     mergeAdvanced(
@@ -1223,13 +1223,13 @@ test("23 - null vs. undefined (#90)", () => {
       {
         b: "b",
         a: null,
-      }
+      },
     ),
     {
       a: null,
       b: "b",
     },
-    "23.02"
+    "23.02",
   );
 });
 
@@ -1244,13 +1244,13 @@ test("24 - no clash, just filling missing values", () => {
       },
       {
         a: f,
-      }
+      },
     ),
     {
       a: f,
       b: "b",
     },
-    "24.01"
+    "24.01",
   );
   equal(
     mergeAdvanced(
@@ -1259,13 +1259,13 @@ test("24 - no clash, just filling missing values", () => {
       },
       {
         b: "b",
-      }
+      },
     ),
     {
       a: f,
       b: "b",
     },
-    "24.02"
+    "24.02",
   );
 });
 
@@ -1280,12 +1280,12 @@ test("25 - arrays and opts.ignoreKeys", () => {
       },
       {
         ignoreKeys: "a",
-      }
+      },
     ),
     {
       a: [1, 2, 3],
     },
-    "25.01"
+    "25.01",
   );
 });
 
@@ -1300,12 +1300,12 @@ test("26 - arrays and opts.ignoreKeys", () => {
       },
       {
         hardMergeKeys: "a",
-      }
+      },
     ),
     {
       a: [4, 5, 6],
     },
-    "26.01"
+    "26.01",
   );
 });
 

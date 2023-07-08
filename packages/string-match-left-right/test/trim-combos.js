@@ -23,7 +23,7 @@ test(`02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
       trimBeforeMatching: true,
     }),
     "EOL",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -38,7 +38,7 @@ test(`04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
       trimBeforeMatching: true,
     }),
     "EOL",
-    "04.01"
+    "04.01",
   );
 });
 
@@ -48,7 +48,7 @@ test(`05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
       trimBeforeMatching: true,
     }),
     "z",
-    "05.01"
+    "05.01",
   );
 });
 
@@ -59,7 +59,7 @@ test(`06 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
       trimBeforeMatching: true,
     }),
     "EOL",
-    "06.01"
+    "06.01",
   );
 });
 
@@ -70,7 +70,7 @@ test(`07 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mtr
       trimBeforeMatching: true,
     }),
     false,
-    "07.01"
+    "07.01",
   );
 });
 

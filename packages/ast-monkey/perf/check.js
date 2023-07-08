@@ -25,7 +25,7 @@ const testme = () =>
     {
       key: null,
       val: { b: "c*" },
-    }
+    },
   );
 
 // action

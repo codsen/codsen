@@ -14,8 +14,8 @@ assert.equal(
     </td>
   </tr>
 </table>`,
-    { removeLineBreaks: true }
+    { removeLineBreaks: true },
   ).result,
   `<table width="100" border="0" cellpadding="0" cellspacing="0"><tr><td> hi
-</td></tr></table>`
+</td></tr></table>`,
 );

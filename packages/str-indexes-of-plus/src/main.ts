@@ -5,16 +5,16 @@ const version: string = v;
 function strIndexesOfPlus(
   str: string,
   searchValue: string,
-  fromIndex: string | number = 0
+  fromIndex: string | number = 0,
 ): number[] {
   if (typeof str !== "string") {
     throw new TypeError(
-      `str-indexes-of-plus/strIndexesOfPlus(): first input argument must be a string! Currently it's: ${typeof str}`
+      `str-indexes-of-plus/strIndexesOfPlus(): first input argument must be a string! Currently it's: ${typeof str}`,
     );
   }
   if (typeof searchValue !== "string") {
     throw new TypeError(
-      `str-indexes-of-plus/strIndexesOfPlus(): second input argument must be a string! Currently it's: ${typeof searchValue}`
+      `str-indexes-of-plus/strIndexesOfPlus(): second input argument must be a string! Currently it's: ${typeof searchValue}`,
     );
   }
   if (
@@ -22,7 +22,7 @@ function strIndexesOfPlus(
     (typeof fromIndex === "string" && !/^\d*$/.test(fromIndex))
   ) {
     throw new TypeError(
-      `str-indexes-of-plus/strIndexesOfPlus(): third input argument must be a natural number! Currently it's: ${fromIndex}`
+      `str-indexes-of-plus/strIndexesOfPlus(): third input argument must be a natural number! Currently it's: ${fromIndex}`,
     );
   }
   let strArr: string[] = Array.from(str);

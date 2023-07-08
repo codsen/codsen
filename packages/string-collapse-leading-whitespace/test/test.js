@@ -469,7 +469,7 @@ test("116 - mixed EOL's", () => {
   equal(
     c("\r\n\r\n\n\n zzz \n \n \n \t ", 9),
     "\r\n\r\n\n\nzzz\n\n\n",
-    "116.01"
+    "116.01",
   );
 });
 

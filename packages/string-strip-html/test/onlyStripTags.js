@@ -10,137 +10,137 @@ import { stripHtml } from "./util/noLog.js";
 test("01 - opts.onlyStripTags - base cases", () => {
   equal(
     stripHtml(
-      'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening'
+      'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening',
     ).result,
     "Let's watch news this evening",
-    "01.01"
+    "01.01",
   );
   equal(
     stripHtml(
       'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening',
       {
         onlyStripTags: "z",
-      }
+      },
     ).result,
     'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening',
-    "01.02"
+    "01.02",
   );
   equal(
     stripHtml(
       'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening',
       {
         onlyStripTags: null,
-      }
+      },
     ).result,
     "Let's watch news this evening",
-    "01.03"
+    "01.03",
   );
   equal(
     stripHtml(
       'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening',
       {
         onlyStripTags: [],
-      }
+      },
     ).result,
     "Let's watch news this evening",
-    "01.04"
+    "01.04",
   );
   equal(
     stripHtml(
       'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening',
       {
         onlyStripTags: [""],
-      }
+      },
     ).result,
     "Let's watch news this evening",
-    "01.05"
+    "01.05",
   );
   equal(
     stripHtml(
       'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening',
       {
         onlyStripTags: ["\t", "\n"],
-      }
+      },
     ).result,
     "Let's watch news this evening",
-    "01.06"
+    "01.06",
   );
   equal(
     stripHtml(
-      'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening'
+      'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening',
     ).result,
     "Let's watch news this evening",
-    "01.07"
+    "01.07",
   );
   equal(
     stripHtml(
       'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening',
       {
         onlyStripTags: "a",
-      }
+      },
     ).result,
     "Let's watch <b>news</b> this evening",
-    "01.08"
+    "01.08",
   );
   equal(
     stripHtml(
       'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening',
       {
         onlyStripTags: ["a"],
-      }
+      },
     ).result,
     "Let's watch <b>news</b> this evening",
-    "01.09"
+    "01.09",
   );
   equal(
     stripHtml(
       'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening',
       {
         onlyStripTags: "b",
-      }
+      },
     ).result,
     'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
-    "01.10"
+    "01.10",
   );
   equal(
     stripHtml(
       'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening',
       {
         onlyStripTags: ["b"],
-      }
+      },
     ).result,
     'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
-    "01.11"
+    "01.11",
   );
 });
 
 test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
   equal(
     stripHtml(
-      '<div>Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening</div>'
+      '<div>Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening</div>',
     ).result,
     "Let's watch news this evening",
-    "02.01"
+    "02.01",
   );
   equal(
     stripHtml(
       '<div>Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening</div>',
       {
         onlyStripTags: "a",
-      }
+      },
     ).result,
     "<div>Let's watch <b>news</b> this evening</div>",
-    "02.02"
+    "02.02",
   );
   equal(
     stripHtml(
       '<div>Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening</div>',
       {
         ignoreTags: "a",
-      }
+      },
     ).result,
     'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
-    "02.03"
+    "02.03",
   );
   equal(
     stripHtml(
@@ -148,10 +148,10 @@ test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
       {
         onlyStripTags: "a",
         ignoreTags: "a",
-      }
+      },
     ).result,
     '<div>Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening</div>',
-    "02.04"
+    "02.04",
   );
   equal(
     stripHtml(
@@ -159,10 +159,10 @@ test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
       {
         onlyStripTags: ["a", "b"],
         ignoreTags: "a",
-      }
+      },
     ).result,
     '<div>Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening</div>',
-    "02.05"
+    "02.05",
   );
   equal(
     stripHtml(
@@ -170,10 +170,10 @@ test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
       {
         onlyStripTags: ["a"],
         ignoreTags: ["a", "b"],
-      }
+      },
     ).result,
     '<div>Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening</div>',
-    "02.06"
+    "02.06",
   );
 });
 
@@ -184,14 +184,14 @@ test("03 - opts.onlyStripTags - multiline text - defaults", () => {
 
 <b>mn</b>
 
-def`
+def`,
     ).result,
     `Abc
 
 mn
 
 def`,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -229,7 +229,7 @@ def`,
           "i",
           "b",
         ],
-      }
+      },
     ).result,
     `Abc
 
@@ -240,7 +240,7 @@ st
 uv
 
 def`,
-    "04.01"
+    "04.01",
   );
 });
 

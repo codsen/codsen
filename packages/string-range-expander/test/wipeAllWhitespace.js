@@ -17,7 +17,7 @@ test("01 - expanding in the middle of the word", () => {
       to: 8,
     }),
     [4, 9],
-    "01.01"
+    "01.01",
   );
 
   // left
@@ -29,7 +29,7 @@ test("01 - expanding in the middle of the word", () => {
       wipeAllWhitespaceOnLeft: false,
     }),
     [4, 9],
-    "01.02"
+    "01.02",
   );
   equal(
     e({
@@ -39,7 +39,7 @@ test("01 - expanding in the middle of the word", () => {
       wipeAllWhitespaceOnLeft: true,
     }),
     [3, 9],
-    "01.03"
+    "01.03",
   );
 
   // right
@@ -51,7 +51,7 @@ test("01 - expanding in the middle of the word", () => {
       wipeAllWhitespaceOnRight: false,
     }),
     [4, 9],
-    "01.04"
+    "01.04",
   );
   equal(
     e({
@@ -61,7 +61,7 @@ test("01 - expanding in the middle of the word", () => {
       wipeAllWhitespaceOnRight: true,
     }),
     [4, 10],
-    "01.05"
+    "01.05",
   );
 
   // both
@@ -74,7 +74,7 @@ test("01 - expanding in the middle of the word", () => {
       wipeAllWhitespaceOnRight: true,
     }),
     [3, 10],
-    "01.06"
+    "01.06",
   );
 });
 
@@ -89,7 +89,7 @@ test("02 - expanding in the beginning of the word", () => {
       to: 5,
     }),
     [1, 6],
-    "02.01"
+    "02.01",
   );
 
   // left
@@ -101,7 +101,7 @@ test("02 - expanding in the beginning of the word", () => {
       wipeAllWhitespaceOnLeft: false,
     }),
     [1, 6],
-    "02.02"
+    "02.02",
   );
   equal(
     e({
@@ -111,7 +111,7 @@ test("02 - expanding in the beginning of the word", () => {
       wipeAllWhitespaceOnLeft: true,
     }),
     [0, 6],
-    "02.03"
+    "02.03",
   );
 
   // right
@@ -123,7 +123,7 @@ test("02 - expanding in the beginning of the word", () => {
       wipeAllWhitespaceOnRight: false,
     }),
     [1, 6],
-    "02.04"
+    "02.04",
   );
   equal(
     e({
@@ -133,7 +133,7 @@ test("02 - expanding in the beginning of the word", () => {
       wipeAllWhitespaceOnRight: true,
     }),
     [1, 7],
-    "02.05"
+    "02.05",
   );
 
   // both
@@ -146,7 +146,7 @@ test("02 - expanding in the beginning of the word", () => {
       wipeAllWhitespaceOnRight: true,
     }),
     [0, 7],
-    "02.06"
+    "02.06",
   );
 });
 
@@ -159,7 +159,7 @@ test("03 - combo with opts.ifLeftSideIncludesThisCropItToo - end of the string f
       to: 8,
     }),
     [4, 9],
-    "03.01"
+    "03.01",
   );
   equal(
     e({
@@ -169,7 +169,7 @@ test("03 - combo with opts.ifLeftSideIncludesThisCropItToo - end of the string f
       ifLeftSideIncludesThisCropItToo: "",
     }),
     [4, 9],
-    "03.02"
+    "03.02",
   );
   equal(
     e({
@@ -180,7 +180,7 @@ test("03 - combo with opts.ifLeftSideIncludesThisCropItToo - end of the string f
       wipeAllWhitespaceOnLeft: false,
     }),
     [1, 9],
-    "03.03"
+    "03.03",
   );
   equal(
     e({
@@ -191,7 +191,7 @@ test("03 - combo with opts.ifLeftSideIncludesThisCropItToo - end of the string f
       wipeAllWhitespaceOnLeft: true,
     }),
     [0, 9],
-    "03.04"
+    "03.04",
   );
 });
 
@@ -204,7 +204,7 @@ test("04 - combo with opts.ifLeftSideIncludesThisCropItToo - letter further", ()
       to: 9,
     }),
     [5, 10],
-    "04.01"
+    "04.01",
   );
   equal(
     e({
@@ -214,7 +214,7 @@ test("04 - combo with opts.ifLeftSideIncludesThisCropItToo - letter further", ()
       ifLeftSideIncludesThisCropItToo: "",
     }),
     [5, 10],
-    "04.02"
+    "04.02",
   );
   equal(
     e({
@@ -225,7 +225,7 @@ test("04 - combo with opts.ifLeftSideIncludesThisCropItToo - letter further", ()
       wipeAllWhitespaceOnLeft: false,
     }),
     [3, 10],
-    "04.03"
+    "04.03",
   );
   equal(
     e({
@@ -236,7 +236,7 @@ test("04 - combo with opts.ifLeftSideIncludesThisCropItToo - letter further", ()
       wipeAllWhitespaceOnLeft: true,
     }),
     [3, 10],
-    "04.04"
+    "04.04",
   );
 });
 
@@ -249,7 +249,7 @@ test("05 - combo with opts.ifLeftSideIncludesThisCropItToo - whitespace+letter f
       to: 11,
     }),
     [7, 12],
-    "05.01"
+    "05.01",
   );
   equal(
     e({
@@ -259,7 +259,7 @@ test("05 - combo with opts.ifLeftSideIncludesThisCropItToo - whitespace+letter f
       ifLeftSideIncludesThisCropItToo: "",
     }),
     [7, 12],
-    "05.02"
+    "05.02",
   );
   equal(
     e({
@@ -270,7 +270,7 @@ test("05 - combo with opts.ifLeftSideIncludesThisCropItToo - whitespace+letter f
       wipeAllWhitespaceOnLeft: false,
     }),
     [4, 12],
-    "05.03"
+    "05.03",
   );
   equal(
     e({
@@ -281,7 +281,7 @@ test("05 - combo with opts.ifLeftSideIncludesThisCropItToo - whitespace+letter f
       wipeAllWhitespaceOnLeft: true,
     }),
     [3, 12],
-    "05.04"
+    "05.04",
   );
 });
 
@@ -294,7 +294,7 @@ test("06 - combo with opts.ifRightSideIncludesThisCropItToo - end of the string 
       to: 8,
     }),
     [4, 9],
-    "06.01"
+    "06.01",
   );
   equal(
     e({
@@ -304,7 +304,7 @@ test("06 - combo with opts.ifRightSideIncludesThisCropItToo - end of the string 
       ifRightSideIncludesThisCropItToo: "",
     }),
     [4, 9],
-    "06.02"
+    "06.02",
   );
   equal(
     e({
@@ -315,7 +315,7 @@ test("06 - combo with opts.ifRightSideIncludesThisCropItToo - end of the string 
       wipeAllWhitespaceOnRight: false,
     }),
     [4, 12],
-    "06.03"
+    "06.03",
   );
   equal(
     e({
@@ -326,7 +326,7 @@ test("06 - combo with opts.ifRightSideIncludesThisCropItToo - end of the string 
       wipeAllWhitespaceOnRight: true,
     }),
     [4, 13],
-    "06.04"
+    "06.04",
   );
 });
 
@@ -339,7 +339,7 @@ test("07 - combo with opts.ifRightSideIncludesThisCropItToo - letter further", (
       to: 8,
     }),
     [4, 9],
-    "07.01"
+    "07.01",
   );
   equal(
     e({
@@ -349,7 +349,7 @@ test("07 - combo with opts.ifRightSideIncludesThisCropItToo - letter further", (
       ifRightSideIncludesThisCropItToo: "",
     }),
     [4, 9],
-    "07.02"
+    "07.02",
   );
   equal(
     e({
@@ -360,7 +360,7 @@ test("07 - combo with opts.ifRightSideIncludesThisCropItToo - letter further", (
       wipeAllWhitespaceOnRight: false,
     }),
     [4, 11],
-    "07.03"
+    "07.03",
   );
   equal(
     e({
@@ -371,7 +371,7 @@ test("07 - combo with opts.ifRightSideIncludesThisCropItToo - letter further", (
       wipeAllWhitespaceOnRight: true,
     }),
     [4, 11],
-    "07.04"
+    "07.04",
   );
 });
 
@@ -384,7 +384,7 @@ test("08 - combo with opts.ifRightSideIncludesThisCropItToo - whitespace+letter 
       to: 8,
     }),
     [4, 9],
-    "08.01"
+    "08.01",
   );
   equal(
     e({
@@ -394,7 +394,7 @@ test("08 - combo with opts.ifRightSideIncludesThisCropItToo - whitespace+letter 
       ifRightSideIncludesThisCropItToo: "",
     }),
     [4, 9],
-    "08.02"
+    "08.02",
   );
   equal(
     e({
@@ -405,7 +405,7 @@ test("08 - combo with opts.ifRightSideIncludesThisCropItToo - whitespace+letter 
       wipeAllWhitespaceOnRight: false,
     }),
     [4, 12],
-    "08.03"
+    "08.03",
   );
   equal(
     e({
@@ -416,7 +416,7 @@ test("08 - combo with opts.ifRightSideIncludesThisCropItToo - whitespace+letter 
       wipeAllWhitespaceOnRight: true,
     }),
     [4, 13],
-    "08.04"
+    "08.04",
   );
 });
 

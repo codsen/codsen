@@ -42,12 +42,12 @@ assert.deepEqual(
       [3, 5],
       [5, 7],
     ],
-    9 // string length needed to set the boundary
+    9, // string length needed to set the boundary
   ),
   [
     [0, 3],
     [7, 9],
-  ]
+  ],
 );
 ```
 

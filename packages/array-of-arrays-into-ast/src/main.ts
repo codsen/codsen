@@ -40,8 +40,8 @@ function generateAst(inputArr: any[], opts?: Partial<Opts>): PlainObj {
       `array-of-arrays-into-ast: [THROW_ID_01] inputArr must be array. Currently it's of a type ${typeof inputArr} equal to:\n${JSON.stringify(
         inputArr,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   } else if (inputArr.length === 0) {
     return {};
@@ -55,7 +55,7 @@ function generateAst(inputArr: any[], opts?: Partial<Opts>): PlainObj {
     DEV &&
       console.log(
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        `${`\u001b[${36}m${`================================================ ${arr}`}\u001b[${39}m`}`
+        `${`\u001b[${36}m${`================================================ ${arr}`}\u001b[${39}m`}`,
       );
 
     let temp = null;
@@ -72,8 +72,8 @@ function generateAst(inputArr: any[], opts?: Partial<Opts>): PlainObj {
         `${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
           temp,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     DEV &&
@@ -81,13 +81,13 @@ function generateAst(inputArr: any[], opts?: Partial<Opts>): PlainObj {
         `${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
           res,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
   });
   DEV &&
     console.log(
-      `\u001b[${36}m${`================================================`}\u001b[${39}m\n\n`
+      `\u001b[${36}m${`================================================`}\u001b[${39}m\n\n`,
     );
   return sortObject(res);
 }

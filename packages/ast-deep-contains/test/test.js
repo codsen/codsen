@@ -19,7 +19,7 @@ test(`01 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - second is a subset of th
     },
     (err) => {
       errors.push(err);
-    }
+    },
   );
 
   equal(
@@ -28,7 +28,7 @@ test(`01 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - second is a subset of th
       ["1", "1"],
       ["2", "2"],
     ],
-    "01.01"
+    "01.01",
   );
   equal(errors, [], "01.02");
 });
@@ -45,7 +45,7 @@ test(`02 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - first is a subset of the
     },
     (err) => {
       errors.push(err);
-    }
+    },
   );
 
   equal(
@@ -54,7 +54,7 @@ test(`02 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - first is a subset of the
       ["1", "1"],
       ["2", "2"],
     ],
-    "02.01"
+    "02.01",
   );
   equal(errors.length, 1, "02.02");
   match(errors[0], /does not have the path "c"/g, "02.03");
@@ -72,7 +72,7 @@ test(`03 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - types mismatch`, () => {
     },
     (err) => {
       errors.push(err);
-    }
+    },
   );
 
   equal(gathered, [], "03.01");
@@ -93,7 +93,7 @@ test(`04 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - arrays with string value
     },
     (err) => {
       errors.push(err);
-    }
+    },
   );
 
   equal(
@@ -103,7 +103,7 @@ test(`04 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - arrays with string value
       ["2", "5"],
       ["3", "6"],
     ],
-    "04.01"
+    "04.01",
   );
   equal(errors, [], "04.02");
 });
@@ -120,7 +120,7 @@ test(`05 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - arrays with string value
     },
     (err) => {
       errors.push(err);
-    }
+    },
   );
 
   equal(
@@ -129,7 +129,7 @@ test(`05 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - arrays with string value
       ["1", "4"],
       ["2", "5"],
     ],
-    "05.01"
+    "05.01",
   );
   equal(errors.length, 1, "05.02");
   match(errors[0], /does not have the path/g, "05.03");
@@ -147,7 +147,7 @@ test(`06 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - arrays with objects, opt
     },
     (err) => {
       errors.push(err);
-    }
+    },
   );
   equal(
     gathered,
@@ -155,7 +155,7 @@ test(`06 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - arrays with objects, opt
       ["1", "4"],
       ["2", "5"],
     ],
-    "06.01"
+    "06.01",
   );
   equal(errors, [], "06.02");
 });
@@ -173,7 +173,7 @@ test(`07 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - arrays with objects, opt
     (err) => {
       errors.push(err);
     },
-    { skipContainers: false }
+    { skipContainers: false },
   );
 
   equal(
@@ -182,7 +182,7 @@ test(`07 - ${`\u001b[${34}m${"basics"}\u001b[${39}m`} - arrays with objects, opt
       ["1", "4"], // <---- skipped [{ a: "1" }, { b: "2" }, { c: "3" }] because it's at the root level
       ["2", "5"],
     ],
-    "07.01"
+    "07.01",
   );
   equal(errors, [], "07.02");
 });
@@ -211,7 +211,7 @@ test(`08 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - elem
       }
     },
     () => {},
-    { skipContainers: false, arrayStrictComparison: false }
+    { skipContainers: false, arrayStrictComparison: false },
   );
 
   equal(
@@ -222,7 +222,7 @@ test(`08 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - elem
       ["a", "a"],
       ["b", "b"],
     ],
-    "08.01"
+    "08.01",
   );
   equal(errors, [], "08.02");
 });
@@ -248,7 +248,7 @@ test(`09 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - elem
       }
     },
     () => {},
-    { skipContainers: false, arrayStrictComparison: true }
+    { skipContainers: false, arrayStrictComparison: true },
   );
 
   equal(gathered, [], "09.01");
@@ -280,7 +280,7 @@ test(`09 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - elem
       ["x", "a"],
       ["y", "b"],
     ],
-    "09.02"
+    "09.02",
   );
 });
 
@@ -305,7 +305,7 @@ test(`10 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - elem
       }
     },
     () => {},
-    { skipContainers: true, arrayStrictComparison: false }
+    { skipContainers: true, arrayStrictComparison: false },
   );
 
   equal(
@@ -316,7 +316,7 @@ test(`10 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - elem
       ["a", "a"],
       ["b", "b"],
     ],
-    "10.01"
+    "10.01",
   );
   equal(errors, [], "10.02");
 });
@@ -342,7 +342,7 @@ test(`11 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - elem
       }
     },
     () => {},
-    { skipContainers: true, arrayStrictComparison: true }
+    { skipContainers: true, arrayStrictComparison: true },
   );
 
   equal(gathered, [], "11.01");
@@ -354,7 +354,7 @@ test(`11 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - elem
       ["x", "a"],
       ["y", "b"],
     ],
-    "11.02"
+    "11.02",
   );
 });
 
@@ -382,7 +382,7 @@ test(`12 - ${`\u001b[${36}m${"deeper nested"}\u001b[${39}m`} - ${`\u001b[${31}m$
       gathered.push([leftSideVal, rightSideVal]);
     },
     () => {},
-    { skipContainers: false }
+    { skipContainers: false },
   );
 
   equal(
@@ -415,7 +415,7 @@ test(`12 - ${`\u001b[${36}m${"deeper nested"}\u001b[${39}m`} - ${`\u001b[${31}m$
       ["a", "a"],
       ["b", "b"],
     ],
-    "12.01"
+    "12.01",
   );
   equal(errors, [], "12.02");
 });
@@ -441,7 +441,7 @@ test(`13 - ${`\u001b[${36}m${"deeper nested"}\u001b[${39}m`} - ${`\u001b[${32}m$
       gathered.push([leftSideVal, rightSideVal]);
     },
     () => {},
-    { skipContainers: true }
+    { skipContainers: true },
   );
 
   equal(
@@ -452,7 +452,7 @@ test(`13 - ${`\u001b[${36}m${"deeper nested"}\u001b[${39}m`} - ${`\u001b[${32}m$
       ["a", "a"],
       ["b", "b"],
     ],
-    "13.01"
+    "13.01",
   );
   equal(errors, [], "13.02");
 });
@@ -470,7 +470,7 @@ test(`14 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - one 
     (errStr) => {
       errors.push(errStr);
     },
-    {} // default opts
+    {}, // default opts
   );
 
   equal(
@@ -479,7 +479,7 @@ test(`14 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - one 
       ["a", "a"],
       ["b", "b"],
     ],
-    "14.01"
+    "14.01",
   );
   equal(errors, [], "14.02");
 });
@@ -539,7 +539,7 @@ test(`15 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - one 
     (errStr) => {
       errors.push(errStr);
     },
-    {} // default opts
+    {}, // default opts
   );
 
   // console.log(
@@ -575,7 +575,7 @@ test(`15 - ${`\u001b[${36}m${"opts.arrayStrictComparison"}\u001b[${39}m`} - one 
       [5, 5],
       ["/", "/"],
     ],
-    "15.01"
+    "15.01",
   );
   equal(errors, [], "15.02");
 });
@@ -660,7 +660,7 @@ test(`16 - ${`\u001b[${35}m${"continuing"}\u001b[${39}m`} - tree 1 has one more 
       }
     },
     () => {},
-    { skipContainers: true }
+    { skipContainers: true },
   );
 
   equal(
@@ -671,7 +671,7 @@ test(`16 - ${`\u001b[${35}m${"continuing"}\u001b[${39}m`} - tree 1 has one more 
       ["a", "a"],
       ["b", "b"],
     ],
-    "16.01"
+    "16.01",
   );
   equal(errors, [], "16.02");
 });

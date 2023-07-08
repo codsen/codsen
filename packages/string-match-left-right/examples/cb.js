@@ -22,5 +22,5 @@ function isSpace(char) {
 
 assert.equal(
   matchLeft('<a class="something">', 8, "class", { cb: isSpace }),
-  "class"
+  "class",
 );

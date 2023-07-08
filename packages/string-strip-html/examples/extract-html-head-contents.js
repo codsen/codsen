@@ -23,7 +23,7 @@ const headWithHeadTags = stripHtml(someHtml, {
 })
   .filteredTagLocations.reduce(
     (acc, [from, to]) => `${acc}${someHtml.slice(from, to)}`,
-    ""
+    "",
   )
   .trim();
 
@@ -32,12 +32,12 @@ assert.equal(
   `<head>
     <meta charset="utf-8">
     <title>the title</title>
-  </head>`
+  </head>`,
 );
 
 const headContents = headWithHeadTags.replace(/<\/?head>/g, "").trim();
 assert.equal(
   headContents,
   `<meta charset="utf-8">
-    <title>the title</title>`
+    <title>the title</title>`,
 );

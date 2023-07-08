@@ -24,10 +24,10 @@ test("02 - util.flattenObject > simple object", () => {
         xhtml: true,
         preventDoubleWrapping: true,
         objectKeyAndValueJoinChar: ".",
-      }
+      },
     ),
     ["a.b", "c.d"],
-    "02.01"
+    "02.01",
   );
 });
 
@@ -45,10 +45,10 @@ test("03 - util.flattenObject > nested objects", () => {
         xhtml: true,
         preventDoubleWrapping: true,
         objectKeyAndValueJoinChar: ".",
-      }
+      },
     ),
     ["a.b.c", "a.d.e", "f.g.h", "f.e.j"],
-    "03.01"
+    "03.01",
   );
 });
 

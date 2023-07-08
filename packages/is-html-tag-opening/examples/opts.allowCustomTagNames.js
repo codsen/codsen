@@ -17,5 +17,5 @@ assert.equal(
   isOpening("abc <zzz>", 4, {
     allowCustomTagNames: true,
   }),
-  true
+  true,
 );

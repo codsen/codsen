@@ -38,7 +38,7 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
   }
   if (!existy(input)) {
     throw new Error(
-      "object-delete-key/deleteKey(): [THROW_ID_01] Please provide the first argument, something to work upon."
+      "object-delete-key/deleteKey(): [THROW_ID_01] Please provide the first argument, something to work upon.",
     );
   }
   let resolvedOpts: Opts = { ...defaults, ...opts };
@@ -50,7 +50,7 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
 
   if (!existy(resolvedOpts.key) && !existy(resolvedOpts.val)) {
     throw new Error(
-      "object-delete-key/deleteKey(): [THROW_ID_04] Please provide at least a key or a value."
+      "object-delete-key/deleteKey(): [THROW_ID_04] Please provide at least a key or a value.",
     );
   }
   let resolvedInput = clone(input);
@@ -59,8 +59,8 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
       `059 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedInput`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedInput,
         null,
-        4
-      )}; keys = ${Object.keys(resolvedInput)}`
+        4,
+      )}; keys = ${Object.keys(resolvedInput)}`,
     );
 
   if (resolvedOpts.cleanup) {
@@ -74,8 +74,8 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
         `074 ${`\u001b[${33}m${`findings`}\u001b[${39}m`} = ${JSON.stringify(
           findings,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     let currentIndex: number;
     let nodeToDelete: number;
@@ -87,8 +87,8 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
           `087 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nodeToDelete`}\u001b[${39}m`} = ${JSON.stringify(
             nodeToDelete,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       for (let i = 1, len = findings[0].path.length; i < len; i++) {
         currentIndex = findings[0].path[len - 1 - i];
@@ -98,7 +98,7 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
               key: resolvedOpts.key,
               val: resolvedOpts.val,
               only: resolvedOpts.only,
-            })
+            }),
           )
         ) {
           nodeToDelete = currentIndex;
@@ -118,8 +118,8 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
         `118 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedInput`}\u001b[${39}m`} = ${JSON.stringify(
           resolvedInput,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     return resolvedInput;
   }
@@ -129,7 +129,7 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
       `129 ${`\u001b[${33}m${`resolvedInput`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedInput,
         null,
-        4
+        4,
       )}; resolvedOpts = ${JSON.stringify(
         {
           key: resolvedOpts.key,
@@ -137,8 +137,8 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
           only: resolvedOpts.only,
         },
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   return del(resolvedInput, {
     key: resolvedOpts.key,

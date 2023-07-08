@@ -15,7 +15,7 @@ declare const defaults: Opts;
 declare function deleteObj<T extends JsonValue>(
   input: T,
   objToDelete: JsonObject,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): T;
 
 export { JsonArray, JsonObject, JsonValue, Opts, defaults, deleteObj, version };

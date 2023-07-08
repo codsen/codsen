@@ -11,12 +11,12 @@ import path from "path";
 const fileName = "language-subtag-registry.txt";
 const ianaSpec = fs.readFileSync(
   path.resolve(`reference/${fileName}`),
-  "utf-8"
+  "utf-8",
 );
 console.log(
   `${`\u001b[${90}m${"reference/runme.js:"}\u001b[${39}m`} read ${`\u001b[${33}m${
     ianaSpec.length
-  }\u001b[${39}m`} characters from ${fileName}`
+  }\u001b[${39}m`} characters from ${fileName}`,
 );
 
 // PROCESS ianaSpec
@@ -98,42 +98,42 @@ ianaSpec
 
 fs.writeFileSync(
   path.resolve("src/tagTypes.json"),
-  JSON.stringify(tagTypes.sort(), null, 4)
+  JSON.stringify(tagTypes.sort(), null, 4),
 );
 //
 fs.writeFileSync(
   path.resolve("src/tag_extlang.json"),
-  JSON.stringify(extlang.sort(), null, 4)
+  JSON.stringify(extlang.sort(), null, 4),
 );
 fs.writeFileSync(
   path.resolve("src/tag_grandfathered.json"),
-  JSON.stringify(grandfathered.sort(), null, 4)
+  JSON.stringify(grandfathered.sort(), null, 4),
 );
 fs.writeFileSync(
   path.resolve("src/tag_language.json"),
-  JSON.stringify(language.sort(), null, 4)
+  JSON.stringify(language.sort(), null, 4),
 );
 fs.writeFileSync(
   path.resolve("src/tag_redundant.json"),
-  JSON.stringify(redundant.sort(), null, 4)
+  JSON.stringify(redundant.sort(), null, 4),
 );
 fs.writeFileSync(
   path.resolve("src/tag_region.json"),
-  JSON.stringify(region.sort(), null, 4)
+  JSON.stringify(region.sort(), null, 4),
 );
 fs.writeFileSync(
   path.resolve("src/tag_script.json"),
-  JSON.stringify(script.sort(), null, 4)
+  JSON.stringify(script.sort(), null, 4),
 );
 fs.writeFileSync(
   path.resolve("src/tag_variant.json"),
-  JSON.stringify(variant.sort(), null, 4)
+  JSON.stringify(variant.sort(), null, 4),
 );
 fs.writeFileSync(
   path.resolve("src/tag_ranged.json"),
-  JSON.stringify(ranged.sort(), null, 4)
+  JSON.stringify(ranged.sort(), null, 4),
 );
 
 console.log(
-  `${`\u001b[${90}m${"reference/runme.js:"}\u001b[${39}m`} ${`\u001b[${32}m${"SUCCESS"}\u001b[${39}m`}, all files written`
+  `${`\u001b[${90}m${"reference/runme.js:"}\u001b[${39}m`} ${`\u001b[${32}m${"SUCCESS"}\u001b[${39}m`}, all files written`,
 );

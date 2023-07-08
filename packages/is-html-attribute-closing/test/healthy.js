@@ -41,7 +41,7 @@ test("02 - one tag, few attrs, double quotes", () => {
       not.ok(isCl(str, 36, 28), "02.16");
       not.ok(isCl(str, 36, 36), "02.17");
       ok(isCl(str, 36, 50), "02.18"); // <--
-    }
+    },
   );
 
   // fin.
@@ -113,7 +113,7 @@ test("06 - url attribs within src", () => {
 
 test("07 - no equal char in mailto", () => {
   combinations(
-    '<a href="mailto:frank@wwdcdemo.example.com">John Frank</a>'
+    '<a href="mailto:frank@wwdcdemo.example.com">John Frank</a>',
   ).forEach((str) => {
     ok(isCl(str, 8, 42), "09");
   });
@@ -121,7 +121,7 @@ test("07 - no equal char in mailto", () => {
 
 test("08 - href with mailto and equal", () => {
   combinations(
-    '<a href="mailto:foo@example.com?cc=bar@example.com&subject=Greetings%20from%20Cupertino!&body=Wish%20you%20were%20here!">John Frank</a>'
+    '<a href="mailto:foo@example.com?cc=bar@example.com&subject=Greetings%20from%20Cupertino!&body=Wish%20you%20were%20here!">John Frank</a>',
   ).forEach((str) => {
     ok(isCl(str, 8, 119), "10");
   });
@@ -131,7 +131,7 @@ test("09", () => {
   combinations('<img src="codsen.com/my-image.png?query=" />').forEach(
     (str) => {
       ok(isCl(str, 9, 40));
-    }
+    },
   );
 });
 
@@ -167,7 +167,7 @@ test("14 - text quotes", () => {
 
 test("15 - quote pairs inside font-family", () => {
   combinations(
-    "<td style=\"font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;\">"
+    "<td style=\"font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;\">",
   ).forEach((str, idx) => {
     not.ok(isCl(str, 10, 23), `15.01.${`${idx}`.padStart(2, "0")} - "${str}"`);
     not.ok(isCl(str, 10, 31), `15.02.${`${idx}`.padStart(2, "0")} - "${str}"`);
@@ -179,7 +179,7 @@ test("15 - quote pairs inside font-family", () => {
 
 test("16", () => {
   combinations(
-    "<td style=\"font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;\">\nzzz\n</td>"
+    "<td style=\"font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;\">\nzzz\n</td>",
   ).forEach((str, idx) => {
     not.ok(isCl(str, 10, 23), `16.01.${`${idx}`.padStart(2, "0")} - "${str}"`);
     not.ok(isCl(str, 10, 31), `16.02.${`${idx}`.padStart(2, "0")} - "${str}"`);
@@ -191,7 +191,7 @@ test("16", () => {
 
 test("17", () => {
   combinations(
-    "<td style=\"font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;\" align=\"left\"></td>"
+    "<td style=\"font-family:'AbCd-Ef', 'AbCd', Ab, cd-ef;\" align=\"left\"></td>",
   ).forEach((str, idx) => {
     not.ok(isCl(str, 10, 23), `17.01.${`${idx}`.padStart(2, "0")} - "${str}"`);
     not.ok(isCl(str, 10, 31), `17.02.${`${idx}`.padStart(2, "0")} - "${str}"`);

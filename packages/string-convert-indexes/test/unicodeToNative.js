@@ -67,7 +67,7 @@ test("07 - two astral characters offsetting the rest", () => {
   equal(
     unicodeToNative("\uD834\uDF06aa", ["0", "1", "2"]),
     ["0", "2", "3"],
-    "07.01"
+    "07.01",
   );
 });
 
@@ -79,7 +79,7 @@ test("09 - two astral characters offsetting the rest", () => {
   equal(
     unicodeToNative("\uD834\uDF06aa", ["1", "0", "2"]),
     ["2", "0", "3"],
-    "09.01"
+    "09.01",
   );
 });
 
@@ -91,7 +91,7 @@ test("11 - two astral characters offsetting the rest", () => {
   throws(
     () => unicodeToNative("\uD834\uDF06aa", [1, 0, 2, 3, 4]),
     /THROW_ID_06/,
-    "11.01"
+    "11.01",
   );
 });
 
@@ -99,7 +99,7 @@ test("12 - two astral characters offsetting the rest", () => {
   throws(
     () => unicodeToNative("\uD834\uDF06aa", ["1", "0", "2", "3", "4"]),
     /THROW_ID_06/,
-    "12.01"
+    "12.01",
   );
 });
 

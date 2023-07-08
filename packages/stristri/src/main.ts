@@ -17,12 +17,12 @@ function returnHelper(
   result: string,
   applicableOpts: ApplicableOpts,
   templatingLang: { name: null | string },
-  start: number
+  start: number,
 ): Res {
   /* c8 ignore next */
   if (arguments.length !== 4) {
     throw new Error(
-      `stristri/returnHelper(): should be 3 input args but ${arguments.length} were given!`
+      `stristri/returnHelper(): should be 3 input args but ${arguments.length} were given!`,
     );
   }
   /* c8 ignore next */
@@ -41,8 +41,8 @@ function returnHelper(
           applicableOpts,
         },
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   return {
     log: {
@@ -64,8 +64,8 @@ function stri(input: string, opts?: Partial<Opts>): Res {
       `064 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
         input,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   // insurance
@@ -74,8 +74,8 @@ function stri(input: string, opts?: Partial<Opts>): Res {
       `stristri: [THROW_ID_01] the first input arg must be string! It was given as ${JSON.stringify(
         input,
         null,
-        4
-      )} (${typeof input})`
+        4,
+      )} (${typeof input})`,
     );
   }
   if (opts && typeof opts !== "object") {
@@ -83,8 +83,8 @@ function stri(input: string, opts?: Partial<Opts>): Res {
       `stristri: [THROW_ID_02] the second input arg must be a plain object! It was given as ${JSON.stringify(
         opts,
         null,
-        4
-      )} (${typeof opts})`
+        4,
+      )} (${typeof opts})`,
     );
   }
 
@@ -97,8 +97,8 @@ function stri(input: string, opts?: Partial<Opts>): Res {
       `097 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   // Prepare blank applicable resolvedOpts object, extract all bool keys,
@@ -115,8 +115,8 @@ function stri(input: string, opts?: Partial<Opts>): Res {
       `115 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts`}\u001b[${39}m`} = ${JSON.stringify(
         applicableOpts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   // quick ending
@@ -147,8 +147,8 @@ function stri(input: string, opts?: Partial<Opts>): Res {
           `${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
             token,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       /* c8 ignore next */
       if (token.type === "comment") {
@@ -162,8 +162,8 @@ function stri(input: string, opts?: Partial<Opts>): Res {
                 `162 ${`\u001b[${33}m${`applicableOpts.css`}\u001b[${39}m`} = ${JSON.stringify(
                   applicableOpts.css,
                   null,
-                  4
-                )}`
+                  4,
+                )}`,
               );
           }
           if (resolvedOpts.css) {
@@ -179,21 +179,21 @@ function stri(input: string, opts?: Partial<Opts>): Res {
                 `179 ${`\u001b[${33}m${`applicableOpts.html`}\u001b[${39}m`} = ${JSON.stringify(
                   applicableOpts.html,
                   null,
-                  4
-                )}`
+                  4,
+                )}`,
               );
           }
           if (!token.closing && !withinXML && !withinHTMLComment) {
             withinHTMLComment = true;
             DEV &&
               console.log(
-                `190 ${`\u001b[${33}m${`withinHTMLComment`}\u001b[${39}m`} = ${withinHTMLComment}`
+                `190 ${`\u001b[${33}m${`withinHTMLComment`}\u001b[${39}m`} = ${withinHTMLComment}`,
               );
           } else if (token.closing && withinHTMLComment) {
             withinHTMLComment = false;
             DEV &&
               console.log(
-                `196 ${`\u001b[${33}m${`withinHTMLComment`}\u001b[${39}m`} = ${withinHTMLComment}`
+                `196 ${`\u001b[${33}m${`withinHTMLComment`}\u001b[${39}m`} = ${withinHTMLComment}`,
               );
           }
           if (resolvedOpts.html) {
@@ -210,7 +210,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
             console.log(
               `211 ${`\u001b[${33}m${`applicableOpts.html`}\u001b[${39}m`} = ${
                 applicableOpts.html
-              }`
+              }`,
             );
         }
         if (resolvedOpts.html) {
@@ -221,7 +221,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
           withinCSS = true;
           DEV &&
             console.log(
-              `224 ${`\u001b[${33}m${`withinCSS`}\u001b[${39}m`} = ${withinCSS}`
+              `224 ${`\u001b[${33}m${`withinCSS`}\u001b[${39}m`} = ${withinCSS}`,
             );
         } else if (
           // closing CSS comment '*/' is met
@@ -232,7 +232,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
           withinCSS = false;
           DEV &&
             console.log(
-              `235 ${`\u001b[${33}m${`withinCSS`}\u001b[${39}m`} = ${withinCSS}`
+              `235 ${`\u001b[${33}m${`withinCSS`}\u001b[${39}m`} = ${withinCSS}`,
             );
         }
 
@@ -241,13 +241,13 @@ function stri(input: string, opts?: Partial<Opts>): Res {
             withinXML = true;
             DEV &&
               console.log(
-                `244 ${`\u001b[${33}m${`withinXML`}\u001b[${39}m`} = ${withinXML}`
+                `244 ${`\u001b[${33}m${`withinXML`}\u001b[${39}m`} = ${withinXML}`,
               );
           } else if (token.closing && withinXML) {
             withinXML = false;
             DEV &&
               console.log(
-                `250 ${`\u001b[${33}m${`withinXML`}\u001b[${39}m`} = ${withinXML}`
+                `250 ${`\u001b[${33}m${`withinXML`}\u001b[${39}m`} = ${withinXML}`,
               );
           }
         }
@@ -256,7 +256,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
           withinScript = true;
           DEV &&
             console.log(
-              `259 ${`\u001b[${33}m${`withinScript`}\u001b[${39}m`} = ${withinScript}`
+              `259 ${`\u001b[${33}m${`withinScript`}\u001b[${39}m`} = ${withinScript}`,
             );
         } else if (
           withinScript &&
@@ -266,7 +266,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
           withinScript = false;
           DEV &&
             console.log(
-              `269 ${`\u001b[${33}m${`withinScript`}\u001b[${39}m`} = ${withinScript}`
+              `269 ${`\u001b[${33}m${`withinScript`}\u001b[${39}m`} = ${withinScript}`,
             );
         }
       } else if (["at", "rule"].includes(token.type)) {
@@ -279,7 +279,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
             console.log(
               `280 ${`\u001b[${33}m${`applicableOpts.css`}\u001b[${39}m`} = ${
                 applicableOpts.css
-              }`
+              }`,
             );
         }
         if (resolvedOpts.css) {
@@ -296,7 +296,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
             console.log(
               `297 ${`\u001b[${33}m${`applicableOpts.js`}\u001b[${39}m`} = ${
                 applicableOpts.js
-              }`
+              }`,
             );
         } else if (
           !withinCSS &&
@@ -310,7 +310,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
             console.log(
               `311 ${`\u001b[${33}m${`applicableOpts.text`}\u001b[${39}m`} = ${
                 applicableOpts.text
-              }`
+              }`,
             );
         }
         if (
@@ -344,8 +344,8 @@ function stri(input: string, opts?: Partial<Opts>): Res {
               `344 ${`\u001b[${33}m${`applicableOpts.templatingTags`}\u001b[${39}m`} = ${JSON.stringify(
                 applicableOpts.templatingTags,
                 null,
-                4
-              )}`
+                4,
+              )}`,
             );
         }
         if (resolvedOpts.templatingTags) {
@@ -356,11 +356,11 @@ function stri(input: string, opts?: Partial<Opts>): Res {
 
       DEV &&
         console.log(
-          `${`\u001b[${90}m${`----------------------`}\u001b[${39}m`}`
+          `${`\u001b[${90}m${`----------------------`}\u001b[${39}m`}`,
         );
       DEV &&
         console.log(
-          `${`\u001b[${90}m${`withinScript = ${withinScript}`}\u001b[${39}m`}`
+          `${`\u001b[${90}m${`withinScript = ${withinScript}`}\u001b[${39}m`}`,
         );
     },
     reportProgressFunc: resolvedOpts.reportProgressFunc,
@@ -373,8 +373,8 @@ function stri(input: string, opts?: Partial<Opts>): Res {
       `373 ${`\u001b[${32}m${`END`}\u001b[${39}m`} ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
         gatheredRanges,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   return returnHelper(
@@ -385,7 +385,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
     }).result,
     applicableOpts,
     detectLang(input),
-    start
+    start,
   );
 }
 

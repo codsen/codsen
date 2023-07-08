@@ -120,7 +120,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
       console.log(
         `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i]?.trim().length ? str[i] : JSON.stringify(str[i], null, 4)
-        }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
+        }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`,
       );
 
     //
@@ -138,16 +138,16 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
     if (str[i] === ")") {
       DEV &&
         console.log(
-          `141 caught closing bracket, ${`\u001b[${31}m${`POP`}\u001b[${39}m`}`
+          `141 caught closing bracket, ${`\u001b[${31}m${`POP`}\u001b[${39}m`}`,
         );
       let lastOpening = bracketOpeningIndexes.pop();
       let extractedValueWithinBrackets = str.slice(
         (lastOpening as number) + 1,
-        i
+        i,
       );
       DEV &&
         console.log(
-          `150 extracted last bracket contents: "${extractedValueWithinBrackets}"`
+          `150 extracted last bracket contents: "${extractedValueWithinBrackets}"`,
         );
 
       // Preliminary check, will be improved later.
@@ -166,14 +166,14 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
             console.log(`166 util(): chunk within brackets is only letters`);
           if (
             !recognisedMediaFeatures.includes(
-              extractedValueWithinBrackets.toLowerCase().trim()
+              extractedValueWithinBrackets.toLowerCase().trim(),
             )
           ) {
             DEV &&
               console.log(
                 `174 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                   (lastOpening as number) + 1
-                }, ${i}]`
+                }, ${i}]`,
               );
             res.push({
               idxFrom: (lastOpening as number) + 1 + opts.offset,
@@ -189,7 +189,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
       // and contains media type
       let regexFromAllKnownMediaTypes = new RegExp(
         recognisedMediaTypes.join("|"),
-        "gi"
+        "gi",
       );
       let findings =
         extractedValueWithinBrackets.match(regexFromAllKnownMediaTypes) || [];
@@ -211,7 +211,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
         // if it's whitespace inside brackets, wipe it
         DEV &&
           console.log(
-            `214 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartsAt}, ${i}]`
+            `214 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${whitespaceStartsAt}, ${i}]`,
           );
         res.push({
           idxFrom: whitespaceStartsAt + opts.offset, // reporting is always whole whitespace
@@ -226,7 +226,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
       } else if (whitespaceStartsAt < i - 1 || str[i - 1] !== " ") {
         DEV &&
           console.log(
-            `229 ${`\u001b[${31}m${`BAD WHITESPACE CAUGHT`}\u001b[${39}m`}`
+            `229 ${`\u001b[${31}m${`BAD WHITESPACE CAUGHT`}\u001b[${39}m`}`,
           );
         // Depends what whitespace is this. We aim to remove minimal amount
         // of characters possible. If there is excessive whitespace, we'll
@@ -253,7 +253,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
           console.log(
             `254 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
               whitespaceStartsAt + opts.offset
-            }, ${i + opts.offset}]`
+            }, ${i + opts.offset}]`,
           );
         res.push({
           idxFrom: whitespaceStartsAt + opts.offset, // reporting is always whole whitespace
@@ -273,7 +273,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
       whitespaceStartsAt = null;
       DEV &&
         console.log(
-          `276 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = null`
+          `276 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = null`,
         );
     }
 
@@ -282,7 +282,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
       whitespaceStartsAt = i;
       DEV &&
         console.log(
-          `285 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`
+          `285 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`,
         );
     }
 
@@ -304,7 +304,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
       gatheredChunksArr.push(chunk.toLowerCase());
       DEV &&
         console.log(
-          `307 extracted chunk: "${`\u001b[${33}m${chunk}\u001b[${39}m`}"`
+          `307 extracted chunk: "${`\u001b[${33}m${chunk}\u001b[${39}m`}"`,
         );
 
       // we use nextCanBeMediaTypeOrMediaCondition to establish where we are
@@ -323,7 +323,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
             console.log(
               `324 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                 chunkStartsAt + opts.offset
-              }, ${i + opts.offset}]`
+              }, ${i + opts.offset}]`,
             );
           res.push({
             idxFrom: chunkStartsAt + opts.offset,
@@ -334,13 +334,13 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
         } else if (!str[i]) {
           DEV &&
             console.log(
-              `337 ${`\u001b[${31}m${`last chunk can't be AND!`}\u001b[${39}m`}`
+              `337 ${`\u001b[${31}m${`last chunk can't be AND!`}\u001b[${39}m`}`,
             );
           DEV &&
             console.log(
               `341 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                 chunkStartsAt + opts.offset
-              }, ${i + opts.offset}]`
+              }, ${i + opts.offset}]`,
             );
           res.push({
             idxFrom: chunkStartsAt + opts.offset,
@@ -361,7 +361,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
             console.log(
               `362 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                 i + opts.offset
-              }, ${i + opts.offset}, " "]`
+              }, ${i + opts.offset}, " "]`,
             );
           res.push({
             idxFrom: chunkStartsAt + opts.offset,
@@ -375,17 +375,17 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
         nextCanBeMediaCondition = true;
         DEV &&
           console.log(
-            `378 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeAnd`}\u001b[${39}m`} = ${nextCanBeAnd}; ${`\u001b[${33}m${`nextCanBeMediaCondition`}\u001b[${39}m`} = ${nextCanBeMediaCondition}`
+            `378 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeAnd`}\u001b[${39}m`} = ${nextCanBeAnd}; ${`\u001b[${33}m${`nextCanBeMediaCondition`}\u001b[${39}m`} = ${nextCanBeMediaCondition}`,
           );
       } else if (nextCanBeNotOrOnly && ["not", "only"].includes(chunk)) {
         DEV &&
           console.log(
-            `383 ${`\u001b[${36}m${`██`}\u001b[${39}m`} NOT/ONLY CLAUSES`
+            `383 ${`\u001b[${36}m${`██`}\u001b[${39}m`} NOT/ONLY CLAUSES`,
           );
         nextCanBeNotOrOnly = false;
         DEV &&
           console.log(
-            `388 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeNotOrOnly`}\u001b[${39}m`} = ${nextCanBeNotOrOnly}`
+            `388 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeNotOrOnly`}\u001b[${39}m`} = ${nextCanBeNotOrOnly}`,
           );
         // nextCanBeMediaType stays true
         // but nextCanBeMediaCondition is now off because media conditions
@@ -399,12 +399,12 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
         nextCanBeMediaCondition = false;
         DEV &&
           console.log(
-            `402 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeMediaCondition`}\u001b[${39}m`} = ${nextCanBeMediaCondition}`
+            `402 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeMediaCondition`}\u001b[${39}m`} = ${nextCanBeMediaCondition}`,
           );
       } else if (nextCanBeMediaType || nextCanBeMediaCondition) {
         DEV &&
           console.log(
-            `407 ${`\u001b[${36}m${`██`}\u001b[${39}m`} MEDIA TYPE/CONDITION CLAUSES`
+            `407 ${`\u001b[${36}m${`██`}\u001b[${39}m`} MEDIA TYPE/CONDITION CLAUSES`,
           );
 
         // is it media type or media condition?
@@ -412,7 +412,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
           // resembles media condition
           DEV &&
             console.log(
-              `415 ${`\u001b[${36}m${`chunk resembles media condition`}\u001b[${39}m`}`
+              `415 ${`\u001b[${36}m${`chunk resembles media condition`}\u001b[${39}m`}`,
             );
           // is there a media condition allowed here?
           if (nextCanBeMediaCondition) {
@@ -423,7 +423,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
             DEV && console.log(`423 ERROR, MEDIA CONDITION WAS NOT EXPECTED`);
             let message = `Media condition "${str.slice(
               chunkStartsAt,
-              i
+              i,
             )}" can't be here.`;
             // try to pinpoint the error's cause:
             if (gatheredChunksArr[gatheredChunksArr.length - 2] === "not") {
@@ -434,7 +434,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
               console.log(
                 `435 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                   chunkStartsAt + opts.offset
-                }, ${i + opts.offset}]`
+                }, ${i + opts.offset}]`,
               );
             res.push({
               idxFrom: chunkStartsAt + opts.offset,
@@ -447,7 +447,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
           // resembles media type
           DEV &&
             console.log(
-              `450 ${`\u001b[${36}m${`chunk resembles media type`}\u001b[${39}m`}`
+              `450 ${`\u001b[${36}m${`chunk resembles media type`}\u001b[${39}m`}`,
             );
           // is there a media type allowed here?
           if (nextCanBeMediaType) {
@@ -457,18 +457,18 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
             if (recognisedMediaTypes.includes(chunk.toLowerCase())) {
               DEV &&
                 console.log(
-                  `460 ${`\u001b[${32}m${`CHUNK MATCHED WITH A KNOWN MEDIA TYPE`}\u001b[${39}m`}`
+                  `460 ${`\u001b[${32}m${`CHUNK MATCHED WITH A KNOWN MEDIA TYPE`}\u001b[${39}m`}`,
                 );
               nextCanBeMediaType = false;
               nextCanBeMediaCondition = false;
               DEV &&
                 console.log(
-                  `466 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeMediaType`}\u001b[${39}m`} = ${nextCanBeMediaType}; ${`\u001b[${33}m${`nextCanBeMediaCondition`}\u001b[${39}m`} = ${nextCanBeMediaCondition}`
+                  `466 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeMediaType`}\u001b[${39}m`} = ${nextCanBeMediaType}; ${`\u001b[${33}m${`nextCanBeMediaCondition`}\u001b[${39}m`} = ${nextCanBeMediaCondition}`,
                 );
             } else {
               DEV &&
                 console.log(
-                  `471 ${`\u001b[${31}m${`ERROR`}\u001b[${39}m`} - this does not match any known media types`
+                  `471 ${`\u001b[${31}m${`ERROR`}\u001b[${39}m`} - this does not match any known media types`,
                 );
               let message = `Unrecognised "${chunk}".`;
               if (!chunk.match(/\w/g)) {
@@ -484,7 +484,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
                 console.log(
                   `485 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                     chunkStartsAt + opts.offset
-                  }, ${i + opts.offset}], message: "${message}"`
+                  }, ${i + opts.offset}], message: "${message}"`,
                 );
               res.push({
                 idxFrom: chunkStartsAt + opts.offset,
@@ -496,7 +496,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
           } else {
             DEV &&
               console.log(
-                `499 ERROR, MEDIA TYPE (OR SOMETHING BRACKET-LESS) WAS NOT EXPECTED`
+                `499 ERROR, MEDIA TYPE (OR SOMETHING BRACKET-LESS) WAS NOT EXPECTED`,
               );
 
             // as a last resort, let's check, maybe it's a known condition but without brackets?
@@ -532,7 +532,11 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
                   chunkStartsAt + opts.offset
                 }, ${
                   i + opts.offset
-                }], message: "${message}", fix: ${JSON.stringify(fix, null, 4)}`
+                }], message: "${message}", fix: ${JSON.stringify(
+                  fix,
+                  null,
+                  4,
+                )}`,
               );
             res.push({
               idxFrom: chunkStartsAt + opts.offset,
@@ -541,7 +545,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
               fix: fix as any,
             });
 
-            DEV && console.log(`544 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+            DEV && console.log(`548 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
             break;
           }
         }
@@ -550,12 +554,12 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
         nextCanBeAnd = true;
         DEV &&
           console.log(
-            `553 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeAnd`}\u001b[${39}m`} = ${nextCanBeAnd}`
+            `557 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeAnd`}\u001b[${39}m`} = ${nextCanBeAnd}`,
           );
       } else {
         DEV &&
           console.log(
-            `558 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`ELSE CLAUSES`}\u001b[${39}m`}`
+            `562 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`ELSE CLAUSES`}\u001b[${39}m`}`,
           );
         // if flag "nextCanBeMediaTypeOrMediaCondition" is false, this means we are
         // currently located at after the media type or media condition,
@@ -563,9 +567,9 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
         // "@media screen <here>" or "@media (color) <here>"
         DEV &&
           console.log(
-            `566 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+            `570 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
               chunkStartsAt + opts.offset
-            }, ${i + opts.offset}]`
+            }, ${i + opts.offset}]`,
           );
         res.push({
           idxFrom: chunkStartsAt + opts.offset,
@@ -579,7 +583,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
       chunkStartsAt = null;
       DEV &&
         console.log(
-          `582 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}; ${`\u001b[${32}m${`chunkWithinBrackets`}\u001b[${39}m`} = ${chunkWithinBrackets}`
+          `586 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}; ${`\u001b[${32}m${`chunkWithinBrackets`}\u001b[${39}m`} = ${chunkWithinBrackets}`,
         );
       chunkWithinBrackets = false;
 
@@ -587,18 +591,18 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
         nextCanBeNotOrOnly = false;
         DEV &&
           console.log(
-            `590 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeNotOrOnly`}\u001b[${39}m`} = ${nextCanBeNotOrOnly}`
+            `594 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`nextCanBeNotOrOnly`}\u001b[${39}m`} = ${nextCanBeNotOrOnly}`,
           );
       }
     } else {
       // TODO - remove
       DEV &&
         console.log(
-          `597 ELSE - ${`\u001b[${33}m${`bracketOpeningIndexes`}\u001b[${39}m`} = ${JSON.stringify(
+          `601 ELSE - ${`\u001b[${33}m${`bracketOpeningIndexes`}\u001b[${39}m`} = ${JSON.stringify(
             bracketOpeningIndexes,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
@@ -618,14 +622,14 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
         chunkWithinBrackets = true;
         DEV &&
           console.log(
-            `621 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkWithinBrackets`}\u001b[${39}m`} = ${chunkWithinBrackets}`
+            `625 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkWithinBrackets`}\u001b[${39}m`} = ${chunkWithinBrackets}`,
           );
       }
 
       chunkStartsAt = i;
       DEV &&
         console.log(
-          `628 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`
+          `632 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`,
         );
     }
 
@@ -642,78 +646,78 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
 
     // catch opening bracket
     if (str[i] === "(") {
-      DEV && console.log(`645 caught opening bracket`);
+      DEV && console.log(`649 caught opening bracket`);
       bracketOpeningIndexes.push(i);
       DEV &&
         console.log(
-          `649 after ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}, ${`\u001b[${33}m${`bracketOpeningIndexes`}\u001b[${39}m`}: ${JSON.stringify(
+          `653 after ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}, ${`\u001b[${33}m${`bracketOpeningIndexes`}\u001b[${39}m`}: ${JSON.stringify(
             bracketOpeningIndexes,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
 
     // LOGGING
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`chunkStartsAt: ${chunkStartsAt}`}\u001b[${39}m`}`
+        `${`\u001b[${90}m${`chunkStartsAt: ${chunkStartsAt}`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`chunkWithinBrackets: ${chunkWithinBrackets}`}\u001b[${39}m`}`
+        `${`\u001b[${90}m${`chunkWithinBrackets: ${chunkWithinBrackets}`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`whitespaceStartsAt: ${whitespaceStartsAt}`}\u001b[${39}m`}`
+        `${`\u001b[${90}m${`whitespaceStartsAt: ${whitespaceStartsAt}`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${90}m${`██ nextCanBeNotOrOnly: ${nextCanBeNotOrOnly}`}\u001b[${39}m`} ${`\u001b[${
           nextCanBeNotOrOnly ? 32 : 31
-        }m${nextCanBeNotOrOnly}\u001b[${39}m`}`
+        }m${nextCanBeNotOrOnly}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${90}m${`██ nextCanBeMediaType: `}\u001b[${39}m`} ${`\u001b[${
           nextCanBeMediaType ? 32 : 31
-        }m${nextCanBeMediaType}\u001b[${39}m`}`
+        }m${nextCanBeMediaType}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${90}m${`██ nextCanBeMediaCondition: ${nextCanBeMediaCondition}`}\u001b[${39}m`} ${`\u001b[${
           nextCanBeMediaCondition ? 32 : 31
-        }m${nextCanBeMediaCondition}\u001b[${39}m`}`
+        }m${nextCanBeMediaCondition}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${90}m${`██ nextCanBeAnd: ${nextCanBeAnd}`}\u001b[${39}m`} ${`\u001b[${
           nextCanBeAnd ? 32 : 31
-        }m${nextCanBeAnd}\u001b[${39}m`}`
+        }m${nextCanBeAnd}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${90}m${`gatheredChunksArr: ${JSON.stringify(
           gatheredChunksArr,
           null,
-          0
-        )}`}\u001b[${39}m`}`
+          0,
+        )}`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${90}m${`bracketOpeningIndexes: ${JSON.stringify(
           bracketOpeningIndexes,
           null,
-          0
-        )}`}\u001b[${39}m`}`
+          0,
+        )}`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
         `██ ${`\u001b[${90}m${`res: ${JSON.stringify(
           res,
           null,
-          4
-        )}`}\u001b[${39}m`}`
+          4,
+        )}`}\u001b[${39}m`}`,
       );
   }
 }

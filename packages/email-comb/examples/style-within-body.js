@@ -32,5 +32,5 @@ assert.equal(
     </tr>
   </table>
 </body>
-</html>`
+</html>`,
 );

@@ -31,7 +31,7 @@ test(`01 - ${`\u001b[${33}m${"line breaks"}\u001b[${39}m`} - HTML BR replacement
         eol: true,
       },
     },
-    "01"
+    "01",
   );
 });
 
@@ -45,7 +45,7 @@ test("02 - trailing line break, homogeneous, no explicit setting - all CRLF", ()
       removeLineBreaks: false,
     }).res,
     "a\r\nb",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -56,7 +56,7 @@ test("03 - trailing line break, homogeneous, no explicit setting - all CR", () =
       removeLineBreaks: false,
     }).res,
     "a\rb",
-    "03.01"
+    "03.01",
   );
 });
 
@@ -67,7 +67,7 @@ test("04 - trailing line break, homogeneous, no explicit setting - all LF", () =
       removeLineBreaks: false,
     }).res,
     "a\nb",
-    "04.01"
+    "04.01",
   );
 });
 
@@ -82,7 +82,7 @@ test("05 - trailing line break, homogeneous, explicit LF setting - all CRLF", ()
       eol: "lf",
     }).res,
     "a\nb",
-    "05.01"
+    "05.01",
   );
 });
 
@@ -94,7 +94,7 @@ test("06 - trailing line break, homogeneous, explicit LF setting - all CR", () =
       eol: "lf",
     }).res,
     "a\nb",
-    "06.01"
+    "06.01",
   );
 });
 
@@ -106,7 +106,7 @@ test("07 - trailing line break, homogeneous, explicit LF setting - all LF", () =
       eol: "lf",
     }).res,
     "a\nb",
-    "07.01"
+    "07.01",
   );
 });
 
@@ -121,7 +121,7 @@ test("08 - trailing line break, homogeneous, explicit CRLF setting - CRLF in the
       eol: "crlf",
     }).res,
     "a\r\nb",
-    "08.01"
+    "08.01",
   );
 });
 
@@ -133,7 +133,7 @@ test("09 - trailing line break, homogeneous, explicit CRLF setting - CR in the i
       eol: "crlf",
     }).res,
     "a\r\nb",
-    "09.01"
+    "09.01",
   );
   equal(
     det(ok, not, 0, "a\rb\r", {
@@ -142,7 +142,7 @@ test("09 - trailing line break, homogeneous, explicit CRLF setting - CR in the i
       eol: "crlf",
     }).res,
     "a\r\nb",
-    "09.02"
+    "09.02",
   );
 });
 
@@ -154,7 +154,7 @@ test("10 - trailing line break, homogeneous, explicit CRLF setting - LF in the i
       eol: "crlf",
     }).res,
     "a\r\nb",
-    "10.01"
+    "10.01",
   );
   equal(
     det(ok, not, 0, "a\nb\n", {
@@ -163,7 +163,7 @@ test("10 - trailing line break, homogeneous, explicit CRLF setting - LF in the i
       eol: "crlf",
     }).res,
     "a\r\nb",
-    "10.02"
+    "10.02",
   );
 });
 
@@ -178,7 +178,7 @@ test("11 - trailing line break, homogeneous, explicit CR setting - CRLF input", 
       eol: "cr",
     }).res,
     "a\rb",
-    "11.01"
+    "11.01",
   );
 });
 
@@ -190,7 +190,7 @@ test("12 - trailing line break, homogeneous, explicit CR setting - CR input", ()
       eol: "cr",
     }).res,
     "a\rb",
-    "12.01"
+    "12.01",
   );
 });
 
@@ -202,7 +202,7 @@ test("13 - trailing line break, homogeneous, explicit CR setting - LF input", ()
       eol: "cr",
     }).res,
     "a\rb",
-    "13.01"
+    "13.01",
   );
 });
 
@@ -218,7 +218,7 @@ test("14 - non-homogeneous, #1 - LF setting", () => {
       eol: "lf",
     }).res,
     "a\nb\nc",
-    "14.01"
+    "14.01",
   );
   equal(
     det(ok, not, 0, input, {
@@ -227,7 +227,7 @@ test("14 - non-homogeneous, #1 - LF setting", () => {
       eol: "cr",
     }).res,
     "a\rb\rc",
-    "14.02"
+    "14.02",
   );
   equal(
     det(ok, not, 0, input, {
@@ -236,7 +236,7 @@ test("14 - non-homogeneous, #1 - LF setting", () => {
       eol: "crlf",
     }).res,
     "a\r\nb\r\nc",
-    "14.03"
+    "14.03",
   );
 });
 
@@ -252,7 +252,7 @@ test("15 - non-homogeneous, #2 - no trailing line break", () => {
       eol: "lf",
     }).res,
     "a\nb\nc",
-    "15.01"
+    "15.01",
   );
   equal(
     det(ok, not, 0, input, {
@@ -261,7 +261,7 @@ test("15 - non-homogeneous, #2 - no trailing line break", () => {
       eol: "cr",
     }).res,
     "a\rb\rc",
-    "15.02"
+    "15.02",
   );
   equal(
     det(ok, not, 0, input, {
@@ -270,7 +270,7 @@ test("15 - non-homogeneous, #2 - no trailing line break", () => {
       eol: "crlf",
     }).res,
     "a\r\nb\r\nc",
-    "15.03"
+    "15.03",
   );
 });
 

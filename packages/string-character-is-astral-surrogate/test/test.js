@@ -17,21 +17,21 @@ test("01 - wrong/missing input = throw", () => {
       isHighSurrogate(1);
     },
     "01.01",
-    "01.01"
+    "01.01",
   );
   throws(
     () => {
       isHighSurrogate(null);
     },
     "01.02",
-    "01.02"
+    "01.02",
   );
   throws(
     () => {
       isHighSurrogate(true);
     },
     "01.03",
-    "01.03"
+    "01.03",
   );
 
   throws(
@@ -39,21 +39,21 @@ test("01 - wrong/missing input = throw", () => {
       isLowSurrogate(1);
     },
     "01.04",
-    "01.04"
+    "01.04",
   );
   throws(
     () => {
       isLowSurrogate(null);
     },
     "01.05",
-    "01.05"
+    "01.05",
   );
   throws(
     () => {
       isLowSurrogate(true);
     },
     "01.06",
-    "01.06"
+    "01.06",
   );
 });
 
@@ -88,7 +88,7 @@ test("04 - isHighSurrogate()", () => {
   equal(
     isHighSurrogate("\uD83E\uDDE2"),
     true,
-    "04.04" // second Unicode code point (and onwards) doesn't matter
+    "04.04", // second Unicode code point (and onwards) doesn't matter
   );
 });
 
@@ -100,7 +100,7 @@ test("05 - isLowSurrogate()", () => {
   equal(
     isLowSurrogate("\uD83E\uDDE2"),
     false,
-    "05.04" // second Unicode code point (and onwards) doesn't matter
+    "05.04", // second Unicode code point (and onwards) doesn't matter
   );
 });
 

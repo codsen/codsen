@@ -13,7 +13,7 @@ test("01", () => {
       {
         foo: true,
         bar: false,
-      }
+      },
     ),
     [
       {
@@ -25,7 +25,7 @@ test("01", () => {
         bar: true,
       },
     ],
-    "01.01"
+    "01.01",
   );
   equal(
     mixer(
@@ -36,7 +36,7 @@ test("01", () => {
         foo: true,
         bar: false,
       },
-      false
+      false,
     ),
     [
       {
@@ -48,7 +48,7 @@ test("01", () => {
         bar: true,
       },
     ],
-    "01.02"
+    "01.02",
   );
   equal(
     mixer(
@@ -59,7 +59,7 @@ test("01", () => {
         foo: true,
         bar: false,
       },
-      true
+      true,
     ),
     [
       {
@@ -71,7 +71,7 @@ test("01", () => {
         bar: true,
       },
     ],
-    "01.03"
+    "01.03",
   );
 });
 
@@ -82,7 +82,7 @@ test("02", () => {
       {
         foo: true,
         bar: "z",
-      }
+      },
     ),
     [
       {
@@ -94,7 +94,7 @@ test("02", () => {
         bar: "z",
       },
     ],
-    "02.01"
+    "02.01",
   );
   equal(
     mixer(
@@ -103,7 +103,7 @@ test("02", () => {
         foo: true,
         bar: "z",
       },
-      true // enforce bool values
+      true, // enforce bool values
     ),
     [
       {
@@ -115,7 +115,7 @@ test("02", () => {
         bar: "z",
       },
     ],
-    "02.02"
+    "02.02",
   );
 });
 
@@ -135,7 +135,7 @@ test("03 - request all variations by passing undefined as 1st arg", () => {
         bar: "z",
       },
     ],
-    "03.01"
+    "03.01",
   );
   equal(
     mixer(
@@ -144,7 +144,7 @@ test("03 - request all variations by passing undefined as 1st arg", () => {
         foo: true,
         bar: "z",
       },
-      true // enforce bool values
+      true, // enforce bool values
     ),
     [
       {
@@ -156,7 +156,7 @@ test("03 - request all variations by passing undefined as 1st arg", () => {
         bar: "z",
       },
     ],
-    "03.02"
+    "03.02",
   );
 });
 
@@ -171,7 +171,7 @@ test("04 - ensure values are cloned, not referenced", () => {
     {
       foo: true,
     },
-    obj
+    obj,
   );
   // then, modify the value within the source - if it was referenced,
   // values will change! If it was cloned, values won't change.
@@ -191,7 +191,7 @@ test("04 - ensure values are cloned, not referenced", () => {
         baz: { x: "y" }, // < still "y", not null
       },
     ],
-    "04.01"
+    "04.01",
   );
 });
 
@@ -212,7 +212,7 @@ test("05 - ensure values are cloned, not referenced", () => {
         stripHtmlButIgnoreTags: ["b", "strong", "i", "em", "br", "sup"],
         stripHtmlAddNewLine: ["li", "/ul"],
         cb: null,
-      }
+      },
     ),
     [
       {
@@ -234,7 +234,7 @@ test("05 - ensure values are cloned, not referenced", () => {
         cb: null,
       },
     ],
-    "05.01"
+    "05.01",
   );
 });
 
@@ -252,7 +252,7 @@ test("06", () => {
         bar: false,
         baz: 0,
         qux: true,
-      }
+      },
     ),
     [
       {
@@ -262,7 +262,7 @@ test("06", () => {
         qux: false,
       },
     ],
-    "06.01"
+    "06.01",
   );
 });
 
@@ -279,7 +279,7 @@ test("07", () => {
         bar: false,
         baz: 0,
         qux: true,
-      }
+      },
     ),
     [
       {
@@ -295,7 +295,7 @@ test("07", () => {
         qux: true,
       },
     ],
-    "07.01"
+    "07.01",
   );
 });
 
@@ -311,7 +311,7 @@ test("08 - contains non-bool values which don't exist in defaultsObj", () => {
         foo: false,
         bar: false,
         qux: true,
-      }
+      },
     ),
     [
       {
@@ -327,7 +327,7 @@ test("08 - contains non-bool values which don't exist in defaultsObj", () => {
         qux: true,
       },
     ],
-    "08.01"
+    "08.01",
   );
 });
 
@@ -341,7 +341,7 @@ test("09", () => {
         foo: false,
         bar: false,
         qux: true,
-      }
+      },
     ),
     [
       // 2^3=8 objects:
@@ -394,7 +394,7 @@ test("09", () => {
         x: 1,
       },
     ],
-    "09.01"
+    "09.01",
   );
 });
 

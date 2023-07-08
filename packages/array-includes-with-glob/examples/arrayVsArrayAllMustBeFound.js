@@ -13,7 +13,7 @@ assert.equal(
   includesWithGlob(source, whatToLookFor, {
     arrayVsArrayAllMustBeFound: "any",
   }),
-  true
+  true,
 );
 // true, because one element, 'a*' was found in source (it was its first element)
 
@@ -21,6 +21,6 @@ assert.equal(
   includesWithGlob(source, whatToLookFor, {
     arrayVsArrayAllMustBeFound: "all",
   }),
-  false
+  false,
 );
 // false, because not all elements were found, the 'd*' is missing

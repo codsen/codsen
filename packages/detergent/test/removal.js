@@ -22,7 +22,7 @@ test("01 - front & back spaces stripped", () => {
     equal(
       det(ok, not, n, "\n\n \t     aaaaaa   \n\t\t  ", opt).res,
       "aaaaaa",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -32,7 +32,7 @@ test("02 - redundant space between words", () => {
     equal(
       det(ok, not, n, "aaaaaa     bbbbbb", opt).res,
       "aaaaaa bbbbbb",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -44,7 +44,7 @@ test("03 - trailing/leading whitespace, convertEntities=on", () => {
     equal(
       det(ok, not, n, "&nbsp; a b", opt).res,
       "&nbsp; a b",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -56,7 +56,7 @@ test("04 - trailing/leading whitespace, convertEntities=on", () => {
     equal(
       det(ok, not, n, "a b &nbsp;", opt).res,
       "a b &nbsp;",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -68,7 +68,7 @@ test("05 - trailing/leading whitespace, convertEntities=on", () => {
     equal(
       det(ok, not, n, "&nbsp; a &nbsp;", opt).res,
       "&nbsp; a &nbsp;",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -80,7 +80,7 @@ test("06 - trailing/leading whitespace, convertEntities=on", () => {
     equal(
       det(ok, not, n, `    ${rawNbsp}     a     ${rawNbsp}      `, opt).res,
       "&nbsp; a &nbsp;",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -92,7 +92,7 @@ test("07 - trailing/leading whitespace, convertEntities=on", () => {
     equal(
       det(ok, not, n, "&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;", opt).res,
       "&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -104,7 +104,7 @@ test("08 - trailing/leading whitespace, convertEntities=on", () => {
     equal(
       det(ok, not, n, " &nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp; ", opt).res,
       "&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -116,7 +116,7 @@ test("09 - trailing/leading whitespace, convertEntities=off", () => {
     equal(
       det(ok, not, n, "&nbsp; a b", opt).res,
       `${rawNbsp} a b`,
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -128,7 +128,7 @@ test("10 - trailing/leading whitespace, convertEntities=off", () => {
     equal(
       det(ok, not, n, "a b &nbsp;", opt).res,
       "a b &nbsp;",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -137,7 +137,7 @@ test("10 - trailing/leading whitespace, convertEntities=off", () => {
     equal(
       det(ok, not, n, "a b &nbsp;", opt).res,
       `a b ${rawNbsp}`,
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -149,7 +149,7 @@ test("11", () => {
     equal(
       det(ok, not, n, "    &nbsp; a &nbsp;     ", opt).res,
       "&nbsp; a &nbsp;",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -158,7 +158,7 @@ test("11", () => {
     equal(
       det(ok, not, n, "    &nbsp; a &nbsp;     ", opt).res,
       `${rawNbsp} a ${rawNbsp}`,
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -171,7 +171,7 @@ test("12 - trailing/leading whitespace, convertEntities=off", () => {
       det(ok, not, n, `    ${rawNbsp}     a     ${rawNbsp}           `, opt)
         .res,
       `${rawNbsp} a ${rawNbsp}`,
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -186,10 +186,10 @@ test("13 - trailing/leading whitespace, convertEntities=off", () => {
         not,
         n,
         `${rawNbsp}${rawNbsp}${rawNbsp} a ${rawNbsp}${rawNbsp}${rawNbsp}`,
-        opt
+        opt,
       ).res,
       `${rawNbsp}${rawNbsp}${rawNbsp} a ${rawNbsp}${rawNbsp}${rawNbsp}`,
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -204,10 +204,10 @@ test("14 - trailing/leading whitespace, convertEntities=off", () => {
         not,
         n,
         ` ${rawNbsp}${rawNbsp}${rawNbsp} a ${rawNbsp}${rawNbsp}${rawNbsp} `,
-        opt
+        opt,
       ).res,
       `${rawNbsp}${rawNbsp}${rawNbsp} a ${rawNbsp}${rawNbsp}${rawNbsp}`,
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -221,7 +221,7 @@ test("15 - ETX - useXHTML=on", () => {
     equal(
       det(ok, not, n, "first\u0003second", opt).res,
       "first<br/>\nsecond",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -235,7 +235,7 @@ test("16 - ETX - useXHTML=off", () => {
     equal(
       det(ok, not, n, "first\u0003second", opt).res,
       "first<br>\nsecond",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -249,7 +249,7 @@ test("17 - ETX - replaceLineBreaks=off", () => {
     equal(
       det(ok, not, n, "first\u0003second", opt).res,
       "first\nsecond",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -259,7 +259,7 @@ test("18 - strips UTF8 BOM", () => {
     equal(
       det(ok, not, n, "\uFEFFunicorn", opt).res,
       "unicorn",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -269,7 +269,7 @@ test("19 - strips UTF8 BOM", () => {
     equal(
       det(ok, not, n, "unicorn\uFEFF", opt).res,
       "unicorn",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -279,7 +279,7 @@ test("20 - strips UTF8 BOM", () => {
     equal(
       det(ok, not, n, "unicorn\uFEFFzzz", opt).res,
       "unicornzzz",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });

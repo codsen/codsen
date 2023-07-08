@@ -26,7 +26,7 @@ test("01 - opts.cb - baseline", () => {
         [45, 52],
       ],
     },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -48,7 +48,7 @@ test("02 - opts.cb - baseline 2", () => {
         [9, 16],
       ],
     },
-    "02.01"
+    "02.01",
   );
 });
 
@@ -71,7 +71,7 @@ test("03 - opts.cb - replace hr with tralala", () => {
       allTagLocations: [[3, 7]],
       filteredTagLocations: [[3, 7]],
     },
-    "03.01"
+    "03.01",
   );
 });
 
@@ -87,7 +87,7 @@ test("04 - opts.cb - replace div with tralala", () => {
     rangesArr.push(
       deleteFrom,
       deleteTo,
-      `<${tag.slashPresent ? "/" : ""}tralala>`
+      `<${tag.slashPresent ? "/" : ""}tralala>`,
     );
   };
   equal(
@@ -107,7 +107,7 @@ test("04 - opts.cb - replace div with tralala", () => {
         [9, 16],
       ],
     },
-    "04.01"
+    "04.01",
   );
 });
 
@@ -124,7 +124,7 @@ test("05 - opts.cb - replace only hr", () => {
       rangesArr.push(
         deleteFrom,
         deleteTo,
-        `<${tag.slashPresent ? "/" : ""}tralala>`
+        `<${tag.slashPresent ? "/" : ""}tralala>`,
       );
     }
   };
@@ -144,7 +144,7 @@ test("05 - opts.cb - replace only hr", () => {
         [19, 26],
       ],
     },
-    "05.01"
+    "05.01",
   );
 });
 
@@ -167,7 +167,7 @@ test("06 - opts.cb - readme example one", () => {
       allTagLocations: [[3, 7]],
       filteredTagLocations: [[3, 7]],
     },
-    "06.01"
+    "06.01",
   );
 });
 
@@ -195,7 +195,7 @@ test("07 - opts.cb - ignored tags are also being pinged, with null deletion rang
       ],
       filteredTagLocations: [[10, 14]],
     },
-    "07.01"
+    "07.01",
   );
   equal(capturedTags, ["hr", "br"], "07.02");
 });
@@ -246,7 +246,7 @@ test("08 - opts.cb - cb.tag contents are correct on ignored tags", () => {
         name: "br",
       },
     ],
-    "08.01"
+    "08.01",
   );
 });
 
@@ -332,7 +332,7 @@ test("09 - opts.cb - cb.tag contents are right on non-ignored tags", () => {
         slashPresent: 30,
       },
     ],
-    "09.01"
+    "09.01",
   );
 });
 

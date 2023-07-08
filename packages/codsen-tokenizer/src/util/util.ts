@@ -243,7 +243,7 @@ function xBeforeYOnTheRight(
   str: string,
   startingIdx: number,
   x: string,
-  y: string
+  y: string,
 ): boolean {
   for (let i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
@@ -264,7 +264,7 @@ function ensureXIsNotPresentBeforeOneOfY(
   str: string,
   startingIdx: number,
   x: string,
-  y: string[] = []
+  y: string[] = [],
 ): boolean {
   for (let i = startingIdx, len = str.length; i < len; i++) {
     if (y.some((oneOfStr) => str.startsWith(oneOfStr, i))) {

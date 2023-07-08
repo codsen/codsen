@@ -27,7 +27,7 @@ test(`01 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - does nothing`, ()
       {
         result: source,
       },
-      "01.01"
+      "01.01",
     );
   });
 });

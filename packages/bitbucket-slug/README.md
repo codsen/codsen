@@ -38,7 +38,7 @@ import { bSlug } from "bitbucket-slug";
 
 assert.equal(
   bSlug("# Let's backwards-engineer BitBucket anchor link slug algorithm"),
-  "markdown-header-lets-backwards-engineer-bitbucket-anchor-link-slug-algorithm"
+  "markdown-header-lets-backwards-engineer-bitbucket-anchor-link-slug-algorithm",
 );
 ```
 

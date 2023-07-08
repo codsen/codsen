@@ -22,7 +22,7 @@ test("02 - exists", () => {
   equal(
     existy(() => {}),
     true,
-    "02.09"
+    "02.09",
   );
   equal(existy(NaN), true, "02.10");
 });

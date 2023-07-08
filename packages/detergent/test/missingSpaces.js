@@ -31,7 +31,7 @@ test(`01 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing s
     equal(
       det(ok, not, n, "10am &ndash;11am", opt).res,
       "10am&nbsp;&ndash;11am",
-      "01.01"
+      "01.01",
     );
   });
 });
@@ -46,7 +46,7 @@ test(`02 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing s
     equal(
       det(ok, not, n, "10am &ndash;11am", opt).res,
       "10am &ndash; 11am",
-      "02.01"
+      "02.01",
     );
   });
 });
@@ -61,7 +61,7 @@ test(`03 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing s
     equal(
       det(ok, not, n, "10am &ndash;11am", opt).res,
       "10am &ndash;11am",
-      "03.01"
+      "03.01",
     );
   });
 });
@@ -87,7 +87,7 @@ test(`05 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "http://detergent.io is cool", opt).res,
       "http://detergent.io is cool",
-      "05.01"
+      "05.01",
     );
   });
 });
@@ -102,7 +102,7 @@ test(`06 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "http://detergent.io.\nThis is cool", opt).res,
       "http://detergent.io.\nThis is cool",
-      "06.01"
+      "06.01",
     );
   });
 });
@@ -117,7 +117,7 @@ test(`07 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "http://detergent.io. \nThis is cool", opt).res,
       "http://detergent.io.\nThis is cool",
-      "07.01"
+      "07.01",
     );
   });
 });
@@ -132,7 +132,7 @@ test(`08 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "Aaaaa.Aaaa www.detergent.io bbbbb.Bbbbb", opt).res,
       "Aaaaa. Aaaa www.detergent.io bbbbb. Bbbbb",
-      "08.01"
+      "08.01",
     );
   });
 });
@@ -147,7 +147,7 @@ test(`09 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "http://detergent.io is cool", opt).res,
       "http://detergent.io is cool",
-      "09.01"
+      "09.01",
     );
   });
 });
@@ -160,7 +160,7 @@ test("10 - missing space after ndash added (nbsp + ndash) - space after ndash no
     equal(
       det(ok, not, n, "10am&ndash;11am", opt).res,
       `10am${rawNDash}11am`,
-      "10.01"
+      "10.01",
     );
   });
 });
@@ -175,7 +175,7 @@ test(`11 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "http://detergent.io.\nThis is cool", opt).res,
       "http://detergent.io.\nThis is cool",
-      "11.01"
+      "11.01",
     );
   });
 });
@@ -190,7 +190,7 @@ test(`12 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "http://detergent.io. \nThis is cool", opt).res,
       "http://detergent.io.\nThis is cool",
-      "12.01"
+      "12.01",
     );
   });
 });
@@ -205,7 +205,7 @@ test(`13 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't a
     equal(
       det(ok, not, n, "Aaaaa.Aaaa www.detergent.io bbbbb.Bbbbb", opt).res,
       "Aaaaa.Aaaa www.detergent.io bbbbb.Bbbbb",
-      "13.01"
+      "13.01",
     );
   });
 });
@@ -218,7 +218,7 @@ test(`14 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.This is cool.", opt).res,
       "This is http://detergent.io. This is cool.",
-      "14.01"
+      "14.01",
     );
   });
 });
@@ -231,7 +231,7 @@ test(`15 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
-      "15.01"
+      "15.01",
     );
   });
 });
@@ -245,7 +245,7 @@ test(`16 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.This is cool.", opt).res,
       "This is http://detergent.io. This is&nbsp;cool.",
-      "16.01"
+      "16.01",
     );
   });
 });
@@ -259,7 +259,7 @@ test(`17 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
-      "17.01"
+      "17.01",
     );
   });
 });
@@ -273,7 +273,7 @@ test(`18 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.This is cool.", opt).res,
       `This is http://detergent.io. This is${rawNbsp}cool.`,
-      "18.01"
+      "18.01",
     );
   });
 });
@@ -287,7 +287,7 @@ test(`19 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
-      "19.01"
+      "19.01",
     );
   });
 });
@@ -300,7 +300,7 @@ test(`20 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.This is cool.", opt).res,
       "This is http://detergent.io.This is cool.",
-      "20.01"
+      "20.01",
     );
   });
 });
@@ -313,7 +313,7 @@ test(`21 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
-      "21.01"
+      "21.01",
     );
   });
 });
@@ -327,7 +327,7 @@ test(`22 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.This is cool.", opt).res,
       "This is http://detergent.io.This is&nbsp;cool.",
-      "22.01"
+      "22.01",
     );
   });
 });
@@ -341,7 +341,7 @@ test(`23 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
-      "23.01"
+      "23.01",
     );
   });
 });
@@ -355,7 +355,7 @@ test(`24 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.This is cool.", opt).res,
       `This is http://detergent.io.This is${rawNbsp}cool.`,
-      "24.01"
+      "24.01",
     );
   });
 });
@@ -369,7 +369,7 @@ test(`25 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - adds spac
     equal(
       det(ok, not, n, "This is http://detergent.io.", opt).res,
       "This is http://detergent.io.",
-      "25.01"
+      "25.01",
     );
   });
 });
@@ -388,10 +388,10 @@ test(`26 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't a
         not,
         n,
         "Aaaa🦄.bbbbb http://detergent.whatever.a.bd.re.qwe.gf.asdew.v.df.g.er.re ZZZ.🦄YYY",
-        opt
+        opt,
       ).res,
       "Aaaa🦄.bbbbb http://detergent.whatever.a.bd.re.qwe.gf.asdew.v.df.g.er.re ZZZ.🦄YYY",
-      "26.01"
+      "26.01",
     );
   });
 });
@@ -410,10 +410,10 @@ test(`27 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't a
         not,
         n,
         "Aaaa.Bbbbb http://detergent.whatever.a.bd.re.qwe.\ngf.Asdew.V.Df,g;er.Re ZZZ.🦄YYY sfhksdf fgkjhk jhfgkh.",
-        opt
+        opt,
       ).res,
       "Aaaa. Bbbbb http://detergent.whatever.a.bd.re.qwe.\ngf. Asdew. V. Df, g; er. Re ZZZ.🦄YYY sfhksdf fgkjhk jhfgkh.",
-      "27.01"
+      "27.01",
     );
   });
 });
@@ -432,10 +432,10 @@ test(`28 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't a
         not,
         n,
         "Aaaa🦄.bbbbb http://detergent.whatever.a.bd.re.qwe.gf.asdew.v.df.g.er.re ZZZ.🦄YYY",
-        opt
+        opt,
       ).res,
       "Aaaa🦄.bbbbb http://detergent.whatever.a.bd.re.qwe.gf.asdew.v.df.g.er.re ZZZ.🦄YYY",
-      "28.01"
+      "28.01",
     );
   });
 });
@@ -454,10 +454,10 @@ test(`29 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - doesn't a
         not,
         n,
         "Aaaa.Bbbbb http://detergent.whatever.a.bd.re.qwe.\ngf.Asdew.V.Df,g;er.Re ZZZ.🦄YYY sfhksdf fgkjhk jhfgkh.",
-        opt
+        opt,
       ).res,
       "Aaaa.Bbbbb http://detergent.whatever.a.bd.re.qwe.\ngf.Asdew.V.Df,g;er.Re ZZZ.🦄YYY sfhksdf fgkjhk jhfgkh.",
-      "29.01"
+      "29.01",
     );
   });
 });
@@ -469,7 +469,7 @@ test(`30 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - being on 
     equal(
       det(ok, not, n, "http://detergent.io;is cool.", opt).res,
       "http://detergent.io;is cool.",
-      "30.01"
+      "30.01",
     );
   });
 });
@@ -489,7 +489,7 @@ test(`32 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - being on 
     equal(
       det(ok, not, n, "http://detergent.io,is cool.", opt).res,
       "http://detergent.io,is cool.",
-      "32.01"
+      "32.01",
     );
   });
 });
@@ -509,7 +509,7 @@ test(`34 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - being on 
     equal(
       det(ok, not, n, "http://detergent.io.Cool!", opt).res,
       "http://detergent.io. Cool!",
-      "34.01"
+      "34.01",
     );
   });
 });
@@ -521,7 +521,7 @@ test(`35 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - being on 
     equal(
       det(ok, not, n, "http://detergent.io.IS COOL.", opt).res,
       "http://detergent.io.IS COOL.",
-      "35.01"
+      "35.01",
     );
   });
 });
@@ -533,7 +533,7 @@ test(`36 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - being on 
     equal(
       det(ok, not, n, "http://detergent.io.is cool.", opt).res,
       "http://detergent.io.is cool.",
-      "36.01"
+      "36.01",
     );
   });
 });
@@ -564,7 +564,7 @@ test(`39 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - non-Latin
     equal(
       det(ok, not, n, "This is http://detergent.io.Это хорошо.", opt).res,
       "This is http://detergent.io. Это хорошо.",
-      "39.01"
+      "39.01",
     );
   });
 });
@@ -579,7 +579,7 @@ test(`40 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - non-Latin
     equal(
       det(ok, not, n, "This is http://detergent.io,Это хорошо.", opt).res,
       "This is http://detergent.io,Это хорошо.",
-      "40.01"
+      "40.01",
     );
   });
 });
@@ -594,7 +594,7 @@ test(`41 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - non-Latin
     equal(
       det(ok, not, n, "This is http://detergent.io;Это хорошо.", opt).res,
       "This is http://detergent.io;Это хорошо.",
-      "41.01"
+      "41.01",
     );
   });
 });
@@ -609,7 +609,7 @@ test(`42 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - non-Latin
     equal(
       det(ok, not, n, "This is http://detergent.io.Это хорошо.", opt).res,
       "This is http://detergent.io.Это хорошо.",
-      "42.01"
+      "42.01",
     );
   });
 });
@@ -624,7 +624,7 @@ test(`43 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - non-Latin
     equal(
       det(ok, not, n, "This is http://detergent.io,Это хорошо.", opt).res,
       "This is http://detergent.io,Это хорошо.",
-      "43.01"
+      "43.01",
     );
   });
 });
@@ -639,7 +639,7 @@ test(`44 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - non-Latin
     equal(
       det(ok, not, n, "This is http://detergent.io;Это хорошо.", opt).res,
       "This is http://detergent.io;Это хорошо.",
-      "44.01"
+      "44.01",
     );
   });
 });
@@ -673,7 +673,7 @@ test(`46 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - long sent
   equal(
     det(ok, not, 0, "Some text .gitignore").res,
     "Some text .gitignore",
-    "46.01"
+    "46.01",
   );
 });
 
@@ -687,10 +687,10 @@ test(`47 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - long sent
         not,
         n,
         "When you will download header.PNG, file fix.jpg and the dotfiles named .gitignore, check them.",
-        opt
+        opt,
       ).res,
       "When you will download header.PNG, file fix.jpg and the dotfiles named .gitignore, check them.",
-      "47.01"
+      "47.01",
     );
   });
 });
@@ -710,7 +710,7 @@ test(`49 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing s
     equal(
       det(ok, not, n, "Text.More text.", opt).res,
       "Text. More text.",
-      "49.01"
+      "49.01",
     );
   });
 });
@@ -724,7 +724,7 @@ test(`50 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing s
     equal(
       det(ok, not, n, "Text.More text.", opt).res,
       "Text.More text.",
-      "50.01"
+      "50.01",
     );
   });
 });
@@ -738,12 +738,12 @@ test(`51 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing s
     equal(
       det(ok, not, n, "Text,more text.", opt).res,
       "Text, more text.",
-      "51.01"
+      "51.01",
     );
     equal(
       det(ok, not, n, "Text,more text,", opt).res,
       "Text, more text,",
-      "51.02"
+      "51.02",
     );
   });
 });
@@ -757,12 +757,12 @@ test(`52 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing s
     equal(
       det(ok, not, n, "Text,more text.", opt).res,
       "Text,more text.",
-      "52.01"
+      "52.01",
     );
     equal(
       det(ok, not, n, "Text,more text,", opt).res,
       "Text,more text,",
-      "52.02"
+      "52.02",
     );
   });
 });
@@ -776,22 +776,22 @@ test(`53 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing s
     equal(
       det(ok, not, n, "Text;more text.", opt).res,
       "Text; more text.",
-      "53.01"
+      "53.01",
     );
     equal(
       det(ok, not, n, "text;more text.", opt).res,
       "text; more text.",
-      "53.02"
+      "53.02",
     );
     equal(
       det(ok, not, n, "Text;more text", opt).res,
       "Text; more text",
-      "53.03"
+      "53.03",
     );
     equal(
       det(ok, not, n, "text;more text", opt).res,
       "text; more text",
-      "53.04"
+      "53.04",
     );
   });
 });
@@ -805,22 +805,22 @@ test(`54 - ${`\u001b[${33}m${"opts.addMissingSpaces"}\u001b[${39}m`} - missing s
     equal(
       det(ok, not, n, "Text;more text.", opt).res,
       "Text;more text.",
-      "54.01"
+      "54.01",
     );
     equal(
       det(ok, not, n, "text;more text.", opt).res,
       "text;more text.",
-      "54.02"
+      "54.02",
     );
     equal(
       det(ok, not, n, "Text;more text", opt).res,
       "Text;more text",
-      "54.03"
+      "54.03",
     );
     equal(
       det(ok, not, n, "text;more text", opt).res,
       "text;more text",
-      "54.04"
+      "54.04",
     );
   });
 });
@@ -835,7 +835,7 @@ test("55 - missing space after ndash added (nbsp + ndash) - missing space after 
     equal(
       det(ok, not, n, "10am&nbsp;&ndash;11am", opt).res,
       "10am&nbsp;&ndash;&nbsp;11am",
-      "55.01"
+      "55.01",
     );
   });
 });
@@ -850,7 +850,7 @@ test("56 - missing space after ndash added (nbsp + ndash) - missing space after 
     equal(
       det(ok, not, n, "10am&nbsp;&ndash;11am", opt).res,
       "10am&nbsp;&ndash;11am",
-      "56.01"
+      "56.01",
     );
   });
 });
@@ -865,7 +865,7 @@ test("57 - missing space after ndash added (nbsp + ndash) - missing space after 
     equal(
       det(ok, not, n, "10am&nbsp;&ndash;11am and more text", opt).res,
       "10am&nbsp;&ndash;11am and more&nbsp;text",
-      "57.01"
+      "57.01",
     );
   });
 });
@@ -878,7 +878,7 @@ test("58 - missing space after ndash added (nbsp + ndash) - space after ndash no
     equal(
       det(ok, not, n, "10am&ndash;11am", opt).res,
       "10am&ndash;11am",
-      "58.01"
+      "58.01",
     );
   });
 });
@@ -893,7 +893,7 @@ test("59 - missing space after ndash added (nbsp + ndash) - missing space after 
     equal(
       det(ok, not, n, "10am&nbsp;&ndash;11am", opt).res,
       `10am${rawNbsp}${rawNDash}${rawNbsp}11am`,
-      "59.01"
+      "59.01",
     );
   });
 });
@@ -908,7 +908,7 @@ test("60 - missing space after ndash added (nbsp + ndash) - missing space after 
     equal(
       det(ok, not, n, "10am&nbsp;&ndash;11am", opt).res,
       `10am${rawNbsp}${rawNDash}${rawNbsp}11am`,
-      "60.01"
+      "60.01",
     );
   });
   mixer({
@@ -920,7 +920,7 @@ test("60 - missing space after ndash added (nbsp + ndash) - missing space after 
     equal(
       det(ok, not, n, "10am&nbsp;&ndash;11am", opt).res,
       `10am ${rawNDash} 11am`,
-      "60.02"
+      "60.02",
     );
   });
 });
@@ -936,7 +936,7 @@ test("61 - deletes space around n-dash between numbers", () => {
     equal(
       det(ok, not, n, `1880 ${rawNDash} 1912`, opt).res,
       `1880${rawNDash}1912`,
-      "61.01"
+      "61.01",
     );
   });
 });
@@ -949,7 +949,7 @@ test("62 - deletes space around n-dash between numbers", () => {
     equal(
       det(ok, not, n, "1880 &ndash; 1912", opt).res,
       `1880${rawNDash}1912`,
-      "62.01"
+      "62.01",
     );
   });
 });
@@ -962,7 +962,7 @@ test("63 - deletes space around n-dash between numbers", () => {
     equal(
       det(ok, not, n, `1880 ${rawNDash} 1912`, opt).res,
       "1880&ndash;1912",
-      "63.01"
+      "63.01",
     );
   });
 });
@@ -975,7 +975,7 @@ test("64 - deletes space around n-dash between numbers", () => {
     equal(
       det(ok, not, n, "1880 &ndash; 1912", opt).res,
       "1880&ndash;1912",
-      "64.01"
+      "64.01",
     );
   });
 });
@@ -988,7 +988,7 @@ test("65 - space in front of n-dash, missing space after it", () => {
     equal(
       det(ok, not, n, `1880 ${rawNDash}1912`, opt).res,
       `1880${rawNDash}1912`,
-      "65.01"
+      "65.01",
     );
   });
 });
@@ -1017,7 +1017,7 @@ test("67", () => {
       removeWidows: true,
     }).res,
     "Abc;&nbsp;de fghij&nbsp;klmnop.",
-    "67.01"
+    "67.01",
   );
 });
 
@@ -1029,7 +1029,7 @@ test("68", () => {
     equal(
       det(ok, not, n, `Abc;${rawNbsp}de fghij klmnop.`, opt).res,
       "Abc;&nbsp;de fghij&nbsp;klmnop.",
-      "68.01"
+      "68.01",
     );
   });
 });
@@ -1042,7 +1042,7 @@ test("69", () => {
     equal(
       det(ok, not, n, `Abc;${rawNbsp}fghij klm nop.`, opt).res,
       `Abc;${rawNbsp}fghij klm${rawNbsp}nop.`,
-      "69.01"
+      "69.01",
     );
   });
 });
@@ -1054,7 +1054,7 @@ test("70", () => {
     equal(
       det(ok, not, n, `Abc;${rawNbsp}de fg.`, opt).res,
       "Abc; de fg.",
-      "70.01"
+      "70.01",
     );
   });
 });
@@ -1066,7 +1066,7 @@ test("71 - sanity check #02", () => {
     equal(
       det(ok, not, n, "Semicolon;&is cool.", opt).res,
       "Semicolon;&is cool.",
-      "71.01"
+      "71.01",
     );
   });
 });

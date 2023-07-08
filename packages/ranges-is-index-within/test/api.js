@@ -10,7 +10,7 @@ test("01 - 1st argument missing", () => {
       isIndexWithin();
     },
     /THROW_ID_01/,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -20,7 +20,7 @@ test("02 - 1st and 2nd args swapped", () => {
       isIndexWithin([[1, 2]], 2);
     },
     /THROW_ID_01/,
-    "02.01"
+    "02.01",
   );
 });
 

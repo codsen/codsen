@@ -32,7 +32,7 @@ const testme = () =>
         },
       ],
     },
-    { mode: 1 }
+    { mode: 1 },
   );
 
 // action

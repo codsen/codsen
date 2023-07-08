@@ -28,7 +28,7 @@ const testme = () =>
       wrapHeadsWith: "%%_",
       wrapTailsWith: "_%%",
       xhtml: false,
-    }
+    },
   );
 
 // action

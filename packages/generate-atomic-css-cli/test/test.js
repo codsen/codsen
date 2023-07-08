@@ -33,12 +33,12 @@ test("01 - there are no usable files at all", async () => {
         `cd ${tempFolder} && ${path.join(
           __dirname,
           "../",
-          "cli.js"
+          "cli.js",
         )} "index.html"`,
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then(() => fs.readFile(path.join(tempFolder, "index.html"), "utf8"))
     .catch((err) => {
@@ -106,12 +106,12 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
         `cd ${tempFolder} && ${path.join(
           __dirname,
           "../",
-          "cli.js"
+          "cli.js",
         )} "index.html"`,
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then(() => fs.readFile(path.join(tempFolder, "index.html"), "utf8"))
     .catch((err) => {
@@ -169,15 +169,15 @@ GENERATE-ATOMIC-CSS-CONTENT-ENDS */
   let file1contents = await fs
     .writeFile(path.join(tempFolder, "file1.html"), file1)
     .then(
-      () => fs.writeFile(path.join(tempFolder, "file2.html"), file2) // <---- we write second file here
+      () => fs.writeFile(path.join(tempFolder, "file2.html"), file2), // <---- we write second file here
     )
     .then(() =>
       execa(
         `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} "*.html"`,
         {
           shell: true,
-        }
-      )
+        },
+      ),
     )
     .then(() => fs.readFile(path.join(tempFolder, "file1.html"), "utf8"))
     .catch((err) => {
@@ -186,7 +186,7 @@ GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 
   let file2contents = await fs.readFile(
     path.join(tempFolder, "file2.html"),
-    "utf8"
+    "utf8",
   );
 
   // 3. compare:

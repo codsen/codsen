@@ -138,7 +138,7 @@ const cli = meow(
         shortFlag: "l",
       },
     },
-  }
+  },
 );
 updateNotifier({ pkg }).notify();
 
@@ -203,7 +203,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
               ? "\t".repeat(indentationCount)
               : indentationCount,
             EOL: eolChar,
-          }
+          },
         );
       } else {
         result = parsedJson;
@@ -212,7 +212,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
       return Promise.resolve(
         !cli.flags.pack && path.basename(oneOfPaths) === "package.json"
           ? format(result)
-          : result
+          : result,
       ).then((obj) => {
         if (cli.flags.ci) {
           // if it's CI mode, we only gather a list of files that differ from
@@ -240,7 +240,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
               return current;
             }),
             null,
-            cli.flags.tabs ? "\t".repeat(indentationCount) : indentationCount
+            cli.flags.tabs ? "\t".repeat(indentationCount) : indentationCount,
           );
 
           if (eolChar === "\r\n") {
@@ -257,7 +257,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
             stringified
               .replaceAll(
                 /\r\n/g,
-                resolveEolSetting(filesContent, cli.flags.lineEnding)
+                resolveEolSetting(filesContent, cli.flags.lineEnding),
               )
               .trimEnd() !== filesContent.trimEnd()
           );
@@ -288,14 +288,14 @@ function readSortAndWriteOverFile(oneOfPaths) {
                 ? "\t".repeat(indentationCount)
                 : indentationCount,
               EOL: resolveEolSetting(filesContent, cli.flags.lineEnding),
-            }
+            },
           )
           .then(() => {
             if (!cli.flags.silent) {
               log(
                 `${chalk.grey(
-                  prefix
-                )}${oneOfPaths} - ${`\u001b[${32}m${"OK"}\u001b[${39}m`}`
+                  prefix,
+                )}${oneOfPaths} - ${`\u001b[${32}m${"OK"}\u001b[${39}m`}`,
               );
             }
             return true;
@@ -304,7 +304,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
     })
     .catch((err) => {
       console.log(
-        `${oneOfPaths} - ${`\u001b[${31}m${"BAD"}\u001b[${39}m`} - ${err}`
+        `${oneOfPaths} - ${`\u001b[${31}m${"BAD"}\u001b[${39}m`} - ${err}`,
       );
     });
 }
@@ -337,8 +337,8 @@ globby(input, { dot: true })
     if (paths.length === 0 && !cli.flags.silent) {
       log(
         `${chalk.grey(prefix)}${chalk.red(
-          "The inputs don't lead to any json files! Exiting."
-        )}`
+          "The inputs don't lead to any json files! Exiting.",
+        )}`,
       );
       process.exit(0);
     }
@@ -360,33 +360,33 @@ globby(input, { dot: true })
                     expandDirectories: {
                       files: [".*", "*.json"],
                     },
-                  }
+                  },
                 )
-              : [singleDirOrFilePath]
-          )
+              : [singleDirOrFilePath],
+          ),
         ),
-      []
+      [],
       // then reduce again, now actually concatenating them all together
     ).then((received) =>
-      pReduce(received, (total, single) => total.concat(single), [])
-    )
+      pReduce(received, (total, single) => total.concat(single), []),
+    ),
   )
   .then((paths) =>
     paths.filter(
       (oneOfPaths) =>
         !oneOfPaths.includes("package-lock.json") &&
-        !oneOfPaths.includes("yarn.lock")
-    )
+        !oneOfPaths.includes("yarn.lock"),
+    ),
   )
   .then((paths) =>
     !cli.flags.nodemodules
       ? paths.filter((oneOfPaths) => !oneOfPaths.includes("node_modules"))
-      : paths
+      : paths,
   )
   .then((paths) =>
     cli.flags.pack
       ? paths.filter((oneOfPaths) => !oneOfPaths.includes("package.json"))
-      : paths
+      : paths,
   )
   .then((paths) =>
     paths.filter((singlePath) => {
@@ -395,40 +395,40 @@ globby(input, { dot: true })
         (typeof path.basename(singlePath) === "string" &&
           path.basename(singlePath).startsWith(".") &&
           !nonJsonFormats.some((badExtension) =>
-            path.extname(singlePath).includes(badExtension)
+            path.extname(singlePath).includes(badExtension),
           ) &&
           !badFiles.some((badFile) =>
-            path.basename(singlePath).includes(badFile)
+            path.basename(singlePath).includes(badFile),
           ))
       );
-    })
+    }),
   )
   // eslint-disable-next-line consistent-return
   .then((paths) => {
     if (cli.flags.dry && !cli.flags.silent) {
       log(
         `${chalk.grey(prefix)}${chalk.yellow(
-          "We'd try to sort the following files:"
-        )}\n${paths.join("\n")}`
+          "We'd try to sort the following files:",
+        )}\n${paths.join("\n")}`,
       );
     } else {
       if (cli.flags.ci) {
         // CI setting
         return pFilter(paths, (currentPath) =>
-          readSortAndWriteOverFile(currentPath)
+          readSortAndWriteOverFile(currentPath),
         ).then((received2) => {
           if (received2.length && !cli.flags.silent) {
             log(
               `${chalk.grey(prefix)}${chalk.red(
-                "Unsorted files:"
-              )}\n${received2.join("\n")}`
+                "Unsorted files:",
+              )}\n${received2.join("\n")}`,
             );
             process.exit(9);
           } else if (!cli.flags.silent) {
             log(
               `${chalk.grey(prefix)}${chalk.white(
-                "All files were already sorted:"
-              )}\n${paths.join("\n")}`
+                "All files were already sorted:",
+              )}\n${paths.join("\n")}`,
             );
             process.exit(0);
           }
@@ -448,36 +448,36 @@ globby(input, { dot: true })
                 : {
                     good: counter.good,
                     bad: counter.bad.concat([currentPath]),
-                  }
+                  },
             )
             .catch((err) => {
               if (!cli.flags.silent) {
                 log(
                   `${chalk.grey(prefix)}${chalk.red(
-                    "Could not write out the sorted file:"
-                  )} ${err}`
+                    "Could not write out the sorted file:",
+                  )} ${err}`,
                 );
               }
             }),
-        { good: [], bad: [] }
+        { good: [], bad: [] },
       ).then((counter) => {
         if (!cli.flags.silent) {
           log(
             `\n${chalk.grey(prefix)}${chalk.green(
               `${counter.bad && counter.bad.length === 0 ? "All " : ""}${
                 counter.good.length
-              } files sorted`
+              } files sorted`,
             )}${
               counter.bad && counter.bad.length
                 ? `\n${chalk.grey(prefix)}${chalk.red(
                     `${counter.bad.length} file${
                       counter.bad.length === 1 ? "" : "s"
-                    } could not be sorted`
+                    } could not be sorted`,
                   )} ${`\u001b[${90}m - ${counter.bad.join(
-                    " - "
+                    " - ",
                   )}\u001b[${39}m`}`
                 : ""
-            }`
+            }`,
           );
         }
       });

@@ -64,7 +64,7 @@ test(`01 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - wrong/missing input`, ()
       genAtomic();
     },
     /THROW_ID_01/g,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -74,7 +74,7 @@ test(`02 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - undefined literal`, () =
       genAtomic(undefined);
     },
     /THROW_ID_01/g,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -84,7 +84,7 @@ test(`03 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - numbers`, () => {
       genAtomic(1);
     },
     /THROW_ID_01/g,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -94,7 +94,7 @@ test(`04 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - null`, () => {
       genAtomic(null);
     },
     /THROW_ID_01/g,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -104,7 +104,7 @@ test(`05 - ${`\u001b[${31}m${"throws"}\u001b[${39}m`} - bools`, () => {
       genAtomic(true);
     },
     /THROW_ID_01/g,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -125,7 +125,7 @@ test("06 - no $$$ - oneliner", () => {
         count: 0,
       },
     },
-    "06.01"
+    "06.01",
   );
   equal(
     genAtomic(source, {
@@ -138,7 +138,7 @@ test("06 - no $$$ - oneliner", () => {
         count: 0,
       },
     },
-    "06.02"
+    "06.02",
   );
   equal(
     genAtomic(source, {
@@ -151,7 +151,7 @@ test("06 - no $$$ - oneliner", () => {
         count: 0,
       },
     },
-    "06.03"
+    "06.03",
   );
   equal(
     genAtomic(source, {
@@ -164,7 +164,7 @@ test("06 - no $$$ - oneliner", () => {
         count: 0,
       },
     },
-    "06.04"
+    "06.04",
   );
 });
 
@@ -177,7 +177,7 @@ test("07 - no $$$ - multiliner", () => {
       includeHeadsAndTails: true,
     }).result,
     source,
-    "07.01"
+    "07.01",
   );
   equal(
     genAtomic(source, {
@@ -185,7 +185,7 @@ test("07 - no $$$ - multiliner", () => {
       includeHeadsAndTails: false,
     }).result,
     source,
-    "07.02"
+    "07.02",
   );
   equal(
     genAtomic(source, {
@@ -193,7 +193,7 @@ test("07 - no $$$ - multiliner", () => {
       includeHeadsAndTails: true,
     }).result,
     source,
-    "07.03"
+    "07.03",
   );
   equal(
     genAtomic(source, {
@@ -201,7 +201,7 @@ test("07 - no $$$ - multiliner", () => {
       includeHeadsAndTails: false,
     }).result,
     source,
-    "07.04"
+    "07.04",
   );
 });
 
@@ -238,7 +238,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 333
 444
 `,
-    "08.01"
+    "08.01",
   );
 });
 
@@ -255,7 +255,7 @@ GENERATE-ATOMIC-CSS-CONFIG-ENDSGENERATE-ATOMIC-CSS-CONTENT-STARTSGENERATE-ATOMIC
 333
 444
 `,
-      { pad: false }
+      { pad: false },
     ).result,
     `111
 222
@@ -278,7 +278,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 333
 444
 `,
-    "09.01"
+    "09.01",
   );
 });
 
@@ -287,7 +287,7 @@ test("10 - placeholder in the middle of the name, ends with px", () => {
     genAtomic(
       `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 |   .pt$$$px[lang|=en] { padding-top: $$$px !important } | 0 | 2 |
-GENERATE-ATOMIC-CSS-CONFIG-ENDSGENERATE-ATOMIC-CSS-CONTENT-STARTSGENERATE-ATOMIC-CSS-CONTENT-ENDS */`
+GENERATE-ATOMIC-CSS-CONFIG-ENDSGENERATE-ATOMIC-CSS-CONTENT-STARTSGENERATE-ATOMIC-CSS-CONTENT-ENDS */`,
     ).result,
     `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 |   .pt$$$px[lang|=en] { padding-top: $$$px !important } | 0 | 2 |
@@ -298,7 +298,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
    .pt2px[lang|=en] { padding-top: 2px !important }
 /* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 `,
-    "10.01"
+    "10.01",
   );
 });
 
@@ -307,7 +307,7 @@ test("11 - placeholder in the middle of the name, ends with px", () => {
     genAtomic(
       `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 |   .pt$$$px[lang|=en] { padding-top: $$$px !important } | 0 | 10 |
-GENERATE-ATOMIC-CSS-CONFIG-ENDSGENERATE-ATOMIC-CSS-CONTENT-STARTSGENERATE-ATOMIC-CSS-CONTENT-ENDS */`
+GENERATE-ATOMIC-CSS-CONFIG-ENDSGENERATE-ATOMIC-CSS-CONTENT-STARTSGENERATE-ATOMIC-CSS-CONTENT-ENDS */`,
     ).result,
     `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 |   .pt$$$px[lang|=en] { padding-top: $$$px !important } | 0 | 10 |
@@ -326,7 +326,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
    .pt10px[lang|=en] { padding-top: 10px !important }
 /* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 `,
-    "11.01"
+    "11.01",
   );
 });
 
@@ -336,7 +336,7 @@ test("12 - placeholder in the middle of the name, ends with p", () => {
       `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 | .pt$$$p { padding-top: $$$% !important; }|0|3|
 GENERATE-ATOMIC-CSS-CONFIG-ENDSGENERATE-ATOMIC-CSS-CONTENT-STARTSGENERATE-ATOMIC-CSS-CONTENT-ENDS */
-`
+`,
     ).result,
     `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 | .pt$$$p { padding-top: $$$% !important; }|0|3|
@@ -348,7 +348,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
  .pt3p { padding-top: 3% !important; }
 /* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 `,
-    "12.01"
+    "12.01",
   );
 });
 
@@ -358,7 +358,7 @@ test("13 - starts with a placeholder (not legit)", () => {
       `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 | .pt$$$p { padding-top: $$$px !important; }|0|3|
 GENERATE-ATOMIC-CSS-CONFIG-ENDSGENERATE-ATOMIC-CSS-CONTENT-STARTSGENERATE-ATOMIC-CSS-CONTENT-ENDS */
-`
+`,
     ).result,
     `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 | .pt$$$p { padding-top: $$$px !important; }|0|3|
@@ -370,7 +370,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
  .pt3p { padding-top: 3px !important; }
 /* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 `,
-    "13.01"
+    "13.01",
   );
 });
 
@@ -389,7 +389,7 @@ test(`14 - ${`\u001b[${33}m${"no config, no heads/tails requested"}\u001b[${39}m
   ok(generated.includes("padding-top: 500px !important", "03.01.03"), "14.03");
   ok(
     generated.includes(".pt401 { padding-top: 401px !important; }", "03.01.04"),
-    "14.04"
+    "14.04",
   );
 });
 
@@ -482,7 +482,7 @@ test(`17 - ${`\u001b[${35}m${"no config, only heads/tails requested"}\u001b[${39
   ok(generated.includes("padding-top: 500px !important", "04.01.03"), "17.03");
   ok(
     generated.includes(".pt401 { padding-top: 401px !important; }", "04.01.04"),
-    "17.04"
+    "17.04",
   );
 
   // without config we can't do a second cycle so unit test ends here
@@ -692,7 +692,7 @@ ${CONTENTHEAD}${contents}${CONTENTTAIL}
       includeHeadsAndTails: false,
     }).result,
     "",
-    "23.01"
+    "23.01",
   );
   equal(
     genAtomic(input, {
@@ -700,7 +700,7 @@ ${CONTENTHEAD}${contents}${CONTENTTAIL}
       includeHeadsAndTails: true,
     }).result,
     "",
-    "23.02"
+    "23.02",
   );
   equal(
     genAtomic(input, {
@@ -708,7 +708,7 @@ ${CONTENTHEAD}${contents}${CONTENTTAIL}
       includeHeadsAndTails: false,
     }).result,
     "",
-    "23.03"
+    "23.03",
   );
   equal(
     genAtomic(input, {
@@ -716,7 +716,7 @@ ${CONTENTHEAD}${contents}${CONTENTTAIL}
       includeHeadsAndTails: true,
     }).result,
     "",
-    "23.04"
+    "23.04",
   );
 });
 
@@ -732,7 +732,7 @@ ${CONTENTTAIL}
       includeHeadsAndTails: false,
     }).result,
     "",
-    "24.01"
+    "24.01",
   );
   equal(
     genAtomic(input, {
@@ -740,7 +740,7 @@ ${CONTENTTAIL}
       includeHeadsAndTails: true,
     }).result,
     "",
-    "24.02"
+    "24.02",
   );
   equal(
     genAtomic(input, {
@@ -748,7 +748,7 @@ ${CONTENTTAIL}
       includeHeadsAndTails: false,
     }).result,
     "",
-    "24.03"
+    "24.03",
   );
   equal(
     genAtomic(input, {
@@ -756,7 +756,7 @@ ${CONTENTTAIL}
       includeHeadsAndTails: true,
     }).result,
     "",
-    "24.04"
+    "24.04",
   );
 });
 
@@ -773,7 +773,7 @@ lala`,
       {
         includeConfig: false,
         includeHeadsAndTails: true,
-      }
+      },
     ).result,
     `tra
 
@@ -789,7 +789,7 @@ lala`,
 lala
 `,
 
-    "25.01"
+    "25.01",
   );
 });
 
@@ -807,7 +807,7 @@ lala`,
     {
       includeConfig: false,
       includeHeadsAndTails: true,
-    }
+    },
   );
   equal(
     result,
@@ -825,7 +825,7 @@ lala`,
 lala
 `,
 
-    "26.01"
+    "26.01",
   );
   equal(log.count, 5, "26.02");
 });
@@ -845,7 +845,7 @@ lala`,
       {
         includeConfig: false,
         includeHeadsAndTails: true,
-      }
+      },
     ).result,
     `tra
 
@@ -861,7 +861,7 @@ lala`,
 lala
 `,
 
-    "27.01"
+    "27.01",
   );
 });
 
@@ -880,7 +880,7 @@ lala`,
       {
         includeConfig: false,
         includeHeadsAndTails: true,
-      }
+      },
     ).result,
     `tra
 
@@ -896,7 +896,7 @@ lala`,
 lala
 `,
 
-    "28.01"
+    "28.01",
   );
 });
 
@@ -913,7 +913,7 @@ lala`,
       {
         includeConfig: true,
         includeHeadsAndTails: true,
-      }
+      },
     ).result,
     `tra
 
@@ -934,7 +934,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 lala
 `,
 
-    "29.01"
+    "29.01",
   );
 });
 
@@ -953,7 +953,7 @@ lala`,
       {
         includeConfig: true,
         includeHeadsAndTails: true,
-      }
+      },
     ).result,
     `tra
 
@@ -974,7 +974,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 lala
 `,
 
-    "30.01"
+    "30.01",
   );
 });
 
@@ -993,7 +993,7 @@ lala`,
       {
         includeConfig: true,
         includeHeadsAndTails: true,
-      }
+      },
     ).result,
     `tra
 
@@ -1014,7 +1014,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 lala
 `,
 
-    "31.01"
+    "31.01",
   );
 });
 
@@ -1033,7 +1033,7 @@ lala`,
       {
         includeConfig: true,
         includeHeadsAndTails: true,
-      }
+      },
     ).result,
     `tra
 
@@ -1054,7 +1054,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 lala
 `,
 
-    "32.01"
+    "32.01",
   );
 });
 
@@ -1073,7 +1073,7 @@ test(`33 - ${`\u001b[${35}m${"config present no config requested"}\u001b[${39}m`
       {
         includeConfig: false,
         includeHeadsAndTails: true,
-      }
+      },
     ).result,
     `/* tra */
 
@@ -1089,7 +1089,7 @@ test(`33 - ${`\u001b[${35}m${"config present no config requested"}\u001b[${39}m`
 /* lala */
 `,
 
-    "33.01"
+    "33.01",
   );
 });
 
@@ -1108,7 +1108,7 @@ test(`34 - ${`\u001b[${35}m${"content tails present no config requested"}\u001b[
       {
         includeConfig: false,
         includeHeadsAndTails: true,
-      }
+      },
     ).result,
     `/* tra */
 
@@ -1124,7 +1124,7 @@ test(`34 - ${`\u001b[${35}m${"content tails present no config requested"}\u001b[
 /* lala */
 `,
 
-    "34.01"
+    "34.01",
   );
 });
 
@@ -1178,7 +1178,7 @@ lala`,
       {
         includeConfig: false,
         includeHeadsAndTails: true,
-      }
+      },
     ).result,
     `tra
 
@@ -1194,7 +1194,7 @@ lala`,
 lala
 `,
 
-    "36.01"
+    "36.01",
   );
 });
 
@@ -1215,7 +1215,7 @@ test(`37 - ${`\u001b[${34}m${"config requested but not present"}\u001b[${39}m`} 
   ok(generated.includes("padding-top: 500px !important", "05.01.05"), "37.05");
   ok(
     generated.includes(".pt401 { padding-top: 401px !important; }", "05.01.06"),
-    "37.06"
+    "37.06",
   );
 
   ok(generated.includes(CONFIGHEAD, "05.01.07"), "37.07");
@@ -1337,7 +1337,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
       includeConfig: true,
       includeHeadsAndTails: true,
     }).result,
-    "39.03"
+    "39.03",
   );
 });
 
@@ -1379,7 +1379,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
       includeConfig: true,
       includeHeadsAndTails: true,
     }).result,
-    "40.02"
+    "40.02",
   );
 });
 
@@ -1427,7 +1427,7 @@ ${CONTENTHEAD} */
       includeConfig: true,
       includeHeadsAndTails: true,
     }).result,
-    "41.02"
+    "41.02",
   );
 });
 
@@ -1463,7 +1463,7 @@ ${CONTENTHEAD} */
       includeConfig: true,
       includeHeadsAndTails: true,
     }).result,
-    "42.02"
+    "42.02",
   );
 });
 
@@ -1500,7 +1500,7 @@ ${CONTENTHEAD} */
       includeConfig: true,
       includeHeadsAndTails: true,
     }).result,
-    "43.02"
+    "43.02",
   );
 });
 
@@ -1524,7 +1524,7 @@ test(`44 - ${`\u001b[${34}m${"config requested but not present"}\u001b[${39}m`} 
       {
         includeConfig: false,
         includeHeadsAndTails: true,
-      }
+      },
     ).result,
     `<style>
 /* GENERATE-ATOMIC-CSS-CONTENT-STARTS */
@@ -1544,7 +1544,7 @@ test(`44 - ${`\u001b[${34}m${"config requested but not present"}\u001b[${39}m`} 
 </table>
 `,
 
-    "44.01"
+    "44.01",
   );
 });
 
@@ -1568,7 +1568,7 @@ test(`45 - ${`\u001b[${34}m${"config requested but not present"}\u001b[${39}m`} 
       {
         includeConfig: false,
         includeHeadsAndTails: true,
-      }
+      },
     ).result,
     `<style>
 /* GENERATE-ATOMIC-CSS-CONTENT-STARTS */
@@ -1588,7 +1588,7 @@ test(`45 - ${`\u001b[${34}m${"config requested but not present"}\u001b[${39}m`} 
 </table>
 `,
 
-    "45.01"
+    "45.01",
   );
 });
 
@@ -1605,7 +1605,7 @@ lala`,
       {
         includeConfig: true,
         includeHeadsAndTails: true,
-      }
+      },
     ).result,
     `tra
 
@@ -1626,7 +1626,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 lala
 `,
 
-    "46.01"
+    "46.01",
   );
 });
 
@@ -1644,7 +1644,7 @@ lala`,
       {
         includeConfig: true,
         includeHeadsAndTails: true,
-      }
+      },
     ).result,
     `/* tra */
 
@@ -1666,7 +1666,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 lala
 `,
 
-    "47.01"
+    "47.01",
   );
 });
 
@@ -1728,7 +1728,7 @@ ${CONTENTHEAD} */
       includeHeadsAndTails: true,
       pad: false,
     }).result,
-    "48.02"
+    "48.02",
   );
 });
 
@@ -1775,7 +1775,7 @@ ${CONTENTHEAD} */
       includeHeadsAndTails: true,
       pad: false,
     }).result,
-    "49.02"
+    "49.02",
   );
 });
 
@@ -1822,7 +1822,7 @@ ${CONTENTHEAD} */
       includeHeadsAndTails: true,
       pad: false,
     }).result,
-    "50.02"
+    "50.02",
   );
 });
 
@@ -1992,7 +1992,7 @@ b
       includeHeadsAndTails: true,
       pad: 0,
       configOverride: source,
-    }
+    },
   ).result;
 
   equal(generated, ref, "54.01");
@@ -2049,7 +2049,7 @@ y
       includeHeadsAndTails: true,
       pad: 0,
       configOverride: source,
-    }
+    },
   ).result;
 
   equal(generated, ref, "55.01");
@@ -2101,7 +2101,7 @@ b
       includeHeadsAndTails: true,
       pad: 0,
       configOverride: source,
-    }
+    },
   ).result;
 
   equal(generated, ref, "56.01");
@@ -2153,7 +2153,7 @@ b
       includeHeadsAndTails: true,
       pad: 0,
       configOverride: source,
-    }
+    },
   ).result;
 
   equal(generated, ref, "57.01");
@@ -2193,7 +2193,7 @@ z`;
 
 z
 `,
-    "58.01"
+    "58.01",
   );
 });
 
@@ -2233,7 +2233,7 @@ z`;
 
 z
 `,
-    "59.01"
+    "59.01",
   );
 });
 
@@ -2278,7 +2278,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
 z
 `,
-    "60.01"
+    "60.01",
   );
 });
 
@@ -2308,7 +2308,7 @@ zzz
 
 z
 `,
-    "61.01"
+    "61.01",
   );
 });
 
@@ -2338,7 +2338,7 @@ z`;
 
 z
 `,
-    "62.01"
+    "62.01",
   );
 });
 
@@ -2370,7 +2370,7 @@ z`;
 
 z
 `,
-    "63.01"
+    "63.01",
   );
 });
 
@@ -2406,7 +2406,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 
 z
 `,
-    "64.01"
+    "64.01",
   );
 });
 
@@ -2428,7 +2428,7 @@ ${CONFIGTAIL}
 ${CONTENTHEAD} */
 zzz
 /* ${CONTENTTAIL} */
-`
+`,
     ).result,
     `/* ${CONFIGHEAD}
 ${content}
@@ -2441,7 +2441,7 @@ ${CONTENTHEAD} */
 .dib { display: inline-block !important }
 /* ${CONTENTTAIL} */
 `,
-    "65.01"
+    "65.01",
   );
 });
 
@@ -2458,7 +2458,7 @@ ${CONFIGTAIL}
 ${CONTENTHEAD} */
 zzz
 /* ${CONTENTTAIL} */
-`
+`,
     ).result,
     `/* ${CONFIGHEAD}
 ${content}
@@ -2470,7 +2470,7 @@ ${CONTENTHEAD} */
 .db { display: block !important }
 /* ${CONTENTTAIL} */
 `,
-    "66.01"
+    "66.01",
   );
 });
 
@@ -2490,7 +2490,7 @@ ${CONFIGTAIL}
 ${CONTENTHEAD} */
 zzz
 /* ${CONTENTTAIL} */
-`
+`,
     ).result,
     `/* ${CONFIGHEAD}
 ${content}
@@ -2503,7 +2503,7 @@ ${CONTENTHEAD} */
 .zzz3 { yyy: 0 auto !important }
 /* ${CONTENTTAIL} */
 `,
-    "67.01"
+    "67.01",
   );
 });
 
@@ -2537,10 +2537,10 @@ ${CONTENTHEAD} */
 zzz
 /* ${CONTENTTAIL} */
 `,
-        setOfOpts
+        setOfOpts,
       ).log.count,
       5,
-      `08.04.1${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+      `08.04.1${i} - ${JSON.stringify(setOfOpts, null, 0)}`,
     );
     equal(
       genAtomic(
@@ -2551,10 +2551,10 @@ ${CONTENTHEAD} */
 zzz
 /* ${CONTENTTAIL} */
 `,
-        setOfOpts
+        setOfOpts,
       ).log.count,
       5,
-      `08.04.2${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+      `08.04.2${i} - ${JSON.stringify(setOfOpts, null, 0)}`,
     );
     equal(
       genAtomic(
@@ -2565,10 +2565,10 @@ ${CONTENTHEAD} */
 zzz
 /* ${CONTENTTAIL} */
 `,
-        setOfOpts
+        setOfOpts,
       ).log.count,
       5,
-      `08.04.3${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+      `08.04.3${i} - ${JSON.stringify(setOfOpts, null, 0)}`,
     );
   });
 
@@ -2599,7 +2599,7 @@ test(`69 - ${`\u001b[${33}m${"heads on, config on"}\u001b[${39}m`} - reports 5 g
     equal(
       genAtomic("zzz", { ...setOfOpts, configOverride: content1 }).log.count,
       5,
-      `08.05.1${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+      `08.05.1${i} - ${JSON.stringify(setOfOpts, null, 0)}`,
     );
     equal(
       genAtomic(
@@ -2610,17 +2610,17 @@ ${CONTENTHEAD} */
 replace me
 /* ${CONTENTTAIL} */
 `,
-        { ...setOfOpts, configOverride: content1 }
+        { ...setOfOpts, configOverride: content1 },
       ).log.count,
       5,
-      `08.05.2${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+      `08.05.2${i} - ${JSON.stringify(setOfOpts, null, 0)}`,
     );
 
     // content2
     equal(
       genAtomic("zzz", { ...setOfOpts, configOverride: content2 }).log.count,
       5,
-      `08.05.3${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+      `08.05.3${i} - ${JSON.stringify(setOfOpts, null, 0)}`,
     );
     equal(
       genAtomic(
@@ -2631,17 +2631,17 @@ ${CONTENTHEAD} */
 replace me
 /* ${CONTENTTAIL} */
 `,
-        { ...setOfOpts, configOverride: content2 }
+        { ...setOfOpts, configOverride: content2 },
       ).log.count,
       5,
-      `08.05.4${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+      `08.05.4${i} - ${JSON.stringify(setOfOpts, null, 0)}`,
     );
 
     // content3
     equal(
       genAtomic("zzz", { ...setOfOpts, configOverride: content3 }).log.count,
       5,
-      `08.05.5${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+      `08.05.5${i} - ${JSON.stringify(setOfOpts, null, 0)}`,
     );
     equal(
       genAtomic(
@@ -2652,10 +2652,10 @@ ${CONTENTHEAD} */
 replace me
 /* ${CONTENTTAIL} */
 `,
-        { ...setOfOpts, configOverride: content3 }
+        { ...setOfOpts, configOverride: content3 },
       ).log.count,
       5,
-      `08.05.6${i} - ${JSON.stringify(setOfOpts, null, 0)}`
+      `08.05.6${i} - ${JSON.stringify(setOfOpts, null, 0)}`,
     );
   });
 });
@@ -2682,7 +2682,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 }
 /* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 `,
-    "70.01"
+    "70.01",
   );
 });
 
@@ -2703,7 +2703,7 @@ test(`71 - ${`\u001b[${33}m${"heads on, config on"}\u001b[${39}m`} - only conten
 }
 /* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 `,
-    "71.01"
+    "71.01",
   );
 });
 
@@ -2722,7 +2722,7 @@ test(`72 - ${`\u001b[${33}m${"heads on, config on"}\u001b[${39}m`} - no heads/ta
   .w2p { width: 2% !important }
 }
 `,
-    "72.01"
+    "72.01",
   );
 });
 
@@ -2768,37 +2768,37 @@ test(`77 - ${`\u001b[${33}m${"API bits"}\u001b[${39}m`} - extractFromToSource - 
   equal(
     extractFromToSource("mt[lang|=en]|2|10"),
     [2, 10, "mt[lang|=en]"],
-    "77.01"
+    "77.01",
   );
   equal(
     extractFromToSource(".mt[lang|=en]|2|"),
     [0, 2, ".mt[lang|=en]"],
-    "77.02"
+    "77.02",
   );
   equal(
     extractFromToSource(".mt[lang|=en]|2|10|"),
     [2, 10, ".mt[lang|=en]"],
-    "77.03"
+    "77.03",
   );
   equal(
     extractFromToSource("mt[lang|=en] | 2 | 10 | 0"),
     [2, 10, "mt[lang|=en]"],
-    "77.04"
+    "77.04",
   );
   equal(
     extractFromToSource("mt[lang|=en] | 2 | 10 | a"),
     [2, 10, "mt[lang|=en]"],
-    "77.05"
+    "77.05",
   );
   equal(
     extractFromToSource("|mt[lang|=en] | 2 | 10 | a"),
     [2, 10, "mt[lang|=en]"],
-    "77.06"
+    "77.06",
   );
   equal(
     extractFromToSource("||||mt[lang|=en] | 2 | 10 | a"),
     [2, 10, "mt[lang|=en]"],
-    "77.07"
+    "77.07",
   );
 });
 
@@ -2806,39 +2806,39 @@ test(`78 - ${`\u001b[${33}m${"API bits"}\u001b[${39}m`} - extractFromToSource - 
   equal(
     extractFromToSource(".mt$$$ { margin-top: $$$px !important; } | 10"),
     [0, 10, ".mt$$$ { margin-top: $$$px !important; }"],
-    "78.01"
+    "78.01",
   );
   equal(
     extractFromToSource("   .mt$$$ { margin-top: $$$px !important; } | 10"),
     [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
-    "78.02"
+    "78.02",
   );
   equal(
     extractFromToSource("   .mt$$$ { margin-top: $$$px !important; } | 10 "),
     [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
-    "78.03"
+    "78.03",
   );
   equal(
     extractFromToSource("   .mt$$$ { margin-top: $$$px !important; } | 10 |"),
     [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
-    "78.04"
+    "78.04",
   );
   equal(
     extractFromToSource("   .mt$$$ { margin-top: $$$px !important; } | 10 | "),
     [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
-    "78.05"
+    "78.05",
   );
   equal(
     extractFromToSource("|   .mt$$$ { margin-top: $$$px !important; } | 10 | "),
     [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
-    "78.06"
+    "78.06",
   );
   equal(
     extractFromToSource(
-      "||||   .mt$$$ { margin-top: $$$px !important; } | 10 | "
+      "||||   .mt$$$ { margin-top: $$$px !important; } | 10 | ",
     ),
     [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
-    "78.07"
+    "78.07",
   );
 });
 
@@ -2846,83 +2846,83 @@ test(`79 - ${`\u001b[${33}m${"API bits"}\u001b[${39}m`} - extractFromToSource - 
   equal(
     extractFromToSource(".mt$$$ { margin-top: $$$px !important; }|2|10"),
     [2, 10, ".mt$$$ { margin-top: $$$px !important; }"],
-    "79.01"
+    "79.01",
   );
   equal(
     extractFromToSource(".mt$$$ { margin-top: $$$px !important; } | 2 | 10 "),
     [2, 10, ".mt$$$ { margin-top: $$$px !important; }"],
-    "79.02"
+    "79.02",
   );
   equal(
     extractFromToSource(".mt$$$ { margin-top: $$$px !important; } | 2 | 10 |"),
     [2, 10, ".mt$$$ { margin-top: $$$px !important; }"],
-    "79.03"
+    "79.03",
   );
   equal(
     extractFromToSource(
-      " .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | "
+      " .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | ",
     ),
     [2, 10, " .mt$$$ { margin-top: $$$px !important; }"],
-    "79.04"
+    "79.04",
   );
   equal(
     extractFromToSource(
-      " .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | a"
+      " .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | a",
     ),
     [2, 10, " .mt$$$ { margin-top: $$$px !important; }"],
-    "79.05"
+    "79.05",
   );
   equal(
     extractFromToSource(
-      "| .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | a"
+      "| .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | a",
     ),
     [2, 10, " .mt$$$ { margin-top: $$$px !important; }"],
-    "79.06"
+    "79.06",
   );
   equal(
     extractFromToSource(
-      "|| .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | a |"
+      "|| .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | a |",
     ),
     [2, 10, " .mt$$$ { margin-top: $$$px !important; }"],
-    "79.07"
+    "79.07",
   );
 });
 
 test(`80 - ${`\u001b[${33}m${"API bits"}\u001b[${39}m`} - extractFromToSource - pipe in CSS`, () => {
   equal(
     extractFromToSource(
-      ".mt$$$[lang|=en] { margin-top: $$$px !important; }|10"
+      ".mt$$$[lang|=en] { margin-top: $$$px !important; }|10",
     ),
     [0, 10, ".mt$$$[lang|=en] { margin-top: $$$px !important; }"],
-    "80.01"
+    "80.01",
   );
   equal(
     extractFromToSource(
-      ".mt$$$[lang|=en] { margin-top: $$$px !important; }|2|10"
+      ".mt$$$[lang|=en] { margin-top: $$$px !important; }|2|10",
     ),
     [2, 10, ".mt$$$[lang|=en] { margin-top: $$$px !important; }"],
-    "80.02"
+    "80.02",
   );
   equal(
     extractFromToSource(
-      "|.mt$$$[lang|=en] { margin-top: $$$px !important; }|10|"
+      "|.mt$$$[lang|=en] { margin-top: $$$px !important; }|10|",
     ),
     [0, 10, ".mt$$$[lang|=en] { margin-top: $$$px !important; }"],
-    "80.03"
+    "80.03",
   );
   equal(
     extractFromToSource(
-      "| .mt$$$[lang|=en] { margin-top: $$$px !important; }| 2 | 10 | "
+      "| .mt$$$[lang|=en] { margin-top: $$$px !important; }| 2 | 10 | ",
     ),
     [2, 10, " .mt$$$[lang|=en] { margin-top: $$$px !important; }"],
-    "80.04"
+    "80.04",
   );
   equal(
     extractFromToSource(
-      "|||| .mt$$$[lang|=en] { margin-top: $$$px !important; }| 2 | 10 | "
+      "|||| .mt$$$[lang|=en] { margin-top: $$$px !important; }| 2 | 10 | ",
     ),
     [2, 10, " .mt$$$[lang|=en] { margin-top: $$$px !important; }"],
-    "80.05"
+    "80.05",
   );
 });
 

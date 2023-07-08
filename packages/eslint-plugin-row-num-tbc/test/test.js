@@ -31,7 +31,8 @@ const shas = {
 let fixturesPath = path.resolve("./test/fixtures");
 readdirSync(fixturesPath)
   .filter(
-    (f) => statSync(path.join(fixturesPath, f)).isFile() && f.endsWith("-in.zz")
+    (f) =>
+      statSync(path.join(fixturesPath, f)).isFile() && f.endsWith("-in.zz"),
   )
   .forEach((file, i) => {
     test(`${String(i + 1).padStart(2, "0")} - ${file}`, () => {
@@ -47,8 +48,8 @@ readdirSync(fixturesPath)
       } else if (sha256(testIn) !== shas[file]) {
         throw new Error(
           `#${testName} - ${file} has been mangled, sha should be: ${sha256(
-            testIn
-          )}`
+            testIn,
+          )}`,
         );
       }
 
@@ -62,17 +63,17 @@ readdirSync(fixturesPath)
       equal(
         verifiedAndFixed.output,
         testOut,
-        `#${testName} - verifyAndFix().output`
+        `#${testName} - verifyAndFix().output`,
       );
       equal(
         verifiedAndFixed.fixed,
         true,
-        `#${testName} - verifyAndFix().fixed`
+        `#${testName} - verifyAndFix().fixed`,
       );
       equal(
         verifiedAndFixed.messages,
         [],
-        `#${testName} - verifyAndFix().messages`
+        `#${testName} - verifyAndFix().messages`,
       );
 
       // 4. ensure no more errors are raised about "out"
@@ -101,7 +102,7 @@ readdirSync(fixturesPath)
         output: testStr,
         messages: [],
       },
-      `02.01.${String(i + 1).padStart(2, "0")}`
+      `02.01.${String(i + 1).padStart(2, "0")}`,
     );
   });
 });

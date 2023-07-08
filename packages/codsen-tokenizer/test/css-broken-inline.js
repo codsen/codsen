@@ -86,7 +86,7 @@ test(`01 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - semi missing between two r
         ],
       },
     ],
-    "01.01"
+    "01.01",
   );
 });
 
@@ -184,7 +184,7 @@ test(`02 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character`, () => {
         attribs: [],
       },
     ],
-    "02.01"
+    "02.01",
   );
 });
 
@@ -288,7 +288,7 @@ test(`03 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character`, () => {
         attribs: [],
       },
     ],
-    "03.01"
+    "03.01",
   );
 });
 
@@ -383,7 +383,7 @@ test(`04 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - copious line breaks`, () =
         attribs: [],
       },
     ],
-    "04.01"
+    "04.01",
   );
 });
 
@@ -466,7 +466,7 @@ test(`05 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character before pro
         attribs: [],
       },
     ],
-    "05.01"
+    "05.01",
   );
 });
 
@@ -549,7 +549,7 @@ test(`06 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character after prop
         attribs: [],
       },
     ],
-    "06.01"
+    "06.01",
   );
 });
 
@@ -632,7 +632,7 @@ test(`07 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character before pro
         attribs: [],
       },
     ],
-    "07.01"
+    "07.01",
   );
 });
 
@@ -715,7 +715,7 @@ test(`08 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character after valu
         attribs: [],
       },
     ],
-    "08.01"
+    "08.01",
   );
 });
 
@@ -798,7 +798,7 @@ test(`09 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character after valu
         attribs: [],
       },
     ],
-    "09.01"
+    "09.01",
   );
 });
 
@@ -908,7 +908,7 @@ test(`10 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character`, () => {
         attribs: [],
       },
     ],
-    "10.01"
+    "10.01",
   );
 });
 
@@ -1018,7 +1018,7 @@ test(`11 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - rogue character`, () => {
         attribs: [],
       },
     ],
-    "11.01"
+    "11.01",
   );
 });
 
@@ -1116,7 +1116,7 @@ test(`12 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - semi instead of a colon #1
         attribs: [],
       },
     ],
-    "12.01"
+    "12.01",
   );
 });
 
@@ -1214,7 +1214,7 @@ test(`13 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - semi instead of a colon #2
         attribs: [],
       },
     ],
-    "13.01"
+    "13.01",
   );
 });
 
@@ -1300,7 +1300,7 @@ test(`14 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - quoted property value, no 
         attribs: [],
       },
     ],
-    "14.01"
+    "14.01",
   );
 });
 
@@ -1383,7 +1383,7 @@ test(`15 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - quoted property value, no 
         attribs: [],
       },
     ],
-    "15.01"
+    "15.01",
   );
 });
 
@@ -1445,7 +1445,7 @@ test(`16 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - quoted property value, sem
         ],
       },
     ],
-    "16.01"
+    "16.01",
   );
 });
 
@@ -1528,7 +1528,7 @@ test(`17 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - quoted property value, sem
         attribs: [],
       },
     ],
-    "17.01"
+    "17.01",
   );
 });
 
@@ -1632,7 +1632,7 @@ test(`18 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - quoted property values`, (
         attribs: [],
       },
     ],
-    "18.01"
+    "18.01",
   );
 });
 
@@ -1694,7 +1694,7 @@ test("19 - repeated !important", () => {
         ],
       },
     ],
-    "19.01"
+    "19.01",
   );
 });
 
@@ -1771,7 +1771,7 @@ test("20 - !important cut off by a semy goes as important, not property", () => 
         ],
       },
     ],
-    "20.01"
+    "20.01",
   );
 });
 
@@ -1833,7 +1833,7 @@ test("21", () => {
         ],
       },
     ],
-    "21.01"
+    "21.01",
   );
 });
 
@@ -1895,7 +1895,7 @@ test("22", () => {
         ],
       },
     ],
-    "22.01"
+    "22.01",
   );
 });
 
@@ -1957,7 +1957,7 @@ test("23", () => {
         ],
       },
     ],
-    "23.01"
+    "23.01",
   );
 });
 
@@ -2036,7 +2036,7 @@ test("24 - repeated semi, tight", () => {
         ],
       },
     ],
-    "24.01"
+    "24.01",
   );
 });
 
@@ -2119,7 +2119,7 @@ test("25 - repeated semi, space in front", () => {
         ],
       },
     ],
-    "25.01"
+    "25.01",
   );
 });
 
@@ -2202,7 +2202,7 @@ test("26 - repeated semi, tab in front", () => {
         ],
       },
     ],
-    "26.01"
+    "26.01",
   );
 });
 
@@ -2285,7 +2285,7 @@ test("27 - repeated semi, space after, quotes follow", () => {
         ],
       },
     ],
-    "27.01"
+    "27.01",
   );
 });
 
@@ -2368,7 +2368,7 @@ test("28 - repeated semi, space after, bracket follows", () => {
         ],
       },
     ],
-    "28.01"
+    "28.01",
   );
 });
 
@@ -2466,7 +2466,7 @@ test("29 - repeated semi, space after", () => {
         ],
       },
     ],
-    "29.01"
+    "29.01",
   );
 });
 
@@ -2615,7 +2615,7 @@ test("30 - unrecognised prop only - tralala #1", () => {
         ],
       },
     ],
-    "30.01"
+    "30.01",
   );
 });
 
@@ -2752,7 +2752,7 @@ test("31 - unrecognised prop only - tralala #2", () => {
         ],
       },
     ],
-    "31.01"
+    "31.01",
   );
 });
 
@@ -2829,7 +2829,7 @@ test("32 - leading semi, tight", () => {
         ],
       },
     ],
-    "32.01"
+    "32.01",
   );
 });
 
@@ -2912,7 +2912,7 @@ test("33 - leading semi, spaced", () => {
         ],
       },
     ],
-    "33.01"
+    "33.01",
   );
 });
 
@@ -2974,7 +2974,7 @@ test("34 - value missing", () => {
         ],
       },
     ],
-    "34.01"
+    "34.01",
   );
 });
 

@@ -20,7 +20,7 @@ test("01 - full", () => {
       [4, 7, " "],
       [10, 11],
     ],
-    "01.02"
+    "01.02",
   );
   equal(
     applicableOpts,
@@ -28,7 +28,7 @@ test("01 - full", () => {
       removeHTMLComments: false,
       removeCSSComments: false,
     },
-    "01.03"
+    "01.03",
   );
 });
 
@@ -45,7 +45,7 @@ test("02 - deletes trailing space", () => {
         removeCSSComments: false,
       },
     },
-    "01.01"
+    "01.01",
   );
   compare(
     ok,
@@ -59,7 +59,7 @@ test("02 - deletes trailing space", () => {
         removeCSSComments: false,
       },
     },
-    "01.02"
+    "01.02",
   );
   compare(
     ok,
@@ -73,7 +73,7 @@ test("02 - deletes trailing space", () => {
         removeCSSComments: false,
       },
     },
-    "01.03"
+    "01.03",
   );
 });
 
@@ -90,7 +90,7 @@ test("03 - retains trailing linebreak", () => {
         removeCSSComments: false,
       },
     },
-    "02"
+    "02",
   );
 });
 
@@ -107,7 +107,7 @@ test("04 - trailing line break", () => {
         removeCSSComments: false,
       },
     },
-    "03"
+    "03",
   );
 });
 
@@ -124,7 +124,7 @@ test("05 - multiple line breaks", () => {
         removeCSSComments: false,
       },
     },
-    "04"
+    "04",
   );
 });
 
@@ -141,7 +141,7 @@ test("06 - ends with character", () => {
         removeCSSComments: false,
       },
     },
-    "05"
+    "05",
   );
 });
 
@@ -158,7 +158,7 @@ test("07 - tags, end with character", () => {
         removeCSSComments: false,
       },
     },
-    "06.01"
+    "06.01",
   );
   compare(
     ok,
@@ -172,7 +172,7 @@ test("07 - tags, end with character", () => {
         removeCSSComments: false,
       },
     },
-    "06.02"
+    "06.02",
   );
 });
 
@@ -190,7 +190,7 @@ test("08 - comments", () => {
         removeCSSComments: false,
       },
     },
-    "07"
+    "07",
   );
 });
 
@@ -202,7 +202,7 @@ test("09 - CRLF", () => {
       removeLineBreaks: true,
     }).result,
     "<table><tr>",
-    "08"
+    "08",
   );
 });
 

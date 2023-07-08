@@ -13,7 +13,7 @@ assert.deepEqual(
     },
     {
       key: "b",
-    }
+    },
   ),
-  { a: "a" }
+  { a: "a" },
 );

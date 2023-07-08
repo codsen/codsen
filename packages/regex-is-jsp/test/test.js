@@ -16,7 +16,7 @@ test("02 scriptlet", () => {
   match(
     '<% out.println("Your IP: " + request.getRemoteAddisJSP()); %>',
     isJSP(),
-    "02.02"
+    "02.02",
   );
 });
 
@@ -32,7 +32,7 @@ test("04 expressions", () => {
   match(
     "<p>Today's date: <%= (new java.util.Date()).toLocaleString()%></p>",
     isJSP(),
-    "04.02"
+    "04.02",
   );
 });
 
@@ -55,7 +55,7 @@ test("08 wrapper tag", () => {
   match(
     '<%@tag description="Simple Wrapper Tag" pageEncoding="UTF-8"%>',
     isJSP(),
-    "08.01"
+    "08.01",
   );
 });
 
@@ -63,7 +63,7 @@ test("09 use bean", () => {
   match(
     '<jsp:useBean id = "name" class = "package.class" />',
     isJSP(),
-    "09.01"
+    "09.01",
   );
 });
 
@@ -79,7 +79,7 @@ test("12 prop mentioning JSP", () => {
   match(
     "${jspProp.cardTypeName} **** **** **** ${jspProp.cardNumber}",
     isJSP(),
-    "12.01"
+    "12.01",
   );
 });
 
@@ -101,7 +101,7 @@ test("14 IF-ELSE", () => {
    </body>
 </html> `,
     isJSP(),
-    "14.01"
+    "14.01",
   );
 });
 

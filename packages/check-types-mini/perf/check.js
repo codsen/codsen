@@ -30,7 +30,7 @@ const testme = () =>
       msg: "msg",
       optsVarName: "OPTS",
       ignorePaths: ["aaa.bbb"],
-    }
+    },
   );
 
 // action

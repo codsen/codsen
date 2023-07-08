@@ -23,12 +23,12 @@ test("01 - sampler", () => {
 </style>`,
       {
         removeLineBreaks: true,
-      }
+      },
     ).result,
     `<style>
 @media screen{div{color:white;} }.foo{background:green;}
 </style>`,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -49,12 +49,12 @@ test("02 - spaced", () => {
 \t\tbackground: green;
 \t}
 </style>`,
-        opt
+        opt,
       ).result,
       `<style>
 @media screen{div{color:white;} }.foo{background:green;}
 </style>`,
-      `${JSON.stringify(opt, null, 0)}`
+      `${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -76,12 +76,12 @@ test("03 - already come tight", () => {
 \t\tbackground: green;
 \t}
 </style>`,
-        opt
+        opt,
       ).result,
       `<style>
 @media screen{div{color:white;} }.foo{background:green;}
 </style>`,
-      `${JSON.stringify(opt, null, 0)}`
+      `${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -96,12 +96,12 @@ test("04 - already come tight, vs. Nunjucks", () => {
         `<style>
 @media screen{div{color:{{brandWhite}}}}.foo{background:green;}
 </style>`,
-        opt
+        opt,
       ).result,
       `<style>
 @media screen{div{color:{{brandWhite}}} }.foo{background:green;}
 </style>`,
-      `${JSON.stringify(opt, null, 0)}`
+      `${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -122,13 +122,13 @@ test("05 - line break falls between two curlies, #1", () => {
       {
         removeLineBreaks: true,
         lineLengthLimit: 31,
-      }
+      },
     ).result,
     `<style>
 @media screen{div{color:white;}
 }.foo{background:green;}
 </style>`,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -148,13 +148,13 @@ test("06 - line break falls between two curlies, #2", () => {
       {
         removeLineBreaks: true,
         lineLengthLimit: 32,
-      }
+      },
     ).result,
     `<style>
 @media screen{div{color:white;}
 }.foo{background:green;}
 </style>`,
-    "06.01"
+    "06.01",
   );
 });
 
@@ -174,13 +174,13 @@ test("07 - line break falls between two curlies, #3", () => {
       {
         removeLineBreaks: true,
         lineLengthLimit: 33,
-      }
+      },
     ).result,
     `<style>
 @media screen{div{color:white;} }
 .foo{background:green;}
 </style>`,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -200,13 +200,13 @@ test("08 - line break falls between two curlies, #4", () => {
       {
         removeLineBreaks: true,
         lineLengthLimit: 34,
-      }
+      },
     ).result,
     `<style>
 @media screen{div{color:white;} }
 .foo{background:green;}
 </style>`,
-    "08.01"
+    "08.01",
   );
 });
 

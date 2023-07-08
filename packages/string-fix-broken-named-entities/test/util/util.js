@@ -9,7 +9,7 @@ function fix(ok, ...args) {
     if (o && o.ruleName) {
       ok(
         allRules.includes(o.ruleName),
-        `${o.ruleName} is not mentioned in allRules!`
+        `${o.ruleName} is not mentioned in allRules!`,
       );
     }
   });

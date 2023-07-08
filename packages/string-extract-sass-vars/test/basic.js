@@ -21,7 +21,7 @@ test("03 - api - opts is wrong", () => {
       e("z", true);
     },
     /THROW_ID_01/gm,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -33,7 +33,7 @@ test("04 - api - opts.cb", () => {
       });
     },
     /THROW_ID_02/gm,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -45,7 +45,7 @@ test("05 - api - opts.throwIfEmpty", () => {
       });
     },
     /THROW_ID_03/gm,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -59,7 +59,7 @@ test("06 - basics - one pair, value without quotes", () => {
     {
       blue: "#08f0fd",
     },
-    "06.01"
+    "06.01",
   );
 });
 
@@ -70,7 +70,7 @@ test("07 - basics - one pair, value with quotes", () => {
     {
       blue: "#08f0fd",
     },
-    "07.01"
+    "07.01",
   );
 });
 
@@ -82,7 +82,7 @@ test("08 - basics - two pairs", () => {
       red: "#ff6565",
       blue: "#08f0fd",
     },
-    "08.01"
+    "08.01",
   );
 });
 
@@ -93,7 +93,7 @@ test("09 - basics - quoted value with semicolon", () => {
     {
       red: "a; b",
     },
-    "09.01"
+    "09.01",
   );
 });
 
@@ -104,7 +104,7 @@ test("10 - basics - value with colon", () => {
     {
       red: "a: b",
     },
-    "10.01"
+    "10.01",
   );
 });
 
@@ -140,7 +140,7 @@ test("16 - basics - value as digit", () => {
     {
       a: "bcd: ef",
     },
-    "16.01"
+    "16.01",
   );
 });
 
@@ -152,7 +152,7 @@ $customValue4: 10;`;
     {
       customValue4: 10,
     },
-    "17.01"
+    "17.01",
   );
 });
 
@@ -167,7 +167,7 @@ test("18 - basics - slash-asterisk comments", () => {
       red: "#ff6565",
       blue: "#08f0fd",
     },
-    "18.01"
+    "18.01",
   );
 });
 
@@ -182,7 +182,7 @@ test("19 - basics - slash-excl. mark-asterisk comments", () => {
       red: "#ff6565",
       blue: "#08f0fd",
     },
-    "19.01"
+    "19.01",
   );
 });
 

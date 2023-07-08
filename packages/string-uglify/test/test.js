@@ -50,12 +50,12 @@ test("03 - generates unique and short class names", () => {
     ok(typeof uglifyById(randomArr, idx) === "string", "01.01 - it exists");
     ok(
       uglifyById(randomArr, idx).length > 1,
-      `03.02 - result name has more than one character not counting dot/hash (${idx})`
+      `03.02 - result name has more than one character not counting dot/hash (${idx})`,
     );
     equal(
       key[0],
       uglifyById(randomArr, idx)[0],
-      `03.03 - ${key[0]} is retained`
+      `03.03 - ${key[0]} is retained`,
     );
   });
 });
@@ -74,8 +74,8 @@ test(`05 - ${`\u001b[${35}m${"makeRandomArr"}\u001b[${39}m`} - generates unique 
     equal(
       generated.some((name2, index2) => name1 === name2 && index1 !== index2),
       false,
-      `${name1} is not unique`
-    )
+      `${name1} is not unique`,
+    ),
   );
 });
 
@@ -144,8 +144,8 @@ test(`09 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - should work if strings don
     equal(
       generated.some((name2, index2) => name1 === name2 && index1 !== index2),
       false,
-      `${name1} is not unique`
-    )
+      `${name1} is not unique`,
+    ),
   );
 });
 
@@ -166,7 +166,7 @@ test(`10 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - should work if strings don
       ".class10",
     ]),
     [".f", ".f", ".f", ".g", ".h", ".i", ".j", ".k", ".l", ".m", ".n", ".b"],
-    "10.01"
+    "10.01",
   );
 });
 
@@ -187,7 +187,7 @@ test(`11 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - bunch of identical just-na
       "zzz",
     ]),
     ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
-    "11.01"
+    "11.01",
   );
 });
 
@@ -239,7 +239,7 @@ test(`12 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - single and double letter n
       ".c",
       "#ao", // <---------- notice it does not take #a because #a is already taken
     ],
-    "12.01"
+    "12.01",
   );
 });
 
@@ -312,7 +312,7 @@ test("13 - readme examples", () => {
   is(
     output1[input1.indexOf(".oscar")],
     output2[input2.indexOf(".oscar")],
-    ".oscar"
+    ".oscar",
   );
 });
 

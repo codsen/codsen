@@ -15,7 +15,7 @@ test(`01 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag wi
     isOpening(s1, 0, {
       allowCustomTagNames: true,
     }),
-    "01.03"
+    "01.03",
   );
 });
 
@@ -27,7 +27,7 @@ test(`02 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag wi
     isOpening(s2, 0, {
       allowCustomTagNames: true,
     }),
-    "02.03"
+    "02.03",
   );
 });
 
@@ -39,7 +39,7 @@ test(`03 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag wi
     isOpening(s3, 0, {
       allowCustomTagNames: true,
     }),
-    "03.03"
+    "03.03",
   );
 });
 
@@ -51,7 +51,7 @@ test(`04 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag wi
     isOpening(s4, 0, {
       allowCustomTagNames: true,
     }),
-    "04.03"
+    "04.03",
   );
 });
 
@@ -63,7 +63,7 @@ test(`05 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag wi
     isOpening(s5, 0, {
       allowCustomTagNames: true,
     }),
-    "05.03"
+    "05.03",
   );
 });
 
@@ -75,7 +75,7 @@ test(`06 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag wi
     isOpening(s6, 0, {
       allowCustomTagNames: true,
     }),
-    "06.03"
+    "06.03",
   );
 });
 
@@ -87,7 +87,7 @@ test(`07 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag wi
     isOpening(s7, 0, {
       allowCustomTagNames: true,
     }),
-    "07.03"
+    "07.03",
   );
 });
 
@@ -99,7 +99,7 @@ test(`08 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag wi
     isOpening(s8, 0, {
       allowCustomTagNames: true,
     }),
-    "08.03"
+    "08.03",
   );
 });
 

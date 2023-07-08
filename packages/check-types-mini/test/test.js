@@ -10,7 +10,7 @@ test("01 - when all/first args are missing", () => {
       checkTypesMini();
     },
     /THROW_ID_01/,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -27,11 +27,11 @@ test("02 - when one of the arguments is of a wrong type", () => {
           option1: "setting1",
           option2: false,
           option3: false,
-        }
+        },
       );
     },
     /not boolean but string/g,
-    "02.01"
+    "02.01",
   );
 
   // with opts.enforceStrictKeyset === false
@@ -50,11 +50,11 @@ test("02 - when one of the arguments is of a wrong type", () => {
         },
         {
           enforceStrictKeyset: false,
-        }
+        },
       );
     },
     /not boolean but string/g,
-    "02.02"
+    "02.02",
   );
 });
 
@@ -74,11 +74,11 @@ test("03", () => {
         },
         {
           msg: "newLibrary/index.js [THROW_ID_01]", // << no trailing space
-        }
+        },
       );
     },
     /THROW_ID_01/g,
-    "03.01"
+    "03.01",
   );
 
   throws(
@@ -96,11 +96,11 @@ test("03", () => {
         },
         {
           msg: "newLibrary/index.js [THROW_ID_01]:        ", // << trailing space
-        }
+        },
       );
     },
     /THROW_ID_01/g,
-    "03.02"
+    "03.02",
   );
 
   not.throws(() => {
@@ -118,7 +118,7 @@ test("03", () => {
       {
         msg: "newLibrary/index.js [THROW_ID_01]: ",
         ignoreKeys: ["option2"],
-      }
+      },
     );
   }, "03.03");
 });
@@ -132,7 +132,7 @@ test("04 - when opts are set wrong", () => {
         msg: "aa",
         optsVarName: "bbb",
         ignoreKeys: "a",
-      }
+      },
     );
   }, "04.01");
 
@@ -144,7 +144,7 @@ test("04 - when opts are set wrong", () => {
         msg: "aa",
         optsVarName: "bbb",
         ignoreKeys: "",
-      }
+      },
     );
   }, "04.02");
 });
@@ -170,11 +170,11 @@ test("05 - nested options", () => {
               bbb: "a",
             },
           },
-        }
+        },
       );
     },
     /opts\.option3\.aaa\.bbb was customised to/,
-    "05.01"
+    "05.01",
   );
 
   not.throws(() => {
@@ -190,7 +190,7 @@ test("05 - nested options", () => {
         option3: {
           aaa: true,
         },
-      }
+      },
     );
   }, "05.02");
 });
@@ -219,7 +219,7 @@ test("06 - opts.ignorePaths", () => {
         msg: "msg",
         optsVarName: "OPTS",
         ignoreKeys: "bbb", // <-------- string, not array, but that's fine
-      }
+      },
     );
   }, "06.01");
 
@@ -247,11 +247,11 @@ test("06 - opts.ignorePaths", () => {
           msg: "msg",
           optsVarName: "OPTS",
           ignorePaths: ["aaa.bbb"], // <----- array.
-        }
+        },
       );
     },
     /OPTS\.ccc\.bbb was customised to/g,
-    "06.01"
+    "06.01",
   );
 
   not.throws(() => {
@@ -276,7 +276,7 @@ test("06 - opts.ignorePaths", () => {
         msg: "msg",
         optsVarName: "OPTS",
         ignorePaths: "aaa.bbb", // <----- string.
-      }
+      },
     );
   }, "06.03");
 
@@ -302,7 +302,7 @@ test("06 - opts.ignorePaths", () => {
         msg: "msg",
         optsVarName: "OPTS",
         ignorePaths: ["aaa.bbb"], // <----- array.
-      }
+      },
     );
   }, "06.04");
 
@@ -328,7 +328,7 @@ test("06 - opts.ignorePaths", () => {
         msg: "msg",
         optsVarName: "OPTS",
         ignorePaths: "aaa.*", // <----- with glob, string.
-      }
+      },
     );
   }, "06.05");
 
@@ -354,7 +354,7 @@ test("06 - opts.ignorePaths", () => {
         msg: "msg",
         optsVarName: "OPTS",
         ignorePaths: ["aaa.*"], // <----- with glob, array.
-      }
+      },
     );
   }, "06.06");
 
@@ -382,11 +382,11 @@ test("06 - opts.ignorePaths", () => {
           msg: "msg",
           optsVarName: "OPTS",
           ignorePaths: "aaa.bbb", // <----- string. Should be same thing tho.
-        }
+        },
       );
     },
     'msg: OPTS.ccc.bbb was customised to "d" which is not boolean but string',
-    "06.02"
+    "06.02",
   );
 
   not.throws(() => {
@@ -411,7 +411,7 @@ test("06 - opts.ignorePaths", () => {
         msg: "msg",
         optsVarName: "OPTS",
         ignorePaths: ["aaa.bbb", "ccc.bbb"], // <----- both ignored
-      }
+      },
     );
   }, "06.08");
 
@@ -439,7 +439,7 @@ test("06 - opts.ignorePaths", () => {
         msg: "msg",
         optsVarName: "OPTS",
         ignorePaths: ["aaa.bbb", "ccc.bbb"], // <----- both ignored
-      }
+      },
     );
   }, "06.09");
 });
@@ -469,11 +469,11 @@ test("07 - opts.ignorePaths with wildcards", () => {
           msg: "msg",
           optsVarName: "OPTS",
           ignorePaths: "aaa.*", // <----- string, not string in an array
-        }
+        },
       );
     },
     'msg: OPTS.ccc.bbb was customised to "d" which is not boolean but string',
-    "07.01"
+    "07.01",
   );
 
   // paths ignored - given as array:
@@ -500,11 +500,11 @@ test("07 - opts.ignorePaths with wildcards", () => {
           msg: "msg",
           optsVarName: "OPTS",
           ignorePaths: ["aaa.*"], // <----- array
-        }
+        },
       );
     },
     'msg: OPTS.ccc.bbb was customised to "d" which is not boolean but string',
-    "07.02"
+    "07.02",
   );
 
   // paths ignored - given as string:
@@ -532,7 +532,7 @@ test("07 - opts.ignorePaths with wildcards", () => {
         msg: "msg",
         optsVarName: "OPTS",
         ignorePaths: ["aaa.*", "ccc.*"], // <------ both ignored
-      }
+      },
     );
   }, "07.03");
 });
@@ -553,11 +553,11 @@ test("08 - opts.ignoreKeys with wildcards not referenced by schema/reference obj
         {
           msg: "msg",
           optsVarName: "OPTS",
-        }
+        },
       );
     },
     "msg: The input object has keys which are not covered by the reference object: www1, www2",
-    "08.01"
+    "08.01",
   );
 
   // the bizness
@@ -579,11 +579,11 @@ test("08 - opts.ignoreKeys with wildcards not referenced by schema/reference obj
           msg: "msg",
           optsVarName: "OPTS",
           ignoreKeys: "www*",
-        }
+        },
       );
     },
     "msg: The reference object has keys which are not present in the input object: aaa, ccc",
-    "08.02"
+    "08.02",
   );
   // and it will throw the question at you.
 
@@ -603,7 +603,7 @@ test("08 - opts.ignoreKeys with wildcards not referenced by schema/reference obj
         optsVarName: "OPTS",
         ignoreKeys: "www*",
         enforceStrictKeyset: false,
-      }
+      },
     );
   }, "08.03");
 });
@@ -631,11 +631,11 @@ test("09 - some keys bailed through ignoreKeys, some through ignorePaths and as 
         },
         {
           msg: "msg",
-        }
+        },
       );
     },
     'msg: opts.aaa.bbb was customised to "ccc" which is not boolean but string',
-    "09.01"
+    "09.01",
   );
 
   // bail the "aaa.bbb" via "ignoreKeys"
@@ -661,11 +661,11 @@ test("09 - some keys bailed through ignoreKeys, some through ignorePaths and as 
         {
           msg: "msg",
           ignoreKeys: "bbb",
-        }
+        },
       );
     },
     'msg: opts.ddd.eee was customised to "fff" which is not boolean but string',
-    "09.02"
+    "09.02",
   );
 
   // bail the "aaa.bbb" via "opts.ignoreKeys" and "ddd.eee" via "opts.ignorePaths"
@@ -691,7 +691,7 @@ test("09 - some keys bailed through ignoreKeys, some through ignorePaths and as 
         msg: "msg",
         ignoreKeys: "bbb",
         ignorePaths: "ddd.eee",
-      }
+      },
     );
   }, "09.03");
 
@@ -719,11 +719,11 @@ test("09 - some keys bailed through ignoreKeys, some through ignorePaths and as 
           msg: "msg",
           ignoreKeys: "zzz", // <------ unused key name
           ignorePaths: "ddd.yyy", // <-- unused path
-        }
+        },
       );
     },
     "09.04",
-    "09.03"
+    "09.03",
   );
 });
 
@@ -744,11 +744,11 @@ test("10 - opts.acceptArrays, strings+arrays", () => {
           option1: "setting1",
           option2: "setting2",
           option3: false,
-        }
+        },
       );
     },
     /opts.option2 was customised/,
-    "10.01"
+    "10.01",
   );
 
   not.throws(() => {
@@ -767,7 +767,7 @@ test("10 - opts.acceptArrays, strings+arrays", () => {
         msg: "message",
         optsVarName: "varname",
         acceptArrays: true,
-      }
+      },
     );
   }, "10.02");
 
@@ -788,11 +788,11 @@ test("10 - opts.acceptArrays, strings+arrays", () => {
           msg: "message",
           optsVarName: "varname",
           acceptArrays: true,
-        }
+        },
       );
     },
     /varname.option2 was customised to be array/,
-    "10.02"
+    "10.02",
   );
 });
 
@@ -809,11 +809,11 @@ test("11 - opts.acceptArrays, Booleans+arrays", () => {
           option1: "setting1",
           option2: false,
           option3: false,
-        }
+        },
       );
     },
     /opts.option2 was customised to "\[true,true\]"/,
-    "11.01"
+    "11.01",
   );
 });
 
@@ -834,7 +834,7 @@ test("12", () => {
         msg: "message",
         optsVarName: "varname",
         acceptArrays: true,
-      }
+      },
     );
   }, "12.01");
 });
@@ -857,11 +857,11 @@ test("13", () => {
           msg: "message",
           optsVarName: "varname",
           acceptArrays: true,
-        }
+        },
       );
     },
     /varname\.option2 was customised to be array/,
-    "13.01"
+    "13.01",
   );
 });
 
@@ -883,7 +883,7 @@ test("14", () => {
         optsVarName: "opts",
         acceptArrays: true,
         acceptArraysIgnore: [],
-      }
+      },
     );
   }, "14.01");
 });
@@ -906,7 +906,7 @@ test("15 - opts.acceptArraysIgnore", () => {
         optsVarName: "opts",
         acceptArrays: true,
         acceptArraysIgnore: [],
-      }
+      },
     );
   }, "15.01");
 
@@ -928,11 +928,11 @@ test("15 - opts.acceptArraysIgnore", () => {
           optsVarName: "opts",
           acceptArrays: true,
           acceptArraysIgnore: ["zzz", "option1"],
-        }
+        },
       );
     },
     /\[THROW_ID_01\]/,
-    "15.01"
+    "15.01",
   );
 
   throws(
@@ -953,11 +953,11 @@ test("15 - opts.acceptArraysIgnore", () => {
           optsVarName: "opts",
           acceptArrays: false,
           acceptArraysIgnore: ["zzz", "option1"],
-        }
+        },
       );
     },
     /opts\.option1 was customised to "\[1,0,1,0\]"/,
-    "15.02"
+    "15.02",
   );
 });
 
@@ -974,11 +974,11 @@ test("16 - involving null values", () => {
           key: null,
           val: null,
           cleanup: true,
-        }
+        },
       );
     },
     /opts.key was customised to "1"/,
-    "16.01"
+    "16.01",
   );
 });
 
@@ -994,11 +994,11 @@ test("17 - throws/notThrows when keysets mismatch", () => {
         {
           key: null,
           val: null,
-        }
+        },
       );
     },
     "17.01",
-    "17.01"
+    "17.01",
   );
   throws(
     () => {
@@ -1011,11 +1011,11 @@ test("17 - throws/notThrows when keysets mismatch", () => {
           key: null,
           val: null,
           cleanup: true,
-        }
+        },
       );
     },
     "17.02",
-    "17.02"
+    "17.02",
   );
   not.throws(() => {
     checkTypesMini(
@@ -1030,7 +1030,7 @@ test("17 - throws/notThrows when keysets mismatch", () => {
       },
       {
         enforceStrictKeyset: false,
-      }
+      },
     );
   }, "17.03");
   not.throws(() => {
@@ -1046,7 +1046,7 @@ test("17 - throws/notThrows when keysets mismatch", () => {
       },
       {
         enforceStrictKeyset: false,
-      }
+      },
     );
   }, "17.04");
 });
@@ -1067,11 +1067,11 @@ test("18 - opts.enforceStrictKeyset set to a wrong thing", () => {
         },
         {
           enforceStrictKeyset: 1,
-        }
+        },
       );
     },
     "18.01",
-    "18.01"
+    "18.01",
   );
 });
 
@@ -1084,11 +1084,11 @@ test("19 - throws when reference and schema are both missing", () => {
           val: null,
           cleanup: true,
         },
-        {}
+        {},
       );
     },
     "19.01",
-    "19.01"
+    "19.01",
   );
 });
 
@@ -1112,7 +1112,7 @@ test("20 - acceptArrays + schema + nested", () => {
         schema: {
           "opt2.opt3": "string",
         },
-      }
+      },
     );
   }, "20.01");
 
@@ -1133,7 +1133,7 @@ test("20 - acceptArrays + schema + nested", () => {
         schema: {
           "opt2.opt3": "string",
         },
-      }
+      },
     );
   }, "20.02");
 
@@ -1158,11 +1158,11 @@ test("20 - acceptArrays + schema + nested", () => {
           schema: {
             "opt2.opt3": "string",
           },
-        }
+        },
       );
     },
     /opts\.opt2\.opt3 was customised to/,
-    "20.01"
+    "20.01",
   );
 
   not.throws(() => {
@@ -1182,7 +1182,7 @@ test("20 - acceptArrays + schema + nested", () => {
         schema: {
           "opt2.opt3": "string",
         },
-      }
+      },
     );
   }, "20.04");
 
@@ -1204,11 +1204,11 @@ test("20 - acceptArrays + schema + nested", () => {
           schema: {
             "opt2.opt3": "string",
           },
-        }
+        },
       );
     },
     /opts\.opt2\.opt3\.1/,
-    "20.02"
+    "20.02",
   ); // throws because schema and opts.acceptArrays detects wrong type within input's array
 });
 
@@ -1227,11 +1227,11 @@ test("21 - enforceStrictKeyset and nested inputs", () => {
           option1: "zz",
           option2: "yy",
           rogueKey: {},
-        }
+        },
       );
     },
     /rogueSubkey is neither covered by reference object/,
-    "21.01"
+    "21.01",
   );
 });
 
@@ -1255,7 +1255,7 @@ test("22 - strict mode, customising keys", () => {
       },
       {
         enforceStrictKeyset: true,
-      }
+      },
     );
   }, "22.01");
 
@@ -1273,7 +1273,7 @@ test("22 - strict mode, customising keys", () => {
       },
       {
         enforceStrictKeyset: false,
-      }
+      },
     );
   }, "22.02");
 
@@ -1291,7 +1291,7 @@ test("22 - strict mode, customising keys", () => {
       },
       {
         enforceStrictKeyset: false,
-      }
+      },
     );
   }, "22.03");
   not.throws(() => {
@@ -1308,7 +1308,7 @@ test("22 - strict mode, customising keys", () => {
       },
       {
         enforceStrictKeyset: true,
-      }
+      },
     );
   }, "22.04");
 
@@ -1327,11 +1327,11 @@ test("22 - strict mode, customising keys", () => {
         },
         {
           enforceStrictKeyset: true,
-        }
+        },
       );
     },
     /opts\.ignoreThese\.1 is neither covered by reference object/,
-    "22.01"
+    "22.01",
   );
 });
 
@@ -1351,11 +1351,11 @@ test(`23 - ${`\u001b[${32}m${"opts.acceptArrays"}\u001b[${39}m`} - strings + arr
         {
           option1: "zz",
           option2: "yy",
-        }
+        },
       );
     },
     "23.01",
-    "23.01"
+    "23.01",
   );
   not.throws(() => {
     checkTypesMini(
@@ -1370,7 +1370,7 @@ test(`23 - ${`\u001b[${32}m${"opts.acceptArrays"}\u001b[${39}m`} - strings + arr
       },
       {
         enforceStrictKeyset: false,
-      }
+      },
     );
   }, "23.02");
 });
@@ -1390,11 +1390,11 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
         {
           option1: "zz",
           option2: "yy",
-        }
+        },
       );
     },
     /opts.option2 was customised to/,
-    "24.01"
+    "24.01",
   );
 
   not.throws(() => {
@@ -1411,7 +1411,7 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
         schema: {
           option2: ["stRing", null],
         },
-      }
+      },
     );
   }, "24.02");
 
@@ -1430,11 +1430,11 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
           schema: {
             option2: ["string", "boolean"],
           },
-        }
+        },
       );
     },
     /opts\.option2 was customised to "null"/,
-    "24.02"
+    "24.02",
   );
 
   not.throws(() => {
@@ -1449,7 +1449,7 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
           option1: "String",
           option2: ["stRing", null],
         },
-      }
+      },
     );
   }, "24.04");
 
@@ -1466,11 +1466,11 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
             // <<< notice how option1 is missing AND also missing in reference obj
             option2: ["stRing", null],
           },
-        }
+        },
       );
     },
     /opts\.enforceStrictKeyset is on and the following key/,
-    "24.03"
+    "24.03",
   );
 
   // true not allowed, - only false or null or string
@@ -1489,11 +1489,11 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
           schema: {
             option2: ["null", "false", "string"],
           },
-        }
+        },
       );
     },
     /opts\.option2 was customised to "true"/,
-    "24.04"
+    "24.04",
   );
 
   not.throws(() => {
@@ -1510,7 +1510,7 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
         schema: {
           option2: ["null", "false", "string"],
         },
-      }
+      },
     );
   }, "24.07");
 
@@ -1528,7 +1528,7 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
         schema: {
           option2: ["null", "false", "string"],
         },
-      }
+      },
     );
   }, "24.08");
 
@@ -1546,7 +1546,7 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
         schema: {
           option2: ["null", "false", "string"],
         },
-      }
+      },
     );
   }, "24.09");
 
@@ -1568,11 +1568,11 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
           schema: {
             option2: ["true", "string"],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2 was customised to "false" \(type: boolean\)/,
-    "24.05"
+    "24.05",
   );
 
   throws(
@@ -1590,11 +1590,11 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
           schema: {
             option2: ["true", "string"],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2 was customised to "null"/,
-    "24.06"
+    "24.06",
   );
 
   throws(
@@ -1612,11 +1612,11 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
           schema: {
             option2: ["true", "string"],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2 was customised to "0"/,
-    "24.07"
+    "24.07",
   );
 
   not.throws(() => {
@@ -1633,7 +1633,7 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
         schema: {
           option2: ["true", "string"],
         },
-      }
+      },
     );
   }, "24.13");
 
@@ -1652,11 +1652,11 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
           schema: {
             option2: ["true"],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2 was customised to "zzz"/,
-    "24.08"
+    "24.08",
   );
 
   not.throws(() => {
@@ -1673,7 +1673,7 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
         schema: {
           option2: ["true"],
         },
-      }
+      },
     );
   }, "24.15");
 
@@ -1691,7 +1691,7 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
         schema: {
           option2: ["boolean"],
         },
-      }
+      },
     );
   }, "24.16");
 
@@ -1709,7 +1709,7 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
         schema: {
           option2: ["false"],
         },
-      }
+      },
     );
   }, "24.17");
 
@@ -1727,7 +1727,7 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
         schema: {
           option2: ["boolean"],
         },
-      }
+      },
     );
   }, "24.18");
 
@@ -1745,7 +1745,7 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
         schema: {
           option2: ["boolean"],
         },
-      }
+      },
     );
   }, "24.19");
 
@@ -1764,11 +1764,11 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
           schema: {
             option2: ["boolean"],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2 was customised to "true" \(type: string\)/,
-    "24.09"
+    "24.09",
   );
 });
 
@@ -1785,11 +1785,11 @@ test(`25 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - deeper level k
         {
           option1: "zz",
           option2: null,
-        }
+        },
       );
     },
     "25.01",
-    "25.01"
+    "25.01",
   );
 
   throws(
@@ -1806,11 +1806,11 @@ test(`25 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - deeper level k
           option2: {
             option3: null,
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2.option3 was customised to "null" which is not null but string/,
-    "25.02"
+    "25.02",
   );
 
   throws(
@@ -1827,11 +1827,11 @@ test(`25 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - deeper level k
           option2: {
             option3: "null",
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2\.option3 was customised to "null" which is not string but null/,
-    "25.03"
+    "25.03",
   );
 });
 
@@ -1855,11 +1855,11 @@ test(`26 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - deeper level k
           schema: {
             option1: ["stRing"],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2\.option3 was customised to "null" which is not string but null/,
-    "26.01"
+    "26.01",
   );
 
   // now prove that schema works:
@@ -1880,7 +1880,7 @@ test(`26 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - deeper level k
         schema: {
           "option2.option3": ["stRing", null],
         },
-      }
+      },
     );
   }, "26.02");
 });
@@ -1901,11 +1901,11 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
           schema: {
             "option2.option3": ["string", "boolean"],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2\.option3 was customised to "null" \(type: null\)/,
-    "27.01"
+    "27.01",
   );
 
   not.throws(() => {
@@ -1921,7 +1921,7 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
           option2: "objecT",
           "option2.option3": ["stRing", null],
         },
-      }
+      },
     );
   }, "27.02");
 
@@ -1938,11 +1938,11 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
             // <<< notice how option1 is missing AND also missing in reference obj
             "option2.option3": ["stRing", null],
           },
-        }
+        },
       );
     },
     /option1, option2/,
-    "27.02"
+    "27.02",
   );
 
   // make error message mention a missing deeper-level path:
@@ -1960,11 +1960,11 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
             option3: "object",
             "option3.option4": ["stRing", null],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option1\.option2 is neither covered by reference object/,
-    "27.03"
+    "27.03",
   );
 
   // true not allowed, - only false or null or string
@@ -1983,11 +1983,11 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
           schema: {
             option2: ["null", "false", "string"],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2 was customised to "true" \(type: boolean\)/,
-    "27.04"
+    "27.04",
   );
 
   not.throws(() => {
@@ -2004,7 +2004,7 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
         schema: {
           option2: ["null", "false", "string"],
         },
-      }
+      },
     );
   }, "27.06");
 
@@ -2022,7 +2022,7 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
         schema: {
           option2: ["null", "false", "string"],
         },
-      }
+      },
     );
   }, "27.07");
 
@@ -2040,7 +2040,7 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
         schema: {
           option2: ["null", "false", "string"],
         },
-      }
+      },
     );
   }, "27.08");
 
@@ -2062,11 +2062,11 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
           schema: {
             option2: ["true", "string"],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2 was customised to "false" \(type: boolean\)/,
-    "27.05"
+    "27.05",
   );
 
   throws(
@@ -2084,11 +2084,11 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
           schema: {
             option2: ["true", "string"],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2 was customised to "null" \(type: null\)/,
-    "27.06"
+    "27.06",
   );
 
   throws(
@@ -2106,11 +2106,11 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
           schema: {
             option2: ["true", "string"],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2 was customised to "0" \(type: number\)/,
-    "27.07"
+    "27.07",
   );
 
   not.throws(() => {
@@ -2127,7 +2127,7 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
         schema: {
           option2: ["true", "string"],
         },
-      }
+      },
     );
   }, "27.12");
 
@@ -2146,11 +2146,11 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
           schema: {
             option2: ["true"],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2 was customised to "zzz" \(type: string\)/,
-    "27.08"
+    "27.08",
   );
 
   not.throws(() => {
@@ -2167,7 +2167,7 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
         schema: {
           option2: ["true"],
         },
-      }
+      },
     );
   }, "27.14");
 
@@ -2185,7 +2185,7 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
         schema: {
           option2: ["boolean"],
         },
-      }
+      },
     );
   }, "27.15");
 
@@ -2203,7 +2203,7 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
         schema: {
           option2: ["false"],
         },
-      }
+      },
     );
   }, "27.16");
 
@@ -2221,7 +2221,7 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
         schema: {
           option2: ["boolean"],
         },
-      }
+      },
     );
   }, "27.17");
 
@@ -2239,7 +2239,7 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
         schema: {
           option2: ["boolean"],
         },
-      }
+      },
     );
   }, "27.18");
 
@@ -2258,11 +2258,11 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
           schema: {
             option2: ["boolean"],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2 was customised to "true" \(type: string\)/,
-    "27.09"
+    "27.09",
   );
 });
 
@@ -2277,11 +2277,11 @@ test(`28 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} values as strings + "
         {
           option1: { somekey: "zz" },
           option2: "yy",
-        }
+        },
       );
     },
     /opts.option2 was customised to "null" which is not string but null/,
-    "28.01"
+    "28.01",
   );
 
   not.throws(() => {
@@ -2299,7 +2299,7 @@ test(`28 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} values as strings + "
           option1: ["object", "string"],
           option2: ["whatever"],
         },
-      }
+      },
     );
   }, "28.02");
   not.throws(() => {
@@ -2317,7 +2317,7 @@ test(`28 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} values as strings + "
           option1: "object", // << observe it's a string, not an array
           option2: ["whatever"],
         },
-      }
+      },
     );
   }, "28.03");
 
@@ -2337,11 +2337,11 @@ test(`28 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} values as strings + "
             option1: "string", // << will throw because this type is not followed
             option2: ["whatever"],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option1 was customised to "{"somekey":"setting1"}" \(type: object\)/,
-    "28.02"
+    "28.02",
   );
 
   not.throws(() => {
@@ -2359,7 +2359,7 @@ test(`28 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} values as strings + "
           option1: ["string", "any"], // <<< observe how "any" is among other types
           option2: "whatever", // also observe that it's not an array. Should work anyway!
         },
-      }
+      },
     );
   }, "28.05");
 
@@ -2378,7 +2378,7 @@ test(`28 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} values as strings + "
           option1: ["string", "any"], // option1 is set to "any" but its child option1.somekey is wrong.
           option2: "whatever", // also observe that it's not an array. Should work anyway!
         },
-      }
+      },
     );
   }, "28.06");
 });
@@ -2400,11 +2400,11 @@ test(`29 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} falling back to refer
           schema: {
             option1: "number",
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option1 was customised to "{"somekey":"setting1"}" \(type: object\)/,
-    "29.01"
+    "29.01",
   );
 
   // without throwing consequences:
@@ -2422,7 +2422,7 @@ test(`29 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} falling back to refer
         schema: {
           option99: "number", // << that's useless, so falls back to reference object
         },
-      }
+      },
     );
   }, "29.02");
 });
@@ -2441,11 +2441,11 @@ test(`30 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} is set to a wrong thi
         },
         {
           schema: "zzz",
-        }
+        },
       );
     },
     /check-types-mini: opts\.schema was customised to "zzz" which is not object but string/,
-    "30.01"
+    "30.01",
   );
 });
 
@@ -2460,11 +2460,11 @@ test(`31 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} understands opts.acce
         {
           option1: "zz",
           option2: "yy",
-        }
+        },
       );
     },
     /check-types-mini: opts.option2 was customised to "\["setting2"]" which is not string but array/,
-    "31.01"
+    "31.01",
   ); // throws because reference's type mismatches.
 
   not.throws(() => {
@@ -2479,7 +2479,7 @@ test(`31 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} understands opts.acce
       },
       {
         acceptArrays: true,
-      }
+      },
     );
   }, "31.02"); // does not throw because of opts.acceptArrays is matching against reference
   not.throws(() => {
@@ -2496,7 +2496,7 @@ test(`31 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} understands opts.acce
         schema: {
           option2: "string",
         },
-      }
+      },
     );
   }, "31.03"); // does not throw because of opts.acceptArrays is matching against schema's keys
 
@@ -2515,11 +2515,11 @@ test(`31 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} understands opts.acce
           schema: {
             option2: "string",
           },
-        }
+        },
       );
     },
     /opts\.option2\.1, the 1th element \(equal to 999\) is of a type number, but only the following are allowed by the opts\.schema: string/,
-    "31.02"
+    "31.02",
   ); // throws because schema and opts.acceptArrays detects wrong type within input's array
 
   not.throws(() => {
@@ -2536,7 +2536,7 @@ test(`31 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} understands opts.acce
         schema: {
           option2: ["string", "number"],
         },
-      }
+      },
     );
   }, "31.05"); // number is allowed now
 
@@ -2555,11 +2555,11 @@ test(`31 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} understands opts.acce
           schema: {
             option2: ["string", "number"],
           },
-        }
+        },
       );
     },
     /check-types-mini: opts\.option2 was customised to "\["setting2",999\]" \(type: array\)/,
-    "31.03"
+    "31.03",
   ); // number is allowed in schema, but not in an array, and opts.acceptArrays is off, so throws
 
   not.throws(() => {
@@ -2576,7 +2576,7 @@ test(`31 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} understands opts.acce
         schema: {
           option2: ["string", "number", "array"],
         },
-      }
+      },
     );
   }, "31.07"); // does not throw because blanked permission for array's is on.
   // it might be array of rubbish though, so that's a faulty, short-sighted type check.
@@ -2626,11 +2626,11 @@ test(`32 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} #1`, () => {
             headsNoWrap: ["string", "null", "undefined"],
             tailsNoWrap: ["string", "null", "undefined"],
           },
-        }
+        },
       );
     },
     /\[THROW_ID_04\*]/,
-    "32.01"
+    "32.01",
   );
 });
 
@@ -2652,11 +2652,11 @@ test(`33 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} #2 - enforcing first-level
           schema: {
             placeholder: ["null", "number", "string", "boolean"], // <--- no object here!
           },
-        }
+        },
       );
     },
     /THROW_ID_10\*/,
-    "33.01"
+    "33.01",
   );
 
   // adding "object" in schema stops the throws:
@@ -2674,7 +2674,7 @@ test(`33 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} #2 - enforcing first-level
         schema: {
           placeholder: ["null", "number", "string", "boolean", "object"], // <--- added object here!
         },
-      }
+      },
     );
   }, "33.02");
 
@@ -2696,7 +2696,7 @@ test(`33 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} #2 - enforcing first-level
         schema: {
           placeholder: ["null", "number", "string", "boolean", "object"],
         },
-      }
+      },
     );
   }, "33.03");
 });
@@ -2717,7 +2717,7 @@ test(`34 - ${`\u001b[${35}m${"opts.schema"}\u001b[${39}m`} type "any" applies to
           option1: "any", // <------ !
           option2: "whatever",
         },
-      }
+      },
     );
   }, "34.01");
 
@@ -2736,7 +2736,7 @@ test(`34 - ${`\u001b[${35}m${"opts.schema"}\u001b[${39}m`} type "any" applies to
           "option1.somekey": "any", // <------ !
           option2: "whatever",
         },
-      }
+      },
     );
   }, "34.02");
 
@@ -2755,7 +2755,7 @@ test(`34 - ${`\u001b[${35}m${"opts.schema"}\u001b[${39}m`} type "any" applies to
           option1: { somekey: "any" }, // <------ !
           option2: "whatever",
         },
-      }
+      },
     );
   }, "34.03");
 });
@@ -2776,11 +2776,11 @@ test(`35 - ${`\u001b[${35}m${"opts.schema"}\u001b[${39}m`} key's value is "undef
           schema: {
             option2: ["string", "boolean"],
           },
-        }
+        },
       );
     },
     /opts\.option2 was customised to "undefined"/,
-    "35.01"
+    "35.01",
   );
 
   not.throws(() => {
@@ -2795,7 +2795,7 @@ test(`35 - ${`\u001b[${35}m${"opts.schema"}\u001b[${39}m`} key's value is "undef
           option1: "String",
           option2: ["null", "undefined"],
         },
-      }
+      },
     );
   }, "35.02");
   not.throws(() => {
@@ -2810,7 +2810,7 @@ test(`35 - ${`\u001b[${35}m${"opts.schema"}\u001b[${39}m`} key's value is "undef
           option1: "String",
           option2: ["null", "undefined"],
         },
-      }
+      },
     );
   }, "35.03");
 });

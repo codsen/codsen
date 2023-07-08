@@ -40,10 +40,10 @@ test("06 - undefined in a second-level depth", () => {
       {
         a: "a",
         b: undefined,
-      }
+      },
     ),
     false,
-    "06.01"
+    "06.01",
   );
 });
 
@@ -55,7 +55,7 @@ test("07 - simple plain objects", () => {
   equal(
     looseCompare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2" }),
     true,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -63,7 +63,7 @@ test("08 - simple plain objects #2", () => {
   equal(
     looseCompare({ a: "1", b: "2" }, { a: "1", b: "2", c: "3" }),
     false,
-    "08.01"
+    "08.01",
   );
 });
 
@@ -80,17 +80,17 @@ test("11 - false match involving empty arrays, sneaky similarity", () => {
   equal(
     looseCompare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2", c: ["3"] }),
     false,
-    "11.01"
+    "11.01",
   );
   equal(
     looseCompare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2", c: 3 }),
     false,
-    "11.02"
+    "11.02",
   );
   equal(
     looseCompare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2", c: { d: "3" } }),
     false,
-    "11.03"
+    "11.03",
   );
 });
 
@@ -98,7 +98,7 @@ test("12 - simple plain arrays, integer, match", () => {
   equal(
     looseCompare({ a: "1", b: "2", c: 3 }, { a: "1", b: "2" }),
     true,
-    "12.01"
+    "12.01",
   );
 });
 
@@ -106,7 +106,7 @@ test("13 - simple plain arrays, integer, no match", () => {
   equal(
     looseCompare({ a: "1", b: "2" }, { a: "1", b: "2", c: 3 }),
     false,
-    "13.01"
+    "13.01",
   );
 });
 
@@ -118,7 +118,7 @@ test("14 - simple nested plain objects", () => {
   equal(
     looseCompare({ a: { d: "4" }, b: "2", c: "3" }, { a: { d: "4" }, b: "2" }),
     true,
-    "14.01"
+    "14.01",
   );
 });
 
@@ -126,10 +126,10 @@ test("15 - simple nested plain objects + array wrapper", () => {
   equal(
     looseCompare(
       { a: [{ d: "4" }], b: "2", c: "3" },
-      { a: [{ d: "4" }], b: "2" }
+      { a: [{ d: "4" }], b: "2" },
     ),
     true,
-    "15.01"
+    "15.01",
   );
 });
 
@@ -137,7 +137,7 @@ test("16 - simple nested plain objects, won't find", () => {
   equal(
     looseCompare({ a: { d: "4" }, b: "2" }, { a: { d: "4" }, b: "2", c: "3" }),
     false,
-    "16.01"
+    "16.01",
   );
 });
 
@@ -145,10 +145,10 @@ test("17 - simple nested plain objects + array wrapper, won't find", () => {
   equal(
     looseCompare(
       { a: [{ d: "4" }], b: "2" },
-      { a: [{ d: "4" }], b: "2", c: "3" }
+      { a: [{ d: "4" }], b: "2", c: "3" },
     ),
     false,
-    "17.01"
+    "17.01",
   );
 });
 
@@ -156,10 +156,10 @@ test("18 - obj, multiple nested levels, bigObj has more", () => {
   equal(
     looseCompare(
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } },
-      { a: { b: { c: { d: [{ e: "1" }] } } } }
+      { a: { b: { c: { d: [{ e: "1" }] } } } },
     ),
     true,
-    "18.01"
+    "18.01",
   );
 });
 
@@ -167,10 +167,10 @@ test("19 - obj, multiple nested levels, equal", () => {
   equal(
     looseCompare(
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } },
-      { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } }
+      { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } },
     ),
     true,
-    "19.01"
+    "19.01",
   );
 });
 
@@ -178,10 +178,10 @@ test("20 - obj, multiple nested levels, smallObj has more", () => {
   equal(
     looseCompare(
       { a: { b: { c: { d: [{ e: "1" }] } } } },
-      { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } }
+      { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } },
     ),
     false,
-    "20.01"
+    "20.01",
   );
 });
 
@@ -198,18 +198,18 @@ test("22 - simple arrays with plain objects", () => {
   equal(
     looseCompare(
       [{ a: "1" }, { b: "2" }, { c: "3" }],
-      [{ a: "1" }, { b: "2" }]
+      [{ a: "1" }, { b: "2" }],
     ),
     true,
-    "22.01"
+    "22.01",
   );
   equal(
     looseCompare(
       [{ a: "1" }, { b: "2" }],
-      [{ a: "1" }, { b: "2" }, { c: "3" }]
+      [{ a: "1" }, { b: "2" }, { c: "3" }],
     ),
     false,
-    "22.02"
+    "22.02",
   );
 });
 
@@ -217,18 +217,18 @@ test("23 - arrays, nested with strings and objects", () => {
   equal(
     looseCompare(
       [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3", e: "4" }] }], "yo"],
-      [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3" }] }]]
+      [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3" }] }]],
     ),
     true,
-    "23.01"
+    "23.01",
   );
   equal(
     looseCompare(
       [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3" }] }]],
-      [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3", e: "4" }] }], "yo"]
+      [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3", e: "4" }] }], "yo"],
     ),
     false,
-    "23.02"
+    "23.02",
   );
 });
 
@@ -280,10 +280,10 @@ test("30 - real-life - won't find", () => {
       {
         type: "rule",
         selectors: [],
-      }
+      },
     ),
     false,
-    "30.01"
+    "30.01",
   );
 });
 
@@ -297,10 +297,10 @@ test("31 - real-life - will find", () => {
       {
         type: "rule",
         selectors: [],
-      }
+      },
     ),
     true,
-    "31.01"
+    "31.01",
   );
 });
 
@@ -315,10 +315,10 @@ test("32 - from README", () => {
       {
         a: "a",
         b: { c: { d: "   \t\t \t" } },
-      }
+      },
     ),
     true,
-    "32.01"
+    "32.01",
   );
 });
 
@@ -331,10 +331,10 @@ test("33 - from real-life, precaution against false-positives", () => {
       },
       {
         z: "",
-      }
+      },
     ),
     false,
-    "33.01"
+    "33.01",
   );
 });
 
@@ -346,27 +346,27 @@ test("34 - simple plain objects #1", () => {
   equal(
     looseCompare({ a: "1", b: "\t\t\t", c: "3" }, { a: "1", b: "\n\n\n" }),
     true,
-    "34.01"
+    "34.01",
   );
   equal(
     looseCompare({ a: "1", b: "\t\t\t", c: "3" }, { a: "2", b: "\n\n\n" }),
     false,
-    "34.02"
+    "34.02",
   );
   equal(
     looseCompare({ a: "1", b: "\t\t\t", c: "3" }, { a: "", b: "\n\n\n" }),
     false,
-    "34.03"
+    "34.03",
   );
   equal(
     looseCompare({ a: "", b: "\t\t\t", c: "3" }, { a: "1", b: "\n\n\n" }),
     false,
-    "34.04"
+    "34.04",
   );
   equal(
     looseCompare({ a: "", b: "\t\t\t", c: "3" }, { a: "", b: "\n\n\n" }),
     true,
-    "34.05"
+    "34.05",
   );
 });
 
@@ -374,26 +374,26 @@ test("35 - simple plain objects #2", () => {
   equal(
     looseCompare(
       { a: "1", b: "\t\t\t", c: "3" },
-      { a: "1", b: ["\n\n\n", "   "] }
+      { a: "1", b: ["\n\n\n", "   "] },
     ),
     true,
-    "35.01"
+    "35.01",
   );
   equal(
     looseCompare(
       { a: "1", b: ["\t\t\t"], c: "3" },
-      { a: "1", b: ["\n\n\n", "   "] }
+      { a: "1", b: ["\n\n\n", "   "] },
     ),
     true,
-    "35.02"
+    "35.02",
   );
   equal(
     looseCompare(
       { a: "1", b: ["\t\t\t", "   ", "\n "], c: "3" },
-      { a: "1", b: "\n\n\n" }
+      { a: "1", b: "\n\n\n" },
     ),
     true,
-    "35.03"
+    "35.03",
   );
 });
 
@@ -401,10 +401,10 @@ test("36 - simple plain objects #3", () => {
   equal(
     looseCompare(
       { a: "1", b: ["\t\t\t", "  ", ["\t"]], c: "3" },
-      { a: "1", b: ["\n\n\n"] }
+      { a: "1", b: ["\n\n\n"] },
     ),
     true,
-    "36.01"
+    "36.01",
   );
 });
 
@@ -412,10 +412,10 @@ test("37 - simple plain objects #4", () => {
   equal(
     looseCompare(
       { a: "1", b: ["\t\t\t", "    ", " "], c: "2" },
-      { a: "1", b: "\n\n\n" }
+      { a: "1", b: "\n\n\n" },
     ),
     true,
-    "37.01"
+    "37.01",
   );
 });
 
@@ -423,10 +423,10 @@ test("38 - simple plain objects #5", () => {
   equal(
     looseCompare(
       { a: "1", b: ["\t\t\t", "   ", "   \n   "], c: "2" },
-      { a: "1", b: "\n\n\n" }
+      { a: "1", b: "\n\n\n" },
     ),
     true,
-    "38.01"
+    "38.01",
   );
 });
 
@@ -438,26 +438,26 @@ test("39 - simple nested plain objects - will find", () => {
   equal(
     looseCompare(
       { a: "1", b: { c: { d: "\t\t\t" } }, c: "3" },
-      { a: "1", b: "\n\n\n" }
+      { a: "1", b: "\n\n\n" },
     ),
     true,
-    "39.01"
+    "39.01",
   );
   equal(
     looseCompare(
       { a: "1", b: "\n\n\n", c: "3" },
-      { a: "1", b: { c: { d: "\t\t\t" } } }
+      { a: "1", b: { c: { d: "\t\t\t" } } },
     ),
     true,
-    "39.02"
+    "39.02",
   );
   equal(
     looseCompare(
       { a: "1", b: ["\n\n\n", "\t\t   "], c: "3" },
-      { a: "1", b: { c: [{ d: ["\t\t\t \n"] }] } }
+      { a: "1", b: { c: [{ d: ["\t\t\t \n"] }] } },
     ),
     true,
-    "39.03"
+    "39.03",
   );
 });
 
@@ -465,26 +465,26 @@ test("40 - simple nested plain objects - won't find", () => {
   equal(
     looseCompare(
       { a: "1", b: { c: { d: "\t\t\t" } }, c: "3" },
-      { a: "2", b: "\n\n\n" }
+      { a: "2", b: "\n\n\n" },
     ),
     false,
-    "40.01"
+    "40.01",
   );
   equal(
     looseCompare(
       { a: "1", b: "\n\n\n", c: "3" },
-      { a: "2", b: { c: { d: "\t\t\t" } } }
+      { a: "2", b: { c: { d: "\t\t\t" } } },
     ),
     false,
-    "40.02"
+    "40.02",
   );
   equal(
     looseCompare(
       { a: "1", b: ["\n\n\n", "\t\t   "], c: "3" },
-      { a: "2", b: { c: { d: "\t\t\t \n" } } }
+      { a: "2", b: { c: { d: "\t\t\t \n" } } },
     ),
     false,
-    "40.03"
+    "40.03",
   );
 });
 
@@ -526,10 +526,10 @@ test("46 - both are plain objects, didn't match - returns false", () => {
       },
       {
         a: NaN,
-      }
+      },
     ),
     false,
-    "46.01"
+    "46.01",
   );
 });
 

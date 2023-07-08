@@ -23,7 +23,7 @@ const testme = () =>
       key2: "val2",
       key3: "val3",
     },
-    { matchKeysStrictly: true, hungryForWhitespace: false }
+    { matchKeysStrictly: true, hungryForWhitespace: false },
   );
 
 // action

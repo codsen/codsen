@@ -41,7 +41,7 @@ const cli = meow(
     shortFlag: {
       l: "loud",
     },
-  }
+  },
 );
 updateNotifier({ pkg }).notify();
 
@@ -87,7 +87,7 @@ function step5() {
           : "") +
         state.quoteStyle +
         val +
-        state.quoteStyle
+        state.quoteStyle,
     );
 
   if (indented) {
@@ -101,7 +101,7 @@ function step5() {
     seedData,
     indexOfThePlaceholder - 1,
     marker.length + 2,
-    insertThis
+    insertThis,
   );
 
   // write out the template:
@@ -115,11 +115,11 @@ function step5() {
         log(
           `${chalk.green(
             logSymbols.success,
-            "email-homey: index.html written OK"
-          )}`
+            "email-homey: index.html written OK",
+          )}`,
         );
       }
-    }
+    },
   );
 }
 
@@ -137,15 +137,15 @@ function step4() {
           log(
             `${chalk.red(
               logSymbols.error,
-              "Computer couldn't fetch the seed.html. That's very bad."
-            )}`
+              "Computer couldn't fetch the seed.html. That's very bad.",
+            )}`,
           );
         }
         process.exit(0);
       }
       seedData = readSeedData;
       step5();
-    }
+    },
   );
 }
 
@@ -202,7 +202,7 @@ if (state.toDoList.length === 0) {
   process.exit(0);
 } else if (state.toDoList.length > 1) {
   log(
-    `Too many directories given!\n${JSON.stringify(state.toDoList, null, 4)}`
+    `Too many directories given!\n${JSON.stringify(state.toDoList, null, 4)}`,
   );
   process.exit(0);
 } else {
@@ -217,7 +217,7 @@ if (state.toDoList.length === 0) {
       folderPaths.map((singlePath) => {
         let tempArr = singlePath.split(path.sep);
         return tempArr[tempArr.length - 1];
-      })
+      }),
     )
     .then((folderPaths) => {
       // console.log(`\nfolderPaths = ${JSON.stringify(folderPaths, null, 4)}`);

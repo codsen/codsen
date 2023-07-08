@@ -11,10 +11,10 @@ import { detectIsItHTMLOrXhtml as detect } from "../dist/detect-is-it-html-or-xh
 test("01 - no tags at all, text string only", () => {
   equal(
     detect(
-      "fhgkd  gjflkgjhlfjl gh;kj;lghj;jklkdjgj hsdkffj jagfg hdkghjkdfhg khkfg sjdgfg gfjdsgfjdhgj kf gfjhk fgkj"
+      "fhgkd  gjflkgjhlfjl gh;kj;lghj;jklkdjgj hsdkffj jagfg hdkghjkdfhg khkfg sjdgfg gfjdsgfjdhgj kf gfjhk fgkj",
     ),
     null,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -38,7 +38,7 @@ test("05 - input is not string - throws", () => {
       });
     },
     /THROW_ID_01/g,
-    "05.01"
+    "05.01",
   );
 });
 

@@ -18,12 +18,12 @@ assert.deepEqual(
     {
       // options
       useNullAsExplicitFalse: true, // <--- !
-    }
+    },
   ),
   {
     // result
     a: null,
-  }
+  },
 );
 
 // off
@@ -40,10 +40,10 @@ assert.deepEqual(
     {
       // options
       useNullAsExplicitFalse: false, // <--- !
-    }
+    },
   ),
   {
     // result
     a: ["z"],
-  }
+  },
 );

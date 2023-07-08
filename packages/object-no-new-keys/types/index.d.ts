@@ -8,7 +8,7 @@ declare const defaults: Opts;
 declare function noNewKeys(
   input: JSONValue,
   reference: JSONValue,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): string[];
 
 export { Opts, defaults, noNewKeys, version };

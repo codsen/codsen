@@ -17,7 +17,7 @@ assert.deepEqual(
       a: {
         c: "z",
       },
-    }
+    },
   ),
-  ["a.b", "x"]
+  ["a.b", "x"],
 );

@@ -30,10 +30,10 @@ test(`01 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         not,
         n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
-        opt
+        opt,
       ).res,
       "Very long line, long-enough to trigger widow removal.<br/>\n<br/>\nText.",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -52,10 +52,10 @@ test(`02 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         not,
         n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
-        opt
+        opt,
       ).res,
       "Very long line, long-enough to trigger widow&nbsp;removal.<br/>\n<br/>\nText.",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -74,10 +74,10 @@ test(`03 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, conver
         not,
         n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
-        opt
+        opt,
       ).res,
       `Very long line, long-enough to trigger widow${rawNbsp}removal.<br/>\n<br/>\nText.`,
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -95,10 +95,10 @@ test(`04 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         not,
         n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
-        opt
+        opt,
       ).res,
       "Very long line, long-enough to trigger widow removal.\n\nText.",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -117,10 +117,10 @@ test(`05 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, conver
         not,
         n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
-        opt
+        opt,
       ).res,
       "Very long line, long-enough to trigger widow&nbsp;removal.\n\nText.",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -139,10 +139,10 @@ test(`06 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, conver
         not,
         n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
-        opt
+        opt,
       ).res,
       `Very long line, long-enough to trigger widow${rawNbsp}removal.\n\nText.`,
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -160,10 +160,10 @@ test(`07 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         not,
         n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
-        opt
+        opt,
       ).res,
       "Very long line, long-enough to trigger widow removal.<br>\n<br>\nText.",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -182,10 +182,10 @@ test(`08 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         not,
         n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
-        opt
+        opt,
       ).res,
       "Very long line, long-enough to trigger widow&nbsp;removal.<br>\n<br>\nText.",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -204,10 +204,10 @@ test(`09 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         not,
         n,
         "\u000a Very long line, long-enough to trigger widow removal . \u000a\n Text . ",
-        opt
+        opt,
       ).res,
       `Very long line, long-enough to trigger widow${rawNbsp}removal.<br>\n<br>\nText.`,
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -223,10 +223,10 @@ test(`10 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         not,
         n,
         " \u000a    Very long line, long-enough to trigger widow removal   \n\n. \u000a\n Text text text text . ",
-        opt
+        opt,
       ).res,
       "Very long line, long-enough to trigger widow removal. Text text text text.",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -242,10 +242,10 @@ test(`11 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         not,
         n,
         " \u000a    Very long line, long-enough to trigger widow removal   \r\r. \u000a\n Text text text text . ",
-        opt
+        opt,
       ).res,
       "Very long line, long-enough to trigger widow removal. Text text text text.",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -261,10 +261,10 @@ test(`12 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         not,
         n,
         " \u000a    Very long line, long-enough to trigger widow removal   \r\n\r\n. \u000a\n Text text text text . ",
-        opt
+        opt,
       ).res,
       "Very long line, long-enough to trigger widow removal. Text text text text.",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -281,10 +281,10 @@ test(`13 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         not,
         n,
         " \u000a    Very long line, long-enough to trigger widow removal .  \n \n \u000a\n Text text text text . ",
-        opt
+        opt,
       ).res,
       "Very long line, long-enough to trigger widow removal. Text text text&nbsp;text.",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -301,10 +301,10 @@ test(`14 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         not,
         n,
         " \u000a   Very long line, long-enough to trigger widow removal .  \n \n  \u000a\n Text text text text . ",
-        opt
+        opt,
       ).res,
       `Very long line, long-enough to trigger widow removal. Text text text${rawNbsp}text.`,
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -328,7 +328,7 @@ test(`18 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - checking line feed being 
     equal(
       det(ok, not, n, "aaaa\u000Abbbbb", opt).res,
       "aaaa bbbbb",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });

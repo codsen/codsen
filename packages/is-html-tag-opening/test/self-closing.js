@@ -15,7 +15,7 @@ test(`01 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, 
     isOpening(str, 0, {
       allowCustomTagNames: true,
     }),
-    "01.03"
+    "01.03",
   );
 
   not.ok(isOpening(str, 1), "01.04");
@@ -23,7 +23,7 @@ test(`01 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, 
     isOpening(str, 1, {
       skipOpeningBracket: true,
     }),
-    "01.04"
+    "01.04",
   );
 });
 
@@ -35,7 +35,7 @@ test(`02 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, 
     isOpening(str, 0, {
       allowCustomTagNames: true,
     }),
-    "02.03"
+    "02.03",
   );
 
   not.ok(isOpening(str, 2), "02.04");
@@ -43,7 +43,7 @@ test(`02 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, 
     isOpening(str, 2, {
       skipOpeningBracket: true,
     }),
-    "02.04"
+    "02.04",
   );
 });
 
@@ -55,7 +55,7 @@ test(`03 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, 
     isOpening(str, 0, {
       allowCustomTagNames: true,
     }),
-    "03.03"
+    "03.03",
   );
 
   not.ok(isOpening(str, 1), "03.04");
@@ -63,7 +63,7 @@ test(`03 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, 
     isOpening(str, 1, {
       skipOpeningBracket: true,
     }),
-    "03.04"
+    "03.04",
   );
 });
 
@@ -75,7 +75,7 @@ test(`04 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, 
     isOpening(str, 0, {
       allowCustomTagNames: true,
     }),
-    "04.03"
+    "04.03",
   );
 
   not.ok(isOpening(str, 1), "04.04");
@@ -83,7 +83,7 @@ test(`04 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, 
     isOpening(str, 1, {
       skipOpeningBracket: true,
     }),
-    "04.04"
+    "04.04",
   );
 });
 
@@ -95,7 +95,7 @@ test(`05 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, 
     isOpening(str, 0, {
       allowCustomTagNames: true,
     }),
-    "05.03"
+    "05.03",
   );
 
   not.ok(isOpening(str, 1), "05.04");
@@ -103,7 +103,7 @@ test(`05 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, 
     isOpening(str, 1, {
       skipOpeningBracket: true,
     }),
-    "05.04"
+    "05.04",
   );
 });
 
@@ -115,7 +115,7 @@ test(`06 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, 
     isOpening(str, 0, {
       allowCustomTagNames: true,
     }),
-    "06.03"
+    "06.03",
   );
 
   not.ok(isOpening(str, 1), "06.04");
@@ -123,7 +123,7 @@ test(`06 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - self-closing tag`, 
     isOpening(str, 1, {
       skipOpeningBracket: true,
     }),
-    "06.04"
+    "06.04",
   );
 });
 

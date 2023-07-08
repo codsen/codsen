@@ -26,7 +26,7 @@ test('01 - outlook "not" type, tight', () => {
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "01.02"
+    "01.02",
   );
   equal(ranges, null, "01.03");
 });
@@ -45,7 +45,7 @@ test('02 - outlook "not" type, tight', () => {
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "02.02"
+    "02.02",
   );
   equal(ranges, null, "02.03");
 });
@@ -64,7 +64,7 @@ test('03 - outlook "not" type, tight', () => {
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "03.02"
+    "03.02",
   );
   equal(
     ranges,
@@ -72,7 +72,7 @@ test('03 - outlook "not" type, tight', () => {
       [0, 19],
       [35, 51],
     ],
-    "03.03"
+    "03.03",
   );
 });
 
@@ -90,7 +90,7 @@ test('04 - outlook "not" type, spaced', () => {
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "04.02"
+    "04.02",
   );
   equal(
     ranges,
@@ -100,7 +100,7 @@ test('04 - outlook "not" type, spaced', () => {
       [23, 25],
       [41, 43],
     ],
-    "04.03"
+    "04.03",
   );
 });
 
@@ -118,7 +118,7 @@ test('05 - outlook "not" type, spaced', () => {
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "05.02"
+    "05.02",
   );
   equal(
     ranges,
@@ -128,7 +128,7 @@ test('05 - outlook "not" type, spaced', () => {
       [23, 25],
       [41, 43],
     ],
-    "05.03"
+    "05.03",
   );
 });
 
@@ -146,7 +146,7 @@ test('06 - outlook "not" type, spaced', () => {
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "06.02"
+    "06.02",
   );
   equal(
     ranges,
@@ -154,7 +154,7 @@ test('06 - outlook "not" type, spaced', () => {
       [0, 25],
       [41, 59],
     ],
-    "06.03"
+    "06.03",
   );
 });
 

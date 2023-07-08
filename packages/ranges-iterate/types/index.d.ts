@@ -13,7 +13,7 @@ declare function rIterate(
   str: string,
   input: Ranges,
   cb: Callback,
-  offset?: number
+  offset?: number,
 ): void;
 
 export { Callback, Obj, rIterate, version };

@@ -13,7 +13,7 @@ test("01 - minimal, off", () => {
       ignoreIndentations: false,
     }).result,
     "x y",
-    "01.01"
+    "01.01",
   );
 });
 
@@ -23,7 +23,7 @@ test("02 - minimal, on, tight", () => {
       ignoreIndentations: true,
     }).result,
     "  x y",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -33,7 +33,7 @@ test("03 - minimal, on, excessive whitespace", () => {
       ignoreIndentations: true,
     }).result,
     "  x y\n      n m",
-    "03.01"
+    "03.01",
   );
 });
 
@@ -44,7 +44,7 @@ test("04 - minimal, ignores", () => {
       ignoreTags: ["b"],
     }).result,
     "  x y\n      n     <b>      m",
-    "04.01"
+    "04.01",
   );
 });
 
@@ -56,12 +56,12 @@ test("05 - three lines, off", () => {
     e <i> f`,
       {
         ignoreIndentations: false,
-      }
+      },
     ).result,
     `a b
 c d
 e f`,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -73,12 +73,12 @@ test("06 - three lines, on", () => {
     e <i> f`,
       {
         ignoreIndentations: true,
-      }
+      },
     ).result,
     `  a b
     c d
     e f`,
-    "06.01"
+    "06.01",
   );
 });
 
@@ -105,7 +105,7 @@ test("07 - markdown, real-life, nothing to do, enabled", () => {
       ignoreIndentations: true,
     }).result,
     input,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -148,7 +148,7 @@ more text
 * bullet 1
 * bullet 2
 3. top level 3`,
-    "08.01"
+    "08.01",
   );
 });
 
@@ -191,7 +191,7 @@ test("09 - markdown, real-life, strips one tag, ignores indentations", () => {
      * bullet 1
      * bullet 2
   3. top level 3`,
-    "09.01"
+    "09.01",
   );
 });
 
@@ -232,7 +232,7 @@ more text
 * bullet 1
 * bullet 2
 3. top level 3`,
-    "10.01"
+    "10.01",
   );
 });
 

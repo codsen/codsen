@@ -43,7 +43,7 @@ test("01 - one nested outlook-only comment", () => {
         end: 10,
       },
     ],
-    "01"
+    "01",
   );
 });
 
@@ -90,7 +90,7 @@ test("02 - one nested outlook-only comment", () => {
         value: "c",
       },
     ],
-    "02"
+    "02",
   );
 });
 
@@ -179,7 +179,7 @@ test("03 - nested tags inside broken comment closing tag pair", () => {
         value: "c",
       },
     ],
-    "03"
+    "03",
   );
 });
 
@@ -208,7 +208,7 @@ test("04 - false positive", () => {
         value: "<a>",
       },
     ],
-    "04"
+    "04",
   );
 });
 
@@ -250,7 +250,7 @@ test("05 - another false positive", () => {
         value: "y->b",
       },
     ],
-    "05"
+    "05",
   );
 });
 
@@ -289,7 +289,7 @@ test("06 - rogue character in the closing", () => {
         end: 11,
       },
     ],
-    "06"
+    "06",
   );
 });
 
@@ -333,7 +333,7 @@ test("07 - one pair", () => {
         end: 34,
       },
     ],
-    "07"
+    "07",
   );
 });
 
@@ -377,7 +377,7 @@ test("08 - one pair", () => {
         end: 38,
       },
     ],
-    "08"
+    "08",
   );
 });
 
@@ -399,7 +399,7 @@ test("09 - first part's missing bracket", () => {
         closing: true,
       },
     ],
-    "09"
+    "09",
   );
 });
 
@@ -421,7 +421,7 @@ test("10 - first part's missing excl mark", () => {
         closing: true,
       },
     ],
-    "10"
+    "10",
   );
 });
 
@@ -443,7 +443,7 @@ test("11 - first part's character one", () => {
         closing: true,
       },
     ],
-    "11"
+    "11",
   );
 });
 
@@ -465,7 +465,7 @@ test("12 - first part's missing dash", () => {
         closing: true,
       },
     ],
-    "12"
+    "12",
   );
 });
 
@@ -495,7 +495,7 @@ test("13 - first part's missing dash", () => {
         closing: true,
       },
     ],
-    "13"
+    "13",
   );
 });
 
@@ -522,7 +522,7 @@ test("14 - first part's missing dash", () => {
         closing: true,
       },
     ],
-    "14"
+    "14",
   );
 });
 
@@ -597,7 +597,7 @@ test("15 - nested inside parent", () => {
         children: [],
       },
     ],
-    "15"
+    "15",
   );
 });
 
@@ -678,7 +678,7 @@ test("16 - nested inside parent", () => {
         children: [],
       },
     ],
-    "16"
+    "16",
   );
 });
 
@@ -755,7 +755,7 @@ test("17 - false alarm", () => {
         language: "html",
       },
     ],
-    "17"
+    "17",
   );
 });
 
@@ -782,7 +782,7 @@ test("18 - rogue bracket", () => {
         language: "html",
       },
     ],
-    "18"
+    "18",
   );
 });
 
@@ -878,7 +878,7 @@ test("19 - a test from html-table-patcher", () => {
         ],
       },
     ],
-    "19"
+    "19",
   );
 });
 
@@ -970,7 +970,7 @@ test("20 - a test from html-table-patcher", () => {
         value: "</table>",
       },
     ],
-    "20"
+    "20",
   );
 });
 

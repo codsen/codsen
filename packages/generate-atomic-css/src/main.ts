@@ -53,8 +53,8 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
       `generate-atomic-css: [THROW_ID_01] First input argument must be a string! It was given as "${JSON.stringify(
         str,
         null,
-        4
-      )}" (type ${typeof str})`
+        4,
+      )}" (type ${typeof str})`,
     );
   }
 
@@ -102,23 +102,23 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
   // find out what to generate
   // eslint-disable-next-line prefer-const
   let [extractedConfig, rawContentAbove, rawContentBelow] = extractConfig(
-    resolvedOpts.configOverride ? resolvedOpts.configOverride : str
+    resolvedOpts.configOverride ? resolvedOpts.configOverride : str,
   );
   DEV &&
     console.log(
-      `109 ${`\u001b[${33}m${`extractedConfig`}\u001b[${39}m`}:\n"${`\u001b[${32}m${extractedConfig}\u001b[${39}m`}"\n\n\n`
+      `109 ${`\u001b[${33}m${`extractedConfig`}\u001b[${39}m`}:\n"${`\u001b[${32}m${extractedConfig}\u001b[${39}m`}"\n\n\n`,
     );
   DEV &&
     console.log(
       `113 ${`\u001b[${33}m${`rawContentAbove`}\u001b[${39}m`} = ${JSON.stringify(
         rawContentAbove,
         null,
-        4
+        4,
       )}; ${`\u001b[${33}m${`rawContentBelow`}\u001b[${39}m`} = ${JSON.stringify(
         rawContentBelow,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   if (typeof extractedConfig !== "string" || !extractedConfig.trim()) {
@@ -142,7 +142,7 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
   DEV && console.log("--------------------------------------------------");
   DEV &&
     console.log(
-      `145 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
+      `145 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`,
     );
 
   // tackle config
@@ -151,7 +151,7 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
     DEV && console.log("--------------------------------------------------");
     DEV &&
       console.log(
-        `154 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
+        `154 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`,
       );
   }
 
@@ -160,12 +160,12 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
       `160 ${`\u001b[${33}m${`rawContentAbove`}\u001b[${39}m`} = ${JSON.stringify(
         rawContentAbove,
         null,
-        4
+        4,
       )}; ${`\u001b[${33}m${`rawContentBelow`}\u001b[${39}m`} = ${JSON.stringify(
         rawContentBelow,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   // maybe there was some content above?
@@ -181,10 +181,10 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
         console.log(
           `182 ${`\u001b[${33}m${`0 -> sliceUpTo`}\u001b[${39}m`} = "${str.slice(
             0,
-            sliceUpTo
+            sliceUpTo,
           )}"; ${`\u001b[${33}m${`sliceUpTo -> end`}\u001b[${39}m`} = "${str.slice(
-            sliceUpTo
-          )}"`
+            sliceUpTo,
+          )}"`,
         );
       if (
         str[left(str, sliceUpTo) as number] === "*" &&
@@ -196,13 +196,13 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
             `196 new ${`\u001b[${33}m${`sliceUpTo`}\u001b[${39}m`} = ${JSON.stringify(
               sliceUpTo,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
       }
       DEV &&
         console.log(
-          `205 ${`\u001b[${31}m${`██`}\u001b[${39}m`} frontPart = "${frontPart}"`
+          `205 ${`\u001b[${31}m${`██`}\u001b[${39}m`} frontPart = "${frontPart}"`,
         );
       let putInFront = "/* ";
       if (
@@ -227,8 +227,8 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
           `227 ${`\u001b[${32}m${`██`}\u001b[${39}m`} new ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`} = ${JSON.stringify(
             frontPart,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
   }
@@ -245,8 +245,8 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
         `245 ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${JSON.stringify(
           sliceFrom,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     // include closing comment:
     if (
@@ -255,18 +255,18 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
       str[
         right(
           str,
-          right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length) as number
+          right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length) as number,
         ) as number
       ] === "/"
     ) {
       sliceFrom =
         (right(
           str,
-          right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length) as number
+          right(str, str.indexOf(CONFIGTAIL) + CONFIGTAIL.length) as number,
         ) as number) + 1;
       DEV &&
         console.log(
-          `269 closing comment included, ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} now = ${sliceFrom}`
+          `269 closing comment included, ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} now = ${sliceFrom}`,
         );
     }
 
@@ -278,7 +278,7 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
       sliceFrom = contentHeadsStartAt || 0 + CONTENTHEAD.length;
       DEV &&
         console.log(
-          `281 content head detected, starts at ${contentHeadsStartAt}; sliceFrom = ${sliceFrom}`
+          `281 content head detected, starts at ${contentHeadsStartAt}; sliceFrom = ${sliceFrom}`,
         );
       if (
         str[right(str, sliceFrom - 1) as number] === "*" &&
@@ -311,8 +311,8 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
         `311 ${`\u001b[${32}m${`sliceFrom`}\u001b[${39}m`} = ${sliceFrom} ("${JSON.stringify(
           str.slice(sliceFrom, sliceFrom + 30),
           null,
-          4
-        )}")`
+          4,
+        )}")`,
       );
     // now, check, does this ending chunk already include the content heads,
     // GENERATE-ATOMIC-CSS-CONTENT-STARTS,
@@ -323,7 +323,7 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
       sliceFrom = str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
       DEV &&
         console.log(
-          `326 new ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${sliceFrom}`
+          `326 new ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${sliceFrom}`,
         );
       if (
         str[right(str, sliceFrom) as number] === "*" &&
@@ -332,7 +332,7 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
         sliceFrom = (right(str, right(str, sliceFrom) as number) as number) + 1;
         DEV &&
           console.log(
-            `335 new ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${sliceFrom}`
+            `335 new ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${sliceFrom}`,
           );
       }
     }
@@ -355,7 +355,7 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
   }
   DEV &&
     console.log(
-      `358 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
+      `358 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`,
     );
 
   DEV &&
@@ -363,12 +363,12 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
       `363 ${`\u001b[${33}m${`rawContentAbove`}\u001b[${39}m`} = ${JSON.stringify(
         rawContentAbove,
         null,
-        4
+        4,
       )}; ${`\u001b[${33}m${`rawContentBelow`}\u001b[${39}m`} = ${JSON.stringify(
         rawContentBelow,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   if (typeof rawContentAbove === "string") {
@@ -378,7 +378,7 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
     DEV && console.log("--------------------------------------------------");
     DEV &&
       console.log(
-        `381 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
+        `381 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`,
       );
   }
 
@@ -388,8 +388,8 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
         `388 tackle ${`\u001b[${33}m${`rawContentBelow`}\u001b[${39}m`} = ${JSON.stringify(
           rawContentBelow,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     // precaution if rawContentBelow ends but not starts with CSS comment
     if (
@@ -411,8 +411,8 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
             `411 ${`\u001b[${33}m${`frontPart2`}\u001b[${39}m`} = ${JSON.stringify(
               frontPart2,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
       }
       rawContentBelow = `${frontPart2}/* ${rawContentBelow.trim()}`;
@@ -423,14 +423,14 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
 
     DEV &&
       console.log(
-        `426 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
+        `426 ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`,
       );
   }
 
   DEV && console.log("--------------------------------------------------");
   DEV &&
     console.log(
-      `433 FINAL ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`
+      `433 FINAL ${`\u001b[${33}m${`frontPart`}\u001b[${39}m`}:\n"${frontPart}"\n\n${`\u001b[${33}m${`endPart`}\u001b[${39}m`}:\n"${endPart}"\n\n`,
     );
 
   let finalRes = `${trimIfNeeded(
@@ -441,9 +441,9 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
       resolvedOpts.reportProgressFuncTo,
       true, // resolvedOpts.includeConfig || resolvedOpts.includeHeadsAndTails
       generatedCount,
-      resolvedOpts.pad
+      resolvedOpts.pad,
     )}${endPart}`,
-    resolvedOpts
+    resolvedOpts,
   )}\n`;
 
   DEV && console.log("\n\n\n");
@@ -454,7 +454,7 @@ ${`\u001b[${36}m${`████████████████████�
 ${finalRes}
 ${`\u001b[${36}m${`███████████████████████████████████████`}\u001b[${39}m`}
 
-`
+`,
     );
 
   return {

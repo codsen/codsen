@@ -16,13 +16,13 @@ test("01", () => {
   equal(
     isNull(() => {}),
     false,
-    "01.09"
+    "01.09",
   );
   equal(isNull(new Set(["a"])), false, "01.10");
   equal(
     isNull(() => {}),
     false,
-    "01.11"
+    "01.11",
   );
   equal(isNull(""), false, "01.12");
   equal(isNull("a"), false, "01.13");

@@ -11,12 +11,12 @@ test("01 - fourth argument doesn't break anything", () => {
   equal(
     compare({ a: "1", b: "2" }, { a: "1", b: "2", c: "3" }, null, true),
     false,
-    "01.01"
+    "01.01",
   );
   equal(
     compare({ a: "1", b: "2" }, { a: "1", b: "2", c: "3" }, null, false),
     false,
-    "01.02"
+    "01.02",
   );
 });
 

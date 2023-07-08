@@ -20,7 +20,7 @@ test(`01 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - inline tags are not
         removeCSSComments: false,
       },
     },
-    "01.01"
+    "01.01",
   );
   compare(
     ok,
@@ -36,7 +36,7 @@ test(`01 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - inline tags are not
         removeCSSComments: false,
       },
     },
-    "01.02"
+    "01.02",
   );
   compare(
     ok,
@@ -52,7 +52,7 @@ test(`01 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - inline tags are not
         removeCSSComments: false,
       },
     },
-    "01.03"
+    "01.03",
   );
 });
 
@@ -76,7 +76,7 @@ new`,
         removeCSSComments: false,
       },
     },
-    "02.01"
+    "02.01",
   );
   compare(
     ok,
@@ -92,7 +92,7 @@ new`,
         removeCSSComments: false,
       },
     },
-    "02.02"
+    "02.02",
   );
   compare(
     ok,
@@ -108,7 +108,7 @@ new`,
         removeCSSComments: false,
       },
     },
-    "02.03"
+    "02.03",
   );
 });
 
@@ -127,7 +127,7 @@ test(`03 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - non-inline tags are
         removeCSSComments: false,
       },
     },
-    "03.01"
+    "03.01",
   );
   compare(
     ok,
@@ -143,7 +143,7 @@ test(`03 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - non-inline tags are
         removeCSSComments: false,
       },
     },
-    "03.02"
+    "03.02",
   );
   compare(
     ok,
@@ -159,7 +159,7 @@ test(`03 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - non-inline tags are
         removeCSSComments: false,
       },
     },
-    "03.03"
+    "03.03",
   );
 });
 
@@ -178,7 +178,7 @@ test(`04 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - string sequence bre
         removeCSSComments: false,
       },
     },
-    "04.01"
+    "04.01",
   );
   compare(
     ok,
@@ -194,7 +194,7 @@ test(`04 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - string sequence bre
         removeCSSComments: false,
       },
     },
-    "04.02"
+    "04.02",
   );
   compare(
     ok,
@@ -210,7 +210,7 @@ test(`04 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - string sequence bre
         removeCSSComments: false,
       },
     },
-    "04.03"
+    "04.03",
   );
 });
 
@@ -229,7 +229,7 @@ test(`05 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - what happens when i
         removeCSSComments: false,
       },
     },
-    "05.01"
+    "05.01",
   );
   compare(
     ok,
@@ -245,7 +245,7 @@ test(`05 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - what happens when i
         removeCSSComments: false,
       },
     },
-    "05.02"
+    "05.02",
   );
   compare(
     ok,
@@ -261,7 +261,7 @@ test(`05 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - what happens when i
         removeCSSComments: false,
       },
     },
-    "05.03"
+    "05.03",
   );
 });
 
@@ -280,7 +280,7 @@ test(`06 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks lines when l
         removeCSSComments: false,
       },
     },
-    "06.01"
+    "06.01",
   );
   compare(
     ok,
@@ -296,7 +296,7 @@ test(`06 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks lines when l
         removeCSSComments: false,
       },
     },
-    "06.02"
+    "06.02",
   );
   compare(
     ok,
@@ -312,7 +312,7 @@ test(`06 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks lines when l
         removeCSSComments: false,
       },
     },
-    "06.03"
+    "06.03",
   );
 });
 
@@ -331,7 +331,7 @@ test(`07 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks along with w
         removeCSSComments: false,
       },
     },
-    "07.01"
+    "07.01",
   );
   compare(
     ok,
@@ -347,7 +347,7 @@ test(`07 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks along with w
         removeCSSComments: false,
       },
     },
-    "07.02"
+    "07.02",
   );
   compare(
     ok,
@@ -363,7 +363,7 @@ test(`07 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks along with w
         removeCSSComments: false,
       },
     },
-    "07.03"
+    "07.03",
   );
 });
 
@@ -382,7 +382,7 @@ test(`08 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks unbreakable 
         removeCSSComments: false,
       },
     },
-    "08.01"
+    "08.01",
   );
   compare(
     ok,
@@ -398,7 +398,7 @@ test(`08 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks unbreakable 
         removeCSSComments: false,
       },
     },
-    "08.02"
+    "08.02",
   );
   compare(
     ok,
@@ -414,7 +414,7 @@ test(`08 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks unbreakable 
         removeCSSComments: false,
       },
     },
-    "08.03"
+    "08.03",
   );
 });
 
@@ -433,7 +433,7 @@ test(`09 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks tags, wipes 
         removeCSSComments: false,
       },
     },
-    "09.01"
+    "09.01",
   );
   compare(
     ok,
@@ -449,7 +449,7 @@ test(`09 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks tags, wipes 
         removeCSSComments: false,
       },
     },
-    "09.02"
+    "09.02",
   );
   compare(
     ok,
@@ -465,7 +465,7 @@ test(`09 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks tags, wipes 
         removeCSSComments: false,
       },
     },
-    "09.03"
+    "09.03",
   );
 });
 
@@ -484,7 +484,7 @@ test(`10 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks tags, wipes 
         removeCSSComments: false,
       },
     },
-    "10.01"
+    "10.01",
   );
   compare(
     ok,
@@ -500,7 +500,7 @@ test(`10 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks tags, wipes 
         removeCSSComments: false,
       },
     },
-    "10.02"
+    "10.02",
   );
   compare(
     ok,
@@ -516,7 +516,7 @@ test(`10 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - stacks tags, wipes 
         removeCSSComments: false,
       },
     },
-    "10.03"
+    "10.03",
   );
 });
 
@@ -535,7 +535,7 @@ test(`11 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting -
         removeCSSComments: false,
       },
     },
-    "11.01"
+    "11.01",
   );
   compare(
     ok,
@@ -551,7 +551,7 @@ test(`11 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting -
         removeCSSComments: false,
       },
     },
-    "11.02"
+    "11.02",
   );
   compare(
     ok,
@@ -567,7 +567,7 @@ test(`11 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting -
         removeCSSComments: false,
       },
     },
-    "11.03"
+    "11.03",
   );
 });
 
@@ -586,7 +586,7 @@ test(`12 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting -
         removeCSSComments: false,
       },
     },
-    "12.01"
+    "12.01",
   );
   compare(
     ok,
@@ -602,7 +602,7 @@ test(`12 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting -
         removeCSSComments: false,
       },
     },
-    "12.02"
+    "12.02",
   );
   compare(
     ok,
@@ -618,7 +618,7 @@ test(`12 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting -
         removeCSSComments: false,
       },
     },
-    "12.03"
+    "12.03",
   );
 });
 
@@ -636,7 +636,7 @@ test(`13 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - more tags and limit
         lineLengthLimit: 9,
         removeIndentations: true,
         removeLineBreaks: true,
-      }
+      },
     ),
     {
       result: "<a> <b> c\n</b></a>\n<a>",
@@ -645,7 +645,7 @@ test(`13 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - more tags and limit
         removeCSSComments: false,
       },
     },
-    "13.01"
+    "13.01",
   );
   compare(
     ok,
@@ -660,7 +660,7 @@ test(`13 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - more tags and limit
         lineLengthLimit: 9,
         removeIndentations: true,
         removeLineBreaks: false,
-      }
+      },
     ),
     {
       result: `<a>
@@ -673,7 +673,7 @@ c </b>
         removeCSSComments: false,
       },
     },
-    "13.02"
+    "13.02",
   );
   compare(
     ok,
@@ -688,7 +688,7 @@ c </b>
         lineLengthLimit: 9,
         removeIndentations: false,
         removeLineBreaks: false,
-      }
+      },
     ),
     {
       result: `  <a>
@@ -701,7 +701,7 @@ c </b>
         removeCSSComments: false,
       },
     },
-    "13.03"
+    "13.03",
   );
 });
 
@@ -719,7 +719,7 @@ test(`14 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - more tags and limit
         lineLengthLimit: 8,
         removeIndentations: true,
         removeLineBreaks: true,
-      }
+      },
     ),
     {
       result: "<x><y> c\n</y></x>\n<x>",
@@ -728,7 +728,7 @@ test(`14 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - more tags and limit
         removeCSSComments: false,
       },
     },
-    "14.01"
+    "14.01",
   );
   compare(
     ok,
@@ -743,7 +743,7 @@ test(`14 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - more tags and limit
         lineLengthLimit: 8,
         removeIndentations: true,
         removeLineBreaks: false,
-      }
+      },
     ),
     {
       result: `<x>
@@ -756,7 +756,7 @@ c </y>
         removeCSSComments: false,
       },
     },
-    "14.02"
+    "14.02",
   );
   compare(
     ok,
@@ -771,7 +771,7 @@ c </y>
         lineLengthLimit: 8,
         removeIndentations: false,
         removeLineBreaks: false,
-      }
+      },
     ),
     {
       result: `  <x>
@@ -784,7 +784,7 @@ c </y>
         removeCSSComments: false,
       },
     },
-    "14.03"
+    "14.03",
   );
 });
 
@@ -803,7 +803,7 @@ test(`15 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting =
         removeCSSComments: false,
       },
     },
-    "15.01"
+    "15.01",
   );
   compare(
     ok,
@@ -819,7 +819,7 @@ test(`15 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting =
         removeCSSComments: false,
       },
     },
-    "15.02"
+    "15.02",
   );
   compare(
     ok,
@@ -835,7 +835,7 @@ test(`15 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting =
         removeCSSComments: false,
       },
     },
-    "15.03"
+    "15.03",
   );
 });
 
@@ -854,7 +854,7 @@ test(`16 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting =
         removeCSSComments: false,
       },
     },
-    "16.01"
+    "16.01",
   );
   compare(
     ok,
@@ -870,7 +870,7 @@ test(`16 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting =
         removeCSSComments: false,
       },
     },
-    "16.02"
+    "16.02",
   );
   compare(
     ok,
@@ -886,7 +886,7 @@ test(`16 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting =
         removeCSSComments: false,
       },
     },
-    "16.03"
+    "16.03",
   );
 });
 
@@ -905,7 +905,7 @@ test(`17 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting =
         removeCSSComments: false,
       },
     },
-    "17.01"
+    "17.01",
   );
   compare(
     ok,
@@ -921,7 +921,7 @@ test(`17 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting =
         removeCSSComments: false,
       },
     },
-    "17.02"
+    "17.02",
   );
   compare(
     ok,
@@ -937,7 +937,7 @@ test(`17 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tags and limiting =
         removeCSSComments: false,
       },
     },
-    "17.03"
+    "17.03",
   );
 });
 
@@ -956,7 +956,7 @@ test(`18 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tag sequence withou
         removeCSSComments: false,
       },
     },
-    "18.01"
+    "18.01",
   );
   compare(
     ok,
@@ -972,7 +972,7 @@ test(`18 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tag sequence withou
         removeCSSComments: false,
       },
     },
-    "18.02"
+    "18.02",
   );
   compare(
     ok,
@@ -988,7 +988,7 @@ test(`18 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tag sequence withou
         removeCSSComments: false,
       },
     },
-    "18.03"
+    "18.03",
   );
 });
 
@@ -1007,7 +1007,7 @@ test(`19 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tag sequence comple
         removeCSSComments: false,
       },
     },
-    "19.01"
+    "19.01",
   );
   compare(
     ok,
@@ -1023,7 +1023,7 @@ test(`19 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tag sequence comple
         removeCSSComments: false,
       },
     },
-    "19.02"
+    "19.02",
   );
   compare(
     ok,
@@ -1039,7 +1039,7 @@ test(`19 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - tag sequence comple
         removeCSSComments: false,
       },
     },
-    "19.03"
+    "19.03",
   );
 });
 
@@ -1058,7 +1058,7 @@ test(`20 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - string sequence bre
         removeCSSComments: false,
       },
     },
-    "20.01"
+    "20.01",
   );
   compare(
     ok,
@@ -1074,7 +1074,7 @@ test(`20 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - string sequence bre
         removeCSSComments: false,
       },
     },
-    "20.02"
+    "20.02",
   );
   compare(
     ok,
@@ -1090,7 +1090,7 @@ test(`20 - ${`\u001b[${33}m${"small tests"}\u001b[${39}m`} - string sequence bre
         removeCSSComments: false,
       },
     },
-    "20.03"
+    "20.03",
   );
 });
 

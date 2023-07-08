@@ -10,7 +10,7 @@ const callerDir = path.resolve(".");
 
 const testme = () =>
   extract(
-    "The quick brown fox jumps over a lazy dog. Then it suddenly bites dog's tail and runs away. What a fox!"
+    "The quick brown fox jumps over a lazy dog. Then it suddenly bites dog's tail and runs away. What a fox!",
   );
 
 // action

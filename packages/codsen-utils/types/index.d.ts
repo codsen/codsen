@@ -56,7 +56,7 @@ declare function stringSplice(
   str?: string,
   index?: number,
   count?: number,
-  add?: string
+  add?: string,
 ): string;
 declare function isStr(something: unknown): something is string;
 declare function isNum(something: unknown): something is number;
@@ -92,7 +92,7 @@ declare function detectEol(str: string | unknown): EolChar | undefined;
 declare function resolveEolSetting(
   str: string | unknown,
   eolSetting: EolSetting | unknown,
-  defaultEolChar?: EolChar
+  defaultEolChar?: EolChar,
 ): EolChar;
 declare function hasOwnProp(obj: unknown, prop: string): boolean;
 /**
@@ -111,7 +111,7 @@ declare const inlineTags: Set<string>;
  */
 declare function includes(
   arr: (string | RegExp)[],
-  whatToMatch: string
+  whatToMatch: string,
 ): boolean;
 /** Alternative to lodash.intersection */
 declare function intersection<T, U>(a?: T[], b?: U[]): T[];

@@ -7,7 +7,7 @@ import { pull } from "../dist/array-pull-all-with-glob.esm.js";
 assert.deepEqual(
   pull(
     ["keep_me", "name-1", "name-2", "name-jhkgdhgkhdfghdkghfdk"],
-    ["name-*"]
+    ["name-*"],
   ),
-  ["keep_me"]
+  ["keep_me"],
 );

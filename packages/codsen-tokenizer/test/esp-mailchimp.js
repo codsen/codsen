@@ -64,7 +64,7 @@ test("01 - colon in attr name is not an issue", () => {
         ],
       },
     ],
-    "01.01"
+    "01.01",
   );
 });
 
@@ -120,7 +120,7 @@ test("02 - fancy quotes pasted from MC documentation website", () => {
         ],
       },
     ],
-    "02.01"
+    "02.01",
   );
 });
 

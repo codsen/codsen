@@ -13,9 +13,9 @@ assert.deepEqual(
     },
     {
       val: "x",
-    }
+    },
   ),
-  { a: "a" }
+  { a: "a" },
 );
 
 // same but without cleanup:
@@ -29,10 +29,10 @@ assert.deepEqual(
     {
       val: "x",
       cleanup: false,
-    }
+    },
   ),
   {
     a: "a",
     c: [{}], // <--- !
-  }
+  },
 );

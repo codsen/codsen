@@ -141,7 +141,7 @@ test("07", () => {
     mixer().forEach((opt) => {
       not.ok(
         isOpening(input, 11, opt),
-        `str=${input} - opt = ${JSON.stringify(opt, null, 0)} - idx = 11`
+        `str=${input} - opt = ${JSON.stringify(opt, null, 0)} - idx = 11`,
       );
     });
   });
@@ -163,7 +163,7 @@ test("08", () => {
     }).forEach((opt) => {
       ok(
         isOpening(input, 11, opt),
-        `str=${input} - opt = ${JSON.stringify(opt, null, 0)} - idx = 11`
+        `str=${input} - opt = ${JSON.stringify(opt, null, 0)} - idx = 11`,
       );
     });
     mixer({
@@ -171,7 +171,7 @@ test("08", () => {
     }).forEach((opt) => {
       not.ok(
         isOpening(input, 11, opt),
-        `str=${input} - opt = ${JSON.stringify(opt, null, 0)} - idx = 11`
+        `str=${input} - opt = ${JSON.stringify(opt, null, 0)} - idx = 11`,
       );
     });
   });
@@ -205,7 +205,7 @@ test("09", () => {
     ].forEach((str) => {
       ok(
         isOpening(str, 11, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 11`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 11`,
       );
     });
   });
@@ -305,7 +305,7 @@ test("11 known tag name + an attribute", () => {
     ].forEach((str) => {
       ok(
         isOpening(str, 13, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 13`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 13`,
       );
     });
   });

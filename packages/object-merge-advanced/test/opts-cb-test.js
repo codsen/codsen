@@ -28,7 +28,7 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
           e: false,
         },
         b: "",
-      }
+      },
     ),
     {
       a: {
@@ -39,7 +39,7 @@ test("01 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       b: "test",
     },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -67,7 +67,7 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       {
         mergeBoolsUsingOrNotAnd: false,
-      }
+      },
     ),
     {
       a: {
@@ -78,7 +78,7 @@ test("02 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       b: "test",
     },
-    "02.01"
+    "02.01",
   );
 });
 
@@ -114,7 +114,7 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
           }
           return resultAboutToBeReturned;
         },
-      }
+      },
     ),
     {
       a: {
@@ -125,7 +125,7 @@ test("03 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       b: "test", // <---- notice how hard merging on Bools didn't affect this string
     },
-    "03.01"
+    "03.01",
   );
 });
 
@@ -162,7 +162,7 @@ test("04 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
           }
           return resultAboutToBeReturned;
         },
-      }
+      },
     ),
     {
       a: {
@@ -173,7 +173,7 @@ test("04 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       b: "", // <---- it was outside of cb's scope as cb dealt with Bools only.
     },
-    "04.01"
+    "04.01",
   );
 });
 
@@ -210,7 +210,7 @@ test("05 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
           }
           return resultAboutToBeReturned;
         },
-      }
+      },
     ),
     {
       a: {
@@ -222,7 +222,7 @@ test("05 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are
       },
       b: "test", // <---- standard rule applies (non-empty string vs. empty string)
     },
-    "05.01"
+    "05.01",
   );
 });
 
@@ -247,7 +247,7 @@ test("06 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Boole
           e: false,
         },
         b: "",
-      }
+      },
     ),
     {
       a: {
@@ -258,7 +258,7 @@ test("06 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Boole
       },
       b: "test",
     },
-    "06.01"
+    "06.01",
   );
 });
 
@@ -286,7 +286,7 @@ test("07 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Boole
       },
       {
         hardMergeEverything: true,
-      }
+      },
     ),
     {
       a: {
@@ -298,7 +298,7 @@ test("07 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Boole
       },
       b: "",
     },
-    "07.01"
+    "07.01",
   );
 });
 
@@ -336,7 +336,7 @@ test("08 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Boole
           }
           return resultAboutToBeReturned;
         },
-      }
+      },
     ),
     {
       a: {
@@ -347,7 +347,7 @@ test("08 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Boole
       },
       b: "", // being hard-merged as usual
     },
-    "08.01"
+    "08.01",
   );
 });
 
@@ -372,7 +372,7 @@ test("09 - \u001b[33mOPTS\u001b[39m - opts.cb - using callback to wrap string wi
           e: "var4",
         },
         b: null,
-      }
+      },
     ),
     {
       a: {
@@ -383,7 +383,7 @@ test("09 - \u001b[33mOPTS\u001b[39m - opts.cb - using callback to wrap string wi
       },
       b: false,
     },
-    "09.01"
+    "09.01",
   );
 });
 
@@ -416,7 +416,7 @@ test("10 - \u001b[33mOPTS\u001b[39m - opts.cb - using callback to wrap string wi
           }
           return resultAboutToBeReturned;
         },
-      }
+      },
     ),
     {
       a: {
@@ -427,7 +427,7 @@ test("10 - \u001b[33mOPTS\u001b[39m - opts.cb - using callback to wrap string wi
       },
       b: false,
     },
-    "10.01"
+    "10.01",
   );
 });
 
@@ -469,7 +469,7 @@ test("11 - \u001b[33mOPTS\u001b[39m - opts.cb - pin the 4th arg values", () => {
               path: "a.b",
               type: ["string", "string"],
             },
-            "11.01 - cb values pinned an object"
+            "11.01 - cb values pinned an object",
           );
         }
 
@@ -481,7 +481,7 @@ test("11 - \u001b[33mOPTS\u001b[39m - opts.cb - pin the 4th arg values", () => {
               path: "a.d",
               type: ["null", "array"],
             },
-            "11.02 - cb values pinned a key which has a value of array"
+            "11.02 - cb values pinned a key which has a value of array",
           );
         }
 
@@ -493,12 +493,12 @@ test("11 - \u001b[33mOPTS\u001b[39m - opts.cb - pin the 4th arg values", () => {
               path: "a.m.0",
               type: ["array", "array"],
             },
-            "11.03 - cb values pinned an element within an array"
+            "11.03 - cb values pinned an element within an array",
           );
         }
         return resultAboutToBeReturned;
       },
-    }
+    },
   );
 
   // dummy test to prevent unused variable alerts
@@ -529,7 +529,7 @@ test("12 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenat
         z: {
           key: "z.key val 2",
         },
-      }
+      },
     ),
     {
       x: {
@@ -542,7 +542,7 @@ test("12 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenat
         key: "z.key val 2",
       },
     },
-    "12.01"
+    "12.01",
   );
 });
 
@@ -589,7 +589,7 @@ test("13 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenat
           }
           return resultAboutToBeReturned;
         },
-      }
+      },
     ),
     {
       x: {
@@ -602,7 +602,7 @@ test("13 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenat
         key: "z.key val 2",
       },
     },
-    "13.01"
+    "13.01",
   );
 });
 
@@ -639,7 +639,7 @@ test("14 - \u001b[33mOPTS\u001b[39m - opts.hardMergeEverything - revisiting deep
             },
           ],
         },
-      }
+      },
     ),
     {
       a: {
@@ -662,7 +662,7 @@ test("14 - \u001b[33mOPTS\u001b[39m - opts.hardMergeEverything - revisiting deep
         },
       },
     },
-    "14.01"
+    "14.01",
   );
 
   // now set the opts.hardMergeEverything
@@ -701,7 +701,7 @@ test("14 - \u001b[33mOPTS\u001b[39m - opts.hardMergeEverything - revisiting deep
       },
       {
         hardMergeEverything: true,
-      }
+      },
     ),
     {
       a: {
@@ -722,7 +722,7 @@ test("14 - \u001b[33mOPTS\u001b[39m - opts.hardMergeEverything - revisiting deep
         },
       },
     },
-    "14.02"
+    "14.02",
   );
 });
 

@@ -17,7 +17,7 @@ test("02 - string-in, ends with slash", () => {
   equal(
     removeTrailingSlash("http://codsen.com/"),
     "http://codsen.com",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -25,7 +25,7 @@ test("03 - removes only one last slash", () => {
   equal(
     removeTrailingSlash("http://codsen.com//"),
     "http://codsen.com/",
-    "03.01"
+    "03.01",
   );
 });
 

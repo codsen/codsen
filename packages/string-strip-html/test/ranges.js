@@ -25,7 +25,7 @@ test("01 - ranges - quick sanity check", () => {
       [9, 43, " "],
       [51, 56, " "],
     ],
-    "01.02"
+    "01.02",
   );
   equal(allTagLocations, intendedAllTagLocations, "01.03");
   validateTagLocations(is, input, intendedAllTagLocations);
@@ -66,7 +66,7 @@ test("02 - consistency with ranges-apply", () => {
       [166, 194, "\n\n"],
       [195, 226],
     ],
-    "02.02"
+    "02.02",
   );
   equal(
     allTagLocations,
@@ -88,7 +88,7 @@ test("02 - consistency with ranges-apply", () => {
       [209, 216],
       [219, 226],
     ],
-    "02.03"
+    "02.03",
   );
 
   equal(rApply(input, stripHtml(input).ranges), result, "02.04");
@@ -192,9 +192,9 @@ test("03 - consistency with ranges-apply", () => {
         input,
         stripHtml(input, {
           trimOnlySpaces: false, // <----------- trim all whitespace!
-        }).ranges
+        }).ranges,
       ),
-      `${idx} - ${input}`
+      `${idx} - ${input}`,
     );
     equal(
       stripHtml(input, { trimOnlySpaces: true }).result,
@@ -202,9 +202,9 @@ test("03 - consistency with ranges-apply", () => {
         input,
         stripHtml(input, {
           trimOnlySpaces: true, // <----------- trim only spaces!
-        }).ranges
+        }).ranges,
       ),
-      `${idx} - ${input}`
+      `${idx} - ${input}`,
     );
   });
 });

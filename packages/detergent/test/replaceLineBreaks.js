@@ -26,8 +26,8 @@ test("01 - minimal example - correct existing linebreaks", () => {
           `present ${key[idx2]}, requested ${key[idx1]} --- ${JSON.stringify(
             opt,
             null,
-            0
-          )}`
+            0,
+          )}`,
         );
       });
     });
@@ -44,7 +44,7 @@ test("02 - minimal example - br", () => {
     equal(
       det(ok, not, n, "a<br/>b", opt).res,
       "a<br/>b",
-      `${JSON.stringify(opt, null, 0)}`
+      `${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -63,10 +63,10 @@ test("03 - replace \\n line breaks with BR - useXHTML=on", () => {
           not,
           n,
           `${eolType}${eolType}${eolType}tralala${eolType}tralala2${eolType}${eolType}tralala3${eolType}${eolType}${eolType}tralala4${eolType}${eolType}${eolType}`,
-          opt
+          opt,
         ).res,
         "tralala<br/>\ntralala2<br/>\n<br/>\ntralala3<br/>\n<br/>\ntralala4",
-        `EOL: ${key[i]} --- ${JSON.stringify(opt, null, 0)}`
+        `EOL: ${key[i]} --- ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
@@ -86,10 +86,10 @@ test("04 - replace \\n line breaks with BR - useXHTML=off", () => {
           not,
           n,
           `${eolType}${eolType}tralala${eolType}tralala2${eolType}${eolType}tralala3${eolType}${eolType}${eolType}tralala4${eolType}${eolType}${eolType}${eolType}`,
-          opt
+          opt,
         ).res,
         "tralala<br>\ntralala2<br>\n<br>\ntralala3<br>\n<br>\ntralala4",
-        `${eolType} --- ${JSON.stringify(opt, null, 0)}`
+        `${eolType} --- ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
@@ -110,8 +110,8 @@ test("05 - br with attribute, line break present", () => {
         `${JSON.stringify(eolType, null, 4)} --- ${JSON.stringify(
           opt,
           null,
-          0
-        )}`
+          0,
+        )}`,
       );
     });
   });
@@ -129,7 +129,7 @@ test("06 - br with attribute, line break present - no eol setting", () => {
       convertEntities: true,
     }).res,
     'a<br class="z">\r\nb',
-    "06.01"
+    "06.01",
   );
 });
 
@@ -143,7 +143,7 @@ test("07 - br with attribute, line break present - eol setting CRLF", () => {
       eol: "crlf",
     }).res,
     'a<br class="z">\r\nb',
-    "07.01"
+    "07.01",
   );
 });
 
@@ -157,7 +157,7 @@ test("08 - br with attribute, line break present - eol setting CR", () => {
       eol: "cr",
     }).res,
     'a<br class="z">\rb',
-    "08.01"
+    "08.01",
   );
 });
 
@@ -171,7 +171,7 @@ test("09 - br with attribute, line break present - eol setting LF", () => {
       eol: "lf",
     }).res,
     'a<br class="z">\nb',
-    "09.01"
+    "09.01",
   );
 });
 
@@ -191,8 +191,8 @@ test("10 - only adds a slash, respects existing attrs", () => {
         `${JSON.stringify(eolType, null, 4)} --- ${JSON.stringify(
           opt,
           null,
-          0
-        )}`
+          0,
+        )}`,
       );
     });
   });
@@ -208,7 +208,7 @@ test("11 - br with attribute, no line break, HTML", () => {
     equal(
       det(ok, not, n, 'a<br class="z">b', opt).res,
       'a<br class="z">b',
-      `${JSON.stringify(opt, null, 0)}`
+      `${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -223,7 +223,7 @@ test("12 - br with attribute, no line break, XHTML", () => {
     equal(
       det(ok, not, n, 'a<br class="z">b', opt).res,
       'a<br class="z"/>b',
-      `${JSON.stringify(opt, null, 0)}`
+      `${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -240,7 +240,7 @@ test("13 - multiple consecutive line breaks", () => {
     equal(
       det(ok, not, n, "abcd\n\n\n\n\n\n\nefgh", opt).res,
       "abcd<br/>\n<br/>\nefgh",
-      `${JSON.stringify(opt, null, 0)}`
+      `${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -254,7 +254,7 @@ test("14 - multiple consecutive line breaks", () => {
     equal(
       det(ok, not, n, "abcd\n\n\n\n\n\n\nefgh", opt).res,
       "abcd<br>\n<br>\nefgh",
-      `${JSON.stringify(opt, null, 0)}`
+      `${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -267,7 +267,7 @@ test("15 - multiple consecutive line breaks", () => {
     equal(
       det(ok, not, n, "abcd\n\n\n\n\n\n\nefgh", opt).res,
       "abcd\n\nefgh",
-      `${JSON.stringify(opt, null, 0)}`
+      `${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -279,7 +279,7 @@ test("16 - multiple consecutive line breaks", () => {
     equal(
       det(ok, not, n, "abcd\n\n\n\n\n\n\nefgh", opt).res,
       "abcd efgh",
-      `${JSON.stringify(opt, null, 0)}`
+      `${JSON.stringify(opt, null, 0)}`,
     );
   });
 });

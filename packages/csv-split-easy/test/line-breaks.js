@@ -40,17 +40,17 @@ test("01 - breaks lines correctly leaving no empty lines", () => {
       ["a", "b", "c"],
       ["d", "e", "f"],
     ],
-    "01.01"
+    "01.01",
   );
   equal(
     splitEasy(
-      "apples and some more apples,bananas,cherries\ndonuts,eclairs,froyos"
+      "apples and some more apples,bananas,cherries\ndonuts,eclairs,froyos",
     ),
     [
       ["apples and some more apples", "bananas", "cherries"],
       ["donuts", "eclairs", "froyos"],
     ],
-    "01.02"
+    "01.02",
   );
   equal(
     splitEasy("a,b,c\n\r\n\r\r\r\r\n\n\nd,e,f"),
@@ -58,17 +58,17 @@ test("01 - breaks lines correctly leaving no empty lines", () => {
       ["a", "b", "c"],
       ["d", "e", "f"],
     ],
-    "01.03"
+    "01.03",
   );
   equal(
     splitEasy(
-      "apples and some more apples,bananas,cherries\n\r\r\r\r\n\n\n\n\ndonuts,eclairs,froyos"
+      "apples and some more apples,bananas,cherries\n\r\r\r\r\n\n\n\n\ndonuts,eclairs,froyos",
     ),
     [
       ["apples and some more apples", "bananas", "cherries"],
       ["donuts", "eclairs", "froyos"],
     ],
-    "01.04"
+    "01.04",
   );
 });
 
@@ -81,7 +81,7 @@ test("02 - breaks lines that have empty values", () => {
       ["a", "b"],
       ["", "c"],
     ],
-    "02.03"
+    "02.03",
   );
   equal(
     splitEasy('a,b\n\r"",""\n,c'),
@@ -89,7 +89,7 @@ test("02 - breaks lines that have empty values", () => {
       ["a", "b"],
       ["", "c"],
     ],
-    "02.04"
+    "02.04",
   );
   equal(
     splitEasy('a,b\n\r"",""\n"",c'),
@@ -97,7 +97,7 @@ test("02 - breaks lines that have empty values", () => {
       ["a", "b"],
       ["", "c"],
     ],
-    "02.05"
+    "02.05",
   );
   equal(
     splitEasy('a,"b"\n\r"",""\n"","c"'),
@@ -105,7 +105,7 @@ test("02 - breaks lines that have empty values", () => {
       ["a", "b"],
       ["", "c"],
     ],
-    "02.06"
+    "02.06",
   );
   equal(
     splitEasy("a,b,c\n\r,,\n\r,,\n,,\n,,\r,,\n,,\n,d,"),
@@ -113,7 +113,7 @@ test("02 - breaks lines that have empty values", () => {
       ["a", "b", "c"],
       ["", "d", ""],
     ],
-    "02.07"
+    "02.07",
   );
   equal(splitEasy(",,,"), [[""]], "02.08");
   equal(splitEasy(""), [[""]], "02.09");
@@ -135,7 +135,7 @@ Bought pens,10,,1000\n`),
       ["Bought chairs", "20", "", "980"],
       ["Bought pens", "10", "", "1000"],
     ],
-    "03.01"
+    "03.01",
   );
   equal(
     splitEasy(`\nDescription,Debit Amount,Credit Amount,Balance
@@ -152,7 +152,7 @@ Bought pens,10,,1000\n \r \n \r \r\r\r\n\n\n\n      `),
       ["Bought chairs", "20", "", "980"],
       ["Bought pens", "10", "", "1000"],
     ],
-    "03.02"
+    "03.02",
   );
 });
 

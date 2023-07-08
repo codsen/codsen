@@ -26,7 +26,7 @@ test('01 - outlook "only" type, tight', () => {
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "01.02"
+    "01.02",
   );
   equal(ranges, null, "01.03");
 });
@@ -45,7 +45,7 @@ test('02 - outlook "only" type, tight', () => {
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "02.02"
+    "02.02",
   );
   equal(ranges, null, "02.03");
 });
@@ -65,7 +65,7 @@ test('01.02 - outlook "only" type, tight', () => {
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "03.02"
+    "03.02",
   );
   equal(
     ranges,
@@ -73,7 +73,7 @@ test('01.02 - outlook "only" type, tight', () => {
       [0, 13],
       [34, 46],
     ],
-    "03.03"
+    "03.03",
   );
 });
 
@@ -90,7 +90,7 @@ test('04 - outlook "only" type, spaced', () => {
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "04.02"
+    "04.02",
   );
   equal(
     ranges,
@@ -100,7 +100,7 @@ test('04 - outlook "only" type, spaced', () => {
       [38, 40],
       [52, 54],
     ],
-    "04.03"
+    "04.03",
   );
 });
 
@@ -118,7 +118,7 @@ test('05 - outlook "only" type, spaced', () => {
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "05.02"
+    "05.02",
   );
   equal(
     ranges,
@@ -128,7 +128,7 @@ test('05 - outlook "only" type, spaced', () => {
       [38, 40],
       [52, 54],
     ],
-    "05.03"
+    "05.03",
   );
 });
 
@@ -146,7 +146,7 @@ test('06 - outlook "only" type, spaced', () => {
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "06.02"
+    "06.02",
   );
   equal(
     ranges,
@@ -154,7 +154,7 @@ test('06 - outlook "only" type, spaced', () => {
       [0, 17],
       [38, 54],
     ],
-    "06.03"
+    "06.03",
   );
 });
 
@@ -172,7 +172,7 @@ test("07 - stray opening only", () => {
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "07.02"
+    "07.02",
   );
   equal(ranges, null, "07.03");
 });
@@ -191,7 +191,7 @@ test("08 - stray opening only", () => {
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "08.02"
+    "08.02",
   );
   equal(ranges, null, "08.03");
 });
@@ -210,7 +210,7 @@ test("09 - stray opening only", () => {
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "09.02"
+    "09.02",
   );
   equal(ranges, [[4, 30]], "09.03");
 });

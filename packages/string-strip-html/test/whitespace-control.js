@@ -11,7 +11,7 @@ test("01 - whitespace control - line breaks between tags", () => {
   equal(
     stripHtml("something <a> \n\n to <a> put here to test").result,
     "something\n\nto put here to test",
-    "01.01"
+    "01.01",
   );
 });
 
@@ -19,7 +19,7 @@ test("02 - whitespace control - line breaks within tag", () => {
   equal(
     stripHtml("something <a\n\n>  to <a> put here to test").result,
     "something to put here to test",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -27,7 +27,7 @@ test("03 - whitespace control - leading inner tag linebreaks", () => {
   equal(
     stripHtml("something <\n\na>  to <a> put here to test").result,
     "something to put here to test",
-    "03.01"
+    "03.01",
   );
 });
 
@@ -35,7 +35,7 @@ test("04 - whitespace control - multiple tags, inner trailing linebreaks", () =>
   equal(
     stripHtml("something <a>  to <a\n\n> put here to test").result,
     "something to put here to test",
-    "04.01"
+    "04.01",
   );
 });
 
@@ -43,7 +43,7 @@ test("05 - whitespace control - multiple tags, inner leading linebreaks", () => 
   equal(
     stripHtml("something <a>  to <\n\na> put here to test").result,
     "something to put here to test",
-    "05.01"
+    "05.01",
   );
 });
 
@@ -51,7 +51,7 @@ test("06 - whitespace control - tabs and linebreaks inside, multiple tags", () =
   equal(
     stripHtml("something <\t\na\n>  to <a\n\n> put here to test").result,
     "something to put here to test",
-    "06.01"
+    "06.01",
   );
 });
 
@@ -60,7 +60,7 @@ test("07 - whitespace control - even this", () => {
     stripHtml("something <\n\na\t>\t\t\t\t\t  to \t<\n\na\t> put here to test")
       .result,
     "something to put here to test",
-    "07.01"
+    "07.01",
   );
 });
 
@@ -76,7 +76,7 @@ test("10 - whitespace control - adds a space in place of stripped tags, tabs and
   equal(
     stripHtml("\t\t\ta <div>   b    </div>    c\n\n\n").result,
     "a b c",
-    "10.01"
+    "10.01",
   );
 });
 
@@ -90,7 +90,7 @@ test("11 - whitespace control - adds a linebreak between each substring piece", 
   </div>
 c`).result,
     "a\n\nb\n\nc",
-    "11.01"
+    "11.01",
   );
 });
 
@@ -112,7 +112,7 @@ test("13 - whitespace control - multiple tag combo case #2", () => {
         </a>
       y`).result,
     "z\n\nc\n\ny",
-    "13.01"
+    "13.01",
   );
 });
 
@@ -121,44 +121,44 @@ test("14 - whitespace control - dirty html, trailing space", () => {
   equal(
     stripHtml("something <article>article> here").result,
     "something article> here",
-    "14.01"
+    "14.01",
   );
   equal(
     stripHtml("something <article>article/> here").result,
     "something here",
-    "14.02"
+    "14.02",
   );
   equal(
     stripHtml('something <article>article class="z"> here').result,
     "something here",
-    "14.03"
+    "14.03",
   );
   equal(
     stripHtml('something <article>article class="z"/> here').result,
     "something here",
-    "14.04"
+    "14.04",
   );
 
   // first tag is self-closing
   equal(
     stripHtml("something <article/>article> here").result,
     "something article> here",
-    "14.05"
+    "14.05",
   );
   equal(
     stripHtml("something <article/>article/> here").result,
     "something here",
-    "14.06"
+    "14.06",
   );
   equal(
     stripHtml('something <article/>article class="z"> here').result,
     "something here",
-    "14.07"
+    "14.07",
   );
   equal(
     stripHtml('something <article/>article class="z"/> here').result,
     "something here",
-    "14.08"
+    "14.08",
   );
 });
 
@@ -167,44 +167,44 @@ test("15 - whitespace control - dirty html, few trailing spaces", () => {
   equal(
     stripHtml("something <article>article>   here").result,
     "something article>   here",
-    "15.01"
+    "15.01",
   );
   equal(
     stripHtml("something <article>article/>   here").result,
     "something here",
-    "15.02"
+    "15.02",
   );
   equal(
     stripHtml('something <article>article class="z">   here').result,
     "something here",
-    "15.03"
+    "15.03",
   );
   equal(
     stripHtml('something <article>article class="z"/>   here').result,
     "something here",
-    "15.04"
+    "15.04",
   );
 
   // first tag is self-closing
   equal(
     stripHtml("something <article/>article>   here").result,
     "something article>   here",
-    "15.05"
+    "15.05",
   );
   equal(
     stripHtml("something <article/>article/>   here").result,
     "something here",
-    "15.06"
+    "15.06",
   );
   equal(
     stripHtml('something <article/>article class="z">   here').result,
     "something here",
-    "15.07"
+    "15.07",
   );
   equal(
     stripHtml('something <article/>article class="z"/>   here').result,
     "something here",
-    "15.08"
+    "15.08",
   );
 });
 
@@ -225,10 +225,10 @@ test("17 - tags on the edge of the string - cb", () => {
 <c>x</c>
 </b>
 </a>`,
-      { cb }
+      { cb },
     ).result,
     "x",
-    "17.01"
+    "17.01",
   );
   equal(
     gathered,
@@ -240,7 +240,7 @@ test("17 - tags on the edge of the string - cb", () => {
       [16, 22, "\n"],
       [21, 26, null],
     ],
-    "17.02"
+    "17.02",
   );
 });
 
@@ -253,7 +253,7 @@ test("18 - indentations, mixed", () => {
 
   `).result,
     "A.\nB.",
-    "18.01"
+    "18.01",
   );
 });
 
@@ -266,7 +266,7 @@ test("19 - indentations, mixed", () => {
 
   `).result,
     "A.\nB.",
-    "19.01"
+    "19.01",
   );
 });
 
@@ -276,7 +276,7 @@ test("20 - indentations, tags in front", () => {
   <a>y
   `).result,
     "x\ny",
-    "20.01"
+    "20.01",
   );
 });
 
@@ -285,7 +285,7 @@ test("21 - indentations, sneaky pair tags", () => {
     stripHtml(`a
     <script>x    </script>  <script> y</script>  b`).result,
     "a\nb",
-    "21.01"
+    "21.01",
   );
 });
 

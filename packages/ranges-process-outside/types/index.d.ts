@@ -6,13 +6,13 @@ type OffsetValueCb = (amountToOffset: number) => void;
 type Callback = (
   fromIdx: number,
   toIdx: number,
-  offsetValueCb: OffsetValueCb
+  offsetValueCb: OffsetValueCb,
 ) => void;
 declare function rProcessOutside(
   originalStr: string,
   originalRanges: Ranges,
   cb: Callback,
-  skipChecks?: boolean
+  skipChecks?: boolean,
 ): void;
 
 export { Callback, OffsetValueCb, rProcessOutside, version };

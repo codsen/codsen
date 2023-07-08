@@ -10,7 +10,7 @@ const callerDir = path.resolve(".");
 
 const testme = () =>
   within(
-    "skjglk djjflgkhjjlsjh fshdfh klahl\n jsldfj ldkjgl dkfjgldjlhj;gfkjljlsdflhs"
+    "skjglk djjflgkhjjlsjh fshdfh klahl\n jsldfj ldkjgl dkfjgldjlhj;gfkjljlsdflhs",
   );
 
 // action

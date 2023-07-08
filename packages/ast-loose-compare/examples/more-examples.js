@@ -6,13 +6,13 @@ import { looseCompare } from "../dist/ast-loose-compare.esm.js";
 
 assert.equal(
   looseCompare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2" }),
-  true
+  true,
 );
 // true, because second (smallObj) is subset of (or equal) first (bigObj).
 
 assert.equal(
   looseCompare({ a: "1", b: "2" }, { a: "1", b: "2", c: "3" }),
-  false
+  false,
 );
 // false, because second (smallObj) is not a subset (or equal) to first (bigObj).
 

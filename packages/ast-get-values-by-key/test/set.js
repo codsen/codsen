@@ -11,12 +11,12 @@ test("01 - string replaced", () => {
         tag: "html",
       },
       "tag",
-      ["style"]
+      ["style"],
     ),
     {
       tag: "style",
     },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -27,12 +27,12 @@ test("02 - string within array replaced", () => {
         tag: ["html"],
       },
       "tag",
-      [["style"]]
+      [["style"]],
     ),
     {
       tag: ["style"],
     },
-    "02.01"
+    "02.01",
   );
 });
 
@@ -49,14 +49,14 @@ test("03 - value is object and is replaced", () => {
         {
           c: "d",
         },
-      ]
+      ],
     ),
     {
       tag: {
         c: "d",
       },
     },
-    "03.01"
+    "03.01",
   );
 });
 
@@ -83,7 +83,7 @@ test("04 - two objects replaced", () => {
         {
           m: "n",
         },
-      ]
+      ],
     ),
     [
       {
@@ -97,7 +97,7 @@ test("04 - two objects replaced", () => {
         },
       },
     ],
-    "04.01"
+    "04.01",
   );
 });
 
@@ -121,7 +121,7 @@ test("05 - simple edit", () => {
         },
       ],
       "tag",
-      ["html3", "html4"]
+      ["html3", "html4"],
     ),
     [
       {
@@ -139,7 +139,7 @@ test("05 - simple edit", () => {
         content: ["\n"],
       },
     ],
-    "05.01"
+    "05.01",
   );
 });
 
@@ -150,12 +150,12 @@ test("06 - replaced to an empty string", () => {
         tag: "html",
       },
       "tag",
-      ""
+      "",
     ),
     {
       tag: "",
     },
-    "06.01"
+    "06.01",
   );
 });
 
@@ -176,7 +176,7 @@ test("07 - not enough replacement values given", () => {
         ],
       },
       "tag",
-      ["", ""]
+      ["", ""],
     ),
     {
       meta: [
@@ -191,7 +191,7 @@ test("07 - not enough replacement values given", () => {
         },
       ],
     },
-    "07.01"
+    "07.01",
   );
 });
 
@@ -202,12 +202,12 @@ test("08 - no results replacement", () => {
         style: "html",
       },
       "tag",
-      ["meta"]
+      ["meta"],
     ),
     {
       style: "html",
     },
-    "08.01"
+    "08.01",
   );
 });
 

@@ -80,7 +80,7 @@ test("03 - removes media query together with the whole style tag #1", () => {
 <body>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!doctype html>
@@ -117,7 +117,7 @@ test("04 - removes media query together with the whole style tag #2", () => {
 zzz
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!doctype html>
@@ -175,7 +175,7 @@ test("05 - removes three media queries together with the style tags", () => {
 <body class="black">
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!doctype html>
@@ -230,7 +230,7 @@ test("06 - empty media queries removed", () => {
 </table>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!DOCTYPE html>
@@ -288,7 +288,7 @@ test("07 - multiple levels of media queries cleaned", () => {
 </table>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!DOCTYPE html>
@@ -359,7 +359,7 @@ test("08 - multiple levels of media queries cleaned + @supports wrap", () => {
 </table>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!DOCTYPE html>
@@ -423,7 +423,7 @@ zzz
         ".ReadMsgBody",
         ".yshortcuts",
       ],
-    }
+    },
   ).result;
 
   let intended = `<html lang="en">
@@ -466,7 +466,7 @@ zzz
         ".ReadMsgBody",
         ".yshortcuts",
       ],
-    }
+    },
   ).result;
 
   let intended = `<html lang="en">
@@ -509,7 +509,7 @@ zzz
         ".ReadMsgBody",
         ".yshortcuts",
       ],
-    }
+    },
   ).result;
 
   let intended = `<html lang="en">
@@ -556,7 +556,7 @@ zzz
         ".ReadMsgBody",
         ".yshortcuts",
       ],
-    }
+    },
   ).result;
 
   let intended = `<html lang="en">
@@ -601,7 +601,7 @@ zzz
         ".ReadMsgBody",
         ".yshortcuts",
       ],
-    }
+    },
   ).result;
 
   let intended = `<html lang="en">
@@ -648,7 +648,7 @@ zzz
         ".ReadMsgBody",
         ".yshortcuts",
       ],
-    }
+    },
   ).result;
 
   let intended = `<html lang="en">
@@ -695,7 +695,7 @@ zzz
         ".ReadMsgBody",
         ".yshortcuts",
       ],
-    }
+    },
   ).result;
 
   let intended = `<html lang="en">
@@ -740,7 +740,7 @@ zzz
         ".ReadMsgBody",
         ".yshortcuts",
       ],
-    }
+    },
   ).result;
 
   let intended = `<html lang="en">
@@ -787,7 +787,7 @@ zzz
         ".ReadMsgBody",
         ".yshortcuts",
       ],
-    }
+    },
   ).result;
 
   let intended = `<html lang="en">
@@ -834,7 +834,7 @@ zzz
         ".ReadMsgBody",
         ".yshortcuts",
       ],
-    }
+    },
   ).result;
 
   let intended = `<html lang="en">
@@ -1029,7 +1029,7 @@ test("21 - retains media queries", () => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
     }).result,
     source,
-    "21.01"
+    "21.01",
   );
   equal(
     comb(source, {
@@ -1038,7 +1038,7 @@ test("21 - retains media queries", () => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
     }).result,
     source,
-    "21.02"
+    "21.02",
   );
   equal(
     comb(source, {
@@ -1047,7 +1047,7 @@ test("21 - retains media queries", () => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
     }).result,
     uglified,
-    "21.03"
+    "21.03",
   );
   equal(
     comb(source, {
@@ -1056,7 +1056,7 @@ test("21 - retains media queries", () => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"],
     }).result,
     uglified,
-    "21.04"
+    "21.04",
   );
 
   // opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains empty
@@ -1067,7 +1067,7 @@ test("21 - retains media queries", () => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result,
     source,
-    "21.05"
+    "21.05",
   );
   equal(
     comb(source, {
@@ -1076,7 +1076,7 @@ test("21 - retains media queries", () => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result,
     source,
-    "21.06"
+    "21.06",
   );
   equal(
     comb(source, {
@@ -1085,7 +1085,7 @@ test("21 - retains media queries", () => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result,
     uglified,
-    "21.07"
+    "21.07",
   );
   equal(
     comb(source, {
@@ -1094,7 +1094,7 @@ test("21 - retains media queries", () => {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result,
     uglified,
-    "21.08"
+    "21.08",
   );
 });
 
@@ -1141,7 +1141,7 @@ test("22 - does not touch @font-face", () => {
 </table>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!DOCTYPE html>
@@ -1191,7 +1191,7 @@ test("23 - does not touch @import with query strings containing commas", () => {
 </table>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!DOCTYPE html>
@@ -1245,7 +1245,7 @@ zzz
         ".ReadMsgBody",
         ".yshortcuts",
       ],
-    }
+    },
   ).result;
 
   let intended = `<html lang="en">
@@ -1283,7 +1283,7 @@ test("25 - media query with asterisk", () => {
 <body>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!doctype html>
@@ -1320,7 +1320,7 @@ test("26 - complex media query #1", () => {
 <body class="black">
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!doctype html>
@@ -1357,7 +1357,7 @@ test("27 - complex media query #2", () => {
 <body class="black">
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!doctype html>

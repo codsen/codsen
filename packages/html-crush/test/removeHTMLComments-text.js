@@ -32,7 +32,7 @@ test(`01 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - one html comment 
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "01.02"
+    "01.02",
   );
   equal(ranges, null, "01.03");
 });
@@ -51,7 +51,7 @@ test(`02 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - one html comment 
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "02.02"
+    "02.02",
   );
   equal(ranges, [[0, 20]], "02.03");
 });
@@ -70,7 +70,7 @@ test(`03 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - one html comment 
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "03.02"
+    "03.02",
   );
   equal(ranges, [[0, 20]], "03.03");
 });
@@ -99,7 +99,7 @@ test(`04 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - one html comment,
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "04.02"
+    "04.02",
   );
   equal(
     ranges,
@@ -107,7 +107,7 @@ test(`04 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - one html comment,
       [0, 2],
       [22, 24],
     ],
-    "04.03"
+    "04.03",
   );
 });
 
@@ -125,7 +125,7 @@ test(`05 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - one html comment,
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "05.02"
+    "05.02",
   );
   equal(ranges, [[0, 24]], "05.03");
 });
@@ -144,7 +144,7 @@ test(`06 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - one html comment,
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "06.02"
+    "06.02",
   );
   equal(ranges, [[0, 24]], "06.03");
 });
@@ -173,7 +173,7 @@ test(`07 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - commented tag - 0
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "07.02"
+    "07.02",
   );
   equal(ranges, null, "07.03");
 });
@@ -192,7 +192,7 @@ test(`08 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - commented tag - 1
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "08.02"
+    "08.02",
   );
   equal(ranges, [[0, 13]], "08.03");
 });
@@ -211,7 +211,7 @@ test(`09 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - commented tag - 2
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "09.02"
+    "09.02",
   );
   equal(ranges, [[0, 13]], "09.03");
 });
@@ -243,7 +243,7 @@ remove
 this
 -->
 </div>`,
-    "10.01"
+    "10.01",
   );
   equal(
     applicableOpts,
@@ -251,7 +251,7 @@ this
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "10.02"
+    "10.02",
   );
   equal(
     ranges,
@@ -262,7 +262,7 @@ this
       [21, 22, "\n"],
       [25, 25, "\n"],
     ],
-    "10.03"
+    "10.03",
   );
 });
 
@@ -281,7 +281,7 @@ test(`11 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - when line length 
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "11.02"
+    "11.02",
   );
   equal(ranges, [[5, 25, "\n"]], "11.03");
 });
@@ -301,7 +301,7 @@ test(`12 - ${`\u001b[${33}m${"html comments"}\u001b[${39}m`} - when line length 
       removeHTMLComments: true,
       removeCSSComments: false,
     },
-    "12.02"
+    "12.02",
   );
   equal(ranges, [[5, 25, "\n"]], "12.03");
 });

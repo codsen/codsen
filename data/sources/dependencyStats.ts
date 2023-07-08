@@ -293,7 +293,6 @@ export const dependencyStats: DependencyStats = {
     "ranges-apply": 5,
     "ranges-invert": 1,
     "ranges-merge": 1,
-    "remark": 1,
     "rfdc": 6,
     "string-find-heads-tails": 1,
     "string-strip-html": 1,

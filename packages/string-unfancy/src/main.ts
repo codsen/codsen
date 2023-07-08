@@ -34,7 +34,7 @@ function unfancy(str: string): string {
   };
   if (!isStr(str)) {
     throw new Error(
-      `string-unfancy/unfancy(): [THROW_ID_01] The input is not a string! It's: ${typeof str}`
+      `string-unfancy/unfancy(): [THROW_ID_01] The input is not a string! It's: ${typeof str}`,
     );
   }
   // decode anticipating multiple encoding one on top of another

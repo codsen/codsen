@@ -20,7 +20,7 @@ test("01 - surrounding underscores - sneaky similarity with wrong side brackets 
       var1: "value1",
       var2: "value2",
     },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -38,7 +38,7 @@ test("02 - surrounding underscores - sneaky similarity with wrong side brackets 
       var1: "value1",
       var2: "value2",
     },
-    "02.01"
+    "02.01",
   );
 });
 
@@ -56,7 +56,7 @@ test("03 - surrounding underscores - sneaky similarity with wrong side brackets 
       var1: "value1",
       var2: "value2",
     },
-    "03.01"
+    "03.01",
   );
 });
 
@@ -74,7 +74,7 @@ test("04 - surrounding underscores - sneaky similarity with wrong side brackets 
       var1: "value1",
       var2: "value2",
     },
-    "04.01"
+    "04.01",
   );
 });
 
@@ -92,7 +92,7 @@ test("05 - surrounding dashes - sneaky similarity with wrong side brackets #1", 
       var1: "value1",
       var2: "value2",
     },
-    "05.01"
+    "05.01",
   );
 });
 
@@ -110,7 +110,7 @@ test("06 - surrounding dashes - sneaky similarity with wrong side brackets #2", 
       var1: "value1",
       var2: "value2",
     },
-    "06.01"
+    "06.01",
   );
 });
 

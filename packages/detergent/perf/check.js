@@ -10,7 +10,7 @@ const callerDir = path.resolve(".");
 
 const testme = () =>
   det(
-    '<a style="display: block !important;">first\u0003second</a>z\n  \n\n   and more text here \xA3\xA3\xA3\xA3'
+    '<a style="display: block !important;">first\u0003second</a>z\n  \n\n   and more text here \xA3\xA3\xA3\xA3',
   ).res;
 
 // action

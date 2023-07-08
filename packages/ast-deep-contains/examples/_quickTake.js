@@ -31,7 +31,7 @@ deepContains(
   },
   (err) => {
     errors.push(err);
-  }
+  },
 );
 
 // imagine instead of pushing pairs into array, you fed them into assert

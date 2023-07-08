@@ -42,7 +42,7 @@ test(`01 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"unr
         rangeValDecoded: null,
       },
     ],
-    "01.01"
+    "01.01",
   );
   equal(gathered, [], "01.02");
 });
@@ -61,7 +61,7 @@ test(`02 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       },
     }),
     outp1,
-    "02.03"
+    "02.03",
   );
 
   equal(gathered, [], "02.04");
@@ -88,7 +88,7 @@ test(`03 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\xA3", // <= pound symbol
       },
     ],
-    "03.01"
+    "03.01",
   );
   equal(gathered, [], "03.02");
 });
@@ -107,7 +107,7 @@ test(`04 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       },
     }),
     outp1,
-    "04.03"
+    "04.03",
   );
   equal(gathered, [], "04.04");
 });
@@ -120,7 +120,7 @@ test(`05 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       cb: (obj) => obj,
     }),
     [],
-    "05.02"
+    "05.02",
   );
 });
 
@@ -135,7 +135,7 @@ test(`06 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       },
     }),
     [],
-    "06.01"
+    "06.01",
   );
   equal(gathered, [], "06.02");
 });
@@ -152,7 +152,7 @@ test(`07 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       },
     }),
     outp1,
-    "07.02"
+    "07.02",
   );
   equal(gathered, [], "07.03");
 });
@@ -174,7 +174,7 @@ test(`08 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: null,
       },
     ],
-    "08.01"
+    "08.01",
   );
 
   equal(
@@ -194,7 +194,7 @@ test(`08 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: null,
       },
     ],
-    "08.02"
+    "08.02",
   );
   equal(gathered, [], "08.03");
 });
@@ -217,7 +217,7 @@ test(`09 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\xA3", // <= pound symbol
       },
     ],
-    "09.01"
+    "09.01",
   );
   equal(gatheredHealthy, [], "09.02");
 });
@@ -244,7 +244,7 @@ test(`10 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\xA3", // <= pound symbol
       },
     ],
-    "10.01"
+    "10.01",
   );
   equal(gatheredHealthy, [], "10.02");
   equal(gathered, [], "10.03");
@@ -266,7 +266,7 @@ test(`11 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\xA3", // <= pound symbol
       },
     ],
-    "11.01"
+    "11.01",
   );
 });
 
@@ -290,7 +290,7 @@ test(`12 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\xA3", // <= pound symbol
       },
     ],
-    "12.01"
+    "12.01",
   );
   equal(gathered, [], "12.02");
 });
@@ -311,7 +311,7 @@ test(`13 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\u21A0",
       },
     ],
-    "13.01"
+    "13.01",
   );
 });
 
@@ -335,7 +335,7 @@ test(`14 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\u21A0",
       },
     ],
-    "14.01"
+    "14.01",
   );
   equal(gathered, [], "14.02");
 });
@@ -356,7 +356,7 @@ test(`15 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\u0391",
       },
     ],
-    "15.01"
+    "15.01",
   );
 });
 
@@ -380,7 +380,7 @@ test(`16 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\u0391",
       },
     ],
-    "16.01"
+    "16.01",
   );
   equal(gathered, [], "16.02");
 });
@@ -401,7 +401,7 @@ test(`17 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\u223F",
       },
     ],
-    "17.01"
+    "17.01",
   );
 });
 
@@ -425,7 +425,7 @@ test(`18 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\u223F",
       },
     ],
-    "18.01"
+    "18.01",
   );
   equal(gathered, [], "18.02");
 });
@@ -446,7 +446,7 @@ test(`19 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\u223F",
       },
     ],
-    "19.01"
+    "19.01",
   );
 });
 
@@ -470,7 +470,7 @@ test(`20 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\u223F",
       },
     ],
-    "20.01"
+    "20.01",
   );
   equal(gathered, [], "20.02");
 });
@@ -491,7 +491,7 @@ test(`21 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: null,
       },
     ],
-    "21.01"
+    "21.01",
   );
 });
 
@@ -515,7 +515,7 @@ test(`22 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: null,
       },
     ],
-    "22.01"
+    "22.01",
   );
   equal(gathered, [], "22.02");
 });
@@ -536,7 +536,7 @@ test(`23 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\u200C",
       },
     ],
-    "23.01"
+    "23.01",
   );
 });
 
@@ -560,7 +560,7 @@ test(`24 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\u200C",
       },
     ],
-    "24.01"
+    "24.01",
   );
   equal(gathered, [], "24.02");
 });
@@ -572,7 +572,7 @@ test(`25 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       cb: (obj) => obj,
     }),
     [],
-    "25.01"
+    "25.01",
   );
   equal(
     fix(ok, inp1, {
@@ -589,7 +589,7 @@ test(`25 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\u22C2",
       },
     ],
-    "25.02"
+    "25.02",
   );
 });
 
@@ -604,7 +604,7 @@ test(`26 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       },
     }),
     [],
-    "26.01"
+    "26.01",
   );
   equal(gathered, [], "26.02");
 });
@@ -630,7 +630,7 @@ test(`27 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         rangeValDecoded: "\u22C2",
       },
     ],
-    "27.01"
+    "27.01",
   );
   equal(gathered, [], "27.02");
 });
@@ -642,7 +642,7 @@ test(`28 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       cb: (obj) => obj,
     }),
     [],
-    "28.01"
+    "28.01",
   );
 });
 
@@ -657,7 +657,7 @@ test(`29 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       },
     }),
     [],
-    "29.01"
+    "29.01",
   );
   equal(gathered, [], "29.02");
 });
@@ -684,8 +684,8 @@ test(`30 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
         },
       }),
       [],
-      `"${input}" - ${i}`
-    )
+      `"${input}" - ${i}`,
+    ),
   );
   equal(gathered, [], "30.01");
 });
@@ -698,7 +698,7 @@ test(`31 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       [0, 6, "&nbsp;"],
       [6, 12, "&nbsp;"],
     ],
-    "31.01"
+    "31.01",
   );
 });
 
@@ -715,7 +715,7 @@ test(`32 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       [0, 6, "&nbsp;"],
       [6, 12, "&nbsp;"],
     ],
-    "32.01"
+    "32.01",
   );
   equal(gathered, [], "32.02");
 });
@@ -732,7 +732,7 @@ test(`33 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       [27, 33, "&nbsp;"],
       [33, 39, "&nbsp;"],
     ],
-    "33.01"
+    "33.01",
   );
 });
 
@@ -753,7 +753,7 @@ test(`34 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       [27, 33, "&nbsp;"],
       [33, 39, "&nbsp;"],
     ],
-    "34.01"
+    "34.01",
   );
   equal(gathered, [], "34.02");
 });
@@ -766,7 +766,7 @@ test(`35 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       [12, 17, "&nbsp;"],
       [26, 33, "&nbsp;"],
     ],
-    "35.01"
+    "35.01",
   );
 });
 
@@ -783,7 +783,7 @@ test(`36 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       [12, 17, "&nbsp;"],
       [26, 33, "&nbsp;"],
     ],
-    "36.01"
+    "36.01",
   );
   equal(gathered, [], "36.02");
 });
@@ -798,7 +798,7 @@ test(`37 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       [27, 34, "&nbsp;"],
       [34, 41, "&nbsp;"],
     ],
-    "37.01"
+    "37.01",
   );
 });
 
@@ -817,7 +817,7 @@ test(`38 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       [27, 34, "&nbsp;"],
       [34, 41, "&nbsp;"],
     ],
-    "38.01"
+    "38.01",
   );
   equal(gathered, [], "38.02");
 });
@@ -829,7 +829,7 @@ test(`39 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       [0, 4, "&ang;"],
       [4, 10, "&ang;"],
     ],
-    "39.01"
+    "39.01",
   );
 });
 
@@ -845,7 +845,7 @@ test(`40 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       [0, 4, "&ang;"],
       [4, 10, "&ang;"],
     ],
-    "40.01"
+    "40.01",
   );
   equal(gathered, [], "40.02");
 });
@@ -863,7 +863,7 @@ test(`42 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       },
     }),
     [[4, 10, "&ang;"]],
-    "42.01"
+    "42.01",
   );
   equal(gathered, [], "42.02");
 });
@@ -881,7 +881,7 @@ test(`44 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - dubious Levenshtein
       },
     }),
     [[0, 5, "&Ifr;"]],
-    "44.01"
+    "44.01",
   );
   equal(gathered, [], "44.02");
 });
@@ -899,7 +899,7 @@ test(`46 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - dubious Levenshtein
       },
     }),
     [[0, 5]],
-    "46.01"
+    "46.01",
   );
   equal(gathered, [], "46.02");
 });
@@ -919,14 +919,14 @@ test(`48 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - dubious Levenshtein
       },
     }),
     result,
-    "48.01"
+    "48.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "48.02"
+    "48.02",
   );
   equal(gathered, [5], "48.03");
 });
@@ -935,7 +935,7 @@ test(`49 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - definitely not an e
   equal(
     fix(ok, "&lhdfgdfgdllkjghlfjjhdkfghkjdfhkghfkhgjkfjhlkfjglhjfgkljhlfjhl;"),
     [],
-    "49.01"
+    "49.01",
   );
 });
 
@@ -950,14 +950,14 @@ test(`50 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - definitely not an e
       },
     }),
     result,
-    "50.01"
+    "50.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "50.02"
+    "50.02",
   );
   equal(gathered, [0], "50.03");
 });
@@ -966,10 +966,10 @@ test(`51 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - lorem ipsum paragra
   equal(
     fix(
       ok,
-      "&Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;"
+      "&Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;",
     ),
     [],
-    "51.01"
+    "51.01",
   );
 });
 
@@ -985,14 +985,14 @@ test(`52 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - lorem ipsum paragra
       },
     }),
     result,
-    "52.01"
+    "52.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "52.02"
+    "52.02",
   );
   equal(gathered, [0], "52.03");
 });
@@ -1001,10 +1001,10 @@ test(`53 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - lorem ipsum paragra
   equal(
     fix(
       ok,
-      "&nbsp ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;"
+      "&nbsp ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;",
     ),
     [[0, 5, "&nbsp;"]],
-    "53.01"
+    "53.01",
   );
 });
 
@@ -1018,10 +1018,10 @@ test(`54 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - lorem ipsum paragra
         textAmpersandCatcherCb: (idx) => {
           gathered.push(idx);
         },
-      }
+      },
     ),
     [[0, 5, "&nbsp;"]],
-    "54.01"
+    "54.01",
   );
   equal(gathered, [], "54.02");
 });
@@ -1041,14 +1041,14 @@ test("56", () => {
       },
     }),
     result,
-    "56.01"
+    "56.01",
   );
   equal(
     fix(ok, input, {
       textAmpersandCatcherCb: () => {},
     }),
     result,
-    "56.02"
+    "56.02",
   );
   equal(gathered, [0, 3, 6], "56.03");
 });
@@ -1074,7 +1074,7 @@ test("57 - rsquo, decoding requested", () => {
         rangeValDecoded: "\u2019",
       },
     ],
-    "57.01"
+    "57.01",
   );
   equal(gathered, [], "57.02");
 });
@@ -1099,7 +1099,7 @@ test("58 - rsqo, no decoding", () => {
         rangeValDecoded: "\u2019",
       },
     ],
-    "58.01"
+    "58.01",
   );
   equal(gathered, [], "58.02");
 });
@@ -1129,7 +1129,7 @@ test("60 - rsqo + decoding, whole cb", () => {
         rangeValDecoded: "\u2019",
       },
     ],
-    "60.01"
+    "60.01",
   );
   equal(gathered, [], "60.02");
 });

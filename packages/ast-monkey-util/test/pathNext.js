@@ -24,7 +24,7 @@ test("05", () => {
   equal(
     pathNext("9.children.1.children.0"),
     "9.children.1.children.1",
-    "05.01"
+    "05.01",
   );
 });
 

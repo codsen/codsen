@@ -19,7 +19,7 @@ test("03 - matching empty arrays - blank vs. normal - opts.hungryForWhitespace",
   equal(
     compare({ a: "1", b: "2", c: 3 }, {}, { hungryForWhitespace: true }),
     false,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -28,10 +28,10 @@ test("04 - matching empty arrays - blank vs. empty - opts.hungryForWhitespace", 
     compare(
       { a: "\n\n", b: "\t", c: "   " },
       {},
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     true,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -39,7 +39,7 @@ test("05 - matching empty arrays - blank vs. normal - opts.matchStrictly", () =>
   equal(
     compare({ a: "1", b: "2", c: 3 }, {}, { matchStrictly: true }),
     false,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -47,7 +47,7 @@ test("06 - matching empty arrays - blank vs. empty - opts.matchStrictly", () => 
   equal(
     compare({ a: "\n\n", b: "\t", c: "   " }, {}, { matchStrictly: true }),
     false,
-    "06.01"
+    "06.01",
   );
 });
 
@@ -56,10 +56,10 @@ test("07 - matching empty arrays - blank vs. normal - both opts", () => {
     compare(
       { a: "1", b: "2", c: 3 },
       {},
-      { hungryForWhitespace: true, matchStrictly: true }
+      { hungryForWhitespace: true, matchStrictly: true },
     ),
     false,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -68,10 +68,10 @@ test("08 - matching empty arrays - blank vs. empty - both opts", () => {
     compare(
       { a: "\n\n", b: "\t", c: "   " },
       {},
-      { hungryForWhitespace: true, matchStrictly: true }
+      { hungryForWhitespace: true, matchStrictly: true },
     ),
     true,
-    "08.01"
+    "08.01",
   );
 });
 
@@ -80,10 +80,10 @@ test("09 - matching empty arrays - blank vs. empty - both opts, arr values", () 
     compare(
       { a: [], b: [], c: [] },
       {},
-      { hungryForWhitespace: true, matchStrictly: true }
+      { hungryForWhitespace: true, matchStrictly: true },
     ),
     true,
-    "09.01"
+    "09.01",
   );
 });
 
@@ -91,7 +91,7 @@ test("10 - matching empty arrays - blank vs. empty - both opts, arr values", () 
   equal(
     compare([" "], "", { hungryForWhitespace: true, matchStrictly: true }),
     true,
-    "10.01"
+    "10.01",
   );
 });
 
@@ -99,7 +99,7 @@ test("11 - array vs string", () => {
   equal(
     compare([" "], "", { hungryForWhitespace: true, matchStrictly: true }),
     true,
-    "11.01"
+    "11.01",
   );
 });
 
@@ -107,7 +107,7 @@ test("12 - array vs null", () => {
   equal(
     compare([" "], [null], { hungryForWhitespace: true, matchStrictly: true }),
     true,
-    "12.01"
+    "12.01",
   );
 });
 
@@ -115,7 +115,7 @@ test("13 - array vs bool", () => {
   equal(
     compare([" "], true, { hungryForWhitespace: true, matchStrictly: true }),
     false,
-    "13.01"
+    "13.01",
   );
 });
 
@@ -123,7 +123,7 @@ test("14", () => {
   equal(
     compare(false, true, { hungryForWhitespace: true, matchStrictly: true }),
     false,
-    "14.01"
+    "14.01",
   );
 });
 
@@ -134,7 +134,7 @@ test("15", () => {
       matchStrictly: true,
     }),
     true,
-    "15.01"
+    "15.01",
   );
 });
 

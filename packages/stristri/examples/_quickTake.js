@@ -13,7 +13,7 @@ assert.equal(
       css: true,
       text: false,
       templatingTags: true,
-    }
+    },
   ).result,
-  "The price is high"
+  "The price is high",
 );

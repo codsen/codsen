@@ -32,7 +32,7 @@ test(`01 - ${`\u001b[${33}m${"tag-space-after-opening-bracket"}\u001b[${39}m`} -
         end: 15,
       },
     ],
-    "01"
+    "01",
   );
 });
 
@@ -56,7 +56,7 @@ test(`02 - ${`\u001b[${33}m${"tag-closing-left-slash"}\u001b[${39}m`} - 1`, () =
         end: 5,
       },
     ],
-    "02"
+    "02",
   );
 });
 
@@ -77,7 +77,7 @@ test(`03 - ${`\u001b[${33}m${"tag-closing-left-slash"}\u001b[${39}m`} - 1`, () =
         end: 6,
       },
     ],
-    "03"
+    "03",
   );
 });
 
@@ -94,7 +94,7 @@ test("04 - xml", () => {
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   equal(
     gathered,
@@ -136,7 +136,7 @@ test("04 - xml", () => {
         value: "\n<AAAch>>\n</o:Offict",
       },
     ],
-    "04.01"
+    "04.01",
   );
 });
 
@@ -205,7 +205,7 @@ test("05 - abrupty ended code", () => {
         ],
       },
     ],
-    "05"
+    "05",
   );
 });
 
@@ -274,7 +274,7 @@ test("06 - abrupty ended code", () => {
         ],
       },
     ],
-    "06"
+    "06",
   );
 });
 

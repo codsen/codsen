@@ -18,7 +18,7 @@ assert.equal(
   isAttrClosing(
     str, // reference string
     21, // known opening (or in absence of a quote, a start of a value)
-    28 // we ask, is this a closing on the attribute?
+    28, // we ask, is this a closing on the attribute?
   ),
-  true // the answer
+  true, // the answer
 );

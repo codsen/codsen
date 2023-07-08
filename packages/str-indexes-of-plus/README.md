@@ -42,7 +42,7 @@ assert.deepEqual(strIndexesOfPlus("abc-abc-abc-abc", "abc"), [0, 4, 8, 12]);
 // all graphemes are counted as one, emoji too:
 assert.deepEqual(
   strIndexesOfPlus("🐴-🦄", "🦄"),
-  [2] // not [3] considering unicorn is 2-characters long
+  [2], // not [3] considering unicorn is 2-characters long
 );
 
 // you can offset the start of a search:

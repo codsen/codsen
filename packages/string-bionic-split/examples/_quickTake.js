@@ -17,7 +17,7 @@ const sources = [
 ];
 
 const splitSources = sources.map(
-  (str) => `${str.slice(0, split(str))} + ${str.slice(split(str))}`
+  (str) => `${str.slice(0, split(str))} + ${str.slice(split(str))}`,
 );
 
 assert.deepEqual(splitSources, [

@@ -10,7 +10,7 @@ declare const defaults: Opts;
 declare function fillMissing(
   incomplete: Obj,
   schema: Obj,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): Obj;
 
 export { Opts, defaults, fillMissing, version };

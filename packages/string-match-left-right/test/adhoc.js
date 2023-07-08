@@ -22,7 +22,7 @@ test(`02 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
       cb: (char) => typeof char === "string" && char.trim() === "",
     }),
     ">",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -30,7 +30,7 @@ test(`03 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
   equal(
     matchRightIncl('<a class="something"> text', 20, "> t"),
     "> t",
-    "03.01"
+    "03.01",
   );
 });
 
@@ -42,7 +42,7 @@ test(`05 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
   equal(
     matchRight("ab      cdef", 1, "cde", { trimBeforeMatching: true }),
     "cde",
-    "05.01"
+    "05.01",
   );
 });
 
@@ -52,7 +52,7 @@ test(`06 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
       cb: (char) => char === " ",
     }),
     ">",
-    "06.01"
+    "06.01",
   );
 });
 
@@ -63,7 +63,7 @@ test(`07 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
       trimBeforeMatching: true,
     }),
     "cde",
-    "07.01"
+    "07.01",
   );
 });
 
@@ -85,7 +85,7 @@ test(`09 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, set #02`, () => {
       trimCharsBeforeMatching: ["?", "!", "[", " ", "-"],
     }),
     "doctype",
-    "09.01"
+    "09.01",
   );
 });
 
@@ -97,7 +97,7 @@ test("10", () => {
       maxMismatches: 1,
     }),
     false,
-    "10.01"
+    "10.01",
   );
   equal(
     matchRight(".a{padding:1px 2px 3px 4px !important}", 23, ["!important"], {
@@ -106,7 +106,7 @@ test("10", () => {
       maxMismatches: 1,
     }),
     false,
-    "10.02"
+    "10.02",
   );
 
   equal(
@@ -116,7 +116,7 @@ test("10", () => {
       maxMismatches: 2,
     }),
     false,
-    "10.03"
+    "10.03",
   );
   equal(
     matchRight(".a{padding:1px 2px 3px 4px !important}", 23, ["!important"], {
@@ -125,7 +125,7 @@ test("10", () => {
       maxMismatches: 2,
     }),
     false,
-    "10.04"
+    "10.04",
   );
 });
 
@@ -137,7 +137,7 @@ test("11", () => {
       maxMismatches: 0,
     }),
     false,
-    "11.01"
+    "11.01",
   );
   equal(
     matchRight(".a{padding:1px 2px 3px 4px !important}", 24, ["!important"], {
@@ -146,7 +146,7 @@ test("11", () => {
       maxMismatches: 0,
     }),
     false,
-    "11.02"
+    "11.02",
   );
 
   equal(
@@ -156,7 +156,7 @@ test("11", () => {
       maxMismatches: 1,
     }),
     false,
-    "11.03"
+    "11.03",
   );
   equal(
     matchRight(".a{padding:1px 2px 3px 4px !important}", 24, ["!important"], {
@@ -165,7 +165,7 @@ test("11", () => {
       maxMismatches: 1,
     }),
     false,
-    "11.04"
+    "11.04",
   );
 
   equal(
@@ -175,7 +175,7 @@ test("11", () => {
       maxMismatches: 2,
     }),
     false,
-    "11.05"
+    "11.05",
   );
   equal(
     matchRight(".a{padding:1px 2px 3px 4px !important}", 24, ["!important"], {
@@ -184,7 +184,7 @@ test("11", () => {
       maxMismatches: 2,
     }),
     false,
-    "11.06"
+    "11.06",
   );
 });
 
@@ -196,7 +196,7 @@ test("12", () => {
       maxMismatches: 0,
     }),
     false,
-    "12.01"
+    "12.01",
   );
   equal(
     matchRight(".a{padding:1px 2px 3px 4px !impotant}", 26, ["!important"], {
@@ -205,7 +205,7 @@ test("12", () => {
       maxMismatches: 0,
     }),
     false,
-    "12.02"
+    "12.02",
   );
 
   equal(
@@ -215,7 +215,7 @@ test("12", () => {
       maxMismatches: 1,
     }),
     "!important",
-    "12.03"
+    "12.03",
   );
   equal(
     matchRight(".a{padding:1px 2px 3px 4px !impotant}", 26, ["!important"], {
@@ -224,7 +224,7 @@ test("12", () => {
       maxMismatches: 1,
     }),
     "!important",
-    "12.04"
+    "12.04",
   );
 
   equal(
@@ -234,7 +234,7 @@ test("12", () => {
       maxMismatches: 2,
     }),
     "!important",
-    "12.05"
+    "12.05",
   );
   equal(
     matchRight(".a{padding:1px 2px 3px 4px !impotant}", 26, ["!important"], {
@@ -243,7 +243,7 @@ test("12", () => {
       maxMismatches: 2,
     }),
     "!important",
-    "12.06"
+    "12.06",
   );
 });
 
@@ -255,7 +255,7 @@ test("13", () => {
       maxMismatches: 0,
     }),
     false,
-    "13.01"
+    "13.01",
   );
   equal(
     matchRight(".a{padding:1px 2px 3px 4px !IMPOR.TANT}", 26, ["!important"], {
@@ -264,7 +264,7 @@ test("13", () => {
       maxMismatches: 0,
     }),
     false,
-    "13.02"
+    "13.02",
   );
 
   equal(
@@ -274,7 +274,7 @@ test("13", () => {
       maxMismatches: 1,
     }),
     "!important",
-    "13.03"
+    "13.03",
   );
   equal(
     matchRight(".a{padding:1px 2px 3px 4px !IMPOR.TANT}", 26, ["!important"], {
@@ -283,7 +283,7 @@ test("13", () => {
       maxMismatches: 1,
     }),
     "!important",
-    "13.04"
+    "13.04",
   );
 
   equal(
@@ -293,7 +293,7 @@ test("13", () => {
       maxMismatches: 2,
     }),
     "!important",
-    "13.05"
+    "13.05",
   );
   equal(
     matchRight(".a{padding:1px 2px 3px 4px !IMPOR.TANT}", 26, ["!important"], {
@@ -302,7 +302,7 @@ test("13", () => {
       maxMismatches: 2,
     }),
     "!important",
-    "13.06"
+    "13.06",
   );
 });
 
@@ -314,7 +314,7 @@ test("14", () => {
       maxMismatches: 2,
     }),
     false,
-    "14.01"
+    "14.01",
   );
   equal(
     matchRightIncl("<style>.a{color:red!IMPOTANT;}", 19, ["!important"], {
@@ -323,7 +323,7 @@ test("14", () => {
       maxMismatches: 2,
     }),
     "!important",
-    "14.02"
+    "14.02",
   );
   equal(
     matchRightIncl("<style>.a{color:red!IMPOTANT;}", 18, ["!important"], {
@@ -332,7 +332,7 @@ test("14", () => {
       maxMismatches: 2,
     }),
     false,
-    "14.03"
+    "14.03",
   );
   equal(
     matchRightIncl("<style>.a{color:red!IMPOTANT;}", 19, ["!important"], {
@@ -341,7 +341,7 @@ test("14", () => {
       maxMismatches: 2,
     }),
     "!important",
-    "14.04"
+    "14.04",
   );
 
   equal(
@@ -351,7 +351,7 @@ test("14", () => {
       maxMismatches: 2,
     }),
     false,
-    "14.05"
+    "14.05",
   );
   equal(
     matchRightIncl("<style>.a{color:red!IMPOTANT;}", 19, ["!important"], {
@@ -360,7 +360,7 @@ test("14", () => {
       maxMismatches: 2,
     }),
     false,
-    "14.06"
+    "14.06",
   );
   equal(
     matchRightIncl("<style>.a{color:red!IMPOTANT;}", 18, ["!important"], {
@@ -369,7 +369,7 @@ test("14", () => {
       maxMismatches: 2,
     }),
     false,
-    "14.07"
+    "14.07",
   );
   equal(
     matchRightIncl("<style>.a{color:red!IMPOTANT;}", 19, ["!important"], {
@@ -378,7 +378,7 @@ test("14", () => {
       maxMismatches: 2,
     }),
     false,
-    "14.08"
+    "14.08",
   );
 });
 
@@ -390,7 +390,7 @@ test("15", () => {
       maxMismatches: 0,
     }),
     false,
-    "15.01"
+    "15.01",
   );
   equal(
     matchRightIncl("abc important}", 2, ["!important"], {
@@ -399,7 +399,7 @@ test("15", () => {
       maxMismatches: 1,
     }),
     false,
-    "15.02"
+    "15.02",
   );
   equal(
     matchRightIncl("abc important}", 2, ["!important"], {
@@ -408,7 +408,7 @@ test("15", () => {
       maxMismatches: 2,
     }),
     false,
-    "15.03"
+    "15.03",
   );
 
   equal(
@@ -418,7 +418,7 @@ test("15", () => {
       maxMismatches: 0,
     }),
     false,
-    "15.04"
+    "15.04",
   );
   equal(
     matchRightIncl("abc important}", 2, ["!important"], {
@@ -427,7 +427,7 @@ test("15", () => {
       maxMismatches: 1,
     }),
     false,
-    "15.05"
+    "15.05",
   );
   equal(
     matchRightIncl("abc important}", 2, ["!important"], {
@@ -436,7 +436,7 @@ test("15", () => {
       maxMismatches: 2,
     }),
     false,
-    "15.06"
+    "15.06",
   );
 });
 
@@ -448,7 +448,7 @@ test("16 - tight", () => {
       maxMismatches: 2,
     }),
     false,
-    "16.01"
+    "16.01",
   );
   equal(
     matchRight("1px!important}", 1, ["!important"], {
@@ -457,7 +457,7 @@ test("16 - tight", () => {
       maxMismatches: 2,
     }),
     false,
-    "16.02"
+    "16.02",
   );
   equal(
     matchRight("1px!important}", 2, ["!important"], {
@@ -466,7 +466,7 @@ test("16 - tight", () => {
       maxMismatches: 2,
     }),
     "!important",
-    "16.03"
+    "16.03",
   );
 });
 
@@ -478,7 +478,7 @@ test("17 - tight", () => {
       maxMismatches: 2,
     }),
     false,
-    "17.01"
+    "17.01",
   );
   equal(
     matchRight("1pximportant}", 1, ["!important"], {
@@ -487,7 +487,7 @@ test("17 - tight", () => {
       maxMismatches: 2,
     }),
     false,
-    "17.02"
+    "17.02",
   );
   equal(
     matchRight("1pximportant}", 2, ["!important"], {
@@ -496,7 +496,7 @@ test("17 - tight", () => {
       maxMismatches: 2,
     }),
     "!important",
-    "17.03"
+    "17.03",
   );
 });
 
@@ -508,7 +508,7 @@ test("18 - tight", () => {
       maxMismatches: 2,
     }),
     false,
-    "18.01"
+    "18.01",
   );
   equal(
     matchRightIncl("1pximportant}", 1, ["!important"], {
@@ -517,7 +517,7 @@ test("18 - tight", () => {
       maxMismatches: 2,
     }),
     false,
-    "18.02"
+    "18.02",
   );
   equal(
     matchRightIncl("1pximportant}", 2, ["!important"], {
@@ -526,7 +526,7 @@ test("18 - tight", () => {
       maxMismatches: 2,
     }),
     false,
-    "18.03"
+    "18.03",
   );
   equal(
     matchRightIncl("1pximportant}", 3, ["!important"], {
@@ -535,7 +535,7 @@ test("18 - tight", () => {
       maxMismatches: 2,
     }),
     "!important",
-    "18.04"
+    "18.04",
   );
 });
 

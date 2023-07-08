@@ -14,7 +14,7 @@ interface Opts {
 declare const defaults: Opts;
 declare function rMerge(
   arrOfRanges: Ranges,
-  originalOpts?: Partial<Opts>
+  originalOpts?: Partial<Opts>,
 ): Ranges;
 
 export { Opts, ProgressFn, UnknownValueObj, defaults, rMerge, version };

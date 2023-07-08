@@ -10,7 +10,7 @@ test("01 - throws", () => {
       detectLang(true);
     },
     /THROW_ID_01/gm,
-    "01.01"
+    "01.01",
   );
 
   function fn() {
@@ -21,7 +21,7 @@ test("01 - throws", () => {
       detectLang(fn);
     },
     /THROW_ID_01/gm,
-    "01.02"
+    "01.02",
   );
 
   throws(
@@ -29,7 +29,7 @@ test("01 - throws", () => {
       detectLang({ a: "b" });
     },
     /THROW_ID_01/gm,
-    "01.03"
+    "01.03",
   );
 
   throws(
@@ -37,7 +37,7 @@ test("01 - throws", () => {
       detectLang(null);
     },
     /THROW_ID_01/gm,
-    "01.04"
+    "01.04",
   );
 });
 
@@ -51,10 +51,10 @@ test("02 - no templating tags at all", () => {
 test("03 - Nunjucks", () => {
   equal(
     detectLang(
-      "<div>{% if something %}do this{% else %}do that{% endif %}</div>"
+      "<div>{% if something %}do this{% else %}do that{% endif %}</div>",
     ),
     { name: "Nunjucks" },
-    "03.01"
+    "03.01",
   );
 });
 
@@ -62,7 +62,7 @@ test("04 - Jinja - with Python namespaces", () => {
   equal(
     detectLang("<div>{%- set ns1 = namespace(utility_providers=0) -%}</div>"),
     { name: "Jinja" },
-    "04.01"
+    "04.01",
   );
 });
 
@@ -70,12 +70,12 @@ test("05 - Jinja - with Python backwards declarations", () => {
   equal(
     detectLang("<div>{{'oodles' if crambles else 'brambles'}}</div>"),
     { name: "Jinja" },
-    "05.01"
+    "05.01",
   );
   equal(
     detectLang('<div>{{"oodles" if crambles else "brambles"}}</div>'),
     { name: "Jinja" },
-    "05.02"
+    "05.02",
   );
 });
 
@@ -83,7 +83,7 @@ test("06 - JSP", () => {
   equal(
     detectLang('<c:set var="someList" value="${jspProp.someList}" />'),
     { name: "JSP" },
-    "06.01"
+    "06.01",
   );
 });
 

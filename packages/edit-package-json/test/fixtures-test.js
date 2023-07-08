@@ -17,28 +17,28 @@ function compare(eq, testName, pathToProcess, val) {
 
   let source = read(
     path.join(__dirname, "fixtures", `${testName}.json`),
-    "utf8"
+    "utf8",
   );
   let result = read(
     path.join(__dirname, "fixtures", `${testName}.expected.json`),
-    "utf8"
+    "utf8",
   );
 
   try {
     let checkme = Number.parseInt(
       read(path.join(__dirname, "fixtures", `${testName}.control.md`), "utf8"),
-      10
+      10,
     );
     eq(
       source.trim().length,
       checkme,
-      `either delete testfile size control record file, ${testName}.control.md`
+      `either delete testfile size control record file, ${testName}.control.md`,
     );
   } catch (e) {
     // if the control file character count file doesn't exist, write it
     write(
       path.join(__dirname, "fixtures", `${testName}.control.md`),
-      source.trim().length
+      source.trim().length,
     );
   }
 
@@ -53,7 +53,7 @@ function compare(eq, testName, pathToProcess, val) {
   eq(
     JSON.parse(testedResult),
     JSON.parse(result),
-    "02 - both parsed parties are deep-equal"
+    "02 - both parsed parties are deep-equal",
   );
 
   // 03. result is equivalent to (JSON.parse + object-path.set())
@@ -68,7 +68,7 @@ function compare(eq, testName, pathToProcess, val) {
   eq(
     temp,
     JSON.parse(result),
-    "03 - objectPath operation is indeed equivalent"
+    "03 - objectPath operation is indeed equivalent",
   );
 }
 

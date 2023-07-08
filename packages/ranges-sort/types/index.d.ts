@@ -11,7 +11,7 @@ interface Opts {
 declare const defaults: Opts;
 declare function rSort(
   arrOfRanges: Ranges,
-  originalOptions?: Partial<Opts>
+  originalOptions?: Partial<Opts>,
 ): Ranges;
 
 export { Opts, ProgressFn, Range, Ranges, defaults, rSort, version };

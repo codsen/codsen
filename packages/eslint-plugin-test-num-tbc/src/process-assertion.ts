@@ -29,18 +29,18 @@ export function processAssertion(
   node: Obj,
   testNumber: number,
   assertionNumber: number,
-  type: TestType
+  type: TestType,
 ) {
   DEV &&
     console.log(
-      `036 ${`\u001b[${35}m${`████████████████████ processAssertion() start - ${testNumber}/${assertionNumber}`}\u001b[${39}m`}`
+      `036 ${`\u001b[${35}m${`████████████████████ processAssertion() start - ${testNumber}/${assertionNumber}`}\u001b[${39}m`}`,
     );
 
   DEV &&
     console.log(
       `041 ${`\u001b[${32}m${`PROCESS`}\u001b[${39}m`} ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${stringify(
-        node
-      )}`
+        node,
+      )}`,
     );
 
   // ---------------------------------------------------------------------------
@@ -92,8 +92,8 @@ export function processAssertion(
         `092 process-assertion.ts: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`extractedAssertsName`}\u001b[${39}m`} = ${JSON.stringify(
           extractedAssertsName,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
   }
   if (type === "uvu" && op.has(node, "expression.callee.name")) {
@@ -103,8 +103,8 @@ export function processAssertion(
         `103 process-assertion.ts: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`extractedAssertsName`}\u001b[${39}m`} = ${JSON.stringify(
           extractedAssertsName,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
   }
 
@@ -118,8 +118,8 @@ export function processAssertion(
         `118 process-assertion.ts: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`correctAssertsMessageArgPos`}\u001b[${39}m`} = ${JSON.stringify(
           correctAssertsMessageArgPos,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
   }
 
@@ -133,8 +133,8 @@ export function processAssertion(
       op.get(
         node,
         `expression.arguments.${identifyAssertsMessageArgPos(
-          extractedAssertsName
-        )}.type`
+          extractedAssertsName,
+        )}.type`,
       ) === "Literal"
     ) {
       // then grab the sibling path keys:
@@ -145,8 +145,8 @@ export function processAssertion(
       op.get(
         node,
         `expression.arguments.${identifyAssertsMessageArgPos(
-          extractedAssertsName
-        )}.type`
+          extractedAssertsName,
+        )}.type`,
       ) === "TemplateLiteral"
     ) {
       // then grab the sibling path keys:
@@ -157,14 +157,14 @@ export function processAssertion(
     thirdArgVal = op.get(
       node,
       `expression.arguments.${identifyAssertsMessageArgPos(
-        extractedAssertsName
-      )}.${msgArgVal}`
+        extractedAssertsName,
+      )}.${msgArgVal}`,
     );
     rangePos = op.get(
       node,
       `expression.arguments.${identifyAssertsMessageArgPos(
-        extractedAssertsName
-      )}.${msgArgRange}`
+        extractedAssertsName,
+      )}.${msgArgRange}`,
     ) as number[];
   }
 
@@ -194,12 +194,12 @@ export function processAssertion(
         `194 process-assertion.ts: ${`\u001b[${33}m${`thirdArgVal`}\u001b[${39}m`} = ${JSON.stringify(
           thirdArgVal,
           null,
-          4
+          4,
         )}; ${`\u001b[${33}m${`rangePos`}\u001b[${39}m`} = ${JSON.stringify(
           rangePos,
           null,
-          0
-        )}`
+          0,
+        )}`,
       );
 
     // distinguish cases:
@@ -227,13 +227,13 @@ export function processAssertion(
       DEV &&
         console.log(
           `229 process-assertion.ts: WRONG THIRD ARG ${thirdArgVal}! SHOULD BE ${`${pad(
-            testNumber
-          )}.${pad(assertionNumber)}`}`
+            testNumber,
+          )}.${pad(assertionNumber)}`}`,
         );
 
       DEV &&
         console.log(
-          `236 process-assertion.ts: ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`}`
+          `236 process-assertion.ts: ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`}`,
         );
 
       let from = rangePos[0] + 1;
@@ -245,7 +245,7 @@ export function processAssertion(
         fix: (fixerObj: Obj) => {
           return fixerObj.replaceTextRange(
             [from, to],
-            `${pad(testNumber)}.${pad(assertionNumber)}`
+            `${pad(testNumber)}.${pad(assertionNumber)}`,
           );
         },
       });
@@ -264,8 +264,8 @@ export function processAssertion(
           `264 process-assertion.ts: ${`\u001b[${33}m${`thirdArgVal`}\u001b[${39}m`} = ${JSON.stringify(
             thirdArgVal,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
 
       let firstDotPosition = -1;
@@ -278,8 +278,8 @@ export function processAssertion(
             `278 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`firstDotPosition`}\u001b[${39}m`} = ${JSON.stringify(
               firstDotPosition,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
       } else if (/^\d+\.$/.test(thirdArgVal)) {
         // cut-off at the first dot
@@ -289,8 +289,8 @@ export function processAssertion(
             `289 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`firstDotPosition`}\u001b[${39}m`} = ${JSON.stringify(
               firstDotPosition,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
       }
 
@@ -302,8 +302,8 @@ export function processAssertion(
           console.log(
             `303 process-assertion.ts: ${thirdArgVal.slice(
               0,
-              firstDotPosition
-            )} !== ${pad(testNumber)}`
+              firstDotPosition,
+            )} !== ${pad(testNumber)}`,
           );
 
         let from = rangePos[0] + 1;
@@ -312,7 +312,7 @@ export function processAssertion(
 
         DEV &&
           console.log(
-            `315 process-assertion.ts: ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} [${from}, ${to}], replacement: "${replacement}"`
+            `315 process-assertion.ts: ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} [${from}, ${to}], replacement: "${replacement}"`,
           );
 
         context.report({
@@ -349,12 +349,12 @@ export function processAssertion(
   ) {
     DEV &&
       console.log(
-        `352 process-assertion.ts: let's add a missing assert's "message" arg`
+        `352 process-assertion.ts: let's add a missing assert's "message" arg`,
       );
 
     let positionToInsertMsg = op.get(
       node,
-      `expression.arguments.${+correctAssertsMessageArgPos - 1}.range.1`
+      `expression.arguments.${+correctAssertsMessageArgPos - 1}.range.1`,
     );
 
     DEV &&
@@ -362,15 +362,15 @@ export function processAssertion(
         `362 process-assertion.ts: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`positionToInsertMsg`}\u001b[${39}m`} = ${JSON.stringify(
           positionToInsertMsg,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     let replacement = `, "${pad(testNumber)}.${pad(assertionNumber)}"`;
 
     DEV &&
       console.log(
-        `373 process-assertion.ts: ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} [${positionToInsertMsg}, ${positionToInsertMsg}], replacement: "${replacement}"`
+        `373 process-assertion.ts: ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} [${positionToInsertMsg}, ${positionToInsertMsg}], replacement: "${replacement}"`,
       );
 
     context.report({
@@ -379,7 +379,7 @@ export function processAssertion(
       fix: (fixerObj: Obj) => {
         return fixerObj.replaceTextRange(
           [positionToInsertMsg, positionToInsertMsg],
-          replacement
+          replacement,
         );
       },
     });
@@ -387,6 +387,6 @@ export function processAssertion(
 
   DEV &&
     console.log(
-      `390 process-assertion.ts: ${`\u001b[${35}m${`████████████████████ processAssertion() end`}\u001b[${39}m`}`
+      `390 process-assertion.ts: ${`\u001b[${35}m${`████████████████████ processAssertion() end`}\u001b[${39}m`}`,
     );
 }

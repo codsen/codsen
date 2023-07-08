@@ -39,7 +39,7 @@ declare function join(...args: string[]): string;
 declare function extract(
   str: string,
   def: string,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): ReturnType;
 
 export {

@@ -11,7 +11,7 @@ const callerDir = path.resolve(".");
 
 const dummyHTML = fs.readFileSync(
   path.resolve("./perf/dummy_file.html"),
-  "utf8"
+  "utf8",
 );
 
 const testme = () =>

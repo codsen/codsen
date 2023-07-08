@@ -40,34 +40,34 @@ test("01 - default sort, called on the whole folder", async () => {
     (oneOfTestFilePaths, testIndex) =>
       fs.writeJson(
         path.join(tempFolder, oneOfTestFilePaths),
-        testFileContents[testIndex]
-      )
+        testFileContents[testIndex],
+      ),
   )
     .then(() =>
       fs.writeFile(
         path.join(tempFolder, "test1/.something.yml"), //  - dotfile in yml with yml extension
-        "foo:\n  bar"
-      )
+        "foo:\n  bar",
+      ),
     )
     .then(() =>
       fs.writeFile(
         path.join(tempFolder, "test1/.somethinginyml"), // - dotfile in yml without yml extension
-        "foo:\n  bar"
-      )
+        "foo:\n  bar",
+      ),
     )
     .then(() => execa("./cli.js", [tempFolder]))
     .then(() =>
       pMap(testFilePaths, (oneOfPaths) =>
-        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
+        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8"),
       ).then((contentsArray) => {
         return pMap(contentsArray, (oneOfArrays) =>
-          JSON.stringify(oneOfArrays, null, 2)
+          JSON.stringify(oneOfArrays, null, 2),
         );
-      })
+      }),
     )
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received),
     )
     .catch((err) => {
       throw new Error(err);
@@ -97,38 +97,38 @@ test("02 - sort, there's a broken JSON among files", async () => {
     (oneOfTestFilePaths, testIndex) =>
       fs.writeJson(
         path.join(tempFolder, oneOfTestFilePaths),
-        testFileContents[testIndex]
-      )
+        testFileContents[testIndex],
+      ),
   )
     .then(() =>
       fs.writeFile(
         path.join(tempFolder, "test1/.something.yml"), // - dotfile in yml with yml extension
-        "foo:\n  bar"
-      )
+        "foo:\n  bar",
+      ),
     )
     .then(() =>
       fs.writeFile(
         path.join(tempFolder, "test1/.somethinginyml"), // - dotfile in yml without yml extension
-        "foo:\n  bar"
-      )
+        "foo:\n  bar",
+      ),
     )
     .then(() =>
-      fs.writeFile(path.join(tempFolder, "test1/broken.json"), '{a": "b"}\n')
+      fs.writeFile(path.join(tempFolder, "test1/broken.json"), '{a": "b"}\n'),
     )
     .then(() => execa("./cli.js", [tempFolder]))
     .then((receivedStdOut) => {
       match(receivedStdOut.stdout, /broken\.json/);
       return pMap(testFilePaths, (oneOfPaths) =>
-        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
+        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8"),
       ).then((contentsArray) => {
         return pMap(contentsArray, (oneOfArrays) =>
-          JSON.stringify(oneOfArrays, null, 2)
+          JSON.stringify(oneOfArrays, null, 2),
         );
       });
     })
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received),
     )
     .catch((err) => {
       throw new Error(err);
@@ -149,7 +149,7 @@ test("03 - fixes minified dotfiles in JSON format", async () => {
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received),
     )
     .catch((err) => {
       throw new Error(err);
@@ -179,14 +179,14 @@ test("04 - topmost level is array", async () => {
           },
         ],
         null,
-        2
-      )
+        2,
+      ),
     )
     .then(() => execa("./cli.js", [tempFolder, "sortme.json"]))
     .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-      execaCommand(`rm -rf ${tempFolder}`).then(() => received)
+      execaCommand(`rm -rf ${tempFolder}`).then(() => received),
     )
     .catch((err) => {
       throw new Error(err);
@@ -204,7 +204,7 @@ test("04 - topmost level is array", async () => {
     "p": "r"
   }
 ]\n`,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -219,7 +219,7 @@ test("05 - no files found in the given directory", async () => {
   match(
     stdOutContents.stdout,
     /The inputs don't lead to any json files! Exiting./,
-    "05.01"
+    "05.01",
   );
 });
 

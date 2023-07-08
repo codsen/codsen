@@ -17,7 +17,7 @@ const create = (context: Obj): Obj => {
   DEV && console.log(`\n`.repeat(20));
   DEV &&
     console.log(
-      `020 correct-test-num.ts: ${`\u001b[${33}m${`████████████████████ create() start`}\u001b[${39}m`}`
+      `020 correct-test-num.ts: ${`\u001b[${33}m${`████████████████████ create() start`}\u001b[${39}m`}`,
     );
 
   let counter = 0;
@@ -36,12 +36,12 @@ const create = (context: Obj): Obj => {
           `036 correct-test-num: ${`\u001b[${33}m${`isUvuTest`}\u001b[${39}m`} = ${JSON.stringify(
             isUvuTest,
             null,
-            4
+            4,
           )}; ${`\u001b[${33}m${`isTapTest`}\u001b[${39}m`} = ${JSON.stringify(
             isTapTest,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
 
       // Asserts within test would also trigger this, so we need
@@ -50,14 +50,14 @@ const create = (context: Obj): Obj => {
       if (!isUvuTest && !isTapTest) {
         DEV &&
           console.log(
-            `053 correct-test-num.ts: ${`\u001b[${31}m${`early return`}\u001b[${39}m`}`
+            `053 correct-test-num.ts: ${`\u001b[${31}m${`early return`}\u001b[${39}m`}`,
           );
         return;
       }
 
       DEV &&
         console.log(
-          `060 correct-test-num.ts: ${`\u001b[${33}m${`██`}\u001b[${39}m`} ExpressionStatement() start`
+          `060 correct-test-num.ts: ${`\u001b[${33}m${`██`}\u001b[${39}m`} ExpressionStatement() start`,
         );
 
       /* DEV &&
@@ -99,8 +99,8 @@ const create = (context: Obj): Obj => {
           `099 correct-test-num.ts: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
             counter,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
 
       // 1 - check the number in front of the test name
@@ -117,14 +117,14 @@ const create = (context: Obj): Obj => {
           context,
           node,
           extractTestNum(node, "uvu"),
-          counter
+          counter,
         );
       } else if (isTapTest) {
         processTestsFirstArg(
           context,
           node,
           extractTestNum(node, "tap"),
-          counter
+          counter,
         );
       }
 
@@ -148,14 +148,14 @@ const create = (context: Obj): Obj => {
           context,
           op.get(node, "expression.arguments.1.body.body"),
           counter,
-          "uvu"
+          "uvu",
         );
       } else if (isTapTest) {
         processBlockStatement(
           context,
           op.get(node, "expression.arguments.1.body.body"),
           counter,
-          "tap"
+          "tap",
         );
       }
 
@@ -163,7 +163,7 @@ const create = (context: Obj): Obj => {
 
       DEV &&
         console.log(
-          `166 correct-test-num.ts: ${`\u001b[${33}m${`██`}\u001b[${39}m`} ExpressionStatement() end`
+          `166 correct-test-num.ts: ${`\u001b[${33}m${`██`}\u001b[${39}m`} ExpressionStatement() end`,
         );
     },
   };

@@ -12,7 +12,7 @@ test("02 - multiple lines - windows endings, clean", () => {
   equal(
     c("  abc  \r\n  def  \r\n  ghi  "),
     " abc  \r\n  def  \r\n  ghi ",
-    "02.01"
+    "02.01",
   );
 });
 

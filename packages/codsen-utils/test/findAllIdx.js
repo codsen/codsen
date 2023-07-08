@@ -16,7 +16,7 @@ test("01 - wrong types", () => {
   equal(
     findAllIdx(() => {}),
     [],
-    "01.07"
+    "01.07",
   );
   equal(findAllIdx({ foo: "bar" }), [], "01.08");
   equal(findAllIdx([1]), [], "01.09");

@@ -154,7 +154,7 @@ test(`01 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of obj
       ],
       // ===================
     ],
-    "01.01"
+    "01.01",
   );
 });
 
@@ -177,7 +177,7 @@ test(`02 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of obj
     (key1, val1, innerObj) => {
       gathered.push([key1, val1, innerObj]);
     },
-    1 // <---------------- ! lookahead
+    1, // <---------------- ! lookahead
   );
   // console.log(
   //   `- 01.02 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
@@ -391,7 +391,7 @@ test(`02 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of obj
       ],
       // ===================
     ],
-    "02.01"
+    "02.01",
   );
 });
 
@@ -414,7 +414,7 @@ test(`03 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of obj
     (key1, val1, innerObj) => {
       gathered.push([key1, val1, innerObj]);
     },
-    2 // <---------------- ! lookahead
+    2, // <---------------- ! lookahead
   );
   // console.log(
   //   `- 01.03 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
@@ -696,7 +696,7 @@ test(`03 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of obj
       ],
       // ===================
     ],
-    "03.01"
+    "03.01",
   );
 });
 
@@ -719,7 +719,7 @@ test(`04 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of obj
     (key1, val1, innerObj) => {
       gathered.push([key1, val1, innerObj]);
     },
-    3
+    3,
   );
   // console.log(
   //   `- 01.04 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
@@ -1047,7 +1047,7 @@ test(`04 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of obj
       ],
       // ===================
     ],
-    "04.01"
+    "04.01",
   );
 });
 
@@ -1070,7 +1070,7 @@ test(`05 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of obj
     (key1, val1, innerObj) => {
       gathered.push([key1, val1, innerObj]);
     },
-    5
+    5,
   );
   // console.log(
   //   `- 01.05 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
@@ -1444,7 +1444,7 @@ test(`05 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of obj
       ],
       // ===================
     ],
-    "05.01"
+    "05.01",
   );
 });
 
@@ -1467,7 +1467,7 @@ test(`06 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of obj
     (key1, val1, innerObj) => {
       gathered.push([key1, val1, innerObj]);
     },
-    6
+    6,
   );
   // console.log(
   //   `- 01.06 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
@@ -1841,7 +1841,7 @@ test(`06 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of obj
       ],
       // ===================
     ],
-    "06.01"
+    "06.01",
   );
 });
 
@@ -1864,7 +1864,7 @@ test(`07 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of obj
     (key1, val1, innerObj) => {
       gathered.push([key1, val1, innerObj]);
     },
-    99
+    99,
   );
   // console.log(
   //   `- 01.07 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
@@ -2238,7 +2238,7 @@ test(`07 - ${`\u001b[${35}m${"traverse"}\u001b[${39}m`} - traverses array of obj
       ],
       // ===================
     ],
-    "07.01"
+    "07.01",
   );
 });
 
@@ -2297,7 +2297,7 @@ test(`08 - ${`\u001b[${31}m${"arrays"}\u001b[${39}m`} - traverses and pings all 
         },
       ],
     ],
-    "08.01"
+    "08.01",
   );
 });
 
@@ -2310,7 +2310,7 @@ test(`09 - ${`\u001b[${31}m${"arrays"}\u001b[${39}m`} - traverses and pings all 
     (key1, val1, innerObj) => {
       gathered.push([key1, val1, innerObj]);
     },
-    1
+    1,
   );
   // console.log(
   //   `- 02.02 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
@@ -2379,7 +2379,7 @@ test(`09 - ${`\u001b[${31}m${"arrays"}\u001b[${39}m`} - traverses and pings all 
         },
       ],
     ],
-    "09.01"
+    "09.01",
   );
 });
 
@@ -2392,7 +2392,7 @@ test(`10 - ${`\u001b[${31}m${"arrays"}\u001b[${39}m`} - traverses and pings all 
     (key1, val1, innerObj) => {
       gathered.push([key1, val1, innerObj]);
     },
-    2
+    2,
   );
   // console.log(
   //   `- 02.03 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
@@ -2471,7 +2471,7 @@ test(`10 - ${`\u001b[${31}m${"arrays"}\u001b[${39}m`} - traverses and pings all 
         },
       ],
     ],
-    "10.01"
+    "10.01",
   );
 });
 
@@ -2484,7 +2484,7 @@ test(`11 - ${`\u001b[${31}m${"arrays"}\u001b[${39}m`} - traverses and pings all 
     (key1, val1, innerObj) => {
       gathered.push([key1, val1, innerObj]);
     },
-    3
+    3,
   );
   // console.log(
   //   `- 02.04 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
@@ -2563,7 +2563,7 @@ test(`11 - ${`\u001b[${31}m${"arrays"}\u001b[${39}m`} - traverses and pings all 
         },
       ],
     ],
-    "11.01"
+    "11.01",
   );
 });
 
@@ -2576,7 +2576,7 @@ test(`12 - ${`\u001b[${31}m${"arrays"}\u001b[${39}m`} - traverses and pings all 
     (key1, val1, innerObj) => {
       gathered.push([key1, val1, innerObj]);
     },
-    3
+    3,
   );
   // console.log(
   //   `- 02.04 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
@@ -2655,7 +2655,7 @@ test(`12 - ${`\u001b[${31}m${"arrays"}\u001b[${39}m`} - traverses and pings all 
         },
       ],
     ],
-    "12.01"
+    "12.01",
   );
 });
 
@@ -2737,7 +2737,7 @@ test("13 - traverses plain objects", () => {
       ],
       // ===================
     ],
-    "13.01"
+    "13.01",
   );
 });
 
@@ -2812,7 +2812,7 @@ test("14 - object key's value is an array", () => {
         },
       ],
     ],
-    "14.01"
+    "14.01",
   );
 });
 
@@ -3305,7 +3305,7 @@ test(`15 - ${`\u001b[${32}m${"complex"}\u001b[${39}m`} - only traversal, #2`, ()
       ],
       // ===================
     ],
-    "15.01"
+    "15.01",
   );
 });
 
@@ -3393,7 +3393,7 @@ test(`16 - ${`\u001b[${32}m${"complex"}\u001b[${39}m`} - only traversal, #3`, ()
         },
       ],
     ],
-    "16.01"
+    "16.01",
   );
 });
 

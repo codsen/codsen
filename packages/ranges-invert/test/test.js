@@ -16,7 +16,7 @@ test("01 - not array", () => {
       i(null);
     },
     /THROW_ID_02/,
-    "01.01"
+    "01.01",
   );
 
   not.throws(() => {
@@ -28,7 +28,7 @@ test("01 - not array", () => {
       i(1);
     },
     /THROW_ID_01/,
-    "01.02"
+    "01.02",
   );
 
   throws(
@@ -36,7 +36,7 @@ test("01 - not array", () => {
       i(true);
     },
     /THROW_ID_01/,
-    "01.03"
+    "01.03",
   );
 
   throws(
@@ -44,7 +44,7 @@ test("01 - not array", () => {
       i({ e: true });
     },
     /THROW_ID_01/,
-    "01.04"
+    "01.04",
   );
 
   throws(
@@ -52,7 +52,7 @@ test("01 - not array", () => {
       i([1, 3], 1); // <----- not array of arrays!
     },
     /THROW_ID_07/,
-    "01.05"
+    "01.05",
   );
 });
 
@@ -62,7 +62,7 @@ test("02 - not two arguments in one of ranges", () => {
       i([[1, 2, 3]], 4, { strictlyTwoElementsInRangeArrays: true });
     },
     /THROW_ID_04/g,
-    "02.01"
+    "02.01",
   );
 
   throws(
@@ -73,11 +73,11 @@ test("02 - not two arguments in one of ranges", () => {
           [4, 5, 6],
         ],
         6,
-        { strictlyTwoElementsInRangeArrays: true }
+        { strictlyTwoElementsInRangeArrays: true },
       );
     },
     /THROW_ID_04/g,
-    "02.02"
+    "02.02",
   );
 
   throws(
@@ -91,11 +91,11 @@ test("02 - not two arguments in one of ranges", () => {
         9,
         {
           strictlyTwoElementsInRangeArrays: true,
-        }
+        },
       );
     },
     /THROW_ID_04/g,
-    "02.03"
+    "02.03",
   );
 
   // DOES NOT THROW:
@@ -107,7 +107,7 @@ test("02 - not two arguments in one of ranges", () => {
         [4, 5],
         [7, 8],
       ],
-      9
+      9,
     );
   }, "02.04");
   // with defaults opts
@@ -120,7 +120,7 @@ test("02 - not two arguments in one of ranges", () => {
         [1, 2, 3],
         [4, 5, 6],
       ],
-      6
+      6,
     );
   }, "02.06");
   not.throws(() => {
@@ -130,7 +130,7 @@ test("02 - not two arguments in one of ranges", () => {
         [4, 5, 6],
         [7, 8],
       ],
-      8
+      8,
     );
   }, "02.07");
 
@@ -143,7 +143,7 @@ test("02 - not two arguments in one of ranges", () => {
         [1, 2, "zzz"],
         [4, 5, "yyyy"],
       ],
-      6
+      6,
     );
   }, "02.09");
   not.throws(() => {
@@ -153,7 +153,7 @@ test("02 - not two arguments in one of ranges", () => {
         [4, 5, "aaa", "bbb"],
         [7, 8, "ccc"],
       ],
-      8
+      8,
     );
   }, "02.10");
   not.throws(() => {
@@ -163,7 +163,7 @@ test("02 - not two arguments in one of ranges", () => {
         [4, 5, "aaa", "bbb"],
         [7, 8, "ccc"],
       ],
-      80
+      80,
     );
   }, "02.11");
 });
@@ -181,7 +181,7 @@ test("03 - some/all range indexes are not natural numbers", () => {
       i([[0.2, 3]], 4);
     },
     /THROW_ID_05/g,
-    "03.01"
+    "03.01",
   );
 
   throws(
@@ -189,7 +189,7 @@ test("03 - some/all range indexes are not natural numbers", () => {
       i([[0.2, 3.3]], 4);
     },
     /THROW_ID_05/g,
-    "03.02"
+    "03.02",
   );
 
   throws(
@@ -197,7 +197,7 @@ test("03 - some/all range indexes are not natural numbers", () => {
       i([[2, 3.3]], 4);
     },
     /THROW_ID_05/g,
-    "03.03"
+    "03.03",
   );
 
   throws(
@@ -205,7 +205,7 @@ test("03 - some/all range indexes are not natural numbers", () => {
       i([[0.2, 3.3]], 5);
     },
     /THROW_ID_05/g,
-    "03.04"
+    "03.04",
   );
 
   throws(
@@ -213,7 +213,7 @@ test("03 - some/all range indexes are not natural numbers", () => {
       i([[0.2, 33]], 40);
     },
     /THROW_ID_05/g,
-    "03.05"
+    "03.05",
   );
 
   throws(
@@ -221,7 +221,7 @@ test("03 - some/all range indexes are not natural numbers", () => {
       i([[0.2, 33, 55, 66.7]], 100);
     },
     /THROW_ID_05/g,
-    "03.06"
+    "03.06",
   );
 });
 
@@ -231,7 +231,7 @@ test("04 - second arg, strLen is wrong", () => {
       i([[0, 3]], 4.1);
     },
     /THROW_ID_02/g,
-    "04.01"
+    "04.01",
   );
 
   throws(
@@ -239,7 +239,7 @@ test("04 - second arg, strLen is wrong", () => {
       i([[0, 3]], "a");
     },
     /THROW_ID_02/g,
-    "04.02"
+    "04.02",
   );
 });
 
@@ -268,10 +268,10 @@ test(`06 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - zero length given`, (
         [1, 2],
         [2, 4],
       ],
-      0
+      0,
     ),
     null,
-    "06.07"
+    "06.07",
   );
   equal(i([[1, 2], null, [2, 4]], 0), null, "06.08");
 });
@@ -287,7 +287,7 @@ test(`07 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - reference string cove
   equal(
     ref.slice(...range2p1) + ref.slice(...range1) + ref.slice(...range2p2),
     ref,
-    "07.04"
+    "07.04",
   );
   // now, real deal:
   equal(i([range1], ref.length), [range2p1, range2p2], "07.05");
@@ -323,13 +323,13 @@ test(`10 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - reference string cov
       ref.slice(...range2) +
       ref.slice(...range2p3),
     ref,
-    "10.03"
+    "10.03",
   );
   // // now, real deal:
   equal(
     i([range1, range2], ref.length),
     [range2p1, range2p2, range2p3],
-    "10.04"
+    "10.04",
   );
 });
 
@@ -340,13 +340,13 @@ test(`11 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - ranges touch each ot
         [3, 5],
         [5, 7],
       ],
-      9
+      9,
     ),
     [
       [0, 3],
       [7, 9],
     ],
-    "11.01"
+    "11.01",
   );
   equal(
     i(
@@ -354,13 +354,13 @@ test(`11 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - ranges touch each ot
         [3, 4],
         [4, 7],
       ],
-      9
+      9,
     ),
     [
       [0, 3],
       [7, 9],
     ],
-    "11.02"
+    "11.02",
   );
   equal(
     i(
@@ -368,10 +368,10 @@ test(`11 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - ranges touch each ot
         [0, 1],
         [1, 2],
       ],
-      9
+      9,
     ),
     [[2, 9]],
-    "11.03"
+    "11.03",
   );
   equal(
     i(
@@ -380,10 +380,10 @@ test(`11 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - ranges touch each ot
         [1, 2],
         [5, 9],
       ],
-      9
+      9,
     ),
     [[2, 5]],
-    "11.04"
+    "11.04",
   );
   equal(
     i(
@@ -391,10 +391,10 @@ test(`11 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - ranges touch each ot
         [0, 1],
         [1, 9],
       ],
-      9
+      9,
     ),
     [],
-    "11.05"
+    "11.05",
   );
 
   // opts.skipChecks - results are the same
@@ -406,13 +406,13 @@ test(`11 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - ranges touch each ot
         [5, 7],
       ],
       9,
-      { skipChecks: true }
+      { skipChecks: true },
     ),
     [
       [0, 3],
       [7, 9],
     ],
-    "11.06"
+    "11.06",
   );
   equal(
     i(
@@ -421,13 +421,13 @@ test(`11 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - ranges touch each ot
         [4, 7],
       ],
       9,
-      { skipChecks: true }
+      { skipChecks: true },
     ),
     [
       [0, 3],
       [7, 9],
     ],
-    "11.07"
+    "11.07",
   );
   equal(
     i(
@@ -436,10 +436,10 @@ test(`11 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - ranges touch each ot
         [1, 2],
       ],
       9,
-      { skipChecks: true }
+      { skipChecks: true },
     ),
     [[2, 9]],
-    "11.08"
+    "11.08",
   );
   equal(
     i(
@@ -449,10 +449,10 @@ test(`11 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - ranges touch each ot
         [5, 9],
       ],
       9,
-      { skipChecks: true }
+      { skipChecks: true },
     ),
     [[2, 5]],
-    "11.09"
+    "11.09",
   );
   equal(
     i(
@@ -461,10 +461,10 @@ test(`11 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - ranges touch each ot
         [1, 9],
       ],
       9,
-      { skipChecks: true }
+      { skipChecks: true },
     ),
     [],
-    "11.10"
+    "11.10",
   );
 });
 
@@ -475,10 +475,10 @@ test(`12 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - input was given not 
         [0, 5],
         [3, 7],
       ],
-      9
+      9,
     ),
     [[7, 9]],
-    "12.01"
+    "12.01",
   );
   equal(
     i(
@@ -486,13 +486,13 @@ test(`12 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - input was given not 
         [2, 5],
         [3, 7],
       ],
-      9
+      9,
     ),
     [
       [0, 2],
       [7, 9],
     ],
-    "12.02"
+    "12.02",
   );
   equal(
     i(
@@ -500,13 +500,13 @@ test(`12 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - input was given not 
         [3, 5],
         [2, 7],
       ],
-      9
+      9,
     ),
     [
       [0, 2],
       [7, 9],
     ],
-    "12.03"
+    "12.03",
   );
 
   // PS. opts.skipChecks would give erroneous result here
@@ -518,11 +518,11 @@ test(`12 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - input was given not 
           [3, 7],
         ],
         9,
-        { skipChecks: true }
+        { skipChecks: true },
       );
     },
     /THROW_ID_08/,
-    "12.04"
+    "12.04",
   );
 });
 
@@ -533,10 +533,10 @@ test(`13 - ${`\u001b[${35}m${"two ranges"}\u001b[${39}m`} - third argument prese
         [0, 5, "zzz"],
         [3, 7, "aaaa"],
       ],
-      9
+      9,
     ),
     [[7, 9]],
-    "13.01"
+    "13.01",
   );
 });
 
@@ -556,10 +556,10 @@ test(`16 - ${`\u001b[${35}m${"ad hoc"}\u001b[${39}m`} - ranges to invert is far 
         [100, 200],
         [300, 400],
       ],
-      10
+      10,
     ),
     [[0, 10]],
-    "16.01"
+    "16.01",
   );
 });
 
@@ -570,10 +570,10 @@ test(`17 - ${`\u001b[${35}m${"ad hoc"}\u001b[${39}m`} - ranges to invert is far 
         [300, 400],
         [100, 200],
       ],
-      10
+      10,
     ),
     [[0, 10]],
-    "17.01"
+    "17.01",
   );
 });
 

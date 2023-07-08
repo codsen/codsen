@@ -14,12 +14,12 @@ assert.equal(
   }
 }`,
     "c.d", // path
-    "x" // value to put
+    "x", // value to put
   ),
   `{
   "a": "b",
   "c": {
     "d": "x"
   }
-}`
+}`,
 );

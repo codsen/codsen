@@ -17,7 +17,7 @@ test(`01 - ${`\u001b[${33}m${"css line length limit"}\u001b[${39}m`} - basic`, (
         lineLengthLimit: 50,
         removeIndentations: true,
         removeLineBreaks: true,
-      }
+      },
     ),
     {
       result: `<style>.aa{font-size:1px;line-height:1px;color:
@@ -31,7 +31,7 @@ text-decoration:none;}
         removeCSSComments: false,
       },
     },
-    "01.01"
+    "01.01",
   );
   compare(
     ok,
@@ -44,7 +44,7 @@ text-decoration:none;}
         lineLengthLimit: 50,
         removeIndentations: true,
         removeLineBreaks: false,
-      }
+      },
     ),
     {
       result: `<style>
@@ -55,7 +55,7 @@ text-decoration:none;}
         removeCSSComments: false,
       },
     },
-    "01.02"
+    "01.02",
   );
   compare(
     ok,
@@ -68,7 +68,7 @@ text-decoration:none;}
         lineLengthLimit: 50,
         removeIndentations: false,
         removeLineBreaks: false,
-      }
+      },
     ),
     {
       result: `<style>
@@ -79,7 +79,7 @@ text-decoration:none;}
         removeCSSComments: false,
       },
     },
-    "01.03"
+    "01.03",
   );
 });
 

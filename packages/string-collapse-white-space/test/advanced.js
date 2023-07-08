@@ -38,7 +38,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "\t\t\t \t\t\taaa\t\t\t \t\t\t",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -65,7 +65,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "\t\t\t \t\t\taaa",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -92,7 +92,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa\t\t\t \t\t\t",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 
@@ -121,7 +121,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " aaa ",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -148,7 +148,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " aaa",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -175,7 +175,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa ",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 
@@ -203,7 +203,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 
@@ -226,8 +226,8 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
                 `props: ${JSON.stringify(
                   props[key],
                   null,
-                  4
-                )}; opt: ${JSON.stringify(opt, null, 4)}`
+                  4,
+                )}; opt: ${JSON.stringify(opt, null, 4)}`,
               );
             } else if (key === "suggested") {
               ok(Array.isArray(props.suggested) || props.suggested === null);
@@ -239,7 +239,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -266,7 +266,7 @@ test("02", () => {
       },
     }).result,
     "aaa",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -301,7 +301,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " \t\t\t aaa \t\t\t ",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -328,7 +328,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " \t\t\t aaa",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -355,7 +355,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa \t\t\t ",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 
@@ -385,7 +385,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " aaa ",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -412,7 +412,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " aaa",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -439,7 +439,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa ",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 
@@ -465,7 +465,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 
@@ -492,7 +492,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -528,7 +528,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " \t \t \t aaa \t \t \t ",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -555,7 +555,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " \t \t \t aaa",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -582,7 +582,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa \t \t \t ",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 
@@ -612,7 +612,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " aaa ",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -639,7 +639,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " aaa",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -666,7 +666,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa ",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 
@@ -692,7 +692,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 
@@ -719,7 +719,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -740,10 +740,10 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
       equal(
         collapse(
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          opt
+          opt,
         ).result,
         `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -756,10 +756,10 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
       equal(
         collapse(
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          opt
+          opt,
         ).result,
         `aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -772,10 +772,10 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
       equal(
         collapse(
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          opt
+          opt,
         ).result,
         `\t ${eol} \t \r ${eol}aaa`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
 
@@ -787,10 +787,10 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
       equal(
         collapse(
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          opt
+          opt,
         ).result,
         "aaa",
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
 
@@ -806,10 +806,10 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
       equal(
         collapse(
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          opt
+          opt,
         ).result,
         ` ${eol} \r ${eol}aaa \n ${eol} ${eol} \r\n \n`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -822,10 +822,10 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
       equal(
         collapse(
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          opt
+          opt,
         ).result,
         `aaa \n ${eol} ${eol} \r\n \n`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -838,10 +838,10 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
       equal(
         collapse(
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          opt
+          opt,
         ).result,
         ` ${eol} \r ${eol}aaa`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
 
@@ -859,10 +859,10 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
       equal(
         collapse(
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          opt
+          opt,
         ).result,
         `${eol}\r${eol}aaa\n${eol}${eol}\r\n\n`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -875,10 +875,10 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
       equal(
         collapse(
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          opt
+          opt,
         ).result,
         `aaa\n${eol}${eol}\r\n\n`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -891,10 +891,10 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
       equal(
         collapse(
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          opt
+          opt,
         ).result,
         `${eol}\r${eol}aaa`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
 
@@ -906,10 +906,10 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
       equal(
         collapse(
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          opt
+          opt,
         ).result,
         "aaa",
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
 
@@ -925,10 +925,10 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
       equal(
         collapse(
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          opt
+          opt,
         ).result,
         `${eol}\r${eol}aaa\n${eol}${eol}\r\n\n`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -941,10 +941,10 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
       equal(
         collapse(
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          opt
+          opt,
         ).result,
         `aaa\n${eol}${eol}\r\n\n`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -957,10 +957,10 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
       equal(
         collapse(
           `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-          opt
+          opt,
         ).result,
         `${eol}\r${eol}aaa`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
   });
@@ -989,7 +989,7 @@ test("06", () => {
         },
       }).result,
       "",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -1013,7 +1013,7 @@ test("06", () => {
         },
       }).result,
       "",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -1037,7 +1037,7 @@ test("06", () => {
         },
       }).result,
       "",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -1063,7 +1063,7 @@ test("06", () => {
         },
       }).result,
       " ",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -1091,7 +1091,7 @@ test("07", () => {
         },
       }),
       { result: "", ranges: [[0, 9]] },
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -1115,7 +1115,7 @@ test("07", () => {
         },
       }),
       { result: "", ranges: [[0, 9]] },
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -1139,7 +1139,7 @@ test("07", () => {
         },
       }),
       { result: "", ranges: [[0, 9]] },
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -1166,7 +1166,7 @@ test("07", () => {
         },
       }),
       { result: "\t\t\t \t\t\t", ranges: [[3, 5]] },
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -1193,7 +1193,7 @@ test("07", () => {
         },
       }),
       { result: " ", ranges: [[0, 9, " "]] },
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -1221,7 +1221,7 @@ test("08", () => {
         },
       }),
       { result: "", ranges: [[0, 3]] },
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -1245,7 +1245,7 @@ test("08", () => {
         },
       }),
       { result: "", ranges: [[0, 3]] },
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -1269,7 +1269,7 @@ test("08", () => {
         },
       }),
       { result: "", ranges: [[0, 3]] },
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -1296,7 +1296,7 @@ test("08", () => {
         },
       }),
       { result: "\t\t\t", ranges: null },
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -1323,7 +1323,7 @@ test("08", () => {
         },
       }),
       { result: " ", ranges: [[0, 3, " "]] },
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -1362,7 +1362,7 @@ test("09", () => {
           },
         }).result,
         "",
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -1396,7 +1396,7 @@ test("09", () => {
           },
         }).result,
         "",
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -1431,7 +1431,7 @@ test("09", () => {
           },
         }).result,
         `${eol}${eol}${eol}`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
 
@@ -1469,7 +1469,7 @@ test("09", () => {
           },
         }).result,
         `${eol}`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -1505,7 +1505,7 @@ test("09", () => {
           },
         }).result,
         `${eol}${eol}`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -1541,7 +1541,7 @@ test("09", () => {
           },
         }).result,
         `${eol}${eol}${eol}`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -1577,7 +1577,7 @@ test("09", () => {
           },
         }).result,
         `${eol}${eol}${eol}`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -1613,7 +1613,7 @@ test("09", () => {
           },
         }).result,
         `${eol}${eol}${eol}`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
   });
@@ -1628,7 +1628,7 @@ test("10", () => {
       limitConsecutiveEmptyLinesTo: true,
     }).result,
     "\r\n\r\n",
-    "10.01"
+    "10.01",
   );
   equal(
     collapse("\r\n\r\n\r\n\r\n\r\n\n\n\n\n\n\n", {
@@ -1638,7 +1638,7 @@ test("10", () => {
       limitConsecutiveEmptyLinesTo: 2,
     }).result,
     "\r\n\r\n\r\n",
-    "10.02"
+    "10.02",
   );
 });
 
@@ -1667,7 +1667,7 @@ test("11 - trim involving non-breaking spaces", () => {
         },
       }).result,
       "a",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -1692,7 +1692,7 @@ test("11 - trim involving non-breaking spaces", () => {
         },
       }).result,
       "a",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 
@@ -1718,7 +1718,7 @@ test("11 - trim involving non-breaking spaces", () => {
         },
       }).result,
       "\xa0 a \xa0",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 
@@ -1747,7 +1747,7 @@ test("11 - trim involving non-breaking spaces", () => {
         },
       }).result,
       " a ",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -1775,7 +1775,7 @@ test("11 - trim involving non-breaking spaces", () => {
         },
       }).result,
       "a",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -1792,7 +1792,7 @@ test("12", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     "a ",
-    "12.01"
+    "12.01",
   );
 });
 
@@ -1809,7 +1809,7 @@ test("13", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     "a",
-    "13.01"
+    "13.01",
   );
 });
 
@@ -1826,7 +1826,7 @@ test("14", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     "a ",
-    "14.01"
+    "14.01",
   );
 });
 
@@ -1843,7 +1843,7 @@ test("15", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     " a",
-    "15.01"
+    "15.01",
   );
 });
 
@@ -1860,7 +1860,7 @@ test("16", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     "a",
-    "16.01"
+    "16.01",
   );
 });
 
@@ -1877,7 +1877,7 @@ test("17", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     "a",
-    "17.01"
+    "17.01",
   );
 });
 
@@ -1893,7 +1893,7 @@ test("18", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     "a",
-    "18.01"
+    "18.01",
   );
 });
 
@@ -1910,7 +1910,7 @@ test("19", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     "a",
-    "19.01"
+    "19.01",
   );
 });
 
@@ -1926,7 +1926,7 @@ test("20", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     " \na\n ",
-    "20.01"
+    "20.01",
   );
   equal(
     collapse("\t\na\n\t", {
@@ -1939,7 +1939,7 @@ test("20", () => {
       limitConsecutiveEmptyLinesTo: 0,
     }).result,
     " \na\n ",
-    "20.02"
+    "20.02",
   );
 });
 
@@ -1953,7 +1953,7 @@ test("21", () => {
       enforceSpacesOnly: true,
     }).result,
     " a b ",
-    "21.01"
+    "21.01",
   );
 });
 
@@ -1970,7 +1970,7 @@ test("22 - trim involving non-breaking spaces", () => {
         [13, 15],
       ],
     },
-    "22.01"
+    "22.01",
   );
 });
 
@@ -1985,7 +1985,7 @@ test("23 - trim involving non-breaking spaces", () => {
         [9, 17],
       ],
     },
-    "23.01"
+    "23.01",
   );
 });
 
@@ -2002,7 +2002,7 @@ test("24 - trim involving non-breaking spaces", () => {
         [17, 23],
       ],
     },
-    "24.01"
+    "24.01",
   );
 });
 
@@ -2013,7 +2013,7 @@ test("25 - trim involving non-breaking spaces", () => {
       trimEnd: false,
     }).result,
     " \xa0 ",
-    "25.01"
+    "25.01",
   );
 });
 
@@ -2042,7 +2042,7 @@ test("26 - trim involving non-breaking spaces", () => {
         },
       }).result,
       " \xa0 ",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -2069,7 +2069,7 @@ test("26 - trim involving non-breaking spaces", () => {
         },
       }).result,
       " ",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });
@@ -2094,7 +2094,7 @@ test("27 - bracket", () => {
         },
       }).result,
       "a > b",
-      "27.01"
+      "27.01",
     );
   });
 });
@@ -2119,7 +2119,7 @@ test("28 - bracket", () => {
         },
       }).result,
       "<span>zzz</span> abc def ghij klm",
-      "28.01"
+      "28.01",
     );
   });
 });

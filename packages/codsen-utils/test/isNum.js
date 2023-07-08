@@ -16,7 +16,7 @@ test("01", () => {
   equal(
     isNum(() => {}),
     false,
-    "01.09"
+    "01.09",
   );
   equal(isNum(""), false, "01.10");
   equal(isNum("a"), false, "01.11");

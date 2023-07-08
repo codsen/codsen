@@ -86,7 +86,7 @@ test(`04 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - first tag is missing clos
         ],
       },
     ],
-    "04.01"
+    "04.01",
   );
   compare(
     ok,
@@ -98,7 +98,7 @@ test(`04 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - first tag is missing clos
         idxTo: 7,
       },
     ],
-    "04.02"
+    "04.02",
   );
   is(gatheredErr.length, 1, "04.01");
 });
@@ -154,7 +154,7 @@ test(`05 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - second tag is missing clo
         value: "</table>",
       },
     ],
-    "05.01"
+    "05.01",
   );
   compare(
     ok,
@@ -166,7 +166,7 @@ test(`05 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - second tag is missing clo
         idxTo: 11,
       },
     ],
-    "05.02"
+    "05.02",
   );
   is(gatheredErr.length, 1, "05.01");
 });
@@ -222,7 +222,7 @@ test(`06 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - third tag is missing clos
         value: "</table>",
       },
     ],
-    "06.01"
+    "06.01",
   );
   compare(
     ok,
@@ -234,7 +234,7 @@ test(`06 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - third tag is missing clos
         idxTo: 15,
       },
     ],
-    "06.02"
+    "06.02",
   );
   is(gatheredErr.length, 1, "06.01");
 });
@@ -270,7 +270,7 @@ test(`07 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - text + tag`, () => {
         children: [],
       },
     ],
-    "07.01"
+    "07.01",
   );
   compare(
     ok,
@@ -282,7 +282,7 @@ test(`07 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - text + tag`, () => {
         idxTo: 7,
       },
     ],
-    "07.02"
+    "07.02",
   );
   is(gatheredErr.length, 1, "07.01");
 });
@@ -297,7 +297,7 @@ test(`08 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - two consecutive tags miss
 </table>`,
     {
       errCb: (errObj) => gatheredErr.push(errObj),
-    }
+    },
   );
   compare(
     ok,
@@ -326,7 +326,7 @@ test(`08 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - two consecutive tags miss
         },
       },
     ],
-    "08.01"
+    "08.01",
   );
   is(gatheredErr.length, 2, "08.01");
 });
@@ -339,7 +339,7 @@ test(`09 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - two consecutive tags miss
     <td>`,
     {
       errCb: (errObj) => gatheredErr.push(errObj),
-    }
+    },
   );
   compare(
     ok,
@@ -361,7 +361,7 @@ test(`09 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - two consecutive tags miss
         idxTo: 23,
       },
     ],
-    "09.01"
+    "09.01",
   );
   is(gatheredErr.length, 3, "09.01");
 });
@@ -376,7 +376,7 @@ test(`10 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`}`, () => {
 </table>`,
     {
       errCb: (errObj) => gatheredErr.push(errObj),
-    }
+    },
   );
   compare(
     ok,
@@ -393,7 +393,7 @@ test(`10 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`}`, () => {
         idxTo: 14,
       },
     ],
-    "10.01"
+    "10.01",
   );
   is(gatheredErr.length, 2, "10.01");
 });
@@ -417,7 +417,7 @@ test(`11 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - two missing with context`
 </div>`,
       {
         errCb: (errObj) => gatheredErr.push(errObj),
-      }
+      },
     ),
     [
       {
@@ -549,7 +549,7 @@ test(`11 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - two missing with context`
         value: "</div>",
       },
     ],
-    "11.01"
+    "11.01",
   );
   compare(
     ok,
@@ -576,7 +576,7 @@ test(`11 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - two missing with context`
         idxTo: 61,
       },
     ],
-    "11.02"
+    "11.02",
   );
   is(gatheredErr.length, 4, "11.01");
 });
@@ -602,7 +602,7 @@ test(`12 - ${`\u001b[${36}m${"basic"}\u001b[${39}m`} - left slash`, () => {
         idxTo: 9,
       },
     ],
-    "12.01"
+    "12.01",
   );
   is(gatheredErr.length, 2, "12.01");
 });

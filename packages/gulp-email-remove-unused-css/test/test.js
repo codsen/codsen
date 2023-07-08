@@ -23,7 +23,7 @@ function fromString(input, path, func) {
         map((file, cb) => {
           contents = file;
           cb(null, file);
-        })
+        }),
       )
       .on("error", (e) => {
         reject(e);
@@ -89,7 +89,7 @@ test("removes unused CSS", async () => {
 `;
 
   let contents = await fromString(source, "test/source.html", geruc).then(
-    (output) => output.contents.toString()
+    (output) => output.contents.toString(),
   );
   equal(contents, intended, "Sass compiled as expected");
 });

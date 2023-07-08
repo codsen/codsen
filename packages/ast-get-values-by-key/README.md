@@ -49,9 +49,9 @@ assert.deepEqual(
         },
       ],
     },
-    "tag" // value to search for
+    "tag", // value to search for
   ),
-  [{ val: "html", path: "parsed.0.tag" }]
+  [{ val: "html", path: "parsed.0.tag" }],
 );
 
 // SETTER
@@ -73,7 +73,7 @@ assert.deepEqual(
       },
     },
     "tag", // value to search for
-    [123, 456] // pot of values to pick from (one result not enough)
+    [123, 456], // pot of values to pick from (one result not enough)
   ),
   {
     parsed: [
@@ -87,7 +87,7 @@ assert.deepEqual(
     bar: {
       tag: null, // value pot was depleted and there was nothing left to put here
     },
-  }
+  },
 );
 ```
 

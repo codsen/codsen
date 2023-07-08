@@ -14,7 +14,7 @@ test("02 - various not numeric inputs", () => {
   [true, "true", "1K", "a", null, "null", false, "false", ""].forEach(
     (input) => {
       not.ok(isNumeric(input), `the following is actually numeric: ${input}`);
-    }
+    },
   );
 });
 

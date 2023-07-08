@@ -14,7 +14,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: false,
     }),
     true,
-    "01.01"
+    "01.01",
   );
   equal(
     compare(["a", "b"], ["a", "b", "c"], {
@@ -22,7 +22,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: false,
     }),
     false,
-    "01.02"
+    "01.02",
   );
 
   equal(
@@ -31,7 +31,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: true,
     }),
     true,
-    "01.03"
+    "01.03",
   );
   equal(
     compare(["a", "b"], ["a", "b", "c"], {
@@ -39,7 +39,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: true,
     }),
     false,
-    "01.04"
+    "01.04",
   );
   not.equal(
     compare(["a", "b"], ["a", "b", "c"], {
@@ -48,7 +48,7 @@ test("01 - simple arrays with strings", () => {
       verboseWhenMismatches: true,
     }),
     true,
-    "01.05"
+    "01.05",
   );
 
   equal(
@@ -57,7 +57,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: false,
     }),
     false,
-    "01.05"
+    "01.05",
   );
   equal(
     compare(["a", "b"], ["a", "b", "c"], {
@@ -65,7 +65,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: false,
     }),
     false,
-    "01.06"
+    "01.06",
   );
 
   equal(
@@ -74,7 +74,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: true,
     }),
     false,
-    "01.07"
+    "01.07",
   );
   equal(
     compare(["a", "b"], ["a", "b", "c"], {
@@ -82,7 +82,7 @@ test("01 - simple arrays with strings", () => {
       hungryForWhitespace: true,
     }),
     false,
-    "01.08"
+    "01.08",
   );
   not.equal(
     compare(["a", "b"], ["a", "b", "c"], {
@@ -91,7 +91,7 @@ test("01 - simple arrays with strings", () => {
       verboseWhenMismatches: true,
     }),
     true,
-    "01.10"
+    "01.10",
   );
 });
 
@@ -99,12 +99,12 @@ test("02 - simple arrays with plain objects", () => {
   equal(
     compare([{ a: "1" }, { b: "2" }, { c: "3" }], [{ a: "1" }, { b: "2" }]),
     true,
-    "02.01"
+    "02.01",
   );
   equal(
     compare([{ a: "1" }, { b: "2" }], [{ a: "1" }, { b: "2" }, { c: "3" }]),
     false,
-    "02.02"
+    "02.02",
   );
 });
 
@@ -112,18 +112,18 @@ test("03 - arrays, nested with strings and objects", () => {
   equal(
     compare(
       [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3", e: "4" }] }], "yo"],
-      [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3" }] }]]
+      [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3" }] }]],
     ),
     true,
-    "03.01"
+    "03.01",
   );
   equal(
     compare(
       [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3" }] }]],
-      [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3", e: "4" }] }], "yo"]
+      [{ a: "1" }, [{ b: "2" }, { c: [{ d: "3", e: "4" }] }], "yo"],
     ),
     false,
-    "03.02"
+    "03.02",
   );
 });
 
@@ -140,7 +140,7 @@ test("04 - comparing empty arrays (variations)", () => {
   equal(
     compare([{ a: [] }, {}, []], [{ a: [] }], { hungryForWhitespace: true }),
     true,
-    "04.10"
+    "04.10",
   );
 });
 
@@ -154,10 +154,10 @@ test("05 - empty arrays within obj key values", () => {
         a: {
           b: "b",
         },
-      }
+      },
     ),
     false,
-    "05.01"
+    "05.01",
   );
   equal(
     compare(
@@ -168,10 +168,10 @@ test("05 - empty arrays within obj key values", () => {
       },
       {
         a: [],
-      }
+      },
     ),
     false,
-    "05.02"
+    "05.02",
   );
   equal(
     compare(
@@ -183,10 +183,10 @@ test("05 - empty arrays within obj key values", () => {
           b: "b",
         },
       },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     false,
-    "05.03"
+    "05.03",
   );
   not.equal(
     compare(
@@ -198,10 +198,10 @@ test("05 - empty arrays within obj key values", () => {
           b: "b",
         },
       },
-      { hungryForWhitespace: true, verboseWhenMismatches: true }
+      { hungryForWhitespace: true, verboseWhenMismatches: true },
     ),
     true,
-    "05.04"
+    "05.04",
   );
   equal(
     compare(
@@ -213,10 +213,10 @@ test("05 - empty arrays within obj key values", () => {
       {
         a: [],
       },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     false,
-    "05.04"
+    "05.04",
   );
 });
 
@@ -228,10 +228,10 @@ test("06 - empty arrays vs empty objects", () => {
       },
       {
         a: {},
-      }
+      },
     ),
     false,
-    "06.01"
+    "06.01",
   );
   equal(
     compare(
@@ -240,10 +240,10 @@ test("06 - empty arrays vs empty objects", () => {
       },
       {
         a: [],
-      }
+      },
     ),
     false,
-    "06.02"
+    "06.02",
   );
   equal(
     compare(
@@ -253,10 +253,10 @@ test("06 - empty arrays vs empty objects", () => {
       {
         a: {},
       },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     true,
-    "06.03"
+    "06.03",
   );
   equal(
     compare(
@@ -266,10 +266,10 @@ test("06 - empty arrays vs empty objects", () => {
       {
         a: [],
       },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     true,
-    "06.04"
+    "06.04",
   );
   equal(
     compare(
@@ -285,10 +285,10 @@ test("06 - empty arrays vs empty objects", () => {
         },
         x: "y",
       },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     true,
-    "06.05"
+    "06.05",
   );
   equal(
     compare(
@@ -304,10 +304,10 @@ test("06 - empty arrays vs empty objects", () => {
         },
         x: "y",
       },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     true,
-    "06.06"
+    "06.06",
   );
 });
 
@@ -319,10 +319,10 @@ test("07 - empty arrays vs empty strings", () => {
       },
       {
         a: "",
-      }
+      },
     ),
     false,
-    "07.01"
+    "07.01",
   );
   equal(
     compare(
@@ -331,10 +331,10 @@ test("07 - empty arrays vs empty strings", () => {
       },
       {
         a: [],
-      }
+      },
     ),
     false,
-    "07.02"
+    "07.02",
   );
   equal(
     compare(
@@ -344,10 +344,10 @@ test("07 - empty arrays vs empty strings", () => {
       {
         a: "",
       },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     true,
-    "07.03"
+    "07.03",
   );
   equal(
     compare(
@@ -357,10 +357,10 @@ test("07 - empty arrays vs empty strings", () => {
       {
         a: [],
       },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     true,
-    "07.04"
+    "07.04",
   );
 });
 
@@ -385,86 +385,86 @@ test("09 - two arrays, matches middle, objects within", () => {
   equal(
     compare(
       [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }],
-      [{ b: "b" }, { c: "c" }, { d: "d" }]
+      [{ b: "b" }, { c: "c" }, { d: "d" }],
     ),
     true,
-    "09.01"
+    "09.01",
   );
   equal(
     compare(
       [{ b: "b" }, { c: "c" }, { d: "d" }],
-      [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }]
+      [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }],
     ),
     false,
-    "09.02"
+    "09.02",
   );
 
   equal(
     compare(
       [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }],
-      [{ b: "b" }, { c: "c" }, { e: "e" }]
+      [{ b: "b" }, { c: "c" }, { e: "e" }],
     ),
     true,
-    "09.03"
+    "09.03",
   );
   equal(
     compare(
       [{ b: "b" }, { c: "c" }, { e: "e" }],
-      [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }]
+      [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }],
     ),
     false,
-    "09.04"
+    "09.04",
   );
 
   equal(
     compare(
       [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }],
-      [{ a: "a" }, { b: "b" }, { c: "c" }]
+      [{ a: "a" }, { b: "b" }, { c: "c" }],
     ),
     true,
-    "09.05"
+    "09.05",
   );
   equal(
     compare(
       [{ a: "a" }, { b: "b" }, { c: "c" }],
-      [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }]
+      [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }],
     ),
     false,
-    "09.06"
+    "09.06",
   );
 
   equal(
     compare(
       [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }],
-      [{ c: "c" }, { d: "d" }, { e: "e" }]
+      [{ c: "c" }, { d: "d" }, { e: "e" }],
     ),
     true,
-    "09.07"
+    "09.07",
   );
   equal(
     compare(
       [{ c: "c" }, { d: "d" }, { e: "e" }],
-      [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }]
+      [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }],
     ),
     false,
-    "09.08"
+    "09.08",
   );
 
   equal(
     compare(
       [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }],
-      [{ e: "e" }]
+      [{ e: "e" }],
     ),
     true,
-    "09.09"
+    "09.09",
   );
   equal(
     compare(
       [{ e: "e" }],
-      [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }]
+      [{ a: "a" }, { b: "b" }, { c: "c" }, { d: "d" }, { e: "e" }],
     ),
     false,
-    "09.10"
+    "09.10",
   );
 
   equal(
@@ -479,10 +479,10 @@ test("09 - two arrays, matches middle, objects within", () => {
       [
         { c1: "c1", c2: "c2" },
         { d1: "d1", d2: "d2" },
-      ]
+      ],
     ),
     true,
-    "09.11"
+    "09.11",
   );
   equal(
     compare(
@@ -496,10 +496,10 @@ test("09 - two arrays, matches middle, objects within", () => {
       [
         { c2: "c2", c1: "c1" },
         { d2: "d2", d1: "d1" },
-      ]
+      ],
     ),
     true,
-    "09.12"
+    "09.12",
   );
   equal(
     compare(
@@ -513,10 +513,10 @@ test("09 - two arrays, matches middle, objects within", () => {
       [
         { c2: "c2", c1: "c1" },
         { d2: "d2", d1: "d1" },
-      ]
+      ],
     ),
     false,
-    "09.13"
+    "09.13",
   );
   equal(
     compare(
@@ -527,10 +527,10 @@ test("09 - two arrays, matches middle, objects within", () => {
         { d1: "d1", d2: "d2" },
         { e: "e" },
       ],
-      [{ c1: "c1" }, { d2: "d2" }]
+      [{ c1: "c1" }, { d2: "d2" }],
     ),
     true,
-    "09.14"
+    "09.14",
   );
   equal(
     compare(
@@ -541,10 +541,10 @@ test("09 - two arrays, matches middle, objects within", () => {
         { d1: "d1", d2: "d2" },
         { e: "e" },
       ],
-      [{ d2: "d2" }, { c1: "c1" }]
+      [{ d2: "d2" }, { c1: "c1" }],
     ),
     false,
-    "09.15"
+    "09.15",
   );
 });
 
@@ -553,12 +553,12 @@ test("10 - two arrays, one empty, string within", () => {
   not.equal(
     compare(["a", "b", "c"], [], { verboseWhenMismatches: true }),
     true,
-    "10.02"
+    "10.02",
   );
   equal(
     compare(["a", "b", "c"], [], { hungryForWhitespace: true }),
     true,
-    "10.02"
+    "10.02",
   );
 });
 

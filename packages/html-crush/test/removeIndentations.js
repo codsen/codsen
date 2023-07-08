@@ -14,7 +14,7 @@ test(`01 - ${`\u001b[${33}m${"opts.removeIndentations"}\u001b[${39}m`} - collaps
       removeIndentations: true,
     }).result,
     "a b\nc d",
-    "01.01"
+    "01.01",
   );
 });
 
@@ -25,7 +25,7 @@ test(`02 - ${`\u001b[${33}m${"opts.removeIndentations"}\u001b[${39}m`} - trailin
       removeIndentations: true,
     }).result,
     "a\nb",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -44,13 +44,13 @@ test(`03 - ${`\u001b[${33}m${"opts.removeIndentations"}\u001b[${39}m`} - leading
       {
         removeLineBreaks: false,
         removeIndentations: true,
-      }
+      },
     ).result,
     `<!DOCTYPE HTML>
 <html>
 <head>
 `,
-    "03.01"
+    "03.01",
   );
 });
 

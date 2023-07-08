@@ -19,24 +19,24 @@ test(`01 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
   equal(
     matchLeft('<a class="something">', 8, "class", { cb: isSpace }),
     "class",
-    "01.01"
+    "01.01",
   );
   equal(
     matchLeft('<a superclass="something">', 13, "class", { cb: isSpace }),
     false,
-    "01.02"
+    "01.02",
   );
   equal(
     matchLeftIncl('<a class="something">', 8, "class=", { cb: isSpace }),
     "class=",
-    "01.03"
+    "01.03",
   );
   equal(
     matchLeftIncl('<a superclass="something">', 13, "class=", {
       cb: isSpace,
     }),
     false,
-    "01.04"
+    "01.04",
   );
   equal(matchLeftIncl("a", 13, "class=", { cb: isSpace }), false, "01.05");
 
@@ -62,7 +62,7 @@ test(`01 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
   equal(
     matchLeft(" b\n\n\nc", 5, "b", { cb: isSpace, trimBeforeMatching: true }),
     "b",
-    "01.09"
+    "01.09",
   );
   // Answer is now true, because character at index #5 is "c", we look to the left of it, skip
   // all trimmable characters and encounter "b". And then, there's a space to the left of it to
@@ -75,7 +75,7 @@ test(`01 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
   equal(
     matchLeft("ab\n\n\nc", 5, "b", { cb: isSpace, trimBeforeMatching: true }),
     false,
-    "01.10"
+    "01.10",
   );
 });
 
@@ -86,12 +86,12 @@ test(`02 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLe
   equal(
     matchLeft("ab\n\n\nc", 5, "b", { cb: isSpace, trimBeforeMatching: true }),
     false,
-    "02.01"
+    "02.01",
   );
   equal(
     matchLeft(" b\n\n\nc", 5, "b", { cb: isSpace, trimBeforeMatching: true }),
     "b",
-    "02.02"
+    "02.02",
   );
   equal(matchLeft(" b\n\n\nc", 5, "b", { cb: isSpace }), false, "02.03");
   equal(
@@ -101,7 +101,7 @@ test(`02 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLe
       i: true,
     }),
     false,
-    "02.04"
+    "02.04",
   );
   equal(
     matchLeft(" b\n\n\nc", 5, "B", {
@@ -110,12 +110,12 @@ test(`02 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLe
       i: true,
     }),
     "B",
-    "02.05"
+    "02.05",
   );
   equal(
     matchLeft(" b\n\n\nc", 5, "B", { cb: isSpace, i: true }),
     false,
-    "02.06"
+    "02.06",
   );
 });
 
@@ -133,7 +133,7 @@ test(`03 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLe
       trimBeforeMatching: true,
     }),
     "bc",
-    "03.02"
+    "03.02",
   );
   equal(
     matchLeftIncl("abc\n\n\n", 5, "bc", {
@@ -141,7 +141,7 @@ test(`03 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLe
       trimBeforeMatching: true,
     }),
     false,
-    "03.03"
+    "03.03",
   );
   equal(
     matchLeftIncl("abc\n\n\n", 5, "bc", {
@@ -149,19 +149,19 @@ test(`03 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLe
       trimBeforeMatching: true,
     }),
     "bc",
-    "03.04"
+    "03.04",
   );
   equal(
     matchLeftIncl("abc\n\n\n", 5, "bc", { trimBeforeMatching: true }),
     "bc",
-    "03.05"
+    "03.05",
   );
 
   // opts.i
   equal(
     matchLeftIncl(" bc\n\n\n", 5, "BC", { cb: isSpace, i: true }),
     false,
-    "03.06"
+    "03.06",
   );
   equal(
     matchLeftIncl(" bc\n\n\n", 5, "BC", {
@@ -170,7 +170,7 @@ test(`03 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLe
       i: true,
     }),
     "BC",
-    "03.07"
+    "03.07",
   );
   equal(
     matchLeftIncl(" bc\n\n\n", 5, ["BC"], {
@@ -179,7 +179,7 @@ test(`03 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLe
       i: true,
     }),
     "BC",
-    "03.08"
+    "03.08",
   );
   equal(
     matchLeftIncl(" bc\n\n\n", 5, ["AAA", "BC"], {
@@ -188,7 +188,7 @@ test(`03 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLe
       i: true,
     }),
     "BC",
-    "03.09"
+    "03.09",
   );
   equal(
     matchLeftIncl("abc\n\n\n", 5, "BC", {
@@ -197,7 +197,7 @@ test(`03 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLe
       i: true,
     }),
     false,
-    "03.10"
+    "03.10",
   );
   equal(
     matchLeftIncl("abc\n\n\n", 5, "BC", {
@@ -205,7 +205,7 @@ test(`03 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLe
       i: true,
     }),
     "BC",
-    "03.11"
+    "03.11",
   );
 });
 
@@ -219,24 +219,24 @@ test(`04 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
     // if and also does the space follow after it
     matchRight('<a class="something"> text', 19, ">", { cb: isSpace }),
     ">",
-    "04.02"
+    "04.02",
   );
   equal(
     matchRight('<a class="something">text', 19, ">", { cb: isSpace }),
     false,
-    "04.03"
+    "04.03",
   );
   equal(matchRight('<a class="something"> text', 18, '">'), '">', "04.04");
   equal(matchRightIncl('<a class="something"> text', 19, '">'), '">', "04.05");
   equal(
     matchRightIncl('<a class="something"> text', 19, '">', { cb: isSpace }),
     '">',
-    "04.06"
+    "04.06",
   );
   equal(
     matchRightIncl('<a class="something">text', 19, '">', { cb: isSpace }),
     false,
-    "04.07"
+    "04.07",
   );
 });
 
@@ -252,7 +252,7 @@ test(`05 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
       trimBeforeMatching: true,
     }),
     "c",
-    "05.02"
+    "05.02",
   );
   equal(
     matchRight("b\n\n\ncz", 0, "c", {
@@ -260,12 +260,12 @@ test(`05 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
       trimBeforeMatching: true,
     }),
     false,
-    "05.03"
+    "05.03",
   );
   equal(
     matchRight("b\n\n\nc z", 0, "C", { cb: isSpace, i: true }),
     false,
-    "05.04"
+    "05.04",
   );
   equal(
     matchRight("b\n\n\nc z", 0, "C", {
@@ -274,7 +274,7 @@ test(`05 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
       i: true,
     }),
     "C",
-    "05.05"
+    "05.05",
   );
   equal(
     matchRight("b\n\n\ncz", 0, "C", {
@@ -283,14 +283,14 @@ test(`05 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
       i: true,
     }),
     false,
-    "05.06"
+    "05.06",
   );
 
   // control
   equal(
     matchRightIncl("\n\n\nbc z", 0, ["aa", "bc"], { cb: isSpace }),
     false,
-    "05.07"
+    "05.07",
   );
   equal(
     matchRightIncl("\n\n\nbc z", 0, ["aa", "bc"], {
@@ -298,7 +298,7 @@ test(`05 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
       trimBeforeMatching: true,
     }),
     "bc",
-    "05.08"
+    "05.08",
   );
   equal(
     matchRightIncl("\n\n\nbcz", 0, ["aa", "bc"], {
@@ -306,21 +306,21 @@ test(`05 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
       trimBeforeMatching: true,
     }),
     false,
-    "05.09"
+    "05.09",
   );
   equal(
     matchRightIncl("\n\n\nbcz", 0, ["aa", "bc"], {
       trimBeforeMatching: true,
     }),
     "bc",
-    "05.10"
+    "05.10",
   );
 
   // opts.i
   equal(
     matchRightIncl("\n\n\nbc z", 0, ["ZZ", "BC"], { cb: isSpace, i: true }),
     false,
-    "05.11"
+    "05.11",
   );
   equal(
     matchRightIncl("\n\n\nbc z", 0, ["ZZ", "BC"], {
@@ -329,7 +329,7 @@ test(`05 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
       i: true,
     }),
     "BC",
-    "05.12"
+    "05.12",
   );
   equal(
     matchRightIncl("\n\n\nbc z", 0, ["KJG", "BC"], {
@@ -338,7 +338,7 @@ test(`05 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
       i: true,
     }),
     "BC",
-    "05.13"
+    "05.13",
   );
   equal(
     matchRightIncl("\n\n\nbcz", 0, ["ZZ", "BC"], {
@@ -347,7 +347,7 @@ test(`05 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
       i: true,
     }),
     false,
-    "05.14"
+    "05.14",
   );
   equal(
     matchRightIncl("\n\n\nbcz", 0, ["ZZ", "BC"], {
@@ -355,12 +355,12 @@ test(`05 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
       i: true,
     }),
     "BC",
-    "05.15"
+    "05.15",
   );
   equal(
     matchRightIncl("\n\n\nbcz", 0, ["ZZ", "BC"], { i: true }),
     false,
-    "05.16"
+    "05.16",
   );
 });
 
@@ -420,7 +420,7 @@ test(`09 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${3
   function hasEmptyClassRightAfterTheTagName2(
     firstCharacter,
     wholeSubstring,
-    indexOfFirstChar
+    indexOfFirstChar,
   ) {
     equal(firstCharacter, " ");
     equal(wholeSubstring, ' class="">');
@@ -433,7 +433,7 @@ test(`09 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${3
       cb: hasEmptyClassRightAfterTheTagName,
     }),
     false, // because slash hasn't been accounted for, it's to the right of index 0 character, "<".
-    "09.01"
+    "09.01",
   );
   equal(
     matchRight(input, 0, ["hello", "div"], {
@@ -441,7 +441,7 @@ test(`09 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${3
       trimCharsBeforeMatching: ["/", " "],
     }),
     "div", // trims slash, finds div, calls the callback with args, they trim and check for "class".
-    "09.02"
+    "09.02",
   );
   equal(
     matchRight(input, 0, ["hello", "div"], {
@@ -449,7 +449,7 @@ test(`09 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${3
       trimCharsBeforeMatching: ["/", " "],
     }),
     "div", // trims slash, finds div, calls the callback with args, they trim and check for "class".
-    "09.03"
+    "09.03",
   );
 
   matchRight(input, 0, ["zz", "div"], {
@@ -499,31 +499,31 @@ test(`10 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${3
   equal(
     matchRightIncl('</div class="">', 0, ["</", "Khg"]),
     "</", // base from where we start
-    "10.01"
+    "10.01",
   );
   equal(
     matchRightIncl('</div class="">', 0, ["</"], {
       cb: hasEmptyClassRightAfterTheTagName,
     }),
     false, // wrong callback function
-    "10.02"
+    "10.02",
   );
   equal(
     matchRightIncl('</div class="">', 0, ["</", ">"], { cb: startsWithDiv }),
     "</", // succeeds because div follows "</"
-    "10.03"
+    "10.03",
   );
   equal(
     matchRightIncl('</ div class="">', 0, ["</"], { cb: startsWithDiv }),
     false, // fails because space (before "class") is not accounted for
-    "10.04"
+    "10.04",
   );
   equal(
     matchRightIncl('</div class="">', 0, ["yo", "</"], {
       cb: startsWithDivWithTrim,
     }),
     "</", // trims slash, finds div, calls the callback with args, they trim and check for "class".
-    "10.05"
+    "10.05",
   );
 });
 
@@ -535,19 +535,19 @@ test(`11 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${3
   equal(
     matchLeft("<div><b>aaa</b></div>", 5, ["<article>", "<div>"]),
     "<div>", // 5th index is left bracket of <b>. Yes, <div> is on the left.
-    "11.01"
+    "11.01",
   );
   equal(
     matchLeft("z<div ><b>aaa</b></div>", 7, ["<div>"]),
     false, // 7th index is left bracket of <b>. Yes, <div> is on the left.
-    "11.02"
+    "11.02",
   );
   equal(
     matchLeft("z<div ><b>aaa</b></div>", 7, ["<b", "<div"], {
       trimCharsBeforeMatching: [">", " "],
     }),
     "<div", // 7th index is left bracket of <b>. Yes, <div> is on the left.
-    "11.03"
+    "11.03",
   );
   equal(
     matchLeft("z<div ><b>aaa</b></div>", 7, ["yo yo yo", "<div", "gkhjg"], {
@@ -555,7 +555,7 @@ test(`11 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${3
       trimCharsBeforeMatching: [">", " "],
     }),
     "<div", // 7th index is left bracket of <b>. Yes, <div> is on the left.
-    "11.04"
+    "11.04",
   );
   equal(
     matchLeft("<div ><b>aaa</b></div>", 6, ["<div"], {
@@ -563,7 +563,7 @@ test(`11 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${3
       trimCharsBeforeMatching: [" ", ">"],
     }),
     false, // cheeky - deliberately making the second arg of cb to be blank and fail startsWithZ
-    "11.05"
+    "11.05",
   );
 });
 
@@ -579,34 +579,34 @@ test(`12 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${3
     "<div>", // 4th index is right bracket of <div>, but it's inclusive so it will get included.
     // not inclusive would give "<div" by the way, that is, given index would not
     // be included in the slice.
-    "12.01"
+    "12.01",
   );
   equal(matchLeftIncl("z<div ><b>aaa</b></div>", 6, ["<div>"]), false, "12.02");
   equal(
     matchLeftIncl("z<div ><b>aaa</b></div>", 6, ["111", "<div >"]),
     "<div >",
-    "12.03"
+    "12.03",
   );
   equal(
     matchLeftIncl("z<div ><b>aaa</b></div>", 6, ["222", "<div >"], {
       cb: startsWithZ,
     }),
     "<div >",
-    "12.04"
+    "12.04",
   );
   equal(
     matchLeftIncl("zxy<div ><b>aaa</b></div>", 8, ["krbd", "<div >"], {
       cb: startsWithZ,
     }),
     "<div >",
-    "12.05"
+    "12.05",
   );
   equal(
     matchLeftIncl("<div ><b>aaa</b></div>", 0, ["krbd", "<div >"], {
       cb: startsWithZ,
     }),
     false,
-    "12.06"
+    "12.06",
   );
 });
 
@@ -619,14 +619,14 @@ test(`13 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       i: true,
       cb: (char) => char === "a",
     }),
-    "13.01"
+    "13.01",
   );
   not.ok(
     matchLeft("abc", 1, null, {
       i: true,
       cb: (char) => char === "c",
     }),
-    "13.02"
+    "13.02",
   );
   throws(
     () => {
@@ -635,7 +635,7 @@ test(`13 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       });
     },
     /THROW_ID_08/,
-    "13.02"
+    "13.02",
   );
 });
 
@@ -645,14 +645,14 @@ test(`14 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       i: true,
       cb: (char) => char === "a",
     }),
-    "14.01"
+    "14.01",
   );
   ok(
     matchLeftIncl("abc", 1, "", {
       i: true,
       cb: (char) => char === "b",
     }),
-    "14.01"
+    "14.01",
   );
   throws(
     () => {
@@ -661,7 +661,7 @@ test(`14 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       });
     },
     /THROW_ID_08/,
-    "14.02"
+    "14.02",
   );
 });
 
@@ -671,14 +671,14 @@ test(`15 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       i: true,
       cb: (char) => char === "c",
     }),
-    "15.01"
+    "15.01",
   );
   not.ok(
     matchRight("abc", 1, "", {
       i: true,
       cb: (char) => char === "a",
     }),
-    "15.02"
+    "15.02",
   );
   throws(
     () => {
@@ -687,7 +687,7 @@ test(`15 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       });
     },
     /THROW_ID_08/,
-    "15.02"
+    "15.02",
   );
 });
 
@@ -697,14 +697,14 @@ test(`16 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       i: true,
       cb: (char) => char === "c",
     }),
-    "16.01"
+    "16.01",
   );
   ok(
     matchRightIncl("abc", 1, "", {
       i: true,
       cb: (char) => char === "b",
     }),
-    "16.01"
+    "16.01",
   );
   throws(
     () => {
@@ -713,7 +713,7 @@ test(`16 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       });
     },
     /THROW_ID_08/,
-    "16.02"
+    "16.02",
   );
 });
 
@@ -723,21 +723,21 @@ test(`17 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       i: true,
       cb: (char) => char === "d",
     }),
-    "17.01"
+    "17.01",
   );
   ok(
     matchRight("abcdef", 2, "", {
       i: true,
       cb: (char, rest) => rest === "def",
     }),
-    "17.02"
+    "17.02",
   );
   ok(
     matchRight("abcdef", 2, "", {
       i: true,
       cb: (char, rest, index) => index === 3,
     }),
-    "17.03"
+    "17.03",
   );
 });
 
@@ -747,19 +747,19 @@ test(`18 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
     matchRight("abc   def", 2, "", {
       cb: (char) => char === "d",
     }),
-    "18.01"
+    "18.01",
   );
   not.ok(
     matchRight("abc   def", 2, "", {
       cb: (char, rest) => rest === "def",
     }),
-    "18.02"
+    "18.02",
   );
   not.ok(
     matchRight("abc   def", 2, "", {
       cb: (char, rest, index) => index === 6, // "d" is at index 6
     }),
-    "18.03"
+    "18.03",
   );
 
   // with opts.trimBeforeMatching
@@ -768,21 +768,21 @@ test(`18 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       trimBeforeMatching: true,
       cb: (char) => char === "d",
     }),
-    "18.01"
+    "18.01",
   );
   ok(
     matchRight("abc   def", 2, "", {
       trimBeforeMatching: true,
       cb: (char, rest) => rest === "def",
     }),
-    "18.02"
+    "18.02",
   );
   ok(
     matchRight("abc   def", 2, "", {
       trimBeforeMatching: true,
       cb: (char, rest, index) => index === 6, // "d" is at index 6
     }),
-    "18.03"
+    "18.03",
   );
 });
 
@@ -792,19 +792,19 @@ test(`19 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
     matchRightIncl("abc   def", 3, "", {
       cb: (char) => char === "d",
     }),
-    "19.01"
+    "19.01",
   );
   not.ok(
     matchRightIncl("abc   def", 3, "", {
       cb: (char, rest) => rest === "def",
     }),
-    "19.02"
+    "19.02",
   );
   not.ok(
     matchRightIncl("abc   def", 3, "", {
       cb: (char, rest, index) => index === 6, // "d" is at index 6
     }),
-    "19.03"
+    "19.03",
   );
 
   // with opts.trimBeforeMatching
@@ -813,21 +813,21 @@ test(`19 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       trimBeforeMatching: true,
       cb: (char) => char === "d",
     }),
-    "19.01"
+    "19.01",
   );
   ok(
     matchRightIncl("abc   def", 3, "", {
       trimBeforeMatching: true,
       cb: (char, rest) => rest === "def",
     }),
-    "19.02"
+    "19.02",
   );
   ok(
     matchRightIncl("abc   def", 3, "", {
       trimBeforeMatching: true,
       cb: (char, rest, index) => index === 6, // "d" is at index 6
     }),
-    "19.03"
+    "19.03",
   );
 });
 
@@ -840,21 +840,21 @@ test(`20 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       "",
       {
         cb: (char) => char === "c",
-      }
+      },
     ),
-    "20.01"
+    "20.01",
   );
   not.ok(
     matchLeft("abc   def", 6, "", {
       cb: (char, rest) => rest === "abc",
     }),
-    "20.02"
+    "20.02",
   );
   not.ok(
     matchLeft("abc   def", 6, "", {
       cb: (char, rest, index) => index === 2, // "c" is at index 2
     }),
-    "20.03"
+    "20.03",
   );
 
   // with opts.trimBeforeMatching
@@ -866,23 +866,23 @@ test(`20 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       {
         trimBeforeMatching: true,
         cb: (char) => char === "c",
-      }
+      },
     ),
-    "20.01"
+    "20.01",
   );
   ok(
     matchLeft("abc   def", 6, "", {
       trimBeforeMatching: true,
       cb: (char, rest) => rest === "abc",
     }),
-    "20.02"
+    "20.02",
   );
   ok(
     matchLeft("abc   def", 6, "", {
       trimBeforeMatching: true,
       cb: (char, rest, index) => index === 2, // "c" is at index 2
     }),
-    "20.03"
+    "20.03",
   );
 });
 
@@ -895,21 +895,21 @@ test(`21 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       "",
       {
         cb: (char) => char === "c",
-      }
+      },
     ),
-    "21.01"
+    "21.01",
   );
   not.ok(
     matchLeftIncl("abc   def", 5, "", {
       cb: (char, rest) => rest === "abc",
     }),
-    "21.02"
+    "21.02",
   );
   not.ok(
     matchLeftIncl("abc   def", 5, "", {
       cb: (char, rest, index) => index === 2, // "c" is at index 2
     }),
-    "21.03"
+    "21.03",
   );
 
   // with opts.trimBeforeMatching
@@ -921,23 +921,23 @@ test(`21 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       {
         trimBeforeMatching: true,
         cb: (char) => char === "c",
-      }
+      },
     ),
-    "21.01"
+    "21.01",
   );
   ok(
     matchLeftIncl("abc   def", 5, "", {
       trimBeforeMatching: true,
       cb: (char, rest) => rest === "abc",
     }),
-    "21.02"
+    "21.02",
   );
   ok(
     matchLeftIncl("abc   def", 5, "", {
       trimBeforeMatching: true,
       cb: (char, rest, index) => index === 2, // "c" is at index 2
     }),
-    "21.03"
+    "21.03",
   );
 });
 
@@ -956,9 +956,9 @@ test(`22 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       "",
       {
         cb: () => true,
-      }
+      },
     ),
-    "22.01"
+    "22.01",
   );
   // Now, even the callback yields "true" in all cases, opts.trimBeforeMatching
   // is on too, which means, starting at index 5 and marching left it encounters
@@ -972,9 +972,9 @@ test(`22 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       {
         trimBeforeMatching: true,
         cb: () => true, // <---- notice it's yielding "true" for all the cases
-      }
+      },
     ),
-    "22.02"
+    "22.02",
   );
 });
 
@@ -987,9 +987,9 @@ test(`23 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       "",
       {
         cb: (char) => char === "_",
-      }
+      },
     ),
-    "23.01"
+    "23.01",
   );
   ok(
     matchLeftIncl(
@@ -999,9 +999,9 @@ test(`23 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       {
         trimCharsBeforeMatching: ["b", "c"],
         cb: (char) => char === "_",
-      }
+      },
     ),
-    "23.01"
+    "23.01",
   );
 });
 
@@ -1011,14 +1011,14 @@ test(`24 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
     matchRightIncl("_bcbcbcbc+", 1, "", {
       cb: (char) => char === "+",
     }),
-    "24.01"
+    "24.01",
   );
   ok(
     matchRightIncl("_bcbcbcbc+", 1, "", {
       trimCharsBeforeMatching: ["b", "c"],
       cb: (char) => char === "+",
     }),
-    "24.01"
+    "24.01",
   );
 });
 
@@ -1031,9 +1031,9 @@ test(`25 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       "",
       {
         cb: (char) => char === "_",
-      }
+      },
     ),
-    "25.01"
+    "25.01",
   );
   ok(
     matchLeft(
@@ -1043,9 +1043,9 @@ test(`25 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
       {
         trimCharsBeforeMatching: ["b", "c"],
         cb: (char) => char === "_",
-      }
+      },
     ),
-    "25.01"
+    "25.01",
   );
 });
 
@@ -1055,14 +1055,14 @@ test(`26 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
     matchRight("_bcbcbcbc+", 1, "", {
       cb: (char) => char === "+",
     }),
-    "26.01"
+    "26.01",
   );
   ok(
     matchRight("_bcbcbcbc+", 1, "", {
       trimCharsBeforeMatching: ["b", "c"],
       cb: (char) => char === "+",
     }),
-    "26.01"
+    "26.01",
   );
 });
 

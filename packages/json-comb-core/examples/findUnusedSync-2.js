@@ -51,5 +51,5 @@ assert.deepEqual(
     { b: false },
     { c: false },
   ]),
-  ["c", "a[0].l"]
+  ["c", "a[0].l"],
 );

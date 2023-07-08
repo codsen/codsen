@@ -78,9 +78,9 @@ function generate() {
         '<meta name="format-detection" content="telephone=no" />',
         '<meta name="viewport" content="width=device-width, initial-scale=1.0" />',
         "<title>Yo</title>",
-        '<style type="text/css">'
+        '<style type="text/css">',
       )}`,
-      ""
+      "",
     )}${chance(
       `${pick(
         "<",
@@ -101,12 +101,12 @@ function generate() {
         "<script ",
         "</script{{",
         "\t",
-        "\n"
+        "\n",
       )}`,
-      ""
+      "",
     )}${chance(`${pick(whitespace)}`, "")}${chance(
       `${pick("<", ">", "a", "strong", " ", "\t", "\n")}`,
-      ""
+      "",
     )}${chance(
       `${pick(
         "<",
@@ -127,11 +127,11 @@ function generate() {
         "</script{{",
         " ",
         "\t",
-        "\n"
+        "\n",
       )}`,
-      ""
+      "",
     )}`}`,
-    pick("a", "1", "\n", "\t").repeat(pick(0, 1, 2, 3, 50))
+    pick("a", "1", "\n", "\t").repeat(pick(0, 1, 2, 3, 50)),
   )}${chance(
     `${pick(
       "<",
@@ -161,9 +161,9 @@ function generate() {
       "<script ",
       "</script{{",
       "<div>\n\t\t</div>>",
-      "<sgfj ldjgkjfgk ghj lf lkgjh lkfjgl gh kgh;l kglhjk ;glhkj >"
+      "<sgfj ldjgkjfgk ghj lf lkgjh lkfjgl gh kgh;l kglhjk ;glhkj >",
     )}`,
-    ""
+    "",
   )}${chance(
     `${pick(
       "<",
@@ -193,9 +193,9 @@ function generate() {
       "<div>\n\t\t</div>>",
       "<div>\n\t\t</div>>",
       "<sgfj ldjgkjfgk ghj lf lkgjh lkfjgl gh kgh;l kglhjk ;glhkj >",
-      '<!--[if (gte mso 9)|(IE)]>\n<table width="50" border="0" cellpadding="0" cellspacing="0" align="center"><tr><td><![endif]-->'
+      '<!--[if (gte mso 9)|(IE)]>\n<table width="50" border="0" cellpadding="0" cellspacing="0" align="center"><tr><td><![endif]-->',
     )}`,
-    ""
+    "",
   )}${chance(
     `${pick(
       "<",
@@ -239,9 +239,9 @@ function generate() {
       ">\t<></strong> z  <",
       ">\t>></strong> z  <",
       ">\t>> </strong> z  <",
-      ">\t>>  </strong> z  <"
+      ">\t>>  </strong> z  <",
     )}`,
-    ""
+    "",
   )}${chance(
     `${pick(
       "<",
@@ -270,9 +270,9 @@ function generate() {
       "zzzz       \t\t    \n aaa    a     \t   ]]>",
       "<script ",
       "</script{{",
-      "<sgfj ldjgkjfgk ghj lf lkgjh lkfjgl gh kgh;l kglhjk ;glhkj >"
+      "<sgfj ldjgkjfgk ghj lf lkgjh lkfjgl gh kgh;l kglhjk ;glhkj >",
     )}`,
-    ""
+    "",
   )}${chance(
     `${pick(
       "<",
@@ -301,9 +301,9 @@ function generate() {
       "zzzz       \t\t    \n aaa    a     \t   ]]>",
       "<script ",
       "</script{{",
-      "<sgfj ldjgkjfgk ghj lf lkgjh lkfjgl gh kgh;l kglhjk ;glhkj >"
+      "<sgfj ldjgkjfgk ghj lf lkgjh lkfjgl gh kgh;l kglhjk ;glhkj >",
     )}`,
-    ""
+    "",
   )}`;
 }
 
@@ -378,17 +378,17 @@ test("*** non-deterministic tests", () => {
                 1000,
                 1500,
                 2000,
-                3000
+                3000,
               ),
               removeIndentations: chance(),
               removeLineBreaks: chance(),
-            }).result
+            }).result,
           ),
           `source was:\n-----------\n${JSON.stringify(
             generated,
             null,
-            0
-          )}\n-----------`
+            0,
+          )}\n-----------`,
         );
         counter += 1;
       } else {

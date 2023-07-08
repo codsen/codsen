@@ -21,10 +21,10 @@ test("01 - replace letter with letter", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "d"
+      "d",
     ),
     "a d c",
-    "test 1.1"
+    "test 1.1",
   );
   equal(
     er(
@@ -32,10 +32,10 @@ test("01 - replace letter with letter", () => {
       {
         searchFor: "b",
       },
-      "d"
+      "d",
     ),
     "a d c",
-    "test 1.1"
+    "test 1.1",
   );
 });
 
@@ -52,10 +52,10 @@ test("02 - replace 1 emoji with 1 emoji", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "💖"
+      "💖",
     ),
     "🐴 💖 🐴",
-    "test 1.2"
+    "test 1.2",
   );
 });
 
@@ -72,10 +72,10 @@ test("03 - replace 3 consecutive emoji with emoji", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "💖"
+      "💖",
     ),
     "a 💖💖💖 a",
-    "test 1.3"
+    "test 1.3",
   );
 });
 
@@ -92,10 +92,10 @@ test("04 - gorilla emoji - in escaped JS", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      " Gorilla "
+      " Gorilla ",
     ),
     "ljghdfjkgzh Gorilla lkgljd",
-    "test 1.4 - http://unicode-table.com/en/1F98D/"
+    "test 1.4 - http://unicode-table.com/en/1F98D/",
   );
 });
 
@@ -112,10 +112,10 @@ test("05 - gorilla emoji - in raw", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "gorilla"
+      "gorilla",
     ),
     "ljghdfjkgzhgorillalkgljd",
-    "test 1.5 - http://unicode-table.com/en/1F98D/"
+    "test 1.5 - http://unicode-table.com/en/1F98D/",
   );
 });
 
@@ -132,10 +132,10 @@ test("06 - won't find a letter", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "d"
+      "d",
     ),
     "a b c",
-    "test 1.6"
+    "test 1.6",
   );
 });
 
@@ -152,10 +152,10 @@ test("07 - won't find emoji, with new lines", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "d"
+      "d",
     ),
     "a\nb\nc",
-    "test 1.7"
+    "test 1.7",
   );
 });
 
@@ -172,10 +172,10 @@ test("08 - replacement with new lines", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "c\nd"
+      "c\nd",
     ),
     "c\nd",
-    "test 1.8"
+    "test 1.8",
   );
 });
 
@@ -192,10 +192,10 @@ test("09 - multiple letter findings", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "c"
+      "c",
     ),
     "c c c c c b",
-    "test 1.9"
+    "test 1.9",
   );
 });
 
@@ -212,10 +212,10 @@ test("10 - single digit of string type replaced", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "1"
+      "1",
     ),
     "1",
-    "test 1.10"
+    "test 1.10",
   );
 });
 
@@ -232,10 +232,10 @@ test("11 - single digit of integer type replaced", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      1
+      1,
     ),
     "1",
-    "test 1.11"
+    "test 1.11",
   );
 });
 
@@ -252,10 +252,10 @@ test("12 - source and replacement are of integer type", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      1
+      1,
     ),
     "1",
-    "test 1.12"
+    "test 1.12",
   );
 });
 
@@ -272,10 +272,10 @@ test("13 - all raw integers: source, replacement and searchFor", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      1
+      1,
     ),
     "1",
-    "test 1.13"
+    "test 1.13",
   );
 });
 
@@ -292,10 +292,10 @@ test("14 - multiple consecutive letter replacements", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "b"
+      "b",
     ),
     "aaabbbbccccc",
-    "test 1.14"
+    "test 1.14",
   );
 });
 

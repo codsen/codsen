@@ -10,7 +10,7 @@ declare const defaults: Opts;
 declare function includesWithGlob(
   input: string | string[],
   findThis: string | string[],
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): boolean;
 
 export { Opts, defaults, includesWithGlob, version };

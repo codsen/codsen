@@ -85,7 +85,8 @@ const shas = {
 let fixturesPath = path.resolve("./test/fixtures");
 readdirSync(fixturesPath)
   .filter(
-    (f) => statSync(path.join(fixturesPath, f)).isFile() && f.endsWith("-in.zz")
+    (f) =>
+      statSync(path.join(fixturesPath, f)).isFile() && f.endsWith("-in.zz"),
   )
   .forEach((file, i) => {
     test(`${file}`, () => {
@@ -99,8 +100,8 @@ readdirSync(fixturesPath)
       } else if (sha256(testIn) !== shas[file]) {
         throw new Error(
           `#${testName} - ${file} has been mangled, sha should be: ${sha256(
-            testIn
-          )}`
+            testIn,
+          )}`,
         );
       }
 
@@ -109,14 +110,14 @@ readdirSync(fixturesPath)
       equal(
         verifiedAndFixed.output,
         testOut,
-        `#${testName} - verifyAndFix().output`
+        `#${testName} - verifyAndFix().output`,
       );
       equal(
         verifiedAndFixed.fixed,
         // if "in" and "out" are the same,
         // there was nothing to fix, so "fixed" will be "false"
         testIn !== testOut,
-        `#${testName} - verifyAndFix().fixed`
+        `#${testName} - verifyAndFix().fixed`,
       );
       /*equal(
         verifiedAndFixed.messages,

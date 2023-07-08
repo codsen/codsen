@@ -8,7 +8,7 @@ interface Inputs {
 declare function set(
   str: string,
   path: string,
-  valToInsert: string | number
+  valToInsert: string | number,
 ): string;
 declare function del(str: string, path: string): string;
 

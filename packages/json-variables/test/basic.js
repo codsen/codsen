@@ -20,7 +20,7 @@ test("01 - two variables in an object's key", () => {
       var1: "value1",
       var2: "value2",
     },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -38,7 +38,7 @@ test("02 - two variables with paths in an object's key", () => {
       var1: { key1: ["value1"] },
       var2: { key2: { key3: ["", "value2"] } },
     },
-    "02.01"
+    "02.01",
   );
 });
 
@@ -54,7 +54,7 @@ test("03 - two variables, with wrapping", () => {
       {
         wrapHeadsWith: "${",
         wrapTailsWith: "}",
-      }
+      },
     ),
     {
       a: "some text ${value1} more text ${value2}",
@@ -62,7 +62,7 @@ test("03 - two variables, with wrapping", () => {
       var1: "value1",
       var2: "value2",
     },
-    "03.01"
+    "03.01",
   );
 });
 
@@ -78,7 +78,7 @@ test("04 - variables with paths being wrapped", () => {
       {
         wrapHeadsWith: "${",
         wrapTailsWith: "}",
-      }
+      },
     ),
     {
       a: "some text ${value1} more text ${value2}",
@@ -86,7 +86,7 @@ test("04 - variables with paths being wrapped", () => {
       var1: { key1: "value1" },
       var2: { key2: "value2" },
     },
-    "04.01"
+    "04.01",
   );
 });
 
@@ -102,7 +102,7 @@ test("05 - custom heads and tails", () => {
       {
         heads: "{",
         tails: "}",
-      }
+      },
     ),
     {
       a: "some text value1 more text value2",
@@ -110,7 +110,7 @@ test("05 - custom heads and tails", () => {
       var1: "value1",
       var2: "value2",
     },
-    "05.01"
+    "05.01",
   );
 });
 
@@ -126,7 +126,7 @@ test("06 - custom heads and tails being wrapped", () => {
       {
         heads: "{",
         tails: "}",
-      }
+      },
     ),
     {
       a: "some text value1 more text value2",
@@ -134,7 +134,7 @@ test("06 - custom heads and tails being wrapped", () => {
       var1: { key1: "value1" },
       var2: { key2: "value2" },
     },
-    "06.01"
+    "06.01",
   );
 });
 
@@ -150,7 +150,7 @@ test("07 - whitespace within custom heads and tails", () => {
       {
         heads: "{",
         tails: "}",
-      }
+      },
     ),
     {
       a: "some text value1 more text value2",
@@ -158,7 +158,7 @@ test("07 - whitespace within custom heads and tails", () => {
       var1: "value1",
       var2: "value2",
     },
-    "07.01"
+    "07.01",
   );
 });
 
@@ -174,7 +174,7 @@ test("08 - whitespace within variables containing paths and custom heads/tails",
       {
         heads: "{",
         tails: "}",
-      }
+      },
     ),
     {
       a: "some text value1 more text value2",
@@ -182,7 +182,7 @@ test("08 - whitespace within variables containing paths and custom heads/tails",
       var1: { key1: "value1" },
       var2: { key2: "value2" },
     },
-    "08.01"
+    "08.01",
   );
 });
 
@@ -206,7 +206,7 @@ test("09 - some values are equal to heads or tails", () => {
       d: "_%%",
       e: "_%%",
     },
-    "09.01"
+    "09.01",
   );
 });
 
@@ -224,7 +224,7 @@ test("10 - opts.noSingleMarkers - off", () => {
       },
       {
         noSingleMarkers: false,
-      }
+      },
     ),
     {
       a: "some text value1 more text value2",
@@ -235,7 +235,7 @@ test("10 - opts.noSingleMarkers - off", () => {
       d: "_%%",
       e: "_%%",
     },
-    "10.01"
+    "10.01",
   );
 });
 
@@ -254,11 +254,11 @@ test("11 - opts.noSingleMarkers - on", () => {
         },
         {
           noSingleMarkers: true,
-        }
+        },
       );
     },
     /THROW_ID_16/,
-    "11.01"
+    "11.01",
   );
 });
 
@@ -275,11 +275,11 @@ test("12 - opts.noSingleMarkers - off - more throw tests", () => {
         },
         {
           noSingleMarkers: true,
-        }
+        },
       );
     },
     /THROW_ID_16/,
-    "12.01"
+    "12.01",
   );
 });
 
@@ -298,7 +298,7 @@ test("13 - custom heads/tails, values equal to them are present in data", () => 
       {
         heads: "{",
         tails: "}",
-      }
+      },
     ),
     {
       a: "some text value1 more text value2",
@@ -309,7 +309,7 @@ test("13 - custom heads/tails, values equal to them are present in data", () => 
       d: "}",
       e: "}",
     },
-    "13.01"
+    "13.01",
   );
 });
 
@@ -329,7 +329,7 @@ test("14 - custom heads/tails - noSingleMarkers = false", () => {
         noSingleMarkers: false,
         heads: "{",
         tails: "}",
-      }
+      },
     ),
     {
       a: "some text value1 more text value2",
@@ -340,7 +340,7 @@ test("14 - custom heads/tails - noSingleMarkers = false", () => {
       d: "}",
       e: "}",
     },
-    "14.01"
+    "14.01",
   );
 });
 
@@ -362,7 +362,7 @@ test("15 - value in an array", () => {
         var2: "value2",
       },
     },
-    "15.01"
+    "15.01",
   );
 });
 
@@ -384,7 +384,7 @@ test("16 - data stores #1", () => {
         var3: "333333",
       },
     },
-    "16.01"
+    "16.01",
   );
   equal(
     jVar(
@@ -396,7 +396,7 @@ test("16 - data stores #1", () => {
           var3: "333333",
         },
       },
-      { wrapHeadsWith: "${", wrapTailsWith: "}" }
+      { wrapHeadsWith: "${", wrapTailsWith: "}" },
     ),
     {
       a: "some text ${value1} more text ${333333}.",
@@ -406,7 +406,7 @@ test("16 - data stores #1", () => {
         var3: "333333",
       },
     },
-    "16.02"
+    "16.02",
   );
   equal(
     jVar({
@@ -425,7 +425,7 @@ test("16 - data stores #1", () => {
         var3: { key3: "333333" },
       },
     },
-    "16.03"
+    "16.03",
   );
   equal(
     jVar(
@@ -437,7 +437,7 @@ test("16 - data stores #1", () => {
           var3: { key3: "333333" },
         },
       },
-      { wrapHeadsWith: "${", wrapTailsWith: "}" }
+      { wrapHeadsWith: "${", wrapTailsWith: "}" },
     ),
     {
       a: "some text ${value1} more text ${333333}.",
@@ -447,7 +447,7 @@ test("16 - data stores #1", () => {
         var3: { key3: "333333" },
       },
     },
-    "16.04"
+    "16.04",
   );
 });
 
@@ -471,7 +471,7 @@ test("17 - top-level key and data stash clash", () => {
         var3: "333333",
       },
     },
-    "17.01"
+    "17.01",
   );
   equal(
     jVar(
@@ -484,7 +484,7 @@ test("17 - top-level key and data stash clash", () => {
           var3: "333333",
         },
       },
-      { wrapHeadsWith: "${", wrapTailsWith: "}" }
+      { wrapHeadsWith: "${", wrapTailsWith: "}" },
     ),
     {
       a: "some text ${value2} more text ${333333}.",
@@ -495,7 +495,7 @@ test("17 - top-level key and data stash clash", () => {
         var3: "333333",
       },
     },
-    "17.02"
+    "17.02",
   );
   equal(
     jVar({
@@ -516,7 +516,7 @@ test("17 - top-level key and data stash clash", () => {
         var3: { key3: "333333" },
       },
     },
-    "17.03"
+    "17.03",
   );
   equal(
     jVar({
@@ -537,7 +537,7 @@ test("17 - top-level key and data stash clash", () => {
         var3: { key3: "333333" },
       },
     },
-    "17.04"
+    "17.04",
   );
 });
 
@@ -559,7 +559,7 @@ test("18 - emoji in values", () => {
         var2: "value2",
       },
     },
-    "18.01"
+    "18.01",
   );
 });
 
@@ -581,7 +581,7 @@ test("19 - emoji in keys", () => {
         var2: "value2",
       },
     },
-    "19.01"
+    "19.01",
   );
 });
 
@@ -603,7 +603,7 @@ test("20 - emoji in variable keys", () => {
         var2: "value2💛",
       },
     },
-    "20.01"
+    "20.01",
   );
 });
 
@@ -623,7 +623,7 @@ test("21 - empty strings in the input AST", () => {
       var1: "value1",
       var2: "value2",
     },
-    "21.01"
+    "21.01",
   );
 });
 
@@ -651,7 +651,7 @@ test("22 - fetching variables from parent node's level", () => {
         },
       },
     },
-    "22.01"
+    "22.01",
   );
 });
 
@@ -680,7 +680,7 @@ test("23 - fetching variables from two levels above", () => {
         var2: "yyy",
       },
     },
-    "23.01"
+    "23.01",
   );
   // mutation didn't happen:
   equal(
@@ -696,7 +696,7 @@ test("23 - fetching variables from two levels above", () => {
         var2: "yyy",
       },
     },
-    "23.02"
+    "23.02",
   );
 });
 
@@ -725,7 +725,7 @@ test("24 - fetching variables from root, three levels above", () => {
       var1: { z: "zzz" },
       var2: "yyy",
     },
-    "24.01"
+    "24.01",
   );
   // input argument was not mutated:
   equal(
@@ -741,7 +741,7 @@ test("24 - fetching variables from root, three levels above", () => {
       var1: { z: "zzz" },
       var2: "yyy",
     },
-    "24.02"
+    "24.02",
   );
 });
 
@@ -773,7 +773,7 @@ test("25 - fetching variables from parent node's level data store", () => {
         },
       },
     },
-    "25.01"
+    "25.01",
   );
 });
 
@@ -805,7 +805,7 @@ test("26 - fetching variables from data store two levels above", () => {
         },
       },
     },
-    "26.01"
+    "26.01",
   );
 });
 
@@ -837,7 +837,7 @@ test("27 - fetching variables from data store as high as the root", () => {
         var2: "yyy",
       },
     },
-    "27.01"
+    "27.01",
   );
 });
 
@@ -879,7 +879,7 @@ test("28 - three level references", () => {
       },
       hhh: "iii",
     },
-    "28.01"
+    "28.01",
   );
 });
 
@@ -893,7 +893,7 @@ test("29 - resolves to a string", () => {
       a: "1",
       b: 1,
     },
-    "29.01"
+    "29.01",
   );
 
   equal(
@@ -909,7 +909,7 @@ test("29 - resolves to a string", () => {
         b: 1,
       },
     },
-    "29.02"
+    "29.02",
   );
 });
 

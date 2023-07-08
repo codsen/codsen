@@ -19,7 +19,7 @@ const testme = () => {
     },
     (err) => {
       errors.push(err);
-    }
+    },
   );
 };
 

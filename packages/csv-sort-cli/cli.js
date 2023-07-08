@@ -48,7 +48,7 @@ const cli = meow(
         default: false,
       },
     },
-  }
+  },
 );
 updateNotifier({ pkg }).notify();
 
@@ -70,8 +70,8 @@ function offerAListOfCSVsToPickFrom(stateObj) {
   if (!allCSVsHere.length) {
     return Promise.reject(
       new Error(
-        "\ncsv-sort-cli: Alas, program couldn't find any CSV files in this folder!"
-      )
+        "\ncsv-sort-cli: Alas, program couldn't find any CSV files in this folder!",
+      ),
     );
   }
   ui.log.write(chalk.grey("To quit, press CTRL+C"));
@@ -159,7 +159,9 @@ if (
   // basically achieving: (!fs.existsSync)
   let erroneous = pullAll(
     state.toDoList.map((onePath) => path.resolve(onePath)),
-    state.toDoList.map((onePath) => path.resolve(onePath)).filter(fs.existsSync)
+    state.toDoList
+      .map((onePath) => path.resolve(onePath))
+      .filter(fs.existsSync),
   ).map((singlePath) => path.basename(singlePath)); // then filtering file names-only
 
   // write the list of unrecognised file names into the console:
@@ -168,8 +170,8 @@ if (
       chalk.red(
         `\ncsv-sort-cli: Alas, the following file${
           erroneous.length > 1 ? "s don't" : " doesn't"
-        } exist: "${erroneous.join('", "')}"`
-      )
+        } exist: "${erroneous.join('", "')}"`,
+      ),
     );
   }
 
@@ -188,8 +190,8 @@ if (
   }
   log(
     chalk.yellow(
-      `\ncsv-sort-cli: Program didn't recognise any CSV files in your input!\n${butStateWasRecognisedMsg}`
-    )
+      `\ncsv-sort-cli: Program didn't recognise any CSV files in your input!\n${butStateWasRecognisedMsg}`,
+    ),
   );
 
   // if there were no valid path in the arguments, query the files from the
@@ -221,12 +223,12 @@ thePromise
                   log(
                     chalk.green(
                       `csv-sort-cli: Yay! The ${path.basename(
-                        requestedCSVsPath
-                      )} has been fixed and overwritten! Check it out.`
-                    )
+                        requestedCSVsPath,
+                      )} has been fixed and overwritten! Check it out.`,
+                    ),
                   );
                   process.exit(0);
-                }
+                },
               );
             } else {
               // create a new file with appended hyphen+integer before extension
@@ -234,7 +236,7 @@ thePromise
               for (let i = 1; i < 1001; i++) {
                 proposedNewFileName = `${path.basename(
                   requestedCSVsPath,
-                  path.extname(requestedCSVsPath)
+                  path.extname(requestedCSVsPath),
                 )}-${i}${path.extname(requestedCSVsPath)}`;
                 if (!fs.existsSync(path.resolve(proposedNewFileName))) {
                   fs.writeFile(
@@ -247,11 +249,11 @@ thePromise
                       }
                       log(
                         chalk.green(
-                          `csv-sort-cli: Yay! A new file, ${proposedNewFileName} has been created! Check it out.`
-                        )
+                          `csv-sort-cli: Yay! A new file, ${proposedNewFileName} has been created! Check it out.`,
+                        ),
                       );
                       process.exit(0);
-                    }
+                    },
                   );
                   break;
                 }
@@ -260,7 +262,7 @@ thePromise
             }
           } catch (e) {
             return Promise.reject(
-              new Error(`\ncsv-sort-cli: Alas, we encountered an error:\n${e}`)
+              new Error(`\ncsv-sort-cli: Alas, we encountered an error:\n${e}`),
             );
           }
         }
@@ -268,9 +270,9 @@ thePromise
           return Promise.reject(
             new Error(
               `\ncsv-sort-cli: Alas, we couldn't fetch the file "${path.basename(
-                requestedCSVsPath
-              )}" you requested!`
-            )
+                requestedCSVsPath,
+              )}" you requested!`,
+            ),
           );
         }
       });

@@ -27,12 +27,12 @@ function empty(input: unknown): boolean {
         `${`\u001b[${33}m${`innerObj`}\u001b[${39}m`} = ${JSON.stringify(
           innerObj,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     DEV &&
       console.log(
-        `035 -------------------------------------- path: ${innerObj.path}`
+        `035 -------------------------------------- path: ${innerObj.path}`,
       );
     let current = val !== undefined ? val : key;
     DEV &&
@@ -40,14 +40,14 @@ function empty(input: unknown): boolean {
         `${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
           current,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     if (typeof current === "string" && current.trim()) {
       found = false;
       DEV &&
         console.log(
-          `050 found = false, ${`\u001b[${31}m${`stopping`}\u001b[${39}m`}`
+          `050 found = false, ${`\u001b[${31}m${`stopping`}\u001b[${39}m`}`,
         );
       stop.now = true;
     }

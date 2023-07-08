@@ -11,7 +11,7 @@ test("01 - false positives - equations: very sneaky considering b is a legit tag
   equal(
     stripHtml("Equations are: a < b and c > d").result,
     "Equations are: a < b and c > d",
-    "01.01"
+    "01.01",
   );
 });
 
@@ -19,17 +19,17 @@ test("02 - false positives - inwards-pointing arrows", () => {
   equal(
     stripHtml("Look here: ---> a <---").result,
     "Look here: ---> a <---",
-    "02.01"
+    "02.01",
   );
 });
 
 test("03 - false positives - arrows mixed with tags", () => {
   equal(
     stripHtml(
-      "Look here: ---> a <--- and here: ---> b <--- oh, and few tags: <div><article>\nzz</article></div>"
+      "Look here: ---> a <--- and here: ---> b <--- oh, and few tags: <div><article>\nzz</article></div>",
     ).result,
     "Look here: ---> a <--- and here: ---> b <--- oh, and few tags:\nzz",
-    "03.01"
+    "03.01",
   );
 });
 
@@ -83,7 +83,7 @@ zzz
   </table>
 <![endif]-->`).result,
     "zzz",
-    "13.01"
+    "13.01",
   );
 });
 
@@ -93,7 +93,7 @@ test("14 - false positives - conditionals that are visible for Outlook only", ()
   shown for everything except Outlook
   <!--<![endif]-->`).result,
     "shown for everything except Outlook",
-    "14.01"
+    "14.01",
   );
 });
 
@@ -103,7 +103,7 @@ test("15 - false positives - conditionals that are visible for Outlook only", ()
   shown for everything except Outlook
   <!--<![endif]-->b`).result,
     "a\nshown for everything except Outlook\nb",
-    "15.01"
+    "15.01",
   );
 });
 
@@ -117,17 +117,17 @@ test("16 - false positives - conditionals that are visible for Outlook only", ()
     </tr>
   </table><!--<![endif]-->`).result,
     "shown for everything except Outlook",
-    "16.01"
+    "16.01",
   );
 });
 
 test("17 - false positives - consecutive tags", () => {
   equal(
     stripHtml(
-      "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after"
+      "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after",
     ).result,
     "Text First point Second point Third point Text straight after",
-    "17.01"
+    "17.01",
   );
 });
 
@@ -216,58 +216,63 @@ test("34", () => {
   equal(stripHtml(input).result, input, "34.01");
 });
 
+test("35", () => {
+  let input = "aaa hat > head > shoulders > knees > toes";
+  equal(stripHtml(input).result, input, "35.01");
+});
+
 // https://github.com/codsen/codsen/issues/78
 // presence of closing slash is a sign of being a tag:
-test("35", () => {
-  let input = "head /> shoulders > knees > toes";
-  equal(stripHtml(input).result, "shoulders > knees > toes", "35.01");
-});
 test("36", () => {
-  let input = "head / > shoulders > knees > toes";
+  let input = "head /> shoulders > knees > toes";
   equal(stripHtml(input).result, "shoulders > knees > toes", "36.01");
 });
 test("37", () => {
-  let input = "head/ > shoulders > knees > toes";
+  let input = "head / > shoulders > knees > toes";
   equal(stripHtml(input).result, "shoulders > knees > toes", "37.01");
 });
 test("38", () => {
-  let input = "head/> shoulders > knees > toes";
+  let input = "head/ > shoulders > knees > toes";
   equal(stripHtml(input).result, "shoulders > knees > toes", "38.01");
 });
-
 test("39", () => {
-  let input = "hat > head /> shoulders > knees > toes";
-  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "39.01");
+  let input = "head/> shoulders > knees > toes";
+  equal(stripHtml(input).result, "shoulders > knees > toes", "39.01");
 });
+
 test("40", () => {
-  let input = "hat > head / > shoulders > knees > toes";
+  let input = "hat > head /> shoulders > knees > toes";
   equal(stripHtml(input).result, "hat > shoulders > knees > toes", "40.01");
 });
 test("41", () => {
-  let input = "hat > head/ > shoulders > knees > toes";
+  let input = "hat > head / > shoulders > knees > toes";
   equal(stripHtml(input).result, "hat > shoulders > knees > toes", "41.01");
 });
 test("42", () => {
-  let input = "hat > head/> shoulders > knees > toes";
+  let input = "hat > head/ > shoulders > knees > toes";
   equal(stripHtml(input).result, "hat > shoulders > knees > toes", "42.01");
+});
+test("43", () => {
+  let input = "hat > head/> shoulders > knees > toes";
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "43.01");
 });
 
 // HTML attribute presence incriminates being a tag
-test("43 - double quotes", () => {
-  let input = 'hat > head class="z"> shoulders > knees > toes';
-  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "43.01");
-});
 test("44 - double quotes", () => {
-  let input = 'hat > head class="z"/> shoulders > knees > toes';
+  let input = 'hat > head class="z"> shoulders > knees > toes';
   equal(stripHtml(input).result, "hat > shoulders > knees > toes", "44.01");
 });
-test("45 - single quotes", () => {
-  let input = "hat > head class='z'> shoulders > knees > toes";
+test("45 - double quotes", () => {
+  let input = 'hat > head class="z"/> shoulders > knees > toes';
   equal(stripHtml(input).result, "hat > shoulders > knees > toes", "45.01");
 });
 test("46 - single quotes", () => {
-  let input = "hat > head class='z'/> shoulders > knees > toes";
+  let input = "hat > head class='z'> shoulders > knees > toes";
   equal(stripHtml(input).result, "hat > shoulders > knees > toes", "46.01");
+});
+test("47 - single quotes", () => {
+  let input = "hat > head class='z'/> shoulders > knees > toes";
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "47.01");
 });
 
 test.run();

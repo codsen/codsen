@@ -16,11 +16,11 @@ export interface ExtractTestNumRes {
 }
 export function extractTestNum(
   node: Obj,
-  testType: TestType
+  testType: TestType,
 ): ExtractTestNumRes | null {
   DEV &&
     console.log(
-      `023 ${`\u001b[${36}m${`████████████████████ extractTestNum() start`}\u001b[${39}m`}`
+      `023 ${`\u001b[${36}m${`████████████████████ extractTestNum() start`}\u001b[${39}m`}`,
     );
 
   /* DEV &&
@@ -46,7 +46,7 @@ export function extractTestNum(
 
       nodeFromPosition = op.get(
         node,
-        "expression.arguments.0.quasis.0.range.0"
+        "expression.arguments.0.quasis.0.range.0",
       ) as number;
     }
 
@@ -66,7 +66,7 @@ export function extractTestNum(
       // PS. position indexes will include quotes!
       nodeFromPosition = op.get(
         node,
-        "expression.arguments.0.range.0"
+        "expression.arguments.0.range.0",
       ) as number;
     }
   } else if (testType === "tap") {
@@ -83,7 +83,7 @@ export function extractTestNum(
 
       nodeFromPosition = op.get(
         node,
-        "expression.arguments.0.quasis.0.range.0"
+        "expression.arguments.0.quasis.0.range.0",
       ) as number;
     }
 
@@ -103,7 +103,7 @@ export function extractTestNum(
       // PS. position indexes will include quotes!
       nodeFromPosition = op.get(
         node,
-        "expression.arguments.0.range.0"
+        "expression.arguments.0.range.0",
       ) as number;
     }
   }
@@ -114,12 +114,12 @@ export function extractTestNum(
   if (full && nodeFromPosition) {
     let extractedNumberPositions: ExtractNumPosRes | null = extractNumPos(
       full,
-      nodeFromPosition + 1
+      nodeFromPosition + 1,
     );
     if (!extractedNumberPositions) {
       DEV &&
         console.log(
-          `122 extract-test-num: ${`\u001b[${31}m${`early exit`}\u001b[${39}m`}`
+          `122 extract-test-num: ${`\u001b[${31}m${`early exit`}\u001b[${39}m`}`,
         );
       return null;
     }
@@ -136,8 +136,8 @@ export function extractTestNum(
             full,
           },
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     return {
       from,

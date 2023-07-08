@@ -13,7 +13,7 @@ test(`01 - ${`\u001b[${34}m${"throws"}\u001b[${39}m`} - when first arg is wrong`
       crush();
     },
     /THROW_ID_01/,
-    "01.01"
+    "01.01",
   );
 
   throws(
@@ -21,7 +21,7 @@ test(`01 - ${`\u001b[${34}m${"throws"}\u001b[${39}m`} - when first arg is wrong`
       crush(true);
     },
     /THROW_ID_02/,
-    "01.02"
+    "01.02",
   );
 });
 
@@ -31,7 +31,7 @@ test(`02 - ${`\u001b[${34}m${"throws"}\u001b[${39}m`} - when second arg is wrong
       crush("zzz", true);
     },
     /THROW_ID_03/,
-    "02.01"
+    "02.01",
   );
 
   throws(
@@ -39,7 +39,7 @@ test(`02 - ${`\u001b[${34}m${"throws"}\u001b[${39}m`} - when second arg is wrong
       crush("zzz", "{}");
     },
     /THROW_ID_03/,
-    "02.02"
+    "02.02",
   );
 });
 
@@ -51,7 +51,7 @@ test(`03 - ${`\u001b[${34}m${"throws"}\u001b[${39}m`} - when opts.breakToTheLeft
       });
     },
     /THROW_ID_05/,
-    "03.01"
+    "03.01",
   );
 
   // but does not throw when array is false, null or empty:
@@ -90,7 +90,7 @@ test(`04 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - plain object is exported an
       "reportProgressFuncTo",
       "breakToTheLeftOf",
     ].sort(),
-    "04.01"
+    "04.01",
   );
 });
 

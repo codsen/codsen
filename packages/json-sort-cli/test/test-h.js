@@ -41,7 +41,7 @@ test("02 - help flag trumps silent flag", async () => {
   let output = await execa("./cli.js", [tempFolder, "-h", "-s"]).catch(
     (err) => {
       throw new Error(err);
-    }
+    },
   );
 
   match(output.stdout, /Usage/, "02.01");
@@ -50,7 +50,7 @@ test("02 - help flag trumps silent flag", async () => {
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "02.04"
+    "02.04",
   );
 });
 

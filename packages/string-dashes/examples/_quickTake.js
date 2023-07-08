@@ -12,7 +12,7 @@ assert.deepEqual(
   {
     result: "Dashes come in two sizes &mdash; the en dash and the em dash.",
     ranges: [[25, 26, "&mdash;"]],
-  }
+  },
 );
 
 assert.deepEqual(
@@ -21,5 +21,5 @@ assert.deepEqual(
     convertDashes: true,
     convertEntities: true,
   }),
-  [[25, 26, "&mdash;"]]
+  [[25, 26, "&mdash;"]],
 );

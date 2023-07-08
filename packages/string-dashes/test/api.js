@@ -13,7 +13,7 @@ test("01 - 1st input arg is missing", () => {
       convertOne();
     },
     /THROW_ID_01/,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -23,7 +23,7 @@ test("02 - 1st input arg wrong type", () => {
       convertOne(true);
     },
     /THROW_ID_01/,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -33,7 +33,7 @@ test("03 - 2nd input arg wrong type", () => {
       convertOne("abc", true);
     },
     /THROW_ID_02/,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -43,7 +43,7 @@ test("04 - 2nd input arg wrong type", () => {
       convertOne("abc", []);
     },
     /THROW_ID_02/,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -53,7 +53,7 @@ test("05 - opts.to is wrong", () => {
       convertOne("abc", {});
     },
     /THROW_ID_03/,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -63,7 +63,7 @@ test("06 - opts.from is wrong", () => {
       convertOne("abc", { from: true });
     },
     /THROW_ID_03/,
-    "06.01"
+    "06.01",
   );
 });
 
@@ -73,7 +73,7 @@ test("07 - opts.from is wrong", () => {
       convertOne("a", { from: -1 });
     },
     /THROW_ID_03/,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -83,7 +83,7 @@ test("08 - opts.from is at or beyond str.length", () => {
       convertOne("a", { from: 1 });
     },
     /THROW_ID_04/,
-    "08.01"
+    "08.01",
   );
 });
 
@@ -93,7 +93,7 @@ test("09 - opts.from is at or beyond str.length", () => {
       convertOne("abc", { from: 999 });
     },
     /THROW_ID_04/,
-    "09.01"
+    "09.01",
   );
 });
 
@@ -106,7 +106,7 @@ test("10 - happy path", () => {
       convertEntities: true,
     }),
     [[4, 5, "&ndash;"]],
-    "10.01"
+    "10.01",
   );
   equal(
     convertOne(input, {
@@ -115,7 +115,7 @@ test("10 - happy path", () => {
       convertEntities: true,
     }),
     [[20, 21, "&ndash;"]],
-    "10.02"
+    "10.02",
   );
   equal(
     convertOne(input, {
@@ -124,7 +124,7 @@ test("10 - happy path", () => {
       convertEntities: true,
     }),
     null,
-    "10.03"
+    "10.03",
   );
   equal(
     convertOne(input, {
@@ -133,7 +133,7 @@ test("10 - happy path", () => {
       convertEntities: true,
     }),
     null,
-    "10.04"
+    "10.04",
   );
   throws(
     () => {
@@ -142,7 +142,7 @@ test("10 - happy path", () => {
       });
     },
     /THROW_ID_04/,
-    "10.05"
+    "10.05",
   );
 });
 
@@ -155,7 +155,7 @@ test("11 - 1st input arg is wrong", () => {
       convertAll();
     },
     /THROW_ID_10/,
-    "11.01"
+    "11.01",
   );
 });
 
@@ -165,7 +165,7 @@ test("12 - 1st input arg is wrong", () => {
       convertAll(true);
     },
     /THROW_ID_10/,
-    "12.01"
+    "12.01",
   );
 });
 
@@ -175,7 +175,7 @@ test("13 - 2nd input arg is wrong", () => {
       convertAll("abc", true);
     },
     /THROW_ID_11/,
-    "13.01"
+    "13.01",
   );
 });
 
@@ -185,7 +185,7 @@ test("14 - 2nd input arg is wrong", () => {
       convertAll("abc", []);
     },
     /THROW_ID_11/,
-    "14.01"
+    "14.01",
   );
 });
 
@@ -196,7 +196,7 @@ test("15 - early exit", () => {
       result: "",
       ranges: null,
     },
-    "15.01"
+    "15.01",
   );
 });
 

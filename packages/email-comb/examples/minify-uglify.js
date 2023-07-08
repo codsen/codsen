@@ -39,5 +39,5 @@ assert.equal(
 <style>#q{color:#ccc;}
 </style>
 </body>
-</html>`
+</html>`,
 );

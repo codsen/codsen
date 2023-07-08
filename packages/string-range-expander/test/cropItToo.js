@@ -15,7 +15,7 @@ test("01 - combo with tight crop", () => {
       ifRightSideIncludesThisThenCropTightly: "<",
     }),
     [10, 21],
-    "01.01"
+    "01.01",
   );
   equal(
     e({
@@ -25,7 +25,7 @@ test("01 - combo with tight crop", () => {
       ifLeftSideIncludesThisCropItToo: "\n\t",
     }),
     [10, 20],
-    "01.02"
+    "01.02",
   );
   equal(
     e({
@@ -36,7 +36,7 @@ test("01 - combo with tight crop", () => {
       ifRightSideIncludesThisThenCropTightly: "<",
     }),
     [10, 21],
-    "01.03"
+    "01.03",
   );
   equal(
     e({
@@ -47,7 +47,7 @@ test("01 - combo with tight crop", () => {
       ifLeftSideIncludesThisThenCropTightly: ">",
     }),
     [12, 21],
-    "01.04"
+    "01.04",
   );
   equal(
     e({
@@ -59,7 +59,7 @@ test("01 - combo with tight crop", () => {
       ifLeftSideIncludesThisThenCropTightly: ">",
     }),
     [10, 21],
-    "01.05"
+    "01.05",
   );
   equal(
     e({
@@ -70,7 +70,7 @@ test("01 - combo with tight crop", () => {
       ifLeftSideIncludesThisThenCropTightly: ">",
     }),
     [10, 21],
-    "01.06"
+    "01.06",
   );
 });
 

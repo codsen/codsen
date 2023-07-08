@@ -6,7 +6,7 @@ import { isJinjaSpecific } from "../dist/regex-jinja-specific.esm.js";
 
 assert.equal(
   isJinjaSpecific().test("<div>{{ '%.2f'|format(3.1415926) }}</div>"),
-  true
+  true,
 );
 
 // in case of ambiguous, Nunjucks-or-Jinja code

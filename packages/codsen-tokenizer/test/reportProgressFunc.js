@@ -57,7 +57,7 @@ test("03", () => {
       });
     },
     /50/,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -94,7 +94,7 @@ test("05", () => {
       });
     },
     /32/g,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -110,13 +110,13 @@ test("06", () => {
   // our function will mutate the "gather" variable:
   ct(
     "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\naaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaa\n".repeat(
-      50
+      50,
     ),
     {
       reportProgressFunc: countingFunction,
       reportProgressFuncFrom: 21,
       reportProgressFuncTo: 86,
-    }
+    },
   );
 
   // 2. check the counter variable:

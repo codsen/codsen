@@ -38,7 +38,7 @@ import { extract } from "tsd-extract";
 const { value } = extract(
   `interface Opts1 { foo: boolean };
 interface Opts2 { bar: boolean };`,
-  "Opts2"
+  "Opts2",
 );
 
 assert.equal(value, "interface Opts2 { bar: boolean };");

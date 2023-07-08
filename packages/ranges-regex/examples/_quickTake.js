@@ -16,5 +16,5 @@ assert.deepEqual(result, [
 // if you slice the ranges, you'll get original regex caught values:
 assert.deepEqual(
   result.map(([from, to]) => oldString.slice(from, to)),
-  ["The", "the"]
+  ["The", "the"],
 );

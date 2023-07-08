@@ -9,7 +9,7 @@ function startsHtmlComment(
   str: string,
   i: number,
   token: Token,
-  layers: Layer[]
+  layers: Layer[],
 ): boolean {
   // DEV && console.log(
   //   `R1: ${!!matchRight(str, i, ["!--"], {

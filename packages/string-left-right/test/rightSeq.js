@@ -16,7 +16,7 @@ test("01 - normal use", () => {
       leftmostChar: 3,
       rightmostChar: 3,
     },
-    "01.01"
+    "01.01",
   );
   equal(
     rightSeq("abcdefghijklmnop", 2, "d", "e", "f"),
@@ -25,7 +25,7 @@ test("01 - normal use", () => {
       leftmostChar: 3,
       rightmostChar: 5,
     },
-    "01.02"
+    "01.02",
   );
   equal(
     rightSeq("a  b  c  d  e  f  g  h  i  j  k  l", 6, "d", "e", "f"),
@@ -38,7 +38,7 @@ test("01 - normal use", () => {
       leftmostChar: 9,
       rightmostChar: 15,
     },
-    "01.03"
+    "01.03",
   );
 });
 
@@ -55,7 +55,7 @@ test("03 - absent skips to right()", () => {
       leftmostChar: 1,
       rightmostChar: 1,
     },
-    "03.02"
+    "03.02",
   );
   equal(
     rightSeq("abcdefghijklmnop", 0, "", "b"),
@@ -64,7 +64,7 @@ test("03 - absent skips to right()", () => {
       leftmostChar: 1,
       rightmostChar: 1,
     },
-    "03.03"
+    "03.03",
   );
 });
 
@@ -80,7 +80,7 @@ test("05 - optional - existing", () => {
       leftmostChar: 3,
       rightmostChar: 5,
     },
-    "05.01"
+    "05.01",
   );
 });
 
@@ -92,7 +92,7 @@ test(`06 - ${`\u001b[${31}m${"optional"}\u001b[${39}m`} - 1 not existing, no whi
       leftmostChar: 3,
       rightmostChar: 4,
     },
-    "06.01"
+    "06.01",
   );
 });
 
@@ -107,7 +107,7 @@ test(`07 - ${`\u001b[${31}m${"optional"}\u001b[${39}m`} - 1 not existing, with w
       leftmostChar: 5,
       rightmostChar: 9,
     },
-    "07.01"
+    "07.01",
   );
 });
 
@@ -119,7 +119,7 @@ test(`08 - ${`\u001b[${31}m${"optional"}\u001b[${39}m`} - ends with non-existing
       leftmostChar: 5,
       rightmostChar: 5,
     },
-    "08.01"
+    "08.01",
   );
 });
 
@@ -131,7 +131,7 @@ test("09 - all optional, existing", () => {
       leftmostChar: 3,
       rightmostChar: 5,
     },
-    "09.01"
+    "09.01",
   );
 });
 
@@ -150,7 +150,7 @@ test("11 - no findings", () => {
       leftmostChar: 1,
       rightmostChar: 3,
     },
-    "11.02"
+    "11.02",
   );
 });
 

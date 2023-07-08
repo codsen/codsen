@@ -19,7 +19,7 @@ test("01 - delete a value which is string", () => {
     {
       key: "b",
       val: "b",
-    }
+    },
   );
   let intended = {
     a: "a",
@@ -37,7 +37,7 @@ test("02 - delete a value which is plain object", () => {
     {
       key: "b",
       val: { c: "d" },
-    }
+    },
   );
   let intended = {
     a: "a",
@@ -56,7 +56,7 @@ test("03 - delete two values, plain objects, cleanup=false", () => {
       key: "b",
       val: { c: "d" },
       cleanup: false,
-    }
+    },
   );
   let intended = {
     a: { e: [{}] },
@@ -75,7 +75,7 @@ test("04 - delete two values, plain objects, cleanup=true", () => {
       key: "b",
       val: { c: "d" },
       cleanup: true,
-    }
+    },
   );
   let intended = {};
 
@@ -91,7 +91,7 @@ test("05 - delete two values which are plain objects (on default)", () => {
     {
       key: "b",
       val: { c: "d" },
-    }
+    },
   );
   let intended = {};
 
@@ -107,7 +107,7 @@ test("06 - delete a value which is an array", () => {
     {
       key: "b",
       val: ["c", "d"],
-    }
+    },
   );
   let intended = {
     a: "a",
@@ -126,7 +126,7 @@ test("07 - delete two values which are arrays, cleanup=false", () => {
       key: "b",
       val: ["c", "d"],
       cleanup: false,
-    }
+    },
   );
   let intended = {
     a: { e: [{}] },
@@ -144,7 +144,7 @@ test("08 - delete two values which are arrays, cleanup=default", () => {
     {
       key: "b",
       val: ["c", "d"],
-    }
+    },
   );
   let intended = {};
 
@@ -168,7 +168,7 @@ test("09 - simple plain object, couple instances found", () => {
     {
       a: "a",
     },
-    "09.01"
+    "09.01",
   );
   equal(
     deleteKey(source, {
@@ -178,7 +178,7 @@ test("09 - simple plain object, couple instances found", () => {
     {
       a: "a",
     },
-    "09.02"
+    "09.02",
   );
   equal(
     deleteKey(source, {
@@ -190,7 +190,7 @@ test("09 - simple plain object, couple instances found", () => {
       b: "whatever",
       c: [{ b: "whatever as well" }],
     },
-    "09.03"
+    "09.03",
   );
   equal(
     deleteKey(source, {
@@ -200,7 +200,7 @@ test("09 - simple plain object, couple instances found", () => {
     {
       a: "a",
     },
-    "09.04"
+    "09.04",
   );
 
   // ensure no mutation happened:
@@ -211,7 +211,7 @@ test("09 - simple plain object, couple instances found", () => {
       b: "whatever",
       c: [{ b: "whatever as well" }],
     },
-    "09.05"
+    "09.05",
   );
 });
 
@@ -226,13 +226,13 @@ test("10 - simple plain object, cleanup", () => {
       {
         key: "a",
         only: "array",
-      }
+      },
     ),
     {
       a: "a",
       b: "whatever",
     },
-    "10.01"
+    "10.01",
   );
   equal(
     deleteKey(
@@ -244,13 +244,13 @@ test("10 - simple plain object, cleanup", () => {
       {
         key: "a",
         only: "object",
-      }
+      },
     ),
     {
       b: "whatever",
       c: ["a"],
     },
-    "10.02"
+    "10.02",
   );
   equal(
     deleteKey(
@@ -262,13 +262,13 @@ test("10 - simple plain object, cleanup", () => {
       {
         key: "*s",
         only: "a", // only target arrays
-      }
+      },
     ),
     {
       a: "apples",
       b: "whatever",
     },
-    "10.03"
+    "10.03",
   );
   equal(
     deleteKey(
@@ -281,14 +281,14 @@ test("10 - simple plain object, cleanup", () => {
         key: "*s",
         only: "a", // only target arrays
         cleanup: false,
-      }
+      },
     ),
     {
       a: "apples",
       b: "whatever",
       c: [],
     },
-    "10.04"
+    "10.04",
   );
 });
 
@@ -310,10 +310,10 @@ test("11 - nested array/plain objects, multiple instances found", () => {
       ],
       {
         key: "b",
-      }
+      },
     ),
     [{ a: "a" }],
-    "11.01"
+    "11.01",
   );
   equal(
     deleteKey(
@@ -333,10 +333,10 @@ test("11 - nested array/plain objects, multiple instances found", () => {
       {
         key: "b",
         only: "object",
-      }
+      },
     ),
     [{ a: "a" }],
-    "11.02"
+    "11.02",
   );
   equal(
     deleteKey(
@@ -356,7 +356,7 @@ test("11 - nested array/plain objects, multiple instances found", () => {
       {
         key: "b",
         only: "array",
-      }
+      },
     ),
     [
       {
@@ -369,7 +369,7 @@ test("11 - nested array/plain objects, multiple instances found", () => {
         d: { e: { f: { g: { b: "and this, no matter how deep-nested" } } } },
       },
     ],
-    "11.03"
+    "11.03",
   );
 });
 
@@ -392,7 +392,7 @@ test("12 - nested array/plain objects, multiple instances found, false", () => {
       {
         key: "b",
         cleanup: false,
-      }
+      },
     ),
     [
       {
@@ -403,7 +403,7 @@ test("12 - nested array/plain objects, multiple instances found, false", () => {
         d: { e: { f: { g: {} } } },
       },
     ],
-    "12.01"
+    "12.01",
   );
 });
 
@@ -427,10 +427,10 @@ test("13 - mixed array and object findings", () => {
       ],
       {
         key: "b",
-      }
+      },
     ),
     [{ a: "a" }],
-    "13.01"
+    "13.01",
   );
   equal(
     deleteKey(
@@ -452,10 +452,10 @@ test("13 - mixed array and object findings", () => {
       {
         key: "b",
         only: "whatever",
-      }
+      },
     ),
     [{ a: "a" }],
-    "13.02"
+    "13.02",
   );
   equal(
     deleteKey(
@@ -469,7 +469,7 @@ test("13 - mixed array and object findings", () => {
       {
         key: "b",
         only: "object",
-      }
+      },
     ),
     [
       {
@@ -477,7 +477,7 @@ test("13 - mixed array and object findings", () => {
         c: ["b", "b"],
       },
     ],
-    "13.03"
+    "13.03",
   );
   equal(
     deleteKey(
@@ -499,7 +499,7 @@ test("13 - mixed array and object findings", () => {
       {
         key: "b",
         only: "arrays",
-      }
+      },
     ),
     [
       {
@@ -512,7 +512,7 @@ test("13 - mixed array and object findings", () => {
         d: { e: { f: { g: [{ b: "and this, no matter how deep-nested" }] } } },
       },
     ],
-    "13.04"
+    "13.04",
   );
   equal(
     deleteKey(
@@ -534,7 +534,7 @@ test("13 - mixed array and object findings", () => {
       {
         key: "b",
         only: "object",
-      }
+      },
     ),
     [
       {
@@ -545,7 +545,7 @@ test("13 - mixed array and object findings", () => {
         d: { e: { f: { g: ["b"] } } },
       },
     ],
-    "13.05"
+    "13.05",
   );
 });
 
@@ -562,7 +562,7 @@ test("14 - targets all keys by value, cleanup=true", () => {
     },
     {
       val: "whatever",
-    }
+    },
   );
   let intended = {
     a: "a",
@@ -581,7 +581,7 @@ test("15 - targets all keys by value, cleanup=false", () => {
     {
       val: "whatever",
       cleanup: false,
-    }
+    },
   );
   let intended = {
     a: "a",
@@ -613,7 +613,7 @@ test('16 - deletion limited to level where non-empty "uncles" exist', () => {
       key: "e",
       val: "",
       cleanup: true,
-    }
+    },
   );
   let intended = {
     a: "a",
@@ -642,7 +642,7 @@ test("17 - deletion of empty things is limited in arrays too", () => {
       key: "a",
       val: "",
       cleanup: true,
-    }
+    },
   );
   let intended = [
     {},
@@ -665,7 +665,7 @@ test("18 - both key and value missing - throws", () => {
       deleteKey({ a: "a" }, {});
     },
     /THROW_ID_04/,
-    "18.01"
+    "18.01",
   );
 });
 
@@ -675,7 +675,7 @@ test("19 - nonsensical options object - throws", () => {
       deleteKey({ a: "a" }, { z: "z" });
     },
     /THROW_ID_04/,
-    "19.01"
+    "19.01",
   );
 });
 
@@ -685,7 +685,7 @@ test("20 - nonsensical options object - throws", () => {
       deleteKey({ a: "a" }, 1);
     },
     /THROW_ID_04/,
-    "20.01"
+    "20.01",
   );
 });
 
@@ -695,7 +695,7 @@ test("21 - no input args - throws", () => {
       deleteKey();
     },
     /THROW_ID_01/,
-    "21.01"
+    "21.01",
   );
 });
 
@@ -708,11 +708,11 @@ test("22 - wrong input args - throws", () => {
           key: 1,
           val: null,
           cleanup: true,
-        }
+        },
       );
     },
     /opts\.key/g,
-    "22.01"
+    "22.01",
   );
 });
 
@@ -725,11 +725,11 @@ test("23 - wrong input args - throws", () => {
           key: 1,
           val: null,
           cleanup: "zzz",
-        }
+        },
       );
     },
     /opts\.key/,
-    "23.01"
+    "23.01",
   );
 });
 
@@ -797,7 +797,7 @@ test("24 - real parsed HTML #1", () => {
     {
       key: "class",
       val: "",
-    }
+    },
   );
   let intended = [
     "<!DOCTYPE html>",
@@ -867,7 +867,7 @@ test("25 - real parsed HTML #2", () => {
     {
       key: "class",
       val: "",
-    }
+    },
   );
   let intended = [
     {
@@ -893,7 +893,7 @@ test("26 - real parsed HTML #3", () => {
       key: "b",
       val: "",
       cleanup: false,
-    }
+    },
   );
   let intended = {
     a: {
@@ -916,7 +916,7 @@ test("27 - real parsed HTML #4", () => {
       key: "b",
       val: "",
       cleanup: true,
-    }
+    },
   );
   let intended = {
     a: {
@@ -946,7 +946,7 @@ test("28 - does not mutate input args", () => {
       a: "a",
       b: "b",
     },
-    "28.02"
+    "28.02",
   ); // real deal
 });
 
@@ -961,7 +961,7 @@ test("29 - delete a value which is empty string", () => {
     },
     {
       key: "",
-    }
+    },
   );
   let intended = {
     a: ["b", "c"],
@@ -977,7 +977,7 @@ test("30 - delete a value which is non-empty string", () => {
     },
     {
       key: "b",
-    }
+    },
   );
   let intended = {
     a: ["", "c"],
@@ -993,7 +993,7 @@ test("31 - delete a value which is non-empty string, with wildcards", () => {
     },
     {
       key: "b*p",
-    }
+    },
   );
   let intended = {
     a: ["", "c"],
@@ -1011,7 +1011,7 @@ test("32 - delete a value which is a non-empty string, with wildcards, only on a
     {
       key: "b*p",
       only: "array",
-    }
+    },
   );
   let intended = {
     a: ["", "c"],
@@ -1036,7 +1036,7 @@ test("33 - wildcard deletes two keys have string values", () => {
     },
     {
       key: "a*",
-    }
+    },
   );
   let intended = {
     b: "b",
@@ -1057,7 +1057,7 @@ test("34 - wildcard deletes two keys have string values", () => {
     },
     {
       key: "*xx",
-    }
+    },
   );
   let intended = {
     ayy: "yyyy",
@@ -1082,7 +1082,7 @@ test("35 - wildcard deletes two keys have string values", () => {
     {
       key: "a*",
       val: "*x",
-    }
+    },
   );
   let intended = {
     notmatching_key: "yyy x",
@@ -1102,7 +1102,7 @@ test("36 - wildcard deletes keys with plain object values, by key", () => {
     },
     {
       key: "*les",
-    }
+    },
   );
   let intended = {
     crawls: "e",
@@ -1125,7 +1125,7 @@ test("37 - wildcard delete two values, plain objects", () => {
       key: "br*",
       val: { c: "d" },
       cleanup: false,
-    }
+    },
   );
   let intended = {
     a: { e: [{}] },
@@ -1148,7 +1148,7 @@ test("38 - wildcard delete two values, plain objects", () => {
       key: "br*",
       val: { c: "d" },
       cleanup: true,
-    }
+    },
   );
   let intended = {};
 
@@ -1163,7 +1163,7 @@ test("39 - issue #8 - undefined as a value", () => {
     },
     {
       key: "__typename",
-    }
+    },
   );
   let intended = {
     entryPoint: "a",
@@ -1182,12 +1182,12 @@ test("40 - issue #8 - undefined as a value, outside deletion path", () => {
       {
         key: "__typename",
         cleanup: true, // <---
-      }
+      },
     ),
     {
       entryPoint: undefined,
     },
-    "40.01"
+    "40.01",
   );
 });
 
@@ -1201,12 +1201,12 @@ test("41 - issue #8 - undefined as a value, outside deletion path", () => {
       {
         key: "__typename",
         cleanup: false, // <---
-      }
+      },
     ),
     {
       entryPoint: undefined,
     },
-    "41.01"
+    "41.01",
   );
 });
 
@@ -1226,7 +1226,7 @@ test("42 - issue #8 - undefined as a value, outside deletion path", () => {
     {
       entryPoint: undefined,
     },
-    "42.01"
+    "42.01",
   );
   equal(
     deleteKey(input, {
@@ -1237,7 +1237,7 @@ test("42 - issue #8 - undefined as a value, outside deletion path", () => {
       a: {},
       entryPoint: undefined,
     },
-    "42.02"
+    "42.02",
   );
 });
 
@@ -1256,7 +1256,7 @@ test("43 - issue #8", () => {
       a: { b: undefined, c: "" },
       entryPoint: undefined,
     },
-    "43.01"
+    "43.01",
   );
   equal(
     deleteKey(input, {
@@ -1267,7 +1267,7 @@ test("43 - issue #8", () => {
       a: { b: undefined, c: "" },
       entryPoint: undefined,
     },
-    "43.02"
+    "43.02",
   );
 });
 

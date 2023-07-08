@@ -39,7 +39,7 @@ test("04 - ast with multiple objects containing empty space", () => {
       "\n\n\n\n\n\n   \t   ",
     ]),
     true,
-    "04.01"
+    "04.01",
   );
   equal(
     empty([
@@ -52,7 +52,7 @@ test("04 - ast with multiple objects containing empty space", () => {
       "\n\n\n\n\n\n   \t   .",
     ]),
     false,
-    "04.02"
+    "04.02",
   );
 });
 
@@ -69,7 +69,7 @@ test("05 - object containing empty strings", () => {
       d: "\t   ",
     }),
     true,
-    "05.01"
+    "05.01",
   );
   equal(
     empty({
@@ -79,7 +79,7 @@ test("05 - object containing empty strings", () => {
       d: "\t   ",
     }),
     false,
-    "05.02"
+    "05.02",
   );
 });
 
@@ -92,7 +92,7 @@ test("06 - object containing arrays of empty strings", () => {
       d: ["\t   "],
     }),
     true,
-    "06.01"
+    "06.01",
   );
 });
 
@@ -105,7 +105,7 @@ test("07 - object containing arrays of empty strings", () => {
       d: ["\t   "],
     }),
     false,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -118,7 +118,7 @@ test("08 - object containing arrays of empty strings", () => {
       d: ["\t   "],
     }),
     false,
-    "08.01"
+    "08.01",
   );
 });
 
@@ -141,7 +141,7 @@ test("09 - object containing arrays of empty strings", () => {
       d: ["\t   "],
     }),
     false,
-    "09.01"
+    "09.01",
   );
 });
 
@@ -164,7 +164,7 @@ test("10 - object containing arrays of empty strings", () => {
       d: ["\t   "],
     }),
     true,
-    "10.01"
+    "10.01",
   );
 });
 
@@ -174,7 +174,7 @@ test("11 - object's value is null", () => {
       a: null,
     }),
     true,
-    "11.01"
+    "11.01",
   );
 });
 
@@ -223,7 +223,7 @@ test("18 - null deeper in an array", () => {
       },
     ]),
     false,
-    "18.01"
+    "18.01",
   );
 });
 

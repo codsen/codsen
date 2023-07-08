@@ -617,7 +617,7 @@ test(`09 - ${`\u001b[${35}m${"ESP tags within attr values"}\u001b[${39}m`} - The
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
 
   compare(ok, gathered, [

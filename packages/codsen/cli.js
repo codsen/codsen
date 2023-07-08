@@ -21,7 +21,7 @@ const cli = meow(
   {
     importMeta: import.meta,
     flags: {},
-  }
+  },
 );
 updateNotifier({ pkg }).notify();
 

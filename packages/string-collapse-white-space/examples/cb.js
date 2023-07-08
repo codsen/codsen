@@ -18,5 +18,5 @@ assert.equal(
       return suggested;
     },
   }).result,
-  "div>span"
+  "div>span",
 );

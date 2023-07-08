@@ -71,7 +71,7 @@ test("01 - recognised opening tag", () => {
     }).forEach((opt) => {
       not.ok(
         isOpening(str, 1, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`,
       );
     });
     mixer({
@@ -79,7 +79,7 @@ test("01 - recognised opening tag", () => {
     }).forEach((opt) => {
       ok(
         isOpening(str, 1, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`,
       );
     });
   });
@@ -162,13 +162,13 @@ test("02 - recognised closing tag", () => {
     mixer().forEach((opt) => {
       ok(
         isOpening(str, undefined, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`,
       );
     });
     mixer().forEach((opt) => {
       ok(
         isOpening(str, 0, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
       );
     });
 
@@ -177,7 +177,7 @@ test("02 - recognised closing tag", () => {
     }).forEach((opt) => {
       not.ok(
         isOpening(str, 1, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`,
       );
     });
     mixer({
@@ -185,7 +185,7 @@ test("02 - recognised closing tag", () => {
     }).forEach((opt) => {
       ok(
         isOpening(str, 1, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`,
       );
     });
 
@@ -194,7 +194,7 @@ test("02 - recognised closing tag", () => {
     }).forEach((opt) => {
       not.ok(
         isOpening(str, 2, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`,
       );
     });
     mixer({
@@ -202,7 +202,7 @@ test("02 - recognised closing tag", () => {
     }).forEach((opt) => {
       ok(
         isOpening(str, 2, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`,
       );
     });
   });
@@ -262,7 +262,7 @@ test("03 - unrecognised opening tag", () => {
     }).forEach((opt) => {
       ok(
         isOpening(str, undefined, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`,
       );
     });
     mixer({
@@ -270,7 +270,7 @@ test("03 - unrecognised opening tag", () => {
     }).forEach((opt) => {
       not.ok(
         isOpening(str, undefined, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`,
       );
     });
     mixer({
@@ -278,7 +278,7 @@ test("03 - unrecognised opening tag", () => {
     }).forEach((opt) => {
       ok(
         isOpening(str, 0, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
       );
     });
     mixer({
@@ -286,7 +286,7 @@ test("03 - unrecognised opening tag", () => {
     }).forEach((opt) => {
       not.ok(
         isOpening(str, 0, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
       );
     });
 
@@ -295,7 +295,7 @@ test("03 - unrecognised opening tag", () => {
     }).forEach((opt) => {
       not.ok(
         isOpening(str, 1, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`,
       );
     });
     mixer({
@@ -303,7 +303,7 @@ test("03 - unrecognised opening tag", () => {
     }).forEach((opt) => {
       not.ok(
         isOpening(str, 1, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`,
       );
     });
     mixer({
@@ -312,7 +312,7 @@ test("03 - unrecognised opening tag", () => {
     }).forEach((opt) => {
       ok(
         isOpening(str, 1, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`,
       );
     });
   });
@@ -372,7 +372,7 @@ test("04 - unrecognised closing tag", () => {
     }).forEach((opt) => {
       ok(
         isOpening(str, undefined, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`,
       );
     });
     mixer({
@@ -380,7 +380,7 @@ test("04 - unrecognised closing tag", () => {
     }).forEach((opt) => {
       ok(
         isOpening(str, 0, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`,
       );
     });
 
@@ -389,7 +389,7 @@ test("04 - unrecognised closing tag", () => {
     }).forEach((opt) => {
       not.ok(
         isOpening(str, 1, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`,
       );
     });
     mixer({
@@ -397,7 +397,7 @@ test("04 - unrecognised closing tag", () => {
     }).forEach((opt) => {
       not.ok(
         isOpening(str, 1, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`,
       );
     });
     mixer({
@@ -406,7 +406,7 @@ test("04 - unrecognised closing tag", () => {
     }).forEach((opt) => {
       ok(
         isOpening(str, 1, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`,
       );
     });
 
@@ -415,7 +415,7 @@ test("04 - unrecognised closing tag", () => {
     }).forEach((opt) => {
       not.ok(
         isOpening(str, 2, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`,
       );
     });
     mixer({
@@ -423,7 +423,7 @@ test("04 - unrecognised closing tag", () => {
     }).forEach((opt) => {
       not.ok(
         isOpening(str, 2, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`,
       );
     });
     mixer({
@@ -432,7 +432,7 @@ test("04 - unrecognised closing tag", () => {
     }).forEach((opt) => {
       ok(
         isOpening(str, 2, opt),
-        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`,
       );
     });
   });

@@ -21,7 +21,7 @@ export type NextToken = [
     path: string;
     parent: any;
     parentType: string;
-  }
+  },
 ];
 
 export interface InnerObj {
@@ -37,7 +37,7 @@ export type Callback = (
   key: string | Obj,
   val: any,
   innerObj: InnerObj,
-  stop: { now: boolean }
+  stop: { now: boolean },
 ) => any;
 
 function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
@@ -52,8 +52,8 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
       `052 ${`\u001b[${33}m${`lookahead`}\u001b[${39}m`} = ${JSON.stringify(
         lookahead,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   let stop1 = { now: false };
 
@@ -70,7 +70,7 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
     tree: any,
     callback: Callback,
     innerObj: InnerObj,
-    stop: { now: boolean }
+    stop: { now: boolean },
   ): void {
     DEV && console.log(`075 ======= traverseInner() =======`);
     DEV &&
@@ -78,8 +78,8 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
         `078 ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${JSON.stringify(
           tree,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     innerObj = { ...innerObj };
@@ -93,8 +93,8 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
             `093: ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`} key: ${JSON.stringify(
               tree[i],
               null,
-              0
-            )}`
+              0,
+            )}`,
           );
         if (stop.now) {
           DEV && console.log(`100 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
@@ -106,8 +106,8 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
             `106 ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
               path,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
         innerObj.parent = clone(tree);
         innerObj.parentType = "array";
@@ -117,14 +117,14 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
           tree[i],
           undefined,
           { ...innerObj, path: trimFirstDot(path) },
-          stop
+          stop,
         );
 
         traverseInner(
           tree[i],
           callback,
           { ...innerObj, path: trimFirstDot(path) },
-          stop
+          stop,
         );
       }
     } else if (isObj(tree)) {
@@ -133,7 +133,7 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
       for (const key in tree) {
         DEV &&
           console.log(
-            `136: ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`} key: ${key}`
+            `136: ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`} key: ${key}`,
           );
         if (stop.now && key != null) {
           DEV && console.log(`139 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
@@ -145,8 +145,8 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
             `145 ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
               path,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
@@ -158,14 +158,14 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
           key,
           tree[key],
           { ...innerObj, path: trimFirstDot(path) },
-          stop
+          stop,
         );
 
         traverseInner(
           tree[key],
           callback,
           { ...innerObj, path: trimFirstDot(path) },
-          stop
+          stop,
         );
       }
     }
@@ -179,7 +179,7 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
   function reportFirstFromStash(): void {
     DEV &&
       console.log(
-        `182 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ██ ${`\u001b[${33}m${`START`}\u001b[${39}m`}`
+        `182 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ██ ${`\u001b[${33}m${`START`}\u001b[${39}m`}`,
       );
     // start to assemble node we're report to the callback cb1()
     let currentElem: any = stash.shift();
@@ -194,20 +194,20 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
       // we want as many as "lookahead" from stash but there might be not enough
       if (stash[i]) {
         currentElem[2].next.push(
-          clone([stash[i][0], stash[i][1], stash[i][2]])
+          clone([stash[i][0], stash[i][1], stash[i][2]]),
         );
         DEV &&
           console.log(
             `201 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} currentElem[2].next now = ${JSON.stringify(
               currentElem[2].next,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
       } else {
         DEV &&
           console.log(
-            `210 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${31}m${`STOP`}\u001b[${39}m`} - there are not enough elements in stash`
+            `210 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${31}m${`STOP`}\u001b[${39}m`} - there are not enough elements in stash`,
           );
         break;
       }
@@ -219,8 +219,8 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
         `219 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${32}m${`PING CB`}\u001b[${39}m`} with ${JSON.stringify(
           [...[currentElem[0], currentElem[1], currentElem[2]]],
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     (cb1 as any)(...currentElem);
   }
@@ -233,8 +233,8 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
         `233 ${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: INCOMING ${JSON.stringify(
           incoming,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     // 1. put the incoming things into stash.
@@ -247,8 +247,8 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
         `247 ${`\u001b[${90}m${`██ stash`}\u001b[${39}m`} = ${JSON.stringify(
           stash,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     // 2. if there are enough things gathered in stash, report the first one
@@ -259,14 +259,14 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
           stash.length > lookahead
             ? `${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: ${`\u001b[${32}m${`ENOUGH VALUES IN STASH`}\u001b[${39}m`}`
             : `${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: ${`\u001b[${31}m${`NOT ENOUGH VALUES IN STASH, MOVE ON`}\u001b[${39}m`}`
-        }`
+        }`,
       );
     if (stash.length > lookahead) {
       DEV &&
         console.log(
           `267 ${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: stash.length=${
             stash.length
-          } >= lookahead=${lookahead} - ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}`
+          } >= lookahead=${lookahead} - ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}`,
         );
       // the following function has "stash" in its scope and it will mutate
       // the stash:
@@ -276,8 +276,8 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
           `276 ${`\u001b[${90}m${`██ stash`}\u001b[${39}m`} = ${JSON.stringify(
             stash,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
   }
@@ -289,7 +289,7 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
       depth: -1,
       path: "",
     },
-    stop1
+    stop1,
   );
 
   DEV && console.log(`295 ███████████████████████████████████████`);
@@ -310,8 +310,8 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
           `310 ${`\u001b[${90}m${`██ stash`}\u001b[${39}m`} = ${JSON.stringify(
             stash,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     }
   }

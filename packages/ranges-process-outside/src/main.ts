@@ -13,14 +13,14 @@ export type OffsetValueCb = (amountToOffset: number) => void;
 export type Callback = (
   fromIdx: number,
   toIdx: number,
-  offsetValueCb: OffsetValueCb
+  offsetValueCb: OffsetValueCb,
 ) => void;
 
 function rProcessOutside(
   originalStr: string,
   originalRanges: Ranges,
   cb: Callback,
-  skipChecks = false
+  skipChecks = false,
 ): void {
   //
   // insurance:
@@ -28,15 +28,15 @@ function rProcessOutside(
   if (typeof originalStr !== "string") {
     if (originalStr === undefined) {
       throw new Error(
-        `ranges-process-outside: [THROW_ID_01] the first input argument must be string! It's missing currently (undefined)!`
+        `ranges-process-outside: [THROW_ID_01] the first input argument must be string! It's missing currently (undefined)!`,
       );
     } else {
       throw new Error(
         `ranges-process-outside: [THROW_ID_02] the first input argument must be string! It was given as:\n${JSON.stringify(
           originalStr,
           null,
-          4
-        )} (type ${typeof originalStr})`
+          4,
+        )} (type ${typeof originalStr})`,
       );
     }
   }
@@ -49,8 +49,8 @@ function rProcessOutside(
       `ranges-process-outside: [THROW_ID_03] the second input argument must be array of ranges or null! It was given as:\n${JSON.stringify(
         originalRanges,
         null,
-        4
-      )} (type ${typeof originalRanges})`
+        4,
+      )} (type ${typeof originalRanges})`,
     );
   }
   if (typeof cb !== "function") {
@@ -58,8 +58,8 @@ function rProcessOutside(
       `ranges-process-outside: [THROW_ID_04] the third input argument must be a function! It was given as:\n${JSON.stringify(
         cb,
         null,
-        4
-      )} (type ${typeof cb})`
+        4,
+      )} (type ${typeof cb})`,
     );
   }
 
@@ -68,20 +68,20 @@ function rProcessOutside(
   function iterator(str: string, arrOfArrays: Ranges): void {
     DEV &&
       console.log(
-        `071 iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`
+        `071 iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`,
       );
     DEV &&
       console.log(
         `075 ${`\u001b[${36}m${`loop [${JSON.stringify(
           arrOfArrays,
           null,
-          0
-        )}]`}\u001b[${39}m`}`
+          0,
+        )}]`}\u001b[${39}m`}`,
       );
     (arrOfArrays || []).forEach(([fromIdx, toIdx]) => {
       DEV &&
         console.log(
-          `084 ${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`
+          `084 ${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`,
         );
       DEV && console.log(`086 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
       for (let i = fromIdx; i < toIdx; i++) {
@@ -108,7 +108,7 @@ function rProcessOutside(
     });
     DEV &&
       console.log(
-        `111 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`
+        `111 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`,
       );
   }
 
@@ -120,17 +120,17 @@ function rProcessOutside(
         originalStr.length,
         {
           skipChecks: !!skipChecks,
-        }
+        },
       ),
-      originalStr.length
+      originalStr.length,
     );
     DEV &&
       console.log(
         `129 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
           temp,
           null,
-          0
-        )}`
+          0,
+        )}`,
       );
 
     iterator(originalStr, temp);

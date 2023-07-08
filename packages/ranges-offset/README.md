@@ -42,12 +42,12 @@ assert.deepEqual(
       [3, 5],
       [8, 7],
     ],
-    10
+    10,
   ),
   [
     [13, 15],
     [18, 17],
-  ]
+  ],
 );
 
 // ranges are empty, nothing happens:

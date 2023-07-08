@@ -12,7 +12,7 @@ interface StreamInterface extends NodeJS.ReadWriteStream {
   read(size?: number): any;
 }
 declare function parseTap(
-  something: string | StreamInterface
+  something: string | StreamInterface,
 ): Res | Promise<Res>;
 
 export { Res, StreamInterface, parseTap, version };

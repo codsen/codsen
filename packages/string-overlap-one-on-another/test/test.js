@@ -14,7 +14,7 @@ test("01 - wrong inputs throw", () => {
       overlap(true, "z");
     },
     /THROW_ID_01/,
-    "01.01"
+    "01.01",
   );
 
   throws(
@@ -22,7 +22,7 @@ test("01 - wrong inputs throw", () => {
       overlap("z", true);
     },
     /THROW_ID_02/,
-    "01.02"
+    "01.02",
   );
 
   throws(
@@ -30,7 +30,7 @@ test("01 - wrong inputs throw", () => {
       overlap("z", "z", true);
     },
     /THROW_ID_03/,
-    "01.03"
+    "01.03",
   );
 
   throws(
@@ -38,7 +38,7 @@ test("01 - wrong inputs throw", () => {
       overlap("z", "z", { offset: 1.2 });
     },
     /THROW_ID_04/,
-    "01.04"
+    "01.04",
   );
 
   throws(
@@ -46,7 +46,7 @@ test("01 - wrong inputs throw", () => {
       overlap("z", "z", { offset: -1.2 });
     },
     /THROW_ID_04/,
-    "01.05"
+    "01.05",
   );
 });
 
@@ -78,7 +78,7 @@ test("03 - empty strings", () => {
   equal(
     overlap("", "456", { offset: 99, offsetFillerCharacter: "zzzz" }),
     "456",
-    "03.05"
+    "03.05",
   );
 
   // both
@@ -94,32 +94,32 @@ test("04 - positive offset", () => {
   equal(
     overlap("123", "b", { offset: 4, offsetFillerCharacter: "_" }),
     "123_b",
-    "04.05"
+    "04.05",
   );
   equal(
     overlap("123", "b", { offset: 4, offsetFillerCharacter: false }),
     "123 b",
-    "04.06"
+    "04.06",
   );
   equal(
     overlap("123", "b", { offset: 4, offsetFillerCharacter: null }),
     "123 b",
-    "04.07"
+    "04.07",
   );
   equal(
     overlap("123", "b", { offset: 5, offsetFillerCharacter: "_" }),
     "123__b",
-    "04.08"
+    "04.08",
   );
   equal(
     overlap("123", "b", { offset: 5, offsetFillerCharacter: "" }),
     "123b",
-    "04.09"
+    "04.09",
   );
   equal(
     overlap("123", "b", { offset: 99, offsetFillerCharacter: "" }),
     "123b",
-    "04.10"
+    "04.10",
   );
 });
 
@@ -128,7 +128,7 @@ test("05 - negative offset", () => {
   equal(
     overlap("123", "b", { offset: -2, offsetFillerCharacter: "-" }),
     "b-123",
-    "05.02"
+    "05.02",
   );
   equal(overlap("123", "b", { offset: -1 }), "b123", "05.03");
   equal(overlap("123", "abc", { offset: -2 }), "abc23", "05.04");

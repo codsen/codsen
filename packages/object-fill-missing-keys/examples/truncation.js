@@ -35,7 +35,7 @@ assert.deepEqual(
     {
       // settings
       doNotFillThesePathsIfTheyContainPlaceholders: ["lalala", "a.b", "a.x"],
-    }
+    },
   ),
   {
     // result
@@ -44,5 +44,5 @@ assert.deepEqual(
       x: false,
     },
     z: "z",
-  }
+  },
 );

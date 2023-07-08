@@ -15,7 +15,7 @@ function startsTag(
   layers: Layer[],
   withinStyle: boolean,
   leftVal: number | null,
-  rightVal: number | null
+  rightVal: number | null,
 ): boolean {
   return !!(
     str[i]?.trim().length &&

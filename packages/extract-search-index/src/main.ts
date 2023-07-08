@@ -11,8 +11,8 @@ function extract(str: string): string {
       `extract-search-index: [THROW_ID_01] The input is not string! It was given as ${JSON.stringify(
         str,
         null,
-        4
-      )} (typeof is ${typeof str})`
+        4,
+      )} (typeof is ${typeof str})`,
     );
   }
 
@@ -25,7 +25,7 @@ function extract(str: string): string {
             .split("")
             // remove surrogates and any emoji
             .map((char) => (char.charCodeAt(0) < 55291 ? char : " "))
-            .join("")
+            .join(""),
         ),
         {
           stripTogetherWithTheirContents: [
@@ -35,22 +35,22 @@ function extract(str: string): string {
             "code",
             "pre",
           ],
-        }
+        },
       )
         .result.toLowerCase()
 
         // remove url's - https://stackoverflow.com/a/3809435/3943954
         .replace(
           /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g,
-          ""
+          "",
         )
         // remove newlines, and punctuation
         .replace(
           /\.|,|;|:|"|\+|=|'|`|\^|\?|!|\/|\(|\)|{|}|>|<|#|-|–|—|\n|\r|\t|\[|\]|\d/g,
-          " "
+          " ",
         )
         // split by whitespace
-        .split(/\s+/)
+        .split(/\s+/),
     ),
   ]
     .filter(
@@ -92,7 +92,7 @@ function extract(str: string): string {
           "we",
           "you",
           "the",
-        ].includes(keyw) && keyw.length > 1
+        ].includes(keyw) && keyw.length > 1,
     )
     .filter((val) => !val.includes("\\"))
     .join(" ")

@@ -38,9 +38,9 @@ import { detectIsItHTMLOrXhtml } from "detect-is-it-html-or-xhtml";
 
 assert.equal(
   detectIsItHTMLOrXhtml(
-    '<img src="some.jpg" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/>'
+    '<img src="some.jpg" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/>',
   ),
-  "xhtml"
+  "xhtml",
 );
 ```
 

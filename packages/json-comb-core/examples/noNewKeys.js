@@ -27,7 +27,7 @@ assert.deepEqual(
       // <- reference keyset
       a: "aaa",
       c: "ccc",
-    }
+    },
   ),
-  ["b"] // list of rogue paths
+  ["b"], // list of rogue paths
 );

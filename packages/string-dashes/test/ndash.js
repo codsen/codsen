@@ -37,7 +37,7 @@ test("01 - digit-dash-digit × 2", () => {
     equal(
       convertOne(input, opt),
       null,
-      `02.01.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `02.01.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -48,7 +48,7 @@ test("01 - digit-dash-digit × 2", () => {
     equal(
       convertOne(input, opt),
       [[4, 5, "&ndash;"]],
-      `02.02.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `02.02.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -59,7 +59,7 @@ test("01 - digit-dash-digit × 2", () => {
     equal(
       convertOne(input, opt),
       [[4, 5, rawNDash]],
-      `02.03.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `02.03.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -72,7 +72,7 @@ test("01 - digit-dash-digit × 2", () => {
     equal(
       convertOne(input, opt),
       null,
-      `02.04.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `02.04.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -83,7 +83,7 @@ test("01 - digit-dash-digit × 2", () => {
     equal(
       convertOne(input, opt),
       [[20, 21, "&ndash;"]],
-      `02.05.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `02.05.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -94,7 +94,7 @@ test("01 - digit-dash-digit × 2", () => {
     equal(
       convertOne(input, opt),
       [[20, 21, rawNDash]],
-      `02.06.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `02.06.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -106,7 +106,7 @@ test("01 - digit-dash-digit × 2", () => {
     equal(
       convertOne(input, opt),
       null,
-      `02.07.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `02.07.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -123,7 +123,7 @@ test("02 - n-dash minimal", () => {
     equal(
       convertOne(input, opt),
       null,
-      `03.01.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `03.01.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -134,7 +134,7 @@ test("02 - n-dash minimal", () => {
     equal(
       convertOne(input, opt),
       [[4, 5, "&ndash;"]],
-      `03.02.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `03.02.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -145,7 +145,7 @@ test("02 - n-dash minimal", () => {
     equal(
       convertOne(input, opt),
       [[4, 5, rawNDash]],
-      `03.03.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `03.03.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -156,7 +156,7 @@ test("02 - n-dash minimal", () => {
     equal(
       convertOne(input, opt),
       null,
-      `03.04.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `03.04.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -165,7 +165,7 @@ test("02 - n-dash minimal", () => {
     equal(
       convertOne(input, opt),
       null,
-      `03.05.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `03.05.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -196,7 +196,7 @@ test("02 - n-dash minimal", () => {
         equal(
           convertOne(input, opt),
           null,
-          `03.01.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+          `03.01.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
         );
       });
     });

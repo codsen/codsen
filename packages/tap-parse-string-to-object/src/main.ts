@@ -43,7 +43,7 @@ function parseTap(something: string | StreamInterface): Res | Promise<Res> {
           // );
           counter.readLine(line as string);
           next();
-        })
+        }),
       );
 
       (something as StreamInterface).on("end", () => {
@@ -76,7 +76,7 @@ function parseTap(something: string | StreamInterface): Res | Promise<Res> {
     return counter.getTotal();
   }
   throw new Error(
-    "tap-parse-string-to-object: [THROW_ID_01] inputs should be either string or stream"
+    "tap-parse-string-to-object: [THROW_ID_01] inputs should be either string or stream",
   );
 }
 

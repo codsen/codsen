@@ -12,12 +12,12 @@ test("01 - input is plain object, replacement is string", () => {
         style: "html",
       },
       "style",
-      "meta"
+      "meta",
     ),
     {
       style: "meta",
     },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -37,7 +37,7 @@ test("02 - paths match object-paht paths", () => {
         path: "tags.0.style",
       },
     ],
-    "02.01"
+    "02.01",
   );
 
   is(objectPath.get(source, "tags.0.style"), "html", "02.02");

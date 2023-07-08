@@ -16,7 +16,7 @@ assert.deepEqual(
     b: false,
     c: false,
     d: false,
-  }
+  },
 );
 
 // you can change the default "false" to something else:
@@ -28,12 +28,12 @@ assert.deepEqual(
       c: "c",
       d: "d",
     },
-    "x"
+    "x",
   ),
   {
     a: "x",
     b: "x",
     c: "x",
     d: "x",
-  }
+  },
 );

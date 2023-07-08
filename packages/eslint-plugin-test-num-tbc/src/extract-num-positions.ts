@@ -17,7 +17,7 @@ export interface ExtractNumPosRes {
  */
 export function extractNumPos(
   val: string,
-  offset: number
+  offset: number,
 ): ExtractNumPosRes | null {
   // early exit
   if (typeof val !== "string" || !val.trim()) {
@@ -34,7 +34,7 @@ export function extractNumPos(
       console.log(
         `035 extract-num-positions(): ${`\u001b[${36}m${`======================== str[${i}]= ${`\u001b[${35}m${
           val[i]?.trim() ? val[i] : JSON.stringify(val[i], null, 4)
-        }\u001b[${39}m`} ========================`}\u001b[${39}m`}`
+        }\u001b[${39}m`} ========================`}\u001b[${39}m`}`,
       );
 
     // catch the end of the digit chunk

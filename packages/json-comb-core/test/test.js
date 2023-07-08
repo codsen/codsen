@@ -19,7 +19,7 @@ function prepArraySync(arr) {
 
 function prepArray(arr) {
   return getKeyset(arr).then((keySet) =>
-    pMap(arr, (obj) => enforceKeyset(obj, keySet))
+    pMap(arr, (obj) => enforceKeyset(obj, keySet)),
   );
 }
 
@@ -37,7 +37,7 @@ test("01 - getKeysetSync() - throws when there's no input", () => {
       getKeysetSync();
     },
     "01.01",
-    "01.01"
+    "01.01",
   );
 });
 
@@ -47,7 +47,7 @@ test("02 - getKeysetSync() - throws when input is not an array", () => {
       getKeysetSync("aa");
     },
     "02.01",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -57,7 +57,7 @@ test("03 - getKeysetSync() - throws when input array is empty", () => {
       getKeysetSync([]);
     },
     "03.01",
-    "03.01"
+    "03.01",
   );
 });
 
@@ -76,7 +76,7 @@ test("04 - getKeysetSync() - throws when input array contains not only plain obj
       ]);
     },
     "04.01",
-    "04.01"
+    "04.01",
   );
 });
 
@@ -109,7 +109,7 @@ test("05 - getKeysetSync() - calculates - three objects - default placeholder", 
         f: false,
       },
     },
-    "05.01"
+    "05.01",
   );
 });
 
@@ -134,7 +134,7 @@ test("06 - getKeysetSync() - calculates - three objects - custom placeholder", (
           },
         },
       ],
-      { placeholder: true }
+      { placeholder: true },
     ),
     {
       a: true,
@@ -145,7 +145,7 @@ test("06 - getKeysetSync() - calculates - three objects - custom placeholder", (
         f: true,
       },
     },
-    "06.01"
+    "06.01",
   );
   equal(
     getKeysetSync(
@@ -167,7 +167,7 @@ test("06 - getKeysetSync() - calculates - three objects - custom placeholder", (
           },
         },
       ],
-      { placeholder: "" }
+      { placeholder: "" },
     ),
     {
       a: "",
@@ -178,7 +178,7 @@ test("06 - getKeysetSync() - calculates - three objects - custom placeholder", (
         f: "",
       },
     },
-    "06.02"
+    "06.02",
   );
   equal(
     getKeysetSync(
@@ -200,7 +200,7 @@ test("06 - getKeysetSync() - calculates - three objects - custom placeholder", (
           },
         },
       ],
-      { placeholder: { a: "a" } }
+      { placeholder: { a: "a" } },
     ),
     {
       a: { a: "a" },
@@ -211,7 +211,7 @@ test("06 - getKeysetSync() - calculates - three objects - custom placeholder", (
         f: { a: "a" },
       },
     },
-    "06.03"
+    "06.03",
   );
 });
 
@@ -221,7 +221,7 @@ test("07 - getKeysetSync() - settings argument is not a plain object - throws", 
       getKeysetSync([{ a: "a" }, { b: "b" }], "zzz");
     },
     /THROW_ID_24/,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -266,7 +266,7 @@ test("08 - getKeysetSync() - multiple levels of nested arrays", () => {
       ],
       key3: false,
     },
-    "08.01"
+    "08.01",
   );
 });
 
@@ -299,7 +299,7 @@ test("09 - getKeysetSync() - objects that are directly in values", () => {
       k: false,
       m: false,
     },
-    "09.01"
+    "09.01",
   );
   equal(
     getKeysetSync([
@@ -329,7 +329,7 @@ test("09 - getKeysetSync() - objects that are directly in values", () => {
       k: false,
       m: false,
     },
-    "09.02"
+    "09.02",
   );
 });
 
@@ -356,7 +356,7 @@ test("10 - getKeysetSync() - deeper level arrays containing only strings", () =>
         },
       },
     },
-    "10.01"
+    "10.01",
   );
 });
 
@@ -383,7 +383,7 @@ test("11 - getKeysetSync() - deeper level array with string vs false", () => {
         },
       },
     },
-    "11.01"
+    "11.01",
   );
 });
 
@@ -414,7 +414,7 @@ test("12 - getKeysetSync() - two deeper level arrays with strings", () => {
         },
       },
     },
-    "12.01"
+    "12.01",
   );
 });
 
@@ -445,7 +445,7 @@ test("13 - getKeysetSync() - two deeper level arrays with mixed contents", () =>
         },
       },
     },
-    "13.01"
+    "13.01",
   );
 });
 
@@ -488,7 +488,7 @@ test("14 - getKeysetSync() - two deeper level arrays with plain objects", () => 
         },
       },
     },
-    "14.01"
+    "14.01",
   );
   equal(
     getKeysetSync([
@@ -516,7 +516,7 @@ test("14 - getKeysetSync() - two deeper level arrays with plain objects", () => 
         },
       },
     },
-    "14.02"
+    "14.02",
   );
   equal(
     getKeysetSync([
@@ -544,7 +544,7 @@ test("14 - getKeysetSync() - two deeper level arrays with plain objects", () => 
         },
       },
     },
-    "14.03"
+    "14.03",
   );
   equal(
     getKeysetSync([
@@ -572,7 +572,7 @@ test("14 - getKeysetSync() - two deeper level arrays with plain objects", () => 
         },
       },
     },
-    "14.04"
+    "14.04",
   );
 });
 
@@ -595,13 +595,13 @@ test("15 - enforceKeysetSync() - enforces a simple schema", () => {
       {
         a: "ccc",
       },
-      schema
+      schema,
     ),
     {
       a: "ccc",
       b: false,
     },
-    "15.01"
+    "15.01",
   );
 });
 
@@ -635,7 +635,7 @@ test("16 - enforceKeysetSync() - enforces a more complex schema", () => {
       ],
       e: false,
     },
-    "16.01"
+    "16.01",
   );
   equal(
     enforceKeysetSync(obj1, schema),
@@ -649,7 +649,7 @@ test("16 - enforceKeysetSync() - enforces a more complex schema", () => {
       ],
       e: false,
     },
-    "16.02"
+    "16.02",
   );
   equal(
     enforceKeysetSync(obj2, schema),
@@ -663,7 +663,7 @@ test("16 - enforceKeysetSync() - enforces a more complex schema", () => {
       ],
       e: "eee",
     },
-    "16.03"
+    "16.03",
   );
   equal(
     enforceKeysetSync(obj3, schema),
@@ -677,7 +677,7 @@ test("16 - enforceKeysetSync() - enforces a more complex schema", () => {
       ],
       e: false,
     },
-    "16.04"
+    "16.04",
   );
 });
 
@@ -702,7 +702,7 @@ test("17 - enforceKeysetSync() - enforces a schema involving arrays", () => {
         },
       ],
     },
-    "17.01"
+    "17.01",
   );
   equal(
     enforceKeysetSync(obj1, schema),
@@ -713,7 +713,7 @@ test("17 - enforceKeysetSync() - enforces a schema involving arrays", () => {
         },
       ],
     },
-    "17.02"
+    "17.02",
   );
   equal(
     enforceKeysetSync(obj2, schema),
@@ -724,7 +724,7 @@ test("17 - enforceKeysetSync() - enforces a schema involving arrays", () => {
         },
       ],
     },
-    "17.03"
+    "17.03",
   );
 });
 
@@ -766,7 +766,7 @@ test("18 - enforceKeysetSync() - another set involving arrays", () => {
         c: false,
       },
     ],
-    "18.01"
+    "18.01",
   );
 });
 
@@ -872,7 +872,7 @@ test("19 - enforceKeysetSync() - deep-nested arrays", () => {
         ],
       },
     ],
-    "19.01"
+    "19.01",
   );
 });
 
@@ -897,7 +897,7 @@ test("20 - enforceKeysetSync() - enforces a schema involving arrays", () => {
         },
       ],
     },
-    "20.01"
+    "20.01",
   );
   equal(
     enforceKeysetSync(obj1, schema),
@@ -908,7 +908,7 @@ test("20 - enforceKeysetSync() - enforces a schema involving arrays", () => {
         },
       ],
     },
-    "20.02"
+    "20.02",
   );
   equal(
     enforceKeysetSync(obj2, schema),
@@ -919,7 +919,7 @@ test("20 - enforceKeysetSync() - enforces a schema involving arrays", () => {
         },
       ],
     },
-    "20.03"
+    "20.03",
   );
 });
 
@@ -986,7 +986,7 @@ test("21 - enforceKeysetSync() - multiple objects within an array", () => {
         ],
       },
     ],
-    "21.01"
+    "21.01",
   );
 });
 
@@ -1052,7 +1052,7 @@ test("22 - enforceKeysetSync() - multiple levels of arrays", () => {
         c: "ccc",
       },
     ],
-    "22.01"
+    "22.01",
   );
 });
 
@@ -1086,7 +1086,7 @@ test("23 - enforceKeysetSync() - array vs string clashes", () => {
         ],
       },
     ],
-    "23.01"
+    "23.01",
   );
 });
 
@@ -1096,7 +1096,7 @@ test("24 - enforceKeysetSync() - all inputs missing - throws", () => {
       enforceKeysetSync();
     },
     "24.01",
-    "24.01"
+    "24.01",
   );
 });
 
@@ -1106,7 +1106,7 @@ test("25 - enforceKeysetSync() - second input arg missing - throws", () => {
       enforceKeysetSync({ a: "a" });
     },
     "25.01",
-    "25.01"
+    "25.01",
   );
 });
 
@@ -1116,7 +1116,7 @@ test("26 - enforceKeysetSync() - second input arg is not a plain obj - throws", 
       enforceKeysetSync({ a: "a" }, "zzz");
     },
     "26.01",
-    "26.01"
+    "26.01",
   );
 });
 
@@ -1126,7 +1126,7 @@ test("27 - enforceKeysetSync() - first input arg is not a plain obj - throws", (
       enforceKeysetSync("zzz", "zzz");
     },
     "27.01",
-    "27.01"
+    "27.01",
   );
 });
 
@@ -1159,7 +1159,7 @@ test("28 - enforceKeysetSync() - array over empty array", () => {
       b: false,
       c: false,
     },
-    "28.01"
+    "28.01",
   );
   equal(
     enforceKeysetSync(obj1, schema),
@@ -1177,7 +1177,7 @@ test("28 - enforceKeysetSync() - array over empty array", () => {
       b: false,
       c: "c",
     },
-    "28.02"
+    "28.02",
   );
   equal(
     enforceKeysetSync(obj2, schema),
@@ -1191,7 +1191,7 @@ test("28 - enforceKeysetSync() - array over empty array", () => {
       b: "b",
       c: false,
     },
-    "28.03"
+    "28.03",
   );
 });
 
@@ -1215,13 +1215,13 @@ test("29 - enforceKeysetSync() - opts", () => {
       schema,
       {
         doNotFillThesePathsIfTheyContainPlaceholders: ["b"],
-      }
+      },
     ),
     {
       a: "zzz",
       b: false,
     },
-    "29.01"
+    "29.01",
   );
 });
 
@@ -1244,13 +1244,13 @@ test("30 - enforceKeysetSync() - opts", () => {
       schema,
       {
         doNotFillThesePathsIfTheyContainPlaceholders: ["b"],
-      }
+      },
     ),
     {
       a: "zzz",
       b: false,
     },
-    "30.01"
+    "30.01",
   );
 });
 
@@ -1273,13 +1273,13 @@ test("31 - enforceKeysetSync() - opts off", () => {
       schema,
       {
         doNotFillThesePathsIfTheyContainPlaceholders: [],
-      }
+      },
     ),
     {
       a: "zzz",
       b: { c: false },
     },
-    "31.01"
+    "31.01",
   );
 });
 
@@ -1289,22 +1289,22 @@ test("32 - enforceKeysetSync() - opts.doNotFillThesePathsIfTheyContainPlaceholde
       enforceKeysetSync(
         { a: "a" },
         { a: "a", b: "b" },
-        { doNotFillThesePathsIfTheyContainPlaceholders: 1 }
+        { doNotFillThesePathsIfTheyContainPlaceholders: 1 },
       );
     },
     "32.01",
-    "32.01"
+    "32.01",
   );
   throws(
     () => {
       enforceKeysetSync(
         { a: "a" },
         { a: "a", b: "b" },
-        { doNotFillThesePathsIfTheyContainPlaceholders: [1] }
+        { doNotFillThesePathsIfTheyContainPlaceholders: [1] },
       );
     },
     "32.02",
-    "32.02"
+    "32.02",
   );
 });
 
@@ -1325,13 +1325,13 @@ test("33 - enforceKeysetSync() - opts.useNullAsExplicitFalse", () => {
       {
         a: null,
       },
-      schema
+      schema,
     ),
     {
       a: null,
       b: false,
     },
-    "33.01"
+    "33.01",
   );
   equal(
     enforceKeysetSync(
@@ -1339,7 +1339,7 @@ test("33 - enforceKeysetSync() - opts.useNullAsExplicitFalse", () => {
         a: null,
       },
       schema,
-      { useNullAsExplicitFalse: false }
+      { useNullAsExplicitFalse: false },
     ),
     {
       a: {
@@ -1347,7 +1347,7 @@ test("33 - enforceKeysetSync() - opts.useNullAsExplicitFalse", () => {
       },
       b: false,
     },
-    "33.02"
+    "33.02",
   );
 });
 
@@ -1385,7 +1385,7 @@ test("34 - enforceKeysetSync() - does not mutate the input args", () => {
       c: "ccc",
       a: false,
     },
-    "34.02"
+    "34.02",
   );
 });
 
@@ -1404,10 +1404,10 @@ test("35 - noNewKeysSync() - BAU", () => {
         a: "aaa",
         b: "bbb",
         c: "ccc",
-      }
+      },
     ),
     [],
-    "35.01"
+    "35.01",
   );
   equal(
     noNewKeysSync(
@@ -1419,10 +1419,10 @@ test("35 - noNewKeysSync() - BAU", () => {
       {
         a: "aaa",
         c: "ccc",
-      }
+      },
     ),
     ["b"],
-    "35.02"
+    "35.02",
   );
 });
 
@@ -1456,10 +1456,10 @@ test("36 - noNewKeysSync() - objects within arrays within objects", () => {
             c: "c",
           },
         ],
-      }
+      },
     ),
     [],
-    "36.01"
+    "36.01",
   );
   equal(
     noNewKeysSync(
@@ -1488,10 +1488,10 @@ test("36 - noNewKeysSync() - objects within arrays within objects", () => {
             c: "c",
           },
         ],
-      }
+      },
     ),
     [],
-    "36.02"
+    "36.02",
   );
   equal(
     noNewKeysSync(
@@ -1520,10 +1520,10 @@ test("36 - noNewKeysSync() - objects within arrays within objects", () => {
             b: false,
           },
         ],
-      }
+      },
     ),
     ["z[0].c", "z[1].c"],
-    "36.03"
+    "36.03",
   );
 });
 
@@ -1533,35 +1533,35 @@ test("37 - noNewKeysSync() - various throws", () => {
       noNewKeysSync();
     },
     /THROW_ID_51/g,
-    "37.01"
+    "37.01",
   );
   throws(
     () => {
       noNewKeysSync({ a: "a" });
     },
     /THROW_ID_52/g,
-    "37.02"
+    "37.02",
   );
   throws(
     () => {
       noNewKeysSync(1, { a: "a" });
     },
     /THROW_ID_53/g,
-    "37.03"
+    "37.03",
   );
   throws(
     () => {
       noNewKeysSync(["a"], ["a"]);
     },
     /THROW_ID_53/g,
-    "37.04"
+    "37.04",
   );
   throws(
     () => {
       noNewKeysSync({ a: "a" }, 1);
     },
     /THROW_ID_54/g,
-    "37.05"
+    "37.05",
   );
 });
 
@@ -1584,7 +1584,7 @@ test("38 - findUnusedSync() - single-level plain objects", () => {
       },
     ]),
     ["c"],
-    "38.01"
+    "38.01",
   );
   equal(
     findUnusedSync([
@@ -1601,7 +1601,7 @@ test("38 - findUnusedSync() - single-level plain objects", () => {
       {},
     ]),
     ["c"],
-    "38.02"
+    "38.02",
   );
 });
 
@@ -1642,7 +1642,7 @@ test("39 - findUnusedSync() - multiple-level plain objects", () => {
       },
     ]),
     ["c", "a[0].l"],
-    "39.01"
+    "39.01",
   );
   equal(
     findUnusedSync([
@@ -1682,7 +1682,7 @@ test("39 - findUnusedSync() - multiple-level plain objects", () => {
       { c: false },
     ]),
     ["c", "a[0].l"],
-    "39.02"
+    "39.02",
   );
 });
 
@@ -1727,7 +1727,7 @@ test("40 - findUnusedSync() - double-nested arrays", () => {
       },
     ]),
     ["c", "a[0][0].l", "a[0][1].k"],
-    "40.01"
+    "40.01",
   );
   equal(
     findUnusedSync([
@@ -1772,7 +1772,7 @@ test("40 - findUnusedSync() - double-nested arrays", () => {
       },
     ]),
     ["c", "a[0][0].l", "a[0][1].k"],
-    "40.02"
+    "40.02",
   );
 });
 
@@ -1788,7 +1788,7 @@ test("42 - findUnusedSync() - various throws", () => {
       findUnusedSync(1, { placeholder: false });
     },
     "42.01",
-    "42.01"
+    "42.01",
   );
   not.throws(() => {
     findUnusedSync([1, 2, 3]);
@@ -1798,7 +1798,7 @@ test("42 - findUnusedSync() - various throws", () => {
       findUnusedSync([{ a: "a" }, { a: "b" }], 1);
     },
     "42.03",
-    "42.02"
+    "42.02",
   );
 });
 
@@ -1817,7 +1817,7 @@ test("43 - findUnusedSync() - case of empty array within an array", () => {
       },
     ]),
     ["c"],
-    "43.01"
+    "43.01",
   );
   equal(
     findUnusedSync([
@@ -1835,7 +1835,7 @@ test("43 - findUnusedSync() - case of empty array within an array", () => {
       {},
     ]),
     ["c"],
-    "43.02"
+    "43.02",
   );
 });
 
@@ -1849,7 +1849,7 @@ test("44 - findUnusedSync() - case of empty array within an array", () => {
       },
     ]),
     [],
-    "44.01"
+    "44.01",
   );
   equal(
     findUnusedSync([
@@ -1862,7 +1862,7 @@ test("44 - findUnusedSync() - case of empty array within an array", () => {
       { a: false },
     ]),
     ["c"],
-    "44.02"
+    "44.02",
   );
 });
 
@@ -1887,7 +1887,7 @@ test("45 - findUnusedSync() - objects containing objects (2 in total)", () => {
       },
     ]),
     ["c", "a.x"],
-    "45.01"
+    "45.01",
   );
   equal(
     findUnusedSync([
@@ -1919,7 +1919,7 @@ test("45 - findUnusedSync() - objects containing objects (2 in total)", () => {
       },
     ]),
     ["c", "e", "a.x", "d.x"],
-    "45.02"
+    "45.02",
   );
   equal(
     findUnusedSync([
@@ -1952,7 +1952,7 @@ test("45 - findUnusedSync() - objects containing objects (2 in total)", () => {
       { c: false },
     ]),
     ["c", "e", "a.x", "d.x"],
-    "45.03"
+    "45.03",
   );
 });
 
@@ -1985,7 +1985,7 @@ test("46 - findUnusedSync() - objects containing objects (3 in total)", () => {
       },
     ]),
     ["c", "a.x", "a.k.l"],
-    "46.01"
+    "46.01",
   );
   equal(
     findUnusedSync([
@@ -2017,7 +2017,7 @@ test("46 - findUnusedSync() - objects containing objects (3 in total)", () => {
       { c: false },
     ]),
     ["c", "a.x", "a.k.l"],
-    "46.02"
+    "46.02",
   );
 });
 
@@ -2074,7 +2074,7 @@ test("47 - findUnusedSync() - objects containing objects, mixed with arrays", ()
       },
     ]),
     ["c", "a.x", "a.k.l"],
-    "47.01"
+    "47.01",
   );
   equal(
     findUnusedSync([
@@ -2128,7 +2128,7 @@ test("47 - findUnusedSync() - objects containing objects, mixed with arrays", ()
       },
     ]),
     ["c", "a.x", "a.k.l", "a.k.p.r[0].x"],
-    "47.02"
+    "47.02",
   );
   equal(
     findUnusedSync([
@@ -2184,7 +2184,7 @@ test("47 - findUnusedSync() - objects containing objects, mixed with arrays", ()
       {},
     ]),
     ["c", "a.x", "a.k.l", "a.k.p.r[0].x"],
-    "47.03"
+    "47.03",
   );
 });
 
@@ -2220,7 +2220,7 @@ test("49 - findUnusedSync() - array > single object > array > unused inside", ()
       },
     ]),
     ["a[0].k"],
-    "49.01"
+    "49.01",
   );
   equal(
     findUnusedSync([
@@ -2268,7 +2268,7 @@ test("49 - findUnusedSync() - array > single object > array > unused inside", ()
       },
     ]),
     ["a[0].k"],
-    "49.02"
+    "49.02",
   );
 });
 
@@ -2290,7 +2290,7 @@ test("50 - findUnusedSync() - simple case of not normalised input", () => {
       },
     ]),
     ["a", "b"],
-    "50.01"
+    "50.01",
   );
 });
 
@@ -2311,7 +2311,7 @@ test("51 - findUnusedSync() - opts.comments", () => {
       },
     ]),
     ["c"],
-    "51.01"
+    "51.01",
   );
   equal(
     findUnusedSync(
@@ -2329,10 +2329,10 @@ test("51 - findUnusedSync() - opts.comments", () => {
           c: false,
         },
       ],
-      { comments: "zzz" }
+      { comments: "zzz" },
     ),
     ["b__comment__this_is_a_comment_for_key_b", "c"],
-    "51.02"
+    "51.02",
   );
   equal(
     findUnusedSync(
@@ -2350,10 +2350,10 @@ test("51 - findUnusedSync() - opts.comments", () => {
           c: false,
         },
       ],
-      { comments: false }
+      { comments: false },
     ),
     ["b__comment__this_is_a_comment_for_key_b", "c"],
-    "51.03"
+    "51.03",
   );
   equal(
     findUnusedSync(
@@ -2371,10 +2371,10 @@ test("51 - findUnusedSync() - opts.comments", () => {
           c: false,
         },
       ],
-      { comments: 0 }
+      { comments: 0 },
     ),
     ["b__comment__this_is_a_comment_for_key_b", "c"],
-    "51.04"
+    "51.04",
   );
   equal(
     findUnusedSync(
@@ -2392,10 +2392,10 @@ test("51 - findUnusedSync() - opts.comments", () => {
           c: false,
         },
       ],
-      { comments: null }
+      { comments: null },
     ),
     ["b__comment__this_is_a_comment_for_key_b", "c"],
-    "51.05"
+    "51.05",
   );
   equal(
     findUnusedSync(
@@ -2413,10 +2413,10 @@ test("51 - findUnusedSync() - opts.comments", () => {
           c: false,
         },
       ],
-      { comments: undefined }
+      { comments: undefined },
     ),
     ["b__comment__this_is_a_comment_for_key_b", "c"],
-    "51.06"
+    "51.06",
   );
   equal(
     findUnusedSync(
@@ -2434,10 +2434,10 @@ test("51 - findUnusedSync() - opts.comments", () => {
           c: false,
         },
       ],
-      { comments: "" }
+      { comments: "" },
     ),
     ["b__comment__this_is_a_comment_for_key_b", "c"],
-    "51.07"
+    "51.07",
   );
 });
 
@@ -2460,7 +2460,7 @@ test("52 - sortAllObjectsSync() - plain object", () => {
   equal(
     JSON.stringify(sortAllObjectsSync(original)),
     JSON.stringify(sorted),
-    "52.01"
+    "52.01",
   ); // test
 });
 
@@ -2507,7 +2507,7 @@ test("54 - sortAllObjectsSync() - object-array-object", () => {
         },
       ],
     },
-    "54.01"
+    "54.01",
   );
 });
 
@@ -2613,7 +2613,7 @@ test("55 - sortAllObjectsSync() - object very deep", () => {
         ],
       ],
     },
-    "55.01"
+    "55.01",
   );
 });
 
@@ -2644,7 +2644,7 @@ test("56 - sortAllObjectsSync() - nested case", () => {
   equal(
     JSON.stringify(sortAllObjectsSync(original)),
     JSON.stringify(sorted),
-    "56.01"
+    "56.01",
   );
 });
 
@@ -2726,7 +2726,7 @@ test("61 - getKeyset() - throws when there's no input", () => {
       getKeyset();
     },
     "61.01",
-    "61.01"
+    "61.01",
   );
 });
 
@@ -2736,7 +2736,7 @@ test("62 - getKeyset() - throws when input is not an array of promises", () => {
       getKeyset(makePromise("aa"));
     },
     "62.01",
-    "62.01"
+    "62.01",
   );
 });
 
@@ -2751,7 +2751,7 @@ test("63 - getKeyset() - resolves to a rejected promise when input array contain
         a: "a",
       },
       "zzzz", // <----- problem!
-    ])
+    ]),
   )
     .then(() => {
       not.ok("not ok");
@@ -2781,7 +2781,7 @@ test("64 - getKeyset() - calculates - three objects - default placeholder", asyn
             f: "f",
           },
         },
-      ])
+      ]),
     ),
     {
       a: false,
@@ -2792,7 +2792,7 @@ test("64 - getKeyset() - calculates - three objects - default placeholder", asyn
         f: false,
       },
     },
-    "64.01"
+    "64.01",
   );
 });
 
@@ -2817,7 +2817,7 @@ test("65 - getKeyset() - calculates - three objects - custom placeholder", async
           },
         },
       ],
-      { placeholder: true }
+      { placeholder: true },
     ),
     {
       a: true,
@@ -2828,7 +2828,7 @@ test("65 - getKeyset() - calculates - three objects - custom placeholder", async
         f: true,
       },
     },
-    "65.01"
+    "65.01",
   );
 
   equal(
@@ -2851,7 +2851,7 @@ test("65 - getKeyset() - calculates - three objects - custom placeholder", async
           },
         },
       ],
-      { placeholder: "" }
+      { placeholder: "" },
     ),
     {
       a: "",
@@ -2862,7 +2862,7 @@ test("65 - getKeyset() - calculates - three objects - custom placeholder", async
         f: "",
       },
     },
-    "65.02"
+    "65.02",
   );
 
   equal(
@@ -2885,7 +2885,7 @@ test("65 - getKeyset() - calculates - three objects - custom placeholder", async
           },
         },
       ],
-      { placeholder: { a: "a" } }
+      { placeholder: { a: "a" } },
     ),
     {
       a: { a: "a" },
@@ -2896,7 +2896,7 @@ test("65 - getKeyset() - calculates - three objects - custom placeholder", async
         f: { a: "a" },
       },
     },
-    "65.03"
+    "65.03",
   );
 });
 
@@ -2906,7 +2906,7 @@ test("66 - getKeyset() - settings argument is not a plain object - throws", () =
       getKeyset([{ a: "a" }, { b: "b" }], "zzz");
     },
     /THROW_ID_12/,
-    "66.01"
+    "66.01",
   );
 });
 
@@ -2951,7 +2951,7 @@ test("67 - getKeyset() - multiple levels of nested arrays", async () => {
       ],
       key3: false,
     },
-    "67.01"
+    "67.01",
   );
 });
 
@@ -2984,7 +2984,7 @@ test("68 - getKeyset() - objects that are directly in values", async () => {
       k: false,
       m: false,
     },
-    "68.01"
+    "68.01",
   );
   equal(
     await getKeyset([
@@ -3014,7 +3014,7 @@ test("68 - getKeyset() - objects that are directly in values", async () => {
       k: false,
       m: false,
     },
-    "68.02"
+    "68.02",
   );
 });
 
@@ -3041,7 +3041,7 @@ test("69 - getKeyset() - deeper level arrays containing only strings", async () 
         },
       },
     },
-    "69.01"
+    "69.01",
   );
 });
 
@@ -3068,7 +3068,7 @@ test("70 - getKeyset() - deeper level array with string vs false", async () => {
         },
       },
     },
-    "70.01"
+    "70.01",
   );
 });
 
@@ -3099,7 +3099,7 @@ test("71 - getKeyset() - two deeper level arrays with strings", async () => {
         },
       },
     },
-    "71.01"
+    "71.01",
   );
 });
 
@@ -3130,7 +3130,7 @@ test("72 - getKeyset() - two deeper level arrays with mixed contents", async () 
         },
       },
     },
-    "72.01"
+    "72.01",
   );
 });
 
@@ -3173,7 +3173,7 @@ test("73 - getKeyset() - two deeper level arrays with plain objects", async () =
         },
       },
     },
-    "73.01"
+    "73.01",
   );
   equal(
     await getKeyset([
@@ -3201,7 +3201,7 @@ test("73 - getKeyset() - two deeper level arrays with plain objects", async () =
         },
       },
     },
-    "73.02"
+    "73.02",
   );
   equal(
     await getKeyset([
@@ -3229,7 +3229,7 @@ test("73 - getKeyset() - two deeper level arrays with plain objects", async () =
         },
       },
     },
-    "73.03"
+    "73.03",
   );
   equal(
     await getKeyset([
@@ -3257,7 +3257,7 @@ test("73 - getKeyset() - two deeper level arrays with plain objects", async () =
         },
       },
     },
-    "73.04"
+    "73.04",
   );
 });
 
@@ -3280,13 +3280,13 @@ test("74 - enforceKeyset() - enforces a simple schema", async () => {
       {
         a: "ccc",
       },
-      schema
+      schema,
     ),
     {
       a: "ccc",
       b: false,
     },
-    "74.01"
+    "74.01",
   );
 });
 
@@ -3320,7 +3320,7 @@ test("75 - enforceKeyset() - enforces a more complex schema", async () => {
       ],
       e: false,
     },
-    "75.01"
+    "75.01",
   );
   equal(
     await enforceKeyset(obj1, schema),
@@ -3334,7 +3334,7 @@ test("75 - enforceKeyset() - enforces a more complex schema", async () => {
       ],
       e: false,
     },
-    "75.02"
+    "75.02",
   );
   equal(
     await enforceKeyset(obj2, schema),
@@ -3348,7 +3348,7 @@ test("75 - enforceKeyset() - enforces a more complex schema", async () => {
       ],
       e: "eee",
     },
-    "75.03"
+    "75.03",
   );
   equal(
     await enforceKeyset(obj3, schema),
@@ -3362,7 +3362,7 @@ test("75 - enforceKeyset() - enforces a more complex schema", async () => {
       ],
       e: false,
     },
-    "75.04"
+    "75.04",
   );
 });
 
@@ -3387,7 +3387,7 @@ test("76 - enforceKeyset() - enforces a schema involving arrays", async () => {
         },
       ],
     },
-    "76.01"
+    "76.01",
   );
   equal(
     await enforceKeyset(obj1, schema),
@@ -3398,7 +3398,7 @@ test("76 - enforceKeyset() - enforces a schema involving arrays", async () => {
         },
       ],
     },
-    "76.02"
+    "76.02",
   );
   equal(
     await enforceKeyset(obj2, schema),
@@ -3409,7 +3409,7 @@ test("76 - enforceKeyset() - enforces a schema involving arrays", async () => {
         },
       ],
     },
-    "76.03"
+    "76.03",
   );
 });
 
@@ -3429,7 +3429,7 @@ test("77 - enforceKeyset() - another set involving arrays", async () => {
           ],
           a: "a val",
         },
-      ])
+      ]),
     ),
     [
       {
@@ -3453,7 +3453,7 @@ test("77 - enforceKeyset() - another set involving arrays", async () => {
         c: false,
       },
     ],
-    "77.01"
+    "77.01",
   );
 });
 
@@ -3559,7 +3559,7 @@ test("78 - enforceKeyset() - deep-nested arrays", async () => {
         ],
       },
     ],
-    "78.01"
+    "78.01",
   );
 });
 
@@ -3584,7 +3584,7 @@ test("79 - enforceKeyset() - enforces a schema involving arrays", async () => {
         },
       ],
     },
-    "79.01"
+    "79.01",
   );
   equal(
     await enforceKeyset(obj1, schema),
@@ -3595,7 +3595,7 @@ test("79 - enforceKeyset() - enforces a schema involving arrays", async () => {
         },
       ],
     },
-    "79.02"
+    "79.02",
   );
   equal(
     await enforceKeyset(obj2, schema),
@@ -3606,7 +3606,7 @@ test("79 - enforceKeyset() - enforces a schema involving arrays", async () => {
         },
       ],
     },
-    "79.03"
+    "79.03",
   );
 });
 
@@ -3673,7 +3673,7 @@ test("80 - enforceKeyset() - multiple objects within an array", async () => {
         ],
       },
     ],
-    "80.01"
+    "80.01",
   );
 });
 
@@ -3739,7 +3739,7 @@ test("81 - enforceKeyset() - multiple levels of arrays", async () => {
         c: "ccc",
       },
     ],
-    "81.01"
+    "81.01",
   );
 });
 
@@ -3773,7 +3773,7 @@ test("82 - enforceKeyset() - array vs string clashes", async () => {
         ],
       },
     ],
-    "82.01"
+    "82.01",
   );
 });
 
@@ -3783,7 +3783,7 @@ test("83 - enforceKeyset() - all inputs missing - resolves to rejected promise",
       enforceKeyset();
     },
     /THROW_ID_31/g,
-    "83.01"
+    "83.01",
   );
 });
 
@@ -3793,7 +3793,7 @@ test("84 - enforceKeyset() - second input arg missing - resolves to rejected pro
       enforceKeyset({ a: "a" });
     },
     /THROW_ID_32/g,
-    "84.01"
+    "84.01",
   );
 });
 
@@ -3846,7 +3846,7 @@ test("87 - enforceKeyset() - array over empty array", async () => {
       b: false,
       c: false,
     },
-    "87.01"
+    "87.01",
   );
   equal(
     await enforceKeyset(obj1, schema),
@@ -3864,7 +3864,7 @@ test("87 - enforceKeyset() - array over empty array", async () => {
       b: false,
       c: "c",
     },
-    "87.02"
+    "87.02",
   );
   equal(
     await enforceKeyset(obj2, schema),
@@ -3878,7 +3878,7 @@ test("87 - enforceKeyset() - array over empty array", async () => {
       b: "b",
       c: false,
     },
-    "87.03"
+    "87.03",
   );
 });
 
@@ -3887,7 +3887,7 @@ test("88 - enforceKeyset() - wrong opts - resolves to rejected promise", async (
     await enforceKeyset(
       { a: "a" },
       { a: "false", b: "b" },
-      { doNotFillThesePathsIfTheyContainPlaceholders: ["a", 1] }
+      { doNotFillThesePathsIfTheyContainPlaceholders: ["a", 1] },
     ).then(() => {
       unreachable("88");
     });
@@ -3908,20 +3908,7 @@ test("89 - enforceKeyset() - opts.useNullAsExplicitFalse", async () => {
           c: "ccc",
         },
       },
-    ])
-  );
-  equal(
-    await enforceKeyset(
-      {
-        a: null,
-      },
-      schema
-    ),
-    {
-      a: null,
-      b: false,
-    },
-    "89.01"
+    ]),
   );
   equal(
     await enforceKeyset(
@@ -3929,7 +3916,20 @@ test("89 - enforceKeyset() - opts.useNullAsExplicitFalse", async () => {
         a: null,
       },
       schema,
-      { useNullAsExplicitFalse: false }
+    ),
+    {
+      a: null,
+      b: false,
+    },
+    "89.01",
+  );
+  equal(
+    await enforceKeyset(
+      {
+        a: null,
+      },
+      schema,
+      { useNullAsExplicitFalse: false },
     ),
     {
       a: {
@@ -3937,7 +3937,7 @@ test("89 - enforceKeyset() - opts.useNullAsExplicitFalse", async () => {
       },
       b: false,
     },
-    "89.02"
+    "89.02",
   );
 });
 

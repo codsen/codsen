@@ -25,7 +25,7 @@ declare function strFindHeadsTails(
   str: string,
   heads: string | string[],
   tails: string | string[],
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): ResObj[];
 
 export { Opts, ResObj, defaults, strFindHeadsTails, version };

@@ -24,7 +24,7 @@ test("01 - space+dash+space", () => {
           ellipsisLen: 155,
         }),
         { result: `API ${dash} includesWithGl`, addEllipsis: true },
-        `01.01 - ${name} - monospace: false`
+        `01.01 - ${name} - monospace: false`,
       );
     });
   });
@@ -40,7 +40,7 @@ test("01 - space+dash+space", () => {
           ellipsisLen: 155,
         }),
         { result: `API ${dash} includesW`, addEllipsis: true },
-        `01.02 - ${name} - monospace: true`
+        `01.02 - ${name} - monospace: true`,
       );
     });
   });
@@ -59,7 +59,7 @@ test("02 - dash+space", () => {
           ellipsisLen: 155,
         }),
         { result: `API${dash} includesWithGl`, addEllipsis: true },
-        `02 - ${name} - monospace: false`
+        `02 - ${name} - monospace: false`,
       );
     });
   });
@@ -75,7 +75,7 @@ test("02 - dash+space", () => {
           ellipsisLen: 155,
         }),
         { result: `API${dash} includesW`, addEllipsis: true },
-        `02 - ${name} - monospace: true`
+        `02 - ${name} - monospace: true`,
       );
     });
   });
@@ -94,7 +94,7 @@ test("03 - space+dash", () => {
           ellipsisLen: 155,
         }),
         { result: `API ${dash}includesWithGl`, addEllipsis: true },
-        `03 - ${name} - monospace: false`
+        `03 - ${name} - monospace: false`,
       );
     });
   });
@@ -110,7 +110,7 @@ test("03 - space+dash", () => {
           ellipsisLen: 155,
         }),
         { result: `API ${dash}includesW`, addEllipsis: true },
-        `03 - ${name} - monospace: true`
+        `03 - ${name} - monospace: true`,
       );
     });
   });
@@ -129,7 +129,7 @@ test("04 - tight dash", () => {
           ellipsisLen: 155,
         }),
         { result: `API${dash}includesWithGl`, addEllipsis: true },
-        `04 - ${name} - monospace: false`
+        `04 - ${name} - monospace: false`,
       );
     });
   });
@@ -145,7 +145,7 @@ test("04 - tight dash", () => {
           ellipsisLen: 155,
         }),
         { result: `API${dash}includesW`, addEllipsis: true },
-        `04 - ${name} - monospace: true`
+        `04 - ${name} - monospace: true`,
       );
     });
   });
@@ -160,7 +160,7 @@ test("adhoc - maxLines=1", () => {
       ellipsisLen: 155,
     }),
     { result: "API - INCLUDES", addEllipsis: true },
-    "d1"
+    "d1",
   );
 });
 
@@ -173,7 +173,7 @@ test("adhoc - maxLines=2", () => {
       ellipsisLen: 155,
     }),
     { result: "API - INCLUDESWITH", addEllipsis: true },
-    "d1"
+    "d1",
   );
 });
 
@@ -186,7 +186,7 @@ test("adhoc - maxLines=3", () => {
       ellipsisLen: 155,
     }),
     { result: "API - INCLUDESWITH", addEllipsis: true },
-    "d1"
+    "d1",
   );
 });
 
@@ -199,7 +199,7 @@ test("adhoc - maxLines=4", () => {
       ellipsisLen: 155,
     }),
     { result: "API - INCLUDESWITH", addEllipsis: true },
-    "d1"
+    "d1",
   );
 });
 

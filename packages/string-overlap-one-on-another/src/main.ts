@@ -18,8 +18,8 @@ function overlap(str1: string, str2: string, opts?: Partial<Opts>): string {
       `string-overlap-one-on-another: [THROW_ID_01] The first input argument must be a string but it was given as ${JSON.stringify(
         str1,
         null,
-        4
-      )}, which is type "${typeof str1}"`
+        4,
+      )}, which is type "${typeof str1}"`,
     );
   }
   if (typeof str2 !== "string") {
@@ -27,8 +27,8 @@ function overlap(str1: string, str2: string, opts?: Partial<Opts>): string {
       `string-overlap-one-on-another: [THROW_ID_02] The second input argument must be a string but it was given as ${JSON.stringify(
         str2,
         null,
-        4
-      )}, which is type "${typeof str2}"`
+        4,
+      )}, which is type "${typeof str2}"`,
     );
   }
 
@@ -41,8 +41,8 @@ function overlap(str1: string, str2: string, opts?: Partial<Opts>): string {
       `string-overlap-one-on-another: [THROW_ID_03] The third input argument must be a plain object but it was given as ${JSON.stringify(
         str2,
         null,
-        4
-      )}, which is type "${typeof opts}"`
+        4,
+      )}, which is type "${typeof opts}"`,
     );
   } else {
     resolvedOpts = { ...defaults, ...opts };
@@ -53,8 +53,8 @@ function overlap(str1: string, str2: string, opts?: Partial<Opts>): string {
         `string-overlap-one-on-another: [THROW_ID_04] The second input argument must be a string but it was given as ${JSON.stringify(
           str2,
           null,
-          4
-        )}, which is type "${typeof str2}"`
+          4,
+        )}, which is type "${typeof str2}"`,
       );
     }
     if (
@@ -77,14 +77,14 @@ function overlap(str1: string, str2: string, opts?: Partial<Opts>): string {
     let part2 =
       Math.abs(resolvedOpts.offset) > str2.length
         ? resolvedOpts.offsetFillerCharacter.repeat(
-            Math.abs(resolvedOpts.offset) - str2.length
+            Math.abs(resolvedOpts.offset) - str2.length,
           )
         : "";
     // the reset of str1 string protruding from underneath, if any:
     let part3 = str1.slice(
       str2.length - Math.abs(resolvedOpts.offset) > 0
         ? str2.length - Math.abs(resolvedOpts.offset)
-        : 0
+        : 0,
     );
     return str2 + part2 + part3;
   }
@@ -94,7 +94,7 @@ function overlap(str1: string, str2: string, opts?: Partial<Opts>): string {
       str1.slice(0, resolvedOpts.offset) +
       (resolvedOpts.offset > str1.length
         ? resolvedOpts.offsetFillerCharacter.repeat(
-            Math.abs(resolvedOpts.offset) - str1.length
+            Math.abs(resolvedOpts.offset) - str1.length,
           )
         : "");
     // the rest of str1 string, if applicable:

@@ -63,7 +63,7 @@ const defaults: Opts = {
 function compare(
   b: JsonValue,
   s: JsonValue,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): boolean | string {
   DEV && console.log(" \n███████████████████████████████████████\n ");
   DEV && console.log(`069 compare() CALLED`);
@@ -80,8 +80,8 @@ function compare(
       `080 compare(): ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   // edge case when hungryForWhitespace=true, matchStrictly=true and matching against blank object:
@@ -121,21 +121,21 @@ function compare(
         `121 ${`\u001b[${33}m${`big`}\u001b[${39}m`}: ${JSON.stringify(
           b,
           null,
-          4
-        )} (empty: ${empty(b)})`
+          4,
+        )} (empty: ${empty(b)})`,
       );
     DEV &&
       console.log(
         `129 ${`\u001b[${33}m${`small`}\u001b[${39}m`}: ${JSON.stringify(
           s,
           null,
-          4
-        )} (empty: ${empty(s)})`
+          4,
+        )} (empty: ${empty(s)})`,
       );
     if (resolvedOpts.hungryForWhitespace && empty(b) && empty(s)) {
       DEV &&
         console.log(
-          `138 ${`\u001b[${32}m${`return true, both empty`}\u001b[${39}m`}`
+          `138 ${`\u001b[${32}m${`return true, both empty`}\u001b[${39}m`}`,
         );
       return true;
     }
@@ -151,7 +151,7 @@ function compare(
           resolvedOpts.useWildcards
             ? isMatch(b, s, { caseSensitive: true })
             : b === s
-        }`
+        }`,
       );
     return resolvedOpts.useWildcards
       ? isMatch(b, s, { caseSensitive: true })
@@ -182,7 +182,7 @@ function compare(
       } but the length of an array on the other end, ${JSON.stringify(
         b,
         null,
-        4
+        4,
       )} is ${b.length}`;
     }
     if (s.length === 0) {
@@ -196,7 +196,7 @@ function compare(
         return `The given array has no elements, but the array on the other end, ${JSON.stringify(
           b,
           null,
-          4
+          4,
         )} does have some`;
       }
       DEV && console.log(`202 return false`);
@@ -221,11 +221,11 @@ function compare(
         return `The given array ${JSON.stringify(
           s,
           null,
-          4
+          4,
         )} is not a subset of an array on the other end, ${JSON.stringify(
           b,
           null,
-          4
+          4,
         )}`;
       }
     }
@@ -242,7 +242,7 @@ function compare(
         ? ` First object has unique keys: ${JSON.stringify(
             uniqueKeysOnS,
             null,
-            4
+            4,
           )}.`
         : "";
 
@@ -278,7 +278,7 @@ function compare(
         // so wildcards are on and sKeys[i] contains a wildcard
         if (
           Object.keys(b as AnyObject).some((bKey) =>
-            isMatch(bKey, sKey, { caseSensitive: true })
+            isMatch(bKey, sKey, { caseSensitive: true }),
           )
         ) {
           // so some keys do match. Return true
@@ -315,14 +315,14 @@ function compare(
           }
           DEV && console.log(`316 return`);
           return `The given key ${sKey} is of a different type on both objects. On the first-one, it's ${typeDetect(
-            (s as AnyObject)[sKey]
+            (s as AnyObject)[sKey],
           )}, on the second-one, it's ${typeDetect((b as AnyObject)[sKey])}`;
         }
       } else if (
         compare(
           (b as AnyObject)[sKey],
           (s as AnyObject)[sKey],
-          resolvedOpts
+          resolvedOpts,
         ) !== true
       ) {
         DEV && console.log(`328 case #3. - recursion returned false`);
@@ -331,16 +331,16 @@ function compare(
             `331 ██ ${`\u001b[${33}m${`b[sKey]`}\u001b[${39}m`} = ${JSON.stringify(
               (b as AnyObject)[sKey],
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
         DEV &&
           console.log(
             `339 ██ ${`\u001b[${33}m${`s[sKey]`}\u001b[${39}m`} = ${JSON.stringify(
               (s as AnyObject)[sKey],
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
         DEV && console.log(`345 so key does exist and type matches`);
         if (!resolvedOpts.verboseWhenMismatches) {
@@ -351,7 +351,7 @@ function compare(
         return `The given piece ${JSON.stringify(
           (s as AnyObject)[sKey],
           null,
-          4
+          4,
         )} and ${JSON.stringify((b as AnyObject)[sKey], null, 4)} don't match.`;
       }
       DEV && console.log(`357 end reached, case #4.`);

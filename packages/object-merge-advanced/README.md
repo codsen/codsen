@@ -48,13 +48,13 @@ assert.deepEqual(
     },
     {
       ignoreKeys: ["a"],
-    }
+    },
   ),
   {
     a: ["c"],
     k: "l",
     m: "n",
-  }
+  },
 );
 ```
 

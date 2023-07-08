@@ -12,7 +12,7 @@ interface UnknownValueObj {
  */
 declare function looseCompare(
   bigObj: JsonValue,
-  smallObj: JsonValue
+  smallObj: JsonValue,
 ): boolean | undefined;
 
 export {

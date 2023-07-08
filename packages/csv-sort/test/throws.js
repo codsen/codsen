@@ -27,35 +27,35 @@ test("04. throws when input types are wrong", () => {
       sort(true);
     },
     /THROW_ID_01/g,
-    "04.01"
+    "04.01",
   );
   throws(
     () => {
       sort(null);
     },
     /THROW_ID_01/g,
-    "04.02"
+    "04.02",
   );
   throws(
     () => {
       sort(1);
     },
     /THROW_ID_01/g,
-    "04.03"
+    "04.03",
   );
   throws(
     () => {
       sort(undefined);
     },
     /THROW_ID_01/g,
-    "04.04"
+    "04.04",
   );
   throws(
     () => {
       sort({ a: "b" });
     },
     /THROW_ID_01/g,
-    "04.05"
+    "04.05",
   );
 });
 

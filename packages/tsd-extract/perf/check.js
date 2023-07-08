@@ -211,7 +211,7 @@ export {
     "version",
     {
       extractAll: true,
-    }
+    },
   );
 
 // action

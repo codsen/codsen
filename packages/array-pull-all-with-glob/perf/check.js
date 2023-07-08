@@ -18,7 +18,7 @@ const testme = () =>
       "elements",
       "elemental",
     ],
-    ["module-*", "something else", "element*"]
+    ["module-*", "something else", "element*"],
   );
 
 // action

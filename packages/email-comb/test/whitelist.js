@@ -36,7 +36,7 @@ test("01 - nothing removed because of settings.whitelist", () => {
 `,
     {
       whitelist: [".module-*", ".particular"],
-    }
+    },
   ).result;
 
   let intended = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
@@ -96,7 +96,7 @@ test("02 - some removed, some whitelisted", () => {
 `,
     {
       whitelist: [".module-*", ".particular"],
-    }
+    },
   ).result;
 
   let intended = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
@@ -155,7 +155,7 @@ test("03 - case of whitelisting everything", () => {
 `,
     {
       whitelist: ["*"],
-    }
+    },
   ).result;
 
   let intended = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
@@ -196,7 +196,7 @@ test("04 - special case - checking adjacent markers #1", () => {
 </style>
 <body class="real">
 zzz
-</body>`
+</body>`,
   ).result;
 
   let intended = `<style type="text/css">
@@ -215,7 +215,7 @@ test("05 - special case - checking adjacent markers #2", () => {
 <body>
 zzz
 </body>
-`
+`,
   ).result;
 
   let intended = `<body>
@@ -236,7 +236,7 @@ test("06 - special case - checking commas within curly braces", () => {
 </style>
 <body class="used">
 zzz
-</body>`
+</body>`,
   ).result;
 
   let intended = `<style type="text/css">
@@ -259,7 +259,7 @@ zzz
 </body>`,
     {
       whitelist: [],
-    }
+    },
   );
 
   let intended = `<body>
@@ -279,7 +279,7 @@ zzz
 </body>`,
     {
       whitelist: ["[data-ogsc]*"],
-    }
+    },
   );
 
   let intended = `<style type="text/css">

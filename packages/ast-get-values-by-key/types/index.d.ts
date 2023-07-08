@@ -9,7 +9,7 @@ interface Findings {
 declare function getByKey(
   originalInput: any,
   whatToFind: string | string[],
-  originalReplacement?: any
+  originalReplacement?: any,
 ): any;
 
 export { Findings, getByKey, version };

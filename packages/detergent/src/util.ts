@@ -431,7 +431,7 @@ const latinAndNonNonLatinRanges = [
 
 function doConvertEntities(
   inputString: string,
-  dontEncodeNonLatin: boolean
+  dontEncodeNonLatin: boolean,
 ): string {
   if (dontEncodeNonLatin) {
     // split, check, encode conditionally
@@ -444,7 +444,7 @@ function doConvertEntities(
           latinAndNonNonLatinRanges.some(
             (rangeArr) =>
               char.charCodeAt(0) > rangeArr[0] &&
-              char.charCodeAt(0) < rangeArr[1]
+              char.charCodeAt(0) < rangeArr[1],
           )
         ) {
           return he.encode(char, {

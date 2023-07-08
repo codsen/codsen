@@ -20,7 +20,7 @@ test("03 - CRLF", () => {
   equal(
     c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 9),
     "\r\n\r\n\r\nzzz\r\n\r\n\r\n",
-    "03.01"
+    "03.01",
   );
 });
 
@@ -36,7 +36,7 @@ test("06 - CRLF", () => {
   equal(
     c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 3),
     "\r\n\r\n\r\nzzz\r\n\r\n\r\n",
-    "06.01"
+    "06.01",
   );
 });
 

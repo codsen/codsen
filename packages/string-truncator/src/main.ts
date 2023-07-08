@@ -253,8 +253,8 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
       `253 incoming ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
         str,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   // Two equals will match both null and undefined
   // That's existy() from the Functional JavaScript by Fogus
@@ -263,7 +263,7 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
   }
   if (typeof str !== "string") {
     throw new Error(
-      `string-truncator: [THROW_ID_02] The input is not a string! It's: ${typeof str}`
+      `string-truncator: [THROW_ID_02] The input is not a string! It's: ${typeof str}`,
     );
   }
 
@@ -279,7 +279,7 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
 
   if (resolvedOpts.noEmpty && !str.trim().length) {
     throw new Error(
-      `string-truncator: [THROW_ID_03] The input string is empty!`
+      `string-truncator: [THROW_ID_03] The input string is empty!`,
     );
   }
 
@@ -288,8 +288,8 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
       `string-truncator: [THROW_ID_04] opts.maxLen must be a number! It was given: ${JSON.stringify(
         resolvedOpts.maxLen,
         null,
-        4
-      )} (typeof is ${typeof resolvedOpts.maxLen})`
+        4,
+      )} (typeof is ${typeof resolvedOpts.maxLen})`,
     );
   }
 
@@ -298,14 +298,14 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
       `string-truncator: [THROW_ID_05] opts.maxLines must be a number! It was given: ${JSON.stringify(
         resolvedOpts.maxLines,
         null,
-        4
-      )} (typeof is ${typeof resolvedOpts.maxLines})`
+        4,
+      )} (typeof is ${typeof resolvedOpts.maxLines})`,
     );
   }
 
   if (resolvedOpts.maxLines === 0) {
     throw new Error(
-      `string-truncator: [THROW_ID_06] opts.maxLines must not be a zero! It was set to zero.`
+      `string-truncator: [THROW_ID_06] opts.maxLines must not be a zero! It was set to zero.`,
     );
   }
 
@@ -324,7 +324,7 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
     maxLetterLen = Math.max(...Object.values(resolvedOpts.letterWidths));
     minLetterLen = Math.min(...Object.values(resolvedOpts.letterWidths));
     averageLetterLen = Math.floor(
-      average(...Object.values(resolvedOpts.letterWidths))
+      average(...Object.values(resolvedOpts.letterWidths)),
     );
   }
 
@@ -333,16 +333,16 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
       `333 ${`\u001b[${33}m${`maxLetterLen`}\u001b[${39}m`} = ${JSON.stringify(
         maxLetterLen,
         null,
-        4
+        4,
       )} (${Object.keys(resolvedOpts.letterWidths).filter(
-        (k) => resolvedOpts.letterWidths[k] === maxLetterLen
+        (k) => resolvedOpts.letterWidths[k] === maxLetterLen,
       )}); ${`\u001b[${33}m${`minLetterLen`}\u001b[${39}m`} = ${JSON.stringify(
         minLetterLen,
         null,
-        4
+        4,
       )} (${Object.keys(resolvedOpts.letterWidths).filter(
-        (k) => resolvedOpts.letterWidths[k] === minLetterLen
-      )})`
+        (k) => resolvedOpts.letterWidths[k] === minLetterLen,
+      )})`,
     );
 
   let maxLength = maxLetterLen * resolvedOpts.maxLen;
@@ -351,8 +351,8 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
       `351 ${`\u001b[${33}m${`maxLength`}\u001b[${39}m`} = ${JSON.stringify(
         maxLength,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   let separatorLength =
@@ -461,7 +461,7 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
       console.log(
         `\n\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 0)
-        }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`
+        }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`,
       );
 
     //
@@ -486,12 +486,12 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
         console.log(
           `487 reference letter length ${`\u001b[${32}m${`found`}\u001b[${39}m`}: ${`\u001b[${36}m${
             resolvedOpts.letterWidths[deburr(str[i])]
-          }\u001b[${39}m`}`
+          }\u001b[${39}m`}`,
         );
       totalLengthSoFar += resolvedOpts.letterWidths[deburr(str[i])];
       DEV &&
         console.log(
-          `494 ${`\u001b[${32}m${`INCREASE`}\u001b[${39}m`} ${`\u001b[${33}m${`totalLengthSoFar`}\u001b[${39}m`} now = ${totalLengthSoFar} / ${maxLength}`
+          `494 ${`\u001b[${32}m${`INCREASE`}\u001b[${39}m`} ${`\u001b[${33}m${`totalLengthSoFar`}\u001b[${39}m`} now = ${totalLengthSoFar} / ${maxLength}`,
         );
 
       // 2. add the current-one since breakpoint
@@ -500,7 +500,7 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
           resolvedOpts.letterWidths[deburr(str[i])];
         DEV &&
           console.log(
-            `503 ${`\u001b[${32}m${`INCREASE`}\u001b[${39}m`} ${`\u001b[${33}m${`lengthSinceTheLastSuitableBreakpoint`}\u001b[${39}m`} now = ${lengthSinceTheLastSuitableBreakpoint}`
+            `503 ${`\u001b[${32}m${`INCREASE`}\u001b[${39}m`} ${`\u001b[${33}m${`lengthSinceTheLastSuitableBreakpoint`}\u001b[${39}m`} now = ${lengthSinceTheLastSuitableBreakpoint}`,
           );
       }
     } else {
@@ -509,14 +509,14 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
       totalLengthSoFar += maxLetterLen;
       DEV &&
         console.log(
-          `512 ${`\u001b[${32}m${`INCREASE`}\u001b[${39}m`} totalLengthSoFar by maxLength ${`\u001b[${33}m${`totalLengthSoFar`}\u001b[${39}m`} now = ${totalLengthSoFar} / ${maxLength}`
+          `512 ${`\u001b[${32}m${`INCREASE`}\u001b[${39}m`} totalLengthSoFar by maxLength ${`\u001b[${33}m${`totalLengthSoFar`}\u001b[${39}m`} now = ${totalLengthSoFar} / ${maxLength}`,
         );
       // 2. add the current-one since breakpoint
       if (str[i]?.trim().length) {
         lengthSinceTheLastSuitableBreakpoint += maxLetterLen;
         DEV &&
           console.log(
-            `519 ${`\u001b[${32}m${`INCREASE`}\u001b[${39}m`} ${`\u001b[${33}m${`lengthSinceTheLastSuitableBreakpoint`}\u001b[${39}m`} now = ${lengthSinceTheLastSuitableBreakpoint}`
+            `519 ${`\u001b[${32}m${`INCREASE`}\u001b[${39}m`} ${`\u001b[${33}m${`lengthSinceTheLastSuitableBreakpoint`}\u001b[${39}m`} now = ${lengthSinceTheLastSuitableBreakpoint}`,
           );
       }
     }
@@ -529,7 +529,7 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
         console.log(
           `530 ${`\u001b[${31}m${`LIMIT REACHED`}\u001b[${39}m`} (totalLengthSoFar + separatorLength)=${
             totalLengthSoFar + separatorLength
-          } > maxLength=${maxLength}`
+          } > maxLength=${maxLength}`,
         );
 
       // make a decision, do we truncate or have we just detected a breakpoint
@@ -537,7 +537,7 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
       if (totalLinesSoFar < resolvedOpts.maxLines) {
         DEV &&
           console.log(
-            `540 ${`\u001b[${32}m${`within maxLines`}\u001b[${39}m`}`
+            `540 ${`\u001b[${32}m${`within maxLines`}\u001b[${39}m`}`,
           );
 
         // if it's one long string which is overflowing,
@@ -548,7 +548,7 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
         ) {
           DEV &&
             console.log(
-              `551 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} result: ${`\u001b[${35}m${`str.slice(0, ${theLastSuitableBreakpoint.index})`}\u001b[${39}m`}`
+              `551 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} result: ${`\u001b[${35}m${`str.slice(0, ${theLastSuitableBreakpoint.index})`}\u001b[${39}m`}`,
             );
           return {
             result: slice(i),
@@ -561,8 +561,8 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
               `561 ${`\u001b[${36}m${`██`}\u001b[${39}m`} ${`\u001b[${32}m${`INCREASE`}\u001b[${39}m`} ${`\u001b[${33}m${`totalLinesSoFar`}\u001b[${39}m`} = ${JSON.stringify(
                 totalLinesSoFar,
                 null,
-                4
-              )}`
+                4,
+              )}`,
             );
           totalLengthSoFar = isSuitableBreakingPoint(i)
             ? 0
@@ -572,14 +572,14 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
               `572 ${`\u001b[${36}m${`██`}\u001b[${39}m`} ${`\u001b[${32}m${`CORRECTION`}\u001b[${39}m`} ${`\u001b[${33}m${`totalLengthSoFar`}\u001b[${39}m`} now = ${JSON.stringify(
                 totalLengthSoFar,
                 null,
-                4
-              )}`
+                4,
+              )}`,
             );
         }
       } else {
         DEV &&
           console.log(
-            `582 ${`\u001b[${31}m${`maxLines limit reached!`}\u001b[${39}m`}`
+            `582 ${`\u001b[${31}m${`maxLines limit reached!`}\u001b[${39}m`}`,
           );
         DEV &&
           console.log(`585 result: ${`\u001b[${35}m${slice(i)}\u001b[${39}m`}`);
@@ -611,8 +611,8 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
           `611 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`theLastSuitableBreakpoint`}\u001b[${39}m`} = ${JSON.stringify(
             theLastSuitableBreakpoint,
             null,
-            4
-          )};  ${`\u001b[${33}m${`lengthSinceTheLastSuitableBreakpoint`}\u001b[${39}m`} = ${lengthSinceTheLastSuitableBreakpoint}`
+            4,
+          )};  ${`\u001b[${33}m${`lengthSinceTheLastSuitableBreakpoint`}\u001b[${39}m`} = ${lengthSinceTheLastSuitableBreakpoint}`,
         );
     }
 
@@ -624,8 +624,8 @@ function truncate(str: string, opts?: Partial<Opts>): Res {
         `${`\u001b[${90}m${`maxLength: ${maxLength} - totalLengthSoFar: ${totalLengthSoFar} - theLastSuitableBreakpoint: ${JSON.stringify(
           theLastSuitableBreakpoint,
           null,
-          0
-        )} - lengthSinceTheLastSuitableBreakpoint: ${lengthSinceTheLastSuitableBreakpoint} - totalLinesSoFar: ${totalLinesSoFar}`}\u001b[${39}m`}`
+          0,
+        )} - lengthSinceTheLastSuitableBreakpoint: ${lengthSinceTheLastSuitableBreakpoint} - totalLinesSoFar: ${totalLinesSoFar}`}\u001b[${39}m`}`,
       );
   }
 

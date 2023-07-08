@@ -31,7 +31,7 @@ export function isLetter(str: unknown): boolean {
 
 export function setLengthCompensation(
   resultArr: Res["todoLines"],
-  receivedMaxLen: number
+  receivedMaxLen: number,
 ) {
   for (let i = resultArr.length; i--; ) {
     DEV &&
@@ -39,13 +39,13 @@ export function setLengthCompensation(
         `039 ${`\u001b[${36}m${`----`}\u001b[${39}m`} ${`\u001b[${33}m${`resultArr[${i}]`}\u001b[${39}m`} = ${JSON.stringify(
           resultArr[i],
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     if (!resultArr[i]?.counts?.length) {
       DEV &&
         console.log(
-          `048 ${`\u001b[${36}m${`----`}\u001b[${39}m`} ${`\u001b[${31}m${`break`}\u001b[${39}m`}`
+          `048 ${`\u001b[${36}m${`----`}\u001b[${39}m`} ${`\u001b[${31}m${`break`}\u001b[${39}m`}`,
         );
       break;
     } else {
@@ -72,7 +72,7 @@ function prepChunk(str: string): string {
   return str
     .split(/\r?\n/)
     .filter(
-      (line) => !line.trim().startsWith("#") && !line.trim().startsWith(">")
+      (line) => !line.trim().startsWith("#") && !line.trim().startsWith(">"),
     )
     .join("\n")
     .trim();
@@ -99,8 +99,8 @@ function editor(todo = "", copy = ""): Res {
       `${`\u001b[${33}m${`chunksArr`}\u001b[${39}m`} = ${JSON.stringify(
         chunksArr,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   let todoLines: Res["todoLines"] = [];
@@ -113,8 +113,8 @@ function editor(todo = "", copy = ""): Res {
       `113 initial ${`\u001b[${33}m${`completion`}\u001b[${39}m`} = ${JSON.stringify(
         completion,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   let todoLineArr = todo.toLowerCase().split(/\r?\n/);
@@ -124,7 +124,7 @@ function editor(todo = "", copy = ""): Res {
     return {
       todoLines: [],
       chunkWordCounts: chunksArr.map(
-        (chunk) => chunk.match(wordRegex)?.length || 0
+        (chunk) => chunk.match(wordRegex)?.length || 0,
       ),
       chunkLengths: chunksArr.map((chunk) => chunk.length),
       todoTotal: 0,
@@ -139,12 +139,12 @@ function editor(todo = "", copy = ""): Res {
   todoLineArr.forEach((lineStr, i) => {
     DEV &&
       console.log(
-        `142 ${`\u001b[${36}m${`███████████████████████████████████████`}\u001b[${39}m`} ${`\u001b[${33}m${i}\u001b[${39}m`} ${lineStr}`
+        `142 ${`\u001b[${36}m${`███████████████████████████████████████`}\u001b[${39}m`} ${`\u001b[${33}m${i}\u001b[${39}m`} ${lineStr}`,
       );
     if (isSuitable(lineStr)) {
       DEV &&
         console.log(
-          `147 ${`\u001b[${32}m${`suitable todo line`}\u001b[${39}m`}`
+          `147 ${`\u001b[${32}m${`suitable todo line`}\u001b[${39}m`}`,
         );
       todoTotal++;
 
@@ -155,8 +155,8 @@ function editor(todo = "", copy = ""): Res {
           `155 ${`\u001b[${33}m${`extracted`}\u001b[${39}m`} = ${JSON.stringify(
             extracted,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       maxLen = Math.max(maxLen, extracted.length);
       DEV &&
@@ -164,8 +164,8 @@ function editor(todo = "", copy = ""): Res {
           `164 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lengthCompensation`}\u001b[${39}m`} = ${JSON.stringify(
             maxLen,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       todoLines.push({
         extracted,
@@ -177,7 +177,7 @@ function editor(todo = "", copy = ""): Res {
           if (!chunk.includes(extracted)) {
             DEV &&
               console.log(
-                `180 ${`\u001b[${31}m${`"${extracted}" not found`}\u001b[${39}m`}`
+                `180 ${`\u001b[${31}m${`"${extracted}" not found`}\u001b[${39}m`}`,
               );
             DEV &&
               console.log(`183 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} 0`);
@@ -185,7 +185,7 @@ function editor(todo = "", copy = ""): Res {
           }
           DEV &&
             console.log(
-              `188 ${`\u001b[${32}m${`"${extracted}" found`}\u001b[${39}m`}`
+              `188 ${`\u001b[${32}m${`"${extracted}" found`}\u001b[${39}m`}`,
             );
           // we need to count all instances
           let total = 0;
@@ -197,14 +197,14 @@ function editor(todo = "", copy = ""): Res {
                 `197 ${`\u001b[${33}m${`findingStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
                   findingStartsAt,
                   null,
-                  4
-                )}`
+                  4,
+                )}`,
               );
             DEV &&
               console.log(
                 `205 in front: idx ${findingStartsAt - 1}; follows: idx ${
                   findingStartsAt + extracted.length
-                }`
+                }`,
               );
             if (
               // ensure there's no letter in front, for example
@@ -223,8 +223,8 @@ function editor(todo = "", copy = ""): Res {
                   `223 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`total`}\u001b[${39}m`} = ${JSON.stringify(
                     total,
                     null,
-                    4
-                  )}`
+                    4,
+                  )}`,
                 );
             }
             // offset the search start, prepare for next finding
@@ -233,8 +233,8 @@ function editor(todo = "", copy = ""): Res {
                 `233 OLD ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
                   startIdx,
                   null,
-                  4
-                )}`
+                  4,
+                )}`,
               );
             startIdx += findingStartsAt + extracted.length;
             DEV &&
@@ -242,8 +242,8 @@ function editor(todo = "", copy = ""): Res {
                 `242 NEW ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
                   startIdx,
                   null,
-                  4
-                )}`
+                  4,
+                )}`,
               );
           }
 
@@ -253,7 +253,7 @@ function editor(todo = "", copy = ""): Res {
 
           DEV &&
             console.log(
-              `256 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${total}`
+              `256 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${total}`,
             );
           return total;
         }),
@@ -264,8 +264,8 @@ function editor(todo = "", copy = ""): Res {
           `264 now ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
             todoLines,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
     } else {
       // traverse objects backwards and set their lengthCompensation
@@ -274,21 +274,21 @@ function editor(todo = "", copy = ""): Res {
           `274 ██ ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
             todoLines,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       if (todoLines[~-todoLines.length]?.counts.length) {
         DEV &&
           console.log(
-            `283 ${`\u001b[${35}m${`traverse backwards`}\u001b[${39}m`}`
+            `283 ${`\u001b[${35}m${`traverse backwards`}\u001b[${39}m`}`,
           );
         DEV &&
           console.log(
             `287 ${`\u001b[${32}m${`BEFORE`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
               todoLines,
               null,
-              4
-            )}; maxLen = ${maxLen}`
+              4,
+            )}; maxLen = ${maxLen}`,
           );
         todoLines = setLengthCompensation(todoLines, maxLen);
         DEV &&
@@ -296,14 +296,14 @@ function editor(todo = "", copy = ""): Res {
             `296 ${`\u001b[${32}m${`AFTER`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
               todoLines,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
       }
 
       DEV &&
         console.log(
-          `306 ${`\u001b[${31}m${`skip this todo line`}\u001b[${39}m`}`
+          `306 ${`\u001b[${31}m${`skip this todo line`}\u001b[${39}m`}`,
         );
       todoLines.push({
         extracted: "",
@@ -319,8 +319,8 @@ function editor(todo = "", copy = ""): Res {
         `319 ending ${`\u001b[${33}m${`lengthCompensation`}\u001b[${39}m`} = ${JSON.stringify(
           maxLen,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
   });
 
@@ -333,8 +333,8 @@ function editor(todo = "", copy = ""): Res {
       `333 FINAL ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
         todoLines,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   DEV &&
@@ -342,8 +342,8 @@ function editor(todo = "", copy = ""): Res {
       `342 LAST TODO LINE ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
         todoLineArr[~-todoLineArr.length],
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   // if the last line in todo is suitable, this means the lengthCompensation
@@ -351,15 +351,15 @@ function editor(todo = "", copy = ""): Res {
   if (isSuitable(todoLineArr[~-todoLineArr.length])) {
     DEV &&
       console.log(
-        `354 todo's leading to EOL! ${`\u001b[${32}m${`traverse backwards`}\u001b[${39}m`}`
+        `354 todo's leading to EOL! ${`\u001b[${32}m${`traverse backwards`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
         `358 ${`\u001b[${32}m${`BEFORE`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
           todoLines,
           null,
-          4
-        )}; maxLen = ${maxLen}`
+          4,
+        )}; maxLen = ${maxLen}`,
       );
     todoLines = setLengthCompensation(todoLines, maxLen);
     DEV &&
@@ -367,15 +367,15 @@ function editor(todo = "", copy = ""): Res {
         `367 ${`\u001b[${32}m${`AFTER`}\u001b[${39}m`} ${`\u001b[${33}m${`todoLines`}\u001b[${39}m`} = ${JSON.stringify(
           todoLines,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
   }
 
   return {
     todoLines,
     chunkWordCounts: chunksArr.map(
-      (chunk) => chunk.match(wordRegex)?.length || 0
+      (chunk) => chunk.match(wordRegex)?.length || 0,
     ),
     chunkLengths: chunksArr.map((chunk) => chunk.length),
     todoTotal,

@@ -14,7 +14,7 @@ const testme = () =>
     [
       { c2: "c2", c1: "c1" },
       { d2: "d2", d1: "d1" },
-    ]
+    ],
   );
 
 // action

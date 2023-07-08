@@ -15,6 +15,6 @@ assert.equal(compare(["a", "b"], ["a", "b", "c"]), false);
 
 assert.equal(
   compare([{ a: "b" }, { c: "d" }, { e: "f" }], [{ a: "b" }, { c: "d" }]),
-  true
+  true,
 );
 // => plain objects nested in arrays

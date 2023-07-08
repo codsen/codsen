@@ -42,7 +42,7 @@ declare const defaults: Opts;
 declare function externalApi(
   input1: unknown,
   input2: unknown,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): any;
 
 export {

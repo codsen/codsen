@@ -87,7 +87,7 @@ test("08 - two astral characters offsetting the rest", () => {
   equal(
     nativeToUnicode("\uD834\uDF06aa", ["0", "1", "2", "3"]),
     ["0", "0", "1", "2"],
-    "08.01"
+    "08.01",
   );
 });
 
@@ -95,7 +95,7 @@ test("09 - two astral characters offsetting the rest", () => {
   equal(
     nativeToUnicode("\uD834\uDF06aa", [0, 2, 0, 1, 2, 3]),
     [0, 1, 0, 0, 1, 2],
-    "09.01"
+    "09.01",
   );
 });
 
@@ -103,7 +103,7 @@ test("10 - two astral characters offsetting the rest", () => {
   equal(
     nativeToUnicode("\uD834\uDF06aa", ["0", "2", "0", "1", "2", "3"]),
     ["0", "1", "0", "0", "1", "2"],
-    "10.01"
+    "10.01",
   );
 });
 
@@ -111,7 +111,7 @@ test("11 - a stray astral surrogate without second counterpart counts as symbol"
   equal(
     nativeToUnicode("\uD834\uDF06a\uDF06a", [0, 1, 2, 3, 4]),
     [0, 0, 1, 2, 3],
-    "11.01"
+    "11.01",
   );
 });
 
@@ -127,7 +127,7 @@ test("13 - single astral symbol", () => {
       nativeToUnicode("\uD834\uDF06", 2);
     },
     "13.03",
-    "13.03"
+    "13.03",
   );
 });
 
@@ -144,99 +144,99 @@ test("15 - two six-char long, single-grapheme emoji", () => {
   is(
     nativeToUnicode(
       "\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08",
-      0
+      0,
     ),
     0,
-    "15.01"
+    "15.01",
   );
   is(
     nativeToUnicode(
       "\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08",
-      1
+      1,
     ),
     0,
-    "15.02"
+    "15.02",
   );
   is(
     nativeToUnicode(
       "\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08",
-      2
+      2,
     ),
     0,
-    "15.03"
+    "15.03",
   );
   is(
     nativeToUnicode(
       "\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08",
-      3
+      3,
     ),
     0,
-    "15.04"
+    "15.04",
   );
   is(
     nativeToUnicode(
       "\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08",
-      4
+      4,
     ),
     0,
-    "15.05"
+    "15.05",
   );
   is(
     nativeToUnicode(
       "\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08",
-      5
+      5,
     ),
     0,
-    "15.06"
+    "15.06",
   );
 
   is(
     nativeToUnicode(
       "\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08",
-      6
+      6,
     ),
     1,
-    "15.07"
+    "15.07",
   );
   is(
     nativeToUnicode(
       "\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08",
-      7
+      7,
     ),
     1,
-    "15.08"
+    "15.08",
   );
   is(
     nativeToUnicode(
       "\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08",
-      8
+      8,
     ),
     1,
-    "15.09"
+    "15.09",
   );
   is(
     nativeToUnicode(
       "\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08",
-      9
+      9,
     ),
     1,
-    "15.10"
+    "15.10",
   );
   is(
     nativeToUnicode(
       "\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08",
-      10
+      10,
     ),
     1,
-    "15.11"
+    "15.11",
   );
   is(
     nativeToUnicode(
       "\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08",
-      11
+      11,
     ),
     1,
-    "15.12"
+    "15.12",
   );
 });
 
@@ -244,7 +244,7 @@ test("16 - multiple consecutive astral symbols", () => {
   equal(
     nativeToUnicode("\uD834\uDF06aa", [1, "0", [[[2]]], 3]),
     [0, "0", [[[1]]], 2],
-    "16.01"
+    "16.01",
   );
 });
 

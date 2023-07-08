@@ -37,37 +37,37 @@ function mixer(tested, reference, idx) {
 test("01 - multiple elements, #1", () => {
   mixer(
     [[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]],
-    [[1, 2, 3], [1, 4, 3], [1, 4, 4], [1]] // first el., 1-1-1-1
+    [[1, 2, 3], [1, 4, 3], [1, 4, 4], [1]], // first el., 1-1-1-1
   );
   mixer(
     [[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]],
     [[1, 2, 3], [1, 4, 3], [1, 4, 4], [1]], // first el., hardcoded, same as above
-    0
+    0,
   );
   mixer(
     [[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]],
     [[1, 2, 3], [1, 4, 3], [1, 4, 4], [1]], // first el., hardcoded, same as above
-    "0"
+    "0",
   );
   mixer(
     [[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]],
     [[1, 2, 3], [1, 4, 3], [1, 4, 4], [1]], // second el., 2-4-4-undefined
-    1
+    1,
   );
   mixer(
     [[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]],
     [[1, 2, 3], [1, 4, 3], [1, 4, 4], [1]], // second el., 2-4-4-undefined
-    "1"
+    "1",
   );
   mixer(
     [[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]],
     [[1, 2, 3], [1, 4, 3], [1, 4, 4], [1]], // third el., 3-3-4-undefined
-    2
+    2,
   );
   mixer(
     [[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]],
     [[1, 2, 3], [1, 4, 3], [1, 4, 4], [1]], // third el., 3-3-4-undefined
-    "2"
+    "2",
   );
 
   throws(
@@ -75,7 +75,7 @@ test("01 - multiple elements, #1", () => {
       sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], 3);
     },
     /THROW_ID_03/,
-    "01.01"
+    "01.01",
   );
 
   throws(
@@ -83,7 +83,7 @@ test("01 - multiple elements, #1", () => {
       sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], "3");
     },
     /THROW_ID_03/,
-    "01.02"
+    "01.02",
   );
 
   throws(
@@ -91,7 +91,7 @@ test("01 - multiple elements, #1", () => {
       sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], 99);
     },
     /THROW_ID_03/,
-    "01.03"
+    "01.03",
   );
 
   throws(
@@ -99,14 +99,14 @@ test("01 - multiple elements, #1", () => {
       sortByCol([[1, 4, 3], [1], [1, 2, 3], [1, 4, 4]], "999");
     },
     /THROW_ID_03/,
-    "01.04"
+    "01.04",
   );
 });
 
 test("02 - multiple elements, #2", () => {
   mixer(
     [[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]],
-    [[1, 7, 5], [1, 8, 2], [1, 9, 0], [1]]
+    [[1, 7, 5], [1, 8, 2], [1, 9, 0], [1]],
   );
 });
 
@@ -114,7 +114,7 @@ test("03 - multiple elements, #2", () => {
   mixer(
     [[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]],
     [[1, 7, 5], [1, 8, 2], [1, 9, 0], [1]],
-    0
+    0,
   );
 });
 
@@ -122,7 +122,7 @@ test("04 - multiple elements, #2", () => {
   mixer(
     [[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]],
     [[1, 7, 5], [1, 8, 2], [1, 9, 0], [1]],
-    1
+    1,
   );
 });
 
@@ -130,7 +130,7 @@ test("05 - multiple elements, #2", () => {
   mixer(
     [[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]],
     [[1, 9, 0], [1, 8, 2], [1, 7, 5], [1]],
-    2
+    2,
   );
 });
 
@@ -140,7 +140,7 @@ test("06 - multiple elements, #2 - axis outside of the range", () => {
       sortByCol([[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]], 3);
     },
     /THROW_ID_03/,
-    "06.01"
+    "06.01",
   );
 });
 
@@ -150,29 +150,29 @@ test("07 - multiple elements, #2 - axis outside of the range", () => {
       sortByCol([[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]], 99);
     },
     /THROW_ID_03/,
-    "07.01"
+    "07.01",
   );
 });
 
 test("08 - multiple elements, #3 - opposite order", () => {
   mixer(
     [[1, 9, 4], [1], [1, 9, 3], [1, 9, 2]],
-    [[1, 9, 2], [1, 9, 3], [1, 9, 4], [1]]
+    [[1, 9, 2], [1, 9, 3], [1, 9, 4], [1]],
   );
   mixer(
     [[1, 9, 4], [1], [1, 9, 3], [1, 9, 2]],
     [[1, 9, 2], [1, 9, 3], [1, 9, 4], [1]],
-    0
+    0,
   );
   mixer(
     [[1, 9, 4], [1], [1, 9, 3], [1, 9, 2]],
     [[1, 9, 2], [1, 9, 3], [1, 9, 4], [1]],
-    1
+    1,
   );
   mixer(
     [[1, 9, 4], [1], [1, 9, 3], [1, 9, 2]],
     [[1, 9, 2], [1, 9, 3], [1, 9, 4], [1]],
-    2
+    2,
   );
 });
 
@@ -186,7 +186,7 @@ test("09 - multiple elements, #4 - single elements", () => {
       sortByCol([[0], [0], [3], [2], [1]], 1); // second element doesn't exist
     },
     /THROW_ID_03/,
-    "09.01"
+    "09.01",
   );
 
   throws(
@@ -194,14 +194,14 @@ test("09 - multiple elements, #4 - single elements", () => {
       sortByCol([[0], [0], [3], [2], [1]], 99); // 100-th element doesn't exist
     },
     /THROW_ID_03/,
-    "09.02"
+    "09.02",
   );
 });
 
 test("10 - first column indexes contain opposite order values", () => {
   mixer(
     [[1, 9, 0], [1], [2, 8, 0], [3, 7, 0]],
-    [[1, 9, 0], [1], [2, 8, 0], [3, 7, 0]]
+    [[1, 9, 0], [1], [2, 8, 0], [3, 7, 0]],
   ); // defaulting to first elements, that's indexes "0" and they contain values: 1-2-3-undefined
 });
 
@@ -209,7 +209,7 @@ test("11 - first column indexes contain opposite order values", () => {
   mixer(
     [[1, 9, 0], [1], [2, 8, 0], [3, 7, 0]],
     [[1, 9, 0], [1], [2, 8, 0], [3, 7, 0]],
-    0 // first elements, indexes "0" contain values: 1-2-3-undefined
+    0, // first elements, indexes "0" contain values: 1-2-3-undefined
   );
 });
 
@@ -217,7 +217,7 @@ test("12 - first column indexes contain opposite order values", () => {
   mixer(
     [[1, 9, 0], [1], [2, 8, 0], [3, 7, 0]],
     [[3, 7, 0], [2, 8, 0], [1, 9, 0], [1]],
-    1 // second elements, indexes "1" contain values: 7-8-9-undefined
+    1, // second elements, indexes "1" contain values: 7-8-9-undefined
   );
 });
 
@@ -230,7 +230,7 @@ test("13 - first column indexes contain opposite order values", () => {
   mixer(
     [[1, 9, 0], [1], [2, 8, 0], [3, 7, 0]],
     [[3, 7, 0], [2, 8, 0], [1, 9, 0], [1]],
-    2 // Third elements, indexes "2" contain values: 0-0-0-undefined across rows
+    2, // Third elements, indexes "2" contain values: 0-0-0-undefined across rows
   );
 });
 
@@ -243,7 +243,7 @@ test("14 - null over number", () => {
     [
       [1, 1],
       [1, null],
-    ]
+    ],
   );
   mixer(
     [
@@ -254,7 +254,7 @@ test("14 - null over number", () => {
       [1, 1],
       [1, null],
     ],
-    1
+    1,
   );
 });
 
@@ -267,7 +267,7 @@ test("15 - just nulls over numbers", () => {
     [
       [1, 1, 1],
       [null, null, null],
-    ]
+    ],
   );
 });
 
@@ -284,7 +284,7 @@ test("16 - just nulls over numbers", () => {
     [
       [1, 3],
       [1, 4],
-    ]
+    ],
   );
   mixer(
     [
@@ -295,7 +295,7 @@ test("16 - just nulls over numbers", () => {
       [1, 3],
       [1, 4],
     ],
-    0
+    0,
   );
   mixer(
     [
@@ -306,7 +306,7 @@ test("16 - just nulls over numbers", () => {
       [1, 3],
       [1, 4],
     ],
-    1
+    1,
   );
 });
 
@@ -324,7 +324,7 @@ test("17 - just nulls over numbers", () => {
       [null, null, null, null, null, 9],
       [null, null, null, null, null, null],
     ],
-    0
+    0,
   );
   mixer(
     [
@@ -339,7 +339,7 @@ test("17 - just nulls over numbers", () => {
       [null, null, null, null, null, 9],
       [null, null, null, null, null, null],
     ],
-    1
+    1,
   );
   mixer(
     [
@@ -354,7 +354,7 @@ test("17 - just nulls over numbers", () => {
       [null, null, null, null, null, 9],
       [null, null, null, null, null, null],
     ],
-    2
+    2,
   );
   mixer(
     [
@@ -369,7 +369,7 @@ test("17 - just nulls over numbers", () => {
       [null, null, null, null, null, 9],
       [null, null, null, null, null, null],
     ],
-    3
+    3,
   );
   mixer(
     [
@@ -384,7 +384,7 @@ test("17 - just nulls over numbers", () => {
       [null, null, null, null, null, 9],
       [null, null, null, null, null, null],
     ],
-    4
+    4,
   );
   mixer(
     [
@@ -399,7 +399,7 @@ test("17 - just nulls over numbers", () => {
       [null, null, null, null, null, 9],
       [null, null, null, null, null, null],
     ],
-    5
+    5,
   );
 });
 
@@ -412,7 +412,7 @@ test("18 - value of first ripple-left is null", () => {
     [
       [1, 9],
       [null, 9],
-    ]
+    ],
   );
   mixer(
     [
@@ -423,7 +423,7 @@ test("18 - value of first ripple-left is null", () => {
       [1, 9],
       [null, 9],
     ],
-    0
+    0,
   );
   mixer(
     [
@@ -434,7 +434,7 @@ test("18 - value of first ripple-left is null", () => {
       [1, 9],
       [null, 9],
     ],
-    1
+    1,
   );
 });
 
@@ -449,7 +449,7 @@ test("19 - same values", () => {
       [1, 1, 1],
       [1, 1, 1],
       [1, 1, 1],
-    ]
+    ],
   );
 });
 
@@ -477,7 +477,7 @@ test("21 - throws", () => {
       sortByCol(1);
     },
     /THROW_ID_01/,
-    "21.01"
+    "21.01",
   );
 
   throws(
@@ -485,7 +485,7 @@ test("21 - throws", () => {
       sortByCol(true);
     },
     /THROW_ID_01/,
-    "21.02"
+    "21.02",
   );
 
   throws(
@@ -493,7 +493,7 @@ test("21 - throws", () => {
       sortByCol("z");
     },
     /THROW_ID_01/,
-    "21.03"
+    "21.03",
   );
 
   throws(
@@ -501,7 +501,7 @@ test("21 - throws", () => {
       sortByCol([], "a");
     },
     /THROW_ID_02/,
-    "21.04"
+    "21.04",
   );
 });
 
@@ -514,11 +514,11 @@ test("22 - throws when sort-by value is outside of any sub-arrays", () => {
           [1, 2, 3],
           [4, 5, 6],
         ],
-        3 // all sub-arrays' max-length=2 since it's zero-indexed
+        3, // all sub-arrays' max-length=2 since it's zero-indexed
       );
     },
     /THROW_ID_03/,
-    "22.01"
+    "22.01",
   );
 });
 
@@ -535,7 +535,7 @@ test("23 - clumping - simple case with values as undefined", () => {
       [null, 1, 2, 1, 0],
       [null, null, 2, 1, null],
     ],
-    2
+    2,
   );
 });
 
@@ -551,7 +551,7 @@ test("24 - clumping - left side takes priority over right - case #1 - values on 
       [null, null, null, 7, 1],
       [null, null, null, 7, 2],
     ],
-    3
+    3,
   );
 });
 
@@ -567,7 +567,7 @@ test("25 - clumping - left side takes priority over right - case #2 - axis is 0t
       [7, 2],
       [7, null],
     ],
-    0
+    0,
   );
 });
 
@@ -583,7 +583,7 @@ test("26 - clumping - left side takes priority over right - case #3 - sort axis 
       [null, null, 2, 7],
       [null, null, null, 7],
     ],
-    3
+    3,
   );
 });
 

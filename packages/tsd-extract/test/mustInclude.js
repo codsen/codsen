@@ -27,7 +27,7 @@ export { c } from "d";`;
       all: [],
       error: null,
     },
-    "01.01"
+    "01.01",
   );
   equal(
     extract(source, "export", {
@@ -48,7 +48,7 @@ export { c } from "d";`;
       all: ["export"],
       error: null,
     },
-    "01.02"
+    "01.02",
   );
   equal(
     extract(source, "export", {
@@ -69,7 +69,7 @@ export { c } from "d";`;
       all: [],
       error: null,
     },
-    "01.03"
+    "01.03",
   );
   equal(
     extract(source, "export", {
@@ -90,7 +90,7 @@ export { c } from "d";`;
       all: ["export"],
       error: null,
     },
-    "01.04"
+    "01.04",
   );
   equal(
     extract(source, "export", {
@@ -111,7 +111,7 @@ export { c } from "d";`;
       all: [],
       error: "not found",
     },
-    "01.05"
+    "01.05",
   );
   equal(
     extract(source, "export", {
@@ -132,7 +132,7 @@ export { c } from "d";`;
       all: ["export"],
       error: "not found",
     },
-    "01.06"
+    "01.06",
   );
   equal(
     extract(source, "export", {
@@ -153,7 +153,7 @@ export { c } from "d";`;
       all: [],
       error: null,
     },
-    "01.07"
+    "01.07",
   );
   equal(
     extract(source, "export", {
@@ -174,7 +174,7 @@ export { c } from "d";`;
       all: ["export"],
       error: null,
     },
-    "01.08"
+    "01.08",
   );
 
   // semi = false
@@ -197,7 +197,7 @@ export { c } from "d";`;
       all: [],
       error: null,
     },
-    "01.09"
+    "01.09",
   );
   equal(
     extract(source, "export", {
@@ -218,7 +218,7 @@ export { c } from "d";`;
       all: ["export"],
       error: null,
     },
-    "01.10"
+    "01.10",
   );
   equal(
     extract(source, "export", {
@@ -239,7 +239,7 @@ export { c } from "d";`;
       all: [],
       error: null,
     },
-    "01.11"
+    "01.11",
   );
   equal(
     extract(source, "export", {
@@ -260,7 +260,7 @@ export { c } from "d";`;
       all: ["export"],
       error: null,
     },
-    "01.12"
+    "01.12",
   );
   equal(
     extract(source, "export", {
@@ -281,7 +281,7 @@ export { c } from "d";`;
       all: [],
       error: "not found",
     },
-    "01.13"
+    "01.13",
   );
   equal(
     extract(source, "export", {
@@ -302,7 +302,7 @@ export { c } from "d";`;
       all: ["export"],
       error: "not found",
     },
-    "01.14"
+    "01.14",
   );
   equal(
     extract(source, "export", {
@@ -323,7 +323,7 @@ export { c } from "d";`;
       all: [],
       error: null,
     },
-    "01.15"
+    "01.15",
   );
   equal(
     extract(source, "export", {
@@ -344,7 +344,7 @@ export { c } from "d";`;
       all: ["export"],
       error: null,
     },
-    "01.16"
+    "01.16",
   );
 });
 

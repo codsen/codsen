@@ -46,7 +46,7 @@ function offerAListOfFilesToPickFrom() {
   if (!allFilesHere.length) {
     log(
       chalk.grey("\nemail-all-chars-within-ascii-cli: [THROW_ID_01] ") +
-        chalk.red("Alas, there are no files in this folder!")
+        chalk.red("Alas, there are no files in this folder!"),
     );
     return process.exit(1);
   }
@@ -97,7 +97,9 @@ if (!state.toDoList.length) {
   // basically achieving: (!fs.existsSync)
   let erroneous = pullAll(
     state.toDoList.map((onePath) => path.resolve(onePath)),
-    state.toDoList.map((onePath) => path.resolve(onePath)).filter(fs.existsSync)
+    state.toDoList
+      .map((onePath) => path.resolve(onePath))
+      .filter(fs.existsSync),
   ).map((singlePath) => path.basename(singlePath)); // then filtering file names-only
 
   // write the list of unrecognised file names into the console:
@@ -107,8 +109,8 @@ if (!state.toDoList.length) {
         chalk.red(
           `Alas, the following file${
             erroneous.length > 1 ? "s don't" : " doesn't"
-          } exist: "${erroneous.join('", "')}"`
-        )
+          } exist: "${erroneous.join('", "')}"`,
+        ),
     );
   }
 
@@ -123,8 +125,8 @@ if (!state.toDoList.length) {
   // ---------------------------------  3  -------------------------------------
   log(
     chalk.yellow(
-      "\nemail-all-chars-within-ascii-cli: [THROW_ID_03] Didn't recognise any files!"
-    )
+      "\nemail-all-chars-within-ascii-cli: [THROW_ID_03] Didn't recognise any files!",
+    ),
   );
 
   // if there were no valid path in the arguments, query the files in the
@@ -161,22 +163,22 @@ thePromise
             if (obj.type === "character") {
               console.log(
                 `\n${chalk.cyan(fileNameInfo)}:${chalk.yellow(
-                  obj.line
+                  obj.line,
                 )}:${chalk.yellow(obj.column)} - ${chalk.red(
-                  "bad character"
+                  "bad character",
                 )} - ${obj.value} ${chalk.grey(
-                  `(https://www.fileformat.info/info/unicode/char/${obj.UTF32Hex}/index.htm)`
-                )}`
+                  `(https://www.fileformat.info/info/unicode/char/${obj.UTF32Hex}/index.htm)`,
+                )}`,
               );
             } else {
               console.log(
                 `\n${chalk.cyan(fileNameInfo)}:${chalk.yellow(
-                  obj.line
+                  obj.line,
                 )} - ${chalk.red(
                   `${obj.value} character-long line (limit ${
                     argv1.len || argv1.l || 500
-                  })`
-                )}`
+                  })`,
+                )}`,
               );
             }
             // console.log(
@@ -201,14 +203,14 @@ thePromise
 
             let sliceFrom = Math.max(
               obj.positionIdx - Math.min(obj.column, 40),
-              startingPos
+              startingPos,
             );
             let sliceTo = Math.min(
               ...[
                 filesContents.indexOf("\n", obj.positionIdx),
                 filesContents.indexOf("\r", obj.positionIdx),
                 obj.positionIdx + 10,
-              ].filter((val) => val > 0)
+              ].filter((val) => val > 0),
             );
             // console.log(
             //   `${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${JSON.stringify(
@@ -230,10 +232,12 @@ thePromise
             console.log(`\n${chalk.inverse(obj.line)} ${currLinesChunk}`);
             console.log(
               `${chalk.inverse(
-                " ".repeat(String(obj.line).length)
+                " ".repeat(String(obj.line).length),
               )} ${" ".repeat(
-                obj.positionIdx - sliceFrom - (obj.type === "character" ? 0 : 1)
-              )}${chalk.red("~")}`
+                obj.positionIdx -
+                  sliceFrom -
+                  (obj.type === "character" ? 0 : 1),
+              )}${chalk.red("~")}`,
             );
           });
 
@@ -241,8 +245,8 @@ thePromise
         } else {
           console.log(
             `${chalk.grey("email-all-chars-within-ascii-cli:")} ${chalk.green(
-              "ALL OK"
-            )}`
+              "ALL OK",
+            )}`,
           );
           process.exit(0);
         }
@@ -250,8 +254,8 @@ thePromise
         log(
           chalk.grey("\nemail-all-chars-within-ascii-cli: [THROW_ID_06] ") +
             chalk.red(
-              `Couldn't fetch the file "${path.basename(requestedPath)}"`
-            )
+              `Couldn't fetch the file "${path.basename(requestedPath)}"`,
+            ),
         );
         process.exit(1);
       }

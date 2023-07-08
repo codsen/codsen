@@ -35,7 +35,7 @@ test("01 - only node_modules with one file, flag disabled", async () => {
         .then(() => testFile)
         .catch((err) => {
           throw new Error(err);
-        })
+        }),
     )
     .catch((err) => {
       throw new Error(err);
@@ -60,7 +60,7 @@ test("02 - only node_modules with one file, flag enabled", async () => {
         .then(() => testFile)
         .catch((err) => {
           throw new Error(err);
-        })
+        }),
     )
     .catch((err) => {
       throw new Error(err);

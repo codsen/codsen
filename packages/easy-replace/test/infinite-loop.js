@@ -21,10 +21,10 @@ test("01 - infinite loop, no maybes, emoji", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "🐴"
+      "🐴",
     ),
     "🐴🦄🐴🦄🐴",
-    "test 8.1"
+    "test 8.1",
   );
 });
 
@@ -41,10 +41,10 @@ test("02 - infinite loop, maybes, multiple findings, emoji", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "🐴"
+      "🐴",
     ),
     "🐴🐴🐴",
-    "test 8.2"
+    "test 8.2",
   );
 });
 
@@ -61,10 +61,10 @@ test("03 - infinite loop protection, emoji replaced with itself", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "🐴"
+      "🐴",
     ),
     "🐴",
-    "test 8.3"
+    "test 8.3",
   );
 });
 
@@ -81,10 +81,10 @@ test("04 - infinite loop protection, right outside", () => {
         rightOutside: "🦄",
         rightOutsideNot: "",
       },
-      "🐴"
+      "🐴",
     ),
     "🐴🦄🐴🦄🐴",
-    "test 8.4"
+    "test 8.4",
   );
 });
 
@@ -101,10 +101,10 @@ test("05 - infinite loop protection, multiples", () => {
         rightOutside: "🦄",
         rightOutsideNot: "",
       },
-      "🌟"
+      "🌟",
     ),
     "🦄🦄🦄🦄zaaaaaaaaa🦄🦄🦄🌟🦄",
-    "test 8.5"
+    "test 8.5",
   );
 });
 
@@ -121,10 +121,10 @@ test("06 - simple infinite loop case", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "a"
+      "a",
     ),
     "a",
-    "test 8.6"
+    "test 8.6",
   );
 });
 
@@ -141,10 +141,10 @@ test("07 - infinite loop, not found", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "a"
+      "a",
     ),
     "",
-    "test 8.7"
+    "test 8.7",
   );
 });
 

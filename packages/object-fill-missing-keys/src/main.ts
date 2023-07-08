@@ -48,7 +48,7 @@ function fillMissingKeys(
   incompleteOriginal: Obj,
   schema: Obj,
   resolvedOpts: Opts,
-  path = ""
+  path = "",
 ): Obj {
   DEV && console.log(`053 fillMissingKeys() starts`);
   let incomplete = clone(incompleteOriginal);
@@ -57,7 +57,7 @@ function fillMissingKeys(
     !(
       path.length &&
       resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.includes(
-        path
+        path,
       ) &&
       allEq(incomplete, resolvedOpts.placeholder)
     )
@@ -72,7 +72,7 @@ function fillMissingKeys(
 
         if (
           resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.includes(
-            currentPath
+            currentPath,
           )
         ) {
           if (existy(incomplete[key])) {
@@ -89,7 +89,7 @@ function fillMissingKeys(
           !existy(incomplete[key]) ||
           !(
             resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.includes(
-              currentPath
+              currentPath,
             ) && allEq(incomplete[key], resolvedOpts.placeholder)
           )
         ) {
@@ -97,7 +97,7 @@ function fillMissingKeys(
             incomplete[key] as JSONObject,
             schema[key] as JSONObject,
             resolvedOpts,
-            currentPath
+            currentPath,
           );
         }
       });
@@ -114,7 +114,7 @@ function fillMissingKeys(
               incomplete[i],
               schema[0] as JSONObject,
               resolvedOpts,
-              currentPath
+              currentPath,
             );
           }
         }
@@ -150,28 +150,28 @@ function fillMissing(incomplete: Obj, schema: Obj, opts?: Partial<Opts>): Obj {
   //
   if (arguments.length === 0) {
     throw new Error(
-      "object-fill-missing-keys: [THROW_ID_01] All arguments are missing!"
+      "object-fill-missing-keys: [THROW_ID_01] All arguments are missing!",
     );
   }
   if (!isObj(incomplete)) {
     throw new Error(
       `object-fill-missing-keys: [THROW_ID_02] First argument, input object must be a plain object. Currently it's type is "${typ(
-        incomplete
-      )}" and it's equal to: ${JSON.stringify(incomplete, null, 4)}`
+        incomplete,
+      )}" and it's equal to: ${JSON.stringify(incomplete, null, 4)}`,
     );
   }
   if (!isObj(schema)) {
     throw new Error(
       `object-fill-missing-keys: [THROW_ID_03] Second argument, schema object, must be a plain object. Currently it's type is "${typ(
-        schema
-      )}" and it's equal to: ${JSON.stringify(schema, null, 4)}`
+        schema,
+      )}" and it's equal to: ${JSON.stringify(schema, null, 4)}`,
     );
   }
   if (opts && !isObj(opts)) {
     throw new Error(
       `object-fill-missing-keys: [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it's type is "${typ(
-        opts
-      )}" and it's equal to: ${JSON.stringify(opts, null, 4)}`
+        opts,
+      )}" and it's equal to: ${JSON.stringify(opts, null, 4)}`,
     );
   }
 
@@ -182,12 +182,12 @@ function fillMissing(incomplete: Obj, schema: Obj, opts?: Partial<Opts>): Obj {
       `182 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffy(
-    resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders
+    resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders,
   );
 
   let culpritsVal = null;
@@ -202,13 +202,13 @@ function fillMissing(incomplete: Obj, schema: Obj, opts?: Partial<Opts>): Obj {
           return false;
         }
         return true;
-      }
+      },
     )
   ) {
     throw new Error(
       `object-fill-missing-keys: [THROW_ID_06] resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders element with an index number "${culpritsIndex}" is not a string! It's ${typ(
-        culpritsVal
-      )}, equal to:\n${JSON.stringify(culpritsVal, null, 4)}`
+        culpritsVal,
+      )}, equal to:\n${JSON.stringify(culpritsVal, null, 4)}`,
     );
   }
 

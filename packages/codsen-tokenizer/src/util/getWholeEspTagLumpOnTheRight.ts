@@ -6,7 +6,7 @@ declare let DEV: boolean;
 function getWholeEspTagLumpOnTheRight(
   str: string,
   i: number,
-  layers: Layer[]
+  layers: Layer[],
 ): string {
   let wholeEspTagLumpOnTheRight = str[i];
   let len = str.length;
@@ -16,13 +16,13 @@ function getWholeEspTagLumpOnTheRight(
 
   DEV &&
     console.log(
-      `019 getWholeEspTagLumpOnTheRight(): ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
+      `019 getWholeEspTagLumpOnTheRight(): ${`\u001b[${32}m${`START`}\u001b[${39}m`}`,
     );
 
   for (let y = i + 1; y < len; y++) {
     DEV &&
       console.log(
-        `025 getWholeEspTagLumpOnTheRight(): ${`\u001b[${36}m${`str[${y}]=${str[y]}`}\u001b[${39}m`}`
+        `025 getWholeEspTagLumpOnTheRight(): ${`\u001b[${36}m${`str[${y}]=${str[y]}`}\u001b[${39}m`}`,
       );
 
     // if righty character is on the left and now it's lefty,
@@ -40,7 +40,7 @@ function getWholeEspTagLumpOnTheRight(
     if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
       DEV &&
         console.log(
-          `043 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+          `043 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`,
         );
       break;
     }
@@ -67,7 +67,7 @@ function getWholeEspTagLumpOnTheRight(
     ) {
       DEV &&
         console.log(
-          `070 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+          `070 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`,
         );
       break;
     }
@@ -121,7 +121,7 @@ function getWholeEspTagLumpOnTheRight(
     //
     if (
       wholeEspTagLumpOnTheRight.endsWith(
-        (layers[layers.length - 1] as LayerEsp).openingLump
+        (layers[layers.length - 1] as LayerEsp).openingLump,
       )
     ) {
       // no need to extract tails, heads "{%-" were confirmed in example:
@@ -133,7 +133,7 @@ function getWholeEspTagLumpOnTheRight(
       return wholeEspTagLumpOnTheRight.slice(
         0,
         wholeEspTagLumpOnTheRight.length -
-          (layers[layers.length - 1] as LayerEsp).openingLump.length
+          (layers[layers.length - 1] as LayerEsp).openingLump.length,
       );
     }
 
@@ -150,14 +150,14 @@ function getWholeEspTagLumpOnTheRight(
     // guessed closing lump.
 
     let uniqueCharsListFromGuessedClosingLumpArr = new Set(
-      (layers[layers.length - 1] as LayerEsp).guessedClosingLump
+      (layers[layers.length - 1] as LayerEsp).guessedClosingLump,
     );
 
     let found = 0;
     for (let y = 0, len2 = wholeEspTagLumpOnTheRight.length; y < len2; y++) {
       if (
         !uniqueCharsListFromGuessedClosingLumpArr.has(
-          wholeEspTagLumpOnTheRight[y]
+          wholeEspTagLumpOnTheRight[y],
         ) &&
         found > 1
       ) {
@@ -166,14 +166,14 @@ function getWholeEspTagLumpOnTheRight(
 
       if (
         uniqueCharsListFromGuessedClosingLumpArr.has(
-          wholeEspTagLumpOnTheRight[y]
+          wholeEspTagLumpOnTheRight[y],
         )
       ) {
         found += 1;
         uniqueCharsListFromGuessedClosingLumpArr = new Set(
           [...uniqueCharsListFromGuessedClosingLumpArr].filter(
-            (el) => el !== wholeEspTagLumpOnTheRight[y]
-          )
+            (el) => el !== wholeEspTagLumpOnTheRight[y],
+          ),
         );
       }
     }

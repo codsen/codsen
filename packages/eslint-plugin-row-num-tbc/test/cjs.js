@@ -11,14 +11,14 @@ const { equal, is, ok, throws, type, not, match } = require("uvu/assert");
 // the CJS imported file can't be ".cjs.js", so we rename temporarily:
 fs.renameSync(
   path.resolve("dist/eslint-plugin-row-num.cjs.js"),
-  path.resolve("dist/eslint-plugin-row-num.cjs")
+  path.resolve("dist/eslint-plugin-row-num.cjs"),
 );
 const api = require("../dist/eslint-plugin-row-num.cjs");
 
 test.after(() => {
   fs.renameSync(
     path.resolve("dist/eslint-plugin-row-num.cjs"),
-    path.resolve("dist/eslint-plugin-row-num.cjs.js")
+    path.resolve("dist/eslint-plugin-row-num.cjs.js"),
   );
 });
 

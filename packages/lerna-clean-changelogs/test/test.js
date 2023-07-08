@@ -31,19 +31,19 @@ function compare(name) {
   let noExtras = readFileSync(path.join(fixtures, noExtrasFileName), "utf8");
   let withExtras = readFileSync(
     path.join(fixtures, withExtrasFileName),
-    "utf8"
+    "utf8",
   );
   if (hashesPresent) {
     // check, are the fixtures intact
     equal(
       sha256(noExtras),
       hashes[noExtrasFileName],
-      `${`\u001b[${31}m${`the fixture ${noExtrasFileName} was mangled!!!`}\u001b[${39}m`}`
+      `${`\u001b[${31}m${`the fixture ${noExtrasFileName} was mangled!!!`}\u001b[${39}m`}`,
     );
     equal(
       sha256(withExtras),
       hashes[withExtrasFileName],
-      `${`\u001b[${31}m${`the fixture ${withExtrasFileName} was mangled!!!`}\u001b[${39}m`}`
+      `${`\u001b[${31}m${`the fixture ${withExtrasFileName} was mangled!!!`}\u001b[${39}m`}`,
     );
   } else {
     // write the hash into dict
@@ -54,33 +54,33 @@ function compare(name) {
   equal(
     c(changelog.replace(/\r?\n/g, "\n")).res,
     noExtras.replace(/\r?\n/g, "\n"),
-    `01 LF - no extras (default setting), ${`\u001b[${33}m${name}\u001b[${39}m`}`
+    `01 LF - no extras (default setting), ${`\u001b[${33}m${name}\u001b[${39}m`}`,
   );
   equal(
     c(changelog.replace(/\r?\n/g, "\n"), { extras: false }).res,
     noExtras.replace(/\r?\n/g, "\n"),
-    `02 LF - hardcoded default, no extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
+    `02 LF - hardcoded default, no extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`,
   );
   equal(
     c(changelog.replace(/\r?\n/g, "\n"), { extras: true }).res,
     withExtras.replace(/\r?\n/g, "\n"),
-    `03 LF - optional with extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
+    `03 LF - optional with extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`,
   );
   // CRLF
   equal(
     c(changelog.replace(/\r?\n/g, "\r\n")).res,
     noExtras.replace(/\r?\n/g, "\r\n"),
-    `04 CRLF - no extras (default setting), ${`\u001b[${33}m${name}\u001b[${39}m`}`
+    `04 CRLF - no extras (default setting), ${`\u001b[${33}m${name}\u001b[${39}m`}`,
   );
   equal(
     c(changelog.replace(/\r?\n/g, "\r\n"), { extras: false }).res,
     noExtras.replace(/\r?\n/g, "\r\n"),
-    `05 CRLF - hardcoded default, no extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
+    `05 CRLF - hardcoded default, no extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`,
   );
   equal(
     c(changelog.replace(/\r?\n/g, "\r\n"), { extras: true }).res,
     withExtras.replace(/\r?\n/g, "\r\n"),
-    `06 CRLF - optional with extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`
+    `06 CRLF - optional with extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`,
   );
 }
 
@@ -107,7 +107,7 @@ test("05 - fixes plural in sourcehut links", () => {
 if (!hashesPresent) {
   writeFileSync(
     path.resolve("test/fixture_hashes.json"),
-    JSON.stringify(hashes, null, 4)
+    JSON.stringify(hashes, null, 4),
   );
   console.log("wrote new hashes");
 }

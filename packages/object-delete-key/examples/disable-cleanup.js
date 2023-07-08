@@ -14,7 +14,7 @@ assert.deepEqual(
       key: "b",
       val: { c: "d" },
       cleanup: false,
-    }
+    },
   ),
-  { a: { e: [{}] } }
+  { a: { e: [{}] } },
 );

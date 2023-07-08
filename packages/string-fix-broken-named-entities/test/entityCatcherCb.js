@@ -145,7 +145,7 @@ test(`08 - ${`\u001b[${36}m${"opts.entityCatcherCb"}\u001b[${39}m`} - ${`\u001b[
       rangeValEncoded: "&isindot;",
       rangeValDecoded: "⋵",
     },
-    "08.02"
+    "08.02",
   );
 });
 

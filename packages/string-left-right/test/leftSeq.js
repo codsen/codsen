@@ -16,7 +16,7 @@ test("01 - normal use", () => {
       leftmostChar: 2,
       rightmostChar: 4,
     },
-    "01.01"
+    "01.01",
   );
   equal(
     leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "e"),
@@ -29,7 +29,7 @@ test("01 - normal use", () => {
       leftmostChar: 6,
       rightmostChar: 12,
     },
-    "01.02"
+    "01.02",
   );
   equal(
     leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "z?", "e"),
@@ -42,7 +42,7 @@ test("01 - normal use", () => {
       leftmostChar: 6,
       rightmostChar: 12,
     },
-    "01.03"
+    "01.03",
   );
   equal(
     leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "z?", "e", "x?"),
@@ -55,7 +55,7 @@ test("01 - normal use", () => {
       leftmostChar: 6,
       rightmostChar: 12,
     },
-    "01.04"
+    "01.04",
   );
 });
 
@@ -70,7 +70,7 @@ test("02 - no findings", () => {
       leftmostChar: 1,
       rightmostChar: 1,
     },
-    "02.04"
+    "02.04",
   );
   equal(
     leftSeq("abcdefghijklmnop", 2, "", "b"),
@@ -79,7 +79,7 @@ test("02 - no findings", () => {
       leftmostChar: 1,
       rightmostChar: 1,
     },
-    "02.05"
+    "02.05",
   );
 });
 
@@ -96,7 +96,7 @@ test("04 - case insensitive", () => {
       leftmostChar: 2,
       rightmostChar: 4,
     },
-    "04.02"
+    "04.02",
   );
 });
 

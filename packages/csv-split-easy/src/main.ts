@@ -34,8 +34,8 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
       `csv-split-easy/split(): [THROW_ID_02] Options object must be a plain object! Currently it's of a type ${typeof opts} equal to:\n${JSON.stringify(
         opts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
 
@@ -47,8 +47,8 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
       `csv-split-easy/split(): [THROW_ID_04] input must be string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(
         str,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   } else {
     if (str === "") {
@@ -122,8 +122,8 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
               padSingleDecimalPlaceNumbers:
                 resolvedOpts.padSingleDecimalPlaceNumbers,
               forceUKStyle: resolvedOpts.forceUKStyle,
-            }
-          )
+            },
+          ),
         );
         // for emptiness via `thisRowContainsOnlyEmptySpace`
       }
@@ -156,7 +156,7 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
               padSingleDecimalPlaceNumbers:
                 resolvedOpts.padSingleDecimalPlaceNumbers,
               forceUKStyle: resolvedOpts.forceUKStyle,
-            })
+            }),
           );
         }
         // 3. dump the whole row's array into result array:
@@ -202,7 +202,7 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
             padSingleDecimalPlaceNumbers:
               resolvedOpts.padSingleDecimalPlaceNumbers,
             forceUKStyle: resolvedOpts.forceUKStyle,
-          })
+          }),
         );
       }
       // in any case, dump the whole row's array into result array.

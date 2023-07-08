@@ -11,7 +11,7 @@ assert.equal(
   stripHtml(someHtml, {
     skipHtmlDecoding: true,
   }).result,
-  "twitter:loretparisi&nbsp;&oslash;"
+  "twitter:loretparisi&nbsp;&oslash;",
 );
 
 assert.equal(
@@ -35,5 +35,5 @@ assert.equal(
       }
     },
   }).result,
-  "https://twitter.com/loretparisi twitter:loretparisi&nbsp;&oslash;"
+  "https://twitter.com/loretparisi twitter:loretparisi&nbsp;&oslash;",
 );

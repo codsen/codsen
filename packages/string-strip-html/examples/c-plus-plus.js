@@ -16,5 +16,5 @@ assert.equal(
     ignoreTagsWithTheirContents: ["code"],
     skipHtmlDecoding: true,
   }).result,
-  someHtml
+  someHtml,
 );

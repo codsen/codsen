@@ -46,7 +46,7 @@ test(`01 - ${`\u001b[${31}m${"false positives"}\u001b[${39}m`} - double percenta
         ],
       },
     ]),
-    "01.01"
+    "01.01",
   );
 });
 

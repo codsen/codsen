@@ -24,7 +24,7 @@ test("01 - get - one plain object as result", () => {
       ],
       {
         tag: "meta",
-      }
+      },
     ),
     [
       {
@@ -33,7 +33,7 @@ test("01 - get - one plain object as result", () => {
         something: "else",
       },
     ],
-    "01.01"
+    "01.01",
   );
 });
 
@@ -55,7 +55,7 @@ test("02 - get - two plain object as result", () => {
           content: "",
         },
       ],
-      { tag: "meta" }
+      { tag: "meta" },
     ),
     [
       {
@@ -68,7 +68,7 @@ test("02 - get - two plain object as result", () => {
         attributes: "as well",
       },
     ],
-    "02.01"
+    "02.01",
   );
 });
 
@@ -99,7 +99,7 @@ test("03 - get - topmost level container is object", () => {
       },
       {
         tag: "meta",
-      }
+      },
     ),
     [
       {
@@ -113,7 +113,7 @@ test("03 - get - topmost level container is object", () => {
         something: "as well",
       },
     ],
-    "03.01"
+    "03.01",
   );
 });
 
@@ -133,7 +133,7 @@ test("04 - get - search value is object", () => {
       ],
       {
         tag: { key: "meta" },
-      }
+      },
     ),
     [
       {
@@ -142,7 +142,7 @@ test("04 - get - search value is object", () => {
         something: "else",
       },
     ],
-    "04.01"
+    "04.01",
   );
 });
 
@@ -162,7 +162,7 @@ test("05 - get - search value is array", () => {
       ],
       {
         tag: ["two", "values"],
-      }
+      },
     ),
     [
       {
@@ -171,7 +171,7 @@ test("05 - get - search value is array", () => {
         something: "else",
       },
     ],
-    "05.01"
+    "05.01",
   );
 });
 
@@ -191,7 +191,7 @@ test("06 - get - search value is nested array", () => {
       ],
       {
         tag: [["two", "values"]],
-      }
+      },
     ),
     [
       {
@@ -200,7 +200,7 @@ test("06 - get - search value is nested array", () => {
         something: "else",
       },
     ],
-    "06.01"
+    "06.01",
   );
 });
 
@@ -235,7 +235,7 @@ test("07 - get - search value is nested object", () => {
             with: "multiple values",
           },
         ],
-      }
+      },
     ),
     [
       {
@@ -249,7 +249,7 @@ test("07 - get - search value is nested object", () => {
         something: "else",
       },
     ],
-    "07.01"
+    "07.01",
   );
 });
 
@@ -281,7 +281,7 @@ test("08 - get - numerous everything", () => {
       {
         a: "a",
         b: "b",
-      }
+      },
     ),
     [
       {
@@ -295,7 +295,7 @@ test("08 - get - numerous everything", () => {
         d: "d",
       },
     ],
-    "08.01"
+    "08.01",
   );
 });
 
@@ -321,7 +321,7 @@ test("09 - rogue 4th input arg given", () => {
         {
           zzz: "yyy",
         },
-      ]
+      ],
     ),
     [
       {
@@ -330,7 +330,7 @@ test("09 - rogue 4th input arg given", () => {
         something: "else",
       },
     ],
-    "09.01"
+    "09.01",
   );
 });
 
@@ -361,7 +361,7 @@ test("10 - set - one plain object", () => {
           content_changed: "UTF-8",
           something: "changed",
         },
-      ]
+      ],
     ),
     [
       {
@@ -374,7 +374,7 @@ test("10 - set - one plain object", () => {
         attrs: "Text of the title",
       },
     ],
-    "10.01"
+    "10.01",
   );
 });
 
@@ -407,7 +407,7 @@ test("11 - set - two plain object", () => {
           content: "edited",
           attributes: "as well",
         },
-      ]
+      ],
     ),
     [
       {
@@ -424,7 +424,7 @@ test("11 - set - two plain object", () => {
         content: "",
       },
     ],
-    "11.01"
+    "11.01",
   );
 });
 
@@ -466,7 +466,7 @@ test("12 - set - topmost level object, one value deleted, one changed", () => {
           content: "edited",
           something: "as well",
         },
-      ]
+      ],
     ),
     {
       key1: {
@@ -489,7 +489,7 @@ test("12 - set - topmost level object, one value deleted, one changed", () => {
         },
       ],
     },
-    "12.01"
+    "12.01",
   );
 });
 
@@ -516,7 +516,7 @@ test("13 - set - search val object, updated val from plain obj to nested arr", (
           content: "UTF-8",
           something: "else",
         },
-      ]
+      ],
     ),
     [
       {
@@ -529,7 +529,7 @@ test("13 - set - search val object, updated val from plain obj to nested arr", (
         attrs: "Text of the title",
       },
     ],
-    "13.01"
+    "13.01",
   );
 });
 
@@ -556,7 +556,7 @@ test("14 - set - search value is array - updated value array", () => {
           content: "UTF-8",
           something: "else",
         },
-      ]
+      ],
     ),
     [
       {
@@ -569,7 +569,7 @@ test("14 - set - search value is array - updated value array", () => {
         attrs: "Text of the title",
       },
     ],
-    "14.01"
+    "14.01",
   );
 });
 
@@ -595,7 +595,7 @@ test("15 - set - search value is nested array - deleted finding", () => {
           content: "UTF-8",
           something: "else",
         },
-      ]
+      ],
     ),
     [
       {
@@ -607,7 +607,7 @@ test("15 - set - search value is nested array - deleted finding", () => {
         attrs: "Text of the title",
       },
     ],
-    "15.01"
+    "15.01",
   );
 });
 
@@ -654,7 +654,7 @@ test("16 - set - edit skipping similar, false search result", () => {
           content: "UTF-8",
           something: "else",
         },
-      ]
+      ],
     ),
     [
       {
@@ -677,7 +677,7 @@ test("16 - set - edit skipping similar, false search result", () => {
         something: "else",
       },
     ],
-    "16.01"
+    "16.01",
   );
 });
 
@@ -721,7 +721,7 @@ test("17 - set - numerous everything, wrong order", () => {
           a: "1",
           d: "3",
         },
-      ]
+      ],
     ),
     [
       [
@@ -745,7 +745,7 @@ test("17 - set - numerous everything, wrong order", () => {
         ],
       ],
     ],
-    "17.01"
+    "17.01",
   );
 });
 
@@ -777,7 +777,7 @@ test("18 - rogue 4th input arg", () => {
         {
           zzz: "yyy",
         },
-      ]
+      ],
     ),
     [
       {
@@ -790,7 +790,7 @@ test("18 - rogue 4th input arg", () => {
         attrs: "Text of the title",
       },
     ],
-    "18.01"
+    "18.01",
   );
 });
 
@@ -804,7 +804,7 @@ test("19 - missing inputs - throws", () => {
       getObj();
     },
     /THROW_ID_01/g,
-    "19.01"
+    "19.01",
   );
 });
 
@@ -820,7 +820,7 @@ test("20 - missing keyValPair", () => {
       ]);
     },
     /THROW_ID_02/g,
-    "20.01"
+    "20.01",
   );
 });
 

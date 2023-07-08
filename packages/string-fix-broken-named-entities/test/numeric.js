@@ -24,7 +24,7 @@ test(`01 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
         rangeValDecoded: "A",
       },
     ],
-    "01.01"
+    "01.01",
   );
   equal(gathered, [], "01.02");
 });
@@ -50,7 +50,7 @@ test(`02 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
         rangeValDecoded: "\xA3",
       },
     ],
-    "02.01"
+    "02.01",
   );
   equal(gathered, [], "02.02");
 });
@@ -76,7 +76,7 @@ test(`03 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
         rangeValDecoded: null,
       },
     ],
-    "03.01"
+    "03.01",
   );
   equal(gathered, [], "03.02");
 });
@@ -95,7 +95,7 @@ test(`04 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
       },
     }),
     [],
-    "04.01"
+    "04.01",
   );
   equal(gathered, [], "04.02");
 });
@@ -112,7 +112,7 @@ test(`05 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
       },
     }),
     [],
-    "05.01"
+    "05.01",
   );
   equal(gathered, [], "05.02");
 });
@@ -138,7 +138,7 @@ test(`06 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
         rangeValDecoded: null,
       },
     ],
-    "06.01"
+    "06.01",
   );
   equal(gathered, [], "06.02");
 });
@@ -163,7 +163,7 @@ test(`07 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
         rangeValDecoded: null,
       },
     ],
-    "07.01"
+    "07.01",
   );
   equal(gathered, [], "07.02");
 });
@@ -180,7 +180,7 @@ test(`08 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
       },
     }),
     [],
-    "08.01"
+    "08.01",
   );
   equal(
     fix(ok, inp1, {
@@ -197,7 +197,7 @@ test(`08 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
         rangeValDecoded: "\xA3",
       },
     ],
-    "08.02"
+    "08.02",
   );
   equal(fix(ok, inp1, { decode: true }), [[15, 21, "\xA3"]], "08.03");
   equal(gathered, [], "08.04");
@@ -225,7 +225,7 @@ test(`09 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${34
         rangeValDecoded: "\xA3",
       },
     ],
-    "09.02"
+    "09.02",
   );
   equal(gathered, [], "09.03");
 });
@@ -251,7 +251,7 @@ test(`10 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${34
         rangeValDecoded: null,
       },
     ],
-    "10.01"
+    "10.01",
   );
   equal(gathered, [], "10.02");
 });
@@ -278,7 +278,7 @@ test(`11 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${34
         rangeValDecoded: null,
       },
     ],
-    "11.02"
+    "11.02",
   );
   equal(gathered, [], "11.03");
 });
@@ -303,7 +303,7 @@ test(`12 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${34
         rangeValDecoded: null,
       },
     ],
-    "12.01"
+    "12.01",
   );
   equal(gathered, [], "12.02");
 });
@@ -328,7 +328,7 @@ test(`13 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${34
         rangeValDecoded: null,
       },
     ],
-    "13.01"
+    "13.01",
   );
   equal(gathered, [], "13.02");
 });

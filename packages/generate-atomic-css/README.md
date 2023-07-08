@@ -60,7 +60,7 @@ z`,
     {
       includeConfig: false,
       includeHeadsAndTails: false,
-    }
+    },
   ),
   {
     log: { count: 8 },
@@ -78,7 +78,7 @@ z`,
 
 z
 `,
-  }
+  },
 );
 ```
 

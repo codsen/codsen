@@ -17,8 +17,8 @@ function chomp(str: string): string {
       `017 ${`\u001b[${33}m${`str after chomp`}\u001b[${39}m`} = ${JSON.stringify(
         str,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   return str;
 }
@@ -38,7 +38,7 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
   // ---------------------------------------------------------------------------
   if (typeof str !== "string") {
     throw new TypeError(
-      `ranges-ent-decode/decode(): [THROW_ID_01] Expected a String! Currently it's given as ${str}, type ${typeof str}`
+      `ranges-ent-decode/decode(): [THROW_ID_01] Expected a String! Currently it's given as ${str}, type ${typeof str}`,
     );
   } else if (!str.trim()) {
     // fast ending, matching Ranges notation - absence is marked by falsy null
@@ -46,7 +46,7 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
   }
   if (opts != null && !isObj(opts)) {
     throw new TypeError(
-      `ranges-ent-decode/decode(): [THROW_ID_02] Optional Options Object, the second in put argument, must be a plain object! Currently it's given as ${opts}, type ${typeof opts}`
+      `ranges-ent-decode/decode(): [THROW_ID_02] Optional Options Object, the second in put argument, must be a plain object! Currently it's given as ${opts}, type ${typeof opts}`,
     );
   }
   let resolvedOpts: Opts = { ...defaults, ...opts };
@@ -56,16 +56,16 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
       `056 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
         str,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   DEV &&
     console.log(
       `064 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   // vars
@@ -97,8 +97,8 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
         `ranges-ent-decode/decode(): [THROW_ID_04] Parse error - strict mode is on and input contains an invalid entity. Here are all the invalid entities: ${JSON.stringify(
           matchedInvalidEntities,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     }
   }
@@ -112,7 +112,7 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
       console.log(
         `--------\nFound ${`\u001b[${33}m${array1[0]}\u001b[${39}m`} Range: [${
           entityRegex.lastIndex - array1[0].length
-        }, ${entityRegex.lastIndex}]`
+        }, ${entityRegex.lastIndex}]`,
       );
     let chomped = chomp(array1[0]);
     if (chomped === "&") {
@@ -126,7 +126,7 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
       let decoded = he.decode(chomped, resolvedOpts);
       DEV &&
         console.log(
-          `129 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`
+          `129 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`,
         );
       if (decoded !== chomped) {
         DEV &&
@@ -138,8 +138,8 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
                 decoded,
               ],
               null,
-              4
-            )}\u001b[${39}m`}"`
+              4,
+            )}\u001b[${39}m`}"`,
           );
         rangesArr.push([
           entityRegex.lastIndex - array1[0].length,

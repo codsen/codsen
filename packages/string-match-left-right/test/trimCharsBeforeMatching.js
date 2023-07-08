@@ -21,7 +21,7 @@ test(`01 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
   equal(
     matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: ["/", " "] }),
     "div",
-    "01.02"
+    "01.02",
   );
   // two character-long opts.trimCharsBeforeMatching
   throws(
@@ -29,26 +29,26 @@ test(`01 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: ["/ "] });
     },
     "01.03",
-    "01.03"
+    "01.03",
   );
   equal(
     matchRight("< / div>", 0, ["div"], {
       trimCharsBeforeMatching: ["/", " "],
     }),
     "div",
-    "01.04"
+    "01.04",
   );
   equal(
     matchRight("< / div>", 0, ["hgfdf", "hkjh", "div", "00"], {
       trimCharsBeforeMatching: ["/", " "],
     }),
     "div",
-    "01.05"
+    "01.05",
   );
   equal(
     matchRight("< / div>", 0, ["div"], { trimCharsBeforeMatching: ["/"] }),
     false,
-    "01.06"
+    "01.06",
   );
 
   // opts.cb
@@ -58,7 +58,7 @@ test(`01 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["/", " "],
     }),
     false,
-    "01.07"
+    "01.07",
   );
   equal(
     matchRight("< / div>", 0, ["zzzz", "div"], {
@@ -66,7 +66,7 @@ test(`01 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["/", " "],
     }),
     false,
-    "01.08"
+    "01.08",
   );
   equal(
     matchRight("< / div>", 0, ["div"], {
@@ -74,7 +74,7 @@ test(`01 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["/", " "],
     }),
     false,
-    "01.09"
+    "01.09",
   );
   equal(
     matchRight("< / div>", 0, ["div"], {
@@ -82,12 +82,12 @@ test(`01 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["/"],
     }),
     false,
-    "01.10"
+    "01.10",
   );
   equal(
     matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: ["/", 1] }),
     "div",
-    "01.11"
+    "01.11",
   );
 });
 
@@ -97,22 +97,22 @@ test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
   equal(
     matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: "/" }),
     "div",
-    "02.02"
+    "02.02",
   );
   equal(
     matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: ["/"] }),
     "div",
-    "02.03"
+    "02.03",
   );
   equal(
     matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: ["a", "/"] }),
     "div",
-    "02.04"
+    "02.04",
   );
   equal(
     matchRight("<adiv>", 0, ["div"], { trimCharsBeforeMatching: "A" }),
     false,
-    "02.05"
+    "02.05",
   );
   equal(
     matchRight("<adiv>", 0, ["div"], {
@@ -120,7 +120,7 @@ test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: "A",
     }),
     false,
-    "02.06"
+    "02.06",
   );
   equal(
     matchRight("<adiv>", 0, ["div"], {
@@ -128,7 +128,7 @@ test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: "A",
     }),
     "div",
-    "02.07"
+    "02.07",
   );
   equal(
     matchRight("<adiv>", 0, ["dIv"], {
@@ -136,35 +136,35 @@ test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["1", "A"],
     }),
     "dIv",
-    "02.08"
+    "02.08",
   );
   // matchRightIncl
   equal(matchRightIncl("</div>", 0, ["div"]), false, "02.09");
   equal(
     matchRightIncl("</div>", 0, ["div"], { trimCharsBeforeMatching: "<" }),
     false,
-    "02.10"
+    "02.10",
   );
   equal(
     matchRightIncl("</div>", 0, ["yo", "div"], {
       trimCharsBeforeMatching: ["<", "/"],
     }),
     "div",
-    "02.11"
+    "02.11",
   );
   equal(
     matchRightIncl("abdiv>", 0, ["yo", "div"], {
       trimCharsBeforeMatching: ["c", "a", "b"],
     }),
     "div",
-    "02.12"
+    "02.12",
   );
   equal(
     matchRightIncl("abdiv>", 0, ["yo", "div"], {
       trimCharsBeforeMatching: ["C", "A", "B"],
     }),
     false,
-    "02.13"
+    "02.13",
   );
   equal(
     matchRightIncl("abdiv>", 0, ["yo", "div"], {
@@ -172,7 +172,7 @@ test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["C", "A", "B"],
     }),
     "div",
-    "02.14"
+    "02.14",
   );
   equal(
     matchRightIncl("abdiv>", 0, ["yo", "dIv"], {
@@ -180,24 +180,24 @@ test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["C", "A", "B"],
     }),
     "dIv",
-    "02.15"
+    "02.15",
   );
   // matchLeft
   equal(matchLeft("</divz>", 6, ["div"]), false, "02.16");
   equal(
     matchLeft("</divz>", 6, ["div"], { trimCharsBeforeMatching: "z" }),
     "div",
-    "02.17"
+    "02.17",
   );
   equal(
     matchLeft("</divz>", 6, ["div"], { trimCharsBeforeMatching: ["z"] }),
     "div",
-    "02.18"
+    "02.18",
   );
   equal(
     matchLeft("</divz>", 6, ["div"], { trimCharsBeforeMatching: ["Z"] }),
     false,
-    "02.19"
+    "02.19",
   );
   equal(
     matchLeft("</divz>", 6, ["div"], {
@@ -205,7 +205,7 @@ test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["Z"],
     }),
     false,
-    "02.20"
+    "02.20",
   );
   equal(
     matchLeft("</divz>", 6, ["div"], {
@@ -213,7 +213,7 @@ test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["Z"],
     }),
     "div",
-    "02.21"
+    "02.21",
   );
   equal(
     matchLeft("</divz>", 6, ["dIv"], {
@@ -221,35 +221,35 @@ test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["Z"],
     }),
     "dIv",
-    "02.22"
+    "02.22",
   );
   // matchLeftIncl
   equal(matchLeftIncl("</divz>", 6, ["div"]), false, "02.23");
   equal(
     matchLeftIncl("</divz>", 6, ["div"], { trimCharsBeforeMatching: "z" }),
     false,
-    "02.24"
+    "02.24",
   );
   equal(
     matchLeftIncl("</divz>", 6, ["div"], {
       trimCharsBeforeMatching: ["z", ">"],
     }),
     "div",
-    "02.25"
+    "02.25",
   );
   equal(
     matchLeftIncl("</divz>", 6, ["div"], {
       trimCharsBeforeMatching: ["a", "z", ">"],
     }),
     "div",
-    "02.26"
+    "02.26",
   );
   equal(
     matchLeftIncl("</divz>", 6, ["div"], {
       trimCharsBeforeMatching: ["Z", ">"],
     }),
     false,
-    "02.27"
+    "02.27",
   );
   equal(
     matchLeftIncl("</divz>", 6, ["div"], {
@@ -257,7 +257,7 @@ test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["a", "Z", ">"],
     }),
     false,
-    "02.28"
+    "02.28",
   );
   equal(
     matchLeftIncl("</divz>", 6, ["div"], {
@@ -265,7 +265,7 @@ test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["a", "Z", ">"],
     }),
     "div",
-    "02.29"
+    "02.29",
   );
   equal(
     matchLeftIncl("</divz>", 6, ["dIv"], {
@@ -273,7 +273,7 @@ test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["a", "Z", ">"],
     }),
     "dIv",
-    "02.30"
+    "02.30",
   );
 });
 
@@ -283,7 +283,7 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["/", "<"],
     }),
     "div",
-    "03.01"
+    "03.01",
   );
   throws(
     () => {
@@ -292,7 +292,7 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       });
     },
     "03.02",
-    "03.02"
+    "03.02",
   );
 
   equal(
@@ -300,7 +300,7 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["/", "<"],
     }),
     "div",
-    "03.03"
+    "03.03",
   );
   throws(
     () => {
@@ -309,7 +309,7 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       });
     },
     "03.04",
-    "03.04"
+    "03.04",
   );
 
   equal(
@@ -317,7 +317,7 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["/", "<"],
     }),
     "div",
-    "03.05"
+    "03.05",
   );
   throws(
     () => {
@@ -326,7 +326,7 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       });
     },
     "03.06",
-    "03.06"
+    "03.06",
   );
 
   equal(
@@ -334,7 +334,7 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["/", "<"],
     }),
     "div",
-    "03.07"
+    "03.07",
   );
   throws(
     () => {
@@ -343,7 +343,7 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       });
     },
     "03.08",
-    "03.08"
+    "03.08",
   );
 });
 
@@ -357,7 +357,7 @@ test(`05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mch
       trimCharsBeforeMatching: ["z"],
     }),
     "EOL",
-    "05.01"
+    "05.01",
   );
 });
 
@@ -375,7 +375,7 @@ test(`08 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mch
       trimCharsBeforeMatching: ["z"],
     }),
     "EOL",
-    "08.01"
+    "08.01",
   );
 });
 

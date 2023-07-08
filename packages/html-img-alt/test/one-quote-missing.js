@@ -23,7 +23,7 @@ test("04 - alt with only one single quote", () => {
   equal(
     alts("zz'z<img alt='>zzz<img alt=\"legit quote: '\" >zz"),
     'zz\'z<img alt="" >zzz<img alt="legit quote: \'" >zz',
-    "04.01"
+    "04.01",
   );
 });
 

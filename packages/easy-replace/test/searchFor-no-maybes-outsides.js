@@ -21,10 +21,10 @@ test("01 - one rightOutside, not found", () => {
         rightOutside: "🦄",
         rightOutsideNot: "",
       },
-      "🌟"
+      "🌟",
     ),
     "aaa🦄a bbbb🦄 cccc🦄",
-    "test 7.1"
+    "test 7.1",
   );
 });
 
@@ -41,10 +41,10 @@ test("02 - one leftOutside, not found", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      "🌟"
+      "🌟",
     ),
     "🦄aaaa 🦄bbbb 🦄cccc",
-    "test 7.2"
+    "test 7.2",
   );
 });
 
@@ -61,10 +61,10 @@ test("03 - one leftOutside, not found + null replacement", () => {
         rightOutside: "",
         rightOutsideNot: "",
       },
-      null
+      null,
     ),
     "aa🦄aa bb🦄bb cc🦄cc",
-    "test 7.3"
+    "test 7.3",
   );
 });
 
@@ -75,10 +75,10 @@ test("04 - leftOutside and replacement are null", () => {
       {
         leftOutside: null,
       },
-      null
+      null,
     ),
     "aaaa bbbb cccc",
-    "test 7.4"
+    "test 7.4",
   );
 });
 
@@ -89,10 +89,10 @@ test("05 - left outside and replacement are undefined", () => {
       {
         leftOutside: undefined,
       },
-      undefined
+      undefined,
     ),
     "aaaa bbbb cccc",
-    "test 7.5"
+    "test 7.5",
   );
 });
 

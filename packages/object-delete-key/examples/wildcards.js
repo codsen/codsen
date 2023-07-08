@@ -13,10 +13,10 @@ assert.deepEqual(
     {
       key: "b*p",
       only: "array",
-    }
+    },
   ),
   {
     a: ["", "c"],
     bap: "bap",
-  }
+  },
 );

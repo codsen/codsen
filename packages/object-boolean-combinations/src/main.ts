@@ -39,12 +39,12 @@ function combinations(input: Obj, Override: undefined | Obj = {}): Obj[] {
   }
   if (!isObj(input)) {
     throw new Error(
-      "[THROW_ID_02] the first input object must be a plain object"
+      "[THROW_ID_02] the first input object must be a plain object",
     );
   }
   if (Override && !isObj(Override)) {
     throw new Error(
-      "[THROW_ID_03] the second override object must be a plain object"
+      "[THROW_ID_03] the second override object must be a plain object",
     );
   }
 
@@ -66,11 +66,11 @@ function combinations(input: Obj, Override: undefined | Obj = {}): Obj[] {
     // enforce that override object had just a subset of incomingObject properties, nothing else
     propertiesToBeOverridden = intersection(
       Object.keys(overrideObject),
-      Object.keys(incomingObject)
+      Object.keys(incomingObject),
     );
     // propertiesToMix = all incoming object's properties MINUS properties to override
     propertiesToMix = propertiesToMix.filter(
-      (val) => !propertiesToBeOverridden.includes(val)
+      (val) => !propertiesToBeOverridden.includes(val),
     );
   }
 

@@ -7,7 +7,7 @@ type PlainObjectOfBool = {
 };
 declare function mixer(
   ref?: PlainObject,
-  defaultsObj?: PlainObject
+  defaultsObj?: PlainObject,
 ): PlainObjectOfBool[];
 
 export { PlainObject, PlainObjectOfBool, mixer, version };

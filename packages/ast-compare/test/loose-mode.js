@@ -17,10 +17,10 @@ test("01 - hungryForWhitespace, empty strings within arrays", () => {
       {
         type: "rule",
         selectors: [],
-      }
+      },
     ),
     false,
-    "01.01"
+    "01.01",
   );
   equal(
     compare(
@@ -34,10 +34,10 @@ test("01 - hungryForWhitespace, empty strings within arrays", () => {
       },
       {
         hungryForWhitespace: true,
-      }
+      },
     ),
     true,
-    "01.02"
+    "01.02",
   );
   equal(
     compare(
@@ -48,10 +48,10 @@ test("01 - hungryForWhitespace, empty strings within arrays", () => {
       {
         type: "rule",
         selectors: ["   ", "\n\n\n", "\t\t\t   \t\t\n\n"],
-      }
+      },
     ),
     false,
-    "01.03"
+    "01.03",
   );
   equal(
     compare(
@@ -65,10 +65,10 @@ test("01 - hungryForWhitespace, empty strings within arrays", () => {
       },
       {
         hungryForWhitespace: true,
-      }
+      },
     ),
     true,
-    "01.04"
+    "01.04",
   );
 });
 

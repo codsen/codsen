@@ -50,13 +50,13 @@ assert.throws(
         option1: "setting1",
         option2: false,
         option3: false,
-      }
+      },
     );
   },
   (err) => {
     assert(/not boolean but string/.test(err));
     return true;
-  }
+  },
 );
 ```
 

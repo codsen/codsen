@@ -29,5 +29,5 @@ assert.deepEqual(
     },
     {}, // <- object #3
   ]),
-  ["c"]
+  ["c"],
 );

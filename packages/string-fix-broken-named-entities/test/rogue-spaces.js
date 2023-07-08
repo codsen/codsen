@@ -14,7 +14,7 @@ test(`${
 } - ${`\u001b[${36}m${"rogue-spaces"}\u001b[${39}m`}`, () => {
   Object.keys(allNamedEntities)
     .filter(
-      (entity) => entity !== "nbsp" && !Object.keys(uncertain).includes(entity)
+      (entity) => entity !== "nbsp" && !Object.keys(uncertain).includes(entity),
     )
     .forEach((singleEntity, i, arr) => {
       //
@@ -29,7 +29,7 @@ test(`${
       for (let y = singleEntity.length + 1; y--; ) {
         let entityWithSpaceInserted = `${`&${singleEntity};`.slice(
           0,
-          singleEntity.length - y + 1
+          singleEntity.length - y + 1,
         )} ${`&${singleEntity};`.slice(singleEntity.length - y + 1)}`;
         // if (i < 10) {
         //   console.log(
@@ -50,7 +50,7 @@ test(`${
               rangeValDecoded: decode(`&${singleEntity};`),
             },
           ],
-          `"${entityWithSpaceInserted}" - 03; ${i + 1}/${arr.length}`
+          `"${entityWithSpaceInserted}" - 03; ${i + 1}/${arr.length}`,
         );
       }
     });
@@ -79,7 +79,7 @@ test(`02 - ${`\u001b[${36}m${"rogue-spaces"}\u001b[${39}m`} - \u001b[${36}m${"nb
       },
     }),
     outp1,
-    "02.02"
+    "02.02",
   );
 
   equal(gathered, [], "02.03");
@@ -108,7 +108,7 @@ test(`03 - ${`\u001b[${36}m${"rogue-spaces"}\u001b[${39}m`} - \u001b[${36}m${"nb
       },
     }),
     outp5,
-    "03.02"
+    "03.02",
   );
   equal(gathered, [], "03.03");
 });
@@ -136,7 +136,7 @@ test(`04 - ${`\u001b[${36}m${"rogue-spaces"}\u001b[${39}m`} - \u001b[${36}m${"nb
       },
     }),
     outp5,
-    "04.02"
+    "04.02",
   );
   equal(gathered, [], "04.03");
 });

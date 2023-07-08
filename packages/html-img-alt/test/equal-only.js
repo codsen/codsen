@@ -15,7 +15,7 @@ test("02 - alt with just equal", () => {
   equal(
     alts("zzz<img alt=>zzz<img alt=>zzz"),
     'zzz<img alt="" >zzz<img alt="" >zzz',
-    "02.01"
+    "02.01",
   );
 });
 

@@ -15,7 +15,7 @@ findMalformed(
   },
   {
     maxDistance: 1, // Levenshtein distance
-  }
+  },
 );
 assert.deepEqual(gathered, [
   {

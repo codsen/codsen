@@ -26,14 +26,14 @@ test("01 - find - throws when there's no input", () => {
       find();
     },
     /THROW_ID_02/g,
-    "01.01"
+    "01.01",
   );
   throws(
     () => {
       find(null, {});
     },
     /THROW_ID_02/g,
-    "01.02"
+    "01.02",
   );
 });
 
@@ -43,14 +43,14 @@ test("02 - get -  throws when there's no input", () => {
       get();
     },
     /THROW_ID_06/g,
-    "02.01"
+    "02.01",
   );
   throws(
     () => {
       get(null, {});
     },
     /THROW_ID_06/g,
-    "02.02"
+    "02.02",
   );
 });
 
@@ -60,14 +60,14 @@ test("03 - set -  throws when there's no input", () => {
       set();
     },
     /THROW_ID_12/g,
-    "03.01"
+    "03.01",
   );
   throws(
     () => {
       set(null, {});
     },
     /THROW_ID_12/g,
-    "03.02"
+    "03.02",
   );
 });
 
@@ -77,14 +77,14 @@ test("04 - drop - throws when there's no input", () => {
       drop();
     },
     /THROW_ID_19/g,
-    "04.01"
+    "04.01",
   );
   throws(
     () => {
       drop(null, {});
     },
     /THROW_ID_19/g,
-    "04.02"
+    "04.02",
   );
 });
 
@@ -94,14 +94,14 @@ test("05 - del - throws when there's no input", () => {
       del();
     },
     /THROW_ID_26/g,
-    "05.01"
+    "05.01",
   );
   throws(
     () => {
       del(null, {});
     },
     /THROW_ID_26/g,
-    "05.02"
+    "05.02",
   );
 });
 
@@ -111,14 +111,14 @@ test("06 - del - throws when opts is not a plain object", () => {
       del({ a: "b" });
     },
     /THROW_ID_27/g,
-    "06.01"
+    "06.01",
   );
   throws(
     () => {
       del({ a: "b" }, "c");
     },
     /THROW_ID_27/g,
-    "06.02"
+    "06.02",
   );
 });
 
@@ -128,7 +128,7 @@ test("07 - arrayFirstOnly - when there's no input", () => {
       arrayFirstOnly();
     },
     /THROW_ID_31/g,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -138,7 +138,7 @@ test("08 - del - throws when opts.key and opts.val are missing", () => {
       del({ a: "b" }, {});
     },
     /THROW_ID_28/g,
-    "08.01"
+    "08.01",
   );
 });
 
@@ -148,28 +148,28 @@ test("09 - get/set - throws when opts.index is missing", () => {
       get(defaultInput);
     },
     /THROW_ID_07/g,
-    "09.01"
+    "09.01",
   );
   throws(
     () => {
       get(defaultInput, { a: "a" });
     },
     /THROW_ID_08/g,
-    "09.02"
+    "09.02",
   );
   throws(
     () => {
       set(defaultInput);
     },
     /THROW_ID_13/g,
-    "09.03"
+    "09.03",
   );
   throws(
     () => {
       set(defaultInput, { a: "a" });
     },
     /THROW_ID_14/g,
-    "09.04"
+    "09.04",
   );
 });
 
@@ -179,42 +179,42 @@ test("10 - get/set/drop - throws when opts.index is not a natural number (both s
       get(defaultInput, { index: "1.5" });
     },
     /THROW_ID_11/g,
-    "10.01"
+    "10.01",
   );
   throws(
     () => {
       get(defaultInput, { index: 1.5 });
     },
     /THROW_ID_11/g,
-    "10.02"
+    "10.02",
   );
   throws(
     () => {
       set(defaultInput, { index: "1.5", val: "zzz" });
     },
     /THROW_ID_17/g,
-    "10.03"
+    "10.03",
   );
   throws(
     () => {
       set(defaultInput, { index: 1.5, val: "zzz" });
     },
     /THROW_ID_17/g,
-    "10.04"
+    "10.04",
   );
   throws(
     () => {
       drop(defaultInput, { index: "1.5" });
     },
     /THROW_ID_23/g,
-    "10.05"
+    "10.05",
   );
   throws(
     () => {
       drop(defaultInput, { index: 1.5 });
     },
     /THROW_ID_23/g,
-    "10.06"
+    "10.06",
   );
 });
 
@@ -224,7 +224,7 @@ test("11 - set - throws when opts.key and opts.val are missing", () => {
       set(defaultInput, { index: "3" });
     },
     /THROW_ID_14/g,
-    "11.01"
+    "11.01",
   );
 });
 
@@ -234,14 +234,14 @@ test("12 - find - throws when opts.key and opts.val are missing", () => {
       find(defaultInput, { index: "3" });
     },
     /THROW_ID_03/g,
-    "12.01"
+    "12.01",
   );
   throws(
     () => {
       find(defaultInput, { index: 3 });
     },
     /THROW_ID_03/g,
-    "12.02"
+    "12.02",
   );
 });
 
@@ -251,14 +251,14 @@ test("13 - del - throws when opts.key and opts.val are missing", () => {
       del(defaultInput, { index: "3" });
     },
     /THROW_ID_28/g,
-    "13.01"
+    "13.01",
   );
   throws(
     () => {
       del(defaultInput, { index: 3 });
     },
     /THROW_ID_28/g,
-    "13.02"
+    "13.02",
   );
 });
 
@@ -268,14 +268,14 @@ test("14 - drop - throws when there's no index", () => {
       drop(["a"], "a");
     },
     /THROW_ID_20/g,
-    "14.01"
+    "14.01",
   );
   throws(
     () => {
       drop({ a: "a" }, { b: "b" });
     },
     /THROW_ID_21/g,
-    "14.02"
+    "14.02",
   );
 });
 

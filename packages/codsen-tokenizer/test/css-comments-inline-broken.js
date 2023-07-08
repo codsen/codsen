@@ -83,7 +83,7 @@ test(`01 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - stray closing closing bloc
         ],
       },
     ],
-    "01.01"
+    "01.01",
   );
 });
 
@@ -175,7 +175,7 @@ test(`02 - ${`\u001b[${36}m${"rule"}\u001b[${39}m`} - multiple stray closing clo
         ],
       },
     ],
-    "02.01"
+    "02.01",
   );
 });
 

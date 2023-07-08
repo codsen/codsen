@@ -6,7 +6,7 @@ function startsCssComment(
   i: number,
   _token: Token,
   _layers: Layer[],
-  withinStyle: boolean
+  withinStyle: boolean,
 ): boolean {
   return (
     // cast to bool

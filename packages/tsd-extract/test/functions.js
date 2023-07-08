@@ -23,7 +23,7 @@ test("01 - minimal", () => {
       error: null,
       all: ["comb"],
     },
-    "01.01"
+    "01.01",
   );
   equal(
     extract(source, "comb", { extractAll: false, semi: true }),
@@ -41,7 +41,7 @@ test("01 - minimal", () => {
       error: null,
       all: [],
     },
-    "01.02"
+    "01.02",
   );
   equal(
     extract(source, "comb", { extractAll: true, semi: false }),
@@ -59,7 +59,7 @@ test("01 - minimal", () => {
       error: null,
       all: ["comb"],
     },
-    "01.03"
+    "01.03",
   );
   equal(
     extract(source, "comb", { extractAll: false, semi: false }),
@@ -77,7 +77,7 @@ test("01 - minimal", () => {
       error: null,
       all: [],
     },
-    "01.04"
+    "01.04",
   );
 });
 
@@ -98,7 +98,7 @@ test("02 - generics - minimal", () => {
       error: null,
       all: [],
     },
-    "02.01"
+    "02.01",
   );
 });
 
@@ -159,13 +159,13 @@ export {
   equal(
     extract(source, "version", { extractAll: false, semi: true }).value,
     "declare const version: string;",
-    "03.01"
+    "03.01",
   );
   equal(
     extract(source, "sortAllObjectsSync", { extractAll: false, semi: true })
       .value,
     "declare function sortAllObjectsSync(input: any): any;",
-    "03.02"
+    "03.02",
   );
   equal(
     extract(source, "getKeyset", { extractAll: false, semi: true }).value,
@@ -175,7 +175,7 @@ export {
     placeholder?: boolean;
   }
 ): Promise<Obj>;`,
-    "03.03"
+    "03.03",
   );
   equal(
     extract(source, "getKeysetSync", { extractAll: false, semi: true }).value,
@@ -185,7 +185,7 @@ export {
     placeholder?: any;
   }
 ): {};`,
-    "03.04"
+    "03.04",
   );
   equal(
     extract(source, "EnforceKeysetOpts", { extractAll: false, semi: true })
@@ -195,7 +195,7 @@ export {
   placeholder: boolean;
   useNullAsExplicitFalse: boolean;
 }`,
-    "03.05"
+    "03.05",
   );
   equal(
     extract(source, "enforceKeyset", { extractAll: false, semi: true }).value,
@@ -204,7 +204,7 @@ export {
   schemaKeyset: Obj,
   opts?: EnforceKeysetOpts
 ): Promise<Obj>;`,
-    "03.06"
+    "03.06",
   );
   equal(
     extract(source, "enforceKeysetSync", { extractAll: false, semi: true })
@@ -214,12 +214,12 @@ export {
   schemaKeyset: Obj,
   opts?: EnforceKeysetOpts
 ): any;`,
-    "03.07"
+    "03.07",
   );
   equal(
     extract(source, "noNewKeysSync", { extractAll: false, semi: true }).value,
     "declare function noNewKeysSync(obj: Obj, schemaKeyset: Obj): any;",
-    "03.08"
+    "03.08",
   );
   equal(
     extract(source, "findUnusedSync", { extractAll: false, semi: true }).value,
@@ -230,7 +230,7 @@ export {
     comments?: string;
   }
 ): string[];`,
-    "03.09"
+    "03.09",
   );
   equal(
     extract(source, "export", { extractAll: false, semi: true }).value,
@@ -244,7 +244,7 @@ export {
   sortAllObjectsSync,
   version,
 };`,
-    "03.10"
+    "03.10",
   );
 });
 

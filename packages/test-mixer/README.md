@@ -50,7 +50,7 @@ assert.deepEqual(
     {
       // empty first arg object means you want all combinations
     },
-    defaultOpts
+    defaultOpts,
   ),
   [
     {
@@ -101,7 +101,7 @@ assert.deepEqual(
       inflateTires: true,
       extinguishersCount: 1,
     },
-  ]
+  ],
 );
 
 // let's "pin" a value, prepare two sets of options objects,
@@ -112,7 +112,7 @@ const variationsWithScrapeWindshieldOn = mixer(
   {
     scrapeWindshield: true,
   },
-  defaultOpts
+  defaultOpts,
 );
 assert.deepEqual(variationsWithScrapeWindshieldOn, [
   {
@@ -146,7 +146,7 @@ const variationsWithScrapeWindshieldOff = mixer(
   {
     scrapeWindshield: false,
   },
-  defaultOpts
+  defaultOpts,
 );
 assert.equal(variationsWithScrapeWindshieldOff.length, 4);
 ```

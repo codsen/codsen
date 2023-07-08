@@ -28,18 +28,18 @@ test("02", () => {
   equal(
     chompLeft("a\n  b c b c  x y", 12, { mode: "0" }, "b", "c"),
     2,
-    "02.11"
+    "02.11",
   );
   equal(
     chompLeft("a\n  b c b c  x y", 12, { mode: null }, "b", "c"),
     2,
-    "02.12"
+    "02.12",
   );
   equal(chompLeft("a\n  b c b c  x y", 12, { mode: "" }, "b", "c"), 2, "02.13");
   equal(
     chompLeft("a\n  b c b c  x y", 12, { mode: undefined }, "b", "c"),
     2,
-    "02.14"
+    "02.14",
   );
   equal(chompLeft("a\n  b c b c  x y", 13, "b", "c", "x?"), 2, "02.15");
   equal(chompLeft("a\n  b c b c  x y", 13, "y?", "b", "c", "x?"), 2, "02.16");
@@ -56,7 +56,7 @@ test("03", () => {
   equal(
     chompLeft("a\n  b c b c  x y", 12, { mode: "1" }, "b", "c"),
     4,
-    "03.06"
+    "03.06",
   );
 });
 
@@ -71,7 +71,7 @@ test("04", () => {
   equal(
     chompLeft("a\n  b c b c  x y", 12, { mode: "2" }, "b", "c"),
     2,
-    "04.06"
+    "04.06",
   );
 });
 
@@ -86,12 +86,12 @@ test("05", () => {
   equal(
     chompLeft("a\n  b c b c  x y", 12, { mode: "3" }, "b", "c"),
     1,
-    "05.06"
+    "05.06",
   );
   equal(
     chompLeft("a\n  b c b c  x y", 12, { mode: "3" }, "b", "c?"),
     1,
-    "05.07"
+    "05.07",
   );
 });
 
@@ -132,7 +132,7 @@ test("07", () => {
       chompLeft("a b c d  c dx", 2, { mode: "z" }, "k", "l");
     },
     /THROW_ID_01/,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -145,7 +145,7 @@ test("09", () => {
   equal(
     chompLeft("         b c   b  c   x y", 22, { mode: 2 }, "b", "c"),
     0,
-    "09.01"
+    "09.01",
   );
 });
 
@@ -153,12 +153,12 @@ test("10", () => {
   equal(
     chompLeft("a        b c   b  c   x y", 22, { mode: 2 }, "b", "c"),
     1,
-    "10.01"
+    "10.01",
   );
   equal(
     chompLeft("a        b c   b  c   x y", 22, { mode: 3 }, "b", "c"),
     1,
-    "10.02"
+    "10.02",
   );
 });
 
@@ -170,17 +170,17 @@ test("12", () => {
   equal(
     chompLeft("\t        b c   b  c   x y", 22, { mode: 0 }, "b", "c"),
     0,
-    "12.01"
+    "12.01",
   );
   equal(
     chompLeft("\t        b c   b  c   x y", 22, { mode: 2 }, "b", "c"),
     0,
-    "12.02"
+    "12.02",
   );
   equal(
     chompLeft("\t        b c   b  c   x y", 22, { mode: 3 }, "b", "c"),
     0,
-    "12.03"
+    "12.03",
   );
 });
 
@@ -188,17 +188,17 @@ test("13", () => {
   equal(
     chompLeft("a        b c   b  c   x y", 22, { mode: 0 }, "b", "c"),
     2,
-    "13.01"
+    "13.01",
   );
   equal(
     chompLeft("a        b c   b  c   x y", 22, { mode: 0 }, "b?", "c?"),
     2,
-    "13.02"
+    "13.02",
   );
   equal(
     chompLeft("a        b c   b  c   x y", 22, { mode: 0 }, "x?", "b", "c"),
     2,
-    "13.03"
+    "13.03",
   );
 });
 
@@ -242,22 +242,22 @@ test("15", () => {
   equal(
     chompLeft("<!!! ! ! ! ! ! ! ! ![CDATA[some stuff]]>", 20, "!"),
     1,
-    "15.01"
+    "15.01",
   );
   equal(
     chompLeft("<!!! ! ! ! ! ! ! ! ![CDATA[some stuff]]>", 19, "!"),
     1,
-    "15.02"
+    "15.02",
   );
   equal(
     chompLeft("<!!! ! ! ! ! ! ! ! ![CDATA[some stuff]]>", 18, "!"),
     1,
-    "15.03"
+    "15.03",
   );
   equal(
     chompLeft("<!!! ! ! ! ! ! ! ! ![CDATA[some stuff]]>", 17, "!"),
     1,
-    "15.04"
+    "15.04",
   );
 });
 
@@ -269,7 +269,7 @@ test("17", () => {
   equal(
     chompLeft("<  << <  << < !! !! ! ! [[[ [ [[  [ x", 36, "<*", "!*", "[*"),
     0,
-    "17.01"
+    "17.01",
   );
 });
 

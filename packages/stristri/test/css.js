@@ -13,7 +13,7 @@ test("01 - css rule", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -23,7 +23,7 @@ test("01 - css rule", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       ".red{color:red;}",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -33,7 +33,7 @@ test("01 - css rule", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "<style> </style>",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -43,7 +43,7 @@ test("01 - css rule", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       input,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -57,7 +57,7 @@ test("02 - at rule", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -67,7 +67,7 @@ test("02 - at rule", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "@media a {.b{c}}",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -77,7 +77,7 @@ test("02 - at rule", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "<style> </style>",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -87,7 +87,7 @@ test("02 - at rule", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       input,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -101,7 +101,7 @@ test("03 - css comment", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -111,7 +111,7 @@ test("03 - css comment", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "/* tralala */",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -121,7 +121,7 @@ test("03 - css comment", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "<style> </style>",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -131,7 +131,7 @@ test("03 - css comment", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       input,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -148,7 +148,7 @@ test("04 - css comment", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -159,7 +159,7 @@ test("04 - css comment", () => {
       stri(assert, n, input, opt).result,
       `@media a {.b{c}}
 /* tralala */`,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -171,7 +171,7 @@ test("04 - css comment", () => {
       `<style>
 
 </style>`,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -184,7 +184,7 @@ test("04 - css comment", () => {
 @media a {.b{c}}
 /* tralala */
 </style>`,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });

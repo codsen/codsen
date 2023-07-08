@@ -34,7 +34,7 @@ test("01 - mirrorred-character heads and tails", () => {
         tailEndsAt: 8,
       },
     ]),
-    "01.01"
+    "01.01",
   );
 });
 

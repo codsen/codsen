@@ -130,7 +130,7 @@ test("06 - both, used and unused", () => {
 </head>
 <body><br class="cd">
 </body>
-`
+`,
   ).result;
 
   let intended = `<head>
@@ -154,7 +154,7 @@ test("07 - both, used and unused", () => {
 </head>
 <body><br class="cd">
 </body>
-  `
+  `,
   ).result;
 
   let intended = `<head>
@@ -177,7 +177,7 @@ test("08 - both, used and unused", () => {
 </head>
 <body><br class="cd">
 </body>
-`
+`,
   ).result;
 
   let intended = `<head>
@@ -199,7 +199,7 @@ test("09 - mixed classes and non-classes", () => {
 </head>
 <body><a>z</a>
 </body>
-`
+`,
   ).result;
 
   let intended = `<head>
@@ -301,7 +301,7 @@ test("11 - removes classes and id's from HTML5 - uglifies", () => {
 </body>
 </html>
 `,
-    { uglify: true }
+    { uglify: true },
   ).result;
 
   let intended = `<!DOCTYPE html>
@@ -364,7 +364,7 @@ test("12 - deletes blank class/id attrs", () => {
     </table>
   </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!DOCTYPE html>
@@ -420,7 +420,7 @@ test("13 - class present in both head and body, but head has it joined with none
   </table>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!DOCTYPE html>
@@ -473,7 +473,7 @@ test("14 - multiple style tags recognised and transformed", () => {
 </table>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!DOCTYPE html>
@@ -539,7 +539,7 @@ test("15 - style tags are outside HEAD", () => {
 </table>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!DOCTYPE html>
@@ -577,7 +577,7 @@ color:  black;
 <body>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!doctype html>
@@ -618,7 +618,7 @@ test("17 - deletes multiple empty style tags", () => {
   </table>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!DOCTYPE html>
@@ -971,7 +971,7 @@ test("25 - issue no.2 - full", () => {
    <div class="banana">Banana</div>
 </body>
 </html>
-`
+`,
   ).result;
 
   let intended = `<!DOCTYPE html>
@@ -1340,7 +1340,7 @@ test("28 - separate style tags, wrapped with Outlook comments - part-used CSS", 
   equal(
     actualAllCommentsDeletedUglified,
     intendedAllCommentsDeletedUglified,
-    "28.04"
+    "28.04",
   );
 
   // comment removal off:
@@ -1374,7 +1374,7 @@ u+.a .jb{uvw}
 <body>
 <u><a class="a"><i class="klm">x</i></a></u>
 <u><a class="a"><i class="zb">y</i></a></u>
-<u><a class="a"><i class="jb">z</i></a></u>`
+<u><a class="a"><i class="jb">z</i></a></u>`,
   ).result;
   let intended1 = `<style>
 [owa] .klm,
@@ -1405,7 +1405,7 @@ height: {{ abc.de_fg | hi_jk: 10 }};
 <table class="unused-4 used-1">
 <tr>
 <td class="unused-5 unused-6">
-text`
+text`,
   ).result;
   let intended1 = `<style>
 .used-1 {

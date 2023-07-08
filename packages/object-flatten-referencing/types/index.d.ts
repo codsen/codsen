@@ -23,14 +23,14 @@ declare function flattenArr(
   arr: any[],
   opts?: Partial<Opts>,
   wrap?: boolean,
-  joinArraysUsingBrs?: boolean
+  joinArraysUsingBrs?: boolean,
 ): string;
 
 declare const version: string;
 declare function flattenReferencing(
   input: JSONValue,
   reference: JSONValue,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): any;
 
 export {

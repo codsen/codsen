@@ -17,7 +17,7 @@ test("01 - three properties two overrides", () => {
       { a: true, b: true, c: false },
       { a: true, b: true, c: true },
     ],
-    "01.01"
+    "01.01",
   );
   equal(
     combinations({ a: false, b: false, c: false }, { a: "z", b: "y" }),
@@ -25,7 +25,7 @@ test("01 - three properties two overrides", () => {
       { a: "z", b: "y", c: false },
       { a: "z", b: "y", c: true },
     ],
-    "01.02"
+    "01.02",
   );
   equal(
     combinations({ a: false, b: false, c: false }, { a: null, b: null }),
@@ -33,7 +33,7 @@ test("01 - three properties two overrides", () => {
       { a: null, b: null, c: false },
       { a: null, b: null, c: true },
     ],
-    "01.03"
+    "01.03",
   );
   equal(
     combinations({ a: false, b: false, c: false }, { a: ["x"], b: ["y"] }),
@@ -41,7 +41,7 @@ test("01 - three properties two overrides", () => {
       { a: ["x"], b: ["y"], c: false },
       { a: ["x"], b: ["y"], c: true },
     ],
-    "01.04"
+    "01.04",
   );
 });
 
@@ -54,7 +54,7 @@ test("02 - four properties three overrides", () => {
         c: false,
         d: false,
       },
-      { a: true, b: true, c: true }
+      { a: true, b: true, c: true },
     ),
     [
       {
@@ -70,7 +70,7 @@ test("02 - four properties three overrides", () => {
         c: true,
       },
     ],
-    "02.01"
+    "02.01",
   );
 });
 
@@ -89,7 +89,7 @@ test("03 - empty override object", () => {
       { a: false, b: true, c: true },
       { a: true, b: true, c: true },
     ],
-    "03.01"
+    "03.01",
   );
 });
 

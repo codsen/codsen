@@ -49,7 +49,7 @@
     "cjs-on": "exit 0",
     "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
     "devtest": "c8 npm run unit && npm run examples && npm run lint",
-    "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --loglevel 'silent'",
+    "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
     "examples": "node '../../ops/scripts/run-examples.js'",
     "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
     "letspublish": "npm publish || :",
@@ -57,7 +57,7 @@
     "perf": "node perf/check.js",
     "prep": "echo 'ready'",
     "prettier": "prettier",
-    "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --loglevel 'silent'",
+    "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
     "pretest": "npm run lect && npm run build",
     "test": "npm run devtest",
     "unit": "uvu test"

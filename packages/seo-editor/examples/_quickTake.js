@@ -16,7 +16,7 @@ const { todoLines, todoTotal, completion, chunkWordCounts } = editor(
 `,
   `
 I ate a banana and a cucumber.
-  `
+  `,
 );
 assert.deepEqual(
   { todoLines, todoTotal, completion, chunkWordCounts },
@@ -36,5 +36,5 @@ assert.deepEqual(
     todoTotal: 3,
     completion: [2],
     chunkWordCounts: [7],
-  }
+  },
 );

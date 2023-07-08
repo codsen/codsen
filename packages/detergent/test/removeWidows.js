@@ -27,7 +27,7 @@ test("01 - minimal samples", () => {
       convertEntities: true,
     }).res,
     "aaa bbb ccc&nbsp;ddd",
-    "01.01"
+    "01.01",
   );
 });
 
@@ -39,7 +39,7 @@ test("02 - ETX processed twice, 2nd time during widow removal", () => {
       removeLineBreaks: true,
     }).res,
     "aaa bbb ccc&nbsp;ddd",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -54,12 +54,12 @@ test(`03 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - four chunks of tex
     equal(
       det(ok, not, n, "aaa bbb ccc ddd", opt).res,
       "aaa bbb ccc&nbsp;ddd",
-      "03.01"
+      "03.01",
     );
     equal(
       det(ok, not, n, "aaa bbb ccc ddd.", opt).res,
       "aaa bbb ccc&nbsp;ddd.",
-      "03.02"
+      "03.02",
     );
   });
 });
@@ -72,12 +72,12 @@ test(`04 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - four chunks of tex
     equal(
       det(ok, not, n, "aaa bbb ccc ddd", opt).res,
       `aaa bbb ccc${rawNbsp}ddd`,
-      "04.01"
+      "04.01",
     );
     equal(
       det(ok, not, n, "aaa bbb ccc ddd.", opt).res,
       `aaa bbb ccc${rawNbsp}ddd.`,
-      "04.02"
+      "04.02",
     );
   });
 });
@@ -89,12 +89,12 @@ test(`05 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - four chunks of tex
     equal(
       det(ok, not, n, "aaa bbb ccc ddd", opt).res,
       "aaa bbb ccc ddd",
-      "05.01"
+      "05.01",
     );
     equal(
       det(ok, not, n, "aaa bbb ccc ddd.", opt).res,
       "aaa bbb ccc ddd.",
-      "05.02"
+      "05.02",
     );
   });
 });
@@ -110,7 +110,7 @@ test(`06 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - with line breaks -
     equal(
       det(ok, not, n, "aaa bbb ccc ddd\n\neee fff ggg hhh", opt).res,
       "aaa bbb ccc&nbsp;ddd<br/>\n<br/>\neee fff ggg&nbsp;hhh",
-      "06.01"
+      "06.01",
     );
   });
 });
@@ -126,7 +126,7 @@ test(`07 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - with line breaks -
     equal(
       det(ok, not, n, "aaa bbb ccc ddd\n\neee fff ggg hhh", opt).res,
       "aaa bbb ccc&nbsp;ddd<br>\n<br>\neee fff ggg&nbsp;hhh",
-      "07.01"
+      "07.01",
     );
   });
 });
@@ -141,7 +141,7 @@ test(`08 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - with line breaks -
     equal(
       det(ok, not, n, "aaa bbb ccc ddd\n\neee fff ggg hhh", opt).res,
       "aaa bbb ccc&nbsp;ddd\n\neee fff ggg&nbsp;hhh",
-      "08.01"
+      "08.01",
     );
   });
 });
@@ -156,7 +156,7 @@ test(`09 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - with line breaks -
     equal(
       det(ok, not, n, "aaa bbb ccc ddd\n\neee fff ggg hhh", opt).res,
       `aaa bbb ccc${rawNbsp}ddd\n\neee fff ggg${rawNbsp}hhh`,
-      "09.01"
+      "09.01",
     );
   });
 });
@@ -171,12 +171,12 @@ test(`10 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - with line breaks -
     equal(
       det(ok, not, n, "aaa bbb ccc ddd\neee fff ggg hhh.", opt).res,
       "aaa bbb ccc&nbsp;ddd\neee fff ggg&nbsp;hhh.",
-      "10.01"
+      "10.01",
     );
     equal(
       det(ok, not, n, "aaa bbb ccc ddd.\neee fff ggg hhh.", opt).res,
       "aaa bbb ccc&nbsp;ddd.\neee fff ggg&nbsp;hhh.",
-      "10.02"
+      "10.02",
     );
   });
 });
@@ -192,7 +192,7 @@ test(`11 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - with trailing whit
     equal(
       det(ok, not, n, "aaa bbb ccc ddd. \n\neee fff ggg hhh", opt).res,
       "aaa bbb ccc&nbsp;ddd.<br>\n<br>\neee fff ggg&nbsp;hhh",
-      "11.01"
+      "11.01",
     );
   });
 });
@@ -205,7 +205,7 @@ test(`12 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - glues UK postcodes
     equal(
       det(ok, not, n, "Some text SW1A 1AA and some more text.", opt).res,
       "Some text SW1A&nbsp;1AA and some more&nbsp;text.",
-      "12.01"
+      "12.01",
     );
     equal(
       det(
@@ -213,10 +213,10 @@ test(`12 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - glues UK postcodes
         not,
         n,
         "Some text SW1A 1AA and some more text SW1A 1AA and some more text.",
-        opt
+        opt,
       ).res,
       "Some text SW1A&nbsp;1AA and some more text SW1A&nbsp;1AA and some more&nbsp;text.",
-      "12.02"
+      "12.02",
     );
     equal(
       det(
@@ -224,10 +224,10 @@ test(`12 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - glues UK postcodes
         not,
         n,
         "This very long line of text ends with a postcode SW1A 1AA.",
-        opt
+        opt,
       ).res,
       "This very long line of text ends with a postcode SW1A&nbsp;1AA.",
-      "12.03"
+      "12.03",
     );
     equal(
       det(
@@ -235,10 +235,10 @@ test(`12 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - glues UK postcodes
         not,
         n,
         "this very long line of text ends with a postcode SW1A 1AA",
-        opt
+        opt,
       ).res,
       "this very long line of text ends with a postcode SW1A&nbsp;1AA",
-      "12.04"
+      "12.04",
     );
     equal(
       det(
@@ -246,15 +246,15 @@ test(`12 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - glues UK postcodes
         not,
         n,
         "🦄 some text text text SW1A 1AA more text text text 🦄 aaa",
-        opt
+        opt,
       ).res,
       "&#x1F984; some text text text SW1A&nbsp;1AA more text text text &#x1F984;&nbsp;aaa",
-      "12.05"
+      "12.05",
     );
     equal(
       det(ok, not, n, "Some text SW1A 1Aa and some more text.", opt).res,
       "Some text SW1A 1Aa and some more&nbsp;text.",
-      "12.06"
+      "12.06",
     );
   });
 });
@@ -267,7 +267,7 @@ test(`13 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - glues UK postcodes
     equal(
       det(ok, not, n, "Some text SW1A 1AA and some more text.", opt).res,
       `Some text SW1A${rawNbsp}1AA and some more${rawNbsp}text.`,
-      "13.01"
+      "13.01",
     );
     equal(
       det(
@@ -275,10 +275,10 @@ test(`13 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - glues UK postcodes
         not,
         n,
         "Some text SW1A 1AA and some more text SW1A 1AA and some more text.",
-        opt
+        opt,
       ).res,
       `Some text SW1A${rawNbsp}1AA and some more text SW1A${rawNbsp}1AA and some more${rawNbsp}text.`,
-      "13.02"
+      "13.02",
     );
     equal(
       det(
@@ -286,10 +286,10 @@ test(`13 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - glues UK postcodes
         not,
         n,
         "This very long line of text ends with a postcode SW1A 1AA.",
-        opt
+        opt,
       ).res,
       `This very long line of text ends with a postcode SW1A${rawNbsp}1AA.`,
-      "13.03"
+      "13.03",
     );
     equal(
       det(
@@ -297,10 +297,10 @@ test(`13 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - glues UK postcodes
         not,
         n,
         "this very long line of text ends with a postcode SW1A 1AA",
-        opt
+        opt,
       ).res,
       `this very long line of text ends with a postcode SW1A${rawNbsp}1AA`,
-      "13.04"
+      "13.04",
     );
     equal(
       det(
@@ -308,15 +308,15 @@ test(`13 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - glues UK postcodes
         not,
         n,
         "🦄 some text text text SW1A 1AA more text text text 🦄 aaa",
-        opt
+        opt,
       ).res,
       `🦄 some text text text SW1A${rawNbsp}1AA more text text text 🦄${rawNbsp}aaa`,
-      "13.05"
+      "13.05",
     );
     equal(
       det(ok, not, n, "Some text SW1A 1Aa and some more text.", opt).res,
       `Some text SW1A 1Aa and some more${rawNbsp}text.`,
-      "13.06"
+      "13.06",
     );
   });
 });
@@ -329,7 +329,7 @@ test(`14 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - glues UK postcodes
     equal(
       det(ok, not, n, "Some text SW1A 1AA and some more text.", opt).res,
       "Some text SW1A 1AA and some more text.",
-      "14.01"
+      "14.01",
     );
     equal(
       det(
@@ -337,10 +337,10 @@ test(`14 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - glues UK postcodes
         not,
         n,
         "Some text SW1A 1AA and some more text SW1A 1AA and some more text.",
-        opt
+        opt,
       ).res,
       "Some text SW1A 1AA and some more text SW1A 1AA and some more text.",
-      "14.02"
+      "14.02",
     );
     equal(
       det(
@@ -348,10 +348,10 @@ test(`14 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - glues UK postcodes
         not,
         n,
         "This very long line of text ends with a postcode SW1A 1AA.",
-        opt
+        opt,
       ).res,
       "This very long line of text ends with a postcode SW1A 1AA.",
-      "14.03"
+      "14.03",
     );
     equal(
       det(
@@ -359,10 +359,10 @@ test(`14 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - glues UK postcodes
         not,
         n,
         "this very long line of text ends with a postcode SW1A 1AA",
-        opt
+        opt,
       ).res,
       "this very long line of text ends with a postcode SW1A 1AA",
-      "14.04"
+      "14.04",
     );
     equal(
       det(
@@ -370,15 +370,15 @@ test(`14 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - glues UK postcodes
         not,
         n,
         "🦄 some text text text SW1A 1AA more text text text 🦄 aaa",
-        opt
+        opt,
       ).res,
       "🦄 some text text text SW1A 1AA more text text text 🦄 aaa",
-      "14.05"
+      "14.05",
     );
     equal(
       det(ok, not, n, "Some text SW1A 1Aa and some more text.", opt).res,
       "Some text SW1A 1Aa and some more text.",
-      "14.06"
+      "14.06",
     );
   });
 });
@@ -391,10 +391,10 @@ test(`15 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - nbsp's not added w
         not,
         n,
         "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        opt
+        opt,
       ).res,
       "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "15.01"
+      "15.01",
     );
   });
 });
@@ -407,10 +407,10 @@ test(`16 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - nbsp's not added w
         not,
         n,
         "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        opt
+        opt,
       ).res,
       "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1br @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "16.01"
+      "16.01",
     );
   });
 });
@@ -423,10 +423,10 @@ test(`17 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - nbsp's not added w
         not,
         n,
         "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        opt
+        opt,
       ).res,
       "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr /@@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "17.01"
+      "17.01",
     );
   });
 });
@@ -439,10 +439,10 @@ test(`18 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - nbsp's not added w
         not,
         n,
         "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        opt
+        opt,
       ).res,
       "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "18.01"
+      "18.01",
     );
   });
 });
@@ -452,23 +452,23 @@ test(`19 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - widow removal dete
     equal(
       det(ok, not, n, "{% if something %}", opt).res,
       "{% if something %}",
-      "19.01"
+      "19.01",
     );
     equal(
       det(ok, not, n, "{%- if something -%}", opt).res,
       "{%- if something -%}",
-      "19.02"
+      "19.02",
     );
     equal(
       det(ok, not, n, "{{ something }}", opt).res,
       "{{ something }}",
-      "19.03"
+      "19.03",
     );
     equal(
       det(ok, not, n, "{% if something else and also another thing %}", opt)
         .res,
       "{% if something else and also another thing %}",
-      "19.04"
+      "19.04",
     );
   });
 });
@@ -481,7 +481,7 @@ test(`20 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - widows and dashes 
     equal(
       det(ok, not, n, "AA Some text And Some Text - 9999", opt).res,
       "AA Some text And Some Text - 9999",
-      "20.01"
+      "20.01",
     );
   });
 });
@@ -495,7 +495,7 @@ test(`21 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - widows and dashes 
     equal(
       det(ok, not, n, "AA Some text And Some Text - 9999", opt).res,
       "AA Some text And Some Text&nbsp;&mdash;&nbsp;9999",
-      "21.01"
+      "21.01",
     );
   });
 });
@@ -509,7 +509,7 @@ test(`22 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - widows and dashes 
     equal(
       det(ok, not, n, "AA Some text And Some Text - 9999", opt).res,
       `AA Some text And Some Text${rawNbsp}\u2014${rawNbsp}9999`,
-      "22.01"
+      "22.01",
     );
   });
 });
@@ -523,7 +523,7 @@ test(`23 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - widows and dashes 
     equal(
       det(ok, not, n, "AA Some text And Some Text - 9999", opt).res,
       "AA Some text And Some Text &mdash; 9999",
-      "23.01"
+      "23.01",
     );
   });
 });
@@ -537,7 +537,7 @@ test(`24 - \u001b[${35}m${"opts.removeWidows"}\u001b[${39}m - widows and dashes 
     equal(
       det(ok, not, n, "AA Some text And Some Text - 9999", opt).res,
       "AA Some text And Some Text \u2014 9999",
-      "24.01"
+      "24.01",
     );
   });
 });
@@ -554,7 +554,7 @@ test(`25 - \u001b[${35}m${"HTML tags"}\u001b[${39}m - tag in the end`, () => {
     equal(
       det(ok, not, n, 'a a<a something="whatever" and="here">', opt).res,
       'a a<a something="whatever" and="here">',
-      "25.01"
+      "25.01",
     );
   });
 });
@@ -568,7 +568,7 @@ test(`26 - \u001b[${35}m${"HTML tags"}\u001b[${39}m - tag in the end`, () => {
     equal(
       det(ok, not, n, 'a a <a something="whatever" and="here">', opt).res,
       'a a <a something="whatever" and="here">',
-      "26.01"
+      "26.01",
     );
   });
 });
@@ -582,7 +582,7 @@ test(`27 - \u001b[${35}m${"HTML tags"}\u001b[${39}m - tag in the end`, () => {
     equal(
       det(ok, not, n, 'a a a<a something="whatever" and="here">', opt).res,
       'a a a<a something="whatever" and="here">',
-      "27.01"
+      "27.01",
     );
   });
 });
@@ -596,7 +596,7 @@ test(`28 - \u001b[${35}m${"HTML tags"}\u001b[${39}m - tag in the end`, () => {
     equal(
       det(ok, not, n, 'a a a <a something="whatever" and="here">', opt).res,
       'a a a <a something="whatever" and="here">',
-      "28.01"
+      "28.01",
     );
   });
 });
@@ -610,7 +610,7 @@ test(`29 - \u001b[${35}m${"HTML tags"}\u001b[${39}m - tag in the end`, () => {
     equal(
       det(ok, not, n, 'a a a a<a something="whatever" and="here">', opt).res,
       'a a a&nbsp;a<a something="whatever" and="here">',
-      "29.01"
+      "29.01",
     );
   });
 });
@@ -624,7 +624,7 @@ test(`30 - \u001b[${35}m${"HTML tags"}\u001b[${39}m - tag in the end`, () => {
     equal(
       det(ok, not, n, 'a a a a <a something="whatever" and="here">', opt).res,
       'a a a a&nbsp;<a something="whatever" and="here">',
-      "30.01"
+      "30.01",
     );
   });
 });
@@ -637,7 +637,7 @@ test("31", () => {
       det(ok, not, n, "The quick brown&nbsp;fox. What an amazing animal!", opt)
         .res,
       "The quick brown fox. What an amazing animal!",
-      "31.01"
+      "31.01",
     );
   });
 });
@@ -652,10 +652,10 @@ test("32", () => {
         not,
         n,
         "The quick brown&nbsp;fox. What an amazing&nbsp;animal!",
-        opt
+        opt,
       ).res,
       "The quick brown fox. What an amazing animal!",
-      "32.01"
+      "32.01",
     );
   });
 });

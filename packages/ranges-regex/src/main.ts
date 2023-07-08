@@ -9,20 +9,20 @@ const version: string = v;
 function rRegex(
   regExp: RegExp,
   str: string,
-  replacement?: string | null | undefined
+  replacement?: string | null | undefined,
 ): Ranges {
   // given regx validation
   if (regExp === undefined) {
     throw new TypeError(
-      `ranges-regex: [THROW_ID_01] The first input's argument must be a regex object! Currently it is missing!`
+      `ranges-regex: [THROW_ID_01] The first input's argument must be a regex object! Currently it is missing!`,
     );
   } else if (!isRegExp(regExp)) {
     throw new TypeError(
       `ranges-regex: [THROW_ID_02] The first input's argument must be a regex object! Currently its type is: ${typeof regExp}, equal to: ${JSON.stringify(
         regExp,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   // str validation
@@ -31,8 +31,8 @@ function rRegex(
       `ranges-regex: [THROW_ID_03] The second input's argument must be a string! Currently its type is: ${typeof str}, equal to: ${JSON.stringify(
         str,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   // replacement validation
@@ -41,8 +41,8 @@ function rRegex(
       `ranges-regex: [THROW_ID_04] The third input's argument must be a string or null! Currently its type is: ${typeof replacement}, equal to: ${JSON.stringify(
         replacement,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   // if an empty string was given, return an empty (ranges) array:

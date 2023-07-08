@@ -22,10 +22,10 @@ test("01 - real-life code", () => {
   </tr>
 </table>
 </body>
-</html>`
+</html>`,
     ),
     "xhtml",
-    "01.01"
+    "01.01",
   );
 });
 

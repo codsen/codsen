@@ -35,21 +35,21 @@ const defaults: Opts = {
 function deleteObj<T extends JsonValue>(
   input: T,
   objToDelete: JsonObject,
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): T {
   if (!input) {
     throw new Error(
-      "ast-delete-object/deleteObj(): [THROW_ID_01] Missing resolvedInput!"
+      "ast-delete-object/deleteObj(): [THROW_ID_01] Missing resolvedInput!",
     );
   }
   if (!objToDelete) {
     throw new Error(
-      "ast-delete-object/deleteObj(): [THROW_ID_02] Missing second argument, object to search for and delete!"
+      "ast-delete-object/deleteObj(): [THROW_ID_02] Missing second argument, object to search for and delete!",
     );
   }
   if (opts && !isObj(opts)) {
     throw new Error(
-      "ast-delete-object/deleteObj(): [THROW_ID_03] Third argument, options object, must be an object!"
+      "ast-delete-object/deleteObj(): [THROW_ID_03] Third argument, options object, must be an object!",
     );
   }
 
@@ -94,7 +94,7 @@ function deleteObj<T extends JsonValue>(
         }
       }
       return current;
-    }
+    },
   );
   return resolvedInput;
 }

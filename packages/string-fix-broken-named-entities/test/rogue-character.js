@@ -17,7 +17,7 @@ test(`01 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - in front of sem
       },
     }),
     [[0, 8, "&pound;"]],
-    "01.02"
+    "01.02",
   );
   equal(gathered, [], "01.03");
 });
@@ -34,7 +34,7 @@ test(`02 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - in front of sem
       },
     }),
     [[0, 8, "\xA3"]],
-    "02.02"
+    "02.02",
   );
   equal(gathered, [], "02.03");
 });
@@ -51,7 +51,7 @@ test(`03 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - no semi - no de
       },
     }),
     [],
-    "03.02"
+    "03.02",
   );
   equal(
     fix(ok, "&puvaaa", {
@@ -59,7 +59,7 @@ test(`03 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - no semi - no de
       textAmpersandCatcherCb: () => {},
     }),
     [],
-    "03.03"
+    "03.03",
   );
   equal(gathered, [0], "03.04");
 });
@@ -76,7 +76,7 @@ test(`04 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - with semi - no 
       },
     }),
     [[0, 5, "&piv;"]],
-    "04.02"
+    "04.02",
   );
   equal(gathered, [], "04.03");
 });
@@ -95,7 +95,7 @@ test(`05 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - with semi - no 
       },
     }),
     [[0, 7, "&nbsp;"]],
-    "05.02"
+    "05.02",
   );
   equal(gathered, [], "05.03");
 });
@@ -104,7 +104,7 @@ test(`06 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - with semi - no 
   equal(
     fix(ok, "&bigtrianglesup;aaa", { decode: false }),
     [[0, 16, "&bigtriangleup;"]],
-    "06.01"
+    "06.01",
   );
 
   let gathered = [];
@@ -116,7 +116,7 @@ test(`06 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - with semi - no 
       },
     }),
     [[0, 16, "&bigtriangleup;"]],
-    "06.02"
+    "06.02",
   );
   equal(gathered, [], "06.03");
 });
@@ -135,7 +135,7 @@ test(`07 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - with semi - no 
       },
     }),
     [[0, 6, "&nbsp;"]],
-    "07.02"
+    "07.02",
   );
   equal(gathered, [], "07.03");
 });
@@ -144,7 +144,7 @@ test(`08 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - with semi - no 
   equal(
     fix(ok, "&bigtrangleup;aaa", { decode: false }),
     [[0, 14, "&bigtriangleup;"]],
-    "08.01"
+    "08.01",
   );
 
   let gathered = [];
@@ -156,7 +156,7 @@ test(`08 - ${`\u001b[${36}m${"rogue character"}\u001b[${39}m`} - with semi - no 
       },
     }),
     [[0, 14, "&bigtriangleup;"]],
-    "08.02"
+    "08.02",
   );
   equal(gathered, [], "08.03");
 });

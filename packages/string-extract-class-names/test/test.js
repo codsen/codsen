@@ -24,7 +24,7 @@ test("02 - tag with two classes", () => {
         [15, 28],
       ],
     },
-    "02.01"
+    "02.01",
   );
 });
 
@@ -32,17 +32,17 @@ test("03 - class: class within tag", () => {
   equal(
     e("div .class-name"),
     { res: [".class-name"], ranges: [[4, 15]] },
-    "03.01"
+    "03.01",
   );
   equal(
     e("div .class-name "),
     { res: [".class-name"], ranges: [[4, 15]] },
-    "03.02"
+    "03.02",
   );
   equal(
     e("div       .class-name        "),
     { res: [".class-name"], ranges: [[10, 21]] },
-    "03.03"
+    "03.03",
   );
   equal(
     e("div       .first-class.second-class        "),
@@ -53,7 +53,7 @@ test("03 - class: class within tag", () => {
         [22, 35],
       ],
     },
-    "03.04"
+    "03.04",
   );
 });
 
@@ -61,7 +61,7 @@ test("04 - class: class within tag's child tag", () => {
   equal(
     e("div .class-name a"),
     { res: [".class-name"], ranges: [[4, 15]] },
-    "04.01"
+    "04.01",
   );
   equal(
     e("div .first-class.second-class a"),
@@ -72,17 +72,17 @@ test("04 - class: class within tag's child tag", () => {
         [16, 29],
       ],
     },
-    "04.02"
+    "04.02",
   );
 });
 
 test("05 - class: more, sandwitched", () => {
   equal(
     e(
-      "div~!@$%^&*()+=,/';:\"?><[]{}|`.class-name~!@$%^&*()+=,/';:\"?><[]{}|`#"
+      "div~!@$%^&*()+=,/';:\"?><[]{}|`.class-name~!@$%^&*()+=,/';:\"?><[]{}|`#",
     ),
     { res: [".class-name"], ranges: [[30, 41]] },
-    "05.01"
+    "05.01",
   );
 });
 
@@ -90,22 +90,22 @@ test("06 - class: exclamation mark", () => {
   equal(
     e("div .class-name!a"),
     { res: [".class-name"], ranges: [[4, 15]] },
-    "06.01"
+    "06.01",
   );
   equal(
     e("div.class-name!a"),
     { res: [".class-name"], ranges: [[3, 14]] },
-    "06.02"
+    "06.02",
   );
   equal(
     e(".class-name!a"),
     { res: [".class-name"], ranges: [[0, 11]] },
-    "06.03"
+    "06.03",
   );
   equal(
     e("!.class-name!a"),
     { res: [".class-name"], ranges: [[1, 12]] },
-    "06.04"
+    "06.04",
   );
   equal(
     e("!.first-class.second-class!a"),
@@ -116,7 +116,7 @@ test("06 - class: exclamation mark", () => {
         [13, 26],
       ],
     },
-    "06.05"
+    "06.05",
   );
 });
 
@@ -124,22 +124,22 @@ test("07 - class: ampersand", () => {
   equal(
     e("div .class-name&a"),
     { res: [".class-name"], ranges: [[4, 15]] },
-    "07.01"
+    "07.01",
   );
   equal(
     e("div.class-name&a"),
     { res: [".class-name"], ranges: [[3, 14]] },
-    "07.02"
+    "07.02",
   );
   equal(
     e(".class-name&a"),
     { res: [".class-name"], ranges: [[0, 11]] },
-    "07.03"
+    "07.03",
   );
   equal(
     e("&.class-name&a"),
     { res: [".class-name"], ranges: [[1, 12]] },
-    "07.04"
+    "07.04",
   );
   equal(
     e("&.first-class.second-class&a"),
@@ -150,7 +150,7 @@ test("07 - class: ampersand", () => {
         [13, 26],
       ],
     },
-    "07.05"
+    "07.05",
   );
 });
 
@@ -158,27 +158,27 @@ test("08 - class: dollar", () => {
   equal(
     e("div .class-name$a"),
     { res: [".class-name"], ranges: [[4, 15]] },
-    "08.01"
+    "08.01",
   );
   equal(
     e("div.class-name$a"),
     { res: [".class-name"], ranges: [[3, 14]] },
-    "08.02"
+    "08.02",
   );
   equal(
     e(".class-name$a"),
     { res: [".class-name"], ranges: [[0, 11]] },
-    "08.03"
+    "08.03",
   );
   equal(
     e("$.class-name$a"),
     { res: [".class-name"], ranges: [[1, 12]] },
-    "08.04"
+    "08.04",
   );
   equal(
     e("a[title~=name] .class-name$a"),
     { res: [".class-name"], ranges: [[15, 26]] },
-    "08.05"
+    "08.05",
   );
   equal(
     e("a[title~=name] .first-class.second-class$a"),
@@ -189,7 +189,7 @@ test("08 - class: dollar", () => {
         [27, 40],
       ],
     },
-    "08.06"
+    "08.06",
   );
 });
 
@@ -197,27 +197,27 @@ test("09 - class: percentage", () => {
   equal(
     e("div .class-name%a"),
     { res: [".class-name"], ranges: [[4, 15]] },
-    "09.01"
+    "09.01",
   );
   equal(
     e("div.class-name%a"),
     { res: [".class-name"], ranges: [[3, 14]] },
-    "09.02"
+    "09.02",
   );
   equal(
     e(".class-name%a"),
     { res: [".class-name"], ranges: [[0, 11]] },
-    "09.03"
+    "09.03",
   );
   equal(
     e("%.class-name%a"),
     { res: [".class-name"], ranges: [[1, 12]] },
-    "09.04"
+    "09.04",
   );
   equal(
     e("[%~class-name] .class-name%a"),
     { res: [".class-name"], ranges: [[15, 26]] },
-    "09.05"
+    "09.05",
   );
   equal(
     e("[%~class-name] .first-class.second-class%a"),
@@ -228,7 +228,7 @@ test("09 - class: percentage", () => {
         [27, 40],
       ],
     },
-    "09.06"
+    "09.06",
   );
 });
 
@@ -236,7 +236,7 @@ test("10 - class: circumflex", () => {
   equal(
     e('a.class-name[href^="https"]'),
     { res: [".class-name"], ranges: [[1, 12]] },
-    "10.01"
+    "10.01",
   );
   equal(
     e('a.first-class.second-class[href^="https"]'),
@@ -247,7 +247,7 @@ test("10 - class: circumflex", () => {
         [13, 26],
       ],
     },
-    "10.02"
+    "10.02",
   );
 });
 
@@ -255,7 +255,7 @@ test("11 - class: ampersand", () => {
   equal(
     e(".class-name &"),
     { res: [".class-name"], ranges: [[0, 11]] },
-    "11.01"
+    "11.01",
   );
   equal(
     e(".first-class.second-class &"),
@@ -266,7 +266,7 @@ test("11 - class: ampersand", () => {
         [12, 25],
       ],
     },
-    "11.02"
+    "11.02",
   );
 });
 
@@ -274,12 +274,12 @@ test("12 - class: asterisk", () => {
   equal(
     e(".class-name *"),
     { res: [".class-name"], ranges: [[0, 11]] },
-    "12.01"
+    "12.01",
   );
   equal(
     e("*.class-name *"),
     { res: [".class-name"], ranges: [[1, 12]] },
-    "12.02"
+    "12.02",
   );
   equal(
     e("*.first-class.second-class*"),
@@ -290,7 +290,7 @@ test("12 - class: asterisk", () => {
         [13, 26],
       ],
     },
-    "12.03"
+    "12.03",
   );
 });
 
@@ -298,7 +298,7 @@ test("13 - class: brackets", () => {
   equal(
     e("p.class-name:lang(it)"),
     { res: [".class-name"], ranges: [[1, 12]] },
-    "13.01"
+    "13.01",
   );
   equal(
     e("p.class-name:lang(it) p.class-name-other:lang(en)"),
@@ -309,7 +309,7 @@ test("13 - class: brackets", () => {
         [23, 40],
       ],
     },
-    "13.02"
+    "13.02",
   );
   equal(
     e(":.first-class.second-class:"),
@@ -320,7 +320,7 @@ test("13 - class: brackets", () => {
         [13, 26],
       ],
     },
-    "13.03"
+    "13.03",
   );
 });
 
@@ -328,12 +328,12 @@ test("14 - class: plus", () => {
   equal(
     e("div.class-name + p"),
     { res: [".class-name"], ranges: [[3, 14]] },
-    "14.01"
+    "14.01",
   );
   equal(
     e("div.class-name+p"),
     { res: [".class-name"], ranges: [[3, 14]] },
-    "14.02"
+    "14.02",
   );
   equal(
     e("+.first-class.second-class+"),
@@ -344,7 +344,7 @@ test("14 - class: plus", () => {
         [13, 26],
       ],
     },
-    "14.03"
+    "14.03",
   );
 });
 
@@ -352,12 +352,12 @@ test("15 - class: equals", () => {
   equal(
     e('a.class-name[href*="npmjs"], ranges: }'),
     { res: [".class-name"], ranges: [[1, 12]] },
-    "15.01"
+    "15.01",
   );
   equal(
     e('a.class-name [href *= "npmjs"], ranges: }'),
     { res: [".class-name"], ranges: [[1, 12]] },
-    "15.02"
+    "15.02",
   );
   equal(
     e("=.first-class.second-class="),
@@ -368,7 +368,7 @@ test("15 - class: equals", () => {
         [13, 26],
       ],
     },
-    "15.03"
+    "15.03",
   );
 });
 
@@ -382,7 +382,7 @@ test("16 - class: colon", () => {
         [13, 30],
       ],
     },
-    "16.01"
+    "16.01",
   );
   equal(
     e(".class-name,.class-name-other"),
@@ -393,7 +393,7 @@ test("16 - class: colon", () => {
         [12, 29],
       ],
     },
-    "16.02"
+    "16.02",
   );
   equal(
     e(",.first-class.second-class,"),
@@ -404,7 +404,7 @@ test("16 - class: colon", () => {
         [13, 26],
       ],
     },
-    "16.03"
+    "16.03",
   );
 });
 
@@ -412,12 +412,12 @@ test("17 - class: right slash", () => {
   equal(
     e(".class-name/class-name-other"),
     { res: [".class-name"], ranges: [[0, 11]] },
-    "17.01"
+    "17.01",
   );
   equal(
     e(".class-name /class-name-other"),
     { res: [".class-name"], ranges: [[0, 11]] },
-    "17.02"
+    "17.02",
   );
   equal(
     e("/.first-class.second-class/"),
@@ -428,7 +428,7 @@ test("17 - class: right slash", () => {
         [13, 26],
       ],
     },
-    "17.03"
+    "17.03",
   );
 });
 
@@ -436,12 +436,12 @@ test("18 - class: apostrophe", () => {
   equal(
     e(".class-name'"),
     { res: [".class-name"], ranges: [[0, 11]] },
-    "18.01"
+    "18.01",
   );
   equal(
     e("'.class-name"),
     { res: [".class-name"], ranges: [[1, 12]] },
-    "18.02"
+    "18.02",
   );
   equal(
     e("'.first-class.second-class'"),
@@ -452,7 +452,7 @@ test("18 - class: apostrophe", () => {
         [13, 26],
       ],
     },
-    "18.03"
+    "18.03",
   );
 });
 
@@ -466,7 +466,7 @@ test("19 - class: semicolon", () => {
         [14, 27],
       ],
     },
-    "19.01"
+    "19.01",
   );
   equal(
     e(".class-name-1;.class-name-2"),
@@ -477,7 +477,7 @@ test("19 - class: semicolon", () => {
         [14, 27],
       ],
     },
-    "19.02"
+    "19.02",
   );
   equal(
     e(";.class-name-1;.class-name-2;"),
@@ -488,7 +488,7 @@ test("19 - class: semicolon", () => {
         [15, 28],
       ],
     },
-    "19.03"
+    "19.03",
   );
   equal(
     e(";.first-class.second-class;"),
@@ -499,7 +499,7 @@ test("19 - class: semicolon", () => {
         [13, 26],
       ],
     },
-    "19.04"
+    "19.04",
   );
 });
 
@@ -507,19 +507,19 @@ test("20 - class: colon", () => {
   equal(
     e("input.class-name:read-only"),
     { res: [".class-name"], ranges: [[5, 16]] },
-    "20.01"
+    "20.01",
   );
   equal(
     e("input:out-of-range .class-name input:out-of-range"),
     { res: [".class-name"], ranges: [[19, 30]] },
-    "20.02"
+    "20.02",
   );
   equal(
     e(
-      "input:out-of-range .class-name::selection input:out-of-range::selection"
+      "input:out-of-range .class-name::selection input:out-of-range::selection",
     ),
     { res: [".class-name"], ranges: [[19, 30]] },
-    "20.03"
+    "20.03",
   );
   equal(
     e(":.first-class.second-class:"),
@@ -530,7 +530,7 @@ test("20 - class: colon", () => {
         [13, 26],
       ],
     },
-    "20.04"
+    "20.04",
   );
 });
 
@@ -538,17 +538,17 @@ test("21 - class: double quote", () => {
   equal(
     e('.class-name a[href^="https"]'),
     { res: [".class-name"], ranges: [[0, 11]] },
-    "21.01"
+    "21.01",
   );
   equal(
     e('a[href^="https"] .class-name a[href^="https"]'),
     { res: [".class-name"], ranges: [[17, 28]] },
-    "21.02"
+    "21.02",
   );
   equal(
     e('"https".class-name"https"'),
     { res: [".class-name"], ranges: [[7, 18]] },
-    "21.03"
+    "21.03",
   );
   equal(
     e('"https".first-class.second-class"https"'),
@@ -559,7 +559,7 @@ test("21 - class: double quote", () => {
         [19, 32],
       ],
     },
-    "21.04"
+    "21.04",
   );
 });
 
@@ -567,17 +567,17 @@ test("22 - class: question mark", () => {
   equal(
     e(".class-name ?"),
     { res: [".class-name"], ranges: [[0, 11]] },
-    "22.01"
+    "22.01",
   );
   equal(
     e("? .class-name?"),
     { res: [".class-name"], ranges: [[2, 13]] },
-    "22.02"
+    "22.02",
   );
   equal(
     e("?.class-name?"),
     { res: [".class-name"], ranges: [[1, 12]] },
-    "22.03"
+    "22.03",
   );
   equal(
     e("?.first-class.second-class?"),
@@ -588,7 +588,7 @@ test("22 - class: question mark", () => {
         [13, 26],
       ],
     },
-    "22.04"
+    "22.04",
   );
 });
 
@@ -596,7 +596,7 @@ test("23 - class: greater than sign", () => {
   equal(
     e(".class-name> p"),
     { res: [".class-name"], ranges: [[0, 11]] },
-    "23.01"
+    "23.01",
   );
   equal(
     e("* > .class-name > p > .class-name-other"),
@@ -607,7 +607,7 @@ test("23 - class: greater than sign", () => {
         [22, 39],
       ],
     },
-    "23.02"
+    "23.02",
   );
   equal(
     e("*.class-name> .class-name-other> p > .class-name-another"),
@@ -619,7 +619,7 @@ test("23 - class: greater than sign", () => {
         [37, 56],
       ],
     },
-    "23.03"
+    "23.03",
   );
   equal(
     e(">.class1.class2> .class3.class4> p > .class5.class6"),
@@ -634,7 +634,7 @@ test("23 - class: greater than sign", () => {
         [44, 51],
       ],
     },
-    "23.04"
+    "23.04",
   );
 });
 
@@ -642,17 +642,17 @@ test("24 - class: square brackets", () => {
   equal(
     e("a[target=_blank] .class-name a[target=_blank]"),
     { res: [".class-name"], ranges: [[17, 28]] },
-    "24.01"
+    "24.01",
   );
   equal(
     e("a[target=_blank] .class-name[target=_blank]"),
     { res: [".class-name"], ranges: [[17, 28]] },
-    "24.02"
+    "24.02",
   );
   equal(
     e("a[target=_blank].class-name[target=_blank]"),
     { res: [".class-name"], ranges: [[16, 27]] },
-    "24.03"
+    "24.03",
   );
   equal(
     e("a[target=_blank].first-class.second-class[target=_blank]"),
@@ -663,7 +663,7 @@ test("24 - class: square brackets", () => {
         [28, 41],
       ],
     },
-    "24.04"
+    "24.04",
   );
 });
 
@@ -671,17 +671,17 @@ test("25 - class: curly brackets", () => {
   equal(
     e("a{target=_blank} .class-name a{target=_blank}"),
     { res: [".class-name"], ranges: [[17, 28]] },
-    "25.01"
+    "25.01",
   );
   equal(
     e("a{target=_blank} .class-name{target=_blank}"),
     { res: [".class-name"], ranges: [[17, 28]] },
-    "25.02"
+    "25.02",
   );
   equal(
     e("a{target=_blank}.class-name{target=_blank}"),
     { res: [".class-name"], ranges: [[16, 27]] },
-    "25.03"
+    "25.03",
   );
   equal(
     e("a{target=_blank}.first-class.second-class{target=_blank}"),
@@ -692,7 +692,7 @@ test("25 - class: curly brackets", () => {
         [28, 41],
       ],
     },
-    "25.04"
+    "25.04",
   );
 });
 
@@ -700,17 +700,17 @@ test("26 - class: pipe", () => {
   equal(
     e("|.class-name|=en]"),
     { res: [".class-name"], ranges: [[1, 12]] },
-    "26.01"
+    "26.01",
   );
   equal(
     e("a[lang|=en] .class-name[lang|=en]"),
     { res: [".class-name"], ranges: [[12, 23]] },
-    "26.02"
+    "26.02",
   );
   equal(
     e("|.class-name|"),
     { res: [".class-name"], ranges: [[1, 12]] },
-    "26.03"
+    "26.03",
   );
   equal(
     e("|.first-class.second-class|"),
@@ -721,7 +721,7 @@ test("26 - class: pipe", () => {
         [13, 26],
       ],
     },
-    "26.04"
+    "26.04",
   );
 });
 
@@ -729,7 +729,7 @@ test("27 - class: tick", () => {
   equal(
     e("`.class-name`"),
     { res: [".class-name"], ranges: [[1, 12]] },
-    "27.01"
+    "27.01",
   );
   equal(
     e("`.first-class.second-class`"),
@@ -740,7 +740,7 @@ test("27 - class: tick", () => {
         [13, 26],
       ],
     },
-    "27.02"
+    "27.02",
   );
 });
 
@@ -756,7 +756,7 @@ test("28 - one-letter class names", () => {
         [4, 6],
       ],
     },
-    "28.02"
+    "28.02",
   );
 });
 
@@ -778,7 +778,7 @@ test("30 - id: tag with id", () => {
         [11, 20],
       ],
     },
-    "30.01"
+    "30.01",
   );
   equal(
     e("div#id-name.class.another"),
@@ -790,7 +790,7 @@ test("30 - id: tag with id", () => {
         [17, 25],
       ],
     },
-    "30.02"
+    "30.02",
   );
 });
 
@@ -800,7 +800,7 @@ test("31 - id: id within tag", () => {
   equal(
     e("div       #id-name        "),
     { res: ["#id-name"], ranges: [[10, 18]] },
-    "31.03"
+    "31.03",
   );
   equal(
     e("div       #first-id#second-id        "),
@@ -811,7 +811,7 @@ test("31 - id: id within tag", () => {
         [19, 29],
       ],
     },
-    "31.04"
+    "31.04",
   );
 });
 
@@ -827,7 +827,7 @@ test("32 - id: id within tag's child tag", () => {
         [19, 25],
       ],
     },
-    "32.02"
+    "32.02",
   );
   equal(
     e("div #id-name.second.third a"),
@@ -839,14 +839,14 @@ test("32 - id: id within tag's child tag", () => {
         [19, 25],
       ],
     },
-    "32.03"
+    "32.03",
   );
 });
 
 test("33 - id: more, sandwitched", () => {
   equal(
     e(
-      "~!@$%^&*()+=,/';:\"?><[]{}|`#id-name#second#third[]yo~!@$%^&*()+=,/';:\"?><[]{}|`"
+      "~!@$%^&*()+=,/';:\"?><[]{}|`#id-name#second#third[]yo~!@$%^&*()+=,/';:\"?><[]{}|`",
     ),
     {
       res: ["#id-name", "#second", "#third"],
@@ -856,7 +856,7 @@ test("33 - id: more, sandwitched", () => {
         [42, 48],
       ],
     },
-    "33.01"
+    "33.01",
   );
 });
 
@@ -873,7 +873,7 @@ test("34 - id: exclamation mark", () => {
         [16, 22],
       ],
     },
-    "34.03"
+    "34.03",
   );
   equal(
     e("!#id-name.second#third.fourth!"),
@@ -886,7 +886,7 @@ test("34 - id: exclamation mark", () => {
         [22, 29],
       ],
     },
-    "34.04"
+    "34.04",
   );
 });
 
@@ -905,7 +905,7 @@ test("35 - id: ampersand", () => {
         [16, 22],
       ],
     },
-    "35.05"
+    "35.05",
   );
 });
 
@@ -917,7 +917,7 @@ test("36 - id: dollar", () => {
   equal(
     e("a[title~=name] #id-name$a"),
     { res: ["#id-name"], ranges: [[15, 23]] },
-    "36.05"
+    "36.05",
   );
   equal(e("$#id-name$"), { res: ["#id-name"], ranges: [[1, 9]] }, "36.06");
   equal(
@@ -929,7 +929,7 @@ test("36 - id: dollar", () => {
         [9, 16],
       ],
     },
-    "36.07"
+    "36.07",
   );
 });
 
@@ -941,7 +941,7 @@ test("37 - id: percentage", () => {
   equal(
     e("[%~class-name] #id-name%a"),
     { res: ["#id-name"], ranges: [[15, 23]] },
-    "37.05"
+    "37.05",
   );
   equal(e("%#id-name%"), { res: ["#id-name"], ranges: [[1, 9]] }, "37.06");
   equal(
@@ -953,7 +953,7 @@ test("37 - id: percentage", () => {
         [9, 16],
       ],
     },
-    "37.07"
+    "37.07",
   );
 });
 
@@ -961,7 +961,7 @@ test("38 - id: circumflex", () => {
   equal(
     e('a#id-name[href^="https"]'),
     { res: ["#id-name"], ranges: [[1, 9]] },
-    "38.01"
+    "38.01",
   );
   equal(e("^#id-name^"), { res: ["#id-name"], ranges: [[1, 9]] }, "38.02");
   equal(
@@ -973,7 +973,7 @@ test("38 - id: circumflex", () => {
         [9, 16],
       ],
     },
-    "38.03"
+    "38.03",
   );
 });
 
@@ -989,7 +989,7 @@ test("39 - id: ampersand", () => {
         [9, 16],
       ],
     },
-    "39.03"
+    "39.03",
   );
 });
 
@@ -1006,7 +1006,7 @@ test("40 - id: asterisk", () => {
         [9, 16],
       ],
     },
-    "40.04"
+    "40.04",
   );
 });
 
@@ -1014,7 +1014,7 @@ test("41 - id: brackets", () => {
   equal(
     e("p#id-name:lang(it)"),
     { res: ["#id-name"], ranges: [[1, 9]] },
-    "41.01"
+    "41.01",
   );
   equal(
     e("p#id-name:lang(it) p#id-name-other:lang(en)"),
@@ -1025,7 +1025,7 @@ test("41 - id: brackets", () => {
         [20, 34],
       ],
     },
-    "41.02"
+    "41.02",
   );
   equal(e("()#id-name()"), { res: ["#id-name"], ranges: [[2, 10]] }, "41.03");
   equal(e("(#id-name)"), { res: ["#id-name"], ranges: [[1, 9]] }, "41.04");
@@ -1039,7 +1039,7 @@ test("41 - id: brackets", () => {
         [16, 22],
       ],
     },
-    "41.05"
+    "41.05",
   );
 });
 
@@ -1047,7 +1047,7 @@ test("42 - id: plus", () => {
   equal(
     e("div#id-name + p"),
     { res: ["#id-name"], ranges: [[3, 11]] },
-    "42.01"
+    "42.01",
   );
   equal(e("div#id-name+p"), { res: ["#id-name"], ranges: [[3, 11]] }, "42.02");
   equal(e("+#id-name+"), { res: ["#id-name"], ranges: [[1, 9]] }, "42.03");
@@ -1060,7 +1060,7 @@ test("42 - id: plus", () => {
         [9, 16],
       ],
     },
-    "42.04"
+    "42.04",
   );
 });
 
@@ -1068,17 +1068,17 @@ test("43 - id: equals", () => {
   equal(
     e('a#id-name[href*="npmjs"]'),
     { res: ["#id-name"], ranges: [[1, 9]] },
-    "43.01"
+    "43.01",
   );
   equal(
     e('a#id-name [href *= "npmjs"]'),
     { res: ["#id-name"], ranges: [[1, 9]] },
-    "43.02"
+    "43.02",
   );
   equal(
     e('a#id-name  [href *= "npmjs"]'),
     { res: ["#id-name"], ranges: [[1, 9]] },
-    "43.03"
+    "43.03",
   );
   equal(
     e("=#id-name#second="),
@@ -1089,7 +1089,7 @@ test("43 - id: equals", () => {
         [9, 16],
       ],
     },
-    "43.04"
+    "43.04",
   );
 });
 
@@ -1103,7 +1103,7 @@ test("44 - id: colon", () => {
         [10, 24],
       ],
     },
-    "44.01"
+    "44.01",
   );
   equal(
     e("#id-name,#id-name-other"),
@@ -1114,7 +1114,7 @@ test("44 - id: colon", () => {
         [9, 23],
       ],
     },
-    "44.02"
+    "44.02",
   );
   equal(e(",#id-name,"), { res: ["#id-name"], ranges: [[1, 9]] }, "44.03");
   equal(
@@ -1126,7 +1126,7 @@ test("44 - id: colon", () => {
         [9, 16],
       ],
     },
-    "44.04"
+    "44.04",
   );
 });
 
@@ -1140,7 +1140,7 @@ test("45 - id: right slash", () => {
         [9, 23],
       ],
     },
-    "45.01"
+    "45.01",
   );
   equal(
     e("/#id-name/#id-name-other"),
@@ -1151,7 +1151,7 @@ test("45 - id: right slash", () => {
         [10, 24],
       ],
     },
-    "45.02"
+    "45.02",
   );
   equal(e("/#id-name/"), { res: ["#id-name"], ranges: [[1, 9]] }, "45.03");
   equal(
@@ -1163,7 +1163,7 @@ test("45 - id: right slash", () => {
         [9, 16],
       ],
     },
-    "45.04"
+    "45.04",
   );
 });
 
@@ -1179,7 +1179,7 @@ test("46 - id: apostrophe", () => {
         [9, 16],
       ],
     },
-    "46.03"
+    "46.03",
   );
 });
 
@@ -1193,7 +1193,7 @@ test("47 - id: semicolon", () => {
         [5, 9],
       ],
     },
-    "47.01"
+    "47.01",
   );
   equal(
     e("#id-name;#id-name-other"),
@@ -1204,7 +1204,7 @@ test("47 - id: semicolon", () => {
         [9, 23],
       ],
     },
-    "47.02"
+    "47.02",
   );
   equal(
     e(";#id-name;#id-name-other;"),
@@ -1215,7 +1215,7 @@ test("47 - id: semicolon", () => {
         [10, 24],
       ],
     },
-    "47.03"
+    "47.03",
   );
   equal(
     e(";#id1#id2;#id3#id4;"),
@@ -1228,7 +1228,7 @@ test("47 - id: semicolon", () => {
         [14, 18],
       ],
     },
-    "47.04"
+    "47.04",
   );
 });
 
@@ -1236,21 +1236,21 @@ test("48 - id: colon", () => {
   equal(
     e("input#id-name:read-only"),
     { res: ["#id-name"], ranges: [[5, 13]] },
-    "48.01"
+    "48.01",
   );
   equal(
     e("input:out-of-range #id-name input:out-of-range"),
     { res: ["#id-name"], ranges: [[19, 27]] },
-    "48.02"
+    "48.02",
   );
   equal(
     e("input:out-of-range #id-name::selection input:out-of-range::selection"),
     { res: ["#id-name"], ranges: [[19, 27]] },
-    "48.03"
+    "48.03",
   );
   equal(
     e(
-      "input:out-of-range #id-name#second.third::selection input:out-of-range::selection"
+      "input:out-of-range #id-name#second.third::selection input:out-of-range::selection",
     ),
     {
       res: ["#id-name", "#second", ".third"],
@@ -1260,7 +1260,7 @@ test("48 - id: colon", () => {
         [34, 40],
       ],
     },
-    "48.04"
+    "48.04",
   );
 });
 
@@ -1268,12 +1268,12 @@ test("49 - id: double quote", () => {
   equal(
     e('#id-name a[href^="https"]'),
     { res: ["#id-name"], ranges: [[0, 8]] },
-    "49.01"
+    "49.01",
   );
   equal(
     e('a[href^="https"] #id-name a[href^="https"]'),
     { res: ["#id-name"], ranges: [[17, 25]] },
-    "49.02"
+    "49.02",
   );
   equal(
     e('a[href^="https"] #id-name#second a[href^="https"]'),
@@ -1284,7 +1284,7 @@ test("49 - id: double quote", () => {
         [25, 32],
       ],
     },
-    "49.03"
+    "49.03",
   );
 });
 
@@ -1300,7 +1300,7 @@ test("50 - id: question mark", () => {
         [9, 16],
       ],
     },
-    "50.03"
+    "50.03",
   );
 });
 
@@ -1315,7 +1315,7 @@ test("51 - id: question mark", () => {
         [17, 31],
       ],
     },
-    "51.02"
+    "51.02",
   );
   equal(
     e("?#id-name-1? #id-name-2> p > #id-name-3"),
@@ -1327,7 +1327,7 @@ test("51 - id: question mark", () => {
         [29, 39],
       ],
     },
-    "51.03"
+    "51.03",
   );
   equal(
     e("?#id1#id2? #id3#id4> p > #id5#id6"),
@@ -1342,7 +1342,7 @@ test("51 - id: question mark", () => {
         [29, 33],
       ],
     },
-    "51.04"
+    "51.04",
   );
 });
 
@@ -1350,12 +1350,12 @@ test("52 - id: square brackets", () => {
   equal(
     e("a[target=_blank] #id-name a[target=_blank]"),
     { res: ["#id-name"], ranges: [[17, 25]] },
-    "52.01"
+    "52.01",
   );
   equal(
     e("a[target=_blank] #id-name[target=_blank]"),
     { res: ["#id-name"], ranges: [[17, 25]] },
-    "52.02"
+    "52.02",
   );
   equal(
     e("[zzz]#id-name#second[target=_blank]"),
@@ -1366,7 +1366,7 @@ test("52 - id: square brackets", () => {
         [13, 20],
       ],
     },
-    "52.03"
+    "52.03",
   );
   equal(
     e("zzz[#id-name#second]zzz"),
@@ -1377,7 +1377,7 @@ test("52 - id: square brackets", () => {
         [12, 19],
       ],
     },
-    "52.04"
+    "52.04",
   );
 });
 
@@ -1385,12 +1385,12 @@ test("53 - id: curly brackets", () => {
   equal(
     e("a{target=_blank} #id-name a{target=_blank}"),
     { res: ["#id-name"], ranges: [[17, 25]] },
-    "53.01"
+    "53.01",
   );
   equal(
     e("a{target=_blank} #id-name{target=_blank}"),
     { res: ["#id-name"], ranges: [[17, 25]] },
-    "53.02"
+    "53.02",
   );
   equal(
     e("aaa{bbb}#id-name#second{ccc}ddd"),
@@ -1401,7 +1401,7 @@ test("53 - id: curly brackets", () => {
         [16, 23],
       ],
     },
-    "53.03"
+    "53.03",
   );
   equal(
     e("{#id-name#second}"),
@@ -1412,7 +1412,7 @@ test("53 - id: curly brackets", () => {
         [9, 16],
       ],
     },
-    "53.04"
+    "53.04",
   );
   equal(
     e("zz{#id-name#second}zzz"),
@@ -1423,7 +1423,7 @@ test("53 - id: curly brackets", () => {
         [11, 18],
       ],
     },
-    "53.05"
+    "53.05",
   );
 });
 
@@ -1432,7 +1432,7 @@ test("54 - id: pipe", () => {
   equal(
     e("a[lang|=en] #id-name[lang|=en]"),
     { res: ["#id-name"], ranges: [[12, 20]] },
-    "54.02"
+    "54.02",
   );
   equal(
     e("|#id-name#second|"),
@@ -1443,7 +1443,7 @@ test("54 - id: pipe", () => {
         [9, 16],
       ],
     },
-    "54.03"
+    "54.03",
   );
 });
 
@@ -1458,7 +1458,7 @@ test("55 - id: tick", () => {
         [9, 16],
       ],
     },
-    "55.02"
+    "55.02",
   );
 });
 
@@ -1476,7 +1476,7 @@ test("56 - classes separated with a space should be recognised", () => {
         [16, 29],
       ],
     },
-    "56.01"
+    "56.01",
   );
   equal(
     e("div.first-class div.second-class"),
@@ -1487,7 +1487,7 @@ test("56 - classes separated with a space should be recognised", () => {
         [19, 32],
       ],
     },
-    "56.02"
+    "56.02",
   );
   equal(
     e(".first-class .second-class"),
@@ -1498,7 +1498,7 @@ test("56 - classes separated with a space should be recognised", () => {
         [13, 26],
       ],
     },
-    "56.03"
+    "56.03",
   );
 });
 
@@ -1514,7 +1514,7 @@ test("57 - classes recognised after brackets", () => {
         [54, 58],
       ],
     },
-    "57.01"
+    "57.01",
   );
   equal(
     e("div.first-class[lang|=en] div.second-class[lang|=en]"),
@@ -1525,7 +1525,7 @@ test("57 - classes recognised after brackets", () => {
         [29, 42],
       ],
     },
-    "57.02"
+    "57.02",
   );
   equal(
     e(".first-class[lang|=en] .second-class[lang|=en]"),
@@ -1536,7 +1536,7 @@ test("57 - classes recognised after brackets", () => {
         [23, 36],
       ],
     },
-    "57.03"
+    "57.03",
   );
 });
 
@@ -1546,27 +1546,27 @@ test("58 - old bracket notation - classes", () => {
   equal(
     e("td [ class = abc-def ]"),
     { res: [".abc-def"], ranges: [[13, 20]] },
-    "58.03"
+    "58.03",
   );
   equal(
     e('td [ class = "abc-def" ]'),
     { res: [".abc-def"], ranges: [[14, 21]] },
-    "58.04"
+    "58.04",
   );
   equal(
     e("td [ class = 'abc-def' ]"),
     { res: [".abc-def"], ranges: [[14, 21]] },
-    "58.05"
+    "58.05",
   );
   equal(
     e('td[class="abc-def"]'),
     { res: [".abc-def"], ranges: [[10, 17]] },
-    "58.06"
+    "58.06",
   );
   equal(
     e("td[class='abc-def']"),
     { res: [".abc-def"], ranges: [[10, 17]] },
-    "58.07"
+    "58.07",
   );
 });
 
@@ -1574,22 +1574,22 @@ test("59 - old bracket notation - classes that need trimming", () => {
   equal(
     e('td [ class = " abc-def " ]'),
     { res: [".abc-def"], ranges: [[15, 22]] },
-    "59.01"
+    "59.01",
   );
   equal(
     e("td [ class = ' abc-def ' ]"),
     { res: [".abc-def"], ranges: [[15, 22]] },
-    "59.02"
+    "59.02",
   );
   equal(
     e('td[class=" abc-def "]'),
     { res: [".abc-def"], ranges: [[11, 18]] },
-    "59.03"
+    "59.03",
   );
   equal(
     e("td[class=' abc-def ']"),
     { res: [".abc-def"], ranges: [[11, 18]] },
-    "59.04"
+    "59.04",
   );
 });
 
@@ -1599,27 +1599,27 @@ test("60 - old bracket notation - ids", () => {
   equal(
     e("td [ id = abc-def ]"),
     { res: ["#abc-def"], ranges: [[10, 17]] },
-    "60.03"
+    "60.03",
   );
   equal(
     e('td [ id = "abc-def" ]'),
     { res: ["#abc-def"], ranges: [[11, 18]] },
-    "60.04"
+    "60.04",
   );
   equal(
     e("td [ id = 'abc-def' ]"),
     { res: ["#abc-def"], ranges: [[11, 18]] },
-    "60.05"
+    "60.05",
   );
   equal(
     e('td[id="abc-def"]'),
     { res: ["#abc-def"], ranges: [[7, 14]] },
-    "60.06"
+    "60.06",
   );
   equal(
     e("td[id='abc-def']"),
     { res: ["#abc-def"], ranges: [[7, 14]] },
-    "60.07"
+    "60.07",
   );
 });
 
@@ -1627,22 +1627,22 @@ test("61 - old bracket notation - ids that need trimming", () => {
   equal(
     e('td [ id = " abc-def " ]'),
     { res: ["#abc-def"], ranges: [[12, 19]] },
-    "61.01"
+    "61.01",
   );
   equal(
     e("td [ id = ' abc-def ' ]"),
     { res: ["#abc-def"], ranges: [[12, 19]] },
-    "61.02"
+    "61.02",
   );
   equal(
     e('td[id=" abc-def "]'),
     { res: ["#abc-def"], ranges: [[8, 15]] },
-    "61.03"
+    "61.03",
   );
   equal(
     e("td[id=' abc-def ']"),
     { res: ["#abc-def"], ranges: [[8, 15]] },
-    "61.04"
+    "61.04",
   );
 });
 
@@ -1679,7 +1679,7 @@ test("63 - missing input args", () => {
       e(undefined);
     },
     /THROW_ID_01/g,
-    "63.01"
+    "63.01",
   );
 });
 
@@ -1689,7 +1689,7 @@ test("64 - the first input arg of a wrong type", () => {
       e(1);
     },
     /THROW_ID_01/g,
-    "64.01"
+    "64.01",
   );
 });
 
@@ -1702,14 +1702,14 @@ test("65 - encoded line breaks", () => {
   equal(
     e("#unused-1\n\n\n\n\t\t\t\t\nz\t\ta"),
     { res: ["#unused-1"], ranges: [[0, 9]] },
-    "65.01"
+    "65.01",
   );
 });
 
 test("66 - recognises JS escaped strings and repeated dots & hashes", () => {
   equal(
     e(
-      "\naaa\n...    .unused-1\n\n\n.unused-2, .unused-3\n\t\t,,,\t###\t\nz\t\ta"
+      "\naaa\n...    .unused-1\n\n\n.unused-2, .unused-3\n\t\t,,,\t###\t\nz\t\ta",
     ),
     {
       res: [".unused-1", ".unused-2", ".unused-3"],
@@ -1719,7 +1719,7 @@ test("66 - recognises JS escaped strings and repeated dots & hashes", () => {
         [35, 44],
       ],
     },
-    "66.01"
+    "66.01",
   );
 });
 

@@ -38,7 +38,7 @@ const cli = meow(
 `,
   {
     importMeta: import.meta,
-  }
+  },
 );
 updateNotifier({ pkg }).notify();
 
@@ -48,14 +48,14 @@ function readUpdateAndWriteOverFile(oneOfPaths) {
     .then((filesContent) => {
       return write(oneOfPaths, genAtomic(filesContent).result).then(() => {
         log(
-          `${messagePrefix}${oneOfPaths} - ${`\u001b[${32}m${"OK"}\u001b[${39}m`}`
+          `${messagePrefix}${oneOfPaths} - ${`\u001b[${32}m${"OK"}\u001b[${39}m`}`,
         );
         return true;
       });
     })
     .catch((err) => {
       console.log(
-        `${oneOfPaths} - ${`\u001b[${31}m${"BAD"}\u001b[${39}m`} - ${err}`
+        `${oneOfPaths} - ${`\u001b[${31}m${"BAD"}\u001b[${39}m`} - ${err}`,
       );
     });
 }
@@ -75,18 +75,18 @@ function processPaths(incomingPaths) {
                         files: ["*.js"],
                       },
                     })
-                  : [singleDirOrFilePath]
-              )
+                  : [singleDirOrFilePath],
+              ),
             ),
-          []
-        )
+          [],
+        ),
       )
       // then reduce again, now actually concatenating them all together
       .then((received) =>
-        pReduce(received, (total, single) => total.concat(single), [])
+        pReduce(received, (total, single) => total.concat(single), []),
       )
       .then((res) =>
-        res.filter((oneOfPaths) => !oneOfPaths.includes("node_modules"))
+        res.filter((oneOfPaths) => !oneOfPaths.includes("node_modules")),
       )
       .then((received) =>
         pReduce(
@@ -102,15 +102,15 @@ function processPaths(incomingPaths) {
                   : {
                       good: counter.good,
                       bad: counter.bad.concat([currentPath]),
-                    }
+                    },
               )
               .catch((err) => {
                 log(
-                  `${messagePrefix}${`\u001b[${31}m${"Could not write out the file:"}\u001b[${39}m`}\n${err}`
+                  `${messagePrefix}${`\u001b[${31}m${"Could not write out the file:"}\u001b[${39}m`}\n${err}`,
                 );
                 return counter;
               }),
-          { good: [], bad: [] }
+          { good: [], bad: [] },
         ).then((counter) => {
           let message;
           if (
@@ -134,13 +134,13 @@ function processPaths(incomingPaths) {
                   } file${
                     counter.bad.length === 1 ? "" : "s"
                   } could not be updated`}\u001b[${39}m`} ${`\u001b[${90}m - ${counter.bad.join(
-                    " - "
+                    " - ",
                   )}\u001b[${39}m`}`
                 : ""
             }`;
           }
           log(`\n${messagePrefix}${message}`);
-        })
+        }),
       )
   );
 }

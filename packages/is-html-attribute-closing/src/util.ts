@@ -9,7 +9,7 @@ function ensureXIsNotPresentBeforeOneOfY(
   str: string,
   startingIdx: number,
   x: string,
-  y: string[] = []
+  y: string[] = [],
 ): boolean {
   DEV && console.log(`014e ensureXIsNotPresentBeforeOneOfY() called`);
   for (let i = startingIdx, len = str.length; i < len; i++) {
@@ -38,7 +38,7 @@ function xBeforeYOnTheRight(
   str: string,
   startingIdx: number,
   x: string,
-  y: string
+  y: string,
 ): boolean {
   for (let i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
@@ -62,7 +62,7 @@ function xBeforeYOnTheRight(
 function plausibleAttrStartsAtX(str: string, start: number): boolean {
   DEV &&
     console.log(
-      `${`\u001b[${35}m${`plausibleAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`
+      `${`\u001b[${35}m${`plausibleAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`,
     );
   if (!isAttrNameChar(str[start]) || !start) {
     return false;
@@ -77,7 +77,7 @@ function plausibleAttrStartsAtX(str: string, start: number): boolean {
 function guaranteedAttrStartsAtX(str: string, start: number): boolean {
   DEV &&
     console.log(
-      `${`\u001b[${35}m${`guaranteedAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`
+      `${`\u001b[${35}m${`guaranteedAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`,
     );
   if (!start || !isAttrNameChar(str[start])) {
     DEV && console.log(`083g return false`);
@@ -93,7 +93,7 @@ function guaranteedAttrStartsAtX(str: string, start: number): boolean {
 
 function findAttrNameCharsChunkOnTheLeft(
   str: string,
-  i: number
+  i: number,
 ): undefined | string {
   if (!isAttrNameChar(str[left(str, i) as number])) {
     return;
@@ -104,8 +104,8 @@ function findAttrNameCharsChunkOnTheLeft(
         `104 ${`\u001b[${36}m${`str[y]`}\u001b[${39}m`} = ${JSON.stringify(
           str[y],
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     if (str[y].trim().length && !isAttrNameChar(str[y])) {
       return str.slice(y + 1, i);

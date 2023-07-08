@@ -338,12 +338,12 @@ function isRel(str: string, opts?: Partial<Opts>): Res {
   // ---------------------------------------------------------------------------
   if (typeof str !== "string") {
     throw new Error(
-      `is-relative-uri: [THROW_ID_01] input string must be string, it was given as "${str}" (type ${typeof str})`
+      `is-relative-uri: [THROW_ID_01] input string must be string, it was given as "${str}" (type ${typeof str})`,
     );
   }
   if (opts && typeof opts !== "object") {
     throw new Error(
-      `is-relative-uri: [THROW_ID_02] resolvedOpts be plain object, it was given as ${opts} (type ${typeof opts})`
+      `is-relative-uri: [THROW_ID_02] resolvedOpts be plain object, it was given as ${opts} (type ${typeof opts})`,
     );
   }
   let resolvedOpts: Opts = { ...defaults, ...opts };
@@ -352,8 +352,8 @@ function isRel(str: string, opts?: Partial<Opts>): Res {
       `352 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} resolvedOpts = ${JSON.stringify(
         resolvedOpts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   // ---------------------------------------------------------------------------

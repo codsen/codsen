@@ -4,7 +4,7 @@ declare const version: string;
 type ErrCb = (
   indexes: [from: number, to: number, whatToAdd?: JSONValue][],
   explanation: string,
-  isFixable: boolean
+  isFixable: boolean,
 ) => void;
 interface Obj {
   [key: string]: any;

@@ -32,12 +32,12 @@ test(`01 - ${`\u001b[${36}m${"opts.reportProgressFunc"}\u001b[${39}m`} - calls t
   equal(
     removeWidows("aaaaaaaaaa", { reportProgressFunc: null }).res,
     "aaaaaaaaaa",
-    "01.02"
+    "01.02",
   );
   equal(
     removeWidows("aaaaaaaaaa", { reportProgressFunc: false }).res,
     "aaaaaaaaaa",
-    "01.03"
+    "01.03",
   );
 
   // 1. our function will mutate the counter variable:
@@ -58,9 +58,9 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-      { reportProgressFunc: countingFunction }
+      { reportProgressFunc: countingFunction },
     ),
-    "01.04"
+    "01.04",
   );
 
   // 2. check the counter variable:
@@ -134,9 +134,9 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
         reportProgressFunc: countingFunction,
         reportProgressFuncFrom: 21,
         reportProgressFuncTo: 86,
-      }
+      },
     ),
-    "02.01"
+    "02.01",
   );
 
   // 2. check the counter variable:

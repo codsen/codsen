@@ -62,9 +62,9 @@ assert.equal(
       },
       c: false,
     },
-    false // reference value to check
+    false, // reference value to check
   ),
-  true // answer is, yes
+  true, // answer is, yes
 );
 ```
 

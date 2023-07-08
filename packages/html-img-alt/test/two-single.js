@@ -20,7 +20,7 @@ test("03 - alt with two single quotes, HTML", () => {
   equal(
     alts("zzz<img     alt    =    ''    >zzz"),
     'zzz<img alt="" >zzz',
-    "03.01"
+    "03.01",
   );
 });
 
@@ -36,7 +36,7 @@ test("06 - alt with two single quotes, HTML", () => {
   equal(
     alts("zzz<img     alt    ='   '    >zzz"),
     'zzz<img alt="" >zzz',
-    "06.01"
+    "06.01",
   );
 });
 
@@ -44,7 +44,7 @@ test("07 - alt with two single quotes, HTML", () => {
   equal(
     alts("zzz<img     alt    =    '   '    >zzz"),
     'zzz<img alt="" >zzz',
-    "07.01"
+    "07.01",
   );
 });
 
@@ -52,7 +52,7 @@ test("08 - alt with two single quotes, HTML", () => {
   equal(
     alts("zzz<img     alt    =    '   '>zzz"),
     'zzz<img alt="" >zzz',
-    "08.01"
+    "08.01",
   );
 });
 

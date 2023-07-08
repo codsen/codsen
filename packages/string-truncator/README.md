@@ -50,12 +50,12 @@ assert.deepEqual(
     {
       maxLen: 10,
       maxLines: 2,
-    }
+    },
   ),
   {
     result: "the quick brown fox jumps over",
     addEllipsis: true,
-  }
+  },
 );
 ```
 

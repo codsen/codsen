@@ -19,7 +19,7 @@ test("02 - single tag to ignore, given as string", () => {
       stripHtmlButIgnoreTags: "a",
     }).res,
     "a <a>z</a> c",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -29,7 +29,7 @@ test("03 - single tag to ignore, given as string in an array", () => {
       stripHtmlButIgnoreTags: ["a"],
     }).res,
     "a <a>z</a> c",
-    "03.01"
+    "03.01",
   );
 });
 
@@ -40,7 +40,7 @@ test("04 - single tag to ignore, given as string", () => {
       removeWidows: false,
     }).res,
     "a <div>z</div> c",
-    "04.01"
+    "04.01",
   );
 });
 
@@ -51,7 +51,7 @@ test("05 - single tag to ignore, given as string in an array", () => {
       removeWidows: false,
     }).res,
     "a <div>z</div> c",
-    "05.01"
+    "05.01",
   );
 });
 
@@ -62,7 +62,7 @@ test("06 - both tags ignored", () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "06.01"
+    "06.01",
   );
 });
 
@@ -73,7 +73,7 @@ test("07 - other tags ignored, not present in the input", () => {
       removeWidows: false,
     }).res,
     "a z c",
-    "07.01"
+    "07.01",
   );
 });
 
@@ -88,7 +88,7 @@ test("09 - no ignores", () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "09.01"
+    "09.01",
   );
 });
 
@@ -99,7 +99,7 @@ test("10 - no ignores", () => {
       removeWidows: false,
     }).res,
     "a z c",
-    "10.01"
+    "10.01",
   );
 });
 
@@ -111,7 +111,7 @@ test("11 - single tag to ignore, given as string", () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "11.01"
+    "11.01",
   );
 });
 
@@ -123,7 +123,7 @@ test("12 - single tag to ignore, given as string", () => {
       removeWidows: false,
     }).res,
     "a <a>z</a> c",
-    "12.01"
+    "12.01",
   );
 });
 
@@ -135,7 +135,7 @@ test("13 - single tag to ignore, given as string in an array", () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "13.01"
+    "13.01",
   );
 });
 
@@ -147,7 +147,7 @@ test("14 - single tag to ignore, given as string in an array", () => {
       removeWidows: false,
     }).res,
     "a <a>z</a> c",
-    "14.01"
+    "14.01",
   );
 });
 
@@ -159,7 +159,7 @@ test("15 - single tag to ignore, given as string", () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "15.01"
+    "15.01",
   );
 });
 
@@ -171,7 +171,7 @@ test("16 - single tag to ignore, given as string", () => {
       removeWidows: false,
     }).res,
     "a <div>z</div> c",
-    "16.01"
+    "16.01",
   );
 });
 
@@ -183,7 +183,7 @@ test("17 - single tag to ignore, given as string in an array", () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "17.01"
+    "17.01",
   );
 });
 
@@ -195,7 +195,7 @@ test("18 - single tag to ignore, given as string in an array", () => {
       removeWidows: false,
     }).res,
     "a <div>z</div> c",
-    "18.01"
+    "18.01",
   );
 });
 
@@ -207,7 +207,7 @@ test("19 - both tags ignored", () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "19.01"
+    "19.01",
   );
 });
 
@@ -219,7 +219,7 @@ test("20 - both tags ignored", () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "20.01"
+    "20.01",
   );
 });
 
@@ -231,7 +231,7 @@ test("21 - other tags ignored, not present in the input", () => {
       removeWidows: false,
     }).res,
     "a <div><a>z</a></div> c",
-    "21.01"
+    "21.01",
   );
 });
 
@@ -243,7 +243,7 @@ test("22 - other tags ignored, not present in the input", () => {
       removeWidows: false,
     }).res,
     "a z c",
-    "22.01"
+    "22.01",
   );
 });
 
@@ -254,7 +254,7 @@ test("23 - ad hoc - one tag", () => {
       stripHtml: true,
     }).res,
     "",
-    "23.01"
+    "23.01",
   );
 });
 
@@ -264,7 +264,7 @@ test("24 - ad hoc - one tag", () => {
       stripHtml: true,
     }).res,
     "<sup>",
-    "24.01"
+    "24.01",
   );
 });
 
@@ -275,7 +275,7 @@ test("25 - ad hoc - one tag", () => {
       stripHtml: true,
     }).res,
     "<sup>",
-    "25.01"
+    "25.01",
   );
 });
 
@@ -286,7 +286,7 @@ test("26 - ad hoc - one tag", () => {
       stripHtml: true,
     }).res,
     "",
-    "26.01"
+    "26.01",
   );
 });
 
@@ -297,7 +297,7 @@ test("27 - ad hoc - four tags", () => {
       stripHtml: true,
     }).res,
     "<a><b><c>",
-    "27.01"
+    "27.01",
   );
 });
 
@@ -308,7 +308,7 @@ test("28 - ad hoc - four tags", () => {
       stripHtml: true,
     }).res,
     "<sup><b><c>",
-    "28.01"
+    "28.01",
   );
 });
 
@@ -319,7 +319,7 @@ test("29 - ad hoc - four tags", () => {
       stripHtml: true,
     }).res,
     "<sup><a><c>",
-    "29.01"
+    "29.01",
   );
 });
 
@@ -330,7 +330,7 @@ test("30 - ad hoc - four tags", () => {
       stripHtml: true,
     }).res,
     "<sup><a><b>",
-    "30.01"
+    "30.01",
   );
 });
 
@@ -345,7 +345,7 @@ test("31 - br variations, not ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc def",
-      "31.01"
+      "31.01",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -354,7 +354,7 @@ test("31 - br variations, not ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc def",
-      "31.02"
+      "31.02",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -363,7 +363,7 @@ test("31 - br variations, not ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc def",
-      "31.03"
+      "31.03",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -372,7 +372,7 @@ test("31 - br variations, not ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc def",
-      "31.04"
+      "31.04",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -381,7 +381,7 @@ test("31 - br variations, not ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc def",
-      "31.05"
+      "31.05",
     );
   });
 });
@@ -398,7 +398,7 @@ test("32 - br variations, not ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      "32.01"
+      "32.01",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -407,7 +407,7 @@ test("32 - br variations, not ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      "32.02"
+      "32.02",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -416,7 +416,7 @@ test("32 - br variations, not ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      "32.03"
+      "32.03",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -425,7 +425,7 @@ test("32 - br variations, not ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      "32.04"
+      "32.04",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -434,7 +434,7 @@ test("32 - br variations, not ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      "32.05"
+      "32.05",
     );
   });
 });
@@ -451,7 +451,7 @@ test("33 - br variations, not ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      "33.01"
+      "33.01",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -460,7 +460,7 @@ test("33 - br variations, not ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      "33.02"
+      "33.02",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -469,7 +469,7 @@ test("33 - br variations, not ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      "33.03"
+      "33.03",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -478,7 +478,7 @@ test("33 - br variations, not ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      "33.04"
+      "33.04",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -487,7 +487,7 @@ test("33 - br variations, not ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      "33.05"
+      "33.05",
     );
   });
 });
@@ -505,7 +505,7 @@ test("34 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      "34.01"
+      "34.01",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -514,7 +514,7 @@ test("34 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      "34.02"
+      "34.02",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -523,7 +523,7 @@ test("34 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      "34.03"
+      "34.03",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -532,7 +532,7 @@ test("34 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      "34.04"
+      "34.04",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -541,7 +541,7 @@ test("34 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      "34.05"
+      "34.05",
     );
   });
 });
@@ -559,7 +559,7 @@ test("35 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      "35.01"
+      "35.01",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -568,7 +568,7 @@ test("35 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      "35.02"
+      "35.02",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -577,7 +577,7 @@ test("35 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      "35.03"
+      "35.03",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -586,7 +586,7 @@ test("35 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      "35.04"
+      "35.04",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -595,7 +595,7 @@ test("35 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      "35.05"
+      "35.05",
     );
   });
 });
@@ -612,7 +612,7 @@ test("36 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      "36.01"
+      "36.01",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -621,7 +621,7 @@ test("36 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      "36.02"
+      "36.02",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -630,7 +630,7 @@ test("36 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      "36.03"
+      "36.03",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -639,7 +639,7 @@ test("36 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      "36.04"
+      "36.04",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -648,7 +648,7 @@ test("36 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br>def",
-      "36.05"
+      "36.05",
     );
   });
 });
@@ -665,7 +665,7 @@ test("37 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      "37.01"
+      "37.01",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -674,7 +674,7 @@ test("37 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      "37.02"
+      "37.02",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -683,7 +683,7 @@ test("37 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      "37.03"
+      "37.03",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -692,7 +692,7 @@ test("37 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      "37.04"
+      "37.04",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -701,7 +701,7 @@ test("37 - br variations, ignored", () => {
         stripHtmlAddNewLine: [],
       }).res,
       "abc<br/>def",
-      "37.05"
+      "37.05",
     );
   });
 });
@@ -719,7 +719,7 @@ test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc\ndef",
-      "38.01"
+      "38.01",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -728,7 +728,7 @@ test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc\ndef",
-      "38.02"
+      "38.02",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -737,7 +737,7 @@ test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc\ndef",
-      "38.03"
+      "38.03",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -746,7 +746,7 @@ test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc\ndef",
-      "38.04"
+      "38.04",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -755,7 +755,7 @@ test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc\ndef",
-      "38.05"
+      "38.05",
     );
   });
 
@@ -770,7 +770,7 @@ test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      "38.06"
+      "38.06",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -779,7 +779,7 @@ test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      "38.07"
+      "38.07",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -788,7 +788,7 @@ test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      "38.08"
+      "38.08",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -797,7 +797,7 @@ test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      "38.09"
+      "38.09",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -806,7 +806,7 @@ test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      "38.10"
+      "38.10",
     );
   });
   mixer({
@@ -820,7 +820,7 @@ test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      "38.11"
+      "38.11",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -829,7 +829,7 @@ test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      "38.12"
+      "38.12",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -838,7 +838,7 @@ test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      "38.13"
+      "38.13",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -847,7 +847,7 @@ test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      "38.14"
+      "38.14",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -856,7 +856,7 @@ test("38 - br variations, not ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      "38.15"
+      "38.15",
     );
   });
 });
@@ -873,7 +873,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      "39.01"
+      "39.01",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -882,7 +882,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      "39.02"
+      "39.02",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -891,7 +891,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      "39.03"
+      "39.03",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -900,7 +900,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      "39.04"
+      "39.04",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -909,7 +909,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      "39.05"
+      "39.05",
     );
   });
   mixer({
@@ -923,7 +923,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      "39.06"
+      "39.06",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -932,7 +932,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      "39.07"
+      "39.07",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -941,7 +941,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      "39.08"
+      "39.08",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -950,7 +950,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      "39.09"
+      "39.09",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -959,7 +959,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      "39.10"
+      "39.10",
     );
   });
 
@@ -974,7 +974,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      "39.11"
+      "39.11",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -983,7 +983,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      "39.12"
+      "39.12",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -992,7 +992,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      "39.13"
+      "39.13",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -1001,7 +1001,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      "39.14"
+      "39.14",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -1010,7 +1010,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br>def",
-      "39.15"
+      "39.15",
     );
   });
   mixer({
@@ -1024,7 +1024,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      "39.16"
+      "39.16",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -1033,7 +1033,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      "39.17"
+      "39.17",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -1042,7 +1042,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      "39.18"
+      "39.18",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -1051,7 +1051,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      "39.19"
+      "39.19",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -1060,7 +1060,7 @@ test("39 - br variations, ignored - stripHtmlAddNewLine br", () => {
         stripHtmlAddNewLine: ["br"],
       }).res,
       "abc<br/>def",
-      "39.20"
+      "39.20",
     );
   });
 });
@@ -1078,7 +1078,7 @@ test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc\ndef",
-      "40.01"
+      "40.01",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -1087,7 +1087,7 @@ test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc\ndef",
-      "40.02"
+      "40.02",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -1096,7 +1096,7 @@ test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc\ndef",
-      "40.03"
+      "40.03",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -1105,7 +1105,7 @@ test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc\ndef",
-      "40.04"
+      "40.04",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -1114,7 +1114,7 @@ test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc\ndef",
-      "40.05"
+      "40.05",
     );
   });
 
@@ -1129,7 +1129,7 @@ test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      "40.06"
+      "40.06",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -1138,7 +1138,7 @@ test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      "40.07"
+      "40.07",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -1147,7 +1147,7 @@ test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      "40.08"
+      "40.08",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -1156,7 +1156,7 @@ test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      "40.09"
+      "40.09",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -1165,7 +1165,7 @@ test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      "40.10"
+      "40.10",
     );
   });
   mixer({
@@ -1179,7 +1179,7 @@ test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      "40.11"
+      "40.11",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -1188,7 +1188,7 @@ test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      "40.12"
+      "40.12",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -1197,7 +1197,7 @@ test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      "40.13"
+      "40.13",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -1206,7 +1206,7 @@ test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      "40.14"
+      "40.14",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -1215,7 +1215,7 @@ test("40 - br variations, not ignored - stripHtmlAddNewLine br/", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      "40.15"
+      "40.15",
     );
   });
 });
@@ -1232,7 +1232,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      "41.01"
+      "41.01",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -1241,7 +1241,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      "41.02"
+      "41.02",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -1250,7 +1250,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      "41.03"
+      "41.03",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -1259,7 +1259,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      "41.04"
+      "41.04",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -1268,7 +1268,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      "41.05"
+      "41.05",
     );
   });
 
@@ -1283,7 +1283,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      "41.06"
+      "41.06",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -1292,7 +1292,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      "41.07"
+      "41.07",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -1301,7 +1301,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      "41.08"
+      "41.08",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -1310,7 +1310,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      "41.09"
+      "41.09",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -1319,7 +1319,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      "41.10"
+      "41.10",
     );
   });
 
@@ -1334,7 +1334,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      "41.11"
+      "41.11",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -1343,7 +1343,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      "41.12"
+      "41.12",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -1352,7 +1352,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      "41.13"
+      "41.13",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -1361,7 +1361,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      "41.14"
+      "41.14",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -1370,7 +1370,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br/>def",
-      "41.15"
+      "41.15",
     );
   });
 
@@ -1385,7 +1385,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      "41.16"
+      "41.16",
     );
     equal(
       det(ok, not, n, "abc<br />def", {
@@ -1394,7 +1394,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      "41.17"
+      "41.17",
     );
     equal(
       det(ok, not, n, "abc<br/ >def", {
@@ -1403,7 +1403,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      "41.18"
+      "41.18",
     );
     equal(
       det(ok, not, n, "abc<br / >def", {
@@ -1412,7 +1412,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      "41.19"
+      "41.19",
     );
     equal(
       det(ok, not, n, "abc<br>def", {
@@ -1421,7 +1421,7 @@ test("41 - strip but ignore", () => {
         stripHtmlAddNewLine: ["br/"],
       }).res,
       "abc<br>def",
-      "41.20"
+      "41.20",
     );
   });
 });

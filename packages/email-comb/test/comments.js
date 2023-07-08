@@ -48,17 +48,17 @@ test("01 - removes HTML comments - healthy code", () => {
       uglify: true,
     }).result,
     uglified,
-    "01.04"
+    "01.04",
   );
   equal(
     comb(source, { removeHTMLComments: true, uglify: true }).result,
     uglified,
-    "01.05"
+    "01.05",
   );
   equal(
     comb(source, { removeHTMLComments: false, uglify: true }).result,
     uglifiedWithComments,
-    "01.06"
+    "01.06",
   );
 });
 
@@ -93,7 +93,7 @@ test("02 - removes bogus HTML comments", () => {
   equal(
     comb(source, { removeHTMLComments: false }).result,
     slightlyProcessed,
-    "02.03"
+    "02.03",
   );
 });
 
@@ -112,35 +112,35 @@ test("03 - removes HTML comments - healthy code with mso conditional - one liner
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["mso", "ie"],
     }).result,
     source,
-    "03.04"
+    "03.04",
   );
   equal(
     comb(source, {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: "mso",
     }).result,
     source,
-    "03.05"
+    "03.05",
   );
   equal(
     comb(source, {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: "ie",
     }).result,
     conditionalRemoved,
-    "03.06"
+    "03.06",
   );
   equal(
     comb(source, {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: "",
     }).result,
     conditionalRemoved,
-    "03.07"
+    "03.07",
   );
   equal(
     comb(source, {
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result,
     conditionalRemoved,
-    "03.08"
+    "03.08",
   );
 });
 
@@ -163,7 +163,7 @@ test("04 - removes HTML comments - everywhere-except-outlook conditional - type 
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result,
     completelyStripped,
-    "04.04"
+    "04.04",
   );
 });
 
@@ -187,7 +187,7 @@ test("05 - removes HTML comments - everywhere-except-outlook conditional - type 
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result,
     completelyStripped,
-    "05.04"
+    "05.04",
   );
 });
 
@@ -203,7 +203,7 @@ test("06 - removes HTML comments - everywhere-except-outlook conditional - alter
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["mso", "endif"],
     }).result,
     source3,
-    "06.01"
+    "06.01",
   );
 
   let source4 = `aaa<!--[if ie]><!-->
@@ -216,7 +216,7 @@ test("06 - removes HTML comments - everywhere-except-outlook conditional - alter
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["ie", "endif"],
     }).result,
     source4,
-    "06.02"
+    "06.02",
   );
 });
 
@@ -284,7 +284,7 @@ test("10 - outer trims - doctype with leading line break", () => {
   equal(
     comb(source, { uglify: true, removeIndentations: true }).result,
     intended,
-    "10.01"
+    "10.01",
   );
 });
 
@@ -360,7 +360,7 @@ test("18 - mixed: classes and tag names", () => {
 </style>
 <body><br class="dd">
 </body>
-`
+`,
   ).result;
 
   let intended = `<head>
@@ -522,34 +522,34 @@ test("19 - removes comments from style blocks - opts.removeHTMLComments + opts.r
   equal(
     comb(source, { removeCSSComments: true }).result,
     cssAndHtmlCommentsRemoved,
-    "19.02"
+    "19.02",
   );
   equal(
     comb(source, { removeCSSComments: false }).result,
     htmlRemovedCssNot,
-    "19.03"
+    "19.03",
   );
 
   equal(
     comb(source, { removeCSSComments: true, removeHTMLComments: true }).result,
     cssAndHtmlCommentsRemoved,
-    "19.04"
+    "19.04",
   );
   equal(
     comb(source, { removeCSSComments: false, removeHTMLComments: true }).result,
     htmlRemovedCssNot,
-    "19.05"
+    "19.05",
   );
   equal(
     comb(source, { removeCSSComments: true, removeHTMLComments: false }).result,
     cssRemovedHtmlNot,
-    "19.06"
+    "19.06",
   );
   equal(
     comb(source, { removeCSSComments: false, removeHTMLComments: false })
       .result,
     neitherCssNorHtml,
-    "19.07"
+    "19.07",
   );
 });
 
@@ -623,7 +623,7 @@ test("21 - comments in the inline styles", () => {
   color:#333333;
 */line-height: 14px;">
 </body>
-`
+`,
   ).result;
 
   let intended = `<head>

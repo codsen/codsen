@@ -60,7 +60,7 @@ assert.deepEqual(
       // <- object #2
       a: "a",
     },
-    schema
+    schema,
   ),
   {
     a: "a",
@@ -70,5 +70,5 @@ assert.deepEqual(
       e: false,
       f: false,
     },
-  }
+  },
 );

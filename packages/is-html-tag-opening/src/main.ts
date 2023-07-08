@@ -24,8 +24,8 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
       `is-html-tag-opening: [THROW_ID_01] the first input argument should have been a string but it was given as "${typeof str}", value being ${JSON.stringify(
         str,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   if (!Number.isInteger(idx) || idx < 0) {
@@ -33,8 +33,8 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
       `is-html-tag-opening: [THROW_ID_02] the second input argument should have been a natural number string index but it was given as "${typeof idx}", value being ${JSON.stringify(
         idx,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
 
@@ -54,14 +54,14 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
     `^<${
       resolvedOpts.skipOpeningBracket ? "?" : ""
     }${whitespaceChunk}\\w+${whitespaceChunk}\\/?${whitespaceChunk}>`,
-    "g"
+    "g",
   );
   // its custom-html tag version:
   let r5 = new RegExp(
     `^<${
       resolvedOpts.skipOpeningBracket ? "?" : ""
     }${whitespaceChunk}[${generalChar}]+[-${generalChar}]*${whitespaceChunk}>`,
-    "g"
+    "g",
   );
   // to anybody who wonders, the \u2070-\uFFFF covers all the surrogates
   // of which emoji can be assembled. This is a very rough match, aiming to
@@ -76,13 +76,13 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
     `^<${
       resolvedOpts.skipOpeningBracket ? "?" : ""
     }\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['"\\w]`,
-    "g"
+    "g",
   );
   // its custom-html tag version:
   let r6 = new RegExp(
     `^<${
       resolvedOpts.skipOpeningBracket ? "?" : ""
-    }\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`
+    }\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`,
   );
 
   // =======
@@ -91,14 +91,14 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
     `^<${
       resolvedOpts.skipOpeningBracket ? "?" : ""
     }\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`,
-    "g"
+    "g",
   );
   // its custom-html tag version:
   let r7 = new RegExp(
     `^<${
       resolvedOpts.skipOpeningBracket ? "?" : ""
     }\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`,
-    "g"
+    "g",
   );
 
   // =======
@@ -107,14 +107,14 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
     `^<${
       resolvedOpts.skipOpeningBracket ? "?" : ""
     }${whitespaceChunk}\\w+(?:\\s*\\w+)?\\s*\\w+=['"]`,
-    "g"
+    "g",
   );
   // its custom-html tag version:
   let r8 = new RegExp(
     `^<${
       resolvedOpts.skipOpeningBracket ? "?" : ""
     }${whitespaceChunk}[${generalChar}]+[-${generalChar}]*\\s+(?:\\s*\\w+)?\\s*\\w+=['"]`,
-    "g"
+    "g",
   );
 
   // =======
@@ -123,7 +123,7 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
     `^<${
       resolvedOpts.skipOpeningBracket ? `?\\/?` : ""
     }(${whitespaceChunk}[${generalChar}]+)+${whitespaceChunk}[\\\\/=>]`,
-    ""
+    "",
   );
   // =======
   // r10. closing tag with slash present but opening bracket missing
@@ -145,7 +145,7 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
 
   DEV &&
     console.log(
-      `148 ██ ${`\u001b[${33}m${`whatToTest`}\u001b[${39}m`} = "${whatToTest}"`
+      `148 ██ ${`\u001b[${33}m${`whatToTest`}\u001b[${39}m`} = "${whatToTest}"`,
     );
 
   // -----------------------------------------------------------------------------
@@ -223,8 +223,8 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
         `223 FIY ${`\u001b[${33}m${`qualified`}\u001b[${39}m`} = ${JSON.stringify(
           qualified,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     if (
@@ -240,7 +240,7 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
               passed = true;
               DEV &&
                 console.log(
-                  `243 ${`\u001b[${31}m${`EOL after tag name`}\u001b[${39}m`}`
+                  `243 ${`\u001b[${31}m${`EOL after tag name`}\u001b[${39}m`}`,
                 );
             }
             return true;
@@ -274,8 +274,8 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
       `274 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
         passed,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   if (
@@ -294,8 +294,8 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
       `294 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
         passed,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   //
@@ -306,8 +306,8 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
       }])`}\u001b[${39}m`} = ${JSON.stringify(
         isNotLetter(str[idx + 1]),
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   let res = typeof str === "string" && idx < str.length && passed;
   DEV && console.log(`313 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);

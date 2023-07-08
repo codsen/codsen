@@ -14,21 +14,21 @@ test("01 - source defs arg is wrong", () => {
       extract();
     },
     /THROW_ID_01/g,
-    "01.01"
+    "01.01",
   );
   throws(
     () => {
       extract(1);
     },
     /THROW_ID_01/g,
-    "01.02"
+    "01.02",
   );
   throws(
     () => {
       extract(true);
     },
     /THROW_ID_01/g,
-    "01.03"
+    "01.03",
   );
 });
 
@@ -38,14 +38,14 @@ test("02 - def arg is wrong", () => {
       extract("");
     },
     /THROW_ID_02/g,
-    "02.01"
+    "02.01",
   );
   throws(
     () => {
       extract("zzz", 1);
     },
     /THROW_ID_02/g,
-    "02.02"
+    "02.02",
   );
 });
 
@@ -55,28 +55,28 @@ test("03 - opts arg is wrong", () => {
       extract("zzz", "zzz", 1);
     },
     /THROW_ID_03/g,
-    "03.01"
+    "03.01",
   );
   throws(
     () => {
       extract("zzz", "zzz", []);
     },
     /THROW_ID_03/g,
-    "03.02"
+    "03.02",
   );
   throws(
     () => {
       extract("zzz", "zzz", [""]);
     },
     /THROW_ID_03/g,
-    "03.03"
+    "03.03",
   );
   throws(
     () => {
       extract("zzz", "zzz", ["throwIfNotFound"]);
     },
     /THROW_ID_03/g,
-    "03.04"
+    "03.04",
   );
 });
 
@@ -96,7 +96,7 @@ test("04 - defs arg is not found", () => {
       error: "not found",
       all: ["a"],
     },
-    "04.01"
+    "04.01",
   );
   equal(
     extract("a", "b", { extractAll: false }),
@@ -113,7 +113,7 @@ test("04 - defs arg is not found", () => {
       error: "not found",
       all: [],
     },
-    "04.02"
+    "04.02",
   );
 });
 
@@ -133,7 +133,7 @@ test("05 - minimal #1", () => {
       error: null,
       all: ["x"],
     },
-    "05.01"
+    "05.01",
   );
   equal(
     extract("x", "x", { extractAll: false }),
@@ -150,7 +150,7 @@ test("05 - minimal #1", () => {
       error: null,
       all: [],
     },
-    "05.02"
+    "05.02",
   );
 });
 
@@ -170,7 +170,7 @@ test("06 - minimal #2", () => {
       error: null,
       all: ["a", "b"],
     },
-    "06.01"
+    "06.01",
   );
   equal(
     extract("a b", "b", { extractAll: false }),
@@ -187,7 +187,7 @@ test("06 - minimal #2", () => {
       error: null,
       all: [],
     },
-    "06.02"
+    "06.02",
   );
 });
 
@@ -207,7 +207,7 @@ test("07 - minimal #3", () => {
       error: "not found",
       all: ["ab"],
     },
-    "07.01"
+    "07.01",
   );
   equal(
     extract("ab", "b", { extractAll: false }),
@@ -224,7 +224,7 @@ test("07 - minimal #3", () => {
       error: "not found",
       all: [],
     },
-    "07.02"
+    "07.02",
   );
 });
 
@@ -234,7 +234,7 @@ test("08 - unclosed comment range - found", () => {
       `interface x { y: boolean }; /*
     `,
       "x",
-      { extractAll: true }
+      { extractAll: true },
     ),
     {
       identifiers: ["interface", "x"],
@@ -249,7 +249,7 @@ test("08 - unclosed comment range - found", () => {
       error: null,
       all: ["x"],
     },
-    "08.01"
+    "08.01",
   );
 });
 
@@ -259,7 +259,7 @@ test("09 - unclosed comment range - not found", () => {
       `/*interface x { y: boolean };
     `,
       "x",
-      { extractAll: true }
+      { extractAll: true },
     ),
     {
       identifiers: [],
@@ -274,7 +274,7 @@ test("09 - unclosed comment range - not found", () => {
       error: "not found",
       all: [],
     },
-    "09.01"
+    "09.01",
   );
 });
 
@@ -294,7 +294,7 @@ test("10 - unclosed line comment", () => {
       error: "not found",
       all: [],
     },
-    "10.01"
+    "10.01",
   );
 });
 
@@ -303,7 +303,7 @@ test("11 - supports CR line endings", () => {
     extract(
       "interface a { b: boolean }; //\rinterface c { d: boolean };",
       "a",
-      { extractAll: true }
+      { extractAll: true },
     ),
     {
       identifiers: ["interface", "a"],
@@ -318,13 +318,13 @@ test("11 - supports CR line endings", () => {
       error: null,
       all: ["a", "c"],
     },
-    "11.01"
+    "11.01",
   );
   equal(
     extract(
       "interface a { b: boolean }; //\rinterface c { d: boolean };",
       "c",
-      { extractAll: true }
+      { extractAll: true },
     ),
     {
       identifiers: ["interface", "c"],
@@ -339,7 +339,7 @@ test("11 - supports CR line endings", () => {
       error: null,
       all: ["a", "c"],
     },
-    "11.02"
+    "11.02",
   );
 });
 

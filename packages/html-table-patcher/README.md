@@ -52,7 +52,7 @@ assert.equal(
   </td>
 </tr>
 {% endif %}
-</table>`
+</table>`,
   ).result,
   `<table>
 
@@ -86,7 +86,7 @@ assert.equal(
   </td>
 </tr>
 
-</table>`
+</table>`,
 );
 ```
 

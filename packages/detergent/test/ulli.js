@@ -28,10 +28,10 @@ test(`02 - ${`\u001b[${31}m${"ul/li tags"}\u001b[${39}m`} - adds missing spaces,
         not,
         n,
         "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after",
-        opt
+        opt,
       ).res,
       "Text First point Second point Third point Text straight after",
-      "02.01"
+      "02.01",
     );
   });
 });
@@ -60,10 +60,10 @@ test(`04 - ${`\u001b[${31}m${"ul/li tags"}\u001b[${39}m`} - adds missing spaces,
         not,
         n,
         "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after",
-        opt
+        opt,
       ).res,
       "Text\nFirst point\nSecond point\nThird point\nText straight after",
-      "04.01"
+      "04.01",
     );
   });
 });
@@ -82,10 +82,10 @@ test(`05 - ${`\u001b[${31}m${"ul/li tags"}\u001b[${39}m`} - adds missing spaces,
         not,
         n,
         "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after",
-        opt
+        opt,
       ).res,
       "Text<br/>\nFirst point<br/>\nSecond point<br/>\nThird point<br/>\nText straight after",
-      "05.01"
+      "05.01",
     );
   });
 
@@ -98,10 +98,10 @@ test(`05 - ${`\u001b[${31}m${"ul/li tags"}\u001b[${39}m`} - adds missing spaces,
         replaceLineBreaks: true,
         useXHTML: true,
         stripHtml: true,
-      }
+      },
     ).res,
     "Text<br/>\nFirst point<br/>\nSecond point<br/>\nThird point<br/>\nText straight after",
-    "05.02"
+    "05.02",
   );
 });
 

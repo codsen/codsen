@@ -18,7 +18,7 @@ const defaults: Opts = {
 function includesWithGlob(
   input: string | string[],
   stringToFind: string | string[],
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): boolean {
   // maybe we can end prematurely:
   if (!input.length || !stringToFind.length) {
@@ -31,7 +31,7 @@ function includesWithGlob(
 
   if (typeof stringToFind === "string") {
     return resolvedInput.some((val) =>
-      isMatch(val, stringToFind, { caseSensitive: resolvedOpts.caseSensitive })
+      isMatch(val, stringToFind, { caseSensitive: resolvedOpts.caseSensitive }),
     );
   }
   // array then.
@@ -40,16 +40,16 @@ function includesWithGlob(
       resolvedInput.some((val) =>
         isMatch(val, stringToFindVal, {
           caseSensitive: resolvedOpts.caseSensitive,
-        })
-      )
+        }),
+      ),
     );
   }
   return stringToFind.every((stringToFindVal) =>
     resolvedInput.some((val) =>
       isMatch(val, stringToFindVal, {
         caseSensitive: resolvedOpts.caseSensitive,
-      })
-    )
+      }),
+    ),
   );
 }
 

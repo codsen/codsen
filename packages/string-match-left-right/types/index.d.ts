@@ -6,7 +6,7 @@ interface Opts {
     | ((
         wholeCharacterOutside?: string | undefined,
         theRemainderOfTheString?: string,
-        firstCharOutsideIndex?: number
+        firstCharOutsideIndex?: number,
       ) => string | boolean);
   i: boolean;
   trimBeforeMatching: boolean;
@@ -22,25 +22,25 @@ declare function matchLeftIncl(
   str: string,
   position: number,
   whatToMatch: (() => string) | string | string[],
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): boolean | string;
 declare function matchLeft(
   str: string,
   position: number,
   whatToMatch: (() => string) | string | string[],
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): boolean | string;
 declare function matchRightIncl(
   str: string,
   position: number,
   whatToMatch: (() => string) | string | string[],
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): boolean | string;
 declare function matchRight(
   str: string,
   position: number,
   whatToMatch: (() => string) | string | string[],
-  opts?: Partial<Opts>
+  opts?: Partial<Opts>,
 ): boolean | string;
 
 export {

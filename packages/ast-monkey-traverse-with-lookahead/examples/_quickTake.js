@@ -23,7 +23,7 @@ traverse(
   (key1, val1, innerObj) => {
     gathered.push([key1, val1, innerObj]);
   },
-  1 // <---------------- report one upcoming value
+  1, // <---------------- report one upcoming value
 );
 
 assert.deepEqual(gathered, [

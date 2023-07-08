@@ -10,7 +10,7 @@ test("01", () => {
       mixer("z");
     },
     /THROW_ID_01/g,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -21,11 +21,11 @@ test("02", () => {
         {
           foo: true,
         },
-        "z"
+        "z",
       );
     },
     /THROW_ID_02/g,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -44,11 +44,11 @@ test("03", () => {
           // like is the case in string-apostrophes convertOne()).
           bar: true,
           baz: "zz",
-        }
+        },
       );
     },
     /THROW_ID_03/g,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -62,7 +62,7 @@ test("04", () => {
         // <-- foo is missing in defaults, that's ok
         bar: true,
         baz: "zz",
-      }
+      },
     ),
     [
       {
@@ -76,7 +76,7 @@ test("04", () => {
         baz: "zz",
       },
     ],
-    "04.01"
+    "04.01",
   );
 });
 

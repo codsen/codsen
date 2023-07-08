@@ -14,35 +14,35 @@ test("01 - wrong/missing input = throw", () => {
       unfancy();
     },
     /THROW_ID_01/g,
-    "01.01"
+    "01.01",
   );
   throws(
     () => {
       unfancy(1);
     },
     /THROW_ID_01/g,
-    "01.02"
+    "01.02",
   );
   throws(
     () => {
       unfancy(null);
     },
     /THROW_ID_01/g,
-    "01.03"
+    "01.03",
   );
   throws(
     () => {
       unfancy(undefined);
     },
     /THROW_ID_01/g,
-    "01.04"
+    "01.04",
   );
   throws(
     () => {
       unfancy(true);
     },
     /THROW_ID_01/g,
-    "01.05"
+    "01.05",
   );
 });
 

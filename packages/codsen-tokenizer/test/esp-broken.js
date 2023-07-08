@@ -67,7 +67,7 @@ test(`01 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - tails missing a
         ],
       },
     ],
-    "01.01"
+    "01.01",
   );
 });
 
@@ -150,7 +150,7 @@ test(`02 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - tails missing a
         ],
       },
     ],
-    "02.01"
+    "02.01",
   );
 });
 
@@ -227,7 +227,7 @@ test(`03 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - tails null - ne
         ],
       },
     ],
-    "03.01"
+    "03.01",
   );
 });
 
@@ -266,7 +266,7 @@ test(`04 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - error, two ESP 
         tailEndsAt: 14,
       },
     ],
-    "04.01"
+    "04.01",
   );
 });
 
@@ -326,7 +326,7 @@ test(`05 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - tails missing c
         ],
       },
     ],
-    "05.01"
+    "05.01",
   );
 });
 
@@ -462,7 +462,7 @@ test(`06 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - tails missing c
         attribs: [],
       },
     ],
-    "06.01"
+    "06.01",
   );
 });
 
@@ -571,7 +571,7 @@ test(`07 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - tails missing c
         ],
       },
     ],
-    "07.01"
+    "07.01",
   );
 });
 
@@ -630,7 +630,7 @@ test(`08 - ${`\u001b[${35}m${"broken ESP tags"}\u001b[${39}m`} - heads missing c
         ],
       },
     ],
-    "08.01"
+    "08.01",
   );
 });
 

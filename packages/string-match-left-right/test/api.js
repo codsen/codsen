@@ -19,7 +19,7 @@ test("01 - throws", () => {
       matchLeftIncl("zzz", 1);
     },
     /THROW_ID_08/,
-    "01.01"
+    "01.01",
   );
 
   throws(
@@ -27,7 +27,7 @@ test("01 - throws", () => {
       matchRightIncl("zzz", 1);
     },
     /THROW_ID_08/,
-    "01.02"
+    "01.02",
   );
 
   // third arg being wrong
@@ -37,7 +37,7 @@ test("01 - throws", () => {
       matchRightIncl("zzz", 1, 1);
     },
     /THROW_ID_05/,
-    "01.03"
+    "01.03",
   );
 
   throws(
@@ -45,7 +45,7 @@ test("01 - throws", () => {
       matchRightIncl("zzz", "aaa", 1);
     },
     /THROW_ID_03/,
-    "01.04"
+    "01.04",
   );
 
   throws(
@@ -53,7 +53,7 @@ test("01 - throws", () => {
       matchRightIncl("zzz", "aaa", "");
     },
     /THROW_ID_03/,
-    "01.05"
+    "01.05",
   );
 
   throws(
@@ -61,7 +61,7 @@ test("01 - throws", () => {
       matchRightIncl("zzz", "aaa", [""]);
     },
     /THROW_ID_03/,
-    "01.06"
+    "01.06",
   );
 
   throws(
@@ -69,7 +69,7 @@ test("01 - throws", () => {
       matchRightIncl("zzz", "aaa", ["", ""]);
     },
     /THROW_ID_03/,
-    "01.07"
+    "01.07",
   );
 
   // no second arg
@@ -79,7 +79,7 @@ test("01 - throws", () => {
       matchLeftIncl("zzz", null, ["aaa"]);
     },
     /THROW_ID_03/,
-    "01.08"
+    "01.08",
   );
 
   throws(
@@ -87,7 +87,7 @@ test("01 - throws", () => {
       matchRightIncl("zzz", null, ["aaa"]);
     },
     /THROW_ID_03/,
-    "01.09"
+    "01.09",
   );
 
   throws(
@@ -95,7 +95,7 @@ test("01 - throws", () => {
       matchRightIncl("zzz", null, []);
     },
     /THROW_ID_03/,
-    "01.10"
+    "01.10",
   );
 
   throws(
@@ -103,7 +103,7 @@ test("01 - throws", () => {
       matchRightIncl("zzz", null, "");
     },
     /THROW_ID_03/,
-    "01.11"
+    "01.11",
   );
 
   // second arg completely missing onwards
@@ -113,7 +113,7 @@ test("01 - throws", () => {
       matchLeftIncl("zzz");
     },
     /THROW_ID_03/,
-    "01.12"
+    "01.12",
   );
 
   throws(
@@ -121,7 +121,7 @@ test("01 - throws", () => {
       matchRightIncl("zzz");
     },
     /THROW_ID_03/,
-    "01.13"
+    "01.13",
   );
 
   // fourth arg not a plain object
@@ -130,7 +130,7 @@ test("01 - throws", () => {
       matchRightIncl("zzz", 1, ["aaa"], true);
     },
     /THROW_ID_06/,
-    "01.14"
+    "01.14",
   );
 
   // opts.trimBeforeMatching wrong type
@@ -141,7 +141,7 @@ test("01 - throws", () => {
       });
     },
     /THROW_ID_09/,
-    "01.15"
+    "01.15",
   );
 
   throws(
@@ -151,7 +151,7 @@ test("01 - throws", () => {
       });
     },
     /trimCharsBeforeMatching/,
-    "01.16"
+    "01.16",
   );
 });
 

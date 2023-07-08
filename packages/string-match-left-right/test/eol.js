@@ -20,7 +20,7 @@ test(`02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
   equal(
     matchLeft("a", 0, () => "EOL"),
     "EOL",
-    "02.01"
+    "02.01",
   );
 });
 
@@ -32,7 +32,7 @@ test(`03 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
       },
     }),
     false,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -44,7 +44,7 @@ test(`04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
       },
     }),
     "EOL",
-    "04.01"
+    "04.01",
   );
 });
 
@@ -53,7 +53,7 @@ test(`05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
     cb: (...args) => {
       equal(
         args,
-        [undefined, "", undefined] // because there's nothing outside-left of index 0
+        [undefined, "", undefined], // because there's nothing outside-left of index 0
       );
       return true;
     },
@@ -65,7 +65,7 @@ test(`06 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
   equal(
     matchLeft(" a", 1, () => "EOL"),
     false,
-    "06.01"
+    "06.01",
   );
 });
 
@@ -73,7 +73,7 @@ test(`07 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
   equal(
     matchLeft("EOLa", 3, () => "EOL"),
     false,
-    "07.01"
+    "07.01",
   );
 });
 
@@ -87,7 +87,7 @@ test(`09 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "09.01"
+    "09.01",
   );
 });
 
@@ -96,7 +96,7 @@ test(`10 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
   equal(
     matchLeft("za", 1, () => "EOL"),
     false,
-    "10.01"
+    "10.01",
   );
 });
 
@@ -106,7 +106,7 @@ test(`11 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
       trimCharsBeforeMatching: ["z"],
     }),
     "EOL",
-    "11.01"
+    "11.01",
   );
 });
 
@@ -115,7 +115,7 @@ test(`12 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
   equal(
     matchLeft("z a", 2, () => "EOL"),
     false,
-    "12.01"
+    "12.01",
   );
 });
 
@@ -126,7 +126,7 @@ test(`13 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "13.01"
+    "13.01",
   );
 });
 
@@ -191,7 +191,7 @@ test(`27 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwh
       trimBeforeMatching: true,
     }),
     "EOL",
-    "27.01"
+    "27.01",
   );
 });
 
@@ -201,7 +201,7 @@ test(`28 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwh
       trimBeforeMatching: true,
     }),
     "EOL",
-    "28.01"
+    "28.01",
   );
 });
 
@@ -211,7 +211,7 @@ test(`29 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwh
       trimBeforeMatching: true,
     }),
     "EOL",
-    "29.01"
+    "29.01",
   );
 });
 
@@ -221,7 +221,7 @@ test(`30 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mwh
       trimBeforeMatching: true,
     }),
     "EOL",
-    "30.01"
+    "30.01",
   );
 });
 
@@ -236,7 +236,7 @@ test(`32 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
   equal(
     matchLeftIncl("a", 0, () => "EOL"),
     false,
-    "32.01"
+    "32.01",
   );
 });
 
@@ -248,7 +248,7 @@ test(`33 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
       },
     }),
     false,
-    "33.01"
+    "33.01",
   );
 });
 
@@ -260,7 +260,7 @@ test(`34 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
       },
     }),
     false,
-    "34.01"
+    "34.01",
   );
 });
 
@@ -268,7 +268,7 @@ test(`35 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
   equal(
     matchLeftIncl(" a", 1, () => "EOL"),
     false,
-    "35.01"
+    "35.01",
   );
 });
 
@@ -276,7 +276,7 @@ test(`36 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
   equal(
     matchLeftIncl("EOLa", 3, () => "EOLa"),
     false,
-    "36.01"
+    "36.01",
   );
   equal(matchLeftIncl("EOLa", 3, "EOL"), false, "36.02");
 });
@@ -287,7 +287,7 @@ test(`37 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     false,
-    "37.01"
+    "37.01",
   );
 });
 
@@ -295,7 +295,7 @@ test(`38 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
   equal(
     matchLeftIncl("za", 1, () => "EOL"),
     false,
-    "38.01"
+    "38.01",
   );
 });
 
@@ -305,7 +305,7 @@ test(`39 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
       trimCharsBeforeMatching: ["z"],
     }),
     false,
-    "39.01"
+    "39.01",
   );
 });
 
@@ -314,7 +314,7 @@ test(`40 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
   equal(
     matchLeftIncl("z a", 2, () => "EOL"),
     false,
-    "40.01"
+    "40.01",
   );
 });
 
@@ -325,7 +325,7 @@ test(`41 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     false,
-    "41.01"
+    "41.01",
   );
 });
 
@@ -340,7 +340,7 @@ test(`43 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("a", 0, () => "EOL"),
     "EOL",
-    "43.01"
+    "43.01",
   );
 });
 
@@ -352,7 +352,7 @@ test(`44 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       },
     }),
     false,
-    "44.01"
+    "44.01",
   );
 });
 
@@ -364,7 +364,7 @@ test(`45 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       },
     }),
     "EOL",
-    "45.01"
+    "45.01",
   );
 });
 
@@ -381,7 +381,7 @@ test(`47 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("a ", 0, () => "EOL"),
     false,
-    "47.01"
+    "47.01",
   );
 });
 
@@ -389,7 +389,7 @@ test(`48 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("a ", 1, () => "EOL"),
     "EOL",
-    "48.01"
+    "48.01",
   );
 });
 
@@ -397,7 +397,7 @@ test(`49 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("aEOL", 0, () => "EOL"),
     false,
-    "49.01"
+    "49.01",
   );
 });
 
@@ -411,7 +411,7 @@ test(`51 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "51.01"
+    "51.01",
   );
 });
 
@@ -419,7 +419,7 @@ test(`52 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("az", 0, () => "EOL"),
     false,
-    "52.01"
+    "52.01",
   );
 });
 
@@ -429,7 +429,7 @@ test(`53 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimCharsBeforeMatching: ["z"],
     }),
     "EOL",
-    "53.01"
+    "53.01",
   );
 });
 
@@ -438,7 +438,7 @@ test(`54 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
   equal(
     matchRight("a z", 0, () => "EOL"),
     false,
-    "54.01"
+    "54.01",
   );
 });
 
@@ -449,7 +449,7 @@ test(`55 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "55.01"
+    "55.01",
   );
 });
 
@@ -514,7 +514,7 @@ test(`69 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "69.01"
+    "69.01",
   );
 });
 
@@ -524,7 +524,7 @@ test(`70 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "70.01"
+    "70.01",
   );
 });
 
@@ -534,7 +534,7 @@ test(`71 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "71.01"
+    "71.01",
   );
 });
 
@@ -544,7 +544,7 @@ test(`72 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "72.01"
+    "72.01",
   );
 });
 
@@ -558,7 +558,7 @@ test(`74 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimCharsBeforeMatching: ["z"],
     }),
     "EOL",
-    "74.01"
+    "74.01",
   );
 });
 
@@ -576,7 +576,7 @@ test(`77 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimCharsBeforeMatching: ["z"],
     }),
     "EOL",
-    "77.01"
+    "77.01",
   );
 });
 
@@ -592,7 +592,7 @@ test(`79 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "79.01"
+    "79.01",
   );
 });
 
@@ -607,7 +607,7 @@ test(`81 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "81.01"
+    "81.01",
   );
 });
 
@@ -617,7 +617,7 @@ test(`82 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "z",
-    "82.01"
+    "82.01",
   );
 });
 
@@ -628,7 +628,7 @@ test(`83 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     "EOL",
-    "83.01"
+    "83.01",
   );
 });
 
@@ -639,7 +639,7 @@ test(`84 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     false,
-    "84.01"
+    "84.01",
   );
 });
 
@@ -657,7 +657,7 @@ test(`86 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
   equal(
     matchRightIncl("a", 0, () => "EOL"),
     false,
-    "86.01"
+    "86.01",
   );
 });
 
@@ -669,7 +669,7 @@ test(`87 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
       },
     }),
     false,
-    "87.01"
+    "87.01",
   );
 });
 
@@ -681,7 +681,7 @@ test(`88 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
       },
     }),
     false,
-    "88.01"
+    "88.01",
   );
 });
 
@@ -689,7 +689,7 @@ test(`89 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
   equal(
     matchRightIncl("a ", 0, () => "EOL"),
     false,
-    "89.01"
+    "89.01",
   );
 });
 
@@ -697,7 +697,7 @@ test(`90 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
   equal(
     matchRightIncl("aEOL", 0, () => "aEOL"),
     false,
-    "90.01"
+    "90.01",
   );
 });
 
@@ -711,7 +711,7 @@ test(`92 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     false,
-    "92.01"
+    "92.01",
   );
 });
 
@@ -719,7 +719,7 @@ test(`93 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
   equal(
     matchRightIncl("az", 0, () => "EOL"),
     false,
-    "93.01"
+    "93.01",
   );
 });
 
@@ -729,7 +729,7 @@ test(`94 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
       trimCharsBeforeMatching: ["z"],
     }),
     false,
-    "94.01"
+    "94.01",
   );
 });
 
@@ -738,7 +738,7 @@ test(`95 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
   equal(
     matchRightIncl("a z", 0, () => "EOL"),
     false,
-    "95.01"
+    "95.01",
   );
 });
 
@@ -749,7 +749,7 @@ test(`96 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEO
       trimBeforeMatching: true,
     }),
     false,
-    "96.01"
+    "96.01",
   );
 });
 

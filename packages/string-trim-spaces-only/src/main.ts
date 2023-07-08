@@ -36,8 +36,8 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
       `string-trim-spaces-only: [THROW_ID_01] input must be string! It was given as ${typeof str}, equal to:\n${JSON.stringify(
         str,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   // resolvedOpts preparation:
@@ -63,7 +63,7 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
     if (check(str[0])) {
       DEV &&
         console.log(
-          `066 \u001b[${36}m${`traverse forwards to trim heads`}\u001b[${39}m`
+          `066 \u001b[${36}m${`traverse forwards to trim heads`}\u001b[${39}m`,
         );
       for (let i = 0, len = str.length; i < len; i++) {
         DEV &&
@@ -71,8 +71,8 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
             `\u001b[${36}m${`046 ------ str[${i}] = ${JSON.stringify(
               str[i],
               null,
-              0
-            )}`}\u001b[${39}m`
+              0,
+            )}`}\u001b[${39}m`,
           );
         if (!check(str[i])) {
           newStart = i;
@@ -81,8 +81,8 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
               `081 SET ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
                 newStart,
                 null,
-                4
-              )}, then ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+                4,
+              )}, then ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`,
             );
           break;
         }
@@ -105,12 +105,12 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
     if (check(str[str.length - 1])) {
       DEV &&
         console.log(
-          `108 \u001b[${36}m${`traverse backwards to trim tails`}\u001b[${39}m`
+          `108 \u001b[${36}m${`traverse backwards to trim tails`}\u001b[${39}m`,
         );
       for (let i = str.length; i--; ) {
         DEV &&
           console.log(
-            `\u001b[${36}m${`085 ------ str[${i}] = ${str[i]}`}\u001b[${39}m`
+            `\u001b[${36}m${`085 ------ str[${i}] = ${str[i]}`}\u001b[${39}m`,
           );
         if (!check(str[i])) {
           newEnd = i + 1;
@@ -119,8 +119,8 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
               `119 SET ${`\u001b[${33}m${`newEnd`}\u001b[${39}m`} = ${JSON.stringify(
                 newEnd,
                 null,
-                4
-              )}, then ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+                4,
+              )}, then ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`,
             );
           break;
         }
@@ -131,16 +131,16 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
         `131 CURRENTLY, ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
           newStart,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     DEV &&
       console.log(
         `139 CURRENTLY, ${`\u001b[${33}m${`newEnd`}\u001b[${39}m`} = ${JSON.stringify(
           newEnd,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     if (newStart) {
       if (newEnd) {

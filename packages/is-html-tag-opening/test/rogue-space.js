@@ -16,7 +16,7 @@ test(`01 - ${`\u001b[${36}m${"broken code"}\u001b[${39}m`} - spaces around`, () 
     isOpening(s1, 0, {
       allowCustomTagNames: true,
     }),
-    "01.02"
+    "01.02",
   );
 });
 
@@ -27,7 +27,7 @@ test(`02 - ${`\u001b[${36}m${"broken code"}\u001b[${39}m`} - spaces around`, () 
     isOpening(s1, 0, {
       allowCustomTagNames: true,
     }),
-    "02.02"
+    "02.02",
   );
 });
 
@@ -38,7 +38,7 @@ test(`03 - ${`\u001b[${36}m${"broken code"}\u001b[${39}m`} - spaces around`, () 
     isOpening(s1, 0, {
       allowCustomTagNames: true,
     }),
-    "03.02"
+    "03.02",
   );
 });
 
@@ -49,7 +49,7 @@ test(`04 - ${`\u001b[${36}m${"broken code"}\u001b[${39}m`} - spaces around`, () 
     isOpening(s1, 0, {
       allowCustomTagNames: true,
     }),
-    "04.02"
+    "04.02",
   );
 });
 
@@ -60,7 +60,7 @@ test(`05 - ${`\u001b[${36}m${"broken code"}\u001b[${39}m`} - spaces around`, () 
     isOpening(s1, 0, {
       allowCustomTagNames: true,
     }),
-    "05.02"
+    "05.02",
   );
 });
 

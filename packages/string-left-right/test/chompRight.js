@@ -23,22 +23,22 @@ test("01", () => {
   equal(
     chompRight("a b c d  c d  \nx", 2, { mode: "0" }, "c", "d"),
     14,
-    "01.11"
+    "01.11",
   );
   equal(
     chompRight("a b c d  c d  \nx", 2, { mode: null }, "c", "d"),
     14,
-    "01.12"
+    "01.12",
   );
   equal(
     chompRight("a b c d  c d  \nx", 2, { mode: "" }, "c", "d"),
     14,
-    "01.13"
+    "01.13",
   );
   equal(
     chompRight("a b c d  c d  \nx", 2, { mode: undefined }, "c", "d"),
     14,
-    "01.14"
+    "01.14",
   );
 });
 
@@ -54,7 +54,7 @@ test("02", () => {
   equal(
     chompRight("a b c d  c d  \t \nx", 2, { mode: "1" }, "c", "d"),
     12,
-    "02.07"
+    "02.07",
   );
 });
 
@@ -70,7 +70,7 @@ test("03", () => {
   equal(
     chompRight("a b c d  c d  \t \nx", 2, { mode: "2" }, "c", "d"),
     16,
-    "03.07"
+    "03.07",
   );
 });
 
@@ -86,7 +86,7 @@ test("04", () => {
   equal(
     chompRight("a b c d  c d  \t \nx", 2, { mode: "3" }, "c", "d"),
     17,
-    "04.07"
+    "04.07",
   );
 });
 
@@ -125,7 +125,7 @@ test("06", () => {
       chompRight("a b c d  c dx", 2, { mode: "z" }, "k", "l");
     },
     /THROW_ID_02/,
-    "06.01"
+    "06.01",
   );
 });
 
@@ -147,17 +147,17 @@ test("10", () => {
   equal(
     chompRight("a b c d  c d    \t", 2, { mode: 0 }, "c", "d"),
     17,
-    "10.01"
+    "10.01",
   );
   equal(
     chompRight("a b c d  c d    \t", 2, { mode: 2 }, "c", "d"),
     17,
-    "10.02"
+    "10.02",
   );
   equal(
     chompRight("a b c d  c d    \t", 2, { mode: 3 }, "c", "d"),
     17,
-    "10.03"
+    "10.03",
   );
 });
 

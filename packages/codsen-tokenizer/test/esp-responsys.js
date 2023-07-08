@@ -72,7 +72,7 @@ test(`01 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - one template tag
         attribs: [],
       },
     ],
-    "01"
+    "01",
   );
 });
 
@@ -156,7 +156,7 @@ test(`02 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - one attr, one ta
         value: "!",
       },
     ],
-    "02"
+    "02",
   );
 });
 
@@ -194,7 +194,7 @@ test(`03 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - if conditional m
         tail: ">",
       },
     ],
-    "03"
+    "03",
   );
 });
 
@@ -232,7 +232,7 @@ test(`04 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - if conditional, 
         tail: ">",
       },
     ],
-    "04"
+    "04",
   );
 });
 
@@ -270,7 +270,7 @@ test(`05 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - if conditional, 
         tail: ">",
       },
     ],
-    "05"
+    "05",
   );
 });
 
@@ -322,7 +322,7 @@ test(`06 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - calculation insi
         attribs: [],
       },
     ],
-    "06"
+    "06",
   );
 });
 
@@ -338,7 +338,7 @@ test(`07 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - RPL list`, () =>
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -463,7 +463,7 @@ test(`07 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - RPL list`, () =>
         attribs: [],
       },
     ],
-    "07"
+    "07",
   );
 });
 
@@ -477,7 +477,7 @@ test(`08 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - RPL if`, () => {
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -554,7 +554,7 @@ test(`08 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - RPL if`, () => {
         attribs: [],
       },
     ],
-    "08"
+    "08",
   );
 });
 
@@ -572,7 +572,7 @@ test(`09 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - RPL list`, () =>
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -708,7 +708,7 @@ test(`09 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - RPL list`, () =>
         closing: true,
       },
     ],
-    "09"
+    "09",
   );
 });
 
@@ -722,7 +722,7 @@ test(`10 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - RPL include`, ()
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -761,7 +761,7 @@ test(`10 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - RPL include`, ()
         value: "</td>",
       },
     ],
-    "10"
+    "10",
   );
 });
 
@@ -783,7 +783,7 @@ test(`11 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - RPL data`, () =>
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -1032,7 +1032,7 @@ test(`11 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - RPL data`, () =>
         value: "</table>",
       },
     ],
-    "11"
+    "11",
   );
 });
 
@@ -1055,7 +1055,7 @@ test(`12 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - multiple directi
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -1290,7 +1290,7 @@ test(`12 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - multiple directi
         value: "</table>",
       },
     ],
-    "12"
+    "12",
   );
 });
 
@@ -1338,7 +1338,7 @@ test(`13 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - missing values`,
         value: "</h1>",
       },
     ],
-    "13"
+    "13",
   );
 });
 
@@ -1350,7 +1350,7 @@ test(`14 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - bracket notation
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -1407,7 +1407,7 @@ test(`14 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - bracket notation
         tail: "}",
       },
     ],
-    "14"
+    "14",
   );
 });
 
@@ -1431,7 +1431,7 @@ test(`15 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - expression in va
         tail: "}",
       },
     ],
-    "15"
+    "15",
   );
 });
 
@@ -1455,7 +1455,7 @@ test(`16 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - string concat`, 
         tail: "}",
       },
     ],
-    "16"
+    "16",
   );
 });
 
@@ -1469,7 +1469,7 @@ test(`17 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - concat of sequen
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -1512,7 +1512,7 @@ test(`17 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - concat of sequen
         tail: ">",
       },
     ],
-    "17"
+    "17",
   );
 });
 
@@ -1536,7 +1536,7 @@ test(`18 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - brackets to be p
         tail: "}",
       },
     ],
-    "18"
+    "18",
   );
 });
 
@@ -1616,7 +1616,7 @@ test(`19 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - convert to int`,
         tail: "}",
       },
     ],
-    "19"
+    "19",
   );
 });
 
@@ -1633,7 +1633,7 @@ test(`20 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - comparison`, () 
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -1690,7 +1690,7 @@ test(`20 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - comparison`, () 
         tail: ">",
       },
     ],
-    "20"
+    "20",
   );
 });
 
@@ -1714,7 +1714,7 @@ test(`21 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - comment`, () => 
         tail: "-->",
       },
     ],
-    "21"
+    "21",
   );
 });
 
@@ -1731,7 +1731,7 @@ test(`22 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - logical ops`, ()
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -1802,7 +1802,7 @@ test(`22 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - logical ops`, ()
         tail: ">",
       },
     ],
-    "22"
+    "22",
   );
 });
 
@@ -1834,7 +1834,7 @@ test(`23 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - refs to a file`,
         tail: "}",
       },
     ],
-    "23"
+    "23",
   );
 });
 
@@ -1858,7 +1858,7 @@ test(`24 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - calling methods`
         tail: "}",
       },
     ],
-    "24"
+    "24",
   );
 });
 
@@ -1874,7 +1874,7 @@ test(`25 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - missing value te
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -1917,7 +1917,7 @@ test(`25 - ${`\u001b[${35}m${"responsys-like"}\u001b[${39}m`} - missing value te
         tail: ">",
       },
     ],
-    "25"
+    "25",
   );
 });
 

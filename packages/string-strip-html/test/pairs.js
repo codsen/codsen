@@ -17,7 +17,7 @@ test("01 - single tag pair - tight", () => {
       [0, 3],
       [6, 10],
     ],
-    "01.02"
+    "01.02",
   );
   equal(
     allTagLocations,
@@ -25,7 +25,7 @@ test("01 - single tag pair - tight", () => {
       [0, 3],
       [6, 10],
     ],
-    "01.03"
+    "01.03",
   );
   equal(
     filteredTagLocations,
@@ -33,7 +33,7 @@ test("01 - single tag pair - tight", () => {
       [0, 3],
       [6, 10],
     ],
-    "01.04"
+    "01.04",
   );
 });
 
@@ -47,7 +47,7 @@ test("02 - single tag pair - outer whitespace", () => {
       [0, 4],
       [7, 12],
     ],
-    "02.02"
+    "02.02",
   );
   equal(
     allTagLocations,
@@ -55,7 +55,7 @@ test("02 - single tag pair - outer whitespace", () => {
       [1, 4],
       [7, 11],
     ],
-    "02.03"
+    "02.03",
   );
   equal(
     filteredTagLocations,
@@ -63,7 +63,7 @@ test("02 - single tag pair - outer whitespace", () => {
       [1, 4],
       [7, 11],
     ],
-    "02.04"
+    "02.04",
   );
 });
 
@@ -77,7 +77,7 @@ test("03 - single tag pair - inner and outer whitespace", () => {
       [0, 5],
       [8, 14],
     ],
-    "03.02"
+    "03.02",
   );
   equal(
     allTagLocations,
@@ -85,7 +85,7 @@ test("03 - single tag pair - inner and outer whitespace", () => {
       [1, 4],
       [9, 13],
     ],
-    "03.03"
+    "03.03",
   );
   equal(
     filteredTagLocations,
@@ -93,13 +93,13 @@ test("03 - single tag pair - inner and outer whitespace", () => {
       [1, 4],
       [9, 13],
     ],
-    "03.04"
+    "03.04",
   );
 });
 
 test("04 - single tag pair - text", () => {
   let { result, ranges, allTagLocations, filteredTagLocations } = stripHtml(
-    "This is a title with some <code>code</code> in it"
+    "This is a title with some <code>code</code> in it",
   );
   equal(result, "This is a title with some code in it", "04.01");
   equal(
@@ -108,7 +108,7 @@ test("04 - single tag pair - text", () => {
       [25, 32, " "],
       [36, 44, " "],
     ],
-    "04.02"
+    "04.02",
   );
   equal(
     allTagLocations,
@@ -116,7 +116,7 @@ test("04 - single tag pair - text", () => {
       [26, 32],
       [36, 43],
     ],
-    "04.03"
+    "04.03",
   );
   equal(
     filteredTagLocations,
@@ -124,7 +124,7 @@ test("04 - single tag pair - text", () => {
       [26, 32],
       [36, 43],
     ],
-    "04.04"
+    "04.04",
   );
 });
 
@@ -133,7 +133,7 @@ test("05 - single tag pair - text, pair tag", () => {
     "This is a title with some <code>code</code> in it",
     {
       stripTogetherWithTheirContents: ["code"],
-    }
+    },
   );
   equal(result, "This is a title with some in it", "05.01");
   equal(ranges, [[25, 44, " "]], "05.02");
@@ -143,7 +143,7 @@ test("05 - single tag pair - text, pair tag", () => {
       [26, 32],
       [36, 43],
     ],
-    "05.03"
+    "05.03",
   );
   equal(filteredTagLocations, [[26, 43]], "05.04");
 });
@@ -153,7 +153,7 @@ test("06 - single tag pair - astrisk", () => {
     "This is a title with some <code>code</code> in it",
     {
       stripTogetherWithTheirContents: ["*"],
-    }
+    },
   );
   equal(result, "This is a title with some in it", "06.01");
   equal(ranges, [[25, 44, " "]], "06.02");
@@ -163,7 +163,7 @@ test("06 - single tag pair - astrisk", () => {
       [26, 32],
       [36, 43],
     ],
-    "06.03"
+    "06.03",
   );
   equal(filteredTagLocations, [[26, 43]], "06.04");
 });
@@ -177,7 +177,7 @@ test("08 - multiple tag pairs - adds spaces - #1", () => {
     stripHtml("rrr <a>zzz</a> something\nelse<img/>zzz<div>yyy</div>uuu")
       .result,
     "rrr zzz something\nelse zzz yyy uuu",
-    "08.01"
+    "08.01",
   );
 });
 
@@ -218,7 +218,7 @@ test("17 - tags with attributes - tight inside tag", () => {
   equal(
     stripHtml('aaaaaaa<div class="zzzz">x</div>bbbbbbbb').result,
     "aaaaaaa x bbbbbbbb",
-    "17.01"
+    "17.01",
   );
 });
 
@@ -226,7 +226,7 @@ test("18 - tags with attributes - rogue spaces inside tag", () => {
   equal(
     stripHtml('aaaaaaa< br class="zzzz">bbbbbbbb').result,
     "aaaaaaa bbbbbbbb",
-    "18.01"
+    "18.01",
   );
 });
 
@@ -234,7 +234,7 @@ test("19 - tags with attributes - rogue spaces inside tag, pair", () => {
   equal(
     stripHtml('aaaaaaa< div class="zzzz">x</div>').result,
     "aaaaaaa x",
-    "19.01"
+    "19.01",
   );
 });
 
@@ -242,7 +242,7 @@ test("20 - tags with attributes", () => {
   equal(
     stripHtml('aaaaaaa < div class="zzzz">x</div>').result,
     "aaaaaaa x",
-    "20.01"
+    "20.01",
   );
 });
 
@@ -250,7 +250,7 @@ test("21 - tags with attributes", () => {
   equal(
     stripHtml('aaaaaaa< div class="zzzz">x</div>').result,
     "aaaaaaa x",
-    "21.01"
+    "21.01",
   );
 });
 
@@ -262,7 +262,7 @@ test("23 - multiple brackets repeated", () => {
   equal(
     stripHtml("aaaa<<<<<<div>>>>something</div>bbbbb").result,
     "aaaa something bbbbb",
-    "23.01"
+    "23.01",
   );
 });
 
@@ -270,7 +270,7 @@ test("24 - multiple brackets repeated", () => {
   equal(
     stripHtml("aaaa<<<<<<div>something</div>bbbbb").result,
     "aaaa something bbbbb",
-    "24.01"
+    "24.01",
   );
 });
 
@@ -278,7 +278,7 @@ test("25 - multiple brackets repeated", () => {
   equal(
     stripHtml("aaaa<<<<<<div>>>>something<<<</div>bbbbb").result,
     "aaaa something bbbbb",
-    "25.01"
+    "25.01",
   );
 });
 
@@ -286,7 +286,7 @@ test("26 - multiple brackets repeated", () => {
   equal(
     stripHtml("aaaa<<<<<<div>>>>something<<<</div>>>>>>>bbbbb").result,
     "aaaa something bbbbb",
-    "26.01"
+    "26.01",
   );
 });
 
@@ -294,7 +294,7 @@ test("27 - multiple brackets repeated", () => {
   equal(
     stripHtml("aaaa something<<<</div>>>>>>>bbbbb").result,
     "aaaa something bbbbb",
-    "27.01"
+    "27.01",
   );
 });
 
@@ -302,7 +302,7 @@ test("28 - multiple brackets repeated", () => {
   equal(
     stripHtml("aaaa something<<<<  / div>>>>>>>bbbbb").result,
     "aaaa something bbbbb",
-    "28.01"
+    "28.01",
   );
 });
 
@@ -310,7 +310,7 @@ test("29 - multiple brackets repeated", () => {
   equal(
     stripHtml("aaaa something<<<<  //// div /// >>>>>>>bbbbb").result,
     "aaaa something bbbbb",
-    "29.01"
+    "29.01",
   );
 });
 
@@ -319,7 +319,7 @@ test("30 - multiple brackets repeated", () => {
     stripHtml("aaaa< <  <   <    <     <     div>>>>something<<<</div>bbbbb")
       .result,
     "aaaa something bbbbb",
-    "30.01"
+    "30.01",
   );
 });
 
@@ -329,44 +329,44 @@ test("31 - checking can script slip through in any way", () => {
       stripTogetherWithTheirContents: ["div"],
     }).result,
     "x z",
-    "31.01"
+    "31.01",
   );
   equal(
     stripHtml("x<b>y</b>z", {
       stripTogetherWithTheirContents: ["b"],
     }).result,
     "xz",
-    "31.02"
+    "31.02",
   );
 });
 
 test("32 - checking can script slip through in any way", () => {
   equal(
     stripHtml(
-      'some text <script>console.log("<sup>>>>>>"); alert("you\'re done!");</script> more text'
+      'some text <script>console.log("<sup>>>>>>"); alert("you\'re done!");</script> more text',
     ).result,
     "some text more text",
-    "32.01"
+    "32.01",
   );
 });
 
 test("33 - checking can script slip through in any way", () => {
   equal(
     stripHtml(
-      'some text &lt;script>console.log("<sup>>>>>>"); alert("you\'re done!");</script> more text'
+      'some text &lt;script>console.log("<sup>>>>>>"); alert("you\'re done!");</script> more text',
     ).result,
     "some text more text",
-    "33.01"
+    "33.01",
   );
 });
 
 test("34 - checking can script slip through in any way", () => {
   equal(
     stripHtml(
-      'some text &lt;script&gt;console.log("<sup>>>>>>"); alert("you\'re done!");&lt;/script&gt; more text'
+      'some text &lt;script&gt;console.log("<sup>>>>>>"); alert("you\'re done!");&lt;/script&gt; more text',
     ).result,
     "some text more text",
-    "34.01"
+    "34.01",
   );
 });
 

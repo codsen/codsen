@@ -28,7 +28,7 @@ const stripFromJsonStr = (str) => {
 // nothing to strip, "<" is false alarm:
 assert.equal(
   JSON.stringify(stripFromJsonStr('{"Operator":"<","IsValid":true}'), null, 0),
-  '{"Operator":"<","IsValid":true}'
+  '{"Operator":"<","IsValid":true}',
 );
 
 // some HTML within one of key values, monkey will skip the boolean:
@@ -36,7 +36,7 @@ assert.equal(
   JSON.stringify(
     stripFromJsonStr('{"Operator":"a <div>b</div> c","IsValid":true}'),
     null,
-    0
+    0,
   ),
-  '{"Operator":"a b c","IsValid":true}'
+  '{"Operator":"a b c","IsValid":true}',
 );

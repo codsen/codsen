@@ -29,7 +29,7 @@ import { temporaryDirectory } from "tempy";
   test(`01 - one sorted file, LF, --lineEnding === ${JSON.stringify(
     ciLFlag,
     null,
-    0
+    0,
   )}`, async () => {
     let sortedFile = '{\n  "a": 1,\n  "z": 2\n}\n';
     // prove the file is of the right format, LF
@@ -64,7 +64,7 @@ import { temporaryDirectory } from "tempy";
     equal(
       fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
       sortedFile,
-      "01.02"
+      "01.02",
     );
   });
 });
@@ -78,7 +78,7 @@ import { temporaryDirectory } from "tempy";
   test(`02 - one sorted file, CRLF, --lineEnding === ${JSON.stringify(
     ciLFlag,
     null,
-    0
+    0,
   )}`, async () => {
     let sortedFile = '{\r\n  "a": 1,\r\n  "z": 2\r\n}\r\n';
     // prove the file is of the right format, CRLF
@@ -112,7 +112,7 @@ import { temporaryDirectory } from "tempy";
     equal(
       fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
       sortedFile,
-      "02.02"
+      "02.02",
     );
   });
 });
@@ -126,7 +126,7 @@ import { temporaryDirectory } from "tempy";
   test(`03 - one sorted file, CR, --lineEnding === ${JSON.stringify(
     ciLFlag,
     null,
-    0
+    0,
   )}`, async () => {
     let sortedFile = '{\r  "a": 1,\r  "z": 2\r}\r';
     // prove the file is of the right format, CR
@@ -160,7 +160,7 @@ import { temporaryDirectory } from "tempy";
     equal(
       fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
       sortedFile,
-      "03.02"
+      "03.02",
     );
   });
 });
@@ -185,7 +185,7 @@ test("04 - one unsorted file", async () => {
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "04.01"
+    "04.01",
   );
 });
 
@@ -200,7 +200,7 @@ test("05 - 'dry' flag trumps 'ci' flag", async () => {
   let output = await execa("./cli.js", [tempFolder, "-c", "-d"]).catch(
     (err) => {
       throw new Error(err);
-    }
+    },
   );
 
   match(output.stdout, /try to sort/, "05.01");
@@ -208,7 +208,7 @@ test("05 - 'dry' flag trumps 'ci' flag", async () => {
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "05.03"
+    "05.03",
   );
 });
 
@@ -229,7 +229,7 @@ test("06 - 'dry', arg order is backwards", async () => {
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "06.03"
+    "06.03",
   );
 });
 
@@ -247,7 +247,7 @@ test("07 - errors out when unsorted array within json, --ci & --arrays flags", a
     "app",
     "cli"
   ]
-}`
+}`,
   );
 
   let output = await execa("./cli.js", [tempFolder, "--ci", "--arrays"])
@@ -278,7 +278,7 @@ test("08 - unsorted array within json, --ci flag", async () => {
     "app",
     "cli"
   ]
-}`
+}`,
   );
 
   let output = await execa("./cli.js", [tempFolder, "--ci"]).catch((err) => {
@@ -305,7 +305,7 @@ test("09 - sorted nested plain object, --ci flag", async () => {
     "b": "c",
     "d": "e"
   }
-}`
+}`,
   );
 
   let output = await execa("./cli.js", [tempFolder, "--ci"]).catch((err) => {
@@ -332,7 +332,7 @@ test("10 - unsorted nested plain object, --ci flag", async () => {
     "d": "e",
     "b": "c"
   }
-}`
+}`,
   );
 
   let output = await execa("./cli.js", [tempFolder, "--ci"])
@@ -361,7 +361,7 @@ test("11 - but requested copious tabs, --ci flag", async () => {
     "b": "c",
     "d": "e"
   }
-}`
+}`,
   );
 
   let output = await execa("./cli.js", [tempFolder, "-c", "-t", "-i 3"])

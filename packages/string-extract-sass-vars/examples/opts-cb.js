@@ -12,5 +12,5 @@ assert.deepEqual(
     throwIfEmpty: true,
     cb: (val) => conv(val), // converts hex codes only, bypasses the rest
   }),
-  { blue: "#22aaff" }
+  { blue: "#22aaff" },
 );

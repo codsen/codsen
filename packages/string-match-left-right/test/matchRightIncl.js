@@ -30,7 +30,7 @@ test(`01 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simple 
       },
     }),
     "cd",
-    "01.06"
+    "01.06",
   );
 });
 
@@ -48,7 +48,7 @@ test(`03 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simple 
   equal(
     matchRightIncl("abcdef", 2, ["JFHG", "URR", "C"], { i: true }),
     "C",
-    "03.04"
+    "03.04",
   );
 });
 
@@ -68,7 +68,7 @@ test(`04 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     cb gives out
       },
     }),
     "def",
-    "04.01"
+    "04.01",
   );
   equal(
     matchRight("abcdef", 2, ["def"], {
@@ -78,7 +78,7 @@ test(`04 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     cb gives out
       },
     }),
     "def",
-    "04.02"
+    "04.02",
   );
 });
 
@@ -90,7 +90,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
   equal(
     matchRightIncl("ab.def", 2, ["cde"], { maxMismatches: 1 }),
     false,
-    "05.03"
+    "05.03",
   );
   equal(
     matchRightIncl("ab.def", 2, ["cde"], {
@@ -98,7 +98,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       hungry: true,
     }),
     "cde",
-    "05.04"
+    "05.04",
   );
 
   equal(
@@ -109,7 +109,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       hungry: false,
     }),
     false,
-    "05.05"
+    "05.05",
   );
   equal(
     matchRightIncl("ab.def", 2, ["cde"], {
@@ -119,7 +119,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       hungry: false,
     }),
     false,
-    "05.06"
+    "05.06",
   );
   equal(
     matchRightIncl("ab.def", 2, ["cde"], {
@@ -129,7 +129,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       hungry: false,
     }),
     false,
-    "05.07"
+    "05.07",
   );
   equal(
     matchRightIncl("ab.def", 2, ["cde"], {
@@ -139,7 +139,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       hungry: false,
     }),
     false,
-    "05.08"
+    "05.08",
   );
 
   equal(
@@ -150,7 +150,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       hungry: true,
     }),
     false,
-    "05.09"
+    "05.09",
   );
   equal(
     matchRightIncl("ab.def", 2, ["cde"], {
@@ -160,7 +160,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       hungry: true,
     }),
     false,
-    "05.10"
+    "05.10",
   );
   equal(
     matchRightIncl("ab.def", 2, ["cde"], {
@@ -170,7 +170,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       hungry: true,
     }),
     "cde",
-    "05.11"
+    "05.11",
   );
   equal(
     matchRightIncl("ab.def", 2, ["cde"], {
@@ -180,7 +180,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       hungry: true,
     }),
     "cde",
-    "05.12"
+    "05.12",
   );
 
   // second char, "d" mismatching
@@ -190,7 +190,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       maxMismatches: 1,
     }),
     "cde",
-    "05.14"
+    "05.14",
   );
   equal(
     matchRightIncl("abc.ef", 2, ["cde"], {
@@ -199,7 +199,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       lastMustMatch: true,
     }),
     "cde",
-    "05.15"
+    "05.15",
   );
   equal(
     matchRightIncl("abc.ef", 2, ["cde"], {
@@ -208,7 +208,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       lastMustMatch: false,
     }),
     "cde",
-    "05.16"
+    "05.16",
   );
   equal(
     matchRightIncl("abc.ef", 2, ["cde"], {
@@ -217,7 +217,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       lastMustMatch: true,
     }),
     "cde",
-    "05.17"
+    "05.17",
   );
   equal(
     matchRightIncl("abc.ef", 2, ["cde"], {
@@ -226,7 +226,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       lastMustMatch: false,
     }),
     "cde",
-    "05.18"
+    "05.18",
   );
 
   // third char, "e" mismatching
@@ -236,7 +236,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       maxMismatches: 1,
     }),
     "cde",
-    "05.20"
+    "05.20",
   );
   equal(
     matchRightIncl("abcd.f", 2, ["cde"], {
@@ -245,7 +245,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       lastMustMatch: true,
     }),
     false,
-    "05.21"
+    "05.21",
   );
   equal(
     matchRightIncl("abcd.f", 2, ["cde"], {
@@ -254,7 +254,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       lastMustMatch: false,
     }),
     "cde",
-    "05.22"
+    "05.22",
   );
   equal(
     matchRightIncl("abcd.f", 2, ["cde"], {
@@ -263,7 +263,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       lastMustMatch: true,
     }),
     false,
-    "05.23"
+    "05.23",
   );
   equal(
     matchRightIncl("abcd.f", 2, ["cde"], {
@@ -272,7 +272,7 @@ test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMism
       lastMustMatch: false,
     }),
     "cde",
-    "05.24"
+    "05.24",
   );
 });
 

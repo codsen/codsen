@@ -19,7 +19,7 @@ test("01 - opts.cb - custom override of a value", () => {
     {
       grey: "#cccccc",
     },
-    "01.01"
+    "01.01",
   );
 });
 

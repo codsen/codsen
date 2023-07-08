@@ -16,7 +16,7 @@ test(`01 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`}
         removeEmptyLines: false,
       }).result,
       `a${presentEolType}${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });
@@ -28,7 +28,7 @@ test(`02 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`}
         removeEmptyLines: true,
       }).result,
       `a${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });
@@ -41,10 +41,10 @@ test(`03 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`}
         {
           removeEmptyLines: true,
           limitConsecutiveEmptyLinesTo: 1,
-        }
+        },
       ).result,
       `a${presentEolType}${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });
@@ -57,7 +57,7 @@ test(`04 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`}
         limitConsecutiveEmptyLinesTo: 1,
       }).result,
       `a${presentEolType}${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });
@@ -70,7 +70,7 @@ test(`05 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`}
         limitConsecutiveEmptyLinesTo: 2,
       }).result,
       `a${presentEolType}${presentEolType}${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });
@@ -83,7 +83,7 @@ test(`06 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`}
         limitConsecutiveEmptyLinesTo: 3,
       }).result,
       `a${presentEolType}${presentEolType}${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });
@@ -96,7 +96,7 @@ test(`07 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`}
         limitConsecutiveEmptyLinesTo: 99,
       }).result,
       `a${presentEolType}${presentEolType}${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });
@@ -110,7 +110,7 @@ test(`08 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`}
         trimLines: false,
       }).result,
       `a${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });
@@ -124,7 +124,7 @@ test(`09 - ${`\u001b[${34}m${"opts.limitConsecutiveEmptyLinesTo"}\u001b[${39}m`}
         trimLines: true,
       }).result,
       `a${presentEolType}b`,
-      `EOL ${key[idx]}`
+      `EOL ${key[idx]}`,
     );
   });
 });

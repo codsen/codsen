@@ -28,7 +28,7 @@ export type Callback = (
   key: string,
   val: any,
   innerObj: InnerObj,
-  stop: Stop
+  stop: Stop,
 ) => any;
 
 /**
@@ -43,7 +43,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
     treeOriginal: U,
     callback: Callback,
     originalInnerObj: Partial<InnerObj>,
-    stop: Stop
+    stop: Stop,
   ): U {
     DEV && console.log(`048 ======= traverseInner() =======`);
     let tree: any = clone(treeOriginal);
@@ -56,7 +56,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
       for (let i = 0, len = tree.length; i < len; i++) {
         DEV &&
           console.log(
-            `059 a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
+            `059 a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
           );
         if (stop.now) {
           DEV && console.log(`062 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
@@ -68,8 +68,8 @@ function traverse<T>(tree1: T, cb1: Callback): T {
             `068 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
               path,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
         if (tree[i] !== undefined) {
           innerObj.parent = clone(tree);
@@ -80,8 +80,8 @@ function traverse<T>(tree1: T, cb1: Callback): T {
               `080 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
                 innerObj.parentKey,
                 null,
-                4
-              )}`
+                4,
+              )}`,
             );
           // innerObj.path = `${innerObj.path}[${i}]`
           res = traverseInner(
@@ -89,11 +89,11 @@ function traverse<T>(tree1: T, cb1: Callback): T {
               tree[i],
               undefined,
               { ...innerObj, path } as InnerObj,
-              stop
+              stop,
             ),
             callback,
             { ...innerObj, path },
-            stop
+            stop,
           );
           if (Number.isNaN(res) && i < tree.length) {
             tree.splice(i, 1);
@@ -111,7 +111,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
       for (let key in tree) {
         DEV &&
           console.log(
-            `114 ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
+            `114 ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
           );
         if (stop.now && key != null) {
           DEV && console.log(`117 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
@@ -122,8 +122,8 @@ function traverse<T>(tree1: T, cb1: Callback): T {
             `122 FIY, ${`\u001b[${33}m${`innerObj.path`}\u001b[${39}m`} = ${JSON.stringify(
               innerObj.path,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
         let path = innerObj.path ? `${innerObj.path}.${key}` : key;
         DEV &&
@@ -131,8 +131,8 @@ function traverse<T>(tree1: T, cb1: Callback): T {
             `131 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
               path,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
@@ -145,14 +145,14 @@ function traverse<T>(tree1: T, cb1: Callback): T {
             `145 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
               innerObj.parentKey,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
         res = traverseInner(
           callback(key, tree[key], { ...innerObj, path } as InnerObj, stop),
           callback,
           { ...innerObj, path },
-          stop
+          stop,
         );
         if (Number.isNaN(res)) {
           delete tree[key];

@@ -58,7 +58,7 @@ test(`01 - ${`\u001b[${33}m${"one tag"}\u001b[${39}m`} - recognised tag name, 1 
         end: 19,
       },
     ],
-    "01.01"
+    "01.01",
   );
   is(gathered.length, 3, "01.01");
 });
@@ -96,7 +96,7 @@ test(`02 - ${`\u001b[${33}m${"one tag"}\u001b[${39}m`} - leading whitespace`, ()
         end: 21,
       },
     ],
-    "02.01"
+    "02.01",
   );
   is(gathered.length, 4, "02.01");
 });
@@ -139,7 +139,7 @@ test(`03 - ${`\u001b[${33}m${"one tag"}\u001b[${39}m`} - text around`, () => {
         end: 24,
       },
     ],
-    "03.01"
+    "03.01",
   );
   is(gathered.length, 5, "03.01");
 });
@@ -192,7 +192,7 @@ test(`04 - ${`\u001b[${33}m${"one tag"}\u001b[${39}m`} - hardcore case - two tag
         end: 39,
       },
     ],
-    "04.01"
+    "04.01",
   );
   is(gathered.length, 7, "04.01");
 });
@@ -275,7 +275,7 @@ test(`05 - ${`\u001b[${33}m${"two tags"}\u001b[${39}m`} - tight`, () => {
         end: 31,
       },
     ],
-    "05.01"
+    "05.01",
   );
   is(gathered.length, 4, "05.01");
 });

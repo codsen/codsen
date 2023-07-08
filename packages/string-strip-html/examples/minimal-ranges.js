@@ -20,14 +20,14 @@ function stripAndFixApos(str) {
   // That's why below we take precautions with "|| []".
   return rApply(
     str,
-    (stripHtml(str).ranges || []).concat(convertAll(str).ranges || [])
+    (stripHtml(str).ranges || []).concat(convertAll(str).ranges || []),
   );
 }
 
 // strips tags and fixes apostrophes:
 assert.equal(
   stripAndFixApos("Let's Go <strong>Larval</strong>"),
-  "Let’s Go Larval"
+  "Let’s Go Larval",
 );
 
 // no tags, no apostrophes:

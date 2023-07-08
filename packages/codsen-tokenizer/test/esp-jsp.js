@@ -36,7 +36,7 @@ test("01 - JSP c: with ${ resembling a Responsys tag", () => {
         tailEndsAt: 52,
       },
     ],
-    "01"
+    "01",
   );
 });
 
@@ -65,7 +65,7 @@ test("02 - JSP scriptlet", () => {
         tailEndsAt: 19,
       },
     ],
-    "02"
+    "02",
   );
 });
 
@@ -94,7 +94,7 @@ test("03 - JSP scriptlet", () => {
         tailEndsAt: 57,
       },
     ],
-    "03"
+    "03",
   );
 });
 
@@ -134,7 +134,7 @@ test("04 - declarations", () => {
           tailEndsAt: input.length,
         },
       ],
-      input
+      input,
     );
   });
 });
@@ -171,7 +171,7 @@ test("05 - expressions", () => {
           tailEndsAt: input.length,
         },
       ],
-      input
+      input,
     );
   });
 });
@@ -238,7 +238,7 @@ test("06 - mixed", () => {
         attribs: [],
       },
     ],
-    "06"
+    "06",
   );
 });
 
@@ -272,7 +272,7 @@ test("07 - comments", () => {
           tailEndsAt: input.length,
         },
       ],
-      input
+      input,
     );
   });
 });
@@ -327,7 +327,7 @@ test("08 - directives", () => {
           tailEndsAt: input.length,
         },
       ],
-      input
+      input,
     );
   });
 });
@@ -357,7 +357,7 @@ test("09 - JSP actions", () => {
         tailEndsAt: 36,
       },
     ],
-    "09"
+    "09",
   );
 });
 
@@ -386,7 +386,7 @@ test("10 - use bean", () => {
         tailEndsAt: input.length,
       },
     ],
-    "10"
+    "10",
   );
 });
 
@@ -415,7 +415,7 @@ test("11 - use cms", () => {
         tailEndsAt: input.length,
       },
     ],
-    "11"
+    "11",
   );
 });
 
@@ -493,7 +493,7 @@ test("12 - standalone JSP prop", () => {
         attribs: [],
       },
     ],
-    "12"
+    "12",
   );
 });
 
@@ -522,7 +522,7 @@ test("13 - c: without closing slash", () => {
         tailEndsAt: input.length,
       },
     ],
-    "13"
+    "13",
   );
 });
 
@@ -747,7 +747,7 @@ test("14 - IF-ELSE mixed with HTML", () => {
         value: "</html>",
       },
     ],
-    "14"
+    "14",
   );
 });
 

@@ -17,7 +17,7 @@ test("01 - bug #01", () => {
 </head>
 <body a="z;">
 </body>
-`
+`,
   );
 
   equal(allInBody, [], "01.01");
@@ -32,7 +32,7 @@ test("01 - bug #01", () => {
 <body a="z;">
 </body>
 `,
-    "01.03"
+    "01.03",
   );
   equal(deletedFromHead, [".unused"], "01.04");
   equal(deletedFromBody, [], "01.05");
@@ -247,7 +247,7 @@ td[class=jj] { font-family: 'GillSans', Gill Sans, Gill Sans MT, Arial, sans-ser
 float:left !important;}
 }
 
-</style>`
+</style>`,
   ).result;
 
   let intended = `<body>
@@ -265,7 +265,7 @@ test("13 - adhoc #1", () => {
 <body>
 <table  id="  zz"  class="aa">
 </body>
-`
+`,
   ).result;
 
   let intended = `<style>
@@ -288,7 +288,7 @@ test("14 - adhoc 2", () => {
 </head>
 <body><a class="  aa   bb  cc  ">z</a>
 </body>
-`
+`,
   ).result;
 
   let intended = `<head>
@@ -312,7 +312,7 @@ test("15 - adhoc 3", () => {
 </head>
 <body><a class="  zz   bb  cc  ">z</a>
 </body>
-`
+`,
   ).result;
 
   let intended = `<head>
@@ -340,7 +340,7 @@ test("16 - bug #36", () => {
     result,
     `<style>.foo {x: y;}</style>
 <body><span class="foo">z</span>`,
-    "16.03"
+    "16.03",
   );
   equal(deletedFromHead, [], "16.04");
   equal(deletedFromBody, [], "16.05");

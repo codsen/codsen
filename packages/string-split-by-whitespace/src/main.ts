@@ -15,7 +15,7 @@ const defaults: Opts = {
 function splitByW(str: string, opts?: Partial<Opts>): string[] {
   if (str === undefined) {
     throw new Error(
-      "string-split-by-whitespace: [THROW_ID_01] The input is missing!"
+      "string-split-by-whitespace: [THROW_ID_01] The input is missing!",
     );
   }
   if (typeof str !== "string") {
@@ -31,7 +31,7 @@ function splitByW(str: string, opts?: Partial<Opts>): string[] {
     !resolvedOpts.ignoreRanges.every((arr) => Array.isArray(arr))
   ) {
     throw new Error(
-      "string-split-by-whitespace: [THROW_ID_03] The resolvedOpts.ignoreRanges contains elements which are not arrays!"
+      "string-split-by-whitespace: [THROW_ID_03] The resolvedOpts.ignoreRanges contains elements which are not arrays!",
     );
   }
 
@@ -50,7 +50,7 @@ function splitByW(str: string, opts?: Partial<Opts>): string[] {
             resolvedOpts.ignoreRanges.map((arr) => [arr[0], arr[1] - 1]),
             {
               inclusiveRangeEnds: true,
-            }
+            },
           )))
     ) {
       nonWhitespaceSubStringStartsAt = i;

@@ -63,12 +63,12 @@ function isProduction4(char: string): boolean {
     (isIndexWithin(
       char.codePointAt(0) as number,
       priorityNameChar,
-      opts
+      opts,
     ) as boolean) ||
     (isIndexWithin(
       char.codePointAt(0) as number,
       nameStartChar,
-      opts
+      opts,
     ) as boolean)
   );
 }
@@ -78,7 +78,7 @@ function isProduction4a(char: string): boolean {
     (isIndexWithin(
       char.codePointAt(0) as number,
       priorityNameChar,
-      opts
+      opts,
     ) as boolean) ||
     (isIndexWithin(char.codePointAt(0) as number, nameChar, opts) as boolean)
   );

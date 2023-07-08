@@ -16,7 +16,7 @@ test("02 - won't find", () => {
   equal(
     pull(["one", "two", "three"], ["something"]),
     ["one", "two", "three"],
-    "02.01"
+    "02.01",
   );
 });
 
@@ -36,12 +36,12 @@ test("06 - no glob, case sensitive", () => {
   equal(
     pull(["One", "two", "Three"], ["one", "three"]),
     ["One", "two", "Three"],
-    "06.01"
+    "06.01",
   );
   equal(
     pull(["One", "two", "Three"], ["one", "three"], { caseSensitive: false }),
     ["two"],
-    "06.02"
+    "06.02",
   );
 });
 
@@ -60,25 +60,10 @@ test("07 - glob, normal use", () => {
         "elements",
         "elemental",
       ],
-      ["module-*", "something else", "element*"]
+      ["module-*", "something else", "element*"],
     ),
     ["only this left"],
-    "07.01"
-  );
-  equal(
-    pull(
-      [
-        "Module-1",
-        "only this left",
-        "module-2",
-        "module-3",
-        "elements",
-        "elemental",
-      ],
-      ["module-*", "something else", "element*"]
-    ),
-    ["Module-1", "only this left"],
-    "07.02"
+    "07.01",
   );
   equal(
     pull(
@@ -91,10 +76,25 @@ test("07 - glob, normal use", () => {
         "elemental",
       ],
       ["module-*", "something else", "element*"],
-      { caseSensitive: false }
+    ),
+    ["Module-1", "only this left"],
+    "07.02",
+  );
+  equal(
+    pull(
+      [
+        "Module-1",
+        "only this left",
+        "module-2",
+        "module-3",
+        "elements",
+        "elemental",
+      ],
+      ["module-*", "something else", "element*"],
+      { caseSensitive: false },
     ),
     ["only this left"],
-    "07.03"
+    "07.03",
   );
 });
 
@@ -109,10 +109,10 @@ test("08 - asterisk the only input - pulls everything", () => {
         "elements",
         "elemental",
       ],
-      ["*"] // <------ array
+      ["*"], // <------ array
     ),
     [],
-    "08.01"
+    "08.01",
   );
   equal(
     pull(
@@ -124,10 +124,10 @@ test("08 - asterisk the only input - pulls everything", () => {
         "elements",
         "elemental",
       ],
-      "*" // <---- string
+      "*", // <---- string
     ),
     [],
-    "08.02"
+    "08.02",
   );
 });
 
@@ -135,10 +135,10 @@ test("09 - asterisk in the source array", () => {
   equal(
     pull(
       ["module-*", "module-**", "something-*", "something-**"],
-      ["module-*"]
+      ["module-*"],
     ),
     ["something-*", "something-**"],
-    "09.01"
+    "09.01",
   );
 });
 
@@ -150,7 +150,7 @@ test("11 - empty array as second arg", () => {
   equal(
     pull(["module-*", "module-**", "something-*", "something-**"], []),
     ["module-*", "module-**", "something-*", "something-**"],
-    "11.01"
+    "11.01",
   );
 });
 
@@ -175,7 +175,7 @@ test("14 - against emoji and asterisk", () => {
   equal(
     pull(["🦄", "🦄*", "🦄**", "*🦄", "*******", "*"], ["🦄*"]),
     ["*🦄", "*******", "*"],
-    "14.01"
+    "14.01",
   );
 });
 
@@ -184,14 +184,14 @@ test("15", () => {
     pull(
       ["one", "two", "three"],
       ["one", "three"],
-      null // null is fine
+      null, // null is fine
     );
   }, "15.01");
   not.throws(() => {
     pull(
       ["one", "two", "three"],
       ["one", "three"],
-      {} // empty opts
+      {}, // empty opts
     );
   }, "15.02");
 });

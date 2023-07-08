@@ -14,7 +14,7 @@ test("01 - xml only", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -23,7 +23,7 @@ test("01 - xml only", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       input,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -37,7 +37,7 @@ test("02 - typical email template's dpi setting tag", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       "",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -46,7 +46,7 @@ test("02 - typical email template's dpi setting tag", () => {
     assert.equal(
       stri(assert, n, input, opt).result,
       input,
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });

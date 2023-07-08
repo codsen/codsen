@@ -23,14 +23,14 @@ function internalApi(
   originalAst: any,
   keyValPair: UnknownValueObj,
   replacementContentsArr?: UnknownValueObj[],
-  result: any[] = []
+  result: any[] = [],
 ): any {
   if (!originalAst) {
     throw new Error("ast-get-object: [THROW_ID_01] First argument is missing!");
   }
   if (!keyValPair) {
     throw new Error(
-      "ast-get-object: [THROW_ID_02] Second argument is missing!"
+      "ast-get-object: [THROW_ID_02] Second argument is missing!",
     );
   }
   // is it set mode or not:
@@ -64,7 +64,7 @@ function internalApi(
               ast[key],
               keyValPair,
               replacementContentsArr,
-              result
+              result,
             );
           } else {
             internalApi(ast[key], keyValPair, replacementContentsArr, result);
@@ -83,7 +83,7 @@ function internalApi(
             ast[i],
             keyValPair,
             replacementContentsArr,
-            result
+            result,
           );
         } else {
           internalApi(ast[i], keyValPair, replacementContentsArr, result);
@@ -105,7 +105,7 @@ function internalApi(
 function getObj(
   originalAst: any,
   keyValPair: UnknownValueObj,
-  replacementContentsArr?: UnknownValueObj[]
+  replacementContentsArr?: UnknownValueObj[],
 ): any {
   return internalApi(originalAst, keyValPair, replacementContentsArr);
 }

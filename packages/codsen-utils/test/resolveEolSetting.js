@@ -16,7 +16,7 @@ test("01 - only relying on default", () => {
       resolveEolSetting("a", null, "foo");
     },
     /defaultEolChar/gm,
-    "01.05"
+    "01.05",
   );
 });
 

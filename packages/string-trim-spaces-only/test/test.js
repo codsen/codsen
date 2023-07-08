@@ -13,7 +13,7 @@ test("01 - empty string, defaults", () => {
       res: "",
       ranges: [],
     },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -24,7 +24,7 @@ test("02 - empty string, classicTrim=false", () => {
       res: "",
       ranges: [],
     },
-    "02.01"
+    "02.01",
   );
 });
 
@@ -35,7 +35,7 @@ test("03 - empty string, classicTrim=true", () => {
       res: "",
       ranges: [],
     },
-    "03.01"
+    "03.01",
   );
 });
 
@@ -46,7 +46,7 @@ test("04 - single space, defaults", () => {
       res: "",
       ranges: [[0, 1]],
     },
-    "04.01"
+    "04.01",
   );
 });
 
@@ -57,7 +57,7 @@ test("05 - single space, classicTrim=false", () => {
       res: "",
       ranges: [[0, 1]],
     },
-    "05.01"
+    "05.01",
   );
 });
 
@@ -68,7 +68,7 @@ test("06 - single space, classicTrim=true", () => {
       res: "",
       ranges: [[0, 1]],
     },
-    "06.01"
+    "06.01",
   );
 });
 
@@ -92,7 +92,7 @@ test("11 - leading space, classicTrim=false", () => {
   equal(
     trim(" a a", { classicTrim: false }),
     { res: "a a", ranges: [[0, 1]] },
-    "11.01"
+    "11.01",
   );
 });
 
@@ -100,7 +100,7 @@ test("12 - leading space, classicTrim=true", () => {
   equal(
     trim(" a a", { classicTrim: true }),
     { res: "a a", ranges: [[0, 1]] },
-    "12.01"
+    "12.01",
   );
 });
 
@@ -112,7 +112,7 @@ test("14 - trailing space, defaults", () => {
   equal(
     trim("a a ", { classicTrim: false }),
     { res: "a a", ranges: [[3, 4]] },
-    "14.01"
+    "14.01",
   );
 });
 
@@ -120,7 +120,7 @@ test("15 - trailing space, defaults", () => {
   equal(
     trim("a a ", { classicTrim: true }),
     { res: "a a", ranges: [[3, 4]] },
-    "15.01"
+    "15.01",
   );
 });
 
@@ -134,7 +134,7 @@ test("16 - space on both sides", () => {
         [6, 11],
       ],
     },
-    "16.01"
+    "16.01",
   );
 });
 
@@ -148,7 +148,7 @@ test("17 - space on both sides - copes with emoji", () => {
         [5, 10],
       ],
     },
-    "17.01"
+    "17.01",
   );
 });
 
@@ -162,7 +162,7 @@ test("18 - space on both sides - classicTrim=true", () => {
         [6, 11],
       ],
     },
-    "18.01"
+    "18.01",
   );
 });
 
@@ -176,7 +176,7 @@ test("19 - space on both sides - copes with emoji - classicTrim=true", () => {
         [5, 10],
       ],
     },
-    "19.01"
+    "19.01",
   );
 });
 
@@ -190,7 +190,7 @@ test("20 - trimming hits the newline and stops", () => {
         [12, 15],
       ],
     },
-    "20.01"
+    "20.01",
   );
 });
 
@@ -204,7 +204,7 @@ test("21 - trimming hits the tab and stops", () => {
         [12, 15],
       ],
     },
-    "21.01"
+    "21.01",
   );
 });
 
@@ -218,7 +218,7 @@ test("22 - trimming hits the newline and stops - classicTrim", () => {
         [9, 15],
       ],
     }, // <---------------- !
-    "22.01"
+    "22.01",
   );
 });
 
@@ -232,7 +232,7 @@ test("23 - trimming hits the tab and stops - classicTrim", () => {
         [9, 15],
       ],
     }, // <---------------- !
-    "23.01"
+    "23.01",
   );
 });
 
@@ -242,7 +242,7 @@ test("24 - non-string input", () => {
       trim(true);
     },
     /THROW_ID_01/g,
-    "24.01"
+    "24.01",
   );
 
   throws(
@@ -250,7 +250,7 @@ test("24 - non-string input", () => {
       trim(undefined);
     },
     /THROW_ID_01/g,
-    "24.02"
+    "24.02",
   );
 
   throws(
@@ -258,7 +258,7 @@ test("24 - non-string input", () => {
       trim(9);
     },
     /THROW_ID_01/g,
-    "24.03"
+    "24.03",
   );
 
   let input = { a: "zzz" };
@@ -267,7 +267,7 @@ test("24 - non-string input", () => {
       trim(input);
     },
     /THROW_ID_01/g,
-    "24.04"
+    "24.04",
   );
 
   throws(
@@ -275,7 +275,7 @@ test("24 - non-string input", () => {
       trim(true, { classicTrim: true });
     },
     /THROW_ID_01/g,
-    "24.05"
+    "24.05",
   );
 
   throws(
@@ -283,7 +283,7 @@ test("24 - non-string input", () => {
       trim(undefined, { classicTrim: true });
     },
     /THROW_ID_01/g,
-    "24.06"
+    "24.06",
   );
 
   throws(
@@ -291,7 +291,7 @@ test("24 - non-string input", () => {
       trim(9, { classicTrim: true });
     },
     /THROW_ID_01/g,
-    "24.07"
+    "24.07",
   );
 
   throws(
@@ -299,7 +299,7 @@ test("24 - non-string input", () => {
       trim(input, { classicTrim: true });
     },
     /THROW_ID_01/g,
-    "24.08"
+    "24.08",
   );
 });
 
@@ -314,7 +314,7 @@ test("25 - opts.space - default", () => {
         [8, 11],
       ],
     },
-    "25.01"
+    "25.01",
   );
 });
 
@@ -328,7 +328,7 @@ test("26 - opts.space - tabs", () => {
         [12, 13],
       ],
     },
-    "26.01"
+    "26.01",
   );
   equal(
     trim(" \t  a b c  \t ", { space: true }),
@@ -339,7 +339,7 @@ test("26 - opts.space - tabs", () => {
         [12, 13],
       ],
     },
-    "26.02"
+    "26.02",
   );
   equal(
     trim(" \t  a b c  \t ", { tab: true, classicTrim: true }),
@@ -350,7 +350,7 @@ test("26 - opts.space - tabs", () => {
         [9, 13],
       ],
     },
-    "26.03"
+    "26.03",
   );
   equal(
     trim(" \t  a b c  \t ", { space: true, tab: true }),
@@ -361,12 +361,12 @@ test("26 - opts.space - tabs", () => {
         [9, 13],
       ],
     },
-    "26.04"
+    "26.04",
   );
   equal(
     trim(" \t  a b c  \t ", { space: false, tab: true }),
     { res: " \t  a b c  \t ", ranges: [] },
-    "26.05"
+    "26.05",
   );
 });
 
@@ -381,7 +381,7 @@ test("27 - opts.cr", () => {
         [12, 13],
       ],
     },
-    "27.01"
+    "27.01",
   );
   equal(
     trim(" \t  a b c  \t ", { cr: true }),
@@ -392,7 +392,7 @@ test("27 - opts.cr", () => {
         [12, 13],
       ],
     },
-    "27.02"
+    "27.02",
   );
   equal(
     trim(" \t  a b c  \t ", { cr: true, classicTrim: true }),
@@ -403,7 +403,7 @@ test("27 - opts.cr", () => {
         [9, 13],
       ],
     },
-    "27.03"
+    "27.03",
   );
   equal(
     trim(" \r  a b c  \r ", { cr: true }),
@@ -414,12 +414,12 @@ test("27 - opts.cr", () => {
         [9, 13],
       ],
     },
-    "27.04"
+    "27.04",
   );
   equal(
     trim(" \r  a b c  \r ", { cr: true, space: false }),
     { res: " \r  a b c  \r ", ranges: [] },
-    "27.05"
+    "27.05",
   );
   equal(
     trim("\r  a b c  \r", { cr: true, space: false }),
@@ -430,7 +430,7 @@ test("27 - opts.cr", () => {
         [10, 11],
       ],
     },
-    "27.06"
+    "27.06",
   );
 });
 
@@ -445,7 +445,7 @@ test("28 - opts.lf", () => {
         [12, 13],
       ],
     },
-    "28.01"
+    "28.01",
   );
   equal(
     trim(" \t  a b c  \t ", { lf: true }),
@@ -456,7 +456,7 @@ test("28 - opts.lf", () => {
         [12, 13],
       ],
     },
-    "28.02"
+    "28.02",
   );
   equal(
     trim(" \t  a b c  \t ", { lf: true, classicTrim: true }),
@@ -467,7 +467,7 @@ test("28 - opts.lf", () => {
         [9, 13],
       ],
     },
-    "28.03"
+    "28.03",
   );
   equal(
     trim(" \n  a b c  \n ", { lf: true }),
@@ -478,12 +478,12 @@ test("28 - opts.lf", () => {
         [9, 13],
       ],
     },
-    "28.04"
+    "28.04",
   );
   equal(
     trim(" \n  a b c  \n ", { lf: true, space: false }),
     { res: " \n  a b c  \n ", ranges: [] },
-    "28.05"
+    "28.05",
   );
   equal(
     trim("\n  a b c  \n", { lf: true, space: false }),
@@ -494,7 +494,7 @@ test("28 - opts.lf", () => {
         [10, 11],
       ],
     },
-    "28.06"
+    "28.06",
   );
 });
 
@@ -509,7 +509,7 @@ test("29 - opts.tab", () => {
         [12, 13],
       ],
     },
-    "29.01"
+    "29.01",
   );
   equal(
     trim(" \n  a b c  \n ", { tab: true }),
@@ -520,7 +520,7 @@ test("29 - opts.tab", () => {
         [12, 13],
       ],
     },
-    "29.02"
+    "29.02",
   );
   equal(
     trim(" \n  a b c  \n ", { tab: true, classicTrim: true }),
@@ -531,7 +531,7 @@ test("29 - opts.tab", () => {
         [9, 13],
       ],
     },
-    "29.03"
+    "29.03",
   );
   equal(
     trim(" \t  a b c  \t ", { tab: true }),
@@ -542,12 +542,12 @@ test("29 - opts.tab", () => {
         [9, 13],
       ],
     },
-    "29.04"
+    "29.04",
   );
   equal(
     trim(" \t  a b c  \t ", { tab: true, space: false }),
     { res: " \t  a b c  \t ", ranges: [] },
-    "29.05"
+    "29.05",
   );
   equal(
     trim("\t  a b c  \t", { tab: true, space: false }),
@@ -558,7 +558,7 @@ test("29 - opts.tab", () => {
         [10, 11],
       ],
     },
-    "29.06"
+    "29.06",
   );
 });
 
@@ -573,7 +573,7 @@ test("30 - opts.nbsp", () => {
         [12, 13],
       ],
     },
-    "30.01"
+    "30.01",
   );
   equal(
     trim(" \n  a b c  \n ", { nbsp: true }),
@@ -584,7 +584,7 @@ test("30 - opts.nbsp", () => {
         [12, 13],
       ],
     },
-    "30.02"
+    "30.02",
   );
   equal(
     trim(" \n  a b c  \n ", { nbsp: true, classicTrim: true }),
@@ -595,7 +595,7 @@ test("30 - opts.nbsp", () => {
         [9, 13],
       ],
     },
-    "30.03"
+    "30.03",
   );
   equal(
     trim(` ${rawnbsp}  a b c  ${rawnbsp} `, { nbsp: true }),
@@ -606,12 +606,12 @@ test("30 - opts.nbsp", () => {
         [9, 13],
       ],
     },
-    "30.04"
+    "30.04",
   );
   equal(
     trim(` ${rawnbsp}  a b c  ${rawnbsp} `, { nbsp: true, space: false }),
     { res: ` ${rawnbsp}  a b c  ${rawnbsp} `, ranges: [] },
-    "30.05"
+    "30.05",
   );
   equal(
     trim(`${rawnbsp}  a b c  ${rawnbsp}`, { nbsp: true, space: false }),
@@ -622,7 +622,7 @@ test("30 - opts.nbsp", () => {
         [10, 11],
       ],
     },
-    "30.06"
+    "30.06",
   );
   equal(
     trim(`${rawnbsp}  a b c  ${rawnbsp}`, {
@@ -637,7 +637,7 @@ test("30 - opts.nbsp", () => {
         [8, 11],
       ],
     },
-    "30.07"
+    "30.07",
   );
 });
 

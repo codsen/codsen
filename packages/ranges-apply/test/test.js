@@ -15,7 +15,7 @@ test("01 - wrong inputs", () => {
       rApply();
     },
     /THROW_ID_01/g,
-    "01.01"
+    "01.01",
   );
 
   // first arg not string
@@ -24,7 +24,7 @@ test("01 - wrong inputs", () => {
       rApply(1);
     },
     /THROW_ID_02/g,
-    "01.02"
+    "01.02",
   );
 
   throws(
@@ -32,7 +32,7 @@ test("01 - wrong inputs", () => {
       rApply(1, [[4, 13]]);
     },
     /THROW_ID_02/g,
-    "01.03"
+    "01.03",
   );
 
   // second arg not array
@@ -41,7 +41,7 @@ test("01 - wrong inputs", () => {
       rApply("aaa", 1);
     },
     /THROW_ID_03/g,
-    "01.04"
+    "01.04",
   );
 
   // ranges array contain something else than arrays
@@ -50,7 +50,7 @@ test("01 - wrong inputs", () => {
       rApply("aaa", [1]);
     },
     /THROW_ID_05/g,
-    "01.05"
+    "01.05",
   );
 
   throws(
@@ -58,7 +58,7 @@ test("01 - wrong inputs", () => {
       rApply("aaa", [[1, "a"]]);
     },
     /THROW_ID_07/g,
-    "01.06"
+    "01.06",
   );
 
   not.throws(() => {
@@ -82,7 +82,7 @@ test("01 - wrong inputs", () => {
       rApply("aaa", [[1], [10, 20]]);
     },
     /THROW_ID_07/g,
-    "01.07"
+    "01.07",
   );
 
   throws(
@@ -90,7 +90,7 @@ test("01 - wrong inputs", () => {
       rApply("aaa", [[10, 20], [30]]);
     },
     /THROW_ID_07/g,
-    "01.08"
+    "01.08",
   );
 
   throws(
@@ -98,7 +98,7 @@ test("01 - wrong inputs", () => {
       rApply("aaa", [[10.1, 20]]);
     },
     /THROW_ID_06/g,
-    "01.09"
+    "01.09",
   );
 
   throws(
@@ -106,7 +106,7 @@ test("01 - wrong inputs", () => {
       rApply("aaa", [["10.1", "20"]]);
     },
     /THROW_ID_06/g,
-    "01.10"
+    "01.10",
   );
 
   throws(
@@ -117,11 +117,11 @@ test("01 - wrong inputs", () => {
           [10, 20],
           [15, 16],
         ],
-        1
+        1,
       );
     },
     /THROW_ID_04/g,
-    "01.11"
+    "01.11",
   );
 
   throws(
@@ -132,11 +132,11 @@ test("01 - wrong inputs", () => {
           [10, 20],
           [15, 16],
         ],
-        true
+        true,
       );
     },
     /THROW_ID_04/g,
-    "01.12"
+    "01.12",
   );
 });
 
@@ -187,7 +187,7 @@ test("03 - deletes multiple chunks correctly", () => {
       [18, 29],
     ]),
     "aaa bbb ccc",
-    "03.01"
+    "03.01",
   );
 });
 
@@ -202,7 +202,7 @@ test("04 - rApplyaces multiple chunks correctly", () => {
       [18, 28, "yyy"],
     ]),
     "aaa zzz bbb yyy ccc",
-    "04.01"
+    "04.01",
   );
 });
 
@@ -217,7 +217,7 @@ test("05 - deletes and replaces multiple chunks correctly", () => {
       [18, 28, "zzz"],
     ]),
     "aaa  bbb zzz ccc",
-    "05.01"
+    "05.01",
   );
 });
 
@@ -236,7 +236,7 @@ test("07 - deletes multiple chunks with zero indexes correctly", () => {
       [14, 25],
     ]),
     "bbb ccc",
-    "07.01"
+    "07.01",
   );
 });
 
@@ -251,7 +251,7 @@ test("08 - rApplyaces multiple chunks with zero indexes correctly", () => {
       [14, 25],
     ]),
     "aaa bbb ccc",
-    "08.01"
+    "08.01",
   );
 });
 
@@ -272,7 +272,7 @@ test("10 - null in third arg does nothing", () => {
       [18, 29],
     ]),
     "aaa bbb ccc",
-    "10.01"
+    "10.01",
   );
   equal(
     rApply(str, [
@@ -280,7 +280,7 @@ test("10 - null in third arg does nothing", () => {
       [18, 29, null],
     ]),
     "aaa bbb ccc",
-    "10.02"
+    "10.02",
   );
   equal(
     rApply(str, [
@@ -288,7 +288,7 @@ test("10 - null in third arg does nothing", () => {
       [18, 29, null],
     ]),
     "aaa bbb ccc",
-    "10.03"
+    "10.03",
   );
 });
 
@@ -300,7 +300,7 @@ test("11 - rApplyaces multiple chunks correctly", () => {
   equal(
     rApply(str, [[4, 13, "zzz"], null, [18, 28, null]]),
     "aaa zzz bbb  ccc",
-    "11.01"
+    "11.01",
   );
 });
 
@@ -315,7 +315,7 @@ test("12 - rApplyaces multiple chunks correctly given in a wrong order", () => {
       [4, 13, "zzz"],
     ]),
     "aaa zzz bbb yyy ccc",
-    "12.01"
+    "12.01",
   );
 });
 
@@ -343,7 +343,7 @@ test("15 - multiple rApplyacement pieces", () => {
       [9, 9, "ddd"],
     ]),
     "aaa bbb ccc ddd eee",
-    "15.01"
+    "15.01",
   );
 });
 
@@ -380,7 +380,7 @@ test("17 - progressFn - basic rApplyacement", () => {
       [5, 7],
     ]),
     "rrrlzgygljhlgzzzkyyyaaaa;dfrrrr lsjfldksj",
-    "17.01"
+    "17.01",
   );
   equal(
     rApply(
@@ -409,10 +409,10 @@ test("17 - progressFn - basic rApplyacement", () => {
         // console.log(`perc = ${perc}`);
         type(perc, "number");
         count += 1;
-      }
+      },
     ),
     "rrrlzgygljhlgzzzkyyyaaaa;dfrrrr lsjfldksj",
-    "17.02"
+    "17.02",
   );
   ok(count <= 101, "17.03");
 });

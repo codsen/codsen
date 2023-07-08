@@ -16,7 +16,7 @@ test("01 - first input argument is missing", () => {
       rRegex();
     },
     /THROW_ID_01/,
-    "01.01"
+    "01.01",
   );
 
   // with second arg:
@@ -25,7 +25,7 @@ test("01 - first input argument is missing", () => {
       rRegex(undefined, "zzzzz");
     },
     /THROW_ID_01/,
-    "01.02"
+    "01.02",
   );
 
   // with third arg:
@@ -34,7 +34,7 @@ test("01 - first input argument is missing", () => {
       rRegex(undefined, undefined, "zzzzz");
     },
     /THROW_ID_01/,
-    "01.03"
+    "01.03",
   );
 
   // with both second and third arg:
@@ -43,7 +43,7 @@ test("01 - first input argument is missing", () => {
       rRegex(undefined, "yyyyy", "zzzzz");
     },
     /THROW_ID_01/,
-    "01.04"
+    "01.04",
   );
 });
 
@@ -54,7 +54,7 @@ test("02 - first input argument is not a regex", () => {
       rRegex("zzzz", "yyyy");
     },
     /THROW_ID_02/,
-    "02.01"
+    "02.01",
   );
 
   // with third arg:
@@ -63,7 +63,7 @@ test("02 - first input argument is not a regex", () => {
       rRegex("zzzz", "yyyy", "xxxxx");
     },
     /THROW_ID_02/,
-    "02.02"
+    "02.02",
   );
 });
 
@@ -74,7 +74,7 @@ test("03 - second input argument is missing", () => {
       rRegex(/z/g);
     },
     /THROW_ID_03/,
-    "03.01"
+    "03.01",
   );
 
   // plus third arg:
@@ -83,7 +83,7 @@ test("03 - second input argument is missing", () => {
       rRegex(/z/g, undefined, "zzzz");
     },
     /THROW_ID_03/,
-    "03.02"
+    "03.02",
   );
 });
 
@@ -94,7 +94,7 @@ test("04 - second input argument is not string", () => {
       rRegex(/z/g, true);
     },
     /THROW_ID_03/,
-    "04.01"
+    "04.01",
   );
 
   // with third arg:
@@ -103,7 +103,7 @@ test("04 - second input argument is not string", () => {
       rRegex(/z/g, true, "zzzzzz");
     },
     /THROW_ID_03/,
-    "04.02"
+    "04.02",
   );
 });
 
@@ -114,7 +114,7 @@ test("05 - third input argument is present and is not string", () => {
       rRegex(/def/g, "abcdefghij_abcdefghij", true);
     },
     /THROW_ID_04/,
-    "05.01"
+    "05.01",
   );
 });
 
@@ -129,7 +129,7 @@ test("06 - crops out few ranges outside the strlen", () => {
       [3, 6],
       [14, 17],
     ],
-    "06.01"
+    "06.01",
   );
   equal(
     rRegex(/def/g, "abcdefghij_abcdefghij", "yo"),
@@ -137,7 +137,7 @@ test("06 - crops out few ranges outside the strlen", () => {
       [3, 6, "yo"],
       [14, 17, "yo"],
     ],
-    "06.02"
+    "06.02",
   );
   equal(
     rRegex(/def/g, "abcdefghij_abcdefghij", null),
@@ -145,7 +145,7 @@ test("06 - crops out few ranges outside the strlen", () => {
       [3, 6, null],
       [14, 17, null],
     ],
-    "06.03"
+    "06.03",
   );
   equal(
     rRegex(/def/g, "abcdefghij_abcdefghij", ""),
@@ -153,7 +153,7 @@ test("06 - crops out few ranges outside the strlen", () => {
       [3, 6],
       [14, 17],
     ],
-    "06.04"
+    "06.04",
   );
 });
 
@@ -172,7 +172,7 @@ test("08 - result ranges are consecutive so their ranges are merged into one", (
       [3, 9],
       [17, 20],
     ],
-    "08.01"
+    "08.01",
   );
   equal(rApply(str, rRegex(reg, str)), str.replace(reg, ""), "08.02");
 });

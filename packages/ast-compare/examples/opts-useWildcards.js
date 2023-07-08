@@ -9,9 +9,9 @@ assert.equal(
   compare(
     { a: "1", b: "2a", c: "3" },
     { a: "1", b: "2*" },
-    { useWildcards: false }
+    { useWildcards: false },
   ),
-  false
+  false,
 );
 
 // once enabled, strings are matched via https://www.npmjs.com/package/matcher
@@ -20,7 +20,7 @@ assert.equal(
   compare(
     { a: "1", b: "2a", c: "3" },
     { a: "1", b: "2*" },
-    { useWildcards: true }
+    { useWildcards: true },
   ),
-  true
+  true,
 );

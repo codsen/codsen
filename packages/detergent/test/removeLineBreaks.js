@@ -37,7 +37,7 @@ test(`02 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - minimal, 
       replaceLineBreaks: false,
     }).res,
     "a\rb",
-    "02.01"
+    "02.01",
   );
   mixer({
     removeLineBreaks: false,
@@ -61,10 +61,10 @@ test(`03 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix styl
         not,
         n,
         "\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n",
-        opt
+        opt,
       ).res,
       "tralala tralala2 tralala3 tralala4",
-      "03.01"
+      "03.01",
     );
   });
 });
@@ -82,10 +82,10 @@ test(`04 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix styl
         not,
         n,
         "\n\n\ntralala\ntralala2\ntralala3\n\n\ntralala4\n\n\n",
-        opt
+        opt,
       ).res,
       "tralala tralala2 tralala3&nbsp;tralala4",
-      "04.01"
+      "04.01",
     );
   });
 
@@ -95,7 +95,7 @@ test(`04 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix styl
       removeWidows: true,
       convertEntities: true,
     }).applicableOpts.eol,
-    "04.03"
+    "04.03",
   );
 
   not.ok(
@@ -104,7 +104,7 @@ test(`04 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix styl
       removeWidows: true,
       convertEntities: true,
     }).applicableOpts.replaceLineBreaks,
-    "04.04"
+    "04.04",
   );
 
   not.ok(
@@ -113,7 +113,7 @@ test(`04 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix styl
       removeWidows: true,
       convertEntities: true,
     }).applicableOpts.useXHTML,
-    "04.05"
+    "04.05",
   );
 
   compare(
@@ -141,7 +141,7 @@ test(`04 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix styl
         eol: false,
       },
     },
-    "04.06"
+    "04.06",
   );
 });
 
@@ -156,10 +156,10 @@ test(`05 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - DOS style
         not,
         n,
         "\r\n\r\n\r\ntralala\r\ntralala2\r\ntralala3\r\n\r\n\r\ntralala4\r\n\r\n\r\n",
-        opt
+        opt,
       ).res,
       "tralala tralala2 tralala3 tralala4",
-      "05.01"
+      "05.01",
     );
   });
 });
@@ -176,10 +176,10 @@ test(`06 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - DOS style
         not,
         n,
         "\r\n\r\n\r\ntralala\r\ntralala2\r\ntralala3\r\n\r\n\r\ntralala4\r\n\r\n\r\n",
-        opt
+        opt,
       ).res,
       `tralala tralala2 tralala3${rawNbsp}tralala4`,
-      "06.01"
+      "06.01",
     );
   });
 });
@@ -195,10 +195,10 @@ test(`07 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - clasic Ma
         not,
         n,
         "\r\r\rtralala\rtralala2\rtralala3\r\r\rtralala4\r\r\r",
-        opt
+        opt,
       ).res,
       "tralala tralala2 tralala3 tralala4",
-      "07.01"
+      "07.01",
     );
   });
 });
@@ -215,10 +215,10 @@ test(`08 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - clasic Ma
         not,
         n,
         "\r\r\rtralala\rtralala2\rtralala3\r\r\rtralala4\r\r\r",
-        opt
+        opt,
       ).res,
       "tralala tralala2 tralala3&nbsp;tralala4",
-      "08.01"
+      "08.01",
     );
   });
 });

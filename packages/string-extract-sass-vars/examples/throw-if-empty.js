@@ -7,5 +7,5 @@ import { extractVars } from "../dist/string-extract-sass-vars.esm.js";
 assert.throws(() =>
   extractVars("", {
     throwIfEmpty: true,
-  })
+  }),
 );

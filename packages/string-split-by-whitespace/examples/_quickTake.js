@@ -21,5 +21,5 @@ assert.deepEqual(
   splitByW("a b c d e", {
     ignoreRanges: [[0, 2]], // that's "a" and space after it
   }),
-  ["b", "c", "d", "e"]
+  ["b", "c", "d", "e"],
 );

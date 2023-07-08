@@ -48,7 +48,7 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
 
   function pullAllWithGlob(
     originalInput: string[],
-    toBeRemoved: string | string[]
+    toBeRemoved: string | string[],
   ): string[] {
     if (typeof toBeRemoved === "string") {
       toBeRemoved = arrayiffy(toBeRemoved);
@@ -58,8 +58,8 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
         !(toBeRemoved as string[]).some((remVal) =>
           isMatch(originalVal, remVal, {
             caseSensitive: true,
-          })
-        )
+          }),
+        ),
     );
   }
   let hasKey = Object.prototype.hasOwnProperty;
@@ -78,7 +78,7 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
   ];
   if (!existy(obj)) {
     throw new Error(
-      "check-types-mini: [THROW_ID_01] First argument is missing!"
+      "check-types-mini: [THROW_ID_01] First argument is missing!",
     );
   }
 
@@ -134,8 +134,8 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
               `134 ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
                 current,
                 null,
-                4
-              )} at ${innerObj.path}`
+                4,
+              )} at ${innerObj.path}`,
             );
           if (!Array.isArray(current) && !isObj(current)) {
             tempObj[`${oneKey}.${innerObj.path}`] = current;
@@ -148,8 +148,8 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
             `148 FINAL ${`\u001b[${33}m${`tempObj`}\u001b[${39}m`} = ${JSON.stringify(
               tempObj,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
 
         // 2. delete that key which leads to object:
@@ -163,8 +163,8 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
             `163 FINALLY, ${`\u001b[${33}m${`resolvedOpts.schema`}\u001b[${39}m`} = ${JSON.stringify(
               resolvedOpts.schema,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
       }
     });
@@ -182,7 +182,7 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
       }
       // then turn all keys into strings and trim and lowercase them:
       resolvedOpts.schema[oneKey] = resolvedOpts.schema[oneKey].map(
-        (el: unknown) => `${el}`.toLowerCase().trim()
+        (el: unknown) => `${el}`.toLowerCase().trim(),
       );
     });
   } else if (resolvedOpts.schema != null) {
@@ -190,8 +190,8 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
       `check-types-mini: opts.schema was customised to ${JSON.stringify(
         resolvedOpts.schema,
         null,
-        0
-      )} which is not object but ${typeof resolvedOpts.schema}`
+        0,
+      )} which is not object but ${typeof resolvedOpts.schema}`,
     );
   }
 
@@ -221,7 +221,7 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
   if (resolvedOpts.enforceStrictKeyset) {
     DEV &&
       console.log(
-        `224 so \u001b[${31}m${`resolvedOpts.enforceStrictKeyset is ON`}\u001b[${39}m`
+        `224 so \u001b[${31}m${`resolvedOpts.enforceStrictKeyset is ON`}\u001b[${39}m`,
       );
     if (
       existy(resolvedOpts.schema) &&
@@ -232,15 +232,15 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
         pullAllWithGlob(
           pullAll(
             Object.keys(obj),
-            Object.keys(ref).concat(Object.keys(resolvedOpts.schema))
+            Object.keys(ref).concat(Object.keys(resolvedOpts.schema)),
           ),
-          resolvedOpts.ignoreKeys
+          resolvedOpts.ignoreKeys,
         ).length
       ) {
         DEV && console.log("240");
         let keys = pullAll(
           Object.keys(obj),
-          Object.keys(ref).concat(Object.keys(resolvedOpts.schema))
+          Object.keys(ref).concat(Object.keys(resolvedOpts.schema)),
         );
         throw new TypeError(
           `${resolvedOpts.msg}: ${
@@ -249,14 +249,14 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
             keys.length > 1 ? "s" : ""
           } ${
             keys.length > 1 ? "are" : "is"
-          } not covered by schema and/or reference objects: ${keys.join(", ")}`
+          } not covered by schema and/or reference objects: ${keys.join(", ")}`,
         );
       }
     } else if (isObj(ref) && Object.keys(ref as Obj).length) {
       if (
         pullAllWithGlob(
           pullAll(Object.keys(obj), Object.keys(ref as Obj)),
-          resolvedOpts.ignoreKeys
+          resolvedOpts.ignoreKeys,
         ).length !== 0
       ) {
         let keys = pullAll(Object.keys(obj), Object.keys(ref as Obj));
@@ -265,12 +265,12 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
             keys.length > 1 ? "s" : ""
           } which ${
             keys.length > 1 ? "are" : "is"
-          } not covered by the reference object: ${keys.join(", ")}`
+          } not covered by the reference object: ${keys.join(", ")}`,
         );
       } else if (
         pullAllWithGlob(
           pullAll(Object.keys(ref as Obj), Object.keys(obj)),
-          resolvedOpts.ignoreKeys
+          resolvedOpts.ignoreKeys,
         ).length !== 0
       ) {
         let keys = pullAll(Object.keys(ref as Obj), Object.keys(obj));
@@ -279,13 +279,13 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
             keys.length > 1 ? "s" : ""
           } which ${
             keys.length > 1 ? "are" : "is"
-          } not present in the input object: ${keys.join(", ")}`
+          } not present in the input object: ${keys.join(", ")}`,
         );
       }
     } else {
       // it's an error because both schema and reference don't exist
       throw new TypeError(
-        `${resolvedOpts.msg}: Both ${resolvedOpts.optsVarName}.schema and reference objects are missing! We don't have anything to match the keys as you requested via resolvedOpts.enforceStrictKeyset!`
+        `${resolvedOpts.msg}: Both ${resolvedOpts.optsVarName}.schema and reference objects are missing! We don't have anything to match the keys as you requested via resolvedOpts.enforceStrictKeyset!`,
       );
     }
   }
@@ -300,8 +300,8 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
       `300 ${`\u001b[${33}m${`LET'S CHECK obj`}\u001b[${39}m`} = ${JSON.stringify(
         obj,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   // When users set schema to "any" for certain path, this applies to that path
@@ -348,12 +348,12 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
         `348 \u001b[${36}m${`traversing: ██ ${innerObj.path} ██ ===========================`}\u001b[${39}m ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${key}; ${`\u001b[${33}m${`val`}\u001b[${39}m`} = ${`\u001b[${35}m${JSON.stringify(
           val,
           null,
-          0
+          0,
         )}\u001b[${39}m`}; ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
           current,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     // Here's what we will compare against to.
@@ -364,16 +364,16 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
         `364 ${`\u001b[${33}m${`resolvedOpts.schema`}\u001b[${39}m`} = ${JSON.stringify(
           resolvedOpts.schema,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     DEV &&
       console.log(
         `372 currently, ${`\u001b[${33}m${`ignoredPathsArr`}\u001b[${39}m`} = ${JSON.stringify(
           ignoredPathsArr,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     // if current path is a children of any paths in "ignoredPathsArr", skip it:
@@ -384,7 +384,7 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
     ) {
       DEV &&
         console.log(
-          `387 \u001b[${32}m${`SKIP THIS PATH BECAUSE IT'S A CHILD OF IGNORED PATH`}\u001b[${39}m`
+          `387 \u001b[${32}m${`SKIP THIS PATH BECAUSE IT'S A CHILD OF IGNORED PATH`}\u001b[${39}m`,
         );
       return current;
     }
@@ -393,7 +393,7 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
     if (
       objKey &&
       (resolvedOpts.ignoreKeys as string[]).some(
-        (oneOfKeysToIgnore) => objKey && isMatch(objKey, oneOfKeysToIgnore)
+        (oneOfKeysToIgnore) => objKey && isMatch(objKey, oneOfKeysToIgnore),
       )
     ) {
       DEV &&
@@ -401,8 +401,8 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
           `401 \u001b[${32}m${`SKIP THIS PATH BECAUSE ITS KEY (${objKey}), IS AMONG IGNORED (${JSON.stringify(
             resolvedOpts.ignoreKeys,
             null,
-            4
-          )})`}\u001b[${39}m`
+            4,
+          )})`}\u001b[${39}m`,
         );
       return current;
     }
@@ -411,14 +411,14 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
         `411 key "${objKey}" was not skipped because it was not matcher-matched against ${JSON.stringify(
           resolvedOpts.ignoreKeys,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     // if this path is ignored, skip it:
     if (
       (resolvedOpts.ignorePaths as string[]).some((oneOfPathsToIgnore) =>
-        isMatch(innerObj.path, oneOfPathsToIgnore)
+        isMatch(innerObj.path, oneOfPathsToIgnore),
       )
     ) {
       DEV &&
@@ -428,8 +428,8 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
           }), IS AMONG IGNORED (${JSON.stringify(
             resolvedOpts.ignorePaths,
             null,
-            4
-          )})`}\u001b[${39}m`
+            4,
+          )})`}\u001b[${39}m`,
         );
       return current;
     }
@@ -440,8 +440,8 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
         } was not matcher-matched against ${JSON.stringify(
           resolvedOpts.ignorePaths,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     let isNotAnArrayChild = !(
@@ -454,56 +454,56 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
     DEV &&
       console.log(
         `456: \n${`${`${`\u001b[${33}m${`██`}\u001b[${39}m`}${`\u001b[${31}m${`██`}\u001b[${39}m`}`}`.repeat(
-          10
-        )}\n`
+          10,
+        )}\n`,
       );
     DEV &&
       console.log(
         `${`\u001b[${33}m${`ref`}\u001b[${39}m`} = ${JSON.stringify(
           ref,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${33}m${`objKey`}\u001b[${39}m`} = ${JSON.stringify(
           objKey,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
           current,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${33}m${`innerObj`}\u001b[${39}m`} = ${JSON.stringify(
           innerObj,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${33}m${`isNotAnArrayChild`}\u001b[${39}m`} = ${JSON.stringify(
           isNotAnArrayChild,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     DEV &&
       console.log(
         `${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
           resolvedOpts,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     let optsSchemaHasThisPathDefined = false;
@@ -518,8 +518,8 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
         `518 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`optsSchemaHasThisPathDefined`}\u001b[${39}m`} = ${JSON.stringify(
           optsSchemaHasThisPathDefined,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     let refHasThisPathDefined = false;
@@ -531,15 +531,15 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
         `531 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`refHasThisPathDefined`}\u001b[${39}m`} = ${JSON.stringify(
           refHasThisPathDefined,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
 
     DEV &&
       console.log(
         `\n${`${`${`\u001b[${33}m${`██`}\u001b[${39}m`}${`\u001b[${31}m${`██`}\u001b[${39}m`}`}`.repeat(
-          10
-        )}\n`
+          10,
+        )}\n`,
       );
     // ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  █
 
@@ -558,7 +558,7 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
     ) {
       DEV &&
         console.log(
-          `\u001b[${31}m${`565 0. nothing to match against.`}\u001b[${39}m`
+          `\u001b[${31}m${`565 0. nothing to match against.`}\u001b[${39}m`,
         );
       throw new TypeError(
         `${resolvedOpts.msg}: ${resolvedOpts.optsVarName}.${
@@ -574,12 +574,12 @@ obj = ${JSON.stringify(obj, null, 4)}\n
 ref = ${JSON.stringify(ref, null, 4)}\n
 innerObj = ${JSON.stringify(innerObj, null, 4)}\n
 resolvedOpts = ${JSON.stringify(resolvedOpts, null, 4)}\n
-current = ${JSON.stringify(current, null, 4)}\n\n`
+current = ${JSON.stringify(current, null, 4)}\n\n`,
       );
     } else if (optsSchemaHasThisPathDefined) {
       DEV &&
         console.log(
-          `\u001b[${31}m${`585 I. matching against schema.`}\u001b[${39}m`
+          `\u001b[${31}m${`585 I. matching against schema.`}\u001b[${39}m`,
         );
       // step 1. Fetch the current keys' schema and normalise it - it's an array
       // which holds strings. Those strings have to be lowercased. It also can
@@ -589,19 +589,19 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
           `589 ${`\u001b[${33}m${`objectPath.get(resolvedOpts.schema, innerObj.path)`}\u001b[${39}m`} = ${JSON.stringify(
             objectPath.get(resolvedOpts.schema, innerObj.path),
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
       let currentKeysSchema = arrayiffy(resolvedOpts.schema[innerObj.path]).map(
-        (el: unknown) => `${el}`.toLowerCase()
+        (el: unknown) => `${el}`.toLowerCase(),
       );
       DEV &&
         console.log(
           `600 ${`\u001b[${33}m${`currentKeysSchema`}\u001b[${39}m`} = ${JSON.stringify(
             currentKeysSchema,
             null,
-            4
-          )}`
+            4,
+          )}`,
         );
 
       objectPath.set(resolvedOpts.schema, innerObj.path, currentKeysSchema);
@@ -618,8 +618,8 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
             `618 ${`\u001b[${33}m${`currentKeysSchema`}\u001b[${39}m`} = ${JSON.stringify(
               currentKeysSchema,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
         if (
           (current !== true &&
@@ -645,12 +645,12 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
                   }.${i}, the ${i}th element (equal to ${JSON.stringify(
                     current[i],
                     null,
-                    0
+                    0,
                   )}) is of a type ${typ(
-                    current[i]
+                    current[i],
                   ).toLowerCase()}, but only the following are allowed by the ${
                     resolvedOpts.optsVarName
-                  }.schema: ${currentKeysSchema.join(", ")}`
+                  }.schema: ${currentKeysSchema.join(", ")}`,
                 );
               }
             }
@@ -665,12 +665,12 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
               }${JSON.stringify(current, null, 0)}${
                 typ(current) !== "string" ? '"' : ""
               } (type: ${typ(
-                current
+                current,
               ).toLowerCase()}) which is not among the allowed types in schema (which is equal to ${JSON.stringify(
                 currentKeysSchema,
                 null,
-                0
-              )})`
+                0,
+              )})`,
             );
           }
         }
@@ -680,8 +680,8 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
             `680 names were blanket: ${JSON.stringify(
               intersection(currentKeysSchema, NAMESFORANYTYPE),
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
         ignoredPathsArr.push(innerObj.path);
         DEV &&
@@ -689,30 +689,30 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
             `689 ${`\u001b[${33}m${`ignoredPathsArr`}\u001b[${39}m`} = ${JSON.stringify(
               ignoredPathsArr,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
       }
     } else if (ref && isObj(ref) && refHasThisPathDefined) {
       DEV &&
         console.log(
-          `\u001b[${31}m${`696 II. matching against ref.`}\u001b[${39}m`
+          `\u001b[${31}m${`696 II. matching against ref.`}\u001b[${39}m`,
         );
       DEV &&
         console.log(
           `* 699 ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
             current,
             null,
-            4
-          )} (type ${typ(current).toLowerCase()})`
+            4,
+          )} (type ${typ(current).toLowerCase()})`,
         );
       DEV &&
         console.log(
           `* 706 ${`\u001b[${33}m${`objectPath.get(ref, innerObj.path)`}\u001b[${39}m`} = "${JSON.stringify(
             objectPath.get(ref, innerObj.path),
             null,
-            4
-          )}" (type ${typ(objectPath.get(ref, innerObj.path)).toLowerCase()})`
+            4,
+          )}" (type ${typ(objectPath.get(ref, innerObj.path)).toLowerCase()})`,
         );
       let compareTo = objectPath.get(ref, innerObj.path);
 
@@ -723,19 +723,20 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
       ) {
         DEV && console.log("724 2-1: check accept arrays");
         let allMatch = current.every(
-          (el) => typ(el).toLowerCase() === typ((ref as Obj)[key]).toLowerCase()
+          (el) =>
+            typ(el).toLowerCase() === typ((ref as Obj)[key]).toLowerCase(),
         );
         if (!allMatch) {
           throw new TypeError(
             `${resolvedOpts.msg}: ${resolvedOpts.optsVarName}.${
               innerObj.path
             } was customised to be array, but not all of its elements are ${typ(
-              ref[key]
-            ).toLowerCase()}-type`
+              ref[key],
+            ).toLowerCase()}-type`,
           );
         }
       } else if (typ(current) !== typ(compareTo)) {
-        DEV && console.log("738 - 2-2: match against ref");
+        DEV && console.log("739 - 2-2: match against ref");
         throw new TypeError(
           `${resolvedOpts.msg}: ${resolvedOpts.optsVarName}.${
             innerObj.path
@@ -744,22 +745,22 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
           }${JSON.stringify(current, null, 0)}${
             typ(current).toLowerCase() === "string" ? "" : '"'
           } which is not ${typ(compareTo).toLowerCase()} but ${typ(
-            current
-          ).toLowerCase()}`
+            current,
+          ).toLowerCase()}`,
         );
       }
     } else {
-      DEV && console.log("752 do nothing");
+      DEV && console.log("753 do nothing");
     }
 
-    DEV && console.log(`755 return: ${JSON.stringify(current, null, 4)}`);
+    DEV && console.log(`756 return: ${JSON.stringify(current, null, 4)}`);
     return current;
   });
   DEV &&
     console.log(
-      `760 ${`${`\u001b[${32}m${`█`}\u001b[${39}m`} `.repeat(
-        39
-      )} TRAVERSAL ENDS\n\n\n`
+      `761 ${`${`\u001b[${32}m${`█`}\u001b[${39}m`} `.repeat(
+        39,
+      )} TRAVERSAL ENDS\n\n\n`,
     );
 }
 

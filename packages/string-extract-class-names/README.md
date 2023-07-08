@@ -49,7 +49,7 @@ assert.deepEqual(ranges, [
 // `res` can be produced by slicing `ranges`:
 assert.deepEqual(
   res,
-  ranges.map(([from, to]) => str.slice(from, to))
+  ranges.map(([from, to]) => str.slice(from, to)),
 );
 ```
 

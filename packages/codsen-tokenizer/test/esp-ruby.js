@@ -61,7 +61,7 @@ test("01 - expression, no trim", () => {
         value: "c",
       },
     ],
-    "01.01"
+    "01.01",
   );
 });
 
@@ -118,7 +118,7 @@ test("02 - expression, trim", () => {
         value: "c",
       },
     ],
-    "02.01"
+    "02.01",
   );
 });
 
@@ -175,7 +175,7 @@ test("03 - code, no trim", () => {
         value: "c",
       },
     ],
-    "03.01"
+    "03.01",
   );
 });
 
@@ -232,7 +232,7 @@ test("04 - code, trim", () => {
         value: "c",
       },
     ],
-    "04.01"
+    "04.01",
   );
 });
 
@@ -289,7 +289,7 @@ test("05 - comment, no trim", () => {
         value: "c",
       },
     ],
-    "05.01"
+    "05.01",
   );
 });
 
@@ -346,7 +346,7 @@ test("06 - comment, trim", () => {
         value: "c",
       },
     ],
-    "06.01"
+    "06.01",
   );
 });
 
@@ -391,7 +391,7 @@ test("07 - various", () => {
         tailEndsAt: 28,
       },
     ],
-    "07.01"
+    "07.01",
   );
 });
 
@@ -430,7 +430,7 @@ test("08", () => {
         value: "b",
       },
     ],
-    "08.01"
+    "08.01",
   );
 });
 
@@ -447,7 +447,7 @@ trustedkey <%= @keys_trusted.join(' ') %>
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   equal(
     gathered,
@@ -555,7 +555,7 @@ trustedkey <%= @keys_trusted.join(' ') %>
         tailEndsAt: 165,
       },
     ],
-    "09.01"
+    "09.01",
   );
 });
 
@@ -640,7 +640,7 @@ test("10 - two expressions as attr values", () => {
         ],
       },
     ],
-    "10.01"
+    "10.01",
   );
 });
 

@@ -39,7 +39,7 @@ test("01 - m-dash minimal", () => {
     equal(
       convertOne(input, opt),
       null,
-      `01.04.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `01.04.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -48,7 +48,7 @@ test("01 - m-dash minimal", () => {
     equal(
       convertOne(input, opt),
       null,
-      `01.05.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `01.05.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -83,7 +83,7 @@ test("02 - n-dash instead of m-dash", () => {
     equal(
       convertOne(input, opt),
       null,
-      `02.04.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `02.04.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -92,7 +92,7 @@ test("02 - n-dash instead of m-dash", () => {
     equal(
       convertOne(input, opt),
       null,
-      `02.05.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `02.05.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -112,7 +112,7 @@ test("03 - already m-dash, spaced", () => {
     equal(
       convertOne(input, opt),
       null,
-      `03.02.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `03.02.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -121,7 +121,7 @@ test("03 - already m-dash, spaced", () => {
     equal(
       convertOne(input, opt),
       null,
-      `03.03.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `03.03.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -168,7 +168,7 @@ test("07 - already m-dash, tight", () => {
     equal(
       convertOne(input, opt),
       null,
-      `07.02.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `07.02.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -177,7 +177,7 @@ test("07 - already m-dash, tight", () => {
     equal(
       convertOne(input, opt),
       null,
-      `07.03.${pad(n)} ${JSON.stringify(opt, null, 0)}`
+      `07.03.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });

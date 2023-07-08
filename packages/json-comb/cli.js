@@ -64,7 +64,7 @@ const cli = meow(
         shortFlag: "h",
       },
     },
-  }
+  },
 );
 updateNotifier({ pkg }).notify();
 
@@ -100,7 +100,7 @@ input = input.concat(
       }
       return false;
     })
-    .map((key) => cli.flags[key])
+    .map((key) => cli.flags[key]),
 );
 
 // console.log(`cli = ${JSON.stringify(cli, null, 4)}`)
@@ -133,22 +133,22 @@ globby(input)
               bool
                 ? globby(
                     path.join(singleDirOrFilePath, "**/*.json"),
-                    "!node_modules"
+                    "!node_modules",
                   )
-                : [singleDirOrFilePath]
-            )
+                : [singleDirOrFilePath],
+            ),
           ),
-      [] // initialValue
+      [], // initialValue
     ).then((received) =>
-      pReduce(received, (total, single) => total.concat(single), [])
-    )
+      pReduce(received, (total, single) => total.concat(single), []),
+    ),
   )
   .then((res) =>
     res.filter(
       (oneOfPaths) =>
         !oneOfPaths.includes("node_modules") &&
-        !oneOfPaths.includes("package-lock.json")
-    )
+        !oneOfPaths.includes("package-lock.json"),
+    ),
   )
   .then((finalPathsToProcessArr) => {
     // At this point, we have an array of paths: "finalPathsToProcessArr".
@@ -188,7 +188,7 @@ globby(input)
       // );
       if (finalPathsToProcessArr.length === 1) {
         log(
-          `${messagePrefix}[ID_2] We can't normalise one file (${finalPathsToProcessArr[0]}), we need more than one.`
+          `${messagePrefix}[ID_2] We can't normalise one file (${finalPathsToProcessArr[0]}), we need more than one.`,
         );
         process.exit(0);
       }
@@ -217,7 +217,7 @@ globby(input)
             return enforceKeyset(
               allFileContentsArr[i],
               referenceKeyset,
-              enforceOpts
+              enforceOpts,
             ).then((newValue) =>
               fs
                 .writeJson(singlePath, newValue, {
@@ -225,9 +225,9 @@ globby(input)
                 })
                 .then(() => {
                   log(
-                    `${messagePrefix}${singlePath} - ${`\u001b[${32}m${"NORMALISED"}\u001b[${39}m`}`
+                    `${messagePrefix}${singlePath} - ${`\u001b[${32}m${"NORMALISED"}\u001b[${39}m`}`,
                   );
-                })
+                }),
             );
           });
         });

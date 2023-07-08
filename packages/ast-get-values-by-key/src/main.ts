@@ -19,7 +19,7 @@ export interface Findings {
 function getByKey(
   originalInput: any,
   whatToFind: string | string[],
-  originalReplacement?: any
+  originalReplacement?: any,
 ): any {
   let replacement: any;
 

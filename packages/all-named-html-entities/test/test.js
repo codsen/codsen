@@ -64,16 +64,16 @@ test("09 - brokenNamedEntities.json is OK", () => {
     Object.keys(brokenNamedEntities).forEach((entity, y) =>
       ok(
         !(entity === oneOfEntities && i !== y),
-        `key "${oneOfEntities}" is not unique`
-      )
+        `key "${oneOfEntities}" is not unique`,
+      ),
     );
 
     // 2. ensure "oneOfEntities" is not used by any keys:
     Object.keys(brokenNamedEntities).forEach((entity) =>
       ok(
         entity !== brokenNamedEntities[oneOfEntities],
-        `value "${brokenNamedEntities[oneOfEntities]}" is used among key names`
-      )
+        `value "${brokenNamedEntities[oneOfEntities]}" is used among key names`,
+      ),
     );
   });
 });

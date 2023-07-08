@@ -26,7 +26,7 @@ declare function tokenizer(str: string, originalOpts?: Partial<Opts>): Res;`;
       error: null,
       all: ["tokenizer"],
     },
-    "01.01"
+    "01.01",
   );
   equal(
     extract(source, "tokenizer", { extractAll: false }),
@@ -44,7 +44,7 @@ declare function tokenizer(str: string, originalOpts?: Partial<Opts>): Res;`;
       error: null,
       all: [],
     },
-    "01.02"
+    "01.02",
   );
 });
 

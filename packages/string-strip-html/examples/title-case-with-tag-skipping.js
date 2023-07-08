@@ -24,9 +24,9 @@ function tagAwareTitle(str) {
           return acc.concat(rangesFindings);
         }
         return acc;
-      }, [])
+      }, []),
     ),
-    str.length
+    str.length,
   );
 
   if (Array.isArray(inverted) && inverted.length) {
@@ -35,7 +35,7 @@ function tagAwareTitle(str) {
     // indexes only processed through "title":
     return rApply(
       str,
-      inverted.map(([from, to]) => [from, to, title(str.slice(from, to))])
+      inverted.map(([from, to]) => [from, to, title(str.slice(from, to))]),
     );
   }
   // otherwise, just apply title() on the whole string:
@@ -45,11 +45,11 @@ function tagAwareTitle(str) {
 // middle:
 assert.equal(
   tagAwareTitle("This is a title with some <code>code</code> in it"),
-  "This Is a Title with Some <code>code</code> In It"
+  "This Is a Title with Some <code>code</code> In It",
 );
 
 // leading:
 assert.equal(
   tagAwareTitle('<span class="xyz">abc</span> defgh ESLint'),
-  '<span class="xyz">abc</span> Defgh ESLint'
+  '<span class="xyz">abc</span> Defgh ESLint',
 );

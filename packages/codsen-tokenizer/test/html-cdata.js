@@ -25,7 +25,7 @@ test("01 - correct", () => {
         kind: "cdata",
       },
     ],
-    "01"
+    "01",
   );
 });
 
@@ -49,7 +49,7 @@ test("02 - messed up 1", () => {
         kind: "cdata",
       },
     ],
-    "02"
+    "02",
   );
 });
 
@@ -73,7 +73,7 @@ test("03 - messed up 2", () => {
         kind: "cdata",
       },
     ],
-    "03"
+    "03",
   );
 });
 
@@ -97,7 +97,7 @@ test("04 - messed up 3", () => {
         kind: "cdata",
       },
     ],
-    "04"
+    "04",
   );
 });
 
@@ -112,7 +112,7 @@ test("05 - with line breaks", () => {
       tagCb: (obj) => {
         gathered.push(obj);
       },
-    }
+    },
   );
   compare(
     ok,
@@ -137,7 +137,7 @@ test("05 - with line breaks", () => {
         end: 92,
       },
     ],
-    "05"
+    "05",
   );
 });
 

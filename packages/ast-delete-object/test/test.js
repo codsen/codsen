@@ -28,10 +28,10 @@ test("01 - delete one object within an array", () => {
         key2: "val2",
         key3: "val3",
       },
-      { matchKeysStrictly: false, hungryForWhitespace: false }
+      { matchKeysStrictly: false, hungryForWhitespace: false },
     ),
     ["elem1", "elem4"],
-    "01.01"
+    "01.01",
   );
   equal(
     deleteObj(
@@ -48,7 +48,7 @@ test("01 - delete one object within an array", () => {
         key2: "val2",
         key3: "val3",
       },
-      { matchKeysStrictly: true, hungryForWhitespace: false }
+      { matchKeysStrictly: true, hungryForWhitespace: false },
     ),
     [
       "elem1",
@@ -59,7 +59,7 @@ test("01 - delete one object within an array", () => {
       },
       "elem4",
     ],
-    "01.02"
+    "01.02",
   );
   equal(
     deleteObj(
@@ -76,10 +76,10 @@ test("01 - delete one object within an array", () => {
         key2: "val2",
         key3: "val3",
       },
-      { matchKeysStrictly: false, hungryForWhitespace: true }
+      { matchKeysStrictly: false, hungryForWhitespace: true },
     ),
     ["elem1", "elem4"],
-    "01.03"
+    "01.03",
   );
   equal(
     deleteObj(
@@ -96,7 +96,7 @@ test("01 - delete one object within an array", () => {
         key2: "val2",
         key3: "val3",
       },
-      { matchKeysStrictly: true, hungryForWhitespace: true }
+      { matchKeysStrictly: true, hungryForWhitespace: true },
     ),
     [
       "elem1",
@@ -107,7 +107,7 @@ test("01 - delete one object within an array", () => {
       },
       "elem4",
     ],
-    "01.04"
+    "01.04",
   );
 });
 
@@ -127,7 +127,7 @@ test("02 - delete one object, involves white space", () => {
         key2: "val2",
         key3: "   ",
       },
-      { matchKeysStrictly: false, hungryForWhitespace: false }
+      { matchKeysStrictly: false, hungryForWhitespace: false },
     ),
     [
       "elem1",
@@ -138,7 +138,7 @@ test("02 - delete one object, involves white space", () => {
       },
       "elem4",
     ],
-    "02.01"
+    "02.01",
   );
   equal(
     deleteObj(
@@ -155,7 +155,7 @@ test("02 - delete one object, involves white space", () => {
         key2: "val2",
         key3: "val3",
       },
-      { matchKeysStrictly: true, hungryForWhitespace: false }
+      { matchKeysStrictly: true, hungryForWhitespace: false },
     ),
     [
       "elem1",
@@ -166,7 +166,7 @@ test("02 - delete one object, involves white space", () => {
       },
       "elem4",
     ],
-    "02.02"
+    "02.02",
   );
   equal(
     deleteObj(
@@ -183,10 +183,10 @@ test("02 - delete one object, involves white space", () => {
         key2: "val2",
         key3: "val3",
       },
-      { matchKeysStrictly: false, hungryForWhitespace: true }
+      { matchKeysStrictly: false, hungryForWhitespace: true },
     ),
     ["elem1", "elem4"],
-    "02.03"
+    "02.03",
   );
   equal(
     deleteObj(
@@ -203,7 +203,7 @@ test("02 - delete one object, involves white space", () => {
         key2: "val2",
         key3: "val3",
       },
-      { matchKeysStrictly: true, hungryForWhitespace: true }
+      { matchKeysStrictly: true, hungryForWhitespace: true },
     ),
     [
       "elem1",
@@ -214,7 +214,7 @@ test("02 - delete one object, involves white space", () => {
       },
       "elem4",
     ],
-    "02.04"
+    "02.04",
   );
 });
 
@@ -256,10 +256,10 @@ test("03 - multiple findings, object within array", () => {
       {
         key2: "val2",
         key3: "val3",
-      }
+      },
     ),
     ["elem1", "elem4"],
-    "03.01"
+    "03.01",
   );
   equal(
     deleteObj(
@@ -299,7 +299,7 @@ test("03 - multiple findings, object within array", () => {
         key2: "val2",
         key3: "val3",
       },
-      { matchKeysStrictly: true }
+      { matchKeysStrictly: true },
     ),
     [
       {
@@ -329,7 +329,7 @@ test("03 - multiple findings, object within array", () => {
         and: "this",
       },
     ],
-    "03.02"
+    "03.02",
   );
   equal(
     deleteObj(
@@ -369,10 +369,10 @@ test("03 - multiple findings, object within array", () => {
         key2: "val2",
         key3: "val3",
       },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     ["elem1", "elem4"],
-    "03.03"
+    "03.03",
   );
   equal(
     deleteObj(
@@ -412,7 +412,7 @@ test("03 - multiple findings, object within array", () => {
         key2: "val2",
         key3: "val3",
       },
-      { matchKeysStrictly: true, hungryForWhitespace: true }
+      { matchKeysStrictly: true, hungryForWhitespace: true },
     ),
     [
       {
@@ -442,7 +442,7 @@ test("03 - multiple findings, object within array", () => {
         and: "this",
       },
     ],
-    "03.04"
+    "03.04",
   );
 });
 
@@ -465,10 +465,10 @@ test("04 - delete object within an arrays", () => {
       {
         key3: "val3",
         key4: "val4",
-      }
+      },
     ),
     ["elem1", ["elem2"], "elem5"],
-    "04.01"
+    "04.01",
   );
   equal(
     deleteObj(
@@ -489,7 +489,7 @@ test("04 - delete object within an arrays", () => {
         key3: "val3",
         key4: "val4",
       },
-      { matchKeysStrictly: true }
+      { matchKeysStrictly: true },
     ),
     [
       "elem1",
@@ -504,7 +504,7 @@ test("04 - delete object within an arrays", () => {
       ],
       "elem5",
     ],
-    "04.02"
+    "04.02",
   );
   equal(
     deleteObj(
@@ -525,10 +525,10 @@ test("04 - delete object within an arrays", () => {
         key3: "val3",
         key4: "val4",
       },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     ["elem1", ["elem2"], "elem5"],
-    "04.03"
+    "04.03",
   );
   equal(
     deleteObj(
@@ -549,7 +549,7 @@ test("04 - delete object within an arrays", () => {
         key3: "val3",
         key4: "val4",
       },
-      { matchKeysStrictly: true, hungryForWhitespace: true }
+      { matchKeysStrictly: true, hungryForWhitespace: true },
     ),
     [
       "elem1",
@@ -564,7 +564,7 @@ test("04 - delete object within an arrays", () => {
       ],
       "elem5",
     ],
-    "04.04"
+    "04.04",
   );
 });
 
@@ -589,10 +589,10 @@ test("05 - delete object within an array, wrong order of keys, pt.1", () => {
         key2: "val2",
         key3: "val3",
       },
-      { matchKeysStrictly: false, hungryForWhitespace: false }
+      { matchKeysStrictly: false, hungryForWhitespace: false },
     ),
     ["elem1", "elem4"],
-    "05.01"
+    "05.01",
   );
   equal(
     deleteObj(
@@ -614,7 +614,7 @@ test("05 - delete object within an array, wrong order of keys, pt.1", () => {
         key2: "val2",
         key3: "val3",
       },
-      { matchKeysStrictly: true, hungryForWhitespace: false }
+      { matchKeysStrictly: true, hungryForWhitespace: false },
     ),
     [
       "elem1",
@@ -630,7 +630,7 @@ test("05 - delete object within an array, wrong order of keys, pt.1", () => {
       },
       "elem4",
     ],
-    "05.02"
+    "05.02",
   );
   equal(
     deleteObj(
@@ -652,10 +652,10 @@ test("05 - delete object within an array, wrong order of keys, pt.1", () => {
         key2: "val2",
         key3: "val3",
       },
-      { matchKeysStrictly: false, hungryForWhitespace: true }
+      { matchKeysStrictly: false, hungryForWhitespace: true },
     ),
     ["elem1", "elem4"],
-    "05.03"
+    "05.03",
   );
   equal(
     deleteObj(
@@ -677,7 +677,7 @@ test("05 - delete object within an array, wrong order of keys, pt.1", () => {
         key2: "val2",
         key3: "val3",
       },
-      { matchKeysStrictly: true, hungryForWhitespace: true }
+      { matchKeysStrictly: true, hungryForWhitespace: true },
     ),
     [
       "elem1",
@@ -693,7 +693,7 @@ test("05 - delete object within an array, wrong order of keys, pt.1", () => {
       },
       "elem4",
     ],
-    "05.04"
+    "05.04",
   );
   equal(
     deleteObj(
@@ -714,7 +714,7 @@ test("05 - delete object within an array, wrong order of keys, pt.1", () => {
         key2: "val2",
         key3: "val3",
       },
-      { matchKeysStrictly: true, hungryForWhitespace: true }
+      { matchKeysStrictly: true, hungryForWhitespace: true },
     ),
     [
       "elem1",
@@ -725,7 +725,7 @@ test("05 - delete object within an array, wrong order of keys, pt.1", () => {
       },
       "elem4",
     ],
-    "05.05"
+    "05.05",
   );
 });
 
@@ -755,7 +755,7 @@ test("06 - delete object within an array, wrong order of keys, pt.2", () => {
       ],
       {
         class: "animals",
-      }
+      },
     ),
     [
       {
@@ -774,7 +774,7 @@ test("06 - delete object within an array, wrong order of keys, pt.2", () => {
         ],
       },
     ],
-    "06.01"
+    "06.01",
   );
 });
 
@@ -786,12 +786,12 @@ test("07 - special case, not strict", () => {
       },
       {
         key: [],
-      }
+      },
     ),
     {
       key: ["a"],
     },
-    "07.01"
+    "07.01",
   );
 });
 
@@ -804,12 +804,12 @@ test("08 - special case, strict", () => {
       {
         key: [],
       },
-      { matchKeysStrictly: true }
+      { matchKeysStrictly: true },
     ),
     {
       key: ["a"],
     },
-    "08.01"
+    "08.01",
   );
 });
 
@@ -837,7 +837,7 @@ test("09 - real-life situation #1", () => {
       {
         type: "rule",
         selectors: [],
-      }
+      },
     ),
     {
       stylesheet: {
@@ -852,7 +852,7 @@ test("09 - real-life situation #1", () => {
         ],
       },
     },
-    "09.01"
+    "09.01",
   );
 });
 
@@ -964,7 +964,7 @@ test("10 - real-life situation #2", () => {
       {
         type: "rule",
         selectors: [],
-      }
+      },
     ),
     {
       type: "stylesheet",
@@ -1036,7 +1036,7 @@ test("10 - real-life situation #2", () => {
         parsingErrors: [],
       },
     },
-    "10.01"
+    "10.01",
   );
 });
 
@@ -1060,16 +1060,16 @@ test("11 - multiple empty values blank arrays #1", () => {
         },
         {
           selectors: "",
-        }
+        },
       ),
       {
         selectors: [],
-      }
+      },
     ),
     {
       rules: [],
     },
-    "11.01"
+    "11.01",
   );
 });
 
@@ -1093,16 +1093,16 @@ test("12 - multiple empty values blank arrays #2", () => {
         },
         {
           selectors: [],
-        }
+        },
       ),
       {
         selectors: "",
-      }
+      },
     ),
     {
       rules: [],
     },
-    "12.01"
+    "12.01",
   );
 });
 
@@ -1120,10 +1120,10 @@ test("13 - object's value is a blank array, looking in an array", () => {
       ],
       {
         key2: [],
-      }
+      },
     ),
     ["elem1", "elem4"],
-    "13.01"
+    "13.01",
   );
 });
 
@@ -1139,12 +1139,12 @@ test("14 - object's value is a blank array, looking in an object", () => {
       },
       {
         key2: [],
-      }
+      },
     ),
     {
       elem4: "zz",
     },
-    "14.01"
+    "14.01",
   );
 });
 
@@ -1168,14 +1168,14 @@ test("15 - delete object within object - simple #1", () => {
       {
         key3: "val3",
         key4: "val4",
-      }
+      },
     ),
     [
       {
         key1: "val1",
       },
     ],
-    "15.01"
+    "15.01",
   );
 });
 
@@ -1200,14 +1200,14 @@ test("16 - multiple objects to find - simple #1", () => {
       {
         key3: "val3",
         key4: "val4",
-      }
+      },
     ),
     [
       {
         key2: "val2",
       },
     ],
-    "16.01"
+    "16.01",
   );
 });
 
@@ -1232,7 +1232,7 @@ test("17 - multiple objects to find within objects", () => {
       {
         del1: "del1",
         del2: "del2",
-      }
+      },
     ),
     [
       {
@@ -1243,7 +1243,7 @@ test("17 - multiple objects to find within objects", () => {
         },
       },
     ],
-    "17.01"
+    "17.01",
   );
 });
 
@@ -1321,7 +1321,7 @@ test("18 - real-life scenario", () => {
       {
         type: "rule",
         selectors: [],
-      }
+      },
     ),
     [
       {
@@ -1360,7 +1360,7 @@ test("18 - real-life scenario", () => {
         ],
       },
     ],
-    "18.01"
+    "18.01",
   );
 });
 
@@ -1378,12 +1378,12 @@ test("19 - delete object within object - simple #1", () => {
       {
         key3: "val3",
         key4: "val4",
-      }
+      },
     ),
     {
       key1: "val1",
     },
-    "19.01"
+    "19.01",
   );
 });
 
@@ -1402,10 +1402,10 @@ test("20 - the input is the finding", () => {
       {
         key3: "val3",
         key4: "val4",
-      }
+      },
     ),
     {},
-    "20.01"
+    "20.01",
   );
 });
 
@@ -1416,7 +1416,7 @@ test("21 - the input is boolean", () => {
       key4: "val4",
     }),
     true,
-    "21.01"
+    "21.01",
   );
 });
 
@@ -1427,7 +1427,7 @@ test("22 - the input is string", () => {
       key4: "val4",
     }),
     "yo",
-    "22.01"
+    "22.01",
   );
 });
 
@@ -1437,7 +1437,7 @@ test("23 - no input - throws", () => {
       deleteObj();
     },
     "23.01",
-    "23.01"
+    "23.01",
   );
   throws(
     () => {
@@ -1447,7 +1447,7 @@ test("23 - no input - throws", () => {
       });
     },
     "23.02",
-    "23.02"
+    "23.02",
   );
   // wrong third argument throws:
   throws(
@@ -1455,7 +1455,7 @@ test("23 - no input - throws", () => {
       deleteObj({ a: "z" }, { b: "y" }, 1);
     },
     "23.03",
-    "23.03"
+    "23.03",
   );
 });
 
@@ -1471,10 +1471,10 @@ test("24 - the input is the finding (right within array)", () => {
       {
         key3: "val3",
         key4: "val4",
-      }
+      },
     ),
     [],
-    "24.01"
+    "24.01",
   );
 });
 
@@ -1488,7 +1488,7 @@ test("25 - pt1. empty object to find", () => {
         },
       ],
       {},
-      { matchKeysStrictly: false, hungryForWhitespace: false }
+      { matchKeysStrictly: false, hungryForWhitespace: false },
     ),
     [
       {
@@ -1496,7 +1496,7 @@ test("25 - pt1. empty object to find", () => {
         key4: "val4",
       },
     ],
-    "25.01"
+    "25.01",
   );
   equal(
     deleteObj(
@@ -1507,7 +1507,7 @@ test("25 - pt1. empty object to find", () => {
         },
       ],
       {},
-      { matchKeysStrictly: false, hungryForWhitespace: true }
+      { matchKeysStrictly: false, hungryForWhitespace: true },
     ),
     [
       {
@@ -1515,7 +1515,7 @@ test("25 - pt1. empty object to find", () => {
         key4: "val4",
       },
     ],
-    "25.02"
+    "25.02",
   );
   equal(
     deleteObj(
@@ -1526,7 +1526,7 @@ test("25 - pt1. empty object to find", () => {
         },
       ],
       {},
-      { matchKeysStrictly: true, hungryForWhitespace: false }
+      { matchKeysStrictly: true, hungryForWhitespace: false },
     ),
     [
       {
@@ -1534,7 +1534,7 @@ test("25 - pt1. empty object to find", () => {
         key4: "val4",
       },
     ],
-    "25.03"
+    "25.03",
   );
   equal(
     deleteObj(
@@ -1545,7 +1545,7 @@ test("25 - pt1. empty object to find", () => {
         },
       ],
       {},
-      { matchKeysStrictly: true, hungryForWhitespace: true }
+      { matchKeysStrictly: true, hungryForWhitespace: true },
     ),
     [
       {
@@ -1553,7 +1553,7 @@ test("25 - pt1. empty object to find", () => {
         key4: "val4",
       },
     ],
-    "25.04"
+    "25.04",
   );
 });
 
@@ -1573,7 +1573,7 @@ test("26 - pt2. empty object to find", () => {
         {},
       ],
       {},
-      { matchKeysStrictly: false, hungryForWhitespace: false }
+      { matchKeysStrictly: false, hungryForWhitespace: false },
     ),
     [
       {
@@ -1581,7 +1581,7 @@ test("26 - pt2. empty object to find", () => {
         key4: "val4",
       },
     ],
-    "26.01"
+    "26.01",
   );
   equal(
     deleteObj(
@@ -1595,7 +1595,7 @@ test("26 - pt2. empty object to find", () => {
         {},
       ],
       {},
-      { matchKeysStrictly: false, hungryForWhitespace: true }
+      { matchKeysStrictly: false, hungryForWhitespace: true },
     ),
     [
       {
@@ -1603,7 +1603,7 @@ test("26 - pt2. empty object to find", () => {
         key4: "val4",
       },
     ],
-    "26.02"
+    "26.02",
   );
   equal(
     deleteObj(
@@ -1617,7 +1617,7 @@ test("26 - pt2. empty object to find", () => {
         {},
       ],
       {},
-      { matchKeysStrictly: true, hungryForWhitespace: false }
+      { matchKeysStrictly: true, hungryForWhitespace: false },
     ),
     [
       {
@@ -1625,7 +1625,7 @@ test("26 - pt2. empty object to find", () => {
         key4: "val4",
       },
     ],
-    "26.03"
+    "26.03",
   );
   equal(
     deleteObj(
@@ -1639,7 +1639,7 @@ test("26 - pt2. empty object to find", () => {
         {},
       ],
       {},
-      { matchKeysStrictly: true, hungryForWhitespace: true }
+      { matchKeysStrictly: true, hungryForWhitespace: true },
     ),
     [
       {
@@ -1647,7 +1647,7 @@ test("26 - pt2. empty object to find", () => {
         key4: "val4",
       },
     ],
-    "26.04"
+    "26.04",
   );
 });
 
@@ -1667,7 +1667,7 @@ test("27 - pt3. empty object to find", () => {
         { c: "" },
       ],
       {},
-      { matchKeysStrictly: false, hungryForWhitespace: false }
+      { matchKeysStrictly: false, hungryForWhitespace: false },
     ),
     [
       { a: "\n" },
@@ -1678,7 +1678,7 @@ test("27 - pt3. empty object to find", () => {
       { b: "   " },
       { c: "" },
     ],
-    "27.01"
+    "27.01",
   );
   equal(
     deleteObj(
@@ -1692,7 +1692,7 @@ test("27 - pt3. empty object to find", () => {
         { c: "" },
       ],
       {},
-      { matchKeysStrictly: false, hungryForWhitespace: true }
+      { matchKeysStrictly: false, hungryForWhitespace: true },
     ),
     [
       {
@@ -1700,7 +1700,7 @@ test("27 - pt3. empty object to find", () => {
         key4: "val4",
       },
     ],
-    "27.02"
+    "27.02",
   );
   equal(
     deleteObj(
@@ -1714,7 +1714,7 @@ test("27 - pt3. empty object to find", () => {
         { c: "" },
       ],
       {},
-      { matchKeysStrictly: true, hungryForWhitespace: false }
+      { matchKeysStrictly: true, hungryForWhitespace: false },
     ),
     [
       { a: "\n" },
@@ -1725,7 +1725,7 @@ test("27 - pt3. empty object to find", () => {
       { b: "   " },
       { c: "" },
     ],
-    "27.03"
+    "27.03",
   );
   equal(
     deleteObj(
@@ -1739,7 +1739,7 @@ test("27 - pt3. empty object to find", () => {
         { c: "" },
       ],
       {},
-      { matchKeysStrictly: true, hungryForWhitespace: true }
+      { matchKeysStrictly: true, hungryForWhitespace: true },
     ),
     [
       {
@@ -1747,7 +1747,7 @@ test("27 - pt3. empty object to find", () => {
         key4: "val4",
       },
     ],
-    "27.04"
+    "27.04",
   );
 });
 
@@ -1761,11 +1761,11 @@ test("28 - to find is undefined - throws", () => {
             key4: "val4",
           },
         ],
-        undefined
+        undefined,
       );
     },
     "28.01",
-    "28.01"
+    "28.01",
   );
 });
 
@@ -1779,11 +1779,11 @@ test("29 - to find is null - throws", () => {
             key4: "val4",
           },
         ],
-        null
+        null,
       );
     },
     "29.01",
-    "29.01"
+    "29.01",
   );
 });
 
@@ -1796,7 +1796,7 @@ test("30 - to find is string - returns input", () => {
           key4: "val4",
         },
       ],
-      "yo"
+      "yo",
     ),
     [
       {
@@ -1804,7 +1804,7 @@ test("30 - to find is string - returns input", () => {
         key4: "val4",
       },
     ],
-    "30.01"
+    "30.01",
   );
 });
 
@@ -1830,7 +1830,7 @@ test("31 - won't delete object within an array because of strict mode", () => {
       },
       {
         matchKeysStrictly: true,
-      }
+      },
     ),
     [
       "elem1",
@@ -1841,7 +1841,7 @@ test("31 - won't delete object within an array because of strict mode", () => {
       },
       "elem4",
     ],
-    "31.01"
+    "31.01",
   );
 });
 
@@ -1864,7 +1864,7 @@ test("32 - won't find multiple findings because of strict mode", () => {
       },
       {
         matchKeysStrictly: true,
-      }
+      },
     ),
     [
       {
@@ -1876,7 +1876,7 @@ test("32 - won't find multiple findings because of strict mode", () => {
         },
       },
     ],
-    "32.01"
+    "32.01",
   );
 });
 
@@ -1921,7 +1921,7 @@ test("33 - strict mode: deletes some and skips some because of strict mode", () 
       },
       {
         matchKeysStrictly: true,
-      }
+      },
     ),
     [
       {
@@ -1951,7 +1951,7 @@ test("33 - strict mode: deletes some and skips some because of strict mode", () 
         and: "this",
       },
     ],
-    "33.01"
+    "33.01",
   );
 });
 
@@ -1977,7 +1977,7 @@ test("34 - won't delete object within an arrays because of strict mode", () => {
       },
       {
         matchKeysStrictly: true,
-      }
+      },
     ),
     [
       "elem1",
@@ -1992,7 +1992,7 @@ test("34 - won't delete object within an arrays because of strict mode", () => {
       ],
       "elem5",
     ],
-    "34.01"
+    "34.01",
   );
 });
 
@@ -2017,10 +2017,10 @@ test("35 - recognises array containing only empty space - default", () => {
       },
       {
         hungryForWhitespace: true,
-      }
+      },
     ),
     ["elem1", "elem4"],
-    "35.01"
+    "35.01",
   );
   equal(
     deleteObj(
@@ -2038,7 +2038,7 @@ test("35 - recognises array containing only empty space - default", () => {
       },
       {
         hungryForWhitespace: false,
-      }
+      },
     ),
     [
       "elem1",
@@ -2049,7 +2049,7 @@ test("35 - recognises array containing only empty space - default", () => {
       },
       "elem4",
     ],
-    "35.02"
+    "35.02",
   );
 });
 
@@ -2070,7 +2070,7 @@ test("36 - recognises array containing only empty space - strict", () => {
       },
       {
         matchKeysStrictly: true,
-      }
+      },
     ),
     [
       "elem1",
@@ -2081,7 +2081,7 @@ test("36 - recognises array containing only empty space - strict", () => {
       },
       "elem4",
     ],
-    "36.01"
+    "36.01",
   );
   equal(
     deleteObj(
@@ -2099,7 +2099,7 @@ test("36 - recognises array containing only empty space - strict", () => {
       },
       {
         matchKeysStrictly: false,
-      }
+      },
     ),
     [
       "elem1",
@@ -2110,7 +2110,7 @@ test("36 - recognises array containing only empty space - strict", () => {
       },
       "elem4",
     ],
-    "36.02"
+    "36.02",
   );
 });
 
@@ -2128,7 +2128,7 @@ test("37 - recognises array containing only empty space - not found", () => {
       ],
       {
         key2: [],
-      }
+      },
     ),
     [
       "elem1",
@@ -2139,7 +2139,7 @@ test("37 - recognises array containing only empty space - not found", () => {
       },
       "elem4",
     ],
-    "37.01"
+    "37.01",
   );
 });
 
@@ -2161,10 +2161,10 @@ test("38 - two keys in objToDelete - default", () => {
       },
       {
         hungryForWhitespace: true,
-      }
+      },
     ),
     ["elem1", "elem4"],
-    "38.01"
+    "38.01",
   );
 });
 
@@ -2186,7 +2186,7 @@ test("39 - two keys in objToDelete - strict, not found", () => {
       },
       {
         matchKeysStrictly: true,
-      }
+      },
     ),
     [
       "elem1",
@@ -2197,7 +2197,7 @@ test("39 - two keys in objToDelete - strict, not found", () => {
       },
       "elem4",
     ],
-    "39.01"
+    "39.01",
   );
   equal(
     deleteObj(
@@ -2213,7 +2213,7 @@ test("39 - two keys in objToDelete - strict, not found", () => {
       {
         key2: [],
         key3: [""],
-      }
+      },
     ),
     [
       "elem1",
@@ -2224,7 +2224,7 @@ test("39 - two keys in objToDelete - strict, not found", () => {
       },
       "elem4",
     ],
-    "39.02"
+    "39.02",
   );
 });
 
@@ -2244,7 +2244,7 @@ test("40 - two keys in objToDelete - strict", () => {
         key2: [],
         key3: [""],
       },
-      { matchKeysStrictly: true }
+      { matchKeysStrictly: true },
     ),
     [
       "elem1",
@@ -2255,7 +2255,7 @@ test("40 - two keys in objToDelete - strict", () => {
       },
       "elem4",
     ],
-    "40.01"
+    "40.01",
   );
 });
 
@@ -2273,7 +2273,7 @@ test("41 - array with strings containing emptiness - default", () => {
       ],
       {
         key2: [],
-      }
+      },
     ),
     [
       "elem1",
@@ -2284,7 +2284,7 @@ test("41 - array with strings containing emptiness - default", () => {
       },
       "elem4",
     ],
-    "41.01"
+    "41.01",
   );
   equal(
     deleteObj(
@@ -2302,10 +2302,10 @@ test("41 - array with strings containing emptiness - default", () => {
       },
       {
         hungryForWhitespace: true,
-      }
+      },
     ),
     ["elem1", "elem4"],
-    "41.02"
+    "41.02",
   );
 });
 
@@ -2326,7 +2326,7 @@ test("42 - array with strings containing emptiness - strict", () => {
       },
       {
         matchKeysStrictly: true,
-      }
+      },
     ),
     [
       "elem1",
@@ -2337,7 +2337,7 @@ test("42 - array with strings containing emptiness - strict", () => {
       },
       "elem4",
     ],
-    "42.01"
+    "42.01",
   );
 });
 
@@ -2358,7 +2358,7 @@ test("43 - array with strings containing emptiness - strict found", () => {
       },
       {
         matchKeysStrictly: true,
-      }
+      },
     ),
     [
       "elem1",
@@ -2369,7 +2369,7 @@ test("43 - array with strings containing emptiness - strict found", () => {
       },
       "elem4",
     ],
-    "43.01"
+    "43.01",
   );
   equal(
     deleteObj(
@@ -2387,10 +2387,10 @@ test("43 - array with strings containing emptiness - strict found", () => {
       },
       {
         matchKeysStrictly: false,
-      }
+      },
     ),
     ["elem1", "elem4"],
-    "43.02"
+    "43.02",
   );
 });
 
@@ -2411,10 +2411,10 @@ test("44 - recognises string containing only empty space (queried array)", () =>
       },
       {
         hungryForWhitespace: true,
-      }
+      },
     ),
     ["elem1", "elem4"],
-    "44.01"
+    "44.01",
   );
   equal(
     deleteObj(
@@ -2432,7 +2432,7 @@ test("44 - recognises string containing only empty space (queried array)", () =>
       },
       {
         hungryForWhitespace: false,
-      }
+      },
     ),
     [
       "elem1",
@@ -2443,7 +2443,7 @@ test("44 - recognises string containing only empty space (queried array)", () =>
       },
       "elem4",
     ],
-    "44.02"
+    "44.02",
   );
 });
 
@@ -2464,7 +2464,7 @@ test("45 - recognises string containing only empty space - strict", () => {
       },
       {
         matchKeysStrictly: true,
-      }
+      },
     ),
     [
       "elem1",
@@ -2475,7 +2475,7 @@ test("45 - recognises string containing only empty space - strict", () => {
       },
       "elem4",
     ],
-    "45.01"
+    "45.01",
   );
 });
 
@@ -2493,7 +2493,7 @@ test("46 - recognises string containing only empty space - won't find", () => {
       ],
       {
         a: [],
-      }
+      },
     ),
     [
       "elem1",
@@ -2504,7 +2504,7 @@ test("46 - recognises string containing only empty space - won't find", () => {
       },
       "elem4",
     ],
-    "46.01"
+    "46.01",
   );
 });
 
@@ -2523,7 +2523,7 @@ test("47 - recognises string containing only empty space - won't find", () => {
       {
         key2: [],
         key3: [],
-      }
+      },
     ),
     [
       "elem1",
@@ -2534,7 +2534,7 @@ test("47 - recognises string containing only empty space - won't find", () => {
       },
       "elem4",
     ],
-    "47.01"
+    "47.01",
   );
   equal(
     deleteObj(
@@ -2553,7 +2553,7 @@ test("47 - recognises string containing only empty space - won't find", () => {
       },
       {
         hungryForWhitespace: true,
-      }
+      },
     ),
     [
       "elem1",
@@ -2564,7 +2564,7 @@ test("47 - recognises string containing only empty space - won't find", () => {
       },
       "elem4",
     ],
-    "47.02"
+    "47.02",
   );
 });
 
@@ -2585,10 +2585,10 @@ test("48 - recognises a string containing only empty space (queried array with e
       },
       {
         hungryForWhitespace: true,
-      }
+      },
     ),
     ["elem1", "elem4"],
-    "48.01"
+    "48.01",
   );
 });
 
@@ -2609,7 +2609,7 @@ test("49 - a string containing only empty space (queried array) - strict", () =>
       },
       {
         matchKeysStrictly: true,
-      }
+      },
     ),
     [
       "elem1",
@@ -2620,7 +2620,7 @@ test("49 - a string containing only empty space (queried array) - strict", () =>
       },
       "elem4",
     ],
-    "49.01"
+    "49.01",
   );
 });
 
@@ -2639,7 +2639,7 @@ test("50 - a string containing only empty space (queried array) - not found", ()
       {
         key2: [""],
         a: [],
-      }
+      },
     ),
     [
       "elem1",
@@ -2650,7 +2650,7 @@ test("50 - a string containing only empty space (queried array) - not found", ()
       },
       "elem4",
     ],
-    "50.01"
+    "50.01",
   );
 });
 
@@ -2671,10 +2671,10 @@ test("51 - recognises string containing only empty space string (queried empty s
       },
       {
         hungryForWhitespace: true,
-      }
+      },
     ),
     ["elem1", "elem4"],
-    "51.01"
+    "51.01",
   );
 });
 
@@ -2696,10 +2696,10 @@ test("52 - multiple string values in objToDelete", () => {
       },
       {
         hungryForWhitespace: true,
-      }
+      },
     ),
     ["elem1", "elem4"],
-    "52.01"
+    "52.01",
   );
 });
 
@@ -2718,7 +2718,7 @@ test("53 - multiple string values in objToDelete - not found", () => {
       {
         key2: "",
         key3: "",
-      }
+      },
     ),
     [
       "elem1",
@@ -2729,7 +2729,7 @@ test("53 - multiple string values in objToDelete - not found", () => {
       },
       "elem4",
     ],
-    "53.01"
+    "53.01",
   );
 });
 
@@ -2754,7 +2754,7 @@ test("54 - multiple string values in objToDelete - strict", () => {
         key2: "",
         key3: "",
       },
-      { matchKeysStrictly: true }
+      { matchKeysStrictly: true },
     ),
     [
       "elem1",
@@ -2770,7 +2770,7 @@ test("54 - multiple string values in objToDelete - strict", () => {
       },
       "elem4",
     ],
-    "54.01"
+    "54.01",
   );
 });
 
@@ -2788,7 +2788,7 @@ test("55 - won't find, queried object with empty string value", () => {
       ],
       {
         a: "",
-      }
+      },
     ),
     [
       "elem1",
@@ -2799,7 +2799,7 @@ test("55 - won't find, queried object with empty string value", () => {
       },
       "elem4",
     ],
-    "55.01"
+    "55.01",
   );
 });
 
@@ -2820,10 +2820,10 @@ test("56 - recognises array of strings each containing only empty space (queried
       },
       {
         hungryForWhitespace: true,
-      }
+      },
     ),
     ["elem1", "elem4"],
-    "56.01"
+    "56.01",
   );
 });
 
@@ -2844,10 +2844,10 @@ test("57 - recognises array with multiple strings containing emptiness", () => {
       },
       {
         hungryForWhitespace: true,
-      }
+      },
     ),
     ["elem1", "elem4"],
-    "57.01"
+    "57.01",
   );
 });
 
@@ -2873,10 +2873,10 @@ test("58 - empty array finding empty string", () => {
       },
       {
         hungryForWhitespace: true,
-      }
+      },
     ),
     ["elem1", "elem4"],
-    "58.01"
+    "58.01",
   );
 });
 
@@ -2897,10 +2897,10 @@ test("59 - empty string finding empty array", () => {
       },
       {
         hungryForWhitespace: true,
-      }
+      },
     ),
     ["elem1", "elem4"],
-    "59.01"
+    "59.01",
   );
 });
 
@@ -2911,10 +2911,10 @@ test("60 - object deleted from an array, strict mode", () => {
       {
         a: "a",
       },
-      { matchKeysStrictly: true }
+      { matchKeysStrictly: true },
     ),
     [],
-    "60.01"
+    "60.01",
   );
 });
 
@@ -2941,14 +2941,14 @@ test("61 - real life situation #1", () => {
       },
       {
         selectors: "",
-      }
+      },
     ),
     {
       stylesheet: {
         rules: [],
       },
     },
-    "61.01"
+    "61.01",
   );
 });
 
@@ -2971,14 +2971,14 @@ test("62 - real life situation #2", () => {
       },
       {
         selectors: [],
-      }
+      },
     ),
     {
       stylesheet: {
         rules: [],
       },
     },
-    "62.01"
+    "62.01",
   );
 });
 
@@ -3119,7 +3119,7 @@ test("63 - real life situation #3", () => {
       },
       {
         selectors: [],
-      }
+      },
     ),
     {
       type: "stylesheet",
@@ -3128,7 +3128,7 @@ test("63 - real life situation #3", () => {
         parsingErrors: [],
       },
     },
-    "63.01"
+    "63.01",
   );
 });
 
@@ -3269,7 +3269,7 @@ test("64 - real life situation #4", () => {
       },
       {
         selectors: [],
-      }
+      },
     ),
     {
       type: "stylesheet",
@@ -3278,7 +3278,7 @@ test("64 - real life situation #4", () => {
         parsingErrors: [],
       },
     },
-    "64.01"
+    "64.01",
   );
 });
 
@@ -3297,7 +3297,7 @@ test("65 - empty strings within arrays", () => {
       {
         key2: [],
         key3: [""],
-      }
+      },
     ),
     [
       "",
@@ -3308,7 +3308,7 @@ test("65 - empty strings within arrays", () => {
       },
       "",
     ],
-    "65.01"
+    "65.01",
   );
   equal(
     deleteObj(
@@ -3327,10 +3327,10 @@ test("65 - empty strings within arrays", () => {
       },
       {
         hungryForWhitespace: true,
-      }
+      },
     ),
     ["", ""], // <<< result
-    "65.02"
+    "65.02",
   );
   equal(
     deleteObj(
@@ -3349,7 +3349,7 @@ test("65 - empty strings within arrays", () => {
       },
       {
         matchKeysStrictly: true,
-      }
+      },
     ),
     [
       "",
@@ -3360,7 +3360,7 @@ test("65 - empty strings within arrays", () => {
       },
       "",
     ],
-    "65.03"
+    "65.03",
   );
   equal(
     deleteObj(
@@ -3380,7 +3380,7 @@ test("65 - empty strings within arrays", () => {
       {
         matchKeysStrictly: true,
         hungryForWhitespace: true,
-      }
+      },
     ),
     [
       "",
@@ -3391,7 +3391,7 @@ test("65 - empty strings within arrays", () => {
       },
       "",
     ],
-    "65.04"
+    "65.04",
   );
 });
 
@@ -3408,10 +3408,10 @@ test("66 - strict mode, deletes everything", () => {
       },
       {
         matchKeysStrictly: true,
-      }
+      },
     ),
     {},
-    "66.01"
+    "66.01",
   );
   equal(
     deleteObj(
@@ -3425,10 +3425,10 @@ test("66 - strict mode, deletes everything", () => {
       },
       {
         matchKeysStrictly: false,
-      }
+      },
     ),
     {},
-    "66.02"
+    "66.02",
   );
 });
 
@@ -3438,7 +3438,7 @@ test("67 - treats holes in arrays - ast-monkey will fix them", () => {
       x: "y",
     }),
     ["a", "b"],
-    "67.01"
+    "67.01",
   );
 });
 
@@ -3460,7 +3460,7 @@ test("68 - does not mutate input args", () => {
       a: "a",
       b: "b",
     },
-    "68.02"
+    "68.02",
   ); // real deal
   equal(
     obj2,
@@ -3468,7 +3468,7 @@ test("68 - does not mutate input args", () => {
       a: "a",
       b: "b",
     },
-    "68.03"
+    "68.03",
   ); // real deal
 });
 

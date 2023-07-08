@@ -26,19 +26,19 @@ test("01 - returned correct info object, nothing to delete from body, damaged HT
     <img src="image.jpg" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz">
     <br><br>
     <hr>
-    <br><br>`
+    <br><br>`,
   );
 
   equal(
     actual.allInHead,
     [".non-existent-class", "#non-existent-id", "#other"],
-    "01.01"
+    "01.01",
   );
   equal(actual.allInBody, [], "01.02");
   equal(
     actual.deletedFromHead,
     [".non-existent-class", "#non-existent-id", "#other"],
-    "01.03"
+    "01.03",
   );
   equal(actual.deletedFromBody, [], "01.04");
 });
@@ -67,28 +67,28 @@ test("02 - returned correct info object, clean HTML", () => {
 </table>
 </body>
 </html>
-`
+`,
   );
 
   equal(
     actual.allInHead,
     [".non-existent-class", "#non-existent-id", "#other"],
-    "02.01"
+    "02.01",
   );
   equal(
     actual.allInBody,
     [".unused1", ".unused2", ".unused3", "#unused4"],
-    "02.02"
+    "02.02",
   );
   equal(
     actual.deletedFromHead,
     [".non-existent-class", "#non-existent-id", "#other"],
-    "02.03"
+    "02.03",
   );
   equal(
     actual.deletedFromBody,
     [".unused1", ".unused2", ".unused3", "#unused4"],
-    "02.04"
+    "02.04",
   );
 });
 
@@ -119,17 +119,17 @@ test("03 - as 06.02 but now with whitelist, dirty HTML", () => {
         "#non-existent-*",
         ".body-only-*",
       ],
-    }
+    },
   );
   equal(
     actual.allInHead,
     [".non-existent-class", "#non-existent-id", "#other"],
-    "03.01"
+    "03.01",
   );
   equal(
     actual.allInBody,
     [".body-only-class-1", ".body-only-class-2"],
-    "03.02"
+    "03.02",
   );
   equal(actual.deletedFromHead, [], "03.03");
   equal(actual.deletedFromBody, [], "03.04");
@@ -156,7 +156,7 @@ test("04 - correct classes reported in info/deletedFromBody", () => {
 </table>
 </body>
 </html>
-`
+`,
   );
 
   equal(actual.allInHead, [".unused", ".used"], "04.01");
@@ -188,19 +188,19 @@ test("05 - more sandwitched classes/ids cases", () => {
 </table>
 </body>
 </html>
-`
+`,
   );
 
   equal(
     actual.allInHead,
     [".unused-class", ".used-class", "#unused-id", "#used-id"],
-    "05.01"
+    "05.01",
   );
   equal(actual.allInBody, [".used-class", "#used-id"], "05.02");
   equal(
     actual.deletedFromHead,
     [".unused-class", ".used-class", "#unused-id", "#used-id"],
-    "05.03"
+    "05.03",
   );
   equal(actual.deletedFromBody, [".used-class", "#used-id"], "05.04");
 });

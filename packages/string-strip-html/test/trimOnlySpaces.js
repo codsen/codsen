@@ -11,7 +11,7 @@ test("01 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all"
   equal(
     stripHtml("\xa0 a \xa0", { trimOnlySpaces: true }).result,
     "\xa0 a \xa0",
-    "01.01"
+    "01.01",
   );
   equal(stripHtml("a", { trimOnlySpaces: false }).result, "a", "01.02");
 });
@@ -20,12 +20,12 @@ test("02 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all,
   equal(
     stripHtml(" \xa0 a \xa0 ", { trimOnlySpaces: true }).result,
     "\xa0 a \xa0",
-    "02.01"
+    "02.01",
   );
   equal(
     stripHtml(" \xa0 a \xa0 ", { trimOnlySpaces: false }).result,
     "a",
-    "02.02"
+    "02.02",
   );
 });
 
@@ -33,12 +33,12 @@ test("03 - opts.trimOnlySpaces - opts.trimOnlySpaces = on", () => {
   equal(
     stripHtml("\xa0 a \xa0", { trimOnlySpaces: true }).result,
     "\xa0 a \xa0",
-    "03.01"
+    "03.01",
   );
   equal(
     stripHtml("\xa0 a \xa0", { trimOnlySpaces: false }).result,
     "a",
-    "03.02"
+    "03.02",
   );
 });
 
@@ -46,12 +46,12 @@ test("04 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, loose", () => {
   equal(
     stripHtml(" \xa0 a \xa0 ", { trimOnlySpaces: true }).result,
     "\xa0 a \xa0",
-    "04.01"
+    "04.01",
   );
   equal(
     stripHtml(" \xa0 a \xa0 ", { trimOnlySpaces: false }).result,
     "a",
-    "04.02"
+    "04.02",
   );
 });
 
@@ -63,12 +63,12 @@ test("06 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, tag", () => {
   equal(
     stripHtml("\xa0 <article> \xa0", { trimOnlySpaces: true }).result,
     "\xa0\xa0",
-    "06.01"
+    "06.01",
   );
   equal(
     stripHtml("\xa0 <article> \xa0", { trimOnlySpaces: false }).result,
     "",
-    "06.02"
+    "06.02",
   );
 });
 
@@ -77,13 +77,13 @@ test("07 - opts.trimOnlySpaces - opts.trimOnlySpaces = on, two tags", () => {
     stripHtml(" \xa0 <article> \xa0 <div> \xa0 ", { trimOnlySpaces: true })
       .result,
     "\xa0 \xa0",
-    "07.01"
+    "07.01",
   );
   equal(
     stripHtml(" \xa0 <article> \xa0 <div> \xa0 ", { trimOnlySpaces: false })
       .result,
     "",
-    "07.02"
+    "07.02",
   );
 });
 
@@ -95,7 +95,7 @@ test("09 - opts.trimOnlySpaces - whitespace around, trimOnlySpaces = on", () => 
   equal(
     stripHtml(" \xa0 <article> \xa0 ", { trimOnlySpaces: true }).result,
     "\xa0\xa0",
-    "09.01"
+    "09.01",
   );
 });
 
@@ -107,7 +107,7 @@ test("11 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all 
   equal(
     stripHtml(" \t a \n ", { trimOnlySpaces: true }).result,
     "\t a \n",
-    "11.01"
+    "11.01",
   );
 });
 
@@ -115,7 +115,7 @@ test("12 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all 
   equal(
     stripHtml(" \t\n a \r\n ", { trimOnlySpaces: true }).result,
     "\t\na \r\n",
-    "12.01"
+    "12.01",
   );
 });
 
@@ -127,7 +127,7 @@ test("14 - opts.trimOnlySpaces - tabs and CRLF", () => {
   equal(
     stripHtml("\t\r\n <article> \t\r\n", { trimOnlySpaces: true }).result,
     "\t\r\n\t\r\n",
-    "14.01"
+    "14.01",
   );
 });
 
@@ -135,7 +135,7 @@ test("15 - opts.trimOnlySpaces - spaced tabs and CRs, trimOnlySpaces = on", () =
   equal(
     stripHtml(" \t \r \n <article> \t \r \n ", { trimOnlySpaces: true }).result,
     "\t \r \n\t \r \n",
-    "15.01"
+    "15.01",
   );
 });
 
@@ -145,7 +145,7 @@ test("16 - opts.trimOnlySpaces - combos of tags and whitespace, trimOnlySpaces =
       trimOnlySpaces: true,
     }).result,
     "\n \t",
-    "16.01"
+    "16.01",
   );
 });
 
@@ -155,7 +155,7 @@ test("17 - opts.trimOnlySpaces - tags, trimOnlySpaces = on", () => {
       trimOnlySpaces: true,
     }).result,
     "\na b\t",
-    "17.01"
+    "17.01",
   );
 });
 
@@ -165,7 +165,7 @@ test("18 - opts.trimOnlySpaces - letters around are retained", () => {
       trimOnlySpaces: true,
     }).result,
     "\na b \t",
-    "18.01"
+    "18.01",
   );
 });
 
@@ -176,7 +176,7 @@ test("19 - opts.trimOnlySpaces - opts.ignoreTags combo", () => {
       ignoreTags: ["div"],
     }).result,
     "\na <div> b \t",
-    "19.01"
+    "19.01",
   );
 });
 
@@ -187,7 +187,7 @@ test("20 - opts.trimOnlySpaces - opts.ignoreTags combo - plausible but recognise
       ignoreTags: ["div"],
     }).result,
     "\na < div> b \t",
-    "20.01"
+    "20.01",
   );
 });
 

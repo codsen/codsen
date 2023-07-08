@@ -7,7 +7,7 @@ declare const defaults: {
 };
 declare function helga(
   str: string,
-  originalOpts?: Partial<Opts>
+  originalOpts?: Partial<Opts>,
 ): {
   minified: string;
   beautified: string;

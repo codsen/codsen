@@ -20,7 +20,7 @@ test("01", () => {
   equal(
     isInt(() => {}),
     false,
-    "01.13"
+    "01.13",
   );
   equal(isInt(""), false, "01.14");
   equal(isInt("a"), false, "01.15");

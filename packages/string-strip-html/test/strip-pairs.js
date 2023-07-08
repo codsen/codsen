@@ -13,7 +13,7 @@ test("01 - wrong opts.stripTogetherWithTheirContents value", () => {
       stripTogetherWithTheirContents: true,
     }).result,
     "a c d",
-    "01.01"
+    "01.01",
   );
   // inline tag
   equal(
@@ -21,7 +21,7 @@ test("01 - wrong opts.stripTogetherWithTheirContents value", () => {
       stripTogetherWithTheirContents: true,
     }).result,
     "acd",
-    "01.02"
+    "01.02",
   );
 });
 
@@ -31,14 +31,14 @@ test("02 - wrong opts.stripTogetherWithTheirContents value", () => {
       stripTogetherWithTheirContents: false,
     }).result,
     "a c d",
-    "02.01"
+    "02.01",
   );
   equal(
     stripHtml("a<b>c</b>d", {
       stripTogetherWithTheirContents: false,
     }).result,
     "acd",
-    "02.02"
+    "02.02",
   );
 });
 
@@ -48,14 +48,14 @@ test("03 - wrong opts.stripTogetherWithTheirContents value", () => {
       stripTogetherWithTheirContents: null,
     }).result,
     "a c d",
-    "03.01"
+    "03.01",
   );
   equal(
     stripHtml("a<b>c</b>d", {
       stripTogetherWithTheirContents: null,
     }).result,
     "acd",
-    "03.02"
+    "03.02",
   );
 });
 
@@ -65,14 +65,14 @@ test("04 - wrong opts.stripTogetherWithTheirContents value", () => {
       stripTogetherWithTheirContents: undefined,
     }).result,
     "a c d",
-    "04.01"
+    "04.01",
   );
   equal(
     stripHtml("a<b>c</b>d", {
       stripTogetherWithTheirContents: undefined,
     }).result,
     "acd",
-    "04.02"
+    "04.02",
   );
 });
 
@@ -82,14 +82,14 @@ test("05 - wrong opts.stripTogetherWithTheirContents value", () => {
       stripTogetherWithTheirContents: "",
     }).result,
     "a c d",
-    "05.01"
+    "05.01",
   );
   equal(
     stripHtml("a<b>c</b>d", {
       stripTogetherWithTheirContents: "",
     }).result,
     "acd",
-    "05.02"
+    "05.02",
   );
 });
 
@@ -106,7 +106,7 @@ test("06 - no mutations! - inline tag", () => {
     {
       stripTogetherWithTheirContents: "b",
     },
-    "06.02"
+    "06.02",
   );
 });
 
@@ -123,7 +123,7 @@ test("07 - no mutations! - block-level tag", () => {
     {
       stripTogetherWithTheirContents: "div",
     },
-    "07.02"
+    "07.02",
   );
 });
 
@@ -142,7 +142,7 @@ test("08 - tag pairs including content - healthy, typical style tag pair", () =>
 <body>aaa</body>
 </html>`).result,
     "aaa",
-    "08.01"
+    "08.01",
   );
 });
 
@@ -162,7 +162,7 @@ test("09 - tag pairs including content - mismatching quotes \"text/css'", () => 
 <body>aaa</body>
 </html>`).result,
     "aaa",
-    "09.01"
+    "09.01",
   );
 });
 
@@ -178,7 +178,7 @@ test("10 - tag pairs including content - mismatching quotes 'text/css\"", () => 
 <body>aaa</body>
 </html>`).result,
     "aaa",
-    "10.01"
+    "10.01",
   );
 });
 
@@ -188,14 +188,14 @@ test("11 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "11.01"
+    "11.01",
   );
   equal(
     stripHtml("a<b>c</b>d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "ad",
-    "11.02"
+    "11.02",
   );
 });
 
@@ -205,14 +205,14 @@ test("12 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "12.01"
+    "12.01",
   );
   equal(
     stripHtml("a<    b    >c<   /   b   >d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "ad",
-    "12.02"
+    "12.02",
   );
 });
 
@@ -222,14 +222,14 @@ test("13 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "13.01"
+    "13.01",
   );
   equal(
     stripHtml("a<    b    >c<     b   /    >d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "ad",
-    "13.02"
+    "13.02",
   );
 });
 
@@ -239,21 +239,21 @@ test("14 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "14.01"
+    "14.01",
   );
   equal(
     stripHtml("a<    b    >c<   /    b   /    >d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "ad",
-    "14.02"
+    "14.02",
   );
   equal(
     stripHtml("a <    b    >c<   /    b   /    > d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "a d",
-    "14.03"
+    "14.03",
   );
 });
 
@@ -263,21 +263,21 @@ test("15 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "15.01"
+    "15.01",
   );
   equal(
     stripHtml("a<    b    >c<   //    b   //    >d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "ad",
-    "15.02"
+    "15.02",
   );
   equal(
     stripHtml("a <    b    >c<   //    b   //    > d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "a d",
-    "15.03"
+    "15.03",
   );
 });
 
@@ -287,28 +287,28 @@ test("16 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "16.01"
+    "16.01",
   );
   equal(
     stripHtml("a <    div    >c<   //  <  div   // >   > d", {
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "16.02"
+    "16.02",
   );
   equal(
     stripHtml("a<    b    >c<   //  <  b   // >   >d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "a d",
-    "16.03"
+    "16.03",
   );
   equal(
     stripHtml("a <    b    >c<   //  <  b   // >   > d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "a d",
-    "16.04"
+    "16.04",
   );
 });
 
@@ -318,14 +318,14 @@ test("17 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a d",
-    "17.01"
+    "17.01",
   );
   equal(
     stripHtml("a<    b    >c<   /    b   /    >d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "ad",
-    "17.02"
+    "17.02",
   );
 });
 
@@ -335,21 +335,21 @@ test("18 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a\n\nd",
-    "18.01"
+    "18.01",
   );
   equal(
     stripHtml("a<    b    >     c \n\n\n        <   /    b   /    >d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "a\n\nd",
-    "18.02"
+    "18.02",
   );
   equal(
     stripHtml("a <    b    >     c \n\n\n        <   /    b   /    > d", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "a\n\nd",
-    "18.03"
+    "18.03",
   );
 });
 
@@ -359,21 +359,21 @@ test("19 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["div", "e"],
     }).result,
     "a d g",
-    "19.01"
+    "19.01",
   );
   equal(
     stripHtml("a<b>c</b>d<e>f</e>g", {
       stripTogetherWithTheirContents: ["b", "e"],
     }).result,
     "ad g",
-    "19.02"
+    "19.02",
   );
   equal(
     stripHtml("a <b>c</b> d <e>f</e> g", {
       stripTogetherWithTheirContents: ["b", "e"],
     }).result,
     "a d g",
-    "19.03"
+    "19.03",
   );
 });
 
@@ -383,7 +383,7 @@ test("20 - tag pairs including content - via opts.stripTogetherWithTheirContents
       stripTogetherWithTheirContents: ["b", "e"],
     }).result,
     "a c d g",
-    "20.01"
+    "20.01",
   );
 });
 
@@ -393,10 +393,10 @@ test("21 - tag pairs including content", () => {
       'Text <div class="" id="3" >here</div> and some more <article>text</article>.',
       {
         stripTogetherWithTheirContents: ["div", "section", "article"],
-      }
+      },
     ).result,
     "Text and some more.",
-    "21.01"
+    "21.01",
   );
 });
 
@@ -406,10 +406,10 @@ test("22 - tag pairs including content", () => {
       'Text < div class="" id="3"  >here<  / div > and some more < article >text<    / article >.',
       {
         stripTogetherWithTheirContents: ["div", "section", "article"],
-      }
+      },
     ).result,
     "Text and some more.",
-    "22.01"
+    "22.01",
   );
 });
 
@@ -419,14 +419,14 @@ test("23 - tag pairs including content", () => {
       stripTogetherWithTheirContents: [],
     }).result,
     "a c d",
-    "23.01"
+    "23.01",
   );
   equal(
     stripHtml("a<    b    >c<     b   /    >d", {
       stripTogetherWithTheirContents: [],
     }).result,
     "acd",
-    "23.02"
+    "23.02",
   );
 });
 
@@ -436,14 +436,14 @@ test("24 - tag pairs including content", () => {
       stripTogetherWithTheirContents: null,
     }).result,
     "a c d",
-    "24.01"
+    "24.01",
   );
   equal(
     stripHtml("a<    b    >c<     b   /    >d", {
       stripTogetherWithTheirContents: null,
     }).result,
     "acd",
-    "24.02"
+    "24.02",
   );
 });
 
@@ -453,14 +453,14 @@ test("25 - tag pairs including content", () => {
       stripTogetherWithTheirContents: false,
     }).result,
     "a c d",
-    "25.01"
+    "25.01",
   );
   equal(
     stripHtml("a<    b    >c<     b   /    >d", {
       stripTogetherWithTheirContents: false,
     }).result,
     "acd",
-    "25.02"
+    "25.02",
   );
 });
 
@@ -470,14 +470,14 @@ test("26 - tag pairs including content", () => {
       stripTogetherWithTheirContents: "div",
     }).result,
     "a d",
-    "26.01"
+    "26.01",
   );
   equal(
     stripHtml("a<    b    >c<   //  <  b   // >   >d", {
       stripTogetherWithTheirContents: "b",
     }).result,
     "a d", // ! still a space as a precaution
-    "26.02"
+    "26.02",
   );
 });
 
@@ -487,20 +487,20 @@ test("27 - tag pairs including content", () => {
       'a<    div style="display:block; color: #333">>c<   //  <  div   // >   >d',
       {
         stripTogetherWithTheirContents: "div",
-      }
+      },
     ).result,
     "a d",
-    "27.01"
+    "27.01",
   );
   equal(
     stripHtml(
       'a<    b style="display:block; color: #333">>c<   //  <  b   // >   >d',
       {
         stripTogetherWithTheirContents: "b",
-      }
+      },
     ).result,
     "a d", // ! still a space as a precaution
-    "27.02"
+    "27.02",
   );
 });
 
@@ -510,14 +510,14 @@ test("28 - tag pairs including content", () => {
       stripTogetherWithTheirContents: ["e", "div"],
     }).result,
     "a c",
-    "28.01"
+    "28.01",
   );
   equal(
     stripHtml("a<    b    >c", {
       stripTogetherWithTheirContents: ["e", "b"],
     }).result,
     "ac",
-    "28.02"
+    "28.02",
   );
 });
 
@@ -528,11 +528,11 @@ test("29 - tag pairs including content", () => {
         'a<    b style="display:block; color: #333">>c<   //  <  b   // >   >d',
         {
           stripTogetherWithTheirContents: ["zzz", true, "b"],
-        }
+        },
       );
     },
     /THROW_ID_08/,
-    "29.01"
+    "29.01",
   );
 });
 
@@ -546,7 +546,7 @@ test("30 - third, rogue <style> causes chopping off the remainder", () => {
   equal(
     stripHtml("a</style>b</style>c<div>z</div>").result,
     "a b c z",
-    "30.06"
+    "30.06",
   );
 
   equal(stripHtml("a<style>b</style>c<style>d").result, "a c d", "30.07");
@@ -554,12 +554,12 @@ test("30 - third, rogue <style> causes chopping off the remainder", () => {
   equal(
     stripHtml("a<style>b</style>c<style>d<div>z</div>").result,
     "a c d z",
-    "30.09"
+    "30.09",
   );
   equal(
     stripHtml("a<style>b</style>c</style>d<div>z</div>").result,
     "a c d z",
-    "30.10"
+    "30.10",
   );
 
   equal(stripHtml("a<style>b<style>c<style>d").result, "a b c d", "30.11");
@@ -567,12 +567,12 @@ test("30 - third, rogue <style> causes chopping off the remainder", () => {
   equal(
     stripHtml("a<style>b<style>c<style>d<div>z</div>").result,
     "a b c d z",
-    "30.13"
+    "30.13",
   );
   equal(
     stripHtml("a<style>b<style>c</style>d<div>z</div>").result,
     "a b d z",
-    "30.14"
+    "30.14",
   );
 
   equal(stripHtml("a</style>b</style>c<style>d").result, "a b c d", "30.15");
@@ -580,12 +580,12 @@ test("30 - third, rogue <style> causes chopping off the remainder", () => {
   equal(
     stripHtml("a</style>b</style>c<style>d<div>z</div>").result,
     "a b c d z",
-    "30.17"
+    "30.17",
   );
   equal(
     stripHtml("a</style>b</style>c</style>d<div>z</div>").result,
     "a b c d z",
-    "30.18"
+    "30.18",
   );
 });
 

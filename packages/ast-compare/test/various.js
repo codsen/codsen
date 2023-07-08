@@ -23,10 +23,10 @@ test("02 - real-life #1", () => {
       {
         type: "rule",
         selectors: [],
-      }
+      },
     ),
     false,
-    "02.01"
+    "02.01",
   );
   equal(
     compare(
@@ -38,10 +38,10 @@ test("02 - real-life #1", () => {
         type: "rule",
         selectors: [],
       },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     true,
-    "02.02"
+    "02.02",
   );
   equal(
     compare(
@@ -53,10 +53,10 @@ test("02 - real-life #1", () => {
         type: "rule",
         selectors: ["\n\n\n     \t\t\t   \n\n\n"],
       },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     true,
-    "02.03"
+    "02.03",
   );
 });
 
@@ -70,10 +70,10 @@ test("03 - real-life #2", () => {
       {
         type: "rule",
         selectors: [],
-      }
+      },
     ),
     true,
-    "03.01"
+    "03.01",
   );
   equal(
     compare(
@@ -87,10 +87,10 @@ test("03 - real-life #2", () => {
       },
       {
         hungryForWhitespace: false,
-      }
+      },
     ),
     true,
-    "03.02"
+    "03.02",
   );
 });
 
@@ -221,10 +221,10 @@ test("04 - real-life #3", () => {
           ],
           parsingErrors: [],
         },
-      }
+      },
     ),
     false,
-    "04.01"
+    "04.01",
   );
   equal(
     compare(
@@ -353,10 +353,10 @@ test("04 - real-life #3", () => {
           parsingErrors: [],
         },
       },
-      { hungryForWhitespace: false }
+      { hungryForWhitespace: false },
     ),
     false,
-    "04.02"
+    "04.02",
   );
   equal(
     compare(
@@ -485,10 +485,10 @@ test("04 - real-life #3", () => {
           parsingErrors: [],
         },
       },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     true,
-    "04.03"
+    "04.03",
   );
 });
 
@@ -512,59 +512,10 @@ test("05 - real-life #3 reduced case", () => {
           ],
           d: [],
         },
-      }
+      },
     ),
     false,
-    "05.01"
-  );
-  equal(
-    compare(
-      {
-        a: "a",
-        b: {
-          c: [
-            {
-              e: "e",
-            },
-          ],
-          d: [],
-        },
-      },
-      {
-        a: "a",
-        b: {
-          c: [],
-          d: [],
-        },
-      }
-    ),
-    false,
-    "05.02"
-  );
-  equal(
-    compare(
-      {
-        a: "a",
-        b: {
-          c: [],
-          d: [],
-        },
-      },
-      {
-        a: "a",
-        b: {
-          c: [
-            {
-              e: "e",
-            },
-          ],
-          d: [],
-        },
-      },
-      { hungryForWhitespace: true }
-    ),
-    false,
-    "05.03"
+    "05.01",
   );
   equal(
     compare(
@@ -586,10 +537,59 @@ test("05 - real-life #3 reduced case", () => {
           d: [],
         },
       },
-      { hungryForWhitespace: true }
+    ),
+    false,
+    "05.02",
+  );
+  equal(
+    compare(
+      {
+        a: "a",
+        b: {
+          c: [],
+          d: [],
+        },
+      },
+      {
+        a: "a",
+        b: {
+          c: [
+            {
+              e: "e",
+            },
+          ],
+          d: [],
+        },
+      },
+      { hungryForWhitespace: true },
+    ),
+    false,
+    "05.03",
+  );
+  equal(
+    compare(
+      {
+        a: "a",
+        b: {
+          c: [
+            {
+              e: "e",
+            },
+          ],
+          d: [],
+        },
+      },
+      {
+        a: "a",
+        b: {
+          c: [],
+          d: [],
+        },
+      },
+      { hungryForWhitespace: true },
     ),
     true,
-    "05.04"
+    "05.04",
   );
 });
 
@@ -599,34 +599,34 @@ test("06 - input args of mismatching type - easy win", () => {
       {
         a: "a",
       },
-      "a"
+      "a",
     ),
     false,
-    "06.01"
+    "06.01",
   );
   equal(
     compare("a", {
       a: "a",
     }),
     false,
-    "06.02"
+    "06.02",
   );
   equal(
     compare(
       {
         a: "a",
       },
-      ["a"]
+      ["a"],
     ),
     false,
-    "06.03"
+    "06.03",
   );
   equal(
     compare(["a"], {
       a: "a",
     }),
     false,
-    "06.04"
+    "06.04",
   );
   equal(
     compare(
@@ -634,10 +634,10 @@ test("06 - input args of mismatching type - easy win", () => {
         a: "a",
       },
       "a",
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     false,
-    "06.05"
+    "06.05",
   );
   equal(
     compare(
@@ -645,10 +645,10 @@ test("06 - input args of mismatching type - easy win", () => {
       {
         a: "a",
       },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     false,
-    "06.06"
+    "06.06",
   );
   equal(
     compare(
@@ -656,10 +656,10 @@ test("06 - input args of mismatching type - easy win", () => {
         a: "a",
       },
       ["a"],
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     false,
-    "06.07"
+    "06.07",
   );
   equal(
     compare(
@@ -667,10 +667,10 @@ test("06 - input args of mismatching type - easy win", () => {
       {
         a: "a",
       },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     false,
-    "06.08"
+    "06.08",
   );
 });
 

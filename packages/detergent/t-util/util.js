@@ -407,14 +407,14 @@ export function det(ok, not, n, src, opts = {}) {
           "stripHtmlButIgnoreTags",
           objectPath.has(opts, "stripHtmlButIgnoreTags")
             ? opts.stripHtmlButIgnoreTags
-            : defaults.stripHtmlButIgnoreTags
+            : defaults.stripHtmlButIgnoreTags,
         );
         objectPath.set(
           obj1,
           "stripHtmlAddNewLine",
           objectPath.has(opts, "stripHtmlAddNewLine")
             ? opts.stripHtmlAddNewLine
-            : defaults.stripHtmlAddNewLine
+            : defaults.stripHtmlAddNewLine,
         );
 
         //
@@ -427,14 +427,14 @@ export function det(ok, not, n, src, opts = {}) {
           "stripHtmlButIgnoreTags",
           objectPath.has(opts, "stripHtmlButIgnoreTags")
             ? opts.stripHtmlButIgnoreTags
-            : defaults.stripHtmlButIgnoreTags
+            : defaults.stripHtmlButIgnoreTags,
         );
         objectPath.set(
           obj2,
           "stripHtmlAddNewLine",
           objectPath.has(opts, "stripHtmlAddNewLine")
             ? opts.stripHtmlAddNewLine
-            : defaults.stripHtmlAddNewLine
+            : defaults.stripHtmlAddNewLine,
         );
 
         //
@@ -447,14 +447,14 @@ export function det(ok, not, n, src, opts = {}) {
           "stripHtmlButIgnoreTags",
           objectPath.has(opts, "stripHtmlButIgnoreTags")
             ? opts.stripHtmlButIgnoreTags
-            : defaults.stripHtmlButIgnoreTags
+            : defaults.stripHtmlButIgnoreTags,
         );
         objectPath.set(
           obj3,
           "stripHtmlAddNewLine",
           objectPath.has(opts, "stripHtmlAddNewLine")
             ? opts.stripHtmlAddNewLine
-            : defaults.stripHtmlAddNewLine
+            : defaults.stripHtmlAddNewLine,
         );
 
         //
@@ -470,28 +470,28 @@ export function det(ok, not, n, src, opts = {}) {
     "${`\u001b[${33}m${JSON.stringify(
       det1(src, obj1).res,
       null,
-      4
+      4,
     )}\u001b[${39}m`}" (opts.${key}="lf") and "${`\u001b[${33}m${JSON.stringify(
-              det1(src, obj2).res,
-              null,
-              4
-            )}\u001b[${39}m`}" (opts.${key}="cr") and "${`\u001b[${33}m${JSON.stringify(
-              det1(src, obj3).res,
-              null,
-              4
-            )}\u001b[${39}m`}" (opts.${key}="crlf"). Input was:\n${JSON.stringify(
-              src,
-              null,
-              4
-            )}. Opts objects:\n\nobj1:\n${JSON.stringify(
-              obj1,
-              null,
-              4
-            )}\nobj2:${JSON.stringify(obj2, null, 4)}\nobj3:${JSON.stringify(
-              obj3,
-              null,
-              4
-            )}\n`
+      det1(src, obj2).res,
+      null,
+      4,
+    )}\u001b[${39}m`}" (opts.${key}="cr") and "${`\u001b[${33}m${JSON.stringify(
+      det1(src, obj3).res,
+      null,
+      4,
+    )}\u001b[${39}m`}" (opts.${key}="crlf"). Input was:\n${JSON.stringify(
+      src,
+      null,
+      4,
+    )}. Opts objects:\n\nobj1:\n${JSON.stringify(
+      obj1,
+      null,
+      4,
+    )}\nobj2:${JSON.stringify(obj2, null, 4)}\nobj3:${JSON.stringify(
+      obj3,
+      null,
+      4,
+    )}\n`,
           );
         } else {
           not.ok(
@@ -500,20 +500,20 @@ export function det(ok, not, n, src, opts = {}) {
     "${`\u001b[${33}m${JSON.stringify(
       det1(src, obj1).res,
       null,
-      4
+      4,
     )}\u001b[${39}m`}". Input was:\n${JSON.stringify(
-              src,
-              null,
-              4
-            )}. Opts objects:\n\nobj1:\n${JSON.stringify(
-              obj1,
-              null,
-              4
-            )}\nobj2:${JSON.stringify(obj2, null, 4)}\nobj3:${JSON.stringify(
-              obj3,
-              null,
-              4
-            )}\n`
+      src,
+      null,
+      4,
+    )}. Opts objects:\n\nobj1:\n${JSON.stringify(
+      obj1,
+      null,
+      4,
+    )}\nobj2:${JSON.stringify(obj2, null, 4)}\nobj3:${JSON.stringify(
+      obj3,
+      null,
+      4,
+    )}\n`,
           );
         }
       } else if (key !== "cb") {
@@ -535,14 +535,14 @@ export function det(ok, not, n, src, opts = {}) {
           "stripHtmlButIgnoreTags",
           objectPath.has(opts, "stripHtmlButIgnoreTags")
             ? opts.stripHtmlButIgnoreTags
-            : defaults.stripHtmlButIgnoreTags
+            : defaults.stripHtmlButIgnoreTags,
         );
         objectPath.set(
           obj1,
           "stripHtmlAddNewLine",
           objectPath.has(opts, "stripHtmlAddNewLine")
             ? opts.stripHtmlAddNewLine
-            : defaults.stripHtmlAddNewLine
+            : defaults.stripHtmlAddNewLine,
         );
         let settledObj1Eol = objectPath.has(opts, "eol")
           ? opts.eol
@@ -564,14 +564,14 @@ export function det(ok, not, n, src, opts = {}) {
           "stripHtmlButIgnoreTags",
           objectPath.has(opts, "stripHtmlButIgnoreTags")
             ? opts.stripHtmlButIgnoreTags
-            : defaults.stripHtmlButIgnoreTags
+            : defaults.stripHtmlButIgnoreTags,
         );
         objectPath.set(
           obj2,
           "stripHtmlAddNewLine",
           objectPath.has(opts, "stripHtmlAddNewLine")
             ? opts.stripHtmlAddNewLine
-            : defaults.stripHtmlAddNewLine
+            : defaults.stripHtmlAddNewLine,
         );
         let settledObj2Eol = objectPath.has(opts, "eol")
           ? opts.eol
@@ -593,20 +593,20 @@ export function det(ok, not, n, src, opts = {}) {
     "${`\u001b[${33}m${JSON.stringify(
       det1(src, obj1).res,
       null,
-      4
+      4,
     )}\u001b[${39}m`}" (opts.${key}=true) and "${`\u001b[${33}m${JSON.stringify(
-              det1(src, obj2).res,
-              null,
-              4
-            )}\u001b[${39}m`}" (opts.${key}=false). Input was:\n${JSON.stringify(
-              src,
-              null,
-              4
-            )}. Opts objects:\n\nobj1:\n${JSON.stringify(
-              obj1,
-              null,
-              4
-            )}\nobj2:${JSON.stringify(obj2, null, 4)}\n`
+      det1(src, obj2).res,
+      null,
+      4,
+    )}\u001b[${39}m`}" (opts.${key}=false). Input was:\n${JSON.stringify(
+      src,
+      null,
+      4,
+    )}. Opts objects:\n\nobj1:\n${JSON.stringify(
+      obj1,
+      null,
+      4,
+    )}\nobj2:${JSON.stringify(obj2, null, 4)}\n`,
           );
         } else if (key !== "stripHtml") {
           not.ok(
@@ -615,16 +615,16 @@ export function det(ok, not, n, src, opts = {}) {
     "${`\u001b[${33}m${JSON.stringify(
       det1(src, obj1).res,
       null,
-      4
+      4,
     )}\u001b[${39}m`}". Input was:\n${JSON.stringify(
-              src,
-              null,
-              4
-            )}. Opts objects:\n\nobj1:\n${JSON.stringify(
-              obj1,
-              null,
-              4
-            )}\nobj2:${JSON.stringify(obj2, null, 4)}\n`
+      src,
+      null,
+      4,
+    )}. Opts objects:\n\nobj1:\n${JSON.stringify(
+      obj1,
+      null,
+      4,
+    )}\nobj2:${JSON.stringify(obj2, null, 4)}\n`,
           );
         }
       }

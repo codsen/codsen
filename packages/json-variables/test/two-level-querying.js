@@ -40,7 +40,7 @@ test("01 - two-level querying, normal keys in the root", () => {
         key8: "value8",
       },
     },
-    "01.01"
+    "01.01",
   );
 });
 
@@ -71,7 +71,7 @@ test("02 - two-level querying, normal keys in the root + wrapping & opts", () =>
         dontWrapVars: ["*zzz", "var1.*", "*key6"],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       a: "some text value3 more text value6",
@@ -89,7 +89,7 @@ test("02 - two-level querying, normal keys in the root + wrapping & opts", () =>
         key8: "value8",
       },
     },
-    "02.01"
+    "02.01",
   );
 
   equal(
@@ -118,7 +118,7 @@ test("02 - two-level querying, normal keys in the root + wrapping & opts", () =>
         dontWrapVars: ["*zzz", "*3", "*9"],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       a: "some text value3 more text {value6}",
@@ -136,7 +136,7 @@ test("02 - two-level querying, normal keys in the root + wrapping & opts", () =>
         key8: "value8",
       },
     },
-    "02.02"
+    "02.02",
   );
 
   equal(
@@ -163,7 +163,7 @@ test("02 - two-level querying, normal keys in the root + wrapping & opts", () =>
         dontWrapVars: ["*zzz", "key3", "key6"],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       a: "some text value3 more text value6",
@@ -181,7 +181,7 @@ test("02 - two-level querying, normal keys in the root + wrapping & opts", () =>
         key8: "value8",
       },
     },
-    "02.03"
+    "02.03",
   );
 
   equal(
@@ -210,7 +210,7 @@ test("02 - two-level querying, normal keys in the root + wrapping & opts", () =>
         dontWrapVars: ["*zzz", "*3", "*9"],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       a: "some text value3 more text value6",
@@ -228,7 +228,7 @@ test("02 - two-level querying, normal keys in the root + wrapping & opts", () =>
         key8: "value8",
       },
     },
-    "02.04"
+    "02.04",
   );
 
   equal(
@@ -257,7 +257,7 @@ test("02 - two-level querying, normal keys in the root + wrapping & opts", () =>
         dontWrapVars: [],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       a: "some text value3 more text value6",
@@ -275,7 +275,7 @@ test("02 - two-level querying, normal keys in the root + wrapping & opts", () =>
         key8: "value8",
       },
     },
-    "02.05"
+    "02.05",
   );
 });
 
@@ -291,11 +291,11 @@ test("03 - opts.throwWhenNonStringInsertedInString", () => {
         },
         {
           throwWhenNonStringInsertedInString: true,
-        }
+        },
       );
     },
     /THROW_ID_23/,
-    "03.01"
+    "03.01",
   );
 
   not.throws(() => {
@@ -322,7 +322,7 @@ test("03 - opts.throwWhenNonStringInsertedInString", () => {
       b: false,
       var2: false,
     },
-    "03.02"
+    "03.02",
   );
 
   equal(
@@ -338,7 +338,7 @@ test("03 - opts.throwWhenNonStringInsertedInString", () => {
       b: false,
       var2: { key2: false },
     },
-    "03.03"
+    "03.03",
   );
 
   equal(
@@ -349,7 +349,7 @@ test("03 - opts.throwWhenNonStringInsertedInString", () => {
         b: "%%_var2.key2_%%",
         var2: { key2: false },
       },
-      { throwWhenNonStringInsertedInString: true }
+      { throwWhenNonStringInsertedInString: true },
     ),
     {
       a: null,
@@ -357,7 +357,7 @@ test("03 - opts.throwWhenNonStringInsertedInString", () => {
       b: false,
       var2: { key2: false },
     },
-    "03.04"
+    "03.04",
   );
 });
 
@@ -386,7 +386,7 @@ test("04 - multi-level + from array + root data store + ignores", () => {
         dontWrapVars: ["*zzz", "*.aaa", "*yyy"],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
-      }
+      },
     ),
     {
       title: ["something", "Some text text", "{ship}", "anything"],
@@ -395,7 +395,7 @@ test("04 - multi-level + from array + root data store + ignores", () => {
         submarine: { bbb: "ship" },
       },
     },
-    "04.01"
+    "04.01",
   );
 });
 

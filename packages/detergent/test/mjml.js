@@ -13,7 +13,7 @@ test("01", () => {
     equal(
       det(ok, not, n, 'a <mj-image src="foo.jpg"> b', opt).res,
       'a <mj-image src="foo.jpg"> b',
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -22,7 +22,7 @@ test("01", () => {
     equal(
       det(ok, not, n, 'a <mj-image src="foo.jpg"> b', opt).res,
       "a b",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });
@@ -34,7 +34,7 @@ test("02", () => {
     equal(
       det(ok, not, n, 'a <mj-image src="foo.jpg"></mj-image> b', opt).res,
       'a <mj-image src="foo.jpg"></mj-image> b',
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
   mixer({
@@ -43,7 +43,7 @@ test("02", () => {
     equal(
       det(ok, not, n, 'a <mj-image src="foo.jpg"></mj-image> b', opt).res,
       "a b",
-      JSON.stringify(opt, null, 4)
+      JSON.stringify(opt, null, 4),
     );
   });
 });

@@ -18,7 +18,7 @@ test("01", () => {
       equal(
         collapse(`   a   bbb  ${eol}   c   d   `, opt).result,
         ` a bbb ${eol} c d `,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
 
@@ -30,7 +30,7 @@ test("01", () => {
       equal(
         collapse(`   a   bbb  ${eol}   c   d   `, opt).result,
         `a bbb ${eol} c d`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -39,7 +39,7 @@ test("01", () => {
       equal(
         collapse(`   a   bbb  ${eol}   c   d   `, opt).result,
         `a bbb${eol}c d`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
   });
@@ -57,10 +57,10 @@ test("02", () => {
       equal(
         collapse(
           `     \xa0    aaa   bbb    \xa0    ${eol}     \xa0     ccc   ddd   \xa0   `,
-          opt
+          opt,
         ).result,
         ` \xa0 aaa bbb \xa0 ${eol} \xa0 ccc ddd \xa0 `,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
     mixer({
@@ -73,10 +73,10 @@ test("02", () => {
       equal(
         collapse(
           `     \xa0    aaa   bbb    \xa0    ${eol}     \xa0     ccc   ddd   \xa0   `,
-          opt
+          opt,
         ).result,
         `\xa0 aaa bbb \xa0${eol}\xa0 ccc ddd \xa0`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
   });
@@ -95,7 +95,7 @@ test("03", () => {
         trimnbsp: false,
         enforceSpacesOnly: false,
         limitConsecutiveEmptyLinesTo: 0,
-      }
+      },
     ),
     {
       result: "\xa0 aaa bbb \xa0\n\xa0 ccc ddd \xa0",
@@ -112,7 +112,7 @@ test("03", () => {
         [53, 56],
       ],
     },
-    "03.01"
+    "03.01",
   );
 });
 
@@ -137,7 +137,7 @@ test("04", () => {
         [10, 11],
       ],
     },
-    "04.01"
+    "04.01",
   );
 });
 
@@ -152,7 +152,7 @@ test("05", () => {
       enforceSpacesOnly: false,
     }).result,
     "\xa0 aaa \xa0",
-    "05.01"
+    "05.01",
   );
 });
 
@@ -161,23 +161,23 @@ test("06", () => {
     equal(
       collapse(
         `${eol}${eol}     a    b    ${eol}    c    d      ${eol}     e     f     ${eol}${eol}${eol}     g    h    ${eol}`,
-        { trimLines: true, trimnbsp: false }
+        { trimLines: true, trimnbsp: false },
       ).result,
-      `a b${eol}c d${eol}e f${eol}${eol}${eol}g h`
+      `a b${eol}c d${eol}e f${eol}${eol}${eol}g h`,
     );
     equal(
       collapse(
         `${eol}${eol}     a    b    ${eol}    c    d      ${eol}     e     f     ${eol}${eol}${eol}     g    h    ${eol}`,
-        { trimLines: true, trimnbsp: true }
+        { trimLines: true, trimnbsp: true },
       ).result,
-      `a b${eol}c d${eol}e f${eol}${eol}${eol}g h`
+      `a b${eol}c d${eol}e f${eol}${eol}${eol}g h`,
     );
     equal(
       collapse(
         `\xa0${eol}${eol}  \xa0   a    b   \xa0 ${eol}  \xa0  c    d   \xa0\xa0   ${eol}  \xa0\xa0   e     f  \xa0\xa0   ${eol}${eol}${eol} \xa0\xa0    g    h    ${eol}\xa0\xa0`,
-        { trimLines: true, trimnbsp: true }
+        { trimLines: true, trimnbsp: true },
       ).result,
-      `a b${eol}c d${eol}e f${eol}${eol}${eol}g h`
+      `a b${eol}c d${eol}e f${eol}${eol}${eol}g h`,
     );
   });
 });
@@ -194,10 +194,10 @@ test("07", () => {
       equal(
         collapse(
           `${eol}${eol}     a    b    ${eol}    c    d      ${eol}     e     f     ${eol}${eol}${eol}     g    h    ${eol}`,
-          opt
+          opt,
         ).result,
         `a b${eol}c d${eol}e f${eol}${eol}${eol}g h`,
-        JSON.stringify(opt, null, 0)
+        JSON.stringify(opt, null, 0),
       );
     });
   });
@@ -212,7 +212,7 @@ test("08", () => {
     equal(
       collapse("a \n \n b", opt).result,
       "a \n \n b",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -222,7 +222,7 @@ test("08", () => {
     equal(
       collapse("a \n \n b", opt).result,
       "a\n\nb",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   // removeEmptyLines=1
@@ -233,7 +233,7 @@ test("08", () => {
     equal(
       collapse("a \n \n b", opt).result,
       "a \n b",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
   mixer({
@@ -243,7 +243,7 @@ test("08", () => {
     equal(
       collapse("a \n \n b", opt).result,
       "a\nb",
-      JSON.stringify(opt, null, 0)
+      JSON.stringify(opt, null, 0),
     );
   });
 });

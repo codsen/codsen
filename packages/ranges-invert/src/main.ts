@@ -20,15 +20,15 @@ const defaults: Opts = {
 function rInvert(
   arrOfRanges: Ranges,
   strLen: number,
-  originalOptions?: Partial<Opts>
+  originalOptions?: Partial<Opts>,
 ): Ranges {
   if (!Array.isArray(arrOfRanges) && arrOfRanges !== null) {
     throw new TypeError(
       `ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(
         arrOfRanges,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   // strLen validation
@@ -37,8 +37,8 @@ function rInvert(
       `ranges-invert: [THROW_ID_02] Input's second argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof strLen}, equal to: ${JSON.stringify(
         strLen,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   }
   // arrOfRanges validation
@@ -51,14 +51,14 @@ function rInvert(
       `ranges-invert: [THROW_ID_07] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(
         arrOfRanges,
         null,
-        0
-      )}!`
+        0,
+      )}!`,
     );
   }
   if (
     !Array.isArray(arrOfRanges) ||
     !arrOfRanges.filter(
-      (range) => Array.isArray(range) && range[0] !== range[1]
+      (range) => Array.isArray(range) && range[0] !== range[1],
     ).length ||
     !strLen
   ) {
@@ -101,8 +101,8 @@ function rInvert(
       `ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the ${culpritsIndex}th range (${JSON.stringify(
         (arrOfRanges as Range[])[culpritsIndex],
         null,
-        0
-      )}) has not two but ${culpritsLen} elements!`
+        0,
+      )}) has not two but ${culpritsLen} elements!`,
     );
   }
   // validate are range indexes natural numbers:
@@ -127,8 +127,8 @@ function rInvert(
       }th range (${JSON.stringify(
         arrOfRanges[culpritsIndex],
         null,
-        0
-      )}) does not consist of only natural numbers!`
+        0,
+      )}) does not consist of only natural numbers!`,
     );
   }
 
@@ -144,7 +144,7 @@ function rInvert(
     // and there's overlap. In reality, merged result is simply [[0, 4]].
     // Then, we invert from 4 onwards to the end of reference string length.
     prep = rMerge(
-      arrOfRanges.filter((rangeArr) => rangeArr[0] !== rangeArr[1])
+      arrOfRanges.filter((rangeArr) => rangeArr[0] !== rangeArr[1]),
     ) as Range[];
   } else {
     // but if checks are turned off, filter straight away:
@@ -157,15 +157,15 @@ function rInvert(
       `157 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
         prep,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   let res: Range[] = (prep as any[]).reduce((accum, currArr, i, arr) => {
     DEV && console.log(`\u001b[${35}m${`=====================`}\u001b[${39}m`);
     DEV &&
       console.log(
-        `accum = ${accum.length ? JSON.stringify(accum, null, 0) : "[]"}`
+        `accum = ${accum.length ? JSON.stringify(accum, null, 0) : "[]"}`,
       );
     DEV && console.log(`currArr = ${JSON.stringify(currArr, null, 0)}`);
     DEV && console.log(`i = ${i}`);
@@ -176,7 +176,7 @@ function rInvert(
     if (i === 0 && arr[0][0] !== 0) {
       DEV &&
         console.log(
-          `179 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`
+          `179 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`,
         );
       res2.push([0, arr[0][0]]);
     }
@@ -188,7 +188,7 @@ function rInvert(
     if (currArr[1] !== endingIndex) {
       DEV &&
         console.log(
-          `191 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
+          `191 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`,
         );
 
       // this can happen only when opts.skipChecks is on:
@@ -199,8 +199,8 @@ function rInvert(
           }, ${endingIndex}] which is backwards. For investigation, whole ranges array is:\n${JSON.stringify(
             arr,
             null,
-            0
-          )}`
+            0,
+          )}`,
         );
       }
       res2.push([currArr[1], endingIndex]);
@@ -214,8 +214,8 @@ function rInvert(
       `${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
         res,
         null,
-        4
-      )}\n\n\n`
+        4,
+      )}\n\n\n`,
     );
 
   return rCrop(res as Ranges, strLen);

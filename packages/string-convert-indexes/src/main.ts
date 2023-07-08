@@ -13,7 +13,7 @@ declare let DEV: boolean;
 function strConvertIndexes(
   mode: "n" | "u",
   str: string,
-  indexes: any
+  indexes: any,
 ): string | number {
   function isItOk(something: any): boolean {
     if (
@@ -41,7 +41,7 @@ function strConvertIndexes(
         console.log(
           `042 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
             graphemeStrArr[i]
-          } (${graphemeStrArr[i].split("").length})`
+          } (${graphemeStrArr[i].split("").length})`,
         );
       if (idx >= currLowerIdx && idx < currUpperIdx) {
         return i;
@@ -53,14 +53,14 @@ function strConvertIndexes(
 
     // if end is reached, it's an error
     throw new Error(
-      `string-convert-indexes: [THROW_ID_05] the "indexes" value, ${indexes}, is not covered by graphemes length!`
+      `string-convert-indexes: [THROW_ID_05] the "indexes" value, ${indexes}, is not covered by graphemes length!`,
     );
   }
 
   function oneUnicodeToNative(graphemeStrArr: string[], idx: number): number {
     if (idx >= graphemeStrArr.length) {
       throw new Error(
-        `string-convert-indexes: [THROW_ID_06] the index to convert, ${idx}, is not covered by graphemes length!`
+        `string-convert-indexes: [THROW_ID_06] the index to convert, ${idx}, is not covered by graphemes length!`,
       );
     }
     return graphemeStrArr.slice(0, idx).join("").length;
@@ -71,7 +71,7 @@ function strConvertIndexes(
   // ---------
   if (typeof str !== "string" || !str) {
     throw new TypeError(
-      `string-convert-indexes: [THROW_ID_01] the first input argument, input string, must be a non-zero-length string! Currently it's: ${typeof str}, equal to:\n${str}`
+      `string-convert-indexes: [THROW_ID_01] the first input argument, input string, must be a non-zero-length string! Currently it's: ${typeof str}, equal to:\n${str}`,
     );
   }
 
@@ -115,8 +115,8 @@ function strConvertIndexes(
       `string-convert-indexes: [THROW_ID_02] the second input argument, "indexes" is not suitable to describe string index - it was given as ${JSON.stringify(
         indexes,
         null,
-        4
-      )} (${typeof indexes})`
+        4,
+      )} (${typeof indexes})`,
     );
   } else if (indexes && typeof indexes === "object") {
     DEV && console.log(`122 ██ AST - traverse!`);
@@ -135,8 +135,8 @@ function strConvertIndexes(
               `string-convert-indexes: [THROW_ID_03] bad value was encountered, ${JSON.stringify(
                 current,
                 null,
-                4
-              )}, its path is ${innerObj.path}`
+                4,
+              )}, its path is ${innerObj.path}`,
             );
           }
           // else - return as is
@@ -155,8 +155,8 @@ function strConvertIndexes(
               `string-convert-indexes: [THROW_ID_04] bad value was encountered, ${JSON.stringify(
                 current,
                 null,
-                4
-              )}, its path is ${innerObj.path}`
+                4,
+              )}, its path is ${innerObj.path}`,
             );
           }
           // else - return as is
@@ -164,7 +164,7 @@ function strConvertIndexes(
         });
   } else {
     throw new Error(
-      `string-convert-indexes: [THROW_ID_07] the first input argument, a source string should be a string but it was given as ${str}, type ${typeof str}`
+      `string-convert-indexes: [THROW_ID_07] the first input argument, a source string should be a string but it was given as ${str}, type ${typeof str}`,
     );
   }
 }

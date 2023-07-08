@@ -18,7 +18,7 @@ test(`01 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      on a simple 
   equal(
     matchLeftIncl("abcdefghi", 3, ["cd", "bcd"]),
     "cd", // first match
-    "01.03"
+    "01.03",
   );
   equal(matchLeftIncl("abcdefghi", 3, ["aaa", "bcd"]), "bcd", "01.04");
   equal(matchLeftIncl("abcdefghi", 3, ["aaa", "zzz"]), false, "01.05");
@@ -29,7 +29,7 @@ test(`01 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      on a simple 
       trimBeforeMatching: true,
     }),
     "ab",
-    "01.07"
+    "01.07",
   );
 
   equal(
@@ -43,7 +43,7 @@ test(`01 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      on a simple 
       },
     }),
     "ab",
-    "01.08"
+    "01.08",
   );
 });
 
@@ -59,7 +59,7 @@ test(`03 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      left substri
   equal(
     matchLeftIncl("abc", 2, ["cjsldfdjshfjkdfhgkdkgfhkd"], { i: true }),
     false,
-    "03.02"
+    "03.02",
   );
 });
 
@@ -74,7 +74,7 @@ test(`04 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}     cb gives outs
       },
     }),
     "abcd",
-    "04.01"
+    "04.01",
   );
 });
 
@@ -85,14 +85,14 @@ test(`05 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       maxMismatches: 1,
     }),
     "c",
-    "05.02"
+    "05.02",
   );
   equal(
     matchLeft("abcd", 3, "c", {
       maxMismatches: 1,
     }),
     "c",
-    "05.03"
+    "05.03",
   );
 
   // at least something from the set must have been matched! In this case,
@@ -103,14 +103,14 @@ test(`05 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       maxMismatches: 1,
     }),
     false, // <-- because at least one character must have been matched (general rule)
-    "05.04"
+    "05.04",
   );
   equal(
     matchLeft("abc", 2, "x", {
       maxMismatches: 1,
     }),
     false, // <-- because at least one character must have been matched (general rule)
-    "05.05"
+    "05.05",
   );
 });
 
@@ -120,14 +120,14 @@ test(`06 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       maxMismatches: 1,
     }),
     "bcd",
-    "06.01"
+    "06.01",
   );
   equal(
     matchLeft("_abdefghi", 4, ["bcd"], {
       maxMismatches: 1,
     }),
     "bcd",
-    "06.02"
+    "06.02",
   );
 });
 
@@ -140,7 +140,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: false,
     }),
     false,
-    "07.01"
+    "07.01",
   );
   equal(
     matchLeftIncl("_ab.defghi", 4, ["bcd"], {
@@ -148,7 +148,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: false,
     }),
     "bcd",
-    "07.02"
+    "07.02",
   );
   equal(
     matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
@@ -156,7 +156,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: false,
     }),
     "bcd",
-    "07.03"
+    "07.03",
   );
   equal(
     matchLeftIncl(".cdefghi", 2, ["bcd"], {
@@ -164,7 +164,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: false,
     }),
     "bcd",
-    "07.04"
+    "07.04",
   );
   equal(
     matchLeftIncl("cdefghi", 1, ["bcd"], {
@@ -172,7 +172,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: false,
     }),
     "bcd",
-    "07.05"
+    "07.05",
   );
   equal(
     matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
@@ -180,7 +180,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: false,
     }),
     "bcd",
-    "07.06"
+    "07.06",
   );
 
   // hungry=true
@@ -191,7 +191,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: true,
     }),
     "bcd",
-    "07.07"
+    "07.07",
   );
   equal(
     matchLeftIncl("_ab.defghi", 4, ["bcd"], {
@@ -199,7 +199,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: true,
     }),
     "bcd",
-    "07.08"
+    "07.08",
   );
   equal(
     matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
@@ -207,7 +207,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: true,
     }),
     "bcd",
-    "07.09"
+    "07.09",
   );
   equal(
     matchLeftIncl(".cdefghi", 2, ["bcd"], {
@@ -215,7 +215,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: true,
     }),
     "bcd",
-    "07.10"
+    "07.10",
   );
   equal(
     matchLeftIncl("cdefghi", 1, ["bcd"], {
@@ -223,7 +223,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: true,
     }),
     "bcd",
-    "07.11"
+    "07.11",
   );
   equal(
     matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
@@ -231,7 +231,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
       hungry: true,
     }),
     "bcd",
-    "07.12"
+    "07.12",
   );
 });
 
@@ -244,7 +244,7 @@ test(`08 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          opts.max
       hungry: true,
     }),
     "bcd",
-    "08.01"
+    "08.01",
   );
   equal(
     matchLeftIncl("_abc.efghi", 4, ["bcd"], {
@@ -253,7 +253,7 @@ test(`08 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          opts.max
       lastMustMatch: false,
     }),
     false,
-    "08.02"
+    "08.02",
   );
 
   equal(
@@ -264,7 +264,7 @@ test(`08 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          opts.max
       hungry: true,
     }),
     "bcd",
-    "08.03"
+    "08.03",
   );
   equal(
     matchLeftIncl("_abc.efghi", 4, ["bcd"], {
@@ -273,7 +273,7 @@ test(`08 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          opts.max
       lastMustMatch: true,
     }),
     false,
-    "08.04"
+    "08.04",
   );
 
   equal(
@@ -283,7 +283,7 @@ test(`08 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          opts.max
       lastMustMatch: false,
     }),
     "bcd",
-    "08.05"
+    "08.05",
   );
   equal(
     matchLeftIncl("_ab.defghi", 4, ["bcd"], {
@@ -292,7 +292,7 @@ test(`08 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          opts.max
       lastMustMatch: false,
     }),
     "bcd",
-    "08.06"
+    "08.06",
   );
 
   equal(
@@ -302,7 +302,7 @@ test(`08 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          opts.max
       lastMustMatch: true,
     }),
     "bcd",
-    "08.07"
+    "08.07",
   );
   equal(
     matchLeftIncl("_ab.defghi", 4, ["bcd"], {
@@ -311,26 +311,26 @@ test(`08 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          opts.max
       lastMustMatch: true,
     }),
     "bcd",
-    "08.08"
+    "08.08",
   );
 
   equal(
     matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
       maxMismatches: 1,
       firstMustMatch: false,
-      lastMustMatch: true,
-    }),
-    false,
-    "08.09"
-  );
-  equal(
-    matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
-      maxMismatches: 1,
-      firstMustMatch: true,
       lastMustMatch: true,
     }),
     false,
-    "08.10"
+    "08.09",
+  );
+  equal(
+    matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
+      maxMismatches: 1,
+      firstMustMatch: true,
+      lastMustMatch: true,
+    }),
+    false,
+    "08.10",
   );
 
   equal(
@@ -340,7 +340,7 @@ test(`08 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          opts.max
       lastMustMatch: false,
     }),
     "bcd",
-    "08.11"
+    "08.11",
   );
   equal(
     matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
@@ -349,7 +349,7 @@ test(`08 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          opts.max
       lastMustMatch: false,
     }),
     "bcd",
-    "08.12"
+    "08.12",
   );
 });
 
@@ -361,7 +361,7 @@ test(`09 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          adhoc`, 
       lastMustMatch: false,
     }),
     false,
-    "09.01"
+    "09.01",
   );
 });
 

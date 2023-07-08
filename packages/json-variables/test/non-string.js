@@ -22,7 +22,7 @@ test("01 - Boolean values inserted into a middle of a string", () => {
       d: "stringD",
       e: false,
     },
-    "01.01"
+    "01.01",
   );
   equal(
     jVar(
@@ -35,7 +35,7 @@ test("01 - Boolean values inserted into a middle of a string", () => {
       },
       {
         resolveToBoolIfAnyValuesContainBool: false,
-      }
+      },
     ),
     {
       a: "stringB  stringD ",
@@ -44,7 +44,7 @@ test("01 - Boolean values inserted into a middle of a string", () => {
       d: "stringD",
       e: false,
     },
-    "01.02"
+    "01.02",
   );
   equal(
     jVar(
@@ -55,7 +55,7 @@ test("01 - Boolean values inserted into a middle of a string", () => {
         d: "stringD",
         e: false,
       },
-      { resolveToFalseIfAnyValuesContainBool: false }
+      { resolveToFalseIfAnyValuesContainBool: false },
     ),
     {
       a: true, // <------ first Boolean value is put here. "b" was string, so "c = true" goes here.
@@ -64,7 +64,7 @@ test("01 - Boolean values inserted into a middle of a string", () => {
       d: "stringD",
       e: false,
     },
-    "01.03"
+    "01.03",
   );
   equal(
     jVar(
@@ -78,7 +78,7 @@ test("01 - Boolean values inserted into a middle of a string", () => {
       {
         resolveToBoolIfAnyValuesContainBool: false,
         resolveToFalseIfAnyValuesContainBool: false,
-      }
+      },
     ),
     {
       a: "stringB  stringD ",
@@ -87,7 +87,7 @@ test("01 - Boolean values inserted into a middle of a string", () => {
       d: "stringD",
       e: false,
     },
-    "01.04"
+    "01.04",
   );
 });
 
@@ -101,7 +101,7 @@ test("02 - Boolean values inserted instead of other values, in whole", () => {
       a: false,
       b: true,
     },
-    "02.01"
+    "02.01",
   );
   equal(
     jVar(
@@ -109,13 +109,13 @@ test("02 - Boolean values inserted instead of other values, in whole", () => {
         a: "%%_b_%%",
         b: true,
       },
-      { resolveToFalseIfAnyValuesContainBool: true }
+      { resolveToFalseIfAnyValuesContainBool: true },
     ),
     {
       a: false,
       b: true,
     },
-    "02.02"
+    "02.02",
   );
   equal(
     jVar(
@@ -123,13 +123,13 @@ test("02 - Boolean values inserted instead of other values, in whole", () => {
         a: "%%_b_%%",
         b: true,
       },
-      { resolveToFalseIfAnyValuesContainBool: false }
+      { resolveToFalseIfAnyValuesContainBool: false },
     ),
     {
       a: true,
       b: true,
     },
-    "02.03"
+    "02.03",
   );
 });
 
@@ -149,7 +149,7 @@ test("03 - null values inserted into a middle of a string", () => {
       d: "stringD",
       e: null,
     },
-    "03.01"
+    "03.01",
   );
 });
 
@@ -163,7 +163,7 @@ test("04 - null values inserted instead of other values, in whole", () => {
       a: null,
       b: null,
     },
-    "04.01"
+    "04.01",
   );
   equal(
     jVar({
@@ -174,7 +174,7 @@ test("04 - null values inserted instead of other values, in whole", () => {
       a: null,
       b: null,
     },
-    "04.02"
+    "04.02",
   );
   equal(
     jVar({
@@ -185,7 +185,7 @@ test("04 - null values inserted instead of other values, in whole", () => {
       a: null,
       b: null,
     },
-    "04.03"
+    "04.03",
   );
   equal(
     jVar({
@@ -196,7 +196,7 @@ test("04 - null values inserted instead of other values, in whole", () => {
       a: null,
       b: null,
     },
-    "04.04"
+    "04.04",
   );
   equal(
     jVar(
@@ -207,13 +207,13 @@ test("04 - null values inserted instead of other values, in whole", () => {
       {
         wrapHeadsWith: "{{",
         wrapTailsWith: "}}",
-      }
+      },
     ),
     {
       a: null,
       b: null,
     },
-    "04.05"
+    "04.05",
   );
   equal(
     jVar(
@@ -224,13 +224,13 @@ test("04 - null values inserted instead of other values, in whole", () => {
       {
         wrapHeadsWith: "{{",
         wrapTailsWith: "}}",
-      }
+      },
     ),
     {
       a: null,
       b: null,
     },
-    "04.06"
+    "04.06",
   );
 });
 

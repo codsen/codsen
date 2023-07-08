@@ -37,9 +37,9 @@ assert.equal(
     "function parent", // prepend this
     // all the same args as before:
     source,
-    "parent"
+    "parent",
   ),
-  "function parent(str: string): null | string;"
+  "function parent(str: string): null | string;",
 );
 
 // On codsen.com, we manually prepend "content" the same way

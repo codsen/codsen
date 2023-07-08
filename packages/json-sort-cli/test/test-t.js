@@ -36,25 +36,25 @@ test("01 - sort, -t (tabs) mode", async () => {
     (oneOfTestFilePaths, testIndex) =>
       fs.writeJson(
         path.join(tempFolder, oneOfTestFilePaths),
-        testFileContents[testIndex]
-      )
+        testFileContents[testIndex],
+      ),
   )
     .then(
-      () => execa("./cli.js", ["-t", tempFolder]) // all test files have been written successfully, let's process them with our CLI
+      () => execa("./cli.js", ["-t", tempFolder]), // all test files have been written successfully, let's process them with our CLI
     )
     .then(() =>
       pMap(testFilePaths, (oneOfPaths) =>
-        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8")
-      )
+        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8"),
+      ),
     )
     .then((contentsArray) =>
       pMap(contentsArray, (oneOfArrays) =>
-        JSON.stringify(oneOfArrays, null, "\t")
-      )
+        JSON.stringify(oneOfArrays, null, "\t"),
+      ),
     )
     .then((received) =>
       // execa(`rm -rf ${path.join(path.resolve(), "../temp")}`, { shell: true }).then(
-      execa(`rm -rf ${tempFolder}`, { shell: true }).then(() => received)
+      execa(`rm -rf ${tempFolder}`, { shell: true }).then(() => received),
     )
     .catch((err) => {
       throw new Error(err);

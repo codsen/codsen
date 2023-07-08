@@ -21,7 +21,7 @@ test("01 - UTIL > single markers in the values", () => {
       },
       {
         noSingleMarkers: false,
-      }
+      },
     );
   }, "01.02");
 
@@ -34,11 +34,11 @@ test("01 - UTIL > single markers in the values", () => {
         },
         {
           noSingleMarkers: true,
-        }
+        },
       );
     },
     /THROW_ID_16/,
-    "01.01"
+    "01.01",
   );
 
   not.throws(() => {
@@ -55,7 +55,7 @@ test("01 - UTIL > single markers in the values", () => {
       },
       {
         noSingleMarkers: false,
-      }
+      },
     );
   }, "01.05");
 
@@ -68,11 +68,11 @@ test("01 - UTIL > single markers in the values", () => {
         },
         {
           noSingleMarkers: true,
-        }
+        },
       );
     },
     /THROW_ID_16/,
-    "01.02"
+    "01.02",
   );
 });
 

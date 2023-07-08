@@ -23,7 +23,7 @@ function applyFixes(str, messages, offset = 0) {
       }
       // else - just return what's been gathered, same as do nothing
       return acc;
-    }, [])
+    }, []),
   );
 }
 
@@ -68,20 +68,20 @@ function writeSample(settingsObj) {
 
   fs.writeFileSync(
     `test/samples/${settingsObj.id}_link_bad.html`,
-    linkSample(settingsObj.str, settingsObj.id)
+    linkSample(settingsObj.str, settingsObj.id),
   );
   fs.writeFileSync(
     `test/samples/${settingsObj.id}_media_bad.html`,
-    mediaSample(settingsObj.str, settingsObj.id)
+    mediaSample(settingsObj.str, settingsObj.id),
   );
   if (settingsObj.fixed) {
     fs.writeFileSync(
       `test/samples/${settingsObj.id}_link_good.html`,
-      linkSample(settingsObj.fixed, settingsObj.id)
+      linkSample(settingsObj.fixed, settingsObj.id),
     );
     fs.writeFileSync(
       `test/samples/${settingsObj.id}_media_good.html`,
-      mediaSample(settingsObj.fixed, settingsObj.id)
+      mediaSample(settingsObj.fixed, settingsObj.id),
     );
   }
 }

@@ -34,7 +34,7 @@ test(`01 - ${`\u001b[${36}m${"void tags"}\u001b[${39}m`} - one slash in front`, 
         children: [],
       },
     ],
-    "01.01"
+    "01.01",
   );
   is(ast.length, 1, "01.01");
 
@@ -49,7 +49,7 @@ test(`01 - ${`\u001b[${36}m${"void tags"}\u001b[${39}m`} - one slash in front`, 
         fix: { ranges: [[1, 2]] },
       },
     ],
-    "01.03"
+    "01.03",
   );
   is(gatheredErr.length, 1, "01.02");
 });

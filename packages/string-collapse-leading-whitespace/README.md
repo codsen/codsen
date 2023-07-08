@@ -49,7 +49,7 @@ assert.equal(collWhitespace("aaa"), "aaa");
 // only beginning and ending whitespace is changed:
 assert.equal(
   collWhitespace("  abc  \n  def  \n  ghi  "),
-  " abc  \n  def  \n  ghi "
+  " abc  \n  def  \n  ghi ",
 );
 ```
 

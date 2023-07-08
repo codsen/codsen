@@ -52,7 +52,7 @@ test("02 - arrayFirstOnly - arrays within arrays only, no obj", () => {
       ["a", "b", "c"],
       ["d", ["e"]],
     ],
-    "02.02"
+    "02.02",
   );
 });
 

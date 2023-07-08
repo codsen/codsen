@@ -25,7 +25,7 @@ test("02 - minimal", () => {
   a: string;
   b: string;
 }`,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -60,7 +60,7 @@ test("03 - more realistic", () => {
   all: string[];
   error: string | null;
 }`,
-    "03.01"
+    "03.01",
   );
 });
 
@@ -92,7 +92,7 @@ test("04 - many objects", () => {
   e: number;
   f: (g) => void;
 }`,
-    "04.01"
+    "04.01",
   );
 });
 

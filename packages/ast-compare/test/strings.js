@@ -14,7 +14,7 @@ test("01 - simple strings", () => {
       hungryForWhitespace: false,
     }),
     true,
-    "01.01"
+    "01.01",
   );
   equal(
     compare("aaaaa\nbbbbb", "aaaaa\nc", {
@@ -22,7 +22,7 @@ test("01 - simple strings", () => {
       hungryForWhitespace: false,
     }),
     false,
-    "01.02"
+    "01.02",
   );
 
   equal(
@@ -31,7 +31,7 @@ test("01 - simple strings", () => {
       hungryForWhitespace: true,
     }),
     true,
-    "01.03"
+    "01.03",
   );
   equal(
     compare("aaaaa\nbbbbb", "aaaaa\nc", {
@@ -39,7 +39,7 @@ test("01 - simple strings", () => {
       hungryForWhitespace: true,
     }),
     false,
-    "01.04"
+    "01.04",
   );
 
   equal(
@@ -48,7 +48,7 @@ test("01 - simple strings", () => {
       hungryForWhitespace: false,
     }),
     true,
-    "01.05"
+    "01.05",
   );
   equal(
     compare("aaaaa\nbbbbb", "aaaaa\nc", {
@@ -56,7 +56,7 @@ test("01 - simple strings", () => {
       hungryForWhitespace: false,
     }),
     false,
-    "01.06"
+    "01.06",
   );
 
   equal(
@@ -65,7 +65,7 @@ test("01 - simple strings", () => {
       hungryForWhitespace: true,
     }),
     true,
-    "01.07"
+    "01.07",
   );
   equal(
     compare("aaaaa\nbbbbb", "aaaaa\nc", {
@@ -73,7 +73,7 @@ test("01 - simple strings", () => {
       hungryForWhitespace: true,
     }),
     false,
-    "01.08"
+    "01.08",
   );
 });
 
@@ -82,7 +82,7 @@ test("02 - strings compared and fails", () => {
   not.equal(
     compare("aaaaa\nbbbbb", ["aaaaa\nbbbbb"], { verboseWhenMismatches: true }),
     true,
-    "02.02"
+    "02.02",
   );
 });
 
@@ -95,19 +95,19 @@ test("04 - string against empty array or empty string within an array", () => {
   equal(
     compare(["aaaaa\nbbbbb"], [], { hungryForWhitespace: true }),
     true,
-    "04.02"
+    "04.02",
   );
   equal(
     compare(["aaaaa\nbbbbb"], ["\n\n\n"], { hungryForWhitespace: true }),
     true,
-    "04.03"
+    "04.03",
   );
   equal(
     compare(["aaaaa\nbbbbb", "\t\t\t \n\n\n", "   "], ["\n\n\n"], {
       hungryForWhitespace: true,
     }),
     true,
-    "04.04"
+    "04.04",
   );
 });
 
@@ -118,7 +118,7 @@ test("05 - string vs empty space", () => {
       hungryForWhitespace: false,
     }),
     false,
-    "05.01"
+    "05.01",
   );
   equal(
     compare("aaaaa\nbbbbb", "\n\n\n   \t\t\t   ", {
@@ -126,7 +126,7 @@ test("05 - string vs empty space", () => {
       hungryForWhitespace: true,
     }),
     false,
-    "05.02"
+    "05.02",
   );
   equal(
     compare("aaaaa\nbbbbb", "\n\n\n   \t\t\t   ", {
@@ -134,7 +134,7 @@ test("05 - string vs empty space", () => {
       hungryForWhitespace: false,
     }),
     false,
-    "05.03"
+    "05.03",
   );
   equal(
     compare("aaaaa\nbbbbb", "\n\n\n   \t\t\t   ", {
@@ -142,7 +142,7 @@ test("05 - string vs empty space", () => {
       hungryForWhitespace: true,
     }),
     false,
-    "05.04"
+    "05.04",
   );
 });
 
@@ -153,7 +153,7 @@ test("06 - empty space vs different empty space", () => {
       hungryForWhitespace: false,
     }),
     false,
-    "06.01"
+    "06.01",
   );
   equal(
     compare("     \n\n\n\n\n\n\n\n     ", "\n\n\n   \t\t\t   ", {
@@ -161,7 +161,7 @@ test("06 - empty space vs different empty space", () => {
       hungryForWhitespace: true,
     }),
     true,
-    "06.02"
+    "06.02",
   );
   equal(
     compare("     \n\n\n\n\n\n\n\n     ", "\n\n\n   \t\t\t   ", {
@@ -169,7 +169,7 @@ test("06 - empty space vs different empty space", () => {
       hungryForWhitespace: false,
     }),
     false,
-    "06.03"
+    "06.03",
   );
   equal(
     compare("     \n\n\n\n\n\n\n\n     ", "\n\n\n   \t\t\t   ", {
@@ -177,7 +177,7 @@ test("06 - empty space vs different empty space", () => {
       hungryForWhitespace: true,
     }),
     true,
-    "06.04"
+    "06.04",
   );
 });
 
@@ -187,17 +187,17 @@ test("07 - two arrays, one empty", () => {
     compare(
       { a: ["\t\t\t\t\t\t      \n\n\n    \t\t\t"] },
       { a: [] },
-      { hungryForWhitespace: true }
+      { hungryForWhitespace: true },
     ),
     true,
-    "07.02"
+    "07.02",
   );
   equal(
     compare([], ["\t\t\t\t\t\t      \n\n\n    \t\t\t"], {
       hungryForWhitespace: true,
     }),
     true,
-    "07.03"
+    "07.03",
   );
 });
 
@@ -206,19 +206,19 @@ test("08 - opts.matchStrictly", () => {
     compare(
       { a: "a" },
       {},
-      { matchStrictly: true, verboseWhenMismatches: true }
+      { matchStrictly: true, verboseWhenMismatches: true },
     ),
     false,
-    "08.01"
+    "08.01",
   );
   equal(
     typeof compare(
       {},
       { a: "a" },
-      { matchStrictly: true, verboseWhenMismatches: true }
+      { matchStrictly: true, verboseWhenMismatches: true },
     ),
     "string",
-    "08.02"
+    "08.02",
   );
 });
 

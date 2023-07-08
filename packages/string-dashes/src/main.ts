@@ -40,7 +40,7 @@ function convertOne(str: string, opts: Opts): Ranges {
 
   if (typeof str !== "string") {
     throw new Error(
-      `string-dashes/convertOne(): [THROW_ID_01] first input argument should be string! It's been passed as ${str} (its typeof ${typeof str})`
+      `string-dashes/convertOne(): [THROW_ID_01] first input argument should be string! It's been passed as ${str} (its typeof ${typeof str})`,
     );
   }
 
@@ -49,19 +49,19 @@ function convertOne(str: string, opts: Opts): Ranges {
       `string-dashes/convertOne(): [THROW_ID_02] options object should be a plain object. It has was passed as ${JSON.stringify(
         opts,
         null,
-        4
-      )} (its typeof is ${typeof opts})`
+        4,
+      )} (its typeof is ${typeof opts})`,
     );
   } else if (!Number.isInteger(opts.from) || opts.from < 0) {
     throw new Error(
       `string-dashes/convertOne(): [THROW_ID_03] options objects key "to", a starting string index, should be a natural number! It was given as ${
         opts.from
-      } (its typeof is ${typeof opts.from})`
+      } (its typeof is ${typeof opts.from})`,
     );
   } else if (opts.from >= str.length) {
     // empty string would trigger this clause, so early exit clause is not needed
     throw new Error(
-      `string-dashes/convertOne(): [THROW_ID_04] opts.from is beyond str length! opts.from was passed as ${opts.from} and str.length is ${str.length}`
+      `string-dashes/convertOne(): [THROW_ID_04] opts.from is beyond str length! opts.from was passed as ${opts.from} and str.length is ${str.length}`,
     );
   }
 
@@ -91,7 +91,7 @@ function convertOne(str: string, opts: Opts): Ranges {
 
   DEV &&
     console.log(
-      `094 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
+      `094 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`START`}\u001b[${39}m`}`,
     );
 
   DEV && console.log("097 settings: n/a");
@@ -100,55 +100,55 @@ function convertOne(str: string, opts: Opts): Ranges {
       `${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
         str,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   DEV &&
     console.log(
       `${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${JSON.stringify(
         from,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   DEV &&
     console.log(
-      `${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${JSON.stringify(to, null, 4)}`
+      `${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${JSON.stringify(to, null, 4)}`,
     );
   DEV &&
     console.log(
       `${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${JSON.stringify(
         value,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   DEV &&
     console.log(
       `${`\u001b[${33}m${`convertEntities`}\u001b[${39}m`} = ${JSON.stringify(
         convertEntities,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   DEV &&
     console.log(
       `${`\u001b[${33}m${`convertDashes`}\u001b[${39}m`} = ${JSON.stringify(
         convertDashes,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   DEV &&
     console.log(
-      `${`\u001b[${33}m${`offsetBy`}\u001b[${39}m`} type - ${typeof offsetBy}`
+      `${`\u001b[${33}m${`offsetBy`}\u001b[${39}m`} type - ${typeof offsetBy}`,
     );
   DEV && console.log("---------------");
 
   if (!convertDashes) {
     DEV &&
       console.log(
-        `151 opts.convertDashes = false, ${`\u001b[${32}m${`early exit`}\u001b[${39}m`}`
+        `151 opts.convertDashes = false, ${`\u001b[${32}m${`early exit`}\u001b[${39}m`}`,
       );
     return null;
   }
@@ -177,7 +177,7 @@ function convertOne(str: string, opts: Opts): Ranges {
         console.log(
           `178 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} n-dash symbol [${from}, ${to}, ${
             convertEntities ? "&ndash;" : rawNDash
-          }]`
+          }]`,
         );
     }
   }
@@ -209,8 +209,8 @@ function convertOne(str: string, opts: Opts): Ranges {
               `209 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
                 idxOnTheLeft,
                 null,
-                4
-              )}`
+                4,
+              )}`,
             );
         } else {
           // a more "expensive" calculation
@@ -220,8 +220,8 @@ function convertOne(str: string, opts: Opts): Ranges {
               `220 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
                 idxOnTheLeft,
                 null,
-                4
-              )}`
+                4,
+              )}`,
             );
         }
       }
@@ -234,8 +234,8 @@ function convertOne(str: string, opts: Opts): Ranges {
               `234 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheRight`}\u001b[${39}m`} = ${JSON.stringify(
                 idxOnTheRight,
                 null,
-                4
-              )}`
+                4,
+              )}`,
             );
         } else {
           // a more "expensive" calculation
@@ -245,8 +245,8 @@ function convertOne(str: string, opts: Opts): Ranges {
               `245 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheRight`}\u001b[${39}m`} = ${JSON.stringify(
                 idxOnTheRight,
                 null,
-                4
-              )}`
+                4,
+              )}`,
             );
         }
       }
@@ -271,7 +271,7 @@ function convertOne(str: string, opts: Opts): Ranges {
           console.log(
             `272 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} n-dash symbol [${from}, ${to}, ${
               convertEntities ? "&ndash;" : rawNDash
-            }]`
+            }]`,
           );
       }
 
@@ -283,7 +283,7 @@ function convertOne(str: string, opts: Opts): Ranges {
           console.log(
             `284 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} m-dash symbol [${from}, ${to}, ${
               convertEntities ? "&mdash;" : rawMDash
-            }]`
+            }]`,
           );
       }
     } else if (
@@ -298,14 +298,14 @@ function convertOne(str: string, opts: Opts): Ranges {
         console.log(
           `299 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} m-dash symbol [${from}, ${to}, ${
             convertEntities ? "&mdash;" : rawMDash
-          }]`
+          }]`,
         );
     }
   }
 
   DEV &&
     console.log(
-      `308 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`
+      `308 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`,
     );
 
   return rangesArr.length ? rangesArr : null;
@@ -326,7 +326,7 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
 
   if (typeof str !== "string") {
     throw new Error(
-      `string-dashes: [THROW_ID_10] first input argument should be string! It's been passed as ${str} (its typeof ${typeof str})`
+      `string-dashes: [THROW_ID_10] first input argument should be string! It's been passed as ${str} (its typeof ${typeof str})`,
     );
   }
 
@@ -335,8 +335,8 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
       `string-dashes: [THROW_ID_11] options object should be a plain object! It was passed as ${JSON.stringify(
         opts,
         null,
-        4
-      )} (its typeof is ${typeof opts})`
+        4,
+      )} (its typeof is ${typeof opts})`,
     );
   }
 
@@ -364,8 +364,8 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
       `364 CALCULATED ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         preppedOpts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   let len = str.length;
@@ -376,8 +376,8 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
         `${`\u001b[${36}m${`=`.repeat(50)}\u001b[${39}m`} ${JSON.stringify(
           str[i],
           null,
-          0
-        )} (idx ${i}) ${`\u001b[${36}m${`=`.repeat(50)}\u001b[${39}m`}`
+          0,
+        )} (idx ${i}) ${`\u001b[${36}m${`=`.repeat(50)}\u001b[${39}m`}`,
       );
     // offset is needed to bypass characters we already fixed - it happens for
     // example with nested quotes - we'd fix many in one go and we need to skip
@@ -393,8 +393,8 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
         `393 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
           preppedOpts,
           null,
-          4
-        )}`
+          4,
+        )}`,
       );
     let res = convertOne(str, preppedOpts as Opts);
     if (Array.isArray(res) && res.length) {
@@ -408,13 +408,13 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
       `408 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} FINAL ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
         ranges,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   DEV &&
     console.log(
-      `417 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`
+      `417 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`,
     );
   DEV && console.log(" ");
   return {

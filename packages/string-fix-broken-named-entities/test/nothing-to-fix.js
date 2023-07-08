@@ -27,7 +27,7 @@ test(`01 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - false positives`
       },
     }),
     [],
-    "01.07"
+    "01.07",
   );
   equal(
     fix(ok, "an insp;", {
@@ -36,7 +36,7 @@ test(`01 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - false positives`
       },
     }),
     [],
-    "01.08"
+    "01.08",
   );
   equal(
     fix(ok, "an inspp;", {
@@ -45,7 +45,7 @@ test(`01 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - false positives`
       },
     }),
     [],
-    "01.09"
+    "01.09",
   );
 
   // decode on:
@@ -57,7 +57,7 @@ test(`01 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - false positives`
       },
     }),
     [],
-    "01.10"
+    "01.10",
   );
   equal(
     fix(ok, "an insp;", {
@@ -67,7 +67,7 @@ test(`01 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - false positives`
       },
     }),
     [],
-    "01.11"
+    "01.11",
   );
   equal(
     fix(ok, "an inspp;", {
@@ -77,7 +77,7 @@ test(`01 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - false positives`
       },
     }),
     [],
-    "01.12"
+    "01.12",
   );
 
   // yet...
@@ -95,7 +95,7 @@ test(`02 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - no decode reques
       },
     }),
     [],
-    "02.02"
+    "02.02",
   );
   equal(gathered, [], "02.03");
 });
@@ -111,7 +111,7 @@ test(`03 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - no decode reques
       },
     }),
     [],
-    "03.02"
+    "03.02",
   );
   equal(gathered, [], "03.03");
 });
@@ -127,7 +127,7 @@ test(`04 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - no decode reques
       },
     }),
     [],
-    "04.02"
+    "04.02",
   );
   equal(gathered, [], "04.03");
 });
@@ -142,7 +142,7 @@ test(`05 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - default callback
       cb: (obj) => obj,
     }),
     [],
-    "05.03"
+    "05.03",
   );
 
   // the main check:
@@ -155,7 +155,7 @@ test(`05 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - default callback
       },
     }),
     [[0, 6, "\xA0"]],
-    "05.04"
+    "05.04",
   );
   equal(gathered, [], "05.05");
 });
@@ -177,7 +177,7 @@ test(`06 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - full callback, d
         rangeValDecoded: "\xA0",
       },
     ],
-    "06.01"
+    "06.01",
   );
 });
 
@@ -188,7 +188,7 @@ test(`07 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - two, surrounded 
       [0, 6, "\xA0"],
       [7, 13, "\xA0"],
     ],
-    "07.01"
+    "07.01",
   );
 });
 
@@ -204,7 +204,7 @@ test(`08 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - surrounded by le
       },
     }),
     [[1, 7, "\xA0"]],
-    "08.02"
+    "08.02",
   );
   equal(gathered, [], "08.03");
 });
@@ -220,7 +220,7 @@ test(`09 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - various - decode
       },
     }),
     [],
-    "09.02"
+    "09.02",
   );
   equal(gathered, [], "09.03");
 });
@@ -236,7 +236,7 @@ test(`10 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - various - decode
       },
     }),
     [],
-    "10.02"
+    "10.02",
   );
   equal(gathered, [], "10.03");
 });
@@ -253,7 +253,7 @@ test(`11 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - hairsp - decode 
       },
     }),
     [[1, 9, "\u200A"]],
-    "11.02"
+    "11.02",
   );
   equal(gathered, [], "11.03");
 });
@@ -262,7 +262,7 @@ test(`12 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - VeryThinSpace - 
   equal(
     fix(ok, "y&VeryThinSpace;z", { decode: true }),
     [[1, 16, "\u200A"]],
-    "12.01"
+    "12.01",
   );
 
   let gathered = [];
@@ -274,7 +274,7 @@ test(`12 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - VeryThinSpace - 
       },
     }),
     [[1, 16, "\u200A"]],
-    "12.02"
+    "12.02",
   );
   equal(gathered, [], "12.03");
 });
@@ -291,7 +291,7 @@ test(`13 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - healthy &pound;`
       },
     }),
     [],
-    "13.02"
+    "13.02",
   );
   equal(gathered, [], "13.03");
 });
@@ -309,7 +309,7 @@ test(`14 - ${`\u001b[${33}m${"nothing to fix"}\u001b[${39}m`} - healthy &pound;`
       },
     }),
     [[0, 7, "\xA3"]],
-    "14.02"
+    "14.02",
   );
   equal(gathered, [], "14.03");
 });

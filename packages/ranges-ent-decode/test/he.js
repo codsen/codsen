@@ -24,7 +24,7 @@ test("02 - legacy named references (without a trailing semicolon)", () => {
       [14, 19, "\xACi"],
       [21, 27, "\xA91"],
     ],
-    "02.01"
+    "02.01",
   );
 });
 
@@ -35,7 +35,7 @@ test("03 - hexadecimal escape", () => {
       [1, 10, "\uD834\uDF06"],
       [11, 32, "\uD834\uDF06"],
     ],
-    "03.01"
+    "03.01",
   );
 });
 
@@ -47,7 +47,7 @@ test("04 - Decimal escape", () => {
       [11, 17, "\xA9"],
       [18, 41, "\xA9"],
     ],
-    "04.01"
+    "04.01",
   );
 });
 
@@ -60,7 +60,7 @@ test("05 - Special numerical escapes (see he.js issue #4)", () => {
       [37, 42, "\uFFFD"],
       [43, 47, "\uFFFD"],
     ],
-    "05.01"
+    "05.01",
   );
 });
 
@@ -70,7 +70,7 @@ test("06 - special numerical escapes in strict mode", () => {
       decode("a&#xD834;b", { strict: true });
     },
     /Parse error/,
-    "06.01"
+    "06.01",
   );
 });
 
@@ -84,7 +84,7 @@ test("08 - out-of-range hexadecimal escape in strict mode", () => {
       decode("a&#x9999999999999999;b", { strict: true });
     },
     /Parse error/,
-    "08.01"
+    "08.01",
   );
 });
 
@@ -98,7 +98,7 @@ test("10 - out-of-range hexadecimal escape in strict mode", () => {
       decode("a&#x110000;b", { strict: true });
     },
     /Parse error/,
-    "10.01"
+    "10.01",
   );
 });
 
@@ -112,7 +112,7 @@ test("12 - ambiguous ampersand in text context in strict mode", () => {
       decode("foo&ampbar", { strict: true });
     },
     /Parse error/,
-    "12.01"
+    "12.01",
   );
 });
 
@@ -126,7 +126,7 @@ test("14 - hexadecimal escape without trailing semicolon in strict mode", () => 
       decode("foo&#x1D306qux", { strict: true });
     },
     /Parse error/,
-    "14.01"
+    "14.01",
   );
 });
 
@@ -140,7 +140,7 @@ test("16 - decimal escape without trailing semicolon in strict mode", () => {
       decode("foo&#119558qux", { strict: true });
     },
     /Parse error/g,
-    "16.01"
+    "16.01",
   );
 });
 
@@ -150,7 +150,7 @@ test("17 - attribute value context - entity without semicolon sandwitched", () =
       isAttributeValue: true,
     }),
     null,
-    "17.01"
+    "17.01",
   );
 });
 
@@ -160,7 +160,7 @@ test("18 - attribute value context - entity with semicolon sandwitched with text
       isAttributeValue: true,
     }),
     [[3, 8, "&"]],
-    "18.01"
+    "18.01",
   );
 });
 
@@ -170,7 +170,7 @@ test("19 - attribute value context - ends with entity with semicolon", () => {
       isAttributeValue: true,
     }),
     [[3, 8, "&"]],
-    "19.01"
+    "19.01",
   );
 });
 
@@ -187,7 +187,7 @@ test("21 - throws in strict mode when entity ends with equal sign instead of sem
       });
     },
     /Parse error/,
-    "21.01"
+    "21.01",
   );
 });
 
@@ -197,7 +197,7 @@ test("22 - unclosed HTML entity ends the input string", () => {
       isAttributeValue: true,
     }),
     [[3, 7, "&"]],
-    "22.01"
+    "22.01",
   );
 });
 
@@ -208,7 +208,7 @@ test("23 - false positive, not a parsing error", () => {
       strict: true,
     }),
     null,
-    "23.01"
+    "23.01",
   );
 });
 
@@ -221,7 +221,7 @@ test("24 - foo&amplol in strict mode throws in text context", () => {
       });
     },
     /Parse error/g,
-    "24.01"
+    "24.01",
   );
 });
 
@@ -234,7 +234,7 @@ test("25 - throws when strict mode is on isAttributeValue is false", () => {
       });
     },
     /Parse error/,
-    "25.01"
+    "25.01",
   );
 });
 
@@ -245,7 +245,7 @@ test("26 - attribute value in error-tolerant mode, non-strict", () => {
       isAttributeValue: true,
     }),
     null,
-    "26.01"
+    "26.01",
   );
 });
 
@@ -255,7 +255,7 @@ test("27 - attribute value in error-tolerant mode, strict", () => {
       strict: true,
     }),
     [[4, 11, "\u2209"]],
-    "27.01"
+    "27.01",
   );
 });
 
@@ -271,7 +271,7 @@ test("29 - decoding `&#x8D;` in strict mode", () => {
       });
     },
     /Parse error/,
-    "29.01"
+    "29.01",
   );
 });
 
@@ -287,7 +287,7 @@ test("31 - decoding `&#xD;` in strict mode", () => {
       });
     },
     /Parse error/g,
-    "31.01"
+    "31.01",
   );
 });
 
@@ -303,7 +303,7 @@ test("33 - decoding `&#x94;` in strict mode", () => {
       });
     },
     /Parse error/,
-    "33.01"
+    "33.01",
   );
 });
 
@@ -317,7 +317,7 @@ test("35 - decoding `&#x1;` in strict mode", () => {
       decode("&#x1;", { strict: true });
     },
     /Parse error/g,
-    "35.01"
+    "35.01",
   );
 });
 
@@ -331,7 +331,7 @@ test("37 - decoding `&#x10FFFF;` in strict mode", () => {
       decode("&#x10FFFF;", { strict: true });
     },
     /Parse error/,
-    "37.01"
+    "37.01",
   );
 });
 
@@ -339,7 +339,7 @@ test("38 - decoding `&#196605;` (valid code point) in strict mode", () => {
   equal(
     decode("&#196605;", { strict: true }),
     [[0, 9, "\uD87F\uDFFD"]],
-    "38.01"
+    "38.01",
   );
 });
 
@@ -349,7 +349,7 @@ test("39 - throws when decoding `&#196607;` in strict mode", () => {
       decode("&#196607;", { strict: true });
     },
     /Parse error/,
-    "39.01"
+    "39.01",
   );
 });
 
@@ -363,7 +363,7 @@ test("41 - decoding &#xZ in strict mode", () => {
       decode("&#xZ", { strict: true });
     },
     "41.01",
-    "41.01"
+    "41.01",
   );
 });
 
@@ -377,7 +377,7 @@ test("43 - decoding &#Z in strict mode", () => {
       decode("&#Z", { strict: true });
     },
     /Parse error/,
-    "43.01"
+    "43.01",
   );
 });
 
