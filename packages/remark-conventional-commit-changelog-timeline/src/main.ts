@@ -46,11 +46,11 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
       `046 final ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
-  return (tree) => {
+  return (tree: any) => {
     // ██████████████████ 1. █████████████████████
 
     // delete the h1, "# Change Log"
@@ -63,21 +63,21 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
 
       if (
         typeof index === "number" &&
-        (node as any)?.tagName === "h1" &&
+        node?.tagName === "h1" &&
         Array.isArray(node.children) &&
         node.children.length
       ) {
-        if ((node.children[0] as any).value === "Change Log") {
+        if (node.children[0].value === "Change Log") {
           // 1. delete this h1
-          (parent as any).children.splice(index, 1);
+          parent.children.splice(index, 1);
           // console.log(`045 ${`\u001b[${32}m${`deleted`}\u001b[${39}m`} h1`);
 
           // 2. tackle the line break that normally follows
           if (
-            (parent as any).children[index]?.type === "text" &&
-            (parent as any).children[index]?.value === "\n"
+            parent.children[index]?.type === "text" &&
+            parent.children[index]?.value === "\n"
           ) {
-            (parent as any).children.splice(index, 1);
+            parent.children.splice(index, 1);
             // console.log(
             //   `054 ${`\u001b[${32}m${`deleted`}\u001b[${39}m`} line break`
             // );
@@ -85,15 +85,14 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
 
           // 3. Remove "All notable changes to this project" if present
           if (
-            (parent as any).children[index]?.tagName === "p" &&
-            (parent as any).children[index]?.children?.length &&
-            typeof (parent as any).children[index].children[0]?.value ===
-              "string" &&
-            (parent as any).children[index].children[0].value.startsWith(
-              "All notable changes to this project"
+            parent.children[index]?.tagName === "p" &&
+            parent.children[index]?.children?.length &&
+            typeof parent.children[index].children[0]?.value === "string" &&
+            parent.children[index].children[0].value.startsWith(
+              "All notable changes to this project",
             )
           ) {
-            (parent as any).children.splice(index, 1);
+            parent.children.splice(index, 1);
             // console.log(
             //   `070 ${`\u001b[${32}m${`deleted`}\u001b[${39}m`} "All notable changes..."`
             // );
@@ -101,13 +100,11 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
         } else if (
           // normal, not linked heading, for example
           // ## 1.0.0 (2022-09-25)
-          (typeof (node.children[0] as any).value === "string" &&
-            extractStartingVersionString((node.children[0] as any).value)) ||
-          (Array.isArray((node as any).children[0]?.children) &&
-            (node as any).children[0].children[0]?.value &&
-            extractStartingVersionString(
-              (node as any).children[0].children[0]?.value
-            ))
+          (typeof node.children[0].value === "string" &&
+            extractStartingVersionString(node.children[0].value)) ||
+          (Array.isArray(node.children[0]?.children) &&
+            node.children[0].children[0]?.value &&
+            extractStartingVersionString(node.children[0].children[0]?.value))
         ) {
           // it's something like:
           // # 3.1.0(2022 - 08 - 12)
@@ -135,7 +132,7 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
 
     DEV &&
       console.log(
-        `138 ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${stringify(tree)}`
+        `135 ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${stringify(tree)}`,
       );
 
     visit(tree, "element", (node, index, parent) => {
@@ -150,56 +147,54 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
 
       if (
         typeof index === "number" &&
-        (node as any)?.tagName === "h2" &&
+        node?.tagName === "h2" &&
         Array.isArray(node.children)
       ) {
         DEV &&
           console.log(
-            `158 processing: ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${stringify(
-              node
-            )}`
+            `155 processing: ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${stringify(
+              node,
+            )}`,
           );
 
         if (
-          typeof (node.children[0] as any)?.value === "string" &&
-          semverRegex().test((node.children[0] as any)?.value)
+          typeof node.children[0]?.value === "string" &&
+          semverRegex().test(node.children[0]?.value)
         ) {
-          versionStr = extractStartingVersionString(
-            (node.children[0] as any)?.value
-          );
-          dateStr = extractDateString((node.children[0] as any)?.value);
+          versionStr = extractStartingVersionString(node.children[0]?.value);
+          dateStr = extractDateString(node.children[0]?.value);
         } else if (
-          (node.children[0] as any).tagName === "a" &&
-          (node.children[0] as any)?.children[0] &&
-          (node.children[0] as any).children[0].type === "text" &&
-          semverRegex().test((node.children[0] as any).children[0].value)
+          node.children[0].tagName === "a" &&
+          node.children[0]?.children[0] &&
+          node.children[0].children[0].type === "text" &&
+          semverRegex().test(node.children[0].children[0].value)
         ) {
           // extract version from within anchor tag
           versionStr = extractStartingVersionString(
-            (node.children[0] as any).children[0].value
+            node.children[0].children[0].value,
           );
 
           // date text node will be following anchor tag
           if (
-            (node.children[1] as any)?.type === "text" &&
-            extractDateString((node.children[1] as any)?.value)
+            node.children[1]?.type === "text" &&
+            extractDateString(node.children[1]?.value)
           ) {
-            dateStr = extractDateString((node.children[1] as any)?.value);
+            dateStr = extractDateString(node.children[1]?.value);
           }
         }
       }
 
       if (versionStr && dateStr) {
         DEV &&
-          console.log(`194 versionStr: ${versionStr}; dateStr: ${dateStr}`);
+          console.log(`189 versionStr: ${versionStr}; dateStr: ${dateStr}`);
 
         DEV &&
           console.log(
-            `198  ███████████████████████████████████████ ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            `193  ███████████████████████████████████████ ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
               node,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
 
         node.children = [
@@ -209,10 +204,10 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
           },
         ];
 
-        DEV && console.log(`212 set the h2 to ${versionStr}`);
+        DEV && console.log(`207 set the h2 to ${versionStr}`);
 
         if (dateStr && typeof index === "number") {
-          DEV && console.log(`215 add the .release-date div`);
+          DEV && console.log(`210 add the .release-date div`);
           let date = new Date(dateStr);
           let formatDay = new Intl.DateTimeFormat(resolvedOpts.dateDivLocale, {
             day: "numeric",
@@ -221,7 +216,7 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
             resolvedOpts.dateDivLocale,
             {
               month: "short",
-            }
+            },
           ).format;
           let formatYear = new Intl.DateTimeFormat(resolvedOpts.dateDivLocale, {
             year: "numeric",
@@ -239,24 +234,24 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
           };
           DEV &&
             console.log(
-              `242 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`dateParamsObj`}\u001b[${39}m`} = ${JSON.stringify(
+              `237 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`dateParamsObj`}\u001b[${39}m`} = ${JSON.stringify(
                 dateParamsObj,
                 null,
-                4
-              )}`
+                4,
+              )}`,
             );
 
           let newMarkup = raw(
-            u("raw", resolvedOpts.dateDivMarkup(dateParamsObj))
+            u("raw", resolvedOpts.dateDivMarkup(dateParamsObj)),
           );
 
           DEV &&
             console.log(
-              `255 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`newMarkup`}\u001b[${39}m`} = ${JSON.stringify(
+              `250 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`newMarkup`}\u001b[${39}m`} = ${JSON.stringify(
                 newMarkup,
                 null,
-                4
-              )}`
+                4,
+              )}`,
             );
 
           // it depends, on what newMarkup, the generated AST ended up -
@@ -316,22 +311,22 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
       // ### 🔧 Bug Fixes
       if (
         typeof index === "number" &&
-        (node as any)?.tagName === "h3" &&
-        (node as any)?.children &&
-        (node as any)?.children[0]?.type === "text"
+        node?.tagName === "h3" &&
+        node?.children &&
+        node?.children[0]?.type === "text"
       ) {
         DEV &&
           console.log(
-            `325 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            `320 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
               node,
               null,
-              4
-            )}`
+              4,
+            )}`,
           );
 
         let emoji = "";
 
-        switch ((node as any)?.children[0].value) {
+        switch (node?.children[0].value) {
           case "Features":
             emoji = "✨";
             break;
@@ -350,7 +345,7 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
           case "Bug Fixes":
           case "Fixed":
             // don't mention "bugs"
-            (node as any).children[0].value = "Fixed";
+            node.children[0].value = "Fixed";
             emoji = "🔧";
             break;
           default:
@@ -359,11 +354,9 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
 
         if (emoji) {
           // 1. add a space in between emoji and existing label
-          (node as any).children[0].value = ` ${
-            (node as any)?.children[0].value
-          }`;
+          node.children[0].value = ` ${node?.children[0].value}`;
           // 2. insert span with emoji in front:
-          (node as any).children.unshift({
+          node.children.unshift({
             type: "element",
             tagName: "span",
             properties: {

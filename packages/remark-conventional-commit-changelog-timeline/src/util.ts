@@ -16,7 +16,7 @@ export const stringify = (obj: Obj) => {
       key: "position",
     }),
     null,
-    4
+    4,
   );
 };
 

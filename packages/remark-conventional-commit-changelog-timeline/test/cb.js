@@ -59,7 +59,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
         `${day} ${month}<br class="z">${year}`,
     }),
     expected,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -89,7 +89,7 @@ test("02 - static string in the date callback", () => {
       dateDivMarkup: () => "foo",
     }),
     expected,
-    "02.01"
+    "02.01",
   );
 });
 
@@ -130,7 +130,7 @@ test("03 - arabic dates", () => {
       },
     }),
     expected,
-    "03.01"
+    "03.01",
   );
 });
 

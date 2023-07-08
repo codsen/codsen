@@ -11,14 +11,14 @@ const { equal, is, ok, throws, type, not, match } = require("uvu/assert");
 // the CJS imported file can't be ".cjs.js", so we rename temporarily:
 fs.renameSync(
   path.resolve("dist/remark-conventional-commit-changelog-timeline.cjs.js"),
-  path.resolve("dist/remark-conventional-commit-changelog-timeline.cjs")
+  path.resolve("dist/remark-conventional-commit-changelog-timeline.cjs"),
 );
 const api = require("../dist/remark-conventional-commit-changelog-timeline.cjs");
 
 test.after(() => {
   fs.renameSync(
     path.resolve("dist/remark-conventional-commit-changelog-timeline.cjs"),
-    path.resolve("dist/remark-conventional-commit-changelog-timeline.cjs.js")
+    path.resolve("dist/remark-conventional-commit-changelog-timeline.cjs.js"),
   );
 });
 

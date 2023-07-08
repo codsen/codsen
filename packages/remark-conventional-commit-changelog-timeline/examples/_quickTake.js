@@ -56,5 +56,5 @@ assert.equal(
     dateDivMarkup: ({ date, year, month, day }) =>
       `${month} ${day}, <span>${year}</span>`,
   }),
-  expected
+  expected,
 );

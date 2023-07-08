@@ -53,5 +53,5 @@ assert.equal(
     dateDivLocale: "ar-EG",
     dateDivMarkup: ({ year, month, day }) => `${year}/${month}/${day}`,
   }),
-  expected
+  expected,
 );

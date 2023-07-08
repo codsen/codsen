@@ -115,7 +115,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
         `${day} ${month} <span>${year}</span>`,
     }),
     expected,
-    "02.01"
+    "02.01",
   );
 });
 
