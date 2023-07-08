@@ -16,29 +16,52 @@
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/dist/**", "{projectRoot}/types/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "{projectRoot}/dist/**",
+        "{projectRoot}/types/**"
+      ]
     },
     "test": {
-      "dependsOn": ["lect", "build"]
+      "dependsOn": [
+        "lect",
+        "build"
+      ]
     },
     "lint": {
-      "dependsOn": ["build"]
+      "dependsOn": [
+        "build"
+      ]
     },
     "unit": {
-      "dependsOn": ["build"]
+      "dependsOn": [
+        "build"
+      ]
     },
     "examples": {
-      "dependsOn": ["^build"]
+      "dependsOn": [
+        "^build"
+      ]
     },
     "prepare": {
-      "dependsOn": ["unit", "examples", "lint"]
+      "dependsOn": [
+        "unit",
+        "examples",
+        "lint"
+      ]
     }
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
     "sharedGlobals": [],
-    "production": ["default"]
+    "production": [
+      "default"
+    ]
   }
 }

@@ -1,6 +1,5 @@
 {
   "npmClient": "npm",
-  "useWorkspaces": true,
   "command": {
     "publish": {
       "conventionalCommits": true,
@@ -18,6 +17,9 @@
   "lifecycle": {
     "version": "git add ."
   },
-  "packages": ["packages/*"],
-  "version": "independent"
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent",
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json"
 }
