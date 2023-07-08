@@ -37,7 +37,7 @@ const fixTypography: UnifiedPlugin<any[]> = () => {
 
   // -----------------------------------------------------------------------------
 
-  return (tree) => {
+  return (tree: any) => {
     visit(tree, "text", (node, index, parent) => {
       let originalNodeValue = node.value;
 
@@ -46,7 +46,7 @@ const fixTypography: UnifiedPlugin<any[]> = () => {
         convertApostrophes,
         convertDashes,
         extras,
-        removeWidows
+        removeWidows,
       );
 
       // correction for:
@@ -55,7 +55,7 @@ const fixTypography: UnifiedPlugin<any[]> = () => {
       //              input gets split by parser into separate nodes
       //              so this apostrophe will lose the context on the left
       if (
-        (parent as any).children[(index as any) - 1]?.type === "inlineCode" &&
+        parent.children[(index as any) - 1]?.type === "inlineCode" &&
         originalNodeValue[0] === "'" &&
         originalNodeValue[1] === "s"
       ) {

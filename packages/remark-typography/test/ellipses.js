@@ -14,7 +14,7 @@ test("01 - apostrophes and ellipsis", async () => {
       .toString()
       .trim(),
     `Yes that${rightSingleQuote}s true${rawNbsp}but${ellipsis}`,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -24,7 +24,7 @@ test("02 - tackles strictly three dot sequences, nothing else", async () => {
   equal(
     (await remark().use(fixTypography, {}).process(source)).toString().trim(),
     source,
-    "02.01"
+    "02.01",
   );
 });
 

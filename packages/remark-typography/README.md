@@ -42,7 +42,7 @@ import fixTypography from "remark-typography";
     (await remark().use(fixTypography, {}).process("Yes that's true but..."))
       .toString()
       .trim(),
-    "Yes that\u2019s true\u00A0but\u2026"
+    "Yes that\u2019s true\u00A0but\u2026",
   );
 })();
 ```

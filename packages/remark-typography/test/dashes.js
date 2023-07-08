@@ -14,7 +14,7 @@ test("01 - spaced m-dashes", async () => {
       .toString()
       .trim(),
     `Some text${rawNbsp}${rawMDash} more${rawNbsp}text.`,
-    "01.01"
+    "01.01",
   );
 });
 
@@ -24,7 +24,7 @@ test("02 - ignores tight dashes", async () => {
       .toString()
       .trim(),
     "Some text-more text.",
-    "02.01"
+    "02.01",
   );
 });
 
