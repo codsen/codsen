@@ -6,12 +6,12 @@ interface Obj {
 }
 declare const contains: (
   tree: any,
-  something: string | string[]
+  something: string | string[],
 ) => string | undefined;
 declare const getNthChildTag: (
   tree: any,
   tagName: string,
-  nth: number
+  nth: number,
 ) => Obj | null;
 
 interface Opts {

@@ -4,7 +4,7 @@ import type {
   Root,
   Element,
   Comment,
-  DocType,
+  Doctype,
   Text,
   // ElementContent,
 } from "hast";
@@ -16,11 +16,11 @@ export interface Obj {
 }
 
 export const find = (
-  tree: Root | Element | Comment | DocType | Text,
-  condition: any
-): Root | Element | Comment | DocType | Text | undefined => {
+  tree: Root | Element | Comment | Doctype | Text,
+  condition: any,
+): Root | Element | Comment | Doctype | Text | undefined => {
   let predicate = iteratee(condition);
-  let result: Root | Element | Comment | DocType | Text | undefined = undefined;
+  let result: Root | Element | Comment | Doctype | Text | undefined = undefined;
 
   visit(tree, (node) => {
     if (predicate(node)) {
@@ -34,7 +34,7 @@ export const find = (
 
 export const contains = (
   tree: any,
-  something: string | string[]
+  something: string | string[],
 ): string | undefined => {
   DEV &&
     console.log(`040 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: start`);
@@ -44,7 +44,7 @@ export const contains = (
   if (!something?.length) {
     DEV &&
       console.log(
-        `047 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${31}m${`early return`}\u001b[${39}m`}`
+        `047 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${31}m${`early return`}\u001b[${39}m`}`,
       );
     return undefined;
   }
@@ -54,8 +54,8 @@ export const contains = (
       `054 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${JSON.stringify(
         tree,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
 
   visit(tree, (node) => {
@@ -81,8 +81,8 @@ export const contains = (
       `081 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${JSON.stringify(
         result,
         null,
-        4
-      )}`
+        4,
+      )}`,
     );
   return result;
 };
@@ -90,7 +90,7 @@ export const contains = (
 export const getNthChildTag = (
   tree: any,
   tagName: string,
-  nth: number
+  nth: number,
 ): Obj | null => {
   // insurance
   if (!Array.isArray(tree.children) || !tree.children.length) {

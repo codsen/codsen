@@ -11,14 +11,14 @@ const { equal, is, ok, throws, type, not, match } = require("uvu/assert");
 // the CJS imported file can't be ".cjs.js", so we rename temporarily:
 fs.renameSync(
   path.resolve("dist/rehype-responsive-tables.cjs.js"),
-  path.resolve("dist/rehype-responsive-tables.cjs")
+  path.resolve("dist/rehype-responsive-tables.cjs"),
 );
 const api = require("../dist/rehype-responsive-tables.cjs");
 
 test.after(() => {
   fs.renameSync(
     path.resolve("dist/rehype-responsive-tables.cjs"),
-    path.resolve("dist/rehype-responsive-tables.cjs.js")
+    path.resolve("dist/rehype-responsive-tables.cjs.js"),
   );
 });
 

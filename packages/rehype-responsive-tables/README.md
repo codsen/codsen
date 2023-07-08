@@ -75,7 +75,7 @@ assert.equal(
     .use(rehypeFormat)
     .processSync(input)
     .toString(),
-  intended
+  intended,
 );
 ```
 
