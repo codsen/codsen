@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "@types/hast": "^3.0.0",
-    "@types/lodash-es": "^4.17.7",
+    "@types/lodash-es": "^4.17.8",
     "lodash-es": "^4.17.21",
     "rehype": "^12.0.1",
     "rehype-parse": "^8.0.4",

@@ -80,7 +80,7 @@
     }
   },
   "dependencies": {
-    "@types/lodash-es": "^4.17.7",
+    "@types/lodash-es": "^4.17.8",
     "lodash-es": "^4.17.21"
   }
 }

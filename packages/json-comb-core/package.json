@@ -71,7 +71,7 @@
     "various": {}
   },
   "dependencies": {
-    "@types/lodash-es": "^4.17.7",
+    "@types/lodash-es": "^4.17.8",
     "@types/semver-compare": "^1.0.1",
     "codsen-utils": "^1.6.0",
     "lodash-es": "^4.17.21",
