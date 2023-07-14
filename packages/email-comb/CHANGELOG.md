@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [7.0.16](https://github.com/codsen/codsen/compare/email-comb@7.0.15...email-comb@7.0.16) (2023-07-14)
-
+## 7.0.16 (2023-07-14)
 
 ### Bug Fixes
 
-* algorithm misinterpreting CSS comments in URL pattern in text ([0b8a520](https://github.com/codsen/codsen/commit/0b8a520fd68406a56e027d3886a5fa1a95fa9c69)), closes [#83](https://github.com/codsen/codsen/issues/83)
-
-
-
-
+- algorithm misinterpreting CSS comments in URL pattern in text ([0b8a520](https://github.com/codsen/codsen/commit/0b8a520fd68406a56e027d3886a5fa1a95fa9c69)), closes [#83](https://github.com/codsen/codsen/issues/83)
 
 ## 5.3.0 (2023-05-21)
 
