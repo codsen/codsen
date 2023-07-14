@@ -60,7 +60,7 @@ function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
   // to-be-inserted values too. That's where the complexity of this package
   // comes from.
 
-  if (input === null || !input.length) {
+  if (!input?.length) {
     for (let i = 0; i < str.length; i++) {
       // push converter simply returns range that was given, no changes needed
       cb({

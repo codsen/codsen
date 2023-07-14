@@ -1363,7 +1363,7 @@ function isAttrClosing(
       //
       DEV && console.log(`1364 *`);
       let firstNonWhitespaceCharOnTheLeft;
-      if (str[i - 1] && str[i - 1].trim() && str[i - 1] !== "=") {
+      if (str[i - 1]?.trim() && str[i - 1] !== "=") {
         // happy path
         firstNonWhitespaceCharOnTheLeft = i - 1;
         DEV && console.log(`1369 happy path`);

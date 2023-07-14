@@ -608,12 +608,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
 
     // catch the beginning of a chunk, without brackets like "print" or
     // with brackets like (min-resolution: 300dpi)
-    if (
-      chunkStartsAt === null &&
-      str[i] &&
-      str[i].trim().length &&
-      str[i] !== ")"
-    ) {
+    if (chunkStartsAt === null && str[i]?.trim() && str[i] !== ")") {
       // Deliberately we keep chunk opening clauses and logic which
       // determines is chunk within brackets, together.
       // That's to potentially avoid logic clause mishaps later.
@@ -622,14 +617,14 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
         chunkWithinBrackets = true;
         DEV &&
           console.log(
-            `625 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkWithinBrackets`}\u001b[${39}m`} = ${chunkWithinBrackets}`,
+            `620 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkWithinBrackets`}\u001b[${39}m`} = ${chunkWithinBrackets}`,
           );
       }
 
       chunkStartsAt = i;
       DEV &&
         console.log(
-          `632 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`,
+          `627 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${32}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`,
         );
     }
 
@@ -646,11 +641,11 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
 
     // catch opening bracket
     if (str[i] === "(") {
-      DEV && console.log(`649 caught opening bracket`);
+      DEV && console.log(`644 caught opening bracket`);
       bracketOpeningIndexes.push(i);
       DEV &&
         console.log(
-          `653 after ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}, ${`\u001b[${33}m${`bracketOpeningIndexes`}\u001b[${39}m`}: ${JSON.stringify(
+          `648 after ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}, ${`\u001b[${33}m${`bracketOpeningIndexes`}\u001b[${39}m`}: ${JSON.stringify(
             bracketOpeningIndexes,
             null,
             4,

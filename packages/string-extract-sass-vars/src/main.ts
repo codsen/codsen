@@ -178,8 +178,10 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
     // -------------------------------------------------------------------------
     DEV &&
       console.log(
-        `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${withinComments ? 90 : 35
-        }m${`str[ ${i} ] = ${str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
+        `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${
+          withinComments ? 90 : 35
+        }m${`str[ ${i} ] = ${
+          str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
         }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`,
       );
 
@@ -306,22 +308,26 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
 
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ withinComments`}\u001b[${39}m`} = ${`\u001b[${withinComments ? 32 : 31
+        `${`\u001b[${90}m${`██ withinComments`}\u001b[${39}m`} = ${`\u001b[${
+          withinComments ? 32 : 31
         }m${withinComments}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ withinQuotes`}\u001b[${39}m`} = ${`\u001b[${withinQuotes ? 32 : 31
+        `${`\u001b[${90}m${`██ withinQuotes`}\u001b[${39}m`} = ${`\u001b[${
+          withinQuotes ? 32 : 31
         }m${withinQuotes}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ withinSlashSlashComment`}\u001b[${39}m`} = ${`\u001b[${withinSlashSlashComment ? 32 : 31
+        `${`\u001b[${90}m${`██ withinSlashSlashComment`}\u001b[${39}m`} = ${`\u001b[${
+          withinSlashSlashComment ? 32 : 31
         }m${withinSlashSlashComment}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ withinSlashAsteriskComment`}\u001b[${39}m`} = ${`\u001b[${withinSlashAsteriskComment ? 32 : 31
+        `${`\u001b[${90}m${`██ withinSlashAsteriskComment`}\u001b[${39}m`} = ${`\u001b[${
+          withinSlashAsteriskComment ? 32 : 31
         }m${withinSlashAsteriskComment}\u001b[${39}m`}`,
       );
     DEV &&
@@ -342,12 +348,14 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
       );
     DEV &&
       console.log(
-        `${varName
-          ? `${`\u001b[${33}m${`varName`}\u001b[${39}m`} = ${varName}; `
-          : ""
-        }${varValue
-          ? `${`\u001b[${33}m${`varValue`}\u001b[${39}m`} = ${varValue}; `
-          : ""
+        `${
+          varName
+            ? `${`\u001b[${33}m${`varName`}\u001b[${39}m`} = ${varName}; `
+            : ""
+        }${
+          varValue
+            ? `${`\u001b[${33}m${`varValue`}\u001b[${39}m`} = ${varValue}; `
+            : ""
         }`,
       );
   }
