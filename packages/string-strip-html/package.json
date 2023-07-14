@@ -1,6 +1,6 @@
 {
   "name": "string-strip-html",
-  "version": "13.4.1",
+  "version": "13.4.2",
   "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
   "keywords": [
     "code",
@@ -76,16 +76,16 @@
   },
   "dependencies": {
     "@types/lodash-es": "^4.17.8",
-    "codsen-utils": "^1.6.0",
+    "codsen-utils": "^1.6.1",
     "html-entities": "^2.4.0",
     "lodash-es": "^4.17.21",
-    "ranges-apply": "^7.0.10",
-    "ranges-push": "^7.0.10",
-    "string-left-right": "^6.0.13"
+    "ranges-apply": "^7.0.11",
+    "ranges-push": "^7.0.11",
+    "string-left-right": "^6.0.14"
   },
   "devDependencies": {
-    "ast-monkey-traverse": "^4.0.11",
-    "ranges-invert": "^6.0.10",
+    "ast-monkey-traverse": "^4.0.12",
+    "ranges-invert": "^6.0.11",
     "title": "^3.5.3"
   }
 }
