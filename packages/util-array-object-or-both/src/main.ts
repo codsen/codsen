@@ -32,7 +32,7 @@ function arrObjOrBoth(
 
   let resolvedOpts: Opts = { ...defaults, ...opts };
 
-  if (resolvedOpts?.msg && resolvedOpts.msg.length) {
+  if (resolvedOpts?.msg?.length) {
     resolvedOpts.msg = `${resolvedOpts.msg.trim()} `;
   }
   if (resolvedOpts.optsVarName !== "given variable") {
