@@ -914,4 +914,100 @@ x
   equal(actual.result, intended, "30.01");
 });
 
+test("31 - #83 misinterpreted CSS comments - URL - no uglify", () => {
+  let actual = comb(
+    `<html>
+<body>
+<table>
+<tr>
+<td>
+http://*
+</td>
+</tr>
+</table>
+<table id="1">
+<tr>
+<td>
+</td>
+</tr>
+</table>
+</body>
+
+</html>
+`,
+    {
+      uglify: false,
+    },
+  );
+
+  let intended = `<html>
+<body>
+<table>
+<tr>
+<td>
+http://*
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td>
+</td>
+</tr>
+</table>
+</body>
+</html>
+`;
+
+  equal(actual.result, intended, "31.01");
+});
+
+test("32 - #83 misinterpreted CSS comments - URL - uglify", () => {
+  let actual = comb(
+    `<html>
+<body>
+<table>
+<tr>
+<td>
+http://*
+</td>
+</tr>
+</table>
+<table id="1">
+<tr>
+<td>
+</td>
+</tr>
+</table>
+</body>
+
+</html>
+`,
+    {
+      uglify: true,
+    },
+  );
+
+  let intended = `<html>
+<body>
+<table>
+<tr>
+<td>
+http://*
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td>
+</td>
+</tr>
+</table>
+</body>
+</html>
+`;
+
+  equal(actual.result, intended, "32.01");
+});
+
 test.run();

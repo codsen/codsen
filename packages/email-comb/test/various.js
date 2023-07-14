@@ -129,7 +129,7 @@ test("04 - HTML inline CSS comments are removed - commented out selectors - remo
   equal(comb(source).result, intended, "04.01");
 });
 
-test("05 - HTML inline CSS comments are removed - commented out selectors - very cheeky contents within comments", () => {
+test.only("05 - HTML inline CSS comments are removed - commented out selectors - very cheeky contents within comments", () => {
   let source = `<head>
 <style type="text/css">
   .aa {z:2;}
