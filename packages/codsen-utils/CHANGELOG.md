@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.6.1](https://github.com/codsen/codsen/compare/codsen-utils@1.6.0...codsen-utils@1.6.1) (2023-07-14)
-
-**Note:** Version bump only for package codsen-utils
-
-
-
-
-
 ## 1.6.0 (2023-05-21)
 
 ### Features

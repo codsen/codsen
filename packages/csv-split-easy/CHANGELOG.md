@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [7.0.11](https://github.com/codsen/codsen/compare/csv-split-easy@7.0.10...csv-split-easy@7.0.11) (2023-07-14)
-
-**Note:** Version bump only for package csv-split-easy
-
-
-
-
-
 ## 7.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
