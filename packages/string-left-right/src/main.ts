@@ -888,7 +888,7 @@ function chomp(
   //
 
   // quick ending - no whitespace on the left at all:
-  if (str[lastIdx] && str[~-lastIdx] && str[~-lastIdx].trim()) {
+  if (str[lastIdx] && str[~-lastIdx]?.trim()) {
     // if the non-whitespace character is on the left
     DEV && console.log(`893 RETURN ${lastIdx}`);
     return lastIdx;
