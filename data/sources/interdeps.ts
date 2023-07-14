@@ -151,7 +151,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-tokenizer",
-    "size": 39696,
+    "size": 39607,
     "imports": [
       "codsen-utils",
       "html-all-known-attributes",
@@ -207,7 +207,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "size": 24399,
+    "size": 24389,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -254,7 +254,7 @@ export const interdeps = [
   },
   {
     "name": "email-comb",
-    "size": 20178,
+    "size": 20104,
     "imports": [
       "array-pull-all-with-glob",
       "codsen-utils",
@@ -329,7 +329,7 @@ export const interdeps = [
   },
   {
     "name": "html-crush",
-    "size": 10932,
+    "size": 10918,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -372,7 +372,7 @@ export const interdeps = [
   },
   {
     "name": "is-html-attribute-closing",
-    "size": 5149,
+    "size": 5142,
     "imports": [
       "html-all-known-attributes",
       "is-char-suitable-for-html-attr-name",
@@ -382,7 +382,7 @@ export const interdeps = [
   },
   {
     "name": "is-html-tag-opening",
-    "size": 3968,
+    "size": 3944,
     "imports": [
       "string-left-right",
       "string-match-left-right"
@@ -397,7 +397,7 @@ export const interdeps = [
   },
   {
     "name": "is-media-descriptor",
-    "size": 6022,
+    "size": 6010,
     "imports": [
       "string-process-comma-separated"
     ]
@@ -656,7 +656,7 @@ export const interdeps = [
   },
   {
     "name": "string-apostrophes",
-    "size": 7143,
+    "size": 7135,
     "imports": [
       "codsen-utils",
       "ranges-apply"
@@ -732,14 +732,14 @@ export const interdeps = [
   },
   {
     "name": "string-left-right",
-    "size": 5887,
+    "size": 5880,
     "imports": [
       "codsen-utils"
     ]
   },
   {
     "name": "string-match-left-right",
-    "size": 5711,
+    "size": 5700,
     "imports": [
       "arrayiffy-if-string",
       "codsen-utils",
@@ -782,7 +782,7 @@ export const interdeps = [
   },
   {
     "name": "string-remove-widows",
-    "size": 7374,
+    "size": 7300,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -800,7 +800,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 20653,
+    "size": 20640,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -815,7 +815,7 @@ export const interdeps = [
   },
   {
     "name": "string-truncator",
-    "size": 4712,
+    "size": 4697,
     "imports": [
       "string-left-right"
     ]
@@ -852,7 +852,7 @@ export const interdeps = [
   },
   {
     "name": "tsd-extract",
-    "size": 7585,
+    "size": 7573,
     "imports": [
       "string-left-right"
     ]
@@ -867,7 +867,7 @@ export const interdeps = [
   },
   {
     "name": "util-array-object-or-both",
-    "size": 1003,
+    "size": 997,
     "imports": []
   },
   {
