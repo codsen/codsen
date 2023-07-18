@@ -36,11 +36,30 @@ impl LineEnding {
             LineEnding::CR => "\r",
             LineEnding::LF => "\n",
             LineEnding::CRLF => "\r\n",
-            LineEnding::SystemDefault => match env::consts::FAMILY {
-                "linux" => LineEnding::LF.as_str(),
-                "windows" => LineEnding::CRLF.as_str(),
-                _ => LineEnding::LF.as_str(),
-            },
+            LineEnding::SystemDefault => self.get_default_str()
+        }
+    }
+
+    pub fn parse_str(s: &str) -> LineEnding {
+        if let Some(_) = s.find(LineEnding::CRLF.as_str()) {
+            LineEnding::CRLF
+        }
+        else if let Some(_) = s.find(LineEnding::LF.as_str()) {
+            LineEnding::LF
+        }
+        else if let Some(_) = s.find(LineEnding::CR.as_str()) {
+            LineEnding::CR
+        }
+        else {
+            LineEnding::SystemDefault
+        }
+    }
+
+    fn get_default_str(&self) -> &str {
+        match env::consts::FAMILY {
+            "linux" => LineEnding::LF.as_str(),
+            "windows" => LineEnding::CRLF.as_str(),
+            _ => LineEnding::LF.as_str(),
         }
     }
 }

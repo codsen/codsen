@@ -43,7 +43,7 @@ struct Args {
     #[clap(long = "indentationCount", short = 'i', default_value = "0")]
     indents: usize,
 
-    /// Set to "cr", "crlf" or "lf" to override the default
+    /// Set to "cr", "crlf" or "lf". Otherwise, the original line ending of the file is used
     #[clap(long = "lineEnding", short = 'l', default_value = LineEnding::SystemDefault.as_str())]
     #[arg(value_parser = LineEnding::from_str)]
     line_ending: LineEnding,

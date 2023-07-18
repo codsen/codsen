@@ -21,7 +21,7 @@ import { temporaryDirectory } from "tempy";
 
 // TODO system default test
 
-test("01 - array, LF line endings, no setting", async () => {
+test("01 - array, LF line endings, preserve original", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
   fs.ensureDirSync(path.resolve(tempFolder));
@@ -43,7 +43,7 @@ test("01 - array, LF line endings, no setting", async () => {
         ],
         null,
         2
-      ).replace(/\n/g, "\r\n")
+      ).replace(/\n/g, "\n")
     )
     .then(() => execa("./roast", ["-s", tempFolder, "sortme.json"]))
     .then(() => fs.readFile(pathOfTheTestFile, "utf8"))

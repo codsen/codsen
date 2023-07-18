@@ -191,7 +191,7 @@ fn path_to_relative(path: &Path) -> Result<String, Box<dyn Error>> {
     Ok(format!("./{}", out))
 }
 
-fn read_json_file(path: &Path) -> Result<Value, JsonError> {
+fn read_file(path: &Path) -> Result<String, JsonError> {
     if !path.exists() {
         log::debug!("File does not exist");
         return Err(JsonError::NotFound);
@@ -205,20 +205,8 @@ fn read_json_file(path: &Path) -> Result<Value, JsonError> {
         }
     };
 
-    let parsed: Value = match serde_json::from_str(&file) {
-        Ok(v) => v,
-        Err(error) => {
-            let filename = path.as_os_str().to_str().unwrap_or(INVALID_PATH);
-            log::debug!(
-                "Failed to parse json file. filename: {}, error: {}",
-                filename,
-                error
-            );
-            return Err(JsonError::ParseError);
-        }
-    };
-
-    Ok(parsed)
+    
+    Ok(file)
 }
 
 fn serialize_json(
@@ -284,7 +272,27 @@ fn sort_and_save(
     line_ending: &LineEnding,
     indents: usize,
 ) -> Result<(), JsonError> {
-    let mut json: Value = read_json_file(path)?;
+    let file: String = read_file(path)?;
+    let mut json: Value = match serde_json::from_str(&file) {
+        Ok(v) => v,
+        Err(error) => {
+            let filename = path.as_os_str().to_str().unwrap_or(INVALID_PATH);
+            log::debug!(
+                "Failed to parse json file. filename: {}, error: {}",
+                filename,
+                error
+            );
+            return Err(JsonError::ParseError);
+        }
+    };
+
+    let desired_line_ending: LineEnding = match line_ending {
+        // if not specified, use original
+        LineEnding::SystemDefault => LineEnding::parse_str(&file),
+        // else use as configured
+        _ => line_ending.clone()
+    };
+
     sort_json_value(&mut json, sort_arrays);
 
     let whitespace_char = if use_spaces { ' ' } else { '\t' };
@@ -298,8 +306,8 @@ fn sort_and_save(
 
     // TODO optimize - replace in place without allocating new string - [char] maybe
     // Apply desired line ending to output
-    json_string = json_string.replace(LineEnding::CRLF.as_str(), line_ending.as_str());
-    json_string = json_string.replace(LineEnding::LF.as_str(), line_ending.as_str());
+    json_string = json_string.replace(LineEnding::CRLF.as_str(), desired_line_ending.as_str());
+    json_string = json_string.replace(LineEnding::LF.as_str(), desired_line_ending.as_str());
     json_string += line_ending.as_str();
 
     // TODO optimize this by sorting all the file contents in memory first, then saving
