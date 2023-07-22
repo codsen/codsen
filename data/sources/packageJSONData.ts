@@ -709,7 +709,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.1",
-      "type-fest": "^3.13.0"
+      "type-fest": "^4.0.0"
     }
   },
   "ast-contains-only-empty-space": {
@@ -879,7 +879,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@sindresorhus/is": "^5.4.1",
+      "@sindresorhus/is": "^5.5.2",
       "ast-monkey-traverse": "^4.0.12",
       "object-path": "^0.11.8"
     },
