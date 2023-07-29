@@ -9,7 +9,10 @@ use crate::sort::sort_files;
 
 #[path = "../src/lines.rs"]
 mod lines;
-use crate::sort::LineEnding;
+use crate::lines::LineEnding;
+
+#[path = "../src/formatter.rs"]
+mod formatter;
 
 const SAMPLE_SIZE: usize = 10;
 
