@@ -1,7 +1,6 @@
 use colored::*;
 use regex::Regex;
 use serde::ser::Serialize;
-use serde_json::ser::PrettyFormatter;
 use serde_json::{Serializer, Value};
 use std::env;
 use std::error::Error;
@@ -10,7 +9,9 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use walkdir::WalkDir;
 
+pub use crate::formatter::LineFormatter;
 pub use crate::lines::LineEnding;
+
 
 const INVALID_PATH: &'static str = "INVALID_PATH";
 const IGNORED_FILES: &'static [&str] = &[
@@ -213,11 +214,12 @@ fn serialize_json(
     json: &Value,
     whitespace_char: char,
     indents: usize,
+    line_ending: &LineEnding
 ) -> Result<String, Box<dyn Error>> {
     let mut buf = Vec::new();
 
     let indent_size = whitespace_char.to_string().repeat(indents);
-    let formatter = PrettyFormatter::with_indent(indent_size.as_bytes());
+    let formatter = LineFormatter::new(indent_size.as_bytes(), line_ending.clone());
 
     let mut ser = Serializer::with_formatter(&mut buf, formatter);
     json.serialize(&mut ser)?;
@@ -296,19 +298,16 @@ fn sort_and_save(
     sort_json_value(&mut json, sort_arrays);
 
     let whitespace_char = if use_spaces { ' ' } else { '\t' };
-    let mut json_string = match serialize_json(&json, whitespace_char, indents) {
+    let mut json_string = match serialize_json(&json, whitespace_char, indents, &desired_line_ending) {
         Ok(s) => s,
         Err(error) => {
             log::debug!("Serialization error: {}", error);
             return Err(JsonError::WriteError);
         }
     };
-
-    // TODO optimize - replace in place without allocating new string - [char] maybe
-    // Apply desired line ending to output
-    json_string = json_string.replace(LineEnding::CRLF.as_str(), desired_line_ending.as_str());
-    json_string = json_string.replace(LineEnding::LF.as_str(), desired_line_ending.as_str());
-    json_string += line_ending.as_str();
+    
+    // End file with line ending
+    json_string += desired_line_ending.as_str();
 
     // TODO optimize this by sorting all the file contents in memory first, then saving
     match fs::write(path, json_string) {

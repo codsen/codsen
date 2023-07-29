@@ -6,6 +6,7 @@ use std::env;
 use std::fmt::Display;
 use std::path::PathBuf;
 
+mod formatter;
 mod lines;
 mod sort;
 
