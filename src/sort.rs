@@ -35,7 +35,6 @@ pub enum JsonError {
     ReadError,
     ParseError,
     WriteError,
-    Unknown,
 }
 
 /// Result of a sort operation for a JSON file

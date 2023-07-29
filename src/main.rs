@@ -1,6 +1,6 @@
 use clap::Parser;
 use colored::*;
-use git2::{Repository, Statuses, Status};
+use git2::{Repository, Status};
 use log::{LevelFilter, Level, Metadata, Record};
 use std::env;
 use std::fmt::Display;
