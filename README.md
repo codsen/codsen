@@ -1,13 +1,12 @@
 
-# Roast :fire:
+# roast :fire:
 Command line app to deep sort JSON files.
 
-Roast is an implementation of [codesen/jsonsort-cli](https://github.com/codsen/codsen/tree/main/packages/json-sort-cli) written in Rust using [serde](https://github.com/serde-rs/json).
+roast is an implementation of [codesen/jsonsort-cli](https://github.com/codsen/codsen/tree/main/packages/json-sort-cli) written in Rust using [serde](https://github.com/serde-rs/json).
 
 ## Installation
 
 Download the latest build for your platform from [Releases](https://github.com/kressnick25/roast/releases). Simply drop the executable into a location in your PATH.
-
 
 ## Usage
 
@@ -22,7 +21,23 @@ $ roast -h
 $ roast --help
 ```
 
+### Ignored files/directories
+
+The following will be not be processed:
+- `node_modules/`
+- `package.json`
+- `package_lock.json`
+- `package-lock.json`
+- `npm-debug.log`
+- `npm-shrinkwrap.json`
+- `config.gypi`
+- `.lock-wscript`
+- `.DS_Store`
+- `.svn/`
+- `CVS/`
+
 ## Flags
+
 Use `roast --help` to list available flags.
 | short | long | description |
 |---|---|---|
