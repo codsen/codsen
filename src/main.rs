@@ -2,7 +2,7 @@ use clap::Parser;
 use colored::*;
 use git2::{Repository, Status};
 use log::{LevelFilter, Level, Metadata, Record};
-use std::env;
+use std::{env, io};
 use std::fmt::Display;
 use std::path::PathBuf;
 
@@ -165,16 +165,25 @@ fn main() {
 
     let files: Vec<PathBuf>;
     if args.git {
+        log::debug!("Reading paths from git");
         files = match get_git_modified() {
             Ok(f) => f,
             Err(err) => {
                 log::debug!("Error reading git repo status: {}", err);
                 log::error!("fatal: not a git repository");
                 std::process::exit(1);
-            } 
+            }
         }
-    } else {
+    } else if !args.files.is_empty() {
+        log::debug!("Reading paths from argv");
         files = args.files;
+    } else {
+        log::debug!("Reading paths from stdin");
+        files = io::stdin()
+            .lines()
+            .filter_map(|f| f.ok())
+            .map(|f| PathBuf::from(f))
+            .collect();
     }
 
     if files.is_empty() {
