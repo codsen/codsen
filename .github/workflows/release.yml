@@ -83,7 +83,7 @@ jobs:
         with:
           name: "latest"
           prerelease: true
-          generate_release_notes: true
+          generate_release_notes: false
           tag_name: latest
           files: "roast*"
           
