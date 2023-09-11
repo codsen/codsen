@@ -23,7 +23,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rimraf ./dist && tsc index.ts --module nodenext --outDir dist --declaration",
+    "build": "rimraf ./dist && tsc index.ts --module nodenext --outDir dist --declaration --skipLibCheck",
     "test": "echo 'no tests'",
     "publ": "npm publish || :"
   },
