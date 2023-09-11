@@ -628,7 +628,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-sort",
-    "size": 1335,
+    "size": 1337,
     "imports": []
   },
   {
@@ -879,7 +879,7 @@ export const interdeps = [
   },
   {
     "name": "util-array-object-or-both",
-    "size": 997,
+    "size": 999,
     "imports": []
   },
   {
