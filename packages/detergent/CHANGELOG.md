@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.2.6](https://github.com/codsen/codsen/compare/detergent@9.2.5...detergent@9.2.6) (2023-09-11)
+
+**Note:** Version bump only for package detergent
+
 ## 9.2.0 (2023-04-16)
 
 ### Features

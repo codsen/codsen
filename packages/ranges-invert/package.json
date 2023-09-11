@@ -1,6 +1,6 @@
 {
   "name": "ranges-invert",
-  "version": "6.0.11",
+  "version": "6.0.12",
   "description": "Invert string index ranges",
   "keywords": [
     "array",
@@ -65,7 +65,7 @@
     }
   },
   "dependencies": {
-    "ranges-crop": "^6.0.11",
-    "ranges-merge": "^9.0.11"
+    "ranges-crop": "^6.0.12",
+    "ranges-merge": "^9.0.12"
   }
 }

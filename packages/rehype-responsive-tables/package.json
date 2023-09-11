@@ -1,6 +1,6 @@
 {
   "name": "rehype-responsive-tables",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "Rehype plugin to stack the first column cells above their rows.",
   "keywords": [
     "unified",

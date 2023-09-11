@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-styled-components-pro-tbc",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lint styled-components styles",
   "keywords": [
     "eslint",
@@ -68,7 +68,7 @@
     "@types/json-stringify-safe": "^5.0.0",
     "@typescript-eslint/utils": "^6.7.0",
     "json-stringify-safe": "^5.0.1",
-    "line-column-mini": "^3.0.8",
+    "line-column-mini": "^3.1.0",
     "object-path": "^0.11.8",
     "postcss": "^8.4.29"
   }

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.13](https://github.com/codsen/codsen/compare/util-nonempty@5.0.12...util-nonempty@5.0.13) (2023-09-11)
+
+**Note:** Version bump only for package util-nonempty
+
 ## 5.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

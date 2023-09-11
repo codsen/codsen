@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.12](https://github.com/codsen/codsen/compare/ranges-merge@9.0.11...ranges-merge@9.0.12) (2023-09-11)
+
+**Note:** Version bump only for package ranges-merge
+
 ## 9.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

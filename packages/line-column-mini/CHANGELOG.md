@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/codsen/codsen/compare/line-column-mini@3.0.8...line-column-mini@3.1.0) (2023-09-11)
+
+### Features
+
+- add `strIdx()` to convert line-column position to string index ([2bd45ce](https://github.com/codsen/codsen/commit/2bd45ceb50455bb5f9723f17b842a908714fd96e))
+
 ## 3.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

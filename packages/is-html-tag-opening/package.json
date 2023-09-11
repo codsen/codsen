@@ -1,6 +1,6 @@
 {
   "name": "is-html-tag-opening",
-  "version": "4.0.14",
+  "version": "4.0.15",
   "description": "Does an HTML tag start at given position?",
   "keywords": [
     "bracket",
@@ -73,10 +73,10 @@
     }
   },
   "dependencies": {
-    "string-left-right": "^6.0.14",
-    "string-match-left-right": "^9.0.14"
+    "string-left-right": "^6.0.15",
+    "string-match-left-right": "^9.0.15"
   },
   "devDependencies": {
-    "test-mixer": "^4.1.11"
+    "test-mixer": "^4.1.12"
   }
 }
