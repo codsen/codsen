@@ -111,4 +111,76 @@ function lineCol(
   };
 }
 
-export { lineCol, getLineStartIndexes, version };
+/**
+ * Convert line-column position to string index
+ */
+function strIdx(
+  input: string,
+  line: number,
+  col: number,
+  skipChecks = false,
+): number | null {
+  DEV && console.log(`123 - line=${line} col=${col}`);
+
+  if (
+    !skipChecks &&
+    (typeof line !== "number" ||
+      line === 0 ||
+      typeof col !== "number" ||
+      col === 0 ||
+      (typeof input === "string" && line > input.length) ||
+      (typeof input === "string" && col > input.length))
+  ) {
+    DEV &&
+      console.log(`135 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
+    return null;
+  }
+
+  let startIndexesOfEachLine = getLineStartIndexes(input);
+  DEV &&
+    console.log(
+      `142 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startIndexesOfEachLine`}\u001b[${39}m`} = ${JSON.stringify(
+        startIndexesOfEachLine,
+        null,
+        4,
+      )}`,
+    );
+
+  let particularRowsStartIdx = startIndexesOfEachLine[line - 1];
+  let deleteMe2 = col - 1;
+  let deleteMeSum = particularRowsStartIdx + deleteMe2;
+
+  if (
+    // Next line exists
+    (startIndexesOfEachLine[line] !== undefined &&
+      // and the calculated index actually would be past the current line,
+      // for example, imagine we have startIndexesOfEachLine = [0, 4] which means,
+      // first row starts at index 0 and second row starts at index 4.
+      // Imagine, we're converting the input "line=1, col=5" - it would sit
+      // on the next line!
+      deleteMeSum >= startIndexesOfEachLine[line]) ||
+    // Calculated index would be beyond string length
+    !input[deleteMeSum]
+  ) {
+    DEV &&
+      console.log(`166 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
+    return null;
+  }
+
+  DEV &&
+    console.log(
+      `172 ${`\u001b[${33}m${`PART1`}\u001b[${39}m`} = ${JSON.stringify(
+        particularRowsStartIdx,
+        null,
+        4,
+      )} + ${`\u001b[${33}m${`PART2`}\u001b[${39}m`} = ${JSON.stringify(
+        deleteMe2,
+        null,
+        4,
+      )} = ${deleteMeSum}`,
+    );
+
+  return startIndexesOfEachLine[line - 1] + col - 1;
+}
+
+export { lineCol, strIdx, getLineStartIndexes, version };

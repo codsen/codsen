@@ -8,14 +8,15 @@ import { lineCol, getLineStartIndexes } from "../dist/line-column-mini.esm.js";
 // group 01. peculiar inputs
 // -----------------------------------------------------------------------------
 
-test("01 - wrong/missing input = throw", () => {
+test("01 - wrong/missing input => gives null, does not throw", () => {
   equal(lineCol(), null, "01.01");
-  equal(lineCol(""), null, "01.02");
-  equal(lineCol("", null), null, "01.03");
-  equal(lineCol("a"), null, "01.04");
-  equal(lineCol("a", null), null, "01.05");
-  equal(lineCol("a", 1), null, "01.06");
-  equal(lineCol("a", 99), null, "01.07");
+  equal(lineCol(1), null, "01.02");
+  equal(lineCol(""), null, "01.03");
+  equal(lineCol("", null), null, "01.04");
+  equal(lineCol("a"), null, "01.05");
+  equal(lineCol("a", null), null, "01.06");
+  equal(lineCol("a", 1), null, "01.07");
+  equal(lineCol("a", 99), null, "01.08");
 });
 
 // -----------------------------------------------------------------------------
@@ -49,7 +50,7 @@ test("02 - all possible line endings, no caching", () => {
     "02.03",
   );
   equal(
-    lineCol(input, 3),
+    lineCol(input, 3), // that's \n - it sits on the same line
     {
       line: 1,
       col: 4,
@@ -81,7 +82,7 @@ test("02 - all possible line endings, no caching", () => {
     "02.07",
   );
   equal(
-    lineCol(input, 7),
+    lineCol(input, 7), // the \r\n's frontal "\r" sits on the same line #2
     {
       line: 2,
       col: 4,
@@ -89,7 +90,7 @@ test("02 - all possible line endings, no caching", () => {
     "02.08",
   );
   equal(
-    lineCol(input, 8),
+    lineCol(input, 8), // its \n also sits on the same line #2
     {
       line: 2,
       col: 5,

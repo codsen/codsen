@@ -12,5 +12,14 @@ declare function lineCol(
   idx: number,
   skipChecks?: boolean,
 ): Res | null;
+/**
+ * Convert line-column position to string index
+ */
+declare function strIdx(
+  input: string,
+  line: number,
+  col: number,
+  skipChecks?: boolean,
+): number | null;
 
-export { Res, getLineStartIndexes, lineCol, version };
+export { Res, getLineStartIndexes, lineCol, strIdx, version };
