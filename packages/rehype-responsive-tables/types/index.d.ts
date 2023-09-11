@@ -53,7 +53,7 @@ declare const defaults: Opts;
 declare const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root>;
 
 export {
-  Opts,
+  type Opts,
   contains,
   rehypeResponsiveTables as default,
   defaults,

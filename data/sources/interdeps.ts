@@ -285,6 +285,13 @@ export const interdeps = [
     ]
   },
   {
+    "name": "eslint-plugin-styled-components-pro",
+    "size": 0,
+    "imports": [
+      "line-column-mini"
+    ]
+  },
+  {
     "name": "eslint-plugin-test-num",
     "size": 0,
     "imports": [
@@ -474,6 +481,11 @@ export const interdeps = [
     "imports": [
       "lerna-clean-changelogs"
     ]
+  },
+  {
+    "name": "line-column-mini",
+    "size": 1131,
+    "imports": []
   },
   {
     "name": "object-all-values-equal-to",

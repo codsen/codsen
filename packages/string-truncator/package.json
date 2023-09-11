@@ -64,7 +64,7 @@
     }
   },
   "dependencies": {
-    "@types/lodash-es": "^4.17.8",
+    "@types/lodash-es": "^4.17.9",
     "lodash-es": "^4.17.21",
     "string-left-right": "^6.0.14"
   }

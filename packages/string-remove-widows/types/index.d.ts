@@ -39,4 +39,12 @@ interface Res {
 }
 declare function removeWidows(str: string, opts?: Partial<Opts>): Res;
 
-export { HeadsAndTailsObj, Obj, Opts, Res, defaults, removeWidows, version };
+export {
+  type HeadsAndTailsObj,
+  type Obj,
+  type Opts,
+  type Res,
+  defaults,
+  removeWidows,
+  version,
+};

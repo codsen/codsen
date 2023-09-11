@@ -70,4 +70,13 @@ interface Res {
  */
 declare function stripHtml(str: string, opts?: Partial<Opts>): Res;
 
-export { Attribute, CbObj, Opts, Res, Tag, defaults, stripHtml, version };
+export {
+  type Attribute,
+  type CbObj,
+  type Opts,
+  type Res,
+  type Tag,
+  defaults,
+  stripHtml,
+  version,
+};

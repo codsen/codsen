@@ -44,7 +44,7 @@ declare function matchRight(
 ): boolean | string;
 
 export {
-  Opts,
+  type Opts,
   defaultGetNextIdx,
   defaults,
   matchLeft,

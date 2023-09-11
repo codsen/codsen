@@ -10,4 +10,4 @@ declare function mixer(
   defaultsObj?: PlainObject,
 ): PlainObjectOfBool[];
 
-export { PlainObject, PlainObjectOfBool, mixer, version };
+export { type PlainObject, type PlainObjectOfBool, mixer, version };

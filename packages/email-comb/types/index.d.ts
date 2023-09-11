@@ -47,4 +47,4 @@ declare const defaults: Opts;
  */
 declare function comb(str: string, opts?: Partial<Opts>): Res;
 
-export { HeadsAndTailsObj, Opts, Res, comb, defaults, version };
+export { type HeadsAndTailsObj, type Opts, type Res, comb, defaults, version };

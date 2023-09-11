@@ -33,4 +33,11 @@ declare const version: string;
  */
 declare function stri(input: string, opts?: Partial<Opts>): Res;
 
-export { ApplicableOpts, Opts, Res, defaultOpts as defaults, stri, version };
+export {
+  type ApplicableOpts,
+  type Opts,
+  type Res,
+  defaultOpts as defaults,
+  stri,
+  version,
+};

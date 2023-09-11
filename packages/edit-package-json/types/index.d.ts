@@ -12,4 +12,4 @@ declare function set(
 ): string;
 declare function del(str: string, path: string): string;
 
-export { Inputs, del, set, version };
+export { type Inputs, del, set, version };

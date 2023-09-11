@@ -24,4 +24,4 @@ interface convertAllRes {
  */
 declare function convertAll(str: string, opts?: Partial<Opts>): convertAllRes;
 
-export { Opts, convertAll, convertOne, defaults, version };
+export { type Opts, convertAll, convertOne, defaults, version };

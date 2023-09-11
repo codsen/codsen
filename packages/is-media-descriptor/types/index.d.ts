@@ -21,4 +21,4 @@ declare const defaults: {
 };
 declare function isMediaD(str: string, opts?: Partial<Opts>): ResObj[];
 
-export { Opts, ResObj, defaults, isMediaD, version };
+export { type Opts, type ResObj, defaults, isMediaD, version };

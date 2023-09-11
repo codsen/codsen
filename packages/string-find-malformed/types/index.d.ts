@@ -16,4 +16,4 @@ declare function findMalformed(
   opts?: Partial<Opts>,
 ): void;
 
-export { DataObj, Opts, defaults, findMalformed, version };
+export { type DataObj, type Opts, defaults, findMalformed, version };

@@ -76,7 +76,7 @@
     }
   },
   "dependencies": {
-    "@types/lodash-es": "^4.17.8",
+    "@types/lodash-es": "^4.17.9",
     "csv-split-easy": "^7.0.11",
     "currency.js": "^2.0.4",
     "lodash-es": "^4.17.21"

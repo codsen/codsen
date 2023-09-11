@@ -5,4 +5,4 @@ interface Opts {
 declare const defaults: Opts;
 declare function alts(str: string, opts?: Partial<Opts>): string;
 
-export { Opts, alts, defaults, version };
+export { type Opts, alts, defaults, version };

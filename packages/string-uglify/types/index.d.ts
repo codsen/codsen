@@ -5,4 +5,4 @@ interface Obj {
 declare function uglifyArr(arr: string[]): string[];
 declare function uglifyById(refArr: string[], idNum: number): string;
 
-export { Obj, uglifyArr, uglifyById, version };
+export { type Obj, uglifyArr, uglifyById, version };

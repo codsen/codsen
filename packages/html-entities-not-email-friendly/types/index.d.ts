@@ -8,7 +8,7 @@ declare const notEmailFriendlyMinLength = 2;
 declare const notEmailFriendlyMaxLength = 31;
 
 export {
-  Obj,
+  type Obj,
   notEmailFriendly,
   notEmailFriendlyLowercaseSetOnly,
   notEmailFriendlyMaxLength,

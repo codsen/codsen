@@ -32,13 +32,13 @@ declare const cbSchema: string[];
 declare function collapse(str: string, opts?: Partial<Opts>): Res;
 
 export {
-  Callback,
-  CbObj,
-  Extras,
-  Opts,
-  Range,
-  Ranges as RangesType,
-  Res,
+  type Callback,
+  type CbObj,
+  type Extras,
+  type Opts,
+  type Range,
+  type Ranges as RangesType,
+  type Res,
   cbSchema,
   collapse,
   defaults,

@@ -27,4 +27,4 @@ declare function setLengthCompensation(
 }[];
 declare function editor(todo?: string, copy?: string): Res;
 
-export { Res, editor, isLetter, setLengthCompensation, version };
+export { type Res, editor, isLetter, setLengthCompensation, version };

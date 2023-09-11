@@ -13,4 +13,4 @@ declare function rInvert(
   originalOptions?: Partial<Opts>,
 ): Ranges;
 
-export { Opts, defaults, rInvert, version };
+export { type Opts, defaults, rInvert, version };

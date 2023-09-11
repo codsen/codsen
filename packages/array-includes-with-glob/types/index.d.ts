@@ -13,4 +13,4 @@ declare function includesWithGlob(
   opts?: Partial<Opts>,
 ): boolean;
 
-export { Opts, defaults, includesWithGlob, version };
+export { type Opts, defaults, includesWithGlob, version };

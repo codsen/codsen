@@ -12,4 +12,4 @@ declare function getByKey(
   originalReplacement?: any,
 ): any;
 
-export { Findings, getByKey, version };
+export { type Findings, getByKey, version };

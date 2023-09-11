@@ -119,13 +119,13 @@ declare function intersection<T, U>(a?: T[], b?: U[]): T[];
 declare function omit(obj: JSONObject, keysToRemove?: string[]): JSONObject;
 
 export {
-  EolChar,
-  EolSetting,
-  JSONArray,
-  JSONObject,
-  JSONValue,
-  JsonObject,
-  Obj,
+  type EolChar,
+  type EolSetting,
+  type JSONArray,
+  type JSONObject,
+  type JSONValue,
+  type JsonObject,
+  type Obj,
   backslash,
   backtick,
   compareFn,

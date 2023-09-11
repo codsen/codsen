@@ -13,4 +13,4 @@ declare function helga(
   beautified: string;
 };
 
-export { Opts, defaults, helga, version };
+export { type Opts, defaults, helga, version };

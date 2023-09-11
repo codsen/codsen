@@ -25,4 +25,12 @@ interface Opts {
 }
 declare function fixEnt(str: string, opts?: Partial<Opts>): Ranges;
 
-export { Obj, Opts, Ranges, allRules, cbObj, fixEnt, version };
+export {
+  type Obj,
+  type Opts,
+  type Ranges,
+  allRules,
+  type cbObj,
+  fixEnt,
+  version,
+};

@@ -13,4 +13,4 @@ declare function fillMissing(
   opts?: Partial<Opts>,
 ): Obj;
 
-export { Opts, defaults, fillMissing, version };
+export { type Opts, defaults, fillMissing, version };

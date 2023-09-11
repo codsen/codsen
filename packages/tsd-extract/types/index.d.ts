@@ -43,10 +43,10 @@ declare function extract(
 ): ReturnType;
 
 export {
-  Chunk,
-  Opts,
-  ReturnType,
-  Statement,
+  type Chunk,
+  type Opts,
+  type ReturnType,
+  type Statement,
   defaults,
   extract,
   join,

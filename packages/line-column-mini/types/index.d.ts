@@ -22,4 +22,4 @@ declare function strIdx(
   skipChecks?: boolean,
 ): number | null;
 
-export { Res, getLineStartIndexes, lineCol, strIdx, version };
+export { type Res, getLineStartIndexes, lineCol, strIdx, version };

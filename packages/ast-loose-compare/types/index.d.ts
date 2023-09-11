@@ -16,10 +16,10 @@ declare function looseCompare(
 ): boolean | undefined;
 
 export {
-  JsonArray,
-  JsonObject,
-  JsonValue,
-  UnknownValueObj,
+  type JsonArray,
+  type JsonObject,
+  type JsonValue,
+  type UnknownValueObj,
   looseCompare,
   version,
 };

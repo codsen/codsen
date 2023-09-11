@@ -46,9 +46,9 @@ declare function externalApi(
 ): any;
 
 export {
-  InfoObj,
-  Opts,
-  argType,
+  type InfoObj,
+  type Opts,
+  type argType,
   defaults,
   externalApi as mergeAdvanced,
   version,

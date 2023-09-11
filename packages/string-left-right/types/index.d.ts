@@ -35,7 +35,7 @@ declare function chompRight(
 ): number | null;
 
 export {
-  Opts,
+  type Opts,
   chompLeft,
   chompRight,
   left,

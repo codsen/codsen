@@ -21,4 +21,4 @@ interface Res {
 }
 declare function fixRowNums(str: string, opts?: Partial<Opts>): Res;
 
-export { Opts, Ranges, Res, defaults, fixRowNums, version };
+export { type Opts, type Ranges, type Res, defaults, fixRowNums, version };

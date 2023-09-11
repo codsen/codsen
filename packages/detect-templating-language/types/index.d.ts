@@ -4,4 +4,4 @@ declare function detectLang(str: string): {
   name: Output;
 };
 
-export { Output, detectLang, version };
+export { type Output, detectLang, version };

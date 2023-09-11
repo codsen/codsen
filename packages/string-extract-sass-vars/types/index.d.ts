@@ -12,4 +12,4 @@ declare function extractVars(
   opts?: Partial<Opts>,
 ): UnknownValueObj;
 
-export { Opts, UnknownValueObj, defaults, extractVars, version };
+export { type Opts, type UnknownValueObj, defaults, extractVars, version };

@@ -25,4 +25,4 @@ declare const defaults: Opts;
  */
 declare function jVar(input: Obj, opts?: Partial<Opts>): Obj;
 
-export { Opts, defaults, jVar, version };
+export { type Opts, defaults, jVar, version };

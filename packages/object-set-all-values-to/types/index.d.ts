@@ -4,4 +4,4 @@ interface Obj {
 }
 declare function setAllValuesTo(input: Obj, value?: any): Obj;
 
-export { Obj, setAllValuesTo, version };
+export { type Obj, setAllValuesTo, version };

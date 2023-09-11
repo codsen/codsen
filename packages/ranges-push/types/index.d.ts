@@ -31,4 +31,4 @@ declare class Ranges {
   last(): Range | null;
 }
 
-export { Opts, Range, Ranges, defaults, version };
+export { type Opts, type Range, Ranges, defaults, version };

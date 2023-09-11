@@ -24,11 +24,11 @@ declare function compare(
 ): boolean | string;
 
 export {
-  AnyObject,
-  JsonArray,
-  JsonObject,
-  JsonValue,
-  Opts,
+  type AnyObject,
+  type JsonArray,
+  type JsonObject,
+  type JsonValue,
+  type Opts,
   compare,
   defaults,
   version,

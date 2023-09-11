@@ -17,4 +17,11 @@ declare function rMerge(
   originalOpts?: Partial<Opts>,
 ): Ranges;
 
-export { Opts, ProgressFn, UnknownValueObj, defaults, rMerge, version };
+export {
+  type Opts,
+  type ProgressFn,
+  type UnknownValueObj,
+  defaults,
+  rMerge,
+  version,
+};

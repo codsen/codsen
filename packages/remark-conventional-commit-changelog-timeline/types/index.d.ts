@@ -15,4 +15,9 @@ declare const defaults: Opts;
 type UnifiedPlugin<T> = Plugin<[T], Root>;
 declare const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]>;
 
-export { DateParamsObj, Opts, changelogTimeline as default, defaults };
+export {
+  type DateParamsObj,
+  type Opts,
+  changelogTimeline as default,
+  defaults,
+};

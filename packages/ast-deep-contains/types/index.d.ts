@@ -21,4 +21,11 @@ declare function deepContains(
   opts?: Partial<Opts>,
 ): void;
 
-export { Callback, ErrorCallback, Opts, deepContains, defaults, version };
+export {
+  type Callback,
+  type ErrorCallback,
+  type Opts,
+  deepContains,
+  defaults,
+  version,
+};

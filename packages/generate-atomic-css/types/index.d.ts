@@ -30,8 +30,8 @@ interface Res {
 declare function genAtomic(str: string, opts?: Partial<Opts>): Res;
 
 export {
-  Opts,
-  Res,
+  type Opts,
+  type Res,
   defaults,
   extractFromToSource,
   genAtomic,

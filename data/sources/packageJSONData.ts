@@ -80,10 +80,10 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@types/hast": "^3.0.0",
-      "hast-util-raw": "^8.0.0",
+      "hast-util-raw": "^9.0.1",
       "object-delete-key": "^4.0.16",
       "semver-regex": "^4.0.5",
-      "unified": "^10.1.2",
+      "unified": "^11.0.3",
       "unist-builder": "^4.0.0",
       "unist-util-visit": "^5.0.0"
     }
@@ -709,7 +709,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.1",
-      "type-fest": "^4.0.0"
+      "type-fest": "^4.3.1"
     }
   },
   "ast-contains-only-empty-space": {
@@ -879,12 +879,12 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@sindresorhus/is": "^5.5.2",
+      "@sindresorhus/is": "^6.0.0",
       "ast-monkey-traverse": "^4.0.12",
       "object-path": "^0.11.8"
     },
     "devDependencies": {
-      "@types/object-path": "^0.11.1"
+      "@types/object-path": "^0.11.2"
     }
   },
   "ast-delete-object": {
@@ -1749,7 +1749,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.8",
+      "@types/lodash-es": "^4.17.9",
       "lodash-es": "^4.17.21"
     }
   },
@@ -1975,7 +1975,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "meow": "^12.0.1",
+      "meow": "^12.1.1",
       "update-notifier": "^6.0.2"
     }
   },
@@ -2375,7 +2375,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.8",
+      "@types/lodash-es": "^4.17.9",
       "csv-split-easy": "^7.0.11",
       "currency.js": "^2.0.4",
       "lodash-es": "^4.17.21"
@@ -2459,8 +2459,8 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.1",
       "csv-sort": "^7.0.11",
       "globby": "^13.2.2",
-      "inquirer": "^9.2.8",
-      "meow": "^12.0.1",
+      "inquirer": "^9.2.11",
+      "meow": "^12.1.1",
       "update-notifier": "^6.0.2"
     }
   },
@@ -3098,7 +3098,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.1",
       "email-all-chars-within-ascii": "^5.0.14",
       "globby": "^13.2.2",
-      "inquirer": "^9.2.8",
+      "inquirer": "^9.2.11",
       "minimist": "^1.2.8",
       "string-left-right": "^6.0.14",
       "update-notifier": "^6.0.2"
@@ -3266,7 +3266,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.1",
       "globby": "^13.2.2",
       "log-symbols": "^5.1.0",
-      "meow": "^12.0.1",
+      "meow": "^12.1.1",
       "update-notifier": "^6.0.2"
     }
   },
@@ -3344,6 +3344,81 @@ export const packageJSONData = {
       "js-row-num": "^7.0.11",
       "json-stringify-safe": "^5.0.1",
       "object-delete-key": "^4.0.16"
+    }
+  },
+  "eslint-plugin-styled-components-pro": {
+    "name": "eslint-plugin-styled-components-pro-tbc",
+    "version": "1.0.0",
+    "description": "Lint styled-components styles",
+    "keywords": [
+      "eslint",
+      "eslint-plugin",
+      "eslintplugin",
+      "lint",
+      "styled",
+      "components",
+      "styled-components",
+      "css"
+    ],
+    "homepage": "https://codsen.com/os/eslint-plugin-styled-components-pro",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/codsen/codsen.git",
+      "directory": "packages/eslint-plugin-styled-components-pro-tbc"
+    },
+    "license": "MIT",
+    "author": {
+      "name": "Roy Revelt",
+      "email": "roy@codsen.com",
+      "url": "https://codsen.com"
+    },
+    "type": "module",
+    "main": "dist/eslint-plugin-styled-components-pro.cjs.js",
+    "scripts": {
+      "build": "node '../../ops/scripts/esbuild.js' && node '../../ops/scripts/fix-cjs.js' && npm run dts",
+      "cjs-off": "node '../../ops/scripts/cjs-off.js'",
+      "cjs-on": "node '../../ops/scripts/cjs-on.js'",
+      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
+      "devtest": "c8 npm run unit && npm run lint",
+      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "examples": "exit 0",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' --write --log-level 'silent'",
+      "letspublish": "npm publish || :",
+      "lint": "eslint . --ext .js --ext .ts --fix",
+      "perf": "echo 'skip perf'",
+      "prep": "echo 'ready'",
+      "prettier": "prettier",
+      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "pretest": "npm run lect && npm run build",
+      "test": "npm run devtest",
+      "unit": "uvu test"
+    },
+    "engines": {
+      "node": ">=14.18.0"
+    },
+    "c8": {
+      "check-coverage": true,
+      "exclude": [
+        "**/test/**/*.*",
+        "**/*.cjs*"
+      ],
+      "lines": 100
+    },
+    "lect": {
+      "licence": {
+        "extras": [
+          ""
+        ]
+      },
+      "various": {}
+    },
+    "dependencies": {
+      "@types/json-stringify-safe": "^5.0.0",
+      "@typescript-eslint/utils": "^6.7.0",
+      "json-stringify-safe": "^5.0.1",
+      "line-column-mini": "^3.0.8",
+      "object-path": "^0.11.8",
+      "postcss": "^8.4.29"
     }
   },
   "eslint-plugin-test-num": {
@@ -3656,7 +3731,7 @@ export const packageJSONData = {
       "generate-atomic-css": "^3.0.14",
       "globby": "^13.2.2",
       "is-d": "^1.0.0",
-      "meow": "^12.0.1",
+      "meow": "^12.1.1",
       "p-reduce": "^3.0.0",
       "update-notifier": "^6.0.2",
       "write-file-atomic": "^5.0.1"
@@ -4849,7 +4924,7 @@ export const packageJSONData = {
       "globby": "^13.2.2",
       "is-d": "^1.0.0",
       "js-row-num": "^7.0.11",
-      "meow": "^12.0.1",
+      "meow": "^12.1.1",
       "p-reduce": "^3.0.0",
       "update-notifier": "^6.0.2",
       "write-file-atomic": "^5.0.1"
@@ -4930,7 +5005,7 @@ export const packageJSONData = {
       "globby": "^13.2.2",
       "is-d": "^1.0.0",
       "json-comb-core": "^8.0.14",
-      "meow": "^12.0.1",
+      "meow": "^12.1.1",
       "p-map": "^6.0.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^6.0.2"
@@ -5009,7 +5084,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.8",
+      "@types/lodash-es": "^4.17.9",
       "@types/semver-compare": "^1.0.1",
       "codsen-utils": "^1.6.1",
       "lodash-es": "^4.17.21",
@@ -5102,7 +5177,7 @@ export const packageJSONData = {
       "fs-extra": "^11.1.1",
       "globby": "^13.2.2",
       "is-d": "^1.0.0",
-      "meow": "^12.0.1",
+      "meow": "^12.1.1",
       "p-filter": "^3.0.0",
       "p-reduce": "^3.0.0",
       "sort-package-json": "^2.5.1",
@@ -5359,7 +5434,7 @@ export const packageJSONData = {
       "fs-extra": "^11.1.1",
       "globby": "^13.2.2",
       "lerna-clean-changelogs": "^5.0.11",
-      "meow": "^12.0.1",
+      "meow": "^12.1.1",
       "p-filter": "^3.0.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^6.0.2",
@@ -5446,9 +5521,9 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "execa": "^7.1.1",
+      "execa": "^8.0.1",
       "fs-extra": "^11.1.1",
-      "meow": "^12.0.1",
+      "meow": "^12.1.1",
       "update-notifier": "^6.0.2"
     }
   },
@@ -5593,7 +5668,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.8",
+      "@types/lodash-es": "^4.17.9",
       "codsen-utils": "^1.6.1",
       "lodash-es": "^4.17.21"
     }
@@ -5911,7 +5986,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.8",
+      "@types/lodash-es": "^4.17.9",
       "codsen-utils": "^1.6.1",
       "lodash-es": "^4.17.21",
       "rfdc": "^1.3.0"
@@ -6071,7 +6146,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.8",
+      "@types/lodash-es": "^4.17.9",
       "codsen-utils": "^1.6.1",
       "lodash-es": "^4.17.21",
       "matcher": "^5.0.0",
@@ -7061,7 +7136,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.8",
+      "@types/lodash-es": "^4.17.9",
       "lodash-es": "^4.17.21",
       "ranges-merge": "^9.0.11"
     },
@@ -7501,11 +7576,11 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@types/hast": "^3.0.0",
-      "@types/lodash-es": "^4.17.8",
+      "@types/lodash-es": "^4.17.9",
       "lodash-es": "^4.17.21",
-      "rehype": "^12.0.1",
-      "rehype-parse": "^8.0.4",
-      "unified": "^10.1.2",
+      "rehype": "^13.0.1",
+      "rehype-parse": "^9.0.0",
+      "unified": "^11.0.3",
       "unist-util-visit": "^5.0.0"
     }
   },
@@ -7581,11 +7656,11 @@ export const packageJSONData = {
     "dependencies": {
       "@types/hast": "^3.0.0",
       "codsen-utils": "^1.6.1",
-      "fp-ts": "^2.16.0",
+      "fp-ts": "^2.16.1",
       "string-apostrophes": "^4.0.14",
       "string-dashes": "^1.2.8",
       "string-remove-widows": "^4.0.16",
-      "unified": "^10.1.2",
+      "unified": "^11.0.3",
       "unist-util-visit": "^5.0.0"
     }
   },
@@ -9202,7 +9277,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.8",
+      "@types/lodash-es": "^4.17.9",
       "lodash-es": "^4.17.21",
       "ranges-apply": "^7.0.11",
       "ranges-push": "^7.0.11"
@@ -9454,7 +9529,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.8",
+      "@types/lodash-es": "^4.17.9",
       "codsen-utils": "^1.6.1",
       "html-entities": "^2.4.0",
       "lodash-es": "^4.17.21",
@@ -9606,7 +9681,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.8",
+      "@types/lodash-es": "^4.17.9",
       "lodash-es": "^4.17.21",
       "string-left-right": "^6.0.14"
     }
@@ -10183,12 +10258,12 @@ export const packageJSONData = {
       "globby": "^13.2.2",
       "is-online": "^10.0.0",
       "log-update": "^5.0.1",
-      "meow": "^12.0.1",
+      "meow": "^12.1.1",
       "object-path": "^0.11.8",
       "p-map": "^6.0.0",
       "p-progress": "^0.6.0",
       "p-reduce": "^3.0.0",
-      "pacote": "^15.2.0",
+      "pacote": "^17.0.4",
       "update-notifier": "^6.0.2",
       "write-file-atomic": "^5.0.1"
     },
@@ -10269,7 +10344,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.8",
+      "@types/lodash-es": "^4.17.9",
       "lodash-es": "^4.17.21"
     }
   },

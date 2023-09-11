@@ -6,4 +6,4 @@ interface BoolObj {
 }
 declare function combinations(input: Obj, Override?: undefined | Obj): Obj[];
 
-export { BoolObj, combinations, version };
+export { type BoolObj, combinations, version };

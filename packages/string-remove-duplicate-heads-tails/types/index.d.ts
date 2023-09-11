@@ -10,4 +10,4 @@ interface LenientOpts {
 declare const defaults: Opts;
 declare function remDup(str: string, opts?: Partial<LenientOpts>): string;
 
-export { LenientOpts, Opts, defaults, remDup, version };
+export { type LenientOpts, type Opts, defaults, remDup, version };

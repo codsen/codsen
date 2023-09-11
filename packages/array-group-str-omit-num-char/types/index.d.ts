@@ -14,4 +14,4 @@ declare const defaults: Opts;
  */
 declare function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj;
 
-export { MappingObj, Opts, defaults, groupStr, version };
+export { type MappingObj, type Opts, defaults, groupStr, version };

@@ -34,7 +34,7 @@ declare function flattenReferencing(
 ): any;
 
 export {
-  Opts,
+  type Opts,
   defaults,
   flattenArr,
   flattenObject,

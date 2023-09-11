@@ -11,4 +11,4 @@ declare function noNewKeys(
   opts?: Partial<Opts>,
 ): string[];
 
-export { Opts, defaults, noNewKeys, version };
+export { type Opts, defaults, noNewKeys, version };

@@ -9,4 +9,4 @@ declare function arrObjOrBoth(
   opts?: Partial<Opts>,
 ): "array" | "object" | "any";
 
-export { Opts, arrObjOrBoth, defaults, version };
+export { type Opts, arrObjOrBoth, defaults, version };

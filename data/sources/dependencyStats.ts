@@ -18,6 +18,7 @@ export const dependencyStats: DependencyStats = {
     "@types/json-stringify-safe",
     "@types/lodash-es",
     "@types/semver-compare",
+    "@typescript-eslint/utils",
     "ansi-diff-stream",
     "ansi-regex",
     "chalk",
@@ -50,6 +51,7 @@ export const dependencyStats: DependencyStats = {
     "p-reduce",
     "pacote",
     "plugin-error",
+    "postcss",
     "rehype",
     "rehype-parse",
     "rfdc",
@@ -98,6 +100,7 @@ export const dependencyStats: DependencyStats = {
     "js-row-num",
     "json-comb-core",
     "lerna-clean-changelogs",
+    "line-column-mini",
     "object-all-values-equal-to",
     "object-boolean-combinations",
     "object-delete-key",
@@ -146,9 +149,10 @@ export const dependencyStats: DependencyStats = {
   "dependencies": {
     "@sindresorhus/is": 1,
     "@types/hast": 2,
-    "@types/json-stringify-safe": 2,
+    "@types/json-stringify-safe": 3,
     "@types/lodash-es": 12,
     "@types/semver-compare": 1,
+    "@typescript-eslint/utils": 1,
     "all-named-html-entities": 2,
     "ansi-diff-stream": 1,
     "ansi-regex": 1,
@@ -195,9 +199,10 @@ export const dependencyStats: DependencyStats = {
     "isstream": 1,
     "js-row-num": 2,
     "json-comb-core": 1,
-    "json-stringify-safe": 2,
+    "json-stringify-safe": 3,
     "lerna-clean-changelogs": 1,
     "leven": 2,
+    "line-column-mini": 1,
     "lodash-es": 12,
     "log-symbols": 1,
     "log-update": 1,
@@ -211,7 +216,7 @@ export const dependencyStats: DependencyStats = {
     "object-flatten-all-arrays": 1,
     "object-merge-advanced": 3,
     "object-no-new-keys": 1,
-    "object-path": 6,
+    "object-path": 7,
     "object-set-all-values-to": 1,
     "p-filter": 2,
     "p-map": 3,
@@ -220,6 +225,7 @@ export const dependencyStats: DependencyStats = {
     "p-reduce": 7,
     "pacote": 1,
     "plugin-error": 1,
+    "postcss": 1,
     "ranges-apply": 17,
     "ranges-crop": 2,
     "ranges-invert": 2,
@@ -321,7 +327,7 @@ export const dependencyStats: DependencyStats = {
       "matcher": 9
     },
     {
-      "object-path": 6
+      "object-path": 7
     },
     {
       "type-detect": 3

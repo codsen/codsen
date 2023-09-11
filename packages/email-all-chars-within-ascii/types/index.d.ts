@@ -14,4 +14,4 @@ interface Opts {
 declare const defaults: Opts;
 declare function within(str: string, opts?: Partial<Opts>): Res[];
 
-export { Opts, Res, defaults, version, within };
+export { type Opts, type Res, defaults, version, within };

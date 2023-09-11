@@ -15,4 +15,4 @@ interface Res {
  */
 declare function patcher(str: string, opts?: Partial<Opts>): Res;
 
-export { Obj, Opts, Res, defaults, patcher, version };
+export { type Obj, type Opts, type Res, defaults, patcher, version };
