@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.0.15](https://github.com/codsen/codsen/compare/ast-get-values-by-key@5.0.14...ast-get-values-by-key@5.0.15) (2023-09-11)
-
-**Note:** Version bump only for package ast-get-values-by-key
-
 ## 5.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

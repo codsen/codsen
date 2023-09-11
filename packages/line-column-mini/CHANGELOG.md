@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.1.0](https://github.com/codsen/codsen/compare/line-column-mini@3.0.8...line-column-mini@3.1.0) (2023-09-11)
+## 3.1.0 (2023-09-11)
 
 ### Features
 
