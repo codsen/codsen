@@ -69,7 +69,7 @@
     "lodash-es": "^4.17.21",
     "rehype": "^12.0.1",
     "rehype-parse": "^8.0.4",
-    "unified": "^10.1.2",
+    "unified": "^11.0.0",
     "unist-util-visit": "^5.0.0"
   }
 }
