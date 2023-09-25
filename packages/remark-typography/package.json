@@ -68,7 +68,7 @@
     "various": {}
   },
   "dependencies": {
-    "@types/hast": "^3.0.0",
+    "@types/hast": "^3.0.1",
     "codsen-utils": "^1.6.2",
     "fp-ts": "^2.16.1",
     "string-apostrophes": "^4.0.15",

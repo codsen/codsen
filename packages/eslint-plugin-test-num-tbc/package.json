@@ -71,7 +71,7 @@
     "various": {}
   },
   "dependencies": {
-    "@types/json-stringify-safe": "^5.0.0",
+    "@types/json-stringify-safe": "^5.0.1",
     "json-stringify-safe": "^5.0.1",
     "object-delete-key": "^4.0.17",
     "object-path": "^0.11.8",
