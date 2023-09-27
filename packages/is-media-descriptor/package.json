@@ -1,6 +1,6 @@
 {
   "name": "is-media-descriptor",
-  "version": "5.0.12",
+  "version": "5.0.13",
   "description": "Is given string a valid media descriptor (including media query)?",
   "keywords": [
     "attribute",

@@ -1,6 +1,6 @@
 {
   "name": "ranges-ent-decode",
-  "version": "6.0.15",
+  "version": "6.0.16",
   "description": "Recursive HTML entity decoding for Ranges workflow",
   "keywords": [
     "astral",
