@@ -30,7 +30,6 @@ const all = [
   "codsen-utils",
   "color-shorthand-hex-to-six-digit",
   "csv-sort",
-  "csv-sort-cli",
   "csv-split-easy",
   "detect-is-it-html-or-xhtml",
   "detect-templating-language",
@@ -38,14 +37,12 @@ const all = [
   "easy-replace",
   "edit-package-json",
   "email-all-chars-within-ascii",
-  "email-all-chars-within-ascii-cli",
   "email-comb",
   "email-homey",
   "email-remove-unused-css",
   "emlint",
   "eslint-on-airbnb-base-badge",
   "eslint-plugin-row-num-tbc",
-  "eslint-plugin-styled-components-pro-tbc",
   "eslint-plugin-test-num-tbc",
   "extract-search-index",
   "fol",
@@ -150,7 +147,6 @@ const all = [
   "test-mixer",
   "tsd-extract",
   "tsd-extract-noesm",
-  "update-versions",
   "util-array-object-or-both",
   "util-nonempty"
 ] as const;
@@ -183,7 +179,6 @@ const current = [
   "codsen-utils",
   "color-shorthand-hex-to-six-digit",
   "csv-sort",
-  "csv-sort-cli",
   "csv-split-easy",
   "detect-is-it-html-or-xhtml",
   "detect-templating-language",
@@ -191,12 +186,10 @@ const current = [
   "easy-replace",
   "edit-package-json",
   "email-all-chars-within-ascii",
-  "email-all-chars-within-ascii-cli",
   "email-comb",
   "email-homey",
   "emlint",
   "eslint-plugin-row-num-tbc",
-  "eslint-plugin-styled-components-pro-tbc",
   "eslint-plugin-test-num-tbc",
   "extract-search-index",
   "generate-atomic-css",
@@ -288,22 +281,18 @@ const current = [
   "test-mixer",
   "tsd-extract",
   "tsd-extract-noesm",
-  "update-versions",
   "util-array-object-or-both",
   "util-nonempty"
 ] as const;
 const cli = [
   "codsen",
-  "csv-sort-cli",
-  "email-all-chars-within-ascii-cli",
   "email-homey",
   "generate-atomic-css-cli",
   "js-row-num-cli",
   "json-comb",
   "json-sort-cli",
   "lerna-clean-changelogs-cli",
-  "lerna-link-dep",
-  "update-versions"
+  "lerna-link-dep"
 ] as const;
 const deprecated = [
   "bitsausage",
@@ -362,7 +351,6 @@ const programs = [
   "email-all-chars-within-ascii",
   "email-comb",
   "eslint-plugin-row-num-tbc",
-  "eslint-plugin-styled-components-pro-tbc",
   "eslint-plugin-test-num-tbc",
   "extract-search-index",
   "generate-atomic-css",
@@ -667,12 +655,9 @@ const splitListObjectOrArrLibs = [
 const splitListLernaLibs = [
   "lerna-clean-changelogs",
   "lerna-clean-changelogs-cli",
-  "lerna-link-dep",
-  "update-versions"
+  "lerna-link-dep"
 ] as const;
 const splitListCliApps = [
-  "csv-sort-cli",
-  "email-all-chars-within-ascii-cli",
   "generate-atomic-css-cli",
   "js-row-num-cli",
   "json-comb",
@@ -701,7 +686,6 @@ const splitListMiscLibs = [
   "csv-split-easy",
   "email-homey",
   "eslint-plugin-row-num",
-  "eslint-plugin-styled-components-pro",
   "eslint-plugin-test-num",
   "extract-search-index",
   "regex-empty-conditional-comments",
@@ -729,10 +713,10 @@ export const packages = {
     special,
     script,
     packagesOutsideMonorepo,
-    totalPackageCount: 154,
-    currentPackagesCount: 136,
-    cliCount: 11,
-    programsCount: 119,
+    totalPackageCount: 150,
+    currentPackagesCount: 132,
+    cliCount: 8,
+    programsCount: 118,
     specialCount: 1,
     scriptCount: 112,
     packagesOutsideMonorepoCount: 5,

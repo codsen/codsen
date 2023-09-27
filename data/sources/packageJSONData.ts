@@ -79,7 +79,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@types/hast": "^3.0.0",
+      "@types/hast": "^3.0.1",
       "hast-util-raw": "^9.0.1",
       "object-delete-key": "^4.0.17",
       "semver-regex": "^4.0.5",
@@ -709,7 +709,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.1",
-      "type-fest": "^4.3.1"
+      "type-fest": "^4.3.2"
     }
   },
   "ast-contains-only-empty-space": {
@@ -2381,89 +2381,6 @@ export const packageJSONData = {
       "lodash-es": "^4.17.21"
     }
   },
-  "csv-sort-cli": {
-    "name": "csv-sort-cli",
-    "version": "3.0.15",
-    "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
-    "keywords": [
-      "accountancy",
-      "accounting",
-      "bank",
-      "columns",
-      "crunch",
-      "csv",
-      "file",
-      "files",
-      "fix",
-      "lloyds",
-      "missing",
-      "patch",
-      "pony",
-      "rows",
-      "sort"
-    ],
-    "homepage": "https://codsen.com/os/csv-sort-cli",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/csv-sort-cli"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "bin": {
-      "csvsort": "cli.js",
-      "sortcsv": "cli.js"
-    },
-    "scripts": {
-      "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "exit 0",
-      "devtest": "npm run test",
-      "dts": "exit 0",
-      "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js'",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --ext .js --ext .ts --fix",
-      "perf": "exit 0",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "exit 0",
-      "test": "c8 npm run unit && npm run lint",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": false,
-      "exclude": [
-        "**/test/**/*.*"
-      ]
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    },
-    "dependencies": {
-      "chalk": "^5.3.0",
-      "codsen-utils": "^1.6.2",
-      "csv-sort": "^7.0.12",
-      "globby": "^13.2.2",
-      "inquirer": "^9.2.11",
-      "meow": "^12.1.1",
-      "update-notifier": "^6.0.2"
-    }
-  },
   "csv-split-easy": {
     "name": "csv-split-easy",
     "version": "7.0.12",
@@ -3023,87 +2940,6 @@ export const packageJSONData = {
       "check-types-mini": "^8.0.15"
     }
   },
-  "email-all-chars-within-ascii-cli": {
-    "name": "email-all-chars-within-ascii-cli",
-    "version": "3.0.18",
-    "description": "Command line app to scan email templates, are all their characters within ASCII range",
-    "keywords": [
-      "7bit",
-      "ascii",
-      "characters",
-      "email",
-      "encoded",
-      "range",
-      "template",
-      "templates",
-      "validate"
-    ],
-    "homepage": "https://codsen.com/os/email-all-chars-within-ascii-cli",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/email-all-chars-within-ascii-cli"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "bin": {
-      "ascii": "cli.js",
-      "tinaturner": "cli.js",
-      "withinascii": "cli.js"
-    },
-    "scripts": {
-      "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "exit 0",
-      "devtest": "npm run test",
-      "dts": "exit 0",
-      "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js'",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --ext .js --ext .ts --fix",
-      "perf": "exit 0",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "exit 0",
-      "test": "c8 npm run unit && npm run lint",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": false,
-      "exclude": [
-        "**/test/**/*.*"
-      ]
-    },
-    "lect": {
-      "cliSpecialKeyword": "tinaturner",
-      "cliSpecialKeywordInstructions": "",
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    },
-    "dependencies": {
-      "chalk": "^5.3.0",
-      "codsen-utils": "^1.6.2",
-      "email-all-chars-within-ascii": "^5.0.15",
-      "globby": "^13.2.2",
-      "inquirer": "^9.2.11",
-      "minimist": "^1.2.8",
-      "string-left-right": "^6.0.15",
-      "update-notifier": "^6.0.2"
-    }
-  },
   "email-comb": {
     "name": "email-comb",
     "version": "7.0.17",
@@ -3340,85 +3176,10 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@types/json-stringify-safe": "^5.0.0",
+      "@types/json-stringify-safe": "^5.0.1",
       "js-row-num": "^7.0.12",
       "json-stringify-safe": "^5.0.1",
       "object-delete-key": "^4.0.17"
-    }
-  },
-  "eslint-plugin-styled-components-pro": {
-    "name": "eslint-plugin-styled-components-pro-tbc",
-    "version": "1.0.1",
-    "description": "Lint styled-components styles",
-    "keywords": [
-      "eslint",
-      "eslint-plugin",
-      "eslintplugin",
-      "lint",
-      "styled",
-      "components",
-      "styled-components",
-      "css"
-    ],
-    "homepage": "https://codsen.com/os/eslint-plugin-styled-components-pro",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/eslint-plugin-styled-components-pro-tbc"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "main": "dist/eslint-plugin-styled-components-pro.cjs.js",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && node '../../ops/scripts/fix-cjs.js' && npm run dts",
-      "cjs-off": "node '../../ops/scripts/cjs-off.js'",
-      "cjs-on": "node '../../ops/scripts/cjs-on.js'",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' --write --log-level 'silent'",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --ext .js --ext .ts --fix",
-      "perf": "echo 'skip perf'",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*",
-        "**/*.cjs*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      },
-      "various": {}
-    },
-    "dependencies": {
-      "@types/json-stringify-safe": "^5.0.0",
-      "@typescript-eslint/utils": "^6.7.0",
-      "json-stringify-safe": "^5.0.1",
-      "line-column-mini": "^3.1.0",
-      "object-path": "^0.11.8",
-      "postcss": "^8.4.29"
     }
   },
   "eslint-plugin-test-num": {
@@ -3494,7 +3255,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@types/json-stringify-safe": "^5.0.0",
+      "@types/json-stringify-safe": "^5.0.1",
       "json-stringify-safe": "^5.0.1",
       "object-delete-key": "^4.0.17",
       "object-path": "^0.11.8",
@@ -6544,7 +6305,7 @@ export const packageJSONData = {
       "ranges-merge": "^9.0.12"
     },
     "devDependencies": {
-      "@types/he": "^1.2.0"
+      "@types/he": "^1.2.1"
     }
   },
   "ranges-invert": {
@@ -7575,7 +7336,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@types/hast": "^3.0.0",
+      "@types/hast": "^3.0.1",
       "@types/lodash-es": "^4.17.9",
       "lodash-es": "^4.17.21",
       "rehype": "^13.0.1",
@@ -7654,7 +7415,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@types/hast": "^3.0.0",
+      "@types/hast": "^3.0.1",
       "codsen-utils": "^1.6.2",
       "fp-ts": "^2.16.1",
       "string-apostrophes": "^4.0.15",
@@ -9845,7 +9606,7 @@ export const packageJSONData = {
       "he": "^1.2.0"
     },
     "devDependencies": {
-      "@types/he": "^1.2.0"
+      "@types/he": "^1.2.1"
     }
   },
   "stristri": {
@@ -10016,8 +9777,8 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/isstream": "^0.1.0",
-      "@types/split2": "^4.2.0",
-      "@types/through2": "^2.0.38",
+      "@types/split2": "^4.2.1",
+      "@types/through2": "^2.0.39",
       "fs-extra": "^11.1.1"
     }
   },
@@ -10173,103 +9934,6 @@ export const packageJSONData = {
     },
     "dependencies": {
       "string-left-right": "^6.0.15"
-    }
-  },
-  "update-versions": {
-    "name": "update-versions",
-    "version": "6.0.17",
-    "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
-    "keywords": [
-      "app",
-      "automates",
-      "check",
-      "cli",
-      "dependencies",
-      "friendly",
-      "json",
-      "lerna",
-      "monorepo",
-      "npm",
-      "package",
-      "package.json",
-      "tool",
-      "update",
-      "updates",
-      "upgrade",
-      "utility",
-      "version",
-      "versions"
-    ],
-    "homepage": "https://codsen.com/os/update-versions",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/update-versions"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "bin": {
-      "upd": "cli.js"
-    },
-    "scripts": {
-      "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "exit 0",
-      "devtest": "npm run test",
-      "dts": "exit 0",
-      "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js'",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --ext .js --ext .ts --fix",
-      "perf": "exit 0",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "exit 0",
-      "test": "c8 npm run unit && npm run lint",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": false,
-      "exclude": [
-        "**/test/**/*.*"
-      ]
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    },
-    "dependencies": {
-      "ansi-diff-stream": "^1.2.1",
-      "codsen-utils": "^1.6.2",
-      "edit-package-json": "^0.8.16",
-      "globby": "^13.2.2",
-      "is-online": "^10.0.0",
-      "log-update": "^5.0.1",
-      "meow": "^12.1.1",
-      "object-path": "^0.11.8",
-      "p-map": "^6.0.0",
-      "p-progress": "^0.6.0",
-      "p-reduce": "^3.0.0",
-      "pacote": "^17.0.4",
-      "update-notifier": "^6.0.2",
-      "write-file-atomic": "^5.0.1"
-    },
-    "devDependencies": {
-      "fs-extra": "^11.1.1",
-      "rfdc": "^1.3.0"
     }
   },
   "util-array-object-or-both": {

@@ -182,14 +182,6 @@ export const interdeps = [
     ]
   },
   {
-    "name": "csv-sort-cli",
-    "size": 8886,
-    "imports": [
-      "codsen-utils",
-      "csv-sort"
-    ]
-  },
-  {
     "name": "csv-split-easy",
     "size": 2265,
     "imports": [
@@ -244,15 +236,6 @@ export const interdeps = [
     ]
   },
   {
-    "name": "email-all-chars-within-ascii-cli",
-    "size": 8621,
-    "imports": [
-      "codsen-utils",
-      "email-all-chars-within-ascii",
-      "string-left-right"
-    ]
-  },
-  {
     "name": "email-comb",
     "size": 20276,
     "imports": [
@@ -282,13 +265,6 @@ export const interdeps = [
     "imports": [
       "js-row-num",
       "object-delete-key"
-    ]
-  },
-  {
-    "name": "eslint-plugin-styled-components-pro",
-    "size": 0,
-    "imports": [
-      "line-column-mini"
     ]
   },
   {
@@ -481,11 +457,6 @@ export const interdeps = [
     "imports": [
       "lerna-clean-changelogs"
     ]
-  },
-  {
-    "name": "line-column-mini",
-    "size": 1131,
-    "imports": []
   },
   {
     "name": "object-all-values-equal-to",
@@ -867,14 +838,6 @@ export const interdeps = [
     "size": 7573,
     "imports": [
       "string-left-right"
-    ]
-  },
-  {
-    "name": "update-versions",
-    "size": 15798,
-    "imports": [
-      "codsen-utils",
-      "edit-package-json"
     ]
   },
   {

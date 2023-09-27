@@ -110,9 +110,6 @@
       "path": "packages/eslint-plugin-row-num-tbc"
     },
     {
-      "path": "packages/eslint-plugin-styled-components-pro-tbc"
-    },
-    {
       "path": "packages/eslint-plugin-test-num-tbc"
     },
     {
