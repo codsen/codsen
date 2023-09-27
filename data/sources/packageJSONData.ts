@@ -13,7 +13,7 @@ export const packageJSONData = {
   },
   "remark-conventional-commit-changelog-timeline": {
     "name": "remark-conventional-commit-changelog-timeline",
-    "version": "3.1.3",
+    "version": "3.1.4",
     "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
     "keywords": [
       "unified",
@@ -81,7 +81,7 @@ export const packageJSONData = {
     "dependencies": {
       "@types/hast": "^3.0.1",
       "hast-util-raw": "^9.0.1",
-      "object-delete-key": "^4.0.17",
+      "object-delete-key": "^4.0.18",
       "semver-regex": "^4.0.5",
       "unified": "^11.0.3",
       "unist-builder": "^4.0.0",
@@ -625,7 +625,7 @@ export const packageJSONData = {
   },
   "ast-compare": {
     "name": "ast-compare",
-    "version": "4.0.17",
+    "version": "4.0.18",
     "description": "Compare anything: AST, objects, arrays, strings and nested thereof",
     "keywords": [
       "array",
@@ -889,7 +889,7 @@ export const packageJSONData = {
   },
   "ast-delete-object": {
     "name": "ast-delete-object",
-    "version": "4.0.17",
+    "version": "4.0.18",
     "description": "Delete all plain objects in AST if they contain a certain key/value pair",
     "keywords": [
       "ast",
@@ -968,7 +968,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-compare": "^4.0.17",
+      "ast-compare": "^4.0.18",
       "ast-monkey-traverse": "^4.0.13",
       "codsen-utils": "^1.6.2",
       "rfdc": "^1.3.0"
@@ -976,7 +976,7 @@ export const packageJSONData = {
   },
   "ast-get-object": {
     "name": "ast-get-object",
-    "version": "4.0.17",
+    "version": "4.0.18",
     "description": "Getter/setter for nested parsed HTML AST’s, querying objects by key/value pairs",
     "keywords": [
       "ast",
@@ -1056,7 +1056,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "ast-compare": "^4.0.17",
+      "ast-compare": "^4.0.18",
       "codsen-utils": "^1.6.2",
       "rfdc": "^1.3.0"
     }
@@ -1321,7 +1321,7 @@ export const packageJSONData = {
   },
   "ast-monkey": {
     "name": "ast-monkey",
-    "version": "9.0.17",
+    "version": "9.0.18",
     "description": "Traverse and edit AST",
     "keywords": [
       "ast",
@@ -1402,7 +1402,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-compare": "^4.0.17",
+      "ast-compare": "^4.0.18",
       "ast-monkey-traverse": "^4.0.13",
       "check-types-mini": "^8.0.15",
       "codsen-utils": "^1.6.2",
@@ -1981,7 +1981,7 @@ export const packageJSONData = {
   },
   "codsen-parser": {
     "name": "codsen-parser",
-    "version": "0.14.17",
+    "version": "0.14.18",
     "description": "Parser aiming at broken or mixed code, especially HTML & CSS",
     "keywords": [
       "ast",
@@ -2050,7 +2050,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-monkey-util": "^3.0.7",
-      "codsen-tokenizer": "^7.0.17",
+      "codsen-tokenizer": "^7.0.18",
       "codsen-utils": "^1.6.2",
       "object-path": "^0.11.8",
       "string-find-malformed": "^4.0.15",
@@ -2059,7 +2059,7 @@ export const packageJSONData = {
   },
   "codsen-tokenizer": {
     "name": "codsen-tokenizer",
-    "version": "7.0.17",
+    "version": "7.0.18",
     "description": "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages",
     "keywords": [
       "ast",
@@ -2141,7 +2141,7 @@ export const packageJSONData = {
       "string-match-left-right": "^9.0.15"
     },
     "devDependencies": {
-      "ast-compare": "^4.0.17"
+      "ast-compare": "^4.0.18"
     }
   },
   "codsen-utils": {
@@ -3108,7 +3108,7 @@ export const packageJSONData = {
   },
   "eslint-plugin-row-num": {
     "name": "eslint-plugin-row-num-tbc",
-    "version": "4.0.17",
+    "version": "4.0.18",
     "description": "ESLint plugin to update row numbers on each console.log",
     "keywords": [
       "console",
@@ -3179,12 +3179,12 @@ export const packageJSONData = {
       "@types/json-stringify-safe": "^5.0.1",
       "js-row-num": "^7.0.12",
       "json-stringify-safe": "^5.0.1",
-      "object-delete-key": "^4.0.17"
+      "object-delete-key": "^4.0.18"
     }
   },
   "eslint-plugin-test-num": {
     "name": "eslint-plugin-test-num-tbc",
-    "version": "3.0.18",
+    "version": "3.0.19",
     "description": "ESLint plugin to update unit test numbers automatically",
     "keywords": [
       "automatically",
@@ -3257,14 +3257,14 @@ export const packageJSONData = {
     "dependencies": {
       "@types/json-stringify-safe": "^5.0.1",
       "json-stringify-safe": "^5.0.1",
-      "object-delete-key": "^4.0.17",
+      "object-delete-key": "^4.0.18",
       "object-path": "^0.11.8",
       "string-left-right": "^6.0.15"
     }
   },
   "extract-search-index": {
     "name": "extract-search-index",
-    "version": "2.0.17",
+    "version": "2.0.18",
     "description": "Extract unique keyword input list string for search",
     "keywords": [
       "string",
@@ -3336,7 +3336,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "string-strip-html": "^13.4.3",
-      "string-unfancy": "^6.0.12"
+      "string-unfancy": "^6.0.13"
     }
   },
   "generate-atomic-css": {
@@ -3883,7 +3883,7 @@ export const packageJSONData = {
   },
   "html-img-alt": {
     "name": "html-img-alt",
-    "version": "4.0.15",
+    "version": "4.0.16",
     "description": "Adds missing alt attributes to img tags. Non-parsing.",
     "keywords": [
       "add",
@@ -3962,12 +3962,12 @@ export const packageJSONData = {
       "check-types-mini": "^8.0.15",
       "ranges-apply": "^7.0.12",
       "ranges-push": "^7.0.12",
-      "string-unfancy": "^6.0.12"
+      "string-unfancy": "^6.0.13"
     }
   },
   "html-table-patcher": {
     "name": "html-table-patcher",
-    "version": "6.0.17",
+    "version": "6.0.18",
     "description": "Visual helper to place templating code around table tags into correct places",
     "keywords": [
       "add",
@@ -4042,7 +4042,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-monkey-traverse-with-lookahead": "^4.0.13",
-      "codsen-parser": "^0.14.17",
+      "codsen-parser": "^0.14.18",
       "ranges-apply": "^7.0.12",
       "ranges-push": "^7.0.12"
     }
@@ -4372,7 +4372,7 @@ export const packageJSONData = {
   },
   "is-media-descriptor": {
     "name": "is-media-descriptor",
-    "version": "5.0.12",
+    "version": "5.0.13",
     "description": "Is given string a valid media descriptor (including media query)?",
     "keywords": [
       "attribute",
@@ -5509,7 +5509,7 @@ export const packageJSONData = {
   },
   "object-delete-key": {
     "name": "object-delete-key",
-    "version": "4.0.17",
+    "version": "4.0.18",
     "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
     "keywords": [
       "ast",
@@ -5586,7 +5586,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-is-empty": "^4.0.13",
-      "ast-monkey": "^9.0.17",
+      "ast-monkey": "^9.0.18",
       "rfdc": "^1.3.0",
       "util-array-object-or-both": "^5.0.10"
     }
@@ -6228,7 +6228,7 @@ export const packageJSONData = {
   },
   "ranges-ent-decode": {
     "name": "ranges-ent-decode",
-    "version": "6.0.15",
+    "version": "6.0.16",
     "description": "Recursive HTML entity decoding for Ranges workflow",
     "keywords": [
       "astral",
@@ -7272,7 +7272,7 @@ export const packageJSONData = {
   },
   "rehype-responsive-tables": {
     "name": "rehype-responsive-tables",
-    "version": "2.0.10",
+    "version": "2.0.11",
     "description": "Rehype plugin to stack the first column cells above their rows.",
     "keywords": [
       "unified",
@@ -7347,7 +7347,7 @@ export const packageJSONData = {
   },
   "remark-typography": {
     "name": "remark-typography",
-    "version": "0.6.14",
+    "version": "0.6.15",
     "description": "Remark plugin to fix typography: quotes, dashes and so on.",
     "keywords": [
       "unified",
@@ -9528,7 +9528,7 @@ export const packageJSONData = {
   },
   "string-unfancy": {
     "name": "string-unfancy",
-    "version": "6.0.12",
+    "version": "6.0.13",
     "description": "Replace all n/m dashes, curly quotes with their simpler equivalents",
     "keywords": [
       "alt",
@@ -9611,7 +9611,7 @@ export const packageJSONData = {
   },
   "stristri": {
     "name": "stristri",
-    "version": "5.0.17",
+    "version": "5.0.18",
     "description": "Extracts or deletes HTML, CSS, text and/or templating tags from string",
     "keywords": [
       "code",
@@ -9685,7 +9685,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "codsen-tokenizer": "^7.0.17",
+      "codsen-tokenizer": "^7.0.18",
       "detect-templating-language": "^4.0.9",
       "ranges-apply": "^7.0.12",
       "ranges-merge": "^9.0.12",
@@ -9698,7 +9698,7 @@ export const packageJSONData = {
   },
   "tap-parse-string-to-object": {
     "name": "tap-parse-string-to-object",
-    "version": "4.0.12",
+    "version": "4.0.13",
     "description": "Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object",
     "keywords": [
       "contents",
