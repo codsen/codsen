@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.19](https://github.com/codsen/codsen/compare/eslint-plugin-row-num-tbc@4.0.18...eslint-plugin-row-num-tbc@4.0.19) (2023-10-02)
+
+**Note:** Version bump only for package eslint-plugin-row-num-tbc
+
 ## 4.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
