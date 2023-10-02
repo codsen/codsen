@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.0.19](https://github.com/codsen/codsen/compare/stristri@5.0.18...stristri@5.0.19) (2023-10-02)
-
-**Note:** Version bump only for package stristri
-
 ## 5.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
