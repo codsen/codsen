@@ -13,7 +13,7 @@ export const packageJSONData = {
   },
   "remark-conventional-commit-changelog-timeline": {
     "name": "remark-conventional-commit-changelog-timeline",
-    "version": "3.1.4",
+    "version": "3.1.5",
     "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
     "keywords": [
       "unified",
@@ -81,7 +81,7 @@ export const packageJSONData = {
     "dependencies": {
       "@types/hast": "^3.0.1",
       "hast-util-raw": "^9.0.1",
-      "object-delete-key": "^4.0.18",
+      "object-delete-key": "^4.0.19",
       "semver-regex": "^4.0.5",
       "unified": "^11.0.3",
       "unist-builder": "^4.0.0",
@@ -625,7 +625,7 @@ export const packageJSONData = {
   },
   "ast-compare": {
     "name": "ast-compare",
-    "version": "4.0.18",
+    "version": "4.0.19",
     "description": "Compare anything: AST, objects, arrays, strings and nested thereof",
     "keywords": [
       "array",
@@ -889,7 +889,7 @@ export const packageJSONData = {
   },
   "ast-delete-object": {
     "name": "ast-delete-object",
-    "version": "4.0.18",
+    "version": "4.0.19",
     "description": "Delete all plain objects in AST if they contain a certain key/value pair",
     "keywords": [
       "ast",
@@ -968,7 +968,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-compare": "^4.0.18",
+      "ast-compare": "^4.0.19",
       "ast-monkey-traverse": "^4.0.13",
       "codsen-utils": "^1.6.2",
       "rfdc": "^1.3.0"
@@ -976,7 +976,7 @@ export const packageJSONData = {
   },
   "ast-get-object": {
     "name": "ast-get-object",
-    "version": "4.0.18",
+    "version": "4.0.19",
     "description": "Getter/setter for nested parsed HTML AST’s, querying objects by key/value pairs",
     "keywords": [
       "ast",
@@ -1056,7 +1056,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "ast-compare": "^4.0.18",
+      "ast-compare": "^4.0.19",
       "codsen-utils": "^1.6.2",
       "rfdc": "^1.3.0"
     }
@@ -1321,7 +1321,7 @@ export const packageJSONData = {
   },
   "ast-monkey": {
     "name": "ast-monkey",
-    "version": "9.0.18",
+    "version": "9.0.19",
     "description": "Traverse and edit AST",
     "keywords": [
       "ast",
@@ -1402,7 +1402,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-compare": "^4.0.18",
+      "ast-compare": "^4.0.19",
       "ast-monkey-traverse": "^4.0.13",
       "check-types-mini": "^8.0.15",
       "codsen-utils": "^1.6.2",
@@ -1981,7 +1981,7 @@ export const packageJSONData = {
   },
   "codsen-parser": {
     "name": "codsen-parser",
-    "version": "0.14.18",
+    "version": "0.14.19",
     "description": "Parser aiming at broken or mixed code, especially HTML & CSS",
     "keywords": [
       "ast",
@@ -2050,7 +2050,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-monkey-util": "^3.0.7",
-      "codsen-tokenizer": "^7.0.18",
+      "codsen-tokenizer": "^7.0.19",
       "codsen-utils": "^1.6.2",
       "object-path": "^0.11.8",
       "string-find-malformed": "^4.0.15",
@@ -2059,7 +2059,7 @@ export const packageJSONData = {
   },
   "codsen-tokenizer": {
     "name": "codsen-tokenizer",
-    "version": "7.0.18",
+    "version": "7.0.19",
     "description": "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages",
     "keywords": [
       "ast",
@@ -2141,7 +2141,7 @@ export const packageJSONData = {
       "string-match-left-right": "^9.0.15"
     },
     "devDependencies": {
-      "ast-compare": "^4.0.18"
+      "ast-compare": "^4.0.19"
     }
   },
   "codsen-utils": {
@@ -2383,7 +2383,7 @@ export const packageJSONData = {
   },
   "csv-sort-cli": {
     "name": "csv-sort-cli",
-    "version": "3.0.15",
+    "version": "3.0.16",
     "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
     "keywords": [
       "accountancy",
@@ -3025,7 +3025,7 @@ export const packageJSONData = {
   },
   "email-all-chars-within-ascii-cli": {
     "name": "email-all-chars-within-ascii-cli",
-    "version": "3.0.18",
+    "version": "3.0.19",
     "description": "Command line app to scan email templates, are all their characters within ASCII range",
     "keywords": [
       "7bit",
@@ -3272,7 +3272,7 @@ export const packageJSONData = {
   },
   "eslint-plugin-row-num": {
     "name": "eslint-plugin-row-num-tbc",
-    "version": "4.0.18",
+    "version": "4.0.19",
     "description": "ESLint plugin to update row numbers on each console.log",
     "keywords": [
       "console",
@@ -3343,12 +3343,12 @@ export const packageJSONData = {
       "@types/json-stringify-safe": "^5.0.1",
       "js-row-num": "^7.0.12",
       "json-stringify-safe": "^5.0.1",
-      "object-delete-key": "^4.0.18"
+      "object-delete-key": "^4.0.19"
     }
   },
   "eslint-plugin-test-num": {
     "name": "eslint-plugin-test-num-tbc",
-    "version": "3.0.19",
+    "version": "3.0.20",
     "description": "ESLint plugin to update unit test numbers automatically",
     "keywords": [
       "automatically",
@@ -3421,7 +3421,7 @@ export const packageJSONData = {
     "dependencies": {
       "@types/json-stringify-safe": "^5.0.1",
       "json-stringify-safe": "^5.0.1",
-      "object-delete-key": "^4.0.18",
+      "object-delete-key": "^4.0.19",
       "object-path": "^0.11.8",
       "string-left-right": "^6.0.15"
     }
@@ -4131,7 +4131,7 @@ export const packageJSONData = {
   },
   "html-table-patcher": {
     "name": "html-table-patcher",
-    "version": "6.0.18",
+    "version": "6.0.19",
     "description": "Visual helper to place templating code around table tags into correct places",
     "keywords": [
       "add",
@@ -4206,7 +4206,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-monkey-traverse-with-lookahead": "^4.0.13",
-      "codsen-parser": "^0.14.18",
+      "codsen-parser": "^0.14.19",
       "ranges-apply": "^7.0.12",
       "ranges-push": "^7.0.12"
     }
@@ -4536,7 +4536,7 @@ export const packageJSONData = {
   },
   "is-media-descriptor": {
     "name": "is-media-descriptor",
-    "version": "5.0.13",
+    "version": "5.0.14",
     "description": "Is given string a valid media descriptor (including media query)?",
     "keywords": [
       "attribute",
@@ -5029,7 +5029,7 @@ export const packageJSONData = {
   },
   "json-sort-cli": {
     "name": "json-sort-cli",
-    "version": "3.1.5",
+    "version": "3.1.6",
     "description": "Command line app to deep sort JSON files, retains package.json special key order",
     "keywords": [
       "app",
@@ -5673,7 +5673,7 @@ export const packageJSONData = {
   },
   "object-delete-key": {
     "name": "object-delete-key",
-    "version": "4.0.18",
+    "version": "4.0.19",
     "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
     "keywords": [
       "ast",
@@ -5750,7 +5750,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-is-empty": "^4.0.13",
-      "ast-monkey": "^9.0.18",
+      "ast-monkey": "^9.0.19",
       "rfdc": "^1.3.0",
       "util-array-object-or-both": "^5.0.10"
     }
@@ -9775,7 +9775,7 @@ export const packageJSONData = {
   },
   "stristri": {
     "name": "stristri",
-    "version": "5.0.18",
+    "version": "5.0.19",
     "description": "Extracts or deletes HTML, CSS, text and/or templating tags from string",
     "keywords": [
       "code",
@@ -9849,7 +9849,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "codsen-tokenizer": "^7.0.18",
+      "codsen-tokenizer": "^7.0.19",
       "detect-templating-language": "^4.0.9",
       "ranges-apply": "^7.0.12",
       "ranges-merge": "^9.0.12",
@@ -10102,7 +10102,7 @@ export const packageJSONData = {
   },
   "update-versions": {
     "name": "update-versions",
-    "version": "6.0.17",
+    "version": "6.0.18",
     "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
     "keywords": [
       "app",
