@@ -1,24 +1,23 @@
 {
-  "name": "json-sort-cli",
-  "version": "3.1.5",
-  "description": "Command line app to deep sort JSON files, retains package.json special key order",
+  "name": "email-all-chars-within-ascii-cli",
+  "version": "3.0.18",
+  "description": "Command line app to scan email templates, are all their characters within ASCII range",
   "keywords": [
-    "app",
-    "cli",
-    "command line",
-    "file",
-    "files",
-    "fix",
-    "json",
-    "sort",
-    "tool",
-    "utility"
+    "7bit",
+    "ascii",
+    "characters",
+    "email",
+    "encoded",
+    "range",
+    "template",
+    "templates",
+    "validate"
   ],
-  "homepage": "https://codsen.com/os/json-sort-cli",
+  "homepage": "https://codsen.com/os/email-all-chars-within-ascii-cli",
   "repository": {
     "type": "git",
     "url": "https://github.com/codsen/codsen.git",
-    "directory": "packages/json-sort-cli"
+    "directory": "packages/email-all-chars-within-ascii-cli"
   },
   "license": "MIT",
   "author": {
@@ -28,8 +27,9 @@
   },
   "type": "module",
   "bin": {
-    "jsonsort": "cli.js",
-    "sortjson": "cli.js"
+    "ascii": "cli.js",
+    "tinaturner": "cli.js",
+    "withinascii": "cli.js"
   },
   "scripts": {
     "build": "exit 0",
@@ -60,6 +60,8 @@
     ]
   },
   "lect": {
+    "cliSpecialKeyword": "tinaturner",
+    "cliSpecialKeywordInstructions": "",
     "licence": {
       "extras": [
         ""
@@ -67,19 +69,13 @@
     }
   },
   "dependencies": {
-    "ast-monkey-traverse": "^4.0.13",
     "chalk": "^5.3.0",
     "codsen-utils": "^1.6.2",
-    "fs-extra": "^11.1.1",
+    "email-all-chars-within-ascii": "^5.0.15",
     "globby": "^13.2.2",
-    "is-d": "^1.0.0",
-    "meow": "^12.1.1",
-    "p-filter": "^3.0.0",
-    "p-reduce": "^3.0.0",
-    "sort-package-json": "^2.6.0",
+    "inquirer": "^9.2.11",
+    "minimist": "^1.2.8",
+    "string-left-right": "^6.0.15",
     "update-notifier": "^6.0.2"
-  },
-  "devDependencies": {
-    "p-map": "^6.0.0"
   }
 }

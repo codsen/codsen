@@ -1,24 +1,33 @@
 {
-  "name": "json-sort-cli",
-  "version": "3.1.5",
-  "description": "Command line app to deep sort JSON files, retains package.json special key order",
+  "name": "update-versions",
+  "version": "6.0.17",
+  "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
   "keywords": [
     "app",
+    "automates",
+    "check",
     "cli",
-    "command line",
-    "file",
-    "files",
-    "fix",
+    "dependencies",
+    "friendly",
     "json",
-    "sort",
+    "lerna",
+    "monorepo",
+    "npm",
+    "package",
+    "package.json",
     "tool",
-    "utility"
+    "update",
+    "updates",
+    "upgrade",
+    "utility",
+    "version",
+    "versions"
   ],
-  "homepage": "https://codsen.com/os/json-sort-cli",
+  "homepage": "https://codsen.com/os/update-versions",
   "repository": {
     "type": "git",
     "url": "https://github.com/codsen/codsen.git",
-    "directory": "packages/json-sort-cli"
+    "directory": "packages/update-versions"
   },
   "license": "MIT",
   "author": {
@@ -28,8 +37,7 @@
   },
   "type": "module",
   "bin": {
-    "jsonsort": "cli.js",
-    "sortjson": "cli.js"
+    "upd": "cli.js"
   },
   "scripts": {
     "build": "exit 0",
@@ -67,19 +75,23 @@
     }
   },
   "dependencies": {
-    "ast-monkey-traverse": "^4.0.13",
-    "chalk": "^5.3.0",
+    "ansi-diff-stream": "^1.2.1",
     "codsen-utils": "^1.6.2",
-    "fs-extra": "^11.1.1",
+    "edit-package-json": "^0.8.16",
     "globby": "^13.2.2",
-    "is-d": "^1.0.0",
+    "is-online": "^10.0.0",
+    "log-update": "^5.0.1",
     "meow": "^12.1.1",
-    "p-filter": "^3.0.0",
+    "object-path": "^0.11.8",
+    "p-map": "^6.0.0",
+    "p-progress": "^0.6.0",
     "p-reduce": "^3.0.0",
-    "sort-package-json": "^2.6.0",
-    "update-notifier": "^6.0.2"
+    "pacote": "^17.0.4",
+    "update-notifier": "^6.0.2",
+    "write-file-atomic": "^5.0.1"
   },
   "devDependencies": {
-    "p-map": "^6.0.0"
+    "fs-extra": "^11.1.1",
+    "rfdc": "^1.3.0"
   }
 }

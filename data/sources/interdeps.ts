@@ -182,6 +182,14 @@ export const interdeps = [
     ]
   },
   {
+    "name": "csv-sort-cli",
+    "size": 8886,
+    "imports": [
+      "codsen-utils",
+      "csv-sort"
+    ]
+  },
+  {
     "name": "csv-split-easy",
     "size": 2265,
     "imports": [
@@ -233,6 +241,15 @@ export const interdeps = [
     "size": 1277,
     "imports": [
       "check-types-mini"
+    ]
+  },
+  {
+    "name": "email-all-chars-within-ascii-cli",
+    "size": 8621,
+    "imports": [
+      "codsen-utils",
+      "email-all-chars-within-ascii",
+      "string-left-right"
     ]
   },
   {
@@ -838,6 +855,14 @@ export const interdeps = [
     "size": 7573,
     "imports": [
       "string-left-right"
+    ]
+  },
+  {
+    "name": "update-versions",
+    "size": 15798,
+    "imports": [
+      "codsen-utils",
+      "edit-package-json"
     ]
   },
   {

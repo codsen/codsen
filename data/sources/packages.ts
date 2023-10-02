@@ -30,6 +30,7 @@ const all = [
   "codsen-utils",
   "color-shorthand-hex-to-six-digit",
   "csv-sort",
+  "csv-sort-cli",
   "csv-split-easy",
   "detect-is-it-html-or-xhtml",
   "detect-templating-language",
@@ -37,6 +38,7 @@ const all = [
   "easy-replace",
   "edit-package-json",
   "email-all-chars-within-ascii",
+  "email-all-chars-within-ascii-cli",
   "email-comb",
   "email-homey",
   "email-remove-unused-css",
@@ -147,6 +149,7 @@ const all = [
   "test-mixer",
   "tsd-extract",
   "tsd-extract-noesm",
+  "update-versions",
   "util-array-object-or-both",
   "util-nonempty"
 ] as const;
@@ -179,6 +182,7 @@ const current = [
   "codsen-utils",
   "color-shorthand-hex-to-six-digit",
   "csv-sort",
+  "csv-sort-cli",
   "csv-split-easy",
   "detect-is-it-html-or-xhtml",
   "detect-templating-language",
@@ -186,6 +190,7 @@ const current = [
   "easy-replace",
   "edit-package-json",
   "email-all-chars-within-ascii",
+  "email-all-chars-within-ascii-cli",
   "email-comb",
   "email-homey",
   "emlint",
@@ -281,18 +286,22 @@ const current = [
   "test-mixer",
   "tsd-extract",
   "tsd-extract-noesm",
+  "update-versions",
   "util-array-object-or-both",
   "util-nonempty"
 ] as const;
 const cli = [
   "codsen",
+  "csv-sort-cli",
+  "email-all-chars-within-ascii-cli",
   "email-homey",
   "generate-atomic-css-cli",
   "js-row-num-cli",
   "json-comb",
   "json-sort-cli",
   "lerna-clean-changelogs-cli",
-  "lerna-link-dep"
+  "lerna-link-dep",
+  "update-versions"
 ] as const;
 const deprecated = [
   "bitsausage",
@@ -655,9 +664,12 @@ const splitListObjectOrArrLibs = [
 const splitListLernaLibs = [
   "lerna-clean-changelogs",
   "lerna-clean-changelogs-cli",
-  "lerna-link-dep"
+  "lerna-link-dep",
+  "update-versions"
 ] as const;
 const splitListCliApps = [
+  "csv-sort-cli",
+  "email-all-chars-within-ascii-cli",
   "generate-atomic-css-cli",
   "js-row-num-cli",
   "json-comb",
@@ -713,9 +725,9 @@ export const packages = {
     special,
     script,
     packagesOutsideMonorepo,
-    totalPackageCount: 150,
-    currentPackagesCount: 132,
-    cliCount: 8,
+    totalPackageCount: 153,
+    currentPackagesCount: 135,
+    cliCount: 11,
     programsCount: 118,
     specialCount: 1,
     scriptCount: 112,

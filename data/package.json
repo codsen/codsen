@@ -28,6 +28,6 @@
     "publ": "npm publish || :"
   },
   "devDependencies": {
-    "rimraf": "^5.0.4"
+    "rimraf": "^5.0.5"
   }
 }
