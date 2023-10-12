@@ -10,17 +10,27 @@ import { applyFixes, writeSample } from "../t-util/util.js";
 // first, remove all files from test/samples subfolder - think of test renames
 // and tests being shuffled - this will guarantee that all sample files
 // are always fresh
-const filesInSamples = fs.readdirSync("test/samples");
-for (let i = 0, len = filesInSamples.length; i < len; i++) {
-  // _red.css and _green.css are stationary, they're not deleted
-  if (!filesInSamples[i].startsWith("_")) {
-    fs.unlink(path.join("test/samples", filesInSamples[i]), (err) => {
-      if (err) {
-        throw err;
-      }
-    });
+function cleanUp() {
+  let filesInSamples = fs.readdirSync("test/samples");
+  for (let i = 0, len = filesInSamples.length; i < len; i++) {
+    // _red.css and _green.css are stationary, they're not deleted
+    if (!filesInSamples[i].startsWith("_")) {
+      fs.unlink(path.join("test/samples", filesInSamples[i]), (err) => {
+        if (err) {
+          throw err;
+        }
+      });
+    }
   }
 }
+
+test.before(() => {
+  cleanUp();
+});
+
+test.after(() => {
+  cleanUp();
+});
 
 // 00. API bits
 // -----------------------------------------------------------------------------
