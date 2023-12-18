@@ -73,12 +73,12 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^5.0.6",
-    "globby": "^13.2.2",
+    "globby": "^14.0.0",
     "is-d": "^1.0.0",
     "js-row-num": "^7.0.12",
     "meow": "^12.1.1",
     "p-reduce": "^3.0.0",
-    "update-notifier": "^6.0.2",
+    "update-notifier": "^7.0.0",
     "write-file-atomic": "^5.0.1"
   }
 }

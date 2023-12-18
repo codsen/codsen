@@ -60,9 +60,7 @@ function extract(str: string): Result {
   for (let i = 0, len = str.length; i <= len; i++) {
     DEV &&
       console.log(
-        `${`\u001b[${36}m${`============================`}\u001b[${39}m`} ${`\u001b[${33}m${
-          str[i]
-        }\u001b[${39}m`} (${`\u001b[${31}m${i}\u001b[${39}m`})`,
+        `${`\u001b[${36}m${`============================`}\u001b[${39}m`} ${`\u001b[${33}m${str[i]}\u001b[${39}m`} (${`\u001b[${31}m${i}\u001b[${39}m`})`,
       );
 
     // catch the ending of a selector's name:
@@ -94,14 +92,14 @@ function extract(str: string): Result {
           stateCurrentlyIs = undefined;
           DEV &&
             console.log(
-              `097 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stateCurrentlyIs = undefined`,
+              `095 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stateCurrentlyIs = undefined`,
             );
         }
       }
       selectorStartsAt = null;
       DEV &&
         console.log(
-          `104 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`,
+          `102 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`,
         );
     }
 
@@ -114,7 +112,7 @@ function extract(str: string): Result {
       selectorStartsAt = i;
       DEV &&
         console.log(
-          `117 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`,
+          `115 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`,
         );
     }
 
@@ -127,7 +125,7 @@ function extract(str: string): Result {
       typeof temp1 === "number" &&
       str[temp1] === "="
     ) {
-      DEV && console.log(`130 [class= caught`);
+      DEV && console.log(`128 [class= caught`);
       // if it's zzz[class=something] (without quotes)
       /* c8 ignore next */
       if (
@@ -135,13 +133,13 @@ function extract(str: string): Result {
         isLatinLetter(str[right(str, temp1) as number])
       ) {
         selectorStartsAt = right(str, temp1);
-        DEV && console.log(`138 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`136 SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp1) as number]) &&
         isLatinLetter(str[right(str, right(str, temp1) as number) as number])
       ) {
         selectorStartsAt = right(str, right(str, temp1));
-        DEV && console.log(`144 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`142 SET selectorStartsAt = ${selectorStartsAt}`);
       }
       stateCurrentlyIs = ".";
     }
@@ -154,24 +152,24 @@ function extract(str: string): Result {
       temp2 !== null &&
       str[temp2] === "="
     ) {
-      DEV && console.log(`157 [id= caught`);
+      DEV && console.log(`155 [id= caught`);
       // if it's zzz[id=something] (without quotes)
       if (isLatinLetter(str[right(str, temp2) as number])) {
         selectorStartsAt = right(str, temp2);
-        DEV && console.log(`161 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`159 SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp2) as number]) &&
         isLatinLetter(str[right(str, right(str, temp2) as number) as number])
       ) {
         selectorStartsAt = right(str, right(str, temp2));
-        DEV && console.log(`167 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`165 SET selectorStartsAt = ${selectorStartsAt}`);
       }
       stateCurrentlyIs = "#";
     }
 
     DEV &&
       console.log(
-        `174 \u001b[${90}m${`ended with: selectorStartsAt = ${selectorStartsAt}; result = ${JSON.stringify(
+        `172 \u001b[${90}m${`ended with: selectorStartsAt = ${selectorStartsAt}; result = ${JSON.stringify(
           result,
           null,
           0,

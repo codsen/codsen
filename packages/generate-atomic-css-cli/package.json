@@ -73,11 +73,11 @@
   },
   "dependencies": {
     "generate-atomic-css": "^3.0.15",
-    "globby": "^13.2.2",
+    "globby": "^14.0.0",
     "is-d": "^1.0.0",
     "meow": "^12.1.1",
     "p-reduce": "^3.0.0",
-    "update-notifier": "^6.0.2",
+    "update-notifier": "^7.0.0",
     "write-file-atomic": "^5.0.1"
   }
 }

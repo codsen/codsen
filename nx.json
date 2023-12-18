@@ -1,67 +1,35 @@
 {
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "cacheableOperations": [
-          "build",
-          "test",
-          "unit",
-          "examples",
-          "lint",
-          "prepare"
-        ]
-      }
-    }
-  },
   "targetDefaults": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "{projectRoot}/dist/**",
-        "{projectRoot}/types/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/dist/**", "{projectRoot}/types/**"],
+      "cache": true
     },
     "test": {
-      "dependsOn": [
-        "lect",
-        "build"
-      ]
+      "dependsOn": ["lect", "build"],
+      "cache": true
     },
     "lint": {
-      "dependsOn": [
-        "build"
-      ]
+      "dependsOn": ["build"],
+      "cache": true
     },
     "unit": {
-      "dependsOn": [
-        "build"
-      ]
+      "dependsOn": ["build"],
+      "cache": true
     },
     "examples": {
-      "dependsOn": [
-        "^build"
-      ]
+      "dependsOn": ["^build"],
+      "cache": true
     },
     "prepare": {
-      "dependsOn": [
-        "unit",
-        "examples",
-        "lint"
-      ]
+      "dependsOn": ["unit", "examples", "lint"],
+      "cache": true
     }
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "sharedGlobals": [],
-    "production": [
-      "default"
-    ]
+    "production": ["default"]
   }
 }

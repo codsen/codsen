@@ -662,8 +662,8 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
           resolvedOpts.targetLanguage === "css"
             ? encodedNbspCss
             : resolvedOpts.targetLanguage === "js"
-            ? encodedNbspJs
-            : encodedNbspHtml,
+              ? encodedNbspJs
+              : encodedNbspHtml,
         );
         DEV &&
           console.log(
@@ -671,8 +671,8 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
               resolvedOpts.targetLanguage === "css"
                 ? encodedNbspCss
                 : resolvedOpts.targetLanguage === "js"
-                ? encodedNbspJs
-                : encodedNbspHtml
+                  ? encodedNbspJs
+                  : encodedNbspHtml
             }"]`,
           );
       }

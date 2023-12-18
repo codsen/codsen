@@ -71,7 +71,7 @@
     }
   },
   "dependencies": {
-    "@types/lodash-es": "^4.17.9",
+    "@types/lodash-es": "^4.17.12",
     "codsen-utils": "^1.6.2",
     "lodash-es": "^4.17.21"
   }

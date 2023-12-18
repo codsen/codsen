@@ -86,11 +86,11 @@
     "various": {}
   },
   "dependencies": {
-    "@sindresorhus/is": "^6.0.0",
+    "@sindresorhus/is": "^6.1.0",
     "ast-monkey-traverse": "^4.0.13",
     "object-path": "^0.11.8"
   },
   "devDependencies": {
-    "@types/object-path": "^0.11.2"
+    "@types/object-path": "^0.11.4"
   }
 }

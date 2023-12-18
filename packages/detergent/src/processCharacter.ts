@@ -173,8 +173,8 @@ function processCharacter(
               opts.removeLineBreaks
                 ? " "
                 : opts.replaceLineBreaks
-                ? `<br${opts.useXHTML ? "/" : ""}>\n`
-                : "\n",
+                  ? `<br${opts.useXHTML ? "/" : ""}>\n`
+                  : "\n",
             );
 
             applicableOpts.removeLineBreaks = true;

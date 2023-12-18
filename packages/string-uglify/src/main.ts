@@ -262,9 +262,9 @@ function uglifyArr(arr: string[]): string[] {
         singleClasses[res[i].slice(1, 2)] = res[i];
         DEV &&
           console.log(
-            `265 shortened ${`\u001b[${33}m${
-              res[i]
-            }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
+            `265 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
+              i
+            ].slice(
               0,
               2,
             )}\u001b[${39}m`}; set ${`\u001b[${33}m${`singleClasses[${res[
@@ -291,12 +291,9 @@ function uglifyArr(arr: string[]): string[] {
         singleIds[res[i].slice(1, 2)] = res[i];
         DEV &&
           console.log(
-            `294 shortened ${`\u001b[${33}m${
-              res[i]
-            }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
-              0,
-              2,
-            )}\u001b[${39}m`};`,
+            `294 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
+              i
+            ].slice(0, 2)}\u001b[${39}m`};`,
           );
         res[i] = res[i].slice(0, 2);
       } else if (singleIds[res[i].slice(1, 2)] === res[i]) {
@@ -309,12 +306,9 @@ function uglifyArr(arr: string[]): string[] {
         singleNameonly[res[i].slice(0, 1)] = res[i];
         DEV &&
           console.log(
-            `312 shortened ${`\u001b[${33}m${
-              res[i]
-            }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
-              0,
-              1,
-            )}\u001b[${39}m`}`,
+            `309 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
+              i
+            ].slice(0, 1)}\u001b[${39}m`}`,
           );
         res[i] = res[i].slice(0, 1);
       } else if (singleNameonly[res[i].slice(0, 1)] === res[i]) {

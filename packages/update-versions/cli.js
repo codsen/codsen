@@ -433,9 +433,8 @@ if (cli.flags) {
                   singleDepName,
                 )
               ) {
-                updatedPackages[
-                  singleDepName
-                ] = `${compiledDepNameVersionPairs[singleDepName]}`;
+                updatedPackages[singleDepName] =
+                  `${compiledDepNameVersionPairs[singleDepName]}`;
               }
             }
 

@@ -70,6 +70,6 @@
     "runes": "^0.4.3"
   },
   "devDependencies": {
-    "@types/runes": "^0.4.1"
+    "@types/runes": "^0.4.3"
   }
 }

@@ -78,9 +78,9 @@
     "through2": "^4.0.2"
   },
   "devDependencies": {
-    "@types/isstream": "^0.1.0",
-    "@types/split2": "^4.2.1",
-    "@types/through2": "^2.0.39",
-    "fs-extra": "^11.1.1"
+    "@types/isstream": "^0.1.2",
+    "@types/split2": "^4.2.3",
+    "@types/through2": "^2.0.41",
+    "fs-extra": "^11.2.0"
   }
 }

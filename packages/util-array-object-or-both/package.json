@@ -70,7 +70,7 @@
     "various": {}
   },
   "dependencies": {
-    "@types/lodash-es": "^4.17.9",
+    "@types/lodash-es": "^4.17.12",
     "lodash-es": "^4.17.21"
   }
 }

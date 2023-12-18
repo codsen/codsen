@@ -14,9 +14,7 @@ const ianaSpec = fs.readFileSync(
   "utf-8",
 );
 console.log(
-  `${`\u001b[${90}m${"reference/runme.js:"}\u001b[${39}m`} read ${`\u001b[${33}m${
-    ianaSpec.length
-  }\u001b[${39}m`} characters from ${fileName}`,
+  `${`\u001b[${90}m${"reference/runme.js:"}\u001b[${39}m`} read ${`\u001b[${33}m${ianaSpec.length}\u001b[${39}m`} characters from ${fileName}`,
 );
 
 // PROCESS ianaSpec

@@ -859,7 +859,7 @@ export const interdeps = [
   },
   {
     "name": "update-versions",
-    "size": 15798,
+    "size": 15780,
     "imports": [
       "codsen-utils",
       "edit-package-json"

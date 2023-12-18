@@ -45,3 +45,4 @@ yarn-error.log*
 
 # testing tsc build output:
 dist_ts/
+.nx/cache

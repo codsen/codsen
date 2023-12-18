@@ -83,7 +83,7 @@
     "type-detect": "^4.0.8"
   },
   "devDependencies": {
-    "@types/type-detect": "^4.0.1",
-    "type-fest": "^4.4.0"
+    "@types/type-detect": "^4.0.3",
+    "type-fest": "^4.8.3"
   }
 }

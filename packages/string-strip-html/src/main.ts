@@ -974,10 +974,10 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             ? str[i] === null
               ? "null"
               : str[i] === "\n"
-              ? "line break"
-              : str[i] === "\t"
-              ? "tab"
-              : "space"
+                ? "line break"
+                : str[i] === "\t"
+                  ? "tab"
+                  : "space"
             : `${str[i]} (${str[i].charCodeAt(0)})`
         }\u001b[${39}m`}`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m`,
       );

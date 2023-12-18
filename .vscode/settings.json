@@ -2,8 +2,8 @@
   "editor.formatOnPaste": false,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
+        "source.fixAll.eslint": "explicit"
+},
   "cSpell.words": [
     "arrayiffy",
     "Butterick",

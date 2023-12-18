@@ -68,7 +68,7 @@
     "various": {}
   },
   "dependencies": {
-    "@types/json-stringify-safe": "^5.0.1",
+    "@types/json-stringify-safe": "^5.0.3",
     "js-row-num": "^7.0.12",
     "json-stringify-safe": "^5.0.1",
     "object-delete-key": "^4.0.20"

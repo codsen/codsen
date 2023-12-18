@@ -70,16 +70,16 @@
     "ast-monkey-traverse": "^4.0.13",
     "chalk": "^5.3.0",
     "codsen-utils": "^1.6.2",
-    "fs-extra": "^11.1.1",
-    "globby": "^13.2.2",
+    "fs-extra": "^11.2.0",
+    "globby": "^14.0.0",
     "is-d": "^1.0.0",
     "meow": "^12.1.1",
     "p-filter": "^3.0.0",
     "p-reduce": "^3.0.0",
     "sort-package-json": "^2.6.0",
-    "update-notifier": "^6.0.2"
+    "update-notifier": "^7.0.0"
   },
   "devDependencies": {
-    "p-map": "^6.0.0"
+    "p-map": "^7.0.0"
   }
 }

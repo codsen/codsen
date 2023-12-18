@@ -73,7 +73,7 @@
     }
   },
   "dependencies": {
-    "@types/lodash-es": "^4.17.9",
+    "@types/lodash-es": "^4.17.12",
     "codsen-utils": "^1.6.2",
     "lodash-es": "^4.17.21",
     "matcher": "^5.0.0",
@@ -81,6 +81,6 @@
     "util-nonempty": "^5.0.13"
   },
   "devDependencies": {
-    "deep-equal": "^2.2.2"
+    "deep-equal": "^2.2.3"
   }
 }

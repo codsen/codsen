@@ -105,9 +105,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     check = fs.statSync(path.resolve("../", cli.input[i]));
   } catch (e) {
     console.log(
-      `${messagePrefix} ${`\u001b[${31}m${'[ERROR_01] Error! A package with name "'}\u001b[${39}m`}${`\u001b[${33}m${
-        cli.input[i]
-      }\u001b[${39}m`}${`\u001b[${31}m${'" not found!'}\u001b[${39}m`}`,
+      `${messagePrefix} ${`\u001b[${31}m${'[ERROR_01] Error! A package with name "'}\u001b[${39}m`}${`\u001b[${33}m${cli.input[i]}\u001b[${39}m`}${`\u001b[${31}m${'" not found!'}\u001b[${39}m`}`,
     );
     continue;
   }
@@ -244,9 +242,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
         );
 
         console.log(
-          `${messagePrefix} ${`\u001b[${32}m${"Success! Package"}\u001b[${39}m`} ${`\u001b[${33}m${
-            cli.input[i]
-          }\u001b[${39}m`} ${`\u001b[${32}m${"linked!"}\u001b[${39}m`}\n${`\u001b[${90}mNew symlink created at: ${path.resolve(
+          `${messagePrefix} ${`\u001b[${32}m${"Success! Package"}\u001b[${39}m`} ${`\u001b[${33}m${cli.input[i]}\u001b[${39}m`} ${`\u001b[${32}m${"linked!"}\u001b[${39}m`}\n${`\u001b[${90}mNew symlink created at: ${path.resolve(
             "./",
             "node_modules",
             cli.input[i],
@@ -264,9 +260,9 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
       for (let y = 0, len2 = isCLI.length; y < len2; y++) {
         let binName = isCLI[y];
         console.log(
-          `${messagePrefix} processing ${`\u001b[${33}m${binName}\u001b[${39}m`} bin entry of a ${`\u001b[${35}m${
-            cli.input[i]
-          }\u001b[${39}m`} (${y + 1}/${isCLI.length})`,
+          `${messagePrefix} processing ${`\u001b[${33}m${binName}\u001b[${39}m`} bin entry of a ${`\u001b[${35}m${cli.input[i]}\u001b[${39}m`} (${
+            y + 1
+          }/${isCLI.length})`,
         );
         // 1. check does the symlink exist already
         // check if symlink already exists
@@ -307,9 +303,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           );
 
           console.log(
-            `${messagePrefix} ${`\u001b[${32}m${"Success! Package's"}\u001b[${39}m`} ${`\u001b[${33}m${
-              cli.input[i]
-            }\u001b[${39}m`} ${`\u001b[${32}m${"bin entry"}\u001b[${39}m`} ${`\u001b[${33}m"${binName}"\u001b[${39}m`} ${`\u001b[${32}m${"was linked!"}\u001b[${39}m`}\n${`\u001b[${90}mNew symlink created at: ${path.resolve(
+            `${messagePrefix} ${`\u001b[${32}m${"Success! Package's"}\u001b[${39}m`} ${`\u001b[${33}m${cli.input[i]}\u001b[${39}m`} ${`\u001b[${32}m${"bin entry"}\u001b[${39}m`} ${`\u001b[${33}m"${binName}"\u001b[${39}m`} ${`\u001b[${32}m${"was linked!"}\u001b[${39}m`}\n${`\u001b[${90}mNew symlink created at: ${path.resolve(
               "./",
               "node_modules",
               ".bin",
@@ -350,9 +344,8 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           if (!askerPackageJsonContents.devDependencies) {
             askerPackageJsonContents.devDependencies = {};
           }
-          askerPackageJsonContents.devDependencies[
-            cli.input[i]
-          ] = `^${requestedPackageJsonContents.version}`;
+          askerPackageJsonContents.devDependencies[cli.input[i]] =
+            `^${requestedPackageJsonContents.version}`;
           fs.writeJsonSync(
             path.resolve("package.json"),
             askerPackageJsonContents,
@@ -363,9 +356,8 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
           if (!askerPackageJsonContents.dependencies) {
             askerPackageJsonContents.dependencies = {};
           }
-          askerPackageJsonContents.dependencies[
-            cli.input[i]
-          ] = `^${requestedPackageJsonContents.version}`;
+          askerPackageJsonContents.dependencies[cli.input[i]] =
+            `^${requestedPackageJsonContents.version}`;
           fs.writeJsonSync(
             path.resolve("package.json"),
             askerPackageJsonContents,
@@ -383,9 +375,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     }
   } else {
     console.log(
-      `${messagePrefix} ${`\u001b[${31}m${'[ERROR_12] Error! A package with name "'}\u001b[${39}m`}${`\u001b[${33}m${
-        cli.input[i]
-      }\u001b[${39}m`}${`\u001b[${31}m${'" not found!'}\u001b[${39}m`}`,
+      `${messagePrefix} ${`\u001b[${31}m${'[ERROR_12] Error! A package with name "'}\u001b[${39}m`}${`\u001b[${33}m${cli.input[i]}\u001b[${39}m`}${`\u001b[${31}m${'" not found!'}\u001b[${39}m`}`,
     );
     continue;
   }
