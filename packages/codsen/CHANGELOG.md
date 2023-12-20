@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.2.8](https://github.com/codsen/codsen/compare/codsen@0.2.7...codsen@0.2.8) (2023-12-20)
-
-**Note:** Version bump only for package codsen
-
 ## 0.2.0 (2022-12-01)
 
 ### BREAKING CHANGES
