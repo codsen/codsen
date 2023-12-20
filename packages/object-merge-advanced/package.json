@@ -1,6 +1,6 @@
 {
   "name": "object-merge-advanced",
-  "version": "14.0.15",
+  "version": "14.0.16",
   "description": "Deeply merge JSON-like data structures",
   "keywords": [
     "advanced",

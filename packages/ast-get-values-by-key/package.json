@@ -1,6 +1,6 @@
 {
   "name": "ast-get-values-by-key",
-  "version": "5.0.15",
+  "version": "5.0.16",
   "description": "Extract values and paths from AST by keys OR set them by keys",
   "keywords": [
     "ast",
@@ -80,7 +80,7 @@
     }
   },
   "dependencies": {
-    "ast-monkey-traverse": "^4.0.13",
+    "ast-monkey-traverse": "^4.0.14",
     "matcher": "^5.0.0",
     "rfdc": "^1.3.0"
   }

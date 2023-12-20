@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.9](https://github.com/codsen/codsen/compare/bitbucket-slug@4.0.8...bitbucket-slug@4.0.9) (2023-12-20)
+
+**Note:** Version bump only for package bitbucket-slug
+
 ## 4.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

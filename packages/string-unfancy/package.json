@@ -1,6 +1,6 @@
 {
   "name": "string-unfancy",
-  "version": "6.0.13",
+  "version": "6.0.14",
   "description": "Replace all n/m dashes, curly quotes with their simpler equivalents",
   "keywords": [
     "alt",

@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-all-arrays",
-  "version": "7.0.15",
+  "version": "7.0.16",
   "description": "Merge and flatten any arrays found in all values within plain objects",
   "keywords": [
     "arrays",

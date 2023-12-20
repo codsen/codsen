@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.11](https://github.com/codsen/codsen/compare/util-array-object-or-both@5.0.10...util-array-object-or-both@5.0.11) (2023-12-20)
+
+**Note:** Version bump only for package util-array-object-or-both
+
 ## 5.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

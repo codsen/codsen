@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey-traverse",
-  "version": "4.0.13",
+  "version": "4.0.14",
   "description": "Utility library to traverse AST",
   "keywords": [
     "ast",

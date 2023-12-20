@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.13](https://github.com/codsen/codsen/compare/js-row-num-cli@3.0.12...js-row-num-cli@3.0.13) (2023-12-20)
+
+**Note:** Version bump only for package js-row-num-cli
+
 ## 3.0.3 (2022-12-22)
 
 ### Bug Fixes

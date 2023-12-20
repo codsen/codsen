@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.14](https://github.com/codsen/codsen/compare/ast-loose-compare@4.0.13...ast-loose-compare@4.0.14) (2023-12-20)
+
+**Note:** Version bump only for package ast-loose-compare
+
 ## 4.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
