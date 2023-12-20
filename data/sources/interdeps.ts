@@ -390,7 +390,7 @@ export const interdeps = [
   },
   {
     "name": "is-language-code",
-    "size": 58414,
+    "size": 58416,
     "imports": [
       "codsen-utils"
     ]
@@ -690,7 +690,7 @@ export const interdeps = [
   },
   {
     "name": "string-dashes",
-    "size": 2749,
+    "size": 2751,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -822,7 +822,7 @@ export const interdeps = [
   },
   {
     "name": "string-uglify",
-    "size": 2486,
+    "size": 2488,
     "imports": []
   },
   {
