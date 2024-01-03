@@ -56,7 +56,7 @@
     "unit": "uvu test"
   },
   "engines": {
-    "node": ">=14.18.0"
+    "node": ">=18"
   },
   "c8": {
     "check-coverage": false,
@@ -77,7 +77,7 @@
     "csv-sort": "^7.0.13",
     "globby": "^14.0.0",
     "inquirer": "^9.2.12",
-    "meow": "^12.1.1",
+    "meow": "^13.0.0",
     "update-notifier": "^7.0.0"
   }
 }
