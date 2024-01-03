@@ -24,4 +24,4 @@ For bugs, feature requests and so on, use the [Issue Tracker](https://github.com
 
 MIT License
 
-Copyright (c) 2010-2023 Roy Revelt and other contributors
+Copyright (c) 2010-2024 Roy Revelt and other contributors

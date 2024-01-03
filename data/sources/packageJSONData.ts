@@ -709,7 +709,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.3",
-      "type-fest": "^4.8.3"
+      "type-fest": "^4.9.0"
     }
   },
   "ast-contains-only-empty-space": {
@@ -1975,7 +1975,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "meow": "^12.1.1",
+      "meow": "^13.0.0",
       "update-notifier": "^7.0.0"
     }
   },
@@ -2460,7 +2460,7 @@ export const packageJSONData = {
       "csv-sort": "^7.0.13",
       "globby": "^14.0.0",
       "inquirer": "^9.2.12",
-      "meow": "^12.1.1",
+      "meow": "^13.0.0",
       "update-notifier": "^7.0.0"
     }
   },
@@ -2945,7 +2945,7 @@ export const packageJSONData = {
     "devDependencies": {
       "ast-monkey-traverse": "^4.0.14",
       "globby": "^14.0.0",
-      "p-map": "^7.0.0",
+      "p-map": "^7.0.1",
       "rfdc": "^1.3.0"
     }
   },
@@ -3266,7 +3266,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.2",
       "globby": "^14.0.0",
       "log-symbols": "^6.0.0",
-      "meow": "^12.1.1",
+      "meow": "^13.0.0",
       "update-notifier": "^7.0.0"
     }
   },
@@ -3656,7 +3656,7 @@ export const packageJSONData = {
       "generate-atomic-css": "^3.0.16",
       "globby": "^14.0.0",
       "is-d": "^1.0.0",
-      "meow": "^12.1.1",
+      "meow": "^13.0.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.0.0",
       "write-file-atomic": "^5.0.1"
@@ -4849,7 +4849,7 @@ export const packageJSONData = {
       "globby": "^14.0.0",
       "is-d": "^1.0.0",
       "js-row-num": "^7.0.13",
-      "meow": "^12.1.1",
+      "meow": "^13.0.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.0.0",
       "write-file-atomic": "^5.0.1"
@@ -4930,8 +4930,8 @@ export const packageJSONData = {
       "globby": "^14.0.0",
       "is-d": "^1.0.0",
       "json-comb-core": "^8.0.16",
-      "meow": "^12.1.1",
-      "p-map": "^7.0.0",
+      "meow": "^13.0.0",
+      "p-map": "^7.0.1",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.0.0"
     }
@@ -5018,7 +5018,7 @@ export const packageJSONData = {
       "object-merge-advanced": "^14.0.16",
       "object-no-new-keys": "^5.1.3",
       "object-set-all-values-to": "^6.0.13",
-      "p-map": "^7.0.0",
+      "p-map": "^7.0.1",
       "p-one": "^2.0.0",
       "p-reduce": "^3.0.0",
       "rfdc": "^1.3.0",
@@ -5102,14 +5102,14 @@ export const packageJSONData = {
       "fs-extra": "^11.2.0",
       "globby": "^14.0.0",
       "is-d": "^1.0.0",
-      "meow": "^12.1.1",
-      "p-filter": "^3.0.0",
+      "meow": "^13.0.0",
+      "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
       "sort-package-json": "^2.6.0",
       "update-notifier": "^7.0.0"
     },
     "devDependencies": {
-      "p-map": "^7.0.0"
+      "p-map": "^7.0.1"
     }
   },
   "json-variables": {
@@ -5359,14 +5359,14 @@ export const packageJSONData = {
       "fs-extra": "^11.2.0",
       "globby": "^14.0.0",
       "lerna-clean-changelogs": "^5.0.12",
-      "meow": "^12.1.1",
-      "p-filter": "^3.0.0",
+      "meow": "^13.0.0",
+      "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.0.0",
       "write-file-atomic": "^5.0.1"
     },
     "devDependencies": {
-      "p-map": "^7.0.0"
+      "p-map": "^7.0.1"
     }
   },
   "lerna-link-dep": {
@@ -5448,7 +5448,7 @@ export const packageJSONData = {
     "dependencies": {
       "execa": "^8.0.1",
       "fs-extra": "^11.2.0",
-      "meow": "^12.1.1",
+      "meow": "^13.0.0",
       "update-notifier": "^7.0.0"
     }
   },
@@ -7581,7 +7581,7 @@ export const packageJSONData = {
     "dependencies": {
       "@types/hast": "^3.0.3",
       "codsen-utils": "^1.6.2",
-      "fp-ts": "^2.16.1",
+      "fp-ts": "^2.16.2",
       "string-apostrophes": "^4.0.16",
       "string-dashes": "^1.2.10",
       "string-remove-widows": "^4.0.18",
@@ -10183,9 +10183,9 @@ export const packageJSONData = {
       "globby": "^14.0.0",
       "is-online": "^10.0.0",
       "log-update": "^6.0.0",
-      "meow": "^12.1.1",
+      "meow": "^13.0.0",
       "object-path": "^0.11.8",
-      "p-map": "^7.0.0",
+      "p-map": "^7.0.1",
       "p-progress": "^1.0.0",
       "p-reduce": "^3.0.0",
       "pacote": "^17.0.5",

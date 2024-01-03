@@ -107,7 +107,7 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
     content.description[0] !== content.description[0].toUpperCase()
   ) {
     content.description = `${content.description[0].toUpperCase()}${content.description.slice(
-      1
+      1,
     )}`;
   }
 
@@ -118,8 +118,8 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
       content.devDependencies,
       intersection(
         Object.keys(rootPackageJSON.devDependencies),
-        Object.keys(content.devDependencies || {})
-      )
+        Object.keys(content.devDependencies || {}),
+      ),
     );
   }
 
@@ -127,8 +127,9 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
     objectPath.del(content, "devDependencies");
   }
 
-  // ad-hoc: set engines
-  objectPath.set(content, "engines.node", ">=14.18.0");
+  if (!state.isRollup) {
+    objectPath.set(content, "engines.node", ">=18");
+  }
 
   // ---
 
@@ -158,14 +159,14 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
   try {
     await writeFileAtomic(
       "package.json",
-      `${JSON.stringify(format(content), null, 2)}\n`
+      `${JSON.stringify(format(content), null, 2)}\n`,
     );
     // console.log(`lect package.json ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`);
 
     return Promise.resolve(null);
   } catch (err) {
     console.log(
-      `lect: ${`\u001b[${31}m${"ERROR"}\u001b[${39}m`} could not write package.json - ${err}`
+      `lect: ${`\u001b[${31}m${"ERROR"}\u001b[${39}m`} could not write package.json - ${err}`,
     );
     return Promise.reject(err);
   }

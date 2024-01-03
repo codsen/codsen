@@ -84,6 +84,6 @@
   },
   "devDependencies": {
     "@types/type-detect": "^4.0.3",
-    "type-fest": "^4.8.3"
+    "type-fest": "^4.9.0"
   }
 }

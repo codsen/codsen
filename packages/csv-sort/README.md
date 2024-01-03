@@ -75,7 +75,7 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 MIT License.
 
-Copyright © 2010-2023 Roy Revelt and other contributors.
+Copyright © 2010-2024 Roy Revelt and other contributors.
 
 List of [currency signs](https://github.com/bengourley/currency-symbol-map) - Copyright © 2017 Ben Gourley - see its [BSD-2-Clause disclaimer](https://opensource.org/licenses/BSD-2-Clause)
 

@@ -55,7 +55,7 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 MIT License.
 
-Copyright © 2010-2023 Roy Revelt and other contributors.
+Copyright © 2010-2024 Roy Revelt and other contributors.
 
 Some tests and some regexes adapted from he.js
 MIT Licence - Copyright © 2013-2018 Mathias Bynens <https://mathiasbynens.be/>
