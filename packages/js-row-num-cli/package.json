@@ -56,7 +56,7 @@
     "unit": "uvu test"
   },
   "engines": {
-    "node": ">=14.18.0"
+    "node": ">=18"
   },
   "c8": {
     "check-coverage": false,
@@ -76,7 +76,7 @@
     "globby": "^14.0.0",
     "is-d": "^1.0.0",
     "js-row-num": "^7.0.13",
-    "meow": "^12.1.1",
+    "meow": "^13.0.0",
     "p-reduce": "^3.0.0",
     "update-notifier": "^7.0.0",
     "write-file-atomic": "^5.0.1"
