@@ -53,7 +53,7 @@
     "unit": "uvu test"
   },
   "engines": {
-    "node": ">=14.18.0"
+    "node": ">=18"
   },
   "c8": {
     "check-coverage": false,
@@ -75,13 +75,13 @@
     "fs-extra": "^11.2.0",
     "globby": "^14.0.0",
     "lerna-clean-changelogs": "^5.0.12",
-    "meow": "^12.1.1",
-    "p-filter": "^3.0.0",
+    "meow": "^13.0.0",
+    "p-filter": "^4.1.0",
     "p-reduce": "^3.0.0",
     "update-notifier": "^7.0.0",
     "write-file-atomic": "^5.0.1"
   },
   "devDependencies": {
-    "p-map": "^7.0.0"
+    "p-map": "^7.0.1"
   }
 }
