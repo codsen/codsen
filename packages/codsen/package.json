@@ -42,7 +42,7 @@
     "unit": "uvu test"
   },
   "engines": {
-    "node": ">=14.18.0"
+    "node": ">=18"
   },
   "c8": {
     "check-coverage": false,
@@ -58,7 +58,7 @@
     }
   },
   "dependencies": {
-    "meow": "^12.1.1",
+    "meow": "^13.0.0",
     "update-notifier": "^7.0.0"
   }
 }
