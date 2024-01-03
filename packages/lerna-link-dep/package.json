@@ -57,7 +57,7 @@
     "unit": "uvu test"
   },
   "engines": {
-    "node": ">=14.18.0"
+    "node": ">=18"
   },
   "c8": {
     "check-coverage": false,
@@ -77,7 +77,7 @@
   "dependencies": {
     "execa": "^8.0.1",
     "fs-extra": "^11.2.0",
-    "meow": "^12.1.1",
+    "meow": "^13.0.0",
     "update-notifier": "^7.0.0"
   }
 }
