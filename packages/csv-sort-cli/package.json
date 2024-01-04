@@ -77,7 +77,7 @@
     "csv-sort": "^7.0.13",
     "globby": "^14.0.0",
     "inquirer": "^9.2.12",
-    "meow": "^13.0.0",
+    "meow": "^13.1.0",
     "update-notifier": "^7.0.0"
   }
 }
