@@ -917,6 +917,37 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
       // 2. replace non-quoted values
     }
 
+    // --------------------
+    // --------------------
+    // --------------------
+    // --------------------
+    // --------------------
+    // --------------------
+    // --------------------
+    // --------------------
+    // --------------------
+    // --------------------
+    // --------------------
+    // --------------------
+
+    // at the very bottom:
+    if (
+      (currentlyWithinObject && currentlyWithinArray) ||
+      (currentlyWithinArray &&
+        typeof withinQuotesSince !== "number" &&
+        str[i] === "]" &&
+        isNotEscape(str, i - 1))
+    ) {
+      currentlyWithinArray = false;
+      currentlyWithinObject = true;
+      DEV &&
+        console.log(
+          `945 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray};  ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}`,
+        );
+    }
+
+    // logs:
+
     log(
       `${`\u001b[${withinQuotesSince ? 32 : 31}m${`withinQuotesSince${
         typeof withinQuotesSince === "number" ? `=${withinQuotesSince}` : ""
@@ -962,7 +993,7 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
 }
 
 function set(str: string, path: string, valToInsert: string | number): string {
-  DEV && console.log(`965 set()`);
+  DEV && console.log(`996 set()`);
   if (!isStr(str) || !str.length) {
     throw new Error(
       `edit-package-json/set(): [THROW_ID_01] first input argument must be a non-empty string. It was given as ${JSON.stringify(
@@ -976,7 +1007,7 @@ function set(str: string, path: string, valToInsert: string | number): string {
 }
 
 function del(str: string, path: string): string {
-  DEV && console.log(`979 del()`);
+  DEV && console.log(`1010 del()`);
   if (!isStr(str) || !str.length) {
     throw new Error(
       `edit-package-json/del(): [THROW_ID_02] first input argument must be a non-empty string. It was given as ${JSON.stringify(
