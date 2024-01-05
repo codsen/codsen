@@ -22,7 +22,7 @@ export const interdeps = [
   },
   {
     "name": "array-pull-all-with-glob",
-    "size": 577,
+    "size": 579,
     "imports": []
   },
   {
@@ -124,7 +124,7 @@ export const interdeps = [
   },
   {
     "name": "charcode-is-valid-xml-name-character",
-    "size": 1086,
+    "size": 1087,
     "imports": [
       "ranges-is-index-within"
     ]
@@ -198,7 +198,7 @@ export const interdeps = [
   },
   {
     "name": "detect-templating-language",
-    "size": 763,
+    "size": 765,
     "imports": [
       "regex-is-jinja-nunjucks",
       "regex-is-jsp",
@@ -578,7 +578,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-is-index-within",
-    "size": 811,
+    "size": 813,
     "imports": []
   },
   {
@@ -810,7 +810,7 @@ export const interdeps = [
   },
   {
     "name": "string-trim-spaces-only",
-    "size": 1117,
+    "size": 1119,
     "imports": []
   },
   {
