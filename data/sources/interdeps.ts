@@ -229,7 +229,7 @@ export const interdeps = [
   },
   {
     "name": "edit-package-json",
-    "size": 9368,
+    "size": 9433,
     "imports": [
       "codsen-utils",
       "ranges-apply",
