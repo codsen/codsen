@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.0.0](https://github.com/codsen/codsen/compare/email-homey@4.0.12...email-homey@5.0.0) (2024-01-05)
+## 5.0.0 (2024-01-05)
 
 ### Features
 

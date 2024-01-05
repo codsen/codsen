@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.0.14](https://github.com/codsen/codsen/compare/ranges-regex@6.0.13...ranges-regex@6.0.14) (2024-01-05)
-
-**Note:** Version bump only for package ranges-regex
-
 ## 6.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

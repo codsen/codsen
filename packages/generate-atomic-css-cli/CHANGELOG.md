@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.0.0](https://github.com/codsen/codsen/compare/generate-atomic-css-cli@3.0.16...generate-atomic-css-cli@4.0.0) (2024-01-05)
+## 4.0.0 (2024-01-05)
 
 ### Features
 

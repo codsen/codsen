@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.0.8](https://github.com/codsen/codsen/compare/easy-replace@6.0.7...easy-replace@6.0.8) (2024-01-05)
-
-**Note:** Version bump only for package easy-replace
-
 ## 6.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
