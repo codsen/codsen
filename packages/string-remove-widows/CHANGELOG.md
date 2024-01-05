@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.19](https://github.com/codsen/codsen/compare/string-remove-widows@4.0.18...string-remove-widows@4.0.19) (2024-01-05)
+
+**Note:** Version bump only for package string-remove-widows
+
 ## 4.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

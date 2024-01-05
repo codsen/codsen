@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/codsen/codsen/compare/email-all-chars-within-ascii-cli@3.0.20...email-all-chars-within-ascii-cli@4.0.0) (2024-01-05)
+
+### Features
+
+- require Node.js 18 ([5c831bb](https://github.com/codsen/codsen/commit/5c831bbdf06c7c7da8a6920de4148d6121c76cf7))
+
+### BREAKING CHANGES
+
+- Require Node.js 18
+
 ## 3.0.3 (2022-12-22)
 
 ### Bug Fixes

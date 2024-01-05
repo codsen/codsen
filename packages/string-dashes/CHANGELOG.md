@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.11](https://github.com/codsen/codsen/compare/string-dashes@1.2.10...string-dashes@1.2.11) (2024-01-05)
+
+**Note:** Version bump only for package string-dashes
+
 ## 1.2.0 (2023-01-06)
 
 ### Bug Fixes

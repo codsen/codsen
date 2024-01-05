@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0](https://github.com/codsen/codsen/compare/update-versions@6.0.19...update-versions@7.0.0) (2024-01-05)
+
+### Features
+
+- require Node.js 18 ([fe9ad6d](https://github.com/codsen/codsen/commit/fe9ad6dc0f6d02579c2c140d4d423c96342874bc))
+
+### BREAKING CHANGES
+
+- Require Node.js 18
+
 ## 6.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

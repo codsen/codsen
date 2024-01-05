@@ -1,6 +1,6 @@
 {
   "name": "string-bionic-split",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "Calculate a word string split position index for later highlighting",
   "keywords": [
     "string",

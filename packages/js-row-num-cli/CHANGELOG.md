@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/codsen/codsen/compare/js-row-num-cli@3.0.13...js-row-num-cli@4.0.0) (2024-01-05)
+
+### Features
+
+- require Node.js 18 ([cf303fe](https://github.com/codsen/codsen/commit/cf303fe06e224f07b21bb59483a7087bd648f4f5))
+
+### BREAKING CHANGES
+
+- Require Node.js 18
+
 ## 3.0.3 (2022-12-22)
 
 ### Bug Fixes

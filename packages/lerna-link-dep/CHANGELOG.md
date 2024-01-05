@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/codsen/codsen/compare/lerna-link-dep@3.0.11...lerna-link-dep@4.0.0) (2024-01-05)
+
+### Features
+
+- require Node.js 18 ([6b13af8](https://github.com/codsen/codsen/commit/6b13af824093000c83d60deaa7ba68a071577d02))
+
+### BREAKING CHANGES
+
+- Require Node.js 18
+
 ## 3.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

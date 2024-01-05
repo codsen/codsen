@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/codsen/codsen/compare/lerna-clean-changelogs-cli@3.0.14...lerna-clean-changelogs-cli@4.0.0) (2024-01-05)
+
+### Features
+
+- require Node.js 18 ([c63afac](https://github.com/codsen/codsen/commit/c63afac33b7cdfede73f1540b196818eb8fe1a0a))
+
+### BREAKING CHANGES
+
+- Require Node.js 18
+
 ## 3.0.1 (2022-12-06)
 
 ### Bug Fixes

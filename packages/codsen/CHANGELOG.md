@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/codsen/codsen/compare/codsen@0.2.8...codsen@0.3.0) (2024-01-05)
+
+### Features
+
+- require Node.js 18 ([3bac403](https://github.com/codsen/codsen/commit/3bac4032d551e48283fcb74834400afe13e81487))
+
+### BREAKING CHANGES
+
+- Require Node.js 18
+
 ## 0.2.0 (2022-12-01)
 
 ### BREAKING CHANGES

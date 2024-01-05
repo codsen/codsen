@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0](https://github.com/codsen/codsen/compare/gulp-email-remove-unused-css@5.0.18...gulp-email-remove-unused-css@6.0.0) (2024-01-05)
+
+### Features
+
+- require Node.js 18 ([dba4ed6](https://github.com/codsen/codsen/commit/dba4ed6f12d8180f46558a547508eccc6e4f5d32))
+
+### BREAKING CHANGES
+
+- Require Node.js 18
+
 ## 5.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

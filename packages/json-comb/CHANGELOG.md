@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/codsen/codsen/compare/json-comb@0.8.17...json-comb@0.9.0) (2024-01-05)
+
+### Features
+
+- require Node.js 18 ([7b090ee](https://github.com/codsen/codsen/commit/7b090ee3a3dab00efce7dd9a4ec014d66e02e78d))
+
+### BREAKING CHANGES
+
+- Require Node.js 18
+
 ## 0.8.0 (2022-12-01)
 
 ### BREAKING CHANGES

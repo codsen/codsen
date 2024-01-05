@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/codsen/codsen/compare/generate-atomic-css-cli@3.0.16...generate-atomic-css-cli@4.0.0) (2024-01-05)
+
+### Features
+
+- require Node.js 18 ([fb6ac50](https://github.com/codsen/codsen/commit/fb6ac508f91a587b4a9ea88d2e327b5041700670))
+
+### BREAKING CHANGES
+
+- Require Node.js 18
+
 ## 3.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

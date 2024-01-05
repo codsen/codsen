@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.22](https://github.com/codsen/codsen/compare/object-delete-key@4.0.21...object-delete-key@4.0.22) (2024-01-05)
+
+**Note:** Version bump only for package object-delete-key
+
 ## 4.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

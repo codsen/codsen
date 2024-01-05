@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.18](https://github.com/codsen/codsen/compare/edit-package-json@0.8.17...edit-package-json@0.8.18) (2024-01-05)
+
+### Bug Fixes
+
+- fix a peculiar case of nested empty arrays ([878c4b0](https://github.com/codsen/codsen/commit/878c4b0335fc36591508c7ee6c88fc26ba8e0695)), closes [#89](https://github.com/codsen/codsen/issues/89)
+
 ## 0.8.0 (2022-12-01)
 
 ### BREAKING CHANGES
