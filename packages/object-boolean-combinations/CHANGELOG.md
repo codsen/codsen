@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.1.5](https://github.com/codsen/codsen/compare/object-boolean-combinations@6.1.4...object-boolean-combinations@6.1.5) (2024-01-31)
-
-**Note:** Version bump only for package object-boolean-combinations
-
 ## 6.1.0 (2023-05-13)
 
 ### Features

@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.0.15](https://github.com/codsen/codsen/compare/ast-is-empty@4.0.14...ast-is-empty@4.0.15) (2024-01-31)
-
-**Note:** Version bump only for package ast-is-empty
-
 ## 4.0.10 (2023-05-13)
 
 ### Bug Fixes
