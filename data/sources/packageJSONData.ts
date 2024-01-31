@@ -79,8 +79,8 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@types/hast": "^3.0.3",
-      "hast-util-raw": "^9.0.1",
+      "@types/hast": "^3.0.4",
+      "hast-util-raw": "^9.0.2",
       "object-delete-key": "^4.0.22",
       "semver-regex": "^4.0.5",
       "unified": "^11.0.4",
@@ -709,7 +709,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.3",
-      "type-fest": "^4.9.0"
+      "type-fest": "^4.10.2"
     }
   },
   "ast-contains-only-empty-space": {
@@ -971,7 +971,7 @@ export const packageJSONData = {
       "ast-compare": "^4.0.22",
       "ast-monkey-traverse": "^4.0.15",
       "codsen-utils": "^1.6.3",
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     }
   },
   "ast-get-object": {
@@ -1058,7 +1058,7 @@ export const packageJSONData = {
     "dependencies": {
       "ast-compare": "^4.0.22",
       "codsen-utils": "^1.6.3",
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     }
   },
   "ast-get-values-by-key": {
@@ -1145,7 +1145,7 @@ export const packageJSONData = {
     "dependencies": {
       "ast-monkey-traverse": "^4.0.15",
       "matcher": "^5.0.0",
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     }
   },
   "ast-is-empty": {
@@ -1494,7 +1494,7 @@ export const packageJSONData = {
     "dependencies": {
       "ast-monkey-util": "^3.0.8",
       "codsen-utils": "^1.6.3",
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     },
     "devDependencies": {
       "deep-equal": "^2.2.3"
@@ -1586,7 +1586,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.6.3",
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     }
   },
   "ast-monkey-util": {
@@ -2136,7 +2136,7 @@ export const packageJSONData = {
       "is-char-suitable-for-html-attr-name": "^4.0.7",
       "is-html-attribute-closing": "^4.0.17",
       "is-html-tag-opening": "^4.0.17",
-      "rfdc": "^1.3.0",
+      "rfdc": "^1.3.1",
       "string-left-right": "^6.0.16",
       "string-match-left-right": "^9.0.17"
     },
@@ -2211,7 +2211,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     }
   },
   "color-shorthand-hex-to-six-digit": {
@@ -2291,7 +2291,7 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.6.3",
       "hex-color-regex": "^1.1.0",
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     },
     "devDependencies": {
       "@types/hex-color-regex": "^1.1.3"
@@ -2459,7 +2459,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.3",
       "csv-sort": "^7.0.14",
       "globby": "^14.0.0",
-      "inquirer": "^9.2.12",
+      "inquirer": "^9.2.13",
       "meow": "^13.1.0",
       "update-notifier": "^7.0.0"
     }
@@ -2787,7 +2787,7 @@ export const packageJSONData = {
       "string-trim-spaces-only": "^5.0.10"
     },
     "devDependencies": {
-      "rfdc": "^1.3.0",
+      "rfdc": "^1.3.1",
       "test-mixer": "^4.1.13"
     }
   },
@@ -2946,7 +2946,7 @@ export const packageJSONData = {
       "ast-monkey-traverse": "^4.0.15",
       "globby": "^14.0.0",
       "p-map": "^7.0.1",
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     }
   },
   "email-all-chars-within-ascii": {
@@ -3098,7 +3098,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.3",
       "email-all-chars-within-ascii": "^5.0.17",
       "globby": "^14.0.0",
-      "inquirer": "^9.2.12",
+      "inquirer": "^9.2.13",
       "minimist": "^1.2.8",
       "string-left-right": "^6.0.16",
       "update-notifier": "^7.0.0"
@@ -5021,7 +5021,7 @@ export const packageJSONData = {
       "p-map": "^7.0.1",
       "p-one": "^2.0.0",
       "p-reduce": "^3.0.0",
-      "rfdc": "^1.3.0",
+      "rfdc": "^1.3.1",
       "semver-compare": "^1.0.0",
       "sort-keys": "^5.0.0",
       "type-detect": "^4.0.8"
@@ -5105,7 +5105,7 @@ export const packageJSONData = {
       "meow": "^13.1.0",
       "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
-      "sort-package-json": "^2.6.0",
+      "sort-package-json": "^2.7.0",
       "update-notifier": "^7.0.0"
     },
     "devDependencies": {
@@ -5668,7 +5668,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.6.3",
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     }
   },
   "object-delete-key": {
@@ -5751,7 +5751,7 @@ export const packageJSONData = {
     "dependencies": {
       "ast-is-empty": "^4.0.14",
       "ast-monkey": "^9.0.22",
-      "rfdc": "^1.3.0",
+      "rfdc": "^1.3.1",
       "util-array-object-or-both": "^5.0.12"
     }
   },
@@ -5835,7 +5835,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.3",
       "object-all-values-equal-to": "^4.0.17",
       "object-merge-advanced": "^14.0.17",
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     }
   },
   "object-flatten-all-arrays": {
@@ -5914,7 +5914,7 @@ export const packageJSONData = {
       "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.6.3",
       "lodash-es": "^4.17.21",
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     }
   },
   "object-flatten-referencing": {
@@ -5992,7 +5992,7 @@ export const packageJSONData = {
       "arrayiffy-if-string": "^5.0.8",
       "codsen-utils": "^1.6.3",
       "matcher": "^5.0.0",
-      "rfdc": "^1.3.0",
+      "rfdc": "^1.3.1",
       "str-indexes-of-plus": "^5.0.7"
     }
   },
@@ -6075,7 +6075,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.3",
       "lodash-es": "^4.17.21",
       "matcher": "^5.0.0",
-      "rfdc": "^1.3.0",
+      "rfdc": "^1.3.1",
       "util-nonempty": "^5.0.14"
     },
     "devDependencies": {
@@ -6233,7 +6233,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.6.3",
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     }
   },
   "ranges-apply": {
@@ -6387,7 +6387,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ranges-apply": "^7.0.14",
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     }
   },
   "ranges-ent-decode": {
@@ -6762,7 +6762,7 @@ export const packageJSONData = {
       "ranges-sort": "^6.0.11"
     },
     "devDependencies": {
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     }
   },
   "ranges-offset": {
@@ -7500,7 +7500,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@types/hast": "^3.0.3",
+      "@types/hast": "^3.0.4",
       "@types/lodash-es": "^4.17.12",
       "lodash-es": "^4.17.21",
       "rehype": "^13.0.1",
@@ -7579,7 +7579,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@types/hast": "^3.0.3",
+      "@types/hast": "^3.0.4",
       "codsen-utils": "^1.6.3",
       "fp-ts": "^2.16.2",
       "string-apostrophes": "^4.0.17",
@@ -8659,7 +8659,7 @@ export const packageJSONData = {
       "all-named-html-entities": "^3.0.9",
       "codsen-utils": "^1.6.3",
       "leven": "^4.0.0",
-      "rfdc": "^1.3.0",
+      "rfdc": "^1.3.1",
       "string-left-right": "^6.0.16"
     }
   },
@@ -8739,7 +8739,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.6.3",
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     }
   },
   "string-match-left-right": {
@@ -9856,7 +9856,7 @@ export const packageJSONData = {
       "string-collapse-white-space": "^11.0.17"
     },
     "devDependencies": {
-      "rfdc": "^1.3.0",
+      "rfdc": "^1.3.1",
       "test-mixer": "^4.1.13"
     }
   },
@@ -10017,7 +10017,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "object-boolean-combinations": "^6.1.4",
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     }
   },
   "tsd-extract": {
@@ -10188,13 +10188,13 @@ export const packageJSONData = {
       "p-map": "^7.0.1",
       "p-progress": "^1.0.0",
       "p-reduce": "^3.0.0",
-      "pacote": "^17.0.5",
+      "pacote": "^17.0.6",
       "update-notifier": "^7.0.0",
       "write-file-atomic": "^5.0.1"
     },
     "devDependencies": {
       "fs-extra": "^11.2.0",
-      "rfdc": "^1.3.0"
+      "rfdc": "^1.3.1"
     }
   },
   "util-array-object-or-both": {

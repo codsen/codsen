@@ -64,7 +64,7 @@
     "various": {}
   },
   "dependencies": {
-    "@types/hast": "^3.0.3",
+    "@types/hast": "^3.0.4",
     "@types/lodash-es": "^4.17.12",
     "lodash-es": "^4.17.21",
     "rehype": "^13.0.1",

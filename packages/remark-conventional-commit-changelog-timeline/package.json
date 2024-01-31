@@ -66,8 +66,8 @@
     "various": {}
   },
   "dependencies": {
-    "@types/hast": "^3.0.3",
-    "hast-util-raw": "^9.0.1",
+    "@types/hast": "^3.0.4",
+    "hast-util-raw": "^9.0.2",
     "object-delete-key": "^4.0.22",
     "semver-regex": "^4.0.5",
     "unified": "^11.0.4",
