@@ -1,6 +1,6 @@
 {
   "name": "update-versions",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
   "keywords": [
     "app",
@@ -76,8 +76,8 @@
   },
   "dependencies": {
     "ansi-diff-stream": "^1.2.1",
-    "codsen-utils": "^1.6.3",
-    "edit-package-json": "^0.8.18",
+    "codsen-utils": "^1.6.4",
+    "edit-package-json": "^0.8.19",
     "globby": "^14.0.0",
     "is-online": "^10.0.0",
     "log-update": "^6.0.0",

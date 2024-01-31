@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-referencing",
-  "version": "7.0.17",
+  "version": "7.0.18",
   "description": "Flatten complex nested objects according to a reference objects",
   "keywords": [
     "advanced",
@@ -71,7 +71,7 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^5.0.8",
-    "codsen-utils": "^1.6.3",
+    "codsen-utils": "^1.6.4",
     "matcher": "^5.0.0",
     "rfdc": "^1.3.1",
     "str-indexes-of-plus": "^5.0.7"

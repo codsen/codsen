@@ -1,6 +1,6 @@
 {
   "name": "is-language-code",
-  "version": "5.0.11",
+  "version": "5.0.12",
   "description": "Is given string a language code (as per IANA)",
   "keywords": [
     "check",
@@ -76,6 +76,6 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.3"
+    "codsen-utils": "^1.6.4"
   }
 }
