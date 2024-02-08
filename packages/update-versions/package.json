@@ -81,7 +81,7 @@
     "globby": "^14.0.0",
     "is-online": "^10.0.0",
     "log-update": "^6.0.0",
-    "meow": "^13.1.0",
+    "meow": "^13.2.0",
     "object-path": "^0.11.8",
     "p-map": "^7.0.1",
     "p-progress": "^1.0.0",

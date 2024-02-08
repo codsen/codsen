@@ -1,6 +1,6 @@
-import fs from "fs";
-import { promisify } from "util";
+import { promises } from "fs";
 import { ensureDirSync } from "fs-extra";
+import writeFileAtomic from "write-file-atomic";
 import path from "path";
 import { test } from "uvu";
 // eslint-disable-next-line no-unused-vars
@@ -14,11 +14,8 @@ import { fileURLToPath } from "url";
 
 const clone = rfdc();
 
-const read = promisify(fs.readFile);
 const require = createRequire(import.meta.url);
 const pack = require("../package.json");
-
-const write = promisify(require("write-file-atomic"));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -132,7 +129,7 @@ test("01 - monorepo", async () => {
   // 2. asynchronously write all test files
 
   await pMap(test1FilePaths, (oneOfTestFilePaths, testIndex) =>
-    write(
+    writeFileAtomic(
       path.join(tempFolder, oneOfTestFilePaths),
       JSON.stringify(test1FileContents[testIndex], null, 2),
     ),
@@ -153,7 +150,7 @@ test("01 - monorepo", async () => {
     })
     .then(() =>
       pMap(test1FilePaths, (oneOfPaths) =>
-        read(path.join(tempFolder, oneOfPaths), "utf8"),
+        promises.readFile(path.join(tempFolder, oneOfPaths), "utf8"),
       ),
     )
     // .then(received =>
@@ -211,7 +208,7 @@ test("02 - normal repo", async () => {
   // asynchronously write all test files
 
   await pMap(test2FilePaths, (oneOfTestFilePaths, testIndex) =>
-    write(
+    writeFileAtomic(
       path.join(tempFolder, oneOfTestFilePaths),
       JSON.stringify(test2FileContents[testIndex], null, 2),
     ),
@@ -232,7 +229,7 @@ test("02 - normal repo", async () => {
     })
     .then(() =>
       pMap(test2FilePaths, (oneOfPaths) =>
-        read(path.join(tempFolder, oneOfPaths), "utf8"),
+        promises.readFile(path.join(tempFolder, oneOfPaths), "utf8"),
       ),
     )
     .then((received) =>
@@ -261,7 +258,7 @@ test("02 - normal repo", async () => {
     });
 });
 
-test("03 - deletes deps from devdeps if they are among normal deps", async () => {
+test("03 - deletes deps from dev-deps if they are among normal deps", async () => {
   let tempFolder = temporaryDirectory();
 
   // 0. We need to add redundant deps onto normal deps key in package.json:
@@ -275,7 +272,7 @@ test("03 - deletes deps from devdeps if they are among normal deps", async () =>
   // asynchronously write all test files
 
   await pMap(test2FilePaths, (oneOfTestFilePaths, testIndex) =>
-    write(
+    writeFileAtomic(
       path.join(tempFolder, oneOfTestFilePaths),
       JSON.stringify(tweakedContents[testIndex], null, 2),
     ),
@@ -296,7 +293,7 @@ test("03 - deletes deps from devdeps if they are among normal deps", async () =>
     })
     .then(() =>
       pMap(test2FilePaths, (oneOfPaths) =>
-        read(path.join(tempFolder, oneOfPaths), "utf8"),
+        promises.readFile(path.join(tempFolder, oneOfPaths), "utf8"),
       ),
     )
     .then((received) =>
@@ -307,7 +304,7 @@ test("03 - deletes deps from devdeps if they are among normal deps", async () =>
     .then((incomingContents) => {
       // array comes in, but each JSON inside in unparsed and in string format:
       let contents = incomingContents.map((arr) => JSON.parse(arr));
-      // root package.json devdeps should not contain the commitizen:
+      // root package.json dev-deps should not contain the commitizen:
       ok(!Object.keys(contents[1].devDependencies).includes("commitizen"));
     })
     .catch((err) => {
