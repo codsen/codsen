@@ -1917,7 +1917,7 @@ export const packageJSONData = {
   },
   "codsen": {
     "name": "codsen",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "Codsen CLI",
     "keywords": [
       "codsen",
@@ -2383,7 +2383,7 @@ export const packageJSONData = {
   },
   "csv-sort-cli": {
     "name": "csv-sort-cli",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
     "keywords": [
       "accountancy",
@@ -3025,7 +3025,7 @@ export const packageJSONData = {
   },
   "email-all-chars-within-ascii-cli": {
     "name": "email-all-chars-within-ascii-cli",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "description": "Command line app to scan email templates, are all their characters within ASCII range",
     "keywords": [
       "7bit",
@@ -3192,7 +3192,7 @@ export const packageJSONData = {
   },
   "email-homey": {
     "name": "email-homey",
-    "version": "5.0.1",
+    "version": "5.0.2",
     "description": "Generate homepage in the Browsersync root with links/screenshots to all your email templates",
     "keywords": [
       "browsersync",
@@ -3581,7 +3581,7 @@ export const packageJSONData = {
   },
   "generate-atomic-css-cli": {
     "name": "generate-atomic-css-cli",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "description": "Generates and updates all HTML templates’ atomic CSS",
     "keywords": [
       "atomic",
@@ -4773,7 +4773,7 @@ export const packageJSONData = {
   },
   "js-row-num-cli": {
     "name": "js-row-num-cli",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "description": "Update all row numbers in all console.logs in given files",
     "keywords": [
       "automated",
@@ -4857,7 +4857,7 @@ export const packageJSONData = {
   },
   "json-comb": {
     "name": "json-comb",
-    "version": "0.9.1",
+    "version": "0.9.2",
     "description": "Command line app to manage sets of JSON files",
     "keywords": [
       "app",
@@ -5029,7 +5029,7 @@ export const packageJSONData = {
   },
   "json-sort-cli": {
     "name": "json-sort-cli",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "description": "Command line app to deep sort JSON files, retains package.json special key order",
     "keywords": [
       "app",
@@ -5284,7 +5284,7 @@ export const packageJSONData = {
   },
   "lerna-clean-changelogs-cli": {
     "name": "lerna-clean-changelogs-cli",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "description": "CLI application to cleanse the lerna/commitizen-generated changelogs",
     "keywords": [
       "changelog",
@@ -5371,7 +5371,7 @@ export const packageJSONData = {
   },
   "lerna-link-dep": {
     "name": "lerna-link-dep",
-    "version": "4.0.0",
+    "version": "4.0.1",
     "description": "Like lerna add but does just the symlinking, works on CLI bins too",
     "keywords": [
       "add",
@@ -10102,7 +10102,7 @@ export const packageJSONData = {
   },
   "update-versions": {
     "name": "update-versions",
-    "version": "7.0.1",
+    "version": "7.0.2",
     "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
     "keywords": [
       "app",
