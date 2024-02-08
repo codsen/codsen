@@ -58,7 +58,7 @@
     }
   },
   "dependencies": {
-    "meow": "^13.1.0",
+    "meow": "^13.2.0",
     "update-notifier": "^7.0.0"
   }
 }

@@ -73,7 +73,7 @@
     "globby": "^14.0.0",
     "is-d": "^1.0.0",
     "json-comb-core": "^8.0.18",
-    "meow": "^13.1.0",
+    "meow": "^13.2.0",
     "p-map": "^7.0.1",
     "p-reduce": "^3.0.0",
     "update-notifier": "^7.0.0"

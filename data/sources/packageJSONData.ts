@@ -1975,7 +1975,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "meow": "^13.1.0",
+      "meow": "^13.2.0",
       "update-notifier": "^7.0.0"
     }
   },
@@ -2459,8 +2459,8 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.4",
       "csv-sort": "^7.0.15",
       "globby": "^14.0.0",
-      "inquirer": "^9.2.13",
-      "meow": "^13.1.0",
+      "inquirer": "^9.2.14",
+      "meow": "^13.2.0",
       "update-notifier": "^7.0.0"
     }
   },
@@ -3098,7 +3098,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.4",
       "email-all-chars-within-ascii": "^5.0.18",
       "globby": "^14.0.0",
-      "inquirer": "^9.2.13",
+      "inquirer": "^9.2.14",
       "minimist": "^1.2.8",
       "string-left-right": "^6.0.17",
       "update-notifier": "^7.0.0"
@@ -3266,7 +3266,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.4",
       "globby": "^14.0.0",
       "log-symbols": "^6.0.0",
-      "meow": "^13.1.0",
+      "meow": "^13.2.0",
       "update-notifier": "^7.0.0"
     }
   },
@@ -3656,7 +3656,7 @@ export const packageJSONData = {
       "generate-atomic-css": "^3.0.18",
       "globby": "^14.0.0",
       "is-d": "^1.0.0",
-      "meow": "^13.1.0",
+      "meow": "^13.2.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.0.0",
       "write-file-atomic": "^5.0.1"
@@ -4849,7 +4849,7 @@ export const packageJSONData = {
       "globby": "^14.0.0",
       "is-d": "^1.0.0",
       "js-row-num": "^7.0.15",
-      "meow": "^13.1.0",
+      "meow": "^13.2.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.0.0",
       "write-file-atomic": "^5.0.1"
@@ -4930,7 +4930,7 @@ export const packageJSONData = {
       "globby": "^14.0.0",
       "is-d": "^1.0.0",
       "json-comb-core": "^8.0.18",
-      "meow": "^13.1.0",
+      "meow": "^13.2.0",
       "p-map": "^7.0.1",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.0.0"
@@ -5102,7 +5102,7 @@ export const packageJSONData = {
       "fs-extra": "^11.2.0",
       "globby": "^14.0.0",
       "is-d": "^1.0.0",
-      "meow": "^13.1.0",
+      "meow": "^13.2.0",
       "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
       "sort-package-json": "^2.7.0",
@@ -5359,7 +5359,7 @@ export const packageJSONData = {
       "fs-extra": "^11.2.0",
       "globby": "^14.0.0",
       "lerna-clean-changelogs": "^5.0.14",
-      "meow": "^13.1.0",
+      "meow": "^13.2.0",
       "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.0.0",
@@ -5448,7 +5448,7 @@ export const packageJSONData = {
     "dependencies": {
       "execa": "^8.0.1",
       "fs-extra": "^11.2.0",
-      "meow": "^13.1.0",
+      "meow": "^13.2.0",
       "update-notifier": "^7.0.0"
     }
   },
@@ -10183,7 +10183,7 @@ export const packageJSONData = {
       "globby": "^14.0.0",
       "is-online": "^10.0.0",
       "log-update": "^6.0.0",
-      "meow": "^13.1.0",
+      "meow": "^13.2.0",
       "object-path": "^0.11.8",
       "p-map": "^7.0.1",
       "p-progress": "^1.0.0",

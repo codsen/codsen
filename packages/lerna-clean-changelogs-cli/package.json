@@ -75,7 +75,7 @@
     "fs-extra": "^11.2.0",
     "globby": "^14.0.0",
     "lerna-clean-changelogs": "^5.0.14",
-    "meow": "^13.1.0",
+    "meow": "^13.2.0",
     "p-filter": "^4.1.0",
     "p-reduce": "^3.0.0",
     "update-notifier": "^7.0.0",
