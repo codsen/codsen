@@ -1,6 +1,6 @@
 {
   "name": "json-comb",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "Command line app to manage sets of JSON files",
   "keywords": [
     "app",
