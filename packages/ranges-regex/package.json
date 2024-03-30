@@ -1,6 +1,6 @@
 {
   "name": "ranges-regex",
-  "version": "6.0.15",
+  "version": "6.0.16",
   "description": "Integrate regex operations into Ranges workflow",
   "keywords": [
     "array",
@@ -77,6 +77,6 @@
     "ranges-merge": "^9.0.15"
   },
   "devDependencies": {
-    "ranges-apply": "^7.0.15"
+    "ranges-apply": "^7.0.16"
   }
 }

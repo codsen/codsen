@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.16](https://github.com/codsen/codsen/compare/ranges-crop@6.0.15...ranges-crop@6.0.16) (2024-03-30)
+
+**Note:** Version bump only for package ranges-crop
+
 ## 6.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

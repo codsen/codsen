@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.24](https://github.com/codsen/codsen/compare/codsen-tokenizer@7.0.23...codsen-tokenizer@7.0.24) (2024-03-30)
+
+### Bug Fixes
+
+- remove an unused import ([f97b2d8](https://github.com/codsen/codsen/commit/f97b2d8a75cda25afb7e3485aa26595dbc6988c0))
+
 ## 7.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

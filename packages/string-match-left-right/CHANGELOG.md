@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.19](https://github.com/codsen/codsen/compare/string-match-left-right@9.0.18...string-match-left-right@9.0.19) (2024-03-30)
+
+### Bug Fixes
+
+- rebase with optional chain ([f4ae8fb](https://github.com/codsen/codsen/commit/f4ae8fb0a1d4bb4b6c3c5dca979c7915d3a28cf8))
+
 ## 9.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

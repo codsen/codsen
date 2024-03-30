@@ -1,6 +1,6 @@
 {
   "name": "stristri",
-  "version": "5.0.23",
+  "version": "5.0.24",
   "description": "Extracts or deletes HTML, CSS, text and/or templating tags from string",
   "keywords": [
     "code",
@@ -74,11 +74,11 @@
     "various": {}
   },
   "dependencies": {
-    "codsen-tokenizer": "^7.0.23",
+    "codsen-tokenizer": "^7.0.24",
     "detect-templating-language": "^4.0.10",
-    "ranges-apply": "^7.0.15",
+    "ranges-apply": "^7.0.16",
     "ranges-merge": "^9.0.15",
-    "string-collapse-white-space": "^11.0.18"
+    "string-collapse-white-space": "^11.0.19"
   },
   "devDependencies": {
     "rfdc": "^1.3.1",
