@@ -10,7 +10,7 @@
 // Quotes could be checked here but are not at the moment, here currently
 // we deal with ESP tokens only
 
-import { Layer, LayerEsp } from "./util";
+import { Layer } from "./util";
 
 declare let DEV: boolean;
 
@@ -48,7 +48,7 @@ function matchLayerLast(
     // match every character from the last "layers" complex-type entry must be
     // present in the extracted lump
     Array.from(wholeEspTagLump).every((char) =>
-      (whichLayerToMatch as LayerEsp).guessedClosingLump.includes(char),
+      whichLayerToMatch.guessedClosingLump.includes(char),
     ) ||
     // consider ruby heads, <%# and tails -%>
     (whichLayerToMatch.guessedClosingLump &&
