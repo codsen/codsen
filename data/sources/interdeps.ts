@@ -207,7 +207,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "size": 24389,
+    "size": 24391,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
