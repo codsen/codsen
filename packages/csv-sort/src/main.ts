@@ -180,7 +180,7 @@ function sort(input: string): Res {
   /* c8 ignore next */
   if (nonEmptyColsStartAt !== 0) {
     content = content.map((arr) =>
-      arr.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart as number),
+      arr.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart),
     );
     schema = schema.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart);
   }

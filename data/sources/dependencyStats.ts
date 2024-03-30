@@ -13,6 +13,7 @@ interface DependencyStats {
 
 export const dependencyStats: DependencyStats = {
   "allExternalDeps": [
+    "@ljharb/through",
     "@sindresorhus/is",
     "@types/hast",
     "@types/json-stringify-safe",
@@ -144,6 +145,7 @@ export const dependencyStats: DependencyStats = {
     "util-nonempty"
   ],
   "dependencies": {
+    "@ljharb/through": 1,
     "@sindresorhus/is": 1,
     "@types/hast": 2,
     "@types/json-stringify-safe": 2,

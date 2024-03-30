@@ -73,7 +73,7 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^5.0.8",
-    "globby": "^14.0.0",
+    "globby": "^14.0.1",
     "is-d": "^1.0.0",
     "js-row-num": "^7.0.15",
     "meow": "^13.2.0",

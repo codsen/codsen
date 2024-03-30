@@ -73,7 +73,7 @@
   "dependencies": {
     "chalk": "^5.3.0",
     "fs-extra": "^11.2.0",
-    "globby": "^14.0.0",
+    "globby": "^14.0.1",
     "lerna-clean-changelogs": "^5.0.14",
     "meow": "^13.2.0",
     "p-filter": "^4.1.0",

@@ -372,7 +372,7 @@ export const interdeps = [
   },
   {
     "name": "is-html-attribute-closing",
-    "size": 5142,
+    "size": 5137,
     "imports": [
       "html-all-known-attributes",
       "is-char-suitable-for-html-attr-name",
@@ -739,7 +739,7 @@ export const interdeps = [
   },
   {
     "name": "string-match-left-right",
-    "size": 5700,
+    "size": 5649,
     "imports": [
       "arrayiffy-if-string",
       "codsen-utils",

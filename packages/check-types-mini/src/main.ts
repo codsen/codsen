@@ -55,7 +55,7 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
     }
     return Array.from(originalInput).filter(
       (originalVal) =>
-        !(toBeRemoved as string[]).some((remVal) =>
+        !toBeRemoved.some((remVal) =>
           isMatch(originalVal, remVal, {
             caseSensitive: true,
           }),
