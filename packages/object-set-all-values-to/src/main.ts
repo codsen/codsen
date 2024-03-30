@@ -33,7 +33,7 @@ function setAllValuesTo(input: Obj, value?: any): Obj {
   } else if (isObj(inp)) {
     Object.keys(inp).forEach((key) => {
       if (Array.isArray(inp[key]) || isObj(inp[key])) {
-        inp[key] = setAllValuesTo(inp[key], val);
+        inp[key] = setAllValuesTo(inp[key] as Obj, val);
       } else {
         inp[key] = val;
       }
