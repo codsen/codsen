@@ -32,7 +32,7 @@ function flattenAllArrays(input: Obj, opts?: Partial<Opts>): Obj {
 
   let resolvedOpts: Opts = { ...defaults, ...opts };
 
-  let incommingObj = clone(input);
+  let incomingObj = clone(input);
   let isFirstObj;
   let combinedObj;
   let firstObjIndex;
@@ -41,47 +41,50 @@ function flattenAllArrays(input: Obj, opts?: Partial<Opts>): Obj {
   // ======
 
   // 1. check current
-  if (Array.isArray(incommingObj)) {
+  if (Array.isArray(incomingObj)) {
     if (
       resolvedOpts.flattenArraysContainingStringsToBeEmpty &&
-      arrayContainsStr(incommingObj)
+      arrayContainsStr(incomingObj)
     ) {
       return [];
     }
     isFirstObj = null;
     combinedObj = {};
     firstObjIndex = 0;
-    for (let i = 0, len = incommingObj.length; i < len; i++) {
-      if (isObj(incommingObj[i])) {
-        combinedObj = merge(combinedObj, incommingObj[i]);
+    for (let i = 0, len = incomingObj.length; i < len; i++) {
+      if (isObj(incomingObj[i])) {
+        combinedObj = merge(combinedObj, incomingObj[i]);
         if (isFirstObj === null) {
           isFirstObj = true;
           firstObjIndex = i;
         } else {
-          incommingObj.splice(i, 1);
+          incomingObj.splice(i, 1);
           i -= 1;
         }
       }
     }
     if (isFirstObj !== null) {
-      incommingObj[firstObjIndex] = clone(combinedObj);
+      incomingObj[firstObjIndex] = clone(combinedObj);
     }
   }
   // 2. traverse deeper
-  if (isObj(incommingObj)) {
-    Object.keys(incommingObj).forEach((key) => {
-      if (isObj(incommingObj[key]) || Array.isArray(incommingObj[key])) {
-        incommingObj[key] = flattenAllArrays(incommingObj[key], resolvedOpts);
+  if (isObj(incomingObj)) {
+    Object.keys(incomingObj).forEach((key) => {
+      if (isObj(incomingObj[key]) || Array.isArray(incomingObj[key])) {
+        incomingObj[key] = flattenAllArrays(
+          incomingObj[key] as Obj,
+          resolvedOpts,
+        );
       }
     });
-  } else if (Array.isArray(incommingObj)) {
-    incommingObj.forEach((_el, i) => {
-      if (isObj(incommingObj[i]) || Array.isArray(incommingObj[i])) {
-        incommingObj[i] = flattenAllArrays(incommingObj[i], resolvedOpts);
+  } else if (Array.isArray(incomingObj)) {
+    incomingObj.forEach((_el, i) => {
+      if (isObj(incomingObj[i]) || Array.isArray(incomingObj[i])) {
+        incomingObj[i] = flattenAllArrays(incomingObj[i], resolvedOpts);
       }
     });
   }
-  return incommingObj;
+  return incomingObj;
 }
 
 export { flattenAllArrays, defaults, version };
