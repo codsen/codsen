@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [7.0.3](https://github.com/codsen/codsen/compare/update-versions@7.0.2...update-versions@7.0.3) (2024-03-30)
-
-**Note:** Version bump only for package update-versions
-
 ## 7.0.0 (2024-01-05)
 
 ### Features
