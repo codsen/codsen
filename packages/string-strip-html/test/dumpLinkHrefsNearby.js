@@ -880,4 +880,24 @@ test("44", () => {
   );
 });
 
+test("45 - Empty href", () => {
+  let source = `
+  <div>
+    <p>Empty href
+      <a href="">Click here</a>
+    </p>
+  </div>
+  `;
+
+  equal(
+    stripHtml(source, {
+      dumpLinkHrefsNearby: {
+        enabled: true,
+      },
+    }).result,
+    "Empty href\nClick here",
+    "45.01",
+  );
+});
+
 test.run();

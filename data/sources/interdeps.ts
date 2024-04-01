@@ -800,7 +800,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 20640,
+    "size": 20658,
     "imports": [
       "codsen-utils",
       "ranges-apply",
