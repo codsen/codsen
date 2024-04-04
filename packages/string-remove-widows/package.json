@@ -1,6 +1,6 @@
 {
   "name": "string-remove-widows",
-  "version": "4.0.21",
+  "version": "4.0.22",
   "description": "Helps to prevent widow words in a text",
   "keywords": [
     "against",
@@ -82,6 +82,6 @@
     "string-match-left-right": "^9.0.19"
   },
   "devDependencies": {
-    "string-strip-html": "^13.4.7"
+    "string-strip-html": "^13.4.8"
   }
 }

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [13.4.8](https://github.com/codsen/codsen/compare/string-strip-html@13.4.7...string-strip-html@13.4.8) (2024-04-04)
+
+### Bug Fixes
+
+- do not store value into attrObj if empty quotes ([9faad8f](https://github.com/codsen/codsen/commit/9faad8f827f11a9d3ec5ab0597c8101ace60b951))
+
 ## 8.5.0 (2023-05-14)
 
 ### Features
