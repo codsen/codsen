@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [13.4.8](https://github.com/codsen/codsen/compare/string-strip-html@13.4.7...string-strip-html@13.4.8) (2024-04-04)
+## 13.4.8 (2024-04-04)
 
 ### Bug Fixes
 
