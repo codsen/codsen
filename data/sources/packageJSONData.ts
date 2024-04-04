@@ -2694,7 +2694,7 @@ export const packageJSONData = {
   },
   "detergent": {
     "name": "detergent",
-    "version": "9.2.10",
+    "version": "9.2.11",
     "description": "Extract, clean, encode text and fix English style",
     "keywords": [
       "brief",
@@ -2782,8 +2782,8 @@ export const packageJSONData = {
       "string-fix-broken-named-entities": "^7.0.17",
       "string-left-right": "^6.0.17",
       "string-range-expander": "^4.0.14",
-      "string-remove-widows": "^4.0.21",
-      "string-strip-html": "^13.4.7",
+      "string-remove-widows": "^4.0.22",
+      "string-strip-html": "^13.4.8",
       "string-trim-spaces-only": "^5.0.10"
     },
     "devDependencies": {
@@ -3429,7 +3429,7 @@ export const packageJSONData = {
   },
   "extract-search-index": {
     "name": "extract-search-index",
-    "version": "2.0.22",
+    "version": "2.0.23",
     "description": "Extract unique keyword input list string for search",
     "keywords": [
       "string",
@@ -3500,7 +3500,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "string-strip-html": "^13.4.7",
+      "string-strip-html": "^13.4.8",
       "string-unfancy": "^6.0.16"
     }
   },
@@ -7512,7 +7512,7 @@ export const packageJSONData = {
   },
   "remark-typography": {
     "name": "remark-typography",
-    "version": "0.6.19",
+    "version": "0.6.20",
     "description": "Remark plugin to fix typography: quotes, dashes and so on.",
     "keywords": [
       "unified",
@@ -7585,7 +7585,7 @@ export const packageJSONData = {
       "fp-ts": "^2.16.5",
       "string-apostrophes": "^4.0.19",
       "string-dashes": "^1.2.13",
-      "string-remove-widows": "^4.0.21",
+      "string-remove-widows": "^4.0.22",
       "unified": "^11.0.4",
       "unist-util-visit": "^5.0.0"
     }
@@ -9211,7 +9211,7 @@ export const packageJSONData = {
   },
   "string-remove-widows": {
     "name": "string-remove-widows",
-    "version": "4.0.21",
+    "version": "4.0.22",
     "description": "Helps to prevent widow words in a text",
     "keywords": [
       "against",
@@ -9293,7 +9293,7 @@ export const packageJSONData = {
       "string-match-left-right": "^9.0.19"
     },
     "devDependencies": {
-      "string-strip-html": "^13.4.7"
+      "string-strip-html": "^13.4.8"
     }
   },
   "string-split-by-whitespace": {
@@ -9380,7 +9380,7 @@ export const packageJSONData = {
   },
   "string-strip-html": {
     "name": "string-strip-html",
-    "version": "13.4.7",
+    "version": "13.4.8",
     "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
     "keywords": [
       "code",
