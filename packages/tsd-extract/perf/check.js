@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 // deps
 import path from "path";
 

@@ -80,6 +80,6 @@
     "update-notifier": "^7.0.0"
   },
   "devDependencies": {
-    "p-map": "^7.0.1"
+    "p-map": "^7.0.2"
   }
 }

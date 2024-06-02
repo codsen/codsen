@@ -67,7 +67,7 @@
   },
   "dependencies": {
     "@types/hast": "^3.0.4",
-    "hast-util-raw": "^9.0.2",
+    "hast-util-raw": "^9.0.3",
     "object-delete-key": "^4.0.24",
     "semver-regex": "^4.0.5",
     "unified": "^11.0.4",

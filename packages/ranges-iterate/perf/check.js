@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /* eslint no-unused-vars:0 */
 
 // deps

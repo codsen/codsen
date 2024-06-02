@@ -83,10 +83,10 @@
     "log-update": "^6.0.0",
     "meow": "^13.2.0",
     "object-path": "^0.11.8",
-    "p-map": "^7.0.1",
+    "p-map": "^7.0.2",
     "p-progress": "^1.0.0",
     "p-reduce": "^3.0.0",
-    "pacote": "^17.0.6",
+    "pacote": "^18.0.6",
     "update-notifier": "^7.0.0",
     "write-file-atomic": "^5.0.1"
   },

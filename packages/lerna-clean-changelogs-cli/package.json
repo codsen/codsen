@@ -82,6 +82,6 @@
     "write-file-atomic": "^5.0.1"
   },
   "devDependencies": {
-    "p-map": "^7.0.1"
+    "p-map": "^7.0.2"
   }
 }

@@ -86,7 +86,7 @@
     "various": {}
   },
   "dependencies": {
-    "@sindresorhus/is": "^6.2.0",
+    "@sindresorhus/is": "^6.3.1",
     "ast-monkey-traverse": "^4.0.16",
     "object-path": "^0.11.8"
   },
