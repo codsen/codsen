@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.6.21](https://github.com/codsen/codsen/compare/remark-typography@0.6.20...remark-typography@0.6.21) (2024-06-02)
-
-**Note:** Version bump only for package remark-typography
-
 ## 0.6.0 (2022-12-27)
 
 ### Features
