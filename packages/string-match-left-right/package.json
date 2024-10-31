@@ -1,6 +1,6 @@
 {
   "name": "string-match-left-right",
-  "version": "9.0.19",
+  "version": "9.0.20",
   "description": "Match substrings on the left or right of a given index, ignoring whitespace",
   "keywords": [
     "left",
@@ -69,7 +69,7 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^5.0.8",
-    "codsen-utils": "^1.6.4",
+    "codsen-utils": "^1.6.5",
     "string-character-is-astral-surrogate": "^3.0.9"
   }
 }

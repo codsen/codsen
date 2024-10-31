@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.12](https://github.com/codsen/codsen/compare/remark-conventional-commit-changelog-timeline@3.1.11...remark-conventional-commit-changelog-timeline@3.1.12) (2024-10-31)
+
+**Note:** Version bump only for package remark-conventional-commit-changelog-timeline
+
 ## 3.1.0 (2023-05-21)
 
 ### Features

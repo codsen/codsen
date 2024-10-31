@@ -1,6 +1,6 @@
 {
   "name": "email-homey",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "description": "Generate homepage in the Browsersync root with links/screenshots to all your email templates",
   "keywords": [
     "browsersync",
@@ -71,7 +71,7 @@
   },
   "dependencies": {
     "chalk": "^5.3.0",
-    "codsen-utils": "^1.6.4",
+    "codsen-utils": "^1.6.5",
     "globby": "^14.0.2",
     "log-symbols": "^7.0.0",
     "meow": "^13.2.0",

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.4](https://github.com/codsen/codsen/compare/email-homey@5.0.3...email-homey@5.0.4) (2024-10-31)
+
+**Note:** Version bump only for package email-homey
+
 ## 5.0.0 (2024-01-05)
 
 ### Features

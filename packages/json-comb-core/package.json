@@ -1,6 +1,6 @@
 {
   "name": "json-comb-core",
-  "version": "8.0.20",
+  "version": "8.0.21",
   "description": "The inner core of json-comb",
   "keywords": [
     "comb",
@@ -73,13 +73,13 @@
   "dependencies": {
     "@types/lodash-es": "^4.17.12",
     "@types/semver-compare": "^1.0.3",
-    "codsen-utils": "^1.6.4",
+    "codsen-utils": "^1.6.5",
     "lodash-es": "^4.17.21",
-    "object-fill-missing-keys": "^11.0.18",
-    "object-flatten-all-arrays": "^7.0.19",
-    "object-merge-advanced": "^14.0.18",
-    "object-no-new-keys": "^5.1.5",
-    "object-set-all-values-to": "^6.0.16",
+    "object-fill-missing-keys": "^11.0.19",
+    "object-flatten-all-arrays": "^7.0.20",
+    "object-merge-advanced": "^14.0.19",
+    "object-no-new-keys": "^5.1.6",
+    "object-set-all-values-to": "^6.0.17",
     "p-map": "^7.0.2",
     "p-one": "^2.0.0",
     "p-reduce": "^3.0.0",

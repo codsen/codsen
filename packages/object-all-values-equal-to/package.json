@@ -1,6 +1,6 @@
 {
   "name": "object-all-values-equal-to",
-  "version": "4.0.18",
+  "version": "4.0.19",
   "description": "Does the AST/nested-plain-object/array/whatever contain only one kind of value?",
   "keywords": [
     "all",
@@ -72,7 +72,7 @@
   },
   "dependencies": {
     "@types/lodash-es": "^4.17.12",
-    "codsen-utils": "^1.6.4",
+    "codsen-utils": "^1.6.5",
     "lodash-es": "^4.17.21"
   }
 }

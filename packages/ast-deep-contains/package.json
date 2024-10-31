@@ -1,6 +1,6 @@
 {
   "name": "ast-deep-contains",
-  "version": "5.0.20",
+  "version": "5.0.21",
   "description": "Like t.same assert on array of objects, where element order doesn't matter.",
   "keywords": [
     "array",
@@ -87,7 +87,7 @@
   },
   "dependencies": {
     "@sindresorhus/is": "^7.0.1",
-    "ast-monkey-traverse": "^4.0.16",
+    "ast-monkey-traverse": "^4.0.17",
     "object-path": "^0.11.8"
   },
   "devDependencies": {

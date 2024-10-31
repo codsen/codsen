@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.19](https://github.com/codsen/codsen/compare/object-all-values-equal-to@4.0.18...object-all-values-equal-to@4.0.19) (2024-10-31)
+
+**Note:** Version bump only for package object-all-values-equal-to
+
 ## 4.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
