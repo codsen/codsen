@@ -107,13 +107,6 @@ module.exports = {
         "@typescript-eslint/no-unnecessary-type-assertion": "error",
         "@typescript-eslint/adjacent-overload-signatures": "error",
         "@typescript-eslint/no-confusing-void-expression": "error",
-        "@typescript-eslint/lines-between-class-members": [
-          "error",
-          "always",
-          {
-            exceptAfterSingleLine: true,
-          },
-        ],
         "@typescript-eslint/prefer-namespace-keyword": "error",
         "@typescript-eslint/restrict-plus-operands": "error",
         "@typescript-eslint/no-useless-constructor": "error",
@@ -157,7 +150,6 @@ module.exports = {
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/restrict-template-expressions": "off",
 
-        "lines-between-class-members": "off",
         "no-useless-constructor": "off",
         "no-unused-expressions": "off",
         "no-dupe-class-members": "off",

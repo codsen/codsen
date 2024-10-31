@@ -10,7 +10,7 @@ import meow from "meow";
 import path from "path";
 import chalk from "chalk";
 import { sort } from "csv-sort";
-import inquirer from "inquirer";
+import { select, confirm } from "@inquirer/prompts";
 import { globbySync } from "globby";
 import { createRequire } from "module";
 import updateNotifier from "update-notifier";
@@ -21,10 +21,10 @@ const { log } = console;
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
 
-const state = {};
-state.toDoList = []; // default
-state.overwrite = false; // default
-const ui = new inquirer.ui.BottomBar();
+const state = {
+  toDoList: [],
+  overwrite: false,
+};
 const cli = meow(
   `
   Usage
@@ -63,9 +63,7 @@ function hasOwnProperty(obj, prop) {
 //   toDoList - array,
 //   overwrite - boolean
 // }
-function offerAListOfCSVsToPickFrom(stateObj) {
-  // This means, it was called without any arguments.
-  // That's fine.
+async function offerAListOfCSVsToPickFrom(stateObj) {
   let allCSVsHere = globbySync("./*.csv", "!**/node_modules/**");
   if (!allCSVsHere.length) {
     return Promise.reject(
@@ -74,36 +72,29 @@ function offerAListOfCSVsToPickFrom(stateObj) {
       ),
     );
   }
-  ui.log.write(chalk.grey("To quit, press CTRL+C"));
-  let questions = [
-    {
-      type: "list",
-      name: "file",
-      message: "Which CSV would you like to check?",
-      choices: allCSVsHere,
-    },
-  ];
+
+  let chosenCSVFile = await select({
+    message: "Which CSV would you like to check?",
+    choices: allCSVsHere,
+  });
+
+  let overwrite = false;
+
   if (
     stateObj === undefined ||
     !hasOwnProperty(stateObj, "overwrite") ||
     (hasOwnProperty(stateObj, "overwrite") && stateObj.overwrite === false) ||
     typeof stateObj.overwrite !== "boolean"
   ) {
-    questions.push({
-      type: "list",
-      name: "overwrite",
+    overwrite = await confirm({
       message: "Do you want to overwrite this file with a sorted result?",
-      choices: [
-        { name: "yes", value: true },
-        { name: "no", value: false },
-      ],
     });
   }
-  ui.log.write(chalk.yellow("Please pick a file:"));
-  return inquirer.prompt(questions).then((answer) => ({
-    toDoList: [path.basename(answer.file)],
-    overwrite: answer.overwrite || false,
-  }));
+
+  return {
+    toDoList: [path.basename(chosenCSVFile)],
+    overwrite,
+  };
 }
 
 // Step #0. take care of -v and -h flags that are left out in meow.
@@ -132,7 +123,7 @@ if (Object.keys(cli.flags).length !== 0) {
 }
 
 if (cli.flags.o) {
-  // variables that can be misinterpreted as falsey, yet the flag still be in
+  // variables that can be misinterpreted as falsy, yet the flag still be in
   // for example, in "csvsort -o false simples.csv simples2.csv",
   // the cli.flags.overwrite === false (WTF?)
   state.overwrite = true; // we normalise the flag since its value in CLI can precede

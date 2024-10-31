@@ -75,9 +75,9 @@
     }
   },
   "dependencies": {
-    "execa": "^9.1.0",
+    "execa": "^9.5.1",
     "fs-extra": "^11.2.0",
     "meow": "^13.2.0",
-    "update-notifier": "^7.0.0"
+    "update-notifier": "^7.3.1"
   }
 }

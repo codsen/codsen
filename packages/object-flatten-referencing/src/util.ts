@@ -3,7 +3,7 @@ import {
   isStr,
   isPlainObject as isObj,
   JSONObject,
-  JSONArray,
+  // JSONArray,
 } from "codsen-utils";
 
 const clone = rfdc();
@@ -59,14 +59,11 @@ function flattenObject(obj: JSONObject, opts?: Partial<Opts>): any[] {
   if (isObj(resolvedObj)) {
     Object.keys(resolvedObj).forEach((key) => {
       if (isObj(resolvedObj[key])) {
-        resolvedObj[key] = flattenObject(
-          resolvedObj[key] as JSONObject,
-          resolvedOpts,
-        );
+        resolvedObj[key] = flattenObject(resolvedObj[key], resolvedOpts);
       }
       if (Array.isArray(resolvedObj[key])) {
         res = res.concat(
-          (resolvedObj[key] as JSONArray).map(
+          resolvedObj[key].map(
             (el: any) => `${key}${resolvedOpts.objectKeyAndValueJoinChar}${el}`,
           ),
         );

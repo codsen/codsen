@@ -1,5 +1,3 @@
-/* eslint no-bitwise:0, @typescript-eslint/explicit-module-boundary-types:0, @typescript-eslint/ban-types:0 */
-
 import { isPlainObject as isObj, Obj, intersection } from "codsen-utils";
 import rfdc from "rfdc";
 import { version as v } from "../package.json";

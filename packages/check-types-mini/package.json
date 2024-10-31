@@ -77,6 +77,6 @@
     "codsen-utils": "^1.6.4",
     "matcher": "^5.0.0",
     "object-path": "^0.11.8",
-    "type-detect": "^4.0.8"
+    "type-detect": "^4.1.0"
   }
 }

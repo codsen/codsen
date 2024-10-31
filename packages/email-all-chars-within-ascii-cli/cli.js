@@ -8,7 +8,7 @@ import chalk from "chalk";
 import fs from "fs";
 import argv from "minimist";
 import { globbySync } from "globby";
-import inquirer from "inquirer";
+import { select } from "@inquirer/prompts";
 import { pullAll } from "codsen-utils";
 import { createRequire } from "module";
 import { right } from "string-left-right";
@@ -40,8 +40,7 @@ const help = `
 `;
 updateNotifier({ pkg }).notify();
 
-function offerAListOfFilesToPickFrom() {
-  let ui = new inquirer.ui.BottomBar();
+async function offerAListOfFilesToPickFrom() {
   let allFilesHere = globbySync("./*.*", "!**/node_modules/**");
   if (!allFilesHere.length) {
     log(
@@ -50,19 +49,15 @@ function offerAListOfFilesToPickFrom() {
     );
     return process.exit(1);
   }
-  ui.log.write(chalk.grey("To quit, press CTRL+C"));
-  let questions = [
-    {
-      type: "list",
-      name: "file",
-      message: "Which file would you like to check?",
-      choices: allFilesHere,
-    },
-  ];
-  ui.log.write(chalk.yellow("Please pick a file:"));
-  return inquirer.prompt(questions).then((answer) => ({
-    toDoList: [path.basename(answer.file)],
-  }));
+
+  let chosenFile = await select({
+    message: "Which file would you like to check?",
+    choices: allFilesHere,
+  });
+
+  return {
+    toDoList: [path.basename(chosenFile)],
+  };
 }
 
 // Step #0. take care of -v and -h flags that are left out in meow.

@@ -13,6 +13,7 @@ interface DependencyStats {
 
 export const dependencyStats: DependencyStats = {
   "allExternalDeps": [
+    "@inquirer/prompts",
     "@ljharb/through",
     "@sindresorhus/is",
     "@types/hast",
@@ -31,7 +32,6 @@ export const dependencyStats: DependencyStats = {
     "he",
     "hex-color-regex",
     "html-entities",
-    "inquirer",
     "is-d",
     "is-online",
     "isstream",
@@ -145,6 +145,7 @@ export const dependencyStats: DependencyStats = {
     "util-nonempty"
   ],
   "dependencies": {
+    "@inquirer/prompts": 2,
     "@ljharb/through": 1,
     "@sindresorhus/is": 1,
     "@types/hast": 2,
@@ -188,7 +189,6 @@ export const dependencyStats: DependencyStats = {
     "html-crush": 1,
     "html-entities": 1,
     "html-entities-not-email-friendly": 1,
-    "inquirer": 2,
     "is-char-suitable-for-html-attr-name": 2,
     "is-d": 4,
     "is-html-attribute-closing": 1,

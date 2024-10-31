@@ -183,7 +183,7 @@ export const interdeps = [
   },
   {
     "name": "csv-sort-cli",
-    "size": 8886,
+    "size": 8444,
     "imports": [
       "codsen-utils",
       "csv-sort"
@@ -245,7 +245,7 @@ export const interdeps = [
   },
   {
     "name": "email-all-chars-within-ascii-cli",
-    "size": 8621,
+    "size": 8404,
     "imports": [
       "codsen-utils",
       "email-all-chars-within-ascii",

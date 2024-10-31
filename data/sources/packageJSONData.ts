@@ -80,10 +80,10 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@types/hast": "^3.0.4",
-      "hast-util-raw": "^9.0.3",
+      "hast-util-raw": "^9.0.4",
       "object-delete-key": "^4.0.25",
       "semver-regex": "^4.0.5",
-      "unified": "^11.0.4",
+      "unified": "^11.0.5",
       "unist-builder": "^4.0.0",
       "unist-util-visit": "^5.0.0"
     }
@@ -705,11 +705,11 @@ export const packageJSONData = {
       "ast-contains-only-empty-space": "^4.0.16",
       "codsen-utils": "^1.6.4",
       "matcher": "^5.0.0",
-      "type-detect": "^4.0.8"
+      "type-detect": "^4.1.0"
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.3",
-      "type-fest": "^4.18.3"
+      "type-fest": "^4.26.1"
     }
   },
   "ast-contains-only-empty-space": {
@@ -879,7 +879,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@sindresorhus/is": "^6.3.1",
+      "@sindresorhus/is": "^7.0.1",
       "ast-monkey-traverse": "^4.0.16",
       "object-path": "^0.11.8"
     },
@@ -971,7 +971,7 @@ export const packageJSONData = {
       "ast-compare": "^4.0.25",
       "ast-monkey-traverse": "^4.0.16",
       "codsen-utils": "^1.6.4",
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     }
   },
   "ast-get-object": {
@@ -1058,7 +1058,7 @@ export const packageJSONData = {
     "dependencies": {
       "ast-compare": "^4.0.25",
       "codsen-utils": "^1.6.4",
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     }
   },
   "ast-get-values-by-key": {
@@ -1145,7 +1145,7 @@ export const packageJSONData = {
     "dependencies": {
       "ast-monkey-traverse": "^4.0.16",
       "matcher": "^5.0.0",
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     }
   },
   "ast-is-empty": {
@@ -1494,7 +1494,7 @@ export const packageJSONData = {
     "dependencies": {
       "ast-monkey-util": "^3.0.8",
       "codsen-utils": "^1.6.4",
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     },
     "devDependencies": {
       "deep-equal": "^2.2.3"
@@ -1586,7 +1586,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.6.4",
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     }
   },
   "ast-monkey-util": {
@@ -1912,7 +1912,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.4",
       "matcher": "^5.0.0",
       "object-path": "^0.11.8",
-      "type-detect": "^4.0.8"
+      "type-detect": "^4.1.0"
     }
   },
   "codsen": {
@@ -1976,7 +1976,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "meow": "^13.2.0",
-      "update-notifier": "^7.0.0"
+      "update-notifier": "^7.3.1"
     }
   },
   "codsen-parser": {
@@ -2136,7 +2136,7 @@ export const packageJSONData = {
       "is-char-suitable-for-html-attr-name": "^4.0.7",
       "is-html-attribute-closing": "^4.0.19",
       "is-html-tag-opening": "^4.0.19",
-      "rfdc": "^1.3.1",
+      "rfdc": "^1.4.1",
       "string-left-right": "^6.0.17",
       "string-match-left-right": "^9.0.19"
     },
@@ -2211,7 +2211,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     }
   },
   "color-shorthand-hex-to-six-digit": {
@@ -2291,7 +2291,7 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.6.4",
       "hex-color-regex": "^1.1.0",
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     },
     "devDependencies": {
       "@types/hex-color-regex": "^1.1.3"
@@ -2455,13 +2455,13 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "@inquirer/prompts": "^7.0.1",
       "chalk": "^5.3.0",
       "codsen-utils": "^1.6.4",
       "csv-sort": "^7.0.16",
-      "globby": "^14.0.1",
-      "inquirer": "^9.2.23",
+      "globby": "^14.0.2",
       "meow": "^13.2.0",
-      "update-notifier": "^7.0.0"
+      "update-notifier": "^7.3.1"
     }
   },
   "csv-split-easy": {
@@ -2768,7 +2768,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "all-named-html-entities": "^3.0.9",
-      "ansi-regex": "^6.0.1",
+      "ansi-regex": "^6.1.0",
       "codsen-utils": "^1.6.4",
       "he": "^1.2.0",
       "html-entities-not-email-friendly": "^0.8.8",
@@ -2787,7 +2787,7 @@ export const packageJSONData = {
       "string-trim-spaces-only": "^5.0.10"
     },
     "devDependencies": {
-      "rfdc": "^1.3.1",
+      "rfdc": "^1.4.1",
       "test-mixer": "^4.1.14"
     }
   },
@@ -2944,9 +2944,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ast-monkey-traverse": "^4.0.16",
-      "globby": "^14.0.1",
+      "globby": "^14.0.2",
       "p-map": "^7.0.2",
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     }
   },
   "email-all-chars-within-ascii": {
@@ -3094,15 +3094,15 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "@inquirer/prompts": "^7.0.1",
       "@ljharb/through": "^2.3.13",
       "chalk": "^5.3.0",
       "codsen-utils": "^1.6.4",
       "email-all-chars-within-ascii": "^5.0.19",
-      "globby": "^14.0.1",
-      "inquirer": "^9.2.23",
+      "globby": "^14.0.2",
       "minimist": "^1.2.8",
       "string-left-right": "^6.0.17",
-      "update-notifier": "^7.0.0"
+      "update-notifier": "^7.3.1"
     }
   },
   "email-comb": {
@@ -3265,10 +3265,10 @@ export const packageJSONData = {
     "dependencies": {
       "chalk": "^5.3.0",
       "codsen-utils": "^1.6.4",
-      "globby": "^14.0.1",
-      "log-symbols": "^6.0.0",
+      "globby": "^14.0.2",
+      "log-symbols": "^7.0.0",
       "meow": "^13.2.0",
-      "update-notifier": "^7.0.0"
+      "update-notifier": "^7.3.1"
     }
   },
   "eslint-plugin-row-num": {
@@ -3655,12 +3655,12 @@ export const packageJSONData = {
     },
     "dependencies": {
       "generate-atomic-css": "^3.0.18",
-      "globby": "^14.0.1",
+      "globby": "^14.0.2",
       "is-d": "^1.0.0",
       "meow": "^13.2.0",
       "p-reduce": "^3.0.0",
-      "update-notifier": "^7.0.0",
-      "write-file-atomic": "^5.0.1"
+      "update-notifier": "^7.3.1",
+      "write-file-atomic": "^6.0.0"
     }
   },
   "gulp-email-remove-unused-css": {
@@ -4847,13 +4847,13 @@ export const packageJSONData = {
     },
     "dependencies": {
       "arrayiffy-if-string": "^5.0.8",
-      "globby": "^14.0.1",
+      "globby": "^14.0.2",
       "is-d": "^1.0.0",
       "js-row-num": "^7.0.16",
       "meow": "^13.2.0",
       "p-reduce": "^3.0.0",
-      "update-notifier": "^7.0.0",
-      "write-file-atomic": "^5.0.1"
+      "update-notifier": "^7.3.1",
+      "write-file-atomic": "^6.0.0"
     }
   },
   "json-comb": {
@@ -4928,13 +4928,13 @@ export const packageJSONData = {
     },
     "dependencies": {
       "fs-extra": "^11.2.0",
-      "globby": "^14.0.1",
+      "globby": "^14.0.2",
       "is-d": "^1.0.0",
       "json-comb-core": "^8.0.20",
       "meow": "^13.2.0",
       "p-map": "^7.0.2",
       "p-reduce": "^3.0.0",
-      "update-notifier": "^7.0.0"
+      "update-notifier": "^7.3.1"
     }
   },
   "json-comb-core": {
@@ -5022,10 +5022,10 @@ export const packageJSONData = {
       "p-map": "^7.0.2",
       "p-one": "^2.0.0",
       "p-reduce": "^3.0.0",
-      "rfdc": "^1.3.1",
+      "rfdc": "^1.4.1",
       "semver-compare": "^1.0.0",
-      "sort-keys": "^5.0.0",
-      "type-detect": "^4.0.8"
+      "sort-keys": "^5.1.0",
+      "type-detect": "^4.1.0"
     }
   },
   "json-sort-cli": {
@@ -5101,13 +5101,13 @@ export const packageJSONData = {
       "chalk": "^5.3.0",
       "codsen-utils": "^1.6.4",
       "fs-extra": "^11.2.0",
-      "globby": "^14.0.1",
+      "globby": "^14.0.2",
       "is-d": "^1.0.0",
       "meow": "^13.2.0",
       "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
-      "sort-package-json": "^2.10.0",
-      "update-notifier": "^7.0.0"
+      "sort-package-json": "^2.10.1",
+      "update-notifier": "^7.3.1"
     },
     "devDependencies": {
       "p-map": "^7.0.2"
@@ -5358,13 +5358,13 @@ export const packageJSONData = {
     "dependencies": {
       "chalk": "^5.3.0",
       "fs-extra": "^11.2.0",
-      "globby": "^14.0.1",
+      "globby": "^14.0.2",
       "lerna-clean-changelogs": "^5.0.14",
       "meow": "^13.2.0",
       "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
-      "update-notifier": "^7.0.0",
-      "write-file-atomic": "^5.0.1"
+      "update-notifier": "^7.3.1",
+      "write-file-atomic": "^6.0.0"
     },
     "devDependencies": {
       "p-map": "^7.0.2"
@@ -5447,10 +5447,10 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "execa": "^9.1.0",
+      "execa": "^9.5.1",
       "fs-extra": "^11.2.0",
       "meow": "^13.2.0",
-      "update-notifier": "^7.0.0"
+      "update-notifier": "^7.3.1"
     }
   },
   "line-column-mini": {
@@ -5669,7 +5669,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.6.4",
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     }
   },
   "object-delete-key": {
@@ -5752,7 +5752,7 @@ export const packageJSONData = {
     "dependencies": {
       "ast-is-empty": "^4.0.15",
       "ast-monkey": "^9.0.25",
-      "rfdc": "^1.3.1",
+      "rfdc": "^1.4.1",
       "util-array-object-or-both": "^5.0.12"
     }
   },
@@ -5836,7 +5836,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.4",
       "object-all-values-equal-to": "^4.0.18",
       "object-merge-advanced": "^14.0.18",
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     }
   },
   "object-flatten-all-arrays": {
@@ -5915,7 +5915,7 @@ export const packageJSONData = {
       "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.6.4",
       "lodash-es": "^4.17.21",
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     }
   },
   "object-flatten-referencing": {
@@ -5993,7 +5993,7 @@ export const packageJSONData = {
       "arrayiffy-if-string": "^5.0.8",
       "codsen-utils": "^1.6.4",
       "matcher": "^5.0.0",
-      "rfdc": "^1.3.1",
+      "rfdc": "^1.4.1",
       "str-indexes-of-plus": "^5.0.7"
     }
   },
@@ -6076,7 +6076,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.4",
       "lodash-es": "^4.17.21",
       "matcher": "^5.0.0",
-      "rfdc": "^1.3.1",
+      "rfdc": "^1.4.1",
       "util-nonempty": "^5.0.15"
     },
     "devDependencies": {
@@ -6234,7 +6234,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.6.4",
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     }
   },
   "ranges-apply": {
@@ -6388,7 +6388,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ranges-apply": "^7.0.16",
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     }
   },
   "ranges-ent-decode": {
@@ -6763,7 +6763,7 @@ export const packageJSONData = {
       "ranges-sort": "^6.0.11"
     },
     "devDependencies": {
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     }
   },
   "ranges-offset": {
@@ -7504,9 +7504,9 @@ export const packageJSONData = {
       "@types/hast": "^3.0.4",
       "@types/lodash-es": "^4.17.12",
       "lodash-es": "^4.17.21",
-      "rehype": "^13.0.1",
-      "rehype-parse": "^9.0.0",
-      "unified": "^11.0.4",
+      "rehype": "^13.0.2",
+      "rehype-parse": "^9.0.1",
+      "unified": "^11.0.5",
       "unist-util-visit": "^5.0.0"
     }
   },
@@ -7582,11 +7582,11 @@ export const packageJSONData = {
     "dependencies": {
       "@types/hast": "^3.0.4",
       "codsen-utils": "^1.6.4",
-      "fp-ts": "^2.16.6",
+      "fp-ts": "^2.16.9",
       "string-apostrophes": "^4.0.19",
       "string-dashes": "^1.2.13",
       "string-remove-widows": "^4.0.22",
-      "unified": "^11.0.4",
+      "unified": "^11.0.5",
       "unist-util-visit": "^5.0.0"
     }
   },
@@ -8660,7 +8660,7 @@ export const packageJSONData = {
       "all-named-html-entities": "^3.0.9",
       "codsen-utils": "^1.6.4",
       "leven": "^4.0.0",
-      "rfdc": "^1.3.1",
+      "rfdc": "^1.4.1",
       "string-left-right": "^6.0.17"
     }
   },
@@ -8740,7 +8740,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.6.4",
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     }
   },
   "string-match-left-right": {
@@ -9857,7 +9857,7 @@ export const packageJSONData = {
       "string-collapse-white-space": "^11.0.19"
     },
     "devDependencies": {
-      "rfdc": "^1.3.1",
+      "rfdc": "^1.4.1",
       "test-mixer": "^4.1.14"
     }
   },
@@ -10018,7 +10018,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "object-boolean-combinations": "^6.1.5",
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     }
   },
   "tsd-extract": {
@@ -10181,21 +10181,21 @@ export const packageJSONData = {
       "ansi-diff-stream": "^1.2.1",
       "codsen-utils": "^1.6.4",
       "edit-package-json": "^0.8.21",
-      "globby": "^14.0.1",
-      "is-online": "^10.0.0",
-      "log-update": "^6.0.0",
+      "globby": "^14.0.2",
+      "is-online": "^11.0.0",
+      "log-update": "^6.1.0",
       "meow": "^13.2.0",
       "object-path": "^0.11.8",
       "p-map": "^7.0.2",
       "p-progress": "^1.0.0",
       "p-reduce": "^3.0.0",
-      "pacote": "^18.0.6",
-      "update-notifier": "^7.0.0",
-      "write-file-atomic": "^5.0.1"
+      "pacote": "^20.0.0",
+      "update-notifier": "^7.3.1",
+      "write-file-atomic": "^6.0.0"
     },
     "devDependencies": {
       "fs-extra": "^11.2.0",
-      "rfdc": "^1.3.1"
+      "rfdc": "^1.4.1"
     }
   },
   "util-array-object-or-both": {
