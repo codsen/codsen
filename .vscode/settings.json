@@ -11,6 +11,7 @@
     "colspan",
     "combi",
     "contributorsrc",
+    "csvsort",
     "deburr",
     "devtest",
     "esbuild",
@@ -38,13 +39,16 @@
     "rfdc",
     "rsquo",
     "scanerless",
+    "simples",
     "sindresorhus",
+    "SOMEQUOTE",
     "sortme",
     "tempy",
     "TSESLint",
     "typedefs",
     "unfancy",
     "unist",
-    "vars"
+    "vars",
+    "YOURFILE"
   ]
 }

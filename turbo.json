@@ -1,19 +1,31 @@
 {
-  "pipeline": {
+  "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", "types/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        "types/**"
+      ]
     },
     "test": {
-      "dependsOn": ["lect", "build"],
+      "dependsOn": [
+        "lect",
+        "build"
+      ],
       "outputs": []
     },
     "lint": {
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "outputs": []
     },
     "unit": {
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "outputs": []
     },
     "dev": {
@@ -45,12 +57,18 @@
       "cache": false
     },
     "examples": {
-      "dependsOn": ["^build"],
+      "dependsOn": [
+        "^build"
+      ],
       "outputs": [],
       "cache": false
     },
     "prep": {
-      "dependsOn": ["unit", "examples", "lint"]
+      "dependsOn": [
+        "unit",
+        "examples",
+        "lint"
+      ]
     }
   }
 }
