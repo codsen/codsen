@@ -1,6 +1,6 @@
 {
   "name": "edit-package-json",
-  "version": "0.8.22",
+  "version": "0.8.23",
   "description": "Edit package.json without parsing, as string, to keep the formatting intact",
   "keywords": [
     "changes",

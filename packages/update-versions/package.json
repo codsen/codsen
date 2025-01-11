@@ -1,6 +1,6 @@
 {
   "name": "update-versions",
-  "version": "7.0.5",
+  "version": "7.0.6",
   "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
   "keywords": [
     "app",
