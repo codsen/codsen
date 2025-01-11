@@ -74,7 +74,7 @@
     "is-d": "^1.0.0",
     "json-comb-core": "^8.0.21",
     "meow": "^13.2.0",
-    "p-map": "^7.0.2",
+    "p-map": "^7.0.3",
     "p-reduce": "^3.0.0",
     "update-notifier": "^7.3.1"
   }

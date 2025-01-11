@@ -86,6 +86,6 @@
   "devDependencies": {
     "ast-monkey-traverse": "^4.0.17",
     "ranges-invert": "^6.0.17",
-    "title": "^3.5.3"
+    "title": "^4.0.1"
   }
 }

@@ -80,7 +80,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@types/hast": "^3.0.4",
-      "hast-util-raw": "^9.0.4",
+      "hast-util-raw": "^9.1.0",
       "object-delete-key": "^4.0.26",
       "semver-regex": "^4.0.5",
       "unified": "^11.0.5",
@@ -709,7 +709,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.3",
-      "type-fest": "^4.26.1"
+      "type-fest": "^4.31.0"
     }
   },
   "ast-contains-only-empty-space": {
@@ -2455,8 +2455,8 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@inquirer/prompts": "^7.0.1",
-      "chalk": "^5.3.0",
+      "@inquirer/prompts": "^7.2.1",
+      "chalk": "^5.4.1",
       "codsen-utils": "^1.6.5",
       "csv-sort": "^7.0.17",
       "globby": "^14.0.2",
@@ -2945,7 +2945,7 @@ export const packageJSONData = {
     "devDependencies": {
       "ast-monkey-traverse": "^4.0.17",
       "globby": "^14.0.2",
-      "p-map": "^7.0.2",
+      "p-map": "^7.0.3",
       "rfdc": "^1.4.1"
     }
   },
@@ -3094,9 +3094,9 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@inquirer/prompts": "^7.0.1",
+      "@inquirer/prompts": "^7.2.1",
       "@ljharb/through": "^2.3.13",
-      "chalk": "^5.3.0",
+      "chalk": "^5.4.1",
       "codsen-utils": "^1.6.5",
       "email-all-chars-within-ascii": "^5.0.20",
       "globby": "^14.0.2",
@@ -3263,7 +3263,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "chalk": "^5.3.0",
+      "chalk": "^5.4.1",
       "codsen-utils": "^1.6.5",
       "globby": "^14.0.2",
       "log-symbols": "^7.0.0",
@@ -4932,7 +4932,7 @@ export const packageJSONData = {
       "is-d": "^1.0.0",
       "json-comb-core": "^8.0.21",
       "meow": "^13.2.0",
-      "p-map": "^7.0.2",
+      "p-map": "^7.0.3",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1"
     }
@@ -5019,7 +5019,7 @@ export const packageJSONData = {
       "object-merge-advanced": "^14.0.19",
       "object-no-new-keys": "^5.1.6",
       "object-set-all-values-to": "^6.0.17",
-      "p-map": "^7.0.2",
+      "p-map": "^7.0.3",
       "p-one": "^2.0.0",
       "p-reduce": "^3.0.0",
       "rfdc": "^1.4.1",
@@ -5098,7 +5098,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-monkey-traverse": "^4.0.17",
-      "chalk": "^5.3.0",
+      "chalk": "^5.4.1",
       "codsen-utils": "^1.6.5",
       "fs-extra": "^11.2.0",
       "globby": "^14.0.2",
@@ -5106,11 +5106,11 @@ export const packageJSONData = {
       "meow": "^13.2.0",
       "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
-      "sort-package-json": "^2.10.1",
+      "sort-package-json": "^2.12.0",
       "update-notifier": "^7.3.1"
     },
     "devDependencies": {
-      "p-map": "^7.0.2"
+      "p-map": "^7.0.3"
     }
   },
   "json-variables": {
@@ -5356,7 +5356,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "chalk": "^5.3.0",
+      "chalk": "^5.4.1",
       "fs-extra": "^11.2.0",
       "globby": "^14.0.2",
       "lerna-clean-changelogs": "^5.0.15",
@@ -5367,7 +5367,7 @@ export const packageJSONData = {
       "write-file-atomic": "^6.0.0"
     },
     "devDependencies": {
-      "p-map": "^7.0.2"
+      "p-map": "^7.0.3"
     }
   },
   "lerna-link-dep": {
@@ -5447,7 +5447,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "execa": "^9.5.1",
+      "execa": "^9.5.2",
       "fs-extra": "^11.2.0",
       "meow": "^13.2.0",
       "update-notifier": "^7.3.1"
@@ -9466,7 +9466,7 @@ export const packageJSONData = {
     "devDependencies": {
       "ast-monkey-traverse": "^4.0.17",
       "ranges-invert": "^6.0.17",
-      "title": "^3.5.3"
+      "title": "^4.0.1"
     }
   },
   "string-trim-spaces-only": {
@@ -10186,10 +10186,10 @@ export const packageJSONData = {
       "log-update": "^6.1.0",
       "meow": "^13.2.0",
       "object-path": "^0.11.8",
-      "p-map": "^7.0.2",
+      "p-map": "^7.0.3",
       "p-progress": "^1.0.0",
       "p-reduce": "^3.0.0",
-      "pacote": "^20.0.0",
+      "pacote": "^21.0.0",
       "update-notifier": "^7.3.1",
       "write-file-atomic": "^6.0.0"
     },

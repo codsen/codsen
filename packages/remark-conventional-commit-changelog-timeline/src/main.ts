@@ -242,7 +242,7 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
             );
 
           let newMarkup = raw(
-            u("raw", resolvedOpts.dateDivMarkup(dateParamsObj)),
+            u("raw", resolvedOpts.dateDivMarkup(dateParamsObj)) as any,
           );
 
           DEV &&

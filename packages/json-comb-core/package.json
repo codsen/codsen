@@ -80,7 +80,7 @@
     "object-merge-advanced": "^14.0.19",
     "object-no-new-keys": "^5.1.6",
     "object-set-all-values-to": "^6.0.17",
-    "p-map": "^7.0.2",
+    "p-map": "^7.0.3",
     "p-one": "^2.0.0",
     "p-reduce": "^3.0.0",
     "rfdc": "^1.4.1",
