@@ -13,7 +13,7 @@ export const packageJSONData = {
   },
   "remark-conventional-commit-changelog-timeline": {
     "name": "remark-conventional-commit-changelog-timeline",
-    "version": "3.1.12",
+    "version": "3.1.13",
     "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
     "keywords": [
       "unified",
@@ -625,7 +625,7 @@ export const packageJSONData = {
   },
   "ast-compare": {
     "name": "ast-compare",
-    "version": "4.0.26",
+    "version": "4.0.27",
     "description": "Compare anything: AST, objects, arrays, strings and nested thereof",
     "keywords": [
       "array",
@@ -2383,7 +2383,7 @@ export const packageJSONData = {
   },
   "csv-sort-cli": {
     "name": "csv-sort-cli",
-    "version": "4.0.5",
+    "version": "4.0.6",
     "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
     "keywords": [
       "accountancy",
@@ -2866,7 +2866,7 @@ export const packageJSONData = {
   },
   "edit-package-json": {
     "name": "edit-package-json",
-    "version": "0.8.22",
+    "version": "0.8.23",
     "description": "Edit package.json without parsing, as string, to keep the formatting intact",
     "keywords": [
       "changes",
@@ -3025,7 +3025,7 @@ export const packageJSONData = {
   },
   "email-all-chars-within-ascii-cli": {
     "name": "email-all-chars-within-ascii-cli",
-    "version": "4.0.5",
+    "version": "4.0.6",
     "description": "Command line app to scan email templates, are all their characters within ASCII range",
     "keywords": [
       "7bit",
@@ -3193,7 +3193,7 @@ export const packageJSONData = {
   },
   "email-homey": {
     "name": "email-homey",
-    "version": "5.0.4",
+    "version": "5.0.5",
     "description": "Generate homepage in the Browsersync root with links/screenshots to all your email templates",
     "keywords": [
       "browsersync",
@@ -4858,7 +4858,7 @@ export const packageJSONData = {
   },
   "json-comb": {
     "name": "json-comb",
-    "version": "0.9.5",
+    "version": "0.9.6",
     "description": "Command line app to manage sets of JSON files",
     "keywords": [
       "app",
@@ -4939,7 +4939,7 @@ export const packageJSONData = {
   },
   "json-comb-core": {
     "name": "json-comb-core",
-    "version": "8.0.21",
+    "version": "8.0.22",
     "description": "The inner core of json-comb",
     "keywords": [
       "comb",
@@ -5030,7 +5030,7 @@ export const packageJSONData = {
   },
   "json-sort-cli": {
     "name": "json-sort-cli",
-    "version": "4.0.5",
+    "version": "4.0.6",
     "description": "Command line app to deep sort JSON files, retains package.json special key order",
     "keywords": [
       "app",
@@ -5285,7 +5285,7 @@ export const packageJSONData = {
   },
   "lerna-clean-changelogs-cli": {
     "name": "lerna-clean-changelogs-cli",
-    "version": "4.0.5",
+    "version": "4.0.6",
     "description": "CLI application to cleanse the lerna/commitizen-generated changelogs",
     "keywords": [
       "changelog",
@@ -5372,7 +5372,7 @@ export const packageJSONData = {
   },
   "lerna-link-dep": {
     "name": "lerna-link-dep",
-    "version": "4.0.3",
+    "version": "4.0.4",
     "description": "Like lerna add but does just the symlinking, works on CLI bins too",
     "keywords": [
       "add",
@@ -9380,7 +9380,7 @@ export const packageJSONData = {
   },
   "string-strip-html": {
     "name": "string-strip-html",
-    "version": "13.4.9",
+    "version": "13.4.10",
     "description": "Strip HTML tags from strings. No parser, accepts mixed sources.",
     "keywords": [
       "code",
@@ -10103,7 +10103,7 @@ export const packageJSONData = {
   },
   "update-versions": {
     "name": "update-versions",
-    "version": "7.0.5",
+    "version": "7.0.6",
     "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
     "keywords": [
       "app",
