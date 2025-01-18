@@ -1,7 +1,7 @@
 export const interdeps = [
   {
     "name": "all-named-html-entities",
-    "size": 176730,
+    "size": 176732,
     "imports": []
   },
   {
@@ -664,7 +664,7 @@ export const interdeps = [
   },
   {
     "name": "string-character-is-astral-surrogate",
-    "size": 849,
+    "size": 850,
     "imports": []
   },
   {
