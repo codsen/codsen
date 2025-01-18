@@ -464,11 +464,11 @@ globby(input, { dot: true })
         if (!cli.flags.silent) {
           log(
             `\n${chalk.grey(prefix)}${chalk.green(
-              `${counter.bad && counter.bad.length === 0 ? "All " : ""}${
+              `${counter?.bad.length === 0 ? "All " : ""}${
                 counter.good.length
               } files sorted`,
             )}${
-              counter.bad && counter.bad.length
+              counter?.bad.length
                 ? `\n${chalk.grey(prefix)}${chalk.red(
                     `${counter.bad.length} file${
                       counter.bad.length === 1 ? "" : "s"

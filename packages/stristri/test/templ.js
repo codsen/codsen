@@ -2,7 +2,6 @@
 import { test } from "uvu";
 import * as assert from "uvu/assert";
 
-import { stri as stri2 } from "../dist/stristri.esm.js";
 import { stri, mixer } from "./util/util.js";
 
 // Templating tags only

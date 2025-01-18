@@ -2,6 +2,7 @@ import { tokenizer } from "codsen-tokenizer";
 import { collapse } from "string-collapse-white-space";
 import { rApply } from "ranges-apply";
 import { detectLang } from "detect-templating-language";
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 import type { Range } from "../../../ops/typedefs/common";
 
 import { defaultOpts, Opts, ApplicableOpts, Res } from "./util";
@@ -35,7 +36,7 @@ function returnHelper(
   }
   DEV &&
     console.log(
-      `038 ${`\u001b[${33}m${`RETURN`}\u001b[${39}m`} = ${JSON.stringify(
+      `039 ${`\u001b[${33}m${`RETURN`}\u001b[${39}m`} = ${JSON.stringify(
         {
           result,
           applicableOpts,
@@ -61,7 +62,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
   let start = Date.now();
   DEV &&
     console.log(
-      `064 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
+      `065 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
         input,
         null,
         4,
@@ -94,7 +95,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
   };
   DEV &&
     console.log(
-      `097 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `098 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -112,7 +113,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
   };
   DEV &&
     console.log(
-      `115 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `116 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts`}\u001b[${39}m`} = ${JSON.stringify(
         applicableOpts,
         null,
         4,
@@ -121,7 +122,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
 
   // quick ending
   if (!input) {
-    DEV && console.log(`124 quick ending, empty input`);
+    DEV && console.log(`125 quick ending, empty input`);
     returnHelper("", applicableOpts, detectLang(input), start);
   }
 
@@ -153,13 +154,13 @@ function stri(input: string, opts?: Partial<Opts>): Res {
       /* c8 ignore next */
       if (token.type === "comment") {
         DEV &&
-          console.log(`156 ${`\u001b[${35}m${`COMMENT TOKEN`}\u001b[${39}m`}`);
+          console.log(`157 ${`\u001b[${35}m${`COMMENT TOKEN`}\u001b[${39}m`}`);
         if (withinCSS) {
           if (!applicableOpts.css) {
             applicableOpts.css = true;
             DEV &&
               console.log(
-                `162 ${`\u001b[${33}m${`applicableOpts.css`}\u001b[${39}m`} = ${JSON.stringify(
+                `163 ${`\u001b[${33}m${`applicableOpts.css`}\u001b[${39}m`} = ${JSON.stringify(
                   applicableOpts.css,
                   null,
                   4,
@@ -168,7 +169,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
           }
           if (resolvedOpts.css) {
             gatheredRanges.push([token.start, token.end, " "]);
-            DEV && console.log(`171 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+            DEV && console.log(`172 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
           }
         } else {
           // it's HTML comment
@@ -176,7 +177,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
             applicableOpts.html = true;
             DEV &&
               console.log(
-                `179 ${`\u001b[${33}m${`applicableOpts.html`}\u001b[${39}m`} = ${JSON.stringify(
+                `180 ${`\u001b[${33}m${`applicableOpts.html`}\u001b[${39}m`} = ${JSON.stringify(
                   applicableOpts.html,
                   null,
                   4,
@@ -187,41 +188,41 @@ function stri(input: string, opts?: Partial<Opts>): Res {
             withinHTMLComment = true;
             DEV &&
               console.log(
-                `190 ${`\u001b[${33}m${`withinHTMLComment`}\u001b[${39}m`} = ${withinHTMLComment}`,
+                `191 ${`\u001b[${33}m${`withinHTMLComment`}\u001b[${39}m`} = ${withinHTMLComment}`,
               );
           } else if (token.closing && withinHTMLComment) {
             withinHTMLComment = false;
             DEV &&
               console.log(
-                `196 ${`\u001b[${33}m${`withinHTMLComment`}\u001b[${39}m`} = ${withinHTMLComment}`,
+                `197 ${`\u001b[${33}m${`withinHTMLComment`}\u001b[${39}m`} = ${withinHTMLComment}`,
               );
           }
           if (resolvedOpts.html) {
             gatheredRanges.push([token.start, token.end, " "]);
-            DEV && console.log(`201 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+            DEV && console.log(`202 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
           }
         }
       } else if (token.type === "tag") {
-        DEV && console.log(`205 ${`\u001b[${35}m${`TAG TOKEN`}\u001b[${39}m`}`);
+        DEV && console.log(`206 ${`\u001b[${35}m${`TAG TOKEN`}\u001b[${39}m`}`);
         // mark applicable resolvedOpts
         if (!applicableOpts.html) {
           applicableOpts.html = true;
           DEV &&
             console.log(
-              `211 ${`\u001b[${33}m${`applicableOpts.html`}\u001b[${39}m`} = ${
+              `212 ${`\u001b[${33}m${`applicableOpts.html`}\u001b[${39}m`} = ${
                 applicableOpts.html
               }`,
             );
         }
         if (resolvedOpts.html) {
           gatheredRanges.push([token.start, token.end, " "]);
-          DEV && console.log(`218 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+          DEV && console.log(`219 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
         }
         if (token.tagName === "style" && !token.closing) {
           withinCSS = true;
           DEV &&
             console.log(
-              `224 ${`\u001b[${33}m${`withinCSS`}\u001b[${39}m`} = ${withinCSS}`,
+              `225 ${`\u001b[${33}m${`withinCSS`}\u001b[${39}m`} = ${withinCSS}`,
             );
         } else if (
           // closing CSS comment '*/' is met
@@ -232,7 +233,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
           withinCSS = false;
           DEV &&
             console.log(
-              `235 ${`\u001b[${33}m${`withinCSS`}\u001b[${39}m`} = ${withinCSS}`,
+              `236 ${`\u001b[${33}m${`withinCSS`}\u001b[${39}m`} = ${withinCSS}`,
             );
         }
 
@@ -241,13 +242,13 @@ function stri(input: string, opts?: Partial<Opts>): Res {
             withinXML = true;
             DEV &&
               console.log(
-                `244 ${`\u001b[${33}m${`withinXML`}\u001b[${39}m`} = ${withinXML}`,
+                `245 ${`\u001b[${33}m${`withinXML`}\u001b[${39}m`} = ${withinXML}`,
               );
           } else if (token.closing && withinXML) {
             withinXML = false;
             DEV &&
               console.log(
-                `250 ${`\u001b[${33}m${`withinXML`}\u001b[${39}m`} = ${withinXML}`,
+                `251 ${`\u001b[${33}m${`withinXML`}\u001b[${39}m`} = ${withinXML}`,
               );
           }
         }
@@ -256,7 +257,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
           withinScript = true;
           DEV &&
             console.log(
-              `259 ${`\u001b[${33}m${`withinScript`}\u001b[${39}m`} = ${withinScript}`,
+              `260 ${`\u001b[${33}m${`withinScript`}\u001b[${39}m`} = ${withinScript}`,
             );
         } else if (
           withinScript &&
@@ -266,35 +267,35 @@ function stri(input: string, opts?: Partial<Opts>): Res {
           withinScript = false;
           DEV &&
             console.log(
-              `269 ${`\u001b[${33}m${`withinScript`}\u001b[${39}m`} = ${withinScript}`,
+              `270 ${`\u001b[${33}m${`withinScript`}\u001b[${39}m`} = ${withinScript}`,
             );
         }
       } else if (["at", "rule"].includes(token.type)) {
         DEV &&
-          console.log(`274 ${`\u001b[${35}m${`AT/RULE TOKEN`}\u001b[${39}m`}`);
+          console.log(`275 ${`\u001b[${35}m${`AT/RULE TOKEN`}\u001b[${39}m`}`);
         // mark applicable resolvedOpts
         if (!applicableOpts.css) {
           applicableOpts.css = true;
           DEV &&
             console.log(
-              `280 ${`\u001b[${33}m${`applicableOpts.css`}\u001b[${39}m`} = ${
+              `281 ${`\u001b[${33}m${`applicableOpts.css`}\u001b[${39}m`} = ${
                 applicableOpts.css
               }`,
             );
         }
         if (resolvedOpts.css) {
           gatheredRanges.push([token.start, token.end, " "]);
-          DEV && console.log(`287 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+          DEV && console.log(`288 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
         }
       } else if (token.type === "text") {
         DEV &&
-          console.log(`291 ${`\u001b[${35}m${`TEXT TOKEN`}\u001b[${39}m`}`);
+          console.log(`292 ${`\u001b[${35}m${`TEXT TOKEN`}\u001b[${39}m`}`);
         // mark applicable resolvedOpts
         if (withinScript) {
           applicableOpts.js = true;
           DEV &&
             console.log(
-              `297 ${`\u001b[${33}m${`applicableOpts.js`}\u001b[${39}m`} = ${
+              `298 ${`\u001b[${33}m${`applicableOpts.js`}\u001b[${39}m`} = ${
                 applicableOpts.js
               }`,
             );
@@ -308,7 +309,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
           applicableOpts.text = true;
           DEV &&
             console.log(
-              `311 ${`\u001b[${33}m${`applicableOpts.text`}\u001b[${39}m`} = ${
+              `312 ${`\u001b[${33}m${`applicableOpts.text`}\u001b[${39}m`} = ${
                 applicableOpts.text
               }`,
             );
@@ -325,23 +326,23 @@ function stri(input: string, opts?: Partial<Opts>): Res {
         ) {
           if (withinScript) {
             gatheredRanges.push([token.start, token.end]);
-            DEV && console.log(`328 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+            DEV && console.log(`329 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
           } else if (token.value.includes("\n")) {
             gatheredRanges.push([token.start, token.end, "\n"]);
-            DEV && console.log(`331 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+            DEV && console.log(`332 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
           } else {
             gatheredRanges.push([token.start, token.end, " "]);
-            DEV && console.log(`334 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+            DEV && console.log(`335 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
           }
         }
       } else if (token.type === "esp") {
-        DEV && console.log(`338 ${`\u001b[${35}m${`ESP TOKEN`}\u001b[${39}m`}`);
+        DEV && console.log(`339 ${`\u001b[${35}m${`ESP TOKEN`}\u001b[${39}m`}`);
         // mark applicable resolvedOpts
         if (!applicableOpts.templatingTags) {
           applicableOpts.templatingTags = true;
           DEV &&
             console.log(
-              `344 ${`\u001b[${33}m${`applicableOpts.templatingTags`}\u001b[${39}m`} = ${JSON.stringify(
+              `345 ${`\u001b[${33}m${`applicableOpts.templatingTags`}\u001b[${39}m`} = ${JSON.stringify(
                 applicableOpts.templatingTags,
                 null,
                 4,
@@ -350,7 +351,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
         }
         if (resolvedOpts.templatingTags) {
           gatheredRanges.push([token.start, token.end, " "]);
-          DEV && console.log(`353 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+          DEV && console.log(`354 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
         }
       }
 
@@ -370,7 +371,7 @@ function stri(input: string, opts?: Partial<Opts>): Res {
 
   DEV &&
     console.log(
-      `373 ${`\u001b[${32}m${`END`}\u001b[${39}m`} ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
+      `374 ${`\u001b[${32}m${`END`}\u001b[${39}m`} ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
         gatheredRanges,
         null,
         4,

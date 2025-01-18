@@ -1,7 +1,3 @@
-#!/usr/bin/env node
-
-/* eslint operator-assignment:0 */
-
 import {
   F_OK,
   accessSync,
@@ -101,13 +97,13 @@ const splitListBlackList = [
 const exportedDefaults = {};
 
 const packageNames = readdirSync(path.resolve("packages")).filter((d) =>
-  removeTbc(statSync(path.join("packages", d)).isDirectory())
+  removeTbc(statSync(path.join("packages", d)).isDirectory()),
 );
 
 for (let packageName of packageNames) {
   try {
     let packageJsonContents = JSON.parse(
-      readFileSync(path.join("packages", packageName, "package.json"), "utf8")
+      readFileSync(path.join("packages", packageName, "package.json"), "utf8"),
     );
     let name = packageJsonContents.name;
 
@@ -129,7 +125,7 @@ for (let packageName of packageNames) {
           addMissingSpaces: false,
           convertDotsToEllipsis: true,
           stripHtml: false,
-        }
+        },
       ).res;
     }
 
@@ -140,7 +136,7 @@ for (let packageName of packageNames) {
     if (packageJsonContents.bin) {
       cliPackages.push(name);
     }
-    if (packageJsonContents.exports && packageJsonContents.exports.script) {
+    if (packageJsonContents.exports?.script) {
       scriptAvailable.push(name);
     }
     // also present in ./ops/lect/lect.js:
@@ -152,7 +148,7 @@ for (let packageName of packageNames) {
       // 2. read its type definitions file .d.ts and push into "allDTS[]"
       let dts = readFileSync(
         path.join("packages", name, "types/index.d.ts"),
-        "utf8"
+        "utf8",
       ).trim();
       allDTS[name] = dts;
 
@@ -164,6 +160,7 @@ for (let packageName of packageNames) {
         if (defaults) {
           exportedDefaults[name] = JSON.stringify(defaults, null, 2);
         }
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         // nothing happens
       }
@@ -175,6 +172,7 @@ for (let packageName of packageNames) {
           if (opts) {
             exportedDefaults[name] = JSON.stringify(opts, null, 2);
           }
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
           // nothing happens
         }
@@ -182,11 +180,11 @@ for (let packageName of packageNames) {
 
       // 4. compile all examples, including Quick Take
       examples[name] = readdirSync(
-        path.join("packages", name, "examples")
+        path.join("packages", name, "examples"),
       ).reduce((accumulatedObj, fileName) => {
         let exampleContents = readFileSync(
           path.join("packages", name, "examples", fileName),
-          "utf-8"
+          "utf-8",
         );
         let title =
           exampleContents
@@ -202,6 +200,7 @@ for (let packageName of packageNames) {
         };
         return accumulatedObj;
       }, {});
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       // nothing happens
     }
@@ -311,7 +310,7 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
   // );
   let pack = JSON.parse(
     // beware, "packageName" has "-tbc" removed! That's why we use "allPackages[i]":
-    readFileSync(path.join("packages", allPackages[i], "package.json"))
+    readFileSync(path.join("packages", allPackages[i], "package.json")),
   );
 
   let size = 0;
@@ -322,17 +321,19 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
     try {
       // normal libs
       statSync(
-        path.join("packages", packageName, "dist", `${packageName}.esm.js`)
+        path.join("packages", packageName, "dist", `${packageName}.esm.js`),
       );
       size = readFileSync(
-        path.join("packages", packageName, "dist", `${packageName}.esm.js`)
+        path.join("packages", packageName, "dist", `${packageName}.esm.js`),
       ).length;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       try {
         // gulp plugins etc. don't have "dist/*"
         size = readFileSync(
-          path.join("packages", packageName, "index.js")
+          path.join("packages", packageName, "index.js"),
         ).length;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         // let's ignore all other unique ad-hoc packages like perf-ref
       }
@@ -365,11 +366,11 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
   if (Object.prototype.hasOwnProperty.call(pack, "devDependencies")) {
     // has deps
     Object.keys(pack.devDependencies).forEach((dep) => {
-      // if devdependency's name doesn't exist in compiled obj., create key
+      // if dev-dependency's name doesn't exist in compiled obj., create key
       if (
         !Object.prototype.hasOwnProperty.call(
           dependencyStats.devDependencies,
-          dep
+          dep,
         )
       ) {
         dependencyStats.devDependencies[dep] = 1;
@@ -381,7 +382,7 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
   }
 }
 
-// 3. compile top 10 of own and external deps and devdeps
+// 3. compile top 10 of own and external deps and dev-deps
 // -----------------------------------------------------------------------------
 
 const top10OwnDeps = [];
@@ -435,14 +436,14 @@ writeFile(
       );
     }),
     null,
-    2
+    2,
   )};\n`,
   (err) => {
     if (err) {
       throw err;
     }
     console.log(`\u001b[${32}m${"interdeps.ts written OK"}\u001b[${39}m`);
-  }
+  },
 );
 
 writeFile(
@@ -457,44 +458,44 @@ const script = ${JSON.stringify(scriptAvailable.sort(), null, 2)} as const;
 const packagesOutsideMonorepo = ${JSON.stringify(
     packagesOutsideMonorepo.sort(),
     null,
-    2
+    2,
   )} as const;
 const splitListFlagshipLibs = ${JSON.stringify(
     splitListFlagshipLibs,
     null,
-    2
+    2,
   )} as const;
 const splitListRangeLibs = ${JSON.stringify(
     splitListRangeLibs,
     null,
-    2
+    2,
   )} as const;
 const splitListHtmlLibs = ${JSON.stringify(
     splitListHtmlLibs,
     null,
-    2
+    2,
   )} as const;
 const splitListStringLibs = ${JSON.stringify(
     splitListStringLibs,
     null,
-    2
+    2,
   )} as const;
 const splitListObjectOrArrLibs = ${JSON.stringify(
     splitListObjectOrArrLibs,
     null,
-    2
+    2,
   )} as const;
 const splitListLernaLibs = ${JSON.stringify(
     splitListLernaLibs,
     null,
-    2
+    2,
   )} as const;
 const splitListCliApps = ${JSON.stringify(splitListCliApps, null, 2)} as const;
 const splitListASTApps = ${JSON.stringify(splitListASTApps, null, 2)} as const;
 const splitListMiscLibs = ${JSON.stringify(
     splitListMiscLibs,
     null,
-    2
+    2,
   )} as const;
 
 export type Package = typeof all[number];
@@ -530,7 +531,7 @@ export const packages = {
       throw err;
     }
     console.log(`\u001b[${32}m${"packages.ts written OK"}\u001b[${39}m`);
-  }
+  },
 );
 
 writeFile(
@@ -538,14 +539,14 @@ writeFile(
   `${dependencyStatsTypings}\nexport const dependencyStats: DependencyStats = ${JSON.stringify(
     sortAllObjectsSync(dependencyStats),
     null,
-    2
+    2,
   )};\n`,
   (err) => {
     if (err) {
       throw err;
     }
     console.log(`\u001b[${32}m${"dependencyStats.ts written OK"}\u001b[${39}m`);
-  }
+  },
 );
 
 writeFile(
@@ -553,14 +554,14 @@ writeFile(
   `export const packageJSONData = ${JSON.stringify(
     packageJSONData,
     null,
-    2
+    2,
   )};\n`,
   (err) => {
     if (err) {
       throw err;
     }
     console.log(`\u001b[${32}m${"packageJSONData.ts written OK"}\u001b[${39}m`);
-  }
+  },
 );
 
 writeFile(
@@ -571,7 +572,7 @@ writeFile(
       throw err;
     }
     console.log(`\u001b[${32}m${"allDTS.ts written OK"}\u001b[${39}m`);
-  }
+  },
 );
 
 writeFile(
@@ -579,16 +580,16 @@ writeFile(
   `export const exportedDefaults = ${JSON.stringify(
     exportedDefaults,
     null,
-    0
+    0,
   )};\n`,
   (err) => {
     if (err) {
       throw err;
     }
     console.log(
-      `\u001b[${32}m${"exportedDefaults.ts written OK"}\u001b[${39}m`
+      `\u001b[${32}m${"exportedDefaults.ts written OK"}\u001b[${39}m`,
     );
-  }
+  },
 );
 
 writeFile(
@@ -599,7 +600,7 @@ writeFile(
       throw err;
     }
     console.log(`\u001b[${32}m${"examples.ts written OK"}\u001b[${39}m`);
-  }
+  },
 );
 
 // 5. gather git repo info
@@ -616,15 +617,16 @@ if (!isCI) {
       `export const gitStats = ${JSON.stringify(
         { commitTotal: commitTotal.trim() },
         null,
-        2
+        2,
       )}`,
       (err) => {
         if (err) {
           throw err;
         }
         console.log(`\u001b[${32}m${"gitStats.ts written OK"}\u001b[${39}m`);
-      }
+      },
     );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     throw new Error("generate-info.js: can't access git data for gitStats.ts");
   }

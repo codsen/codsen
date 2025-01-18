@@ -2,7 +2,7 @@
 import { readdirSync, statSync } from "fs";
 import path from "path";
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { read, sha256 } from "../../../ops/helpers/common.js";
 import { verifyAndFix, verify } from "./_util.js";

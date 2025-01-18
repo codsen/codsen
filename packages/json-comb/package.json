@@ -43,7 +43,7 @@
     "examples": "exit 0",
     "lect": "node '../../ops/lect/lect.js'",
     "letspublish": "npm publish || :",
-    "lint": "eslint . --ext .js --ext .ts --fix",
+    "lint": "eslint . --fix",
     "perf": "exit 0",
     "prep": "echo 'ready'",
     "prettier": "prettier",

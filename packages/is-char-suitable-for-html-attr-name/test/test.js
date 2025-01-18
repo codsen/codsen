@@ -1,5 +1,5 @@
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, ok, throws, type, not, match } from "uvu/assert";
 
 import { isAttrNameChar as is } from "../dist/is-char-suitable-for-html-attr-name.esm.js";

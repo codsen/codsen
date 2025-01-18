@@ -3,6 +3,7 @@
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 import { right } from "string-left-right";
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 import type { Range, Ranges as RangesType } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";
@@ -66,7 +67,7 @@ const cbSchema = ["suggested", "whiteSpaceStartsAt", "whiteSpaceEndsAt", "str"];
 function collapse(str: string, opts?: Partial<Opts>): Res {
   DEV &&
     console.log(
-      `069 ██ string-collapse-whitespace called: str = ${JSON.stringify(
+      `070 ██ string-collapse-whitespace called: str = ${JSON.stringify(
         str,
         null,
         4,
@@ -108,7 +109,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
   DEV && console.log(` `);
   DEV &&
     console.log(
-      `111 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `112 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -119,7 +120,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
     DEV && console.log(`---- push() ----`);
     DEV &&
       console.log(
-        `122 ${`\u001b[${35}m${`push()`}\u001b[${39}m`} ${`\u001b[${32}m${`extras`}\u001b[${39}m`} = ${JSON.stringify(
+        `123 ${`\u001b[${35}m${`push()`}\u001b[${39}m`} ${`\u001b[${32}m${`extras`}\u001b[${39}m`} = ${JSON.stringify(
           extras,
           null,
           4,
@@ -133,7 +134,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       });
       DEV &&
         console.log(
-          `136 ${`\u001b[${35}m${`push():`}\u001b[${39}m`} ${`\u001b[${33}m${`final`}\u001b[${39}m`} = ${JSON.stringify(
+          `137 ${`\u001b[${35}m${`push():`}\u001b[${39}m`} ${`\u001b[${33}m${`final`}\u001b[${39}m`} = ${JSON.stringify(
             final,
             null,
             4,
@@ -142,7 +143,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       if (Array.isArray(final)) {
         DEV &&
           console.log(
-            `145 ${`\u001b[${35}m${`push():`}\u001b[${39}m`} ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`,
+            `146 ${`\u001b[${35}m${`push():`}\u001b[${39}m`} ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`,
           );
         (finalIndexesToDelete as any).push(...final);
       }
@@ -214,20 +215,20 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       consecutiveLineBreakCount += 1;
       DEV &&
         console.log(
-          `217 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} consecutiveLineBreakCount = ${consecutiveLineBreakCount}`,
+          `218 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} consecutiveLineBreakCount = ${consecutiveLineBreakCount}`,
         );
       if (linebreaksStartAt === null) {
         linebreaksStartAt = i;
         DEV &&
           console.log(
-            `223 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} linebreaksStartAt = ${linebreaksStartAt}`,
+            `224 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} linebreaksStartAt = ${linebreaksStartAt}`,
           );
       }
 
       linebreaksEndAt = str[i] === "\r" && str[i + 1] === "\n" ? i + 2 : i + 1;
       DEV &&
         console.log(
-          `230 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} linebreaksEndAt = ${linebreaksEndAt}`,
+          `231 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} linebreaksEndAt = ${linebreaksEndAt}`,
         );
     }
 
@@ -236,7 +237,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       nbspPresent = true;
       DEV &&
         console.log(
-          `239 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} nbspPresent = ${nbspPresent}`,
+          `240 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} nbspPresent = ${nbspPresent}`,
         );
     }
 
@@ -270,7 +271,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       str[i] !== " "
     ) {
       DEV && console.log(`.`);
-      DEV && console.log(`273 space sequence`);
+      DEV && console.log(`274 space sequence`);
       let a1 = // it's not a beginning of the string (more general whitespace clauses
         // will take care of trimming, taking into account resolvedOpts.trimStart etc)
         // either it's not leading whitespace
@@ -309,7 +310,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
 
       DEV &&
         console.log(
-          `312 space char seq. clause: a1=${`\u001b[${
+          `313 space char seq. clause: a1=${`\u001b[${
             a1 ? 32 : 31
           }m${!!a1}\u001b[${39}m`} && a2=${`\u001b[${
             a2 ? 32 : 31
@@ -327,7 +328,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         a2 &&
         a3
       ) {
-        DEV && console.log(`330 inside space seq. removal clauses`);
+        DEV && console.log(`331 inside space seq. removal clauses`);
         let startIdx = spacesStartAt;
         let endIdx = i;
         let whatToAdd: string | null = " ";
@@ -349,7 +350,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
 
         DEV &&
           console.log(
-            `352 initial range: [${startIdx}, ${endIdx}, ${JSON.stringify(
+            `353 initial range: [${startIdx}, ${endIdx}, ${JSON.stringify(
               whatToAdd,
               null,
               0,
@@ -361,10 +362,10 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         // [1, 4, " "], we leave the last space, only deleting other two:
         // range [1, 3] (notice the third element, "what to add" missing).
         if (whatToAdd && str[spacesStartAt] === " ") {
-          DEV && console.log(`364 contract ending index`);
+          DEV && console.log(`365 contract ending index`);
           endIdx -= 1;
           whatToAdd = null;
-          DEV && console.log(`367 new range: [${startIdx}, ${endIdx}, " "]`);
+          DEV && console.log(`368 new range: [${startIdx}, ${endIdx}, " "]`);
         }
 
         // if nbsp trimming is disabled and we have a situation like:
@@ -374,18 +375,18 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         //
         // we need to still trim the spaces chunk, in whole
         if (!spacesStartAt && resolvedOpts.trimStart) {
-          DEV && console.log(`377 - frontal chunk`);
+          DEV && console.log(`378 - frontal chunk`);
           endIdx = i;
-          DEV && console.log(`379 new range: [${startIdx}, ${endIdx}, " "]`);
+          DEV && console.log(`380 new range: [${startIdx}, ${endIdx}, " "]`);
         } else if (!str[i] && resolvedOpts.trimEnd) {
-          DEV && console.log(`381 - trailing chunk`);
+          DEV && console.log(`382 - trailing chunk`);
           endIdx = i;
-          DEV && console.log(`383 new range: [${startIdx}, ${endIdx}, " "]`);
+          DEV && console.log(`384 new range: [${startIdx}, ${endIdx}, " "]`);
         }
 
         DEV &&
           console.log(
-            `388 suggested range: ${`\u001b[${35}m${JSON.stringify(
+            `389 suggested range: ${`\u001b[${35}m${JSON.stringify(
               whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx],
               null,
               0,
@@ -419,7 +420,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       spacesStartAt = i;
       DEV &&
         console.log(
-          `422 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`spacesStartAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `423 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`spacesStartAt`}\u001b[${39}m`} = ${JSON.stringify(
             spacesStartAt,
             null,
             4,
@@ -438,7 +439,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       whiteSpaceStartsAt = i;
       DEV &&
         console.log(
-          `441 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `442 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             whiteSpaceStartsAt,
             null,
             4,
@@ -446,7 +447,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         );
     }
 
-    // catch the end of line whitespace (chunk of whitespace characters execept LF / CR)
+    // catch the end of line whitespace (chunk of whitespace characters except LF / CR)
     if (
       // chunk has been recording
       lineWhiteSpaceStartsAt !== null &&
@@ -476,7 +477,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         (resolvedOpts.enforceSpacesOnly && nbspPresent))
     ) {
       DEV && console.log(`.`);
-      DEV && console.log(`479 line whitespace clauses`);
+      DEV && console.log(`480 line whitespace clauses`);
 
       // tend resolvedOpts.enforceSpacesOnly
       // ---------------------------
@@ -488,7 +489,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
           // or it's single character but not a space (yet still whitespace)
           str[lineWhiteSpaceStartsAt] !== " ")
       ) {
-        DEV && console.log(`491 resolvedOpts.enforceSpacesOnly clauses`);
+        DEV && console.log(`492 resolvedOpts.enforceSpacesOnly clauses`);
         // also whole whitespace chunk goes, only we replace with a single space
         // but maybe we can reuse existing characters to reduce the footprint
         let startIdx = lineWhiteSpaceStartsAt;
@@ -513,7 +514,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
           whatToAdd = null;
           DEV &&
             console.log(
-              `516 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = ${JSON.stringify(
+              `517 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = ${JSON.stringify(
                 whatToAdd,
                 null,
                 4,
@@ -523,7 +524,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
 
         DEV &&
           console.log(
-            `526 suggested range: ${`\u001b[${35}m${`[${lineWhiteSpaceStartsAt}, ${i}, " "]`}\u001b[${39}m`}`,
+            `527 suggested range: ${`\u001b[${35}m${`[${lineWhiteSpaceStartsAt}, ${i}, " "]`}\u001b[${39}m`}`,
           );
         push(whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx], {
           whiteSpaceStartsAt: whiteSpaceStartsAt as number,
@@ -549,7 +550,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       ) {
         DEV &&
           console.log(
-            `552 suggested range: ${`\u001b[${35}m${`[${lineWhiteSpaceStartsAt}, ${i}, " "]`}\u001b[${39}m`}`,
+            `553 suggested range: ${`\u001b[${35}m${`[${lineWhiteSpaceStartsAt}, ${i}, " "]`}\u001b[${39}m`}`,
           );
         push([lineWhiteSpaceStartsAt, i], {
           whiteSpaceStartsAt: whiteSpaceStartsAt as number,
@@ -561,7 +562,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       lineWhiteSpaceStartsAt = null;
       DEV &&
         console.log(
-          `564 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`lineWhiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `565 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`lineWhiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             lineWhiteSpaceStartsAt,
             null,
             4,
@@ -569,7 +570,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         );
     }
 
-    // Catch the start of a sequence of line whitespace (chunk of whitespace characters execept LF / CR)
+    // Catch the start of a sequence of line whitespace (chunk of whitespace characters except LF / CR)
     if (
       // chunk hasn't been recording
       lineWhiteSpaceStartsAt === null &&
@@ -586,7 +587,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       lineWhiteSpaceStartsAt = i;
       DEV &&
         console.log(
-          `589 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lineWhiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `590 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lineWhiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             lineWhiteSpaceStartsAt,
             null,
             4,
@@ -630,7 +631,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         str[i].trim())
     ) {
       DEV && console.log(`.`);
-      DEV && console.log(`633 general whitespace clauses`);
+      DEV && console.log(`634 general whitespace clauses`);
       // If there's anything staged, that must be string-only or per-line
       // whitespace chunks (possibly even multiple) gathered while we've been
       // traversing this (one) whitespace chunk.
@@ -662,7 +663,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       ) {
         DEV &&
           console.log(
-            `665 suggested range: ${`\u001b[${35}m${`[${whiteSpaceStartsAt}, ${i}]`}\u001b[${39}m`}`,
+            `666 suggested range: ${`\u001b[${35}m${`[${whiteSpaceStartsAt}, ${i}]`}\u001b[${39}m`}`,
           );
         push([whiteSpaceStartsAt, i], {
           whiteSpaceStartsAt,
@@ -670,7 +671,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
           str,
         });
       } else {
-        DEV && console.log(`673 - neither frontal nor rear`);
+        DEV && console.log(`674 - neither frontal nor rear`);
         let somethingPushed = false;
 
         // tackle the line breaks
@@ -684,7 +685,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
             (resolvedOpts.limitConsecutiveEmptyLinesTo || 0) + 1
         ) {
           somethingPushed = true;
-          DEV && console.log(`687 remove the linebreak sequence`);
+          DEV && console.log(`688 remove the linebreak sequence`);
 
           // try to salvage some of the existing linebreaks - don't replace the
           // same with the same
@@ -699,7 +700,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
 
           DEV &&
             console.log(
-              `702 FIY, ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = ${JSON.stringify(
+              `703 FIY, ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = ${JSON.stringify(
                 whatToAdd,
                 null,
                 4,
@@ -708,18 +709,18 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
 
           /* c8 ignore next */
           if (str.endsWith(whatToAdd, linebreaksEndAt as number)) {
-            DEV && console.log(`711 reuse the ending`);
+            DEV && console.log(`712 reuse the ending`);
             endIdx -= whatToAdd.length || 0;
             whatToAdd = null;
           } else if (str.startsWith(whatToAdd, linebreaksStartAt)) {
-            DEV && console.log(`715 reuse the beginning`);
+            DEV && console.log(`716 reuse the beginning`);
             startIdx += whatToAdd.length;
             whatToAdd = null;
           }
 
           DEV &&
             console.log(
-              `722 suggested range: ${`\u001b[${35}m${`[${startIdx}, ${endIdx}, ${JSON.stringify(
+              `723 suggested range: ${`\u001b[${35}m${`[${startIdx}, ${endIdx}, ${JSON.stringify(
                 whatToAdd,
                 null,
                 0,
@@ -736,7 +737,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         // push the staging if it exists
         // -----------------------------
         if (staging.length) {
-          DEV && console.log(`739 push all staged ranges into final`);
+          DEV && console.log(`740 push all staged ranges into final`);
           while (staging.length) {
             // FIFO - first in, first out
             // @tsx-ignore
@@ -750,7 +751,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         if (!somethingPushed) {
           DEV &&
             console.log(
-              `753 suggested range: ${`\u001b[${35}m${`null`}\u001b[${39}m`}`,
+              `754 suggested range: ${`\u001b[${35}m${`null`}\u001b[${39}m`}`,
             );
           push(null, {
             whiteSpaceStartsAt,
@@ -764,7 +765,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       lineWhiteSpaceStartsAt = null;
       DEV &&
         console.log(
-          `767 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`whiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `768 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`whiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             whiteSpaceStartsAt,
             null,
             4,
@@ -778,7 +779,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       nbspPresent = false;
       DEV &&
         console.log(
-          `781 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nbspPresent`}\u001b[${39}m`} = ${nbspPresent}`,
+          `782 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nbspPresent`}\u001b[${39}m`} = ${nbspPresent}`,
         );
 
       // reset line break counts
@@ -786,17 +787,17 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
         consecutiveLineBreakCount = 0;
         DEV &&
           console.log(
-            `789 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} consecutiveLineBreakCount = ${consecutiveLineBreakCount}`,
+            `790 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} consecutiveLineBreakCount = ${consecutiveLineBreakCount}`,
           );
         linebreaksStartAt = null;
         DEV &&
           console.log(
-            `794 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} linebreaksStartAt = ${linebreaksStartAt}`,
+            `795 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} linebreaksStartAt = ${linebreaksStartAt}`,
           );
         linebreaksEndAt = null;
         DEV &&
           console.log(
-            `799 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} linebreaksEndAt = ${linebreaksEndAt}`,
+            `800 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} linebreaksEndAt = ${linebreaksEndAt}`,
           );
       }
     }
@@ -806,7 +807,7 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
       spacesStartAt = null;
       DEV &&
         console.log(
-          `809 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`spacesStartAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `810 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`spacesStartAt`}\u001b[${39}m`} = ${JSON.stringify(
             spacesStartAt,
             null,
             4,
@@ -860,10 +861,10 @@ function collapse(str: string, opts?: Partial<Opts>): Res {
     //
   }
 
-  DEV && console.log(`863 ----------------------------`);
+  DEV && console.log(`864 ----------------------------`);
   DEV &&
     console.log(
-      `866 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`finalIndexesToDelete`}\u001b[${39}m`} = ${JSON.stringify(
+      `867 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`finalIndexesToDelete`}\u001b[${39}m`} = ${JSON.stringify(
         finalIndexesToDelete.current(),
         null,
         4,

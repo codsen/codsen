@@ -41,7 +41,7 @@ function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
     );
   } else if (typeof cb !== "function") {
     throw new TypeError(
-      `ranges-iterate: [THROW_ID_05] The calllback function (third input argument) must be a function. It was given as: ${typeof cb}, equal to: ${JSON.stringify(
+      `ranges-iterate: [THROW_ID_05] The callback function (third input argument) must be a function. It was given as: ${typeof cb}, equal to: ${JSON.stringify(
         cb,
         null,
         0,

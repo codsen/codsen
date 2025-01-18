@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { rMerge } from "ranges-merge";
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 import type { Range, Ranges } from "ranges-merge";
 
 import { version as v } from "../package.json";
@@ -100,7 +101,7 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
 
   DEV &&
     console.log(
-      `103 ${`\u001b[${33}m${`arrOfRanges`}\u001b[${39}m`} = ${JSON.stringify(
+      `104 ${`\u001b[${33}m${`arrOfRanges`}\u001b[${39}m`} = ${JSON.stringify(
         arrOfRanges,
         null,
         4,
@@ -116,7 +117,7 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
       if (singleRangeArr[1] > strLen) {
         DEV &&
           console.log(
-            `119 - we will process the ${JSON.stringify(
+            `120 - we will process the ${JSON.stringify(
               singleRangeArr,
               null,
               0,
@@ -125,25 +126,25 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
         if (singleRangeArr[2] != null) {
           DEV &&
             console.log(
-              `128 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`,
+              `129 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`,
             );
           return [singleRangeArr[0], strLen, singleRangeArr[2]];
         }
         DEV &&
           console.log(
-            `134 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`,
+            `135 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`,
           );
         return [singleRangeArr[0], strLen];
       }
       DEV &&
         console.log(
-          `140 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`,
+          `141 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`,
         );
       return singleRangeArr;
     });
   DEV &&
     console.log(
-      `146 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
+      `147 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
         res,
         null,
         4,

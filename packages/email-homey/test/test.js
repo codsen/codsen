@@ -1,6 +1,6 @@
 import { execa } from "execa";
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import fs from "fs";
 import path from "path";
@@ -8,25 +8,25 @@ import path from "path";
 const dirname = path.resolve();
 
 test("generates the homepage with correct folders", async () => {
-  await fs.unlink("./fixtures/index.html", () => {});
+  fs.unlink("./fixtures/index.html", () => {});
   await execa("./cli.js", ["fixtures"]);
   equal(
     fs.readFileSync(path.join(dirname, "fixtures/index.html"), "utf8"),
     fs.readFileSync(path.join(dirname, "fixtures/reference.html"), "utf8"),
     "01.01",
   );
-  await fs.unlink("./fixtures/index.html", () => {});
+  fs.unlink("./fixtures/index.html", () => {});
 });
 
 test("unused flags are OK", async () => {
-  await fs.unlink("./fixtures/index.html", () => {});
+  fs.unlink("./fixtures/index.html", () => {});
   await execa("./cli.js", ["-x", "-y", "-z", "fixtures"]);
   equal(
     fs.readFileSync(path.join(dirname, "fixtures/index.html"), "utf8"),
     fs.readFileSync(path.join(dirname, "fixtures/reference.html"), "utf8"),
     "02.01",
   );
-  await fs.unlink("./fixtures/index.html", () => {});
+  fs.unlink("./fixtures/index.html", () => {});
 });
 
 test("empty input", async () => {

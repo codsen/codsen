@@ -77,7 +77,7 @@ if (cli.flags) {
 // -----------------------------------------------------------------------------
 
 (async () => {
-  // we'll use the object below to distill all unique package updates
+  // we'll use the object below to distil all unique package updates
   let updatedPackages = {};
   function printUpdated() {
     return Object.keys(updatedPackages)
@@ -109,7 +109,8 @@ if (cli.flags) {
   // try to read the local config if it's present
   try {
     newConfig = JSON.parse(readFileSync(confLocation, "utf8"));
-  } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (e) {
     console.log(
       `\n${messagePrefix}${`\u001b[${90}m${"No config found, moving on."}\u001b[${39}m`}\n`,
     );
@@ -175,7 +176,7 @@ if (cli.flags) {
         //
         //
         //
-        //               1. LOOKUP OF ALL DEPS & DEVDEPS ALL AT ONCE
+        //               1. LOOKUP OF ALL DEPS & DEV-DEPS ALL AT ONCE
         //
         //
         //
@@ -222,7 +223,8 @@ if (cli.flags) {
                     }
                   }
                 });
-            } catch (err) {
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            } catch (e) {
               // no response from npm
               compiledDepNameVersionPairs[singleDepName] = null;
             }
@@ -371,12 +373,12 @@ if (cli.flags) {
           if (isPlainObject(parsedContents.dependencies)) {
             Object.keys(parsedContents.dependencies).forEach((depName) => {
               if (keys.includes(depName)) {
-                // 1. delete devdep entry on JSON string
+                // 1. delete dev-dep entry on JSON string
                 finalContents = del(
                   finalContents,
                   `devDependencies.${depName}`,
                 );
-                // 2. delete the devdep from parsedContents.devDependencies
+                // 2. delete the dev-dep from parsedContents.devDependencies
                 // key array which will be used to traverse in the loop later
                 keys = keys.filter((val) => val !== depName);
                 // 3. set the flag to activate the file write operation later
@@ -454,6 +456,7 @@ if (cli.flags) {
         if (amended) {
           try {
             await write(oneOfPaths, finalContents);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
           } catch (e) {
             console.error(
               `${messagePrefix}error happened when writing package.json:\n${e}`,

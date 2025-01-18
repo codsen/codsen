@@ -1,4 +1,4 @@
-import { includes as lodashIncludes, isDate, isFinite } from "lodash-es";
+import { includes as lodashIncludes, isDate } from "lodash-es";
 import { nonEmpty } from "util-nonempty";
 import rfdc from "rfdc";
 import {
@@ -271,7 +271,7 @@ function mergeAdvanced(
             );
           } else if (
             opts.oneToManyArrayObjectMerge &&
-            (i1.length === 1 || i2.length === 1) // either of arrays has one elem.
+            (i1.length === 1 || i2.length === 1) // either of arrays has one element
           ) {
             temp.push(
               i1.length === 1
@@ -559,12 +559,12 @@ function mergeAdvanced(
   } else if (isDate(i1)) {
     DEV && console.log(`560 ██ i1 is date`);
 
-    if (isFinite(+i1)) {
+    if (Number.isFinite(+i1)) {
       DEV && console.log(`563 i1 is a finite date`);
 
       if (isDate(i2)) {
         DEV && console.log(`566 i2 is date`);
-        if (isFinite(+i2)) {
+        if (Number.isFinite(+i2)) {
           DEV && console.log(`568 i2 is a finite date`);
 
           // compares dates

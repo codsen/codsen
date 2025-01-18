@@ -1,14 +1,14 @@
 import fs from "fs-extra";
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import path from "path";
 import { fileURLToPath } from "url";
 import { execa } from "execa";
 import { temporaryDirectory } from "tempy";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename2 = fileURLToPath(import.meta.url);
+const __dirname2 = path.dirname(__filename2);
 
 // we need to escape to prevent accidental "fixing" of this file through
 // build scripts
@@ -33,7 +33,7 @@ test("01 - there are no usable files at all", async () => {
   let processedFileContents = fs
     .writeFile(path.join(tempFolder, "cli.js"), "zzz")
     .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
+      execa(`cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")}`, {
         shell: true,
       }),
     )
@@ -74,7 +74,7 @@ test("02 - cli.js in the root", async () => {
   let processedFileContents = fs
     .writeFile(path.join(tempFolder, "cli.js"), originalFile)
     .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
+      execa(`cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")}`, {
         shell: true,
       }),
     )
@@ -117,7 +117,7 @@ test("03/1 - pad override, -p", async () => {
     .writeFile(path.join(tempFolder, "cli.js"), originalFile)
     .then(() =>
       execa(
-        `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} -p 2`,
+        `cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")} -p 2`,
         {
           shell: true,
         },
@@ -148,7 +148,7 @@ test("04/2 - pad override, --pad", async () => {
     .writeFile(path.join(tempFolder, "cli.js"), originalFile)
     .then(() =>
       execa(
-        `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} --pad 2`,
+        `cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")} --pad 2`,
         {
           shell: true,
         },
@@ -197,7 +197,7 @@ test("05 - one file called with glob, another not processed", async () => {
     .then(() =>
       execa(
         `cd ${tempFolder} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
           "cli.js",
         )} -p 4 file1.js`,
@@ -253,7 +253,7 @@ test("06 - two files processed by calling glob with wildcard", async () => {
     .then(() =>
       execa(
         `cd ${tempFolder} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
           "cli.js",
         )} -p 4 "*.js"`,
@@ -306,7 +306,7 @@ test('07/1 - "t" flag, -t', async () => {
     .writeFile(path.join(tempFolder, "cli.js"), originalFile)
     .then(() =>
       execa(
-        `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} -t "log"`,
+        `cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")} -t "log"`,
         {
           shell: true,
         },
@@ -339,7 +339,7 @@ test('08/2 - "t" flag, --trigger', async () => {
     .then(() =>
       execa(
         `cd ${tempFolder} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
         )}/cli.js --trigger "log"`,
         {

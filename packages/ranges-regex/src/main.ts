@@ -1,5 +1,6 @@
 import { rMerge } from "ranges-merge";
 import { isRegExp } from "lodash-es";
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 import type { Range, Ranges } from "ranges-merge";
 
 import { version as v } from "../package.json";

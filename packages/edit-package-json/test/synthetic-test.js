@@ -1,5 +1,5 @@
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { promises as fsp } from "fs";
 import objectPath from "object-path";
@@ -52,6 +52,7 @@ globby([
         let amended = set(JSON.stringify(obj, null, 4), innerObj.path, "x");
         try {
           calculated = JSON.parse(amended);
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
           test("failure in set()", () => {
             not.ok(
@@ -66,6 +67,7 @@ globby([
         try {
           editedRefObj = clone(obj);
           objectPath.set(editedRefObj, innerObj.path, "x");
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
           test("failure in objectPath.set():", () => {
             not.ok(

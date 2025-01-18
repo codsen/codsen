@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redeclare */
 import { visit, EXIT } from "unist-util-visit";
 import { iteratee } from "lodash-es";
 import type {
@@ -37,21 +38,21 @@ export const contains = (
   something: string | string[],
 ): string | undefined => {
   DEV &&
-    console.log(`040 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: start`);
+    console.log(`041 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: start`);
   let result: string | undefined = undefined;
 
   // early exit
   if (!something?.length) {
     DEV &&
       console.log(
-        `047 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${31}m${`early return`}\u001b[${39}m`}`,
+        `048 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${31}m${`early return`}\u001b[${39}m`}`,
       );
     return undefined;
   }
 
   DEV &&
     console.log(
-      `054 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${JSON.stringify(
+      `055 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${JSON.stringify(
         tree,
         null,
         4,
@@ -78,7 +79,7 @@ export const contains = (
 
   DEV &&
     console.log(
-      `081 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${JSON.stringify(
+      `082 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${JSON.stringify(
         result,
         null,
         4,

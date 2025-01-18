@@ -6,7 +6,7 @@ import {
 function fix(ok, ...args) {
   // check, are all emitted rules present in "allRules"
   fixEntESM(...args).forEach((o) => {
-    if (o && o.ruleName) {
+    if (o?.ruleName) {
       ok(
         allRules.includes(o.ruleName),
         `${o.ruleName} is not mentioned in allRules!`,

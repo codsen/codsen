@@ -1,5 +1,5 @@
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -8,25 +8,25 @@ import objectPath from "object-path";
 
 import { set, del } from "../dist/edit-package-json.esm.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename2 = fileURLToPath(import.meta.url);
+const __dirname2 = path.dirname(__filename2);
 
 function compare(eq, testName, pathToProcess, val) {
   let isSet = arguments.length === 4;
   // console.log(`011 ${isSet ? "SET" : "DEL"} mode`);
 
   let source = read(
-    path.join(__dirname, "fixtures", `${testName}.json`),
+    path.join(__dirname2, "fixtures", `${testName}.json`),
     "utf8",
   );
   let result = read(
-    path.join(__dirname, "fixtures", `${testName}.expected.json`),
+    path.join(__dirname2, "fixtures", `${testName}.expected.json`),
     "utf8",
   );
 
   try {
     let checkme = Number.parseInt(
-      read(path.join(__dirname, "fixtures", `${testName}.control.md`), "utf8"),
+      read(path.join(__dirname2, "fixtures", `${testName}.control.md`), "utf8"),
       10,
     );
     eq(
@@ -34,10 +34,11 @@ function compare(eq, testName, pathToProcess, val) {
       checkme,
       `either delete testfile size control record file, ${testName}.control.md`,
     );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     // if the control file character count file doesn't exist, write it
     write(
-      path.join(__dirname, "fixtures", `${testName}.control.md`),
+      path.join(__dirname2, "fixtures", `${testName}.control.md`),
       source.trim().length,
     );
   }

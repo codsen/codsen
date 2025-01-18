@@ -1,4 +1,4 @@
-import type { Range, Ranges } from "../../../ops/typedefs/common";
+import type { Range as RangeType, Ranges } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";
 
@@ -18,7 +18,7 @@ function isIndexWithin(
   index: number,
   rangesArr: Ranges,
   opts?: Partial<Opts>,
-): boolean | Range {
+): boolean | RangeType {
   let resolvedOpts = { ...defaults, ...opts };
   // insurance
   if (!Number.isInteger(index)) {
@@ -47,4 +47,4 @@ function isIndexWithin(
   );
 }
 
-export { isIndexWithin, defaults, version, Range, Ranges };
+export { isIndexWithin, defaults, version, RangeType as Range, Ranges };

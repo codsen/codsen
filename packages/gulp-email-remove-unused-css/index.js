@@ -10,13 +10,15 @@ function geruc(options) {
   stream._transform = (file, encoding, cb) => {
     if (file.isStream()) {
       let error = "Streaming not supported";
-      return cb(new PluginError(PLUGIN_NAME, error));
+      cb(new PluginError(PLUGIN_NAME, error));
+      return;
     }
     if (file.isBuffer()) {
       let contents = String(file.contents);
       if (!contents.length) {
         // Don't crash on empty files
-        return cb(null, file);
+        cb(null, file);
+        return;
       }
       file.contents = Buffer.from(comb(contents, options).result);
       cb(null, file);

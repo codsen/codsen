@@ -23,19 +23,20 @@ async function allContrib({ state }) {
 
   try {
     let existingAllContribFile = JSON.parse(
-      await fs.readFile(ALLCONTRIBFILE, "utf8")
+      await fs.readFile(ALLCONTRIBFILE, "utf8"),
     );
     // console.log(
     //   `${`\u001b[${32}m${`read ${ALLCONTRIBFILE} OK`}\u001b[${39}m`}`
     // );
     if (!existingAllContribFile.contributors) {
       throw new Error(
-        `lect: no "contributors" key in ${ALLCONTRIBFILE} - we'll reset it!`
+        `lect: no "contributors" key in ${ALLCONTRIBFILE} - we'll reset it!`,
       );
     }
 
     // extract "contributors" key from existing file
     finalFileToWrite.contributors = existingAllContribFile.contributors;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     // console.log(
     //   `${`\u001b[${31}m${`could not read ${ALLCONTRIBFILE}`}\u001b[${39}m`}`
@@ -54,7 +55,7 @@ async function allContrib({ state }) {
   try {
     await writeFileAtomic(
       ALLCONTRIBFILE,
-      JSON.stringify(finalFileToWrite, null, 2)
+      JSON.stringify(finalFileToWrite, null, 2),
     );
     // console.log(
     //   `lect ${ALLCONTRIBFILE} ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`

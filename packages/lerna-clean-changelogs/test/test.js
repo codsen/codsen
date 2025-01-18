@@ -1,18 +1,18 @@
 import { readFileSync, writeFileSync } from "fs";
 import path from "path";
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import crypto from "crypto";
+import crypto2 from "crypto";
 import { createRequire } from "module";
 
 import { cleanChangelogs as c } from "../dist/lerna-clean-changelogs.esm.js";
 
 const sha256 = (x) =>
-  crypto.createHash("sha256").update(x, "utf8").digest("hex");
+  crypto2.createHash("sha256").update(x, "utf8").digest("hex");
 
-const require = createRequire(import.meta.url);
-const readHashes = require("./fixture_hashes.json");
+const require2 = createRequire(import.meta.url);
+const readHashes = require2("./fixture_hashes.json");
 
 const hashes = { ...readHashes };
 

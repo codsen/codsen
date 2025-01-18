@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 // ==================================
 // GENERATES THE MONOREPO ROOT README
 // ==================================
@@ -25,9 +23,9 @@ const allPackages = fs
       !JSON.parse(
         fs.readFileSync(
           path.join("packages", packageName, "package.json"),
-          "utf8"
-        )
-      ).private
+          "utf8",
+        ),
+      ).private,
   )
   .map((p) => removeTbc(p));
 

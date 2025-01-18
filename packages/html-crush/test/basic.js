@@ -1,9 +1,9 @@
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { compare } from "../../../ops/helpers/shallow-compare.js";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { crush, defaults, version } from "../dist/html-crush.esm.js";
 import { m } from "./util/util.js";
 

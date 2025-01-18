@@ -1,5 +1,5 @@
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import fix from "./util/util.js";
@@ -675,8 +675,10 @@ test(`30 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
     "&nbsp;\t&nbsp;\t&nbsp;\t\ta\t&nbsp;\t&nbsp;\t&nbsp;",
     "&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;",
   ];
-  inputs.forEach((input, i) => equal(fix(ok, input), [], `"${input}" - ${i}`));
-  inputs.forEach((input, i) =>
+  inputs.forEach((input, i) => {
+    equal(fix(ok, input), [], `"${input}" - ${i}`);
+  });
+  inputs.forEach((input, i) => {
     equal(
       fix(ok, input, {
         textAmpersandCatcherCb: (idx) => {
@@ -685,8 +687,8 @@ test(`30 - ${`\u001b[${34}m${"other cases"}\u001b[${39}m`} - \u001b[${32}m${"rec
       }),
       [],
       `"${input}" - ${i}`,
-    ),
-  );
+    );
+  });
   equal(gathered, [], "30.01");
 });
 

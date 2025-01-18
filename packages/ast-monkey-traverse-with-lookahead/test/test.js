@@ -1,7 +1,7 @@
 /* eslint no-param-reassign:0 */
 
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { traverse } from "../dist/ast-monkey-traverse-with-lookahead.esm.js";

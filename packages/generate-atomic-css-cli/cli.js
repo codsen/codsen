@@ -113,10 +113,7 @@ function processPaths(incomingPaths) {
           { good: [], bad: [] },
         ).then((counter) => {
           let message;
-          if (
-            (!counter.bad || !counter.bad.length) &&
-            (!counter.good || !counter.good.length)
-          ) {
+          if (!counter.bad?.length && !counter.good?.length) {
             message = "Nothing to process.";
           } else {
             message = `${`\u001b[${32}m${`${
@@ -128,7 +125,7 @@ function processPaths(incomingPaths) {
             }${counter.good.length} file${
               counter.good.length === 1 ? "" : "s"
             } updated`}\u001b[${39}m`}${
-              counter.bad && counter.bad.length
+              counter?.bad.length
                 ? `\n${messagePrefix}${`\u001b[${31}m${`${
                     counter.bad.length
                   } file${

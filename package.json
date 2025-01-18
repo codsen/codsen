@@ -50,12 +50,13 @@
     }
   },
   "devDependencies": {
+    "@eslint/compat": "^1.2.5",
+    "@eslint/js": "^9.18.0",
     "@monorepo-utils/workspaces-to-typescript-project-references": "^2.10.4",
     "@rollup/plugin-json": "^6.1.0",
     "@sindresorhus/merge-streams": "^4.0.0",
     "@types/hast": "^3.0.4",
     "@types/node": "^22.10.5",
-    "@types/tap": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^8.19.1",
     "@typescript-eslint/parser": "^8.19.1",
     "benchmark": "^2.1.4",
@@ -67,7 +68,7 @@
     "detergent": "^9.2.12",
     "esbuild": "^0.24.2",
     "esbuild-register": "^3.6.0",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.7.0",
     "eslint-plugin-import": "^2.31.0",

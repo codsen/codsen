@@ -6,7 +6,7 @@ import { checkTypesMini } from "../dist/check-types-mini.esm.js";
 
 const callerDir = path.resolve(".");
 
-const testme = () =>
+const testme = () => {
   checkTypesMini(
     {
       aaa: {
@@ -30,6 +30,7 @@ const testme = () =>
       ignorePaths: ["aaa.bbb"],
     },
   );
+};
 
 // action
 runPerf(testme, callerDir);

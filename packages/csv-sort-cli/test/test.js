@@ -1,6 +1,6 @@
 import fs from "fs";
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import path from "path";
 import { temporaryDirectory } from "tempy";
@@ -8,8 +8,8 @@ import { fileURLToPath } from "url";
 
 import { spawn } from "../../../ops/helpers/spawn.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename2 = fileURLToPath(import.meta.url);
+const __dirname2 = path.dirname(__filename2);
 
 //                                  *
 //                                  *
@@ -31,7 +31,7 @@ test("01 - there are no usable files at all", async () => {
 
   fs.writeFileSync(path.join(tempFolder, "file.md"), "zzz");
   try {
-    spawn(tempFolder, __dirname);
+    spawn(tempFolder, __dirname2);
     not.ok("01");
   } catch (error) {
     ok("01");
@@ -78,7 +78,7 @@ test("02 - sorts a file", async () => {
 
   // 2. write CSV, process it and read the new file
   fs.writeFileSync(path.join(tempFolder, "testfile.csv"), originalCSV);
-  spawn(tempFolder, __dirname, "testfile.csv");
+  spawn(tempFolder, __dirname2, "testfile.csv");
 
   // execaCommandSync(
   //   `cd ${tempFolder} && ${path.join(__dirname, "../cli.js")} testfile.csv`,

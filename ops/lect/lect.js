@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { promises as fs, F_OK, accessSync } from "fs";
 import path from "path";
 import objectPath from "object-path";
@@ -18,7 +16,7 @@ import allContrib from "./plugins/allContributors.js";
 
 import { fileURLToPath } from "url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname2 = path.dirname(fileURLToPath(import.meta.url));
 
 // SETUP
 // -----------------------------------------------------------------------------
@@ -35,7 +33,7 @@ const state = {
 
 const packageJson = JSON.parse(await fs.readFile("package.json", "utf8"));
 const rootPackageJSON = JSON.parse(
-  await fs.readFile(path.resolve("../../package.json"), "utf8")
+  await fs.readFile(path.resolve("../../package.json"), "utf8"),
 );
 state.pack = packageJson;
 state.root = path.resolve("./");
@@ -52,6 +50,7 @@ state.isCJS = false;
 try {
   accessSync(path.join(state.root, "rollup.config.js"), F_OK);
   state.isRollup = true;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 } catch (e) {
   //
 }
@@ -68,15 +67,16 @@ if (
 }
 
 const lectrc = JSON.parse(
-  await fs.readFile(path.join(__dirname, ".lectrc.json"), "utf8")
+  await fs.readFile(path.join(__dirname2, ".lectrc.json"), "utf8"),
 );
 state.originalLectrc = { ...lectrc };
 
 let quickTakeExample;
 try {
   quickTakeExample = prepExampleFileStr(
-    await fs.readFile(path.join(state.root, "examples/_quickTake.js"), "utf8")
+    await fs.readFile(path.join(state.root, "examples/_quickTake.js"), "utf8"),
   ).str;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 } catch (e) {
   // console.log(`081 lect: ${`\u001b[${31}m${`no examples`}\u001b[${39}m`}`);
 }

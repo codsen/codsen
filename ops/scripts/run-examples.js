@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import fs from "fs";
 import util from "util";
 import path from "path";
@@ -10,7 +8,7 @@ const readdir = util.promisify(fs.readdir);
 
 readdir(path.resolve(`.`, "examples"))
   .then((files) =>
-    files.filter((file) => [".js", ".mjs"].includes(path.extname(file)))
+    files.filter((file) => [".js", ".mjs"].includes(path.extname(file))),
   )
   .then((files) =>
     Promise.all(
@@ -20,25 +18,25 @@ readdir(path.resolve(`.`, "examples"))
           stdio: "inherit",
         })
           .then(() => {
-            // log "PASS" on bold, black on green brackground:
+            // log "PASS" on bold, black on green background:
             console.log(
-              `\u001B[30m\u001B[42m PASS \u001B[49m\u001B[39m examples/${file} ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`
+              `\u001B[30m\u001B[42m PASS \u001B[49m\u001B[39m examples/${file} ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`,
             );
           })
           .catch((err) => {
             console.log(
-              `\u001b[${37};${1};${41}m FAIL \u001b[${49}m examples/${file}:\n${err}`
+              `\u001b[${37};${1};${41}m FAIL \u001b[${49}m examples/${file}:\n${err}`,
             );
             process.exit(1);
-          })
-      )
+          }),
+      ),
     ).catch((err) => {
       // tests failed:
       console.log(
-        `text-examples.js - Unit test failed:\n${`\u001b[${31}m${err}\u001b[${39}m`}`
+        `text-examples.js - Unit test failed:\n${`\u001b[${31}m${err}\u001b[${39}m`}`,
       );
       process.exit(1);
-    })
+    }),
   )
   .catch(() => {
     // silently exit - examples not found!

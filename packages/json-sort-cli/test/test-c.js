@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa, execaCommand } from "execa";
 import { temporaryDirectory } from "tempy";
@@ -58,7 +58,9 @@ import { temporaryDirectory } from "tempy";
           // this clause should never be reached
           not.ok("execa should have exited with non-zero code");
         })
-        .catch((err) => equal(err.exitCode, 9, "01.03"));
+        .catch((err) => {
+          equal(err.exitCode, 9, "01.03");
+        });
     }
 
     equal(
@@ -106,7 +108,9 @@ import { temporaryDirectory } from "tempy";
           // this clause should never be reached
           not.ok("execa should have exited with non-zero code");
         })
-        .catch((err) => equal(err.exitCode, 9, "02.03"));
+        .catch((err) => {
+          equal(err.exitCode, 9, "02.03");
+        });
     }
 
     equal(
@@ -154,7 +158,9 @@ import { temporaryDirectory } from "tempy";
           // this clause should never be reached
           not.ok("execa should have exited with non-zero code");
         })
-        .catch((err) => equal(err.exitCode, 9, "03.03"));
+        .catch((err) => {
+          equal(err.exitCode, 9, "03.03");
+        });
     }
 
     equal(
@@ -180,7 +186,9 @@ test("04 - one unsorted file", async () => {
       // this clause should never be reached
       not.ok("execa should have exited with non-zero code");
     })
-    .catch((err) => equal(err.exitCode, 9, "02"));
+    .catch((err) => {
+      equal(err.exitCode, 9, "02");
+    });
 
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),

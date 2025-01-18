@@ -1,4 +1,4 @@
-/* eslint no-unused-vars:0 */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 // deps
 import path from "path";
@@ -10,18 +10,19 @@ const callerDir = path.resolve(".");
 
 let pinged = "";
 let index = 0;
-const testme = () =>
+const testMe = () => {
   rIterate(
     "abcdefghij",
     [
       [0, 5],
       [5, 10],
     ],
-    ({ i, val }) => {
+    ({ val }) => {
       pinged += val;
       index += 1;
     },
   );
+};
 
 // action
-runPerf(testme, callerDir);
+runPerf(testMe, callerDir);

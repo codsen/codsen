@@ -10,7 +10,7 @@
     ? define(factory)
     : ((global = global || self), (global.Vue = factory()));
 })(this, () => {
-  
+
 
   /*  */
 
@@ -332,7 +332,8 @@
         }
         /* istanbul ignore next */
         return false;
-      } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
         /* istanbul ignore next */
         return false;
       }
@@ -569,7 +570,8 @@
         }
       }); // https://github.com/facebook/flow/issues/285
       window.addEventListener("test-passive", null, opts);
-    } catch (e) {}
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {}
   }
 
   // this needs to be lazy-evaled because vue may be required before
@@ -1117,7 +1119,7 @@
   function set(target, key, val) {
     if (isUndef(target) || isPrimitive(target)) {
       warn(
-        `Cannot set reactive property on undefined, null, or primitive value: ${ 
+        `Cannot set reactive property on undefined, null, or primitive value: ${
           target}`
       );
     }
@@ -1153,7 +1155,7 @@
   function del(target, key) {
     if (isUndef(target) || isPrimitive(target)) {
       warn(
-        `Cannot delete reactive property on undefined, null, or primitive value: ${ 
+        `Cannot delete reactive property on undefined, null, or primitive value: ${
           target}`
       );
     }
@@ -1209,8 +1211,8 @@
     strats.el = strats.propsData = function(parent, child, vm, key) {
       if (!vm) {
         warn(
-          `option "${ 
-            key 
+          `option "${
+            key
             }" can only be used during instance ` +
             `creation with the \`new\` keyword.`
         );
@@ -1452,7 +1454,7 @@
     if (isBuiltInTag(name) || config.isReservedTag(name)) {
       warn(
         `${"Do not use built-in or reserved HTML elements as component " +
-          "id: "}${ 
+          "id: "}${
           name}`
       );
     }
@@ -1491,8 +1493,8 @@
     } else {
       warn(
         `${'Invalid value for option "props": expected an Array or an Object, ' +
-          "but got "}${ 
-          toRawType(props) 
+          "but got "}${
+          toRawType(props)
           }.`,
         vm
       );
@@ -1523,8 +1525,8 @@
     } else {
       warn(
         `${'Invalid value for option "inject": expected an Array or an Object, ' +
-          "but got "}${ 
-          toRawType(inject) 
+          "but got "}${
+          toRawType(inject)
           }.`,
         vm
       );
@@ -1549,11 +1551,11 @@
   function assertObjectType(name, value, vm) {
     if (!isPlainObject(value)) {
       warn(
-        `Invalid value for option "${ 
-          name 
+        `Invalid value for option "${
+          name
           }": expected an Object, ` +
-          `but got ${ 
-          toRawType(value) 
+          `but got ${
+          toRawType(value)
           }.`,
         vm
       );
@@ -1804,10 +1806,10 @@
 
   function getInvalidTypeMessage(name, value, expectedTypes) {
     let message =
-      `Invalid prop: type check failed for prop "${ 
-      name 
+      `Invalid prop: type check failed for prop "${
+      name
       }".` +
-      ` Expected ${ 
+      ` Expected ${
       expectedTypes.map(capitalize).join(", ")}`;
     const expectedType = expectedTypes[0];
     const receivedType = toRawType(value);
@@ -1869,7 +1871,8 @@
               if (capture) {
                 return;
               }
-            } catch (e) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
               globalHandleError(e, cur, "errorCaptured hook");
             }
           }
@@ -1888,7 +1891,8 @@
           return handleError(e, vm, info + " (Promise/async)");
         });
       }
-    } catch (e) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
       handleError(e, vm, info);
     }
     return res;
@@ -1898,7 +1902,8 @@
     if (config.errorHandler) {
       try {
         return config.errorHandler.call(null, err, vm, info);
-      } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
         logError(e, null, "config.errorHandler");
       }
     }
@@ -2008,7 +2013,8 @@
       if (cb) {
         try {
           cb.call(ctx);
-        } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
           handleError(e, ctx, "nextTick");
         }
       } else if (_resolve) {
@@ -2068,8 +2074,8 @@
 
     const warnNonPresent = function(target, key) {
       warn(
-        `Property or method "${ 
-          key 
+        `Property or method "${
+          key
           }" is not defined on the instance but ` +
           `referenced during render. Make sure that this property is reactive, ` +
           `either in the data option, or for class-based components, by ` +
@@ -2081,10 +2087,10 @@
 
     const warnReservedPrefix = function(target, key) {
       warn(
-        `Property "${ 
-          key 
-          }" must be accessed with "$data.${ 
-          key 
+        `Property "${
+          key
+          }" must be accessed with "$data.${
+          key
           }" because ` +
           `properties starting with "$" or "_" are not proxied in the Vue instance to ` +
           `prevent conflicts with Vue internals` +
@@ -2349,20 +2355,20 @@
             hasOwn(attrs, keyInLowerCase)
           ) {
             tip(
-              `Prop "${ 
-                keyInLowerCase 
-                }" is passed to component ${ 
-                formatComponentName(tag || Ctor) 
+              `Prop "${
+                keyInLowerCase
+                }" is passed to component ${
+                formatComponentName(tag || Ctor)
                 }, but the declared prop name is` +
-                ` "${ 
-                key 
+                ` "${
+                key
                 }". ` +
                 `Note that HTML attributes are case-insensitive and camelCased ` +
                 `props need to use their kebab-case equivalents when using in-DOM ` +
-                `templates. You should probably use "${ 
-                altKey 
-                }" instead of "${ 
-                key 
+                `templates. You should probably use "${
+                altKey
+                }" instead of "${
+                key
                 }".`
             );
           }
@@ -2901,7 +2907,7 @@
       } else if (key !== "" && key !== null) {
         // null is a speical value for explicitly removing a binding
         warn(
-          `Invalid value for dynamic directive argument (expected string or null): ${ 
+          `Invalid value for dynamic directive argument (expected string or null): ${
             key}`,
           this
         );
@@ -3561,7 +3567,8 @@
         // when parent component is patched.
         currentRenderingInstance = vm;
         vnode = render.call(vm._renderProxy, vm.$createElement);
-      } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
         handleError(e, vm, "render");
         // return error render result,
         // or previous vnode to prevent render error causing blank component
@@ -3573,7 +3580,8 @@
               vm.$createElement,
               e
             );
-          } catch (e) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
             handleError(e, vm, "renderError");
             vnode = vm._vnode;
           }
@@ -3673,7 +3681,7 @@
 
       const reject = once(reason => {
         warn(
-          `Failed to resolve async component: ${  String(factory) 
+          `Failed to resolve async component: ${  String(factory)
           }${reason ? ("\nReason: " + reason) : ''}`
         );
         if (isDef(factory.errorComp)) {
@@ -3865,19 +3873,19 @@
         const lowerCaseEvent = event.toLowerCase();
         if (lowerCaseEvent !== event && vm._events[lowerCaseEvent]) {
           tip(
-            `Event "${ 
-              lowerCaseEvent 
-              }" is emitted in component ${ 
-              formatComponentName(vm) 
-              } but the handler is registered for "${ 
-              event 
+            `Event "${
+              lowerCaseEvent
+              }" is emitted in component ${
+              formatComponentName(vm)
+              } but the handler is registered for "${
+              event
               }". ` +
               `Note that HTML attributes are case-insensitive and you cannot use ` +
               `v-on to listen to camelCase events when using in-DOM templates. ` +
-              `You should probably use "${ 
-              hyphenate(event) 
-              }" instead of "${ 
-              event 
+              `You should probably use "${
+              hyphenate(event)
+              }" instead of "${
+              event
               }".`
           );
         }
@@ -4316,7 +4324,7 @@
         circular[id] = (circular[id] || 0) + 1;
         if (circular[id] > MAX_UPDATE_COUNT) {
           warn(
-            `You may have an infinite update loop ${ 
+            `You may have an infinite update loop ${
               watcher.user
                 ? 'in watcher with expression "' + watcher.expression + '"'
                 : "in a component render function."}`,
@@ -4448,8 +4456,8 @@
       if (!this.getter) {
         this.getter = noop;
         warn(
-          `Failed watching path: "${ 
-            expOrFn 
+          `Failed watching path: "${
+            expOrFn
             }" ` +
             `Watcher only accepts simple dot-delimited paths. ` +
             `For full control, use a function instead.`,
@@ -4469,7 +4477,8 @@
     const vm = this.vm;
     try {
       value = this.getter.call(vm, vm);
-    } catch (e) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
       if (this.user) {
         handleError(e, vm, `getter for watcher "${  this.expression  }"`);
       } else {
@@ -4558,7 +4567,8 @@
         if (this.user) {
           try {
             this.cb.call(this.vm, value, oldValue);
-          } catch (e) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
             handleError(
               e,
               this.vm,
@@ -4673,8 +4683,8 @@
           config.isReservedAttr(hyphenatedKey)
         ) {
           warn(
-            `"${ 
-              hyphenatedKey 
+            `"${
+              hyphenatedKey
               }" is a reserved attribute and cannot be used as component prop.`,
             vm
           );
@@ -4734,8 +4744,8 @@
       }
       if (props && hasOwn(props, key)) {
         warn(
-          `The data property "${ 
-            key 
+          `The data property "${
+            key
             }" is already declared as a prop. ` +
             `Use prop default value instead.`,
           vm
@@ -4753,7 +4763,8 @@
     pushTarget();
     try {
       return data.call(vm, vm);
-    } catch (e) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
       handleError(e, vm, "data()");
       return {};
     } finally {
@@ -4825,8 +4836,8 @@
     if (sharedPropertyDefinition.set === noop) {
       sharedPropertyDefinition.set = function() {
         warn(
-          `Computed property "${ 
-            key 
+          `Computed property "${
+            key
             }" was assigned to but it has no setter.`,
           this
         );
@@ -4862,10 +4873,10 @@
       {
         if (typeof methods[key] !== "function") {
           warn(
-            `Method "${ 
-              key 
-              }" has type "${ 
-              typeof methods[key] 
+            `Method "${
+              key
+              }" has type "${
+              typeof methods[key]
               }" in the component definition. ` +
               `Did you reference the function correctly?`,
             vm
@@ -4876,8 +4887,8 @@
         }
         if (key in vm && isReserved(key)) {
           warn(
-            `Method "${ 
-              key 
+            `Method "${
+              key
               }" conflicts with an existing Vue instance method. ` +
               `Avoid defining component methods that start with _ or $.`
           );
@@ -5234,7 +5245,7 @@
       ) {
         if (!definition) {
           return this.options[type + 's'][id]
-        } 
+        }
           /* istanbul ignore if */
           if (type === 'component') {
             validateComponentName(id);
@@ -5248,7 +5259,7 @@
           }
           this.options[type + 's'][id] = definition;
           return definition
-        
+
       };
     });
   }
@@ -5961,8 +5972,8 @@
           }
           if (isUnknownElement$$1(vnode, creatingElmInVPre)) {
             warn(
-              `Unknown custom element: <${ 
-                tag 
+              `Unknown custom element: <${
+                tag
                 }> - did you ` +
                 `register the component correctly? For recursive components, ` +
                 `make sure to provide the "name" option.`,
@@ -6398,8 +6409,8 @@
         if (isDef(key)) {
           if (seenKeys[key]) {
             warn(
-              `Duplicate keys detected: '${ 
-                key 
+              `Duplicate keys detected: '${
+                key
                 }'. This may cause an update error.`,
               vnode.context
             );
@@ -6868,7 +6879,8 @@
     if (fn) {
       try {
         fn(vnode.elm, dir, vnode, oldVnode, isDestroy);
-      } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
         handleError(
           e,
           vnode.context,
@@ -7453,12 +7465,12 @@
           exp: val.slice(0, index$1),
           key: `"${  val.slice(index$1 + 1)  }"`
         };
-      } 
+      }
         return {
           exp: val,
           key: null
         };
-      
+
     }
 
     str = val;
@@ -7892,7 +7904,8 @@
     // work around IE bug when accessing document.activeElement in an iframe
     try {
       notInFocus = document.activeElement !== elm;
-    } catch (e) {}
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {}
     return notInFocus && elm.value !== checkVal;
   }
 
@@ -8763,10 +8776,10 @@
     const isMultiple = el.multiple;
     if (isMultiple && !Array.isArray(value)) {
       warn(
-        `<select multiple v-model="${ 
-          binding.expression 
+        `<select multiple v-model="${
+          binding.expression
           }"> ` +
-          `expects an Array value for its binding, but got ${ 
+          `expects an Array value for its binding, but got ${
           Object.prototype.toString.call(value).slice(8, -1)}`,
         vm
       );
@@ -9374,8 +9387,8 @@
       const res = parseText(staticClass, options.delimiters);
       if (res) {
         warn(
-          `class="${ 
-            staticClass 
+          `class="${
+            staticClass
             }": ` +
             `Interpolation inside attributes has been removed. ` +
             `Use v-bind or the colon shorthand instead. For example, ` +
@@ -9421,8 +9434,8 @@
         const res = parseText(staticStyle, options.delimiters);
         if (res) {
           warn(
-            `style="${ 
-              staticStyle 
+            `style="${
+              staticStyle
               }": ` +
               `Interpolation inside attributes has been removed. ` +
               `Use v-bind or the colon shorthand instead. For example, ` +
@@ -10055,8 +10068,8 @@
           warn$2(
             `${"Templates should only be responsible for mapping the state to the " +
               "UI. Avoid placing tags with side-effects in your templates, such as " +
-              "<"}${ 
-              tag 
+              "<"}${
+              tag
               }>` +
               `, as they will not be parsed.`,
             { start: element.start }
@@ -10589,8 +10602,8 @@
           }
           if (value.trim().length === 0) {
             warn$2(
-              `The value for a v-bind expression cannot be empty. Found in "v-bind:${ 
-                name 
+              `The value for a v-bind expression cannot be empty. Found in "v-bind:${
+                name
                 }"`
             );
           }
@@ -10946,7 +10959,7 @@
 
   function genStaticKeys$1(keys) {
     return makeMap(
-      `type,tag,attrsList,attrsMap,plain,parent,children,attrs,start,end,rawAttrsMap${ 
+      `type,tag,attrsList,attrsMap,plain,parent,children,attrs,start,end,rawAttrsMap${
         keys ? "," + keys : ""}`
     );
   }
@@ -11476,12 +11489,12 @@
     // component v-model
     if (el.model) {
       data +=
-        `model:{value:${ 
-        el.model.value 
-        },callback:${ 
-        el.model.callback 
-        },expression:${ 
-        el.model.expression 
+        `model:{value:${
+        el.model.value
+        },callback:${
+        el.model.callback
+        },expression:${
+        el.model.expression
         }},`;
     }
     // inline-template
@@ -11533,21 +11546,21 @@
       if (needRuntime) {
         hasRuntime = true;
         res +=
-          `{name:"${ 
-          dir.name 
-          }",rawName:"${ 
-          dir.rawName 
-          }"${ 
+          `{name:"${
+          dir.name
+          }",rawName:"${
+          dir.rawName
+          }"${
           dir.value
             ? ",value:(" +
               dir.value +
               "),expression:" +
               JSON.stringify(dir.value)
-            : "" 
+            : ""
           }${dir.arg
             ? ",arg:" + (dir.isDynamicArg ? dir.arg : '"' + dir.arg + '"')
-            : "" 
-          }${dir.modifiers ? ",modifiers:" + JSON.stringify(dir.modifiers) : "" 
+            : ""
+          }${dir.modifiers ? ",modifiers:" + JSON.stringify(dir.modifiers) : ""
           }},`;
       }
     }
@@ -11599,14 +11612,14 @@
     }
 
     return (
-      `scopedSlots:_u([${ 
+      `scopedSlots:_u([${
       Object.keys(slots)
         .map(function(key) {
           return genScopedSlot(slots[key], state);
         })
-        .join(",") 
-      }]${ 
-      needsForceUpdate ? ",true" : "" 
+        .join(",")
+      }]${
+      needsForceUpdate ? ",true" : ""
       })`
     );
   }
@@ -11622,10 +11635,10 @@
     const slotScope =
       el.slotScope === emptySlotScopeToken ? "" : String(el.slotScope);
     const fn =
-      `function(${ 
-      slotScope 
+      `function(${
+      slotScope
       }){` +
-      `return ${ 
+      `return ${
       el.tag === "template"
         ? el.if && isLegacySyntax
           ? "(" +
@@ -11634,7 +11647,7 @@
             (genChildren(el, state) || "undefined") +
             ":undefined"
           : genChildren(el, state) || "undefined"
-        : genElement(el, state) 
+        : genElement(el, state)
       }}`;
     return `{key:${  el.slotTarget || '"default"'  },fn:${  fn  }}`;
   }
@@ -11721,10 +11734,10 @@
 
   function genText(text) {
     return (
-      `_v(${ 
+      `_v(${
       text.type === 2
         ? text.expression // no need for () because already wrapped in _s()
-        : transformSpecialNewlines(JSON.stringify(text.text)) 
+        : transformSpecialNewlines(JSON.stringify(text.text))
       })`
     );
   }
@@ -11800,21 +11813,21 @@
   // these keywords should not appear inside expressions, but operators like
   // typeof, instanceof and in are allowed
   const prohibitedKeywordRE = new RegExp(
-    `\\b${ 
+    `\\b${
       (
         "do,if,for,let,new,try,var,case,else,with,await,break,catch,class,const," +
         "super,throw,while,yield,delete,export,import,return,switch,default," +
         "extends,finally,continue,debugger,function,arguments"
       )
         .split(",")
-        .join("\\b|\\b") 
+        .join("\\b|\\b")
       }\\b`
   );
 
   // these unary operators should not be used as property/method names
   const unaryOperatorsRE = new RegExp(
-    `\\b${ 
-      "delete,typeof,void".split(",").join("\\s*\\([^\\)]*\\)|\\b") 
+    `\\b${
+      "delete,typeof,void".split(",").join("\\s*\\([^\\)]*\\)|\\b")
       }\\s*\\([^\\)]*\\)`
   );
 
@@ -11880,7 +11893,8 @@
     if (typeof ident === "string") {
       try {
         new Function(`var ${  ident  }=_`);
-      } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
         warn(
           `invalid ${  type  } "${  ident  }" in expression: ${  text.trim()}`,
           range
@@ -11892,7 +11906,8 @@
   function checkExpression(exp, text, warn, range) {
     try {
       new Function(`return ${  exp}`);
-    } catch (e) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
       const keywordMatch = exp
         .replace(stripStringRE, "")
         .match(prohibitedKeywordRE);
@@ -11937,10 +11952,10 @@
             continue;
           }
           res.push(
-            `${ 
-              j + 1 
-              }${repeat$1(" ", 3 - String(j + 1).length) 
-              }|  ${ 
+            `${
+              j + 1
+              }${repeat$1(" ", 3 - String(j + 1).length)
+              }|  ${
               lines[j]}`
           );
           const lineLength = lines[j].length;
@@ -12002,7 +12017,8 @@
         // detect possible CSP restriction
         try {
           new Function("return 1");
-        } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
           if (e.toString().match(/unsafe-eval|CSP/)) {
             warn$$1(
               "It seems you are using the standalone build of Vue.js in an " +
@@ -12032,7 +12048,7 @@
           if (options.outputSourceRange) {
             compiled.errors.forEach(e => {
               warn$$1(
-                `Error compiling template:\n\n${  e.msg  }\n\n${ 
+                `Error compiling template:\n\n${  e.msg  }\n\n${
                 generateCodeFrame(template, e.start, e.end)}`,
                 vm
               );

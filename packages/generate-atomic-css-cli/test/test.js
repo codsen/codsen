@@ -1,14 +1,14 @@
 import fs from "fs-extra";
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import path from "path";
 import { fileURLToPath } from "url";
 import { execa } from "execa";
 import { temporaryDirectory } from "tempy";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename2 = fileURLToPath(import.meta.url);
+const __dirname2 = path.dirname(__filename2);
 
 //                                  *
 //                                  *
@@ -31,7 +31,7 @@ test("01 - there are no usable files at all", async () => {
     .then(() =>
       execa(
         `cd ${tempFolder} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
           "cli.js",
         )} "index.html"`,
@@ -104,7 +104,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
     .then(() =>
       execa(
         `cd ${tempFolder} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
           "cli.js",
         )} "index.html"`,
@@ -173,7 +173,7 @@ GENERATE-ATOMIC-CSS-CONTENT-ENDS */
     )
     .then(() =>
       execa(
-        `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} "*.html"`,
+        `cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")} "*.html"`,
         {
           shell: true,
         },

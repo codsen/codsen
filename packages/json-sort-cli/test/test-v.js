@@ -1,14 +1,14 @@
 import fs from "fs-extra";
 import path from "path";
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa } from "execa";
 import { temporaryDirectory } from "tempy";
 import { createRequire } from "module";
 
-const require = createRequire(import.meta.url);
-const pack = require("../package.json");
+const require2 = createRequire(import.meta.url);
+const pack = require2("../package.json");
 
 // -----------------------------------------------------------------------------
 

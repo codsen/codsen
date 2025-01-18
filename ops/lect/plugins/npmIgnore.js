@@ -14,8 +14,8 @@ async function npmIgnore({
   if (typeof lectrc !== "object") {
     return Promise.reject(
       new Error(
-        `lect/npmIgnore.js: ${`\u001b[${31}m${`ERROR`}\u001b[${39}m`} lectrc was passed empty`
-      )
+        `lect/npmIgnore.js: ${`\u001b[${31}m${`ERROR`}\u001b[${39}m`} lectrc was passed empty`,
+      ),
     );
   }
 
@@ -117,6 +117,7 @@ async function npmIgnore({
       } else {
         filesList.push(files[i]);
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       //
     }
@@ -132,7 +133,7 @@ async function npmIgnore({
   let badFolders = [];
   let unclearFolders = [];
   [badFolders, unclearFolders] = partition(foldersList, (foldersName) =>
-    get("npmignore.badFolders").includes(foldersName)
+    get("npmignore.badFolders").includes(foldersName),
   );
   unclearFolders = pull(unclearFolders, get("npmignore.goodFolders"), {
     caseSensitive: false,
@@ -142,11 +143,11 @@ async function npmIgnore({
     // const folderAnswers = await ask(encodeDot(unclearFolders));
     console.log(
       `lect/npmIgnore.js: add folders to .lectrc.json: ${`\u001b[${31}m${unclearFolders.join(
-        ", "
-      )}\u001b[${39}m`}`
+        ", ",
+      )}\u001b[${39}m`}`,
     );
     return Promise.reject(
-      new Error(`add folders to .lectrc.json: ${unclearFolders.join(", ")}`)
+      new Error(`add folders to .lectrc.json: ${unclearFolders.join(", ")}`),
     );
   }
 
@@ -155,7 +156,7 @@ async function npmIgnore({
   let badFiles = [];
   let unclearFiles = [];
   [badFiles, unclearFiles] = partition(filesList, (filesName) =>
-    get("npmignore.badFiles").includes(filesName)
+    get("npmignore.badFiles").includes(filesName),
   );
   // if (state.isCJS) {
   //   badFiles.push(`dist/${removeTbc(state.pack.name)}.esm.js`);
@@ -168,11 +169,11 @@ async function npmIgnore({
     // const fileAnswers = await ask(encodeDot(unclearFiles), "file");
     console.log(
       `lect/npmIgnore.js: add files to .lectrc.json: ${`\u001b[${31}m${unclearFiles.join(
-        ", "
-      )}\u001b[${39}m`}`
+        ", ",
+      )}\u001b[${39}m`}`,
     );
     return Promise.reject(
-      new Error(`add files to .lectrc.json: ${unclearFiles.join(", ")}`)
+      new Error(`add files to .lectrc.json: ${unclearFiles.join(", ")}`),
     );
   }
 
@@ -190,7 +191,7 @@ async function npmIgnore({
     return writeFileAtomic(".npmignore", finalNpmIgnoreFile);
   } catch (err) {
     console.log(
-      `lect: ${`\u001b[${31}m${`ERROR`}\u001b[${39}m`} could not write .npmignore - ${err}`
+      `lect: ${`\u001b[${31}m${`ERROR`}\u001b[${39}m`} could not write .npmignore - ${err}`,
     );
     return Promise.reject(err);
   }

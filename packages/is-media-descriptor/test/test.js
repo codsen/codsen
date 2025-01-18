@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { isMediaD } from "../dist/is-media-descriptor.esm.js";

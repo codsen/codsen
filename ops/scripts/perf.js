@@ -14,17 +14,17 @@ export const runPerf = async (cb, callerDir) => {
 
   let historicalDataFileContents = fs.readFileSync(
     path.resolve(callerDir, "perf/historical.json"),
-    "utf8"
+    "utf8",
   );
   let historicalData = JSON.parse(historicalDataFileContents);
   let { version, name } = JSON.parse(
-    fs.readFileSync(path.resolve(callerDir, "package.json"))
+    fs.readFileSync(path.resolve(callerDir, "package.json")),
   );
 
   console.log(
     `${`\u001b[${90}m${`scripts/run-perf.js:`}\u001b[${39}m`}${" ".repeat(
-      Math.max(0, name.length - 5)
-    )} 📦 ${`\u001b[${33}m${name}\u001b[${39}m`} v${version}`
+      Math.max(0, name.length - 5),
+    )} 📦 ${`\u001b[${33}m${name}\u001b[${39}m`} v${version}`,
   );
 
   // functions
@@ -96,7 +96,7 @@ export const runPerf = async (cb, callerDir) => {
               throw err;
             }
             console.log(`${heads}✅ historical.json written`);
-          }
+          },
         );
       }
 
@@ -106,15 +106,15 @@ export const runPerf = async (cb, callerDir) => {
       if (
         perc(
           Math.abs(historicalData.lastVersion - normalisedBenchmarkedOpsPerSec),
-          historicalData.lastVersion
+          historicalData.lastVersion,
         ) <= 2
       ) {
         console.log(
           `${heads}${"⚡️"} ${`\u001b[${32}m${`current code is just as fast as before`}\u001b[${39}m`} ${`\u001b[${90}m${`(was ${round(
-            historicalData.lastVersion
+            historicalData.lastVersion,
           )} \u2014 now ${round(
-            normalisedBenchmarkedOpsPerSec
-          )} ops/sec)`}\u001b[${39}m`}`
+            normalisedBenchmarkedOpsPerSec,
+          )} ops/sec)`}\u001b[${39}m`}`,
         );
       } else {
         console.log(
@@ -132,14 +132,14 @@ export const runPerf = async (cb, callerDir) => {
               : "slower"
           } by ${perc(
             Math.abs(
-              historicalData.lastVersion - normalisedBenchmarkedOpsPerSec
+              historicalData.lastVersion - normalisedBenchmarkedOpsPerSec,
             ),
-            historicalData.lastVersion
+            historicalData.lastVersion,
           )}%`}\u001b[${39}m`} ${`\u001b[${90}m${`(was ${round(
-            historicalData.lastVersion
+            historicalData.lastVersion,
           )} \u2014 now ${round(
-            normalisedBenchmarkedOpsPerSec
-          )} ops/sec)`}\u001b[${39}m`}`
+            normalisedBenchmarkedOpsPerSec,
+          )} ops/sec)`}\u001b[${39}m`}`,
         );
       }
 

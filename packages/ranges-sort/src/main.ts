@@ -1,5 +1,6 @@
 import { version as v } from "../package.json";
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type Range =
   | [from: number, to: number]
   | [from: number, to: number, whatToInsert: string | null | undefined];

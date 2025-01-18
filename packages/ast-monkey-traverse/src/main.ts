@@ -2,7 +2,7 @@
 
 import rfdc from "rfdc";
 import { isPlainObject as isObj } from "codsen-utils";
-import { parent } from "ast-monkey-util";
+import { parent as parent2 } from "ast-monkey-util";
 
 import { version as v } from "../package.json";
 
@@ -74,7 +74,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
         if (tree[i] !== undefined) {
           innerObj.parent = clone(tree);
           innerObj.parentType = "array";
-          innerObj.parentKey = parent(path);
+          innerObj.parentKey = parent2(path);
           DEV &&
             console.log(
               `080 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
@@ -139,7 +139,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
         }
         innerObj.parent = clone(tree);
         innerObj.parentType = "object";
-        innerObj.parentKey = parent(path);
+        innerObj.parentKey = parent2(path);
         DEV &&
           console.log(
             `145 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(

@@ -3,7 +3,7 @@
 // to
 // 9.children.2
 // the path notation is object-path
-function pathPrev(str: string): null | string {
+export function pathPrev(str: string): null | string {
   if (!str) {
     return null;
   }
@@ -21,5 +21,3 @@ function pathPrev(str: string): null | string {
   }
   return null;
 }
-
-export default pathPrev;

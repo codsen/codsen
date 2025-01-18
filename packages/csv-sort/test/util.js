@@ -1,20 +1,20 @@
-/* eslint no-unused-vars:0 */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { readFileSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { splitEasy } from "csv-split-easy";
-import crypto from "crypto";
+import crypto2 from "crypto";
 
 import { sort } from "../dist/csv-sort.esm.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename2 = fileURLToPath(import.meta.url);
+const __dirname2 = path.dirname(__filename2);
 
 const sha256 = (x) =>
-  crypto.createHash("sha256").update(x, "utf8").digest("hex");
+  crypto2.createHash("sha256").update(x, "utf8").digest("hex");
 
-const fixtures = path.join(__dirname, "fixtures");
+const fixtures = path.join(__dirname2, "fixtures");
 
 function compare(equal, name, throws) {
   // first, ensure fixtures are not mangled

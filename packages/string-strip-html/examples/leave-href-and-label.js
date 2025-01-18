@@ -21,8 +21,7 @@ assert.equal(
       let temp;
       if (
         tag.name === "a" &&
-        tag.attributes &&
-        tag.attributes.some((attr) => {
+        tag.attributes?.some((attr) => {
           if (attr.name === "href") {
             temp = attr.value;
             return true;

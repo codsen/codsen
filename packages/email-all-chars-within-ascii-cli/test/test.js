@@ -2,13 +2,13 @@ import fs from "fs-extra";
 import path from "path";
 import { fileURLToPath } from "url";
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa } from "execa";
 import { temporaryDirectory } from "tempy";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename2 = fileURLToPath(import.meta.url);
+const __dirname2 = path.dirname(__filename2);
 
 test("01 - called upon a single file which is healthy", async () => {
   // 1. fetch us an empty, random, temporary folder:
@@ -28,7 +28,7 @@ test("01 - called upon a single file which is healthy", async () => {
   // but from testing perspective, it's a different folder.
 
   let stdOutContents = await execa(
-    `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
+    `cd ${tempFolder} && ${path.join(__dirname2, "../")}cli.js test.html`,
     {
       shell: true,
     },
@@ -52,7 +52,7 @@ test("02 - called upon a single file which contains non-ASCII symbol", async () 
 
   // const error1 = await t.throwsAsync(() =>
   let error1 = await execa(
-    `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
+    `cd ${tempFolder} && ${path.join(__dirname2, "../")}cli.js test.html`,
     { shell: true },
   ).catch((e) => e);
   match(error1.stdout, /bad character/, "02.01");
@@ -86,7 +86,7 @@ test("05 - no files found in the given directory", async () => {
   // CLI will complain no files could be found
 
   let error1 = await execa(
-    `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
+    `cd ${tempFolder} && ${path.join(__dirname2, "../")}cli.js test.html`,
     { shell: true },
   ).catch((e) => e);
   match(error1.stdout, /THROW_ID_03/, "05.01");

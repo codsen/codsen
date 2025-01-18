@@ -1,5 +1,5 @@
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { det as det1 } from "../dist/detergent.esm.js";
@@ -103,7 +103,7 @@ test(`06 - ${`\u001b[${33}m${"change letter case"}\u001b[${39}m`} - with strip H
         // including that line break between div pairs, so
         // we implement a check, is it non-whitespace,
         // before wrapping it:
-        cb: (str) => (str && str.trim() ? `{${str.trim()}}` : str),
+        cb: (str) => (str?.trim() ? `{${str.trim()}}` : str),
       },
     ).res,
     `

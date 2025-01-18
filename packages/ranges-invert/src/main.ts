@@ -1,4 +1,5 @@
 import { rMerge } from "ranges-merge";
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 import type { Range, Ranges } from "ranges-merge";
 import { rCrop } from "ranges-crop";
 
@@ -154,7 +155,7 @@ function rInvert(
 
   DEV &&
     console.log(
-      `157 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
+      `158 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
         prep,
         null,
         4,
@@ -176,7 +177,7 @@ function rInvert(
     if (i === 0 && arr[0][0] !== 0) {
       DEV &&
         console.log(
-          `179 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`,
+          `180 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`,
         );
       res2.push([0, arr[0][0]]);
     }
@@ -188,7 +189,7 @@ function rInvert(
     if (currArr[1] !== endingIndex) {
       DEV &&
         console.log(
-          `191 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`,
+          `192 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`,
         );
 
       // this can happen only when opts.skipChecks is on:

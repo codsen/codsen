@@ -3,7 +3,7 @@ import { ensureDirSync } from "fs-extra";
 import writeFileAtomic from "write-file-atomic";
 import path from "path";
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa, execaCommand } from "execa";
 import { temporaryDirectory } from "tempy";
@@ -14,11 +14,11 @@ import { fileURLToPath } from "url";
 
 const clone = rfdc();
 
-const require = createRequire(import.meta.url);
-const pack = require("../package.json");
+const require2 = createRequire(import.meta.url);
+const pack = require2("../package.json");
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename2 = fileURLToPath(import.meta.url);
+const __dirname2 = path.dirname(__filename2);
 
 // -----------------------------------------------------------------------------
 
@@ -135,16 +135,12 @@ test("01 - monorepo", async () => {
     ),
   )
     .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
+      execa(`cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")}`, {
         shell: true,
       }),
     )
     .then((received) => {
-      if (
-        received &&
-        received.stdout &&
-        received.stdout.includes("FetchError")
-      ) {
+      if (received?.stdout.includes("FetchError")) {
         not.ok("Internet is down");
       }
     })
@@ -214,16 +210,12 @@ test("02 - normal repo", async () => {
     ),
   )
     .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
+      execa(`cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")}`, {
         shell: true,
       }),
     )
     .then((received) => {
-      if (
-        received &&
-        received.stdout &&
-        received.stdout.includes("FetchError")
-      ) {
+      if (received?.stdout.includes("FetchError")) {
         not.ok("Internet is down");
       }
     })
@@ -233,7 +225,7 @@ test("02 - normal repo", async () => {
       ),
     )
     .then((received) =>
-      execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
+      execa(`rm -rf ${path.join(__dirname2, "../temp")}`, { shell: true }).then(
         () => received,
       ),
     )
@@ -278,16 +270,12 @@ test("03 - deletes deps from dev-deps if they are among normal deps", async () =
     ),
   )
     .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`, {
+      execa(`cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")}`, {
         shell: true,
       }),
     )
     .then((received) => {
-      if (
-        received &&
-        received.stdout &&
-        received.stdout.includes("FetchError")
-      ) {
+      if (received?.stdout.includes("FetchError")) {
         not.ok("Internet is down");
       }
     })
@@ -297,7 +285,7 @@ test("03 - deletes deps from dev-deps if they are among normal deps", async () =
       ),
     )
     .then((received) =>
-      execa(`rm -rf ${path.join(__dirname, "../temp")}`, {
+      execa(`rm -rf ${path.join(__dirname2, "../temp")}`, {
         shell: true,
       }).then(() => received),
     )
@@ -337,7 +325,7 @@ test("06 - no files found in the given directory", async () => {
 
   // call execa on that empty folder
   let stdOutContents = await execa(
-    `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`,
+    `cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")}`,
     { shell: true },
   );
 
@@ -345,7 +333,7 @@ test("06 - no files found in the given directory", async () => {
   equal(stdOutContents.exitCode, 0, "06.01");
 
   // delete folder:
-  await execaCommand(`rm -rf ${path.join(__dirname, "../temp")}`);
+  await execaCommand(`rm -rf ${path.join(__dirname2, "../temp")}`);
 });
 
 test.run();

@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare let DEV: boolean;
 
-function pathUp(str: string): string {
+export function pathUp(str: string): string {
   // input must have at least two dots:
   if (str.includes(".") && str.slice(str.indexOf(".") + 1).includes(".")) {
     // go up, for example, from "a.children.2" to "a"
@@ -20,5 +20,3 @@ function pathUp(str: string): string {
   // zero is the root level's first element
   return "0";
 }
-
-export default pathUp;

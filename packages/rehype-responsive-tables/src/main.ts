@@ -1,5 +1,5 @@
-import type { Plugin } from "unified";
-import type { Root, Element, ElementContent } from "hast";
+import type { Plugin as Plugin2 } from "unified";
+import type { Root, Element as Element2, ElementContent } from "hast";
 import { visit } from "unist-util-visit";
 import { contains, getNthChildTag, Obj } from "./util";
 
@@ -70,7 +70,7 @@ function addClassToFirstTd(node: ElementContent, className: string) {
   };
 }
 
-const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
+const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
   let resolvedOpts: Opts = { ...defaults, ...opts };
   DEV &&
     console.log(
@@ -82,7 +82,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
     );
 
   return (tree: any) => {
-    visit(tree, "element", (node: Element, index, parent) => {
+    visit(tree, "element", (node: Element2, index, parent) => {
       let tdCount = 0;
       if (
         parent &&
@@ -91,9 +91,9 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
         // with children
         Array.isArray(node.children) &&
         node.children.length &&
-        node.children.some((childElem) => {
-          if ((childElem as Obj).tagName === "tr") {
-            tdCount = (childElem as Obj).children.filter(
+        node.children.some((childEl) => {
+          if ((childEl as Obj).tagName === "tr") {
+            tdCount = (childEl as Obj).children.filter(
               (c: Obj) => c.tagName === "td",
             ).length;
             return true;
@@ -123,7 +123,7 @@ const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root> = (opts) => {
           // 1. TACKLE THEAD VIA PARENT
           if (parent.children.some((c: Obj) => c.tagName === "thead")) {
             DEV && console.log(`125 thead found`);
-            parent.children = parent.children.map((ch: Element) => {
+            parent.children = parent.children.map((ch: Element2) => {
               if (
                 (ch as Obj).tagName === "thead" &&
                 Array.isArray((ch as Obj).children) &&

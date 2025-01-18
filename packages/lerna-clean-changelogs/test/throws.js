@@ -1,12 +1,12 @@
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { createRequire } from "module";
 
 import { cleanChangelogs as c } from "../dist/lerna-clean-changelogs.esm.js";
 
-const require = createRequire(import.meta.url);
-const { version } = require("../package.json");
+const require2 = createRequire(import.meta.url);
+const { version } = require2("../package.json");
 
 test("01 - missing 1st arg", () => {
   throws(

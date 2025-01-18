@@ -42,7 +42,7 @@
     "examples": "exit 0",
     "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' --write --log-level 'silent'",
     "letspublish": "npm publish || :",
-    "lint": "eslint . --ext .js --ext .ts --fix",
+    "lint": "eslint . --fix",
     "perf": "echo 'skip perf'",
     "prep": "echo 'ready'",
     "prettier": "prettier",

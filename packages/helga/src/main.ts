@@ -24,6 +24,7 @@ const escapes = {
   "0": "\0",
 };
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 function unescape(str: string): string {
   return str.replace(/\\([bfnrtv'"\\0])/g, (match) => {
     DEV && console.log(`${`\u001b[${33}m${`match`}\u001b[${39}m`} = ${match}`);

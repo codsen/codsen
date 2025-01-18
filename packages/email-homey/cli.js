@@ -78,6 +78,7 @@ function step5() {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-array-sort-compare
   let insertThis = paths
     .sort()
     .map(

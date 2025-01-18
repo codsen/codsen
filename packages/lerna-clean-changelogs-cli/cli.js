@@ -81,7 +81,8 @@ function readSortAndWriteOverFile(oneOfPaths) {
         preppedContents = cleanChangelogs(filesContent, {
           extras: !!(cli.flags.e || cli.flags.extras),
         });
-      } catch (err) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (e) {
         return null;
       }
       // don't write empty files:
@@ -207,9 +208,9 @@ thePromise.then((received) => {
     let writtenAndSkippedMsg = ""; // message regarding written and skipped files
 
     // calculate writtenAndSkippedMsg
-    if (counter.good && counter.good.length) {
+    if (counter?.good.length) {
       // some files were written
-      if (counter.ignored && counter.ignored.length) {
+      if (counter?.ignored.length) {
         // some files were written, but there were some skipped/ignored
         writtenAndSkippedMsg = `${counter.good.length} updated, ${counter.ignored.length} skipped`;
       }
@@ -221,7 +222,7 @@ thePromise.then((received) => {
       }
     }
     // no files were written
-    else if (counter.ignored && counter.ignored.length) {
+    else if (counter?.ignored.length) {
       // no files were written, there were some skipped/ignored
       if (counter.ignored.length === 1) {
         writtenAndSkippedMsg = "1 skipped";
@@ -236,12 +237,9 @@ thePromise.then((received) => {
     // -------------------------------------------------------------------------
     let errorredMsg = ""; // message regarding files that errorred out
     let badSupplement =
-      !(counter.good && counter.good.length) &&
-      !(counter.ignored && counter.ignored.length)
-        ? "All "
-        : "";
+      !counter?.good.length && !counter?.ignored.length ? "All " : "";
 
-    if (counter.bad && counter.bad.length) {
+    if (counter?.bad.length) {
       errorredMsg = `${badSupplement}${counter.bad.length} errorred`;
     }
 

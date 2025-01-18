@@ -1,7 +1,7 @@
 /* eslint no-template-curly-in-string:0 */
 
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { compare } from "../../../ops/helpers/shallow-compare.js";

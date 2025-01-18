@@ -28,11 +28,12 @@ const input = {
     },
   },
 };
-const testme = () =>
+const testme = () => {
   traverse(input, (key1, val1) => {
     let current = val1 !== undefined ? val1 : key1;
     return current;
   });
+};
 
 // action
 runPerf(testme, callerDir);

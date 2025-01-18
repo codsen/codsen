@@ -214,6 +214,8 @@ export interface FindOpts {
   val: any;
   only?: undefined | null | "any" | "array" | "object";
 }
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 function find(input: JsonValue, opts: FindOpts): Finding[] {
   if (!existy(input)) {
     throw new Error(

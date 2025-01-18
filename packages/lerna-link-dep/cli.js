@@ -103,6 +103,8 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
   let check;
   try {
     check = fs.statSync(path.resolve("../", cli.input[i]));
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     console.log(
       `${messagePrefix} ${`\u001b[${31}m${'[ERROR_01] Error! A package with name "'}\u001b[${39}m`}${`\u001b[${33}m${cli.input[i]}\u001b[${39}m`}${`\u001b[${31}m${'" not found!'}\u001b[${39}m`}`,
@@ -110,11 +112,13 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     continue;
   }
 
-  if (check && check.isDirectory()) {
+  if (check?.isDirectory()) {
     // check the existence of package.json in the asking folder
     // -------------------------------------------------------------------------
     try {
       fs.statSync(path.resolve("package.json"));
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       console.log(
         `${messagePrefix} ${`\u001b[${31}m${"[ERROR_02] Error! A package.json doesn't exist at:\n"}\u001b[${39}m`}${`\u001b[${33}m${path.resolve(
@@ -131,6 +135,8 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     // -------------------------------------------------------------------------
     try {
       fs.statSync(path.resolve("../", cli.input[i], "package.json"));
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       console.log(
         `${messagePrefix} ${`\u001b[${31}m${"[ERROR_03] Error! A package.json doesn't exist at:\n"}\u001b[${39}m`}${`\u001b[${33}m${path.resolve(
@@ -199,6 +205,8 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
             );
             continue;
           }
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {}
       }
 
@@ -280,6 +288,8 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
             );
             continue;
           }
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {}
 
         // 2. write the symlink
@@ -332,11 +342,9 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     if (
       (isNormalDep || isCLI.length) &&
       ((cli.flags.dev &&
-        (!askerPackageJsonContents.devDependencies ||
-          !askerPackageJsonContents.devDependencies[cli.input[i]])) ||
+        !askerPackageJsonContents.devDependencies?.[cli.input[i]]) ||
         (!cli.flags.dev &&
-          (!askerPackageJsonContents.dependencies ||
-            !askerPackageJsonContents.dependencies[cli.input[i]])))
+          !askerPackageJsonContents.dependencies?.[cli.input[i]]))
     ) {
       try {
         if (cli.flags.dev) {

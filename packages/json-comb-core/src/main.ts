@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redeclare */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
@@ -112,7 +113,7 @@ function getKeyset(
   let resolvedOpts: GetKeysetOpts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `115 CALLING check-types-mini:\nopts = ${JSON.stringify(
+      `116 CALLING check-types-mini:\nopts = ${JSON.stringify(
         resolvedOpts,
         null,
         4,

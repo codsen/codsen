@@ -3,17 +3,17 @@ import fs from "fs";
 import path from "path";
 import { createRequire } from "module";
 
-const require = createRequire(import.meta.url);
+const require2 = createRequire(import.meta.url);
 
-const { test } = require("uvu");
-// eslint-disable-next-line no-unused-vars
-const { equal, is, ok, throws, type, not, match } = require("uvu/assert");
+const { test } = require2("uvu");
+/* eslint-disable @typescript-eslint/no-unused-vars */
+const { equal, is, ok, throws, type, not, match } = require2("uvu/assert");
 // the CJS imported file can't be ".cjs.js", so we rename temporarily:
 fs.renameSync(
   path.resolve("dist/eslint-plugin-test-num.cjs.js"),
   path.resolve("dist/eslint-plugin-test-num.cjs"),
 );
-const api = require("../dist/eslint-plugin-test-num.cjs");
+const api = require2("../dist/eslint-plugin-test-num.cjs");
 
 test.after(() => {
   fs.renameSync(

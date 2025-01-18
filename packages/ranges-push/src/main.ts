@@ -7,7 +7,7 @@ import { existy, isStr, isInt } from "codsen-utils";
 import { rMerge } from "./rMerge";
 import { version as v } from "../package.json";
 // eslint-disable-next-line import/extensions
-import { Range } from "../../../ops/typedefs/common";
+import { Range as RangeType } from "../../../ops/typedefs/common";
 
 const version: string = v;
 
@@ -61,7 +61,7 @@ class Ranges {
     this.ranges = [];
   }
 
-  ranges: Range[];
+  ranges: RangeType[];
   opts: Opts;
 
   // A D D ()
@@ -72,7 +72,7 @@ class Ranges {
     originalTo?: number,
     addVal?: undefined | null | string,
   ): void;
-  add(originalFrom: Range[] | Range | null): void;
+  add(originalFrom: RangeType[] | RangeType | null): void;
   add(originalFrom?: any, originalTo?: any, addVal?: any): void {
     DEV &&
       console.log(`\n\n\n${`\u001b[${32}m${`=`.repeat(80)}\u001b[${39}m`}`);
@@ -196,7 +196,7 @@ class Ranges {
       if (
         existy(this.ranges) &&
         Array.isArray(this.last()) &&
-        from === (this.last() as Range)[1]
+        from === (this.last() as RangeType)[1]
       ) {
         DEV &&
           console.log(
@@ -204,27 +204,29 @@ class Ranges {
           );
         // The incoming range is an exact extension of the last range, like
         // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
-        (this.last() as Range)[1] = to;
+        (this.last() as RangeType)[1] = to;
         // DEV && console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
 
-        if ((this.last() as Range)[2] === null || addVal === null) {
+        if ((this.last() as RangeType)[2] === null || addVal === null) {
           DEV &&
-            console.log(`212 this.last()[2] = ${(this.last() as Range)[2]}`);
-          DEV && console.log(`213 addVal = ${addVal}`);
+            console.log(
+              `213 this.last()[2] = ${(this.last() as RangeType)[2]}`,
+            );
+          DEV && console.log(`215 addVal = ${addVal}`);
         }
 
-        if ((this.last() as Range)[2] !== null && existy(addVal)) {
-          DEV && console.log(`217`);
+        if ((this.last() as RangeType)[2] !== null && existy(addVal)) {
+          DEV && console.log(`219`);
           let calculatedVal =
-            (this.last() as Range)[2] &&
-            ((this.last() as Range)[2] as string).length &&
+            (this.last() as RangeType)[2] &&
+            ((this.last() as RangeType)[2] as string).length &&
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             (!this.opts?.mergeType || this.opts.mergeType === 1)
-              ? `${(this.last() as Range)[2]}${addVal}`
+              ? `${(this.last() as RangeType)[2]}${addVal}`
               : addVal;
           DEV &&
             console.log(
-              `227 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+              `229 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
                 calculatedVal,
                 null,
                 4,
@@ -238,7 +240,7 @@ class Ranges {
           }
           DEV &&
             console.log(
-              `241 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+              `243 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
                 calculatedVal,
                 null,
                 4,
@@ -246,20 +248,20 @@ class Ranges {
             );
           if (!(isStr(calculatedVal) && !calculatedVal.length)) {
             // don't let the zero-length strings past
-            (this.last() as Range)[2] = calculatedVal;
+            (this.last() as RangeType)[2] = calculatedVal;
           }
         }
-        DEV && console.log(`252`);
+        DEV && console.log(`254`);
       } else {
         DEV &&
           console.log(
-            `256 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`,
+            `258 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`,
           );
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (!this.ranges) {
           this.ranges = [];
         }
-        let whatToPush: Range =
+        let whatToPush: RangeType =
           addVal !== undefined && !(isStr(addVal) && !addVal.length)
             ? [
                 from,
@@ -271,18 +273,18 @@ class Ranges {
             : [from, to];
         DEV &&
           console.log(
-            `274 PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`,
+            `276 PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`,
           );
         this.ranges.push(whatToPush);
         DEV &&
           console.log(
-            `279 this.ranges = ${JSON.stringify(this.ranges, null, 4)};`,
+            `281 this.ranges = ${JSON.stringify(this.ranges, null, 4)};`,
           );
       }
     } else {
       DEV &&
         console.log(
-          `285 ${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`,
+          `287 ${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`,
         );
       // Error somewhere!
       // Let's find out where.
@@ -307,7 +309,7 @@ class Ranges {
         );
       }
     }
-    DEV && console.log(`310`);
+    DEV && console.log(`312`);
   }
 
   // P U S H  ()  -  A L I A S   F O R   A D D ()
@@ -317,17 +319,17 @@ class Ranges {
     originalTo?: number,
     addVal?: undefined | null | string,
   ): void;
-  push(originalFrom: Range[] | Range | null): void;
+  push(originalFrom: RangeType[] | RangeType | null): void;
   push(originalFrom?: any, originalTo?: any, addVal?: any): void {
     this.add(originalFrom, originalTo, addVal);
   }
 
   // C U R R E N T () - kindof a getter
   // ==================================
-  current(): null | Range[] {
+  current(): null | RangeType[] {
     DEV &&
       console.log(
-        `330 ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
+        `332 ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
           this.ranges,
           null,
           4,
@@ -337,7 +339,7 @@ class Ranges {
       // beware, merging can return null
       this.ranges = rMerge(this.ranges, {
         mergeType: this.opts.mergeType,
-      }) as Range[];
+      }) as RangeType[];
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (this.ranges && this.opts.limitToBeAddedWhitespace) {
         return this.ranges.map((val) => {
@@ -353,7 +355,7 @@ class Ranges {
       }
       DEV &&
         console.log(
-          `356 ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
+          `358 ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
             this.ranges,
             null,
             4,
@@ -372,7 +374,7 @@ class Ranges {
 
   // R E P L A C E ()
   // ==========
-  replace(givenRanges: Range[]): void {
+  replace(givenRanges: RangeType[]): void {
     if (Array.isArray(givenRanges) && givenRanges.length) {
       // Now, ranges can be array of arrays, correct format but also single
       // range, an array of two natural numbers might be given.
@@ -395,7 +397,7 @@ class Ranges {
 
   // L A S T ()
   // ==========
-  last(): Range | null {
+  last(): RangeType | null {
     if (Array.isArray(this.ranges) && this.ranges.length) {
       return this.ranges[this.ranges.length - 1];
     }
@@ -403,4 +405,4 @@ class Ranges {
   }
 }
 
-export { Ranges, defaults, version, Range };
+export { Ranges, defaults, version, RangeType as Range };

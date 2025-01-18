@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/require-array-sort-compare */
 // reads src/language-subtag-registry.txt and bakes JSON files
 // -----------------------------------------------------------------------------
 

@@ -1,15 +1,15 @@
 import fs from "fs-extra";
 import path from "path";
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import { execa, execaCommand } from "execa";
 import { temporaryDirectory } from "tempy";
 import pMap from "p-map";
 import { createRequire } from "module";
 
-const require = createRequire(import.meta.url);
-const pack = require("../package.json");
+const require2 = createRequire(import.meta.url);
+const pack = require2("../package.json");
 
 // Test file contents
 // -----------------------------------------------------------------------------
@@ -177,13 +177,13 @@ test(`05 - ${`\u001b[${35}m${"functionality"}\u001b[${39}m`} - globs, multiple w
         shell: true,
       }),
     )
-    .then((execasMsg) =>
+    .then((execasMsg) => {
       match(
         execasMsg.stdout,
         /5 updated, 1 skipped/,
         "02.02.01 - prints a message that all went OK",
-      ),
-    )
+      );
+    })
     // .then(() => execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`))
     .then(() => execaCommand(`rm -rf ${tempFolder}`))
     .catch((err) => {

@@ -1,5 +1,5 @@
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { uglifyArr, uglifyById, version } from "../dist/string-uglify.esm.js";
@@ -70,13 +70,13 @@ test(`05 - ${`\u001b[${35}m${"makeRandomArr"}\u001b[${39}m`} - generates unique 
   let length = 1000;
   let generated = uglifyArr(makeRandomArr(length));
   equal(generated.length, length, "05.01");
-  generated.forEach((name1, index1) =>
+  generated.forEach((name1, index1) => {
     equal(
       generated.some((name2, index2) => name1 === name2 && index1 !== index2),
       false,
       `${name1} is not unique`,
-    ),
-  );
+    );
+  });
 });
 
 test(`06 - ${`\u001b[${31}m${"wrong cases"}\u001b[${39}m`} - bypasses for everything else`, () => {
@@ -140,13 +140,13 @@ test(`09 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - should work if strings don
   let length = 1000;
   let generated = uglifyArr(makeRandomArr(length, false));
   equal(generated.length, length, "09.01");
-  generated.forEach((name1, index1) =>
+  generated.forEach((name1, index1) => {
     equal(
       generated.some((name2, index2) => name1 === name2 && index1 !== index2),
       false,
       `${name1} is not unique`,
-    ),
-  );
+    );
+  });
 });
 
 test(`10 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - should work if strings don't have hashes/dots`, () => {

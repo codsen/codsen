@@ -84,7 +84,7 @@ assert.equal(
   render(input, {
     // defaults:
     dateDivLocale: "en-US",
-    // eslint-disable-next-line no-unused-vars
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     dateDivMarkup: ({ date, year, month, day }) =>
       `${month} ${day}, <span>${year}</span>`,
   }),

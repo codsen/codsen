@@ -251,6 +251,7 @@ thePromise
               }
               path.basename(requestedCSVsPath, path.extname(requestedCSVsPath));
             }
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
           } catch (e) {
             return Promise.reject(
               new Error(`\ncsv-sort-cli: Alas, we encountered an error:\n${e}`),

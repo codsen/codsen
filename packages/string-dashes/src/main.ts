@@ -10,6 +10,7 @@ import {
   isWhitespaceChar,
   isUppercaseLetter,
 } from "codsen-utils";
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 import type { Range, Ranges } from "ranges-apply";
 
 import { version as v } from "../package.json";
@@ -91,10 +92,10 @@ function convertOne(str: string, opts: Opts): Ranges {
 
   DEV &&
     console.log(
-      `094 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`START`}\u001b[${39}m`}`,
+      `095 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`START`}\u001b[${39}m`}`,
     );
 
-  DEV && console.log("097 settings: n/a");
+  DEV && console.log("098 settings: n/a");
   DEV &&
     console.log(
       `${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
@@ -148,7 +149,7 @@ function convertOne(str: string, opts: Opts): Ranges {
   if (!convertDashes) {
     DEV &&
       console.log(
-        `151 opts.convertDashes = false, ${`\u001b[${32}m${`early exit`}\u001b[${39}m`}`,
+        `152 opts.convertDashes = false, ${`\u001b[${32}m${`early exit`}\u001b[${39}m`}`,
       );
     return null;
   }
@@ -158,7 +159,7 @@ function convertOne(str: string, opts: Opts): Ranges {
     (value && [`-`, rawMDash].includes(value)) ||
     (to === from + 1 && [`-`, rawMDash].includes(str[from]))
   ) {
-    DEV && console.log(`161 n-dash clauses`);
+    DEV && console.log(`162 n-dash clauses`);
 
     if (
       // 1.1. tight dash surrounded by numbers 1880-1912
@@ -175,7 +176,7 @@ function convertOne(str: string, opts: Opts): Ranges {
       rangesArr.push([from, to, convertEntities ? "&ndash;" : rawNDash]);
       DEV &&
         console.log(
-          `178 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} n-dash symbol [${from}, ${to}, ${
+          `179 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} n-dash symbol [${from}, ${to}, ${
             convertEntities ? "&ndash;" : rawNDash
           }]`,
         );
@@ -187,7 +188,7 @@ function convertOne(str: string, opts: Opts): Ranges {
     (value && [`-`, rawNDash].includes(value)) ||
     (to === from + 1 && [`-`, rawNDash].includes(str[from]))
   ) {
-    DEV && console.log(`190 m-dash clauses`);
+    DEV && console.log(`191 m-dash clauses`);
 
     if (
       // 2.1. whitespace-hyphen-whitespace
@@ -206,7 +207,7 @@ function convertOne(str: string, opts: Opts): Ranges {
           idxOnTheLeft = from - 2;
           DEV &&
             console.log(
-              `209 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
+              `210 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
                 idxOnTheLeft,
                 null,
                 4,
@@ -217,7 +218,7 @@ function convertOne(str: string, opts: Opts): Ranges {
           idxOnTheLeft = left(str, from);
           DEV &&
             console.log(
-              `220 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
+              `221 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
                 idxOnTheLeft,
                 null,
                 4,
@@ -231,7 +232,7 @@ function convertOne(str: string, opts: Opts): Ranges {
           idxOnTheRight = to + 1;
           DEV &&
             console.log(
-              `234 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheRight`}\u001b[${39}m`} = ${JSON.stringify(
+              `235 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheRight`}\u001b[${39}m`} = ${JSON.stringify(
                 idxOnTheRight,
                 null,
                 4,
@@ -242,7 +243,7 @@ function convertOne(str: string, opts: Opts): Ranges {
           idxOnTheRight = right(str, from);
           DEV &&
             console.log(
-              `245 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheRight`}\u001b[${39}m`} = ${JSON.stringify(
+              `246 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`idxOnTheRight`}\u001b[${39}m`} = ${JSON.stringify(
                 idxOnTheRight,
                 null,
                 4,
@@ -269,7 +270,7 @@ function convertOne(str: string, opts: Opts): Ranges {
         rangesArr.push([from, to, convertEntities ? "&ndash;" : rawNDash]);
         DEV &&
           console.log(
-            `272 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} n-dash symbol [${from}, ${to}, ${
+            `273 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} n-dash symbol [${from}, ${to}, ${
               convertEntities ? "&ndash;" : rawNDash
             }]`,
           );
@@ -281,7 +282,7 @@ function convertOne(str: string, opts: Opts): Ranges {
         rangesArr.push([from, to, convertEntities ? "&mdash;" : rawMDash]);
         DEV &&
           console.log(
-            `284 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} m-dash symbol [${from}, ${to}, ${
+            `285 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} m-dash symbol [${from}, ${to}, ${
               convertEntities ? "&mdash;" : rawMDash
             }]`,
           );
@@ -296,7 +297,7 @@ function convertOne(str: string, opts: Opts): Ranges {
       rangesArr.push([from, to, convertEntities ? "&mdash;" : rawMDash]);
       DEV &&
         console.log(
-          `299 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} m-dash symbol [${from}, ${to}, ${
+          `300 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} m-dash symbol [${from}, ${to}, ${
             convertEntities ? "&mdash;" : rawMDash
           }]`,
         );
@@ -305,7 +306,7 @@ function convertOne(str: string, opts: Opts): Ranges {
 
   DEV &&
     console.log(
-      `308 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`,
+      `309 ${`\u001b[${36}m${`convertOne():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`,
     );
 
   return rangesArr.length ? rangesArr : null;
@@ -361,7 +362,7 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
 
   DEV &&
     console.log(
-      `364 CALCULATED ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `365 CALCULATED ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         preppedOpts,
         null,
         4,
@@ -385,12 +386,12 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
     // multiple times
     preppedOpts.from = i;
     preppedOpts.offsetBy = (idx) => {
-      DEV && console.log(`388 ██ BUMP i from ${i} to ${i + idx}`);
+      DEV && console.log(`389 ██ BUMP i from ${i} to ${i + idx}`);
       i += idx;
     };
     DEV &&
       console.log(
-        `393 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+        `394 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedOpts`}\u001b[${39}m`} = ${JSON.stringify(
           preppedOpts,
           null,
           4,
@@ -405,7 +406,7 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
 
   DEV &&
     console.log(
-      `408 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} FINAL ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+      `409 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} FINAL ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
         ranges,
         null,
         4,
@@ -414,7 +415,7 @@ function convertAll(str: string, opts?: Partial<Opts>): convertAllRes {
 
   DEV &&
     console.log(
-      `417 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`,
+      `418 ${`\u001b[${36}m${`convertAll():`}\u001b[${39}m`} ${`\u001b[${32}m${`END`}\u001b[${39}m`}`,
     );
   DEV && console.log(" ");
   return {

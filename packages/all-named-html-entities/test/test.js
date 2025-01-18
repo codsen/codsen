@@ -1,5 +1,5 @@
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import {
@@ -61,20 +61,20 @@ test("09 - brokenNamedEntities.json is OK", () => {
   ok(Object.keys(brokenNamedEntities).length, "09.02");
   Object.keys(brokenNamedEntities).forEach((oneOfEntities, i) => {
     // 1. ensure all are keys unique:
-    Object.keys(brokenNamedEntities).forEach((entity, y) =>
+    Object.keys(brokenNamedEntities).forEach((entity, y) => {
       ok(
         !(entity === oneOfEntities && i !== y),
         `key "${oneOfEntities}" is not unique`,
-      ),
-    );
+      );
+    });
 
     // 2. ensure "oneOfEntities" is not used by any keys:
-    Object.keys(brokenNamedEntities).forEach((entity) =>
+    Object.keys(brokenNamedEntities).forEach((entity) => {
       ok(
         entity !== brokenNamedEntities[oneOfEntities],
         `value "${brokenNamedEntities[oneOfEntities]}" is used among key names`,
-      ),
-    );
+      );
+    });
   });
 });
 

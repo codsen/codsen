@@ -1,12 +1,12 @@
 declare let DEV: boolean;
 
-// calulate parent key, for example,
+// calculate parent key, for example,
 // "a" => null
 // "0" => null
 // "a.b" => "a"
 // "a.0" => "a"
 // "a.0.c" => "0"
-function parent(str: string): null | string {
+export function parentItem(str: string): null | string {
   // input must have at least one dot:
   if (str.includes(".")) {
     let lastDotAt = str.lastIndexOf(".");
@@ -24,5 +24,3 @@ function parent(str: string): null | string {
 
   return null;
 }
-
-export default parent;

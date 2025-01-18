@@ -1,13 +1,13 @@
 import fs from "fs-extra";
 import { test } from "uvu";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 import path from "path";
 import { fileURLToPath } from "url";
 import { execa, execaCommand } from "execa";
 import { temporaryDirectory } from "tempy";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname2 = path.dirname(fileURLToPath(import.meta.url));
 
 const aPackageJson = `{
   "name": "a",
@@ -66,7 +66,7 @@ test(`01 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - requested package does n
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
           "cli.js",
         )} oodles`, // requesting to link monorepo package "oodles"
@@ -118,7 +118,7 @@ test(`02 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - couldn't read a's packag
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
           "cli.js",
         )} b`,
@@ -171,7 +171,7 @@ test(`03 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - couldn't read b's packag
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
           "cli.js",
         )} b`,
@@ -237,7 +237,7 @@ test(`04 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - normal dep, symlink alre
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
           "cli.js",
         )} b`, // requesting to link monorepo package "b"
@@ -292,7 +292,7 @@ test(`05 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - error while trying to pa
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
           "cli.js",
         )} b`,
@@ -367,7 +367,7 @@ test(`06 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - dep is a CLI, one of sym
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
         )}/cli.js c`, // requesting to link monorepo package "b"
         {
@@ -426,7 +426,7 @@ test(`07 - ${`\u001b[${35}m${"errors"}\u001b[${39}m`} - package.json had no main
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
           "cli.js",
         )} b`,
@@ -482,7 +482,7 @@ test(`08 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links normal
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
           "cli.js",
         )} b`,
@@ -531,7 +531,7 @@ test(`09 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links CLI de
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
           "cli.js",
         )} c`,
@@ -578,7 +578,7 @@ test(`10 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links normal
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
           "cli.js",
         )} b -d`,
@@ -625,7 +625,7 @@ test(`11 - ${`\u001b[${33}m${"main functionality"}\u001b[${39}m`} - links normal
     .then(() =>
       execa(
         `cd ${path.resolve(path.join(tempFolder, "a"))} && ${path.join(
-          __dirname,
+          __dirname2,
           "../",
           "cli.js",
         )} b --dev`,
