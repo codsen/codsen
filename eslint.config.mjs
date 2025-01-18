@@ -150,7 +150,7 @@ export default [
       sourceType: "script",
 
       parserOptions: {
-        tsconfigRootDir: "/Users/royrevelt/Documents/__PROJECTS/_____mono",
+        tsconfigRootDir: __dirname2,
         project: ["./tsconfig.base.json", "./packages/*/tsconfig.json"],
       },
     },
