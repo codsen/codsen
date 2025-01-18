@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-row-num-tbc",
-  "version": "4.0.26",
+  "version": "4.0.27",
   "description": "ESLint plugin to update row numbers on each console.log",
   "keywords": [
     "console",
@@ -69,8 +69,8 @@
   },
   "dependencies": {
     "@types/json-stringify-safe": "^5.0.3",
-    "js-row-num": "^7.0.17",
+    "js-row-num": "^7.0.18",
     "json-stringify-safe": "^5.0.1",
-    "object-delete-key": "^4.0.26"
+    "object-delete-key": "^4.0.27"
   }
 }

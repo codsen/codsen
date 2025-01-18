@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey-traverse-with-lookahead",
-  "version": "4.0.16",
+  "version": "4.0.17",
   "description": "Utility library to traverse AST, reports upcoming values",
   "keywords": [
     "ast",
@@ -83,7 +83,7 @@
     "various": {}
   },
   "dependencies": {
-    "codsen-utils": "^1.6.5",
+    "codsen-utils": "^1.6.6",
     "rfdc": "^1.4.1"
   }
 }

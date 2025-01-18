@@ -1,6 +1,6 @@
 {
   "name": "object-fill-missing-keys",
-  "version": "11.0.19",
+  "version": "11.0.20",
   "description": "Add missing keys into plain objects, according to a reference object",
   "keywords": [
     "add",
@@ -74,10 +74,10 @@
     }
   },
   "dependencies": {
-    "arrayiffy-if-string": "^5.0.8",
-    "codsen-utils": "^1.6.5",
-    "object-all-values-equal-to": "^4.0.19",
-    "object-merge-advanced": "^14.0.19",
+    "arrayiffy-if-string": "^5.0.9",
+    "codsen-utils": "^1.6.6",
+    "object-all-values-equal-to": "^4.0.20",
+    "object-merge-advanced": "^14.0.20",
     "rfdc": "^1.4.1"
   }
 }

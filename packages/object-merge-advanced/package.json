@@ -1,6 +1,6 @@
 {
   "name": "object-merge-advanced",
-  "version": "14.0.19",
+  "version": "14.0.20",
   "description": "Deeply merge JSON-like data structures",
   "keywords": [
     "advanced",
@@ -74,11 +74,11 @@
   },
   "dependencies": {
     "@types/lodash-es": "^4.17.12",
-    "codsen-utils": "^1.6.5",
+    "codsen-utils": "^1.6.6",
     "lodash-es": "^4.17.21",
     "matcher": "^5.0.0",
     "rfdc": "^1.4.1",
-    "util-nonempty": "^5.0.16"
+    "util-nonempty": "^5.0.17"
   },
   "devDependencies": {
     "deep-equal": "^2.2.3"

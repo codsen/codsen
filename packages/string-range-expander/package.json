@@ -1,6 +1,6 @@
 {
   "name": "string-range-expander",
-  "version": "4.0.15",
+  "version": "4.0.16",
   "description": "Expands string index ranges within whitespace boundaries until letters are met",
   "keywords": [
     "expand",
@@ -70,6 +70,6 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.5"
+    "codsen-utils": "^1.6.6"
   }
 }

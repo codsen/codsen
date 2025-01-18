@@ -1,6 +1,6 @@
 {
   "name": "ast-compare",
-  "version": "4.0.27",
+  "version": "4.0.28",
   "description": "Compare anything: AST, objects, arrays, strings and nested thereof",
   "keywords": [
     "array",
@@ -77,8 +77,8 @@
     }
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^4.0.17",
-    "codsen-utils": "^1.6.5",
+    "ast-contains-only-empty-space": "^4.0.18",
+    "codsen-utils": "^1.6.6",
     "matcher": "^5.0.0",
     "type-detect": "^4.1.0"
   },
