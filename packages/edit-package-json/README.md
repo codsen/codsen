@@ -95,7 +95,7 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 MIT License.
 
-Copyright © 2010-2024 Roy Revelt and other contributors.
+Copyright © 2010-2025 Roy Revelt and other contributors.
 
 Passes adapted .set() unit tests from https://github.com/mariocasciaro/object-path/blob/master/test.js, MIT Licence Copyright (c) 2015 Mario Casciaro
 
