@@ -100,7 +100,7 @@ function genAtomic(str: string, opts?: Partial<Opts>): Res {
   let endPart = "";
 
   // find out what to generate
-  // eslint-disable-next-line prefer-const
+
   let [extractedConfig, rawContentAbove, rawContentBelow] = extractConfig(
     resolvedOpts.configOverride ? resolvedOpts.configOverride : str,
   );

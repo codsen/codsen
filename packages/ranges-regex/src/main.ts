@@ -1,6 +1,6 @@
 import { rMerge } from "ranges-merge";
 import { isRegExp } from "lodash-es";
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+
 import type { Range, Ranges } from "ranges-merge";
 
 import { version as v } from "../package.json";
@@ -61,7 +61,6 @@ function rRegex(
     replacement === null ||
     (typeof replacement === "string" && replacement.length)
   ) {
-    // eslint-disable-next-line no-cond-assign
     while ((tempArr = regExp.exec(str)) !== null) {
       resRange.push([
         regExp.lastIndex - tempArr[0].length,
@@ -70,7 +69,6 @@ function rRegex(
       ]);
     }
   } else {
-    // eslint-disable-next-line no-cond-assign
     while ((tempArr = regExp.exec(str)) !== null) {
       resRange.push([regExp.lastIndex - tempArr[0].length, regExp.lastIndex]);
     }

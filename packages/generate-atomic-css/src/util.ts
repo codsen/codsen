@@ -672,7 +672,6 @@ function prepLine(
         DEV && console.log(`672`);
         if (
           i === 0 &&
-          // eslint-disable-next-line consistent-return, array-callback-return
           units.some((unit) => {
             if (restOfStr.startsWith(unit)) {
               unitFound = unit;
@@ -682,10 +681,10 @@ function prepLine(
           (source[right(source, y + unitFound.length) as number] === "{" ||
             !source[y + unitFound.length + 1].trim().length)
         ) {
-          DEV && console.log(`685 push: "${source.slice(startPoint, y - 2)}"`);
+          DEV && console.log(`684 push: "${source.slice(startPoint, y - 2)}"`);
           DEV &&
             console.log(
-              `688 push also: "${
+              `687 push also: "${
                 pad
                   ? String(i).padStart(
                       String(to).length -
@@ -705,24 +704,24 @@ function prepLine(
           }`;
           DEV &&
             console.log(
-              `708 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`,
+              `707 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`,
             );
           startPoint = y + 1 + (unitFound ? unitFound.length : 0);
         } else {
           // extract units if any follow the $$$
           let unitThatFollow = "";
-          DEV && console.log(`714`);
-          // eslint-disable-next-line consistent-return, array-callback-return
+          DEV && console.log(`713`);
+
           units.some((unit) => {
             if (source.startsWith(unit, y + 1)) {
               unitThatFollow = unit;
-              DEV && console.log(`719 return true`);
+              DEV && console.log(`718 return true`);
               return true;
             }
           });
           DEV &&
             console.log(
-              `725 extracted ${`\u001b[${33}m${`unitThatFollow`}\u001b[${39}m`} = ${JSON.stringify(
+              `724 extracted ${`\u001b[${33}m${`unitThatFollow`}\u001b[${39}m`} = ${JSON.stringify(
                 unitThatFollow,
                 null,
                 4,
@@ -741,14 +740,14 @@ function prepLine(
             // if left-side padding can be possible:
             DEV &&
               console.log(
-                `744 source.slice(startPoint, y - 2) = "${source.slice(
+                `743 source.slice(startPoint, y - 2) = "${source.slice(
                   startPoint,
                   y - 2,
                 )}"`,
               );
             DEV &&
               console.log(
-                `751 push ${`${source.slice(startPoint, y - 2)}${
+                `750 push ${`${source.slice(startPoint, y - 2)}${
                   pad
                     ? String(i).padStart(
                         String(to).length +
@@ -763,7 +762,6 @@ function prepLine(
             // if it's zero'th row
             let temp = 0;
             if (i === 0) {
-              // eslint-disable-next-line no-loop-func
               units.some((unit) => {
                 if (`${source.slice(startPoint, y - 2)}`.startsWith(unit)) {
                   temp = unit.length;
@@ -782,7 +780,7 @@ function prepLine(
             }`;
             DEV &&
               console.log(
-                `785 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`,
+                `783 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`,
               );
           } else if (
             !source[y + 1].trim().length ||
@@ -790,7 +788,7 @@ function prepLine(
           ) {
             DEV &&
               console.log(
-                `793 push ${`${source.slice(startPoint, y - 2)}${
+                `791 push ${`${source.slice(startPoint, y - 2)}${
                   pad
                     ? String(i).padEnd(
                         String(to).length +
@@ -814,17 +812,17 @@ function prepLine(
             }`;
             DEV &&
               console.log(
-                `817 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`,
+                `815 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`,
               );
           } else {
             DEV &&
               console.log(
-                `822 push ${`${source.slice(startPoint, y - 2)}${i}`}`,
+                `820 push ${`${source.slice(startPoint, y - 2)}${i}`}`,
               );
             res += `${source.slice(startPoint, y - 2)}${i}`;
             DEV &&
               console.log(
-                `827 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`,
+                `825 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`,
               );
 
             // also, make a note of padding which we'll need to do later,
@@ -839,7 +837,7 @@ function prepLine(
               debtPaddingLen = String(to).length - String(i).length;
               DEV &&
                 console.log(
-                  `842 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`debtPaddingLen`}\u001b[${39}m`} = ${JSON.stringify(
+                  `840 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`debtPaddingLen`}\u001b[${39}m`} = ${JSON.stringify(
                     debtPaddingLen,
                     null,
                     4,
@@ -854,24 +852,24 @@ function prepLine(
       // catch opening curlie
       // -----------------------------------------------------------------------
       if (source[y] === "{" && pad) {
-        DEV && console.log(`857 opening curlie caught`);
+        DEV && console.log(`855 opening curlie caught`);
         if (debtPaddingLen) {
           res += `${source.slice(startPoint, y)}${` `.repeat(debtPaddingLen)}`;
           startPoint = y;
           debtPaddingLen = 0;
           DEV &&
             console.log(
-              `864 SET startPoint = ${startPoint}; debtPaddingLen = ${debtPaddingLen}`,
+              `862 SET startPoint = ${startPoint}; debtPaddingLen = ${debtPaddingLen}`,
             );
         }
       }
 
       // catch the last character of a line
       if (!source[y + 1]) {
-        DEV && console.log(`871 last character on a line!`);
+        DEV && console.log(`869 last character on a line!`);
         DEV &&
           console.log(
-            `874 ${`\u001b[${33}m${`startPoint`}\u001b[${39}m`} = ${JSON.stringify(
+            `872 ${`\u001b[${33}m${`startPoint`}\u001b[${39}m`} = ${JSON.stringify(
               startPoint,
               null,
               4,
@@ -881,11 +879,10 @@ function prepLine(
         let restOfStr = source.slice(startPoint);
         DEV &&
           console.log(
-            `884 restOfStr = "${restOfStr}" --- we'll check, does it start with any elements from units`,
+            `882 restOfStr = "${restOfStr}" --- we'll check, does it start with any elements from units`,
           );
         if (
           i === 0 &&
-          // eslint-disable-next-line
           units.some((unit) => {
             if (restOfStr.startsWith(unit)) {
               unitFound = unit;
@@ -895,31 +892,31 @@ function prepLine(
         ) {
           DEV &&
             console.log(
-              `898 push "${source.slice(startPoint + unitFound.length)}"`,
+              `895 push "${source.slice(startPoint + unitFound.length)}"`,
             );
           res += `${source.slice(startPoint + unitFound.length)}`;
           DEV &&
             console.log(
-              `903 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`,
+              `900 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`,
             );
         } else {
           DEV &&
-            console.log(`907 last char - submit "${source.slice(startPoint)}"`);
+            console.log(`904 last char - submit "${source.slice(startPoint)}"`);
           res += `${source.slice(startPoint)}`;
           DEV &&
             console.log(
-              `911 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`,
+              `908 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`,
             );
         }
         // add line break
         res += `${i !== to ? "\n" : ""}`;
         DEV &&
           console.log(
-            `918 add line break ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`,
+            `915 add line break ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`,
           );
       }
     }
-    // eslint-disable-next-line no-param-reassign
+
     (generatedCount.count as number) += 1;
 
     if (typeof progressFn === "function") {
@@ -938,7 +935,6 @@ function prepLine(
 
 function bump(str: string, thingToBump: Obj): string {
   if (/\.\w/g.test(str)) {
-    // eslint-disable-next-line no-param-reassign
     (thingToBump.count as number) += 1;
   }
   return str;

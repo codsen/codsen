@@ -1,5 +1,5 @@
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import * as assert from "uvu/assert";
 
 // import { stri as stri2 } from "../dist/stristri.esm.js";

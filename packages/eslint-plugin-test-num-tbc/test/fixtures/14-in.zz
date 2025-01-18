@@ -334,7 +334,6 @@ test(`11 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - objects - after "b"`, 
     let current = val1 !== undefined ? val1 : key1;
     gathered.push(innerObj.path);
     if (innerObj.path === "b") {
-      // eslint-disable-next-line no-param-reassign
       stop.now = true;
     }
     return current;
@@ -360,7 +359,6 @@ test(`13 - ${`\u001b[${31}m${`stopping`}\u001b[${39}m`} - arrays - after "b"`, (
     let current = val1 !== undefined ? val1 : key1;
     gathered.push(innerObj.path);
     if (innerObj.path === "1") {
-      // eslint-disable-next-line no-param-reassign
       stop.now = true;
     }
     return current;

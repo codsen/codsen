@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-redeclare */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import { flattenAllArrays } from "object-flatten-all-arrays";
@@ -113,7 +111,7 @@ function getKeyset(
   let resolvedOpts: GetKeysetOpts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `116 CALLING check-types-mini:\nopts = ${JSON.stringify(
+      `114 CALLING check-types-mini:\nopts = ${JSON.stringify(
         resolvedOpts,
         null,
         4,

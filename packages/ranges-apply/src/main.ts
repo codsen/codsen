@@ -1,5 +1,5 @@
 import { rMerge } from "ranges-merge";
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+
 import type { Range, Ranges } from "ranges-merge";
 import invariant from "tiny-invariant";
 
@@ -69,7 +69,7 @@ function rApply(
 
   rangesArr
     // insurance against array of nulls
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
     .filter((range) => range)
     .forEach((el, i) => {
       if (progressFn) {

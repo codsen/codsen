@@ -1,6 +1,5 @@
 import { isStr, isInt, isPlainObject as isObj } from "codsen-utils";
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 import type { Range } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";
@@ -184,7 +183,7 @@ function expander(opts: Partial<Opts>): Range {
 
   DEV &&
     console.log(
-      `187 START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`,
+      `186 START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`,
     );
 
   // 1. expand the given range outwards and leave a single space or
@@ -202,7 +201,7 @@ function expander(opts: Partial<Opts>): Range {
   ) {
     // loop backwards
     DEV &&
-      console.log(`205 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
+      console.log(`204 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
     for (let i = from; i--; ) {
       DEV &&
         console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
@@ -218,7 +217,7 @@ function expander(opts: Partial<Opts>): Range {
           }
           DEV &&
             console.log(
-              `221 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`,
+              `220 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`,
             );
           break;
         } else if (i === 0) {
@@ -229,7 +228,7 @@ function expander(opts: Partial<Opts>): Range {
           }
           DEV &&
             console.log(
-              `232 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`,
+              `231 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`,
             );
           break;
         }
@@ -245,7 +244,7 @@ function expander(opts: Partial<Opts>): Range {
       resolvedOpts.ifRightSideIncludesThisCropItToo.includes(str[to]))
   ) {
     // loop forward
-    DEV && console.log(`248 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
+    DEV && console.log(`247 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
     for (let i = to, len = str.length; i < len; i++) {
       DEV &&
         console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
@@ -256,27 +255,27 @@ function expander(opts: Partial<Opts>): Range {
             resolvedOpts.ifRightSideIncludesThisCropItToo.includes(str[i - 1])
           ) {
             to = i;
-            DEV && console.log(`259`);
+            DEV && console.log(`258`);
           } else {
             to = i - 1;
-            DEV && console.log(`262`);
+            DEV && console.log(`261`);
           }
           DEV &&
             console.log(
-              `266 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`,
+              `265 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`,
             );
           break;
         } else if (i === str.length - 1) {
           if (resolvedOpts.wipeAllWhitespaceOnRight) {
             to = str.length;
-            DEV && console.log(`272`);
+            DEV && console.log(`271`);
           } else {
             to = str.length - 1;
-            DEV && console.log(`275`);
+            DEV && console.log(`274`);
           }
           DEV &&
             console.log(
-              `279 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`,
+              `278 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`,
             );
           break;
         }
@@ -309,7 +308,7 @@ function expander(opts: Partial<Opts>): Range {
             str[to],
           ))))
   ) {
-    DEV && console.log("312");
+    DEV && console.log("311");
     if (
       resolvedOpts.extendToOneSide !== "right" &&
       isWhitespace(str[from - 1]) &&
@@ -348,10 +347,10 @@ function expander(opts: Partial<Opts>): Range {
       )) &&
     (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))
   ) {
-    DEV && console.log(`351 RETURN: [${from}, ${to}, " "]`);
+    DEV && console.log(`350 RETURN: [${from}, ${to}, " "]`);
     return [from, to, " "];
   }
-  DEV && console.log(`354 RETURN: [${from}, ${to}]`);
+  DEV && console.log(`353 RETURN: [${from}, ${to}]`);
   return [from, to];
 }
 

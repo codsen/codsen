@@ -70,13 +70,13 @@
     "ast-monkey-traverse": "^4.0.17",
     "chalk": "^5.4.1",
     "codsen-utils": "^1.6.5",
-    "fs-extra": "^11.2.0",
+    "fs-extra": "^11.3.0",
     "globby": "^14.0.2",
     "is-d": "^1.0.0",
     "meow": "^13.2.0",
     "p-filter": "^4.1.0",
     "p-reduce": "^3.0.0",
-    "sort-package-json": "^2.12.0",
+    "sort-package-json": "^2.14.0",
     "update-notifier": "^7.3.1"
   },
   "devDependencies": {

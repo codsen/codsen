@@ -1,7 +1,7 @@
 import { isIndexWithin } from "ranges-is-index-within";
 
 import { version as v } from "../package.json";
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+
 import { Range } from "../../../ops/typedefs/common";
 
 const version: string = v;

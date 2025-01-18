@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { readdirSync, statSync } from "fs";
 import path from "path";
 import { test } from "uvu";

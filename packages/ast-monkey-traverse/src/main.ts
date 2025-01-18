@@ -107,7 +107,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
       }
     } else if (isObj(tree)) {
       DEV && console.log(`109 tree is object`);
-      // eslint-disable-next-line guard-for-in, no-restricted-syntax
+
       for (let key in tree) {
         DEV &&
           console.log(

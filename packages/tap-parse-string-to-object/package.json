@@ -81,6 +81,6 @@
     "@types/isstream": "^0.1.2",
     "@types/split2": "^4.2.3",
     "@types/through2": "^2.0.41",
-    "fs-extra": "^11.2.0"
+    "fs-extra": "^11.3.0"
   }
 }

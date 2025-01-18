@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 // Asynchronous `getKeyset()`
 
 import { strict as assert } from "assert";

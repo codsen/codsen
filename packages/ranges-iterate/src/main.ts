@@ -94,7 +94,7 @@ function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
         console.log(
           `095 finalIdx ${`\u001b[${34}m${finalIdx}\u001b[${39}m`} is before first range's starting index ${`\u001b[${34}m${resolvedRanges[0][0]}\u001b[${39}m`} so ping all characters up to it`,
         );
-      // eslint-disable-next-line
+
       for (; finalIdx < resolvedRanges[0][0]; finalIdx++, currentIdx++) {
         // insure against gaps:
         if (!str[finalIdx]) {
@@ -178,7 +178,7 @@ function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
           loopUntil = resolvedRanges[rangeArrIdx + 1][0];
         }
         DEV && console.log(`180 loopUntil = ${loopUntil}`);
-        // eslint-disable-next-line
+
         for (; currentIdx < loopUntil; finalIdx++, currentIdx++) {
           DEV && console.log(`183 \u001b[${90}m${`ping CB`}\u001b[${39}m`);
           cb({

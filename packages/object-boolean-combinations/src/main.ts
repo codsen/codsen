@@ -92,7 +92,6 @@ function combinations(input: Obj, Override: undefined | Obj = {}): Obj[] {
   if (isObj(overrideObject) && Object.keys(overrideObject).length) {
     outgoingObjectsArray.forEach((el3) => {
       propertiesToBeOverridden.forEach((el4) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         el3[el4] = overrideObject[el4];
       });
     });

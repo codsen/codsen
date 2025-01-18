@@ -22,7 +22,7 @@ test("01 - wrong types", () => {
   equal(findAllIdx([1]), [], "01.09");
   equal(findAllIdx(null), [], "01.10");
   equal(findAllIdx(NaN), [], "01.11");
-  // eslint-disable-next-line no-new-symbol
+
   equal(findAllIdx(Symbol("foo")), [], "01.12");
 });
 

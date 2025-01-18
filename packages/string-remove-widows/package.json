@@ -82,6 +82,6 @@
     "string-match-left-right": "^9.0.20"
   },
   "devDependencies": {
-    "string-strip-html": "^13.4.9"
+    "string-strip-html": "^13.4.10"
   }
 }

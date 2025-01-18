@@ -3,7 +3,7 @@
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 import { right } from "string-left-right";
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+
 import type { Range, Ranges as RangesType } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";

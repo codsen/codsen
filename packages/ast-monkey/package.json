@@ -81,7 +81,7 @@
     }
   },
   "dependencies": {
-    "ast-compare": "^4.0.26",
+    "ast-compare": "^4.0.27",
     "ast-monkey-traverse": "^4.0.17",
     "check-types-mini": "^8.0.20",
     "codsen-utils": "^1.6.5",

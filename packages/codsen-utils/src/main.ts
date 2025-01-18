@@ -278,7 +278,7 @@ export function pullAll<T, U>(input: T[] = [], remove: U[] = []) {
     return input;
   }
   // actual filtration
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
   return input.filter((val) => !remove.includes(val as any));
 }
 

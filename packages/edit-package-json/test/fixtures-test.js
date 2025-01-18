@@ -34,7 +34,6 @@ function compare(eq, testName, pathToProcess, val) {
       checkme,
       `either delete testfile size control record file, ${testName}.control.md`,
     );
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     // if the control file character count file doesn't exist, write it
     write(

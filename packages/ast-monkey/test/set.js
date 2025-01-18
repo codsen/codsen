@@ -1,11 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { test } from "uvu";
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import {
-  // eslint-disable-next-line @typescript-eslint/no-redeclare
   find,
   get,
   set,

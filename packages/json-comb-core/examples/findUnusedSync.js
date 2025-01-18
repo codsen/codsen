@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 // Synchronous `findUnusedSync()` - example #1
 
 import { strict as assert } from "assert";

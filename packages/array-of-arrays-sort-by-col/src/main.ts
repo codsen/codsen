@@ -86,7 +86,6 @@ function sortByCol(arr: any[][], axis: number | string = 0): any[] {
     if (arr1[+axis] !== arr2[+axis]) {
       DEV &&
         console.log(
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           `\u001b[${33}m${`${arr1[+axis]} vs. ${arr2[+axis]}`}\u001b[${39}m`,
         );
       if (
@@ -95,7 +94,7 @@ function sortByCol(arr: any[][], axis: number | string = 0): any[] {
           existy(arr2[+axis]) &&
           arr1[+axis] > arr2[+axis])
       ) {
-        DEV && console.log(`098 return 1, SWAP`);
+        DEV && console.log(`097 return 1, SWAP`);
         return 1;
       }
       /* c8 ignore next */
@@ -105,7 +104,7 @@ function sortByCol(arr: any[][], axis: number | string = 0): any[] {
           existy(arr2[+axis]) &&
           arr1[+axis] < arr2[+axis])
       ) {
-        DEV && console.log(`108 return -1, STAYS AS-IS`);
+        DEV && console.log(`107 return -1, STAYS AS-IS`);
         return -1;
       }
     }
@@ -136,22 +135,22 @@ function sortByCol(arr: any[][], axis: number | string = 0): any[] {
         if (existy(arr1[+axis - i])) {
           if (existy(arr2[+axis - i])) {
             if (arr1[+axis - i] < arr2[+axis - i]) {
-              DEV && console.log(`139 return -1, ALL STAYS AS-IS`);
+              DEV && console.log(`138 return -1, ALL STAYS AS-IS`);
               return -1;
             }
             if (arr1[+axis - i] > arr2[+axis - i]) {
-              DEV && console.log(`143 return 1, SWAP`);
+              DEV && console.log(`142 return 1, SWAP`);
               return 1;
             }
           } else {
-            DEV && console.log(`147 return -1, ALL STAYS AS-IS`);
+            DEV && console.log(`146 return -1, ALL STAYS AS-IS`);
             return -1;
           }
         }
         // arr1 value is null or undefined
         // it's enough for arr2 not to be null or undefined and it goes on top:
         else if (existy(arr2[+axis - i])) {
-          DEV && console.log(`154 return 1, SWAP`);
+          DEV && console.log(`153 return 1, SWAP`);
           return 1;
         }
       }
@@ -165,29 +164,29 @@ function sortByCol(arr: any[][], axis: number | string = 0): any[] {
         if (existy(arr1[+axis + i])) {
           if (existy(arr2[+axis + i])) {
             if (arr1[+axis + i] < arr2[+axis + i]) {
-              DEV && console.log(`168 return -1, ALL STAYS AS-IS`);
+              DEV && console.log(`167 return -1, ALL STAYS AS-IS`);
               return -1;
             }
             if (arr1[+axis + i] > arr2[+axis + i]) {
-              DEV && console.log(`172 return 1, SWAP`);
+              DEV && console.log(`171 return 1, SWAP`);
               return 1;
             }
           } else {
-            DEV && console.log(`176 return -1, ALL STAYS AS-IS`);
+            DEV && console.log(`175 return -1, ALL STAYS AS-IS`);
             return -1;
           }
         }
         // arr1 value is null or undefined
         // it's enough for arr2 not to be null or undefined and it goes on top:
         else if (existy(arr2[+axis + i])) {
-          DEV && console.log(`183 return 1, SWAP`);
+          DEV && console.log(`182 return 1, SWAP`);
           return 1;
         }
       }
     }
 
     // 3. if by now any of returns hasn't happened yet, these two rows are equal
-    DEV && console.log(`190 return 0 - \u001b[${32}m${`EQUAL`}\u001b[${39}m`);
+    DEV && console.log(`189 return 0 - \u001b[${32}m${`EQUAL`}\u001b[${39}m`);
     return 0;
   });
 

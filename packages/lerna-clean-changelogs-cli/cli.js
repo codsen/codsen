@@ -130,13 +130,10 @@ if (isArr(cli.input) && cli.input.length) {
       process.exit(0);
     }
 
-    return pFilter(
-      preppedPathsArr,
-      (onePath) =>
-        fs.stat(path.resolve(onePath)).catch(() => {
-          return Promise.resolve(false);
-        }),
-      // eslint-disable-next-line
+    return pFilter(preppedPathsArr, (onePath) =>
+      fs.stat(path.resolve(onePath)).catch(() => {
+        return Promise.resolve(false);
+      }),
     ).then((resultArr) => {
       if (!isArr(resultArr) || !resultArr.length) {
         // spinner.warn("no changelogs found");
@@ -169,7 +166,6 @@ thePromise.then((received) => {
     (counter, currentPath) =>
       readSortAndWriteOverFile(currentPath)
         .then((res) =>
-          // eslint-disable-next-line no-nested-ternary
           res
             ? res === "ok"
               ? {

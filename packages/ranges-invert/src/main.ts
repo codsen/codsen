@@ -1,5 +1,5 @@
 import { rMerge } from "ranges-merge";
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+
 import type { Range, Ranges } from "ranges-merge";
 import { rCrop } from "ranges-crop";
 

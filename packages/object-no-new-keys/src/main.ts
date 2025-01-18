@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { hasOwnProp, isPlainObject as isObj, JSONValue } from "codsen-utils";
 import { version as v } from "../package.json";
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 // Quick Take
 
 import { strict as assert } from "assert";

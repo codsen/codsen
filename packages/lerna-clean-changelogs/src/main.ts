@@ -59,7 +59,6 @@ function cleanChangelogs(
       (changelog[~-changelog.length] === "\n" ||
         changelog[~-changelog.length] === "\r");
 
-    // eslint-disable-next-line no-param-reassign
     changelog = changelog
       ?.trim()
       .replace(
@@ -69,7 +68,7 @@ function cleanChangelogs(
     let linesArr = changelog.split(/\r?\n/);
     DEV &&
       console.log(
-        `072 ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
+        `071 ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
           linesArr,
           null,
           4,
@@ -95,7 +94,7 @@ function cleanChangelogs(
       });
       DEV &&
         console.log(
-          `098 AFTER STEP 1, ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
+          `097 AFTER STEP 1, ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
             linesArr,
             null,
             4,
@@ -150,7 +149,7 @@ function cleanChangelogs(
           lastLineWasEmpty = true;
           DEV &&
             console.log(
-              `153 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`,
+              `152 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`,
             );
         }
       }
@@ -166,7 +165,7 @@ function cleanChangelogs(
         lastLineWasEmpty = false;
         DEV &&
           console.log(
-            `169 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`,
+            `168 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`,
           );
       }
     }

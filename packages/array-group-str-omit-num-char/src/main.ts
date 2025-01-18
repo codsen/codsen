@@ -1,5 +1,5 @@
 import { rApply } from "ranges-apply";
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+
 import type { Range, Ranges } from "ranges-apply";
 import { hasOwnProp } from "codsen-utils";
 

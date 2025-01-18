@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 // A bypass callback and a do-nothing callback
 
 import { strict as assert } from "assert";

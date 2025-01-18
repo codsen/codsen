@@ -52,7 +52,6 @@ globby([
         let amended = set(JSON.stringify(obj, null, 4), innerObj.path, "x");
         try {
           calculated = JSON.parse(amended);
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
           test("failure in set()", () => {
             not.ok(
@@ -67,7 +66,6 @@ globby([
         try {
           editedRefObj = clone(obj);
           objectPath.set(editedRefObj, innerObj.path, "x");
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
           test("failure in objectPath.set():", () => {
             not.ok(

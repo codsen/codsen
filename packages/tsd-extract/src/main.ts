@@ -60,7 +60,6 @@ const statementDefault = {
 };
 Object.freeze(statementDefault);
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type ReturnType = Statement & { all: string[]; error: string | null };
 
 // -----------------------------------------------------------------------------
@@ -90,7 +89,7 @@ function extractInner(
 
   // early exit
   if (!resolvedOpts.extractAll && (!def || !str.includes(def))) {
-    DEV && console.log(`093 ${`\u001b[${31}m${`EXIT`}\u001b[${39}m`}`);
+    DEV && console.log(`092 ${`\u001b[${31}m${`EXIT`}\u001b[${39}m`}`);
     return { ...statementDefault, all: [], error: NOT_FOUND_STR };
   }
 
@@ -142,7 +141,7 @@ function extractInner(
       lastNonWhitespaceChar = i;
       DEV &&
         console.log(
-          `145 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastNonWhitespaceChar`}\u001b[${39}m`} = ${JSON.stringify(
+          `144 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastNonWhitespaceChar`}\u001b[${39}m`} = ${JSON.stringify(
             lastNonWhitespaceChar,
             null,
             4,
@@ -152,7 +151,7 @@ function extractInner(
   }
 
   function patchMissingValues(i: number): void {
-    DEV && console.log(`155 patchMissingValues() called`);
+    DEV && console.log(`154 patchMissingValues() called`);
 
     if (
       typeof statement.contentStartsAt === "number" &&
@@ -163,7 +162,7 @@ function extractInner(
         (resolvedOpts.semi || str[lastNonWhitespaceChar] !== ";" ? 1 : 0);
       DEV &&
         console.log(
-          `166 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.contentEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `165 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.contentEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
             statement.contentEndsAt,
             null,
             4,
@@ -176,14 +175,14 @@ function extractInner(
       typeof statement.contentEndsAt === "number" &&
       statement.content === null
     ) {
-      DEV && console.log(`179`);
+      DEV && console.log(`178`);
       statement.content = str.slice(
         statement.contentStartsAt,
         statement.contentEndsAt,
       );
       DEV &&
         console.log(
-          `186 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.content`}\u001b[${39}m`} = ${JSON.stringify(
+          `185 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.content`}\u001b[${39}m`} = ${JSON.stringify(
             statement.content,
             null,
             4,
@@ -193,7 +192,7 @@ function extractInner(
         statement.content = statement.content.replace(asChunkRegexp, "");
         DEV &&
           console.log(
-            `196 ${`\u001b[${32}m${`REMOVE "* as"`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.content`}\u001b[${39}m`} = ${JSON.stringify(
+            `195 ${`\u001b[${32}m${`REMOVE "* as"`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.content`}\u001b[${39}m`} = ${JSON.stringify(
               statement.content,
               null,
               4,
@@ -202,7 +201,7 @@ function extractInner(
       }
 
       if (typeof resolvedOpts.contentSort === "function") {
-        DEV && console.log(`205 ${`\u001b[${36}m${`sort args`}\u001b[${39}m`}`);
+        DEV && console.log(`204 ${`\u001b[${36}m${`sort args`}\u001b[${39}m`}`);
         if (
           def === "export" &&
           // there are curly brackets...
@@ -236,7 +235,7 @@ function extractInner(
             .sort(resolvedOpts.contentSort);
           DEV &&
             console.log(
-              `239 ${`\u001b[${33}m${`args`}\u001b[${39}m`} = ${JSON.stringify(
+              `238 ${`\u001b[${33}m${`args`}\u001b[${39}m`} = ${JSON.stringify(
                 args,
                 null,
                 4,
@@ -253,7 +252,7 @@ function extractInner(
           // now it depends was it on one line or split between lines
           if (!contentBetweenCurlies.includes("\n")) {
             DEV &&
-              console.log(`256 ${`\u001b[${36}m${`one-liner!`}\u001b[${39}m`}`);
+              console.log(`255 ${`\u001b[${36}m${`one-liner!`}\u001b[${39}m`}`);
 
             statement.content = `${statement.content.slice(
               0,
@@ -263,7 +262,7 @@ function extractInner(
             )}`;
             DEV &&
               console.log(
-                `266 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.content`}\u001b[${39}m`} = ${JSON.stringify(
+                `265 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.content`}\u001b[${39}m`} = ${JSON.stringify(
                   statement.content,
                   null,
                   4,
@@ -272,7 +271,7 @@ function extractInner(
           } else {
             DEV &&
               console.log(
-                `275 ${`\u001b[${36}m${`multi-line!`}\u001b[${39}m`}`,
+                `274 ${`\u001b[${36}m${`multi-line!`}\u001b[${39}m`}`,
               );
 
             let detectedIndentation = statement.content.slice(
@@ -291,7 +290,7 @@ function extractInner(
 
             DEV &&
               console.log(
-                `294 ${`\u001b[${33}m${`detectedIndentation`}\u001b[${39}m`} = ${JSON.stringify(
+                `293 ${`\u001b[${33}m${`detectedIndentation`}\u001b[${39}m`} = ${JSON.stringify(
                   detectedIndentation,
                   null,
                   4,
@@ -314,7 +313,7 @@ function extractInner(
 
             DEV &&
               console.log(
-                `317 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.content`}\u001b[${39}m`} = ${JSON.stringify(
+                `316 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.content`}\u001b[${39}m`} = ${JSON.stringify(
                   statement.content,
                   null,
                   4,
@@ -334,7 +333,7 @@ function extractInner(
         (resolvedOpts.semi || str[lastNonWhitespaceChar] !== ";" ? 1 : 0);
       DEV &&
         console.log(
-          `337 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.valueEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `336 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.valueEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
             statement.valueEndsAt,
             null,
             4,
@@ -353,7 +352,7 @@ function extractInner(
       );
       DEV &&
         console.log(
-          `356 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.value`}\u001b[${39}m`} = ${JSON.stringify(
+          `355 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.value`}\u001b[${39}m`} = ${JSON.stringify(
             statement.value,
             null,
             4,
@@ -363,7 +362,7 @@ function extractInner(
         statement.value = statement.value.replace(asChunkRegexp, "");
         DEV &&
           console.log(
-            `366 ${`\u001b[${32}m${`TWEAK`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.value`}\u001b[${39}m`} = ${JSON.stringify(
+            `365 ${`\u001b[${32}m${`TWEAK`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.value`}\u001b[${39}m`} = ${JSON.stringify(
               statement.value,
               null,
               4,
@@ -381,7 +380,7 @@ function extractInner(
         statement.identifiers.push(...chunk.identifiers);
         DEV &&
           console.log(
-            `384 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiers`}\u001b[${39}m`} now = ${JSON.stringify(
+            `383 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiers`}\u001b[${39}m`} now = ${JSON.stringify(
               statement.identifiers,
               null,
               4,
@@ -396,7 +395,7 @@ function extractInner(
           statement.identifiersStartAt = chunk.startsAt;
           DEV &&
             console.log(
-              `399 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiersStartAt`}\u001b[${39}m`} = ${JSON.stringify(
+              `398 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiersStartAt`}\u001b[${39}m`} = ${JSON.stringify(
                 statement.identifiersStartAt,
                 null,
                 4,
@@ -409,7 +408,7 @@ function extractInner(
           statement.identifiersEndAt = i;
           DEV &&
             console.log(
-              `412 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiersEndAt`}\u001b[${39}m`} = ${JSON.stringify(
+              `411 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiersEndAt`}\u001b[${39}m`} = ${JSON.stringify(
                 statement.identifiersEndAt,
                 null,
                 4,
@@ -421,7 +420,7 @@ function extractInner(
 
     DEV &&
       console.log(
-        `424 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} patched ${`\u001b[${33}m${`statement`}\u001b[${39}m`} = ${JSON.stringify(
+        `423 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} patched ${`\u001b[${33}m${`statement`}\u001b[${39}m`} = ${JSON.stringify(
           statement,
           null,
           4,
@@ -468,22 +467,22 @@ function extractInner(
     // Catch the comments
     if (str[i] === "/") {
       if (str[i + 1] === "*") {
-        DEV && console.log(`471 a comment opening caught`);
+        DEV && console.log(`470 a comment opening caught`);
         DEV &&
-          console.log(`473 OLD ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
+          console.log(`472 OLD ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
         if (str.includes("*/", i + 1)) {
           i = str.indexOf("*/", i + 1) + 2;
         } else {
           i = str.length - 1;
         }
         DEV &&
-          console.log(`480 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
+          console.log(`479 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
         continue;
       } else if (str[i + 1] === "/") {
-        DEV && console.log(`483 skip until line break`);
+        DEV && console.log(`482 skip until line break`);
 
         DEV &&
-          console.log(`486 OLD ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
+          console.log(`485 OLD ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
         if (str.includes("\n", i + 1)) {
           i = str.indexOf("\n", i + 1);
         } else if (str.includes("\r", i + 1)) {
@@ -492,7 +491,7 @@ function extractInner(
           i = str.length - 1;
         }
         DEV &&
-          console.log(`495 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
+          console.log(`494 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${i}`);
         continue;
       }
     }
@@ -528,7 +527,7 @@ function extractInner(
         // some other identifier starts
         NON_IDENTIFIER_CHARS.includes(str[i]))
     ) {
-      DEV && console.log(`531 inside the catch identifier's end clauses`);
+      DEV && console.log(`530 inside the catch identifier's end clauses`);
       // 1. chunk.endsAt is a "rolling" value to end up as
       // the value of "identifiersEndAt"
       chunk.endsAt = i;
@@ -537,7 +536,7 @@ function extractInner(
       let identifier = str.slice(identifierStartsAt, i);
       DEV &&
         console.log(
-          `540 ${`\u001b[${35}m${`██ EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`identifier`}\u001b[${39}m`} = ${JSON.stringify(
+          `539 ${`\u001b[${35}m${`██ EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`identifier`}\u001b[${39}m`} = ${JSON.stringify(
             identifier,
             null,
             4,
@@ -546,7 +545,7 @@ function extractInner(
       chunk.identifiers.push(identifier);
       DEV &&
         console.log(
-          `549 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`chunk.identifiers`}\u001b[${39}m`} now = ${JSON.stringify(
+          `548 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`chunk.identifiers`}\u001b[${39}m`} now = ${JSON.stringify(
             chunk.identifiers,
             null,
             4,
@@ -562,7 +561,7 @@ function extractInner(
           statement.valueStartsAt = identifierStartsAt;
           DEV &&
             console.log(
-              `565 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunk.startsAt`}\u001b[${39}m`} = ${JSON.stringify(
+              `564 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunk.startsAt`}\u001b[${39}m`} = ${JSON.stringify(
                 chunk.startsAt,
                 null,
                 4,
@@ -591,7 +590,7 @@ function extractInner(
       identifierStartsAt = null;
       DEV &&
         console.log(
-          `594 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`identifierStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `593 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`identifierStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             identifierStartsAt,
             null,
             4,
@@ -607,7 +606,7 @@ function extractInner(
         all.add(identifier);
         DEV &&
           console.log(
-            `610 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${identifier}\u001b[${39}m`} to ${`\u001b[${33}m${`all`}\u001b[${39}m`} = ${JSON.stringify(
+            `609 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${identifier}\u001b[${39}m`} to ${`\u001b[${33}m${`all`}\u001b[${39}m`} = ${JSON.stringify(
               [...all],
               null,
               4,
@@ -623,7 +622,7 @@ function extractInner(
       (str[i] in PAIRS || `=:`.includes(str[i])) &&
       statement.contentStartsAt === null
     ) {
-      DEV && console.log(`626 caught a chunk's end`);
+      DEV && console.log(`625 caught a chunk's end`);
       // 1. set statement, but only if "def" was not found yet
 
       // It's because if opts.extractAll is enabled, after we find
@@ -637,7 +636,7 @@ function extractInner(
       statement.identifiersEndAt = chunk.endsAt;
       DEV &&
         console.log(
-          `640 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiers`}\u001b[${39}m`} = ${JSON.stringify(
+          `639 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.identifiers`}\u001b[${39}m`} = ${JSON.stringify(
             statement.identifiers,
             null,
             4,
@@ -662,14 +661,14 @@ function extractInner(
           } else {
             DEV &&
               console.log(
-                `665 ${`\u001b[${31}m${`unexpected case`}\u001b[${39}m`}`,
+                `664 ${`\u001b[${31}m${`unexpected case`}\u001b[${39}m`}`,
               );
             statement.contentStartsAt = i;
           }
         }
         DEV &&
           console.log(
-            `672 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.contentStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+            `671 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`statement.contentStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
               statement.contentStartsAt,
               null,
               4,
@@ -689,7 +688,7 @@ function extractInner(
       }
 
       // 3. reset chunk
-      DEV && console.log(`692 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} chunk`);
+      DEV && console.log(`691 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} chunk`);
       resetChunk();
     }
 
@@ -710,7 +709,7 @@ function extractInner(
           !ignoreUntil.length ||
           str[i] !== ignoreUntil[~-ignoreUntil.length])
       ) {
-        DEV && console.log(`713 - it's an opening counterpart`);
+        DEV && console.log(`712 - it's an opening counterpart`);
         //
         // activate the ignores - skip until the closing counterpart,
         // but beware the nesting - continue catching nested pairs
@@ -718,19 +717,19 @@ function extractInner(
         resetChunk();
         DEV &&
           console.log(
-            `721 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`ignoreUntil`}\u001b[${39}m`}, now = ${JSON.stringify(
+            `720 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`ignoreUntil`}\u001b[${39}m`}, now = ${JSON.stringify(
               ignoreUntil,
               null,
               0,
             )}; ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} chunk`,
           );
       } else if (ignoreUntil.length) {
-        DEV && console.log(`728`);
+        DEV && console.log(`727`);
         if (str[i] === ignoreUntil[~-ignoreUntil.length]) {
           ignoreUntil.pop();
           DEV &&
             console.log(
-              `733 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} ${`\u001b[${33}m${`ignoreUntil`}\u001b[${39}m`} now = ${JSON.stringify(
+              `732 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} ${`\u001b[${33}m${`ignoreUntil`}\u001b[${39}m`} now = ${JSON.stringify(
                 ignoreUntil,
                 null,
                 4,
@@ -758,12 +757,12 @@ function extractInner(
       str[i]?.trim() &&
       !NON_IDENTIFIER_CHARS.includes(str[i])
     ) {
-      DEV && console.log(`761 Catch an identifier's start clauses`);
+      DEV && console.log(`760 Catch an identifier's start clauses`);
       if (str.startsWith("from", i)) {
         catchNextQuotedChunk = true;
         DEV &&
           console.log(
-            `766 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`catchNextQuotedChunk`}\u001b[${39}m`} = ${JSON.stringify(
+            `765 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`catchNextQuotedChunk`}\u001b[${39}m`} = ${JSON.stringify(
               catchNextQuotedChunk,
               null,
               4,
@@ -774,7 +773,7 @@ function extractInner(
         (statement.contentStartsAt === null ||
           str[statement.contentStartsAt] !== ":")
       ) {
-        DEV && console.log(`777`);
+        DEV && console.log(`776`);
         // if the semicolon was missing, at this point, we'll have "identifiersEndAt"
         // still set; that's how we detect the curlies chunk was passed by now
         if (
@@ -785,12 +784,12 @@ function extractInner(
           //                                                          we're here
           str[statement.identifiersEndAt] !== "("
         ) {
-          DEV && console.log(`788`);
+          DEV && console.log(`787`);
           if (!resolvedOpts.extractAll && statement.identifiers.includes(def)) {
             // patch up the missing values
             DEV &&
               console.log(
-                `793 PATCHING! ${`\u001b[${33}m${`FIY`}\u001b[${39}m`}, ${`\u001b[${33}m${`lastNonWhitespaceChar`}\u001b[${39}m`} = ${JSON.stringify(
+                `792 PATCHING! ${`\u001b[${33}m${`FIY`}\u001b[${39}m`}, ${`\u001b[${33}m${`lastNonWhitespaceChar`}\u001b[${39}m`} = ${JSON.stringify(
                   lastNonWhitespaceChar,
                   null,
                   4,
@@ -800,24 +799,24 @@ function extractInner(
             patchMissingValues(i);
 
             DEV &&
-              console.log(`803 ${`\u001b[${35}m${`RETURN`}\u001b[${39}m`}`);
+              console.log(`802 ${`\u001b[${35}m${`RETURN`}\u001b[${39}m`}`);
             // "all" is empty unless requested
             return { ...statement, all: [], error: null };
           }
 
           if (statement.identifiers.includes(def)) {
-            DEV && console.log(`809 patch statement`);
+            DEV && console.log(`808 patch statement`);
             patchMissingValues(i);
             DEV &&
               console.log(
-                `813 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${35}m${`ret`}\u001b[${39}m`}`,
+                `812 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${35}m${`ret`}\u001b[${39}m`}`,
               );
             ret = { ...statement, all: [], error: null };
           }
           resetStatement();
           DEV &&
             console.log(
-              `820 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} statement`,
+              `819 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} statement`,
             );
         }
 
@@ -828,7 +827,7 @@ function extractInner(
           identifierStartsAt = i;
           DEV &&
             console.log(
-              `831 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`identifierStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+              `830 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`identifierStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
                 identifierStartsAt,
                 null,
                 4,
@@ -859,7 +858,7 @@ function extractInner(
     //                                S
 
     // Update "lastNonWhitespaceChar"
-    DEV && console.log(`862 call updateLastNonWhitespaceChar()`);
+    DEV && console.log(`861 call updateLastNonWhitespaceChar()`);
     updateLastNonWhitespaceChar(i);
 
     // EOL
@@ -870,12 +869,12 @@ function extractInner(
       !ret &&
       (chunk.identifiers.includes(def) || statement.identifiers.includes(def))
     ) {
-      DEV && console.log(`873 EOL clauses`);
+      DEV && console.log(`872 EOL clauses`);
       patchMissingValues(i);
 
       DEV &&
         console.log(
-          `878 after patch, ${`\u001b[${33}m${`statement`}\u001b[${39}m`} = ${JSON.stringify(
+          `877 after patch, ${`\u001b[${33}m${`statement`}\u001b[${39}m`} = ${JSON.stringify(
             statement,
             null,
             4,
@@ -886,11 +885,11 @@ function extractInner(
         !resolvedOpts.mustInclude ||
         statement.value?.includes(resolvedOpts.mustInclude)
       ) {
-        DEV && console.log(`889`);
+        DEV && console.log(`888`);
         ret = { ...statement, all: [], error: null };
         DEV &&
           console.log(
-            `893 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`ret`}\u001b[${39}m`} = ${JSON.stringify(
+            `892 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`ret`}\u001b[${39}m`} = ${JSON.stringify(
               ret,
               null,
               4,
@@ -899,18 +898,18 @@ function extractInner(
       }
       resetStatement();
       DEV &&
-        console.log(`902 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} statement`);
+        console.log(`901 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} statement`);
     }
 
     // Catch semi
     // -----------------------------------------------------------------------------
     if (!ignoreUntil.length && str[i] === ";") {
-      DEV && console.log(`908`);
+      DEV && console.log(`907`);
       if (statement.identifiers.includes(def)) {
         DEV &&
-          console.log(`911 ${`\u001b[${32}m${`END REACHED`}\u001b[${39}m`}`);
+          console.log(`910 ${`\u001b[${32}m${`END REACHED`}\u001b[${39}m`}`);
         patchMissingValues(i);
-        DEV && console.log(`913`);
+        DEV && console.log(`912`);
 
         if (
           !resolvedOpts.mustInclude ||
@@ -918,18 +917,18 @@ function extractInner(
         ) {
           if (!resolvedOpts.extractAll) {
             DEV &&
-              console.log(`921 ${`\u001b[${35}m${`RETURN`}\u001b[${39}m`}`);
+              console.log(`920 ${`\u001b[${35}m${`RETURN`}\u001b[${39}m`}`);
             return { ...statement, all: [...all], error: null };
           } else if (!ret) {
             DEV &&
               console.log(
-                `926 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${35}m${`ret`}\u001b[${39}m`}`,
+                `925 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${35}m${`ret`}\u001b[${39}m`}`,
               );
             // remember to patch "all" in the end, now it's incomplete
             ret = { ...statement, all: [], error: null };
           }
         }
-        DEV && console.log(`932 reset statement`);
+        DEV && console.log(`931 reset statement`);
         resetStatement();
       } else if (typeof statement.contentStartsAt === "number") {
         // wipe statement object, prepare to start
@@ -937,7 +936,7 @@ function extractInner(
         resetStatement();
         DEV &&
           console.log(
-            `940 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} statement`,
+            `939 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} statement`,
           );
       }
     }
@@ -956,11 +955,11 @@ function extractInner(
       //
       statement.contentStartsAt === null
     ) {
-      DEV && console.log(`959 ignore until closing bracket`);
+      DEV && console.log(`958 ignore until closing bracket`);
       ignoreUntil.push(">");
       DEV &&
         console.log(
-          `963 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`ignoreUntil`}\u001b[${39}m`} now = ${JSON.stringify(
+          `962 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`ignoreUntil`}\u001b[${39}m`} now = ${JSON.stringify(
             ignoreUntil,
             null,
             4,
@@ -1023,7 +1022,7 @@ function extractInner(
     if (offset) {
       DEV &&
         console.log(
-          `1026 ${`\u001b[${33}m${`offset correction`}\u001b[${39}m`}`,
+          `1025 ${`\u001b[${33}m${`offset correction`}\u001b[${39}m`}`,
         );
       if (ret.identifiersStartAt) {
         ret.identifiersStartAt += offset;
@@ -1045,13 +1044,13 @@ function extractInner(
       }
     }
 
-    DEV && console.log(`1048 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ret`);
+    DEV && console.log(`1047 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ret`);
     ret.all = [...all];
     return ret;
   }
   DEV &&
     console.log(
-      `1054 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${31}m${`error`}\u001b[${39}m`} ${NOT_FOUND_STR}`,
+      `1053 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${31}m${`error`}\u001b[${39}m`} ${NOT_FOUND_STR}`,
     );
   return { ...statementDefault, all: [...all], error: NOT_FOUND_STR };
 }
@@ -1138,7 +1137,7 @@ function fixIndentation<Type>(s: Type): Type {
 function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
   DEV &&
     console.log(
-      `1141 ███████████████████████████████████████ looking for: ${`\u001b[${33}m${`def`}\u001b[${39}m`} = ${JSON.stringify(
+      `1140 ███████████████████████████████████████ looking for: ${`\u001b[${33}m${`def`}\u001b[${39}m`} = ${JSON.stringify(
         def,
         null,
         4,
@@ -1215,9 +1214,9 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
     );
 
     if (def.includes(".")) {
-      DEV && console.log(`1218`);
+      DEV && console.log(`1217`);
       if (firstLoopIteration) {
-        DEV && console.log(`1220 - initial loop, save the keys`);
+        DEV && console.log(`1219 - initial loop, save the keys`);
         // make a note of these, but only if it's the first loop
         // (meaning we're querying "foo" from def="foo.bar" if it's
         // the interface sub-key querying, or it's simply def="foo")
@@ -1226,7 +1225,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
         identifiersStartAt = res.identifiersStartAt;
         identifiersEndAt = res.identifiersEndAt;
       } else {
-        DEV && console.log(`1229 - restore keys`);
+        DEV && console.log(`1228 - restore keys`);
         // restore keys from the first loop because "identifiers" and
         // "all" will be wrong at this deeper level loop; inputs here
         // couldn't "see" the outer identifiers, they operate from
@@ -1249,7 +1248,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
 
     DEV &&
       console.log(
-        `1252 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+        `1251 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
           res,
           null,
           4,
@@ -1259,12 +1258,12 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
     if (!defs.length) {
       if (!def.includes(".")) {
         DEV &&
-          console.log(`1262 normal return ${JSON.stringify(res, null, 4)}`);
+          console.log(`1261 normal return ${JSON.stringify(res, null, 4)}`);
         return res;
       } else {
         DEV &&
           console.log(
-            `1267 sub-key return ${JSON.stringify(
+            `1266 sub-key return ${JSON.stringify(
               { ...res, identifiers, all },
               null,
               4,

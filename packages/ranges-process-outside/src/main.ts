@@ -89,7 +89,7 @@ function rProcessOutside(
         let charLength = runes(str.slice(i))[0].length;
 
         DEV && console.log(`091 charLength = ${charLength}`);
-        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+
         cb(i, i + charLength, (offsetValue) => {
           /* c8 ignore next */
           if (offsetValue != null) {

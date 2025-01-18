@@ -119,7 +119,7 @@ export const interdeps = [
   },
   {
     "name": "ast-monkey-util",
-    "size": 1085,
+    "size": 1053,
     "imports": []
   },
   {
@@ -245,7 +245,7 @@ export const interdeps = [
   },
   {
     "name": "email-all-chars-within-ascii-cli",
-    "size": 8404,
+    "size": 8474,
     "imports": [
       "codsen-utils",
       "email-all-chars-within-ascii",
@@ -310,14 +310,14 @@ export const interdeps = [
   },
   {
     "name": "generate-atomic-css-cli",
-    "size": 4728,
+    "size": 4643,
     "imports": [
       "generate-atomic-css"
     ]
   },
   {
     "name": "gulp-email-remove-unused-css",
-    "size": 861,
+    "size": 827,
     "imports": [
       "email-comb"
     ]
@@ -413,7 +413,7 @@ export const interdeps = [
   },
   {
     "name": "js-row-num-cli",
-    "size": 5557,
+    "size": 5472,
     "imports": [
       "arrayiffy-if-string",
       "js-row-num"
@@ -440,7 +440,7 @@ export const interdeps = [
   },
   {
     "name": "json-sort-cli",
-    "size": 14356,
+    "size": 14281,
     "imports": [
       "ast-monkey-traverse",
       "codsen-utils"
@@ -470,7 +470,7 @@ export const interdeps = [
   },
   {
     "name": "lerna-clean-changelogs-cli",
-    "size": 7546,
+    "size": 7381,
     "imports": [
       "lerna-clean-changelogs"
     ]
@@ -526,7 +526,7 @@ export const interdeps = [
   },
   {
     "name": "object-merge-advanced",
-    "size": 7160,
+    "size": 7174,
     "imports": [
       "codsen-utils",
       "util-nonempty"
@@ -599,7 +599,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-push",
-    "size": 5634,
+    "size": 5667,
     "imports": [
       "codsen-utils",
       "ranges-sort",
@@ -859,7 +859,7 @@ export const interdeps = [
   },
   {
     "name": "update-versions",
-    "size": 15780,
+    "size": 15920,
     "imports": [
       "codsen-utils",
       "edit-package-json"

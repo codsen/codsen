@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 // Leave only opening `td` tags
 
 import { strict as assert } from "assert";

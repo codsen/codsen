@@ -103,7 +103,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
   let check;
   try {
     check = fs.statSync(path.resolve("../", cli.input[i]));
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     console.log(
@@ -117,7 +117,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     // -------------------------------------------------------------------------
     try {
       fs.statSync(path.resolve("package.json"));
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       console.log(
@@ -135,7 +135,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
     // -------------------------------------------------------------------------
     try {
       fs.statSync(path.resolve("../", cli.input[i], "package.json"));
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       console.log(
@@ -205,7 +205,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
             );
             continue;
           }
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {}
       }
@@ -288,7 +288,7 @@ for (let i = 0, len = cli.input.length; i < len; i++) {
             );
             continue;
           }
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {}
 

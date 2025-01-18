@@ -35,7 +35,6 @@ function strIndexesOfPlus(
     return [];
   }
   if (!fromIndex) {
-    // eslint-disable-next-line no-param-reassign
     fromIndex = 0;
   }
 

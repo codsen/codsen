@@ -1,5 +1,5 @@
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { equal, is, ok, throws, type, not, match } from "uvu/assert";
 
 import { crush } from "../dist/html-crush.esm.js";
@@ -13,7 +13,6 @@ function pick(...args) {
 }
 function addThousandSeparators(numStr) {
   if (typeof numStr !== "string") {
-    // eslint-disable-next-line no-param-reassign
     numStr = String(numStr);
   }
   let newStr = "";

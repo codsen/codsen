@@ -140,7 +140,6 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
       // if there was only one separator up to now, wipe it
       if (separatorsArr.length) {
         if (separatorsArr.length > 1) {
-          // eslint-disable-next-line no-loop-func
           separatorsArr.forEach((separatorsIdx, orderNumber) => {
             if (orderNumber && resolvedOpts.errCb) {
               resolvedOpts.errCb(
@@ -159,14 +158,14 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
         separatorsArr = [];
         DEV &&
           console.log(
-            `162 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`separatorsArr`}\u001b[${39}m`}`,
+            `161 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`separatorsArr`}\u001b[${39}m`}`,
           );
       }
 
       chunkStartsAt = i;
       DEV &&
         console.log(
-          `169 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`,
+          `168 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`,
         );
     }
 
@@ -178,7 +177,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
         str[i] === resolvedOpts.separator) ||
         i + 1 === resolvedOpts.to)
     ) {
-      DEV && console.log(`181 chunk ends`);
+      DEV && console.log(`180 chunk ends`);
       let chunk = str.slice(
         chunkStartsAt as number,
         i + 1 === resolvedOpts.to &&
@@ -189,14 +188,14 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
       );
       DEV &&
         console.log(
-          `192 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`chunk`}\u001b[${39}m`} = "${`\u001b[${35}m${chunk}\u001b[${39}m`}"`,
+          `191 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`chunk`}\u001b[${39}m`} = "${`\u001b[${35}m${chunk}\u001b[${39}m`}"`,
         );
 
       // ping the cb
       if (typeof resolvedOpts.cb === "function") {
         DEV &&
           console.log(
-            `199 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+            `198 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
               [
                 (chunkStartsAt as number) + resolvedOpts.offset,
                 (i + 1 === resolvedOpts.to &&
@@ -224,8 +223,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
       chunkStartsAt = null;
       DEV &&
         console.log(
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-          `228 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`,
+          `226 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`,
         );
     }
 
@@ -234,7 +232,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
       whitespaceStartsAt = i;
       DEV &&
         console.log(
-          `237 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`,
+          `235 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`,
         );
     }
 
@@ -243,17 +241,17 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
       whitespaceStartsAt !== null &&
       (str[i].trim() || i + 1 === resolvedOpts.to)
     ) {
-      DEV && console.log(`246 whitespace ends`);
+      DEV && console.log(`244 whitespace ends`);
 
       if (whitespaceStartsAt === resolvedOpts.from) {
-        DEV && console.log(`249 leading whitespace clauses`);
+        DEV && console.log(`247 leading whitespace clauses`);
         if (
           !resolvedOpts.leadingWhitespaceOK &&
           typeof resolvedOpts.errCb === "function"
         ) {
           DEV &&
             console.log(
-              `256 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+              `254 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
                 [
                   [
                     whitespaceStartsAt + resolvedOpts.offset,
@@ -281,14 +279,14 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
       } else if (!str[i].trim() && i + 1 === resolvedOpts.to) {
         // if it's trailing whitespace, we're on the last character
         // (right before resolvedOpts.to)
-        DEV && console.log(`284 trailing whitespace clauses`);
+        DEV && console.log(`282 trailing whitespace clauses`);
         if (
           !resolvedOpts.trailingWhitespaceOK &&
           typeof resolvedOpts.errCb === "function"
         ) {
           DEV &&
             console.log(
-              `291 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+              `289 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
                 [[whitespaceStartsAt, i + 1], "Remove whitespace."],
                 null,
                 4,
@@ -325,7 +323,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
       ) {
         DEV &&
           console.log(
-            `328 ███████████████████████████████████████ regular whitespace clauses`,
+            `326 ███████████████████████████████████████ regular whitespace clauses`,
           );
         // exclude single space after a comma, with condition that something
         // non-whitespacey follows
@@ -346,7 +344,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
 
         DEV &&
           console.log(
-            `349 ${`\u001b[${33}m${`endingIdx`}\u001b[${39}m`} = ${JSON.stringify(
+            `347 ${`\u001b[${33}m${`endingIdx`}\u001b[${39}m`} = ${JSON.stringify(
               endingIdx,
               null,
               4,
@@ -378,7 +376,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
 
         DEV &&
           console.log(
-            `381 ██ str[whitespaceStartsAt - 1] = ${
+            `379 ██ str[whitespaceStartsAt - 1] = ${
               str[whitespaceStartsAt - 1]
             }`,
           );
@@ -396,7 +394,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
 
         DEV &&
           console.log(
-            `399 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+            `397 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
               [
                 [
                   [
@@ -448,11 +446,11 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
 
     // catch the separator
     if (str[i] === resolvedOpts.separator) {
-      DEV && console.log(`451 separator caught`);
+      DEV && console.log(`449 separator caught`);
       if (!firstNonWhitespaceNonSeparatorCharFound && resolvedOpts.errCb) {
         DEV &&
           console.log(
-            `455 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+            `453 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
               [i, i + 1, "Remove separator."],
               null,
               4,
@@ -491,7 +489,6 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
     // catch the end of the string
     if (i + 1 === resolvedOpts.to && resolvedOpts.errCb) {
       separatorsArr.forEach((separatorsIdx) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         (resolvedOpts as any).errCb(
           [
             [

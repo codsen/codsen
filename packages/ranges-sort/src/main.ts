@@ -1,6 +1,5 @@
 import { version as v } from "../package.json";
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type Range =
   | [from: number, to: number]
   | [from: number, to: number, whatToInsert: string | null | undefined];
@@ -59,13 +58,10 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
       })
   ) {
     throw new TypeError(
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       `ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         arrOfRanges[culpritsIndex],
         null,
         4,
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       )}) has not two but ${culpritsLen} elements!`,
     );
   }
@@ -87,9 +83,7 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
     })
   ) {
     throw new TypeError(
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       `ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         arrOfRanges[culpritsIndex],
         null,
         4,

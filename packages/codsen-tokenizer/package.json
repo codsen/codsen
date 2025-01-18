@@ -82,6 +82,6 @@
     "string-match-left-right": "^9.0.20"
   },
   "devDependencies": {
-    "ast-compare": "^4.0.26"
+    "ast-compare": "^4.0.27"
   }
 }

@@ -71,7 +71,7 @@
     }
   },
   "dependencies": {
-    "string-strip-html": "^13.4.9",
+    "string-strip-html": "^13.4.10",
     "string-unfancy": "^6.0.17"
   }
 }

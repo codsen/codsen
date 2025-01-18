@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 // Synchronous `noNewKeysSync()` - example #2
 
 import { strict as assert } from "assert";

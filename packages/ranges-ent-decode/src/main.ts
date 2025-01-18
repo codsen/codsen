@@ -10,11 +10,10 @@ const version: string = v;
 declare let DEV: boolean;
 
 function chomp(str: string): string {
-  // eslint-disable-next-line no-param-reassign
   str = str.replace(/(amp;)|(#x26;)/gi, "");
   DEV &&
     console.log(
-      `017 ${`\u001b[${33}m${`str after chomp`}\u001b[${39}m`} = ${JSON.stringify(
+      `016 ${`\u001b[${33}m${`str after chomp`}\u001b[${39}m`} = ${JSON.stringify(
         str,
         null,
         4,
@@ -53,7 +52,7 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
 
   DEV &&
     console.log(
-      `056 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
+      `055 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
         str,
         null,
         4,
@@ -61,7 +60,7 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
     );
   DEV &&
     console.log(
-      `064 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `063 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -106,7 +105,6 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
   // action
   // ---------------------------------------------------------------------------
 
-  // eslint-disable-next-line no-cond-assign
   while ((array1 = entityRegex.exec(str)) !== null) {
     DEV &&
       console.log(
@@ -116,7 +114,7 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
       );
     let chomped = chomp(array1[0]);
     if (chomped === "&") {
-      DEV && console.log('119 chomped === "&"');
+      DEV && console.log('117 chomped === "&"');
       rangesArr.push([
         entityRegex.lastIndex - array1[0].length,
         entityRegex.lastIndex,
@@ -126,12 +124,12 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
       let decoded = he.decode(chomped, resolvedOpts);
       DEV &&
         console.log(
-          `129 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`,
+          `127 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`,
         );
       if (decoded !== chomped) {
         DEV &&
           console.log(
-            `134 will push "${`\u001b[${33}m${JSON.stringify(
+            `132 will push "${`\u001b[${33}m${JSON.stringify(
               [
                 entityRegex.lastIndex - array1[0].length,
                 entityRegex.lastIndex,

@@ -80,7 +80,7 @@
     "various": {}
   },
   "dependencies": {
-    "ast-compare": "^4.0.26",
+    "ast-compare": "^4.0.27",
     "codsen-utils": "^1.6.5",
     "rfdc": "^1.4.1"
   }

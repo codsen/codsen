@@ -456,7 +456,6 @@ if (cli.flags) {
         if (amended) {
           try {
             await write(oneOfPaths, finalContents);
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
           } catch (e) {
             console.error(
               `${messagePrefix}error happened when writing package.json:\n${e}`,

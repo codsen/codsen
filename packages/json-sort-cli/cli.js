@@ -403,7 +403,7 @@ globby(input, { dot: true })
       );
     }),
   )
-  // eslint-disable-next-line consistent-return
+
   .then((paths) => {
     if (cli.flags.dry && !cli.flags.silent) {
       log(

@@ -6,7 +6,7 @@ const PLUGIN_NAME = "gulp-email-remove-unused-css";
 
 function geruc(options) {
   let stream = new Transform({ objectMode: true });
-  // eslint-disable-next-line no-underscore-dangle
+
   stream._transform = (file, encoding, cb) => {
     if (file.isStream()) {
       let error = "Streaming not supported";

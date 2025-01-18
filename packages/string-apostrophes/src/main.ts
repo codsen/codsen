@@ -10,7 +10,7 @@ import {
   isNumberChar,
   isLetter,
 } from "codsen-utils";
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+
 import type { Range, Ranges } from "ranges-apply";
 
 import { version as v } from "../package.json";

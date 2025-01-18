@@ -2,7 +2,7 @@ import { tokenizer } from "codsen-tokenizer";
 import { collapse } from "string-collapse-white-space";
 import { rApply } from "ranges-apply";
 import { detectLang } from "detect-templating-language";
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+
 import type { Range } from "../../../ops/typedefs/common";
 
 import { defaultOpts, Opts, ApplicableOpts, Res } from "./util";
