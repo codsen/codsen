@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.0.5](https://github.com/codsen/codsen/compare/lerna-link-dep@4.0.4...lerna-link-dep@4.0.5) (2025-01-18)
-
-**Note:** Version bump only for package lerna-link-dep
-
 ## 4.0.0 (2024-01-05)
 
 ### Features

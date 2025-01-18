@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.1.7](https://github.com/codsen/codsen/compare/string-process-comma-separated@4.1.6...string-process-comma-separated@4.1.7) (2025-01-18)
-
-**Note:** Version bump only for package string-process-comma-separated
-
 ## 4.1.0 (2023-05-13)
 
 ### Features
