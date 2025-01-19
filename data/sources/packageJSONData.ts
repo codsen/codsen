@@ -3625,7 +3625,7 @@ export const packageJSONData = {
   },
   "html-table-patcher": {
     "name": "html-table-patcher",
-    "version": "6.0.27",
+    "version": "6.0.28",
     "description": "Visual helper to place templating code around table tags into correct places",
     "keywords": [
       "add",
