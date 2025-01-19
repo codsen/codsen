@@ -139,30 +139,6 @@ export const interdeps = [
     ]
   },
   {
-    "name": "codsen-parser",
-    "size": 7040,
-    "imports": [
-      "ast-monkey-util",
-      "codsen-tokenizer",
-      "codsen-utils",
-      "string-find-malformed",
-      "string-left-right"
-    ]
-  },
-  {
-    "name": "codsen-tokenizer",
-    "size": 39607,
-    "imports": [
-      "codsen-utils",
-      "html-all-known-attributes",
-      "is-char-suitable-for-html-attr-name",
-      "is-html-attribute-closing",
-      "is-html-tag-opening",
-      "string-left-right",
-      "string-match-left-right"
-    ]
-  },
-  {
     "name": "codsen-utils",
     "size": 4710,
     "imports": []
@@ -267,13 +243,6 @@ export const interdeps = [
       "string-match-left-right",
       "string-range-expander",
       "string-uglify"
-    ]
-  },
-  {
-    "name": "email-homey",
-    "size": 6152,
-    "imports": [
-      "codsen-utils"
     ]
   },
   {
@@ -814,13 +783,6 @@ export const interdeps = [
     "imports": []
   },
   {
-    "name": "string-truncator",
-    "size": 4697,
-    "imports": [
-      "string-left-right"
-    ]
-  },
-  {
     "name": "string-uglify",
     "size": 2488,
     "imports": []
@@ -830,17 +792,6 @@ export const interdeps = [
     "size": 903,
     "imports": [
       "codsen-utils"
-    ]
-  },
-  {
-    "name": "stristri",
-    "size": 2673,
-    "imports": [
-      "codsen-tokenizer",
-      "detect-templating-language",
-      "ranges-apply",
-      "ranges-merge",
-      "string-collapse-white-space"
     ]
   },
   {

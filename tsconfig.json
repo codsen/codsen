@@ -14,9 +14,6 @@
       "path": "packages/array-of-arrays-into-ast"
     },
     {
-      "path": "packages/array-of-arrays-sort-by-col"
-    },
-    {
       "path": "packages/array-pull-all-with-glob"
     },
     {
@@ -59,19 +56,10 @@
       "path": "packages/ast-monkey-util"
     },
     {
-      "path": "packages/bitbucket-slug"
-    },
-    {
       "path": "packages/charcode-is-valid-xml-name-character"
     },
     {
       "path": "packages/check-types-mini"
-    },
-    {
-      "path": "packages/codsen-parser"
-    },
-    {
-      "path": "packages/codsen-tokenizer"
     },
     {
       "path": "packages/codsen-utils"
@@ -95,9 +83,6 @@
       "path": "packages/detergent"
     },
     {
-      "path": "packages/easy-replace"
-    },
-    {
       "path": "packages/edit-package-json"
     },
     {
@@ -117,9 +102,6 @@
     },
     {
       "path": "packages/generate-atomic-css"
-    },
-    {
-      "path": "packages/helga"
     },
     {
       "path": "packages/html-all-known-attributes"
@@ -165,9 +147,6 @@
     },
     {
       "path": "packages/lerna-clean-changelogs"
-    },
-    {
-      "path": "packages/line-column-mini"
     },
     {
       "path": "packages/object-all-values-equal-to"
@@ -218,9 +197,6 @@
       "path": "packages/ranges-merge"
     },
     {
-      "path": "packages/ranges-offset"
-    },
-    {
       "path": "packages/ranges-process-outside"
     },
     {
@@ -254,16 +230,10 @@
       "path": "packages/remark-typography"
     },
     {
-      "path": "packages/seo-editor"
-    },
-    {
       "path": "packages/str-indexes-of-plus"
     },
     {
       "path": "packages/string-apostrophes"
-    },
-    {
-      "path": "packages/string-bionic-split"
     },
     {
       "path": "packages/string-character-is-astral-surrogate"
@@ -302,9 +272,6 @@
       "path": "packages/string-match-left-right"
     },
     {
-      "path": "packages/string-overlap-one-on-another"
-    },
-    {
       "path": "packages/string-process-comma-separated"
     },
     {
@@ -329,19 +296,10 @@
       "path": "packages/string-trim-spaces-only"
     },
     {
-      "path": "packages/string-truncator"
-    },
-    {
       "path": "packages/string-uglify"
     },
     {
       "path": "packages/string-unfancy"
-    },
-    {
-      "path": "packages/stristri"
-    },
-    {
-      "path": "packages/tap-parse-string-to-object"
     },
     {
       "path": "packages/test-mixer"

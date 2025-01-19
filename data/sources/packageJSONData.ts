@@ -88,6 +88,54 @@ export const packageJSONData = {
       "unist-util-visit": "^5.0.0"
     }
   },
+  "array-of-arrays-sort-by-col": {
+    "description": "Sort array of arrays by column, rippling the sorting outwards from that column"
+  },
+  "bitbucket-slug": {
+    "description": "Generate BitBucket readme header anchor slug URLs. Unofficial, covers whole ASCII and a bit beyond"
+  },
+  "codsen-parser": {
+    "description": "Parser aiming at broken or mixed code, especially HTML & CSS"
+  },
+  "codsen-tokenizer": {
+    "description": "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages"
+  },
+  "easy-replace": {
+    "description": "Replace strings with optional lookarounds, but without regexes"
+  },
+  "email-homey": {
+    "description": "Generate homepage in the BrowserSync root with links/screenshots to all your email templates"
+  },
+  "helga": {
+    "description": "Your next best friend when editing complex nested code"
+  },
+  "lerna-link-dep": {
+    "description": "Like lerna add but does just the symlinking, works on CLI bins too"
+  },
+  "line-column-mini": {
+    "description": "Convert string index to line-column position"
+  },
+  "ranges-offset": {
+    "description": "Increment or decrement each index in every range"
+  },
+  "seo-editor": {
+    "description": "Copywriting keyword to-do list automation"
+  },
+  "string-bionic-split": {
+    "description": "Calculate a word string split position index for later highlighting"
+  },
+  "string-overlap-one-on-another": {
+    "description": "Lay one string on top of another, with an optional offset"
+  },
+  "string-truncator": {
+    "description": "Over-engineered string truncation for web UI's"
+  },
+  "stristri": {
+    "description": "Extracts or deletes HTML, CSS, text and/or templating tags from string"
+  },
+  "tap-parse-string-to-object": {
+    "description": "Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object"
+  },
   "all-named-html-entities": {
     "name": "all-named-html-entities",
     "version": "3.0.10",
@@ -390,81 +438,6 @@ export const packageJSONData = {
     "dependencies": {
       "check-types-mini": "^8.0.21",
       "object-merge-advanced": "^14.0.20"
-    }
-  },
-  "array-of-arrays-sort-by-col": {
-    "name": "array-of-arrays-sort-by-col",
-    "version": "5.0.11",
-    "description": "Sort array of arrays by column, rippling the sorting outwards from that column",
-    "keywords": [
-      "array",
-      "arrays",
-      "ascending",
-      "by",
-      "column",
-      "descending",
-      "nested",
-      "order",
-      "sort",
-      "sorting"
-    ],
-    "homepage": "https://codsen.com/os/array-of-arrays-sort-by-col",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/array-of-arrays-sort-by-col"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/array-of-arrays-sort-by-col.umd.js",
-      "default": "./dist/array-of-arrays-sort-by-col.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    },
-    "devDependencies": {
-      "array-shuffle": "^3.0.0"
     }
   },
   "array-pull-all-with-glob": {
@@ -1667,92 +1640,6 @@ export const packageJSONData = {
       }
     }
   },
-  "bitbucket-slug": {
-    "name": "bitbucket-slug",
-    "version": "4.0.11",
-    "description": "Generate BitBucket readme header anchor slug URLs. Unofficial, covers whole ASCII and a bit beyond.",
-    "keywords": [
-      "anchor",
-      "bitbucket",
-      "create",
-      "generate",
-      "generator",
-      "h1",
-      "h2",
-      "h3",
-      "h4",
-      "h5",
-      "h6",
-      "header",
-      "heading",
-      "link",
-      "linked",
-      "readme",
-      "slug",
-      "string",
-      "title",
-      "url"
-    ],
-    "homepage": "https://codsen.com/os/bitbucket-slug",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/bitbucket-slug"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/bitbucket-slug.umd.js",
-      "default": "./dist/bitbucket-slug.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    },
-    "dependencies": {
-      "@types/lodash-es": "^4.17.12",
-      "lodash-es": "^4.17.21"
-    }
-  },
   "charcode-is-valid-xml-name-character": {
     "name": "charcode-is-valid-xml-name-character",
     "version": "3.0.11",
@@ -1977,171 +1864,6 @@ export const packageJSONData = {
     "dependencies": {
       "meow": "^13.2.0",
       "update-notifier": "^7.3.1"
-    }
-  },
-  "codsen-parser": {
-    "name": "codsen-parser",
-    "version": "0.14.27",
-    "description": "Parser aiming at broken or mixed code, especially HTML & CSS",
-    "keywords": [
-      "ast",
-      "css",
-      "html",
-      "parse",
-      "parsing",
-      "processing",
-      "tokenizer"
-    ],
-    "homepage": "https://codsen.com/os/codsen-parser",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/codsen-parser"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/codsen-parser.umd.js",
-      "default": "./dist/codsen-parser.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      },
-      "various": {}
-    },
-    "dependencies": {
-      "ast-monkey-util": "^3.0.9",
-      "codsen-tokenizer": "^7.0.27",
-      "codsen-utils": "^1.6.6",
-      "object-path": "^0.11.8",
-      "string-find-malformed": "^4.0.19",
-      "string-left-right": "^6.0.19"
-    }
-  },
-  "codsen-tokenizer": {
-    "name": "codsen-tokenizer",
-    "version": "7.0.27",
-    "description": "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages",
-    "keywords": [
-      "ast",
-      "codsen",
-      "css",
-      "html",
-      "lexer",
-      "lint",
-      "parse",
-      "parsing",
-      "processing",
-      "token",
-      "tokeniser",
-      "tokenizer"
-    ],
-    "homepage": "https://codsen.com/os/codsen-tokenizer",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/codsen-tokenizer"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/codsen-tokenizer.umd.js",
-      "default": "./dist/codsen-tokenizer.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": false,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    },
-    "dependencies": {
-      "codsen-utils": "^1.6.6",
-      "html-all-known-attributes": "^6.0.8",
-      "is-char-suitable-for-html-attr-name": "^4.0.8",
-      "is-html-attribute-closing": "^4.0.21",
-      "is-html-tag-opening": "^4.0.21",
-      "rfdc": "^1.4.1",
-      "string-left-right": "^6.0.19",
-      "string-match-left-right": "^9.0.21"
-    },
-    "devDependencies": {
-      "ast-compare": "^4.0.28"
     }
   },
   "codsen-utils": {
@@ -2791,79 +2513,6 @@ export const packageJSONData = {
       "test-mixer": "^4.1.16"
     }
   },
-  "easy-replace": {
-    "name": "easy-replace",
-    "version": "6.0.9",
-    "description": "Replace strings with optional lookarounds, but without regexes",
-    "keywords": [
-      "easy",
-      "find",
-      "lookahead",
-      "lookaround",
-      "lookbehind",
-      "negative",
-      "positive",
-      "replace",
-      "replacement",
-      "search",
-      "string"
-    ],
-    "homepage": "https://codsen.com/os/easy-replace",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/easy-replace"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/easy-replace.umd.js",
-      "default": "./dist/easy-replace.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    }
-  },
   "edit-package-json": {
     "name": "edit-package-json",
     "version": "0.8.24",
@@ -3189,86 +2838,6 @@ export const packageJSONData = {
       "string-match-left-right": "^9.0.21",
       "string-range-expander": "^4.0.16",
       "string-uglify": "^3.0.12"
-    }
-  },
-  "email-homey": {
-    "name": "email-homey",
-    "version": "5.0.6",
-    "description": "Generate homepage in the Browsersync root with links/screenshots to all your email templates",
-    "keywords": [
-      "browsersync",
-      "build",
-      "email",
-      "folder",
-      "generate",
-      "gulp",
-      "gulpplugin",
-      "home",
-      "homepage",
-      "page",
-      "root",
-      "system",
-      "templates"
-    ],
-    "homepage": "https://codsen.com/os/email-homey",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/email-homey"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "bin": {
-      "homey": "cli.js"
-    },
-    "scripts": {
-      "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "exit 0",
-      "devtest": "npm run test",
-      "dts": "exit 0",
-      "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js'",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "exit 0",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "exit 0",
-      "test": "c8 npm run unit && npm run lint",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=18"
-    },
-    "c8": {
-      "check-coverage": false,
-      "exclude": [
-        "**/test/**/*.*"
-      ]
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      },
-      "various": {}
-    },
-    "dependencies": {
-      "chalk": "^5.4.1",
-      "codsen-utils": "^1.6.6",
-      "globby": "^14.0.2",
-      "log-symbols": "^7.0.0",
-      "meow": "^13.2.0",
-      "update-notifier": "^7.3.1"
     }
   },
   "eslint-plugin-row-num": {
@@ -3739,82 +3308,6 @@ export const packageJSONData = {
       "vinyl-string": "^1.0.2"
     }
   },
-  "helga": {
-    "name": "helga",
-    "version": "3.0.10",
-    "description": "Your next best friend when editing complex nested code",
-    "keywords": [
-      "api",
-      "code",
-      "editor",
-      "esp",
-      "helper",
-      "jinja",
-      "json",
-      "languages",
-      "liquid",
-      "nested",
-      "nunjucks",
-      "responsys",
-      "string",
-      "templating"
-    ],
-    "homepage": "https://codsen.com/os/helga",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/helga"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/helga.umd.js",
-      "default": "./dist/helga.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    }
-  },
   "html-all-known-attributes": {
     "name": "html-all-known-attributes",
     "version": "6.0.8",
@@ -4207,7 +3700,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-monkey-traverse-with-lookahead": "^4.0.17",
-      "codsen-parser": "^0.14.27",
+      "codsen-parser": "^0.14.25",
       "ranges-apply": "^7.0.18",
       "ranges-push": "^7.0.17"
     }
@@ -5368,157 +4861,6 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "p-map": "^7.0.3"
-    }
-  },
-  "lerna-link-dep": {
-    "name": "lerna-link-dep",
-    "version": "4.0.5",
-    "description": "Like lerna add but does just the symlinking, works on CLI bins too",
-    "keywords": [
-      "add",
-      "cli",
-      "command-line",
-      "dependencies",
-      "deps",
-      "devdependencies",
-      "devdeps",
-      "lerna",
-      "link",
-      "ln",
-      "ln -s",
-      "monorepo",
-      "symlink",
-      "tool",
-      "utility"
-    ],
-    "homepage": "https://codsen.com/os/lerna-link-dep",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/lerna-link-dep"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "bin": {
-      "deplink": "cli.js",
-      "johnnydepp": "cli.js",
-      "linkdep": "cli.js"
-    },
-    "scripts": {
-      "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "exit 0",
-      "devtest": "npm run test",
-      "dts": "exit 0",
-      "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js'",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "exit 0",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "exit 0",
-      "test": "c8 npm run unit && npm run lint",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=18"
-    },
-    "c8": {
-      "check-coverage": false,
-      "exclude": [
-        "**/test/**/*.*"
-      ]
-    },
-    "lect": {
-      "cliSpecialKeyword": "johnnydepp",
-      "cliSpecialKeywordInstructions": "remember the actor, DEPP as in _Johnny Dependency_ - just type his full name and surname.",
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    },
-    "dependencies": {
-      "execa": "^9.5.2",
-      "fs-extra": "^11.3.0",
-      "meow": "^13.2.0",
-      "update-notifier": "^7.3.1"
-    }
-  },
-  "line-column-mini": {
-    "name": "line-column-mini",
-    "version": "3.1.2",
-    "description": "Convert string index to line-column position",
-    "keywords": [
-      "string",
-      "index",
-      "line",
-      "column",
-      "linecol",
-      "position"
-    ],
-    "homepage": "https://codsen.com/os/line-column-mini",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/line-column-mini"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/line-column-mini.umd.js",
-      "default": "./dist/line-column-mini.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
     }
   },
   "object-all-values-equal-to": {
@@ -6766,74 +6108,6 @@ export const packageJSONData = {
       "rfdc": "^1.4.1"
     }
   },
-  "ranges-offset": {
-    "name": "ranges-offset",
-    "version": "4.0.9",
-    "description": "Increment or decrement each index in every range",
-    "keywords": [
-      "array",
-      "indexes",
-      "offset",
-      "range",
-      "ranges",
-      "string"
-    ],
-    "homepage": "https://codsen.com/os/ranges-offset",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/ranges-offset"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/ranges-offset.umd.js",
-      "default": "./dist/ranges-offset.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    }
-  },
   "ranges-process-outside": {
     "name": "ranges-process-outside",
     "version": "6.0.18",
@@ -7590,80 +6864,6 @@ export const packageJSONData = {
       "unist-util-visit": "^5.0.0"
     }
   },
-  "seo-editor": {
-    "name": "seo-editor",
-    "version": "2.0.9",
-    "description": "Copywriting keyword to-do list automation",
-    "keywords": [
-      "seo",
-      "keyword",
-      "count",
-      "counting",
-      "tool",
-      "web",
-      "app",
-      "program",
-      "long tail",
-      "markdown",
-      "editor"
-    ],
-    "homepage": "https://codsen.com/os/seo-editor",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/seo-editor"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/seo-editor.umd.js",
-      "default": "./dist/seo-editor.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "branches": 100,
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ]
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      },
-      "various": {}
-    }
-  },
   "str-indexes-of-plus": {
     "name": "str-indexes-of-plus",
     "version": "5.0.8",
@@ -7809,81 +7009,6 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.6.6",
       "ranges-apply": "^7.0.18"
-    }
-  },
-  "string-bionic-split": {
-    "name": "string-bionic-split",
-    "version": "2.0.11",
-    "description": "Calculate a word string split position index for later highlighting",
-    "keywords": [
-      "string",
-      "word",
-      "bionic",
-      "split",
-      "improved",
-      "read",
-      "reading",
-      "experience",
-      "readable",
-      "text",
-      "highlighted",
-      "fixation",
-      "point"
-    ],
-    "homepage": "https://codsen.com/os/string-bionic-split",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/string-bionic-split"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/string-bionic-split.umd.js",
-      "default": "./dist/string-bionic-split.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
     }
   },
   "string-character-is-astral-surrogate": {
@@ -8818,84 +7943,6 @@ export const packageJSONData = {
       "string-character-is-astral-surrogate": "^3.0.10"
     }
   },
-  "string-overlap-one-on-another": {
-    "name": "string-overlap-one-on-another",
-    "version": "4.0.11",
-    "description": "Lay one string on top of another, with an optional offset",
-    "keywords": [
-      "add",
-      "another",
-      "characters",
-      "compose",
-      "lay",
-      "offset",
-      "on",
-      "one",
-      "over",
-      "overlay",
-      "string",
-      "superimpose",
-      "text",
-      "top",
-      "word",
-      "words"
-    ],
-    "homepage": "https://codsen.com/os/string-overlap-one-on-another",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/string-overlap-one-on-another"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/string-overlap-one-on-another.umd.js",
-      "default": "./dist/string-overlap-one-on-another.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    }
-  },
   "string-process-comma-separated": {
     "name": "string-process-comma-separated",
     "version": "4.1.7",
@@ -9541,77 +8588,6 @@ export const packageJSONData = {
       }
     }
   },
-  "string-truncator": {
-    "name": "string-truncator",
-    "version": "2.0.20",
-    "description": "Over-engineered string truncation for web UI’s",
-    "keywords": [
-      "string",
-      "limit",
-      "len",
-      "length",
-      "truncate",
-      "truncator"
-    ],
-    "homepage": "https://codsen.com/os/string-truncator",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/string-truncator"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/string-truncator.umd.js",
-      "default": "./dist/string-truncator.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "branches": 100,
-      "check-coverage": true,
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    },
-    "dependencies": {
-      "@types/lodash-es": "^4.17.12",
-      "lodash-es": "^4.17.21",
-      "string-left-right": "^6.0.19"
-    }
-  },
   "string-uglify": {
     "name": "string-uglify",
     "version": "3.0.12",
@@ -9772,179 +8748,6 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/he": "^1.2.3"
-    }
-  },
-  "stristri": {
-    "name": "stristri",
-    "version": "5.0.27",
-    "description": "Extracts or deletes HTML, CSS, text and/or templating tags from string",
-    "keywords": [
-      "code",
-      "css",
-      "extract",
-      "html",
-      "jinja",
-      "jsp",
-      "nunjucks",
-      "qa",
-      "remove",
-      "separate",
-      "strip",
-      "tags",
-      "text"
-    ],
-    "homepage": "https://codsen.com/os/stristri",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/stristri"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/stristri.umd.js",
-      "default": "./dist/stristri.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      },
-      "various": {}
-    },
-    "dependencies": {
-      "codsen-tokenizer": "^7.0.27",
-      "detect-templating-language": "^4.0.11",
-      "ranges-apply": "^7.0.18",
-      "ranges-merge": "^9.0.17",
-      "string-collapse-white-space": "^11.0.21"
-    },
-    "devDependencies": {
-      "rfdc": "^1.4.1",
-      "test-mixer": "^4.1.16"
-    }
-  },
-  "tap-parse-string-to-object": {
-    "name": "tap-parse-string-to-object",
-    "version": "4.0.16",
-    "description": "Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object",
-    "keywords": [
-      "contents",
-      "file",
-      "object",
-      "output",
-      "parse",
-      "parser",
-      "raw",
-      "saved",
-      "string",
-      "tap",
-      "terminal",
-      "test",
-      "unit"
-    ],
-    "homepage": "https://codsen.com/os/tap-parse-string-to-object",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
-      "directory": "packages/tap-parse-string-to-object"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "default": "./dist/tap-parse-string-to-object.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish || :",
-      "lint": "eslint . --fix",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      },
-      "various": {}
-    },
-    "dependencies": {
-      "isstream": "^0.1.2",
-      "split2": "^4.2.0",
-      "through2": "^4.0.2"
-    },
-    "devDependencies": {
-      "@types/isstream": "^0.1.2",
-      "@types/split2": "^4.2.3",
-      "@types/through2": "^2.0.41",
-      "fs-extra": "^11.3.0"
     }
   },
   "test-mixer": {

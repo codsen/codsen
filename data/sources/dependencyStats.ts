@@ -24,7 +24,6 @@ export const dependencyStats: DependencyStats = {
     "ansi-regex",
     "chalk",
     "currency.js",
-    "execa",
     "fp-ts",
     "fs-extra",
     "globby",
@@ -34,11 +33,9 @@ export const dependencyStats: DependencyStats = {
     "html-entities",
     "is-d",
     "is-online",
-    "isstream",
     "json-stringify-safe",
     "leven",
     "lodash-es",
-    "log-symbols",
     "log-update",
     "matcher",
     "meow",
@@ -58,8 +55,6 @@ export const dependencyStats: DependencyStats = {
     "semver-compare",
     "sort-keys",
     "sort-package-json",
-    "split2",
-    "through2",
     "tiny-invariant",
     "type-detect",
     "unified",
@@ -81,11 +76,9 @@ export const dependencyStats: DependencyStats = {
     "ast-monkey-util",
     "check-types-mini",
     "codsen-parser",
-    "codsen-tokenizer",
     "codsen-utils",
     "csv-sort",
     "csv-split-easy",
-    "detect-templating-language",
     "edit-package-json",
     "email-all-chars-within-ascii",
     "email-comb",
@@ -94,8 +87,6 @@ export const dependencyStats: DependencyStats = {
     "html-crush",
     "html-entities-not-email-friendly",
     "is-char-suitable-for-html-attr-name",
-    "is-html-attribute-closing",
-    "is-html-tag-opening",
     "js-row-num",
     "json-comb-core",
     "lerna-clean-changelogs",
@@ -127,7 +118,6 @@ export const dependencyStats: DependencyStats = {
     "string-dashes",
     "string-extract-class-names",
     "string-find-heads-tails",
-    "string-find-malformed",
     "string-fix-broken-named-entities",
     "string-left-right",
     "string-match-left-right",
@@ -150,7 +140,7 @@ export const dependencyStats: DependencyStats = {
     "@sindresorhus/is": 1,
     "@types/hast": 2,
     "@types/json-stringify-safe": 2,
-    "@types/lodash-es": 12,
+    "@types/lodash-es": 10,
     "@types/semver-compare": 1,
     "all-named-html-entities": 2,
     "ansi-diff-stream": 1,
@@ -164,47 +154,40 @@ export const dependencyStats: DependencyStats = {
     "ast-monkey": 1,
     "ast-monkey-traverse": 9,
     "ast-monkey-traverse-with-lookahead": 1,
-    "ast-monkey-util": 2,
-    "chalk": 5,
+    "ast-monkey-util": 1,
+    "chalk": 4,
     "check-types-mini": 4,
     "codsen-parser": 1,
-    "codsen-tokenizer": 2,
-    "codsen-utils": 53,
+    "codsen-utils": 50,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
-    "detect-templating-language": 1,
     "edit-package-json": 1,
     "email-all-chars-within-ascii": 1,
     "email-comb": 1,
-    "execa": 1,
     "fp-ts": 1,
-    "fs-extra": 4,
+    "fs-extra": 3,
     "generate-atomic-css": 1,
-    "globby": 9,
+    "globby": 8,
     "grapheme-splitter": 1,
     "he": 3,
     "hex-color-regex": 1,
-    "html-all-known-attributes": 2,
+    "html-all-known-attributes": 1,
     "html-crush": 1,
     "html-entities": 1,
     "html-entities-not-email-friendly": 1,
-    "is-char-suitable-for-html-attr-name": 2,
+    "is-char-suitable-for-html-attr-name": 1,
     "is-d": 4,
-    "is-html-attribute-closing": 1,
-    "is-html-tag-opening": 1,
     "is-online": 1,
-    "isstream": 1,
     "js-row-num": 2,
     "json-comb-core": 1,
     "json-stringify-safe": 2,
     "lerna-clean-changelogs": 1,
     "leven": 2,
-    "lodash-es": 12,
-    "log-symbols": 1,
+    "lodash-es": 10,
     "log-update": 1,
     "matcher": 9,
-    "meow": 10,
+    "meow": 8,
     "minimist": 1,
     "object-all-values-equal-to": 1,
     "object-boolean-combinations": 1,
@@ -213,7 +196,7 @@ export const dependencyStats: DependencyStats = {
     "object-flatten-all-arrays": 1,
     "object-merge-advanced": 3,
     "object-no-new-keys": 1,
-    "object-path": 6,
+    "object-path": 5,
     "object-set-all-values-to": 1,
     "p-filter": 2,
     "p-map": 3,
@@ -222,11 +205,11 @@ export const dependencyStats: DependencyStats = {
     "p-reduce": 7,
     "pacote": 1,
     "plugin-error": 1,
-    "ranges-apply": 17,
+    "ranges-apply": 16,
     "ranges-crop": 2,
     "ranges-invert": 2,
     "ranges-is-index-within": 2,
-    "ranges-merge": 6,
+    "ranges-merge": 5,
     "ranges-process-outside": 1,
     "ranges-push": 13,
     "ranges-sort": 2,
@@ -236,24 +219,22 @@ export const dependencyStats: DependencyStats = {
     "regex-jinja-specific": 1,
     "rehype": 1,
     "rehype-parse": 1,
-    "rfdc": 19,
+    "rfdc": 18,
     "runes": 1,
     "semver-compare": 1,
     "sort-keys": 1,
     "sort-package-json": 1,
-    "split2": 1,
     "str-indexes-of-plus": 1,
     "string-apostrophes": 2,
     "string-character-is-astral-surrogate": 1,
     "string-collapse-leading-whitespace": 1,
-    "string-collapse-white-space": 2,
+    "string-collapse-white-space": 1,
     "string-dashes": 2,
     "string-extract-class-names": 1,
     "string-find-heads-tails": 1,
-    "string-find-malformed": 1,
     "string-fix-broken-named-entities": 1,
-    "string-left-right": 20,
-    "string-match-left-right": 9,
+    "string-left-right": 17,
+    "string-match-left-right": 8,
     "string-process-comma-separated": 1,
     "string-range-expander": 3,
     "string-remove-duplicate-heads-tails": 1,
@@ -264,12 +245,11 @@ export const dependencyStats: DependencyStats = {
     "string-uglify": 1,
     "string-unfancy": 2,
     "test-mixer": 1,
-    "through2": 1,
     "tiny-invariant": 1,
     "type-detect": 3,
     "unified": 2,
     "unist-util-visit": 2,
-    "update-notifier": 11,
+    "update-notifier": 9,
     "util-array-object-or-both": 2,
     "util-nonempty": 1,
     "write-file-atomic": 4
@@ -277,53 +257,45 @@ export const dependencyStats: DependencyStats = {
   "devDependencies": {
     "@types/he": 2,
     "@types/hex-color-regex": 1,
-    "@types/isstream": 1,
     "@types/object-path": 1,
     "@types/runes": 1,
-    "@types/split2": 1,
-    "@types/through2": 1,
     "@types/type-detect": 1,
-    "array-shuffle": 1,
-    "ast-compare": 1,
     "ast-monkey-traverse": 2,
     "color-shorthand-hex-to-six-digit": 1,
     "deep-equal": 2,
-    "fs-extra": 2,
+    "fs-extra": 1,
     "globby": 1,
     "map-stream": 1,
     "p-map": 3,
     "ranges-apply": 5,
     "ranges-invert": 1,
     "ranges-merge": 1,
-    "rfdc": 6,
+    "rfdc": 5,
     "string-find-heads-tails": 1,
     "string-strip-html": 1,
-    "test-mixer": 5,
+    "test-mixer": 4,
     "title": 1,
     "type-fest": 1,
     "vinyl-string": 1
   },
   "top10ExternalDeps": [
     {
-      "rfdc": 19
+      "rfdc": 18
     },
     {
-      "@types/lodash-es": 12
-    },
-    {
-      "lodash-es": 12
-    },
-    {
-      "update-notifier": 11
-    },
-    {
-      "meow": 10
+      "@types/lodash-es": 10
     },
     {
       "matcher": 9
     },
     {
-      "object-path": 6
+      "update-notifier": 9
+    },
+    {
+      "meow": 8
+    },
+    {
+      "object-path": 5
     },
     {
       "type-detect": 3
@@ -333,14 +305,17 @@ export const dependencyStats: DependencyStats = {
     },
     {
       "hex-color-regex": 1
+    },
+    {
+      "currency.js": 1
     }
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 53
+      "codsen-utils": 50
     },
     {
-      "ranges-apply": 17
+      "ranges-apply": 16
     },
     {
       "ast-monkey-traverse": 9
@@ -361,10 +336,10 @@ export const dependencyStats: DependencyStats = {
       "util-array-object-or-both": 2
     },
     {
-      "ast-monkey-util": 2
+      "ranges-is-index-within": 2
     },
     {
-      "ranges-is-index-within": 2
+      "ast-monkey-util": 1
     }
   ]
 };

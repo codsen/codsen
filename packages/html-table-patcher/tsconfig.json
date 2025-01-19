@@ -17,9 +17,6 @@
       "path": "../ast-monkey-traverse-with-lookahead"
     },
     {
-      "path": "../codsen-parser"
-    },
-    {
       "path": "../ranges-apply"
     },
     {

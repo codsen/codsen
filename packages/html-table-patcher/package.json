@@ -75,7 +75,7 @@
   },
   "dependencies": {
     "ast-monkey-traverse-with-lookahead": "^4.0.17",
-    "codsen-parser": "^0.14.27",
+    "codsen-parser": "^0.14.25",
     "ranges-apply": "^7.0.18",
     "ranges-push": "^7.0.17"
   }

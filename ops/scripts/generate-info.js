@@ -37,6 +37,63 @@ const packagesOutsideMonorepoObj = {
     description:
       "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline",
   },
+  "array-of-arrays-sort-by-col": {
+    description:
+      "Sort array of arrays by column, rippling the sorting outwards from that column",
+  },
+  "bitbucket-slug": {
+    description:
+      "Generate BitBucket readme header anchor slug URLs. Unofficial, covers whole ASCII and a bit beyond",
+  },
+  "codsen-parser": {
+    description: "Parser aiming at broken or mixed code, especially HTML & CSS",
+  },
+  "codsen-tokenizer": {
+    description:
+      "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages",
+  },
+  "easy-replace": {
+    description:
+      "Replace strings with optional lookarounds, but without regexes",
+  },
+  "email-homey": {
+    description:
+      "Generate homepage in the BrowserSync root with links/screenshots to all your email templates",
+  },
+  helga: {
+    description: "Your next best friend when editing complex nested code",
+  },
+  "lerna-link-dep": {
+    description:
+      "Like lerna add but does just the symlinking, works on CLI bins too",
+  },
+  "line-column-mini": {
+    description: "Convert string index to line-column position",
+  },
+  "ranges-offset": {
+    description: "Increment or decrement each index in every range",
+  },
+  "seo-editor": {
+    description: "Copywriting keyword to-do list automation",
+  },
+  "string-bionic-split": {
+    description:
+      "Calculate a word string split position index for later highlighting",
+  },
+  "string-overlap-one-on-another": {
+    description: "Lay one string on top of another, with an optional offset",
+  },
+  "string-truncator": {
+    description: "Over-engineered string truncation for web UI's",
+  },
+  stristri: {
+    description:
+      "Extracts or deletes HTML, CSS, text and/or templating tags from string",
+  },
+  "tap-parse-string-to-object": {
+    description:
+      "Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object",
+  },
 };
 
 const deprecated = [
