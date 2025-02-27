@@ -73,7 +73,7 @@
   },
   "dependencies": {
     "generate-atomic-css": "^3.0.20",
-    "globby": "^14.0.2",
+    "globby": "^14.1.0",
     "is-d": "^1.0.0",
     "meow": "^13.2.0",
     "p-reduce": "^3.0.0",

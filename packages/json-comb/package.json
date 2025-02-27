@@ -70,7 +70,7 @@
   },
   "dependencies": {
     "fs-extra": "^11.3.0",
-    "globby": "^14.0.2",
+    "globby": "^14.1.0",
     "is-d": "^1.0.0",
     "json-comb-core": "^8.0.23",
     "meow": "^13.2.0",

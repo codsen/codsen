@@ -682,7 +682,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.3",
-      "type-fest": "^4.32.0"
+      "type-fest": "^4.35.0"
     }
   },
   "ast-contains-only-empty-space": {
@@ -2177,11 +2177,11 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@inquirer/prompts": "^7.2.3",
+      "@inquirer/prompts": "^7.3.2",
       "chalk": "^5.4.1",
       "codsen-utils": "^1.6.6",
       "csv-sort": "^7.0.18",
-      "globby": "^14.0.2",
+      "globby": "^14.1.0",
       "meow": "^13.2.0",
       "update-notifier": "^7.3.1"
     }
@@ -2593,7 +2593,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ast-monkey-traverse": "^4.0.18",
-      "globby": "^14.0.2",
+      "globby": "^14.1.0",
       "p-map": "^7.0.3",
       "rfdc": "^1.4.1"
     }
@@ -2743,12 +2743,12 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@inquirer/prompts": "^7.2.3",
-      "@ljharb/through": "^2.3.13",
+      "@inquirer/prompts": "^7.3.2",
+      "@ljharb/through": "^2.3.14",
       "chalk": "^5.4.1",
       "codsen-utils": "^1.6.6",
       "email-all-chars-within-ascii": "^5.0.21",
-      "globby": "^14.0.2",
+      "globby": "^14.1.0",
       "minimist": "^1.2.8",
       "string-left-right": "^6.0.19",
       "update-notifier": "^7.3.1"
@@ -3224,7 +3224,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "generate-atomic-css": "^3.0.20",
-      "globby": "^14.0.2",
+      "globby": "^14.1.0",
       "is-d": "^1.0.0",
       "meow": "^13.2.0",
       "p-reduce": "^3.0.0",
@@ -4340,7 +4340,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "arrayiffy-if-string": "^5.0.9",
-      "globby": "^14.0.2",
+      "globby": "^14.1.0",
       "is-d": "^1.0.0",
       "js-row-num": "^7.0.18",
       "meow": "^13.2.0",
@@ -4421,7 +4421,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "fs-extra": "^11.3.0",
-      "globby": "^14.0.2",
+      "globby": "^14.1.0",
       "is-d": "^1.0.0",
       "json-comb-core": "^8.0.23",
       "meow": "^13.2.0",
@@ -4594,12 +4594,12 @@ export const packageJSONData = {
       "chalk": "^5.4.1",
       "codsen-utils": "^1.6.6",
       "fs-extra": "^11.3.0",
-      "globby": "^14.0.2",
+      "globby": "^14.1.0",
       "is-d": "^1.0.0",
       "meow": "^13.2.0",
       "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
-      "sort-package-json": "^2.14.0",
+      "sort-package-json": "^2.15.0",
       "update-notifier": "^7.3.1"
     },
     "devDependencies": {
@@ -4851,7 +4851,7 @@ export const packageJSONData = {
     "dependencies": {
       "chalk": "^5.4.1",
       "fs-extra": "^11.3.0",
-      "globby": "^14.0.2",
+      "globby": "^14.1.0",
       "lerna-clean-changelogs": "^5.0.16",
       "meow": "^13.2.0",
       "p-filter": "^4.1.0",
@@ -8984,7 +8984,7 @@ export const packageJSONData = {
       "ansi-diff-stream": "^1.2.1",
       "codsen-utils": "^1.6.6",
       "edit-package-json": "^0.8.24",
-      "globby": "^14.0.2",
+      "globby": "^14.1.0",
       "is-online": "^11.0.0",
       "log-update": "^6.1.0",
       "meow": "^13.2.0",

@@ -78,7 +78,7 @@
   },
   "devDependencies": {
     "ast-monkey-traverse": "^4.0.18",
-    "globby": "^14.0.2",
+    "globby": "^14.1.0",
     "p-map": "^7.0.3",
     "rfdc": "^1.4.1"
   }
