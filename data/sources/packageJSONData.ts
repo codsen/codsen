@@ -13,7 +13,7 @@ export const packageJSONData = {
   },
   "remark-conventional-commit-changelog-timeline": {
     "name": "remark-conventional-commit-changelog-timeline",
-    "version": "3.1.14",
+    "version": "3.1.15",
     "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
     "keywords": [
       "unified",
@@ -81,7 +81,7 @@ export const packageJSONData = {
     "dependencies": {
       "@types/hast": "^3.0.4",
       "hast-util-raw": "^9.1.0",
-      "object-delete-key": "^4.0.27",
+      "object-delete-key": "^4.0.28",
       "semver-regex": "^4.0.5",
       "unified": "^11.0.5",
       "unist-builder": "^4.0.0",
@@ -598,7 +598,7 @@ export const packageJSONData = {
   },
   "ast-compare": {
     "name": "ast-compare",
-    "version": "4.0.28",
+    "version": "4.0.29",
     "description": "Compare anything: AST, objects, arrays, strings and nested thereof",
     "keywords": [
       "array",
@@ -862,7 +862,7 @@ export const packageJSONData = {
   },
   "ast-delete-object": {
     "name": "ast-delete-object",
-    "version": "4.0.27",
+    "version": "4.0.28",
     "description": "Delete all plain objects in AST if they contain a certain key/value pair",
     "keywords": [
       "ast",
@@ -941,7 +941,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-compare": "^4.0.28",
+      "ast-compare": "^4.0.29",
       "ast-monkey-traverse": "^4.0.18",
       "codsen-utils": "^1.6.6",
       "rfdc": "^1.4.1"
@@ -949,7 +949,7 @@ export const packageJSONData = {
   },
   "ast-get-object": {
     "name": "ast-get-object",
-    "version": "4.0.27",
+    "version": "4.0.28",
     "description": "Getter/setter for nested parsed HTML AST’s, querying objects by key/value pairs",
     "keywords": [
       "ast",
@@ -1029,7 +1029,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "ast-compare": "^4.0.28",
+      "ast-compare": "^4.0.29",
       "codsen-utils": "^1.6.6",
       "rfdc": "^1.4.1"
     }
@@ -1294,7 +1294,7 @@ export const packageJSONData = {
   },
   "ast-monkey": {
     "name": "ast-monkey",
-    "version": "9.0.27",
+    "version": "9.0.28",
     "description": "Traverse and edit AST",
     "keywords": [
       "ast",
@@ -1375,7 +1375,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-compare": "^4.0.28",
+      "ast-compare": "^4.0.29",
       "ast-monkey-traverse": "^4.0.18",
       "check-types-mini": "^8.0.21",
       "codsen-utils": "^1.6.6",
@@ -2105,7 +2105,7 @@ export const packageJSONData = {
   },
   "csv-sort-cli": {
     "name": "csv-sort-cli",
-    "version": "4.0.7",
+    "version": "4.0.8",
     "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
     "keywords": [
       "accountancy",
@@ -2515,7 +2515,7 @@ export const packageJSONData = {
   },
   "edit-package-json": {
     "name": "edit-package-json",
-    "version": "0.8.24",
+    "version": "0.8.25",
     "description": "Edit package.json without parsing, as string, to keep the formatting intact",
     "keywords": [
       "changes",
@@ -2674,7 +2674,7 @@ export const packageJSONData = {
   },
   "email-all-chars-within-ascii-cli": {
     "name": "email-all-chars-within-ascii-cli",
-    "version": "4.0.7",
+    "version": "4.0.8",
     "description": "Command line app to scan email templates, are all their characters within ASCII range",
     "keywords": [
       "7bit",
@@ -2756,7 +2756,7 @@ export const packageJSONData = {
   },
   "email-comb": {
     "name": "email-comb",
-    "version": "7.0.23",
+    "version": "7.0.24",
     "description": "Remove unused CSS from email templates",
     "keywords": [
       "body",
@@ -2842,7 +2842,7 @@ export const packageJSONData = {
   },
   "eslint-plugin-row-num": {
     "name": "eslint-plugin-row-num-tbc",
-    "version": "4.0.27",
+    "version": "4.0.28",
     "description": "ESLint plugin to update row numbers on each console.log",
     "keywords": [
       "console",
@@ -2913,12 +2913,12 @@ export const packageJSONData = {
       "@types/json-stringify-safe": "^5.0.3",
       "js-row-num": "^7.0.18",
       "json-stringify-safe": "^5.0.1",
-      "object-delete-key": "^4.0.27"
+      "object-delete-key": "^4.0.28"
     }
   },
   "eslint-plugin-test-num": {
     "name": "eslint-plugin-test-num-tbc",
-    "version": "3.0.28",
+    "version": "3.0.29",
     "description": "ESLint plugin to update unit test numbers automatically",
     "keywords": [
       "automatically",
@@ -2991,7 +2991,7 @@ export const packageJSONData = {
     "dependencies": {
       "@types/json-stringify-safe": "^5.0.3",
       "json-stringify-safe": "^5.0.1",
-      "object-delete-key": "^4.0.27",
+      "object-delete-key": "^4.0.28",
       "object-path": "^0.11.8",
       "string-left-right": "^6.0.19"
     }
@@ -3151,7 +3151,7 @@ export const packageJSONData = {
   },
   "generate-atomic-css-cli": {
     "name": "generate-atomic-css-cli",
-    "version": "4.0.5",
+    "version": "4.0.6",
     "description": "Generates and updates all HTML templates’ atomic CSS",
     "keywords": [
       "atomic",
@@ -3234,7 +3234,7 @@ export const packageJSONData = {
   },
   "gulp-email-remove-unused-css": {
     "name": "gulp-email-remove-unused-css",
-    "version": "6.0.4",
+    "version": "6.0.5",
     "description": "Gulp plugin to remove unused CSS classes/id’s from styles in HTML HEAD and inline within BODY",
     "keywords": [
       "body",
@@ -3300,7 +3300,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "email-comb": "^7.0.23",
+      "email-comb": "^7.0.24",
       "plugin-error": "^2.0.1"
     },
     "devDependencies": {
@@ -4267,7 +4267,7 @@ export const packageJSONData = {
   },
   "js-row-num-cli": {
     "name": "js-row-num-cli",
-    "version": "4.0.5",
+    "version": "4.0.6",
     "description": "Update all row numbers in all console.logs in given files",
     "keywords": [
       "automated",
@@ -4351,7 +4351,7 @@ export const packageJSONData = {
   },
   "json-comb": {
     "name": "json-comb",
-    "version": "0.9.7",
+    "version": "0.9.8",
     "description": "Command line app to manage sets of JSON files",
     "keywords": [
       "app",
@@ -4523,7 +4523,7 @@ export const packageJSONData = {
   },
   "json-sort-cli": {
     "name": "json-sort-cli",
-    "version": "4.0.7",
+    "version": "4.0.8",
     "description": "Command line app to deep sort JSON files, retains package.json special key order",
     "keywords": [
       "app",
@@ -4778,7 +4778,7 @@ export const packageJSONData = {
   },
   "lerna-clean-changelogs-cli": {
     "name": "lerna-clean-changelogs-cli",
-    "version": "4.0.7",
+    "version": "4.0.8",
     "description": "CLI application to cleanse the lerna/commitizen-generated changelogs",
     "keywords": [
       "changelog",
@@ -5016,7 +5016,7 @@ export const packageJSONData = {
   },
   "object-delete-key": {
     "name": "object-delete-key",
-    "version": "4.0.27",
+    "version": "4.0.28",
     "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
     "keywords": [
       "ast",
@@ -5093,7 +5093,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-is-empty": "^4.0.17",
-      "ast-monkey": "^9.0.27",
+      "ast-monkey": "^9.0.28",
       "rfdc": "^1.4.1",
       "util-array-object-or-both": "^5.0.13"
     }
@@ -8906,7 +8906,7 @@ export const packageJSONData = {
   },
   "update-versions": {
     "name": "update-versions",
-    "version": "7.0.7",
+    "version": "7.0.8",
     "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
     "keywords": [
       "app",
@@ -8983,7 +8983,7 @@ export const packageJSONData = {
     "dependencies": {
       "ansi-diff-stream": "^1.2.1",
       "codsen-utils": "^1.6.6",
-      "edit-package-json": "^0.8.24",
+      "edit-package-json": "^0.8.25",
       "globby": "^14.1.0",
       "is-online": "^11.0.0",
       "log-update": "^6.1.0",
