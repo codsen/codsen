@@ -1,6 +1,6 @@
 {
   "name": "generate-atomic-css-cli",
-  "version": "4.0.5",
+  "version": "4.0.6",
   "description": "Generates and updates all HTML templates' atomic CSS",
   "keywords": [
     "atomic",

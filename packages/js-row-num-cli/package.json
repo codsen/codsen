@@ -1,6 +1,6 @@
 {
   "name": "js-row-num-cli",
-  "version": "4.0.5",
+  "version": "4.0.6",
   "description": "Update all row numbers in all console.logs in given files",
   "keywords": [
     "automated",
