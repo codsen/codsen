@@ -773,7 +773,7 @@ x
 
   let intended = `<head>
 <style>
-.a, li  {}
+.a, li{}
 </style>
 </head>
 <body class="a">
@@ -799,7 +799,7 @@ x
 
   let intended = `<head>
 <style>
-p, li  {}
+p, li{}
 </style>
 </head>
 <body>
@@ -825,7 +825,7 @@ x
 
   let intended = `<head>
 <style>
-.a, li  {}
+.a, li{}
 </style>
 </head>
 <body class="a">
@@ -935,9 +935,7 @@ http://*
 
 </html>
 `,
-    {
-      uglify: false,
-    },
+    { uglify: false },
   );
 
   let intended = `<html>
@@ -983,9 +981,7 @@ http://*
 
 </html>
 `,
-    {
-      uglify: true,
-    },
+    { uglify: true },
   );
 
   let intended = `<html>
@@ -1008,6 +1004,37 @@ http://*
 `;
 
   equal(actual.result, intended, "32.01");
+});
+
+test("33 - #102 trailing comma - no uglify", () => {
+  let actual = comb(
+    `<head>
+<style>
+.foo,
+.bar div,
+.baz{
+color:red;
+}
+</style>
+</head>
+<body>
+<div class="foo">test</div>
+</body>`,
+    { uglify: false },
+  );
+
+  let intended = `<head>
+<style>
+.foo{
+color:red;
+}
+</style>
+</head>
+<body>
+<div class="foo">test</div>
+</body>`;
+
+  equal(actual.result, intended, "33.01");
 });
 
 test.run();

@@ -104,19 +104,13 @@ test(`02 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - ignores`, () => {
   equal(comb(source, { uglify: true }).result, baselineUglified, "02.02");
 
   equal(
-    comb(source, {
-      uglify: false,
-      whitelist: ".zzz*",
-    }).result,
+    comb(source, { uglify: false, whitelist: ".zzz*" }).result,
     ignores,
     "02.03",
   );
 
   equal(
-    comb(source, {
-      uglify: true,
-      whitelist: ".zzz*",
-    }).result,
+    comb(source, { uglify: true, whitelist: ".zzz*" }).result,
     ignoresUglified,
     "02.04",
   );
@@ -281,20 +275,8 @@ test(`04 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - style tag within Outlook
 <a class="e">
 `;
 
-  equal(
-    comb(source, {
-      uglify: false,
-    }).result,
-    intended,
-    "04.01",
-  );
-  equal(
-    comb(source, {
-      uglify: true,
-    }).result,
-    uglified,
-    "04.02",
-  );
+  equal(comb(source, { uglify: false }).result, intended, "04.01");
+  equal(comb(source, { uglify: true }).result, uglified, "04.02");
 });
 
 test(`05 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - style tag within Outlook conditionals, unused CSS`, () => {
@@ -345,34 +327,16 @@ test(`05 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - style tag within Outlook
 <body id="outlook"><a>
 `;
 
-  equal(
-    comb(source, {
-      uglify: false,
-    }).result,
-    intended,
-    "05.01",
-  );
-  equal(
-    comb(source, {
-      uglify: true,
-    }).result,
-    uglified,
-    "05.02",
-  );
+  equal(comb(source, { uglify: false }).result, intended, "05.01");
+  equal(comb(source, { uglify: true }).result, uglified, "05.02");
   // now ignores are set, so deletion is prevented:
   equal(
-    comb(source, {
-      uglify: false,
-      whitelist: ["#outlook", ".myclass"],
-    }).result,
+    comb(source, { uglify: false, whitelist: ["#outlook", ".myclass"] }).result,
     ignored,
     "05.03",
   );
   equal(
-    comb(source, {
-      uglify: true,
-      whitelist: ["#outlook", ".myclass"],
-    }).result,
+    comb(source, { uglify: true, whitelist: ["#outlook", ".myclass"] }).result,
     ignored,
     "05.04",
   );
@@ -388,18 +352,12 @@ test(`06 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - ignores on used id's`, (
 <body id="mn"><a>
 `;
   equal(
-    comb(source, {
-      uglify: true,
-      whitelist: ["#mn", ".op"],
-    }).result,
+    comb(source, { uglify: true, whitelist: ["#mn", ".op"] }).result,
     source,
     "06.01",
   );
   equal(
-    comb(source, {
-      uglify: true,
-      whitelist: ["#mn"],
-    }).result,
+    comb(source, { uglify: true, whitelist: ["#mn"] }).result,
     source,
     "06.02",
   );
@@ -415,18 +373,12 @@ test(`07 - ${`\u001b[${31}m${"uglify"}\u001b[${39}m`} - ignores on used classes`
 <body class="mn"><a>
 `;
   equal(
-    comb(source, {
-      uglify: true,
-      whitelist: [".mn", ".op"],
-    }).result,
+    comb(source, { uglify: true, whitelist: [".mn", ".op"] }).result,
     source,
     "07.01",
   );
   equal(
-    comb(source, {
-      uglify: true,
-      whitelist: [".mn"],
-    }).result,
+    comb(source, { uglify: true, whitelist: [".mn"] }).result,
     source,
     "07.02",
   );
