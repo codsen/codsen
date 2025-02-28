@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [7.0.24](https://github.com/codsen/codsen/compare/email-comb@7.0.23...email-comb@7.0.24) (2025-02-28)
+## 7.0.24 (2025-02-28)
 
 ### Bug Fixes
 
