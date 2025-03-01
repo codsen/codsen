@@ -29,7 +29,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/remark-conventional-commit-changelog-timeline",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/remark-conventional-commit-changelog-timeline"
     },
     "license": "MIT",
@@ -155,7 +155,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/all-named-html-entities",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages-external/all-named-html-entities"
     },
     "license": "MIT",
@@ -228,7 +228,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/array-group-str-omit-num-char",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/array-group-str-omit-num-char"
     },
     "license": "MIT",
@@ -308,7 +308,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/array-includes-with-glob",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/array-includes-with-glob"
     },
     "license": "MIT",
@@ -383,7 +383,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/array-of-arrays-into-ast",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/array-of-arrays-into-ast"
     },
     "license": "MIT",
@@ -464,7 +464,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/array-pull-all-with-glob",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/array-pull-all-with-glob"
     },
     "license": "MIT",
@@ -542,7 +542,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/arrayiffy-if-string",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/arrayiffy-if-string"
     },
     "license": "MIT",
@@ -622,7 +622,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ast-compare",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ast-compare"
     },
     "license": "MIT",
@@ -708,7 +708,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ast-contains-only-empty-space",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ast-contains-only-empty-space"
     },
     "license": "MIT",
@@ -798,7 +798,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ast-deep-contains",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ast-deep-contains"
     },
     "license": "MIT",
@@ -888,7 +888,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ast-delete-object",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ast-delete-object"
     },
     "license": "MIT",
@@ -975,7 +975,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ast-get-object",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ast-get-object"
     },
     "license": "MIT",
@@ -1063,7 +1063,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ast-get-values-by-key",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ast-get-values-by-key"
     },
     "license": "MIT",
@@ -1151,7 +1151,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ast-is-empty",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ast-is-empty"
     },
     "license": "MIT",
@@ -1235,7 +1235,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ast-loose-compare",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ast-loose-compare"
     },
     "license": "MIT",
@@ -1322,7 +1322,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ast-monkey",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ast-monkey"
     },
     "license": "MIT",
@@ -1412,7 +1412,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ast-monkey-traverse",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ast-monkey-traverse"
     },
     "license": "MIT",
@@ -1504,7 +1504,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ast-monkey-traverse-with-lookahead",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ast-monkey-traverse-with-lookahead"
     },
     "license": "MIT",
@@ -1587,7 +1587,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ast-monkey-util",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ast-monkey-util"
     },
     "license": "MIT",
@@ -1664,7 +1664,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/charcode-is-valid-xml-name-character",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/charcode-is-valid-xml-name-character"
     },
     "license": "MIT",
@@ -1741,7 +1741,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/check-types-mini",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/check-types-mini"
     },
     "license": "MIT",
@@ -1813,7 +1813,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/codsen",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/codsen"
     },
     "license": "MIT",
@@ -1878,7 +1878,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/codsen-utils",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/codsen-utils"
     },
     "license": "MIT",
@@ -1958,7 +1958,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/color-shorthand-hex-to-six-digit",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/color-shorthand-hex-to-six-digit"
     },
     "license": "MIT",
@@ -2043,7 +2043,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/csv-sort",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/csv-sort"
     },
     "license": "MIT",
@@ -2127,7 +2127,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/csv-sort-cli",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/csv-sort-cli"
     },
     "license": "MIT",
@@ -2209,7 +2209,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/csv-split-easy",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/csv-split-easy"
     },
     "license": "MIT",
@@ -2288,7 +2288,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/detect-is-it-html-or-xhtml",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/detect-is-it-html-or-xhtml"
     },
     "license": "MIT",
@@ -2356,7 +2356,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/detect-templating-language",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/detect-templating-language"
     },
     "license": "MIT",
@@ -2435,7 +2435,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/detergent",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/detergent"
     },
     "license": "MIT",
@@ -2533,7 +2533,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/edit-package-json",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/edit-package-json"
     },
     "license": "MIT",
@@ -2616,7 +2616,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/email-all-chars-within-ascii",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/email-all-chars-within-ascii"
     },
     "license": "MIT",
@@ -2690,7 +2690,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/email-all-chars-within-ascii-cli",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/email-all-chars-within-ascii-cli"
     },
     "license": "MIT",
@@ -2773,7 +2773,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/email-comb",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/email-comb"
     },
     "license": "MIT",
@@ -2860,7 +2860,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/eslint-plugin-row-num",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/eslint-plugin-row-num-tbc"
     },
     "license": "MIT",
@@ -2939,7 +2939,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/eslint-plugin-test-num",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/eslint-plugin-test-num-tbc"
     },
     "license": "MIT",
@@ -3016,7 +3016,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/extract-search-index",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/extract-search-index"
     },
     "license": "MIT",
@@ -3092,7 +3092,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/generate-atomic-css",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/generate-atomic-css"
     },
     "license": "MIT",
@@ -3173,7 +3173,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/generate-atomic-css-cli",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/generate-atomic-css-cli"
     },
     "license": "MIT",
@@ -3253,7 +3253,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/gulp-email-remove-unused-css",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/gulp-email-remove-unused-css"
     },
     "license": "MIT",
@@ -3325,7 +3325,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/html-all-known-attributes",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/html-all-known-attributes"
     },
     "license": "MIT",
@@ -3407,7 +3407,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/html-crush",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/html-crush"
     },
     "license": "MIT",
@@ -3486,7 +3486,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/html-entities-not-email-friendly",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/html-entities-not-email-friendly"
     },
     "license": "MIT",
@@ -3564,7 +3564,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/html-img-alt",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/html-img-alt"
     },
     "license": "MIT",
@@ -3646,7 +3646,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/html-table-patcher",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/html-table-patcher"
     },
     "license": "MIT",
@@ -3729,7 +3729,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/is-char-suitable-for-html-attr-name",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/is-char-suitable-for-html-attr-name"
     },
     "license": "MIT",
@@ -3805,7 +3805,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/is-html-attribute-closing",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/is-html-attribute-closing"
     },
     "license": "MIT",
@@ -3887,7 +3887,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/is-html-tag-opening",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/is-html-tag-opening"
     },
     "license": "MIT",
@@ -3972,7 +3972,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/is-language-code",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/is-language-code"
     },
     "license": "MIT",
@@ -4051,7 +4051,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/is-media-descriptor",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/is-media-descriptor"
     },
     "license": "MIT",
@@ -4128,7 +4128,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/is-relative-uri",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/is-relative-uri"
     },
     "license": "MIT",
@@ -4207,7 +4207,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/js-row-num",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/js-row-num"
     },
     "license": "MIT",
@@ -4289,7 +4289,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/js-row-num-cli",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/js-row-num-cli"
     },
     "license": "MIT",
@@ -4371,7 +4371,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/json-comb",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/json-comb"
     },
     "license": "MIT",
@@ -4449,7 +4449,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/json-comb-core",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/json-comb-core"
     },
     "license": "MIT",
@@ -4540,7 +4540,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/json-sort-cli",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/json-sort-cli"
     },
     "license": "MIT",
@@ -4632,7 +4632,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/json-variables",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/json-variables"
     },
     "license": "MIT",
@@ -4720,7 +4720,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/lerna-clean-changelogs",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/lerna-clean-changelogs"
     },
     "license": "MIT",
@@ -4797,7 +4797,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/lerna-clean-changelogs-cli",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/lerna-clean-changelogs-cli"
     },
     "license": "MIT",
@@ -4883,7 +4883,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/object-all-values-equal-to",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/object-all-values-equal-to"
     },
     "license": "MIT",
@@ -4961,7 +4961,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/object-boolean-combinations",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/object-boolean-combinations"
     },
     "license": "MIT",
@@ -5039,7 +5039,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/object-delete-key",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/object-delete-key"
     },
     "license": "MIT",
@@ -5121,7 +5121,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/object-fill-missing-keys",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/object-fill-missing-keys"
     },
     "license": "MIT",
@@ -5201,7 +5201,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/object-flatten-all-arrays",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/object-flatten-all-arrays"
     },
     "license": "MIT",
@@ -5279,7 +5279,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/object-flatten-referencing",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/object-flatten-referencing"
     },
     "license": "MIT",
@@ -5361,7 +5361,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/object-merge-advanced",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/object-merge-advanced"
     },
     "license": "MIT",
@@ -5446,7 +5446,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/object-no-new-keys",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/object-no-new-keys"
     },
     "license": "MIT",
@@ -5522,7 +5522,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/object-set-all-values-to",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/object-set-all-values-to"
     },
     "license": "MIT",
@@ -5598,7 +5598,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ranges-apply",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ranges-apply"
     },
     "license": "MIT",
@@ -5673,7 +5673,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ranges-crop",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ranges-crop"
     },
     "license": "MIT",
@@ -5753,7 +5753,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ranges-ent-decode",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ranges-ent-decode"
     },
     "license": "MIT",
@@ -5829,7 +5829,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ranges-invert",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ranges-invert"
     },
     "license": "MIT",
@@ -5900,7 +5900,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ranges-is-index-within",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ranges-is-index-within"
     },
     "license": "MIT",
@@ -5972,7 +5972,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ranges-iterate",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ranges-iterate"
     },
     "license": "MIT",
@@ -6048,7 +6048,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ranges-merge",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ranges-merge"
     },
     "license": "MIT",
@@ -6122,7 +6122,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ranges-process-outside",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ranges-process-outside"
     },
     "license": "MIT",
@@ -6202,7 +6202,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ranges-push",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ranges-push"
     },
     "license": "MIT",
@@ -6283,7 +6283,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ranges-regex",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ranges-regex"
     },
     "license": "MIT",
@@ -6358,7 +6358,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/ranges-sort",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/ranges-sort"
     },
     "license": "MIT",
@@ -6432,7 +6432,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/regex-empty-conditional-comments",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/regex-empty-conditional-comments"
     },
     "license": "MIT",
@@ -6506,7 +6506,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/regex-is-jinja-nunjucks",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/regex-is-jinja-nunjucks"
     },
     "license": "MIT",
@@ -6582,7 +6582,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/regex-is-jsp",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/regex-is-jsp"
     },
     "license": "MIT",
@@ -6656,7 +6656,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/regex-jinja-specific",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/regex-jinja-specific"
     },
     "license": "MIT",
@@ -6725,7 +6725,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/rehype-responsive-tables",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/rehype-responsive-tables"
     },
     "license": "MIT",
@@ -6804,7 +6804,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/remark-typography",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/remark-typography"
     },
     "license": "MIT",
@@ -6883,7 +6883,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/str-indexes-of-plus",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/str-indexes-of-plus"
     },
     "license": "MIT",
@@ -6954,7 +6954,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-apostrophes",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-apostrophes"
     },
     "license": "MIT",
@@ -7034,7 +7034,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-character-is-astral-surrogate",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-character-is-astral-surrogate"
     },
     "license": "MIT",
@@ -7110,7 +7110,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-collapse-leading-whitespace",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-collapse-leading-whitespace"
     },
     "license": "MIT",
@@ -7181,7 +7181,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-collapse-white-space",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-collapse-white-space"
     },
     "license": "MIT",
@@ -7260,7 +7260,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-convert-indexes",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-convert-indexes"
     },
     "license": "MIT",
@@ -7338,7 +7338,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-dashes",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-dashes"
     },
     "license": "MIT",
@@ -7414,7 +7414,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-extract-class-names",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-extract-class-names"
     },
     "license": "MIT",
@@ -7491,7 +7491,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-extract-sass-vars",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-extract-sass-vars"
     },
     "license": "MIT",
@@ -7568,7 +7568,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-find-heads-tails",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-find-heads-tails"
     },
     "license": "MIT",
@@ -7648,7 +7648,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-find-malformed",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-find-malformed"
     },
     "license": "MIT",
@@ -7728,7 +7728,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-fix-broken-named-entities",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-fix-broken-named-entities"
     },
     "license": "MIT",
@@ -7811,7 +7811,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-left-right",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-left-right"
     },
     "license": "MIT",
@@ -7885,7 +7885,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-match-left-right",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-match-left-right"
     },
     "license": "MIT",
@@ -7962,7 +7962,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-process-comma-separated",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-process-comma-separated"
     },
     "license": "MIT",
@@ -8036,7 +8036,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-range-expander",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-range-expander"
     },
     "license": "MIT",
@@ -8116,7 +8116,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-remove-duplicate-heads-tails",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-remove-duplicate-heads-tails"
     },
     "license": "MIT",
@@ -8197,7 +8197,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-remove-thousand-separators",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-remove-thousand-separators"
     },
     "license": "MIT",
@@ -8280,7 +8280,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-remove-widows",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-remove-widows"
     },
     "license": "MIT",
@@ -8366,7 +8366,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-split-by-whitespace",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-split-by-whitespace"
     },
     "license": "MIT",
@@ -8449,7 +8449,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-strip-html",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-strip-html"
     },
     "license": "MIT",
@@ -8535,7 +8535,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-trim-spaces-only",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-trim-spaces-only"
     },
     "license": "MIT",
@@ -8613,7 +8613,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-uglify",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-uglify"
     },
     "license": "MIT",
@@ -8690,7 +8690,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/string-unfancy",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/string-unfancy"
     },
     "license": "MIT",
@@ -8767,7 +8767,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/test-mixer",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/test-mixer"
     },
     "license": "MIT",
@@ -8848,7 +8848,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/tsd-extract",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/tsd-extract"
     },
     "license": "MIT",
@@ -8932,7 +8932,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/update-versions",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/update-versions"
     },
     "license": "MIT",
@@ -9019,7 +9019,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/util-array-object-or-both",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/util-array-object-or-both"
     },
     "license": "MIT",
@@ -9093,7 +9093,7 @@ export const packageJSONData = {
     "homepage": "https://codsen.com/os/util-nonempty",
     "repository": {
       "type": "git",
-      "url": "https://github.com/codsen/codsen.git",
+      "url": "git+https://github.com/codsen/codsen.git",
       "directory": "packages/util-nonempty"
     },
     "license": "MIT",
