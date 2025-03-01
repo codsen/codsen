@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.0.12](https://github.com/codsen/codsen/compare/string-trim-spaces-only@5.0.11...string-trim-spaces-only@5.0.12) (2025-03-01)
-
-**Note:** Version bump only for package string-trim-spaces-only
-
 ## 5.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
