@@ -19,7 +19,7 @@
     "ci:generate:changelogs": "lernacleanchangelog '**' --extras && node ./ops/scripts/generate-changelogs.js",
     "ci:generate:info": "node ./ops/scripts/generate-info.js",
     "ci:lerna:version": "lerna version --no-push --conventional-commits --no-commit-hooks --yes && lernacleanchangelog '**' --extras",
-    "ci:publish:all": "turbo run letspublish --no-cache",
+    "ci:publish:all": "turbo run letspublish --cache=local:r,remote:r",
     "cjs-off": "turbo run cjs-off",
     "cjs-on": "turbo run cjs-on",
     "cm": "git-cz -n",
