@@ -15,7 +15,7 @@
   "homepage": "https://codsen.com/os/html-all-known-attributes",
   "repository": {
     "type": "git",
-    "url": "https://github.com/codsen/codsen.git",
+    "url": "git+https://github.com/codsen/codsen.git",
     "directory": "packages/html-all-known-attributes"
   },
   "license": "MIT",

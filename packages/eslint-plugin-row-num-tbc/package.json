@@ -18,7 +18,7 @@
   "homepage": "https://codsen.com/os/eslint-plugin-row-num",
   "repository": {
     "type": "git",
-    "url": "https://github.com/codsen/codsen.git",
+    "url": "git+https://github.com/codsen/codsen.git",
     "directory": "packages/eslint-plugin-row-num-tbc"
   },
   "license": "MIT",

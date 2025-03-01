@@ -12,7 +12,7 @@
   "homepage": "https://codsen.com/os/ranges-process-outside",
   "repository": {
     "type": "git",
-    "url": "https://github.com/codsen/codsen.git",
+    "url": "git+https://github.com/codsen/codsen.git",
     "directory": "packages/ranges-process-outside"
   },
   "license": "MIT",

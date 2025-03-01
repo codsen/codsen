@@ -29,7 +29,7 @@
   "homepage": "https://codsen.com/os/ast-monkey-traverse-with-lookahead",
   "repository": {
     "type": "git",
-    "url": "https://github.com/codsen/codsen.git",
+    "url": "git+https://github.com/codsen/codsen.git",
     "directory": "packages/ast-monkey-traverse-with-lookahead"
   },
   "license": "MIT",

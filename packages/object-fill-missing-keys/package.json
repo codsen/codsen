@@ -21,7 +21,7 @@
   "homepage": "https://codsen.com/os/object-fill-missing-keys",
   "repository": {
     "type": "git",
-    "url": "https://github.com/codsen/codsen.git",
+    "url": "git+https://github.com/codsen/codsen.git",
     "directory": "packages/object-fill-missing-keys"
   },
   "license": "MIT",

@@ -15,7 +15,7 @@
   "homepage": "https://codsen.com/os/string-match-left-right",
   "repository": {
     "type": "git",
-    "url": "https://github.com/codsen/codsen.git",
+    "url": "git+https://github.com/codsen/codsen.git",
     "directory": "packages/string-match-left-right"
   },
   "license": "MIT",

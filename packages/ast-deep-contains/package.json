@@ -32,7 +32,7 @@
   "homepage": "https://codsen.com/os/ast-deep-contains",
   "repository": {
     "type": "git",
-    "url": "https://github.com/codsen/codsen.git",
+    "url": "git+https://github.com/codsen/codsen.git",
     "directory": "packages/ast-deep-contains"
   },
   "license": "MIT",
