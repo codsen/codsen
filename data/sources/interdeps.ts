@@ -27,7 +27,7 @@ export const interdeps = [
   },
   {
     "name": "arrayiffy-if-string",
-    "size": 353,
+    "size": 354,
     "imports": []
   },
   {
@@ -119,7 +119,7 @@ export const interdeps = [
   },
   {
     "name": "ast-monkey-util",
-    "size": 1053,
+    "size": 1055,
     "imports": []
   },
   {
@@ -311,7 +311,7 @@ export const interdeps = [
   },
   {
     "name": "html-entities-not-email-friendly",
-    "size": 65838,
+    "size": 65839,
     "imports": []
   },
   {
