@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.17](https://github.com/codsen/codsen/compare/rehype-responsive-tables@2.0.16...rehype-responsive-tables@2.0.17) (2025-03-01)
+
+**Note:** Version bump only for package rehype-responsive-tables
+
 ## 2.0.0 (2022-12-01)
 
 ### Features

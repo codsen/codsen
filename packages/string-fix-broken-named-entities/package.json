@@ -1,6 +1,6 @@
 {
   "name": "string-fix-broken-named-entities",
-  "version": "7.0.19",
+  "version": "7.0.20",
   "description": "Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes",
   "keywords": [
     "broken",
@@ -75,10 +75,10 @@
     "various": {}
   },
   "dependencies": {
-    "all-named-html-entities": "^3.0.10",
-    "codsen-utils": "^1.6.6",
+    "all-named-html-entities": "^3.0.11",
+    "codsen-utils": "^1.6.7",
     "leven": "^4.0.0",
     "rfdc": "^1.4.1",
-    "string-left-right": "^6.0.19"
+    "string-left-right": "^6.0.20"
   }
 }

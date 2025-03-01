@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.18](https://github.com/codsen/codsen/compare/ranges-push@7.0.17...ranges-push@7.0.18) (2025-03-01)
+
+**Note:** Version bump only for package ranges-push
+
 ## 7.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
