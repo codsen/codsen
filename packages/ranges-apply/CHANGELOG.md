@@ -106,7 +106,6 @@ Accidental version bump during migration to SourceHut. Sorry about that.
 
 - Added third argument, `progressFn` — it reports progress, feeding natural numbers meaning percentage done to any function that is in the third input argument.
 - Pinned all the throws on all unit tests. "Pinning unit test throws" means we not just assert the fact that function threw, but match the throw's error message too. This gives more assurance:
-
   1. When there are many cases when an algorithm can throw and generic "function threw" assertion is used, a unit test can anticipate one throw to be thrown but another was thrown. Generic "function threw" assertions would still pass, throw is throw after all. But not pinned throws:
   2. It's easier to sort unit tests this way (order by throw ID) in a test file
   3. It's easier to perfect the unit test coverage when throws can be easier identified.

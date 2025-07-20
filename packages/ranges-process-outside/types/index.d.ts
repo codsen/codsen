@@ -15,4 +15,5 @@ declare function rProcessOutside(
   skipChecks?: boolean,
 ): void;
 
-export { type Callback, type OffsetValueCb, rProcessOutside, version };
+export { rProcessOutside, version };
+export type { Callback, OffsetValueCb };

@@ -13,4 +13,5 @@ interface Result {
  */
 declare function extract(str: string): Result;
 
-export { type Result, extract, version };
+export { extract, version };
+export type { Result };

@@ -177,7 +177,6 @@ Accidental version bump during migration to SourceHut. Sorry about that.
 - Rewrote a lot of code, relieving us from all `lodash` dependencies.
 - `opts.trimCharsBeforeMatching` must be a string of single character or an array of single characters. Previously merged string of characters was accepted but now it's not accepted.
 - Callback `cb` now returns three arguments:
-
   1. `char` - the character just outside of the matched substring (as previously)
   2. `theRemainderOfTheString` - whole string outside of the matched substring (as previously)
   3. `index` - NEW - the index of the `char`.

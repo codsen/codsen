@@ -12,4 +12,5 @@ declare function pull(
   opts?: Partial<Opts>,
 ): string[];
 
-export { type Opts, defaults, pull, version };
+export { defaults, pull, version };
+export type { Opts };

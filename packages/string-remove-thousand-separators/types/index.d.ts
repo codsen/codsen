@@ -7,4 +7,5 @@ interface Opts {
 declare const defaults: Opts;
 declare function remSep(str: string, opts?: Partial<Opts>): string;
 
-export { type Opts, defaults, remSep, version };
+export { defaults, remSep, version };
+export type { Opts };

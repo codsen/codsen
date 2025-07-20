@@ -18,12 +18,5 @@ declare function deleteObj<T extends JsonValue>(
   opts?: Partial<Opts>,
 ): T;
 
-export {
-  type JsonArray,
-  type JsonObject,
-  type JsonValue,
-  type Opts,
-  defaults,
-  deleteObj,
-  version,
-};
+export { defaults, deleteObj, version };
+export type { JsonArray, JsonObject, JsonValue, Opts };

@@ -29,12 +29,5 @@ interface Res {
 }
 declare function genAtomic(str: string, opts?: Partial<Opts>): Res;
 
-export {
-  type Opts,
-  type Res,
-  defaults,
-  extractFromToSource,
-  genAtomic,
-  headsAndTails,
-  version,
-};
+export { defaults, extractFromToSource, genAtomic, headsAndTails, version };
+export type { Opts, Res };

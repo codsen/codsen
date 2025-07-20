@@ -16,4 +16,5 @@ type Callback = (key: string, val: any, innerObj: InnerObj, stop: Stop) => any;
  */
 declare function traverse<T>(tree1: T, cb1: Callback): T;
 
-export { type Callback, type InnerObj, type Stop, traverse, version };
+export { traverse, version };
+export type { Callback, InnerObj, Stop };

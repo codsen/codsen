@@ -45,11 +45,5 @@ declare function externalApi(
   opts?: Partial<Opts>,
 ): any;
 
-export {
-  type InfoObj,
-  type Opts,
-  type argType,
-  defaults,
-  externalApi as mergeAdvanced,
-  version,
-};
+export { defaults, externalApi as mergeAdvanced, version };
+export type { InfoObj, Opts, argType };

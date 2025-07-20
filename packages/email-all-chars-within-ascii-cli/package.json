@@ -69,7 +69,7 @@
     }
   },
   "dependencies": {
-    "@inquirer/prompts": "^7.3.2",
+    "@inquirer/prompts": "^7.6.0",
     "@ljharb/through": "^2.3.14",
     "chalk": "^5.4.1",
     "codsen-utils": "^1.6.7",

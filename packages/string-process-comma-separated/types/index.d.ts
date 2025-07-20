@@ -23,4 +23,5 @@ interface Opts {
 }
 declare function processCommaSep(str: string, opts?: Partial<Opts>): void;
 
-export { type ErrCb, type Obj, type Opts, processCommaSep, version };
+export { processCommaSep, version };
+export type { ErrCb, Obj, Opts };

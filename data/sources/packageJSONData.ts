@@ -682,7 +682,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.3",
-      "type-fest": "^4.35.0"
+      "type-fest": "^4.41.0"
     }
   },
   "ast-contains-only-empty-space": {
@@ -852,7 +852,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@sindresorhus/is": "^7.0.1",
+      "@sindresorhus/is": "^7.0.2",
       "ast-monkey-traverse": "^4.0.19",
       "object-path": "^0.11.8"
     },
@@ -2177,7 +2177,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@inquirer/prompts": "^7.3.2",
+      "@inquirer/prompts": "^7.6.0",
       "chalk": "^5.4.1",
       "codsen-utils": "^1.6.7",
       "csv-sort": "^7.0.19",
@@ -2743,7 +2743,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@inquirer/prompts": "^7.3.2",
+      "@inquirer/prompts": "^7.6.0",
       "@ljharb/through": "^2.3.14",
       "chalk": "^5.4.1",
       "codsen-utils": "^1.6.7",
@@ -4599,7 +4599,7 @@ export const packageJSONData = {
       "meow": "^13.2.0",
       "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
-      "sort-package-json": "^2.15.0",
+      "sort-package-json": "^3.4.0",
       "update-notifier": "^7.3.1"
     },
     "devDependencies": {
@@ -6856,7 +6856,7 @@ export const packageJSONData = {
     "dependencies": {
       "@types/hast": "^3.0.4",
       "codsen-utils": "^1.6.7",
-      "fp-ts": "^2.16.9",
+      "fp-ts": "^2.16.10",
       "string-apostrophes": "^4.0.22",
       "string-dashes": "^1.2.16",
       "string-remove-widows": "^4.0.25",
@@ -8504,7 +8504,7 @@ export const packageJSONData = {
     "dependencies": {
       "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.6.7",
-      "html-entities": "^2.5.2",
+      "html-entities": "^2.6.0",
       "lodash-es": "^4.17.21",
       "ranges-apply": "^7.0.19",
       "ranges-push": "^7.0.18",

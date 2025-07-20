@@ -12,4 +12,5 @@ interface Res {
  */
 declare function sort(input: string): Res;
 
-export { type Res, findType, isNumeric, sort, version };
+export { findType, isNumeric, sort, version };
+export type { Res };

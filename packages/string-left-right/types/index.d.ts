@@ -35,7 +35,6 @@ declare function chompRight(
 ): number | null;
 
 export {
-  type Opts,
   chompLeft,
   chompRight,
   left,
@@ -48,3 +47,4 @@ export {
   rightStopAtRawNbsp,
   version,
 };
+export type { Opts };

@@ -12,4 +12,5 @@ interface Opts {
 declare const defaults: Opts;
 declare function deleteKey(input: Obj, opts?: Partial<Opts>): Obj;
 
-export { type Obj, type Opts, defaults, deleteKey, version };
+export { defaults, deleteKey, version };
+export type { Obj, Opts };

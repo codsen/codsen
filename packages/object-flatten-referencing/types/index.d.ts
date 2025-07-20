@@ -33,11 +33,5 @@ declare function flattenReferencing(
   opts?: Partial<Opts>,
 ): any;
 
-export {
-  type Opts,
-  defaults,
-  flattenArr,
-  flattenObject,
-  flattenReferencing,
-  version,
-};
+export { defaults, flattenArr, flattenObject, flattenReferencing, version };
+export type { Opts };

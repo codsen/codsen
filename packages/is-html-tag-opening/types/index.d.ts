@@ -14,4 +14,5 @@ declare function isOpening(
   opts?: Partial<Opts>,
 ): boolean;
 
-export { type Opts, defaultOpts as defaults, isOpening, version };
+export { defaultOpts as defaults, isOpening, version };
+export type { Opts };

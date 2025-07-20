@@ -23,13 +23,5 @@ declare function compare(
   opts?: Partial<Opts>,
 ): boolean | string;
 
-export {
-  type AnyObject,
-  type JsonArray,
-  type JsonObject,
-  type JsonValue,
-  type Opts,
-  compare,
-  defaults,
-  version,
-};
+export { compare, defaults, version };
+export type { AnyObject, JsonArray, JsonObject, JsonValue, Opts };

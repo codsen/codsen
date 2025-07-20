@@ -19,4 +19,5 @@ interface Opts {
 declare const defaults: Opts;
 declare function expander(opts: Partial<Opts>): Range;
 
-export { type Opts, type Range, defaults, expander, version };
+export { defaults, expander, version };
+export type { Opts, Range };

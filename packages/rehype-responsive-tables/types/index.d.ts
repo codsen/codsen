@@ -53,9 +53,9 @@ declare const defaults: Opts;
 declare const rehypeResponsiveTables: Plugin<[Partial<Opts>?], Root>;
 
 export {
-  type Opts,
   contains,
   rehypeResponsiveTables as default,
   defaults,
   getNthChildTag,
 };
+export type { Opts };

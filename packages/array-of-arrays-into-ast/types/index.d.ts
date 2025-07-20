@@ -11,4 +11,5 @@ declare const defaults: Opts;
  */
 declare function generateAst(inputArr: any[], opts?: Partial<Opts>): PlainObj;
 
-export { type Opts, type PlainObj, defaults, generateAst, version };
+export { defaults, generateAst, version };
+export type { Opts, PlainObj };

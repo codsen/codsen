@@ -15,11 +15,5 @@ declare function looseCompare(
   smallObj: JsonValue,
 ): boolean | undefined;
 
-export {
-  type JsonArray,
-  type JsonObject,
-  type JsonValue,
-  type UnknownValueObj,
-  looseCompare,
-  version,
-};
+export { looseCompare, version };
+export type { JsonArray, JsonObject, JsonValue, UnknownValueObj };

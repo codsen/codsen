@@ -9,4 +9,5 @@ interface Opts {
 declare const defaults: Opts;
 declare function splitByW(str: string, opts?: Partial<Opts>): string[];
 
-export { type Opts, type Range, defaults, splitByW, version };
+export { defaults, splitByW, version };
+export type { Opts, Range };

@@ -8,4 +8,5 @@ declare function getObj(
   replacementContentsArr?: UnknownValueObj[],
 ): any;
 
-export { type UnknownValueObj, getObj, version };
+export { getObj, version };
+export type { UnknownValueObj };

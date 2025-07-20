@@ -30,11 +30,5 @@ type Callback = (
 ) => any;
 declare function traverse(tree1: any, cb1: Callback, lookahead?: number): void;
 
-export {
-  type Callback,
-  type InnerObj,
-  type NextToken,
-  type Obj,
-  traverse,
-  version,
-};
+export { traverse, version };
+export type { Callback, InnerObj, NextToken, Obj };

@@ -15,4 +15,5 @@ declare function isIndexWithin(
   opts?: Partial<Opts>,
 ): boolean | Range;
 
-export { type Opts, type Range, type Ranges, defaults, isIndexWithin, version };
+export { defaults, isIndexWithin, version };
+export type { Opts, Range, Ranges };

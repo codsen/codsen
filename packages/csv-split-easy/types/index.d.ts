@@ -7,4 +7,5 @@ interface Opts {
 declare const defaults: Opts;
 declare function splitEasy(str: string, opts?: Partial<Opts>): string[][];
 
-export { type Opts, defaults, splitEasy, version };
+export { defaults, splitEasy, version };
+export type { Opts };

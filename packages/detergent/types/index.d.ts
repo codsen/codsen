@@ -45,4 +45,5 @@ declare const version: string;
  */
 declare function det(str: string, opts?: Partial<Opts>): Res;
 
-export { type Opts, type Res, det, defaultOpts as opts, version };
+export { det, defaultOpts as opts, version };
+export type { Opts, Res };

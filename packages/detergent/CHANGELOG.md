@@ -134,7 +134,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - add few previously missing invisible space-like characters ([33ee0ed](https://gitlab.com/codsen/codsen/commit/33ee0ed1dc151cd03e4d52ff1f99037eed3ad82b))
 
 - Besides U+200A HAIR SPACE, now we detect and turn into normal space all other fancy space characters:
-
   - U+1680 OGHAM SPACE MARK
   - U+2000 EN QUAD
   - U+2001 EM QUAD

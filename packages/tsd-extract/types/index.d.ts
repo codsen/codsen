@@ -42,14 +42,5 @@ declare function extract(
   opts?: Partial<Opts>,
 ): ReturnType;
 
-export {
-  type Chunk,
-  type Opts,
-  type ReturnType,
-  type Statement,
-  defaults,
-  extract,
-  join,
-  roysSort,
-  version,
-};
+export { defaults, extract, join, roysSort, version };
+export type { Chunk, Opts, ReturnType, Statement };

@@ -9,4 +9,5 @@ interface Opts {
 declare const defaults: Opts;
 declare function rEntDecode(str: string, opts?: Partial<Opts>): Ranges;
 
-export { type Opts, defaults, rEntDecode, version };
+export { defaults, rEntDecode, version };
+export type { Opts };

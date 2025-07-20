@@ -417,7 +417,6 @@ This makes it easier for us to contain all new `opts.dumpLinkHrefsNearby` settin
 ## 2.1.0 (2018-05-31)
 
 - `opts.trimOnlySpaces` - up until now, by default, the outsides of the string was trimmed using `String.trim()` which erased:
-
   - non-breaking spaces (in combination with recursive entity decoding this means `&nbsp;` will also be erased)
   - tabs
   - line breaks (`\n`), carriage returns (`\r`) and combination thereof (`\r\n`)

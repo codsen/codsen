@@ -11,4 +11,5 @@ declare function cleanChangelogs(
   res: string;
 };
 
-export { type Opts, cleanChangelogs, defaults, version };
+export { cleanChangelogs, defaults, version };
+export type { Opts };

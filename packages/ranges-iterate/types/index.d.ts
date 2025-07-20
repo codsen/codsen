@@ -16,4 +16,5 @@ declare function rIterate(
   offset?: number,
 ): void;
 
-export { type Callback, type Obj, rIterate, version };
+export { rIterate, version };
+export type { Callback, Obj };

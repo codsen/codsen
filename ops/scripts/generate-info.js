@@ -1,11 +1,10 @@
 import {
-  F_OK,
   accessSync,
   readdirSync,
   writeFile,
   statSync,
   readFileSync,
-} from "fs";
+} from "node:fs";
 import path from "path";
 import git from "simple-git";
 import { sortAllObjectsSync } from "json-comb-core";
@@ -198,7 +197,7 @@ for (let packageName of packageNames) {
     }
     // also present in ./ops/lect/lect.js:
     try {
-      accessSync(path.join("packages", name, "rollup.config.js"), F_OK);
+      accessSync(path.join("packages", name, "rollup.config.js"));
       // 1. add program to the "programs" list
       programPackages.push(name);
 

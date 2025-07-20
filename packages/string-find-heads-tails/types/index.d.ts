@@ -28,4 +28,5 @@ declare function strFindHeadsTails(
   opts?: Partial<Opts>,
 ): ResObj[];
 
-export { type Opts, type ResObj, defaults, strFindHeadsTails, version };
+export { defaults, strFindHeadsTails, version };
+export type { Opts, ResObj };

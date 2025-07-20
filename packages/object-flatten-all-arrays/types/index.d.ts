@@ -8,4 +8,5 @@ interface Opts {
 declare const defaults: Opts;
 declare function flattenAllArrays(input: Obj, opts?: Partial<Opts>): Obj;
 
-export { type Obj, type Opts, defaults, flattenAllArrays, version };
+export { defaults, flattenAllArrays, version };
+export type { Obj, Opts };

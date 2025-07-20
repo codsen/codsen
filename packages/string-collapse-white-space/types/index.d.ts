@@ -31,16 +31,5 @@ interface Res {
 declare const cbSchema: string[];
 declare function collapse(str: string, opts?: Partial<Opts>): Res;
 
-export {
-  type Callback,
-  type CbObj,
-  type Extras,
-  type Opts,
-  type Range,
-  type Ranges as RangesType,
-  type Res,
-  cbSchema,
-  collapse,
-  defaults,
-  version,
-};
+export { cbSchema, collapse, defaults, version };
+export type { Callback, CbObj, Extras, Opts, Range, Ranges as RangesType, Res };
