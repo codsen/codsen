@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.10](https://github.com/codsen/codsen/compare/email-all-chars-within-ascii-cli@4.0.9...email-all-chars-within-ascii-cli@4.0.10) (2025-07-20)
+
+**Note:** Version bump only for package email-all-chars-within-ascii-cli
+
 ## 4.0.0 (2024-01-05)
 
 ### Features

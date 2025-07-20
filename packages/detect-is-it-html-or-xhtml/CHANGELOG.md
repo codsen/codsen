@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.13](https://github.com/codsen/codsen/compare/detect-is-it-html-or-xhtml@6.0.12...detect-is-it-html-or-xhtml@6.0.13) (2025-07-20)
+
+**Note:** Version bump only for package detect-is-it-html-or-xhtml
+
 ## 6.0.0 (2022-12-01)
 
 ### Bug Fixes
