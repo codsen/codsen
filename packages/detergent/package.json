@@ -74,7 +74,7 @@
   },
   "dependencies": {
     "all-named-html-entities": "^3.0.11",
-    "ansi-regex": "^6.1.0",
+    "ansi-regex": "^6.2.2",
     "codsen-utils": "^1.6.8",
     "he": "^1.2.0",
     "html-entities-not-email-friendly": "^0.8.11",

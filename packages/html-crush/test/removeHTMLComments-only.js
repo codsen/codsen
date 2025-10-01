@@ -50,8 +50,6 @@ test('02 - outlook "only" type, tight', () => {
   equal(ranges, null, "02.03");
 });
 
-// removeHTMLComments=2 - includes outlook conditional comments
-// eslint-disable-next-line test-num/correct-test-num
 test('01.02 - outlook "only" type, tight', () => {
   let source = '<!--[if mso]><img src="fallback"/><![endif]-->';
   let { result, applicableOpts, ranges } = m(equal, source, {

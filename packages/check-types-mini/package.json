@@ -75,7 +75,7 @@
     "arrayiffy-if-string": "^5.0.10",
     "ast-monkey-traverse": "^4.0.20",
     "codsen-utils": "^1.6.8",
-    "matcher": "^5.0.0",
+    "matcher": "^6.0.0",
     "object-path": "^0.11.8",
     "type-detect": "^4.1.0"
   }

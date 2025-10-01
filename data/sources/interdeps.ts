@@ -221,7 +221,7 @@ export const interdeps = [
   },
   {
     "name": "email-all-chars-within-ascii-cli",
-    "size": 8474,
+    "size": 8404,
     "imports": [
       "codsen-utils",
       "email-all-chars-within-ascii",
@@ -439,7 +439,7 @@ export const interdeps = [
   },
   {
     "name": "lerna-clean-changelogs-cli",
-    "size": 7381,
+    "size": 7311,
     "imports": [
       "lerna-clean-changelogs"
     ]

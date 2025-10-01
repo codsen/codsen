@@ -109,7 +109,6 @@ if (cli.flags) {
   // try to read the local config if it's present
   try {
     newConfig = JSON.parse(readFileSync(confLocation, "utf8"));
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     console.log(
       `\n${messagePrefix}${`\u001b[${90}m${"No config found, moving on."}\u001b[${39}m`}\n`,
@@ -223,7 +222,6 @@ if (cli.flags) {
                     }
                   }
                 });
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
             } catch (e) {
               // no response from npm
               compiledDepNameVersionPairs[singleDepName] = null;

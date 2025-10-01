@@ -81,7 +81,7 @@
   },
   "dependencies": {
     "ast-monkey-traverse": "^4.0.20",
-    "matcher": "^5.0.0",
+    "matcher": "^6.0.0",
     "rfdc": "^1.4.1"
   }
 }

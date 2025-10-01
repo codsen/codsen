@@ -81,7 +81,6 @@ function readSortAndWriteOverFile(oneOfPaths) {
         preppedContents = cleanChangelogs(filesContent, {
           extras: !!(cli.flags.e || cli.flags.extras),
         });
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         return null;
       }

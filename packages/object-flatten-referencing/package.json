@@ -72,7 +72,7 @@
   "dependencies": {
     "arrayiffy-if-string": "^5.0.10",
     "codsen-utils": "^1.6.8",
-    "matcher": "^5.0.0",
+    "matcher": "^6.0.0",
     "rfdc": "^1.4.1",
     "str-indexes-of-plus": "^5.0.9"
   }

@@ -74,6 +74,6 @@
     }
   },
   "dependencies": {
-    "matcher": "^5.0.0"
+    "matcher": "^6.0.0"
   }
 }

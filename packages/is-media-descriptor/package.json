@@ -72,7 +72,7 @@
     }
   },
   "dependencies": {
-    "leven": "^4.0.0",
+    "leven": "^4.1.0",
     "string-process-comma-separated": "^4.1.9"
   },
   "devDependencies": {

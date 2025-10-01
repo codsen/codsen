@@ -72,12 +72,12 @@
     }
   },
   "dependencies": {
-    "@inquirer/prompts": "^7.6.0",
-    "chalk": "^5.4.1",
+    "@inquirer/prompts": "^7.8.6",
+    "chalk": "^5.6.2",
     "codsen-utils": "^1.6.8",
     "csv-sort": "^7.0.20",
-    "globby": "^14.1.0",
-    "meow": "^13.2.0",
+    "globby": "^15.0.0",
+    "meow": "^14.0.0",
     "update-notifier": "^7.3.1"
   }
 }

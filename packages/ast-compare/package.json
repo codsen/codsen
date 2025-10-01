@@ -79,11 +79,11 @@
   "dependencies": {
     "ast-contains-only-empty-space": "^4.0.20",
     "codsen-utils": "^1.6.8",
-    "matcher": "^5.0.0",
+    "matcher": "^6.0.0",
     "type-detect": "^4.1.0"
   },
   "devDependencies": {
     "@types/type-detect": "^4.0.3",
-    "type-fest": "^4.41.0"
+    "type-fest": "^5.0.1"
   }
 }

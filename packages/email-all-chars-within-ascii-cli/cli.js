@@ -245,7 +245,6 @@ thePromise
           );
           process.exit(0);
         }
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e1) {
         log(
           chalk.grey("\nemail-all-chars-within-ascii-cli: [THROW_ID_06] ") +

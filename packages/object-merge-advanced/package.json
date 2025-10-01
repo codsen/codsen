@@ -76,7 +76,7 @@
     "@types/lodash-es": "^4.17.12",
     "codsen-utils": "^1.6.8",
     "lodash-es": "^4.17.21",
-    "matcher": "^5.0.0",
+    "matcher": "^6.0.0",
     "rfdc": "^1.4.1",
     "util-nonempty": "^5.0.19"
   },
