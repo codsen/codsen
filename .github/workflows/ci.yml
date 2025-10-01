@@ -1,4 +1,4 @@
-name: CI
+name: Codsen CI
 
 on:
   push:
@@ -6,34 +6,50 @@ on:
 
 jobs:
   build:
-    name: Build and Test
-    timeout-minutes: 15
+    name: Codsen Release
+    timeout-minutes: 30
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out code
+      - name: check out code
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
 
-      - name: Setup Node.js environment
+      - name: set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: "npm"
 
-      # install deps
-      - name: Install dependencies
+      - name: install dependencies
         run: npm ci
 
-      # build all
-      - name: Build
+      - name: build
         run: npm run build
 
       # "unit" + "examples" + "lint":
-      - name: Test
-        run: npm run test
+      - name: prep
+        run: npm run prep
 
-      # generate new versions
-      - name: Lerna version
+      - name: generate statistics files
+        run: npm run ci:generate:info
+
+      - name: build root-level Readme
+        run: npm run ci:build:root-readme
+
+      - name: git-add the build artefacts
+        run: |
+          git status
+          git add packages
+          git add ops
+          git add data
+          git add README.md
+
+      - name: git-add lockfile
+        run: |
+          git add package-lock.json
+          git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify
+
+      - name: lerna version
         run: npm run ci:lerna:version
