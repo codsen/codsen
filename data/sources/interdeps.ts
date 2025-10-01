@@ -277,7 +277,7 @@ export const interdeps = [
   },
   {
     "name": "html-all-known-attributes",
-    "size": 13002,
+    "size": 13004,
     "imports": []
   },
   {
@@ -320,7 +320,7 @@ export const interdeps = [
   },
   {
     "name": "is-char-suitable-for-html-attr-name",
-    "size": 517,
+    "size": 519,
     "imports": []
   },
   {
@@ -437,7 +437,7 @@ export const interdeps = [
   },
   {
     "name": "object-boolean-combinations",
-    "size": 1128,
+    "size": 1130,
     "imports": [
       "codsen-utils"
     ]
@@ -487,7 +487,7 @@ export const interdeps = [
   },
   {
     "name": "object-no-new-keys",
-    "size": 1517,
+    "size": 1519,
     "imports": [
       "codsen-utils"
     ]
@@ -574,22 +574,22 @@ export const interdeps = [
   },
   {
     "name": "regex-empty-conditional-comments",
-    "size": 404,
+    "size": 406,
     "imports": []
   },
   {
     "name": "regex-is-jinja-nunjucks",
-    "size": 346,
+    "size": 348,
     "imports": []
   },
   {
     "name": "regex-is-jsp",
-    "size": 344,
+    "size": 346,
     "imports": []
   },
   {
     "name": "regex-jinja-specific",
-    "size": 426,
+    "size": 428,
     "imports": []
   },
   {
@@ -604,7 +604,7 @@ export const interdeps = [
   },
   {
     "name": "str-indexes-of-plus",
-    "size": 1084,
+    "size": 1086,
     "imports": []
   },
   {
@@ -622,7 +622,7 @@ export const interdeps = [
   },
   {
     "name": "string-collapse-leading-whitespace",
-    "size": 1143,
+    "size": 1145,
     "imports": []
   },
   {
@@ -701,7 +701,7 @@ export const interdeps = [
   },
   {
     "name": "string-process-comma-separated",
-    "size": 2584,
+    "size": 2586,
     "imports": [
       "codsen-utils"
     ]
