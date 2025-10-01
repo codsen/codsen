@@ -3,8 +3,8 @@ import n from "eslint-plugin-n";
 import preferLet from "eslint-plugin-prefer-let";
 import jsxA11Y from "eslint-plugin-jsx-a11y";
 import jest from "eslint-plugin-jest";
-import rowNum from "eslint-plugin-row-num";
-import testNum from "eslint-plugin-test-num";
+// import rowNum from "eslint-plugin-row-num";
+// import testNum from "eslint-plugin-test-num";
 import prettier from "eslint-plugin-prettier";
 import { fixupPluginRules } from "@eslint/compat";
 import globals from "globals";
@@ -49,8 +49,8 @@ export default [
       "prefer-let": preferLet,
       "jsx-a11y": jsxA11Y,
       jest,
-      "row-num": rowNum,
-      "test-num": testNum,
+      // "row-num": rowNum,
+      // "test-num": testNum,
       prettier,
     },
 
@@ -115,8 +115,8 @@ export default [
       "no-console": "off",
       "prefer-const": "off",
       "no-nested-ternary": "off",
-      "row-num/correct-row-num": "error",
-      "test-num/correct-test-num": "error",
+      // "row-num/correct-row-num": "error",
+      // "test-num/correct-test-num": "error",
       "import/extensions": "off",
       "no-shadow": "off",
       "@typescript-eslint/no-shadow": ["error"],
@@ -182,7 +182,7 @@ export default [
       "@typescript-eslint/no-for-in-array": "error",
       "@typescript-eslint/no-var-requires": "error",
       "@typescript-eslint/await-thenable": "error",
-      "@typescript-eslint/no-unused-vars": "error",
+      "@typescript-eslint/no-unused-vars": ["error", { caughtErrors: "none" }],
       "@typescript-eslint/no-redeclare": "error",
       "@typescript-eslint/no-redeclare": "off",
       "@typescript-eslint/no-shadow": "error",
