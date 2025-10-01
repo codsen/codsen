@@ -251,7 +251,6 @@ export const dependencyStats: DependencyStats = {
   "devDependencies": {
     "@types/he": 2,
     "@types/hex-color-regex": 1,
-    "@types/object-path": 1,
     "@types/runes": 1,
     "@types/type-detect": 1,
     "ast-monkey-traverse": 2,
