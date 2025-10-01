@@ -43,7 +43,7 @@
     "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
     "examples": "node '../../ops/scripts/run-examples.js'",
     "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-    "letspublish": "npm publish || :",
+    "letspublish": "npm publish --provenance || :",
     "lint": "eslint . --fix",
     "perf": "node perf/check.js",
     "prep": "echo 'ready'",

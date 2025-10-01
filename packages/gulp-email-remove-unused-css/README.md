@@ -28,7 +28,6 @@ This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908
 ```bash
 npm i gulp-email-remove-unused-css
 ```
-
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/gulp-email-remove-unused-css/) for a full description of the API.

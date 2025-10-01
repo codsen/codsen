@@ -31,7 +31,7 @@
     "dts": "exit 0",
     "examples": "exit 0",
     "lect": "node '../../ops/lect/lect.js'",
-    "letspublish": "npm publish || :",
+    "letspublish": "npm publish --provenance || :",
     "lint": "eslint . --fix",
     "perf": "exit 0",
     "prep": "echo 'ready'",
