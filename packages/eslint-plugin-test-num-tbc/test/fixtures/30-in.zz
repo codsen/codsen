@@ -1,8 +1,0 @@
-// plugin should detect cases with too many args
-tap.test(`01 - a`, (t) => {
-  t.is(foo, foo, foo, foo, foo);
-  t.match(foo, foo, foo, foo, foo);
-  t.strictSame(foo, foo, foo, foo, foo);
-  t.true(foo, foo, foo, foo, foo);
-  t.end(foo, foo, foo, foo, foo);
-});

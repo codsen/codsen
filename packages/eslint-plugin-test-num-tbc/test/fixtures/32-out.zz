@@ -1,6 +1,0 @@
-// plugin should detect cases with too few args
-test("01 - too few", () => {
-  equal();
-});
-
-test.run();
