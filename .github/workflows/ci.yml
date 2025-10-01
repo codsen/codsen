@@ -37,6 +37,9 @@ jobs:
       - name: install dependencies
         run: npm ci
 
+      - name: build no.1
+        run: npm run build
+
       # "unit" + "examples" + "lint" (which, in turn, depend on "build"):
       - name: prep
         run: npm run prep
