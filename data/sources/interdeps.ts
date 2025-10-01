@@ -397,7 +397,7 @@ export const interdeps = [
   },
   {
     "name": "json-comb-core",
-    "size": 7246,
+    "size": 7210,
     "imports": [
       "codsen-utils",
       "object-fill-missing-keys",
@@ -810,7 +810,7 @@ export const interdeps = [
   },
   {
     "name": "update-versions",
-    "size": 15920,
+    "size": 15778,
     "imports": [
       "codsen-utils",
       "edit-package-json"
