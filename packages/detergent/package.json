@@ -1,6 +1,6 @@
 {
   "name": "detergent",
-  "version": "9.2.16",
+  "version": "9.2.17",
   "description": "Extract, clean, encode text and fix English style",
   "keywords": [
     "brief",
@@ -73,27 +73,27 @@
     }
   },
   "dependencies": {
-    "all-named-html-entities": "^3.0.12",
+    "all-named-html-entities": "^3.0.13",
     "ansi-regex": "^6.2.2",
-    "codsen-utils": "^1.6.9",
+    "codsen-utils": "^1.6.10",
     "he": "^1.2.0",
-    "html-entities-not-email-friendly": "^0.8.12",
-    "ranges-apply": "^7.0.21",
-    "ranges-invert": "^6.0.21",
-    "ranges-process-outside": "^6.0.21",
-    "ranges-push": "^7.0.20",
-    "string-apostrophes": "^4.0.24",
-    "string-collapse-white-space": "^11.0.24",
-    "string-dashes": "^1.2.18",
-    "string-fix-broken-named-entities": "^7.0.22",
-    "string-left-right": "^6.0.22",
-    "string-range-expander": "^4.0.19",
-    "string-remove-widows": "^4.0.27",
-    "string-strip-html": "^13.4.14",
-    "string-trim-spaces-only": "^5.0.14"
+    "html-entities-not-email-friendly": "^0.8.13",
+    "ranges-apply": "^7.0.22",
+    "ranges-invert": "^6.0.22",
+    "ranges-process-outside": "^6.0.22",
+    "ranges-push": "^7.0.21",
+    "string-apostrophes": "^4.0.25",
+    "string-collapse-white-space": "^11.0.25",
+    "string-dashes": "^1.2.19",
+    "string-fix-broken-named-entities": "^7.0.23",
+    "string-left-right": "^6.0.23",
+    "string-range-expander": "^4.0.20",
+    "string-remove-widows": "^4.0.28",
+    "string-strip-html": "^13.4.15",
+    "string-trim-spaces-only": "^5.0.15"
   },
   "devDependencies": {
     "rfdc": "^1.4.1",
-    "test-mixer": "^4.1.19"
+    "test-mixer": "^4.1.20"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "string-left-right",
-  "version": "6.0.22",
+  "version": "6.0.23",
   "description": "Looks up the first non-whitespace character to the left/right of a given index",
   "keywords": [
     "check",
@@ -73,7 +73,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.9",
+    "codsen-utils": "^1.6.10",
     "rfdc": "^1.4.1"
   }
 }
