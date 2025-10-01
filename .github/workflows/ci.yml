@@ -37,9 +37,80 @@ jobs:
       - name: install dependencies
         run: npm ci
 
-      - name: test committing permissions
+      # "unit" + "examples" + "lint" (which, in turn, depend on "build"):
+      - name: prep
+        run: npm run prep
+
+      - name: generate statistics files
+        run: npm run ci:generate:info
+
+      - name: build root-level Readme
+        run: npm run ci:build:root-readme
+
+      - name: git-add the build artefacts
         run: |
-          touch delete_me.txt
-          git add delete_me.txt
-          git commit -m 'test: committing permissions [skip ci]' --no-verify
+          git status
+          git add packages
+          git add ops
+          git add data
+          git add README.md
+
+      - name: git-add lockfile
+        run: |
+          git add package-lock.json
+          git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify
+
+      - name: lerna version
+        run: npm run ci:lerna:version
+
+      - name: clean the changelogs
+        run: lernacleanchangelog
+
+      # PS. above, we don't push git tags because
+      # if something goes wrong further (and there is another build coming)
+      # then we'd have problems.
+      #
+      # Now build again, because those bumped versions need to be written into header comment blocks:
+      - name: build all packages again
+        run: npm run build
+
+      # it will save down the latest dep version in perf/historical.json
+      - name: run perf
+        run: |
+          echo "Skipping perf for now"
+
+      - name: git-add the build artefacts
+        run: |
+          git status
+          git add packages
+          git add ops
+          git add data
+          git add README.md
+          git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify
+
+      - name: publish all packages to npm
+        run: npm run ci:publish:all
+
+      - name: push no.1 to git remote
+        run: |
           git push
+          git push origin --tags
+
+      - name: build and publish @codsen/data
+        run: |
+          npm run ci:generate:info
+          npm run ci:generate:changelogs
+          cd data
+          npm run build
+          git add .
+          cd ..
+          git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify
+          cd data
+          npm run publ
+          cd ..
+          git status
+
+      - name: push no.2 to git remote
+        run: |
+          git push
+          git push origin --tags
