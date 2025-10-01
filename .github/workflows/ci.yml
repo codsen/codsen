@@ -71,7 +71,7 @@ jobs:
       # then we'd have problems.
       #
       # Now build again, because those bumped versions need to be written into header comment blocks:
-      - name: build all packages again
+      - name: build no.2
         run: npm run build
 
       # it will save down the latest dep version in perf/historical.json
