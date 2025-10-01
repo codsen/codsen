@@ -67,7 +67,7 @@ jobs:
         run: npm run ci:lerna:version
 
       - name: clean the changelogs
-        run: lernacleanchangelog
+        run: npm run lernacleanchangelog
 
       # PS. above, we don't push git tags because
       # if something goes wrong further (and there is another build coming)
