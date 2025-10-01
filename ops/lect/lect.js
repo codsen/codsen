@@ -1,4 +1,4 @@
-import { promises as fs, F_OK, accessSync } from "fs";
+import { promises as fs, accessSync } from "fs";
 import path from "path";
 import objectPath from "object-path";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
@@ -48,10 +48,9 @@ state.isCJS = false;
 
 // also present in ./scripts/generate-info.js:
 try {
-  accessSync(path.join(state.root, "rollup.config.js"), F_OK);
+  accessSync(path.join(state.root, "rollup.config.js"));
   state.isRollup = true;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-} catch (e) {
+} catch (error) {
   //
 }
 
@@ -76,9 +75,8 @@ try {
   quickTakeExample = prepExampleFileStr(
     await fs.readFile(path.join(state.root, "examples/_quickTake.js"), "utf8"),
   ).str;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-} catch (e) {
-  // console.log(`081 lect: ${`\u001b[${31}m${`no examples`}\u001b[${39}m`}`);
+} catch (error) {
+  // console.log(`079 lect: ${`\u001b[${31}m${`no examples`}\u001b[${39}m`}`);
 }
 
 // ACTION

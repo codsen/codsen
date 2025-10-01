@@ -1,4 +1,4 @@
-import { promises as fs, constants } from "fs";
+import { promises as fs } from "fs";
 import path from "path";
 import objectPath from "object-path";
 // import rimraf from "rimraf";
@@ -15,27 +15,27 @@ async function hardDelete({ lectrc }) {
   let thingsToDelete = (objectPath.get(lectrc, "files.delete") || []).filter(
     (val) => {
       return val && val.trim() !== "";
-    }
+    },
   );
   // if to-do list is empty, bail early:
-  if (!thingsToDelete || !thingsToDelete.length) {
+  if (!thingsToDelete?.length) {
     return Promise.resolve(null);
   }
 
   return Promise.all(
     thingsToDelete.map((fileName) =>
       fs
-        .access(path.resolve(fileName), constants.F_OK)
+        .access(path.resolve(fileName))
         .then(() =>
           fs.unlink(fileName).then(() => {
             console.log(
-              `lect ${fileName} ${`\u001b[${31}m${"DELETED"}\u001b[${39}m`}`
+              `lect ${fileName} ${`\u001b[${31}m${"DELETED"}\u001b[${39}m`}`,
             );
             return Promise.resolve(null);
-          })
+          }),
         )
-        .catch(() => Promise.resolve(null))
-    )
+        .catch(() => Promise.resolve(null)),
+    ),
   );
 }
 

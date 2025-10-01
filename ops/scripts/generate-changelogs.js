@@ -1,6 +1,3 @@
-#!/usr/bin/env node
-/* eslint-disable no-unused-vars */
-
 import {
   // promises as fs,
   // F_OK,
@@ -25,7 +22,7 @@ import { removeTbc } from "../lect/plugins/_util.js";
 // ------------------------------------------------------------------------------
 
 const packageNames = readdirSync(path.resolve("packages")).filter((d) =>
-  statSync(path.join("packages", d)).isDirectory()
+  statSync(path.join("packages", d)).isDirectory(),
 );
 
 const gatheredChangelogs = {};
@@ -38,7 +35,7 @@ for (let packageName of packageNames) {
     // read
     changelogContents = readFileSync(
       path.join("packages", packageName, "CHANGELOG.md"),
-      "utf8"
+      "utf8",
     );
 
     // EXTRAS:
@@ -91,7 +88,7 @@ writeFile(
       throw err;
     }
     console.log(
-      `\u001b[${32}m${`gatheredChangelogs.ts written OK`}\u001b[${39}m`
+      `\u001b[${32}m${`gatheredChangelogs.ts written OK`}\u001b[${39}m`,
     );
-  }
+  },
 );
