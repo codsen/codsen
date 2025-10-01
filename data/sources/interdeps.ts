@@ -246,22 +246,6 @@ export const interdeps = [
     ]
   },
   {
-    "name": "eslint-plugin-row-num",
-    "size": 0,
-    "imports": [
-      "js-row-num",
-      "object-delete-key"
-    ]
-  },
-  {
-    "name": "eslint-plugin-test-num",
-    "size": 0,
-    "imports": [
-      "object-delete-key",
-      "string-left-right"
-    ]
-  },
-  {
     "name": "extract-search-index",
     "size": 1225,
     "imports": [

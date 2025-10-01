@@ -1,6 +1,6 @@
 # Codsen
 
-> A turbo-monorepo of 114 npm packages 📦📦📦
+> A turbo-monorepo of 112 npm packages 📦📦📦
 
 ## 📚 Documentation
 
