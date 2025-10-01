@@ -3891,7 +3891,6 @@ test("88 - enforceKeyset() - wrong opts - resolves to rejected promise", async (
     ).then(() => {
       unreachable("88");
     });
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     ok("88");
   }

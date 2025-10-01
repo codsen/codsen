@@ -85,7 +85,7 @@
     "p-reduce": "^3.0.0",
     "rfdc": "^1.4.1",
     "semver-compare": "^1.0.0",
-    "sort-keys": "^5.1.0",
+    "sort-keys": "^6.0.0",
     "type-detect": "^4.1.0"
   }
 }

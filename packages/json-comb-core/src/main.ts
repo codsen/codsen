@@ -289,44 +289,34 @@ function enforceKeyset(
     );
   }
   return new Promise((resolve, reject) => {
-    Promise.all([obj, schemaKeyset]).then(
-      ([objResolved, schemaKeysetResolved]) => {
-        if (!isObj(obj)) {
-          reject(
-            Error(
-              `json-comb-core/enforceKeyset(): [THROW_ID_34] Input must resolve to a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
-                obj,
-                null,
-                4,
-              )}`,
-            ),
-          );
-          return;
-        }
-        if (!isObj(schemaKeyset)) {
-          reject(
-            Error(
-              `json-comb-core/enforceKeyset(): [THROW_ID_35] Schema, 2nd arg, must resolve to a plain object! Currently it's resolving to: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
-                schemaKeyset,
-                null,
-                4,
-              )}`,
-            ),
-          );
-          return;
-        }
-        resolve(
-          sortAllObjectsSync(
-            clone(
-              fillMissing(
-                clone(objResolved),
-                clone(schemaKeysetResolved),
-                resolvedOpts,
-              ),
-            ),
-          ),
-        );
-      },
+    if (!isObj(obj)) {
+      reject(
+        Error(
+          `json-comb-core/enforceKeyset(): [THROW_ID_34] Input must resolve to a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
+            obj,
+            null,
+            4,
+          )}`,
+        ),
+      );
+      return;
+    }
+    if (!isObj(schemaKeyset)) {
+      reject(
+        Error(
+          `json-comb-core/enforceKeyset(): [THROW_ID_35] Schema, 2nd arg, must resolve to a plain object! Currently it's resolving to: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
+            schemaKeyset,
+            null,
+            4,
+          )}`,
+        ),
+      );
+      return;
+    }
+    resolve(
+      sortAllObjectsSync(
+        clone(fillMissing(clone(obj), clone(schemaKeyset), resolvedOpts)),
+      ),
     );
   });
 }
