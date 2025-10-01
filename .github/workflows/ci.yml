@@ -88,8 +88,14 @@ jobs:
           git add README.md
           git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify
 
+      - name: remove type=module from CJS packages
+        run: npm run cjs-on
+
       - name: publish all packages to npm
         run: npm run ci:publish:all
+
+      - name: restore type=module in CJS packages
+        run: npm run cjs-off
 
       - name: push no.1 to git remote
         run: |
