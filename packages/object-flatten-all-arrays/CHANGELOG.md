@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 7.0.24 (2025-10-01)
-
-**Note:** Version bump only for package object-flatten-all-arrays
-
 ## 7.0.19 (2024-03-30)
 
 ### Bug Fixes
