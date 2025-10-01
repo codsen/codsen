@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.0.11 (2025-10-01)
+
+**Note:** Version bump only for package update-versions
+
 ## 7.0.0 (2024-01-05)
 
 ### Features

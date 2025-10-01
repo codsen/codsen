@@ -1,6 +1,6 @@
 {
   "name": "string-find-heads-tails",
-  "version": "6.0.23",
+  "version": "6.0.24",
   "description": "Finds where are arbitrary templating marker heads and tails located",
   "keywords": [
     "array",
@@ -71,8 +71,8 @@
     }
   },
   "dependencies": {
-    "arrayiffy-if-string": "^5.0.10",
-    "codsen-utils": "^1.6.8",
-    "string-match-left-right": "^9.0.23"
+    "arrayiffy-if-string": "^5.0.11",
+    "codsen-utils": "^1.6.9",
+    "string-match-left-right": "^9.0.24"
   }
 }

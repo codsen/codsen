@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.0.27 (2025-10-01)
+
+**Note:** Version bump only for package email-comb
+
 ## 7.0.24 (2025-02-28)
 
 ### Bug Fixes

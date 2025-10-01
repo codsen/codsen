@@ -1,6 +1,6 @@
 {
   "name": "ranges-push",
-  "version": "7.0.19",
+  "version": "7.0.20",
   "description": "Gather string index ranges",
   "keywords": [
     "delete",
@@ -71,9 +71,9 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.8",
-    "ranges-sort": "^6.0.14",
-    "string-collapse-leading-whitespace": "^7.0.9",
-    "string-trim-spaces-only": "^5.0.13"
+    "codsen-utils": "^1.6.9",
+    "ranges-sort": "^6.0.15",
+    "string-collapse-leading-whitespace": "^7.0.10",
+    "string-trim-spaces-only": "^5.0.14"
   }
 }
