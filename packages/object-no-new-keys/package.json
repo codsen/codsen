@@ -1,6 +1,6 @@
 {
   "name": "object-no-new-keys",
-  "version": "5.1.14",
+  "version": "5.1.15",
   "description": "Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)",
   "keywords": [
     "compare",
@@ -72,7 +72,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.13"
+    "codsen-utils": "^1.6.14"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

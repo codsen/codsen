@@ -1,6 +1,6 @@
 {
   "name": "extract-search-index",
-  "version": "2.0.32",
+  "version": "2.0.33",
   "description": "Extract unique keyword input list string for search",
   "keywords": [
     "string",
@@ -71,8 +71,8 @@
     }
   },
   "dependencies": {
-    "string-strip-html": "^13.4.18",
-    "string-unfancy": "^6.0.25"
+    "string-strip-html": "^13.4.19",
+    "string-unfancy": "^6.0.26"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

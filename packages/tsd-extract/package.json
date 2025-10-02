@@ -1,6 +1,6 @@
 {
   "name": "tsd-extract",
-  "version": "0.8.26",
+  "version": "0.8.27",
   "description": "Extract any definition from TS definitions file string",
   "keywords": [
     "ts",
@@ -75,7 +75,7 @@
     }
   },
   "dependencies": {
-    "string-left-right": "^6.0.26"
+    "string-left-right": "^6.0.27"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

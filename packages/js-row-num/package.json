@@ -1,6 +1,6 @@
 {
   "name": "js-row-num",
-  "version": "7.0.25",
+  "version": "7.0.26",
   "description": "Update all row numbers in all console.logs in JS code",
   "keywords": [
     "alt",
@@ -74,9 +74,9 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.13",
-    "ranges-apply": "^7.0.25",
-    "ranges-push": "^7.0.24"
+    "codsen-utils": "^1.6.14",
+    "ranges-apply": "^7.0.26",
+    "ranges-push": "^7.0.25"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

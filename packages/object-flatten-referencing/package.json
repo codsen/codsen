@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-referencing",
-  "version": "7.0.27",
+  "version": "7.0.28",
   "description": "Flatten complex nested objects according to a reference objects",
   "keywords": [
     "advanced",
@@ -70,11 +70,11 @@
     }
   },
   "dependencies": {
-    "arrayiffy-if-string": "^5.0.15",
-    "codsen-utils": "^1.6.13",
+    "arrayiffy-if-string": "^5.0.16",
+    "codsen-utils": "^1.6.14",
     "matcher": "^6.0.0",
     "rfdc": "^1.4.1",
-    "str-indexes-of-plus": "^5.0.14"
+    "str-indexes-of-plus": "^5.0.15"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

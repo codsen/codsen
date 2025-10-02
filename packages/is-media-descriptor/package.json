@@ -1,6 +1,6 @@
 {
   "name": "is-media-descriptor",
-  "version": "5.0.28",
+  "version": "5.0.29",
   "description": "Is given string a valid media descriptor (including media query)?",
   "keywords": [
     "attribute",
@@ -73,10 +73,10 @@
   },
   "dependencies": {
     "leven": "^4.1.0",
-    "string-process-comma-separated": "^4.1.14"
+    "string-process-comma-separated": "^4.1.15"
   },
   "devDependencies": {
-    "ranges-apply": "^7.0.25"
+    "ranges-apply": "^7.0.26"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

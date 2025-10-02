@@ -1,6 +1,6 @@
 {
   "name": "array-of-arrays-into-ast",
-  "version": "4.0.28",
+  "version": "4.0.29",
   "description": "Turns an array of arrays of data into a nested tree of plain objects",
   "keywords": [
     "array",
@@ -70,8 +70,8 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^8.0.28",
-    "object-merge-advanced": "^14.0.27"
+    "check-types-mini": "^8.0.29",
+    "object-merge-advanced": "^14.0.28"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

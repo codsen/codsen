@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey-traverse",
-  "version": "4.0.25",
+  "version": "4.0.26",
   "description": "Utility library to traverse AST",
   "keywords": [
     "ast",
@@ -81,8 +81,8 @@
     }
   },
   "dependencies": {
-    "ast-monkey-util": "^3.0.15",
-    "codsen-utils": "^1.6.13",
+    "ast-monkey-util": "^3.0.16",
+    "codsen-utils": "^1.6.14",
     "rfdc": "^1.4.1"
   },
   "devDependencies": {
