@@ -86,6 +86,9 @@ export const packageJSONData = {
       "unified": "^11.0.5",
       "unist-builder": "^4.0.0",
       "unist-util-visit": "^5.0.0"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "array-of-arrays-sort-by-col": {
@@ -206,6 +209,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "array-group-str-omit-num-char": {
@@ -283,6 +289,9 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.6.13",
       "ranges-apply": "^7.0.25"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "array-includes-with-glob": {
@@ -362,6 +371,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "matcher": "^6.0.0"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "array-of-arrays-into-ast": {
@@ -438,6 +450,9 @@ export const packageJSONData = {
     "dependencies": {
       "check-types-mini": "^8.0.28",
       "object-merge-advanced": "^14.0.27"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "array-pull-all-with-glob": {
@@ -518,6 +533,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "matcher": "^6.0.0"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "arrayiffy-if-string": {
@@ -594,6 +612,9 @@ export const packageJSONData = {
           "Thanks to KRyan for types https://stackoverflow.com/a/71834598/3943954"
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ast-compare": {
@@ -683,6 +704,9 @@ export const packageJSONData = {
     "devDependencies": {
       "@types/type-detect": "^4.0.3",
       "type-fest": "^5.0.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ast-contains-only-empty-space": {
@@ -762,6 +786,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-monkey-traverse": "^4.0.25"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ast-deep-contains": {
@@ -855,6 +882,9 @@ export const packageJSONData = {
       "@sindresorhus/is": "^7.1.0",
       "ast-monkey-traverse": "^4.0.25",
       "object-path": "^0.11.8"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ast-delete-object": {
@@ -942,6 +972,9 @@ export const packageJSONData = {
       "ast-monkey-traverse": "^4.0.25",
       "codsen-utils": "^1.6.13",
       "rfdc": "^1.4.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ast-get-object": {
@@ -1029,6 +1062,9 @@ export const packageJSONData = {
       "ast-compare": "^4.0.36",
       "codsen-utils": "^1.6.13",
       "rfdc": "^1.4.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ast-get-values-by-key": {
@@ -1116,6 +1152,9 @@ export const packageJSONData = {
       "ast-monkey-traverse": "^4.0.25",
       "matcher": "^6.0.0",
       "rfdc": "^1.4.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ast-is-empty": {
@@ -1202,6 +1241,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.6.13"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ast-loose-compare": {
@@ -1287,6 +1329,9 @@ export const packageJSONData = {
     "dependencies": {
       "ast-contains-only-empty-space": "^4.0.25",
       "codsen-utils": "^1.6.13"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ast-monkey": {
@@ -1377,6 +1422,9 @@ export const packageJSONData = {
       "check-types-mini": "^8.0.28",
       "codsen-utils": "^1.6.13",
       "util-array-object-or-both": "^5.0.20"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ast-monkey-traverse": {
@@ -1468,6 +1516,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "deep-equal": "^2.2.3"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ast-monkey-traverse-with-lookahead": {
@@ -1557,6 +1608,9 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.6.13",
       "rfdc": "^1.4.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ast-monkey-util": {
@@ -1635,6 +1689,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "charcode-is-valid-xml-name-character": {
@@ -1715,6 +1772,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ranges-is-index-within": "^4.0.18"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "check-types-mini": {
@@ -1797,6 +1857,9 @@ export const packageJSONData = {
       "matcher": "^6.0.0",
       "object-path": "^0.11.8",
       "type-detect": "^4.1.0"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "codsen": {
@@ -1861,6 +1924,9 @@ export const packageJSONData = {
     "dependencies": {
       "meow": "^14.0.0",
       "update-notifier": "^7.3.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "codsen-utils": {
@@ -1931,6 +1997,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "rfdc": "^1.4.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "color-shorthand-hex-to-six-digit": {
@@ -2014,6 +2083,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/hex-color-regex": "^1.1.3"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "csv-sort": {
@@ -2098,6 +2170,9 @@ export const packageJSONData = {
       "csv-split-easy": "^7.0.25",
       "currency.js": "^2.0.4",
       "lodash-es": "^4.17.21"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "csv-sort-cli": {
@@ -2181,6 +2256,9 @@ export const packageJSONData = {
       "globby": "^15.0.0",
       "meow": "^14.0.0",
       "update-notifier": "^7.3.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "csv-split-easy": {
@@ -2260,6 +2338,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "string-remove-thousand-separators": "^7.0.25"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "detect-is-it-html-or-xhtml": {
@@ -2336,6 +2417,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "detect-templating-language": {
@@ -2409,6 +2493,9 @@ export const packageJSONData = {
       "regex-is-jinja-nunjucks": "^4.0.14",
       "regex-is-jsp": "^4.0.14",
       "regex-jinja-specific": "^4.0.14"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "detergent": {
@@ -2508,6 +2595,9 @@ export const packageJSONData = {
     "devDependencies": {
       "rfdc": "^1.4.1",
       "test-mixer": "^4.1.23"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "edit-package-json": {
@@ -2593,6 +2683,9 @@ export const packageJSONData = {
       "globby": "^15.0.0",
       "p-map": "^7.0.3",
       "rfdc": "^1.4.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "email-all-chars-within-ascii": {
@@ -2667,6 +2760,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "check-types-mini": "^8.0.28"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "email-all-chars-within-ascii-cli": {
@@ -2749,6 +2845,9 @@ export const packageJSONData = {
       "minimist": "^1.2.8",
       "string-left-right": "^6.0.26",
       "update-notifier": "^7.3.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "email-comb": {
@@ -2835,6 +2934,9 @@ export const packageJSONData = {
       "string-match-left-right": "^9.0.28",
       "string-range-expander": "^4.0.23",
       "string-uglify": "^3.0.19"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "extract-search-index": {
@@ -2912,6 +3014,9 @@ export const packageJSONData = {
     "dependencies": {
       "string-strip-html": "^13.4.18",
       "string-unfancy": "^6.0.25"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "generate-atomic-css": {
@@ -2988,6 +3093,9 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.6.13",
       "string-left-right": "^6.0.26"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "generate-atomic-css-cli": {
@@ -3071,6 +3179,9 @@ export const packageJSONData = {
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
       "write-file-atomic": "^6.0.0"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "gulp-email-remove-unused-css": {
@@ -3147,6 +3258,9 @@ export const packageJSONData = {
     "devDependencies": {
       "map-stream": "^0.0.7",
       "vinyl-string": "^1.0.2"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "html-all-known-attributes": {
@@ -3217,6 +3331,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "html-crush": {
@@ -3308,6 +3425,9 @@ export const packageJSONData = {
       "string-match-left-right": "^9.0.28",
       "string-range-expander": "^4.0.23",
       "test-mixer": "^4.1.23"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "html-entities-not-email-friendly": {
@@ -3378,6 +3498,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "html-img-alt": {
@@ -3462,6 +3585,9 @@ export const packageJSONData = {
       "ranges-apply": "^7.0.25",
       "ranges-push": "^7.0.24",
       "string-unfancy": "^6.0.25"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "html-table-patcher": {
@@ -3544,6 +3670,9 @@ export const packageJSONData = {
       "codsen-parser": "^0.14.25",
       "ranges-apply": "^7.0.25",
       "ranges-push": "^7.0.24"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "is-char-suitable-for-html-attr-name": {
@@ -3621,6 +3750,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "is-html-attribute-closing": {
@@ -3704,6 +3836,9 @@ export const packageJSONData = {
       "is-char-suitable-for-html-attr-name": "^4.0.14",
       "string-left-right": "^6.0.26",
       "string-match-left-right": "^9.0.28"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "is-html-tag-opening": {
@@ -3786,6 +3921,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "test-mixer": "^4.1.23"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "is-language-code": {
@@ -3867,6 +4005,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.6.13"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "is-media-descriptor": {
@@ -3948,6 +4089,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ranges-apply": "^7.0.25"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "is-relative-uri": {
@@ -4023,6 +4167,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ranges-apply": "^7.0.25"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "js-row-num": {
@@ -4104,6 +4251,9 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.13",
       "ranges-apply": "^7.0.25",
       "ranges-push": "^7.0.24"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "js-row-num-cli": {
@@ -4188,6 +4338,9 @@ export const packageJSONData = {
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
       "write-file-atomic": "^6.0.0"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "json-comb": {
@@ -4269,6 +4422,9 @@ export const packageJSONData = {
       "p-map": "^7.0.3",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "json-comb-core": {
@@ -4360,6 +4516,9 @@ export const packageJSONData = {
       "semver-compare": "^1.0.0",
       "sort-keys": "^6.0.0",
       "type-detect": "^4.1.0"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "json-sort-cli": {
@@ -4445,6 +4604,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "p-map": "^7.0.3"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "json-variables": {
@@ -4538,6 +4700,9 @@ export const packageJSONData = {
       "string-find-heads-tails": "^6.0.28",
       "string-match-left-right": "^9.0.28",
       "string-remove-duplicate-heads-tails": "^7.0.28"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "lerna-clean-changelogs": {
@@ -4615,6 +4780,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.6.13"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "lerna-clean-changelogs-cli": {
@@ -4702,6 +4870,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "p-map": "^7.0.3"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "object-all-values-equal-to": {
@@ -4780,6 +4951,9 @@ export const packageJSONData = {
       "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.6.13",
       "lodash-es": "^4.17.21"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "object-boolean-combinations": {
@@ -4853,6 +5027,9 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.6.13",
       "rfdc": "^1.4.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "object-delete-key": {
@@ -4937,6 +5114,9 @@ export const packageJSONData = {
       "ast-monkey": "^9.0.35",
       "rfdc": "^1.4.1",
       "util-array-object-or-both": "^5.0.20"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "object-fill-missing-keys": {
@@ -5020,6 +5200,9 @@ export const packageJSONData = {
       "object-all-values-equal-to": "^4.0.27",
       "object-merge-advanced": "^14.0.27",
       "rfdc": "^1.4.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "object-flatten-all-arrays": {
@@ -5099,6 +5282,9 @@ export const packageJSONData = {
       "codsen-utils": "^1.6.13",
       "lodash-es": "^4.17.21",
       "rfdc": "^1.4.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "object-flatten-referencing": {
@@ -5178,6 +5364,9 @@ export const packageJSONData = {
       "matcher": "^6.0.0",
       "rfdc": "^1.4.1",
       "str-indexes-of-plus": "^5.0.14"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "object-merge-advanced": {
@@ -5264,6 +5453,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "deep-equal": "^2.2.3"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "object-no-new-keys": {
@@ -5341,6 +5533,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.6.13"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "object-set-all-values-to": {
@@ -5418,6 +5613,9 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.6.13",
       "rfdc": "^1.4.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ranges-apply": {
@@ -5494,6 +5692,9 @@ export const packageJSONData = {
     "dependencies": {
       "ranges-merge": "^9.0.24",
       "tiny-invariant": "^1.3.3"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ranges-crop": {
@@ -5572,6 +5773,9 @@ export const packageJSONData = {
     "devDependencies": {
       "ranges-apply": "^7.0.25",
       "rfdc": "^1.4.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ranges-ent-decode": {
@@ -5654,6 +5858,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/he": "^1.2.3"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ranges-invert": {
@@ -5725,6 +5932,9 @@ export const packageJSONData = {
     "dependencies": {
       "ranges-crop": "^6.0.25",
       "ranges-merge": "^9.0.24"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ranges-is-index-within": {
@@ -5792,6 +6002,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ranges-iterate": {
@@ -5868,6 +6081,9 @@ export const packageJSONData = {
     "devDependencies": {
       "ranges-apply": "^7.0.25",
       "ranges-merge": "^9.0.24"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ranges-merge": {
@@ -5947,6 +6163,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "rfdc": "^1.4.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ranges-process-outside": {
@@ -6022,6 +6241,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/runes": "^0.4.3"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ranges-push": {
@@ -6101,6 +6323,9 @@ export const packageJSONData = {
       "ranges-sort": "^6.0.19",
       "string-collapse-leading-whitespace": "^7.0.14",
       "string-trim-spaces-only": "^5.0.18"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ranges-regex": {
@@ -6183,6 +6408,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ranges-apply": "^7.0.25"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "ranges-sort": {
@@ -6250,6 +6478,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "regex-empty-conditional-comments": {
@@ -6324,6 +6555,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "regex-is-jinja-nunjucks": {
@@ -6398,6 +6632,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "regex-is-jsp": {
@@ -6474,6 +6711,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "regex-jinja-specific": {
@@ -6548,6 +6788,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "rehype-responsive-tables": {
@@ -6623,6 +6866,9 @@ export const packageJSONData = {
       "rehype-parse": "^9.0.1",
       "unified": "^11.0.5",
       "unist-util-visit": "^5.0.0"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "remark-typography": {
@@ -6703,6 +6949,9 @@ export const packageJSONData = {
       "string-remove-widows": "^4.0.31",
       "unified": "^11.0.5",
       "unist-util-visit": "^5.0.0"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "str-indexes-of-plus": {
@@ -6775,6 +7024,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-apostrophes": {
@@ -6850,6 +7102,9 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.6.13",
       "ranges-apply": "^7.0.25"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-character-is-astral-surrogate": {
@@ -6926,6 +7181,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-collapse-leading-whitespace": {
@@ -7002,6 +7260,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-collapse-white-space": {
@@ -7081,6 +7342,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "test-mixer": "^4.1.23"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-convert-indexes": {
@@ -7157,6 +7421,9 @@ export const packageJSONData = {
     "dependencies": {
       "ast-monkey-traverse": "^4.0.25",
       "grapheme-splitter": "^1.0.4"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-dashes": {
@@ -7238,6 +7505,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "test-mixer": "^4.1.23"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-extract-class-names": {
@@ -7309,6 +7579,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "string-left-right": "^6.0.26"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-extract-sass-vars": {
@@ -7387,6 +7660,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "color-shorthand-hex-to-six-digit": "^5.0.25"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-find-heads-tails": {
@@ -7465,6 +7741,9 @@ export const packageJSONData = {
       "arrayiffy-if-string": "^5.0.15",
       "codsen-utils": "^1.6.13",
       "string-match-left-right": "^9.0.28"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-find-malformed": {
@@ -7544,6 +7823,9 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.6.13",
       "string-left-right": "^6.0.26"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-fix-broken-named-entities": {
@@ -7628,6 +7910,9 @@ export const packageJSONData = {
       "leven": "^4.1.0",
       "rfdc": "^1.4.1",
       "string-left-right": "^6.0.26"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-left-right": {
@@ -7707,6 +7992,9 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.6.13",
       "rfdc": "^1.4.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-match-left-right": {
@@ -7782,6 +8070,9 @@ export const packageJSONData = {
       "arrayiffy-if-string": "^5.0.15",
       "codsen-utils": "^1.6.13",
       "string-character-is-astral-surrogate": "^3.0.16"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-process-comma-separated": {
@@ -7857,6 +8148,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.6.13"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-range-expander": {
@@ -7932,6 +8226,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.6.13"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-remove-duplicate-heads-tails": {
@@ -8016,6 +8313,9 @@ export const packageJSONData = {
       "ranges-push": "^7.0.24",
       "string-match-left-right": "^9.0.28",
       "string-trim-spaces-only": "^5.0.18"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-remove-thousand-separators": {
@@ -8095,6 +8395,9 @@ export const packageJSONData = {
       "lodash-es": "^4.17.21",
       "ranges-apply": "^7.0.25",
       "ranges-push": "^7.0.24"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-remove-widows": {
@@ -8182,6 +8485,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "string-strip-html": "^13.4.18"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-split-by-whitespace": {
@@ -8264,6 +8570,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "string-find-heads-tails": "^6.0.28"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-strip-html": {
@@ -8355,6 +8664,9 @@ export const packageJSONData = {
       "ast-monkey-traverse": "^4.0.25",
       "ranges-invert": "^6.0.25",
       "title": "^4.0.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-trim-spaces-only": {
@@ -8427,6 +8739,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-uglify": {
@@ -8506,6 +8821,9 @@ export const packageJSONData = {
         ]
       },
       "various": {}
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "string-unfancy": {
@@ -8589,6 +8907,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/he": "^1.2.3"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "test-mixer": {
@@ -8663,6 +8984,9 @@ export const packageJSONData = {
     "dependencies": {
       "object-boolean-combinations": "^6.1.14",
       "rfdc": "^1.4.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "tsd-extract": {
@@ -8743,6 +9067,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "string-left-right": "^6.0.26"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "update-versions": {
@@ -8840,6 +9167,9 @@ export const packageJSONData = {
     "devDependencies": {
       "fs-extra": "^11.3.2",
       "rfdc": "^1.4.1"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "util-array-object-or-both": {
@@ -8916,6 +9246,9 @@ export const packageJSONData = {
     "dependencies": {
       "@types/lodash-es": "^4.17.12",
       "lodash-es": "^4.17.21"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   },
   "util-nonempty": {
@@ -8988,6 +9321,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.6.13"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
     }
   }
 };
