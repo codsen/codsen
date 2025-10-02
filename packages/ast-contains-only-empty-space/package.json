@@ -75,5 +75,8 @@
   },
   "dependencies": {
     "ast-monkey-traverse": "^4.0.25"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

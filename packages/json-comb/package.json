@@ -77,5 +77,8 @@
     "p-map": "^7.0.3",
     "p-reduce": "^3.0.0",
     "update-notifier": "^7.3.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

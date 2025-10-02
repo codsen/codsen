@@ -60,5 +60,8 @@
   "dependencies": {
     "meow": "^14.0.0",
     "update-notifier": "^7.3.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

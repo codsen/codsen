@@ -87,5 +87,8 @@
     "ast-monkey-traverse": "^4.0.25",
     "ranges-invert": "^6.0.25",
     "title": "^4.0.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

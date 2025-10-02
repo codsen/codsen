@@ -78,5 +78,8 @@
     "matcher": "^6.0.0",
     "object-path": "^0.11.8",
     "type-detect": "^4.1.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

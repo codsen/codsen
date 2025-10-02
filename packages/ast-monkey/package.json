@@ -86,5 +86,8 @@
     "check-types-mini": "^8.0.28",
     "codsen-utils": "^1.6.13",
     "util-array-object-or-both": "^5.0.20"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

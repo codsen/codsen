@@ -85,5 +85,8 @@
   "devDependencies": {
     "@types/type-detect": "^4.0.3",
     "type-fest": "^5.0.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -72,5 +72,8 @@
         "Thanks to KRyan for types https://stackoverflow.com/a/71834598/3943954"
       ]
     }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

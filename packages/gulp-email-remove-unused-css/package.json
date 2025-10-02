@@ -72,5 +72,8 @@
   "devDependencies": {
     "map-stream": "^0.0.7",
     "vinyl-string": "^1.0.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

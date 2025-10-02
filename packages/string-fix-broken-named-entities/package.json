@@ -80,5 +80,8 @@
     "leven": "^4.1.0",
     "rfdc": "^1.4.1",
     "string-left-right": "^6.0.26"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

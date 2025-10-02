@@ -69,5 +69,8 @@
     "regex-is-jinja-nunjucks": "^4.0.14",
     "regex-is-jsp": "^4.0.14",
     "regex-jinja-specific": "^4.0.14"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -100,8 +100,7 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
 
   // 5. capitalise first letter in description
   if (
-    content.description &&
-    content.description.length &&
+    content.description?.length &&
     content.description[0].toLowerCase() !==
       content.description[0].toUpperCase() &&
     content.description[0] !== content.description[0].toUpperCase()

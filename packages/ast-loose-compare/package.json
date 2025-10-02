@@ -81,5 +81,8 @@
   "dependencies": {
     "ast-contains-only-empty-space": "^4.0.25",
     "codsen-utils": "^1.6.13"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

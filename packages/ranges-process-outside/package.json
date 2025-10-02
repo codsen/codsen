@@ -71,5 +71,8 @@
   },
   "devDependencies": {
     "@types/runes": "^0.4.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

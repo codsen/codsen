@@ -74,5 +74,8 @@
   "devDependencies": {
     "ranges-apply": "^7.0.25",
     "rfdc": "^1.4.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

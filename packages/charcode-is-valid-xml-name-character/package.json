@@ -76,5 +76,8 @@
   },
   "dependencies": {
     "ranges-is-index-within": "^4.0.18"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

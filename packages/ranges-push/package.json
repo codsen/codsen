@@ -75,5 +75,8 @@
     "ranges-sort": "^6.0.19",
     "string-collapse-leading-whitespace": "^7.0.14",
     "string-trim-spaces-only": "^5.0.18"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

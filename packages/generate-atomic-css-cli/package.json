@@ -79,5 +79,8 @@
     "p-reduce": "^3.0.0",
     "update-notifier": "^7.3.1",
     "write-file-atomic": "^6.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

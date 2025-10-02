@@ -74,5 +74,8 @@
     "arrayiffy-if-string": "^5.0.15",
     "codsen-utils": "^1.6.13",
     "string-match-left-right": "^9.0.28"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

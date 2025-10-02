@@ -82,5 +82,8 @@
   },
   "dependencies": {
     "codsen-utils": "^1.6.13"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

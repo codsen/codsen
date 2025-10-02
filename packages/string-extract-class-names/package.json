@@ -67,5 +67,8 @@
   },
   "dependencies": {
     "string-left-right": "^6.0.26"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

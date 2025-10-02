@@ -75,5 +75,8 @@
   },
   "dependencies": {
     "matcher": "^6.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

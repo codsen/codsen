@@ -20,7 +20,8 @@
     "directory": "data"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "build": "rimraf ./dist && tsc index.ts --module nodenext --outDir dist --declaration --skipLibCheck",

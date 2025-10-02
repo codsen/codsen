@@ -87,5 +87,8 @@
     "semver-compare": "^1.0.0",
     "sort-keys": "^6.0.0",
     "type-detect": "^4.1.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

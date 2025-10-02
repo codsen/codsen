@@ -67,5 +67,8 @@
   "dependencies": {
     "ranges-crop": "^6.0.25",
     "ranges-merge": "^9.0.24"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -75,5 +75,8 @@
   },
   "devDependencies": {
     "test-mixer": "^4.1.23"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

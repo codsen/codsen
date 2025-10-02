@@ -80,5 +80,8 @@
     "ast-monkey": "^9.0.35",
     "rfdc": "^1.4.1",
     "util-array-object-or-both": "^5.0.20"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

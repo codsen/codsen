@@ -70,5 +70,8 @@
   },
   "dependencies": {
     "check-types-mini": "^8.0.28"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

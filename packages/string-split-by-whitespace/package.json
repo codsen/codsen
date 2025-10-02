@@ -78,5 +78,8 @@
   },
   "devDependencies": {
     "string-find-heads-tails": "^6.0.28"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

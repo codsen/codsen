@@ -78,5 +78,8 @@
     "codsen-parser": "^0.14.25",
     "ranges-apply": "^7.0.25",
     "ranges-push": "^7.0.24"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

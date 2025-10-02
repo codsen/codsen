@@ -89,5 +89,8 @@
     "string-find-heads-tails": "^6.0.28",
     "string-match-left-right": "^9.0.28",
     "string-remove-duplicate-heads-tails": "^7.0.28"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

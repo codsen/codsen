@@ -71,5 +71,8 @@
     "arrayiffy-if-string": "^5.0.15",
     "codsen-utils": "^1.6.13",
     "string-character-is-astral-surrogate": "^3.0.16"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

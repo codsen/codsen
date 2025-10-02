@@ -82,5 +82,8 @@
   },
   "devDependencies": {
     "deep-equal": "^2.2.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

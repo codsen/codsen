@@ -82,5 +82,8 @@
     "string-match-left-right": "^9.0.28",
     "string-range-expander": "^4.0.23",
     "string-uglify": "^3.0.19"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

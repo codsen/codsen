@@ -75,5 +75,8 @@
     "matcher": "^6.0.0",
     "rfdc": "^1.4.1",
     "str-indexes-of-plus": "^5.0.14"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -74,5 +74,8 @@
   },
   "devDependencies": {
     "color-shorthand-hex-to-six-digit": "^5.0.25"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

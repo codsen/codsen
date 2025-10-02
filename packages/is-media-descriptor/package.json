@@ -77,5 +77,8 @@
   },
   "devDependencies": {
     "ranges-apply": "^7.0.25"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

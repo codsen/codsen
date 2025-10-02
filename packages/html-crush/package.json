@@ -87,5 +87,8 @@
     "string-match-left-right": "^9.0.28",
     "string-range-expander": "^4.0.23",
     "test-mixer": "^4.1.23"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

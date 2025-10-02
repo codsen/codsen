@@ -79,5 +79,8 @@
     "is-char-suitable-for-html-attr-name": "^4.0.14",
     "string-left-right": "^6.0.26",
     "string-match-left-right": "^9.0.28"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

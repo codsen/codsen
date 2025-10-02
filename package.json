@@ -123,5 +123,8 @@
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "npm@11.6.0"
+  "packageManager": "npm@11.6.0",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
 }

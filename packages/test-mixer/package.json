@@ -70,5 +70,8 @@
   "dependencies": {
     "object-boolean-combinations": "^6.1.14",
     "rfdc": "^1.4.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

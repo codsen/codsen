@@ -81,5 +81,8 @@
   },
   "devDependencies": {
     "p-map": "^7.0.3"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -184,7 +184,11 @@
       "lect.files",
       "lect.npmignore"
     ],
-    "write": {}
+    "write": {
+      "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+      }
+    }
   },
   "scripts": {
     "cjs": {

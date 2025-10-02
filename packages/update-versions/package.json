@@ -93,5 +93,8 @@
   "devDependencies": {
     "fs-extra": "^11.3.2",
     "rfdc": "^1.4.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -83,5 +83,8 @@
     "ast-monkey-traverse": "^4.0.25",
     "codsen-utils": "^1.6.13",
     "rfdc": "^1.4.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -75,5 +75,8 @@
       ]
     },
     "various": {}
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

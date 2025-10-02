@@ -83,5 +83,8 @@
     "ast-monkey-traverse": "^4.0.25",
     "matcher": "^6.0.0",
     "rfdc": "^1.4.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

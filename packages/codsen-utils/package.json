@@ -66,5 +66,8 @@
   },
   "dependencies": {
     "rfdc": "^1.4.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

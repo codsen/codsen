@@ -80,5 +80,8 @@
     "csv-split-easy": "^7.0.25",
     "currency.js": "^2.0.4",
     "lodash-es": "^4.17.21"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

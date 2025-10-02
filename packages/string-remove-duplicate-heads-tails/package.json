@@ -80,5 +80,8 @@
     "ranges-push": "^7.0.24",
     "string-match-left-right": "^9.0.28",
     "string-trim-spaces-only": "^5.0.18"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
