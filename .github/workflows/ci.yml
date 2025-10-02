@@ -31,7 +31,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          registry-url: "https://registry.npmjs.org"
           cache: "npm"
 
       - name: install dependencies
@@ -96,8 +95,6 @@ jobs:
 
       - name: publish all packages to npm
         run: npm run ci:publish:all
-        env:
-          NPM_CONFIG_PROVENANCE: true
 
       - name: restore type=module in CJS packages
         run: npm run cjs-off
@@ -120,8 +117,6 @@ jobs:
           npm run publ
           cd ..
           git status
-        env:
-          NPM_CONFIG_PROVENANCE: true
 
       - name: push no.2 to git remote
         run: |
