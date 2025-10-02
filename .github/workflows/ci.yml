@@ -95,6 +95,8 @@ jobs:
 
       - name: publish all packages to npm
         run: npm run ci:publish:all
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: restore type=module in CJS packages
         run: npm run cjs-off
@@ -117,6 +119,8 @@ jobs:
           npm run publ
           cd ..
           git status
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: push no.2 to git remote
         run: |
