@@ -1,6 +1,6 @@
 {
   "name": "edit-package-json",
-  "version": "0.8.31",
+  "version": "0.8.32",
   "description": "Edit package.json without parsing, as string, to keep the formatting intact",
   "keywords": [
     "changes",
@@ -72,12 +72,12 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.12",
-    "ranges-apply": "^7.0.24",
-    "string-left-right": "^6.0.25"
+    "codsen-utils": "^1.6.13",
+    "ranges-apply": "^7.0.25",
+    "string-left-right": "^6.0.26"
   },
   "devDependencies": {
-    "ast-monkey-traverse": "^4.0.24",
+    "ast-monkey-traverse": "^4.0.25",
     "globby": "^15.0.0",
     "p-map": "^7.0.3",
     "rfdc": "^1.4.1"
