@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey",
-  "version": "9.0.32",
+  "version": "9.0.33",
   "description": "Traverse and edit AST",
   "keywords": [
     "ast",
@@ -81,10 +81,10 @@
     }
   },
   "dependencies": {
-    "ast-compare": "^4.0.33",
-    "ast-monkey-traverse": "^4.0.22",
-    "check-types-mini": "^8.0.25",
-    "codsen-utils": "^1.6.10",
-    "util-array-object-or-both": "^5.0.17"
+    "ast-compare": "^4.0.34",
+    "ast-monkey-traverse": "^4.0.23",
+    "check-types-mini": "^8.0.26",
+    "codsen-utils": "^1.6.11",
+    "util-array-object-or-both": "^5.0.18"
   }
 }

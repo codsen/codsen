@@ -1,6 +1,6 @@
 {
   "name": "js-row-num-cli",
-  "version": "4.0.10",
+  "version": "4.0.11",
   "description": "Update all row numbers in all console.logs in given files",
   "keywords": [
     "automated",
@@ -72,10 +72,10 @@
     }
   },
   "dependencies": {
-    "arrayiffy-if-string": "^5.0.12",
+    "arrayiffy-if-string": "^5.0.13",
     "globby": "^15.0.0",
     "is-d": "^1.0.0",
-    "js-row-num": "^7.0.22",
+    "js-row-num": "^7.0.23",
     "meow": "^14.0.0",
     "p-reduce": "^3.0.0",
     "update-notifier": "^7.3.1",

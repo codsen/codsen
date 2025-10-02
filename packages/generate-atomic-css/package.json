@@ -1,6 +1,6 @@
 {
   "name": "generate-atomic-css",
-  "version": "3.0.24",
+  "version": "3.0.25",
   "description": "Generate Atomic CSS",
   "keywords": [
     "api",
@@ -70,7 +70,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.10",
-    "string-left-right": "^6.0.23"
+    "codsen-utils": "^1.6.11",
+    "string-left-right": "^6.0.24"
   }
 }

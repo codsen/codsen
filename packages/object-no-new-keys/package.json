@@ -1,6 +1,6 @@
 {
   "name": "object-no-new-keys",
-  "version": "5.1.11",
+  "version": "5.1.12",
   "description": "Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)",
   "keywords": [
     "compare",
@@ -72,6 +72,6 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.10"
+    "codsen-utils": "^1.6.11"
   }
 }
