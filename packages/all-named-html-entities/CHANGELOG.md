@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 3.0.15 (2025-10-02)
-
-**Note:** Version bump only for package all-named-html-entities
-
 ## 3.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
