@@ -1,6 +1,6 @@
 {
   "name": "ranges-crop",
-  "version": "6.0.27",
+  "version": "6.0.28",
   "description": "Crop array of ranges when they go beyond the reference string's length",
   "keywords": [
     "array",
@@ -69,10 +69,10 @@
     }
   },
   "dependencies": {
-    "ranges-merge": "^9.0.26"
+    "ranges-merge": "^9.0.27"
   },
   "devDependencies": {
-    "ranges-apply": "^7.0.27",
+    "ranges-apply": "^7.0.28",
     "rfdc": "^1.4.1"
   },
   "publishConfig": {

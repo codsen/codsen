@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey",
-  "version": "9.0.37",
+  "version": "9.0.38",
   "description": "Traverse and edit AST",
   "keywords": [
     "ast",
@@ -81,11 +81,11 @@
     }
   },
   "dependencies": {
-    "ast-compare": "^4.0.38",
-    "ast-monkey-traverse": "^4.0.27",
-    "check-types-mini": "^8.0.30",
-    "codsen-utils": "^1.6.15",
-    "util-array-object-or-both": "^5.0.22"
+    "ast-compare": "^4.0.39",
+    "ast-monkey-traverse": "^4.0.28",
+    "check-types-mini": "^8.0.31",
+    "codsen-utils": "^1.6.16",
+    "util-array-object-or-both": "^5.0.23"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

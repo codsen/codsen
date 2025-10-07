@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.6.33 (2025-10-07)
+
+**Note:** Version bump only for package remark-typography
+
 ## 0.6.0 (2022-12-27)
 
 ### Features

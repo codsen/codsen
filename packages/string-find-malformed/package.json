@@ -1,6 +1,6 @@
 {
   "name": "string-find-malformed",
-  "version": "4.0.28",
+  "version": "4.0.29",
   "description": "Search for a malformed string. Think of Levenshtein distance but in search.",
   "keywords": [
     "character",
@@ -73,8 +73,8 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.15",
-    "string-left-right": "^6.0.28"
+    "codsen-utils": "^1.6.16",
+    "string-left-right": "^6.0.29"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

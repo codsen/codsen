@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.0.27 (2025-10-07)
+
+**Note:** Version bump only for package ast-is-empty
+
 ## 4.0.10 (2023-05-13)
 
 ### Bug Fixes

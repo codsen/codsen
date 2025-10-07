@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-white-space",
-  "version": "11.0.30",
+  "version": "11.0.31",
   "description": "Replace chunks of whitespace with a single spaces",
   "keywords": [
     "chunk",
@@ -69,12 +69,12 @@
     }
   },
   "dependencies": {
-    "ranges-apply": "^7.0.27",
-    "ranges-push": "^7.0.26",
-    "string-left-right": "^6.0.28"
+    "ranges-apply": "^7.0.28",
+    "ranges-push": "^7.0.27",
+    "string-left-right": "^6.0.29"
   },
   "devDependencies": {
-    "test-mixer": "^4.1.25"
+    "test-mixer": "^4.1.26"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

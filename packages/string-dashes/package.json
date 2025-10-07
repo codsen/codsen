@@ -1,6 +1,6 @@
 {
   "name": "string-dashes",
-  "version": "1.2.24",
+  "version": "1.2.25",
   "description": "Comprehensive, HTML-entities-aware tool to typographically-correct the dashes and hyphens",
   "keywords": [
     "dash",
@@ -71,12 +71,12 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.15",
-    "ranges-apply": "^7.0.27",
-    "string-left-right": "^6.0.28"
+    "codsen-utils": "^1.6.16",
+    "ranges-apply": "^7.0.28",
+    "string-left-right": "^6.0.29"
   },
   "devDependencies": {
-    "test-mixer": "^4.1.25"
+    "test-mixer": "^4.1.26"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
