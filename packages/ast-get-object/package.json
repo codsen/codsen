@@ -1,6 +1,6 @@
 {
   "name": "ast-get-object",
-  "version": "4.0.38",
+  "version": "4.0.39",
   "description": "Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs",
   "keywords": [
     "ast",
@@ -80,8 +80,8 @@
     "various": {}
   },
   "dependencies": {
-    "ast-compare": "^4.0.39",
-    "codsen-utils": "^1.6.16",
+    "ast-compare": "^4.0.40",
+    "codsen-utils": "^1.6.17",
     "rfdc": "^1.4.1"
   },
   "publishConfig": {

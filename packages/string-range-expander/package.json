@@ -1,6 +1,6 @@
 {
   "name": "string-range-expander",
-  "version": "4.0.26",
+  "version": "4.0.27",
   "description": "Expands string index ranges within whitespace boundaries until letters are met",
   "keywords": [
     "expand",
@@ -70,7 +70,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.16"
+    "codsen-utils": "^1.6.17"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

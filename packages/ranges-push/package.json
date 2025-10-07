@@ -1,6 +1,6 @@
 {
   "name": "ranges-push",
-  "version": "7.0.27",
+  "version": "7.0.28",
   "description": "Gather string index ranges",
   "keywords": [
     "delete",
@@ -71,10 +71,10 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.16",
-    "ranges-sort": "^6.0.22",
-    "string-collapse-leading-whitespace": "^7.0.17",
-    "string-trim-spaces-only": "^5.0.21"
+    "codsen-utils": "^1.6.17",
+    "ranges-sort": "^6.0.23",
+    "string-collapse-leading-whitespace": "^7.0.18",
+    "string-trim-spaces-only": "^5.0.22"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

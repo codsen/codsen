@@ -1,6 +1,6 @@
 {
   "name": "is-relative-uri",
-  "version": "5.0.28",
+  "version": "5.0.29",
   "description": "Is given string a relative URI?",
   "keywords": [
     "href",
@@ -70,7 +70,7 @@
     }
   },
   "devDependencies": {
-    "ranges-apply": "^7.0.28"
+    "ranges-apply": "^7.0.29"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

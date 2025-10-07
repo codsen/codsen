@@ -1,6 +1,6 @@
 {
   "name": "generate-atomic-css",
-  "version": "3.0.30",
+  "version": "3.0.31",
   "description": "Generate Atomic CSS",
   "keywords": [
     "api",
@@ -70,8 +70,8 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.16",
-    "string-left-right": "^6.0.29"
+    "codsen-utils": "^1.6.17",
+    "string-left-right": "^6.0.30"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

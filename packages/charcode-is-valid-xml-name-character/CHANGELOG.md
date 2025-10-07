@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.22 (2025-10-07)
+
+**Note:** Version bump only for package charcode-is-valid-xml-name-character
+
 ## 3.0.0 (2022-12-01)
 
 ### BREAKING CHANGES

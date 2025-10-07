@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 13.4.22 (2025-10-07)
+
+**Note:** Version bump only for package string-strip-html
+
 ## 13.4.8 (2024-04-04)
 
 ### Bug Fixes

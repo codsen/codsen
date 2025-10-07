@@ -1,6 +1,6 @@
 {
   "name": "string-match-left-right",
-  "version": "9.0.31",
+  "version": "9.0.32",
   "description": "Match substrings on the left or right of a given index, ignoring whitespace",
   "keywords": [
     "left",
@@ -68,9 +68,9 @@
     }
   },
   "dependencies": {
-    "arrayiffy-if-string": "^5.0.18",
-    "codsen-utils": "^1.6.16",
-    "string-character-is-astral-surrogate": "^3.0.19"
+    "arrayiffy-if-string": "^5.0.19",
+    "codsen-utils": "^1.6.17",
+    "string-character-is-astral-surrogate": "^3.0.20"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

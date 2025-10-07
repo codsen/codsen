@@ -1,6 +1,6 @@
 {
   "name": "regex-jinja-specific",
-  "version": "4.0.17",
+  "version": "4.0.18",
   "description": "Regular expression for detecting Python-specific Jinja code",
   "keywords": [
     "code",
