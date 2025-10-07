@@ -1,6 +1,6 @@
 {
   "name": "string-apostrophes",
-  "version": "4.0.29",
+  "version": "4.0.30",
   "description": "Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes",
   "keywords": [
     "apostrophe",
@@ -69,8 +69,8 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.14",
-    "ranges-apply": "^7.0.26"
+    "codsen-utils": "^1.6.15",
+    "ranges-apply": "^7.0.27"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

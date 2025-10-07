@@ -1,6 +1,6 @@
 {
   "name": "string-remove-duplicate-heads-tails",
-  "version": "7.0.29",
+  "version": "7.0.30",
   "description": "Detect and (recursively) remove head and tail wrappings around the input string",
   "keywords": [
     "alt",
@@ -74,12 +74,12 @@
     }
   },
   "dependencies": {
-    "arrayiffy-if-string": "^5.0.16",
-    "codsen-utils": "^1.6.14",
-    "ranges-apply": "^7.0.26",
-    "ranges-push": "^7.0.25",
-    "string-match-left-right": "^9.0.29",
-    "string-trim-spaces-only": "^5.0.19"
+    "arrayiffy-if-string": "^5.0.17",
+    "codsen-utils": "^1.6.15",
+    "ranges-apply": "^7.0.27",
+    "ranges-push": "^7.0.26",
+    "string-match-left-right": "^9.0.30",
+    "string-trim-spaces-only": "^5.0.20"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

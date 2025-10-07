@@ -1,6 +1,6 @@
 {
   "name": "array-includes-with-glob",
-  "version": "5.0.19",
+  "version": "5.0.20",
   "description": "Like _.includes but with wildcards",
   "keywords": [
     "array",

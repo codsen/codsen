@@ -1,6 +1,6 @@
 {
   "name": "string-find-heads-tails",
-  "version": "6.0.29",
+  "version": "6.0.30",
   "description": "Finds where are arbitrary templating marker heads and tails located",
   "keywords": [
     "array",
@@ -71,9 +71,9 @@
     }
   },
   "dependencies": {
-    "arrayiffy-if-string": "^5.0.16",
-    "codsen-utils": "^1.6.14",
-    "string-match-left-right": "^9.0.29"
+    "arrayiffy-if-string": "^5.0.17",
+    "codsen-utils": "^1.6.15",
+    "string-match-left-right": "^9.0.30"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

@@ -1,6 +1,6 @@
 {
   "name": "ranges-merge",
-  "version": "9.0.25",
+  "version": "9.0.26",
   "description": "Merge and sort string index ranges",
   "keywords": [
     "index",
@@ -70,8 +70,8 @@
     }
   },
   "dependencies": {
-    "ranges-push": "^7.0.25",
-    "ranges-sort": "^6.0.20"
+    "ranges-push": "^7.0.26",
+    "ranges-sort": "^6.0.21"
   },
   "devDependencies": {
     "rfdc": "^1.4.1"

@@ -1,6 +1,6 @@
 {
   "name": "ranges-is-index-within",
-  "version": "4.0.19",
+  "version": "4.0.20",
   "description": "Checks if index is within any of the given string index ranges",
   "keywords": [
     "index",

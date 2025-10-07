@@ -1,6 +1,6 @@
 {
   "name": "ast-is-empty",
-  "version": "4.0.25",
+  "version": "4.0.26",
   "description": "Find out, is nested array/object/string/AST tree is empty",
   "keywords": [
     "array",
@@ -81,7 +81,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.14"
+    "codsen-utils": "^1.6.15"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

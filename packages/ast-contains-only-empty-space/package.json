@@ -1,6 +1,6 @@
 {
   "name": "ast-contains-only-empty-space",
-  "version": "4.0.26",
+  "version": "4.0.27",
   "description": "Does AST contain only empty space?",
   "keywords": [
     "ast",
@@ -74,7 +74,7 @@
     }
   },
   "dependencies": {
-    "ast-monkey-traverse": "^4.0.26"
+    "ast-monkey-traverse": "^4.0.27"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
