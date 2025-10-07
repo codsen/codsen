@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 6.0.27 (2025-10-07)
-
-**Note:** Version bump only for package object-set-all-values-to
-
 ## 6.0.16 (2024-03-30)
 
 ### Bug Fixes
