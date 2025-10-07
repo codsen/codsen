@@ -4,10 +4,6 @@ on:
   push:
     branches: ["main"]
 
-permissions:
-  contents: write
-  id-token: write
-
 jobs:
   build:
     name: Codsen Release
@@ -15,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write # Needed to push commits
+      id-token: write
 
     steps:
       - name: prepare
