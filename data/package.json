@@ -26,7 +26,22 @@
   "scripts": {
     "build": "rimraf ./dist && tsc index.ts --module nodenext --outDir dist --declaration --skipLibCheck",
     "test": "echo 'no tests'",
-    "publ": "npm publish --provenance --access public || :"
+    "publ": "npm publish --provenance || :",
+    "cjs-off": "exit 0",
+    "cjs-on": "exit 0",
+    "dev": "exit 0",
+    "devtest": "exit 0",
+    "dts": "exit 0",
+    "examples": "exit 0",
+    "lect": "exit 0",
+    "letspublish": "exit 0",
+    "lint": "exit 0",
+    "perf": "exit 0",
+    "prep": "exit 0",
+    "prettier": "exit 0",
+    "prettier:format": "exit 0",
+    "pretest": "exit 0",
+    "unit": "exit 0"
   },
   "devDependencies": {
     "rimraf": "^6.0.1"

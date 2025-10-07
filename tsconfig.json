@@ -92,12 +92,6 @@
       "path": "packages/email-comb"
     },
     {
-      "path": "packages/eslint-plugin-row-num-tbc"
-    },
-    {
-      "path": "packages/eslint-plugin-test-num-tbc"
-    },
-    {
       "path": "packages/extract-search-index"
     },
     {

@@ -30,8 +30,13 @@ jobs:
       - name: set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 24
-          cache: "npm"
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Configure npm for OIDC
+        run: |
+          echo "Setting up OIDC authentication..."
+          npm config set //registry.npmjs.org/:_authToken "system"
 
       - name: install dependencies
         run: npm ci
@@ -94,7 +99,7 @@ jobs:
         run: npm run cjs-on
 
       - name: publish all packages to npm
-        run: npm run ci:publish:all
+        run: npm run letspublish --workspace=packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
