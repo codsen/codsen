@@ -5,8 +5,8 @@ on:
     branches: ["main"]
 
 permissions:
-  id-token: write # Required for OIDC
-  contents: read
+  contents: write
+  id-token: write
 
 jobs:
   build:
@@ -32,11 +32,6 @@ jobs:
         with:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
-
-      - name: Configure npm for OIDC
-        run: |
-          echo "Setting up OIDC authentication..."
-          npm config set //registry.npmjs.org/:_authToken "system"
 
       - name: install dependencies
         run: npm ci
