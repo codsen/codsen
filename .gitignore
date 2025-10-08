@@ -1,9 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# lockfiles
-# package-lock.json
-yarn.lock
-
 # dependencies
 node_modules
 .pnp
@@ -20,6 +16,7 @@ dist/
 
 # misc
 .cache
+.eslintcache
 .DS_Store
 *.pem
 ideas.md

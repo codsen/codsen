@@ -18,7 +18,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/codsen/codsen.git",
-    "directory": "packages-external/all-named-html-entities"
+    "directory": "packages/all-named-html-entities"
   },
   "license": "MIT",
   "author": {
@@ -43,7 +43,7 @@
     "examples": "node '../../ops/scripts/run-examples.js'",
     "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
     "letspublish": "npm publish --provenance || :",
-    "lint": "eslint . --fix",
+    "lint": "eslint . --fix --concurrency=auto --cache",
     "perf": "node perf/check.js",
     "prep": "echo 'ready'",
     "prettier": "prettier",

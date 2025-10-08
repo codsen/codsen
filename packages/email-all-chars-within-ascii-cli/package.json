@@ -41,7 +41,7 @@
     "examples": "exit 0",
     "lect": "node '../../ops/lect/lect.js'",
     "letspublish": "npm publish --provenance || :",
-    "lint": "eslint . --fix",
+    "lint": "eslint . --fix --concurrency=auto --cache",
     "perf": "exit 0",
     "prep": "echo 'ready'",
     "prettier": "prettier",

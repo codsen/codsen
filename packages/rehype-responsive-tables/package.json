@@ -36,7 +36,7 @@
     "examples": "node '../../ops/scripts/run-examples.js'",
     "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' --write --log-level 'silent'",
     "letspublish": "npm publish --provenance || :",
-    "lint": "eslint . --fix",
+    "lint": "eslint . --fix --concurrency=auto --cache",
     "perf": "echo 'skip perf'",
     "prep": "echo 'ready'",
     "prettier": "prettier",
