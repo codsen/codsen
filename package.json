@@ -43,7 +43,8 @@
     "turbo": "turbo",
     "unit": "npm run house && turbo run unit",
     "update:projectReferences": "workspaces-to-typescript-project-references --includesRoot",
-    "wipe": "rm package-lock.json || true && rm -rf node_modules && git clean -fXd && npm i"
+    "wipe": "rm package-lock.json || true && rm -rf node_modules && git clean -fXd && npm i",
+    "knip": "knip"
   },
   "config": {
     "commitizen": {
@@ -88,6 +89,7 @@
     "hast-util-raw": "^9.1.0",
     "jest": "^30.2.0",
     "json-comb-core": "^8.0.31",
+    "knip": "^5.64.2",
     "lerna": "^9.0.0",
     "lerna-clean-changelogs-cli": "^4.0.16",
     "lodash.camelcase": "^4.3.0",
