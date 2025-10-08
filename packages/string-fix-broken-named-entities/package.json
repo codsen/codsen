@@ -1,6 +1,6 @@
 {
   "name": "string-fix-broken-named-entities",
-  "version": "7.0.30",
+  "version": "7.0.31",
   "description": "Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes",
   "keywords": [
     "broken",
@@ -75,11 +75,11 @@
     "various": {}
   },
   "dependencies": {
-    "all-named-html-entities": "^3.0.20",
-    "codsen-utils": "^1.6.17",
+    "all-named-html-entities": "^3.0.21",
+    "codsen-utils": "^1.6.18",
     "leven": "^4.1.0",
     "rfdc": "^1.4.1",
-    "string-left-right": "^6.0.30"
+    "string-left-right": "^6.0.31"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

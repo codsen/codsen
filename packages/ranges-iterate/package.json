@@ -1,6 +1,6 @@
 {
   "name": "ranges-iterate",
-  "version": "4.0.29",
+  "version": "4.0.30",
   "description": "Iterate a string and any changes within given string index ranges",
   "keywords": [
     "array",
@@ -70,8 +70,8 @@
     }
   },
   "devDependencies": {
-    "ranges-apply": "^7.0.29",
-    "ranges-merge": "^9.0.28"
+    "ranges-apply": "^7.0.30",
+    "ranges-merge": "^9.0.29"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

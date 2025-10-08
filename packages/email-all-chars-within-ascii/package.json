@@ -1,6 +1,6 @@
 {
   "name": "email-all-chars-within-ascii",
-  "version": "5.0.32",
+  "version": "5.0.33",
   "description": "Scans all characters within a string and checks are they within ASCII range",
   "keywords": [
     "7bit",
@@ -69,7 +69,7 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^8.0.32"
+    "check-types-mini": "^8.0.33"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

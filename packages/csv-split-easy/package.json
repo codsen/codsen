@@ -1,6 +1,6 @@
 {
   "name": "csv-split-easy",
-  "version": "7.0.29",
+  "version": "7.0.30",
   "description": "Splits the CSV string into array of arrays, each representing a row of columns",
   "keywords": [
     "add",
@@ -74,7 +74,7 @@
     }
   },
   "dependencies": {
-    "string-remove-thousand-separators": "^7.0.29"
+    "string-remove-thousand-separators": "^7.0.30"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

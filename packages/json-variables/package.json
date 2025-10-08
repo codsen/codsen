@@ -1,6 +1,6 @@
 {
   "name": "json-variables",
-  "version": "12.0.32",
+  "version": "12.0.33",
   "description": "Resolves custom-marked, cross-referenced paths in parsed JSON",
   "keywords": [
     "comb",
@@ -78,17 +78,17 @@
     "various": {}
   },
   "dependencies": {
-    "arrayiffy-if-string": "^5.0.19",
-    "ast-get-values-by-key": "^5.0.31",
-    "ast-monkey-traverse": "^4.0.29",
-    "codsen-utils": "^1.6.17",
+    "arrayiffy-if-string": "^5.0.20",
+    "ast-get-values-by-key": "^5.0.32",
+    "ast-monkey-traverse": "^4.0.30",
+    "codsen-utils": "^1.6.18",
     "matcher": "^6.0.0",
     "object-path": "^0.11.8",
-    "ranges-apply": "^7.0.29",
-    "ranges-push": "^7.0.28",
-    "string-find-heads-tails": "^6.0.32",
-    "string-match-left-right": "^9.0.32",
-    "string-remove-duplicate-heads-tails": "^7.0.32"
+    "ranges-apply": "^7.0.30",
+    "ranges-push": "^7.0.29",
+    "string-find-heads-tails": "^6.0.33",
+    "string-match-left-right": "^9.0.33",
+    "string-remove-duplicate-heads-tails": "^7.0.33"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

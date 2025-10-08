@@ -1,6 +1,6 @@
 {
   "name": "html-table-patcher",
-  "version": "6.0.39",
+  "version": "6.0.40",
   "description": "Visual helper to place templating code around table tags into correct places",
   "keywords": [
     "add",
@@ -74,10 +74,10 @@
     }
   },
   "dependencies": {
-    "ast-monkey-traverse-with-lookahead": "^4.0.28",
+    "ast-monkey-traverse-with-lookahead": "^4.0.29",
     "codsen-parser": "^0.14.25",
-    "ranges-apply": "^7.0.29",
-    "ranges-push": "^7.0.28"
+    "ranges-apply": "^7.0.30",
+    "ranges-push": "^7.0.29"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
