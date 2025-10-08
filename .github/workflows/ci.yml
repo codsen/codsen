@@ -113,8 +113,9 @@ jobs:
           cd ..
           git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify
           cd data
-          npm run publ
+          npm version patch -m "chore: automated build tasks [skip ci]"
           cd ..
+          npm run publ --workspace=data
           git status
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
