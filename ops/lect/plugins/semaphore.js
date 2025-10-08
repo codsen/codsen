@@ -17,14 +17,14 @@ async function semaphore({ state }) {
           .statSync(path.join(path.resolve("../"), packageName))
           .isDirectory() &&
         fs.statSync(
-          path.join(path.resolve("../"), packageName, "package.json")
+          path.join(path.resolve("../"), packageName, "package.json"),
         ) &&
         !JSON.parse(
           fs.readFileSync(
             path.join(path.resolve("../"), packageName, "package.json"),
-            "utf8"
-          )
-        ).private
+            "utf8",
+          ),
+        ).private,
     )
     .slice(0, 11);
 
@@ -73,9 +73,9 @@ ${chunkOfPackages
             - cd packages/${packagesName}
             - npm run test
             - cd ...
-            - cache store ${packagesName}-cache-1 packages/${packagesName}`
+            - cache store ${packagesName}-cache-1 packages/${packagesName}`,
   )
-  .join("\n")}`
+  .join("\n")}`,
   )
   .join("\n")}
   - name: "Bump versions"
@@ -138,9 +138,9 @@ ${chunkOfPackages
             # - "npm run publish || :"
             - cat package.json | grep \\"name\\" -m1
             - cat package.json | grep \\"version\\" -m1
-            - cd ...`
+            - cd ...`,
   )
-  .join("\n")}`
+  .join("\n")}`,
   )
   .join("\n")}
   - name: "Purge JSDelivr"

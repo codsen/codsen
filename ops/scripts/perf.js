@@ -1,4 +1,3 @@
-/* eslint-disable no-invalid-this */
 import Benchmark from "benchmark";
 import fs from "fs";
 import path from "path";

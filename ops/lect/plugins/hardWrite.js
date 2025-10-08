@@ -21,7 +21,7 @@ async function hardWrite({ lectrc }) {
     });
 
   // if to-do list is empty, bail early:
-  if (!contentsToWriteHard || !contentsToWriteHard.length) {
+  if (!contentsToWriteHard?.length) {
     return Promise.resolve(null);
   }
 
@@ -35,7 +35,7 @@ async function hardWrite({ lectrc }) {
             // );
             return writeFileAtomic(
               oneToDoObj.name,
-              resolve(oneToDoObj.contents)
+              resolve(oneToDoObj.contents),
             );
           } else {
             // console.log(
@@ -51,7 +51,7 @@ async function hardWrite({ lectrc }) {
         // );
         return writeFileAtomic(oneToDoObj.name, resolve(oneToDoObj.contents));
       }
-    })
+    }),
   );
 }
 

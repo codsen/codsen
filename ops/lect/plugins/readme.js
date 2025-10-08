@@ -1,7 +1,7 @@
 import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
 import arrayiffy from "../../helpers/arrayiffy.js";
-import { esmBump } from "@codsen/data";
+import { esmBump } from "../../../data/sources/esmBump.ts";
 import { removeTbc } from "./_util.js";
 
 const playgroundLibs = [
@@ -53,12 +53,12 @@ async function readme({ state, quickTakeExample, lectrc }) {
 
 <p align="center">
   <a href="https://codsen.com/os/${removeTbc(
-    state.pack.name
+    state.pack.name,
   )}" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/-codsen-blue?style=flat-square" alt="page on codsen.com">
   </a>
   <a href="https://www.npmjs.com/package/${removeTbc(
-    state.pack.name
+    state.pack.name,
   )}" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/-npm-blue?style=flat-square" alt="page on npm">
   </a>
@@ -68,35 +68,33 @@ async function readme({ state, quickTakeExample, lectrc }) {
     <img src="https://img.shields.io/badge/-github-blue?style=flat-square" alt="page on github">
   </a>
   <a href="https://npmcharts.com/compare/${removeTbc(
-    state.pack.name
+    state.pack.name,
   )}?interval=30" rel="nofollow noreferrer noopener" target="_blank">
     <img src="https://img.shields.io/npm/dm/${removeTbc(
-      state.pack.name
+      state.pack.name,
     )}.svg?style=flat-square" alt="Downloads per month">
   </a>
   <a href="https://codsen.com/os/${removeTbc(
-    state.pack.name
+    state.pack.name,
   )}/changelog" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/changelog-here-brightgreen?style=flat-square" alt="changelog">
   </a>
   <img src="https://img.shields.io/badge/licence-MIT-brightgreen.svg?style=flat-square" alt="MIT Licence">${
     hasPlayground(removeTbc(state.pack.name))
       ? `\n  <a href="https://codsen.com/os/${removeTbc(
-          state.pack.name
+          state.pack.name,
         )}/play"><img src="https://img.shields.io/badge/playground-here-brightgreen?style=flat-square" alt="playground"></a>`
       : ""
   }
 </p>
 
 ## Install${state.pack?.exports ? `\n\n${esmNotice}` : ""}${
-    state.pack?.main && state.pack?.main.includes(".cjs")
-      ? `\n\n${cjsNotice}`
-      : ""
+    state.pack?.main?.includes(".cjs") ? `\n\n${cjsNotice}` : ""
   }
 
 \`\`\`bash
 npm i${!state.isRollup && state.isBin ? " -g" : ""} ${removeTbc(
-    state.pack.name
+    state.pack.name,
   )}
 \`\`\`${
     !state.isRollup && state.pack.bin
@@ -123,11 +121,11 @@ ${quickTakeExample}
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/${removeTbc(
-    state.pack.name
+    state.pack.name,
   )}/) for a full description of the API.${
     hasPlayground(removeTbc(state.pack.name))
       ? ` Also, try the [GUI playground](https://codsen.com/os/${removeTbc(
-          state.pack.name
+          state.pack.name,
         )}/play).`
       : ""
   }

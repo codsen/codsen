@@ -216,7 +216,6 @@ for (let packageName of packageNames) {
         if (defaults) {
           exportedDefaults[name] = JSON.stringify(defaults, null, 2);
         }
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         // nothing happens
       }
@@ -228,7 +227,6 @@ for (let packageName of packageNames) {
           if (opts) {
             exportedDefaults[name] = JSON.stringify(opts, null, 2);
           }
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
           // nothing happens
         }
@@ -256,7 +254,6 @@ for (let packageName of packageNames) {
         };
         return accumulatedObj;
       }, {});
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       // nothing happens
     }
@@ -382,14 +379,12 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
       size = readFileSync(
         path.join("packages", packageName, "dist", `${packageName}.esm.js`),
       ).length;
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       try {
         // gulp plugins etc. don't have "dist/*"
         size = readFileSync(
           path.join("packages", packageName, "index.js"),
         ).length;
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         // let's ignore all other unique ad-hoc packages like perf-ref
       }
@@ -682,7 +677,6 @@ if (!isCI) {
         console.log(`\u001b[${32}m${"gitStats.ts written OK"}\u001b[${39}m`);
       },
     );
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     throw new Error("generate-info.js: can't access git data for gitStats.ts");
   }

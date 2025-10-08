@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 // This script is triggered from one of monorepo packages,
 // specifically, CJS packages, such as ESLint plugins.
 // It removes the "type": "module" row from the package.json
@@ -19,22 +17,22 @@ const pkgName = path.resolve(".").split("/").pop();
 const pkg = fs.readFileSync(path.resolve("package.json"), "utf8");
 if (!pkg) {
   throw new Error(
-    `ops/scripts/cjs-on.js: couldn't read ${path.resolve("package.json")}`
+    `ops/scripts/cjs-on.js: couldn't read ${path.resolve("package.json")}`,
   );
 }
 if (!pkgName) {
   throw new Error(
-    `ops/scripts/cjs-on.js: something went wrong! pkgName is falsy!`
+    `ops/scripts/cjs-on.js: something went wrong! pkgName is falsy!`,
   );
 }
 if (pkgName.includes("eslint") && !pkgName.includes("-tbc")) {
   throw new Error(
-    `ops/scripts/cjs-on.js: package's folder name (${pkgName}) is missing "-tbc"!`
+    `ops/scripts/cjs-on.js: package's folder name (${pkgName}) is missing "-tbc"!`,
   );
 }
 if (pkgName.includes("eslint") && !pkg.includes("-tbc")) {
   throw new Error(
-    `ops/scripts/cjs-on.js: ${pkgName} package.json does not include "-tbc"!`
+    `ops/scripts/cjs-on.js: ${pkgName} package.json does not include "-tbc"!`,
   );
 }
 
