@@ -51,9 +51,9 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 ## Licence
 
-MIT License.
+MIT License
 
-Copyright © 2010-2025 Roy Revelt and other contributors.
+Copyright © 2010-2025 Roy Revelt and other contributors
 
 Passes unit tests from https://github.com/kemitchell/straight-to-curly-quotes.json, licenced under CC0-1.0
 

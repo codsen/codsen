@@ -1,7 +1,8 @@
 import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
 import arrayiffy from "../../helpers/arrayiffy.js";
-import { esmBump } from "../../../data/sources/esmBump.ts";
+import { esmBump } from "../../../data/dist/sources/esmBump.js";
+import { getLicenceShortVersion } from "../common/getLicenceContents.js";
 import { removeTbc } from "./_util.js";
 
 const playgroundLibs = [
@@ -21,7 +22,7 @@ function hasPlayground(name) {
   return playgroundLibs.includes(name);
 }
 
-async function readme({ state, quickTakeExample, lectrc }) {
+async function readme({ state, quickTakeExample }) {
   let badge1 = `<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center">`;
 
   let badge2 = `<img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center">`;
@@ -134,17 +135,12 @@ Please [visit codsen.com](https://codsen.com/os/${removeTbc(
 
 To report bugs or request features or assistance, [raise an issue](https://github.com/codsen/codsen/issues/new/choose) on GitHub.
 
-`;
+## Licence
+
+${getLicenceShortVersion(new Date().getFullYear())}`;
 
   // licence module
   let licenceExtras = objectPath.get(state.pack, "lect.licence.extras");
-
-  content += `${
-    lectrc.licence.header.length > 0 ? `${lectrc.licence.header}` : ""
-  }`;
-  content += `${
-    lectrc.licence.restOfIt.length > 0 ? `\n\n${lectrc.licence.restOfIt}` : ""
-  }`;
 
   if (
     licenceExtras &&
@@ -157,7 +153,7 @@ To report bugs or request features or assistance, [raise an issue](https://githu
       .join("\n")}`;
   }
 
-  content = content.replace(/%YEAR%/, String(new Date().getFullYear()));
+  // content = content.replace(/%YEAR%/, String(new Date().getFullYear()));
 
   content += `\n\n<p align="center">${badge1} ${badge2} ${badge3}</p>\n`;
 

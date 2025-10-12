@@ -117,7 +117,6 @@ async function npmIgnore({
       } else {
         filesList.push(files[i]);
       }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       //
     }

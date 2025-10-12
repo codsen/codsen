@@ -2,6 +2,7 @@ import { promises as fs, accessSync } from "fs";
 import path from "path";
 import objectPath from "object-path";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
+import writeFileAtomic from "write-file-atomic";
 
 // import tasks:
 import readme from "./plugins/readme.js";
@@ -12,7 +13,8 @@ import pack from "./plugins/pack.js";
 import rollupConfig from "./plugins/rollupConfig.js";
 import tsconfig from "./plugins/tsconfig.js";
 import allContrib from "./plugins/allContributors.js";
-// import semaphore from "./plugins/semaphore";
+import licence from "./plugins/licence.js";
+import { getLicenceContents } from "./common/getLicenceContents.js";
 
 import { fileURLToPath } from "url";
 
@@ -27,6 +29,7 @@ const state = {
   isBin: false,
   pack: { name: null, version: null, description: null },
   originalLectrc: {},
+  currentYear: new Date().getFullYear(),
 };
 
 // 1. Read package.json in the root where this script was called
@@ -99,9 +102,15 @@ await Promise.all([
   Promise.resolve(tsconfig({ state })),
   // write .all-contributorsrc
   Promise.resolve(allContrib({ state })),
-  // TBC - write ./.semaphore/semaphore.yml
-  // Promise.resolve(semaphore({ state })),
+  // write LICENCE
+  Promise.resolve(licence({ state })),
 ]).catch((e) => {
-  console.log(`105 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${e}`);
+  console.log(`111 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${e}`);
   process.exit(1);
 });
+
+// also write the root LICENSE
+await writeFileAtomic(
+  path.join(path.resolve("../../"), "LICENSE"),
+  getLicenceContents(state.currentYear),
+);
