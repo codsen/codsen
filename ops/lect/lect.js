@@ -102,6 +102,6 @@ await Promise.all([
   // TBC - write ./.semaphore/semaphore.yml
   // Promise.resolve(semaphore({ state })),
 ]).catch((e) => {
-  console.log(`107 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${e}`);
+  console.log(`105 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${e}`);
   process.exit(1);
 });

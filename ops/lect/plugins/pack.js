@@ -110,8 +110,8 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
     )}`;
   }
 
-  // 6. remove devdeps from this package.json which are already present
-  // in root package.json devdeps
+  // 6. remove dev deps from this package.json which are already present
+  // in root package.json dev deps
   if (Object.keys(content.devDependencies || {}).length) {
     content.devDependencies = omit(
       content.devDependencies,
@@ -126,9 +126,8 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
     objectPath.del(content, "devDependencies");
   }
 
-  if (!state.isRollup) {
-    objectPath.set(content, "engines.node", ">=18");
-  }
+  // TODO
+  // objectPath.set(content, "engines.node", ">=20");
 
   // ---
 

@@ -143,7 +143,7 @@ To report bugs or request features or assistance, [raise an issue](https://githu
     lectrc.licence.header.length > 0 ? `${lectrc.licence.header}` : ""
   }`;
   content += `${
-    lectrc.licence.restofit.length > 0 ? `\n\n${lectrc.licence.restofit}` : ""
+    lectrc.licence.restOfIt.length > 0 ? `\n\n${lectrc.licence.restOfIt}` : ""
   }`;
 
   if (
@@ -166,7 +166,7 @@ To report bugs or request features or assistance, [raise an issue](https://githu
     // console.log(`lect README.md ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`);
     return Promise.resolve(null);
   } catch (err) {
-    console.log(`lect: could not write README.md - ${err}`);
+    console.log(`lect: could not write package's README.md - ${err}`);
     return Promise.reject(err);
   }
 }
