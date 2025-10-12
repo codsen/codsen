@@ -25,7 +25,7 @@ const banner = {
  * @name ${name2}
  * @fileoverview ${pkg.description}
  * @version ${pkg.version}
- * @author Roy Revelt, Codsen Ltd
+ * @author Roy Revelt
  * @license MIT
  * {@link https://codsen.com/os/${name2}/}
  */
@@ -46,7 +46,7 @@ if (
     define: { DEV: String(!!process.env.DEV) },
     minify: !process.env.DEV,
     sourcemap: false,
-    target: ["esnext"],
+    target: ["node20"],
     outfile: path.join(path.resolve("./"), `dist/${name2}.esm.js`),
     // pure,
     banner,
