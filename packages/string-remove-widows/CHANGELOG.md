@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 4.0.37 (2025-10-12)
-
-**Note:** Version bump only for package string-remove-widows
-
 ## 4.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
