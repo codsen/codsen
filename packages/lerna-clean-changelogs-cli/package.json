@@ -1,6 +1,6 @@
 {
   "name": "lerna-clean-changelogs-cli",
-  "version": "4.0.20",
+  "version": "4.0.21",
   "description": "CLI application to cleanse the lerna/commitizen-generated changelogs",
   "keywords": [
     "changelog",
@@ -74,7 +74,7 @@
     "chalk": "^5.6.2",
     "fs-extra": "^11.3.2",
     "globby": "^15.0.0",
-    "lerna-clean-changelogs": "^5.0.28",
+    "lerna-clean-changelogs": "^5.0.29",
     "meow": "^14.0.0",
     "p-filter": "^4.1.0",
     "p-reduce": "^3.0.0",

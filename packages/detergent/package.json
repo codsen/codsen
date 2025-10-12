@@ -1,6 +1,6 @@
 {
   "name": "detergent",
-  "version": "9.2.25",
+  "version": "9.2.26",
   "description": "Extract, clean, encode text and fix English style",
   "keywords": [
     "brief",
@@ -73,28 +73,28 @@
     }
   },
   "dependencies": {
-    "all-named-html-entities": "^3.0.21",
+    "all-named-html-entities": "^3.0.22",
     "ansi-regex": "^6.2.2",
-    "codsen-utils": "^1.6.18",
+    "codsen-utils": "^1.6.19",
     "he": "^1.2.0",
-    "html-entities-not-email-friendly": "^0.8.21",
-    "ranges-apply": "^7.0.30",
-    "ranges-invert": "^6.0.30",
-    "ranges-process-outside": "^6.0.30",
-    "ranges-push": "^7.0.29",
-    "string-apostrophes": "^4.0.33",
-    "string-collapse-white-space": "^11.0.33",
-    "string-dashes": "^1.2.27",
-    "string-fix-broken-named-entities": "^7.0.31",
-    "string-left-right": "^6.0.31",
-    "string-range-expander": "^4.0.28",
-    "string-remove-widows": "^4.0.36",
-    "string-strip-html": "^13.4.23",
-    "string-trim-spaces-only": "^5.0.23"
+    "html-entities-not-email-friendly": "^0.8.22",
+    "ranges-apply": "^7.0.31",
+    "ranges-invert": "^6.0.31",
+    "ranges-process-outside": "^6.0.31",
+    "ranges-push": "^7.0.30",
+    "string-apostrophes": "^4.0.34",
+    "string-collapse-white-space": "^11.0.34",
+    "string-dashes": "^1.2.28",
+    "string-fix-broken-named-entities": "^7.0.32",
+    "string-left-right": "^6.0.32",
+    "string-range-expander": "^4.0.29",
+    "string-remove-widows": "^4.0.37",
+    "string-strip-html": "^13.4.24",
+    "string-trim-spaces-only": "^5.0.24"
   },
   "devDependencies": {
     "rfdc": "^1.4.1",
-    "test-mixer": "^4.1.28"
+    "test-mixer": "^4.1.29"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

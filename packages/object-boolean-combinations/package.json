@@ -1,6 +1,6 @@
 {
   "name": "object-boolean-combinations",
-  "version": "6.1.19",
+  "version": "6.1.20",
   "description": "Consumes a defaults object with booleans, generates all possible variations of it",
   "keywords": [
     "all",
@@ -67,7 +67,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.18",
+    "codsen-utils": "^1.6.19",
     "rfdc": "^1.4.1"
   },
   "publishConfig": {

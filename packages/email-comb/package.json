@@ -1,6 +1,6 @@
 {
   "name": "email-comb",
-  "version": "7.0.36",
+  "version": "7.0.37",
   "description": "Remove unused CSS from email templates",
   "keywords": [
     "body",
@@ -70,18 +70,18 @@
     }
   },
   "dependencies": {
-    "array-pull-all-with-glob": "^7.0.23",
-    "codsen-utils": "^1.6.18",
-    "html-crush": "^6.0.33",
+    "array-pull-all-with-glob": "^7.0.24",
+    "codsen-utils": "^1.6.19",
+    "html-crush": "^6.0.34",
     "matcher": "^6.0.0",
-    "ranges-apply": "^7.0.30",
-    "ranges-push": "^7.0.29",
-    "regex-empty-conditional-comments": "^3.0.19",
-    "string-extract-class-names": "^8.0.32",
-    "string-left-right": "^6.0.31",
-    "string-match-left-right": "^9.0.33",
-    "string-range-expander": "^4.0.28",
-    "string-uglify": "^3.0.24"
+    "ranges-apply": "^7.0.31",
+    "ranges-push": "^7.0.30",
+    "regex-empty-conditional-comments": "^3.0.20",
+    "string-extract-class-names": "^8.0.33",
+    "string-left-right": "^6.0.32",
+    "string-match-left-right": "^9.0.34",
+    "string-range-expander": "^4.0.29",
+    "string-uglify": "^3.0.25"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

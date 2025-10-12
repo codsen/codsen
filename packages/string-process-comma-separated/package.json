@@ -1,6 +1,6 @@
 {
   "name": "string-process-comma-separated",
-  "version": "4.1.19",
+  "version": "4.1.20",
   "description": "Extracts chunks from possibly comma or whatever-separated string",
   "keywords": [
     "characters",
@@ -70,7 +70,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.18"
+    "codsen-utils": "^1.6.19"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

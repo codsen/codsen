@@ -1,6 +1,6 @@
 {
   "name": "is-char-suitable-for-html-attr-name",
-  "version": "4.0.19",
+  "version": "4.0.20",
   "description": "Is given character suitable to be in an HTML attribute's name?",
   "keywords": [
     "attribute",

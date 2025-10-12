@@ -1,6 +1,6 @@
 {
   "name": "ast-loose-compare",
-  "version": "4.0.30",
+  "version": "4.0.31",
   "description": "Compare anything: AST, objects, arrays and strings",
   "keywords": [
     "array",
@@ -79,8 +79,8 @@
     }
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^4.0.30",
-    "codsen-utils": "^1.6.18"
+    "ast-contains-only-empty-space": "^4.0.31",
+    "codsen-utils": "^1.6.19"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

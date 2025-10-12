@@ -1,6 +1,6 @@
 {
   "name": "ranges-invert",
-  "version": "6.0.30",
+  "version": "6.0.31",
   "description": "Invert string index ranges",
   "keywords": [
     "array",
@@ -65,8 +65,8 @@
     }
   },
   "dependencies": {
-    "ranges-crop": "^6.0.30",
-    "ranges-merge": "^9.0.29"
+    "ranges-crop": "^6.0.31",
+    "ranges-merge": "^9.0.30"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
