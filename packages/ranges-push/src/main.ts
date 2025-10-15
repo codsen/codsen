@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import { collWhitespace } from "string-collapse-leading-whitespace";
-import { existy, isStr, isInt } from "codsen-utils";
+import { existy, isStr, isInt, isNum } from "codsen-utils";
 
 import { rMerge } from "./rMerge";
 import { version as v } from "../package.json";
@@ -160,18 +160,14 @@ class Ranges {
     let from = +(originalFrom as number);
     let to = +originalTo;
 
-    if (isInt(addVal)) {
-      addVal = String(addVal);
-    }
-
     // validation
     if (isInt(from) && isInt(to)) {
       DEV &&
         console.log(
-          `171 ${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`,
+          `167 ${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`,
         );
       // This means two indexes were given as arguments. Business as usual.
-      if (existy(addVal) && !isStr(addVal) && !isInt(addVal)) {
+      if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
         throw new TypeError(
           `ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ${typeof addVal}, equal to:\n${JSON.stringify(
             addVal,
@@ -182,7 +178,7 @@ class Ranges {
       }
       DEV &&
         console.log(
-          `185 ${`\u001b[${33}m${`addVal`}\u001b[${39}m`} = ${JSON.stringify(
+          `181 ${`\u001b[${33}m${`addVal`}\u001b[${39}m`} = ${JSON.stringify(
             addVal,
             null,
             4,
@@ -198,7 +194,7 @@ class Ranges {
       ) {
         DEV &&
           console.log(
-            `201 ${`\u001b[${32}m${`YES`}\u001b[${39}m`}, incoming "from" value match the existing last element's "to" value`,
+            `197 ${`\u001b[${32}m${`YES`}\u001b[${39}m`}, incoming "from" value match the existing last element's "to" value`,
           );
         // The incoming range is an exact extension of the last range, like
         // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
@@ -208,13 +204,13 @@ class Ranges {
         if ((this.last() as RangeType)[2] === null || addVal === null) {
           DEV &&
             console.log(
-              `211 this.last()[2] = ${(this.last() as RangeType)[2]}`,
+              `207 this.last()[2] = ${(this.last() as RangeType)[2]}`,
             );
-          DEV && console.log(`213 addVal = ${addVal}`);
+          DEV && console.log(`209 addVal = ${addVal}`);
         }
 
         if ((this.last() as RangeType)[2] !== null && existy(addVal)) {
-          DEV && console.log(`217`);
+          DEV && console.log(`213`);
           let calculatedVal =
             (this.last() as RangeType)[2] &&
             ((this.last() as RangeType)[2] as string).length &&
@@ -223,11 +219,11 @@ class Ranges {
               : addVal;
           DEV &&
             console.log(
-              `226 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+              `222 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
                 calculatedVal,
                 null,
                 4,
-              )}`,
+              )} (type ${typeof calculatedVal})`,
             );
           if (this.opts.limitToBeAddedWhitespace) {
             calculatedVal = collWhitespace(
@@ -237,7 +233,7 @@ class Ranges {
           }
           DEV &&
             console.log(
-              `240 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+              `236 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
                 calculatedVal,
                 null,
                 4,
@@ -248,11 +244,11 @@ class Ranges {
             (this.last() as RangeType)[2] = calculatedVal;
           }
         }
-        DEV && console.log(`251`);
+        DEV && console.log(`247`);
       } else {
         DEV &&
           console.log(
-            `255 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`,
+            `251 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`,
           );
 
         if (!this.ranges) {
@@ -270,18 +266,18 @@ class Ranges {
             : [from, to];
         DEV &&
           console.log(
-            `273 PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`,
+            `269 PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`,
           );
         this.ranges.push(whatToPush);
         DEV &&
           console.log(
-            `278 this.ranges = ${JSON.stringify(this.ranges, null, 4)};`,
+            `274 this.ranges = ${JSON.stringify(this.ranges, null, 4)};`,
           );
       }
     } else {
       DEV &&
         console.log(
-          `284 ${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`,
+          `280 ${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`,
         );
       // Error somewhere!
       // Let's find out where.
@@ -306,7 +302,7 @@ class Ranges {
         );
       }
     }
-    DEV && console.log(`309`);
+    DEV && console.log(`305`);
   }
 
   // P U S H  ()  -  A L I A S   F O R   A D D ()
@@ -326,7 +322,7 @@ class Ranges {
   current(): null | RangeType[] {
     DEV &&
       console.log(
-        `329 ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
+        `325 ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
           this.ranges,
           null,
           4,
@@ -352,7 +348,7 @@ class Ranges {
       }
       DEV &&
         console.log(
-          `355 ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
+          `351 ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
             this.ranges,
             null,
             4,
