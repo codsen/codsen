@@ -49,7 +49,7 @@ assert.equal(
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/ranges-apply/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/ranges-apply/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/ranges-apply/CHANGELOG.md).
 
 ## Contributing
 

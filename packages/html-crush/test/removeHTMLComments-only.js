@@ -50,7 +50,7 @@ test('02 - outlook "only" type, tight', () => {
   equal(ranges, null, "02.03");
 });
 
-test('01.02 - outlook "only" type, tight', () => {
+test('03 - outlook "only" type, tight', () => {
   let source = '<!--[if mso]><img src="fallback"/><![endif]-->';
   let { result, applicableOpts, ranges } = m(equal, source, {
     removeHTMLComments: 2, // <---

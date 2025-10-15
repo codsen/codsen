@@ -61,7 +61,7 @@ assert.deepEqual(
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/object-fill-missing-keys/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/object-fill-missing-keys/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/object-fill-missing-keys/CHANGELOG.md).
 
 ## Contributing
 

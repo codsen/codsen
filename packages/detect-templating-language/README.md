@@ -51,7 +51,7 @@ assert.deepEqual(
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/detect-templating-language/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/detect-templating-language/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/detect-templating-language/CHANGELOG.md).
 
 ## Contributing
 

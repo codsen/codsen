@@ -49,7 +49,7 @@ assert.deepEqual(ranges, [[33, 34, "002"]]);
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/js-row-num/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/js-row-num/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/js-row-num/CHANGELOG.md).
 
 ## Contributing
 

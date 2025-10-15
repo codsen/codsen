@@ -49,7 +49,7 @@ assert.equal(unfancy("someone&rsquo;s"), "someone's");
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-unfancy/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/string-unfancy/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/string-unfancy/CHANGELOG.md).
 
 ## Contributing
 

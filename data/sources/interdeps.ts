@@ -401,7 +401,7 @@ export const interdeps = [
   },
   {
     "name": "json-variables",
-    "size": 9847,
+    "size": 10257,
     "imports": [
       "arrayiffy-if-string",
       "ast-get-values-by-key",
@@ -552,7 +552,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-push",
-    "size": 5655,
+    "size": 5646,
     "imports": [
       "codsen-utils",
       "ranges-sort",

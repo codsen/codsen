@@ -59,7 +59,7 @@ assert.deepEqual(gathered, [
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-find-malformed/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/string-find-malformed/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/string-find-malformed/CHANGELOG.md).
 
 ## Contributing
 

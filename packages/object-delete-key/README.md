@@ -70,7 +70,7 @@ assert.deepEqual(
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/object-delete-key/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/object-delete-key/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/object-delete-key/CHANGELOG.md).
 
 ## Contributing
 

@@ -123,7 +123,7 @@ ${quickTakeExample}
 
 Please [visit codsen.com](https://codsen.com/os/${removeTbc(
     state.pack.name,
-  )}/) for a full description of the API.${
+  )}/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/${state.pack.name}/CHANGELOG.md).${
     hasPlayground(removeTbc(state.pack.name))
       ? ` Also, try the [GUI playground](https://codsen.com/os/${removeTbc(
           state.pack.name,

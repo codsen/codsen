@@ -50,7 +50,7 @@ assert.deepEqual(isLangCode("sr-Latn"), {
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/is-language-code/) for a full description of the API. Also, try the [GUI playground](https://codsen.com/os/is-language-code/play).
+Please [visit codsen.com](https://codsen.com/os/is-language-code/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/is-language-code/CHANGELOG.md). Also, try the [GUI playground](https://codsen.com/os/is-language-code/play).
 
 ## Contributing
 

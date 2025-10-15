@@ -72,7 +72,7 @@ assert.throws(() => unicodeToNative("\uD834\uDF06aa", [1, 0, 2, 3]));
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/string-convert-indexes/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/string-convert-indexes/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/string-convert-indexes/CHANGELOG.md).
 
 ## Contributing
 

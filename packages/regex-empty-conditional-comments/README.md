@@ -82,7 +82,7 @@ assert.deepEqual(
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/regex-empty-conditional-comments/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/regex-empty-conditional-comments/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/regex-empty-conditional-comments/CHANGELOG.md).
 
 ## Contributing
 

@@ -176,7 +176,17 @@ test("02 - correct inputs", () => {
 // 02. normal use, no opts
 // -----------------------------------------------------------------------------
 
-test("03 - deletes multiple chunks correctly", () => {
+test("03 - adds a chunk, arg is a number, middle", () => {
+  let str = "abc def ghi";
+  equal(rApply(str, [[4, 7, 0.3]]), "abc 0.3 ghi", "03.01");
+});
+
+test("04 - adds a chunk, arg is a number, whole str", () => {
+  let str = "abc";
+  equal(rApply(str, [[0, 3, -0.3]]), "-0.3", "04.01");
+});
+
+test("05 - deletes multiple chunks correctly", () => {
   let str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n115.01')
   // console.log('slice 1: >>>' + str.slice(4, 14) + '<<<')
@@ -187,11 +197,11 @@ test("03 - deletes multiple chunks correctly", () => {
       [18, 29],
     ]),
     "aaa bbb ccc",
-    "03.01",
+    "05.01",
   );
 });
 
-test("04 - rApplyaces multiple chunks correctly", () => {
+test("06 - replaces multiple chunks correctly", () => {
   let str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n131.02')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
@@ -202,11 +212,11 @@ test("04 - rApplyaces multiple chunks correctly", () => {
       [18, 28, "yyy"],
     ]),
     "aaa zzz bbb yyy ccc",
-    "04.01",
+    "06.01",
   );
 });
 
-test("05 - deletes and replaces multiple chunks correctly", () => {
+test("07 - deletes and replaces multiple chunks correctly", () => {
   let str = "aaa delete me bbb replace me ccc";
   // console.log('\n===============\n147.03')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
@@ -217,15 +227,15 @@ test("05 - deletes and replaces multiple chunks correctly", () => {
       [18, 28, "zzz"],
     ]),
     "aaa  bbb zzz ccc",
-    "05.01",
+    "07.01",
   );
 });
 
-test("06 - empty ranges array", () => {
-  equal(rApply("some text", []), "some text", "06.01");
+test("08 - empty ranges array", () => {
+  equal(rApply("some text", []), "some text", "08.01");
 });
 
-test("07 - deletes multiple chunks with zero indexes correctly", () => {
+test("09 - deletes multiple chunks with zero indexes correctly", () => {
   let str = "delete me bbb and me too ccc";
   // console.log('\n===============\n168.05')
   // console.log('slice 1: >>>' + str.slice(0, 10) + '<<<')
@@ -236,11 +246,11 @@ test("07 - deletes multiple chunks with zero indexes correctly", () => {
       [14, 25],
     ]),
     "bbb ccc",
-    "07.01",
+    "09.01",
   );
 });
 
-test("08 - rApplyaces multiple chunks with zero indexes correctly", () => {
+test("10 - replaces multiple chunks with zero indexes correctly", () => {
   let str = "delete me bbb and me too ccc";
   // console.log('\n===============\n184.06')
   // console.log('slice 1: >>>' + str.slice(0, 9) + '<<<')
@@ -251,17 +261,17 @@ test("08 - rApplyaces multiple chunks with zero indexes correctly", () => {
       [14, 25],
     ]),
     "aaa bbb ccc",
-    "08.01",
+    "10.01",
   );
 });
 
-test("09 - rApplyace with ending index zero", () => {
+test("11 - replaces with ending index zero", () => {
   let str = "bbb ccc";
-  equal(rApply(str, [[0, 0, "aaa "]]), "aaa bbb ccc", "09.01");
-  equal(rApply(str, [0, 0, "aaa "]), "aaa bbb ccc", "09.02");
+  equal(rApply(str, [[0, 0, "aaa "]]), "aaa bbb ccc", "11.01");
+  equal(rApply(str, [0, 0, "aaa "]), "aaa bbb ccc", "11.02");
 });
 
-test("10 - null in third arg does nothing", () => {
+test("12 - null in third arg does nothing", () => {
   let str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n215.08')
   // console.log('slice 1: >>>' + str.slice(4, 14) + '<<<')
@@ -272,7 +282,7 @@ test("10 - null in third arg does nothing", () => {
       [18, 29],
     ]),
     "aaa bbb ccc",
-    "10.01",
+    "12.01",
   );
   equal(
     rApply(str, [
@@ -280,7 +290,7 @@ test("10 - null in third arg does nothing", () => {
       [18, 29, null],
     ]),
     "aaa bbb ccc",
-    "10.02",
+    "12.02",
   );
   equal(
     rApply(str, [
@@ -288,11 +298,11 @@ test("10 - null in third arg does nothing", () => {
       [18, 29, null],
     ]),
     "aaa bbb ccc",
-    "10.03",
+    "12.03",
   );
 });
 
-test("11 - rApplyaces multiple chunks correctly", () => {
+test("13 - replaces multiple chunks correctly", () => {
   let str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n247.09')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
@@ -300,11 +310,11 @@ test("11 - rApplyaces multiple chunks correctly", () => {
   equal(
     rApply(str, [[4, 13, "zzz"], null, [18, 28, null]]),
     "aaa zzz bbb  ccc",
-    "11.01",
+    "13.01",
   );
 });
 
-test("12 - rApplyaces multiple chunks correctly given in a wrong order", () => {
+test("14 - replaces multiple chunks correctly given in a wrong order", () => {
   let str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n265.10')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
@@ -315,25 +325,25 @@ test("12 - rApplyaces multiple chunks correctly given in a wrong order", () => {
       [4, 13, "zzz"],
     ]),
     "aaa zzz bbb yyy ccc",
-    "12.01",
+    "14.01",
   );
 });
 
-test("13 - null as rApplyacement range - does nothing", () => {
+test("15 - null as replacement range - does nothing", () => {
   let str = "zzzzzzzz";
-  equal(rApply(str, null), str, "13.01");
+  equal(rApply(str, null), str, "15.01");
 });
 
 // -----------------------------------------------------------------------------
-// 03. rApplyacement - both "from" and "to" markers are equal
+// 03. replacement - both "from" and "to" markers are equal
 // -----------------------------------------------------------------------------
 
-test("14 - basic rApplyacement", () => {
-  equal(rApply("aaa  ccc", [[4, 4, "bbb"]]), "aaa bbb ccc", "14.01");
-  equal(rApply("aaa  ccc", [4, 4, "bbb"]), "aaa bbb ccc", "14.02");
+test("16 - basic replacement", () => {
+  equal(rApply("aaa  ccc", [[4, 4, "bbb"]]), "aaa bbb ccc", "16.01");
+  equal(rApply("aaa  ccc", [4, 4, "bbb"]), "aaa bbb ccc", "16.02");
 });
 
-test("15 - multiple rApplyacement pieces", () => {
+test("17 - multiple replacement pieces", () => {
   // let str = 'aaa  ccc  eee'
   // console.log('previewing: >>>' + str.slice(4, 15) + '<<<')
   // console.log('previewing: >>>' + str.slice(9, 15) + '<<<')
@@ -343,20 +353,20 @@ test("15 - multiple rApplyacement pieces", () => {
       [9, 9, "ddd"],
     ]),
     "aaa bbb ccc ddd eee",
-    "15.01",
+    "17.01",
   );
 });
 
-test("16 - null in rApplyacement op - does nothing", () => {
-  equal(rApply("aaa  ccc", [[4, 4, null]]), "aaa  ccc", "16.01");
-  equal(rApply("aaa  ccc", [4, 4, null]), "aaa  ccc", "16.02");
+test("18 - null in replacement op - does nothing", () => {
+  equal(rApply("aaa  ccc", [[4, 4, null]]), "aaa  ccc", "18.01");
+  equal(rApply("aaa  ccc", [4, 4, null]), "aaa  ccc", "18.02");
 });
 
 // -----------------------------------------------------------------------------
 // 04. progressFn
 // -----------------------------------------------------------------------------
 
-test("17 - progressFn - basic rApplyacement", () => {
+test("19 - progressFn - basic replacement", () => {
   let count = 0;
   equal(
     rApply("lkg jdlg dfljhlfgjlkhjf;gjh ;jsdlfj sldf lsjfldksj", [
@@ -380,7 +390,7 @@ test("17 - progressFn - basic rApplyacement", () => {
       [5, 7],
     ]),
     "rrrlzgygljhlgzzzkyyyaaaa;dfrrrr lsjfldksj",
-    "17.01",
+    "19.01",
   );
   equal(
     rApply(
@@ -412,9 +422,9 @@ test("17 - progressFn - basic rApplyacement", () => {
       },
     ),
     "rrrlzgygljhlgzzzkyyyaaaa;dfrrrr lsjfldksj",
-    "17.02",
+    "19.02",
   );
-  ok(count <= 101, "17.03");
+  ok(count <= 101, "19.03");
 });
 
 test.run();

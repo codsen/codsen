@@ -47,7 +47,7 @@ assert.equal(parent("9.children.3"), "children");
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/ast-monkey-util/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/ast-monkey-util/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/ast-monkey-util/CHANGELOG.md).
 
 ## Contributing
 

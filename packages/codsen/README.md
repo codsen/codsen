@@ -35,7 +35,7 @@ codsen
 
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/codsen/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/codsen/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/codsen/CHANGELOG.md).
 
 ## Contributing
 
