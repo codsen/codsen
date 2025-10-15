@@ -1,6 +1,6 @@
 {
   "name": "string-remove-widows",
-  "version": "4.0.37",
+  "version": "4.1.0",
   "description": "Helps to prevent widow words in a text",
   "keywords": [
     "against",
@@ -75,14 +75,14 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.6.19",
-    "ranges-apply": "^7.0.31",
-    "ranges-push": "^7.0.30",
-    "string-left-right": "^6.0.32",
-    "string-match-left-right": "^9.0.34"
+    "codsen-utils": "^1.7.0",
+    "ranges-apply": "^7.1.0",
+    "ranges-push": "^7.1.0",
+    "string-left-right": "^6.1.0",
+    "string-match-left-right": "^9.1.0"
   },
   "devDependencies": {
-    "string-strip-html": "^13.4.24"
+    "string-strip-html": "^13.5.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

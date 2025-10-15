@@ -1,6 +1,6 @@
 {
   "name": "string-split-by-whitespace",
-  "version": "4.0.34",
+  "version": "4.1.0",
   "description": "Split string into array by chunks of whitespace",
   "keywords": [
     "alt",
@@ -74,10 +74,10 @@
     }
   },
   "dependencies": {
-    "ranges-is-index-within": "^4.0.24"
+    "ranges-is-index-within": "^4.1.0"
   },
   "devDependencies": {
-    "string-find-heads-tails": "^6.0.34"
+    "string-find-heads-tails": "^6.1.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

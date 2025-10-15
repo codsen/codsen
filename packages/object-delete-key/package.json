@@ -1,6 +1,6 @@
 {
   "name": "object-delete-key",
-  "version": "4.0.41",
+  "version": "4.1.0",
   "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
   "keywords": [
     "ast",
@@ -76,10 +76,10 @@
     }
   },
   "dependencies": {
-    "ast-is-empty": "^4.0.30",
-    "ast-monkey": "^9.0.41",
+    "ast-is-empty": "^4.1.0",
+    "ast-monkey": "^9.1.0",
     "rfdc": "^1.4.1",
-    "util-array-object-or-both": "^5.0.26"
+    "util-array-object-or-both": "^5.1.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

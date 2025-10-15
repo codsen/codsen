@@ -1,6 +1,6 @@
 {
   "name": "ast-delete-object",
-  "version": "4.0.41",
+  "version": "4.1.0",
   "description": "Delete all plain objects in AST if they contain a certain key/value pair",
   "keywords": [
     "ast",
@@ -79,9 +79,9 @@
     }
   },
   "dependencies": {
-    "ast-compare": "^4.0.42",
-    "ast-monkey-traverse": "^4.0.31",
-    "codsen-utils": "^1.6.19",
+    "ast-compare": "^4.1.0",
+    "ast-monkey-traverse": "^4.1.0",
+    "codsen-utils": "^1.7.0",
     "rfdc": "^1.4.1"
   },
   "publishConfig": {
