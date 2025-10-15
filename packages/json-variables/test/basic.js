@@ -883,19 +883,21 @@ test("28 - three level references", () => {
   );
 });
 
-test("29 - resolves to a string", () => {
+test("29 - resolves number to a number from top-level", () => {
   equal(
     jVar({
       a: "%%_b_%%",
       b: 1,
     }),
     {
-      a: "1",
+      a: 1,
       b: 1,
     },
     "29.01",
   );
+});
 
+test("30 - resolves one number to a number from _data", () => {
   equal(
     jVar({
       a: "%%_b_%%",
@@ -904,12 +906,46 @@ test("29 - resolves to a string", () => {
       },
     }),
     {
-      a: "1",
+      a: 1,
       a_data: {
         b: 1,
       },
     },
-    "29.02",
+    "30.01",
+  );
+});
+
+test("31 - resolves multiple, number to a number from _data", () => {
+  equal(
+    jVar({
+      a: "%%_b_%%",
+      a_data: {
+        b: 1,
+      },
+      k: "%%_m_%%",
+      k_data: {
+        m: 2,
+      },
+      z: "%%_y_%%",
+      z_data: {
+        y: 3,
+      },
+    }),
+    {
+      a: 1,
+      a_data: {
+        b: 1,
+      },
+      k: 2,
+      k_data: {
+        m: 2,
+      },
+      z: 3,
+      z_data: {
+        y: 3,
+      },
+    },
+    "31.01",
   );
 });
 

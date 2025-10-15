@@ -1,7 +1,5 @@
 /* eslint max-len:0 */
 
-import { matchLeftIncl, matchRightIncl } from "string-match-left-right";
-import { remDup } from "string-remove-duplicate-heads-tails";
 import { strFindHeadsTails } from "string-find-heads-tails";
 import { getByKey } from "ast-get-values-by-key";
 import { arrayiffy } from "arrayiffy-if-string";
@@ -9,7 +7,7 @@ import { traverse } from "ast-monkey-traverse";
 import { rApply } from "ranges-apply";
 import objectPath from "object-path";
 import { Ranges } from "ranges-push";
-import { isMatch } from "matcher";
+
 import {
   isPlainObject as isObj,
   existy,
@@ -19,6 +17,12 @@ import {
   isNum,
   Obj,
 } from "codsen-utils";
+import { getTopmostKey } from "./utils/getTopmostKey";
+import { goLevelUp } from "./utils/goLevelUp";
+import { getLastKey } from "./utils/getLastKey";
+import { withoutTopmostKey } from "./utils/withoutTopmostKey";
+import { containsHeadsOrTails } from "./utils/containsHeadsOrTails";
+import { wrap } from "./utils/wrap";
 
 import { version as v } from "../package.json";
 
@@ -79,219 +83,6 @@ function trimIfString(something: any): any {
   return isStr(something) ? something.trim() : something;
 }
 
-function getTopmostKey(str: string): string {
-  if (isStr(str) && str.length && str.indexOf(".") !== -1) {
-    for (let i = 0, len = str.length; i < len; i++) {
-      if (str[i] === ".") {
-        return str.slice(0, i);
-      }
-    }
-  }
-  return str;
-}
-function withoutTopmostKey(str: string): string {
-  if (isStr(str) && str.length && str.indexOf(".") !== -1) {
-    for (let i = 0, len = str.length; i < len; i++) {
-      if (str[i] === ".") {
-        return str.slice(i + 1);
-      }
-    }
-  }
-  return str;
-}
-function goLevelUp(str: string): string {
-  if (isStr(str) && str.length && str.indexOf(".") !== -1) {
-    for (let i = str.length; i--; ) {
-      if (str[i] === ".") {
-        return str.slice(0, i);
-      }
-    }
-  }
-  return str;
-}
-function getLastKey(str: string): string {
-  if (isStr(str) && str.length && str.indexOf(".") !== -1) {
-    for (let i = str.length; i--; ) {
-      if (str[i] === ".") {
-        return str.slice(i + 1);
-      }
-    }
-  }
-  return str;
-}
-function containsHeadsOrTails(str: string, resolvedOpts: Opts): boolean {
-  if (!isStr(str) || !str.trim()) {
-    return false;
-  }
-  if (
-    str.includes(resolvedOpts.heads) ||
-    str.includes(resolvedOpts.tails) ||
-    (isStr(resolvedOpts.headsNoWrap) &&
-      resolvedOpts.headsNoWrap.length &&
-      str.includes(resolvedOpts.headsNoWrap)) ||
-    (isStr(resolvedOpts.tailsNoWrap) &&
-      resolvedOpts.tailsNoWrap.length &&
-      str.includes(resolvedOpts.tailsNoWrap))
-  ) {
-    return true;
-  }
-  return false;
-}
-function removeWrappingHeadsAndTails(
-  str: string,
-  heads: string | string[],
-  tails: string | string[],
-): string {
-  let tempFrom;
-  let tempTo;
-  if (
-    isStr(str) &&
-    str.length &&
-    matchRightIncl(str, 0, heads, {
-      trimBeforeMatching: true,
-      cb: (_c, _t, index) => {
-        tempFrom = index;
-        return true;
-      },
-    }) &&
-    matchLeftIncl(str, str.length - 1, tails, {
-      trimBeforeMatching: true,
-      cb: (_c, _t, index) => {
-        tempTo = (index || 0) + 1;
-        return true;
-      },
-    })
-  ) {
-    return str.slice(tempFrom, tempTo);
-  }
-  return str;
-}
-function wrap(
-  placementValue: string,
-  resolvedOpts: Opts,
-  dontWrapTheseVars = false,
-  breadCrumbPath: string[],
-  newPath: string,
-  oldVarName: string,
-): string | false {
-  DEV &&
-    console.log(
-      `179 >>>>>>>>>> WRAP(): placementValue = ${JSON.stringify(
-        placementValue,
-        null,
-        4,
-      )}`,
-    );
-  DEV &&
-    console.log(
-      `187 >>>>>>>>>> WRAP(): breadCrumbPath = ${JSON.stringify(
-        breadCrumbPath,
-        null,
-        4,
-      )}`,
-    );
-  DEV &&
-    console.log(
-      `195 >>>>>>>>>> WRAP(): newPath = ${JSON.stringify(newPath, null, 4)}`,
-    );
-  DEV &&
-    console.log(
-      `199 >>>>>>>>>> WRAP(): oldVarName = ${JSON.stringify(
-        oldVarName,
-        null,
-        4,
-      )}\n`,
-    );
-
-  // resolvedOpts validation
-  if (!resolvedOpts.wrapHeadsWith) {
-    resolvedOpts.wrapHeadsWith = "";
-  }
-  if (!resolvedOpts.wrapTailsWith) {
-    resolvedOpts.wrapTailsWith = "";
-  }
-
-  // main resolvedOpts
-
-  if (
-    isStr(placementValue) &&
-    !dontWrapTheseVars &&
-    resolvedOpts.wrapGlobalFlipSwitch &&
-    !resolvedOpts.dontWrapVars.some((val) => isMatch(oldVarName, val)) && // considering double-wrapping prevention setting:
-    (!resolvedOpts.preventDoubleWrapping ||
-      (resolvedOpts.preventDoubleWrapping &&
-        isStr(placementValue) &&
-        !placementValue.includes(resolvedOpts.wrapHeadsWith as string) &&
-        !placementValue.includes(resolvedOpts.wrapTailsWith as string)))
-  ) {
-    DEV && console.log("227 +++ WE WILL WRAP THIS!");
-    return `${resolvedOpts.wrapHeadsWith}${placementValue}${resolvedOpts.wrapTailsWith}`;
-  }
-  if (dontWrapTheseVars) {
-    DEV &&
-      console.log(
-        "\n\n\n233 💥💥💥💥💥💥 !!! dontWrapTheseVars is ON!!!\n\n\n",
-      );
-    DEV &&
-      console.log(
-        `237 placementValue = ${JSON.stringify(placementValue, null, 4)}`,
-      );
-    DEV &&
-      console.log(
-        `241 resolvedOpts.wrapHeadsWith = ${JSON.stringify(
-          resolvedOpts.wrapHeadsWith,
-          null,
-          4,
-        )}`,
-      );
-    DEV &&
-      console.log(
-        `249 resolvedOpts.wrapTailsWith = ${JSON.stringify(
-          resolvedOpts.wrapTailsWith,
-          null,
-          4,
-        )}`,
-      );
-
-    DEV &&
-      console.log(
-        `258 about to return:\n${JSON.stringify(
-          remDup(placementValue, {
-            heads: resolvedOpts.wrapHeadsWith,
-            tails: resolvedOpts.wrapTailsWith,
-          }),
-          null,
-          4,
-        )}`,
-      );
-    DEV &&
-      console.log(
-        `269 \u001b[${36}m placementValue = ${JSON.stringify(
-          placementValue,
-          null,
-          4,
-        )}\u001b[${39}m`,
-      );
-    if (!isStr(placementValue)) {
-      DEV && console.log(`276 Returning placementValue = ${placementValue}`);
-      return placementValue;
-    }
-    let tempValue = remDup(placementValue, {
-      heads: resolvedOpts.wrapHeadsWith,
-      tails: resolvedOpts.wrapTailsWith,
-    });
-    if (!isStr(tempValue)) {
-      return tempValue;
-    }
-    return removeWrappingHeadsAndTails(
-      tempValue,
-      resolvedOpts.wrapHeadsWith,
-      resolvedOpts.wrapTailsWith,
-    );
-  }
-  DEV && console.log("292 +++ NO WRAP");
-  return placementValue;
-}
 function findValues(
   input: Obj,
   varName: string,
@@ -300,13 +91,13 @@ function findValues(
 ): string | undefined {
   DEV &&
     console.log(
-      `303 findValues(): looking for varName = ${JSON.stringify(
+      `094 findValues(): looking for varName = ${JSON.stringify(
         varName,
         null,
         4,
       )}`,
     );
-  DEV && console.log(`309 path = ${JSON.stringify(path, null, 4)}\n\n`);
+  DEV && console.log(`100 path = ${JSON.stringify(path, null, 4)}\n\n`);
   let resolveValue;
   // 1.1. first, traverse up to root level, looking for key right at that level
   // or within data store, respecting the config
@@ -323,7 +114,7 @@ function findValues(
       !currentPath.endsWith(resolvedOpts.dataContainerIdentifierTails)
     ) {
       // 1.1.1. first check data store
-      DEV && console.log("326: 1.1.0.");
+      DEV && console.log("117: 1.1.0.");
       DEV &&
         console.log(
           `\n256 * datastore = ${JSON.stringify(
@@ -336,10 +127,14 @@ function findValues(
         input,
         currentPath + resolvedOpts.dataContainerIdentifierTails,
       );
-      DEV && console.log(`339 * gotPath = ${JSON.stringify(gotPath, null, 4)}`);
+      DEV && console.log(`130 * gotPath = ${JSON.stringify(gotPath, null, 4)}`);
       if (isObj(gotPath) && objectPath.get(gotPath, varName)) {
-        DEV && console.log(`341 FOUND!\n${gotPath[varName]}`);
+        DEV && console.log(`132 FOUND!\n${gotPath[varName]}`);
         resolveValue = objectPath.get(gotPath, varName);
+        DEV &&
+          console.log(
+            `${`\u001b[${33}m${`resolveValue`}\u001b[${39}m`} = ${JSON.stringify(resolveValue, null, 4)}`,
+          );
         handBrakeOff = false;
       }
     }
@@ -354,7 +149,7 @@ function findValues(
           )}" is called the same as the variable "${varName}" we're looking for.`,
         );
       }
-      DEV && console.log(`357 traversing up. Currently at: ${currentPath}`);
+      DEV && console.log(`152 traversing up. Currently at: ${currentPath}`);
 
       // first, check the current level's datastore:
       if (
@@ -364,7 +159,7 @@ function findValues(
         !currentPath.endsWith(resolvedOpts.dataContainerIdentifierTails)
       ) {
         // 1.1.1. first check data store
-        DEV && console.log("367: 1.1.1.");
+        DEV && console.log("162: 1.1.1.");
         DEV &&
           console.log(
             `\n296 * datastore = ${JSON.stringify(
@@ -378,23 +173,23 @@ function findValues(
           currentPath + resolvedOpts.dataContainerIdentifierTails,
         );
         DEV &&
-          console.log(`381 * gotPath = ${JSON.stringify(gotPath, null, 4)}`);
+          console.log(`176 * gotPath = ${JSON.stringify(gotPath, null, 4)}`);
         if (isObj(gotPath) && objectPath.get(gotPath, varName)) {
-          DEV && console.log(`383 FOUND!\n${gotPath[varName]}`);
+          DEV && console.log(`178 FOUND!\n${gotPath[varName]}`);
           resolveValue = objectPath.get(gotPath, varName);
           handBrakeOff = false;
         }
       }
 
       if (resolveValue === undefined) {
-        DEV && console.log("390 1.1.2.");
+        DEV && console.log("185 1.1.2.");
         // 1.1.2. second check for key straight in parent level
         let gotPath = objectPath.get(input, currentPath);
-        DEV && console.log(`393 gotPath = ${JSON.stringify(gotPath, null, 4)}`);
+        DEV && console.log(`188 gotPath = ${JSON.stringify(gotPath, null, 4)}`);
         if (isObj(gotPath) && objectPath.get(gotPath, varName)) {
           DEV &&
             console.log(
-              `397 SUCCESS! currentPath = ${JSON.stringify(
+              `192 SUCCESS! currentPath = ${JSON.stringify(
                 currentPath,
                 null,
                 4,
@@ -410,14 +205,14 @@ function findValues(
   // maybe we traversed up to root and couldn't resolve anything.
   // Either way, let's check keys and data store at the root level:
   if (resolveValue === undefined) {
-    DEV && console.log("413 check the root");
+    DEV && console.log("208 check the root");
     let gotPath = objectPath.get(input, varName);
     DEV &&
-      console.log(`416 ROOT's gotPath = ${JSON.stringify(gotPath, null, 4)}`);
+      console.log(`211 ROOT's gotPath = ${JSON.stringify(gotPath, null, 4)}`);
     if (gotPath !== undefined) {
       DEV &&
         console.log(
-          `420 SET resolveValue = ${JSON.stringify(gotPath, null, 4)}`,
+          `215 SET resolveValue = ${JSON.stringify(gotPath, null, 4)}`,
         );
       resolveValue = gotPath;
     }
@@ -425,7 +220,7 @@ function findValues(
   // 1.3. Last resort, just look for key ANYWHERE, as long as it's named as
   // our variable name's topmost key (if it's a path with dots) or equal to key entirely (no dots)
   if (resolveValue === undefined) {
-    DEV && console.log(`428 search for key: ${getTopmostKey(varName)}`);
+    DEV && console.log(`223 search for key: ${getTopmostKey(varName)}`);
 
     // 1.3.1. It depends, does the varName we're looking for have dot or not.
     // - Because if it does, it's a path and we'll have to split the search into two
@@ -439,7 +234,7 @@ function findValues(
       let gotPathArr = getByKey(input, varName);
       DEV &&
         console.log(
-          `442 *** gotPathArr = ${JSON.stringify(gotPathArr, null, 4)}`,
+          `237 *** gotPathArr = ${JSON.stringify(gotPathArr, null, 4)}`,
         );
       if (gotPathArr.length) {
         for (let y = 0, len2 = gotPathArr.length; y < len2; y++) {
@@ -451,21 +246,21 @@ function findValues(
             resolveValue = gotPathArr[y].val;
             DEV &&
               console.log(
-                `454 resolveValue = ${JSON.stringify(resolveValue, null, 4)}`,
+                `249 SET resolveValue = ${JSON.stringify(resolveValue, null, 4)}`,
               );
             break;
           } else if (isNum(gotPathArr[y].val)) {
-            resolveValue = String(gotPathArr[y].val);
+            resolveValue = gotPathArr[y].val;
             DEV &&
               console.log(
-                `461 resolveValue = ${JSON.stringify(resolveValue, null, 4)}`,
+                `256 SET resolveValue = ${JSON.stringify(resolveValue, null, 4)}`,
               );
             break;
           } else if (Array.isArray(gotPathArr[y].val)) {
             resolveValue = gotPathArr[y].val.join("");
             DEV &&
               console.log(
-                `468 resolveValue = ${JSON.stringify(resolveValue, null, 4)}`,
+                `263 SET resolveValue = ${JSON.stringify(resolveValue, null, 4)}`,
               );
             break;
           }
@@ -475,7 +270,7 @@ function findValues(
       // it's a path (contains dots)
       let gotPath = getByKey(input, getTopmostKey(varName));
       DEV &&
-        console.log(`478 *** gotPath = ${JSON.stringify(gotPath, null, 4)}`);
+        console.log(`273 *** gotPath = ${JSON.stringify(gotPath, null, 4)}`);
       if (gotPath.length) {
         for (let y = 0, len2 = gotPath.length; y < len2; y++) {
           let temp = objectPath.get(gotPath[y].val, withoutTopmostKey(varName));
@@ -486,7 +281,7 @@ function findValues(
       }
     }
   }
-  DEV && console.log(`489 findValues(): FINAL RETURN: ${resolveValue}\n`);
+  DEV && console.log(`284 findValues(): FINAL RETURN: ${resolveValue}\n`);
   return resolveValue;
 }
 
@@ -507,11 +302,11 @@ function resolveString(
 ): string | false | undefined {
   DEV &&
     console.log(
-      `\u001b[${33}m${`\n\n429 CALLED resolveString() on "${string}". Path = "${path}"`}\u001b[${39}m`,
+      `305 \u001b[${33}m${`CALLED resolveString() on "${string}". Path = "${path}"`}\u001b[${39}m`,
     );
   DEV &&
     console.log(
-      `514 incomingBreadCrumbPath = ${JSON.stringify(
+      `309 incomingBreadCrumbPath = ${JSON.stringify(
         incomingBreadCrumbPath,
         null,
         4,
@@ -548,7 +343,7 @@ function resolveString(
 
   DEV &&
     console.log(
-      `=============================\n468 string = ${JSON.stringify(
+      `346 =============================\nstring = ${JSON.stringify(
         string,
         null,
         4,
@@ -566,16 +361,22 @@ function resolveString(
 
   let finalRangesArr = new Ranges();
 
+  let resolvedValue;
+
   function processHeadsAndTails(
     arr: Obj[],
     dontWrapTheseVars: boolean,
     wholeValueIsVariable: boolean,
-  ): string | false | undefined {
+  ): string | number | false | undefined {
+    DEV &&
+      console.log(
+        `373 ${`\u001b[${35}m${`processHeadsAndTails() STARTS`}\u001b[${39}m`};\narr=${JSON.stringify(arr, null, 4)}; dontWrapTheseVars=${JSON.stringify(dontWrapTheseVars, null, 4)}; wholeValueIsVariable=${JSON.stringify(wholeValueIsVariable, null, 4)}`,
+      );
     for (let i = 0, len = arr.length; i < len; i++) {
       let obj = arr[i];
       DEV &&
         console.log(
-          `\u001b[${33}m${`490 obj = ${JSON.stringify(
+          `379 \u001b[${33}m${`obj = ${JSON.stringify(
             obj,
             null,
             4,
@@ -587,13 +388,14 @@ function resolveString(
       );
       DEV &&
         console.log(
-          `590 ${`\u001b[${33}m${`varName`}\u001b[${39}m`} = ${JSON.stringify(
+          `391 ${`\u001b[${33}m${`varName`}\u001b[${39}m`} = ${JSON.stringify(
             varName,
             null,
             4,
           )}`,
         );
       if (varName.length === 0) {
+        DEV && console.log(`398 PUSH`);
         finalRangesArr.push(
           obj.headsStartAt as number, // replace from index
           obj.tailsEndAt as number, // replace upto index - no third argument, just deletion of heads/tails
@@ -603,7 +405,7 @@ function resolveString(
         isStr(secretResolvedVarsStash[varName])
       ) {
         // check, maybe the value was already resolved before and present in secret stash:
-        DEV && console.log("606 Yay! Value taken from stash!");
+        DEV && console.log("408 Yay! Value taken from stash! PUSH");
         finalRangesArr.push(
           obj.headsStartAt as number, // replace from index
           obj.tailsEndAt as number, // replace upto index
@@ -611,7 +413,7 @@ function resolveString(
         );
       } else {
         // it's not in the stash unfortunately, so let's search for it then:
-        let resolvedValue = findValues(
+        resolvedValue = findValues(
           input, // input
           varName.trim(), // varName
           path, // path
@@ -648,6 +450,10 @@ function resolveString(
           );
         }
 
+        DEV &&
+          console.log(
+            `455 ██ BEFORE, ${`\u001b[${33}m${`resolvedValue`}\u001b[${39}m`} = ${JSON.stringify(resolvedValue, null, 4)} (type ${typeof resolvedValue})`,
+          );
         if (isBool(resolvedValue)) {
           if (resolvedOpts.resolveToBoolIfAnyValuesContainBool) {
             finalRangesArr.wipe();
@@ -664,24 +470,29 @@ function resolveString(
           resolvedValue = String(resolvedValue.join(""));
         } else if (isNull(resolvedValue)) {
           resolvedValue = "";
-        } else {
+        } else if (!isNum(resolvedValue) || !wholeValueIsVariable) {
+          // don't touch whole-value, keys resolving to numbers
           resolvedValue = String(resolvedValue);
         }
 
         DEV &&
           console.log(
-            `* 574 resolvedValue = ${JSON.stringify(resolvedValue, null, 4)}`,
+            `480 ██ AFTER, ${`\u001b[${33}m${`resolvedValue`}\u001b[${39}m`} = ${JSON.stringify(resolvedValue, null, 4)} (type ${typeof resolvedValue})`,
           );
-        DEV && console.log(`* 576 path = ${JSON.stringify(path, null, 4)}`);
+        DEV && console.log(`482 ██ path = ${JSON.stringify(path, null, 4)}`);
         DEV &&
-          console.log(`* 577 varName = ${JSON.stringify(varName, null, 4)}`);
+          console.log(`484 ██ varName = ${JSON.stringify(varName, null, 4)}`);
 
         let newPath = path.includes(".")
           ? `${goLevelUp(path)}.${varName}`
           : varName;
         DEV &&
-          console.log(`* 582 newPath = ${JSON.stringify(newPath, null, 4)}`);
+          console.log(`490 ██ newPath = ${JSON.stringify(newPath, null, 4)}`);
         if (containsHeadsOrTails(resolvedValue, resolvedOpts)) {
+          DEV &&
+            console.log(
+              `494 ███████████████████████████████████████ resolvedValue = ${JSON.stringify(resolvedValue, null, 4)} (type ${typeof resolvedValue})`,
+            );
           let replacementVal = wrap(
             resolveString(
               // replacement value    <--------- R E C U R S I O N
@@ -697,7 +508,12 @@ function resolveString(
             newPath,
             varName.trim(),
           );
-          if (isStr(replacementVal)) {
+          DEV &&
+            console.log(
+              `513 received ${`\u001b[${33}m${`replacementVal`}\u001b[${39}m`} = ${JSON.stringify(replacementVal, null, 4)}`,
+            );
+          if (replacementVal !== false) {
+            DEV && console.log(`516 PUSH`);
             finalRangesArr.push(
               obj.headsStartAt as number, // replace from index
               obj.tailsEndAt as number, // replace upto index
@@ -705,8 +521,17 @@ function resolveString(
             );
           }
         } else {
-          // 1. store it in the stash for the future
+          DEV &&
+            console.log(
+              `526 - no heads or tails found in resolved value which is equal to ${JSON.stringify(resolvedValue, null, 4)} (type ${typeof resolvedValue})`,
+            );
+
+          // store it in the stash for the future
           secretResolvedVarsStash[varName] = resolvedValue;
+          DEV &&
+            console.log(
+              `533 ${`\u001b[${36}m${`wholeValueIsVariable`}\u001b[${39}m`} = ${JSON.stringify(wholeValueIsVariable, null, 4)}`,
+            );
           let replacementVal = wrap(
             resolvedValue,
             resolvedOpts,
@@ -714,8 +539,13 @@ function resolveString(
             breadCrumbPath,
             newPath,
             varName.trim(),
-          ); // replacement value
-          if (isStr(replacementVal)) {
+          );
+
+          if (replacementVal !== false) {
+            DEV &&
+              console.log(
+                `547 ██ ██ ██ PUSH [${obj.headsStartAt}, ${obj.tailsEndAt}, ${replacementVal} (type ${typeof replacementVal})]`,
+              );
             // 2. submit to be replaced
             finalRangesArr.push(
               obj.headsStartAt as number, // replace from index
@@ -726,6 +556,10 @@ function resolveString(
         }
       }
     }
+    DEV &&
+      console.log(
+        `561 ${`\u001b[${35}m${`processHeadsAndTails() RETURN undefined`}\u001b[${39}m`}`,
+      );
     return undefined;
   }
 
@@ -751,7 +585,7 @@ function resolveString(
   }
   DEV &&
     console.log(
-      `${`\u001b[${36}m${"694 foundHeadsAndTails = "}\u001b[${39}m`} ${JSON.stringify(
+      `${`\u001b[${36}m${"785 foundHeadsAndTails = "}\u001b[${39}m`} ${JSON.stringify(
         foundHeadsAndTails,
         null,
         4,
@@ -759,7 +593,7 @@ function resolveString(
     );
   DEV &&
     console.log(
-      `\u001b[${36}m${`654 string.length = ${string.length}`}\u001b[${39}m`,
+      `\u001b[${36}m${`793 string.length = ${string.length}`}\u001b[${39}m`,
     );
 
   // if heads and tails array has only one range inside and it spans whole string's
@@ -832,13 +666,13 @@ function resolveString(
     return temp2;
   }
 
-  DEV && console.log(`835 temp2 = ${JSON.stringify(temp2, null, 4)}`);
+  DEV && console.log(`669 temp2 = ${JSON.stringify(temp2, null, 4)}`);
 
   // 3. Then, work the finalRangesArr list
   // ================================
   DEV &&
     console.log(
-      `\u001b[${33}m${`\n729 END OF rApply: finalRangesArr.current() = ${JSON.stringify(
+      `675 \u001b[${33}m${`END OF rApply: finalRangesArr.current() = ${JSON.stringify(
         finalRangesArr.current(),
         null,
         4,
@@ -846,16 +680,57 @@ function resolveString(
     );
   DEV &&
     console.log(
-      `\u001b[${33}m${`\n736 string was = ${JSON.stringify(
+      `683 \u001b[${33}m${`\nstring was = ${JSON.stringify(
         string,
         null,
         4,
       )}`}\u001b[${39}m`,
     );
+  DEV &&
+    console.log(
+      `691 FINAL ${`\u001b[${33}m${`resolvedValue`}\u001b[${39}m`} = ${JSON.stringify(resolvedValue, null, 4)} (type ${typeof resolvedValue})\n`,
+    );
+  DEV &&
+    console.log(
+      `695 ${`\u001b[${31}m${`wholeValueIsVariable`}\u001b[${39}m`} = ${JSON.stringify(wholeValueIsVariable, null, 4)}`,
+    );
 
   if (finalRangesArr?.current()) {
-    return rApply(string, finalRangesArr.current());
+    // there is an edge case, where whole-value key
+    // is resolving to a number:
+    let currentRanges = finalRangesArr.current();
+
+    if (wholeValueIsVariable) {
+      if (typeof resolvedValue === "number") {
+        DEV &&
+          console.log(`706 RETURN ${resolvedValue} (${typeof resolvedValue})`);
+        return resolvedValue;
+      }
+
+      if (
+        currentRanges?.length === 1 &&
+        currentRanges[0].length === 3 &&
+        isNum(currentRanges[0][2])
+      ) {
+        DEV &&
+          console.log(
+            `717 RETURN ${currentRanges[0][2]} (${typeof currentRanges[0][2]})`,
+          );
+        return currentRanges[0][2];
+      }
+    }
+
+    let valueWithAppliedRanges = rApply(string, currentRanges);
+    DEV &&
+      console.log(
+        `726 ${`\u001b[${33}m${`valueWithAppliedRanges`}\u001b[${39}m`} = ${JSON.stringify(valueWithAppliedRanges, null, 4)} (type ${typeof valueWithAppliedRanges}); ${`\u001b[${33}m${`resolvedValue`}\u001b[${39}m`} = ${JSON.stringify(resolvedValue, null, 4)} (type ${typeof resolvedValue});`,
+      );
+
+    DEV && console.log(`729 RETURN`);
+    return valueWithAppliedRanges;
   }
+
+  DEV && console.log(`733 RETURN "${string}"`);
   return string;
 }
 
@@ -991,9 +866,13 @@ function jVar(input: Obj, opts?: Partial<Opts>): Obj {
     if (val !== undefined) {
       // if it's object currently being traversed, we'll get both key and value
       current = val;
+      DEV &&
+        console.log(`870 SET current = ${current} (type ${typeof current})`);
     } else {
       // if it's an array being traversed currently, we'll get only key
       current = key;
+      DEV &&
+        console.log(`875 SET current = ${current} (type ${typeof current})`);
     }
 
     // * * *
@@ -1002,7 +881,7 @@ function jVar(input: Obj, opts?: Partial<Opts>): Obj {
     // to mutate it, we return "current". If we want to mutate it, we return a new
     // value (which will get written onto that node, previously equal to "current").
 
-    DEV && console.log(`1005 current = ${JSON.stringify(current, null, 4)}`);
+    DEV && console.log(`884 current = ${JSON.stringify(current, null, 4)}`);
 
     // *
     // Instantly skip empty strings:
@@ -1052,17 +931,18 @@ function jVar(input: Obj, opts?: Partial<Opts>): Obj {
       );
     }
 
-    DEV && console.log(`\n953 current = ${JSON.stringify(current, null, 4)}`);
+    DEV && console.log(`934 ██ current = ${JSON.stringify(current, null, 4)}`);
 
-    // *
     // Process the current node if it's a string and it contains heads / tails /
     // headsNoWrap / tailsNoWrap:
     if (isStr(current) && containsHeadsOrTails(current, resolvedOpts)) {
+      DEV && console.log("939 RETURN");
       // breadCrumbPath, the fifth argument is not passed as there're no previous paths
       return resolveString(input, current, innerObj.path, resolvedOpts);
     }
 
     // otherwise, just return as it is. We're not going to touch plain objects/arrays,numbers/bools etc.
+    DEV && console.log(`945 RETURN ${current} (type ${typeof current})`);
     return current;
 
     // END OF MONKEY'S TRAVERSE
