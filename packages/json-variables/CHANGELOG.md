@@ -9,6 +9,28 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - if value to be added is a number, keep it as is, don't stringify ([ce3e1a5](https://github.com/codsen/codsen/commit/ce3e1a525998ca3c0abf0142affef95b14cd1990))
 
+```js
+import { strict as assert } from "assert";
+import { jVar } from "json-variables";
+
+const data = jVar({
+  shouldBeANumber: "%%_number_%%",
+  shouldBeAString: "%%_string_%%",
+  shouldAlsoBeAString: "%%_number_%% blah",
+  number: 123,
+  string: "123",
+});
+const target = {
+  shouldBeANumber: 123, // <------ previously, would be rendered into string
+  shouldBeAString: "123",
+  shouldAlsoBeAString: "123 blah",
+  number: 123,
+  string: "123",
+};
+
+assert.deepEqual(data, target);
+```
+
 ## 12.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
