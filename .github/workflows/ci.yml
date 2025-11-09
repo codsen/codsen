@@ -57,6 +57,13 @@ jobs:
           path: packages/
           retention-days: 1
 
+      - name: upload @codsen/data dist
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        with:
+          name: codsen-data-dist
+          path: data/dist/
+          retention-days: 1
+
   static_analysis:
     name: static analysis
     needs: [build]
