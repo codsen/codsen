@@ -41,10 +41,10 @@ jobs:
       # build @codsen/data
       - name: build @codsen/data
         run: |
+          npm run build -- '--filter=./data/**'
           npm run ci:generate:info
           npm run ci:generate:changelogs
           npm run ci:build:root-readme
-          npm run build -- '--filter=./data/**'
 
       - name: git-add the build artefacts
         run: |
