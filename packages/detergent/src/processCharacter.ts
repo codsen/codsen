@@ -127,7 +127,7 @@ function processCharacter(
       );
 
     // if it's astral character which comprises of more than one character,
-    // tackle it separately from "normal" charactrs of length === 1
+    // tackle it separately from "normal" characters of length === 1
     if (opts.convertEntities) {
       rangesArr.push(
         i,
@@ -147,7 +147,7 @@ function processCharacter(
 
     let charcode = str[i].charCodeAt(0);
     // Filter ASCII
-    // the cutoff point is 127 not 128 because large chunk of invisibles, C1
+    // the cut-off point is 127 not 128 because large chunk of invisibles, C1
     // group starts at DEL, decimal point 128.
     if (charcode < 127) {
       // within ASCII - no need to encode, just clean
