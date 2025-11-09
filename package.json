@@ -18,7 +18,7 @@
     "ci:build:root-readme": "node ./ops/scripts/generate-readme.js",
     "ci:generate:changelogs": "npm run lernacleanchangelog && node ./ops/scripts/generate-changelogs.js",
     "ci:generate:info": "node ./ops/scripts/generate-info.js",
-    "ci:lerna:version": "lerna version --no-push --conventional-commits --no-commit-hooks --yes --no-git-tag-version",
+    "ci:lerna:version": "lerna version --no-push --conventional-commits --no-commit-hooks --yes",
     "ci:publish:all": "turbo run letspublish --cache=local:r,remote:r",
     "lernacleanchangelog": "lernacleanchangelog '**' --extras",
     "cjs-off": "turbo run cjs-off",
