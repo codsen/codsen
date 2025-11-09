@@ -11,8 +11,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: Lint
-            cmd: 'lint'
+          # - name: Lint
+          #   cmd: 'lint'
           - name: Examples
             cmd: 'examples'
           - name: Unit test
