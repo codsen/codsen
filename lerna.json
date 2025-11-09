@@ -11,15 +11,9 @@
     "**/node_modules/**",
     "**/.npmignore",
     "**/perf/**",
-    "./data",
     "**/*.md"
   ],
-  "lifecycle": {
-    "version": "git add ."
-  },
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*", "data/"],
   "version": "independent",
   "$schema": "node_modules/lerna/schemas/lerna-schema.json"
 }
