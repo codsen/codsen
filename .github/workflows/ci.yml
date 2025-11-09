@@ -107,13 +107,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: restore type=module in CJS packages
+        run: npm run cjs-off
+
       - name: commit the latest
         run: |
           git add .
           git diff-index --quiet HEAD || git commit -m 'chore: post-release build tasks [skip ci]' --no-verify
-
-      - name: restore type=module in CJS packages
-        run: npm run cjs-off
 
       - name: push to git remote
         run: |
