@@ -34,4 +34,4 @@ jobs:
           path: packages/
 
       - name: ${{ matrix.name }}
-        run: turbo run ${{ matrix.cmd }}
+        run: npm run ${{ matrix.cmd }} --workspace=packages
