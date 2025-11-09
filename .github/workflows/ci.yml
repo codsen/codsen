@@ -13,6 +13,17 @@ jobs:
       contents: write # Needed to push commits
       id-token: write
 
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Lint
+            cmd: 'lint'
+          - name: Examples
+            cmd: 'examples'
+          - name: Unit test
+            cmd: 'unit'
+
     steps:
       - name: prepare
         run: |
@@ -33,45 +44,26 @@ jobs:
       - name: install dependencies
         run: npm ci
 
-      - name: build no.1
-        run: npm run build
-
-      # "unit" + "examples" + "lint" (which, in turn, depend on "build"):
-      - name: prep
-        run: npm run prep
-
-      - name: generate statistics files
-        run: npm run ci:generate:info
-
-      - name: build root-level Readme
-        run: npm run ci:build:root-readme
-
-      - name: git-add the build artefacts
-        run: |
-          git status
-          git add packages
-          git add ops
-          git add data
-          git add README.md
-
-      - name: git-add lockfile
-        run: |
-          git add package-lock.json
-          git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify
-
+      # bump versions straight away because build will
+      # hardcode them in licence headers in dist/*.js
       - name: lerna version
         run: npm run ci:lerna:version
 
-      - name: clean the changelogs
-        run: npm run lernacleanchangelog
+      # build but skip @codsen/data (./data/*) because it will need the
+      # updated/bumped packages' sources (incl. package.json's)
+      - name: build packages
+        run: npm run build -- '--filter=./packages/**'
 
-      # PS. above, we don't push git tags because
-      # if something goes wrong further (and there is another build coming)
-      # then we'd have problems.
-      #
-      # Now build again, because those bumped versions need to be written into header comment blocks:
-      - name: build no.2
-        run: npm run build
+      # build @codsen/data
+      - name: build @codsen/data
+        run: |
+          npm run ci:generate:info
+          npm run ci:generate:changelogs
+          npm run ci:build:root-readme
+          npm run build -- '--filter=./data/**'
+
+      - name: ${{ matrix.name }}
+        run: npm run ${{ matrix.cmd }}
 
       # it will save down the latest dep version in perf/historical.json
       - name: run perf
@@ -81,46 +73,3 @@ jobs:
       - name: git-add the build artefacts
         run: |
           git status
-          git add packages
-          git add ops
-          git add data
-          git add README.md
-          git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify
-
-      - name: remove type=module from CJS packages
-        run: npm run cjs-on
-
-      - name: publish all packages to npm
-        run: npm run letspublish --workspace=packages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: restore type=module in CJS packages
-        run: npm run cjs-off
-
-      - name: push no.1 to git remote
-        run: |
-          git push
-          git push origin --tags
-
-      - name: build and publish @codsen/data
-        run: |
-          npm run ci:generate:info
-          npm run ci:generate:changelogs
-          cd data
-          npm run build
-          git add .
-          cd ..
-          git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify
-          cd data
-          npm version patch -m "chore: automated build tasks [skip ci]"
-          cd ..
-          npm run publ --workspace=data
-          git status
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: push no.2 to git remote
-        run: |
-          git push
-          git push origin --tags
