@@ -165,8 +165,7 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
           dateStr = extractDateString(node.children[0]?.value);
         } else if (
           node.children[0].tagName === "a" &&
-          node.children[0]?.children[0] &&
-          node.children[0].children[0].type === "text" &&
+          node.children[0]?.children[0]?.type === "text" &&
           semverRegex().test(node.children[0].children[0].value)
         ) {
           // extract version from within anchor tag
@@ -186,11 +185,11 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
 
       if (versionStr && dateStr) {
         DEV &&
-          console.log(`189 versionStr: ${versionStr}; dateStr: ${dateStr}`);
+          console.log(`188 versionStr: ${versionStr}; dateStr: ${dateStr}`);
 
         DEV &&
           console.log(
-            `193  ███████████████████████████████████████ ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            `192  ███████████████████████████████████████ ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
               node,
               null,
               4,
@@ -204,10 +203,10 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
           },
         ];
 
-        DEV && console.log(`207 set the h2 to ${versionStr}`);
+        DEV && console.log(`206 set the h2 to ${versionStr}`);
 
         if (dateStr && typeof index === "number") {
-          DEV && console.log(`210 add the .release-date div`);
+          DEV && console.log(`209 add the .release-date div`);
           let date = new Date(dateStr);
           let formatDay = new Intl.DateTimeFormat(resolvedOpts.dateDivLocale, {
             day: "numeric",
@@ -234,7 +233,7 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
           };
           DEV &&
             console.log(
-              `237 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`dateParamsObj`}\u001b[${39}m`} = ${JSON.stringify(
+              `236 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`dateParamsObj`}\u001b[${39}m`} = ${JSON.stringify(
                 dateParamsObj,
                 null,
                 4,
@@ -247,7 +246,7 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
 
           DEV &&
             console.log(
-              `250 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`newMarkup`}\u001b[${39}m`} = ${JSON.stringify(
+              `249 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`newMarkup`}\u001b[${39}m`} = ${JSON.stringify(
                 newMarkup,
                 null,
                 4,
@@ -317,7 +316,7 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
       ) {
         DEV &&
           console.log(
-            `320 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            `319 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
               node,
               null,
               4,

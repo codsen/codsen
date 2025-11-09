@@ -703,7 +703,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.3",
-      "type-fest": "^5.0.1"
+      "type-fest": "^5.2.0"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -879,7 +879,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@sindresorhus/is": "^7.1.0",
+      "@sindresorhus/is": "^7.1.1",
       "ast-monkey-traverse": "^4.1.0",
       "object-path": "^0.11.8"
     },
@@ -2249,7 +2249,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@inquirer/prompts": "^7.8.6",
+      "@inquirer/prompts": "^7.10.0",
       "chalk": "^5.6.2",
       "codsen-utils": "^1.7.0",
       "csv-sort": "^7.1.0",
@@ -2836,7 +2836,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@inquirer/prompts": "^7.8.6",
+      "@inquirer/prompts": "^7.10.0",
       "@ljharb/through": "^2.3.14",
       "chalk": "^5.6.2",
       "codsen-utils": "^1.7.0",
@@ -3178,7 +3178,7 @@ export const packageJSONData = {
       "meow": "^14.0.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
-      "write-file-atomic": "^6.0.0"
+      "write-file-atomic": "^7.0.0"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4337,7 +4337,7 @@ export const packageJSONData = {
       "meow": "^14.0.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
-      "write-file-atomic": "^6.0.0"
+      "write-file-atomic": "^7.0.0"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4866,7 +4866,7 @@ export const packageJSONData = {
       "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
-      "write-file-atomic": "^6.0.0"
+      "write-file-atomic": "^7.0.0"
     },
     "devDependencies": {
       "p-map": "^7.0.3"
@@ -9162,7 +9162,7 @@ export const packageJSONData = {
       "p-reduce": "^3.0.0",
       "pacote": "^21.0.3",
       "update-notifier": "^7.3.1",
-      "write-file-atomic": "^6.0.0"
+      "write-file-atomic": "^7.0.0"
     },
     "devDependencies": {
       "fs-extra": "^11.3.2",

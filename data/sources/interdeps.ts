@@ -263,7 +263,7 @@ export const interdeps = [
   },
   {
     "name": "generate-atomic-css-cli",
-    "size": 4643,
+    "size": 4601,
     "imports": [
       "generate-atomic-css"
     ]
@@ -366,7 +366,7 @@ export const interdeps = [
   },
   {
     "name": "js-row-num-cli",
-    "size": 5472,
+    "size": 5430,
     "imports": [
       "arrayiffy-if-string",
       "js-row-num"

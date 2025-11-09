@@ -154,9 +154,7 @@ function processPaths(paths) {
             message = "Nothing to fix.";
           } else {
             message = `${`\u001b[${32}m${`${
-              counter.bad &&
-              counter.bad.length === 0 &&
-              counter.good.length !== 1
+              counter.bad?.length === 0 && counter.good.length !== 1
                 ? "All "
                 : ""
             }${counter.good.length} file${

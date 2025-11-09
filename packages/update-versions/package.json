@@ -88,7 +88,7 @@
     "p-reduce": "^3.0.0",
     "pacote": "^21.0.3",
     "update-notifier": "^7.3.1",
-    "write-file-atomic": "^6.0.0"
+    "write-file-atomic": "^7.0.0"
   },
   "devDependencies": {
     "fs-extra": "^11.3.2",
