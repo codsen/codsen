@@ -28,6 +28,9 @@ jobs:
       - name: install dependencies
         run: npm ci
 
+      - name: delete symlink for local lerna-clean-changelogs
+        run: rm -f ./node_modules/.bin/lernacleanchangelog
+
       - name: install lerna-clean-changelogs from the internet
         run: npm install -g lerna-clean-changelogs
 
