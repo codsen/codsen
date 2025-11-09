@@ -6,23 +6,12 @@ on:
 
 jobs:
   build:
-    name: Codsen Release
+    name: build
     timeout-minutes: 30
     runs-on: ubuntu-latest
     permissions:
       contents: write # Needed to push commits
       id-token: write
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: Lint
-            cmd: 'lint'
-          - name: Examples
-            cmd: 'examples'
-          - name: Unit test
-            cmd: 'unit'
 
     steps:
       - name: prepare
@@ -31,15 +20,10 @@ jobs:
           git config --global user.name "${{ secrets.YOUR_NAME_SURNAME }}"
 
       - name: check out code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-          registry-url: "https://registry.npmjs.org"
+        uses: ./.github/actions/setup-node
 
       - name: install dependencies
         run: npm ci
@@ -62,14 +46,19 @@ jobs:
           npm run ci:build:root-readme
           npm run build -- '--filter=./data/**'
 
-      - name: ${{ matrix.name }}
-        run: npm run ${{ matrix.cmd }}
-
-      # it will save down the latest dep version in perf/historical.json
-      - name: run perf
-        run: |
-          echo "Skipping perf for now"
-
       - name: git-add the build artefacts
         run: |
           git status
+
+      - name: upload build artifacts
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        with:
+          name: packages-folder
+          path: packages/
+          retention-days: 1
+
+  static_analysis:
+    name: static analysis
+    needs: [build]
+    uses: ./.github/workflows/static_analysis.yml
+    secrets: inherit
