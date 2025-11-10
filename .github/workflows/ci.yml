@@ -51,6 +51,11 @@ jobs:
           git add .
           git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify
 
+      - name: push to git remote
+        run: |
+          git push
+          git push origin --tags
+
       - name: upload build artifacts
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
