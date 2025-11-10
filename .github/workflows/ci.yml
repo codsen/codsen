@@ -76,6 +76,11 @@ jobs:
     needs: [static_analysis]
     runs-on: ubuntu-latest
     steps:
+      - name: prepare
+        run: |
+          git config --global user.email "${{ secrets.USER_EMAIL }}"
+          git config --global user.name "${{ secrets.YOUR_NAME_SURNAME }}"
+
       - name: check out code
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
