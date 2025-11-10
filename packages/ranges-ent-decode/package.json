@@ -1,6 +1,6 @@
 {
   "name": "ranges-ent-decode",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "description": "Recursive HTML entity decoding for Ranges workflow",
   "keywords": [
     "astral",
@@ -72,9 +72,9 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.7.0",
+    "codsen-utils": "^1.7.1",
     "he": "^1.2.0",
-    "ranges-merge": "^9.1.0"
+    "ranges-merge": "^9.1.1"
   },
   "devDependencies": {
     "@types/he": "^1.2.3"

@@ -1,6 +1,6 @@
 {
   "name": "string-extract-sass-vars",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "Parse SASS variables file into a plain object of CSS key-value pairs",
   "keywords": [
     "css",
@@ -73,7 +73,7 @@
     "various": {}
   },
   "devDependencies": {
-    "color-shorthand-hex-to-six-digit": "^5.1.0"
+    "color-shorthand-hex-to-six-digit": "^5.1.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
