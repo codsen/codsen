@@ -348,7 +348,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
         console.log(
           `349 fixEnt: ${`\u001b[${36}m${`██ letterSeqStartAt = ${letterSeqStartAt}`}\u001b[${39}m`}`,
         );
-      if (i > letterSeqStartAt + 1) {
+      if (i > (letterSeqStartAt as number) + 1) {
         let potentialEntity = str.slice(letterSeqStartAt, i);
         DEV &&
           console.log(
