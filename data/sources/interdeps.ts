@@ -183,7 +183,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "size": 24377,
+    "size": 24312,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -381,7 +381,7 @@ export const interdeps = [
   },
   {
     "name": "json-comb-core",
-    "size": 7196,
+    "size": 7194,
     "imports": [
       "codsen-utils",
       "object-fill-missing-keys",
@@ -609,7 +609,7 @@ export const interdeps = [
   },
   {
     "name": "string-apostrophes",
-    "size": 7121,
+    "size": 7102,
     "imports": [
       "codsen-utils",
       "ranges-apply"
@@ -735,7 +735,7 @@ export const interdeps = [
   },
   {
     "name": "string-remove-widows",
-    "size": 7286,
+    "size": 7272,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -753,7 +753,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 20679,
+    "size": 20666,
     "imports": [
       "codsen-utils",
       "ranges-apply",

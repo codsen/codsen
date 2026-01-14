@@ -79,7 +79,7 @@
     "@types/lodash-es": "^4.17.12",
     "csv-split-easy": "^7.1.1",
     "currency.js": "^2.0.4",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.17.22"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

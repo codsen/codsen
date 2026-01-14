@@ -69,12 +69,12 @@
     }
   },
   "dependencies": {
-    "fs-extra": "^11.3.2",
-    "globby": "^15.0.0",
+    "fs-extra": "^11.3.3",
+    "globby": "^16.1.0",
     "is-d": "^1.0.0",
     "json-comb-core": "^8.1.1",
     "meow": "^14.0.0",
-    "p-map": "^7.0.3",
+    "p-map": "^7.0.4",
     "p-reduce": "^3.0.0",
     "update-notifier": "^7.3.1"
   },

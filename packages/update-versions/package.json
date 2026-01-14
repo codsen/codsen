@@ -78,20 +78,20 @@
     "ansi-diff-stream": "^1.2.1",
     "codsen-utils": "^1.7.1",
     "edit-package-json": "^0.9.1",
-    "globby": "^15.0.0",
-    "is-online": "^12.0.1",
-    "log-update": "^7.0.1",
+    "globby": "^16.1.0",
+    "is-online": "^12.0.2",
+    "log-update": "^7.0.2",
     "meow": "^14.0.0",
     "object-path": "^0.11.8",
-    "p-map": "^7.0.3",
+    "p-map": "^7.0.4",
     "p-progress": "^1.0.0",
     "p-reduce": "^3.0.0",
-    "pacote": "^21.0.3",
+    "pacote": "^21.0.4",
     "update-notifier": "^7.3.1",
     "write-file-atomic": "^7.0.0"
   },
   "devDependencies": {
-    "fs-extra": "^11.3.2",
+    "fs-extra": "^11.3.3",
     "rfdc": "^1.4.1"
   },
   "publishConfig": {

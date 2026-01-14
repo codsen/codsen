@@ -72,7 +72,7 @@
   },
   "dependencies": {
     "@types/lodash-es": "^4.17.12",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.22",
     "ranges-apply": "^7.1.1",
     "ranges-push": "^7.1.1"
   },

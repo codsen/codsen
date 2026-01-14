@@ -484,8 +484,7 @@ function findUnusedSync(
         let unusedKeys = Object.keys(keySet).filter((key) =>
           arr1.every(
             (obj) =>
-              ((opts1 && obj[key] === opts1.placeholder) ||
-                obj[key] === undefined) &&
+              (obj[key] === opts1?.placeholder || obj[key] === undefined) &&
               (!opts1?.comments || !includes(key, opts1.comments)),
           ),
         );

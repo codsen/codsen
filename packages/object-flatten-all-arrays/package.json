@@ -73,7 +73,7 @@
   "dependencies": {
     "@types/lodash-es": "^4.17.12",
     "codsen-utils": "^1.7.1",
-    "lodash-es": "^4.17.21",
+    "lodash-es": "^4.17.22",
     "rfdc": "^1.4.1"
   },
   "publishConfig": {

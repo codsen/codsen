@@ -967,7 +967,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     DEV &&
       console.log(
         `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${`\u001b[${31}m${
-          str[i] && str[i].trim() === ""
+          str[i]?.trim() === ""
             ? str[i] === null
               ? "null"
               : str[i] === "\n"
@@ -3254,7 +3254,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // check end - the last range of gathered ranges, does it touch the end (str.length)
     // PS. remember ending is not inclusive, so ranges covering the whole ending
     // would go up to str.length, not up to str.length - 1!
-    if (curr[curr.length - 1] && curr[curr.length - 1][1] === str.length) {
+    if (curr[curr.length - 1]?.[1] === str.length) {
       DEV &&
         console.log(
           `3260 ${`\u001b[${33}m${`the last range`}\u001b[${39}m`} = ${JSON.stringify(

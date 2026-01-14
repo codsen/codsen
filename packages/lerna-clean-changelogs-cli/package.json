@@ -72,8 +72,8 @@
   },
   "dependencies": {
     "chalk": "^5.6.2",
-    "fs-extra": "^11.3.2",
-    "globby": "^15.0.0",
+    "fs-extra": "^11.3.3",
+    "globby": "^16.1.0",
     "lerna-clean-changelogs": "^5.1.1",
     "meow": "^14.0.0",
     "p-filter": "^4.1.0",
@@ -82,7 +82,7 @@
     "write-file-atomic": "^7.0.0"
   },
   "devDependencies": {
-    "p-map": "^7.0.3"
+    "p-map": "^7.0.4"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
