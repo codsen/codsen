@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-all-arrays",
-  "version": "7.1.1",
+  "version": "7.1.2",
   "description": "Merge and flatten any arrays found in all values within plain objects",
   "keywords": [
     "arrays",
@@ -72,7 +72,7 @@
   },
   "dependencies": {
     "@types/lodash-es": "^4.17.12",
-    "codsen-utils": "^1.7.1",
+    "codsen-utils": "^1.7.2",
     "lodash-es": "^4.17.22",
     "rfdc": "^1.4.1"
   },

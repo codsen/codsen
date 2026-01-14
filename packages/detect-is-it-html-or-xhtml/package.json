@@ -1,6 +1,6 @@
 {
   "name": "detect-is-it-html-or-xhtml",
-  "version": "6.1.1",
+  "version": "6.1.2",
   "description": "Does the string resemble an HTML or XHTML (or neither)?",
   "keywords": [
     "check",

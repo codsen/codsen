@@ -1,6 +1,6 @@
 {
   "name": "array-group-str-omit-num-char",
-  "version": "6.1.1",
+  "version": "6.1.2",
   "description": "Groups array of strings by omitting number characters",
   "keywords": [
     "array",
@@ -71,8 +71,8 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.7.1",
-    "ranges-apply": "^7.1.1"
+    "codsen-utils": "^1.7.2",
+    "ranges-apply": "^7.1.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

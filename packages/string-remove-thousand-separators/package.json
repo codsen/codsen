@@ -1,6 +1,6 @@
 {
   "name": "string-remove-thousand-separators",
-  "version": "7.1.1",
+  "version": "7.1.2",
   "description": "Detects and removes thousand separators (dot/comma/quote/space) from string-type digits",
   "keywords": [
     "amount",
@@ -73,8 +73,8 @@
   "dependencies": {
     "@types/lodash-es": "^4.17.12",
     "lodash-es": "^4.17.22",
-    "ranges-apply": "^7.1.1",
-    "ranges-push": "^7.1.1"
+    "ranges-apply": "^7.1.2",
+    "ranges-push": "^7.1.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

@@ -1,6 +1,6 @@
 {
   "name": "test-mixer",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "Test helper to generate function opts object variations",
   "keywords": [
     "combinations",
@@ -68,7 +68,7 @@
     }
   },
   "dependencies": {
-    "object-boolean-combinations": "^6.2.1",
+    "object-boolean-combinations": "^6.2.2",
     "rfdc": "^1.4.1"
   },
   "publishConfig": {

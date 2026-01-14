@@ -1,6 +1,6 @@
 {
   "name": "is-language-code",
-  "version": "5.1.1",
+  "version": "5.1.2",
   "description": "Is given string a language code (as per IANA)",
   "keywords": [
     "check",
@@ -76,7 +76,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.7.1"
+    "codsen-utils": "^1.7.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

@@ -1,6 +1,6 @@
 {
   "name": "ranges-regex",
-  "version": "6.1.1",
+  "version": "6.1.2",
   "description": "Integrate regex operations into Ranges workflow",
   "keywords": [
     "array",
@@ -74,10 +74,10 @@
   "dependencies": {
     "@types/lodash-es": "^4.17.12",
     "lodash-es": "^4.17.22",
-    "ranges-merge": "^9.1.1"
+    "ranges-merge": "^9.1.2"
   },
   "devDependencies": {
-    "ranges-apply": "^7.1.1"
+    "ranges-apply": "^7.1.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
