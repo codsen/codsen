@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 0.10.2 (2026-01-14)
-
-**Note:** Version bump only for package json-comb
-
 ## 0.10.0 (2025-10-15)
 
 ### Features
