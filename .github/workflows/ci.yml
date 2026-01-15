@@ -125,6 +125,7 @@ jobs:
 
       - name: commit the latest
         run: |
+          git pull
           git add .
           git diff-index --quiet HEAD || git commit -m 'chore: post-release build tasks [skip ci]' --no-verify
 
