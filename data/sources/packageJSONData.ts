@@ -703,7 +703,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/type-detect": "^4.0.3",
-      "type-fest": "^5.4.0"
+      "type-fest": "^5.4.1"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
