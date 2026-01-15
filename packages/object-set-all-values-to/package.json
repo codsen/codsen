@@ -1,6 +1,6 @@
 {
   "name": "object-set-all-values-to",
-  "version": "6.1.2",
+  "version": "6.1.3",
   "description": "Recursively walk the input and set all found values in plain objects to something",
   "keywords": [
     "all",
@@ -71,7 +71,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.7.2",
+    "codsen-utils": "^1.7.3",
     "rfdc": "^1.4.1"
   },
   "publishConfig": {

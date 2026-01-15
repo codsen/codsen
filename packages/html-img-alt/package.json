@@ -1,6 +1,6 @@
 {
   "name": "html-img-alt",
-  "version": "4.1.2",
+  "version": "4.1.3",
   "description": "Adds missing alt attributes to img tags. Non-parsing.",
   "keywords": [
     "add",
@@ -76,10 +76,10 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^8.1.2",
-    "ranges-apply": "^7.1.2",
-    "ranges-push": "^7.1.2",
-    "string-unfancy": "^6.1.2"
+    "check-types-mini": "^8.1.3",
+    "ranges-apply": "^7.1.3",
+    "ranges-push": "^7.1.3",
+    "string-unfancy": "^6.1.3"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

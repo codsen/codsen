@@ -1,6 +1,6 @@
 {
   "name": "detect-templating-language",
-  "version": "4.1.2",
+  "version": "4.1.3",
   "description": "Detects various templating languages present in string",
   "keywords": [
     "check",
@@ -66,9 +66,9 @@
     }
   },
   "dependencies": {
-    "regex-is-jinja-nunjucks": "^4.1.2",
-    "regex-is-jsp": "^4.1.2",
-    "regex-jinja-specific": "^4.1.2"
+    "regex-is-jinja-nunjucks": "^4.1.3",
+    "regex-is-jsp": "^4.1.3",
+    "regex-jinja-specific": "^4.1.3"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
