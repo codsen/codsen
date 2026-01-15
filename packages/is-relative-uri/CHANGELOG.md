@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 5.1.3 (2026-01-15)
-
-**Note:** Version bump only for package is-relative-uri
-
 ## 5.1.0 (2025-10-15)
 
 ### Features
