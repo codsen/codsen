@@ -80,6 +80,9 @@ jobs:
     name: release
     needs: [static_analysis]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to push commits
+      id-token: write
     steps:
       - name: prepare
         run: |
@@ -127,5 +130,6 @@ jobs:
 
       - name: push to git remote
         run: |
+          git status
           git push
           git push origin --tags
