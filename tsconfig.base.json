@@ -8,18 +8,12 @@
     "sourceMap": false,
     "declaration": true,
     "jsx": "preserve",
-    "lib": [
-      "DOM",
-      "ES2020",
-      "ESNext"
-    ],
+    "lib": ["DOM", "ES2020", "ESNext"],
     "rootDir": ".",
     "composite": true,
     "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true,
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
