@@ -20,6 +20,7 @@ t-util
 
 # files:
 
+*.tsbuildinfo
 .all-contributorsrc
 .babelrc
 .editorconfig
@@ -30,6 +31,7 @@ t-util
 .npmignore
 .prettierignore
 .travis.yml
+AGENTS.md
 benchmark.js
 bitbucket-pipelines.yml
 chlu_adds_missing_diff_links.gif
