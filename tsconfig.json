@@ -1,5 +1,6 @@
 {
   "extends": "./tsconfig.base.json",
+  "files": [],
   "references": [
     {
       "path": "packages/all-named-html-entities"
@@ -9,9 +10,6 @@
     },
     {
       "path": "packages/array-includes-with-glob"
-    },
-    {
-      "path": "packages/array-of-arrays-into-ast"
     },
     {
       "path": "packages/array-pull-all-with-glob"
