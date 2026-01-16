@@ -1,34 +1,66 @@
 {
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!dist/**",
+        "!types/**",
+        "$TURBO_ROOT$/ops/scripts/esbuild.js",
+        "$TURBO_ROOT$/tsconfig.base.json"
       ],
-      "outputs": [
-        "dist/**",
-        "types/**"
-      ]
+      "outputs": ["dist/**", "types/**"]
     },
-    "test": {
-      "dependsOn": [
-        "lect",
-        "build"
-      ],
+    "codsen#build": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "csv-sort-cli#build": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "email-all-chars-within-ascii-cli#build": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "generate-atomic-css-cli#build": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "js-row-num-cli#build": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "json-comb#build": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "json-sort-cli#build": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "lerna-clean-changelogs-cli#build": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "update-versions#build": {
+      "dependsOn": ["^build"],
       "outputs": []
     },
     "lint": {
-      "dependsOn": [
-        "build"
-      ],
-      "outputs": []
+      "dependsOn": ["build"],
+      "outputs": [],
+      "cache": false
     },
     "unit": {
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "outputs": []
     },
     "dev": {
+      "outputs": [],
+      "cache": false
+    },
+    "devtest": {
       "outputs": [],
       "cache": false
     },
@@ -48,27 +80,13 @@
       "outputs": [],
       "cache": false
     },
-    "cjs-on": {
-      "outputs": [],
-      "cache": false
-    },
-    "cjs-off": {
-      "outputs": [],
-      "cache": false
-    },
     "examples": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["build"],
       "outputs": [],
       "cache": false
     },
     "prep": {
-      "dependsOn": [
-        "unit",
-        "examples",
-        "lint"
-      ]
+      "dependsOn": ["unit", "examples", "lint"]
     }
   }
 }
