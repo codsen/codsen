@@ -4,6 +4,8 @@ import objectPath from "object-path";
 import sortPackageJson, { sortOrder } from "sort-package-json";
 import writeFileAtomic from "write-file-atomic";
 
+// import { applyNodeEnginePolicy } from "../common/applyNodeEnginePolicy.js";
+
 function format(obj) {
   if (typeof obj !== "object") {
     return obj;
@@ -110,8 +112,7 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
     objectPath.del(content, "devDependencies");
   }
 
-  // TODO
-  // objectPath.set(content, "engines.node", ">=20");
+  // content = applyNodeEnginePolicy(content);
 
   // 7. write
   try {
