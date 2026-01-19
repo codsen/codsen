@@ -1,12 +1,4 @@
-import {
-  // promises as fs,
-  // F_OK,
-  // accessSync,
-  readdirSync,
-  readFileSync,
-  statSync,
-  writeFile,
-} from "node:fs";
+import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 // import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
@@ -19,34 +11,22 @@ import changelogTimeline from "./remark-conventional-commit-changelog-timeline.e
 
 // ------------------------------------------------------------------------------
 
-const packageNames = readdirSync(path.resolve("packages")).filter((d) =>
-  statSync(path.join("packages", d)).isDirectory(),
-);
+const packageNames = readdirSync(path.resolve("packages"))
+  .filter((directory) =>
+    statSync(path.join("packages", directory)).isDirectory(),
+  )
+  .sort();
 
 const gatheredChangelogs = {};
-let changelogContents;
-
-let uniqueH3 = new Set();
 
 for (let packageName of packageNames) {
   try {
-    // read
-    changelogContents = readFileSync(
+    let changelogContents = readFileSync(
       path.join("packages", packageName, "CHANGELOG.md"),
       "utf8",
     );
 
-    // EXTRAS:
-    changelogContents
-      .split(/(\r?\n)/)
-      .filter((l) => l.startsWith("### "))
-      .map((l) => l.slice(4))
-      .forEach((l) => {
-        uniqueH3.add(l);
-      });
-
-    // render markdown
-    let { value } = unified()
+    const { value } = unified()
       .data("settings", { fragment: true })
       .use(remarkParse)
       .use(remarkGfm)
@@ -61,29 +41,32 @@ for (let packageName of packageNames) {
       .use(rehypeStringify)
       .processSync(changelogContents);
 
-    changelogContents = value;
-
-    // if (packageName === "email-comb") {
+    changelogContents = String(value);
+    if (!changelogContents.trim()) {
+      throw new Error("rendered changelog is empty");
+    }
     gatheredChangelogs[packageName] = changelogContents;
-    // }
-  } catch (_error) {}
+  } catch (error) {
+    throw new Error(
+      `Could not generate the ${packageName} changelog: ${error.message}`,
+      { cause: error },
+    );
+  }
 }
 
-// write files
-// -----------------------------------------------------------------------------
+const gatheredNames = Object.keys(gatheredChangelogs).sort();
+if (JSON.stringify(gatheredNames) !== JSON.stringify(packageNames)) {
+  throw new Error(
+    `Expected ${packageNames.length} changelogs, generated ${gatheredNames.length}`,
+  );
+}
 
-writeFile(
+writeFileSync(
   path.resolve("./data/sources/changelogs.ts"),
-  // path.resolve("./data/sources/changelogs.html"),
   `export const changelogs = ${JSON.stringify(gatheredChangelogs, null, 0)};\n`,
-  // gatheredChangelogs["email-comb"],
-  // [...uniqueH3].join("\n").trim(),
-  (err) => {
-    if (err) {
-      throw err;
-    }
-    console.log(
-      `\u001b[${32}m${`gatheredChangelogs.ts written OK`}\u001b[${39}m`,
-    );
-  },
+  "utf8",
+);
+
+console.log(
+  `\u001b[${32}mGenerated ${gatheredNames.length} changelogs in data/sources/changelogs.ts\u001b[${39}m`,
 );
