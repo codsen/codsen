@@ -13,6 +13,13 @@ import git from "simple-git";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
 
 const isCI = process?.env?.CI || false;
+const arguments_ = process.argv.slice(2);
+if (arguments_.some((argument) => argument !== "--git-stats")) {
+  throw new Error(
+    `generate-info.js: unsupported argument(s): ${arguments_.join(", ")}`,
+  );
+}
+const shouldGenerateGitStats = !isCI || arguments_.includes("--git-stats");
 
 // READ ALL LIBS
 // =============
@@ -655,8 +662,10 @@ writeFile(
 // 5. gather git repo info
 // ---------------------------------------------------------------------------
 
-// don't run git stats on CI because it won't read all the commits, only ~50
-if (!isCI) {
+// Release preparation opts in after checking out the complete history. Later
+// release jobs preserve that prepared value because their synthetic PR/merge
+// commits were not part of the package changes being measured.
+if (shouldGenerateGitStats) {
   let commitTotal = null;
   try {
     // git rev-list --count HEAD
