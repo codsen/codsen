@@ -1,3 +1,4 @@
+import { rmSync } from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import esbuild from "esbuild";
@@ -7,6 +8,12 @@ const require2 = createRequire(import.meta.url);
 const name2 = path.basename(path.resolve("./"));
 
 const pkg = require2(path.join(path.resolve("./"), "package.json"));
+
+// Builds must not leave output from older compiler layouts behind.
+rmSync(path.join(path.resolve("./"), "dist"), {
+  recursive: true,
+  force: true,
+});
 
 // bundle, but set dependencies as external
 const external2 = [
@@ -39,7 +46,7 @@ if (
     define: { DEV: String(!!process.env.DEV) },
     minify: !process.env.DEV,
     sourcemap: false,
-    target: ["node20"],
+    target: ["node22"],
     outfile: path.join(path.resolve("./"), `dist/${name2}.esm.js`),
     // pure,
     banner,
