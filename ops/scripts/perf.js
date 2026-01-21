@@ -3,6 +3,7 @@ import path from "node:path";
 import Benchmark from "benchmark";
 import { sortAllObjectsSync } from "json-comb-core";
 import { perfRef, opsPerSec as refOpsPerSec } from "perf-ref";
+import { parseHistorical, stringifyHistorical } from "./historicalJson.js";
 
 export const runPerf = async (cb, callerDir) => {
   let logThreshold = 1000;
@@ -15,7 +16,7 @@ export const runPerf = async (cb, callerDir) => {
     path.resolve(callerDir, "perf/historical.json"),
     "utf8",
   );
-  let historicalData = JSON.parse(historicalDataFileContents);
+  let historicalData = parseHistorical(historicalDataFileContents);
   let { version, name } = JSON.parse(
     fs.readFileSync(path.resolve(callerDir, "package.json")),
   );
@@ -74,22 +75,27 @@ export const runPerf = async (cb, callerDir) => {
       let normalisedBenchmarkedOpsPerSec =
         (this[0].hz * refOpsPerSec) / freshlyRanRefOpsPerSec;
 
-      if (!Object.hasOwn(historicalData, version)) {
-        historicalData[version] = normalisedBenchmarkedOpsPerSec;
-      }
-      historicalData.lastVersion = historicalData[version];
+      // what we compare against — grab it before we overwrite anything below
+      let baseline = historicalData.lastVersion ?? historicalData[version];
+
+      historicalData[version] = normalisedBenchmarkedOpsPerSec;
+      historicalData.lastVersion = normalisedBenchmarkedOpsPerSec;
 
       // housekeeping
       delete historicalData.lastPublished;
       delete historicalData.lastRan;
 
+      let newHistoricalDataFileContents = `${stringifyHistorical(
+        sortAllObjectsSync(historicalData),
+      )}\n`;
+
       if (
         historicalDataFileContents.trim() !==
-        JSON.stringify(sortAllObjectsSync(historicalData), null, 2).trim()
+        newHistoricalDataFileContents.trim()
       ) {
         fs.writeFile(
           path.resolve(callerDir, "./perf/historical.json"),
-          JSON.stringify(sortAllObjectsSync(historicalData), null, 2),
+          newHistoricalDataFileContents,
           (err) => {
             if (err) {
               throw err;
@@ -102,15 +108,18 @@ export const runPerf = async (cb, callerDir) => {
       // evaluation:
       // -----------------------------------------------------------------------
 
-      if (
-        perc(
-          Math.abs(historicalData.lastVersion - normalisedBenchmarkedOpsPerSec),
-          historicalData.lastVersion,
-        ) <= 2
+      if (typeof baseline !== "number") {
+        console.log(
+          `${heads}🆕 ${`\u001b[${33}m${`no previous record, this run becomes the baseline`}\u001b[${39}m`} ${`\u001b[${90}m${`(${round(
+            normalisedBenchmarkedOpsPerSec,
+          )} ops/sec)`}\u001b[${39}m`}`,
+        );
+      } else if (
+        perc(Math.abs(baseline - normalisedBenchmarkedOpsPerSec), baseline) <= 2
       ) {
         console.log(
           `${heads}${"⚡️"} ${`\u001b[${32}m${`current code is just as fast as before`}\u001b[${39}m`} ${`\u001b[${90}m${`(was ${round(
-            historicalData.lastVersion,
+            baseline,
           )} \u2014 now ${round(
             normalisedBenchmarkedOpsPerSec,
           )} ops/sec)`}\u001b[${39}m`}`,
@@ -118,24 +127,16 @@ export const runPerf = async (cb, callerDir) => {
       } else {
         console.log(
           `${heads}${
-            historicalData.lastVersion < normalisedBenchmarkedOpsPerSec
-              ? "⚡️"
-              : "🐌"
+            baseline < normalisedBenchmarkedOpsPerSec ? "⚡️" : "🐌"
           } ${`\u001b[${
-            historicalData.lastVersion < normalisedBenchmarkedOpsPerSec
-              ? 32
-              : 31
+            baseline < normalisedBenchmarkedOpsPerSec ? 32 : 31
           }m${`current code is ${
-            historicalData.lastVersion < normalisedBenchmarkedOpsPerSec
-              ? "faster"
-              : "slower"
+            baseline < normalisedBenchmarkedOpsPerSec ? "faster" : "slower"
           } by ${perc(
-            Math.abs(
-              historicalData.lastVersion - normalisedBenchmarkedOpsPerSec,
-            ),
-            historicalData.lastVersion,
+            Math.abs(baseline - normalisedBenchmarkedOpsPerSec),
+            baseline,
           )}%`}\u001b[${39}m`} ${`\u001b[${90}m${`(was ${round(
-            historicalData.lastVersion,
+            baseline,
           )} \u2014 now ${round(
             normalisedBenchmarkedOpsPerSec,
           )} ops/sec)`}\u001b[${39}m`}`,
