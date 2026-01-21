@@ -1,10 +1,13 @@
 {
   "npmClient": "npm",
   "command": {
-    "publish": {
+    "version": {
+      "commitHooks": false,
       "conventionalCommits": true,
-      "noPush": true,
-      "message": "chore: release [skip ci]"
+      "forcePublish": ["@codsen/data"],
+      "gitTagVersion": false,
+      "message": "chore(release): publish",
+      "push": false
     }
   },
   "ignoreChanges": [
@@ -13,7 +16,7 @@
     "**/perf/**",
     "**/*.md"
   ],
-  "packages": ["packages/*", "data/"],
+  "packages": ["packages/*", "data"],
   "version": "independent",
-  "$schema": "node_modules/lerna/schemas/lerna-schema.json"
+  "$schema": "node_modules/@lerna-lite/cli/schemas/lerna-schema.json"
 }
