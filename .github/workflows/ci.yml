@@ -1,130 +1,170 @@
-name: Codsen CI
+---
+name: CI
 
 on:
+  pull_request:
   push:
-    branches: ["main"]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
-    name: build
-    timeout-minutes: 30
+  validate:
+    name: Build and validate
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # Needed to push commits
-      id-token: write
-
+    timeout-minutes: 30
     steps:
-      - name: prepare
-        run: |
-          git config --global user.email "${{ secrets.USER_EMAIL }}"
-          git config --global user.name "${{ secrets.YOUR_NAME_SURNAME }}"
-
-      - name: check out code
+      - name: Check out the exact revision
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
 
-      - name: set up Node
+      - name: Set up Node and npm
         uses: ./.github/actions/setup-node
 
-      - name: install dependencies
+      - name: Install dependencies
         run: npm ci
 
-      # bump versions straight away because build will
-      # hardcode them in licence headers in dist/*.js
-      - name: lerna version
-        run: npm run ci:lerna:version
+      - name: Assert the complete workspace set
+        run: node ops/scripts/npm-release.js assert-workspaces --expected 111
 
-      # build but skip @codsen/data (./data/*) because it will need the
-      # updated/bumped packages' sources (incl. package.json's)
-      - name: build packages
+      - name: Regenerate lect-managed package files
+        run: npm run lect
+
+      - name: Build packages
         run: npm run build -- '--filter=./packages/**'
 
-      # build @codsen/data
-      - name: build @codsen/data
+      - name: Bootstrap @codsen/data
+        run: npm run build -- '--filter=./data/**'
+
+      - name: Regenerate repository data
         run: |
-          npm run build -- '--filter=./data/**'
           npm run ci:generate:info
           npm run ci:generate:changelogs
           npm run ci:build:root-readme
 
-      - name: commit the build artefacts
-        run: |
-          git add .
-          git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify
+      - name: Rebuild @codsen/data from regenerated sources
+        run: npm run build -- '--filter=./data/**'
 
-      - name: push to git remote
-        run: |
-          git push
-          git push origin --tags
+      - name: Verify complete and freshly compiled repository data
+        run: npm run ci:verify:data
 
-      - name: upload build artifacts
+      - name: Check formatting and linting without changing files
+        run: npm exec -- biome check .
+
+      - name: Dry-run every npm package
+        env:
+          PACK_REPORT: ${{ runner.temp }}/npm-pack-dry-run.json
+        run: |
+          npm pack --dry-run --json --workspaces --ignore-scripts > "$PACK_REPORT"
+          node --input-type=module -e '
+            import fs from "node:fs";
+            const report = JSON.parse(fs.readFileSync(process.env.PACK_REPORT, "utf8"));
+            if (report.length !== 111) {
+              throw new Error(`Expected 111 npm pack results, received ${report.length}`);
+            }
+          '
+
+      - name: Verify generated files are current
+        run: |
+          git diff --exit-code
+          test -z "$(git status --porcelain --untracked-files=all)"
+
+      - name: Archive built test inputs
+        run: >-
+          tar --create --gzip
+          --file "${{ runner.temp }}/built-packages.tar.gz"
+          packages/*/dist packages/*/types data/dist
+
+      - name: Upload built test inputs
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
-          name: packages-folder
-          path: packages/
+          name: ci-built-packages
+          path: ${{ runner.temp }}/built-packages.tar.gz
+          compression-level: 0
+          if-no-files-found: error
+          overwrite: true
           retention-days: 1
 
-      - name: upload @codsen/data dist
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
-        with:
-          name: codsen-data-dist
-          path: data/dist/
-          retention-days: 1
-
-  static_analysis:
-    name: static analysis
-    needs: [build]
-    uses: ./.github/workflows/static_analysis.yml
-    secrets: inherit
-
-  release:
-    name: release
-    needs: [static_analysis]
+  library-compatibility:
+    name: Libraries / Node ${{ matrix.node-version }}
+    needs: validate
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # Needed to push commits
-      id-token: write
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ["22", "24"]
     steps:
-      - name: prepare
-        run: |
-          git config --global user.email "${{ secrets.USER_EMAIL }}"
-          git config --global user.name "${{ secrets.YOUR_NAME_SURNAME }}"
-
-      - name: check out code
+      - name: Check out the exact revision
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
 
-      - name: set up Node
+      - name: Set up Node and npm
         uses: ./.github/actions/setup-node
+        with:
+          node-version: ${{ matrix.node-version }}
 
-      - name: install dependencies
+      - name: Install dependencies
         run: npm ci
 
-      - name: download built packages folder
+      - name: Build and test Rollup-family libraries
+        shell: bash
+        run: |
+          filters=()
+          for config in packages/*/rollup.config.js; do
+            package_dir=${config%/rollup.config.js}
+            filters+=("--filter=./${package_dir}")
+          done
+
+          npm run turbo -- run build "${filters[@]}" --only
+          npm run turbo -- run unit examples "${filters[@]}" --only
+
+  cli-tests:
+    name: CLI unit tests / Node 24
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the exact revision
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Node and npm
+        uses: ./.github/actions/setup-node
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download built test inputs
         uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
         with:
-          name: packages-folder
-          path: packages/
+          name: ci-built-packages
+          path: ${{ runner.temp }}/built-packages
 
-      - name: download @codsen/data dist
-        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
-        with:
-          name: codsen-data-dist
-          path: data/dist/
+      - name: Restore built test inputs
+        run: tar --extract --gzip --file "${{ runner.temp }}/built-packages/built-packages.tar.gz"
 
-      - name: publish all packages to npm
+      - name: Run CLI unit tests
+        shell: bash
         run: |
-          npm run letspublish --workspace=packages
-          npm run publ --workspace=data
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          filters=()
+          for package_json in packages/*/package.json; do
+            package_dir=${package_json%/package.json}
+            if [[ ! -f "${package_dir}/rollup.config.js" ]]; then
+              filters+=("--filter=./${package_dir}")
+            fi
+          done
 
-      - name: commit the latest
-        run: |
-          git pull
-          git add .
-          git diff-index --quiet HEAD || git commit -m 'chore: post-release build tasks [skip ci]' --no-verify
-
-      - name: push to git remote
-        run: |
-          git status
-          git push
-          git push origin --tags
+          npm run turbo -- run unit "${filters[@]}" --only
