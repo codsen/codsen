@@ -1,7 +1,13 @@
 ---
-name: Setup Node and Restore Cache
+name: Setup Node and npm
 
-description: setup Node.js and save or restore npm_modules
+description: Set up the repository's pinned Node.js and npm versions
+
+inputs:
+  node-version:
+    description: Node.js version to install
+    required: false
+    default: "24"
 
 runs:
   using: composite
@@ -9,6 +15,10 @@ runs:
     - name: Setup Node
       uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
       with:
-        node-version: "24"
-        registry-url: "https://registry.npmjs.org"
+        node-version: ${{ inputs.node-version }}
+        cache: npm
         cache-dependency-path: "./package-lock.json"
+
+    - name: Install the pinned npm version
+      shell: bash
+      run: npm install --global npm@11.16.0
