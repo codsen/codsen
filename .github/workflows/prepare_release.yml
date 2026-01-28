@@ -1,0 +1,187 @@
+---
+name: Prepare npm release
+
+on:
+  workflow_dispatch:
+    inputs:
+      force_all:
+        description: Version every package instead of only conventionally changed packages
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-release-preparation
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    name: Create release pull request
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Check out main with complete history
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Refuse parallel release proposals
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          open_release=$(
+            gh pr list \
+              --base main \
+              --state open \
+              --limit 100 \
+              --json headRefName,url \
+              --jq '.[] | select(.headRefName | startswith("release/npm-")) | .url'
+          )
+          if [ -n "$open_release" ]; then
+            echo "An npm release proposal is already open: $open_release" >&2
+            exit 1
+          fi
+
+      - name: Set up Node and npm
+        uses: ./.github/actions/setup-node
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Assert the complete workspace set
+        run: node ops/scripts/npm-release.js assert-workspaces --expected 111
+
+      - name: Record the release base and create a branch
+        id: release
+        env:
+          RELEASE_BRANCH: release/npm-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          echo "base=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "branch=$RELEASE_BRANCH" >> "$GITHUB_OUTPUT"
+          git switch --create "$RELEASE_BRANCH"
+
+      - name: Configure the release author
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Version conventionally changed packages
+        if: ${{ !inputs.force_all }}
+        run: npm run ci:lerna:version
+
+      - name: Version every package
+        if: ${{ inputs.force_all }}
+        run: npm run ci:lerna:version -- --force-publish '*'
+
+      - name: Regenerate lect-managed package files
+        run: npm run lect
+
+      - name: Build packages
+        run: npm run build -- '--filter=./packages/**'
+
+      - name: Bootstrap @codsen/data
+        run: npm run build -- '--filter=./data/**'
+
+      - name: Regenerate repository data
+        run: |
+          npm run ci:generate:info -- --git-stats
+          npm run ci:generate:changelogs
+          npm run ci:build:root-readme
+
+      - name: Rebuild @codsen/data from regenerated sources
+        run: npm run build -- '--filter=./data/**'
+
+      - name: Verify complete and freshly compiled repository data
+        run: npm run ci:verify:data
+
+      - name: Create the npm release plan
+        run: >-
+          node ops/scripts/npm-release.js plan
+          --base "${{ steps.release.outputs.base }}"
+          --output .github/npm-release-plan.json
+
+      - name: Reject package versions already present on npm
+        run: >-
+          node ops/scripts/npm-release.js preflight
+          --plan .github/npm-release-plan.json
+          --concurrency 8
+
+      - name: Reject unexpected generated paths
+        run: |
+          unexpected=0
+          while IFS= read -r path; do
+            case "$path" in
+              .github/npm-release-plan.json|LICENSE|README.md|package-lock.json|data/*|packages/*)
+                ;;
+              *)
+                echo "Unexpected generated path: $path" >&2
+                unexpected=1
+                ;;
+            esac
+          done < <(git status --porcelain=v1 --untracked-files=all | cut -c4-)
+          test "$unexpected" -eq 0
+
+      - name: Commit the release proposal
+        run: |
+          git add -- .github/npm-release-plan.json LICENSE README.md package-lock.json data packages
+          git diff --cached --exit-code --quiet && {
+            echo "No packages need a release." >&2
+            exit 1
+          }
+          git commit --no-verify --message "chore: prepare npm release"
+
+      - name: Summarize the proposed version bumps
+        env:
+          RELEASE_SUMMARY_FILE: ${{ runner.temp }}/npm-release-summary.md
+        run: |
+          node ops/scripts/npm-release.js summary \
+            --plan .github/npm-release-plan.json \
+            --output "$RELEASE_SUMMARY_FILE"
+          test -s "$RELEASE_SUMMARY_FILE"
+          cat "$RELEASE_SUMMARY_FILE" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Ensure main has not advanced during preparation
+        env:
+          RELEASE_BASE: ${{ steps.release.outputs.base }}
+        run: |
+          git fetch origin main
+          current_main=$(git rev-parse origin/main)
+          if [ "$current_main" != "$RELEASE_BASE" ]; then
+            echo "main advanced during preparation; run this workflow again" >&2
+            exit 1
+          fi
+
+      - name: Push the release branch
+        env:
+          RELEASE_BRANCH: ${{ steps.release.outputs.branch }}
+        run: git push --set-upstream origin "$RELEASE_BRANCH"
+
+      - name: Open the release pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_BRANCH: ${{ steps.release.outputs.branch }}
+          RELEASE_SUMMARY_FILE: ${{ runner.temp }}/npm-release-summary.md
+        run: |
+          test -s "$RELEASE_SUMMARY_FILE"
+          gh pr create \
+            --base main \
+            --head "$RELEASE_BRANCH" \
+            --title "chore: prepare npm release" \
+            --body-file "$RELEASE_SUMMARY_FILE"
+
+      # Events created by GITHUB_TOKEN do not start another workflow run, so the
+      # release branch needs an explicit CI dispatch after its PR is opened.
+      - name: Run CI on the release proposal
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_BRANCH: ${{ steps.release.outputs.branch }}
+        run: gh workflow run ci.yml --ref "$RELEASE_BRANCH"
