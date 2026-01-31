@@ -1,6 +1,6 @@
 // `entStartsWithCaseInsensitive`
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { entStartsWithCaseInsensitive } from "../dist/all-named-html-entities.esm.js";
 
