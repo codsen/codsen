@@ -1,6 +1,6 @@
 // `entEndsWith`
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { entEndsWith } from "../dist/all-named-html-entities.esm.js";
 
