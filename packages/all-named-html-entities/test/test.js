@@ -1,19 +1,19 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
   allNamedEntities,
   allNamedEntitiesSetOnly,
   allNamedEntitiesSetOnlyCaseInsensitive,
-  entStartsWith,
-  entEndsWith,
-  entStartsWithCaseInsensitive,
-  entEndsWithCaseInsensitive,
   brokenNamedEntities,
   decode,
-  minLength,
+  entEndsWith,
+  entEndsWithCaseInsensitive,
+  entStartsWith,
+  entStartsWithCaseInsensitive,
   maxLength,
+  minLength,
   uncertain,
 } from "../dist/all-named-html-entities.esm.js";
 
@@ -102,12 +102,12 @@ test("13 - uncertain list is set", () => {
 
 test("14 - allNamedEntitiesSetOnly is exported and is a set", () => {
   type(allNamedEntitiesSetOnly, "object", "14.01");
-  equal(allNamedEntitiesSetOnly.size, 2125, "14.02");
+  equal(allNamedEntitiesSetOnly.size, 2125, "14.01");
 });
 
 test("15 - allNamedEntitiesSetOnlyCaseInsensitive is exported and is a set", () => {
   type(allNamedEntitiesSetOnlyCaseInsensitive, "object", "15.01");
-  equal(allNamedEntitiesSetOnlyCaseInsensitive.size, 1722, "15.02");
+  equal(allNamedEntitiesSetOnlyCaseInsensitive.size, 1722, "15.01");
 });
 
 test.run();
