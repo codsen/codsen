@@ -1,29 +1,32 @@
 import { version as v } from "../package.json";
 import allNamedEntitiesJson from "./allNamedEntities.json";
 import brokenNamedEntitiesJson from "./brokenNamedEntities.json";
-import entStartsWithJson from "./startsWith.json";
 import entEndsWithJson from "./endsWith.json";
-import entStartsWithCaseInsensitiveJson from "./startsWithCaseInsensitive.json";
 import entEndsWithCaseInsensitiveJson from "./endsWithCaseInsensitive.json";
+import entStartsWithJson from "./startsWith.json";
+import entStartsWithCaseInsensitiveJson from "./startsWithCaseInsensitive.json";
 import uncertainJson from "./uncertain.json";
 
-type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
-type JsonObject = { [Key in string]?: JsonValue };
-type JsonArray = JsonValue[];
+type EntityLookup = Record<string, string>;
+type EntityAffixLookup = Record<string, Record<string, string[]>>;
+type UncertainEntityLookup = Record<
+  string,
+  {
+    addAmpIfSemiPresent: boolean | string;
+    addSemiIfAmpPresent: boolean | string;
+  }
+>;
 const version: string = v;
-const allNamedEntities: JsonObject = allNamedEntitiesJson;
-const brokenNamedEntities: JsonObject = brokenNamedEntitiesJson;
-const entStartsWith: JsonObject = entStartsWithJson;
-const entEndsWith: JsonObject = entEndsWithJson;
-const entStartsWithCaseInsensitive: JsonObject =
+const allNamedEntities: EntityLookup = allNamedEntitiesJson;
+const brokenNamedEntities: EntityLookup = brokenNamedEntitiesJson;
+const entStartsWith: EntityAffixLookup = entStartsWithJson;
+const entEndsWith: EntityAffixLookup = entEndsWithJson;
+const entStartsWithCaseInsensitive: EntityAffixLookup =
   entStartsWithCaseInsensitiveJson;
-const entEndsWithCaseInsensitive: JsonObject = entEndsWithCaseInsensitiveJson;
+const entEndsWithCaseInsensitive: EntityAffixLookup =
+  entEndsWithCaseInsensitiveJson;
 
-const uncertain: JsonObject = uncertainJson;
-
-interface UnknownValueObj {
-  [key: string]: any;
-}
+const uncertain: UncertainEntityLookup = uncertainJson;
 
 const allNamedEntitiesSetOnly = new Set([
   "Aacute",
@@ -3880,7 +3883,7 @@ const allNamedEntitiesSetOnlyCaseInsensitive = new Set([
 
 // -----------------------------------------------------------------------------
 
-// import fs from "fs";
+// import fs from "node:fs";
 // const all = Object.keys(allNamedEntities);
 // const allCaseInsensitive = [];
 //
@@ -3966,9 +3969,8 @@ function decode(ent: string): string | null {
     );
   }
   let val = ent.slice(1, ent.length - 1);
-  return (allNamedEntities as UnknownValueObj)[val]
-    ? (allNamedEntities as UnknownValueObj)[val]
-    : null;
+  let decoded = allNamedEntities[val];
+  return typeof decoded === "string" ? decoded : null;
 }
 
 // -----------------------------------------------------------------------------
@@ -3986,16 +3988,16 @@ const maxLength = 31;
 
 export {
   allNamedEntities,
-  entStartsWith,
-  entEndsWith,
-  entStartsWithCaseInsensitive,
-  entEndsWithCaseInsensitive,
-  brokenNamedEntities,
-  uncertain,
   allNamedEntitiesSetOnly,
   allNamedEntitiesSetOnlyCaseInsensitive,
+  brokenNamedEntities,
   decode,
-  minLength,
+  entEndsWith,
+  entEndsWithCaseInsensitive,
+  entStartsWith,
+  entStartsWithCaseInsensitive,
   maxLength,
+  minLength,
+  uncertain,
   version,
 };
