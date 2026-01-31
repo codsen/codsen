@@ -1,5 +1,5 @@
 // deps
-import path from "path";
+import path from "node:path";
 
 import { runPerf } from "../../../ops/scripts/perf.js";
 import { decode } from "../dist/all-named-html-entities.esm.js";
