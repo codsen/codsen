@@ -1,19 +1,19 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import {
   allNamedEntities,
   allNamedEntitiesSetOnly,
   allNamedEntitiesSetOnlyCaseInsensitive,
-  entStartsWith,
-  entEndsWith,
-  entStartsWithCaseInsensitive,
-  entEndsWithCaseInsensitive,
   brokenNamedEntities,
   decode,
-  minLength,
+  entEndsWith,
+  entEndsWithCaseInsensitive,
+  entStartsWith,
+  entStartsWithCaseInsensitive,
   maxLength,
+  minLength,
   uncertain,
 } from "../dist/all-named-html-entities.esm.js";
 
