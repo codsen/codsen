@@ -1,11 +1,11 @@
 // `opts.arrayVsArrayAllMustBeFound`
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { includesWithGlob } from "../dist/array-includes-with-glob.esm.js";
 
-let source = ["aaa", "bbb", "ccc"];
-let whatToLookFor = ["a*", "d*"];
+const source = ["aaa", "bbb", "ccc"];
+const whatToLookFor = ["a*", "d*"];
 
 // the default setting for opts.arrayVsArrayAllMustBeFound is "any"
 assert.equal(includesWithGlob(source, whatToLookFor), true);
