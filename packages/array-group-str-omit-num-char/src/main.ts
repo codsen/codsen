@@ -1,7 +1,7 @@
-import { rApply } from "ranges-apply";
+import { hasOwnProp } from "codsen-utils";
 
 import type { Range, Ranges } from "ranges-apply";
-import { hasOwnProp } from "codsen-utils";
+import { rApply } from "ranges-apply";
 
 import { version as v } from "../package.json";
 
@@ -45,7 +45,7 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
   for (let i = 0, len = resolvedArr.length; i < len; i++) {
     DEV &&
       console.log(
-        `${`\u001b[${36}m${`-1--------------------`}\u001b[${39}m`}  ${`\u001b[${33}m${`resolvedArr[${i}]`}\u001b[${39}m`} = ${`\u001b[${35}m${resolvedArr[i]}\u001b[${39}m`}  ${`\u001b[${36}m${`--------------------`}\u001b[${39}m`}`,
+        `48 ${`\u001b[${36}m${`-1--------------------`}\u001b[${39}m`}  ${`\u001b[${33}m${`resolvedArr[${i}]`}\u001b[${39}m`} = ${`\u001b[${35}m${resolvedArr[i]}\u001b[${39}m`}  ${`\u001b[${36}m${`--------------------`}\u001b[${39}m`}`,
       );
 
     // compile an array of digit chunks, consisting of at least one digit
@@ -159,9 +159,9 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
   Object.keys(compiledObj).forEach((key) => {
     DEV &&
       console.log(
-        `\u001b[${36}m${`------------------------------------------`}\u001b[${39}m`,
+        `162 \u001b[${36}m${`------------------------------------------`}\u001b[${39}m`,
       );
-    DEV && console.log(`${`\u001b[${35}m${`z`}\u001b[${39}m`}`);
+    DEV && console.log(`164 ${`\u001b[${35}m${`z`}\u001b[${39}m`}`);
     DEV &&
       console.log(
         `167 PROCESSING compiledObj key: ${JSON.stringify(key, null, 4)}`,
@@ -197,21 +197,23 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
       let nThIndex = 0;
 
       DEV &&
-        console.log(`\u001b[${32}m${`==== while starts ====`}\u001b[${39}m`);
+        console.log(
+          `201 \u001b[${32}m${`==== while starts ====`}\u001b[${39}m`,
+        );
       for (
         let z = 0;
         z < compiledObj[key].elementsWhichWeCanReplaceWithWildcards.length;
         z++
       ) {
-        DEV && console.log(z === 0 ? "" : "\n-------------\n");
-        DEV && console.log(`207 ${`\u001b[${33}m${`z`}\u001b[${39}m`} = ${z}`);
+        DEV && console.log(`208 ${z === 0 ? "" : "\n-------------\n"}`);
+        DEV && console.log(`209 ${`\u001b[${33}m${`z`}\u001b[${39}m`} = ${z}`);
         nThIndex = newKey.indexOf(
           `${resolvedOpts.wildcard || ""}`,
           nThIndex + (resolvedOpts.wildcard || "").length,
         );
         DEV &&
           console.log(
-            `${`\u001b[${33}m${`nThIndex`}\u001b[${39}m`} = ${JSON.stringify(
+            `216 ${`\u001b[${33}m${`nThIndex`}\u001b[${39}m`} = ${JSON.stringify(
               nThIndex,
               null,
               4,
@@ -229,15 +231,17 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
       }
       newKey = rApply(newKey, rangesArr as Range[]);
       DEV &&
-        console.log(`\u001b[${32}m${`\n==== while ends ====`}\u001b[${39}m`);
+        console.log(
+          `235 \u001b[${32}m${`\n==== while ends ====`}\u001b[${39}m`,
+        );
     }
     resObj[newKey] = compiledObj[key].count;
   });
   DEV &&
     console.log(
-      `\u001b[${36}m${`------------------------------------------`}\u001b[${39}m`,
+      `242 \u001b[${36}m${`------------------------------------------`}\u001b[${39}m`,
     );
   return resObj;
 }
 
-export { groupStr, defaults, version, Range, Ranges };
+export { defaults, groupStr, type Range, type Ranges, version };
