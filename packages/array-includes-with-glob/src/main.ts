@@ -27,9 +27,9 @@ function includesWithGlob(
     return false; // because nothing can be found in it
   }
 
-  let resolvedOpts = { ...defaults, ...opts };
+  const resolvedOpts = { ...defaults, ...opts };
 
-  let resolvedInput = typeof input === "string" ? [input] : Array.from(input);
+  const resolvedInput = typeof input === "string" ? [input] : Array.from(input);
 
   if (typeof findThis === "string") {
     return resolvedInput.some((val) =>
@@ -55,4 +55,4 @@ function includesWithGlob(
   );
 }
 
-export { includesWithGlob, defaults, version };
+export { defaults, includesWithGlob, version };
