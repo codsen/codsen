@@ -28,11 +28,11 @@ function pull(
   if (!strArr.length || !toBeRemoved.length) {
     return Array.from(strArr);
   }
-  let resolvedToBeRemoved: string[] =
+  const resolvedToBeRemoved: string[] =
     typeof toBeRemoved === "string" ? [toBeRemoved] : Array.from(toBeRemoved);
-  let resolvedOpts: Opts = { ...defaults, ...opts };
+  const resolvedOpts: Opts = { ...defaults, ...opts };
 
-  let res = Array.from(strArr).filter(
+  const res = Array.from(strArr).filter(
     (originalVal) =>
       !resolvedToBeRemoved.some((remVal) =>
         isMatch(originalVal, remVal, {
@@ -43,4 +43,4 @@ function pull(
   return res;
 }
 
-export { pull, defaults, version };
+export { defaults, pull, version };
