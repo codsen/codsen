@@ -8,3 +8,4 @@ type StringInABox<T> = T extends ""
 declare function arrayiffy<T>(something: T): StringInABox<T>;
 
 export { arrayiffy };
+export type { StringInABox };

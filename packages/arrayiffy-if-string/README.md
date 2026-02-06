@@ -32,7 +32,7 @@ npm i arrayiffy-if-string
 ## Quick Take
 
 ```js
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { arrayiffy } from "arrayiffy-if-string";
 
@@ -45,9 +45,10 @@ assert.equal(arrayiffy(true), true);
 assert.equal(arrayiffy(), undefined);
 ```
 
+
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/arrayiffy-if-string/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/arrayiffy-if-string/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/arrayiffy-if-string/CHANGELOG.md).
 
 ## Contributing
 
@@ -57,7 +58,7 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 MIT License
 
-Copyright © 2010-2025 Roy Revelt and other contributors
+Copyright © 2010-2026 Roy Revelt and other contributors
 
 Thanks to KRyan for types https://stackoverflow.com/a/71834598/3943954
 
