@@ -13,4 +13,4 @@ function arrayiffy<T>(something: T): [] | [string] | T {
   return [];
 }
 
-export { arrayiffy };
+export { arrayiffy, type StringInABox };
