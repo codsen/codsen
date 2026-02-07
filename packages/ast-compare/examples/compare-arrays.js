@@ -1,6 +1,6 @@
 // Compare Arrays
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { compare } from "../dist/ast-compare.esm.js";
 
