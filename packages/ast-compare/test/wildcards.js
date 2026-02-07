@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { compare } from "../dist/ast-compare.esm.js";
 
@@ -277,6 +277,27 @@ test("04 - wildcards in deeper levels within arrays", () => {
     ),
     true,
     "04.05",
+  );
+});
+
+test("05 - every wildcard key in the subset must match", () => {
+  equal(
+    compare(
+      { alpha: "x", beta: "y" },
+      { "a*": "ignored", "z*": "ignored" },
+      { useWildcards: true },
+    ),
+    false,
+    "05.01",
+  );
+  equal(
+    compare(
+      { alpha: "x", beta: "y" },
+      { "a*": "ignored", "b*": "ignored" },
+      { useWildcards: true },
+    ),
+    true,
+    "05.02",
   );
 });
 
