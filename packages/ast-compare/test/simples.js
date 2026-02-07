@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { compare } from "../dist/ast-compare.esm.js";
 
@@ -447,7 +447,7 @@ test("41 - comparison of empty plain objects - same, default hardcoded", () => {
 });
 
 test("42 - comparison of empty plain objects - matchStrictly trump hungryForWhitespace", () => {
-  // matchStrictly trump hungryForWhitespace - element count is uneven hence a falsey result
+  // matchStrictly trump hungryForWhitespace - element count is uneven hence a falsy result
   equal(
     compare(
       {
