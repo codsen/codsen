@@ -1,6 +1,6 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { empty } from "../dist/ast-contains-only-empty-space.esm.js";
 
