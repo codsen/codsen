@@ -1,62 +1,60 @@
-import { traverse } from "ast-monkey-traverse";
-
 import { version as v } from "../package.json";
 
 const version: string = v;
 
 declare let DEV: boolean;
 
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  if (value == null || typeof value !== "object") {
+    return false;
+  }
+  let proto = Object.getPrototypeOf(value);
+  if (
+    proto !== null &&
+    proto !== Object.prototype &&
+    Object.getPrototypeOf(proto) !== null
+  ) {
+    return false;
+  }
+  return !(Symbol.iterator in value) && !(Symbol.toStringTag in value);
+}
+
+function containsOnlyWhitespace(value: unknown): boolean {
+  if (typeof value === "string") {
+    return !value.trim();
+  }
+  if (Array.isArray(value)) {
+    for (let item of value) {
+      if (!containsOnlyWhitespace(item)) {
+        return false;
+      }
+    }
+  } else if (isPlainObject(value)) {
+    for (let key of Object.keys(value)) {
+      if (!containsOnlyWhitespace(value[key])) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 /**
  * Does AST contain only empty space?
  */
 function empty(input: unknown): boolean {
   if (typeof input === "string") {
-    DEV && console.log(`014 return ${!input.trim()}`);
+    DEV && console.log(`047 return ${!input.trim()}`);
     return !input.trim();
   }
-  if (!["object", "string"].includes(typeof input) || !input) {
-    DEV && console.log(`018 return false`);
+  if (typeof input !== "object" || !input) {
+    DEV && console.log(`051 return false`);
     return false;
   }
-  let found = true;
-  DEV && console.log(`022 ${`\u001b[${36}m${`AST traversal!`}\u001b[${39}m`}`);
-  input = traverse(input, (key, val, innerObj, stop) => {
-    DEV && console.log(" ");
-    DEV &&
-      console.log(
-        `${`\u001b[${33}m${`innerObj`}\u001b[${39}m`} = ${JSON.stringify(
-          innerObj,
-          null,
-          4,
-        )}`,
-      );
-    DEV &&
-      console.log(
-        `035 -------------------------------------- path: ${innerObj.path}`,
-      );
-    let current = val !== undefined ? val : key;
-    DEV &&
-      console.log(
-        `${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
-          current,
-          null,
-          4,
-        )}`,
-      );
-    if (typeof current === "string" && current.trim()) {
-      found = false;
-      DEV &&
-        console.log(
-          `050 found = false, ${`\u001b[${31}m${`stopping`}\u001b[${39}m`}`,
-        );
-      stop.now = true;
-    }
-    return current;
-  });
-  DEV && console.log(`056 -------------------------------------- fin.`);
-
-  DEV && console.log(`058 return ${found}`);
-  return found;
+  DEV && console.log(`054 ${`\u001b[${36}m${`AST traversal!`}\u001b[${39}m`}`);
+  let result = containsOnlyWhitespace(input);
+  DEV && console.log(`056 return ${result}`);
+  return result;
 }
 
 export { empty, version };
