@@ -1,8 +1,7 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import objectPath from "object-path";
 import { traverse } from "ast-monkey-traverse";
-import is from "@sindresorhus/is";
+import objectPath from "object-path";
 
 import { version as v } from "../package.json";
 
@@ -24,12 +23,32 @@ function goUp(pathStr: string): string {
   return pathStr;
 }
 
-function dropIth<T>(arr: T[], badIdx: number): T[] {
-  return Array.from(arr).filter((_el, i) => i !== badIdx);
-}
-
 interface UnknownValueObj {
   [key: string]: any;
+}
+
+function isPlainObject(value: unknown): value is UnknownValueObj {
+  if (value === null || typeof value !== "object") {
+    return false;
+  }
+  const prototype = Object.getPrototypeOf(value);
+  return prototype === null || prototype === Object.prototype;
+}
+
+function typeLabel(value: unknown): string {
+  if (value === null) {
+    return "null";
+  }
+  if (Array.isArray(value)) {
+    return "array";
+  }
+  if (typeof value === "number" && Number.isNaN(value)) {
+    return "nan";
+  }
+  if (typeof value !== "object") {
+    return typeof value;
+  }
+  return Object.prototype.toString.call(value).slice(8, -1).toLowerCase();
 }
 
 export interface Opts {
@@ -42,13 +61,13 @@ const defaults: Opts = {
   arrayStrictComparison: false,
 };
 
-export interface Callback {
-  (leftSideVal: any, rightSideVal: any, path: string): void;
-}
+export type Callback = (
+  leftSideVal: any,
+  rightSideVal: any,
+  path: string,
+) => void;
 
-export interface ErrorCallback {
-  (errStr: string): void;
-}
+export type ErrorCallback = (errStr: string) => void;
 
 /**
  * Like t.same assert on array of objects, where element order doesn't matter.
@@ -61,13 +80,11 @@ function deepContains(
   opts?: Partial<Opts>,
 ): void {
   let resolvedOpts = { ...defaults, ...opts };
-  if (is(tree1) !== is(tree2)) {
+  const tree1Type = typeLabel(tree1);
+  const tree2Type = typeLabel(tree2);
+  if (tree1Type !== tree2Type) {
     errCb(
-      `the first input arg is of a type ${is(
-        tree1,
-      ).toLowerCase()} but the second is ${is(
-        tree2,
-      ).toLowerCase()}. Values are - 1st:\n${JSON.stringify(
+      `the first input arg is of a type ${tree1Type} but the second is ${tree2Type}. Values are - 1st:\n${JSON.stringify(
         tree1,
         null,
         4,
@@ -79,10 +96,10 @@ function deepContains(
       let current = val !== undefined ? val : key;
       let { path } = innerObj;
       // retrieve the path of the current node from the monkey
-      DEV && console.log("\n");
+      DEV && console.log("099 \n");
       DEV &&
         console.log(
-          `085 ${`\u001b[${90}m${`====================================`}\u001b[${39}m`} ${`\u001b[${36}m${`path`}\u001b[${39}m`}: ${path}; ${`\u001b[${36}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
+          `102 ${`\u001b[${90}m${`====================================`}\u001b[${39}m`} ${`\u001b[${36}m${`path`}\u001b[${39}m`}: ${path}; ${`\u001b[${36}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
             current,
             null,
             0,
@@ -97,16 +114,16 @@ function deepContains(
       // );
 
       if (objectPath.has(tree1, path)) {
-        DEV && console.log(`100 tree1 does have the path "${path}"`);
+        DEV && console.log(`117 tree1 does have the path "${path}"`);
         if (
           !resolvedOpts.arrayStrictComparison &&
-          is.plainObject(current) &&
+          isPlainObject(current) &&
           innerObj.parentType === "array" &&
           innerObj.parent.length > 1
         ) {
           DEV &&
             console.log(
-              `109 ${`\u001b[${35}m${`██ object within array`}\u001b[${39}m`}`,
+              `126 ${`\u001b[${35}m${`██ object within array`}\u001b[${39}m`}`,
             );
           // stop the monkey, we'll go further recursively
           stop.now = true;
@@ -118,7 +135,7 @@ function deepContains(
           );
           DEV &&
             console.log(
-              `121 SET ${`\u001b[${33}m${`arr1`}\u001b[${39}m`} = ${JSON.stringify(
+              `138 SET ${`\u001b[${33}m${`arr1`}\u001b[${39}m`} = ${JSON.stringify(
                 arr1,
                 null,
                 4,
@@ -140,38 +157,14 @@ function deepContains(
               )}`,
             );
           } else {
-            DEV && console.log(`143`);
+            DEV && console.log(`160`);
             let arr2: UnknownValueObj[] = innerObj.parent;
             DEV &&
               console.log(
-                `147 SET ${`\u001b[${33}m${`arr2`}\u001b[${39}m`} = ${JSON.stringify(
+                `164 SET ${`\u001b[${33}m${`arr2`}\u001b[${39}m`} = ${JSON.stringify(
                   arr2,
                   null,
                   4,
-                )}`,
-              );
-
-            // we extract just indexes:
-            let tree1RefSource = arr1.map((_v, i) => i);
-            let tree2RefSource = arr2.map((_v, i) => i);
-            // [0, 1, 2] for example.
-            // We'll use them to calculate combinations, as in 1st object in tree2
-            // array against 2nd object in tree1 array...
-
-            DEV &&
-              console.log(
-                `163 ${`\u001b[${33}m${`tree1RefSource`}\u001b[${39}m`} = ${JSON.stringify(
-                  tree1RefSource,
-                  null,
-                  0,
-                )}`,
-              );
-            DEV &&
-              console.log(
-                `171 ${`\u001b[${33}m${`tree2RefSource`}\u001b[${39}m`} = ${JSON.stringify(
-                  tree2RefSource,
-                  null,
-                  0,
                 )}`,
               );
 
@@ -184,8 +177,8 @@ function deepContains(
             // calculate which object is the most resembling which.
             //
             //
-            // Plan: let's generate the table combinations of each table vs. each
-            // table. Think about 3 vs. 2 compares:
+            // Find the maximum-score one-to-one assignment. This avoids generating
+            // every permutation and works for arrays of any length.
             // deepContains(
             //   [
             //       { key1: "a", key2: "b" },
@@ -197,256 +190,35 @@ function deepContains(
             //       { key1: "a", key2: "b" }  <---- is wrong
             //   ]
             //
-            //  Once we have table of all combinations, we'll calculate the
-            // likeness score of each combination, and whichever is the highest
-            // we'll ping those objects to user-supplied (likely AVA's t.equal()) callback.
+            // The most similar pairs are sent to the user-supplied callback.
             //
-
-            // We want to achieve something like this (using example above):
-            // [[0, 0], [1, 1]]
-            // [[0, 0], [1, 2]]
-            //
-            // [[0, 1], [1, 0]]
-            // [[0, 1], [1, 2]]
-            //
-            // [[0, 2], [1, 0]]
-            // [[0, 2], [1, 1]]
-
-            // where [[0, 0], [1, 1]] means:
-
-            // [
-            //   [ index 0 from tree2, index 0 from tree1 ]
-            //   [ index 1 from tree2, index 1 from tree1 ]
-            // ]
-
-            // We'll compose the combinations array from two parts:
-            // The first digits are following "tree2RefSource", the tree2 indexes.
-            // The second digits are from iterating tree1, picking one and
-            // iterating what's left for the second variation.
-
-            let secondDigits: [number, number][] = [];
-
-            for (let i = 0, len = tree1RefSource.length; i < len; i++) {
-              let currArr: number[] = [];
-              let pickedVal: number = tree1RefSource[i];
-              DEV &&
-                console.log(
-                  `234 SET ${`\u001b[${33}m${`pickedVal`}\u001b[${39}m`} = ${JSON.stringify(
-                    pickedVal,
-                    null,
-                    4,
-                  )}`,
-                );
-              let disposableArr1 = dropIth(tree1RefSource, i);
-              currArr.push(pickedVal);
-              DEV &&
-                console.log(
-                  `244 PUSH to ${`\u001b[${33}m${`currArr`}\u001b[${39}m`} now = ${JSON.stringify(
-                    currArr,
-                    null,
-                    4,
-                  )}`,
-                );
-              // iterate what's left
-              disposableArr1.forEach((key1) => {
-                secondDigits.push(
-                  Array.from(currArr).concat(key1) as [number, number],
-                );
-                DEV &&
-                  console.log(
-                    `257 secondDigits now = ${JSON.stringify(
-                      secondDigits,
-                      null,
-                      4,
-                    )}`,
-                  );
-              });
-            }
-
-            type FinalCombined = [
-              [number, number],
-              [number, number],
-              number?,
-            ][];
-            let finalCombined: FinalCombined = secondDigits.map((arr) => {
-              return arr.map((val2, i) => [i, val2]);
-            }) as FinalCombined;
+            const mapping = findBestArrayMapping(arr2, arr1);
             DEV &&
               console.log(
-                `276 SET ${`\u001b[${33}m${`finalCombined`}\u001b[${39}m`} = ${JSON.stringify(
-                  finalCombined,
+                `198 SET ${`\u001b[${33}m${`mapping`}\u001b[${39}m`} = ${JSON.stringify(
+                  mapping,
                   null,
                   4,
                 )}`,
               );
-
-            DEV && console.log(" ");
-            DEV && console.log(" ");
-            DEV &&
-              console.log(
-                `287 ${`\u001b[${35}m${`MAPPING TABLE:`}\u001b[${39}m`} ${finalCombined.reduce(
-                  (acc, curr, idx) => {
-                    return `${acc}${
-                      idx % 2 === 0 ? "\n" : ""
-                    }\n${JSON.stringify(curr, null, 0)}`;
-                  },
-                  "",
-                )}`,
+            for (const [tree2Index, tree1Index] of mapping) {
+              // ping object pairs recursively:
+              deepContains(
+                arr1[tree1Index],
+                arr2[tree2Index],
+                cb,
+                errCb,
+                resolvedOpts,
               );
-
-            // now, use the "finalCombined" as a guidance which objects to match against which, and array-push the comparison score as third element into each. Whichever comparison gathers highest score, gets pinged to the callback.
-
-            DEV && console.log(" ");
-
-            let maxScore = 0;
-
-            for (let i = 0, len = finalCombined.length; i < len; i++) {
-              let score = 0;
-              // finalCombined[i] === something like [[0,0],[1,1]]
-
-              // tree1 array: arr1
-              // tree2 array: arr2
-
-              DEV && console.log(`\n-----\n#${i + 1}:`);
-              finalCombined[i].forEach((mapping) => {
-                DEV &&
-                  console.log(
-                    `314 ${`\u001b[${33}m${`mapping`}\u001b[${39}m`} = ${JSON.stringify(
-                      mapping,
-                      null,
-                      4,
-                    )}`,
-                  );
-                DEV &&
-                  console.log(
-                    `322 ${JSON.stringify(
-                      arr2[(mapping as any)[0]],
-                      null,
-                      4,
-                    )} vs. ${JSON.stringify(
-                      arr1[(mapping as any)[1]],
-                      null,
-                      4,
-                    )}`,
-                  );
-
-                if (
-                  is.plainObject(arr2[(mapping as any)[0]]) &&
-                  is.plainObject(arr1[(mapping as any)[1]])
-                ) {
-                  Object.keys(arr2[(mapping as any)[0]]).forEach((key2) => {
-                    if (Object.keys(arr1[(mapping as any)[1]]).includes(key2)) {
-                      score += 1;
-                      if (
-                        arr1[(mapping as any)[1]][key2] ===
-                        arr2[(mapping as any)[0]][key2]
-                      ) {
-                        score += 5;
-                      }
-                    }
-                  });
-                }
-              });
-              DEV &&
-                console.log(
-                  `352 BEFORE PUSHING ${`\u001b[${33}m${`finalCombined[i]`}\u001b[${39}m`} = ${JSON.stringify(
-                    finalCombined[i],
-                    null,
-                    4,
-                  )}`,
-                );
-              finalCombined[i].push(score);
-              DEV &&
-                console.log(
-                  `361 AFTER PUSHING ${`\u001b[${33}m${`finalCombined[i]`}\u001b[${39}m`} = ${JSON.stringify(
-                    finalCombined[i],
-                    null,
-                    4,
-                  )}`,
-                );
-              // finally, push the score as 3rd arg. into mapping array
-              if (score > maxScore) {
-                maxScore = score;
-              }
             }
-
-            DEV && console.log(" ");
-            DEV && console.log(" ");
-            DEV &&
-              console.log(
-                `377: ${`\u001b[${35}m${`WITH SCORES:`}\u001b[${39}m`} ${finalCombined.reduce(
-                  (acc, curr, idx) => {
-                    return `${acc}${
-                      idx % 2 === 0 ? "\n" : ""
-                    }\n${JSON.stringify(curr, null, 0)}`;
-                  },
-                  "",
-                )}`,
-              );
-            DEV && console.log(" ");
-            DEV &&
-              console.log(
-                `389 ${`\u001b[${35}m${`MAX SCORE:`}\u001b[${39}m`} ${maxScore}`,
-              );
-
-            // FINALLY, ping callbacks with the max score objects
-            for (let i = 0, len = finalCombined.length; i < len; i++) {
-              if (finalCombined[i][2] === maxScore) {
-                DEV &&
-                  console.log(
-                    `397 ${`\u001b[${35}m${`PING:`}\u001b[${39}m`} ${JSON.stringify(
-                      [finalCombined[i][0], finalCombined[i][1]],
-                      null,
-                      0,
-                    )}`,
-                  );
-
-                finalCombined[i].forEach((matchPairObj, y) => {
-                  // beware score is the last element.
-                  if (y < finalCombined[i].length - 1) {
-                    // DEV && console.log(
-                    //   `${`\u001b[${33}m${`matchPairObj`}\u001b[${39}m`} = ${JSON.stringify(
-                    //     matchPairObj,
-                    //     null,
-                    //     4
-                    //   )}`
-                    // );
-                    DEV &&
-                      console.log(
-                        `${JSON.stringify(
-                          arr1[(matchPairObj as any)[1]],
-                          null,
-                          4,
-                        )} vs ${JSON.stringify(
-                          arr2[(matchPairObj as any)[0]],
-                          null,
-                          4,
-                        )}`,
-                      );
-
-                    // ping object pairs recursively:
-                    deepContains(
-                      arr1[(matchPairObj as any)[1]],
-                      arr2[(matchPairObj as any)[0]],
-                      cb,
-                      errCb,
-                      resolvedOpts,
-                    );
-                  }
-                });
-
-                break;
-              }
-            }
-            //
           }
         } else {
-          DEV && console.log(`444 it is not an object inside an array`);
+          DEV && console.log(`216 it is not an object inside an array`);
           // if tree1 has that path on tree2, call the callback
           let retrieved = objectPath.get(tree1, path);
           DEV &&
             console.log(
-              `449 ${`\u001b[${33}m${`resolvedOpts.skipContainers`}\u001b[${39}m`} = ${JSON.stringify(
+              `221 ${`\u001b[${33}m${`resolvedOpts.skipContainers`}\u001b[${39}m`} = ${JSON.stringify(
                 resolvedOpts.skipContainers,
                 null,
                 4,
@@ -454,20 +226,20 @@ function deepContains(
             );
           DEV &&
             console.log(
-              `457 ${`\u001b[${33}m${`retrieved`}\u001b[${39}m`} = ${JSON.stringify(
+              `229 ${`\u001b[${33}m${`retrieved`}\u001b[${39}m`} = ${JSON.stringify(
                 retrieved,
                 null,
                 4,
-              )}; type: ${typeof retrieved}; isObj: ${is.plainObject(
+              )}; type: ${typeof retrieved}; isObj: ${isPlainObject(
                 retrieved,
               )}`,
             );
           if (
             !resolvedOpts.skipContainers ||
-            (!is.plainObject(retrieved) && !Array.isArray(retrieved))
+            (!isPlainObject(retrieved) && !Array.isArray(retrieved))
           ) {
             DEV &&
-              console.log(`470 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} cb()`);
+              console.log(`242 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} cb()`);
             cb(retrieved, current, path);
           }
         }
@@ -487,11 +259,106 @@ function deepContains(
 
       DEV &&
         console.log(
-          `\n\n\n348 ${`\u001b[${90}m${`======================================================`}\u001b[${39}m`} fin. ${`\u001b[${90}m${`======================================================`}\u001b[${39}m`}`,
+          `\n\n\n262 ${`\u001b[${90}m${`======================================================`}\u001b[${39}m`} fin. ${`\u001b[${90}m${`======================================================`}\u001b[${39}m`}`,
         );
       return current;
     });
   }
+}
+
+function similarityScore(rightValue: unknown, leftValue: unknown): number {
+  if (!isPlainObject(rightValue) || !isPlainObject(leftValue)) {
+    return 0;
+  }
+
+  let score = 0;
+  for (const key of Object.keys(rightValue)) {
+    if (Object.hasOwn(leftValue, key)) {
+      score += leftValue[key] === rightValue[key] ? 6 : 1;
+    }
+  }
+  return score;
+}
+
+/**
+ * Maximum-weight matching for a rectangular matrix, using the Hungarian
+ * algorithm. The right array is no longer silently truncated to two items and
+ * matching remains cubic instead of generating every possible permutation.
+ */
+function findBestArrayMapping(
+  rightValues: unknown[],
+  leftValues: unknown[],
+): [rightIndex: number, leftIndex: number][] {
+  const rowCount = rightValues.length;
+  const columnCount = leftValues.length;
+  const scores = rightValues.map((rightValue) =>
+    leftValues.map((leftValue) => similarityScore(rightValue, leftValue)),
+  );
+  const rowPotential = new Array<number>(rowCount + 1).fill(0);
+  const columnPotential = new Array<number>(columnCount + 1).fill(0);
+  const matching = new Array<number>(columnCount + 1).fill(0);
+  const previousColumn = new Array<number>(columnCount + 1).fill(0);
+
+  for (let row = 1; row <= rowCount; row++) {
+    matching[0] = row;
+    let currentColumn = 0;
+    const minimum = new Array<number>(columnCount + 1).fill(
+      Number.POSITIVE_INFINITY,
+    );
+    const used = new Array<boolean>(columnCount + 1).fill(false);
+
+    do {
+      used[currentColumn] = true;
+      const currentRow = matching[currentColumn];
+      let delta = Number.POSITIVE_INFINITY;
+      let nextColumn = 0;
+
+      for (let column = 1; column <= columnCount; column++) {
+        if (used[column]) {
+          continue;
+        }
+        const cost =
+          -scores[currentRow - 1][column - 1] -
+          rowPotential[currentRow] -
+          columnPotential[column];
+        if (cost < minimum[column]) {
+          minimum[column] = cost;
+          previousColumn[column] = currentColumn;
+        }
+        if (minimum[column] < delta) {
+          delta = minimum[column];
+          nextColumn = column;
+        }
+      }
+
+      for (let column = 0; column <= columnCount; column++) {
+        if (used[column]) {
+          rowPotential[matching[column]] += delta;
+          columnPotential[column] -= delta;
+        } else {
+          minimum[column] -= delta;
+        }
+      }
+      currentColumn = nextColumn;
+    } while (matching[currentColumn] !== 0);
+
+    do {
+      const nextColumn = previousColumn[currentColumn];
+      matching[currentColumn] = matching[nextColumn];
+      currentColumn = nextColumn;
+    } while (currentColumn !== 0);
+  }
+
+  const leftIndexByRight = new Array<number>(rowCount);
+  for (let column = 1; column <= columnCount; column++) {
+    if (matching[column] > 0) {
+      leftIndexByRight[matching[column] - 1] = column - 1;
+    }
+  }
+  return leftIndexByRight.map((leftIndex, rightIndex) => [
+    rightIndex,
+    leftIndex,
+  ]);
 }
 
 // -----------------------------------------------------------------------------
