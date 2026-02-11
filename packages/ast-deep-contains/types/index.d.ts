@@ -4,12 +4,8 @@ interface Opts {
   arrayStrictComparison: boolean;
 }
 declare const defaults: Opts;
-interface Callback {
-  (leftSideVal: any, rightSideVal: any, path: string): void;
-}
-interface ErrorCallback {
-  (errStr: string): void;
-}
+type Callback = (leftSideVal: any, rightSideVal: any, path: string) => void;
+type ErrorCallback = (errStr: string) => void;
 /**
  * Like t.same assert on array of objects, where element order doesn't matter.
  */
