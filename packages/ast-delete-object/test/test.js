@@ -1,10 +1,8 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { deepClone as clone } from "codsen-utils";
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import rfdc from "rfdc";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import { deleteObj } from "../dist/ast-delete-object.esm.js";
-
-const clone = rfdc();
 
 // (input, objToDelete, strictOrNot)
 
@@ -3460,7 +3458,7 @@ test("68 - does not mutate input args", () => {
       a: "a",
       b: "b",
     },
-    "68.02",
+    "68.01",
   ); // real deal
   equal(
     obj2,
@@ -3468,7 +3466,7 @@ test("68 - does not mutate input args", () => {
       a: "a",
       b: "b",
     },
-    "68.03",
+    "68.02",
   ); // real deal
 });
 
