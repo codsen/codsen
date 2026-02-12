@@ -1,12 +1,14 @@
-import rfdc from "rfdc";
 import { compare } from "ast-compare";
 import { traverse } from "ast-monkey-traverse";
-import { isPlainObject as isObj, JSONValue } from "codsen-utils";
+import {
+  deepClone as clone,
+  isPlainObject as isObj,
+  type JSONValue,
+} from "codsen-utils";
 
 import { version as v } from "../package.json";
 
 const version: string = v;
-const clone = rfdc();
 
 // From "type-fest" by Sindre Sorhus:
 export type JsonValue =
@@ -99,4 +101,4 @@ function deleteObj<T extends JsonValue>(
   return resolvedInput;
 }
 
-export { deleteObj, defaults, version };
+export { defaults, deleteObj, version };
