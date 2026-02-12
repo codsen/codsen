@@ -1,6 +1,6 @@
 // `opts.matchKeysStrictly`
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { deleteObj } from "../dist/ast-delete-object.esm.js";
 
