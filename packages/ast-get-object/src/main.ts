@@ -1,15 +1,12 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import rfdc from "rfdc";
-import { isPlainObject as isObj } from "codsen-utils";
 import { compare } from "ast-compare";
+import { deepClone as clone, isPlainObject as isObj } from "codsen-utils";
 
 import { version as v } from "../package.json";
 
-const clone = rfdc();
 const version: string = v;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare let DEV: boolean;
 
 export interface UnknownValueObj {
@@ -26,11 +23,13 @@ function internalApi(
   result: any[] = [],
 ): any {
   if (!originalAst) {
-    throw new Error("ast-get-object: [THROW_ID_01] First argument is missing!");
+    throw new Error(
+      "ast-get-object/getObj(): [THROW_ID_01] First argument is missing!",
+    );
   }
   if (!keyValPair) {
     throw new Error(
-      "ast-get-object: [THROW_ID_02] Second argument is missing!",
+      "ast-get-object/getObj(): [THROW_ID_02] Second argument is missing!",
     );
   }
   // is it set mode or not:
