@@ -1,6 +1,6 @@
 // Replace all null's in keys `amount` with zero, but only under `orders`
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { getByKey } from "../dist/ast-get-values-by-key.esm.js";
 
