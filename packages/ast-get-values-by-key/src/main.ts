@@ -1,11 +1,10 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import { traverse } from "ast-monkey-traverse";
+import { deepClone as clone } from "codsen-utils";
 import { isMatch } from "matcher";
-import rfdc from "rfdc";
 import { version as v } from "../package.json";
 
-const clone = rfdc();
 const version: string = v;
 
 export interface Findings {
