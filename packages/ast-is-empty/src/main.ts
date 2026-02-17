@@ -10,15 +10,13 @@ const version: string = v;
  * Find out, is nested array/object/string/AST tree is empty
  */
 function isEmpty(input: unknown): boolean | null {
-  let i;
-  let len;
   let res: boolean | null = true;
   if (Array.isArray(input)) {
     if (input.length === 0) {
       return true;
     }
-    for (i = 0, len = input.length; i < len; i++) {
-      res = isEmpty(input[i]);
+    for (const value of input) {
+      res = isEmpty(value);
       if (res === null) {
         return null;
       }
@@ -27,11 +25,12 @@ function isEmpty(input: unknown): boolean | null {
       }
     }
   } else if (isObj(input)) {
-    if (Object.keys(input).length === 0) {
+    const keys = Object.keys(input);
+    if (keys.length === 0) {
       return true;
     }
-    for (i = 0, len = Object.keys(input).length; i < len; i++) {
-      res = isEmpty(input[Object.keys(input)[i]]);
+    for (const key of keys) {
+      res = isEmpty(input[key]);
       if (res === null) {
         return null;
       }
