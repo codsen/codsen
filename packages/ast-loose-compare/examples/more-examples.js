@@ -1,6 +1,6 @@
 // More Examples
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { looseCompare } from "../dist/ast-loose-compare.esm.js";
 
