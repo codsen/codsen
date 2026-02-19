@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { looseCompare } from "../dist/ast-loose-compare.esm.js";
 
@@ -24,7 +24,7 @@ test("04 - null as input", () => {
   equal(looseCompare(undefined, { a: "a" }), undefined, "04.01");
 });
 
-test("05 - falsey inputs", () => {
+test("05 - falsy inputs", () => {
   equal(looseCompare(null, undefined), undefined, "05.01");
 });
 
