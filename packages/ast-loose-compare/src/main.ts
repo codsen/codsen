@@ -77,39 +77,29 @@ function internalCompare(
     }
   } else if (isObj(bigObj) && isObj(smallObj)) {
     // if both are plain objects
-    if (Object.keys(smallObj as UnknownValueObj).length) {
-      let keysArr = Object.keys(smallObj as UnknownValueObj);
+    if (Object.keys(smallObj).length) {
+      let keysArr = Object.keys(smallObj);
       for (i = 0, len = keysArr.length; i < len; i++) {
         /* c8 ignore next */
         if (
-          Array.isArray((smallObj as UnknownValueObj)[keysArr[i]]) ||
-          isObj((smallObj as UnknownValueObj)[keysArr[i]]) ||
-          typeof (smallObj as UnknownValueObj)[keysArr[i]] === "string"
+          Array.isArray(smallObj[keysArr[i]]) ||
+          isObj(smallObj[keysArr[i]]) ||
+          typeof smallObj[keysArr[i]] === "string"
         ) {
-          res = internalCompare(
-            (bigObj as UnknownValueObj)[keysArr[i]],
-            (smallObj as UnknownValueObj)[keysArr[i]],
-            res,
-          );
+          res = internalCompare(bigObj[keysArr[i]], smallObj[keysArr[i]], res);
           if (!res) {
             return false;
           }
-        } else if (
-          (smallObj as UnknownValueObj)[keysArr[i]] !==
-          (bigObj as UnknownValueObj)[keysArr[i]]
-        ) {
-          if (
-            !empty((smallObj as UnknownValueObj)[keysArr[i]]) ||
-            !empty((bigObj as UnknownValueObj)[keysArr[i]])
-          ) {
+        } else if (smallObj[keysArr[i]] !== bigObj[keysArr[i]]) {
+          if (!empty(smallObj[keysArr[i]]) || !empty(bigObj[keysArr[i]])) {
             return false;
           }
         }
       }
     } else {
       if (
-        (Object.keys(smallObj as UnknownValueObj).length === 0 &&
-          Object.keys(bigObj as UnknownValueObj).length === 0) ||
+        (Object.keys(smallObj).length === 0 &&
+          Object.keys(bigObj).length === 0) ||
         (empty(smallObj) && empty(bigObj))
       ) {
         return true;
