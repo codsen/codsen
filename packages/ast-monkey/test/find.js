@@ -1,24 +1,24 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
+  arrayFirstOnly,
+  del,
+  drop,
   find,
   get,
   set,
-  drop,
-  del,
-  arrayFirstOnly,
 } from "../dist/ast-monkey.esm.js";
 
-const defaultInput = {
+const _defaultInput = {
   a: { b: [{ c: { d: "e" } }] },
   c: { d: "e" },
 };
 
 // -----------------------------------------------------------------------------
 
-test("01.pt1 - finds by key in a simple object #1", () => {
+test("01 - pt1 - finds by key in a simple object #1", () => {
   let input = {
     a: {
       b: "c",
@@ -43,7 +43,7 @@ test("01.pt1 - finds by key in a simple object #1", () => {
   equal(find(input, { key: "a", val: null }), [], "01.03");
 });
 
-test("02.pt2 - finds by key in a simple object, with glob", () => {
+test("02 - pt2 - finds by key in a simple object, with glob", () => {
   let input = {
     a1: {
       b1: "c1",
@@ -82,7 +82,7 @@ test("02.pt2 - finds by key in a simple object, with glob", () => {
   equal(find(input, { key: "a*", val: null }), [], "02.03");
 });
 
-test("03.pt1 - finds by key in a simple object #2", () => {
+test("03 - pt1 - finds by key in a simple object #2", () => {
   let input = {
     a: {
       b: "c",
@@ -106,7 +106,7 @@ test("03.pt1 - finds by key in a simple object #2", () => {
   equal(find(input, { key: "b", val: undefined }), intended, "03.03");
 });
 
-test("04.pt2 - finds by key in a simple object, with glob", () => {
+test("04 - pt2 - finds by key in a simple object, with glob", () => {
   let input = {
     a: {
       b1: "c1",
@@ -138,7 +138,7 @@ test("04.pt2 - finds by key in a simple object, with glob", () => {
   equal(find(input, { key: "b*", val: undefined }), intended, "04.03");
 });
 
-test("05.pt1 - does not find by key in a simple object", () => {
+test("05 - pt1 - does not find by key in a simple object", () => {
   let input = {
     a: {
       b: "c",
@@ -151,7 +151,7 @@ test("05.pt1 - does not find by key in a simple object", () => {
   equal(actual, intended, "05.01");
 });
 
-test("06.pt2 - does not find by key in a simple object, with glob", () => {
+test("06 - pt2 - does not find by key in a simple object, with glob", () => {
   let input = {
     a: {
       b: "c",
@@ -164,7 +164,7 @@ test("06.pt2 - does not find by key in a simple object, with glob", () => {
   equal(actual, intended, "06.01");
 });
 
-test("07.pt1 - finds by key in simple arrays #1", () => {
+test("07 - pt1 - finds by key in simple arrays #1", () => {
   let input = ["a", [["b"], "c"]];
   let key = "a";
   let actual = find(input, { key });
@@ -179,7 +179,7 @@ test("07.pt1 - finds by key in simple arrays #1", () => {
   equal(actual, intended, "07.01");
 });
 
-test("08.pt2 - finds by key in simple arrays, with glob", () => {
+test("08 - pt2 - finds by key in simple arrays, with glob", () => {
   let input = ["a", "azzz", [["b"], "c"]];
   let key = "a*";
   let actual = find(input, { key });
@@ -200,7 +200,7 @@ test("08.pt2 - finds by key in simple arrays, with glob", () => {
   equal(actual, intended, "08.01");
 });
 
-test("09.pt1 - finds by key in simple arrays #2", () => {
+test("09 - pt1 - finds by key in simple arrays #2", () => {
   let input = ["a", [["b"], "c"]];
   let key = "b";
   let actual = find(input, { key });
@@ -215,7 +215,7 @@ test("09.pt1 - finds by key in simple arrays #2", () => {
   equal(actual, intended, "09.01");
 });
 
-test("10.pt2 - finds by key in simple arrays, with globs", () => {
+test("10 - pt2 - finds by key in simple arrays, with globs", () => {
   let input = ["a", [["zzz", "b", "bbb"], "c"]];
   let key = "b*";
   let actual = find(input, { key });
@@ -236,7 +236,7 @@ test("10.pt2 - finds by key in simple arrays, with globs", () => {
   equal(actual, intended, "10.01");
 });
 
-test("11.pt1 - finds by key in simple arrays #3", () => {
+test("11 - pt1 - finds by key in simple arrays #3", () => {
   let input = ["a", [["b"], "c"]];
   let key = "c";
   let actual = find(input, { key, val: undefined });
@@ -251,7 +251,7 @@ test("11.pt1 - finds by key in simple arrays #3", () => {
   equal(actual, intended, "11.01");
 });
 
-test("12.pt2 - finds by key in simple arrays, with glob", () => {
+test("12 - pt2 - finds by key in simple arrays, with glob", () => {
   let input = ["apples", [["hackles"], "crackles"]];
   let key = "*ackles";
   let actual = find(input, { key, val: undefined });
@@ -272,7 +272,7 @@ test("12.pt2 - finds by key in simple arrays, with glob", () => {
   equal(actual, intended, "12.01");
 });
 
-test("13.pt1 - does not find by key in simple arrays", () => {
+test("13 - pt1 - does not find by key in simple arrays", () => {
   let input = ["a", [["b"], "c"]];
   let key = "d";
   let actual = find(input, { key });
@@ -280,7 +280,7 @@ test("13.pt1 - does not find by key in simple arrays", () => {
   equal(actual, intended, "13.01");
 });
 
-test("14.pt2 - does not find by key in simple arrays, with globs", () => {
+test("14 - pt2 - does not find by key in simple arrays, with globs", () => {
   let input = ["a", [["b"], "c"]];
   let key = "lexicographer*";
   let actual = find(input, { key });
@@ -323,7 +323,7 @@ test("16 - finds by value in a simple object - string", () => {
   equal(actual, intended, "16.01");
 });
 
-test("17.pt1 - finds by value in a simple object - object", () => {
+test("17 - pt1 - finds by value in a simple object - object", () => {
   let input = {
     a: {
       b: "c",
@@ -343,7 +343,7 @@ test("17.pt1 - finds by value in a simple object - object", () => {
   equal(actual, intended, "17.01");
 });
 
-test("18.pt2 - finds by value in a simple object - object, with globs", () => {
+test("18 - pt2 - finds by value in a simple object - object, with globs", () => {
   let input = {
     a: {
       b: "c1",
