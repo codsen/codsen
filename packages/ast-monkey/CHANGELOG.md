@@ -3,12 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 9.1.0 (2025-10-15)
-
-### Features
-
-- if value to be added is a number, keep it as is, don't stringify ([ce3e1a5](https://github.com/codsen/codsen/commit/ce3e1a525998ca3c0abf0142affef95b14cd1990))
-
 ## 9.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -215,7 +209,7 @@ Hardened the API, namely, all added more validations to options object key value
 
 ### Features
 
-- Tighetened the API in cases when `monkey()` inputs are missing or falsey.
+- Tighetened the API in cases when `monkey()` inputs are missing or falsy.
 
 ## 5.1.0 (2017-05-02)
 
