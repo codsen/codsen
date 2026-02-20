@@ -1,17 +1,17 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
+  arrayFirstOnly,
+  del,
+  drop,
   find,
   get,
   set,
-  drop,
-  del,
-  arrayFirstOnly,
 } from "../dist/ast-monkey.esm.js";
 
-const defaultInput = {
+const _defaultInput = {
   a: { b: [{ c: { d: "e" } }] },
   c: { d: "e" },
 };
@@ -108,7 +108,7 @@ test("06 - throws when inputs are wrong", () => {
         },
       );
     },
-    /THROW_ID_14/g,
+    /THROW_ID_11/g,
     "06.01",
   );
   throws(
@@ -120,7 +120,7 @@ test("06 - throws when inputs are wrong", () => {
         },
       );
     },
-    /THROW_ID_15/g,
+    /THROW_ID_12/g,
     "06.02",
   );
   throws(
@@ -133,7 +133,7 @@ test("06 - throws when inputs are wrong", () => {
         },
       );
     },
-    /THROW_ID_17/g,
+    /THROW_ID_13/g,
     "06.03",
   );
   throws(
@@ -146,7 +146,7 @@ test("06 - throws when inputs are wrong", () => {
         },
       );
     },
-    /THROW_ID_17/g,
+    /THROW_ID_13/g,
     "06.04",
   );
 });
