@@ -1,17 +1,17 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
+  arrayFirstOnly,
+  del,
+  drop,
   find,
   get,
   set,
-  drop,
-  del,
-  arrayFirstOnly,
 } from "../dist/ast-monkey.esm.js";
 
-const defaultInput = {
+const _defaultInput = {
   a: { b: [{ c: { d: "e" } }] },
   c: { d: "e" },
 };
@@ -120,7 +120,7 @@ test("08 - index is real number as string - throws", () => {
         },
       );
     },
-    /THROW_ID_11/g,
+    /THROW_ID_08/g,
     "08.01",
   );
 });
