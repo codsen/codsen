@@ -1,14 +1,14 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
+  arrayFirstOnly,
+  del,
+  drop,
   find,
   get,
   set,
-  drop,
-  del,
-  arrayFirstOnly,
 } from "../dist/ast-monkey.esm.js";
 
 const defaultInput = {
@@ -23,14 +23,14 @@ test("01 - find - throws when there's no input", () => {
     () => {
       find();
     },
-    /THROW_ID_02/g,
+    /THROW_ID_01/g,
     "01.01",
   );
   throws(
     () => {
       find(null, {});
     },
-    /THROW_ID_02/g,
+    /THROW_ID_01/g,
     "01.02",
   );
 });
@@ -40,14 +40,14 @@ test("02 - get -  throws when there's no input", () => {
     () => {
       get();
     },
-    /THROW_ID_06/g,
+    /THROW_ID_05/g,
     "02.01",
   );
   throws(
     () => {
       get(null, {});
     },
-    /THROW_ID_06/g,
+    /THROW_ID_05/g,
     "02.02",
   );
 });
@@ -57,14 +57,14 @@ test("03 - set -  throws when there's no input", () => {
     () => {
       set();
     },
-    /THROW_ID_12/g,
+    /THROW_ID_09/g,
     "03.01",
   );
   throws(
     () => {
       set(null, {});
     },
-    /THROW_ID_12/g,
+    /THROW_ID_09/g,
     "03.02",
   );
 });
@@ -74,14 +74,14 @@ test("04 - drop - throws when there's no input", () => {
     () => {
       drop();
     },
-    /THROW_ID_19/g,
+    /THROW_ID_15/g,
     "04.01",
   );
   throws(
     () => {
       drop(null, {});
     },
-    /THROW_ID_19/g,
+    /THROW_ID_15/g,
     "04.02",
   );
 });
@@ -91,14 +91,14 @@ test("05 - del - throws when there's no input", () => {
     () => {
       del();
     },
-    /THROW_ID_26/g,
+    /THROW_ID_19/g,
     "05.01",
   );
   throws(
     () => {
       del(null, {});
     },
-    /THROW_ID_26/g,
+    /THROW_ID_19/g,
     "05.02",
   );
 });
@@ -108,14 +108,14 @@ test("06 - del - throws when opts is not a plain object", () => {
     () => {
       del({ a: "b" });
     },
-    /THROW_ID_27/g,
+    /THROW_ID_20/g,
     "06.01",
   );
   throws(
     () => {
       del({ a: "b" }, "c");
     },
-    /THROW_ID_27/g,
+    /THROW_ID_20/g,
     "06.02",
   );
 });
@@ -125,7 +125,7 @@ test("07 - arrayFirstOnly - when there's no input", () => {
     () => {
       arrayFirstOnly();
     },
-    /THROW_ID_31/g,
+    /THROW_ID_24/g,
     "07.01",
   );
 });
@@ -135,7 +135,7 @@ test("08 - del - throws when opts.key and opts.val are missing", () => {
     () => {
       del({ a: "b" }, {});
     },
-    /THROW_ID_28/g,
+    /THROW_ID_21/g,
     "08.01",
   );
 });
@@ -145,28 +145,28 @@ test("09 - get/set - throws when opts.index is missing", () => {
     () => {
       get(defaultInput);
     },
-    /THROW_ID_07/g,
+    /THROW_ID_06/g,
     "09.01",
   );
   throws(
     () => {
       get(defaultInput, { a: "a" });
     },
-    /THROW_ID_08/g,
+    /THROW_ID_07/g,
     "09.02",
   );
   throws(
     () => {
       set(defaultInput);
     },
-    /THROW_ID_13/g,
+    /THROW_ID_10/g,
     "09.03",
   );
   throws(
     () => {
       set(defaultInput, { a: "a" });
     },
-    /THROW_ID_14/g,
+    /THROW_ID_11/g,
     "09.04",
   );
 });
@@ -176,42 +176,42 @@ test("10 - get/set/drop - throws when opts.index is not a natural number (both s
     () => {
       get(defaultInput, { index: "1.5" });
     },
-    /THROW_ID_11/g,
+    /THROW_ID_08/g,
     "10.01",
   );
   throws(
     () => {
       get(defaultInput, { index: 1.5 });
     },
-    /THROW_ID_11/g,
+    /THROW_ID_08/g,
     "10.02",
   );
   throws(
     () => {
       set(defaultInput, { index: "1.5", val: "zzz" });
     },
-    /THROW_ID_17/g,
+    /THROW_ID_13/g,
     "10.03",
   );
   throws(
     () => {
       set(defaultInput, { index: 1.5, val: "zzz" });
     },
-    /THROW_ID_17/g,
+    /THROW_ID_13/g,
     "10.04",
   );
   throws(
     () => {
       drop(defaultInput, { index: "1.5" });
     },
-    /THROW_ID_23/g,
+    /THROW_ID_18/g,
     "10.05",
   );
   throws(
     () => {
       drop(defaultInput, { index: 1.5 });
     },
-    /THROW_ID_23/g,
+    /THROW_ID_18/g,
     "10.06",
   );
 });
@@ -221,7 +221,7 @@ test("11 - set - throws when opts.key and opts.val are missing", () => {
     () => {
       set(defaultInput, { index: "3" });
     },
-    /THROW_ID_14/g,
+    /THROW_ID_11/g,
     "11.01",
   );
 });
@@ -231,14 +231,14 @@ test("12 - find - throws when opts.key and opts.val are missing", () => {
     () => {
       find(defaultInput, { index: "3" });
     },
-    /THROW_ID_03/g,
+    /THROW_ID_02/g,
     "12.01",
   );
   throws(
     () => {
       find(defaultInput, { index: 3 });
     },
-    /THROW_ID_03/g,
+    /THROW_ID_02/g,
     "12.02",
   );
 });
@@ -248,14 +248,14 @@ test("13 - del - throws when opts.key and opts.val are missing", () => {
     () => {
       del(defaultInput, { index: "3" });
     },
-    /THROW_ID_28/g,
+    /THROW_ID_21/g,
     "13.01",
   );
   throws(
     () => {
       del(defaultInput, { index: 3 });
     },
-    /THROW_ID_28/g,
+    /THROW_ID_21/g,
     "13.02",
   );
 });
@@ -265,14 +265,14 @@ test("14 - drop - throws when there's no index", () => {
     () => {
       drop(["a"], "a");
     },
-    /THROW_ID_20/g,
+    /THROW_ID_16/g,
     "14.01",
   );
   throws(
     () => {
       drop({ a: "a" }, { b: "b" });
     },
-    /THROW_ID_21/g,
+    /THROW_ID_17/g,
     "14.02",
   );
 });
