@@ -1,6 +1,6 @@
 // Stop
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { traverse } from "../dist/ast-monkey-traverse.esm.js";
 
