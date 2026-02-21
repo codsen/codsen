@@ -32,7 +32,7 @@ npm i ast-monkey-traverse
 ## Quick Take
 
 ```js
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { traverse } from "ast-monkey-traverse";
 
@@ -74,6 +74,7 @@ traverse(source, (key, val, innerObj) => {
 assert.deepEqual(paths, ["a.foo", "a.foo.bar.0.foo", "a.foo.d.e.foo"]);
 ```
 
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ast-monkey-traverse/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/ast-monkey-traverse/CHANGELOG.md).
@@ -86,6 +87,6 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 MIT License
 
-Copyright © 2010-2025 Roy Revelt and other contributors
+Copyright © 2010-2026 Roy Revelt and other contributors
 
 <p align="center"><img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center"></p>
