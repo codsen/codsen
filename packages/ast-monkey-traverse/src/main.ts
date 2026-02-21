@@ -1,12 +1,9 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
 
-import rfdc from "rfdc";
-import { isPlainObject as isObj } from "codsen-utils";
-import { parent as parent2 } from "ast-monkey-util";
+import { deepClone as clone, isPlainObject as isObj } from "codsen-utils";
 
 import { version as v } from "../package.json";
 
-const clone = rfdc();
 const version: string = v;
 
 declare let DEV: boolean;
@@ -18,14 +15,14 @@ export interface Stop {
 export interface InnerObj {
   depth: number;
   path: string;
-  topmostKey: string;
+  topmostKey?: string;
   parent: any;
   parentType: string;
   parentKey: string | null;
 }
 
 export type Callback = (
-  key: string,
+  key: any,
   val: any,
   innerObj: InnerObj,
   stop: Stop,
@@ -35,6 +32,11 @@ export type Callback = (
  * Utility library to traverse AST
  */
 function traverse<T>(tree1: T, cb1: Callback): T {
+  if (typeof cb1 !== "function") {
+    throw new TypeError(
+      `ast-monkey-traverse/traverse(): [THROW_ID_01] The second argument must be a callback function. It was ${typeof cb1}.`,
+    );
+  }
   let stop2: Stop = { now: false };
   //
   // traverseInner() needs a wrapper to shield the last two input args from the outside
@@ -45,27 +47,27 @@ function traverse<T>(tree1: T, cb1: Callback): T {
     originalInnerObj: Partial<InnerObj>,
     stop: Stop,
   ): U {
-    DEV && console.log(`048 ======= traverseInner() =======`);
-    let tree: any = clone(treeOriginal);
+    DEV && console.log(`050 ======= traverseInner() =======`);
+    let tree: any = treeOriginal;
 
     let res;
     let innerObj = { depth: -1, path: "", ...originalInnerObj };
     innerObj.depth += 1;
     if (Array.isArray(tree)) {
-      DEV && console.log(`055 tree is array!`);
+      DEV && console.log(`057 tree is array!`);
       for (let i = 0, len = tree.length; i < len; i++) {
         DEV &&
           console.log(
-            `059 a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
+            `061 a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
           );
         if (stop.now) {
-          DEV && console.log(`062 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          DEV && console.log(`064 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
         let path = innerObj.path ? `${innerObj.path}.${i}` : `${i}`;
         DEV &&
           console.log(
-            `068 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+            `070 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
               path,
               null,
               4,
@@ -74,23 +76,29 @@ function traverse<T>(tree1: T, cb1: Callback): T {
         if (tree[i] !== undefined) {
           innerObj.parent = clone(tree);
           innerObj.parentType = "array";
-          innerObj.parentKey = parent2(path);
+          innerObj.parentKey = innerObj.path
+            ? innerObj.path.slice(innerObj.path.lastIndexOf(".") + 1)
+            : null;
           DEV &&
             console.log(
-              `080 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
+              `084 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
                 innerObj.parentKey,
                 null,
                 4,
               )}`,
             );
           // innerObj.path = `${innerObj.path}[${i}]`
+          let currentValue = tree[i];
+          let callbackResult = callback(
+            currentValue,
+            undefined,
+            { ...innerObj, path } as InnerObj,
+            stop,
+          );
           res = traverseInner(
-            callback(
-              tree[i],
-              undefined,
-              { ...innerObj, path } as InnerObj,
-              stop,
-            ),
+            callbackResult === currentValue
+              ? callbackResult
+              : clone(callbackResult),
             callback,
             { ...innerObj, path },
             stop,
@@ -106,20 +114,20 @@ function traverse<T>(tree1: T, cb1: Callback): T {
         }
       }
     } else if (isObj(tree)) {
-      DEV && console.log(`109 tree is object`);
+      DEV && console.log(`117 tree is object`);
 
       for (let key in tree) {
         DEV &&
           console.log(
-            `114 ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
+            `122 ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
           );
         if (stop.now && key != null) {
-          DEV && console.log(`117 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          DEV && console.log(`125 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
         DEV &&
           console.log(
-            `122 FIY, ${`\u001b[${33}m${`innerObj.path`}\u001b[${39}m`} = ${JSON.stringify(
+            `130 FIY, ${`\u001b[${33}m${`innerObj.path`}\u001b[${39}m`} = ${JSON.stringify(
               innerObj.path,
               null,
               4,
@@ -128,7 +136,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
         let path = innerObj.path ? `${innerObj.path}.${key}` : key;
         DEV &&
           console.log(
-            `131 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+            `139 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
               path,
               null,
               4,
@@ -139,17 +147,28 @@ function traverse<T>(tree1: T, cb1: Callback): T {
         }
         innerObj.parent = clone(tree);
         innerObj.parentType = "object";
-        innerObj.parentKey = parent2(path);
+        innerObj.parentKey = innerObj.path
+          ? innerObj.path.slice(innerObj.path.lastIndexOf(".") + 1)
+          : null;
         DEV &&
           console.log(
-            `145 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
+            `155 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
               innerObj.parentKey,
               null,
               4,
             )}`,
           );
+        let currentValue = tree[key];
+        let callbackResult = callback(
+          key,
+          currentValue,
+          { ...innerObj, path } as InnerObj,
+          stop,
+        );
         res = traverseInner(
-          callback(key, tree[key], { ...innerObj, path } as InnerObj, stop),
+          callbackResult === currentValue
+            ? callbackResult
+            : clone(callbackResult),
           callback,
           { ...innerObj, path },
           stop,
@@ -162,10 +181,10 @@ function traverse<T>(tree1: T, cb1: Callback): T {
       }
     }
     DEV &&
-      console.log(`165 just returning tree, ${JSON.stringify(tree, null, 4)}`);
+      console.log(`184 just returning tree, ${JSON.stringify(tree, null, 4)}`);
     return tree;
   }
-  return traverseInner(tree1, cb1, {}, stop2);
+  return traverseInner(clone(tree1), cb1, {}, stop2);
 }
 
 // -----------------------------------------------------------------------------
