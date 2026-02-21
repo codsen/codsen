@@ -1,8 +1,8 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import isEqual from "deep-equal";
 import objectPath from "object-path";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { traverse } from "../dist/ast-monkey-traverse.esm.js";
 
@@ -10,7 +10,7 @@ import { traverse } from "../dist/ast-monkey-traverse.esm.js";
 // traverse
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - use traverse to delete one key from an array`, () => {
+test(`01 - traverse - use traverse to delete one key from an array`, () => {
   let input = [
     {
       a: "b",
@@ -74,7 +74,7 @@ test(`01 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - use traverse to delete
   equal(actual03, intended03, "01.03");
 });
 
-test(`02 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - more deletion from arrays`, () => {
+test(`02 - traverse - more deletion from arrays`, () => {
   let input = [
     {
       a: "b",
@@ -102,7 +102,7 @@ test(`02 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - more deletion from arr
   equal(actual01, intended01, "02.01");
 });
 
-test(`03 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - use traverse, passing null, write over values`, () => {
+test(`03 - traverse - use traverse, passing null, write over values`, () => {
   let input = [
     {
       a: "b",
@@ -136,7 +136,7 @@ test(`03 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - use traverse, passing 
   equal(actual01, intended01, "03.01");
 });
 
-test(`04 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - use traverse, passing undefined, write over values`, () => {
+test(`04 - traverse - use traverse, passing undefined, write over values`, () => {
   let input = [
     {
       a: "b",
@@ -171,7 +171,7 @@ test(`04 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - use traverse, passing 
   equal(actual01, intended01, "04.01");
 });
 
-test(`05 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - traverse automatically patches up holes in arrays`, () => {
+test(`05 - traverse - traverse automatically patches up holes in arrays`, () => {
   let input = ["a", undefined, "b"];
 
   let actual01 = traverse(input, (key1, val1) => {
@@ -183,7 +183,7 @@ test(`05 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - traverse automatically
   equal(actual01, intended01, "05.01");
 });
 
-test(`06 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - delete key-value pair from plain object in root`, () => {
+test(`06 - traverse - delete key-value pair from plain object in root`, () => {
   let input = {
     a: "a",
     b: "b",
@@ -205,19 +205,19 @@ test(`06 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - delete key-value pair 
   equal(actual, intended, "06.01");
 });
 
-test(`07 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - only traversal, #1`, () => {
+test(`07 - traverse - only traversal, #1`, () => {
   let input = {
     a: ["1", "2", "3"],
   };
   let actual = traverse(input, (key1, val1, innerObj) => {
     let current = val1 !== undefined ? val1 : key1;
-    equal(current, objectPath.get(input, innerObj.path), innerObj.path);
+    equal(current, objectPath.get(input, innerObj.path), "07.01");
     return current;
   });
   ok(actual, "07.01");
 });
 
-test(`08 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - only traversal, #2`, () => {
+test(`08 - traverse - only traversal, #2`, () => {
   let input = {
     a: {
       b: {
@@ -243,18 +243,18 @@ test(`08 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - only traversal, #2`, (
   let gathered = [];
   let actual = traverse(input, (key1, val1, innerObj) => {
     let current = val1 !== undefined ? val1 : key1;
-    equal(current, objectPath.get(input, innerObj.path), innerObj.path);
+    equal(current, objectPath.get(input, innerObj.path), "08.01");
     gathered.push(current);
     return current;
   });
   ok(actual, "08.01");
 });
 
-test(`09 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - only traversal, #3`, () => {
+test(`09 - traverse - only traversal, #3`, () => {
   let input = ["1", "2", { a: "3" }];
   let actual = traverse(input, (key1, val1, innerObj) => {
     let current = val1 !== undefined ? val1 : key1;
-    equal(current, objectPath.get(input, innerObj.path), innerObj.path);
+    equal(current, objectPath.get(input, innerObj.path), "09.01");
     return current;
   });
   ok(actual, "09.01");
@@ -263,7 +263,7 @@ test(`09 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - only traversal, #3`, (
 // 02. stopping the traversal upon request
 // -----------------------------------------------------------------------------
 
-test(`10 - ${`\u001b[${31}m${"stopping"}\u001b[${39}m`} - objects - a reference traversal`, () => {
+test(`10 - stopping - objects - a reference traversal`, () => {
   let input = { a: "1", b: { c: "2" } };
   let gathered = [];
   traverse(input, (key1, val1, innerObj) => {
@@ -315,7 +315,7 @@ test(`10 - ${`\u001b[${31}m${"stopping"}\u001b[${39}m`} - objects - a reference 
   );
 });
 
-test(`11 - ${`\u001b[${31}m${"stopping"}\u001b[${39}m`} - objects - after "b"`, () => {
+test(`11 - stopping - objects - after "b"`, () => {
   let input = { a: "1", b: { c: "2" } };
   let gathered = [];
   traverse(input, (key1, val1, innerObj, stop) => {
@@ -329,7 +329,7 @@ test(`11 - ${`\u001b[${31}m${"stopping"}\u001b[${39}m`} - objects - after "b"`, 
   equal(gathered, ["a", "b"], "11.01");
 });
 
-test(`12 - ${`\u001b[${31}m${"stopping"}\u001b[${39}m`} - arrays - a reference traversal`, () => {
+test(`12 - stopping - arrays - a reference traversal`, () => {
   let input = ["a", ["b", "c"]];
   let gathered = [];
   traverse(input, (key1, val1, innerObj) => {
@@ -340,7 +340,7 @@ test(`12 - ${`\u001b[${31}m${"stopping"}\u001b[${39}m`} - arrays - a reference t
   equal(gathered, ["0", "1", "1.0", "1.1"], "12.01");
 });
 
-test(`13 - ${`\u001b[${31}m${"stopping"}\u001b[${39}m`} - arrays - after "b"`, () => {
+test(`13 - stopping - arrays - after "b"`, () => {
   let input = ["a", ["b", "c"]];
   let gathered = [];
   traverse(input, (key1, val1, innerObj, stop) => {
@@ -357,7 +357,7 @@ test(`13 - ${`\u001b[${31}m${"stopping"}\u001b[${39}m`} - arrays - after "b"`, (
 // 03. traversal reporting
 // -----------------------------------------------------------------------------
 
-test(`14 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - array of objects, just traversing`, () => {
+test(`14 - traverse - array of objects, just traversing`, () => {
   let input = [
     {
       a: "b",
@@ -498,7 +498,7 @@ test(`14 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - array of objects, just
   );
 });
 
-test(`15 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - traversal continues after the hole`, () => {
+test(`15 - traverse - traversal continues after the hole`, () => {
   let input = {
     a: "k",
     b: "l",
@@ -566,7 +566,7 @@ test(`15 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - traversal continues af
   );
 });
 
-test(`16 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - traversal continues after the hole`, () => {
+test(`16 - traverse - traversal continues after the hole`, () => {
   let input = {
     a: ["1", "2", "3"],
   };
@@ -634,7 +634,7 @@ test(`16 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - traversal continues af
   );
 });
 
-test(`17 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - more complex AST`, () => {
+test(`17 - traverse - more complex AST`, () => {
   let input = {
     a: {
       b: {
@@ -1118,7 +1118,7 @@ test(`17 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - more complex AST`, () 
   );
 });
 
-test(`18 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - more traversal`, () => {
+test(`18 - traverse - more traversal`, () => {
   let input = ["1", "2", { a: "3" }];
   let gathered = [];
   traverse(input, (key1, val1, internalObj) => {
@@ -1198,6 +1198,22 @@ test(`18 - ${`\u001b[${36}m${"traverse"}\u001b[${39}m`} - more traversal`, () =>
     ],
     "18.01",
   );
+});
+
+test(`19 - input and callback-owned values remain immutable`, () => {
+  let input = { a: { b: "c" } };
+  let replacement = { nested: { value: 1 } };
+  let actual = traverse(input, (key, value) => {
+    if (key === "a") {
+      return replacement;
+    }
+    return value === undefined ? key : value;
+  });
+
+  equal(input, { a: { b: "c" } }, "19.01");
+  equal(replacement, { nested: { value: 1 } }, "19.02");
+  equal(actual, { a: { nested: { value: 1 } } }, "19.03");
+  throws(() => traverse(input), /THROW_ID_01/, "19.04");
 });
 
 test.run();
