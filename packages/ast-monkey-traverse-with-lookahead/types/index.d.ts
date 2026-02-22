@@ -3,7 +3,7 @@ interface Obj {
   [key: string]: any;
 }
 type NextToken = [
-  key: "string",
+  key: any,
   value: any,
   innerObj: {
     depth: number;
@@ -21,7 +21,7 @@ interface InnerObj {
   next?: NextToken[];
 }
 type Callback = (
-  key: string | Obj,
+  key: any,
   val: any,
   innerObj: InnerObj,
   stop: {

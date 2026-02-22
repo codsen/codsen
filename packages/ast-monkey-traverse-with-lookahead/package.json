@@ -52,7 +52,7 @@
     "dts": "rollup -c && npm run prettier:format",
     "examples": "node '../../ops/scripts/run-examples.js'",
     "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
-    "letspublish": "npm publish --provenance || :",
+    "letspublish": "npm publish --provenance",
     "lint": "biome lint --write .",
     "perf": "node perf/check.js",
     "prep": "echo 'ready'",
@@ -77,8 +77,7 @@
     "various": {}
   },
   "dependencies": {
-    "codsen-utils": "^1.7.3",
-    "rfdc": "^1.4.1"
+    "codsen-utils": "^1.7.3"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

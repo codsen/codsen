@@ -29,10 +29,15 @@ const input = {
   },
 };
 const testme = () => {
-  traverse(input, (key1, val1) => {
-    let current = val1 !== undefined ? val1 : key1;
-    return current;
-  });
+  let futureNodes = 0;
+  traverse(
+    input,
+    (_key, _val, innerObj) => {
+      futureNodes += innerObj.next.length;
+    },
+    1,
+  );
+  return futureNodes;
 };
 
 // action
