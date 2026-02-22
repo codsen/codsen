@@ -3450,4 +3450,8 @@ test(`20 - stopping - arrays - after "b"`, () => {
   equal(gathered, ["0", "1"], "20.01");
 });
 
+test("21 - rejects a missing callback even for an empty tree", () => {
+  throws(() => traverse([]), /THROW_ID_01/, "21.01");
+});
+
 test.run();
