@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { pathPrev } from "../dist/ast-monkey-util.esm.js";
 
@@ -29,6 +29,17 @@ test("06", () => {
     pathPrev("9.children.1.children.2"),
     "9.children.1.children.1",
     "06.01",
+  );
+});
+
+test("07 - edge cases", () => {
+  equal(pathPrev("00"), null, "07.01");
+  throws(
+    () => {
+      pathPrev();
+    },
+    /ast-monkey-util\/pathPrev\(\): \[THROW_ID_03]/,
+    "07.02",
   );
 });
 
