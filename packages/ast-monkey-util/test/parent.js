@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { parent as parentItem } from "../dist/ast-monkey-util.esm.js";
 
@@ -42,6 +42,16 @@ test("09", () => {
 
 test("10", () => {
   equal(parentItem("9.children.1.children.2"), "children", "10.01");
+});
+
+test("11 - non-string input", () => {
+  throws(
+    () => {
+      parentItem();
+    },
+    /ast-monkey-util\/parent\(\): \[THROW_ID_01]/,
+    "11.01",
+  );
 });
 
 test.run();
