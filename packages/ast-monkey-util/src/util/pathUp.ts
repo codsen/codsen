@@ -1,19 +1,15 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-declare let DEV: boolean;
-
 export function pathUp(str: string): string {
-  // input must have at least two dots:
-  if (str.includes(".") && str.slice(str.indexOf(".") + 1).includes(".")) {
-    // go up, for example, from "a.children.2" to "a"
-    let dotsCount = 0;
-    for (let i = str.length; i--; ) {
-      // DEV && console.log(`010 str[${i}] = ${str[i]}`);
-      if (str[i] === ".") {
-        dotsCount += 1;
-      }
-      if (dotsCount === 2) {
-        return str.slice(0, i);
-      }
+  if (typeof str !== "string") {
+    throw new TypeError(
+      `ast-monkey-util/pathUp(): [THROW_ID_04] The first argument must be a string; it was ${typeof str}.`,
+    );
+  }
+
+  let lastDotAt = str.lastIndexOf(".");
+  if (lastDotAt !== -1) {
+    let previousDotAt = str.lastIndexOf(".", lastDotAt - 1);
+    if (previousDotAt !== -1) {
+      return str.slice(0, previousDotAt);
     }
   }
 
