@@ -3,21 +3,35 @@
 // to
 // 9.children.2
 // the path notation is object-path
+function containsOnlyDigits(value: string): boolean {
+  for (let i = 0; i < value.length; i++) {
+    let code = value.charCodeAt(i);
+    if (code < 48 || code > 57) {
+      return false;
+    }
+  }
+  return true;
+}
+
 export function pathPrev(str: string): null | string {
+  if (typeof str !== "string") {
+    throw new TypeError(
+      `ast-monkey-util/pathPrev(): [THROW_ID_03] The first argument must be a string; it was ${typeof str}.`,
+    );
+  }
   if (!str) {
     return null;
   }
-  let extractedValue = str.slice(str.lastIndexOf(".") + 1);
-  if (extractedValue === "0") {
+
+  let lastDotAt = str.lastIndexOf(".");
+  let extractedValue = str.slice(lastDotAt + 1);
+  if (!containsOnlyDigits(extractedValue)) {
     return null;
   }
-  if (str.includes(".") && /^\d*$/.test(extractedValue)) {
-    return `${str.slice(0, str.lastIndexOf(".") + 1)}${
-      +str.slice(str.lastIndexOf(".") + 1) - 1
-    }`;
+  let numericValue = +extractedValue;
+  if (numericValue <= 0) {
+    return null;
   }
-  if (/^\d*$/.test(str)) {
-    return `${+str - 1}`;
-  }
-  return null;
+  let prefix = lastDotAt === -1 ? "" : str.slice(0, lastDotAt + 1);
+  return `${prefix}${numericValue - 1}`;
 }
