@@ -1,5 +1,5 @@
 // deps
-import path from "path";
+import path from "node:path";
 
 import { runPerf } from "../../../ops/scripts/perf.js";
 import { isProduction4a } from "../dist/charcode-is-valid-xml-name-character.esm.js";
