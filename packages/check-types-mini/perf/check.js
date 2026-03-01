@@ -1,5 +1,5 @@
 // deps
-import path from "path";
+import path from "node:path";
 
 import { runPerf } from "../../../ops/scripts/perf.js";
 import { checkTypesMini } from "../dist/check-types-mini.esm.js";

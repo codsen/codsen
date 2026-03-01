@@ -23,3 +23,4 @@ declare function checkTypesMini(
 ): void;
 
 export { checkTypesMini, defaults, version };
+export type { Obj, Opts };
