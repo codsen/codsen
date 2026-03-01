@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { checkTypesMini } from "../dist/check-types-mini.esm.js";
 
@@ -1339,7 +1339,7 @@ test("22 - strict mode, customising keys", () => {
 // 03. opts.enforceStrictKeyset
 // ======================
 
-test(`23 - ${`\u001b[${32}m${"opts.acceptArrays"}\u001b[${39}m`} - strings + arrays`, () => {
+test(`23 - opts.acceptArrays - strings + arrays`, () => {
   throws(
     () => {
       checkTypesMini(
@@ -1379,7 +1379,7 @@ test(`23 - ${`\u001b[${32}m${"opts.acceptArrays"}\u001b[${39}m`} - strings + arr
 // opts.schema
 // ======================
 
-test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in root`, () => {
+test(`24 - opts.schema only - located in root`, () => {
   throws(
     () => {
       checkTypesMini(
@@ -1772,7 +1772,7 @@ test(`24 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located in roo
   );
 });
 
-test(`25 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - deeper level key doesn't even exist in ref`, () => {
+test(`25 - opts.schema only - deeper level key doesn't even exist in ref`, () => {
   throws(
     () => {
       checkTypesMini(
@@ -1835,7 +1835,7 @@ test(`25 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - deeper level k
   );
 });
 
-test(`26 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - deeper level key type mismatches but is allowed through a schema`, () => {
+test(`26 - opts.schema only - deeper level key type mismatches but is allowed through a schema`, () => {
   // control - make it throw:
 
   throws(
@@ -1885,7 +1885,7 @@ test(`26 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - deeper level k
   }, "26.02");
 });
 
-test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper`, () => {
+test(`27 - opts.schema only - located deeper`, () => {
   throws(
     () => {
       checkTypesMini(
@@ -2266,7 +2266,7 @@ test(`27 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} only - located deeper
   );
 });
 
-test(`28 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} values as strings + "whatever" keys`, () => {
+test(`28 - opts.schema values as strings + "whatever" keys`, () => {
   throws(
     () => {
       checkTypesMini(
@@ -2383,7 +2383,7 @@ test(`28 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} values as strings + "
   }, "28.06");
 });
 
-test(`29 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} falling back to reference object`, () => {
+test(`29 - opts.schema falling back to reference object`, () => {
   // with throwing consequences:
   throws(
     () => {
@@ -2427,7 +2427,7 @@ test(`29 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} falling back to refer
   }, "29.02");
 });
 
-test(`30 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} is set to a wrong thing - throws`, () => {
+test(`30 - opts.schema is set to a wrong thing - throws`, () => {
   throws(
     () => {
       checkTypesMini(
@@ -2444,12 +2444,12 @@ test(`30 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} is set to a wrong thi
         },
       );
     },
-    /check-types-mini: opts\.schema was customised to "zzz" which is not object but string/,
+    /check-types-mini\/checkTypesMini\(\): \[THROW_ID_02] opts\.schema was customised to "zzz" which is not object but string/,
     "30.01",
   );
 });
 
-test(`31 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} understands opts.acceptArrays`, () => {
+test(`31 - opts.schema understands opts.acceptArrays`, () => {
   throws(
     () => {
       checkTypesMini(
@@ -2582,7 +2582,7 @@ test(`31 - ${`\u001b[${36}m${"opts.schema"}\u001b[${39}m`} understands opts.acce
   // it might be array of rubbish though, so that's a faulty, short-sighted type check.
 });
 
-test(`32 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} #1`, () => {
+test(`32 - ad-hoc #1`, () => {
   throws(
     () => {
       checkTypesMini(
@@ -2634,7 +2634,7 @@ test(`32 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} #1`, () => {
   );
 });
 
-test(`33 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} #2 - enforcing first-level key types but ignoring sub-level values`, () => {
+test(`33 - ad-hoc #2 - enforcing first-level key types but ignoring sub-level values`, () => {
   // root level "placeholder" gets flagged up, deeper levels given in "ignorePaths"
   // don't even matter.
   throws(
@@ -2701,7 +2701,7 @@ test(`33 - ${`\u001b[${35}m${"ad-hoc"}\u001b[${39}m`} #2 - enforcing first-level
   }, "33.03");
 });
 
-test(`34 - ${`\u001b[${35}m${"opts.schema"}\u001b[${39}m`} type "any" applies to all deeper levels`, () => {
+test(`34 - opts.schema type "any" applies to all deeper levels`, () => {
   not.throws(() => {
     checkTypesMini(
       {
@@ -2760,7 +2760,7 @@ test(`34 - ${`\u001b[${35}m${"opts.schema"}\u001b[${39}m`} type "any" applies to
   }, "34.03");
 });
 
-test(`35 - ${`\u001b[${35}m${"opts.schema"}\u001b[${39}m`} key's value is "undefined" literal, it's in schema`, () => {
+test(`35 - opts.schema key's value is "undefined" literal, it's in schema`, () => {
   throws(
     () => {
       checkTypesMini(
@@ -2813,6 +2813,69 @@ test(`35 - ${`\u001b[${35}m${"opts.schema"}\u001b[${39}m`} key's value is "undef
       },
     );
   }, "35.03");
+});
+
+test("36 - nested schema arrays are normalized without mutating the input", () => {
+  let schema = {
+    option: {
+      nested: [" String ", "NUMBER"],
+    },
+  };
+
+  not.throws(() => {
+    checkTypesMini(
+      { option: { nested: 1 } },
+      { option: { nested: "" } },
+      { schema },
+    );
+  }, "36.01");
+  equal(
+    schema,
+    {
+      option: {
+        nested: [" String ", "NUMBER"],
+      },
+    },
+    "36.01",
+  );
+});
+
+test("37 - an any-type path does not ignore similarly prefixed paths", () => {
+  throws(
+    () => {
+      checkTypesMini(
+        { a: { nested: true }, ab: 1 },
+        { a: { nested: "" }, ab: "" },
+        { schema: { a: "any" } },
+      );
+    },
+    /opts\.ab was customised/,
+    "37.01",
+  );
+});
+
+test("38 - acceptArrays uses the nested reference value", () => {
+  not.throws(() => {
+    checkTypesMini(
+      { a: { b: ["value"] } },
+      { a: { b: "" } },
+      { acceptArrays: true },
+    );
+  }, "38.01");
+});
+
+test("39 - strict-keyset errors omit ignored keys", () => {
+  throws(
+    () => {
+      checkTypesMini(
+        { known: 1, ignored: 1, rogue: 1 },
+        { known: 1 },
+        { ignoreKeys: "ignored" },
+      );
+    },
+    "check-types-mini: The input object has key which is not covered by the reference object: rogue",
+    "39.01",
+  );
 });
 
 test.run();
