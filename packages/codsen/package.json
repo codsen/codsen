@@ -2,10 +2,7 @@
   "name": "codsen",
   "version": "0.4.3",
   "description": "Codsen CLI",
-  "keywords": [
-    "codsen",
-    "cli"
-  ],
+  "keywords": ["codsen", "cli"],
   "homepage": "https://codsen.com/os/codsen",
   "repository": {
     "type": "git",
@@ -24,19 +21,17 @@
   },
   "scripts": {
     "build": "exit 0",
-    "cjs-off": "exit 0",
-    "cjs-on": "exit 0",
     "dev": "exit 0",
     "devtest": "npm run test",
     "dts": "exit 0",
     "examples": "exit 0",
-    "lect": "node '../../ops/lect/lect.js'",
-    "letspublish": "npm publish --provenance || :",
-    "lint": "eslint . --fix --concurrency=auto --cache",
+    "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+    "letspublish": "npm publish --provenance",
+    "lint": "biome lint --write .",
     "perf": "exit 0",
     "prep": "echo 'ready'",
-    "prettier": "prettier",
-    "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+    "prettier": "biome format",
+    "prettier:format": "biome format --write .",
     "pretest": "exit 0",
     "test": "c8 npm run unit && npm run lint",
     "unit": "uvu test"
@@ -46,19 +41,15 @@
   },
   "c8": {
     "check-coverage": false,
-    "exclude": [
-      "**/test/**/*.*"
-    ]
+    "exclude": ["**/test/**/*.*"]
   },
   "lect": {
     "licence": {
-      "extras": [
-        ""
-      ]
+      "extras": [""]
     }
   },
   "dependencies": {
-    "meow": "^14.0.0",
+    "codsen-utils": "^1.7.3",
     "update-notifier": "^7.3.1"
   },
   "publishConfig": {
