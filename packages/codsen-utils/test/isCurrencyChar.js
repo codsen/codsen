@@ -68,4 +68,9 @@ test("15", () => {
   equal(isCurrencyChar("€"), true, "15.01");
 });
 
+test("16 - accepts exactly one character", () => {
+  equal(isCurrencyChar(""), false, "16.01");
+  equal(isCurrencyChar("$₼"), false, "16.02");
+});
+
 test.run();
