@@ -42,4 +42,11 @@ test("04", () => {
   equal(hasOwnProp({ a: "x" }, "\n"), false, "04.03");
 });
 
+test("05 - inherited properties are not own properties", () => {
+  let value = { toString: "own" };
+
+  equal(hasOwnProp({}, "toString"), false, "05.01");
+  equal(hasOwnProp(value, "toString"), true, "05.02");
+});
+
 test.run();
