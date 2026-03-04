@@ -88,4 +88,34 @@ test("14 - both undefined", () => {
   equal(result, [], "14.01");
 });
 
+test("15 - uses SameValueZero equality", () => {
+  let result = pullAll([NaN, -0, 0, 1], [NaN, 0]);
+
+  equal(result, [1], "15.01");
+});
+
+test("16 - sparse inputs are compacted like Array.prototype.filter", () => {
+  let input = new Array(5);
+  input[1] = undefined;
+  input[2] = "keep";
+  input[4] = "remove";
+
+  let result = pullAll(input, ["remove"]);
+
+  equal(result, [undefined, "keep"], "16.01");
+  equal(result.length, 2, "16.02");
+  equal(0 in result, true, "16.03");
+});
+
+test("17 - uses a Set for large inputs and removal lists", () => {
+  let input = Array.from({ length: 130 }, (_, index) => index % 10);
+  let result = pullAll(input, [1, 3, 5, 7, 9]);
+
+  equal(
+    result,
+    input.filter((value) => value % 2 === 0),
+    "17.01",
+  );
+});
+
 test.run();
