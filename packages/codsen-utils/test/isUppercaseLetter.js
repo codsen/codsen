@@ -54,4 +54,9 @@ test("12", () => {
   equal(isUppercaseLetter("\r\n"), false, "12.03");
 });
 
+test("13 - Unicode and multi-character strings", () => {
+  equal(isUppercaseLetter("İ"), true, "13.01");
+  equal(isUppercaseLetter("AA"), false, "13.02");
+});
+
 test.run();
