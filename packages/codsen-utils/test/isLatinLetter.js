@@ -56,4 +56,12 @@ test("12", () => {
   equal(isLatinLetter("\r\n"), false, "12.03");
 });
 
+test("13 - ASCII boundaries and first-character semantics", () => {
+  equal(isLatinLetter("@"), false, "13.01");
+  equal(isLatinLetter("["), false, "13.02");
+  equal(isLatinLetter("`"), false, "13.03");
+  equal(isLatinLetter("{"), false, "13.04");
+  equal(isLatinLetter("Az"), true, "13.05");
+});
+
 test.run();
