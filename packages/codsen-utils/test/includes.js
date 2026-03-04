@@ -34,4 +34,42 @@ test("03 - matching regexp", () => {
   equal(includes([/\n/], "apple"), false, "03.06");
 });
 
+test("04 - global regexps start and finish at index zero", () => {
+  let global = /app/g;
+  global.lastIndex = 1;
+
+  equal(includes([global], "apple"), true, "04.01");
+  equal(global.lastIndex, 0, "04.02");
+
+  let globalSticky = /app/gy;
+  globalSticky.lastIndex = 1;
+
+  equal(includes([globalSticky], "apple"), true, "04.03");
+  equal(globalSticky.lastIndex, 0, "04.04");
+
+  let globalStickyMiss = /pp/gy;
+  globalStickyMiss.lastIndex = 1;
+
+  equal(includes([globalStickyMiss], "apple"), false, "04.05");
+  equal(globalStickyMiss.lastIndex, 0, "04.06");
+});
+
+test("05 - non-global sticky regexps use and update their last index", () => {
+  let sticky = /app/y;
+  sticky.lastIndex = 1;
+
+  equal(includes([sticky], "apple"), false, "05.01");
+  equal(sticky.lastIndex, 0, "05.02");
+  equal(includes([sticky], "apple"), true, "05.03");
+  equal(sticky.lastIndex, 3, "05.04");
+});
+
+test("06 - ordinary non-global regexps leave their last index alone", () => {
+  let regexp = /app/;
+  regexp.lastIndex = 2;
+
+  equal(includes([regexp], "apple"), true, "06.01");
+  equal(regexp.lastIndex, 2, "06.02");
+});
+
 test.run();
