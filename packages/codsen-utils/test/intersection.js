@@ -32,4 +32,30 @@ test("03 - normal use", () => {
   equal(intersection([1, 1, "a"], ["a", 1]), [1, "a"], "03.06");
 });
 
+test("04 - result order follows the first array", () => {
+  equal(intersection(["c", "b", "a", "c"], ["a", "c"]), ["c", "a"], "04.01");
+});
+
+test("05 - uses SameValueZero equality", () => {
+  equal(intersection([NaN, 1, NaN], [NaN]), [NaN], "05.01");
+  equal(intersection([-0, 1], [0]), [0], "05.02");
+});
+
+test("06 - objects intersect by identity", () => {
+  let shared = { id: 1 };
+  let sameShape = { id: 1 };
+
+  let result = intersection([sameShape, shared, shared], [shared, { id: 1 }]);
+
+  equal(result.length, 1, "06.01");
+  is(result[0], shared, "06.02");
+});
+
+test("07 - larger inputs", () => {
+  let a = Array.from({ length: 30 }, (_, index) => index % 15);
+  let b = Array.from({ length: 10 }, (_, index) => index * 2);
+
+  equal(intersection(a, b), [0, 2, 4, 6, 8, 10, 12, 14], "07.01");
+});
+
 test.run();
