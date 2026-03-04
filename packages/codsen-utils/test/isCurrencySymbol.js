@@ -80,4 +80,10 @@ test("18", () => {
   equal(isCurrencySymbol("лв"), true, "18.01");
 });
 
+test("19 - empty and padded values are not symbols", () => {
+  equal(isCurrencySymbol(""), false, "19.01");
+  equal(isCurrencySymbol(" $"), false, "19.02");
+  equal(isCurrencySymbol("$ "), false, "19.03");
+});
+
 test.run();
