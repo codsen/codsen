@@ -56,4 +56,9 @@ test("12", () => {
   equal(isLowercaseLetter("\r\n"), false, "12.03");
 });
 
+test("13 - Unicode and multi-character strings", () => {
+  equal(isLowercaseLetter("ß"), true, "13.01");
+  equal(isLowercaseLetter("aa"), false, "13.02");
+});
+
 test.run();
