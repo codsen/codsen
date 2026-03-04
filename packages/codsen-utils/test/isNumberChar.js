@@ -56,4 +56,9 @@ test("12", () => {
   equal(isNumberChar("a"), false, "12.01");
 });
 
+test("13 - ASCII digit boundaries", () => {
+  equal(isNumberChar("/"), false, "13.01");
+  equal(isNumberChar(":"), false, "13.02");
+});
+
 test.run();
