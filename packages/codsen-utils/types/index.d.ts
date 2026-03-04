@@ -27,6 +27,8 @@ interface JSONObject {
 type Obj = JSONObject;
 type EolChar = "\n" | "\r" | "\r\n";
 type EolSetting = "lf" | "crlf" | "cr";
+/** Clone nested data without retaining object or collection references. */
+declare function deepClone<T>(value: T): T;
 declare function isNumberChar(value: unknown): boolean;
 declare function isCurrencyChar(value: unknown): boolean;
 declare function isCurrencySymbol(value: unknown): boolean;
@@ -114,13 +116,80 @@ declare function includes(
 ): boolean;
 /** Alternative to lodash.intersection */
 declare function intersection<T, U>(a?: T[], b?: U[]): T[];
+/** What a flag's value gets coerced to, once parsed */
+type CliFlagType = "boolean" | "string" | "number";
+interface CliFlag {
+  /** Coercion applied to whatever the user typed. Undeclared - value is
+   * passed through as a raw string (or `true` for a bare flag) */
+  type?: CliFlagType;
+  /** Single-letter alias, for example `p` to serve `--pad` as `-p` */
+  shortFlag?: string;
+  /** Used when the flag is absent from argv */
+  default?: unknown;
+  /** Collect every occurrence into an array instead of last-one-wins */
+  isMultiple?: boolean;
+}
+interface CliPkg {
+  name?: string;
+  version?: string;
+  description?: string;
+  bin?: string | Record<string, string>;
+  [key: string]: unknown;
+}
+interface CliOptions {
+  /** The consuming program's package.json contents */
+  pkg?: CliPkg;
+  /** Flag schema, keyed by the flag's camelCase name */
+  flags?: Record<string, CliFlag>;
+  /** Defaults to `process.argv.slice(2)` */
+  argv?: string[];
+  /** Printed above the help text. Defaults to `pkg.description`,
+   * set to `false` to omit it */
+  description?: string | false;
+  /** Defaults to `pkg.version` */
+  version?: string;
+  /** How many spaces the help text is indented by. Default: 2 */
+  helpIndent?: number;
+  /** Print help and exit when the only argument is `--help`. Default: true */
+  autoHelp?: boolean;
+  /** Print version and exit when the only argument is `--version`.
+   * Default: true */
+  autoVersion?: boolean;
+  /** Value given to declared boolean flags the user didn't pass.
+   * Default: `false`, set to `undefined` to leave them unset */
+  booleanDefault?: boolean;
+}
+interface CliResult {
+  /** Positional arguments, in the order they were given */
+  input: string[];
+  /** Parsed flags, keyed by their camelCase names */
+  flags: Record<string, unknown>;
+  pkg: CliPkg;
+  /** The assembled help text, ready to print */
+  help: string;
+  /** Prints the help text, then exits (code 2 unless told otherwise) */
+  showHelp: (exitCode?: number) => void;
+  /** Prints the version, then exits with code 0 */
+  showVersion: () => void;
+}
+/**
+ * Parses argv the way a CLI expects: flags with values, short flags, bundles,
+ * `--no-` negation, camelCase names and a `--` escape hatch. Prints help or
+ * version on request. An in-house stand-in for "meow".
+ * @param helpText what `--help` prints
+ * @param options flag schema and the consuming program's package.json
+ * @returns the parsed `input` and `flags`, plus `help`/`showHelp`/`showVersion`
+ */
+declare function codsenCLI(helpText?: string, options?: CliOptions): CliResult;
 /** Alternative to lodash.omit */
 declare function omit(obj: JSONObject, keysToRemove?: string[]): JSONObject;
 
 export {
   backslash,
   backtick,
+  codsenCLI,
   compareFn,
+  deepClone,
   detectEol,
   doublePrime,
   ellipsis,
@@ -169,6 +238,11 @@ export {
   voidTags,
 };
 export type {
+  CliFlag,
+  CliFlagType,
+  CliOptions,
+  CliPkg,
+  CliResult,
   EolChar,
   EolSetting,
   JSONArray,
