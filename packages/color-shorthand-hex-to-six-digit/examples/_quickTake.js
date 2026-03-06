@@ -1,6 +1,6 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { conv } from "../dist/color-shorthand-hex-to-six-digit.esm.js";
 
