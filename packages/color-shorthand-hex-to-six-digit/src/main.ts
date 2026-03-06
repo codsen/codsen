@@ -1,12 +1,135 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import r from "hex-color-regex";
 import { isPlainObject } from "codsen-utils";
-import rfdc from "rfdc";
 import { version as v } from "../package.json";
 
-const clone = rfdc();
 const version: string = v;
+const hexColorRegex = /#(?:[a-f0-9]{3}|[a-f0-9]{4}(?:[a-f0-9]{2}){0,2})\b/gi;
+
+function isWhitespace(input: string, index: number): boolean {
+  const code = input.charCodeAt(index);
+  if (code === 32 || (code >= 9 && code <= 13)) {
+    return true;
+  }
+  return code > 127 && !input[index].trim();
+}
+
+function canBeAttributeNameCharacter(character: string): boolean {
+  const code = character.charCodeAt(0);
+  return (
+    character === "-" ||
+    character === ":" ||
+    (code >= 65 && code <= 90) ||
+    (code >= 97 && code <= 122)
+  );
+}
+
+function isReferenceContext(input: string, offset: number): boolean {
+  let index = offset - 1;
+
+  while (isWhitespace(input, index)) {
+    index -= 1;
+  }
+  if (input[index] === '"' || input[index] === "'") {
+    index -= 1;
+    while (isWhitespace(input, index)) {
+      index -= 1;
+    }
+  }
+
+  if (input[index] === "(") {
+    index -= 1;
+    while (isWhitespace(input, index)) {
+      index -= 1;
+    }
+    return (
+      input.slice(Math.max(0, index - 2), index + 1).toLowerCase() === "url"
+    );
+  }
+
+  if (input[index] === "=") {
+    index -= 1;
+    while (isWhitespace(input, index)) {
+      index -= 1;
+    }
+    const attributeEnds = index + 1;
+    while (index >= 0 && canBeAttributeNameCharacter(input[index])) {
+      index -= 1;
+    }
+    const attribute = input.slice(index + 1, attributeEnds).toLowerCase();
+    return attribute === "href" || attribute === "xlink:href";
+  }
+
+  return false;
+}
+
+function isCssIdentifierContinuation(input: string, index: number): boolean {
+  const character = input[index];
+  const code = input.charCodeAt(index);
+  return (
+    character === "-" ||
+    character === "_" ||
+    character === "\\" ||
+    (code >= 48 && code <= 57) ||
+    (code >= 65 && code <= 90) ||
+    (code >= 97 && code <= 122) ||
+    code >= 0x80
+  );
+}
+
+function isLikelySelectorSuffix(input: string, index: number): boolean {
+  while (isWhitespace(input, index)) {
+    index += 1;
+  }
+  const character = input[index];
+  if (
+    character === "{" ||
+    character === ":" ||
+    character === "[" ||
+    character === "#" ||
+    character === ">" ||
+    character === "+" ||
+    character === "~"
+  ) {
+    return true;
+  }
+  return character === "." && isCssIdentifierContinuation(input, index + 1);
+}
+
+function toFullHex(hex: string, offset: number, string: string): string {
+  const matchEnds = offset + hex.length;
+  const previous = string[offset - 1];
+  const next = string[matchEnds];
+  if (
+    previous === "&" || // consider false positives like &#124;
+    isCssIdentifierContinuation(string, matchEnds) ||
+    ((previous === '"' ||
+      previous === "'" ||
+      previous === "(" ||
+      previous === "=" ||
+      isWhitespace(string, offset - 1)) &&
+      isReferenceContext(string, offset)) ||
+    ((next === "{" ||
+      next === ":" ||
+      next === "[" ||
+      next === "#" ||
+      next === ">" ||
+      next === "+" ||
+      next === "~" ||
+      next === "." ||
+      isWhitespace(string, matchEnds)) &&
+      isLikelySelectorSuffix(string, matchEnds))
+  ) {
+    return hex;
+  }
+  if (hex.length === 4) {
+    const red = hex[1].toLowerCase();
+    const green = hex[2].toLowerCase();
+    const blue = hex[3].toLowerCase();
+    return `#${red}${red}${green}${green}${blue}${blue}`;
+  }
+  return hex.toLowerCase();
+}
 
 /**
  * Convert shorthand hex color codes into full
@@ -20,39 +143,21 @@ function conv(input: any): any {
     return input;
   }
 
-  function toFullHex(
-    hex: string,
-    _findings: any,
-    offset: number,
-    string: string,
-  ): string {
-    if (
-      string[offset - 1] !== "&" && // consider false positives like &#124;
-      hex.length === 4 &&
-      hex.charAt(0) === "#"
-    ) {
-      return `#${hex.charAt(1)}${hex.charAt(1)}${hex.charAt(2)}${hex.charAt(
-        2,
-      )}${hex.charAt(3)}${hex.charAt(3)}`.toLowerCase();
-    }
-    return hex.toLowerCase();
-  }
-
   // action
   // ====================
 
   if (typeof input === "string") {
-    return input.replace(r(), toFullHex);
+    return input.replace(hexColorRegex, toFullHex);
   }
   if (Array.isArray(input)) {
     return input.map(conv);
   }
   if (isPlainObject(input)) {
-    let clonedInput = clone(input);
-    Object.keys(clonedInput).forEach((key) => {
-      clonedInput[key] = conv(clonedInput[key]);
-    });
-    return clonedInput;
+    let result: Record<string, any> = {};
+    for (const key of Object.keys(input)) {
+      result[key] = conv(input[key]);
+    }
+    return result;
   }
   return input;
 }
