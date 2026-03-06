@@ -1,8 +1,8 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 /* eslint func-names:0 */
 
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { conv } from "../dist/color-shorthand-hex-to-six-digit.esm.js";
 
@@ -130,9 +130,7 @@ test("07 - array input - nested objects & arrays", () => {
 // ==================================
 
 test("08 - function as input - returned", () => {
-  let dummy = function () {
-    return null;
-  };
+  let dummy = () => null;
   equal(conv(dummy), dummy, "08.01");
 });
 
@@ -156,12 +154,16 @@ test("12 - no input - returned undefined", () => {
 // 05. Enforces all hexes to be lowercase only
 // ==============================
 
-test("13 - fixes mixed case three and six digit hexes", () => {
+test("13 - normalises supported hex lengths and rejects invalid lengths", () => {
   equal(
     conv("aaaa #cCccCc zzzz\n\t\t\t#ffF."),
     "aaaa #cccccc zzzz\n\t\t\t#ffffff.",
     "13.01",
   );
+  equal(conv("#AbC8"), "#abc8", "13.02");
+  equal(conv("#AbCdEf12"), "#abcdef12", "13.03");
+  equal(conv("#AbCdE"), "#AbCdE", "13.04");
+  equal(conv("#AbCdEf1"), "#AbCdEf1", "13.05");
 });
 
 // ==============================
@@ -182,7 +184,7 @@ test("14 - does not mutate the input args", () => {
       a: "aaaa #f0c zzzz\n\t\t\t#FFcc00",
       b: "aaaa #ff00CC zzzz\n\t\t\t#ffcc00",
     },
-    "14.02",
+    "14.01",
   ); // real deal
 });
 
@@ -215,6 +217,21 @@ test("17 - does not mangle encoded HTML entities that look like hex codes", () =
     "aaa &#124; bbb #112255 ccc &#126; ddd",
     "17.01",
   );
+});
+
+test("18 - avoids likely CSS selectors and references", () => {
+  equal(conv("#abc:hover {}"), "#abc:hover {}", "18.01");
+  equal(conv("#abc-foo {}"), "#abc-foo {}", "18.02");
+  equal(conv("#abcé {}"), "#abcé {}", "18.03");
+  equal(conv("#abc {}"), "#abc {}", "18.04");
+  equal(conv(".root #abc[data-kind] {}"), ".root #abc[data-kind] {}", "18.05");
+  equal(conv(".root #abc.child {}"), ".root #abc.child {}", "18.06");
+  equal(conv("svg { fill: url(#abc); }"), "svg { fill: url(#abc); }", "18.07");
+  equal(conv('<a href="#abc">'), '<a href="#abc">', "18.08");
+  equal(conv("<use xlink:href='#abc'>"), "<use xlink:href='#abc'>", "18.09");
+  equal(conv("color: #abc;"), "color: #aabbcc;", "18.10");
+  equal(conv("the colour #abc."), "the colour #aabbcc.", "18.11");
+  equal(conv("#abc"), "#aabbcc", "18.12");
 });
 
 test.run();
