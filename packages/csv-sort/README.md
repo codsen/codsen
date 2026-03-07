@@ -32,7 +32,7 @@ npm i csv-sort
 ## Quick Take
 
 ```js
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { sort } from "csv-sort";
 
@@ -63,9 +63,10 @@ assert.deepEqual(
 // you'll have to join elements and lines from the array yourself
 ```
 
+
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/csv-sort/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/csv-sort/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/csv-sort/CHANGELOG.md).
 
 ## Contributing
 
@@ -75,7 +76,7 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 MIT License
 
-Copyright © 2010-2025 Roy Revelt and other contributors
+Copyright © 2010-2026 Roy Revelt and other contributors
 
 List of [currency signs](https://github.com/bengourley/currency-symbol-map) - Copyright © 2017 Ben Gourley - see its [BSD-2-Clause disclaimer](https://opensource.org/licenses/BSD-2-Clause)
 
