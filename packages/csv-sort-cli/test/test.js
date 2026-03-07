@@ -1,10 +1,10 @@
-import fs from "fs";
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import path from "path";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { temporaryDirectory } from "tempy";
-import { fileURLToPath } from "url";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { spawn } from "../../../ops/helpers/spawn.js";
 
@@ -33,7 +33,7 @@ test("01 - there are no usable files at all", async () => {
   try {
     spawn(tempFolder, __dirname2);
     not.ok("01");
-  } catch (error) {
+  } catch {
     ok("01");
   }
 });
@@ -96,6 +96,25 @@ test("02 - sorts a file", async () => {
     "utf8",
   );
   equal(originalCsvFile, originalCSV, "02.02");
+});
+
+test("03 - waits for all requested files", () => {
+  let originalCSV = `Acc Number,Description,Debit Amount,Credit Amount,Balance,
+123456,Client #1 payment,,1000,1940
+123456,Bought carpet,30,,950
+123456,Bought table,10,,940
+123456,Bought pens,10,,1000
+123456,Bought chairs,20,,980
+`;
+
+  let tempFolder = temporaryDirectory();
+  fs.writeFileSync(path.join(tempFolder, "first.csv"), originalCSV);
+  fs.writeFileSync(path.join(tempFolder, "second.csv"), originalCSV);
+
+  spawn(tempFolder, __dirname2, "first.csv", "second.csv");
+
+  ok(fs.existsSync(path.join(tempFolder, "first-1.csv")), "03.01");
+  ok(fs.existsSync(path.join(tempFolder, "second-1.csv")), "03.02");
 });
 
 //                                  *
