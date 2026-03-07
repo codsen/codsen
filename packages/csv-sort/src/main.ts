@@ -1,9 +1,8 @@
-import { pull } from "lodash-es";
 import { splitEasy } from "csv-split-easy";
 import currency from "currency.js";
-
-import { findType, isNumeric } from "./util/findType";
+import { pull } from "lodash-es";
 import { version as v } from "../package.json";
+import { findType, isNumeric } from "./util/findType";
 
 const version: string = v;
 
@@ -27,7 +26,7 @@ function sort(input: string): Res {
   // depends what was passed in,
   if (typeof input !== "string") {
     throw new TypeError(
-      `csv-sort/csvSort(): [THROW_ID_01] The input is of a wrong type! We accept either string of array of arrays. We got instead: ${typeof input}, equal to:\n${JSON.stringify(
+      `csv-sort/sort(): [THROW_ID_01] The input is of a wrong type! We accept either string of array of arrays. We got instead: ${typeof input}, equal to:\n${JSON.stringify(
         input,
         null,
         4,
@@ -55,23 +54,18 @@ function sort(input: string): Res {
   let indexAtWhichEmptyCellsStart: number | null = null;
 
   for (let i = content.length - 1; i >= 0; i--) {
-    DEV && console.log(`058 content[${i}] = ${content[i]}`);
+    DEV && console.log(`057 content[${i}] = ${content[i]}`);
     if (!schema.length) {
       // prevention against last blank row:
       /* c8 ignore next */
       if (content[i].length !== 1 || content[i][0] !== "") {
         for (let y = 0, len = content[i].length; y < len; y++) {
-          schema.push(findType(content[i][y].trim()));
-          if (
-            indexAtWhichEmptyCellsStart === null &&
-            findType(content[i][y].trim()) === "empty"
-          ) {
+          const cellType = findType(content[i][y].trim());
+          schema.push(cellType);
+          if (indexAtWhichEmptyCellsStart === null && cellType === "empty") {
             indexAtWhichEmptyCellsStart = y;
           }
-          if (
-            indexAtWhichEmptyCellsStart !== null &&
-            findType(content[i][y].trim()) !== "empty"
-          ) {
+          if (indexAtWhichEmptyCellsStart !== null && cellType !== "empty") {
             indexAtWhichEmptyCellsStart = null;
           }
         }
@@ -81,9 +75,10 @@ function sort(input: string): Res {
         // Check is this header row.
         // Header rows should consist of only text content.
         // Let's iterate through all elements and find out.
-        stateHeaderRowPresent = content[i].every(
-          (el) => findType(el) === "text" || findType(el) === "empty",
-        );
+        stateHeaderRowPresent = content[i].every((el) => {
+          const cellType = findType(el);
+          return cellType === "text" || cellType === "empty";
+        });
 
         // if schema was calculated (this means there's header row and at least one content row),
         // find out if the column length in the header differs from schema's
@@ -98,32 +93,30 @@ function sort(input: string): Res {
 
       let perRowIndexAtWhichEmptyCellsStart = null;
       for (let y = 0, len = content[i].length; y < len; y++) {
+        const cellType = findType(content[i][y].trim());
         // trim
         /* c8 ignore next */
         if (
           perRowIndexAtWhichEmptyCellsStart === null &&
-          findType(content[i][y].trim()) === "empty"
+          cellType === "empty"
         ) {
           perRowIndexAtWhichEmptyCellsStart = y;
         }
         /* c8 ignore next */
         if (
           perRowIndexAtWhichEmptyCellsStart !== null &&
-          findType(content[i][y].trim()) !== "empty"
+          cellType !== "empty"
         ) {
           perRowIndexAtWhichEmptyCellsStart = null;
         }
         // checking schema
         /* c8 ignore next */
-        if (
-          findType(content[i][y].trim()) !== schema[y] &&
-          !stateHeaderRowPresent
-        ) {
-          let toAdd = findType(content[i][y].trim());
+        if (cellType !== schema[y] && !stateHeaderRowPresent) {
+          let toAdd = cellType;
           /* c8 ignore next */
           if (Array.isArray(schema[y])) {
             if (!schema[y].includes(toAdd)) {
-              (schema[y] as string[]).push(findType(content[i][y].trim()));
+              (schema[y] as string[]).push(toAdd);
             }
           } else if (schema[y] !== toAdd) {
             let temp = schema[y];
@@ -213,7 +206,7 @@ function sort(input: string): Res {
     balanceColumnIndex = numericSchemaColumns[0];
   } else if (numericSchemaColumns.length === 0) {
     throw new Error(
-      'csv-sort/csvSort(): [THROW_ID_03] Your CSV file does not contain numeric-only columns and computer was not able to detect the "Balance" column!',
+      'csv-sort/sort(): [THROW_ID_02] Your CSV file does not contain numeric-only columns and computer was not able to detect the "Balance" column!',
     );
   } else {
     // So (numericSchemaColumns > 0) and we'll have to do some work.
@@ -316,7 +309,7 @@ function sort(input: string): Res {
       balanceColumnIndex = potentialBalanceColumnIndexesList[0];
     } else if (potentialBalanceColumnIndexesList.length === 0) {
       throw new Error(
-        'csv-sort/csvSort(): [THROW_ID_04] The computer can\'t find the "Balance" column! It saw some numeric-only columns, but they all seem to have certain rows with the same values as rows right below/above them!',
+        'csv-sort/sort(): [THROW_ID_03] The computer can\'t find the "Balance" column! It saw some numeric-only columns, but they all seem to have certain rows with the same values as rows right below/above them!',
       );
     } else {
       // TODO - continue processing interpolating horizontally and vertically.
@@ -337,7 +330,7 @@ function sort(input: string): Res {
 
   if (!balanceColumnIndex) {
     throw new Error(
-      "csv-sort/csvSort(): [THROW_ID_05] Sadly computer couldn't find its way in this CSV and had to stop working on it.",
+      "csv-sort/sort(): [THROW_ID_04] Sadly computer couldn't find its way in this CSV and had to stop working on it.",
     );
   }
 
@@ -382,7 +375,7 @@ function sort(input: string): Res {
 
   DEV &&
     console.log(
-      `385 after push ${`\u001b[${33}m${`resContent`}\u001b[${39}m`} = ${JSON.stringify(
+      `378 after push ${`\u001b[${33}m${`resContent`}\u001b[${39}m`} = ${JSON.stringify(
         resContent,
         null,
         4,
@@ -398,11 +391,11 @@ function sort(input: string): Res {
     // go through all the rows and pick the right row which matches to the above:
     DEV &&
       console.log(
-        `\n\u001b[${90}m${`                       S`}\u001b[${39}m`.repeat(15),
+        `394 ${`\n\u001b[${90}m${`                       S`}\u001b[${39}m`.repeat(15)}`,
       );
     DEV &&
       console.log(
-        `405 \u001b[${90}m${`████████████████ y = ${y} ████████████████`}\u001b[${39}m`,
+        `398 \u001b[${90}m${`████████████████ y = ${y} ████████████████`}\u001b[${39}m`,
       );
 
     for (
@@ -410,10 +403,11 @@ function sort(input: string): Res {
       suspectedRowsIndex >= bottom;
       suspectedRowsIndex--
     ) {
-      DEV && console.log(`\n\n\n\n\n ${`\u001b[${90}m${`██`}\u001b[${39}m`}`);
+      DEV &&
+        console.log(`407 \n\n\n\n\n ${`\u001b[${90}m${`██`}\u001b[${39}m`}`);
       DEV &&
         console.log(
-          `416 \u001b[${90}m${`=============== suspected row: ${JSON.stringify(
+          `410 \u001b[${90}m${`=============== suspected row: ${JSON.stringify(
             content[suspectedRowsIndex],
             null,
             0,
@@ -431,7 +425,7 @@ function sort(input: string): Res {
         ) {
           DEV &&
             console.log(
-              `434 \u001b[${90}m${`--------------- suspectedColIndex = ${suspectedColIndex} ---------------`}\u001b[${39}m`,
+              `428 \u001b[${90}m${`--------------- suspectedColIndex = ${suspectedColIndex} ---------------`}\u001b[${39}m`,
             );
           let diffVal = null;
           if (
@@ -446,7 +440,7 @@ function sort(input: string): Res {
             );
             DEV &&
               console.log(
-                `449 SET ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
+                `443 SET ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
                   diffVal,
                   null,
                   4,
@@ -462,7 +456,7 @@ function sort(input: string): Res {
             );
             DEV &&
               console.log(
-                `465 SET ${`\u001b[${33}m${`totalVal`}\u001b[${39}m`} = ${JSON.stringify(
+                `459 SET ${`\u001b[${33}m${`totalVal`}\u001b[${39}m`} = ${JSON.stringify(
                   totalVal,
                   null,
                   4,
@@ -478,7 +472,7 @@ function sort(input: string): Res {
             ).format();
             DEV &&
               console.log(
-                `481 SET ${`\u001b[${33}m${`topmostResContentBalance`}\u001b[${39}m`} = ${JSON.stringify(
+                `475 SET ${`\u001b[${33}m${`topmostResContentBalance`}\u001b[${39}m`} = ${JSON.stringify(
                   topmostResContentBalance,
                   null,
                   4,
@@ -500,7 +494,7 @@ function sort(input: string): Res {
             ).format();
             DEV &&
               console.log(
-                `${`\u001b[${33}m${`currentRowsDiffVal`}\u001b[${39}m`} = ${JSON.stringify(
+                `497 ${`\u001b[${33}m${`currentRowsDiffVal`}\u001b[${39}m`} = ${JSON.stringify(
                   currentRowsDiffVal,
                   null,
                   4,
@@ -516,10 +510,10 @@ function sort(input: string): Res {
             );
           }
 
-          DEV && console.log("\n\n\n\n\n");
+          DEV && console.log("513 \n\n\n\n\n");
           DEV &&
             console.log(
-              `522 ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
+              `516 ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
                 diffVal,
                 null,
                 4,
@@ -528,19 +522,19 @@ function sort(input: string): Res {
 
           DEV &&
             console.log(
-              `case 1 totalVal=${totalVal} + diffVal=${diffVal} === topmostResContentBalance=${topmostResContentBalance}`,
+              `525 case 1 totalVal=${totalVal} + diffVal=${diffVal} === topmostResContentBalance=${topmostResContentBalance}`,
             );
           DEV &&
             console.log(
-              `case 2 totalVal=${totalVal} - diffVal=${diffVal} === topmostResContentBalance=${topmostResContentBalance}`,
+              `529 case 2 totalVal=${totalVal} - diffVal=${diffVal} === topmostResContentBalance=${topmostResContentBalance}`,
             );
           DEV &&
             console.log(
-              `case 3 lastResContentRowsBalance=${lastResContentRowsBalance} + currentRowsDiffVal=${currentRowsDiffVal} === totalVal=${totalVal}`,
+              `533 case 3 lastResContentRowsBalance=${lastResContentRowsBalance} + currentRowsDiffVal=${currentRowsDiffVal} === totalVal=${totalVal}`,
             );
           DEV &&
             console.log(
-              `case 4 lastResContentRowsBalance=${lastResContentRowsBalance} - currentRowsDiffVal=${currentRowsDiffVal} === totalVal=${totalVal}`,
+              `537 case 4 lastResContentRowsBalance=${lastResContentRowsBalance} - currentRowsDiffVal=${currentRowsDiffVal} === totalVal=${totalVal}`,
             );
 
           /* c8 ignore next */
@@ -549,7 +543,7 @@ function sort(input: string): Res {
             (totalVal as currency).add(diffVal).format() ===
               topmostResContentBalance
           ) {
-            DEV && console.log(`552 ADD THIS ROW ABOVE EVERYTHING`);
+            DEV && console.log(`546 ADD THIS ROW ABOVE EVERYTHING`);
             // ADD THIS ROW ABOVE EVERYTHING
             // add this row above the current HEAD in resContent lines array (index `0`)
             resContent.unshift(
@@ -598,10 +592,10 @@ function sort(input: string): Res {
             break;
           }
 
-          DEV && console.log("----------");
+          DEV && console.log("595 ----------");
           DEV &&
             console.log(
-              `604 ${`\u001b[${33}m${`thisRowIsDone`}\u001b[${39}m`} = ${JSON.stringify(
+              `598 ${`\u001b[${33}m${`thisRowIsDone`}\u001b[${39}m`} = ${JSON.stringify(
                 thisRowIsDone,
                 null,
                 4,
@@ -618,7 +612,7 @@ function sort(input: string): Res {
 
     DEV &&
       console.log(
-        `621 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ENDING \u001b[${33}m${`resContent`}\u001b[${39}m = ${JSON.stringify(
+        `615 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ENDING \u001b[${33}m${`resContent`}\u001b[${39}m = ${JSON.stringify(
           resContent,
           null,
           4,
@@ -653,4 +647,4 @@ function sort(input: string): Res {
   };
 }
 
-export { sort, findType, isNumeric, version };
+export { findType, isNumeric, sort, version };
