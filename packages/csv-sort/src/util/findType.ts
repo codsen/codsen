@@ -1,8 +1,8 @@
 function isNumeric(str: any): boolean {
-  if (typeof str === "number" && !isNaN(str)) return true;
+  if (typeof str === "number" && !Number.isNaN(str)) return true;
   str = (str || "").toString().trim();
   if (!str) return false;
-  return !isNaN(+str);
+  return !Number.isNaN(+str);
 }
 
 const currencySigns = [
