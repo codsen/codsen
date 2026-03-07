@@ -1,8 +1,8 @@
-import { readFileSync } from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+import crypto2 from "node:crypto";
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { splitEasy } from "csv-split-easy";
-import crypto2 from "crypto";
 
 import { sort } from "../dist/csv-sort.esm.js";
 
@@ -14,7 +14,7 @@ const sha256 = (x) =>
 
 const fixtures = path.join(__dirname2, "fixtures");
 
-function compare(equal, name, throws) {
+function compare(equal, name, testNumber, throws) {
   // first, ensure fixtures are not mangled
   let hashes = {
     "all-round-simples-trim":
@@ -56,11 +56,7 @@ function compare(equal, name, throws) {
   // check the hash
   let testSource = readFileSync(path.join(fixtures, `${name}.csv`), "utf8");
 
-  equal(
-    sha256(testSource),
-    hashes[name],
-    `inputs were mangled for fixture "${name}"`,
-  );
+  equal(sha256(testSource), hashes[name], `${testNumber}.01`);
 
   // then get onto real bizness
   if (throws) {
@@ -73,7 +69,7 @@ function compare(equal, name, throws) {
     path.join(fixtures, `${name}.expected.csv`),
     "utf8",
   );
-  return equal(actual, splitEasy(expected));
+  return equal(actual, splitEasy(expected), `${testNumber}.02`);
 }
 
 export default compare;
