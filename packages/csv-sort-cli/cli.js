@@ -5,18 +5,23 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-import fs from "fs";
-import meow from "meow";
-import path from "path";
-import chalk from "chalk";
+import fs from "node:fs";
+import { readFile, writeFile } from "node:fs/promises";
+import { createRequire } from "node:module";
+import path from "node:path";
+import { confirm, select } from "@inquirer/prompts";
+import { codsenCLI, pullAll } from "codsen-utils";
 import { sort } from "csv-sort";
-import { select, confirm } from "@inquirer/prompts";
 import { globbySync } from "globby";
-import { createRequire } from "module";
 import updateNotifier from "update-notifier";
-import { pullAll } from "codsen-utils";
 
 const { log } = console;
+
+const colours = {
+  green: 32,
+  red: 31,
+  yellow: 33,
+};
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
@@ -25,7 +30,7 @@ const state = {
   toDoList: [],
   overwrite: false,
 };
-const cli = meow(
+const cli = codsenCLI(
   `
   Usage
     $ csvsort YOURFILE.csv
@@ -40,7 +45,7 @@ const cli = meow(
     Just call it in the root, where your csv file is located
 `,
   {
-    importMeta: import.meta,
+    pkg,
     flags: {
       overwrite: {
         type: "boolean",
@@ -55,14 +60,10 @@ updateNotifier({ pkg }).notify();
 // FUNCTIONS
 // -----------------------------------------------------------------------------
 
-function hasOwnProperty(obj, prop) {
-  return Object.prototype.hasOwnProperty.call(obj, prop);
+function colour(str, colourCode) {
+  return `\u001b[${colourCode}m${str}\u001b[39m`;
 }
 
-// consumes a plain object: {
-//   toDoList - array,
-//   overwrite - boolean
-// }
 async function offerAListOfCSVsToPickFrom(stateObj) {
   let allCSVsHere = globbySync("./*.csv", "!**/node_modules/**");
   if (!allCSVsHere.length) {
@@ -78,14 +79,9 @@ async function offerAListOfCSVsToPickFrom(stateObj) {
     choices: allCSVsHere,
   });
 
-  let overwrite = false;
+  let overwrite = stateObj?.overwrite === true;
 
-  if (
-    stateObj === undefined ||
-    !hasOwnProperty(stateObj, "overwrite") ||
-    (hasOwnProperty(stateObj, "overwrite") && stateObj.overwrite === false) ||
-    typeof stateObj.overwrite !== "boolean"
-  ) {
+  if (!overwrite) {
     overwrite = await confirm({
       message: "Do you want to overwrite this file with a sorted result?",
     });
@@ -97,7 +93,8 @@ async function offerAListOfCSVsToPickFrom(stateObj) {
   };
 }
 
-// Step #0. take care of -v and -h flags that are left out in meow.
+// Step #0. take care of the short -v and -h flags, which codsenCLI leaves
+// to us (it answers the long --version and --help on its own).
 // -----------------------------------------------------------------------------
 
 if (cli.flags.v) {
@@ -122,10 +119,8 @@ if (Object.keys(cli.flags).length !== 0) {
   state.toDoList = [...new Set(cli.input)];
 }
 
-if (cli.flags.o) {
-  // variables that can be misinterpreted as falsy, yet the flag still be in
-  // for example, in "csvsort -o false simples.csv simples2.csv",
-  // the cli.flags.overwrite === false (WTF?)
+// short flags resolve onto their long names, so "-o" arrives as "overwrite"
+if (cli.flags.overwrite) {
   state.overwrite = true; // we normalise the flag since its value in CLI can precede
 }
 
@@ -158,10 +153,11 @@ if (
   // write the list of unrecognised file names into the console:
   if (erroneous.length > 0) {
     log(
-      chalk.red(
+      colour(
         `\ncsv-sort-cli: Alas, the following file${
           erroneous.length > 1 ? "s don't" : " doesn't"
         } exist: "${erroneous.join('", "')}"`,
+        colours.red,
       ),
     );
   }
@@ -180,8 +176,9 @@ if (
     butStateWasRecognisedMsg = 'But it recognised your "-o" flag.';
   }
   log(
-    chalk.yellow(
+    colour(
       `\ncsv-sort-cli: Program didn't recognise any CSV files in your input!\n${butStateWasRecognisedMsg}`,
+      colours.yellow,
     ),
   );
 
@@ -194,82 +191,75 @@ if (
 // -----------------------------------------------------------------------------
 
 thePromise
-  .then((receivedState) => {
-    receivedState.toDoList.map((requestedCSVsPath) => {
-      // read the source
-      fs.readFile(requestedCSVsPath, "utf8", (csvError, csvData) => {
-        if (csvData) {
-          try {
-            let cleaned = sort(csvData);
-            if (receivedState.overwrite) {
-              // overwrite
-              fs.writeFile(
-                path.basename(requestedCSVsPath),
-                cleaned.res.join("\n"),
-                "utf8",
-                (err) => {
-                  if (err) {
-                    throw err;
-                  }
-                  log(
-                    chalk.green(
-                      `csv-sort-cli: Yay! The ${path.basename(
-                        requestedCSVsPath,
-                      )} has been fixed and overwritten! Check it out.`,
-                    ),
-                  );
-                  process.exit(0);
-                },
-              );
-            } else {
-              // create a new file with appended hyphen+integer before extension
-              let proposedNewFileName;
-              for (let i = 1; i < 1001; i++) {
-                proposedNewFileName = `${path.basename(
-                  requestedCSVsPath,
-                  path.extname(requestedCSVsPath),
-                )}-${i}${path.extname(requestedCSVsPath)}`;
-                if (!fs.existsSync(path.resolve(proposedNewFileName))) {
-                  fs.writeFile(
-                    proposedNewFileName,
-                    cleaned.res.join("\n"),
-                    "utf8",
-                    (err) => {
-                      if (err) {
-                        throw err;
-                      }
-                      log(
-                        chalk.green(
-                          `csv-sort-cli: Yay! A new file, ${proposedNewFileName} has been created! Check it out.`,
-                        ),
-                      );
-                      process.exit(0);
-                    },
-                  );
-                  break;
-                }
-              }
-              path.basename(requestedCSVsPath, path.extname(requestedCSVsPath));
-            }
-          } catch (e) {
-            return Promise.reject(
-              new Error(`\ncsv-sort-cli: Alas, we encountered an error:\n${e}`),
-            );
-          }
-        }
-        if (csvError) {
-          return Promise.reject(
-            new Error(
-              `\ncsv-sort-cli: Alas, we couldn't fetch the file "${path.basename(
-                requestedCSVsPath,
-              )}" you requested!`,
-            ),
+  .then(async (receivedState) => {
+    await Promise.all(
+      receivedState.toDoList.map(async (requestedCSVsPath) => {
+        let csvData;
+        try {
+          csvData = await readFile(requestedCSVsPath, "utf8");
+        } catch {
+          throw new Error(
+            `\ncsv-sort-cli: Alas, we couldn't fetch the file "${path.basename(
+              requestedCSVsPath,
+            )}" you requested!`,
           );
         }
-      });
-    });
+
+        try {
+          const cleaned = sort(csvData);
+          if (receivedState.overwrite) {
+            await writeFile(
+              path.basename(requestedCSVsPath),
+              cleaned.res.join("\n"),
+              "utf8",
+            );
+            log(
+              colour(
+                `csv-sort-cli: Yay! The ${path.basename(
+                  requestedCSVsPath,
+                )} has been fixed and overwritten! Check it out.`,
+                colours.green,
+              ),
+            );
+            return;
+          }
+
+          // create a new file with appended hyphen+integer before extension
+          for (let i = 1; i < 1001; i++) {
+            const proposedNewFileName = `${path.basename(
+              requestedCSVsPath,
+              path.extname(requestedCSVsPath),
+            )}-${i}${path.extname(requestedCSVsPath)}`;
+            if (!fs.existsSync(path.resolve(proposedNewFileName))) {
+              await writeFile(
+                proposedNewFileName,
+                cleaned.res.join("\n"),
+                "utf8",
+              );
+              log(
+                colour(
+                  `csv-sort-cli: Yay! A new file, ${proposedNewFileName} has been created! Check it out.`,
+                  colours.green,
+                ),
+              );
+              return;
+            }
+          }
+
+          throw new Error(
+            `Could not create an output file for "${path.basename(
+              requestedCSVsPath,
+            )}" because names 1–1000 are already taken.`,
+          );
+        } catch (error) {
+          throw new Error(
+            `\ncsv-sort-cli: Alas, we encountered an error:\n${error}`,
+          );
+        }
+      }),
+    );
   })
   .catch((err) => {
-    log(chalk.red(err));
-    process.exit(1);
+    log(colour(err, colours.red));
+    process.exitCode = 1;
   });
