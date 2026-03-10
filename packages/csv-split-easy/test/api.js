@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { splitEasy } from "../dist/csv-split-easy.esm.js";
 
@@ -70,8 +70,10 @@ test("01 - wrong input types causes throwing up", () => {
       splitEasy(f);
     },
     "01.10",
-    "01.09",
+    "01.10",
   );
+  throws(() => splitEasy("a", []), /THROW_ID_01/, "01.11");
+  throws(() => splitEasy("a", new Date()), /THROW_ID_01/, "01.12");
 });
 
 test.run();
