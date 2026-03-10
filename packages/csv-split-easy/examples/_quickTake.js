@@ -1,6 +1,6 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { splitEasy } from "../dist/csv-split-easy.esm.js";
 
