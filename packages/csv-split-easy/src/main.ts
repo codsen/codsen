@@ -18,6 +18,14 @@ const defaults: Opts = {
   forceUKStyle: false,
 };
 
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  if (value === null || typeof value !== "object") {
+    return false;
+  }
+  const prototype = Object.getPrototypeOf(value);
+  return prototype === null || prototype === Object.prototype;
+}
+
 function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
   // traverse the string and push each column into array
   // when line break is detected, push what's gathered into main array
@@ -29,9 +37,9 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
   let thisRowContainsOnlyEmptySpace = true; // we need at least one non-empty element to
   // flip it to `false` on each line
 
-  if (opts && typeof opts !== "object") {
+  if (opts && !isPlainObject(opts)) {
     throw new Error(
-      `csv-split-easy/split(): [THROW_ID_02] Options object must be a plain object! Currently it's of a type ${typeof opts} equal to:\n${JSON.stringify(
+      `csv-split-easy/splitEasy(): [THROW_ID_01] Options object must be a plain object! Currently it's of a type ${typeof opts} equal to:\n${JSON.stringify(
         opts,
         null,
         4,
@@ -44,7 +52,7 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
 
   if (typeof str !== "string") {
     throw new TypeError(
-      `csv-split-easy/split(): [THROW_ID_04] input must be string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(
+      `csv-split-easy/splitEasy(): [THROW_ID_02] input must be string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(
         str,
         null,
         4,
@@ -228,4 +236,4 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
   return resArray;
 }
 
-export { splitEasy, defaults, version };
+export { defaults, splitEasy, version };
