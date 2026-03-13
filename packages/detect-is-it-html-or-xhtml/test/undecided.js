@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { detectIsItHTMLOrXhtml as detect } from "../dist/detect-is-it-html-or-xhtml.esm.js";
 
@@ -40,6 +40,8 @@ test("05 - input is not string - throws", () => {
     /THROW_ID_01/g,
     "05.01",
   );
+  throws(() => detect(0), /THROW_ID_01/g, "05.02");
+  throws(() => detect(false), /THROW_ID_01/g, "05.03");
 });
 
 test.run();
