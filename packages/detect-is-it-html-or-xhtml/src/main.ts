@@ -1,6 +1,11 @@
 import { version as v } from "../package.json";
 
 const version: string = v;
+const metaTagRegex = /<\s*!\s*doctype[^>]*>/i;
+const singleTagRegex = /<\s*(?:img|br|hr)[^>]*>/gi;
+const closingSlashRegex = /\/\s*>/;
+const xhtmlRegex = /xhtml/i;
+const svgRegex = /svg/i;
 
 // ===================================
 // F U N C T I O N S
@@ -8,17 +13,13 @@ const version: string = v;
 export type Output = "html" | "xhtml" | null;
 
 function detectIsItHTMLOrXhtml(input: string): Output {
-  function existy(x: any): boolean {
-    return x != null;
-  }
-
-  if (!input) {
+  if (input == null || input === "") {
     return null;
   }
 
   if (typeof input !== "string") {
     throw new TypeError(
-      `detect-is-it-html-or-xhtml: [THROW_ID_01] Input must be a string! It was given as ${JSON.stringify(
+      `detect-is-it-html-or-xhtml/detectIsItHTMLOrXhtml(): [THROW_ID_01] Input must be a string! It was given as ${JSON.stringify(
         input,
         null,
         4,
@@ -26,20 +27,13 @@ function detectIsItHTMLOrXhtml(input: string): Output {
     );
   }
 
-  let metaTag = /<\s*!\s*doctype[^>]*>/im;
-  let imgTag = /<\s*img[^>]*>/gi;
-  let brTag = /<\s*br[^>]*>/gi;
-  let hrTag = /<\s*hr[^>]*>/gi;
-  let closingSlash = /\/\s*>/g;
-  let extractedMetaTag = input.match(metaTag);
+  const extractedMetaTag = input.match(metaTagRegex);
 
   if (extractedMetaTag) {
     // detect by doctype meta tag
-    let xhtmlRegex = /xhtml/gi;
-    let svgRegex = /svg/gi;
     if (
-      extractedMetaTag[0].match(xhtmlRegex) ||
-      extractedMetaTag[0].match(svgRegex)
+      xhtmlRegex.test(extractedMetaTag[0]) ||
+      svgRegex.test(extractedMetaTag[0])
     ) {
       return "xhtml";
     }
@@ -47,23 +41,15 @@ function detectIsItHTMLOrXhtml(input: string): Output {
   }
 
   // ELSE - detect by scanning single tags
-  let allImageTagsArr: string[] = input.match(imgTag) || [];
-  let allBRTagsArr: string[] = input.match(brTag) || [];
-  let allHRTagsArr: string[] = input.match(hrTag) || [];
-
-  // join all found tags
-  let allConcernedTagsArr = allImageTagsArr
-    .concat(allBRTagsArr)
-    .concat(allHRTagsArr);
-
-  if (allConcernedTagsArr.length === 0) {
+  const allConcernedTagsArr = input.match(singleTagRegex);
+  if (!allConcernedTagsArr) {
     return null;
   }
 
   // count closing slashes
   let slashCount = 0;
   for (let i = 0, len = allConcernedTagsArr.length; i < len; i++) {
-    if (existy(allConcernedTagsArr[i].match(closingSlash))) {
+    if (closingSlashRegex.test(allConcernedTagsArr[i])) {
       slashCount += 1;
     }
   }
