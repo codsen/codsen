@@ -13,7 +13,7 @@ function detectLang(str: string): { name: Output } {
 
   if (typeof str !== "string") {
     throw new TypeError(
-      `detect-templating-language: [THROW_ID_01] Input must be string! It was given as ${JSON.stringify(
+      `detect-templating-language/detectLang(): [THROW_ID_01] Input must be string! It was given as ${JSON.stringify(
         str,
         null,
         4,
