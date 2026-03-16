@@ -1,15 +1,16 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { det as det1 } from "../dist/detergent.esm.js";
+
 // const { det, mixer } from "../t-util/util.js";
 
 // ================================================
 // 01. Only real applicable rules keys are reported
 // ================================================
 
-test(`01 - ${`\u001b[${31}m${"rubbish removal"}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=on`, () => {
+test("001 - rubbish removal - trailing/leading whitespace, convertEntities=on", () => {
   equal(
     Object.keys(
       det1("&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;", {
@@ -31,7 +32,7 @@ test(`01 - ${`\u001b[${31}m${"rubbish removal"}\u001b[${39}m`} - trailing/leadin
       "stripHtml",
       "eol",
     ].sort(),
-    "01.01",
+    "001.01",
   );
 });
 
