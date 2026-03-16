@@ -1,11 +1,9 @@
-import rfdc from "rfdc";
-// eslint-disable-next-line n/no-extraneous-import
 import objectPath from "object-path";
 import { mixer as originalMixer } from "test-mixer";
 
-import { det as det1, opts as defaults } from "../dist/detergent.esm.js";
+import { opts as defaults, det as det1 } from "../dist/detergent.esm.js";
 
-const clone = rfdc();
+const clone = structuredClone;
 
 export const widowRegexTest = /. ./g;
 export const latinAndNonNonLatinRanges = [
