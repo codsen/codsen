@@ -1,9 +1,4 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
-// import { det as det1 } from "../dist/detergent.esm.js";
-import { det, mixer } from "../t-util/util.js";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import {
   // rawReplacementMark,
   // rawNDash,
@@ -16,46 +11,50 @@ import {
   // leftDoubleQuote,
   // leftSingleQuote,
 } from "codsen-utils";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+// import { det as det1 } from "../dist/detergent.esm.js";
+import { det, mixer } from "../t-util/util.js";
 
 // -----------------------------------------------------------------------------
 
-test(`01 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - horizontal ellipsis sanity check - convert off - raw`, () => {
+test("001 - ellipsis - horizontal ellipsis sanity check - convert off - raw", () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, `${ellipsis}`, opt).res,
       "...",
-      JSON.stringify(opt, null, 4),
+      `001.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`02 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - horizontal ellipsis sanity check - convert off - encoded`, () => {
+test("002 - ellipsis - horizontal ellipsis sanity check - convert off - encoded", () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "&hellip;", opt).res,
       "...",
-      JSON.stringify(opt, null, 4),
+      `002.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`03 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - horizontal ellipsis sanity check - convert off - wrongly encoded`, () => {
+test("003 - ellipsis - horizontal ellipsis sanity check - convert off - wrongly encoded", () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "&mldr;", opt).res,
       "...",
-      JSON.stringify(opt, null, 4),
+      `003.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`04 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - encodes the ellipsis when it has to`, () => {
+test("004 - ellipsis - raw - encodes the ellipsis when it has to", () => {
   mixer({
     convertEntities: true,
     convertDotsToEllipsis: true,
@@ -63,12 +62,12 @@ test(`04 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - encodes the ellipsis 
     equal(
       det(ok, not, n, `${ellipsis}`, opt).res,
       "&hellip;",
-      JSON.stringify(opt, null, 4),
+      `004.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`05 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - correctly encoded - converts`, () => {
+test("005 - ellipsis - correctly encoded - converts", () => {
   mixer({
     convertEntities: true,
     convertDotsToEllipsis: true,
@@ -76,12 +75,12 @@ test(`05 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - correctly encoded - convert
     equal(
       det(ok, not, n, "&hellip;", opt).res,
       "&hellip;",
-      JSON.stringify(opt, null, 4),
+      `005.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`06 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - wrongly encoded - convert on`, () => {
+test("006 - ellipsis - wrongly encoded - convert on", () => {
   mixer({
     convertEntities: true,
     convertDotsToEllipsis: true,
@@ -89,68 +88,72 @@ test(`06 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - wrongly encoded - convert o
     equal(
       det(ok, not, n, "&mldr;", opt).res,
       "&hellip;",
-      JSON.stringify(opt, null, 4),
+      `006.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`07 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - siwtched off setting converts explicitly`, () => {
+test("007 - ellipsis - raw - siwtched off setting converts explicitly", () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "...", opt).res, "...", JSON.stringify(opt, null, 4));
+    equal(
+      det(ok, not, n, "...", opt).res,
+      "...",
+      `007.01 - ${JSON.stringify(opt, null, 4)}`,
+    );
   });
 });
 
-test(`08 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - siwtched off setting converts explicitly`, () => {
+test("008 - ellipsis - raw - siwtched off setting converts explicitly", () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "And then...", opt).res,
       "And then...",
-      JSON.stringify(opt, null, 4),
+      `008.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`09 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - siwtched off setting converts explicitly`, () => {
+test("009 - ellipsis - raw - siwtched off setting converts explicitly", () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, `${ellipsis}`, opt).res,
       "...",
-      JSON.stringify(opt, null, 4),
+      `009.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`10 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - siwtched off setting converts explicitly`, () => {
+test("010 - ellipsis - raw - siwtched off setting converts explicitly", () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "&hellip;", opt).res,
       "...",
-      JSON.stringify(opt, null, 4),
+      `010.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`11 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - siwtched off setting converts explicitly`, () => {
+test("011 - ellipsis - raw - siwtched off setting converts explicitly", () => {
   mixer({
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "&mldr;", opt).res,
       "...",
-      JSON.stringify(opt, null, 4),
+      `011.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`12 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - convert off`, () => {
+test("012 - ellipsis - raw - convert off", () => {
   mixer({
     convertEntities: false,
     convertDotsToEllipsis: true,
@@ -158,12 +161,12 @@ test(`12 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - convert off`, () => {
     equal(
       det(ok, not, n, `${ellipsis}`, opt).res,
       `${ellipsis}`,
-      JSON.stringify(opt, null, 4),
+      `012.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`13 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - convert off`, () => {
+test("013 - ellipsis - raw - convert off", () => {
   mixer({
     convertEntities: false,
     convertDotsToEllipsis: true,
@@ -171,12 +174,12 @@ test(`13 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - convert off`, () => {
     equal(
       det(ok, not, n, "&hellip;", opt).res,
       `${ellipsis}`,
-      JSON.stringify(opt, null, 4),
+      `013.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`14 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - convert off`, () => {
+test("014 - ellipsis - raw - convert off", () => {
   mixer({
     convertEntities: false,
     convertDotsToEllipsis: true,
@@ -184,12 +187,12 @@ test(`14 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - raw - convert off`, () => {
     equal(
       det(ok, not, n, "&mldr;", opt).res,
       `${ellipsis}`,
-      JSON.stringify(opt, null, 4),
+      `014.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`15 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - three dots to unencoded hellip`, () => {
+test("015 - ellipsis - dots - convert off - three dots to unencoded hellip", () => {
   mixer({
     convertEntities: false,
     convertDotsToEllipsis: true,
@@ -197,12 +200,12 @@ test(`15 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - three 
     equal(
       det(ok, not, n, "...", opt).res,
       `${ellipsis}`,
-      JSON.stringify(opt, null, 4),
+      `015.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`16 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - three dots to unencoded hellip`, () => {
+test("016 - ellipsis - dots - convert off - three dots to unencoded hellip", () => {
   mixer({
     removeWidows: false,
     convertEntities: false,
@@ -211,12 +214,12 @@ test(`16 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - three 
     equal(
       det(ok, not, n, "Aaaaa... Bbbbb... C...", opt).res,
       `Aaaaa${ellipsis} Bbbbb${ellipsis} C${ellipsis}`,
-      JSON.stringify(opt, null, 4),
+      `016.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`17 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - encoded hellip to unencoded hellip`, () => {
+test("017 - ellipsis - dots - convert off - encoded hellip to unencoded hellip", () => {
   mixer({
     removeWidows: false,
     convertEntities: false,
@@ -225,12 +228,12 @@ test(`17 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - encode
     equal(
       det(ok, not, n, "&hellip;", opt).res,
       `${ellipsis}`,
-      JSON.stringify(opt, null, 4),
+      `017.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`18 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - encoded mldr to unencoded hellip`, () => {
+test("018 - ellipsis - dots - convert off - encoded mldr to unencoded hellip", () => {
   mixer({
     removeWidows: false,
     convertEntities: false,
@@ -239,12 +242,12 @@ test(`18 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - encode
     equal(
       det(ok, not, n, "&mldr;", opt).res,
       `${ellipsis}`,
-      JSON.stringify(opt, null, 4),
+      `018.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`19 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - hexidecimal to unencoded hellip`, () => {
+test("019 - ellipsis - dots - convert off - hexidecimal to unencoded hellip", () => {
   mixer({
     removeWidows: false,
     convertEntities: false,
@@ -253,12 +256,12 @@ test(`19 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - hexide
     equal(
       det(ok, not, n, "&#x02026;", opt).res,
       `${ellipsis}`,
-      JSON.stringify(opt, null, 4),
+      `019.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`20 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - decimal to unencoded hellip`, () => {
+test("020 - ellipsis - dots - convert off - decimal to unencoded hellip", () => {
   mixer({
     removeWidows: false,
     convertEntities: false,
@@ -267,12 +270,12 @@ test(`20 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - decima
     equal(
       det(ok, not, n, "&#8230;", opt).res,
       `${ellipsis}`,
-      JSON.stringify(opt, null, 4),
+      `020.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`21 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - three dots to encoded hellip`, () => {
+test("021 - ellipsis - dots - convert on - three dots to encoded hellip", () => {
   mixer({
     removeWidows: false,
     convertEntities: true,
@@ -281,12 +284,12 @@ test(`21 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - three d
     equal(
       det(ok, not, n, "...", opt).res,
       "&hellip;",
-      JSON.stringify(opt, null, 4),
+      `021.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`22 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - three dots to encoded hellip`, () => {
+test("022 - ellipsis - dots - convert on - three dots to encoded hellip", () => {
   mixer({
     convertEntities: true,
     convertDotsToEllipsis: true,
@@ -294,12 +297,12 @@ test(`22 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - three d
     equal(
       det(ok, not, n, "Aaaaa... Bbbbb... C...", opt).res,
       "Aaaaa&hellip; Bbbbb&hellip; C&hellip;",
-      JSON.stringify(opt, null, 4),
+      `022.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`23 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - encoded hellip to encoded hellip`, () => {
+test("023 - ellipsis - dots - convert on - encoded hellip to encoded hellip", () => {
   mixer({
     convertEntities: true,
     convertDotsToEllipsis: true,
@@ -307,12 +310,12 @@ test(`23 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - encoded
     equal(
       det(ok, not, n, "&hellip;", opt).res,
       "&hellip;",
-      JSON.stringify(opt, null, 4),
+      `023.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`24 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - encoded mldr to encoded hellip`, () => {
+test("024 - ellipsis - dots - convert on - encoded mldr to encoded hellip", () => {
   mixer({
     convertEntities: true,
     convertDotsToEllipsis: true,
@@ -320,12 +323,12 @@ test(`24 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - encoded
     equal(
       det(ok, not, n, "&mldr;", opt).res,
       "&hellip;",
-      JSON.stringify(opt, null, 4),
+      `024.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`25 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - hexidecimal to encoded hellip`, () => {
+test("025 - ellipsis - dots - convert on - hexidecimal to encoded hellip", () => {
   mixer({
     convertEntities: true,
     convertDotsToEllipsis: true,
@@ -333,12 +336,12 @@ test(`25 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - hexidec
     equal(
       det(ok, not, n, "&#x02026;", opt).res,
       "&hellip;",
-      JSON.stringify(opt, null, 4),
+      `025.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`26 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - decimal to encoded hellip`, () => {
+test("026 - ellipsis - dots - convert on - decimal to encoded hellip", () => {
   mixer({
     removeWidows: false,
     convertEntities: true,
@@ -347,12 +350,12 @@ test(`26 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - decimal
     equal(
       det(ok, not, n, "&#8230;", opt).res,
       "&hellip;",
-      JSON.stringify(opt, null, 4),
+      `026.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`27 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - unencoded to encoded`, () => {
+test("027 - ellipsis - dots - convert on - unencoded to encoded", () => {
   mixer({
     removeWidows: false,
     convertEntities: true,
@@ -361,21 +364,25 @@ test(`27 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert on - unencod
     equal(
       det(ok, not, n, `${ellipsis}`, opt).res,
       "&hellip;",
-      JSON.stringify(opt, null, 4),
+      `027.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`28 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - three dots`, () => {
+test("028 - ellipsis - dots - convert off - three dots", () => {
   mixer({
     removeWidows: false,
     convertDotsToEllipsis: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "...", opt).res, "...", JSON.stringify(opt, null, 4));
+    equal(
+      det(ok, not, n, "...", opt).res,
+      "...",
+      `028.01 - ${JSON.stringify(opt, null, 4)}`,
+    );
   });
 });
 
-test(`29 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - single letters`, () => {
+test("029 - ellipsis - dots - convert off - single letters", () => {
   mixer({
     removeWidows: false,
     convertDotsToEllipsis: false,
@@ -383,12 +390,12 @@ test(`29 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - single
     equal(
       det(ok, not, n, "Aaaaa... Bbbbb... C...", opt).res,
       "Aaaaa... Bbbbb... C...",
-      JSON.stringify(opt, null, 4),
+      `029.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`30 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - hellip entity`, () => {
+test("030 - ellipsis - dots - convert off - hellip entity", () => {
   mixer({
     removeWidows: false,
     convertDotsToEllipsis: false,
@@ -396,12 +403,12 @@ test(`30 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - hellip
     equal(
       det(ok, not, n, "&hellip;", opt).res,
       "...",
-      JSON.stringify(opt, null, 4),
+      `030.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`31 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - mldr entity`, () => {
+test("031 - ellipsis - dots - convert off - mldr entity", () => {
   mixer({
     removeWidows: false,
     convertDotsToEllipsis: false,
@@ -409,12 +416,12 @@ test(`31 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - mldr e
     equal(
       det(ok, not, n, "&mldr;", opt).res,
       "...",
-      JSON.stringify(opt, null, 4),
+      `031.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`32 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - hex entity`, () => {
+test("032 - ellipsis - dots - convert off - hex entity", () => {
   mixer({
     removeWidows: false,
     convertDotsToEllipsis: false,
@@ -422,12 +429,12 @@ test(`32 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - hex en
     equal(
       det(ok, not, n, "&#x02026;", opt).res,
       "...",
-      JSON.stringify(opt, null, 4),
+      `032.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`33 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - numeric entity`, () => {
+test("033 - ellipsis - dots - convert off - numeric entity", () => {
   mixer({
     removeWidows: false,
     convertDotsToEllipsis: false,
@@ -435,12 +442,12 @@ test(`33 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - dots - convert off - numeri
     equal(
       det(ok, not, n, "&#8230;", opt).res,
       "...",
-      JSON.stringify(opt, null, 4),
+      `033.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`34 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - ellipsis - long lines of many dots are not touched`, () => {
+test("034 - ellipsis - ellipsis - long lines of many dots are not touched", () => {
   let source =
     "Chapter 01 ..................... page 21\nChapter 02 ..................... page 43";
   mixer({
@@ -452,12 +459,12 @@ test(`34 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - ellipsis - long lines of ma
     equal(
       det(ok, not, n, source, opt).res,
       source,
-      JSON.stringify(opt, null, 4),
+      `034.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`35 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - ellipsis - mix of false positives and a real deal`, () => {
+test("035 - ellipsis - ellipsis - mix of false positives and a real deal", () => {
   mixer({
     replaceLineBreaks: false,
     removeLineBreaks: false,
@@ -474,7 +481,7 @@ test(`35 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - ellipsis - mix of false pos
         opt,
       ).res,
       `Chapter 01 ..................... page 21\nChapter 02 ..................... page 43\nI said so${ellipsis}`,
-      JSON.stringify(opt, null, 4),
+      `035.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
   mixer({
@@ -493,12 +500,12 @@ test(`35 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - ellipsis - mix of false pos
         opt,
       ).res,
       "Chapter 01 ..................... page 21\nChapter 02 ..................... page 43\nI said so...",
-      JSON.stringify(opt, null, 4),
+      `035.02 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`36 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - ellipsis - mix of dots`, () => {
+test("036 - ellipsis - ellipsis - mix of dots", () => {
   mixer({
     replaceLineBreaks: false,
     removeLineBreaks: false,
@@ -509,7 +516,7 @@ test(`36 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - ellipsis - mix of dots`, ()
     equal(
       det(ok, not, n, "..... ... . ..", opt).res,
       `..... ${ellipsis} . ..`,
-      JSON.stringify(opt, null, 4),
+      `036.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
   mixer({
@@ -522,12 +529,12 @@ test(`36 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - ellipsis - mix of dots`, ()
     equal(
       det(ok, not, n, "..... ... . ..", opt).res,
       "..... ... . ..",
-      JSON.stringify(opt, null, 4),
+      `036.02 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`37 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - ellipsis - resembling real life`, () => {
+test("037 - ellipsis - ellipsis - resembling real life", () => {
   let source = "Contents.......page 01";
   mixer({
     replaceLineBreaks: false,
@@ -538,7 +545,7 @@ test(`37 - \u001b[${32}m${"ellipsis"}\u001b[${39}m - ellipsis - resembling real 
     equal(
       det(ok, not, n, source, opt).res,
       source,
-      JSON.stringify(opt, null, 4),
+      `037.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
