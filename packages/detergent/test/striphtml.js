@@ -1,18 +1,18 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 // import { det as det1 } from "../dist/detergent.esm.js";
 import { det, mixer } from "../t-util/util.js";
 
-test(`01 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - healthy tag pair`, () => {
+test("001 - strip HTML - healthy tag pair", () => {
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "text <a>text</a> text", opt).res,
       "text text text",
-      "01.01",
+      "001.01",
     );
   });
   mixer({
@@ -21,150 +21,158 @@ test(`01 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - healthy tag pair`, (
     equal(
       det(ok, not, n, "text <a>text</a> text", opt).res,
       "text <a>text</a> text",
-      "01.02",
+      "001.02",
     );
   });
 });
 
-test(`02 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - closing tag without a slash`, () => {
+test("002 - strip HTML - closing tag without a slash", () => {
   let input = "text <a>text<a> text";
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, "text text text", "02.01");
+    equal(det(ok, not, n, input, opt).res, "text text text", "002.01");
   });
   mixer({
     stripHtml: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, "02.02");
+    equal(det(ok, not, n, input, opt).res, input, "002.02");
   });
 });
 
-test(`03 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - unrecognised tag`, () => {
+test("003 - strip HTML - unrecognised tag", () => {
   let input = "text <error>text<error> text";
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, "text text text", "03.01");
+    equal(det(ok, not, n, input, opt).res, "text text text", "003.01");
   });
   mixer({
     stripHtml: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, "03.02");
+    equal(det(ok, not, n, input, opt).res, input, "003.02");
   });
 });
 
-test(`04 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - strips nonsense tags`, () => {
+test("004 - strip HTML - strips nonsense tags", () => {
   let input =
     'text <sldkfj asdasd="lekjrtt" lgkdjfld="lndllkjfg">text<hgjkd> text';
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, "text text text", "04.01");
+    equal(det(ok, not, n, input, opt).res, "text text text", "004.01");
   });
   mixer({
     stripHtml: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, "04.02");
+    equal(det(ok, not, n, input, opt).res, input, "004.02");
   });
 });
 
-test(`05 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - strips legit HTML`, () => {
+test("005 - strip HTML - strips legit HTML", () => {
   let input = 'text <a href="#" style="display: block;">text</a> text';
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, "text text text", "05.01");
+    equal(det(ok, not, n, input, opt).res, "text text text", "005.01");
   });
   mixer({
     stripHtml: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, "05.02");
+    equal(det(ok, not, n, input, opt).res, input, "005.02");
   });
 });
 
-test(`06 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - strips non-ignored singleton tags`, () => {
+test("006 - strip HTML - strips non-ignored singleton tags", () => {
   let input = "<hr>";
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, "", "06.01");
+    equal(det(ok, not, n, input, opt).res, "", "006.01");
   });
   mixer({
     stripHtml: false,
     useXHTML: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, "06.02");
+    equal(det(ok, not, n, input, opt).res, input, "006.02");
   });
   mixer({
     stripHtml: false,
     useXHTML: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, "<hr/>", "06.03");
+    equal(det(ok, not, n, input, opt).res, "<hr/>", "006.03");
   });
 });
 
-test(`07 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - custom ignored singleton tag`, () => {
+test("007 - strip HTML - custom ignored singleton tag", () => {
   mixer({
     stripHtml: true,
     useXHTML: false,
     stripHtmlButIgnoreTags: ["hr"],
   }).forEach((opt, i) => {
-    equal(det(ok, not, 0, "<hr>", opt).res, "<hr>", `opt #${i}:\n${"04.01"}`);
+    equal(
+      det(ok, not, 0, "<hr>", opt).res,
+      "<hr>",
+      `007.01 - ${`opt #${i}:\n${"04.01"}`}`,
+    );
   });
 });
 
-test(`08 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - opts.useXHTML - removes slash`, () => {
+test("008 - strip HTML - opts.useXHTML - removes slash", () => {
   mixer({
     stripHtml: true,
     useXHTML: false,
     stripHtmlButIgnoreTags: ["hr"],
   }).forEach((opt, i) => {
-    equal(det(ok, not, 0, "<hr/>", opt).res, "<hr>", `opt #${i}:\n${"04.01"}`);
+    equal(
+      det(ok, not, 0, "<hr/>", opt).res,
+      "<hr>",
+      `008.01 - ${`opt #${i}:\n${"04.01"}`}`,
+    );
   });
 });
 
-test(`09 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - opts.useXHTML - adds slash`, () => {
+test("009 - strip HTML - opts.useXHTML - adds slash", () => {
   mixer({
     useXHTML: true,
     stripHtml: true,
     stripHtmlButIgnoreTags: ["hr"],
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "<hr>", opt).res, "<hr/>", "09.01");
+    equal(det(ok, not, n, "<hr>", opt).res, "<hr/>", "009.01");
   });
 });
 
-test(`10 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - opts.useXHTML - keeps slash`, () => {
+test("010 - strip HTML - opts.useXHTML - keeps slash", () => {
   mixer({
     useXHTML: true,
     stripHtml: true,
     stripHtmlButIgnoreTags: ["hr"],
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "<hr>", opt).res, "<hr/>", "10.01");
+    equal(det(ok, not, n, "<hr>", opt).res, "<hr/>", "010.01");
   });
 });
 
-test(`11 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - opts.useXHTML - minimal case`, () => {
+test("011 - strip HTML - opts.useXHTML - minimal case", () => {
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "a<div>b</div>c", opt).res, "a b c", "11.01");
+    equal(det(ok, not, n, "a<div>b</div>c", opt).res, "a b c", "011.01");
   });
 });
 
-test(`12 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - opts.useXHTML - minimal case`, () => {
+test("012 - strip HTML - opts.useXHTML - minimal case", () => {
   mixer({
     stripHtml: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "a<div>b</div>c", opt).res,
       "a<div>b</div>c",
-      "12.01",
+      "012.01",
     );
   });
 });
 
-test(`13 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - opts.useXHTML - minimal case`, () => {
+test("013 - strip HTML - opts.useXHTML - minimal case", () => {
   mixer({
     stripHtml: false,
   }).forEach((opt, n) => {
@@ -172,12 +180,12 @@ test(`13 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - opts.useXHTML - mini
       det(ok, not, n, "\u0000a\u0001<div>\u0002b\u0002</div>\u0004c\u0005", opt)
         .res,
       "a<div>b</div>c",
-      "13.01",
+      "013.01",
     );
   });
 });
 
-test(`14 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - opts.useXHTML - minimal case`, () => {
+test("014 - strip HTML - opts.useXHTML - minimal case", () => {
   mixer({
     convertEntities: true,
     stripHtml: false,
@@ -186,142 +194,146 @@ test(`14 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - opts.useXHTML - mini
       det(ok, not, n, "\u00A3a\u00A3<div>\u00A3b\u00A3</div>\u00A3c\u00A3", opt)
         .res,
       "&pound;a&pound;<div>&pound;b&pound;</div>&pound;c&pound;",
-      "14.01",
+      "014.01",
     );
   });
 });
 
-test(`15 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - single tag`, () => {
+test("015 - strip HTML - single tag", () => {
   equal(
     det(ok, not, 0, "<div>", {
       stripHtml: false,
     }).res,
     "<div>",
-    "15.01",
+    "015.01",
   );
 });
 
-test(`16 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - single tag`, () => {
+test("016 - strip HTML - single tag", () => {
   equal(
     det(ok, not, 0, "<a>", {
       stripHtml: false,
     }).res,
     "<a>",
-    "16.01",
+    "016.01",
   );
 });
 
-test(`17 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - single tag`, () => {
+test("017 - strip HTML - single tag", () => {
   equal(
     det(ok, not, 0, '<a style="font-size: red;">', {
       stripHtml: false,
     }).res,
     '<a style="font-size: red;">',
-    "17.01",
+    "017.01",
   );
 });
 
-test(`18 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - single tag`, () => {
+test("018 - strip HTML - single tag", () => {
   equal(
     det(ok, not, 0, "<div>", {
       stripHtml: true,
     }).res,
     "",
-    "18.01",
+    "018.01",
   );
 });
 
-test(`19 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - single tag, lowercase`, () => {
+test("019 - strip HTML - single tag, lowercase", () => {
   equal(
     det(ok, not, 0, "<a>", {
       stripHtml: true,
     }).res,
     "",
-    "19.01",
+    "019.01",
   );
 });
 
-test(`20 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - single tag, uppercase`, () => {
+test("020 - strip HTML - single tag, uppercase", () => {
   let input = "<A>";
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, "", "20.01");
+    equal(det(ok, not, n, input, opt).res, "", "020.01");
   });
   mixer({
     stripHtml: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, "20.02");
+    equal(det(ok, not, n, input, opt).res, input, "020.02");
   });
 });
 
-test(`21 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - single tag`, () => {
+test("021 - strip HTML - single tag", () => {
   equal(
     det(ok, not, 0, '<a style="font-size: red;">', {
       stripHtml: true,
     }).res,
     "",
-    "21.01",
+    "021.01",
   );
 });
 
-test(`22 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - strips <script> tags incl. contents`, () => {
+test("022 - strip HTML - strips <script> tags incl. contents", () => {
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "a<script>var i = 0;</script>b", opt).res,
       "a b",
-      "22.01",
+      "022.01",
     );
   });
 });
 
-test(`23 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - strips <script> tags incl. contents`, () => {
+test("023 - strip HTML - strips <script> tags incl. contents", () => {
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "<script>var i = 0;</script>b", opt).res,
       "b",
-      "23.01",
+      "023.01",
     );
   });
 });
 
-test(`24 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - strips <script> tags incl. contents`, () => {
+test("024 - strip HTML - strips <script> tags incl. contents", () => {
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "a<script>var i = 0;</script>", opt).res,
       "a",
-      "24.01",
+      "024.01",
     );
   });
 });
 
-test(`25 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - strips <script> tags incl. contents`, () => {
+test("025 - strip HTML - strips <script> tags incl. contents", () => {
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "<script>var i = 0;</script>", opt).res, "", "25.01");
+    equal(
+      det(ok, not, n, "<script>var i = 0;</script>", opt).res,
+      "",
+      "025.01",
+    );
   });
 });
 
-test(`26 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - <script> tags with whitespace within closing tags`, () => {
+test("026 - strip HTML - <script> tags with whitespace within closing tags", () => {
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "a<script>var i = 0;</script        >b", opt).res,
       "a b",
-      "26.01",
+      "026.01",
     );
   });
 });
 
-test(`27 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - <script> sneaky case`, () => {
+test("027 - strip HTML - <script> sneaky case", () => {
   mixer({
     removeLineBreaks: false,
     removeWidows: true,
@@ -330,12 +342,12 @@ test(`27 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - <script> sneaky case
     equal(
       det(ok, not, n, "a<script>var i = 0;</script        ", opt).res,
       "a",
-      "27.01",
+      "027.01",
     );
   });
 });
 
-test(`28 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - <script> sneaky case`, () => {
+test("028 - strip HTML - <script> sneaky case", () => {
   mixer({
     removeLineBreaks: false,
     removeWidows: true,
@@ -344,12 +356,12 @@ test(`28 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - <script> sneaky case
     equal(
       det(ok, not, n, "a<script>var i = 0;</script", opt).res,
       "a",
-      "28.01",
+      "028.01",
     );
   });
 });
 
-test(`29 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining b tags by default`, () => {
+test("029 - strip HTML - retaining b tags by default", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -362,12 +374,12 @@ test(`29 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining b tags by 
         opt,
       ).res,
       'test text is being <b class="test" id="br">set in bold</b> here',
-      "29.01",
+      "029.01",
     );
   });
 });
 
-test(`30 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining b tags by default`, () => {
+test("030 - strip HTML - retaining b tags by default", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -380,24 +392,24 @@ test(`30 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining b tags by 
         opt,
       ).res,
       'test text is being <b class="test">set in bold</b> here',
-      "30.01",
+      "030.01",
     );
   });
 });
 
-test(`31 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`, () => {
+test("031 - strip HTML - tag pair's closing tag's slash is put on a wrong side", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "a <sup>c<sup/> d", opt).res,
       "a <sup>c</sup> d",
-      "31.01",
+      "031.01",
     );
   });
 });
 
-test(`32 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`, () => {
+test("032 - strip HTML - tag pair's closing tag's slash is put on a wrong side", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -405,24 +417,24 @@ test(`32 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - tag pair's closing t
       det(ok, not, n, "test text is being < b >set in bold< b /> here", opt)
         .res,
       "test text is being <b>set in bold</b> here",
-      "32.01",
+      "032.01",
     );
   });
 });
 
-test(`33 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`, () => {
+test("033 - strip HTML - tag pair's closing tag's slash is put on a wrong side", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "test text is being <B>set in bold<B/> here", opt).res,
       "test text is being <B>set in bold</B> here",
-      "33.01",
+      "033.01",
     );
   });
 });
 
-test(`34 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - tag pair's closing tag's slash is put on a wrong side`, () => {
+test("034 - strip HTML - tag pair's closing tag's slash is put on a wrong side", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -435,24 +447,24 @@ test(`34 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - tag pair's closing t
         opt,
       ).res,
       'test text is being <b class="h">set in bold</b> here',
-      "34.01",
+      "034.01",
     );
   });
 });
 
-test(`35 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining i tags by default`, () => {
+test("035 - strip HTML - retaining i tags by default", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "test text is being <i>set in italic</i> here", opt).res,
       "test text is being <i>set in italic</i> here",
-      "35.01",
+      "035.01",
     );
   });
 });
 
-test(`36 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining i tags by default`, () => {
+test("036 - strip HTML - retaining i tags by default", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -460,12 +472,12 @@ test(`36 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining i tags by 
       det(ok, not, n, "test text is being < i >set in italic< /  i > here", opt)
         .res,
       "test text is being <i>set in italic</i> here",
-      "36.01",
+      "036.01",
     );
   });
 });
 
-test(`37 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining i tags by default`, () => {
+test("037 - strip HTML - retaining i tags by default", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -473,12 +485,12 @@ test(`37 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining i tags by 
       det(ok, not, n, "test text is being < I >set in italic<   I /> here", opt)
         .res,
       "test text is being <I>set in italic</I> here",
-      "37.01",
+      "037.01",
     );
   });
 });
 
-test(`38 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tags by default`, () => {
+test("038 - strip HTML - retaining strong tags by default", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -491,12 +503,12 @@ test(`38 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tag
         opt,
       ).res,
       'test text is being <strong id="main">set in bold</strong> here',
-      "38.01",
+      "038.01",
     );
   });
 });
 
-test(`39 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tags by default`, () => {
+test("039 - strip HTML - retaining strong tags by default", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -509,12 +521,12 @@ test(`39 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tag
         opt,
       ).res,
       'test text is being <strong id="main">set in bold</strong> here',
-      "39.01",
+      "039.01",
     );
   });
 });
 
-test(`40 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tags by default`, () => {
+test("040 - strip HTML - retaining strong tags by default", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -527,12 +539,12 @@ test(`40 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tag
         opt,
       ).res,
       'test text is being <StRoNg>set in bold</StRoNg class="z1"> here',
-      "40.01",
+      "040.01",
     );
   });
 });
 
-test(`41 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tags by default`, () => {
+test("041 - strip HTML - retaining strong tags by default", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -540,12 +552,12 @@ test(`41 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tag
       det(ok, not, n, "test text is being <em>set in emphasis</em> here", opt)
         .res,
       "test text is being <em>set in emphasis</em> here",
-      "41.01",
+      "041.01",
     );
   });
 });
 
-test(`42 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tags by default`, () => {
+test("042 - strip HTML - retaining strong tags by default", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -558,12 +570,12 @@ test(`42 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tag
         opt,
       ).res,
       'test text is being <em id="main">set in emphasis</em> here',
-      "42.01",
+      "042.01",
     );
   });
 });
 
-test(`43 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tags by default`, () => {
+test("043 - strip HTML - retaining strong tags by default", () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -576,12 +588,12 @@ test(`43 - ${`\u001b[${32}m${"strip HTML"}\u001b[${39}m`} - retaining strong tag
         opt,
       ).res,
       "test text is being <em>set in emphasis</em> here",
-      "43.01",
+      "043.01",
     );
   });
 });
 
-test("44 - widow removal is aware of surrounding html", () => {
+test("044 - widow removal is aware of surrounding html", () => {
   let input = "<a b c d>";
   mixer({
     removeWidows: true,
@@ -590,11 +602,11 @@ test("44 - widow removal is aware of surrounding html", () => {
     removeLineBreaks: false,
     stripHtml: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, "44.01");
+    equal(det(ok, not, n, input, opt).res, input, "044.01");
   });
 });
 
-test("45 - widow removal is aware of surrounding html", () => {
+test("045 - widow removal is aware of surrounding html", () => {
   let input =
     '<a w="1" x="y" z="x">\n<!--[if (gte mso 9)|(IE)]>\n<td a="b:c;" d="e" f="g">';
   mixer({
@@ -604,17 +616,17 @@ test("45 - widow removal is aware of surrounding html", () => {
     removeLineBreaks: false,
     stripHtml: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, input, "45.01");
+    equal(det(ok, not, n, input, opt).res, input, "045.01");
   });
 });
 
-test("46 - a JSX pattern", () => {
+test("046 - a JSX pattern", () => {
   let input = `<A b>c</A>
 </>< /></ >< / >`;
   mixer({
     stripHtml: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, input, opt).res, "c", "46.01");
+    equal(det(ok, not, n, input, opt).res, "c", "046.01");
   });
   mixer({
     stripHtml: false,
@@ -625,7 +637,7 @@ test("46 - a JSX pattern", () => {
       det(ok, not, n, input, opt).res,
       `<A b>c</A>
 </></></></>`,
-      "46.02",
+      "046.02",
     );
   });
 });
