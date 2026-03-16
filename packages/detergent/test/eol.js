@@ -1,12 +1,12 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { det as realDet } from "../dist/detergent.esm.js";
 import { det } from "../t-util/util.js";
 
-test(`01 - ${`\u001b[${33}m${"line breaks"}\u001b[${39}m`} - HTML BR replacement with XHTML BR`, () => {
+test("001 - line breaks - HTML BR replacement with XHTML BR", () => {
   compare(
     ok,
     det(ok, not, 0, "a\nb", {
@@ -38,43 +38,43 @@ test(`01 - ${`\u001b[${33}m${"line breaks"}\u001b[${39}m`} - HTML BR replacement
 //                            1x3
 // ------------------------------------------------------------
 
-test("02 - trailing line break, homogeneous, no explicit setting - all CRLF", () => {
+test("002 - trailing line break, homogeneous, no explicit setting - all CRLF", () => {
   equal(
     realDet("a\r\nb\r\n", {
       replaceLineBreaks: false,
       removeLineBreaks: false,
     }).res,
     "a\r\nb",
-    "02.01",
+    "002.01",
   );
 });
 
-test("03 - trailing line break, homogeneous, no explicit setting - all CR", () => {
+test("003 - trailing line break, homogeneous, no explicit setting - all CR", () => {
   equal(
     realDet("a\rb\r", {
       replaceLineBreaks: false,
       removeLineBreaks: false,
     }).res,
     "a\rb",
-    "03.01",
+    "003.01",
   );
 });
 
-test("04 - trailing line break, homogeneous, no explicit setting - all LF", () => {
+test("004 - trailing line break, homogeneous, no explicit setting - all LF", () => {
   equal(
     realDet("a\nb\n", {
       replaceLineBreaks: false,
       removeLineBreaks: false,
     }).res,
     "a\nb",
-    "04.01",
+    "004.01",
   );
 });
 
 //                            1x3
 // ------------------------------------------------------------
 
-test("05 - trailing line break, homogeneous, explicit LF setting - all CRLF", () => {
+test("005 - trailing line break, homogeneous, explicit LF setting - all CRLF", () => {
   equal(
     det(ok, not, 0, "a\r\nb\r\n", {
       replaceLineBreaks: false,
@@ -82,11 +82,11 @@ test("05 - trailing line break, homogeneous, explicit LF setting - all CRLF", ()
       eol: "lf",
     }).res,
     "a\nb",
-    "05.01",
+    "005.01",
   );
 });
 
-test("06 - trailing line break, homogeneous, explicit LF setting - all CR", () => {
+test("006 - trailing line break, homogeneous, explicit LF setting - all CR", () => {
   equal(
     det(ok, not, 0, "a\rb\r", {
       replaceLineBreaks: false,
@@ -94,11 +94,11 @@ test("06 - trailing line break, homogeneous, explicit LF setting - all CR", () =
       eol: "lf",
     }).res,
     "a\nb",
-    "06.01",
+    "006.01",
   );
 });
 
-test("07 - trailing line break, homogeneous, explicit LF setting - all LF", () => {
+test("007 - trailing line break, homogeneous, explicit LF setting - all LF", () => {
   equal(
     det(ok, not, 0, "a\nb\n", {
       replaceLineBreaks: false,
@@ -106,14 +106,14 @@ test("07 - trailing line break, homogeneous, explicit LF setting - all LF", () =
       eol: "lf",
     }).res,
     "a\nb",
-    "07.01",
+    "007.01",
   );
 });
 
 //                            1x3
 // ------------------------------------------------------------
 
-test("08 - trailing line break, homogeneous, explicit CRLF setting - CRLF in the input", () => {
+test("008 - trailing line break, homogeneous, explicit CRLF setting - CRLF in the input", () => {
   equal(
     det(ok, not, 0, "a\r\nb\r\n", {
       replaceLineBreaks: false,
@@ -121,11 +121,11 @@ test("08 - trailing line break, homogeneous, explicit CRLF setting - CRLF in the
       eol: "crlf",
     }).res,
     "a\r\nb",
-    "08.01",
+    "008.01",
   );
 });
 
-test("09 - trailing line break, homogeneous, explicit CRLF setting - CR in the input", () => {
+test("009 - trailing line break, homogeneous, explicit CRLF setting - CR in the input", () => {
   equal(
     realDet("a\rb\r", {
       replaceLineBreaks: false,
@@ -133,7 +133,7 @@ test("09 - trailing line break, homogeneous, explicit CRLF setting - CR in the i
       eol: "crlf",
     }).res,
     "a\r\nb",
-    "09.01",
+    "009.01",
   );
   equal(
     det(ok, not, 0, "a\rb\r", {
@@ -142,11 +142,11 @@ test("09 - trailing line break, homogeneous, explicit CRLF setting - CR in the i
       eol: "crlf",
     }).res,
     "a\r\nb",
-    "09.02",
+    "009.02",
   );
 });
 
-test("10 - trailing line break, homogeneous, explicit CRLF setting - LF in the input", () => {
+test("010 - trailing line break, homogeneous, explicit CRLF setting - LF in the input", () => {
   equal(
     realDet("a\nb\n", {
       replaceLineBreaks: false,
@@ -154,7 +154,7 @@ test("10 - trailing line break, homogeneous, explicit CRLF setting - LF in the i
       eol: "crlf",
     }).res,
     "a\r\nb",
-    "10.01",
+    "010.01",
   );
   equal(
     det(ok, not, 0, "a\nb\n", {
@@ -163,14 +163,14 @@ test("10 - trailing line break, homogeneous, explicit CRLF setting - LF in the i
       eol: "crlf",
     }).res,
     "a\r\nb",
-    "10.02",
+    "010.02",
   );
 });
 
 //                            1x3
 // ------------------------------------------------------------
 
-test("11 - trailing line break, homogeneous, explicit CR setting - CRLF input", () => {
+test("011 - trailing line break, homogeneous, explicit CR setting - CRLF input", () => {
   equal(
     det(ok, not, 0, "a\r\nb\r\n", {
       replaceLineBreaks: false,
@@ -178,11 +178,11 @@ test("11 - trailing line break, homogeneous, explicit CR setting - CRLF input", 
       eol: "cr",
     }).res,
     "a\rb",
-    "11.01",
+    "011.01",
   );
 });
 
-test("12 - trailing line break, homogeneous, explicit CR setting - CR input", () => {
+test("012 - trailing line break, homogeneous, explicit CR setting - CR input", () => {
   equal(
     det(ok, not, 0, "a\rb\r", {
       replaceLineBreaks: false,
@@ -190,11 +190,11 @@ test("12 - trailing line break, homogeneous, explicit CR setting - CR input", ()
       eol: "cr",
     }).res,
     "a\rb",
-    "12.01",
+    "012.01",
   );
 });
 
-test("13 - trailing line break, homogeneous, explicit CR setting - LF input", () => {
+test("013 - trailing line break, homogeneous, explicit CR setting - LF input", () => {
   equal(
     det(ok, not, 0, "a\nb\n", {
       replaceLineBreaks: false,
@@ -202,14 +202,14 @@ test("13 - trailing line break, homogeneous, explicit CR setting - LF input", ()
       eol: "cr",
     }).res,
     "a\rb",
-    "13.01",
+    "013.01",
   );
 });
 
 //                            1x3
 // ------------------------------------------------------------
 
-test("14 - non-homogeneous, #1 - LF setting", () => {
+test("014 - non-homogeneous, #1 - LF setting", () => {
   let input = "\na\rb\r\nc\r";
   equal(
     det(ok, not, 0, input, {
@@ -218,7 +218,7 @@ test("14 - non-homogeneous, #1 - LF setting", () => {
       eol: "lf",
     }).res,
     "a\nb\nc",
-    "14.01",
+    "014.01",
   );
   equal(
     det(ok, not, 0, input, {
@@ -227,7 +227,7 @@ test("14 - non-homogeneous, #1 - LF setting", () => {
       eol: "cr",
     }).res,
     "a\rb\rc",
-    "14.02",
+    "014.02",
   );
   equal(
     det(ok, not, 0, input, {
@@ -236,14 +236,14 @@ test("14 - non-homogeneous, #1 - LF setting", () => {
       eol: "crlf",
     }).res,
     "a\r\nb\r\nc",
-    "14.03",
+    "014.03",
   );
 });
 
 //                            1x3
 // ------------------------------------------------------------
 
-test("15 - non-homogeneous, #2 - no trailing line break", () => {
+test("015 - non-homogeneous, #2 - no trailing line break", () => {
   let input = "\na\rb\r\nc";
   equal(
     det(ok, not, 0, input, {
@@ -252,7 +252,7 @@ test("15 - non-homogeneous, #2 - no trailing line break", () => {
       eol: "lf",
     }).res,
     "a\nb\nc",
-    "15.01",
+    "015.01",
   );
   equal(
     det(ok, not, 0, input, {
@@ -261,7 +261,7 @@ test("15 - non-homogeneous, #2 - no trailing line break", () => {
       eol: "cr",
     }).res,
     "a\rb\rc",
-    "15.02",
+    "015.02",
   );
   equal(
     det(ok, not, 0, input, {
@@ -270,7 +270,7 @@ test("15 - non-homogeneous, #2 - no trailing line break", () => {
       eol: "crlf",
     }).res,
     "a\r\nb\r\nc",
-    "15.03",
+    "015.03",
   );
 });
 
