@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { det as det1 } from "../dist/detergent.esm.js";
 import { det, mixer } from "../t-util/util.js";
@@ -9,7 +9,7 @@ import { det, mixer } from "../t-util/util.js";
 // stripped, ignored and/or replaced with line breaks
 // correctly, across all combinations of possible settings
 
-test("01", () => {
+test("001", () => {
   // replaceLineBreaks=false
   equal(
     det1("abc<br>def", {
@@ -19,7 +19,7 @@ test("01", () => {
       stripHtmlAddNewLine: ["br"], // <---
     }).res,
     "abc\ndef",
-    "01.01",
+    "001.01",
   );
   equal(
     det1("abc<br>def", {
@@ -29,7 +29,7 @@ test("01", () => {
       stripHtmlAddNewLine: [], // <---
     }).res,
     "abc def",
-    "01.02",
+    "001.02",
   );
 
   // replaceLineBreaks=true
@@ -43,7 +43,7 @@ test("01", () => {
       stripHtmlAddNewLine: ["br"], // <---
     }).res,
     "abc<br/>\ndef",
-    "01.03",
+    "001.03",
   );
   // replaceLineBreaks=true
   // useXHTML=true,
@@ -56,7 +56,7 @@ test("01", () => {
       stripHtmlAddNewLine: ["br"], // <---
     }).res,
     "abc<br>\ndef",
-    "01.04",
+    "001.04",
   );
 
   equal(
@@ -66,11 +66,11 @@ test("01", () => {
       stripHtmlAddNewLine: [], // <---
     }).res,
     "abc def",
-    "01.05",
+    "001.05",
   );
 });
 
-test("02", () => {
+test("002", () => {
   mixer({
     stripHtml: true,
     removeLineBreaks: false,
@@ -81,7 +81,7 @@ test("02", () => {
     equal(
       det(ok, not, n, "abc<br>def", opt).res,
       "abc\ndef",
-      JSON.stringify(opt, null, 4),
+      `002.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
   mixer({
@@ -95,7 +95,7 @@ test("02", () => {
     equal(
       det(ok, not, n, "abc<br>def", opt).res,
       "abc<br>\ndef",
-      JSON.stringify(opt, null, 4),
+      `002.02 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
   mixer({
@@ -109,7 +109,7 @@ test("02", () => {
     equal(
       det(ok, not, n, "abc<br>def", opt).res,
       "abc<br/>\ndef",
-      JSON.stringify(opt, null, 4),
+      `002.03 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 
@@ -123,7 +123,7 @@ test("02", () => {
     equal(
       det(ok, not, n, "abc<br>def", opt).res,
       "abc def",
-      JSON.stringify(opt, null, 4),
+      `002.04 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 
@@ -134,7 +134,7 @@ test("02", () => {
     equal(
       det(ok, not, n, "abc<br>def", opt).res,
       "abc<br>def",
-      JSON.stringify(opt, null, 4),
+      `002.05 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
   mixer({
@@ -144,12 +144,12 @@ test("02", () => {
     equal(
       det(ok, not, n, "abc<br>def", opt).res,
       "abc<br/>def",
-      JSON.stringify(opt, null, 4),
+      `002.06 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("03", () => {
+test("003", () => {
   equal(
     det1("abc<br/>def", {
       stripHtml: true,
@@ -158,11 +158,11 @@ test("03", () => {
       stripHtmlAddNewLine: ["br"], // <---
     }).res,
     "abc\ndef",
-    "03.01",
+    "003.01",
   );
 });
 
-test("04", () => {
+test("004", () => {
   mixer({
     stripHtml: true,
     removeLineBreaks: false,
@@ -173,7 +173,7 @@ test("04", () => {
     equal(
       det(ok, not, n, "abc<br/>def", opt).res,
       "abc\ndef",
-      JSON.stringify(opt, null, 4),
+      `004.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
   mixer({
@@ -186,7 +186,7 @@ test("04", () => {
     equal(
       det(ok, not, n, "abc<br/>def", opt).res,
       "abc def",
-      JSON.stringify(opt, null, 4),
+      `004.02 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
   mixer({
@@ -198,7 +198,7 @@ test("04", () => {
     equal(
       det(ok, not, n, "abc<br/>def", opt).res,
       "abc def",
-      JSON.stringify(opt, null, 4),
+      `004.03 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
