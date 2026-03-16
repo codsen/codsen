@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
+import type { EolSetting } from "codsen-utils";
 import he from "he";
-import { EolSetting } from "codsen-utils";
 
 interface Opts {
   fixBrokenEntities: boolean;
@@ -474,11 +474,11 @@ function doConvertEntities(
 // -----------------------------------------------------------------------------
 
 export {
-  doConvertEntities,
-  Opts,
+  type ApplicableOpts,
   defaultOpts,
-  Res,
-  State,
-  ApplicableOpts,
+  doConvertEntities,
+  type Opts,
+  type Res,
+  type State,
   widowRegexTest,
 };
