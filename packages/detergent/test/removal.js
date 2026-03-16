@@ -1,9 +1,4 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
-// import { det as det1 } from "../dist/detergent.esm.js";
-import { det, mixer } from "../t-util/util.js";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import {
   // rawReplacementMark,
   // rawNDash,
@@ -16,119 +11,123 @@ import {
   // leftDoubleQuote,
   // leftSingleQuote,
 } from "codsen-utils";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+// import { det as det1 } from "../dist/detergent.esm.js";
+import { det, mixer } from "../t-util/util.js";
 
-test("01 - front & back spaces stripped", () => {
+test("001 - front & back spaces stripped", () => {
   mixer().forEach((opt, n) => {
     equal(
       det(ok, not, n, "\n\n \t     aaaaaa   \n\t\t  ", opt).res,
       "aaaaaa",
-      JSON.stringify(opt, null, 0),
+      `001.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("02 - redundant space between words", () => {
+test("002 - redundant space between words", () => {
   mixer().forEach((opt, n) => {
     equal(
       det(ok, not, n, "aaaaaa     bbbbbb", opt).res,
       "aaaaaa bbbbbb",
-      JSON.stringify(opt, null, 0),
+      `002.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("03 - trailing/leading whitespace, convertEntities=on", () => {
+test("003 - trailing/leading whitespace, convertEntities=on", () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "&nbsp; a b", opt).res,
       "&nbsp; a b",
-      JSON.stringify(opt, null, 0),
+      `003.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("04 - trailing/leading whitespace, convertEntities=on", () => {
+test("004 - trailing/leading whitespace, convertEntities=on", () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "a b &nbsp;", opt).res,
       "a b &nbsp;",
-      JSON.stringify(opt, null, 0),
+      `004.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("05 - trailing/leading whitespace, convertEntities=on", () => {
+test("005 - trailing/leading whitespace, convertEntities=on", () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "&nbsp; a &nbsp;", opt).res,
       "&nbsp; a &nbsp;",
-      JSON.stringify(opt, null, 0),
+      `005.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("06 - trailing/leading whitespace, convertEntities=on", () => {
+test("006 - trailing/leading whitespace, convertEntities=on", () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, `    ${rawNbsp}     a     ${rawNbsp}      `, opt).res,
       "&nbsp; a &nbsp;",
-      JSON.stringify(opt, null, 0),
+      `006.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("07 - trailing/leading whitespace, convertEntities=on", () => {
+test("007 - trailing/leading whitespace, convertEntities=on", () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;", opt).res,
       "&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;",
-      JSON.stringify(opt, null, 0),
+      `007.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("08 - trailing/leading whitespace, convertEntities=on", () => {
+test("008 - trailing/leading whitespace, convertEntities=on", () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, " &nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp; ", opt).res,
       "&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;",
-      JSON.stringify(opt, null, 0),
+      `008.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("09 - trailing/leading whitespace, convertEntities=off", () => {
+test("009 - trailing/leading whitespace, convertEntities=off", () => {
   mixer({
     convertEntities: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "&nbsp; a b", opt).res,
       `${rawNbsp} a b`,
-      JSON.stringify(opt, null, 0),
+      `009.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("10 - trailing/leading whitespace, convertEntities=off", () => {
+test("010 - trailing/leading whitespace, convertEntities=off", () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "a b &nbsp;", opt).res,
       "a b &nbsp;",
-      JSON.stringify(opt, null, 0),
+      `010.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -137,19 +136,19 @@ test("10 - trailing/leading whitespace, convertEntities=off", () => {
     equal(
       det(ok, not, n, "a b &nbsp;", opt).res,
       `a b ${rawNbsp}`,
-      JSON.stringify(opt, null, 0),
+      `010.02 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("11", () => {
+test("011", () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "    &nbsp; a &nbsp;     ", opt).res,
       "&nbsp; a &nbsp;",
-      JSON.stringify(opt, null, 0),
+      `011.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -158,12 +157,12 @@ test("11", () => {
     equal(
       det(ok, not, n, "    &nbsp; a &nbsp;     ", opt).res,
       `${rawNbsp} a ${rawNbsp}`,
-      JSON.stringify(opt, null, 0),
+      `011.02 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("12 - trailing/leading whitespace, convertEntities=off", () => {
+test("012 - trailing/leading whitespace, convertEntities=off", () => {
   mixer({
     convertEntities: false,
   }).forEach((opt, n) => {
@@ -171,12 +170,12 @@ test("12 - trailing/leading whitespace, convertEntities=off", () => {
       det(ok, not, n, `    ${rawNbsp}     a     ${rawNbsp}           `, opt)
         .res,
       `${rawNbsp} a ${rawNbsp}`,
-      JSON.stringify(opt, null, 0),
+      `012.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("13 - trailing/leading whitespace, convertEntities=off", () => {
+test("013 - trailing/leading whitespace, convertEntities=off", () => {
   mixer({
     convertEntities: false,
   }).forEach((opt, n) => {
@@ -189,12 +188,12 @@ test("13 - trailing/leading whitespace, convertEntities=off", () => {
         opt,
       ).res,
       `${rawNbsp}${rawNbsp}${rawNbsp} a ${rawNbsp}${rawNbsp}${rawNbsp}`,
-      JSON.stringify(opt, null, 0),
+      `013.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("14 - trailing/leading whitespace, convertEntities=off", () => {
+test("014 - trailing/leading whitespace, convertEntities=off", () => {
   mixer({
     convertEntities: false,
   }).forEach((opt, n) => {
@@ -207,12 +206,12 @@ test("14 - trailing/leading whitespace, convertEntities=off", () => {
         opt,
       ).res,
       `${rawNbsp}${rawNbsp}${rawNbsp} a ${rawNbsp}${rawNbsp}${rawNbsp}`,
-      JSON.stringify(opt, null, 0),
+      `014.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("15 - ETX - useXHTML=on", () => {
+test("015 - ETX - useXHTML=on", () => {
   mixer({
     removeLineBreaks: false,
     replaceLineBreaks: true,
@@ -221,12 +220,12 @@ test("15 - ETX - useXHTML=on", () => {
     equal(
       det(ok, not, n, "first\u0003second", opt).res,
       "first<br/>\nsecond",
-      JSON.stringify(opt, null, 0),
+      `015.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("16 - ETX - useXHTML=off", () => {
+test("016 - ETX - useXHTML=off", () => {
   mixer({
     removeLineBreaks: false,
     replaceLineBreaks: true,
@@ -235,12 +234,12 @@ test("16 - ETX - useXHTML=off", () => {
     equal(
       det(ok, not, n, "first\u0003second", opt).res,
       "first<br>\nsecond",
-      JSON.stringify(opt, null, 0),
+      `016.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("17 - ETX - replaceLineBreaks=off", () => {
+test("017 - ETX - replaceLineBreaks=off", () => {
   mixer({
     removeLineBreaks: false,
     replaceLineBreaks: false,
@@ -249,37 +248,37 @@ test("17 - ETX - replaceLineBreaks=off", () => {
     equal(
       det(ok, not, n, "first\u0003second", opt).res,
       "first\nsecond",
-      JSON.stringify(opt, null, 0),
+      `017.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("18 - strips UTF8 BOM", () => {
+test("018 - strips UTF8 BOM", () => {
   mixer().forEach((opt, n) => {
     equal(
       det(ok, not, n, "\uFEFFunicorn", opt).res,
       "unicorn",
-      JSON.stringify(opt, null, 0),
+      `018.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("19 - strips UTF8 BOM", () => {
+test("019 - strips UTF8 BOM", () => {
   mixer().forEach((opt, n) => {
     equal(
       det(ok, not, n, "unicorn\uFEFF", opt).res,
       "unicorn",
-      JSON.stringify(opt, null, 0),
+      `019.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test("20 - strips UTF8 BOM", () => {
+test("020 - strips UTF8 BOM", () => {
   mixer().forEach((opt, n) => {
     equal(
       det(ok, not, n, "unicorn\uFEFFzzz", opt).res,
       "unicornzzz",
-      JSON.stringify(opt, null, 0),
+      `020.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
