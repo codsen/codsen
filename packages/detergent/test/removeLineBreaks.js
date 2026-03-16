@@ -1,10 +1,4 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
-import { compare } from "../../../ops/helpers/shallow-compare.js";
-import { det as realDet } from "../dist/detergent.esm.js";
-import { det, mixer } from "../t-util/util.js";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import {
   // rawReplacementMark,
   // rawNDash,
@@ -17,40 +11,45 @@ import {
   // leftDoubleQuote,
   // leftSingleQuote,
 } from "codsen-utils";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+import { compare } from "../../../ops/helpers/shallow-compare.js";
+import { det as realDet } from "../dist/detergent.esm.js";
+import { det, mixer } from "../t-util/util.js";
 
 // see https://en.wikipedia.org/wiki/Newline#Representation
 
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - minimal, removeLineBreaks=on`, () => {
+test("001 - opts.removeLineBreaks - minimal, removeLineBreaks=on", () => {
   mixer({
     removeLineBreaks: true,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "a\nb", opt).res, "a b", "01.01");
+    equal(det(ok, not, n, "a\nb", opt).res, "a b", "001.01");
   });
 });
 
-test(`02 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - minimal, removeLineBreaks=off`, () => {
+test("002 - opts.removeLineBreaks - minimal, removeLineBreaks=off", () => {
   equal(
     realDet("a\rb", {
       removeLineBreaks: false,
       replaceLineBreaks: false,
     }).res,
     "a\rb",
-    "02.01",
+    "002.01",
   );
   mixer({
     removeLineBreaks: false,
     replaceLineBreaks: false,
     eol: undefined,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "a\nb", opt).res, "a\nb", "02.02");
-    equal(det(ok, not, n, "a\rb", opt).res, "a\rb", "02.03");
-    equal(det(ok, not, n, "a\r\nb", opt).res, "a\r\nb", "02.04");
+    equal(det(ok, not, n, "a\nb", opt).res, "a\nb", "002.02");
+    equal(det(ok, not, n, "a\rb", opt).res, "a\rb", "002.03");
+    equal(det(ok, not, n, "a\r\nb", opt).res, "a\r\nb", "002.04");
   });
 });
 
-test(`03 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix style (LF or \\n)`, () => {
+test("003 - opts.removeLineBreaks - Unix style (LF or \\n)", () => {
   mixer({
     removeLineBreaks: true,
     removeWidows: false,
@@ -64,12 +63,12 @@ test(`03 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix styl
         opt,
       ).res,
       "tralala tralala2 tralala3 tralala4",
-      "03.01",
+      "003.01",
     );
   });
 });
 
-test(`04 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix style (LF or \\n)`, () => {
+test("004 - opts.removeLineBreaks - Unix style (LF or \\n)", () => {
   mixer({
     removeLineBreaks: true,
     removeWidows: true,
@@ -85,7 +84,7 @@ test(`04 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix styl
         opt,
       ).res,
       "tralala tralala2 tralala3&nbsp;tralala4",
-      "04.01",
+      "004.01",
     );
   });
 
@@ -145,7 +144,7 @@ test(`04 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - Unix styl
   );
 });
 
-test(`05 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - DOS style (CRLF or \\r\\n)`, () => {
+test("005 - opts.removeLineBreaks - DOS style (CRLF or \\r\\n)", () => {
   mixer({
     removeLineBreaks: true,
     removeWidows: false,
@@ -159,12 +158,12 @@ test(`05 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - DOS style
         opt,
       ).res,
       "tralala tralala2 tralala3 tralala4",
-      "05.01",
+      "005.01",
     );
   });
 });
 
-test(`06 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - DOS style (CRLF or \\r\\n)`, () => {
+test("006 - opts.removeLineBreaks - DOS style (CRLF or \\r\\n)", () => {
   mixer({
     removeLineBreaks: true,
     removeWidows: true,
@@ -179,12 +178,12 @@ test(`06 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - DOS style
         opt,
       ).res,
       `tralala tralala2 tralala3${rawNbsp}tralala4`,
-      "06.01",
+      "006.01",
     );
   });
 });
 
-test(`07 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - clasic Mac OS style (CR or \\r only)`, () => {
+test("007 - opts.removeLineBreaks - clasic Mac OS style (CR or \\r only)", () => {
   mixer({
     removeLineBreaks: true,
     removeWidows: false,
@@ -198,12 +197,12 @@ test(`07 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - clasic Ma
         opt,
       ).res,
       "tralala tralala2 tralala3 tralala4",
-      "07.01",
+      "007.01",
     );
   });
 });
 
-test(`08 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - clasic Mac OS style (CR or \\r only)`, () => {
+test("008 - opts.removeLineBreaks - clasic Mac OS style (CR or \\r only)", () => {
   mixer({
     removeLineBreaks: true,
     removeWidows: true,
@@ -218,7 +217,7 @@ test(`08 - ${`\u001b[${35}m${"opts.removeLineBreaks"}\u001b[${39}m`} - clasic Ma
         opt,
       ).res,
       "tralala tralala2 tralala3&nbsp;tralala4",
-      "08.01",
+      "008.01",
     );
   });
 });
