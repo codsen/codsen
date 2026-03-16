@@ -1,9 +1,4 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
-// import { det as det1 } from "../dist/detergent.esm.js";
-import { det, mixer } from "../t-util/util.js";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import {
   // rawReplacementMark,
   // rawNDash,
@@ -16,8 +11,12 @@ import {
   // leftDoubleQuote,
   // leftSingleQuote,
 } from "codsen-utils";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+// import { det as det1 } from "../dist/detergent.esm.js";
+import { det, mixer } from "../t-util/util.js";
 
-test(`01 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=off`, () => {
+test("001 - fixes - space - full stop, removeWidows=off", () => {
   mixer({
     removeWidows: false,
     replaceLineBreaks: true,
@@ -33,12 +32,12 @@ test(`01 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         opt,
       ).res,
       "Very long line, long-enough to trigger widow removal.<br/>\n<br/>\nText.",
-      JSON.stringify(opt, null, 0),
+      `001.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test(`02 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=on`, () => {
+test("002 - fixes - space - full stop, removeWidows=on", () => {
   mixer({
     removeWidows: true,
     convertEntities: true,
@@ -55,12 +54,12 @@ test(`02 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         opt,
       ).res,
       "Very long line, long-enough to trigger widow&nbsp;removal.<br/>\n<br/>\nText.",
-      JSON.stringify(opt, null, 0),
+      `002.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test(`03 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, convertEntities=off`, () => {
+test("003 - fixes - space - full stop, convertEntities=off", () => {
   mixer({
     removeWidows: true,
     convertEntities: false,
@@ -77,12 +76,12 @@ test(`03 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, conver
         opt,
       ).res,
       `Very long line, long-enough to trigger widow${rawNbsp}removal.<br/>\n<br/>\nText.`,
-      JSON.stringify(opt, null, 0),
+      `003.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test(`04 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeLineBreaks=off`, () => {
+test("004 - fixes - space - full stop, removeLineBreaks=off", () => {
   mixer({
     removeWidows: false,
     replaceLineBreaks: false,
@@ -98,12 +97,12 @@ test(`04 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         opt,
       ).res,
       "Very long line, long-enough to trigger widow removal.\n\nText.",
-      JSON.stringify(opt, null, 0),
+      `004.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test(`05 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, convertEntities=on`, () => {
+test("005 - fixes - space - full stop, convertEntities=on", () => {
   mixer({
     removeWidows: true,
     convertEntities: true,
@@ -120,12 +119,12 @@ test(`05 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, conver
         opt,
       ).res,
       "Very long line, long-enough to trigger widow&nbsp;removal.\n\nText.",
-      JSON.stringify(opt, null, 0),
+      `005.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test(`06 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, convertEntities=off`, () => {
+test("006 - fixes - space - full stop, convertEntities=off", () => {
   mixer({
     removeWidows: true,
     convertEntities: false,
@@ -142,12 +141,12 @@ test(`06 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, conver
         opt,
       ).res,
       `Very long line, long-enough to trigger widow${rawNbsp}removal.\n\nText.`,
-      JSON.stringify(opt, null, 0),
+      `006.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test(`07 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=off, replaceLineBreaks=on`, () => {
+test("007 - fixes - space - full stop, removeWidows=off, replaceLineBreaks=on", () => {
   mixer({
     removeWidows: false,
     replaceLineBreaks: true,
@@ -163,12 +162,12 @@ test(`07 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         opt,
       ).res,
       "Very long line, long-enough to trigger widow removal.<br>\n<br>\nText.",
-      JSON.stringify(opt, null, 0),
+      `007.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test(`08 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=on, replaceLineBreaks=on`, () => {
+test("008 - fixes - space - full stop, removeWidows=on, replaceLineBreaks=on", () => {
   mixer({
     removeWidows: true,
     convertEntities: true,
@@ -185,12 +184,12 @@ test(`08 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         opt,
       ).res,
       "Very long line, long-enough to trigger widow&nbsp;removal.<br>\n<br>\nText.",
-      JSON.stringify(opt, null, 0),
+      `008.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test(`09 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=on, replaceLineBreaks=on, convertEntities=off`, () => {
+test("009 - fixes - space - full stop, removeWidows=on, replaceLineBreaks=on, convertEntities=off", () => {
   mixer({
     removeWidows: true,
     convertEntities: false,
@@ -207,12 +206,12 @@ test(`09 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         opt,
       ).res,
       `Very long line, long-enough to trigger widow${rawNbsp}removal.<br>\n<br>\nText.`,
-      JSON.stringify(opt, null, 0),
+      `009.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test(`10 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=off, removeLineBreaks=on - LF`, () => {
+test("010 - fixes - space - full stop, removeWidows=off, removeLineBreaks=on - LF", () => {
   mixer({
     removeWidows: false,
     removeLineBreaks: true,
@@ -226,12 +225,12 @@ test(`10 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         opt,
       ).res,
       "Very long line, long-enough to trigger widow removal. Text text text text.",
-      JSON.stringify(opt, null, 0),
+      `010.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test(`11 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=off, removeLineBreaks=on - CR`, () => {
+test("011 - fixes - space - full stop, removeWidows=off, removeLineBreaks=on - CR", () => {
   mixer({
     removeWidows: false,
     removeLineBreaks: true,
@@ -245,12 +244,12 @@ test(`11 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         opt,
       ).res,
       "Very long line, long-enough to trigger widow removal. Text text text text.",
-      JSON.stringify(opt, null, 0),
+      `011.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test(`12 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=off, removeLineBreaks=on - CRLF`, () => {
+test("012 - fixes - space - full stop, removeWidows=off, removeLineBreaks=on - CRLF", () => {
   mixer({
     removeWidows: false,
     removeLineBreaks: true,
@@ -264,12 +263,12 @@ test(`12 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         opt,
       ).res,
       "Very long line, long-enough to trigger widow removal. Text text text text.",
-      JSON.stringify(opt, null, 0),
+      `012.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test(`13 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=on, removeLineBreaks=on`, () => {
+test("013 - fixes - space - full stop, removeWidows=on, removeLineBreaks=on", () => {
   mixer({
     removeWidows: true,
     convertEntities: true,
@@ -284,12 +283,12 @@ test(`13 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         opt,
       ).res,
       "Very long line, long-enough to trigger widow removal. Text text text&nbsp;text.",
-      JSON.stringify(opt, null, 0),
+      `013.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test(`14 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, removeWidows=on, convertEntities=off`, () => {
+test("014 - fixes - space - full stop, removeWidows=on, convertEntities=off", () => {
   mixer({
     removeWidows: true,
     convertEntities: false,
@@ -304,31 +303,31 @@ test(`14 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - space - full stop, remove
         opt,
       ).res,
       `Very long line, long-enough to trigger widow removal. Text text text${rawNbsp}text.`,
-      JSON.stringify(opt, null, 0),
+      `014.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
 
-test(`15 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - line break combinations`, () => {
-  equal(det(ok, not, 0, "a. \na").res, "a.<br/>\na", "15.01");
+test("015 - fixes - line break combinations", () => {
+  equal(det(ok, not, 0, "a. \na").res, "a.<br/>\na", "015.01");
 });
 
-test(`16 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - line break combinations`, () => {
-  equal(det(ok, not, 0, "a . \na").res, "a.<br/>\na", "16.01");
+test("016 - fixes - line break combinations", () => {
+  equal(det(ok, not, 0, "a . \na").res, "a.<br/>\na", "016.01");
 });
 
-test(`17 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - line break combinations`, () => {
-  equal(det(ok, not, 0, "a , \na").res, "a,<br/>\na", "17.01");
+test("017 - fixes - line break combinations", () => {
+  equal(det(ok, not, 0, "a , \na").res, "a,<br/>\na", "017.01");
 });
 
-test(`18 - ${`\u001b[${32}m${"fixes"}\u001b[${39}m`} - checking line feed being replaced with space`, () => {
+test("018 - fixes - checking line feed being replaced with space", () => {
   mixer({
     removeLineBreaks: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "aaaa\u000Abbbbb", opt).res,
       "aaaa bbbbb",
-      JSON.stringify(opt, null, 0),
+      `018.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
