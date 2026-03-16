@@ -33,7 +33,7 @@ npm i detergent
 ## Quick Take
 
 ```js
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { det, opts, version } from "detergent";
 
@@ -41,9 +41,10 @@ import { det, opts, version } from "detergent";
 assert.equal(det("clean this text £").res, "clean this text&nbsp;&pound;");
 ```
 
+
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/detergent/) for a full description of the API. Also, try the [GUI playground](https://codsen.com/os/detergent/play).
+Please [visit codsen.com](https://codsen.com/os/detergent/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/detergent/CHANGELOG.md). Also, try the [GUI playground](https://codsen.com/os/detergent/play).
 
 ## Contributing
 
@@ -53,7 +54,7 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 MIT License
 
-Copyright © 2010-2025 Roy Revelt and other contributors
+Copyright © 2010-2026 Roy Revelt and other contributors
 
 Passes unit tests from https://github.com/kemitchell/straight-to-curly-quotes.json, licenced under CC0-1.0
 
