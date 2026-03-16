@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
   det as det1,
@@ -9,7 +9,7 @@ import {
 } from "../dist/detergent.esm.js";
 import { det } from "../t-util/util.js";
 
-test("01 - throws when the first argument is not string", () => {
+test("001 - throws when the first argument is not string", () => {
   throws(
     () => {
       det(ok, not, 0, 1, "zzz");
@@ -54,7 +54,7 @@ test("01 - throws when the first argument is not string", () => {
   );
 });
 
-test("02 - throws when the second argument is truthy yet not a plain object", () => {
+test("002 - throws when the second argument is truthy yet not a plain object", () => {
   throws(
     () => {
       det(ok, not, 0, "zzz", "zzz");
@@ -62,17 +62,19 @@ test("02 - throws when the second argument is truthy yet not a plain object", ()
     /THROW_ID_02/gm,
     "02.01",
   );
+  throws(() => det1("zzz", []), /THROW_ID_02/gm, "02.02");
+  throws(() => det1("zzz", new Date()), /THROW_ID_02/gm, "02.03");
 });
 
-test("03 - default opts object is exported", () => {
+test("003 - default opts object is exported", () => {
   ok(Object.keys(exportedOptsObj).length > 10, "03.01");
 });
 
-test("04 - version is exported", () => {
+test("004 - version is exported", () => {
   match(version, /\d+\.\d+\.\d+/g, "04.01");
 });
 
-test("05 - throws when opts.cb is truthy and not a function", () => {
+test("005 - throws when opts.cb is truthy and not a function", () => {
   throws(
     () => {
       det(ok, not, 0, "zzz", { cb: true });
@@ -82,7 +84,7 @@ test("05 - throws when opts.cb is truthy and not a function", () => {
   );
 });
 
-test("06 - not throws when opts.cb is falsey", () => {
+test("006 - not throws when opts.cb is falsy", () => {
   // original function det1():
   not.throws(() => {
     det1("zzz", { cb: null });
@@ -106,7 +108,7 @@ test("06 - not throws when opts.cb is falsey", () => {
   }, "06.06");
 });
 
-test("07 - throws when opts.cb.eol is truthy and invalid", () => {
+test("007 - throws when opts.cb.eol is truthy and invalid", () => {
   throws(
     () => {
       det(ok, not, 0, "zzz", { eol: true });
