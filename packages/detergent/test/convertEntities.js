@@ -1,51 +1,50 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import he from "he";
-
-import { det as det1 } from "../dist/detergent.esm.js";
-import { det, mixer } from "../t-util/util.js";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import {
-  rawReplacementMark,
-  // rawNDash,
-  rawMDash,
-  rawNbsp,
   hairspace,
-  // ellipsis,
-  rightSingleQuote,
   // rightDoubleQuote,
   // leftDoubleQuote,
   leftSingleQuote,
+  // rawNDash,
+  rawMDash,
+  rawNbsp,
+  rawReplacementMark,
+  // ellipsis,
+  rightSingleQuote,
 } from "codsen-utils";
+import he from "he";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+import { det as det1 } from "../dist/detergent.esm.js";
+import { det, mixer } from "../t-util/util.js";
 
 // 01. opts.convertEntities
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - pound - convertEntities=on`, () => {
+test("001 - opts.convertEntities - pound - convertEntities=on", () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "\u00A3", opt).res,
       "&pound;",
-      JSON.stringify(opt, null, 4),
+      `001.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`02 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - pound - convertEntities=off`, () => {
+test("002 - opts.convertEntities - pound - convertEntities=off", () => {
   mixer({
     convertEntities: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "\u00A3", opt).res,
       "\u00A3",
-      JSON.stringify(opt, null, 4),
+      `002.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`03 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - m-dash`, () => {
+test("003 - opts.convertEntities - m-dash", () => {
   mixer({
     convertEntities: true,
     convertDashes: true,
@@ -53,24 +52,24 @@ test(`03 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - m-dash`, (
     equal(
       det(ok, not, n, `${rawMDash}`, opt).res,
       "&mdash;",
-      JSON.stringify(opt, null, 4),
+      `003.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`04 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - m-dash`, () => {
+test("004 - opts.convertEntities - m-dash", () => {
   mixer({
     convertDashes: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, `${rawMDash}`, opt).res,
       "-",
-      JSON.stringify(opt, null, 4),
+      `004.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`05 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - m-dash`, () => {
+test("005 - opts.convertEntities - m-dash", () => {
   mixer({
     convertEntities: false,
     convertDashes: true,
@@ -78,24 +77,24 @@ test(`05 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - m-dash`, (
     equal(
       det(ok, not, n, `${rawMDash}`, opt).res,
       `${rawMDash}`,
-      JSON.stringify(opt, null, 4),
+      `005.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`06 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - m-dash`, () => {
+test("006 - opts.convertEntities - m-dash", () => {
   mixer({
     convertDashes: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, `${rawMDash}`, opt).res,
       "-",
-      JSON.stringify(opt, null, 4),
+      `006.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`07 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - hairspace`, () => {
+test("007 - opts.convertEntities - hairspace", () => {
   mixer({
     convertEntities: false,
     removeWidows: false,
@@ -104,12 +103,12 @@ test(`07 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - hairspace`
     equal(
       det(ok, not, n, `a${hairspace}&mdash;${hairspace}a`, opt).res,
       `a ${rawMDash} a`,
-      JSON.stringify(opt, null, 4),
+      `007.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`08 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - hairspace`, () => {
+test("008 - opts.convertEntities - hairspace", () => {
   mixer({
     convertDashes: false,
     removeWidows: false,
@@ -117,36 +116,36 @@ test(`08 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - hairspace`
     equal(
       det(ok, not, n, `a${hairspace}&mdash;${hairspace}a`, opt).res,
       "a - a",
-      JSON.stringify(opt, null, 4),
+      `008.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`09 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - ad hoc 1`, () => {
+test("009 - opts.convertEntities - ad hoc 1", () => {
   equal(
     det1('"', { convertApostrophes: false, convertEntities: true }).res,
     "&quot;",
-    "09.01",
+    "009.01",
   );
 });
 
-test(`10 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - ad hoc 1`, () => {
+test("010 - opts.convertEntities - ad hoc 1", () => {
   equal(
     det1('^"', { convertApostrophes: false, convertEntities: true }).res,
     "^&quot;",
-    "10.01",
+    "010.01",
   );
 });
 
-test(`11 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - ad hoc 1`, () => {
+test("011 - opts.convertEntities - ad hoc 1", () => {
   equal(
     det1('^`"', { convertApostrophes: false, convertEntities: true }).res,
     "^`&quot;",
-    "11.01",
+    "011.01",
   );
 });
 
-test(`12 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - ad hoc 1`, () => {
+test("012 - opts.convertEntities - ad hoc 1", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: false,
@@ -154,7 +153,7 @@ test(`12 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - ad hoc 1`,
     equal(
       det(ok, not, n, '^`"', opt).res,
       "^`&quot;",
-      JSON.stringify(opt, null, 4),
+      `012.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
   mixer({
@@ -164,7 +163,7 @@ test(`12 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - ad hoc 1`,
     equal(
       det(ok, not, n, '^`"', opt).res,
       "^`&rdquo;",
-      JSON.stringify(opt, null, 4),
+      `012.02 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -172,7 +171,7 @@ test(`12 - ${`\u001b[${31}m${"opts.convertEntities"}\u001b[${39}m`} - ad hoc 1`,
 // 02. mixed cases
 // -----------------------------------------------------------------------------
 
-test(`13 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #1 - convertApostrophes=on, right single q.`, () => {
+test("013 - opts.convertApostrophes - mixed #1 - convertApostrophes=on, right single q.", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: true,
@@ -188,12 +187,12 @@ test(`13 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
         opt,
       ).res,
       "HOORAY &mdash; IT&rsquo;S HERE",
-      JSON.stringify(opt, null, 4),
+      `013.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`14 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #1 - convertApostrophes=on, left single q.`, () => {
+test("014 - opts.convertApostrophes - mixed #1 - convertApostrophes=on, left single q.", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: true,
@@ -209,12 +208,12 @@ test(`14 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
         opt,
       ).res,
       "HOORAY &mdash; IT&rsquo;S HERE",
-      JSON.stringify(opt, null, 4),
+      `014.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`15 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #1 - convertApostrophes=off`, () => {
+test("015 - opts.convertApostrophes - mixed #1 - convertApostrophes=off", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: false,
@@ -224,12 +223,12 @@ test(`15 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
     equal(
       det(ok, not, n, `HOORAY  ${rawMDash}  IT'S HERE ${hairspace}`, opt).res,
       "HOORAY &mdash; IT'S HERE",
-      JSON.stringify(opt, null, 4),
+      `015.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`16 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #2 - convertApostrophes=on - right single q.`, () => {
+test("016 - opts.convertApostrophes - mixed #2 - convertApostrophes=on - right single q.", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: true,
@@ -245,12 +244,12 @@ test(`16 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
         opt,
       ).res,
       "HOORAY &mdash; IT&rsquo;S HERE",
-      JSON.stringify(opt, null, 4),
+      `016.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`17 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #2 - convertApostrophes=on - left single q.`, () => {
+test("017 - opts.convertApostrophes - mixed #2 - convertApostrophes=on - left single q.", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: true,
@@ -261,12 +260,12 @@ test(`17 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
       det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
         .res,
       "HOORAY &mdash; IT&rsquo;S HERE",
-      JSON.stringify(opt, null, 4),
+      `017.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`18 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #2 - convertApostrophes=off - left single q.`, () => {
+test("018 - opts.convertApostrophes - mixed #2 - convertApostrophes=off - left single q.", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: false,
@@ -277,12 +276,12 @@ test(`18 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
       det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
         .res,
       "HOORAY &mdash; IT'S HERE",
-      JSON.stringify(opt, null, 4),
+      `018.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`19 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #2 - convertApostrophes=off - right single q.`, () => {
+test("019 - opts.convertApostrophes - mixed #2 - convertApostrophes=off - right single q.", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: false,
@@ -298,12 +297,12 @@ test(`19 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
         opt,
       ).res,
       "HOORAY &mdash; IT'S HERE",
-      JSON.stringify(opt, null, 4),
+      `019.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`20 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #3 - convertApostrophes=on - left single q.`, () => {
+test("020 - opts.convertApostrophes - mixed #3 - convertApostrophes=on - left single q.", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: true,
@@ -314,12 +313,12 @@ test(`20 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
       det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
         .res,
       "HOORAY - IT&rsquo;S HERE",
-      JSON.stringify(opt, null, 4),
+      `020.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`21 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #3 - convertApostrophes=off - left single q.`, () => {
+test("021 - opts.convertApostrophes - mixed #3 - convertApostrophes=off - left single q.", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: false,
@@ -330,12 +329,12 @@ test(`21 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
       det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
         .res,
       "HOORAY - IT'S HERE",
-      JSON.stringify(opt, null, 4),
+      `021.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`22 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #3 - convertApostrophes=on - right single q.`, () => {
+test("022 - opts.convertApostrophes - mixed #3 - convertApostrophes=on - right single q.", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: true,
@@ -351,12 +350,12 @@ test(`22 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
         opt,
       ).res,
       "HOORAY - IT&rsquo;S HERE",
-      JSON.stringify(opt, null, 4),
+      `022.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`23 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #3 - convertApostrophes=off - right single q.`, () => {
+test("023 - opts.convertApostrophes - mixed #3 - convertApostrophes=off - right single q.", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: false,
@@ -372,12 +371,12 @@ test(`23 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
         opt,
       ).res,
       "HOORAY - IT'S HERE",
-      JSON.stringify(opt, null, 4),
+      `023.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test.skip(`24 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #4 - convertApostrophes=on`, () => {
+test.skip(`024 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #4 - convertApostrophes=on`, () => {
   mixer({
     convertEntities: true, // <-----
     convertApostrophes: true,
@@ -388,7 +387,7 @@ test.skip(`24 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mi
       det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
         .res,
       "HOORAY&nbsp;- IT&rsquo;S&nbsp;HERE",
-      JSON.stringify(opt, null, 4),
+      `024.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
   mixer({
@@ -401,12 +400,12 @@ test.skip(`24 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mi
       det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
         .res,
       `HOORAY${rawNbsp}- IT${rightSingleQuote}S${rawNbsp}HERE`,
-      JSON.stringify(opt, null, 4),
+      `024.02 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test.skip(`25 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`, () => {
+test.skip(`025 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`, () => {
   mixer({
     convertEntities: true,
     convertApostrophes: false,
@@ -417,7 +416,7 @@ test.skip(`25 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mi
       det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
         .res,
       "HOORAY&nbsp;- IT'S&nbsp;HERE",
-      JSON.stringify(opt, null, 4),
+      `025.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
   mixer({
@@ -430,12 +429,12 @@ test.skip(`25 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mi
       det(ok, not, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${hairspace}`, opt)
         .res,
       "HOORAY&nbsp;&mdash; IT'S&nbsp;HERE",
-      JSON.stringify(opt, null, 4),
+      `025.02 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test.skip(`26 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`, () => {
+test.skip(`026 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`, () => {
   mixer({
     convertEntities: true, // <-----
     convertApostrophes: false,
@@ -451,7 +450,7 @@ test.skip(`26 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mi
         opt,
       ).res,
       "HOORAY&nbsp;- IT'S&nbsp;HERE",
-      JSON.stringify(opt, null, 4),
+      `026.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
   mixer({
@@ -469,12 +468,12 @@ test.skip(`26 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mi
         opt,
       ).res,
       `HOORAY${rawNbsp}- IT'S${rawNbsp}HERE`,
-      JSON.stringify(opt, null, 4),
+      `026.02 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`27 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #5 - convertApostrophes=on`, () => {
+test("027 - opts.convertApostrophes - mixed #5 - convertApostrophes=on", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: true,
@@ -490,12 +489,12 @@ test(`27 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
         opt,
       ).res,
       "HOORAY&nbsp;&mdash; IT&rsquo;S&nbsp;HERE",
-      JSON.stringify(opt, null, 4),
+      `027.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`28 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #5 - convertApostrophes=on`, () => {
+test("028 - opts.convertApostrophes - mixed #5 - convertApostrophes=on", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: true,
@@ -511,12 +510,12 @@ test(`28 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
         opt,
       ).res,
       "HOORAY&nbsp;&mdash; IT&rsquo;S&nbsp;HERE",
-      JSON.stringify(opt, null, 4),
+      `028.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`29 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #5 - convertApostrophes=off`, () => {
+test("029 - opts.convertApostrophes - mixed #5 - convertApostrophes=off", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: false,
@@ -532,12 +531,12 @@ test(`29 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
         opt,
       ).res,
       "HOORAY&nbsp;&mdash; IT'S&nbsp;HERE",
-      JSON.stringify(opt, null, 4),
+      `029.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`30 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #5 - convertApostrophes=off`, () => {
+test("030 - opts.convertApostrophes - mixed #5 - convertApostrophes=off", () => {
   mixer({
     convertEntities: true,
     convertApostrophes: false,
@@ -553,7 +552,7 @@ test(`30 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
         opt,
       ).res,
       "HOORAY&nbsp;&mdash; IT'S&nbsp;HERE",
-      JSON.stringify(opt, null, 4),
+      `030.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -561,7 +560,7 @@ test(`30 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #
 // 03. m-dash
 // -----------------------------------------------------------------------------
 
-test(`31 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("031 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
@@ -570,12 +569,12 @@ test(`31 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, "aaaaaaaaaaa - aaaaaaaaaaaa", opt).res,
       "aaaaaaaaaaa&nbsp;&mdash; aaaaaaaaaaaa",
-      JSON.stringify(opt, null, 4),
+      `031.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test.skip(`32 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test.skip(`032 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
   mixer({
     convertDashes: false,
     removeWidows: true,
@@ -584,12 +583,12 @@ test.skip(`32 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, "aaaaaaaaaaa - aaaaaaaaaaaa", opt).res,
       "aaaaaaaaaaa&nbsp;- aaaaaaaaaaaa",
-      JSON.stringify(opt, null, 4),
+      `032.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`33 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("033 - m-dash", () => {
   mixer({
     convertDashes: false,
     removeWidows: false,
@@ -597,12 +596,12 @@ test(`33 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, "aaaaaaaaaaa - aaaaaaaaaaaa", opt).res,
       "aaaaaaaaaaa - aaaaaaaaaaaa",
-      JSON.stringify(opt, null, 4),
+      `033.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`34 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("034 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
@@ -617,7 +616,7 @@ test(`34 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
         opt,
       ).res,
       "aaaaaaaaaaa&nbsp;&mdash; aaaaaaaaaaaa&nbsp;&mdash;&nbsp;aaaaaaaaaaaa",
-      JSON.stringify(opt, null, 4),
+      `034.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 
@@ -628,11 +627,11 @@ test(`34 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
       removeWidows: true,
     }).res,
     "aaaaaaaaaaa&nbsp;&mdash; aaaaaaaaaaaa&nbsp;&mdash;&nbsp;aaaaaaaaaaaa",
-    "34.02",
+    "034.02",
   );
 });
 
-test(`35 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("035 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
@@ -642,12 +641,12 @@ test(`35 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a ${rawMDash}a`, opt).res,
       "a&nbsp;&mdash;a",
-      JSON.stringify(opt, null, 4),
+      `035.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`36 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("036 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
@@ -657,12 +656,12 @@ test(`36 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a ${rawMDash}a`, opt).res,
       "a&nbsp;&mdash; a",
-      JSON.stringify(opt, null, 4),
+      `036.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`37 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("037 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
@@ -672,12 +671,12 @@ test(`37 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a ${rawMDash}a`, opt).res,
       "a &mdash;a",
-      JSON.stringify(opt, null, 4),
+      `037.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`38 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("038 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
@@ -687,12 +686,12 @@ test(`38 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a ${rawMDash}a`, opt).res,
       "a &mdash; a",
-      JSON.stringify(opt, null, 4),
+      `038.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`39 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("039 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: false,
@@ -702,12 +701,12 @@ test(`39 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a ${rawMDash}a`, opt).res,
       `a${rawNbsp}${rawMDash}a`,
-      JSON.stringify(opt, null, 4),
+      `039.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`40 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("040 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: false,
@@ -717,12 +716,12 @@ test(`40 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a ${rawMDash}a`, opt).res,
       `a${rawNbsp}${rawMDash} a`,
-      JSON.stringify(opt, null, 4),
+      `040.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`41 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("041 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: false,
@@ -732,12 +731,12 @@ test(`41 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a ${rawMDash}a`, opt).res,
       `a ${rawMDash}a`,
-      JSON.stringify(opt, null, 4),
+      `041.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`42 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("042 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: false,
@@ -747,12 +746,12 @@ test(`42 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a ${rawMDash}a`, opt).res,
       `a ${rawMDash} a`,
-      JSON.stringify(opt, null, 4),
+      `042.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`43 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("043 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
@@ -762,12 +761,12 @@ test(`43 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       "a&nbsp;&mdash;a",
-      JSON.stringify(opt, null, 4),
+      `043.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`44 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("044 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
@@ -777,12 +776,12 @@ test(`44 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       "a&nbsp;&mdash; a",
-      JSON.stringify(opt, null, 4),
+      `044.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`45 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("045 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
@@ -792,12 +791,12 @@ test(`45 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       "a &mdash;a",
-      JSON.stringify(opt, null, 4),
+      `045.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`46 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("046 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
@@ -807,12 +806,12 @@ test(`46 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       "a &mdash; a",
-      JSON.stringify(opt, null, 4),
+      `046.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`47 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("047 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: false,
@@ -822,12 +821,12 @@ test(`47 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       `a${rawNbsp}${rawMDash}a`,
-      JSON.stringify(opt, null, 4),
+      `047.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`48 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("048 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: false,
@@ -837,12 +836,12 @@ test(`48 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       `a${rawNbsp}${rawMDash} a`,
-      JSON.stringify(opt, null, 4),
+      `048.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`49 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("049 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: false,
@@ -852,12 +851,12 @@ test(`49 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       `a ${rawMDash}a`,
-      JSON.stringify(opt, null, 4),
+      `049.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`50 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("050 - m-dash", () => {
   mixer({
     convertDashes: false,
     removeWidows: false,
@@ -865,12 +864,12 @@ test(`50 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a${hairspace}${rawMDash} a`, opt).res,
       "a - a",
-      JSON.stringify(opt, null, 4),
+      `050.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`51 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`} - false positives`, () => {
+test("051 - m-dash - false positives", () => {
   mixer({
     convertEntities: true,
     removeWidows: false,
@@ -878,7 +877,7 @@ test(`51 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`} - false positives`, () => 
     equal(
       det(ok, not, n, "Discount: -£10.00", opt).res,
       "Discount: -&pound;10.00",
-      JSON.stringify(opt, null, 4),
+      `051.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 
@@ -888,11 +887,11 @@ test(`51 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`} - false positives`, () => 
       removeWidows: false,
     }).res,
     "Discount: -&pound;10.00",
-    "51.02",
+    "051.02",
   );
 });
 
-test(`52 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`} - false positives`, () => {
+test("052 - m-dash - false positives", () => {
   mixer({
     convertEntities: false,
     removeWidows: false,
@@ -900,22 +899,22 @@ test(`52 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`} - false positives`, () => 
     equal(
       det(ok, not, n, "Discount: -£10.00", opt).res,
       "Discount: -£10.00",
-      JSON.stringify(opt, null, 4),
+      `052.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`53 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`} - false positives`, () => {
+test("053 - m-dash - false positives", () => {
   mixer().forEach((opt, n) => {
     equal(
       det(ok, not, n, "-10.00", opt).res,
       "-10.00",
-      JSON.stringify(opt, null, 4),
+      `053.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`54 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`} - letters, convertEntities=on, removeWidows=on`, () => {
+test("054 - m-dash - letters, convertEntities=on, removeWidows=on", () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
@@ -930,12 +929,12 @@ test(`54 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`} - letters, convertEntities
         opt,
       ).res,
       "a a a a a a a a a a&nbsp;&mdash; a a a&nbsp;a",
-      JSON.stringify(opt, null, 4),
+      `054.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`55 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`} - letters, convertEntities=on, removeWidows=off`, () => {
+test("055 - m-dash - letters, convertEntities=on, removeWidows=off", () => {
   mixer({
     convertDashes: true,
     convertEntities: true,
@@ -950,12 +949,12 @@ test(`55 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`} - letters, convertEntities
         opt,
       ).res,
       "a a a a a a a a a a &mdash; a a a a",
-      JSON.stringify(opt, null, 4),
+      `055.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`56 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`} - letters, convertEntities=off, removeWidows=on`, () => {
+test("056 - m-dash - letters, convertEntities=off, removeWidows=on", () => {
   mixer({
     convertDashes: true,
     convertEntities: false,
@@ -970,12 +969,12 @@ test(`56 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`} - letters, convertEntities
         opt,
       ).res,
       `a a a a a a a a a a${rawNbsp}${rawMDash} a a a${rawNbsp}a`,
-      JSON.stringify(opt, null, 4),
+      `056.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`57 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`} - letters, convertEntities=off, removeWidows=off`, () => {
+test("057 - m-dash - letters, convertEntities=off, removeWidows=off", () => {
   mixer({
     convertDashes: true,
     convertEntities: false,
@@ -990,12 +989,12 @@ test(`57 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`} - letters, convertEntities
         opt,
       ).res,
       `a a a a a a a a a a ${rawMDash} a a a a`,
-      JSON.stringify(opt, null, 4),
+      `057.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`58 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test("058 - m-dash", () => {
   mixer({
     convertDashes: true,
     convertEntities: false,
@@ -1005,7 +1004,7 @@ test(`58 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
     equal(
       det(ok, not, n, `a${hairspace}${rawMDash}a`, opt).res,
       `a ${rawMDash} a`,
-      JSON.stringify(opt, null, 4),
+      `058.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -1013,94 +1012,102 @@ test(`58 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
 // 04. astral chars
 // -----------------------------------------------------------------------------
 
-test(`59 - ${`\u001b[${36}m${"astral chars"}\u001b[${39}m`} - trigram char converted into entity, convertEntities=on`, () => {
+test("059 - astral chars - trigram char converted into entity, convertEntities=on", () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "\uD834\uDF06", opt).res,
       "&#x1D306;",
-      JSON.stringify(opt, null, 4),
+      `059.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`60 - ${`\u001b[${36}m${"astral chars"}\u001b[${39}m`} - trigram char converted into entity, convertEntities=off`, () => {
+test("060 - astral chars - trigram char converted into entity, convertEntities=off", () => {
   mixer({
     convertEntities: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "\uD834\uDF06", opt).res,
       "\uD834\uDF06",
-      JSON.stringify(opt, null, 4),
+      `060.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`61 - ${`\u001b[${36}m${"astral chars"}\u001b[${39}m`} - paired surrogate encoding, convertEntities=on`, () => {
+test("061 - astral chars - paired surrogate encoding, convertEntities=on", () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "\uD83D\uDE0A", opt).res,
       "&#x1F60A;",
-      JSON.stringify(opt, null, 4),
+      `061.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`62 - ${`\u001b[${36}m${"astral chars"}\u001b[${39}m`} - paired surrogate encoding, convertEntities=off`, () => {
+test("062 - astral chars - paired surrogate encoding, convertEntities=off", () => {
   mixer({
     convertEntities: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "\uD83D\uDE0A", opt).res,
       "\uD83D\uDE0A",
-      JSON.stringify(opt, null, 4),
+      `062.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`63 - ${`\u001b[${36}m${"astral chars"}\u001b[${39}m`} - stray low surrogates removed`, () => {
+test("063 - astral chars - stray low surrogates removed", () => {
   mixer().forEach((opt, n) => {
     equal(
       det(ok, not, n, `${rawReplacementMark}a\uD800a\uD83Da\uDBFF`, opt).res,
       "aaa",
-      JSON.stringify(opt, null, 4),
+      `063.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`64 - ${`\u001b[${36}m${"astral chars"}\u001b[${39}m`} - stray low surrogates removed`, () => {
+test("064 - astral chars - stray low surrogates removed", () => {
   mixer().forEach((opt, n) => {
     equal(
       det(ok, not, n, "\uDC00a\uDE0Aa\uDFFF", opt).res,
       "aa",
-      JSON.stringify(opt, null, 4),
+      `064.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`65 - ${`\u001b[${36}m${"astral chars"}\u001b[${39}m`} - stray low surrogates removed`, () => {
+test("065 - astral chars - stray low surrogates removed", () => {
   mixer().forEach((opt, n) => {
-    equal(det(ok, not, n, "\uD835", opt).res, "", JSON.stringify(opt, null, 4));
+    equal(
+      det(ok, not, n, "\uD835", opt).res,
+      "",
+      `065.01 - ${JSON.stringify(opt, null, 4)}`,
+    );
   });
 });
 
-test(`66 - ${`\u001b[${36}m${"astral chars"}\u001b[${39}m`} - stray low surrogates removed`, () => {
+test("066 - astral chars - stray low surrogates removed", () => {
   mixer().forEach((opt, n) => {
-    equal(det(ok, not, n, "\uDFD8", opt).res, "", JSON.stringify(opt, null, 4));
+    equal(
+      det(ok, not, n, "\uDFD8", opt).res,
+      "",
+      `066.01 - ${JSON.stringify(opt, null, 4)}`,
+    );
   });
 });
 
-test(`67 - ${`\u001b[${36}m${"astral chars"}\u001b[${39}m`} - stray low surrogates removed`, () => {
+test("067 - astral chars - stray low surrogates removed", () => {
   mixer({
     convertEntities: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "gr\u00F6\u00DFer", opt).res,
       "gr\u00F6\u00DFer",
-      JSON.stringify(opt, null, 4),
+      `067.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -1108,44 +1115,48 @@ test(`67 - ${`\u001b[${36}m${"astral chars"}\u001b[${39}m`} - stray low surrogat
 // 05. opts.convertApostrophes
 // -----------------------------------------------------------------------------
 
-test(`68 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - German characters`, () => {
+test("068 - opts.convertApostrophes - German characters", () => {
   mixer({
     convertEntities: true,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "gr\u00F6\u00DFer", opt).res,
       "gr&ouml;&szlig;er",
-      JSON.stringify(opt, null, 4),
+      `068.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`69 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - single raw apostrophes are not encoded`, () => {
+test("069 - opts.convertApostrophes - single raw apostrophes are not encoded", () => {
   mixer({
     convertApostrophes: false,
   }).forEach((opt, n) => {
-    equal(det(ok, not, n, "'", opt).res, "'", JSON.stringify(opt, null, 4));
+    equal(
+      det(ok, not, n, "'", opt).res,
+      "'",
+      `069.01 - ${JSON.stringify(opt, null, 4)}`,
+    );
   });
 });
 
-test(`70 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - single encoded apostrophes are decoded`, () => {
+test("070 - opts.convertApostrophes - single encoded apostrophes are decoded", () => {
   mixer({
     convertApostrophes: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "&apos;", opt).res,
       "'",
-      JSON.stringify(opt, null, 4),
+      `070.01 - ${JSON.stringify(opt, null, 4)}`,
     );
     equal(
       det(ok, not, n, "&#x27;", opt).res,
       "'",
-      JSON.stringify(opt, null, 4),
+      `070.02 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`71 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - single apostrophes`, () => {
+test("071 - opts.convertApostrophes - single apostrophes", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -1153,17 +1164,17 @@ test(`71 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - single 
     equal(
       det(ok, not, n, "It&apos;s Monday.", opt).res,
       `It${rightSingleQuote}s Monday.`,
-      JSON.stringify(opt, null, 4),
+      `071.01 - ${JSON.stringify(opt, null, 4)}`,
     );
     equal(
       det(ok, not, n, "It&#x27;s Monday.", opt).res,
       `It${rightSingleQuote}s Monday.`,
-      JSON.stringify(opt, null, 4),
+      `071.02 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`72 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - single apostrophes`, () => {
+test("072 - opts.convertApostrophes - single apostrophes", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1171,34 +1182,34 @@ test(`72 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - single 
     equal(
       det(ok, not, n, "It&apos;s Monday.", opt).res,
       "It&rsquo;s Monday.",
-      JSON.stringify(opt, null, 4),
+      `072.01 - ${JSON.stringify(opt, null, 4)}`,
     );
     equal(
       det(ok, not, n, "It&#x27;s Monday.", opt).res,
       "It&rsquo;s Monday.",
-      JSON.stringify(opt, null, 4),
+      `072.02 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`73 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - single apostrophes`, () => {
+test("073 - opts.convertApostrophes - single apostrophes", () => {
   mixer({
     convertApostrophes: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "It&apos;s Monday.", opt).res,
       "It's Monday.",
-      JSON.stringify(opt, null, 4),
+      `073.01 - ${JSON.stringify(opt, null, 4)}`,
     );
     equal(
       det(ok, not, n, "It&#x27;s Monday.", opt).res,
       "It's Monday.",
-      JSON.stringify(opt, null, 4),
+      `073.02 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`74 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks - case of "wouldn't"`, () => {
+test('074 - opts.convertApostrophes - replacement marks - case of "wouldn\'t"', () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1206,12 +1217,12 @@ test(`74 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `wouldn${rawReplacementMark}t`, opt).res,
       "wouldn&rsquo;t",
-      JSON.stringify(opt, null, 4),
+      `074.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`75 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks - case of "wouldn't"`, () => {
+test('075 - opts.convertApostrophes - replacement marks - case of "wouldn\'t"', () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -1219,24 +1230,24 @@ test(`75 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `wouldn${rawReplacementMark}t`, opt).res,
       `wouldn${rightSingleQuote}t`,
-      JSON.stringify(opt, null, 4),
+      `075.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`76 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks - case of "wouldn't"`, () => {
+test('076 - opts.convertApostrophes - replacement marks - case of "wouldn\'t"', () => {
   mixer({
     convertApostrophes: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, `wouldn${rawReplacementMark}t`, opt).res,
       "wouldn't",
-      JSON.stringify(opt, null, 4),
+      `076.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`77 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks - case of "wouldn't" - caps`, () => {
+test('077 - opts.convertApostrophes - replacement marks - case of "wouldn\'t" - caps', () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1244,12 +1255,12 @@ test(`77 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `WOULDN${rawReplacementMark}T`, opt).res,
       "WOULDN&rsquo;T",
-      JSON.stringify(opt, null, 4),
+      `077.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`78 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks - case of "wouldn't" - caps`, () => {
+test('078 - opts.convertApostrophes - replacement marks - case of "wouldn\'t" - caps', () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -1257,25 +1268,25 @@ test(`78 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `WOULDN${rawReplacementMark}T`, opt).res,
       `WOULDN${rightSingleQuote}T`,
-      JSON.stringify(opt, null, 4),
+      `078.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`79 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks - case of "wouldn't" - caps`, () => {
+test('079 - opts.convertApostrophes - replacement marks - case of "wouldn\'t" - caps', () => {
   mixer({
     convertApostrophes: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, `WOULDN${rawReplacementMark}T`, opt).res,
       "WOULDN'T",
-      JSON.stringify(opt, null, 4),
+      `079.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
 // rawReplacementMark === �
-test(`80 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks - case of "one's"`, () => {
+test('080 - opts.convertApostrophes - replacement marks - case of "one\'s"', () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1283,12 +1294,12 @@ test(`80 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `one${rawReplacementMark}s`, opt).res,
       "one&rsquo;s",
-      JSON.stringify(opt, null, 4),
+      `080.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`81 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks - case of "one's"`, () => {
+test('081 - opts.convertApostrophes - replacement marks - case of "one\'s"', () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -1296,24 +1307,24 @@ test(`81 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `one${rawReplacementMark}s`, opt).res,
       `one${rightSingleQuote}s`,
-      JSON.stringify(opt, null, 4),
+      `081.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`82 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - converts to non-fancy which is never encoded`, () => {
+test("082 - opts.convertApostrophes - converts to non-fancy which is never encoded", () => {
   mixer({
     convertApostrophes: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, `one${rawReplacementMark}s`, opt).res,
       "one's",
-      JSON.stringify(opt, null, 4),
+      `082.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`83 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - converts to fancy, encoded`, () => {
+test("083 - opts.convertApostrophes - converts to fancy, encoded", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1321,12 +1332,12 @@ test(`83 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - convert
     equal(
       det(ok, not, n, `ONE${rawReplacementMark}S`, opt).res,
       "ONE&rsquo;S",
-      JSON.stringify(opt, null, 4),
+      `083.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`84 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - converts to fancy but leaves unencoded`, () => {
+test("084 - opts.convertApostrophes - converts to fancy but leaves unencoded", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -1334,19 +1345,19 @@ test(`84 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - convert
     equal(
       det(ok, not, n, `ONE${rawReplacementMark}S`, opt).res,
       `ONE${rightSingleQuote}S`,
-      JSON.stringify(opt, null, 4),
+      `084.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`85 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - converts to non-fancy which is never encoded`, () => {
+test("085 - opts.convertApostrophes - converts to non-fancy which is never encoded", () => {
   mixer({
     convertApostrophes: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, `ONE${rawReplacementMark}S`, opt).res,
       "ONE'S",
-      JSON.stringify(opt, null, 4),
+      `085.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -1355,7 +1366,7 @@ test(`85 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - convert
 // -----------------------------------------------------------------------------
 // ${rawReplacementMark} = �
 
-test(`86 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test("086 - opts.convertApostrophes - replacement marks", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1363,12 +1374,12 @@ test(`86 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `couldn${rawReplacementMark}t`, opt).res,
       "couldn&rsquo;t",
-      JSON.stringify(opt, null, 4),
+      `086.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`87 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test("087 - opts.convertApostrophes - replacement marks", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1376,12 +1387,12 @@ test(`87 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `we${rawReplacementMark}re`, opt).res,
       "we&rsquo;re",
-      JSON.stringify(opt, null, 4),
+      `087.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`88 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test("088 - opts.convertApostrophes - replacement marks", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1389,12 +1400,12 @@ test(`88 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `you${rawReplacementMark}re`, opt).res,
       "you&rsquo;re",
-      JSON.stringify(opt, null, 4),
+      `088.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`89 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test("089 - opts.convertApostrophes - replacement marks", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1402,12 +1413,12 @@ test(`89 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `they${rawReplacementMark}re`, opt).res,
       "they&rsquo;re",
-      JSON.stringify(opt, null, 4),
+      `089.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`90 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test("090 - opts.convertApostrophes - replacement marks", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1415,12 +1426,12 @@ test(`90 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `YOU${rawReplacementMark}RE`, opt).res,
       "YOU&rsquo;RE",
-      JSON.stringify(opt, null, 4),
+      `090.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`91 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test("091 - opts.convertApostrophes - replacement marks", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1428,12 +1439,12 @@ test(`91 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `I${rawReplacementMark}ll`, opt).res,
       "I&rsquo;ll",
-      JSON.stringify(opt, null, 4),
+      `091.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`92 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test("092 - opts.convertApostrophes - replacement marks", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1441,12 +1452,12 @@ test(`92 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `you${rawReplacementMark}ll`, opt).res,
       "you&rsquo;ll",
-      JSON.stringify(opt, null, 4),
+      `092.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`93 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test("093 - opts.convertApostrophes - replacement marks", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1454,12 +1465,12 @@ test(`93 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `he${rawReplacementMark}ll`, opt).res,
       "he&rsquo;ll",
-      JSON.stringify(opt, null, 4),
+      `093.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`94 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test("094 - opts.convertApostrophes - replacement marks", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1467,12 +1478,12 @@ test(`94 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `she${rawReplacementMark}ll`, opt).res,
       "she&rsquo;ll",
-      JSON.stringify(opt, null, 4),
+      `094.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`95 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test("095 - opts.convertApostrophes - replacement marks", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1480,12 +1491,12 @@ test(`95 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `we${rawReplacementMark}ll`, opt).res,
       "we&rsquo;ll",
-      JSON.stringify(opt, null, 4),
+      `095.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`96 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test("096 - opts.convertApostrophes - replacement marks", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1493,12 +1504,12 @@ test(`96 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `they${rawReplacementMark}ll`, opt).res,
       "they&rsquo;ll",
-      JSON.stringify(opt, null, 4),
+      `096.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`97 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test("097 - opts.convertApostrophes - replacement marks", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1506,12 +1517,12 @@ test(`97 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `YOU${rawReplacementMark}LL`, opt).res,
       "YOU&rsquo;LL",
-      JSON.stringify(opt, null, 4),
+      `097.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`98 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test("098 - opts.convertApostrophes - replacement marks", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1519,12 +1530,12 @@ test(`98 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `HE${rawReplacementMark}LL`, opt).res,
       "HE&rsquo;LL",
-      JSON.stringify(opt, null, 4),
+      `098.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`99 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test("099 - opts.convertApostrophes - replacement marks", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1532,12 +1543,12 @@ test(`99 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replace
     equal(
       det(ok, not, n, `SHE${rawReplacementMark}LL`, opt).res,
       "SHE&rsquo;LL",
-      JSON.stringify(opt, null, 4),
+      `099.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`100 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`100 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1545,12 +1556,12 @@ test(`100 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `WE${rawReplacementMark}LL`, opt).res,
       "WE&rsquo;LL",
-      JSON.stringify(opt, null, 4),
+      `100.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`101 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`101 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1558,12 +1569,12 @@ test(`101 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `THEY${rawReplacementMark}LL`, opt).res,
       "THEY&rsquo;LL",
-      JSON.stringify(opt, null, 4),
+      `101.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`102 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`102 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1571,12 +1582,12 @@ test(`102 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `might${rawReplacementMark}ve`, opt).res,
       "might&rsquo;ve",
-      JSON.stringify(opt, null, 4),
+      `102.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`103 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`103 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1584,12 +1595,12 @@ test(`103 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `she${rawReplacementMark}s`, opt).res,
       "she&rsquo;s",
-      JSON.stringify(opt, null, 4),
+      `103.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`104 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`104 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1597,12 +1608,12 @@ test(`104 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `they${rawReplacementMark}re`, opt).res,
       "they&rsquo;re",
-      JSON.stringify(opt, null, 4),
+      `104.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`105 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`105 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1610,12 +1621,12 @@ test(`105 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `they${rawReplacementMark}ve`, opt).res,
       "they&rsquo;ve",
-      JSON.stringify(opt, null, 4),
+      `105.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`106 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`106 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1623,12 +1634,12 @@ test(`106 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `they${rawReplacementMark}ll`, opt).res,
       "they&rsquo;ll",
-      JSON.stringify(opt, null, 4),
+      `106.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`107 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`107 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1636,12 +1647,12 @@ test(`107 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `peoples${rawReplacementMark}`, opt).res,
       "peoples&rsquo;",
-      JSON.stringify(opt, null, 4),
+      `107.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`108 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`108 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -1649,12 +1660,12 @@ test(`108 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `Mr. Brown${rawReplacementMark}s`, opt).res,
       "Mr. Brown&rsquo;s",
-      JSON.stringify(opt, null, 4),
+      `108.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`109 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`109 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertEntities: true,
     removeWidows: false,
@@ -1663,12 +1674,12 @@ test(`109 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `minutes ${rawReplacementMark} we`, opt).res,
       "minutes &mdash; we",
-      JSON.stringify(opt, null, 4),
+      `109.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`110 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`110 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertEntities: true,
     removeWidows: true,
@@ -1677,12 +1688,12 @@ test(`110 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `minutes ${rawReplacementMark} we`, opt).res,
       "minutes&nbsp;&mdash; we",
-      JSON.stringify(opt, null, 4),
+      `110.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`111 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`111 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertEntities: false,
     removeWidows: true,
@@ -1691,12 +1702,12 @@ test(`111 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `minutes ${rawReplacementMark} we`, opt).res,
       `minutes${rawNbsp}${rawMDash} we`,
-      JSON.stringify(opt, null, 4),
+      `111.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`112 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`112 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertEntities: false,
     removeWidows: false,
@@ -1705,12 +1716,12 @@ test(`112 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `minutes ${rawReplacementMark} we`, opt).res,
       `minutes ${rawMDash} we`,
-      JSON.stringify(opt, null, 4),
+      `112.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`113 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`113 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertEntities: true,
     removeWidows: false,
@@ -1719,12 +1730,12 @@ test(`113 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `minutes ${rawReplacementMark} we`, opt).res,
       "minutes - we",
-      JSON.stringify(opt, null, 4),
+      `113.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`114 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`114 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertEntities: true,
     removeWidows: true,
@@ -1733,12 +1744,12 @@ test(`114 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `minutes ${rawReplacementMark} we`, opt).res,
       "minutes&nbsp;- we",
-      JSON.stringify(opt, null, 4),
+      `114.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`115 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`115 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertEntities: false,
     removeWidows: true,
@@ -1747,12 +1758,12 @@ test(`115 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `minutes ${rawReplacementMark} we`, opt).res,
       `minutes${rawNbsp}- we`,
-      JSON.stringify(opt, null, 4),
+      `115.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`116 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replacement marks`, () => {
+test(`116 - opts.convertApostrophes - replacement marks`, () => {
   mixer({
     convertEntities: false,
     removeWidows: false,
@@ -1761,7 +1772,7 @@ test(`116 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
     equal(
       det(ok, not, n, `minutes ${rawReplacementMark} we`, opt).res,
       "minutes - we",
-      JSON.stringify(opt, null, 4),
+      `116.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -1769,7 +1780,7 @@ test(`116 - ${`\u001b[${34}m${"opts.convertApostrophes"}\u001b[${39}m`} - replac
 // 07. numeric entities
 // -----------------------------------------------------------------------------
 
-test(`117 - ${`\u001b[${35}m${"numeric entities"}\u001b[${39}m`} - numeric entities`, () => {
+test(`117 - numeric entities - numeric entities`, () => {
   equal(
     det(ok, not, 0, "aaaaaaa aaaaaaaaa aaaaaaaaaa&#160;bbbb").res,
     "aaaaaaa aaaaaaaaa aaaaaaaaaa&nbsp;bbbb",
@@ -1777,7 +1788,7 @@ test(`117 - ${`\u001b[${35}m${"numeric entities"}\u001b[${39}m`} - numeric entit
   );
 });
 
-test(`118 - ${`\u001b[${35}m${"numeric entities"}\u001b[${39}m`} - named entities`, () => {
+test(`118 - numeric entities - named entities`, () => {
   equal(
     det(ok, not, 0, "aaaaaaa aaaaaaaaa aaaaaaaaaa&nbsp;bbbb").res,
     "aaaaaaa aaaaaaaaa aaaaaaaaaa&nbsp;bbbb",
@@ -1785,7 +1796,7 @@ test(`118 - ${`\u001b[${35}m${"numeric entities"}\u001b[${39}m`} - named entitie
   );
 });
 
-test(`119 - ${`\u001b[${35}m${"numeric entities"}\u001b[${39}m`} - raw characters`, () => {
+test(`119 - numeric entities - raw characters`, () => {
   equal(
     det(ok, not, 0, `aaaaaaa aaaaaaaaa aaaaaaaaa${rawNbsp}bbbb`).res,
     "aaaaaaa aaaaaaaaa aaaaaaaaa&nbsp;bbbb",
@@ -1796,19 +1807,19 @@ test(`119 - ${`\u001b[${35}m${"numeric entities"}\u001b[${39}m`} - raw character
 // 08. erroneous entities
 // -----------------------------------------------------------------------------
 
-test(`120 - ${`\u001b[${35}m${"erroneous entities"}\u001b[${39}m`} - potentially clashing incomplete named entities - precaution &fnof; (\\u0192)`, () => {
+test(`120 - erroneous entities - potentially clashing incomplete named entities - precaution &fnof; (\\u0192)`, () => {
   equal(det(ok, not, 0, "aaa&fnof;aaa").res, "aaa&fnof;aaa", "120.01");
 });
 
-test(`121 - ${`\u001b[${35}m${"erroneous entities"}\u001b[${39}m`} - potentially clashing incomplete named entities`, () => {
+test(`121 - erroneous entities - potentially clashing incomplete named entities`, () => {
   equal(det(ok, not, 0, "aaa&thinsp;aaa").res, "aaa aaa", "121.01");
 });
 
-test(`122 - ${`\u001b[${35}m${"erroneous entities"}\u001b[${39}m`} - potentially clashing incomplete named entities`, () => {
+test(`122 - erroneous entities - potentially clashing incomplete named entities`, () => {
   equal(det(ok, not, 0, "aaa&zwnjaaa").res, "aaa&zwnj;aaa", "122.01");
 });
 
-test(`123 - ${`\u001b[${35}m${"erroneous entities"}\u001b[${39}m`} - potentially clashing incomplete named entities`, () => {
+test(`123 - erroneous entities - potentially clashing incomplete named entities`, () => {
   equal(
     det(ok, not, 0, "aaa&pi&piv&pi&pivaaa", {
       convertEntities: false,
@@ -1818,7 +1829,7 @@ test(`123 - ${`\u001b[${35}m${"erroneous entities"}\u001b[${39}m`} - potentially
   );
 });
 
-test(`124 - ${`\u001b[${35}m${"erroneous entities"}\u001b[${39}m`} - potentially clashing incomplete named entities`, () => {
+test(`124 - erroneous entities - potentially clashing incomplete named entities`, () => {
   equal(
     det(ok, not, 0, "aaa&pi&piv&pi&pivaaa", {
       convertEntities: true,
@@ -1829,7 +1840,7 @@ test(`124 - ${`\u001b[${35}m${"erroneous entities"}\u001b[${39}m`} - potentially
   );
 });
 
-test(`125 - ${`\u001b[${35}m${"erroneous entities"}\u001b[${39}m`} - precaution against false positives`, () => {
+test(`125 - erroneous entities - precaution against false positives`, () => {
   mixer({
     convertEntities: false,
     removeWidows: true,
@@ -1848,7 +1859,7 @@ test(`125 - ${`\u001b[${35}m${"erroneous entities"}\u001b[${39}m`} - precaution 
   });
 });
 
-test(`126 - ${`\u001b[${35}m${"erroneous entities"}\u001b[${39}m`} - potentially clashing incomplete named entities`, () => {
+test(`126 - erroneous entities - potentially clashing incomplete named entities`, () => {
   equal(
     det(ok, not, 0, "aaa&sup&sup1&sup&sup2&sup&sup3&sup&supeaaa").res,
     "aaa&sup;&sup1;&sup;&sup2;&sup;&sup3;&sup;&supe;aaa",
@@ -1856,7 +1867,7 @@ test(`126 - ${`\u001b[${35}m${"erroneous entities"}\u001b[${39}m`} - potentially
   );
 });
 
-test(`127 - ${`\u001b[${35}m${"erroneous entities"}\u001b[${39}m`} - potentially clashing incomplete named entities`, () => {
+test(`127 - erroneous entities - potentially clashing incomplete named entities`, () => {
   equal(
     det(ok, not, 0, "aaa&theta&thetasym&theta&thetasymaaa", {
       convertEntities: false,
@@ -1866,7 +1877,7 @@ test(`127 - ${`\u001b[${35}m${"erroneous entities"}\u001b[${39}m`} - potentially
   );
 });
 
-test(`128 - ${`\u001b[${35}m${"erroneous entities"}\u001b[${39}m`} - potentially clashing incomplete named entities`, () => {
+test(`128 - erroneous entities - potentially clashing incomplete named entities`, () => {
   equal(
     det(ok, not, 0, "aaa&ang&angst&ang&angstaaa").res,
     "aaa&ang;&#xC5;&ang;&#xC5;aaa",
@@ -1877,11 +1888,11 @@ test(`128 - ${`\u001b[${35}m${"erroneous entities"}\u001b[${39}m`} - potentially
 // 09. sanity checks
 // -----------------------------------------------------------------------------
 
-test(`129 - ${`\u001b[${90}m${"sanity checks"}\u001b[${39}m`} - checking if entity references are left intact`, () => {
+test(`129 - sanity checks - checking if entity references are left intact`, () => {
   equal(det(ok, not, 0, "aaa&lt;bbb ccc").res, "aaa&lt;bbb ccc", "129.01");
 });
 
-test(`130 - ${`\u001b[${90}m${"sanity checks"}\u001b[${39}m`} - checking if entity references are left intact`, () => {
+test(`130 - sanity checks - checking if entity references are left intact`, () => {
   equal(
     det(ok, not, 0, "aaa&lt;bbb ccc", {
       convertEntities: true,
@@ -1891,7 +1902,7 @@ test(`130 - ${`\u001b[${90}m${"sanity checks"}\u001b[${39}m`} - checking if enti
   );
 });
 
-test(`131 - ${`\u001b[${90}m${"sanity checks"}\u001b[${39}m`} - checking if entity references are left intact`, () => {
+test(`131 - sanity checks - checking if entity references are left intact`, () => {
   equal(
     det(ok, not, 0, "aaa&lt;bbb ccc", {
       convertEntities: false,
@@ -1901,11 +1912,11 @@ test(`131 - ${`\u001b[${90}m${"sanity checks"}\u001b[${39}m`} - checking if enti
   );
 });
 
-test(`132 - ${`\u001b[${90}m${"sanity checks"}\u001b[${39}m`} - checking if entity references are left intact`, () => {
+test(`132 - sanity checks - checking if entity references are left intact`, () => {
   equal(det(ok, not, 0, "aaa<bbb ccc").res, "aaa&lt;bbb ccc", "132.01");
 });
 
-test(`133 - ${`\u001b[${90}m${"sanity checks"}\u001b[${39}m`} - checking if entity references are left intact`, () => {
+test(`133 - sanity checks - checking if entity references are left intact`, () => {
   equal(
     det(ok, not, 0, "aaa<bbb ccc", { convertEntities: true }).res,
     "aaa&lt;bbb ccc",
@@ -1913,7 +1924,7 @@ test(`133 - ${`\u001b[${90}m${"sanity checks"}\u001b[${39}m`} - checking if enti
   );
 });
 
-test(`134 - ${`\u001b[${90}m${"sanity checks"}\u001b[${39}m`} - checking if entity references are left intact`, () => {
+test(`134 - sanity checks - checking if entity references are left intact`, () => {
   equal(
     det(ok, not, 0, "aaa<bbb ccc", { convertEntities: false }).res,
     "aaa<bbb ccc",
@@ -1921,7 +1932,7 @@ test(`134 - ${`\u001b[${90}m${"sanity checks"}\u001b[${39}m`} - checking if enti
   );
 });
 
-test(`135 - ${`\u001b[${90}m${"sanity checks"}\u001b[${39}m`} - precaution against false positives`, () => {
+test(`135 - sanity checks - precaution against false positives`, () => {
   mixer({
     removeWidows: false,
   }).forEach((opt, n) => {
@@ -1934,12 +1945,12 @@ test(`135 - ${`\u001b[${90}m${"sanity checks"}\u001b[${39}m`} - precaution again
         opt,
       ).res,
       "Zzz times; Zzzz or; Zzzzzz real; Zzzz alpha; Zzzzz exist; Zzzzz euro;",
-      JSON.stringify(opt, null, 4),
+      `135.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test(`136 - ${`\u001b[${90}m${"sanity checks"}\u001b[${39}m`} - precaution against false positives`, () => {
+test(`136 - sanity checks - precaution against false positives`, () => {
   mixer({
     convertEntities: true,
     removeWidows: true,
@@ -1953,7 +1964,7 @@ test(`136 - ${`\u001b[${90}m${"sanity checks"}\u001b[${39}m`} - precaution again
         opt,
       ).res,
       "Zzz times; Zzzz or; Zzzzzz real; Zzzz alpha; Zzzzz exist; Zzzzz&nbsp;euro;",
-      JSON.stringify(opt, null, 4),
+      `136.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -1991,7 +2002,7 @@ test("139 - numeric entities", () => {
         opt,
       ).res,
       "&#x2D8;&#x2216;&#x106;&#x2299;&#x2145;&#x22C4;&darr;&lt;&rarr;&#x2218;&#x219F;&#x2016;&#xC5;&#x17C; a",
-      JSON.stringify(opt, null, 4),
+      `139.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -2003,7 +2014,7 @@ test("140 - wrong named entity QUOT into quot", () => {
     equal(
       det(ok, not, n, "&QUOT;", opt).res,
       "&quot;",
-      JSON.stringify(opt, null, 4),
+      `140.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -2015,7 +2026,7 @@ test("141 - enforce spaces after semicolons - semicol between letters, addMissin
     equal(
       det(ok, not, n, "aaa;aaa", opt).res,
       "aaa; aaa",
-      JSON.stringify(opt, null, 4),
+      `141.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -2027,7 +2038,7 @@ test("142 - enforce spaces after semicolons - semicol between letters, addMissin
     equal(
       det(ok, not, n, "aaa;aaa", opt).res,
       "aaa;aaa",
-      JSON.stringify(opt, null, 4),
+      `142.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -2039,7 +2050,7 @@ test("143 - enforce spaces after semicolons - semicol between letters, ends with
     equal(
       det(ok, not, n, "aaa;aaa;", opt).res,
       "aaa; aaa;",
-      JSON.stringify(opt, null, 4),
+      `143.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -2051,7 +2062,7 @@ test("144 - enforce spaces after semicolons - semicol between letters, ends with
     equal(
       det(ok, not, n, "aaa;aaa;", opt).res,
       "aaa;aaa;",
-      JSON.stringify(opt, null, 4),
+      `144.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -2064,7 +2075,7 @@ test("145 - enforce spaces after semicolons - semicol fixes must not affect HTML
     equal(
       det(ok, not, n, "aaa&nbsp;aaa", opt).res,
       "aaa&nbsp;aaa",
-      JSON.stringify(opt, null, 4),
+      `145.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -2076,7 +2087,7 @@ test("146 - enforce spaces after dot if upper-case letter follows", () => {
     equal(
       det(ok, not, n, "aaa.Aaa", opt).res,
       "aaa. Aaa",
-      JSON.stringify(opt, null, 4),
+      `146.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -2086,7 +2097,7 @@ test("147 - does not touch dots among lowercase letters", () => {
     equal(
       det(ok, not, n, "aaa.aaa", opt).res,
       "aaa.aaa",
-      JSON.stringify(opt, null, 4),
+      `147.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -2096,7 +2107,7 @@ test("148 - letters within ASCII are decoded if come encoded", () => {
     equal(
       det(ok, not, n, "&#x61;", opt).res,
       "a",
-      JSON.stringify(opt, null, 4),
+      `148.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
