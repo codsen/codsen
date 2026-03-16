@@ -1,11 +1,8 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
-// import detergent from "../dist/detergent.esm.js";
-// const det1 = detergent.det;
-import { det, mixer } from "../t-util/util.js";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import {
+  leftDoubleQuote,
+  leftSingleQuote,
+  rightDoubleQuote,
   // rawReplacementMark,
   // rawNDash,
   // rawMDash,
@@ -13,14 +10,16 @@ import {
   // hairspace,
   // ellipsis,
   rightSingleQuote,
-  rightDoubleQuote,
-  leftDoubleQuote,
-  leftSingleQuote,
 } from "codsen-utils";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+// import detergent from "../dist/detergent.esm.js";
+// const det1 = detergent.det;
+import { det, mixer } from "../t-util/util.js";
 
 // -----------------------------------------------------------------------------
 
-test("01 - converts single apostrophes - with entities", () => {
+test("001 - converts single apostrophes - with entities", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -28,12 +27,12 @@ test("01 - converts single apostrophes - with entities", () => {
     equal(
       det(ok, not, n, "test's", opt).res,
       "test&rsquo;s",
-      JSON.stringify(opt, null, 4),
+      `001.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("02 - converts single apostrophes - no entities", () => {
+test("002 - converts single apostrophes - no entities", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -41,24 +40,24 @@ test("02 - converts single apostrophes - no entities", () => {
     equal(
       det(ok, not, n, "test's", opt).res,
       "test\u2019s",
-      JSON.stringify(opt, null, 4),
+      `002.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("03 - doesn't convert single apostrophes", () => {
+test("003 - doesn't convert single apostrophes", () => {
   mixer({
     convertApostrophes: false,
   }).forEach((opt, n) => {
     equal(
       det(ok, not, n, "test's", opt).res,
       "test's",
-      JSON.stringify(opt, null, 4),
+      `003.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("04 - converts quotation marks into fancy ones: +entities", () => {
+test("004 - converts quotation marks into fancy ones: +entities", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: true,
@@ -66,12 +65,12 @@ test("04 - converts quotation marks into fancy ones: +entities", () => {
     equal(
       det(ok, not, n, 'this is "citation"', opt).res,
       "this is &ldquo;citation&rdquo;",
-      JSON.stringify(opt, null, 4),
+      `004.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("05 - converts quotation marks into fancy ones: -entities", () => {
+test("005 - converts quotation marks into fancy ones: -entities", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -79,12 +78,12 @@ test("05 - converts quotation marks into fancy ones: -entities", () => {
     equal(
       det(ok, not, n, 'this is "citation"', opt).res,
       "this is \u201Ccitation\u201D",
-      JSON.stringify(opt, null, 4),
+      `005.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("06 - doesn't convert quotation marks: -apostrophes-entities", () => {
+test("006 - doesn't convert quotation marks: -apostrophes-entities", () => {
   mixer({
     convertApostrophes: false,
     convertEntities: false,
@@ -92,12 +91,12 @@ test("06 - doesn't convert quotation marks: -apostrophes-entities", () => {
     equal(
       det(ok, not, n, 'this is "citation"', opt).res,
       'this is "citation"',
-      JSON.stringify(opt, null, 4),
+      `006.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("07 - exclamation mark + double quote", () => {
+test("007 - exclamation mark + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -106,12 +105,12 @@ test("07 - exclamation mark + double quote", () => {
     equal(
       det(ok, not, n, '"What!" he said', opt).res,
       `${leftDoubleQuote}What!${rightDoubleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `007.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("08 - full stop + double quote", () => {
+test("008 - full stop + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -120,12 +119,12 @@ test("08 - full stop + double quote", () => {
     equal(
       det(ok, not, n, '"What." he said', opt).res,
       `${leftDoubleQuote}What.${rightDoubleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `008.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("09 - comma + double quote", () => {
+test("009 - comma + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -134,12 +133,12 @@ test("09 - comma + double quote", () => {
     equal(
       det(ok, not, n, '"What," he said', opt).res,
       `${leftDoubleQuote}What,${rightDoubleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `009.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("10 - semicolon + double quote", () => {
+test("010 - semicolon + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -148,12 +147,12 @@ test("10 - semicolon + double quote", () => {
     equal(
       det(ok, not, n, '"What;" he said', opt).res,
       `${leftDoubleQuote}What;${rightDoubleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `010.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("11 - question mark + double quote", () => {
+test("011 - question mark + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -162,12 +161,12 @@ test("11 - question mark + double quote", () => {
     equal(
       det(ok, not, n, '"What?" he said', opt).res,
       `${leftDoubleQuote}What?${rightDoubleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `011.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("12 - exclamation mark + double quote + space", () => {
+test("012 - exclamation mark + double quote + space", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -176,12 +175,12 @@ test("12 - exclamation mark + double quote + space", () => {
     equal(
       det(ok, not, n, "'What!' he said", opt).res,
       `${leftSingleQuote}What!${rightSingleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `012.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("13 - full stop + double quote + space", () => {
+test("013 - full stop + double quote + space", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -190,12 +189,12 @@ test("13 - full stop + double quote + space", () => {
     equal(
       det(ok, not, n, "'What.' he said", opt).res,
       `${leftSingleQuote}What.${rightSingleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `013.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("14 - comma + double quote + space", () => {
+test("014 - comma + double quote + space", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -204,12 +203,12 @@ test("14 - comma + double quote + space", () => {
     equal(
       det(ok, not, n, "'What,' he said", opt).res,
       `${leftSingleQuote}What,${rightSingleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `014.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("15 - semicolon + double quote + space", () => {
+test("015 - semicolon + double quote + space", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -218,12 +217,12 @@ test("15 - semicolon + double quote + space", () => {
     equal(
       det(ok, not, n, "'What;' he said", opt).res,
       `${leftSingleQuote}What;${rightSingleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `015.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("16 - question mark + double quote + space", () => {
+test("016 - question mark + double quote + space", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -232,12 +231,12 @@ test("16 - question mark + double quote + space", () => {
     equal(
       det(ok, not, n, "'What?' he said", opt).res,
       `${leftSingleQuote}What?${rightSingleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `016.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("17 - exclamation mark + single quote + double quote", () => {
+test("017 - exclamation mark + single quote + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -246,12 +245,12 @@ test("17 - exclamation mark + single quote + double quote", () => {
     equal(
       det(ok, not, n, "\"'What!'\" he said", opt).res,
       `${leftDoubleQuote}${leftSingleQuote}What!${rightSingleQuote}${rightDoubleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `017.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("18 - full stop + single quote + double quote", () => {
+test("018 - full stop + single quote + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -260,12 +259,12 @@ test("18 - full stop + single quote + double quote", () => {
     equal(
       det(ok, not, n, "\"'What.'\" he said", opt).res,
       `${leftDoubleQuote}${leftSingleQuote}What.${rightSingleQuote}${rightDoubleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `018.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("19 - comma + single quote + double quote", () => {
+test("019 - comma + single quote + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -274,12 +273,12 @@ test("19 - comma + single quote + double quote", () => {
     equal(
       det(ok, not, n, "\"'What,'\" he said", opt).res,
       `${leftDoubleQuote}${leftSingleQuote}What,${rightSingleQuote}${rightDoubleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `019.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("20 - semicolon + single quote + double quote", () => {
+test("020 - semicolon + single quote + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -288,12 +287,12 @@ test("20 - semicolon + single quote + double quote", () => {
     equal(
       det(ok, not, n, "\"'What;'\" he said", opt).res,
       `${leftDoubleQuote}${leftSingleQuote}What;${rightSingleQuote}${rightDoubleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `020.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("21 - question mark + single quote + double quote", () => {
+test("021 - question mark + single quote + double quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -302,12 +301,12 @@ test("21 - question mark + single quote + double quote", () => {
     equal(
       det(ok, not, n, "\"'What;'\" he said", opt).res,
       `${leftDoubleQuote}${leftSingleQuote}What;${rightSingleQuote}${rightDoubleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `021.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("22 - exclamation mark + double quote + single quote", () => {
+test("022 - exclamation mark + double quote + single quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -316,12 +315,12 @@ test("22 - exclamation mark + double quote + single quote", () => {
     equal(
       det(ok, not, n, "'\"What!\"' he said", opt).res,
       `${leftSingleQuote}${leftDoubleQuote}What!${rightDoubleQuote}${rightSingleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `022.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("23 - full stop + double quote + single quote", () => {
+test("023 - full stop + double quote + single quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -330,12 +329,12 @@ test("23 - full stop + double quote + single quote", () => {
     equal(
       det(ok, not, n, "'\"What.\"' he said", opt).res,
       `${leftSingleQuote}${leftDoubleQuote}What.${rightDoubleQuote}${rightSingleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `023.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("24 - comma + double quote + single quote", () => {
+test("024 - comma + double quote + single quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -344,12 +343,12 @@ test("24 - comma + double quote + single quote", () => {
     equal(
       det(ok, not, n, "'\"What,\"' he said", opt).res,
       `${leftSingleQuote}${leftDoubleQuote}What,${rightDoubleQuote}${rightSingleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `024.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("25 - semicolon + double quote + single quote", () => {
+test("025 - semicolon + double quote + single quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -358,12 +357,12 @@ test("25 - semicolon + double quote + single quote", () => {
     equal(
       det(ok, not, n, "'\"What;\"' he said", opt).res,
       `${leftSingleQuote}${leftDoubleQuote}What;${rightDoubleQuote}${rightSingleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `025.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("26 - question mark + double quote + single quote", () => {
+test("026 - question mark + double quote + single quote", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -372,7 +371,7 @@ test("26 - question mark + double quote + single quote", () => {
     equal(
       det(ok, not, n, "'\"What?\"' he said", opt).res,
       `${leftSingleQuote}${leftDoubleQuote}What?${rightDoubleQuote}${rightSingleQuote} he said`,
-      JSON.stringify(opt, null, 4),
+      `026.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -381,7 +380,7 @@ test("26 - question mark + double quote + single quote", () => {
 // https://github.com/kemitchell/straight-to-curly-quotes.JSON.
 // License CC0-1.0
 
-test("27 - one word wrapped with double quotes", () => {
+test("027 - one word wrapped with double quotes", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -390,12 +389,12 @@ test("27 - one word wrapped with double quotes", () => {
     equal(
       det(ok, not, n, '"Hello!"', opt).res,
       "“Hello!”",
-      JSON.stringify(opt, null, 4),
+      `027.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("28 - single quote surrounded by letters", () => {
+test("028 - single quote surrounded by letters", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -404,12 +403,12 @@ test("28 - single quote surrounded by letters", () => {
     equal(
       det(ok, not, n, "ain't", opt).res,
       "ain’t",
-      JSON.stringify(opt, null, 4),
+      `028.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("29 - single quote surrounded by letters 2", () => {
+test("029 - single quote surrounded by letters 2", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -418,12 +417,12 @@ test("29 - single quote surrounded by letters 2", () => {
     equal(
       det(ok, not, n, "ma'am", opt).res,
       "ma’am",
-      JSON.stringify(opt, null, 4),
+      `029.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("30 - leading single quote", () => {
+test("030 - leading single quote", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -433,12 +432,12 @@ test("30 - leading single quote", () => {
     equal(
       det(ok, not, n, "'Twas the night", opt).res,
       `${rightSingleQuote}Twas the night`,
-      JSON.stringify(opt, null, 4),
+      `030.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("31 - mixed quotes within a single sentence", () => {
+test("031 - mixed quotes within a single sentence", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -449,12 +448,12 @@ test("31 - mixed quotes within a single sentence", () => {
       det(ok, not, n, '"Hello," said the spider. "\'Shelob\' is my name."', opt)
         .res,
       "“Hello,” said the spider. “‘Shelob’ is my name.”",
-      JSON.stringify(opt, null, 4),
+      `031.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("32 - single letters wrapped with single quotes", () => {
+test("032 - single letters wrapped with single quotes", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -464,12 +463,12 @@ test("32 - single letters wrapped with single quotes", () => {
     equal(
       det(ok, not, n, "'A', 'B', and 'C' are letters.", opt).res,
       "‘A’, ‘B’, and ‘C’ are letters.",
-      JSON.stringify(opt, null, 4),
+      `032.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("33 - words wrapped with single quotes", () => {
+test("033 - words wrapped with single quotes", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -485,12 +484,12 @@ test("33 - words wrapped with single quotes", () => {
         opt,
       ).res,
       "‘Oak,’ ‘elm,’ and ‘beech’ are names of trees. So is ‘pine.’",
-      JSON.stringify(opt, null, 4),
+      `033.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("34 - double quotes within single quotes", () => {
+test("034 - double quotes within single quotes", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -506,12 +505,12 @@ test("34 - double quotes within single quotes", () => {
         opt,
       ).res,
       "‘He said, “I want to go.”’ Were you alive in the 70’s?",
-      JSON.stringify(opt, null, 4),
+      `034.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("35 - double quotes within single quotes", () => {
+test("035 - double quotes within single quotes", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -521,12 +520,12 @@ test("35 - double quotes within single quotes", () => {
     equal(
       det(ok, not, n, "\"That's a 'magic' sock.\"", opt).res,
       "“That’s a ‘magic’ sock.”",
-      JSON.stringify(opt, null, 4),
+      `035.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("36 - double quotes within double quotes", () => {
+test("036 - double quotes within double quotes", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -542,12 +541,12 @@ test("36 - double quotes within double quotes", () => {
         opt,
       ).res,
       "Welcome to Website Name! Company Name, Inc. (“Company Name” or “Company”) recommends that you read the following terms and conditions carefully.",
-      JSON.stringify(opt, null, 4),
+      `036.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("37 - single quotes within double quotes", () => {
+test("037 - single quotes within double quotes", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -563,12 +562,12 @@ test("37 - single quotes within double quotes", () => {
         opt,
       ).res,
       "Welcome to Website Name! Company Name, Inc. (‘Company Name’ or ‘Company’) recommends that you read the following terms and conditions carefully.",
-      JSON.stringify(opt, null, 4),
+      `037.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("38 - plural", () => {
+test("038 - plural", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -578,12 +577,12 @@ test("38 - plural", () => {
     equal(
       det(ok, not, n, "'85 was a good year. (The entire '80s were.)", opt).res,
       "’85 was a good year. (The entire ’80s were.)",
-      JSON.stringify(opt, null, 4),
+      `038.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("39 - single quote in the end of a word", () => {
+test("039 - single quote in the end of a word", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -592,12 +591,12 @@ test("39 - single quote in the end of a word", () => {
     equal(
       det(ok, not, n, "Workin' hard", opt).res,
       "Workin’ hard",
-      JSON.stringify(opt, null, 4),
+      `039.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("40 - single quote in the front of a word", () => {
+test("040 - single quote in the front of a word", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -607,12 +606,12 @@ test("40 - single quote in the front of a word", () => {
     equal(
       det(ok, not, n, "'Twas the night before Christmas.", opt).res,
       "’Twas the night before Christmas.",
-      JSON.stringify(opt, null, 4),
+      `040.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("41 - single quote in the front of a word plus in the middle", () => {
+test("041 - single quote in the front of a word plus in the middle", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -622,12 +621,12 @@ test("41 - single quote in the front of a word plus in the middle", () => {
     equal(
       det(ok, not, n, "'Twasn't the night before Christmas.", opt).res,
       "’Twasn’t the night before Christmas.",
-      JSON.stringify(opt, null, 4),
+      `041.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("42 - single quote in the front of a word plus in the middle", () => {
+test("042 - single quote in the front of a word plus in the middle", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -637,12 +636,12 @@ test("42 - single quote in the front of a word plus in the middle", () => {
     equal(
       det(ok, not, n, "'Tis the night before Christmas.", opt).res,
       "’Tis the night before Christmas.",
-      JSON.stringify(opt, null, 4),
+      `042.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("43 - single quote in the front of a word plus in the middle", () => {
+test("043 - single quote in the front of a word plus in the middle", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -652,12 +651,12 @@ test("43 - single quote in the front of a word plus in the middle", () => {
     equal(
       det(ok, not, n, "'Tisn't the night before Christmas.", opt).res,
       "’Tisn’t the night before Christmas.",
-      JSON.stringify(opt, null, 4),
+      `043.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("44 - single quote in the front of a string", () => {
+test("044 - single quote in the front of a string", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -667,12 +666,12 @@ test("44 - single quote in the front of a string", () => {
     equal(
       det(ok, not, n, "'Twill be the night before Christmas.", opt).res,
       `${rightSingleQuote}Twill be the night before Christmas.`,
-      JSON.stringify(opt, null, 4),
+      `044.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("45 - single quote in the front of a string", () => {
+test("045 - single quote in the front of a string", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -682,12 +681,12 @@ test("45 - single quote in the front of a string", () => {
     equal(
       det(ok, not, n, "'Twould be the night before Christmas.", opt).res,
       `${rightSingleQuote}Twould be the night before Christmas.`,
-      JSON.stringify(opt, null, 4),
+      `045.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("46 - single quote in the front of a string", () => {
+test("046 - single quote in the front of a string", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -703,12 +702,12 @@ test("46 - single quote in the front of a string", () => {
         opt,
       ).res,
       "’Twere the night before Christmas, I would be happy.",
-      JSON.stringify(opt, null, 4),
+      `046.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("47 - single quote in the front of a string", () => {
+test("047 - single quote in the front of a string", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -724,12 +723,12 @@ test("47 - single quote in the front of a string", () => {
         opt,
       ).res,
       "’Tweren’t the night before Christmas, I would be happy.",
-      JSON.stringify(opt, null, 4),
+      `047.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("48 - single quotes wrapping word, ending in the middle", () => {
+test("048 - single quotes wrapping word, ending in the middle", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -739,12 +738,12 @@ test("48 - single quotes wrapping word, ending in the middle", () => {
     equal(
       det(ok, not, n, "'Twon't be the night before Christmas.", opt).res,
       "’Twon’t be the night before Christmas.",
-      JSON.stringify(opt, null, 4),
+      `048.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("49 - single quotes wrapping a word, ending in between words", () => {
+test("049 - single quotes wrapping a word, ending in between words", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -754,12 +753,12 @@ test("49 - single quotes wrapping a word, ending in between words", () => {
     equal(
       det(ok, not, n, "'70s are my favorite numbers,' she said.", opt).res,
       `${rightSingleQuote}70s are my favorite numbers,${rightSingleQuote} she said.`,
-      JSON.stringify(opt, null, 4),
+      `049.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("50 - single quote on years", () => {
+test("050 - single quote on years", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -769,12 +768,12 @@ test("50 - single quote on years", () => {
     equal(
       det(ok, not, n, "'70s fashion was weird.", opt).res,
       `${rightSingleQuote}70s fashion was weird.`,
-      JSON.stringify(opt, null, 4),
+      `050.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("51 - inches", () => {
+test("051 - inches", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -784,12 +783,12 @@ test("51 - inches", () => {
     equal(
       det(ok, not, n, '12" record, 5\'10" height', opt).res,
       "12″ record, 5′10″ height",
-      JSON.stringify(opt, null, 4),
+      `051.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("52 - word wrapped with double quotes in the end of a string", () => {
+test("052 - word wrapped with double quotes in the end of a string", () => {
   mixer({
     convertApostrophes: true,
     convertEntities: false,
@@ -798,12 +797,12 @@ test("52 - word wrapped with double quotes in the end of a string", () => {
     equal(
       det(ok, not, n, 'Model "T2000"', opt).res,
       `Model ${leftDoubleQuote}T2000${rightDoubleQuote}`,
-      JSON.stringify(opt, null, 4),
+      `052.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("53 - plural", () => {
+test("053 - plural", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -813,12 +812,12 @@ test("53 - plural", () => {
     equal(
       det(ok, not, n, "iPad 3's battery life is not great.", opt).res,
       "iPad 3’s battery life is not great.",
-      JSON.stringify(opt, null, 4),
+      `053.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("54 - plural", () => {
+test("054 - plural", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -834,13 +833,13 @@ test("54 - plural", () => {
         opt,
       ).res,
       "Book ’em, Danno. Rock ’n’ roll. ’Cause ’twas the season.",
-      JSON.stringify(opt, null, 4),
+      `054.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
 // Example from https://practicaltypography.com/apostrophes.html
-test("55 - Buttericks example - on", () => {
+test("055 - Buttericks example - on", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -850,12 +849,12 @@ test("55 - Buttericks example - on", () => {
     equal(
       det(ok, not, n, "In the '60s, rock 'n' roll", opt).res,
       "In the ’60s, rock ’n’ roll",
-      JSON.stringify(opt, null, 4),
+      `055.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("56 - Buttericks example - off", () => {
+test("056 - Buttericks example - off", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: false,
@@ -865,12 +864,12 @@ test("56 - Buttericks example - off", () => {
     equal(
       det(ok, not, n, "In the '60s, rock 'n' roll", opt).res,
       "In the '60s, rock 'n' roll",
-      JSON.stringify(opt, null, 4),
+      `056.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("57 - Hawaii - sets okina #1", () => {
+test("057 - Hawaii - sets okina #1", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -880,12 +879,12 @@ test("57 - Hawaii - sets okina #1", () => {
     equal(
       det(ok, not, n, "Hawai'i", opt).res,
       "Hawai‘i",
-      JSON.stringify(opt, null, 4),
+      `057.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
 
-test("58 - Hawaii - sets okina #2", () => {
+test("058 - Hawaii - sets okina #2", () => {
   mixer({
     removeWidows: false,
     convertApostrophes: true,
@@ -895,7 +894,7 @@ test("58 - Hawaii - sets okina #2", () => {
     equal(
       det(ok, not, n, "O'ahu", opt).res,
       "O‘ahu",
-      JSON.stringify(opt, null, 4),
+      `058.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
