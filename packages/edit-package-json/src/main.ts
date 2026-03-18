@@ -1,6 +1,6 @@
-import { left, right, chompLeft } from "string-left-right";
+import { isNum, isStr } from "codsen-utils";
 import { rApply } from "ranges-apply";
-import { isStr, isNum } from "codsen-utils";
+import { chompLeft, left, right } from "string-left-right";
 
 import { version as v } from "../package.json";
 
@@ -72,7 +72,7 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
     // if (i > 80 && str[i] && str[i].trim()) {
     // if (str[i] && str[i].trim()) {
     if (str[i] !== " ") {
-      DEV && console.log(something);
+      DEV && console.log(`75 ${something}`);
     }
   }
   let len = str.length;
@@ -829,7 +829,7 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
 
           DEV &&
             console.log(
-              `RETURNING:\n${`\u001b[${36}m${`[0, ${valueStartedAt}]`}\u001b[${39}m`}: ${JSON.stringify(
+              `832 RETURNING:\n${`\u001b[${36}m${`[0, ${valueStartedAt}]`}\u001b[${39}m`}: ${JSON.stringify(
                 str.slice(0, valueStartedAt),
                 null,
                 0,
@@ -1021,4 +1021,4 @@ function del(str: string, path: string): string {
   return main({ str, path, mode: "del" });
 }
 
-export { set, del, version };
+export { del, set, version };
