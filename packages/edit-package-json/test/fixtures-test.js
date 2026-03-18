@@ -1,18 +1,20 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import path from "path";
-import { fileURLToPath } from "url";
-import { readFileSync as read, writeFileSync as write } from "fs";
-import objectPath from "object-path";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 
-import { set, del } from "../dist/edit-package-json.esm.js";
+import { readFileSync as read, writeFileSync as write } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import objectPath from "object-path";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+
+import { del, set } from "../dist/edit-package-json.esm.js";
 
 const __filename2 = fileURLToPath(import.meta.url);
 const __dirname2 = path.dirname(__filename2);
 
-function compare(eq, testName, pathToProcess, val) {
-  let isSet = arguments.length === 4;
+function compare(eq, testName, pathToProcess, ...values) {
+  let isSet = values.length === 1;
+  let [val] = values;
   // console.log(`011 ${isSet ? "SET" : "DEL"} mode`);
 
   let source = read(
@@ -24,21 +26,23 @@ function compare(eq, testName, pathToProcess, val) {
     "utf8",
   );
 
+  let controlPath = path.join(__dirname2, "fixtures", `${testName}.control.md`);
+  let checkme;
   try {
-    let checkme = Number.parseInt(
-      read(path.join(__dirname2, "fixtures", `${testName}.control.md`), "utf8"),
-      10,
-    );
+    checkme = Number.parseInt(read(controlPath, "utf8"), 10);
+  } catch (_e) {
+    // first run - the character count control record doesn't exist yet
+    write(controlPath, String(source.trim().length));
+  }
+
+  // Deliberately outside the catch above: a mismatch means the fixture drifted
+  // (a formatter reaching it, most likely) and has to fail loudly, not be
+  // papered over by rewriting the control record.
+  if (checkme !== undefined) {
     eq(
       source.trim().length,
       checkme,
       `either delete testfile size control record file, ${testName}.control.md`,
-    );
-  } catch (e) {
-    // if the control file character count file doesn't exist, write it
-    write(
-      path.join(__dirname2, "fixtures", `${testName}.control.md`),
-      source.trim().length,
     );
   }
 
