@@ -1,8 +1,8 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
-import { set, del } from "../dist/edit-package-json.esm.js";
+import { del, set } from "../dist/edit-package-json.esm.js";
 
 // edit JSON as string
 assert.equal(
