@@ -1,6 +1,6 @@
 import objectPath from "object-path";
 
-import { set, del } from "../../dist/edit-package-json.esm.js";
+import { del, set } from "../../dist/edit-package-json.esm.js";
 
 function setter(
   equal,
@@ -59,4 +59,4 @@ function deleter(equal, source, result, path, idNum) {
   equal(temp, JSON.parse(result), `${idNum}.03 - objectPath del is deep-equal`);
 }
 
-export { setter, deleter };
+export { deleter, setter };
