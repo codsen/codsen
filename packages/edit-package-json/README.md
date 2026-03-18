@@ -32,9 +32,9 @@ npm i edit-package-json
 ## Quick Take
 
 ```js
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
-import { set, del } from "edit-package-json";
+import { del, set } from "edit-package-json";
 
 // edit JSON as string
 assert.equal(
@@ -83,9 +83,10 @@ assert.equal(
 );
 ```
 
+
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/edit-package-json/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/edit-package-json/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/edit-package-json/CHANGELOG.md).
 
 ## Contributing
 
@@ -95,7 +96,7 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 MIT License
 
-Copyright © 2010-2025 Roy Revelt and other contributors
+Copyright © 2010-2026 Roy Revelt and other contributors
 
 Passes adapted .set() unit tests from https://github.com/mariocasciaro/object-path/blob/master/test.js, MIT Licence Copyright (c) 2015 Mario Casciaro
 
