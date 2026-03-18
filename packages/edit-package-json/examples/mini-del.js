@@ -1,6 +1,6 @@
 // Minimal example, `del()`
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { del } from "../dist/edit-package-json.esm.js";
 
