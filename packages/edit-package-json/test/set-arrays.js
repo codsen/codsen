@@ -1,33 +1,34 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { setter } from "./util/util.js";
+
 // import { set, del } from "../dist/edit-package-json.esm.js";
 
 // -----------------------------------------------------------------------------
 // 06. set - on arrays, existing path
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${"set"}\u001b[${39}m`} - ${`\u001b[${36}m${"existing path"}\u001b[${39}m`} - nested arrays 1`, () => {
+test(`01 - set - ${`\u001b[${36}m${"existing path"}\u001b[${39}m`} - nested arrays 1`, () => {
   let input = "[[]]";
   let result = "[true]";
   setter(equal, input, result, "0", true, "06.01");
 });
 
-test(`02 - ${`\u001b[${34}m${"set"}\u001b[${39}m`} - ${`\u001b[${36}m${"existing path"}\u001b[${39}m`} - nested arrays 1`, () => {
+test(`02 - set - ${`\u001b[${36}m${"existing path"}\u001b[${39}m`} - nested arrays 1`, () => {
   let input = "[{}]";
   let result = "[true]";
   setter(equal, input, result, "0", true, "06.02");
 });
 
-test(`03 - ${`\u001b[${34}m${"set"}\u001b[${39}m`} - ${`\u001b[${36}m${"existing path"}\u001b[${39}m`} - nested arrays 1`, () => {
+test(`03 - set - ${`\u001b[${36}m${"existing path"}\u001b[${39}m`} - nested arrays 1`, () => {
   let input = "[false]";
   let result = "[true]";
   setter(equal, input, result, "0", true, "06.03");
 });
 
-test(`04 - ${`\u001b[${34}m${"set"}\u001b[${39}m`} - ${`\u001b[${36}m${"existing path"}\u001b[${39}m`} - nested arrays 1`, () => {
+test(`04 - set - ${`\u001b[${36}m${"existing path"}\u001b[${39}m`} - nested arrays 1`, () => {
   let input = '["z"]';
   let result = "[true]";
   setter(equal, input, result, "0", true, "06.04");
