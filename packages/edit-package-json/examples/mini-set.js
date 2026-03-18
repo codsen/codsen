@@ -1,6 +1,6 @@
 // Minimal example, `set()`
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { set } from "../dist/edit-package-json.esm.js";
 
