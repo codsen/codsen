@@ -1,16 +1,16 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import { promises as fsp } from "fs";
-import objectPath from "object-path";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+
+import { promises as fsp } from "node:fs";
+import path from "node:path";
 import { traverse } from "ast-monkey-traverse";
 import { globby } from "globby";
-import path from "path";
+import objectPath from "object-path";
 import pMap from "p-map";
-import rfdc from "rfdc";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import { set } from "../dist/edit-package-json.esm.js";
 
-const clone = rfdc();
+const clone = structuredClone;
 
 function isStr(something) {
   return typeof something === "string";
@@ -30,7 +30,7 @@ globby([
   )
   .then((objectsArr) => {
     // console.log(objectsArr.length);
-    test("validate the incoming parsed package.json count", () => {
+    test("01 - validate the incoming parsed package.json count", () => {
       ok(
         objectsArr.length,
         `${objectsArr.length} package.json objects are parsed and fed here`,
@@ -53,7 +53,7 @@ globby([
         try {
           calculated = JSON.parse(amended);
         } catch (e) {
-          test("failure in set()", () => {
+          test("02 - failure in set()", () => {
             not.ok(
               `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path
@@ -67,7 +67,7 @@ globby([
           editedRefObj = clone(obj);
           objectPath.set(editedRefObj, innerObj.path, "x");
         } catch (e) {
-          test("failure in objectPath.set():", () => {
+          test("03 - failure in objectPath.set():", () => {
             not.ok(
               `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path
@@ -80,13 +80,13 @@ globby([
         if (!(isStr(key) && key.includes("."))) {
           // only run the test if key's name doesn't include a dot.
           // Object-path won't work while this program will but still we can't compare.
-          test(`${idx} - ${innerObj.path} - our set() is identical to object-path.set()`, () => {
+          test(`04 - ${`${idx} - ${innerObj.path} - our set() is identical to object-path.set()`}`, () => {
             equal(
               calculated,
               editedRefObj,
-              `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
+              `04.01 - ${`package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${
                 innerObj.path
-              }`,
+              }`}`,
             );
           });
         }
