@@ -1,11 +1,11 @@
-import fs from "fs-extra";
-import path from "path";
-import { fileURLToPath } from "url";
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { writeFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { execa } from "execa";
 import { temporaryDirectory } from "tempy";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 const __filename2 = fileURLToPath(import.meta.url);
 const __dirname2 = path.dirname(__filename2);
@@ -20,7 +20,7 @@ test("01 - called upon a single file which is healthy", async () => {
 
   // 2. asynchronously write the test file
 
-  await fs.writeFile(path.join(tempFolder, "test.html"), "aaa");
+  await writeFile(path.join(tempFolder, "test.html"), "aaa");
 
   // 3. call the the CLI via the shell because there are no "path" argument
   // that's fed into the CLI - on the contrary, it's called from some unknown
@@ -46,7 +46,7 @@ test("02 - called upon a single file which contains non-ASCII symbol", async () 
 
   // 2. asynchronously write the test file
 
-  await fs.writeFile(path.join(tempFolder, "test.html"), "£20");
+  await writeFile(path.join(tempFolder, "test.html"), "£20");
 
   // 3. call the the CLI
 
