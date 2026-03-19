@@ -3,29 +3,34 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-import path from "path";
-import chalk from "chalk";
-import fs from "fs";
-import argv from "minimist";
-import { globbySync } from "globby";
+import fs from "node:fs";
+import { createRequire } from "node:module";
+import path from "node:path";
 import { select } from "@inquirer/prompts";
-import { pullAll } from "codsen-utils";
-import { createRequire } from "module";
+import { codsenCLI, pullAll } from "codsen-utils";
+import { within } from "email-all-chars-within-ascii";
+import { globbySync } from "globby";
 import { right } from "string-left-right";
 import updateNotifier from "update-notifier";
-import { within } from "email-all-chars-within-ascii";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
 
-const argv1 = argv(process.argv.slice(2));
-
 const { log } = console;
+
+const colours = {
+  cyan: 36,
+  green: 32,
+  grey: 90,
+  red: 31,
+  yellow: 33,
+};
 
 const state = {};
 state.toDoList = []; // default
 
-const help = `
+const cli = codsenCLI(
+  `
   Usage
     $ withinascii YOURFILE.html
   or, just type "withinascii" and it will let you pick a file
@@ -37,15 +42,35 @@ const help = `
 
   Instructions
     Just call it in the folder where your file is located or provide a path
-`;
+`,
+  {
+    pkg,
+    flags: {
+      len: {
+        type: "number",
+        shortFlag: "l",
+      },
+    },
+  },
+);
 updateNotifier({ pkg }).notify();
+
+function colour(str, colourCode) {
+  return `\u001b[${colourCode}m${str}\u001b[39m`;
+}
+
+function inverse(str) {
+  return `\u001b[7m${str}\u001b[27m`;
+}
 
 async function offerAListOfFilesToPickFrom() {
   let allFilesHere = globbySync("./*.*", "!**/node_modules/**");
   if (!allFilesHere.length) {
     log(
-      chalk.grey("\nemail-all-chars-within-ascii-cli: [THROW_ID_01] ") +
-        chalk.red("Alas, there are no files in this folder!"),
+      colour(
+        "\nemail-all-chars-within-ascii-cli/offerAListOfFilesToPickFrom(): [THROW_ID_01] ",
+        colours.grey,
+      ) + colour("Alas, there are no files in this folder!", colours.red),
     );
     return process.exit(1);
   }
@@ -60,21 +85,22 @@ async function offerAListOfFilesToPickFrom() {
   };
 }
 
-// Step #0. take care of -v and -h flags that are left out in meow.
+// Step #0. take care of the short -v and -h flags, which codsenCLI leaves
+// to us (it answers the long --version and --help on its own).
 // -----------------------------------------------------------------------------
 
-if (argv1.v || argv1.version) {
+if (cli.flags.v || cli.flags.version) {
   log(pkg.version);
   process.exit(0);
-} else if (argv1.h || argv1.help) {
-  log(help);
+} else if (cli.flags.h || cli.flags.help) {
+  log(cli.help);
   process.exit(0);
 }
 
 // Step #1. gather the to-do list of files.
 // -----------------------------------------------------------------------------
 
-state.toDoList = argv1._;
+state.toDoList = cli.input;
 
 // Step #2. create a promise variable and assign it to one of the promises,
 // depending on was the acceptable file passed via args or queries afterwards.
@@ -100,11 +126,15 @@ if (!state.toDoList.length) {
   // write the list of unrecognised file names into the console:
   if (erroneous.length) {
     log(
-      chalk.grey("\nemail-all-chars-within-ascii-cli: [THROW_ID_02] ") +
-        chalk.red(
+      colour(
+        "\nemail-all-chars-within-ascii-cli/main(): [THROW_ID_02] ",
+        colours.grey,
+      ) +
+        colour(
           `Alas, the following file${
             erroneous.length > 1 ? "s don't" : " doesn't"
           } exist: "${erroneous.join('", "')}"`,
+          colours.red,
         ),
     );
   }
@@ -119,8 +149,9 @@ if (!state.toDoList.length) {
 } else {
   // ---------------------------------  3  -------------------------------------
   log(
-    chalk.yellow(
-      "\nemail-all-chars-within-ascii-cli: [THROW_ID_03] Didn't recognise any files!",
+    colour(
+      "\nemail-all-chars-within-ascii-cli/main(): [THROW_ID_03] Didn't recognise any files!",
+      colours.yellow,
     ),
   );
 
@@ -143,36 +174,40 @@ thePromise
       }
       try {
         filesContents = fs.readFileSync(requestedPath, "utf8");
-        let lineLength = argv1.len || argv1.l;
-        if (typeof lineLength === "boolean") {
-          // in case somebody puts empty flag without a value
-          lineLength = undefined;
-        }
+        // an empty "--len" with no value after it comes through as undefined
+        let lineLength = cli.flags.len;
         let findings = within(filesContents, {
           lineLength,
         });
         if (findings.length) {
           noErrors = false;
-          console.log(chalk.grey("\nemail-all-chars-within-ascii-cli:"));
+          console.log(
+            colour("\nemail-all-chars-within-ascii-cli:", colours.grey),
+          );
           findings.forEach((obj) => {
             if (obj.type === "character") {
               console.log(
-                `\n${chalk.cyan(fileNameInfo)}:${chalk.yellow(
+                `\n${colour(fileNameInfo, colours.cyan)}:${colour(
                   obj.line,
-                )}:${chalk.yellow(obj.column)} - ${chalk.red(
+                  colours.yellow,
+                )}:${colour(obj.column, colours.yellow)} - ${colour(
                   "bad character",
-                )} - ${obj.value} ${chalk.grey(
+                  colours.red,
+                )} - ${obj.value} ${colour(
                   `(https://www.fileformat.info/info/unicode/char/${obj.UTF32Hex}/index.htm)`,
+                  colours.grey,
                 )}`,
               );
             } else {
               console.log(
-                `\n${chalk.cyan(fileNameInfo)}:${chalk.yellow(
+                `\n${colour(fileNameInfo, colours.cyan)}:${colour(
                   obj.line,
-                )} - ${chalk.red(
+                  colours.yellow,
+                )} - ${colour(
                   `${obj.value} character-long line (limit ${
-                    argv1.len || argv1.l || 500
+                    cli.flags.len || 500
                   })`,
+                  colours.red,
                 )}`,
               );
             }
@@ -224,32 +259,35 @@ thePromise
             let currLinesChunk = filesContents
               .slice(sliceFrom, sliceTo)
               .replace(/\t/g, " ");
-            console.log(`\n${chalk.inverse(obj.line)} ${currLinesChunk}`);
+            console.log(`\n${inverse(obj.line)} ${currLinesChunk}`);
             console.log(
-              `${chalk.inverse(
-                " ".repeat(String(obj.line).length),
-              )} ${" ".repeat(
+              `${inverse(" ".repeat(String(obj.line).length))} ${" ".repeat(
                 obj.positionIdx -
                   sliceFrom -
                   (obj.type === "character" ? 0 : 1),
-              )}${chalk.red("~")}`,
+              )}${colour("~", colours.red)}`,
             );
           });
 
           process.exit(noErrors ? 0 : 1);
         } else {
           console.log(
-            `${chalk.grey("email-all-chars-within-ascii-cli:")} ${chalk.green(
+            `${colour("email-all-chars-within-ascii-cli:", colours.grey)} ${colour(
               "ALL OK",
+              colours.green,
             )}`,
           );
           process.exit(0);
         }
-      } catch (e1) {
+      } catch (_e1) {
         log(
-          chalk.grey("\nemail-all-chars-within-ascii-cli: [THROW_ID_06] ") +
-            chalk.red(
+          colour(
+            "\nemail-all-chars-within-ascii-cli/main(): [THROW_ID_04] ",
+            colours.grey,
+          ) +
+            colour(
               `Couldn't fetch the file "${path.basename(requestedPath)}"`,
+              colours.red,
             ),
         );
         process.exit(1);
