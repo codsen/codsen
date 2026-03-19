@@ -107,7 +107,7 @@ function within(str: string, opts?: Partial<Opts>): Res[] {
 
     DEV &&
       console.log(
-        `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+        `110 \u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
         }; column = ${column}; line = ${currLine}`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`,
       );
@@ -166,4 +166,4 @@ function within(str: string, opts?: Partial<Opts>): Res[] {
   return res;
 }
 
-export { within, defaults, version };
+export { defaults, version, within };
