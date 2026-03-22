@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 // consume plain, real comb, we're just testing the api
 import { comb } from "../dist/email-comb.esm.js";
@@ -181,7 +181,7 @@ test("21 - wrong inputs, opts.backend", () => {
     () => {
       comb("zzz", { backend: [{}] }); // objects have to have consistent schema: "heads" and "tails" keys
     },
-    "21.01",
+    /THROW_ID_07/,
     "21.01",
   );
 });
@@ -237,6 +237,118 @@ test("28 - wrong inputs, opts.reportProgressFunc", () => {
     },
     /THROW_ID_09/,
     "28.01",
+  );
+});
+
+test("29 - validation errors use the package/function prefix", () => {
+  throws(
+    () => {
+      comb(true);
+    },
+    /email-comb\/comb\(\): \[THROW_ID_01\]/,
+    "29.01",
+  );
+});
+
+test("30 - backend heads and tails must be strings", () => {
+  throws(
+    () => {
+      comb("z", { backend: [{ heads: 1, tails: 2 }] });
+    },
+    /THROW_ID_07/,
+    "30.01",
+  );
+});
+
+test("31 - comment exclusions must be an array or string", () => {
+  throws(
+    () => {
+      comb("z", { doNotRemoveHTMLCommentsWhoseOpeningTagContains: null });
+    },
+    /THROW_ID_10/,
+    "31.01",
+  );
+});
+
+test("32 - comment exclusions must contain strings", () => {
+  throws(
+    () => {
+      comb("z", { doNotRemoveHTMLCommentsWhoseOpeningTagContains: [1] });
+    },
+    /THROW_ID_11/,
+    "32.01",
+  );
+});
+
+test("33 - comment-removal options must be Boolean", () => {
+  throws(
+    () => {
+      comb("z", { removeHTMLComments: 1 });
+    },
+    /THROW_ID_12/,
+    "33.01",
+  );
+  throws(
+    () => {
+      comb("z", { removeCSSComments: 1 });
+    },
+    /THROW_ID_13/,
+    "33.02",
+  );
+});
+
+test("34 - html-crush options must be a plain object", () => {
+  throws(
+    () => {
+      comb("z", { htmlCrushOpts: 1 });
+    },
+    /THROW_ID_14/,
+    "34.01",
+  );
+});
+
+test("35 - progress range values must be finite numbers", () => {
+  throws(
+    () => {
+      comb("z", { reportProgressFuncFrom: "0" });
+    },
+    /THROW_ID_15/,
+    "35.01",
+  );
+  throws(
+    () => {
+      comb("z", { reportProgressFuncTo: Number.POSITIVE_INFINITY });
+    },
+    /THROW_ID_16/,
+    "35.02",
+  );
+});
+
+test("36 - progress range must be ordered", () => {
+  throws(
+    () => {
+      comb("z", { reportProgressFuncFrom: 60, reportProgressFuncTo: 50 });
+    },
+    /THROW_ID_17/,
+    "36.01",
+  );
+});
+
+test("37 - partial html-crush options inherit email-comb defaults", () => {
+  equal(
+    comb("<body>\n  <div>x</div>\n</body>", {
+      htmlCrushOpts: { lineLengthLimit: 80 },
+    }).result,
+    "<body>\n  <div>x</div>\n</body>",
+    "37.01",
+  );
+  equal(
+    comb('<style>.x{color:red}/* keep */</style><body class="x"></body>', {
+      removeCSSComments: false,
+      htmlCrushOpts: { lineLengthLimit: 80 },
+    }).result,
+    '<style>.x{color:red}/* keep */</style><body class="x"></body>',
+    "37.02",
   );
 });
 
