@@ -1,6 +1,6 @@
 // Works even if `<style>` is within `<body>` and there's no `<head>`
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 import { comb } from "../dist/email-comb.esm.js";
 
 const someHtml = `<html>
