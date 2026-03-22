@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { comb } from "./util/util.js";
 
@@ -129,7 +129,7 @@ test("04 - HTML inline CSS comments are removed - commented out selectors - remo
   equal(comb(source).result, intended, "04.01");
 });
 
-test.only("05 - HTML inline CSS comments are removed - commented out selectors - very cheeky contents within comments", () => {
+test("05 - HTML inline CSS comments are removed - commented out selectors - very cheeky contents within comments", () => {
   let source = `<head>
 <style type="text/css">
   .aa {z:2;}
