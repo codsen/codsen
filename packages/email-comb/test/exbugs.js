@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { comb } from "./util/util.js";
 
@@ -469,7 +469,7 @@ test("12 - Cosmin's reported bug", () => {
     '<body><a href="http://a.b/c?d=2&class=xyz&e=0">\n',
   ];
   srcs.forEach((src) => {
-    equal(comb(src).result, src);
+    equal(comb(src).result, src, "12.01");
   });
 });
 
