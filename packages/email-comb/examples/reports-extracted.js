@@ -1,6 +1,6 @@
 // Returns all extracted and deleted classes and id's
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 import { comb } from "../dist/email-comb.esm.js";
 
 const { allInHead, allInBody, deletedFromHead, deletedFromBody } = comb(
