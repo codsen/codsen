@@ -1,6 +1,6 @@
 // Whitelist using wildcards
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 import { comb } from "../dist/email-comb.esm.js";
 
 const someHtml = `<html>
