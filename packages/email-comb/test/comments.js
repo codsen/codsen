@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { comb } from "./util/util.js";
 
@@ -635,6 +635,18 @@ test("21 - comments in the inline styles", () => {
 `;
 
   equal(actual, intended, "21.01");
+});
+
+test("22 - empty Outlook conditional comments respect removal option", () => {
+  let source = "<!--[if mso]><![endif]--><p>x</p>";
+  let removed = comb(source, { removeHTMLComments: true });
+  let retained = comb(source, { removeHTMLComments: false });
+
+  equal(removed.result, "<p>x</p>", "22.01");
+  equal(removed.log.commentsLength, 25, "22.02");
+  equal(removed.log.commentsTakeUpPercentageOfOriginal, 76, "22.03");
+  equal(retained.result, source, "22.04");
+  equal(retained.log.commentsLength, 0, "22.05");
 });
 
 // test("22 - comments in the inline styles", () => {
