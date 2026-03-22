@@ -1,6 +1,7 @@
 // deps
-import path from "path";
-import fs from "fs";
+
+import fs from "node:fs";
+import path from "node:path";
 
 import { runPerf } from "../../../ops/scripts/perf.js";
 import { comb } from "../dist/email-comb.esm.js";

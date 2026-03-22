@@ -17,6 +17,18 @@ interface Opts {
   reportProgressFuncFrom: number;
   reportProgressFuncTo: number;
 }
+interface InputOpts {
+  whitelist?: string | string[];
+  backend?: HeadsAndTailsObj[];
+  uglify?: boolean | 0 | 1;
+  removeHTMLComments?: boolean;
+  removeCSSComments?: boolean;
+  doNotRemoveHTMLCommentsWhoseOpeningTagContains?: string | string[];
+  htmlCrushOpts?: Partial<Opts$1>;
+  reportProgressFunc?: null | false | 0 | ((percDone: number) => void);
+  reportProgressFuncFrom?: number;
+  reportProgressFuncTo?: number;
+}
 type StringifiedLegend = [string, string];
 interface Res {
   log: {
@@ -45,7 +57,7 @@ declare const defaults: Opts;
 /**
  * Remove unused CSS from email templates
  */
-declare function comb(str: string, opts?: Partial<Opts>): Res;
+declare function comb(str: string, opts?: InputOpts | null): Res;
 
 export { comb, defaults, version };
-export type { HeadsAndTailsObj, Opts, Res };
+export type { HeadsAndTailsObj, InputOpts, Opts, Res };

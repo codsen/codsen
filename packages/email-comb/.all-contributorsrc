@@ -1,7 +1,9 @@
 {
   "projectName": "email-comb",
   "projectOwner": "codsen",
-  "files": ["README.md"],
+  "files": [
+    "README.md"
+  ],
   "imageSize": 100,
   "contributors": [
     {
@@ -9,14 +11,21 @@
       "name": "Roy Revelt",
       "avatar_url": "https://avatars.githubusercontent.com/u/8344688?v=4",
       "profile": "https://github.com/revelt",
-      "contributions": ["code", "test", "doc", "review"]
+      "contributions": [
+        "code",
+        "test",
+        "doc",
+        "review"
+      ]
     },
     {
       "login": "r0xorz",
       "name": "Giedrius Matonis",
       "avatar_url": "https://avatars.githubusercontent.com/u/73747386?v=4",
       "profile": "https://github.com/r0xorz",
-      "contributions": ["bug"]
+      "contributions": [
+        "bug"
+      ]
     }
   ]
 }
