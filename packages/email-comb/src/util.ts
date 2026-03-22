@@ -3,7 +3,7 @@ const regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
 const regexEmptyUnclosedMediaQuery = /@media[^{@}]+{(?=\s*<\/style>)/g;
 
 export {
-  regexEmptyStyleTag,
   regexEmptyMediaQuery,
+  regexEmptyStyleTag,
   regexEmptyUnclosedMediaQuery,
 };
