@@ -1,14 +1,14 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { comb } from "../dist/email-comb.esm.js";
 
 // opts.reportProgressFunc
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${"opts.reportProgressFunc"}\u001b[${39}m`} - calls the progress function`, () => {
-  function shouldveBeenCalled(val) {
+test(`01 - opts.reportProgressFunc - calls the progress function`, () => {
+  function shouldHaveBeenCalled(val) {
     throw new Error(val);
   }
 
@@ -57,7 +57,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-        { reportProgressFunc: shouldveBeenCalled },
+        { reportProgressFunc: shouldHaveBeenCalled },
       );
     },
     /50/,
@@ -122,7 +122,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
   ok(counter > 50, "01.06");
 });
 
-test(`02 - ${`\u001b[${36}m${"opts.reportProgressFunc"}\u001b[${39}m`} - reports when passing at 50% only`, () => {
+test(`02 - opts.reportProgressFunc - reports when passing at 50% only`, () => {
   function shouldveBeenCalled(val) {
     throw new Error(val);
   }
@@ -160,12 +160,12 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
         },
       );
     },
-    /32/,
+    /53/,
     "02.01",
   );
 });
 
-test(`03 - ${`\u001b[${36}m${"opts.reportProgressFunc"}\u001b[${39}m`} - adjusted from-to range`, () => {
+test(`03 - opts.reportProgressFunc - adjusted from-to range`, () => {
   let gather = [];
   let countingFunction = (val) => {
     // const countingFunction = val => {
@@ -433,10 +433,23 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
   }
   // since we use Math.floor, some percentages can be skipped, so let's just
   // confirm that no numbers outside of permitted values are reported
+  // biome-ignore lint/suspicious/useIterableCallbackReturn: quick test
   gather.forEach((perc) => ok(compareTo.includes(perc)));
-  equal(gather.length, 86 - 21, "03.02");
+  equal(gather.length, 86 - 21, "03.01");
 
-  equal(gather, compareTo, "03.03");
+  equal(gather, compareTo, "03.02");
+});
+
+test(`04 - medium input reports within an adjusted range`, () => {
+  let gathered = [];
+
+  comb("a".repeat(1500), {
+    reportProgressFunc: (value) => gathered.push(value),
+    reportProgressFuncFrom: 50,
+    reportProgressFuncTo: 60,
+  });
+
+  equal(gathered, [55], "04.01");
 });
 
 test.run();
