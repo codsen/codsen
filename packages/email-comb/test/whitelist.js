@@ -1,9 +1,8 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
-import { comb } from "./util/util.js";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import { comb as comb1 } from "../dist/email-comb.esm.js";
+import { comb } from "./util/util.js";
 
 // whitelisting
 // -----------------------------------------------------------------------------
