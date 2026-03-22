@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { comb } from "./util/util.js";
 
@@ -203,6 +203,18 @@ test("05 - more sandwitched classes/ids cases", () => {
     "05.03",
   );
   equal(actual.deletedFromBody, [".used-class", "#used-id"], "05.04");
+});
+
+test("06 - reports reductions and crushed whitespace accurately", () => {
+  let whitespaceOnly = comb("   ");
+  let crushed = comb("<body>\n  <div>x</div>\n</body>", {
+    htmlCrushOpts: { removeIndentations: true },
+  });
+
+  equal(whitespaceOnly.log.bytesSaved, 3, "06.01");
+  equal(whitespaceOnly.log.percentageReducedOfOriginal, 100, "06.02");
+  equal(crushed.result, "<body>\n<div>x</div>\n</body>", "06.03");
+  equal(crushed.log.nonIndentationsWhitespaceLength, 2, "06.04");
 });
 
 test.run();
