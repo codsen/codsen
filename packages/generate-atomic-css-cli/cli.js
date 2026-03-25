@@ -2,16 +2,16 @@
 
 /* eslint no-console:0 */
 
-import meow from "meow";
-import { promises as fs } from "fs";
-import pReduce from "p-reduce";
-import isDirectory from "is-d";
+import { promises as fs } from "node:fs";
+import { createRequire } from "node:module";
+import { promisify } from "node:util";
+import { codsenCLI } from "codsen-utils";
+import { genAtomic, version } from "generate-atomic-css";
 import { globby } from "globby";
-import { promisify } from "util";
-import { createRequire } from "module";
+import isDirectory from "is-d";
+import pReduce from "p-reduce";
 import updateNotifier from "update-notifier";
 import writeFileAtomic from "write-file-atomic";
-import { genAtomic, version } from "generate-atomic-css";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
@@ -20,7 +20,7 @@ const write = promisify(writeFileAtomic);
 const { log } = console;
 const messagePrefix = `\u001b[${90}m${"✨ generate-atomic-css-cli: "}\u001b[${39}m`;
 
-const cli = meow(
+const cli = codsenCLI(
   `
   Call either way:
     $ gac index.html
@@ -37,7 +37,7 @@ const cli = meow(
     gac --version
 `,
   {
-    importMeta: import.meta,
+    pkg,
   },
 );
 updateNotifier({ pkg }).notify();
@@ -140,7 +140,8 @@ function processPaths(incomingPaths) {
   );
 }
 
-// Step #0. take care of -v and -h flags that are left out in meow.
+// Step #0. take care of the short -v and -h flags, which codsenCLI leaves
+// to us (it answers the long --version and --help on its own).
 // -----------------------------------------------------------------------------
 
 if (cli.flags.v) {
