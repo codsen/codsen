@@ -1,12 +1,12 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import {
-  genAtomic,
-  version,
-  headsAndTails,
   extractFromToSource,
+  genAtomic,
+  headsAndTails,
+  version,
 } from "../dist/generate-atomic-css.esm.js";
 
 assert.deepEqual(
