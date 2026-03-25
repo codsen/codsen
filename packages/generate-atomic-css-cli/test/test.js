@@ -1,11 +1,11 @@
-import fs from "fs-extra";
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import path from "path";
-import { fileURLToPath } from "url";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { execa } from "execa";
 import { temporaryDirectory } from "tempy";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 const __filename2 = fileURLToPath(import.meta.url);
 const __dirname2 = path.dirname(__filename2);
@@ -26,8 +26,10 @@ const __dirname2 = path.dirname(__filename2);
 
 test("01 - there are no usable files at all", async () => {
   let tempFolder = temporaryDirectory();
-  let processedFileContents = fs
-    .writeFile(path.join(tempFolder, "index.html"), "zzz")
+  let processedFileContents = writeFile(
+    path.join(tempFolder, "index.html"),
+    "zzz",
+  )
     .then(() =>
       execa(
         `cd ${tempFolder} && ${path.join(
@@ -40,7 +42,7 @@ test("01 - there are no usable files at all", async () => {
         },
       ),
     )
-    .then(() => fs.readFile(path.join(tempFolder, "index.html"), "utf8"))
+    .then(() => readFile(path.join(tempFolder, "index.html"), "utf8"))
     .catch((err) => {
       throw new Error(err);
     });
@@ -99,8 +101,10 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
   // console.log(`tempFolder = ${tempFolder}`);
 
   // 2. asynchronously write all test files
-  let processedFileContents = fs
-    .writeFile(path.join(tempFolder, "index.html"), originalFile)
+  let processedFileContents = writeFile(
+    path.join(tempFolder, "index.html"),
+    originalFile,
+  )
     .then(() =>
       execa(
         `cd ${tempFolder} && ${path.join(
@@ -113,7 +117,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
         },
       ),
     )
-    .then(() => fs.readFile(path.join(tempFolder, "index.html"), "utf8"))
+    .then(() => readFile(path.join(tempFolder, "index.html"), "utf8"))
     .catch((err) => {
       throw new Error(err);
     });
@@ -166,10 +170,12 @@ GENERATE-ATOMIC-CSS-CONTENT-ENDS */
   // const tempFolder = "temp";
 
   // 2. asynchronously write all test files
-  let file1contents = await fs
-    .writeFile(path.join(tempFolder, "file1.html"), file1)
+  let file1contents = await writeFile(
+    path.join(tempFolder, "file1.html"),
+    file1,
+  )
     .then(
-      () => fs.writeFile(path.join(tempFolder, "file2.html"), file2), // <---- we write second file here
+      () => writeFile(path.join(tempFolder, "file2.html"), file2), // <---- we write second file here
     )
     .then(() =>
       execa(
@@ -179,12 +185,12 @@ GENERATE-ATOMIC-CSS-CONTENT-ENDS */
         },
       ),
     )
-    .then(() => fs.readFile(path.join(tempFolder, "file1.html"), "utf8"))
+    .then(() => readFile(path.join(tempFolder, "file1.html"), "utf8"))
     .catch((err) => {
       throw new Error(err);
     });
 
-  let file2contents = await fs.readFile(
+  let file2contents = await readFile(
     path.join(tempFolder, "file2.html"),
     "utf8",
   );
