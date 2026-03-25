@@ -32,13 +32,13 @@ npm i generate-atomic-css
 ## Quick Take
 
 ```js
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import {
-  genAtomic,
-  version,
-  headsAndTails,
   extractFromToSource,
+  genAtomic,
+  headsAndTails,
+  version,
 } from "generate-atomic-css";
 
 assert.deepEqual(
@@ -82,9 +82,10 @@ z
 );
 ```
 
+
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/generate-atomic-css/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/generate-atomic-css/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/generate-atomic-css/CHANGELOG.md).
 
 ## Contributing
 
@@ -94,6 +95,6 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 MIT License
 
-Copyright © 2010-2025 Roy Revelt and other contributors
+Copyright © 2010-2026 Roy Revelt and other contributors
 
 <p align="center"><img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center"></p>

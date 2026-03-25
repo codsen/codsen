@@ -3,12 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 3.1.0 (2025-10-15)
-
-### Features
-
-- if value to be added is a number, keep it as is, don't stringify ([ce3e1a5](https://github.com/codsen/codsen/commit/ce3e1a525998ca3c0abf0142affef95b14cd1990))
-
 ## 3.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -96,7 +90,7 @@ Accidental version bump during migration to SourceHut. Sorry about that.
 
 - Don't close the comment blocks above, it's not fully safe ([5ce6230](https://gitlab.com/codsen/codsen/commit/5ce6230))
 - Fix cases when there is no \$\$\$ in the input and there are heads/tails ([09ceccd](https://gitlab.com/codsen/codsen/commit/09ceccd))
-- Fix the case when the only non-whitespace string is at zero index (falsey value) ([76fd296](https://gitlab.com/codsen/codsen/commit/76fd296))
+- Fix the case when the only non-whitespace string is at zero index (falsy value) ([76fd296](https://gitlab.com/codsen/codsen/commit/76fd296))
 - More tests and more improvements to edge case recognition ([4721b20](https://gitlab.com/codsen/codsen/commit/4721b20))
 - Tightened the whitespace management part on the surrounding areas ([551a851](https://gitlab.com/codsen/codsen/commit/551a851))
 
