@@ -1,6 +1,6 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { allHtmlAttribs } from "../dist/html-all-known-attributes.esm.js";
 
@@ -10,7 +10,7 @@ assert.equal(allHtmlAttribs.size, 702);
 
 // iterating:
 const gathered = [];
-for (let x of allHtmlAttribs) {
+for (const x of allHtmlAttribs) {
   // push first three
   if (gathered.length < 3) {
     gathered.push(x);
