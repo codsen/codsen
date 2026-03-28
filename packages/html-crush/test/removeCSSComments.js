@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { m } from "./util/util.js";
@@ -8,7 +8,7 @@ import { m } from "./util/util.js";
 // within head styles
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${"css comments"}\u001b[${39}m`} - in head styles`, () => {
+test(`01 - css comments - in head styles`, () => {
   let source = "<style>/* remove this */</style><body>z</body>";
 
   // off
@@ -44,7 +44,7 @@ test(`01 - ${`\u001b[${33}m${"css comments"}\u001b[${39}m`} - in head styles`, (
   );
 });
 
-test(`02 - ${`\u001b[${33}m${"css comments"}\u001b[${39}m`} - in head styles`, () => {
+test(`02 - css comments - in head styles`, () => {
   let source = `<style>
 .a { font-size: 1px; }/* remove this */
 .b { /* remove this */
@@ -121,7 +121,7 @@ margin: 3px; /* remove this */
 // within HTML body, inline
 // -----------------------------------------------------------------------------
 
-test(`03 - ${`\u001b[${33}m${"css comments"}\u001b[${39}m`} - within body`, () => {
+test(`03 - css comments - within body`, () => {
   let source =
     '<div style="display:block;/*font-size: 1px;*/width:100px;"></div>';
 
