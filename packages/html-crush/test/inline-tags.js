@@ -1,13 +1,13 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { m } from "./util/util.js";
 
 // HTML Inline tags
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - style on sup #1`, () => {
+test(`01 - inline tags - style on sup #1`, () => {
   equal(
     m(equal, '<sup style="">word, here', {
       removeLineBreaks: true,
@@ -17,7 +17,7 @@ test(`01 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - style on sup #1`, (
   );
 });
 
-test(`02 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - style on sup #2`, () => {
+test(`02 - inline tags - style on sup #2`, () => {
   equal(
     m(equal, '<sup style=" ">word, here', {
       removeLineBreaks: true,
@@ -27,7 +27,7 @@ test(`02 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - style on sup #2`, (
   );
 });
 
-test(`03 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - two spans with space - space retained`, () => {
+test(`03 - inline tags - two spans with space - space retained`, () => {
   equal(
     m(equal, "<span>a</span> <span>b</span>", {
       removeLineBreaks: true,
@@ -37,7 +37,7 @@ test(`03 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - two spans with spac
   );
 });
 
-test(`04 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - two spans without space - fine`, () => {
+test(`04 - inline tags - two spans without space - fine`, () => {
   equal(
     m(equal, "<span>a</span><span>b</span>", {
       removeLineBreaks: true,
@@ -47,7 +47,7 @@ test(`04 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - two spans without s
   );
 });
 
-test(`05 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - inside tag`, () => {
+test(`05 - inline tags - inside tag`, () => {
   equal(
     m(equal, "</b >", {
       removeLineBreaks: true,
@@ -57,7 +57,7 @@ test(`05 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - inside tag`, () => 
   );
 });
 
-test(`06 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - nameless attr`, () => {
+test(`06 - inline tags - nameless attr`, () => {
   equal(
     m(equal, 'x<a b="c" >y', {
       removeLineBreaks: true,
@@ -74,7 +74,7 @@ test(`06 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - nameless attr`, () 
   );
 });
 
-test(`07 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - style attr`, () => {
+test(`07 - inline tags - style attr`, () => {
   equal(
     m(equal, 'x<span style="a: b;" >y', {
       removeLineBreaks: true,
@@ -92,7 +92,7 @@ test(`07 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - style attr`, () => 
   );
 });
 
-test(`08 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - two spans`, () => {
+test(`08 - inline tags - two spans`, () => {
   equal(
     m(
       equal,
@@ -129,7 +129,7 @@ test(`08 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - two spans`, () => {
   );
 });
 
-test(`09 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - span + sup`, () => {
+test(`09 - inline tags - span + sup`, () => {
   equal(
     m(equal, '<span style="abc: def;">a</span> <sup>1</sup>', {
       removeLineBreaks: true,
@@ -147,7 +147,7 @@ test(`09 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - span + sup`, () => 
   );
 });
 
-test(`10 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - won't line break between two inline tags`, () => {
+test(`10 - inline tags - won't line break between two inline tags`, () => {
   for (let i = 1; i < 37; i++) {
     equal(
       m(equal, '<span>a</span><span style="z">b</span>', {
@@ -155,12 +155,12 @@ test(`10 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - won't line break be
         removeLineBreaks: true,
       }).result,
       '<span>a</span><span\nstyle="z">b</span>',
-      `09.11.0${i} - limit = ${i}`,
+      `10.01 - 0${i} - limit = ${i}`,
     );
   }
 });
 
-test(`11 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - 012 pt.2`, () => {
+test(`11 - inline tags - 012 pt.2`, () => {
   equal(
     m(equal, '<i><span>a</span><span style="z">b</span></i>', {
       lineLengthLimit: 22,
@@ -171,7 +171,7 @@ test(`11 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - 012 pt.2`, () => {
   );
 });
 
-test(`12 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - will line break between mixed #1`, () => {
+test(`12 - inline tags - will line break between mixed #1`, () => {
   equal(
     m(equal, "<i>a</i><span>b</span>", {
       lineLengthLimit: 9, // <--- asking to break after /i
@@ -190,7 +190,7 @@ test(`12 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - will line break bet
   );
 });
 
-test(`13 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - will line break between mixed, #2`, () => {
+test(`13 - inline tags - will line break between mixed, #2`, () => {
   equal(
     m(equal, "<span>a</span><div>b</div>", {
       lineLengthLimit: 15, // <--- asking to break after div
@@ -201,7 +201,7 @@ test(`13 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - will line break bet
   );
 });
 
-test(`14 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - will line break between mixed, space, #1`, () => {
+test(`14 - inline tags - will line break between mixed, space, #1`, () => {
   equal(
     m(equal, "<span>a</span> <div>b</div>", {
       lineLengthLimit: 15,
@@ -220,7 +220,7 @@ test(`14 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - will line break bet
   );
 });
 
-test(`15 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - will line break between mixed, space, #2`, () => {
+test(`15 - inline tags - will line break between mixed, space, #2`, () => {
   equal(
     m(equal, "<div>a</div> <span>b</span>", {
       lineLengthLimit: 12,
@@ -263,7 +263,7 @@ test(`15 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - will line break bet
   );
 });
 
-test(`16 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - space between inline tags`, () => {
+test(`16 - inline tags - space between inline tags`, () => {
   equal(
     m(equal, "<b>x</b> <i>y</i>", {
       lineLengthLimit: 6,
@@ -322,7 +322,7 @@ test(`16 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - space between inlin
   );
 });
 
-test(`17 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - excessive whitespace between inline tags #1`, () => {
+test(`17 - inline tags - excessive whitespace between inline tags #1`, () => {
   equal(
     m(equal, "<i>a</i>     <sup>b</sup>", {
       removeLineBreaks: true,
@@ -404,7 +404,7 @@ test(`17 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - excessive whitespac
   );
 });
 
-test(`18 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - div and sup`, () => {
+test(`18 - inline tags - div and sup`, () => {
   equal(
     m(equal, "<div>a</div>     <sup>b</sup>", {
       removeLineBreaks: true,
@@ -421,7 +421,7 @@ test(`18 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - div and sup`, () =>
   );
 });
 
-test(`19 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - div and sup, escessive whitespace`, () => {
+test(`19 - inline tags - div and sup, escessive whitespace`, () => {
   equal(
     m(equal, "<div>a</div>     <sup>b</sup>", {
       lineLengthLimit: 10,
@@ -432,7 +432,7 @@ test(`19 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - div and sup, escess
   );
 });
 
-test(`20 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - div and sup, escessive whitespace`, () => {
+test(`20 - inline tags - div and sup, escessive whitespace`, () => {
   for (let i = 10; i < 25; i++) {
     equal(
       m(equal, "<div>a</div>     <sup>b</sup>", {
@@ -440,7 +440,7 @@ test(`20 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - div and sup, escess
         removeLineBreaks: true,
       }).result,
       "<div>a</div>\n<sup>b</sup>",
-      `09.21.01 - limit = ${i}`,
+      `20.01 - 01 - limit =${i}`,
     );
   }
   equal(
@@ -449,7 +449,7 @@ test(`20 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - div and sup, escess
       removeLineBreaks: true,
     }).result,
     "<div>a</div> <sup>b</sup>",
-    "20.01",
+    "20.02",
   );
   equal(
     m(equal, "<div>a</div>     <sup>b</sup>", {
@@ -457,11 +457,11 @@ test(`20 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - div and sup, escess
       removeLineBreaks: true,
     }).result,
     "<div>a</div> <sup>b</sup>",
-    "20.02",
+    "20.03",
   );
 });
 
-test(`21 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - multiple wrapped inline tags`, () => {
+test(`21 - inline tags - multiple wrapped inline tags`, () => {
   let source = '<span><a href="z"><b>a</b><i>b</i><a><span>';
   let res = '<span><a\nhref="z"><b>a</b><i>b</i><a><span>';
   equal(
@@ -485,12 +485,12 @@ test(`21 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - multiple wrapped in
         removeLineBreaks: true,
       }).result,
       res,
-      `09.22.03* - lineLengthLimit: i = ${i}`,
+      `21.03 - 03* - lineLengthLimit: i =${i}`,
     );
   }
 });
 
-test(`22 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - first tag name letters resemble legit inline tags`, () => {
+test(`22 - inline tags - first tag name letters resemble legit inline tags`, () => {
   equal(
     m(equal, "<az>123</az> <by>456</by> <see>789</see> <in></in>", {
       removeLineBreaks: true,
@@ -508,7 +508,7 @@ test(`22 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - first tag name lett
   );
 });
 
-test(`23 - ${`\u001b[${32}m${"inline tags"}\u001b[${39}m`} - spanner is not span`, () => {
+test(`23 - inline tags - spanner is not span`, () => {
   equal(
     m(equal, "<span>1</span> <span>2</span> <span>3</span>", {
       removeLineBreaks: true,
