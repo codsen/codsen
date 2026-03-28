@@ -1,6 +1,7 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
 
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { crush } from "../dist/html-crush.esm.js";
 
@@ -397,3 +398,5 @@ test("*** non-deterministic tests", () => {
     }
   }
 });
+
+test.run();
