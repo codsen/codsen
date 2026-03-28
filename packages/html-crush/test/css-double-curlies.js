@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { crush } from "../dist/html-crush.esm.js";
 import { m, mixer } from "./util/util.js";
@@ -54,7 +54,7 @@ test("02 - spaced", () => {
       `<style>
 @media screen{div{color:white;} }.foo{background:green;}
 </style>`,
-      `${JSON.stringify(opt, null, 0)}`,
+      `02.01 - ${`${JSON.stringify(opt, null, 0)}`}`,
     );
   });
 });
@@ -81,7 +81,7 @@ test("03 - already come tight", () => {
       `<style>
 @media screen{div{color:white;} }.foo{background:green;}
 </style>`,
-      `${JSON.stringify(opt, null, 0)}`,
+      `03.01 - ${`${JSON.stringify(opt, null, 0)}`}`,
     );
   });
 });
@@ -101,7 +101,7 @@ test("04 - already come tight, vs. Nunjucks", () => {
       `<style>
 @media screen{div{color:{{brandWhite}}} }.foo{background:green;}
 </style>`,
-      `${JSON.stringify(opt, null, 0)}`,
+      `04.01 - ${`${JSON.stringify(opt, null, 0)}`}`,
     );
   });
 });
