@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { crush } from "../dist/html-crush.esm.js";
 import { m, mixer } from "./util/util.js";
@@ -21,16 +21,32 @@ function strip(str) {
 test("01 - nothing to minify, empty", () => {
   let source = "";
   mixer({}).forEach((opt) => {
-    equal(m(equal, source, opt).result, "", JSON.stringify(opt, null, 4));
-    equal(m(equal, source, opt).ranges, null, JSON.stringify(opt, null, 4));
+    equal(
+      m(equal, source, opt).result,
+      "",
+      `01.01 - ${JSON.stringify(opt, null, 4)}`,
+    );
+    equal(
+      m(equal, source, opt).ranges,
+      null,
+      `01.02 - ${JSON.stringify(opt, null, 4)}`,
+    );
   });
 });
 
 test("02 - nothing to minify, non-empty", () => {
   let source = "zzzz";
   mixer({}).forEach((opt) => {
-    equal(m(equal, source, opt).result, "zzzz", JSON.stringify(opt, null, 4));
-    equal(m(equal, source, opt).ranges, null, JSON.stringify(opt, null, 4));
+    equal(
+      m(equal, source, opt).result,
+      "zzzz",
+      `02.01 - ${JSON.stringify(opt, null, 4)}`,
+    );
+    equal(
+      m(equal, source, opt).ranges,
+      null,
+      `02.02 - ${JSON.stringify(opt, null, 4)}`,
+    );
   });
 });
 
@@ -49,7 +65,7 @@ test("03 - minimal string of few words", () => {
     equal(
       m(equal, source, opt).result,
       "<x><y> c </y></x>\n",
-      JSON.stringify(opt, null, 4),
+      `03.01 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 
@@ -65,7 +81,7 @@ c
 </y>
 </x>
 `,
-      JSON.stringify(opt, null, 4),
+      `03.02 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 
@@ -82,7 +98,7 @@ c
   </y>
 </x>
 `,
-      JSON.stringify(opt, null, 4),
+      `03.03 - ${JSON.stringify(opt, null, 4)}`,
     );
   });
 });
@@ -94,7 +110,7 @@ test("04 - trailing linebreaks (or their absence) at the EOF are respected", () 
     equal(
       m(equal, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n", opt).result,
       "<x><y> c </y></x>\n",
-      `${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`,
+      `04.01 - ${`${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`}`,
     );
   });
   mixer({
@@ -104,7 +120,7 @@ test("04 - trailing linebreaks (or their absence) at the EOF are respected", () 
     equal(
       m(equal, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n", opt).result,
       "<x>\n<y>\nc\n</y>\n</x>\n",
-      `${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`,
+      `04.02 - ${`${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`}`,
     );
   });
   // with both settings off, frontal trimming won't happen, notice
@@ -116,7 +132,7 @@ test("04 - trailing linebreaks (or their absence) at the EOF are respected", () 
     equal(
       m(equal, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n", opt).result,
       "\n<x>\n  <y>\n    c\n  </y>\n</x>\n",
-      `${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`,
+      `04.03 - ${`${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`}`,
     );
   });
 });
@@ -128,7 +144,7 @@ test("05 - trailing linebreaks (or their absence) at the EOF are respected", () 
     equal(
       m(equal, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n\n", opt).result,
       "<x><y> c </y></x>\n",
-      `${JSON.stringify(opt, null, 4)} - double trailing line breaks at EOF`,
+      `05.01 - ${`${JSON.stringify(opt, null, 4)} - double trailing line breaks at EOF`}`,
     );
   });
 });
@@ -140,7 +156,7 @@ test("06 - trailing linebreaks (or their absence) at the EOF are respected", () 
     equal(
       m(equal, "\n<x>\n  <y>\n    c\n  </y>\n</x>", opt).result,
       "<x><y> c </y></x>",
-      `${JSON.stringify(opt, null, 4)} - no trailing line breaks at EOF`,
+      `06.01 - ${`${JSON.stringify(opt, null, 4)} - no trailing line breaks at EOF`}`,
     );
   });
 });
@@ -1358,7 +1374,7 @@ test("26 - does not mangle different-type line endings, CRLF", () => {
   equal(m(equal, source).result, source, "26.01");
 });
 
-test("line break into space", () => {
+test("27 - line break into space", () => {
   equal(
     m(equal, "abc\ndef", {
       removeLineBreaks: true,
@@ -1393,7 +1409,7 @@ test("line break into space", () => {
   );
 });
 
-test("tab into space", () => {
+test("28 - tab into space", () => {
   equal(
     m(equal, "abc\tdef", {
       removeLineBreaks: true,
@@ -1449,7 +1465,7 @@ test("31 - issue #5, minimal", () => {
       equal(
         m(equal, source, opt).result,
         `<!DOCTYPE html>${eols[i]}<html lang="en">${eols[i]}`,
-        `${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`,
+        `31.01 - ${`${JSON.stringify(opt, null, 0)} - single trailing line breaks at EOF`}`,
       );
     });
   });
@@ -1469,7 +1485,7 @@ test("32 - issue #5", () => {
       equal(
         m(equal, source, opt).result,
         `<!DOCTYPE html>${eols[i]}<html lang="en">${eols[i]}<head>${eols[i]}<meta charset="UTF-8">${eols[i]}<meta http-equiv="X-UA-Compatible" content="IE=edge">${eols[i]}<meta name="viewport" content="width=device-width, initial-scale=1.0">${eols[i]}<title>Document</title>${eols[i]}</head>${eols[i]}<body><div>Hello</div>${eols[i]}</body>${eols[i]}</html>${eols[i]}`,
-        `${JSON.stringify(
+        `32.01 - ${`${JSON.stringify(
           opt,
           null,
           0,
@@ -1477,7 +1493,7 @@ test("32 - issue #5", () => {
           eols[i],
           null,
           0,
-        )})`,
+        )})`}`,
       );
     });
   });
