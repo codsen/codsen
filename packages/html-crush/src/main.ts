@@ -1,9 +1,9 @@
+import { isLetter, isPlainObject as isObj, isStr } from "codsen-utils";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
+import { left, right } from "string-left-right";
 import { matchLeft, matchRight, matchRightIncl } from "string-match-left-right";
 import { expander } from "string-range-expander";
-import { left, right } from "string-left-right";
-import { isStr, isLetter, isPlainObject as isObj } from "codsen-utils";
 import type { Ranges as RangesType } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";
@@ -11,9 +11,6 @@ import { version as v } from "../package.json";
 const version: string = v;
 
 declare let DEV: boolean;
-
-const finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
-
 export interface Opts {
   lineLengthLimit: number;
   removeIndentations: boolean;
@@ -142,11 +139,11 @@ function crush(str: string, opts?: Partial<Opts>): Res {
   if (!isStr(str)) {
     if (str === undefined) {
       throw new Error(
-        "html-crush: [THROW_ID_01] the first input argument is completely missing! It should be given as string.",
+        "html-crush/crush(): [THROW_ID_01] the first input argument is completely missing! It should be given as string.",
       );
     } else {
       throw new Error(
-        `html-crush: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(
+        `html-crush/crush(): [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(
           str,
           null,
           4,
@@ -157,7 +154,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
 
   if (opts && !isObj(opts)) {
     throw new Error(
-      `html-crush: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ${typeof opts}, equal to ${JSON.stringify(
+      `html-crush/crush(): [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ${typeof opts}, equal to ${JSON.stringify(
         opts,
         null,
         4,
@@ -173,7 +170,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
     for (let z = 0, len = opts.breakToTheLeftOf.length; z < len; z++) {
       if (!isStr(opts.breakToTheLeftOf[z])) {
         throw new TypeError(
-          `html-crush: [THROW_ID_05] the resolvedOpts.breakToTheLeftOf array contains non-string elements! For example, element at index ${z} is of a type "${typeof opts
+          `html-crush/crush(): [THROW_ID_04] the resolvedOpts.breakToTheLeftOf array contains non-string elements! For example, element at index ${z} is of a type "${typeof opts
             .breakToTheLeftOf[z]}" and is equal to:\n${JSON.stringify(
             opts.breakToTheLeftOf[z],
             null,
@@ -184,6 +181,9 @@ function crush(str: string, opts?: Partial<Opts>): Res {
     }
   }
 
+  const finalIndexesToDelete = new Ranges({
+    limitToBeAddedWhitespace: true,
+  });
   let resolvedOpts: Opts = { ...defaults, ...opts };
   DEV &&
     console.log(
@@ -342,7 +342,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
       // ███████████████████████████████████████
       DEV &&
         console.log(
-          `\n\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+          `345 \n\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
             str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 0)
           }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`,
         );
@@ -459,7 +459,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
           for (let y = i; y--; ) {
             DEV &&
               console.log(
-                `\u001b[${36}m${`str[${y}] = ${JSON.stringify(
+                `462 \u001b[${36}m${`str[${y}] = ${JSON.stringify(
                   str[y],
                   null,
                   0,
@@ -475,7 +475,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
                   );
                 finalIndexesToDelete.push(y + 1, i);
               }
-              DEV && console.log(`\u001b[${36}m${`BREAK`}\u001b[${39}m`);
+              DEV && console.log(`\u001b[${36}m${`478 BREAK`}\u001b[${39}m`);
               break;
             }
           }
@@ -489,7 +489,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
             `489 SET ${`\u001b[${33}m${`scriptStartedAt`}\u001b[${39}m`} = null, ${`\u001b[${33}m${`doNothing`}\u001b[${39}m`} = false`,
           );
         i += 8;
-        DEV && console.log(`OFFSET i now = ${i}, then CONTINUE`);
+        DEV && console.log(`492 OFFSET i now = ${i}, then CONTINUE`);
         continue;
       }
 
@@ -623,7 +623,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
           DEV && console.log(`623 SET tagNameStartsAt = ${tagNameStartsAt}`);
         } else if (
           str[right(str, ~-i) as number] === "/" &&
-          /\w/.test(str[right(str, right(str, ~-i) as number) as number] || "")
+          /\w/.test(str[right(str, right(str, ~-i)) as number] || "")
         ) {
           tagNameStartsAt = right(str, right(str, ~-i));
           DEV && console.log(`629 SET tagNameStartsAt = ${tagNameStartsAt}`);
@@ -1321,7 +1321,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
 
               // TWO CASES:
               if (!resolvedOpts.lineLengthLimit) {
-                DEV && console.log(`\u001b[${35}m${`1099: 2-1`}\u001b[${39}m`);
+                DEV && console.log(`\u001b[${35}m${`1324: 2-1`}\u001b[${39}m`);
                 DEV && console.log("1325: !resolvedOpts.lineLengthLimit");
                 // 2-1: Line-length limiting is off (easy)
                 // We skip the stage part, the whitespace chunks to straight to
@@ -1346,7 +1346,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
                     );
                 }
               } else {
-                DEV && console.log(`\u001b[${35}m${`1123: 2-2`}\u001b[${39}m`);
+                DEV && console.log(`\u001b[${35}m${`1349: 2-2`}\u001b[${39}m`);
                 DEV &&
                   console.log(
                     `1352 - 2-2 - resolvedOpts.lineLengthLimit; ${`\u001b[${33}m${`LIMIT`}\u001b[${39}m`} = ${`\u001b[${35}m${resolvedOpts.lineLengthLimit}\u001b[${39}m`}; ${`\u001b[${33}m${`COUNT`}\u001b[${39}m`} = ${`\u001b[${35}m${countCharactersPerLine}\u001b[${39}m`}`,
@@ -1360,7 +1360,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
                   (str[i] === "/" && str[i + 1] === ">")
                 ) {
                   DEV &&
-                    console.log(`\u001b[${35}m${`1137: 2-2-1`}\u001b[${39}m`);
+                    console.log(`\u001b[${35}m${`1363: 2-2-1`}\u001b[${39}m`);
                   DEV &&
                     console.log(
                       `1366: ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`}(${countCharactersPerLine}) >= ${`\u001b[${33}m${`resolvedOpts.lineLengthLimit`}\u001b[${39}m`}(${
@@ -1426,7 +1426,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
                 ) {
                   // only submit the range if it's bigger
                   DEV &&
-                    console.log(`\u001b[${35}m${`1191: 2-2-2`}\u001b[${39}m`);
+                    console.log(`\u001b[${35}m${`1429: 2-2-2`}\u001b[${39}m`);
                   DEV &&
                     console.log(
                       `1432: ${`\u001b[${33}m${`countCharactersPerLine`}\u001b[${39}m`}(${countCharactersPerLine}) <= ${`\u001b[${33}m${`resolvedOpts.lineLengthLimit`}\u001b[${39}m`}(${
@@ -2246,7 +2246,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
       // ███████████████████████████████████████
       DEV &&
         console.log(
-          `    \u001b[${90}m${`██ ██ ██ ██ ██ END ██ ██ ██ ██ ██`}\u001b[${39}m`,
+          `2249     \u001b[${90}m${`██ ██ ██ ██ ██ END ██ ██ ██ ██ ██`}\u001b[${39}m`,
         );
       DEV &&
         console.log(
@@ -2257,7 +2257,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
 
       DEV &&
         console.log(
-          `${`\u001b[${36}m${`countCharactersPerLine`}\u001b[${39}m`} = ${JSON.stringify(
+          `2260 ${`\u001b[${36}m${`countCharactersPerLine`}\u001b[${39}m`} = ${JSON.stringify(
             countCharactersPerLine,
             null,
             0,
@@ -2294,9 +2294,9 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         )}`,
       );
 
-    if (finalIndexesToDelete.current()) {
-      let ranges = finalIndexesToDelete.current();
-      finalIndexesToDelete.wipe();
+    const ranges = finalIndexesToDelete.current();
+    if (ranges) {
+      // This accumulator is local to the call, so no wipe is necessary.
 
       let startingPercentageDone =
         resolvedOpts.reportProgressFuncTo -
@@ -2338,7 +2338,9 @@ function crush(str: string, opts?: Partial<Opts>): Res {
           )}\n\n ${`\u001b[${90}m${`or:`}\u001b[${39}m`}\n\n"${res}"`,
         );
       DEV &&
-        console.log(`\u001b[${90}m${`\n      ██ FIN ██\n\n`}\u001b[${39}m`);
+        console.log(
+          `\u001b[${90}m${`2342 \n      ██ FIN ██\n\n`}\u001b[${39}m`,
+        );
       let resLen = res.length;
       return {
         log: {
@@ -2359,18 +2361,18 @@ function crush(str: string, opts?: Partial<Opts>): Res {
   // ELSE - return the original input string
   DEV &&
     console.log(
-      `2362 returning original ${`\u001b[${33}m${`str`}\u001b[${39}m`} =\n\n${JSON.stringify(
+      `2364 returning original ${`\u001b[${33}m${`str`}\u001b[${39}m`} =\n\n${JSON.stringify(
         str,
         null,
         4,
       )}\n\n ${`\u001b[${90}m${`or:`}\u001b[${39}m`}\n\n${str}`,
     );
 
-  DEV && console.log(" ");
-  DEV && console.log(" ");
-  DEV && console.log(`\u001b[${90}m${`      ██ FIN ██\n\n`}\u001b[${39}m`);
-  DEV && console.log(" ");
-  DEV && console.log(" ");
+  DEV && console.log("2371 ");
+  DEV && console.log("2372 ");
+  DEV && console.log(`\u001b[${90}m${`2373       ██ FIN ██\n\n`}\u001b[${39}m`);
+  DEV && console.log("2374 ");
+  DEV && console.log("2375 ");
 
   return {
     log: {
