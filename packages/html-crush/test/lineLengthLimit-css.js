@@ -1,11 +1,11 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { m } from "./util/util.js";
 
-test(`01 - ${`\u001b[${33}m${"css line length limit"}\u001b[${39}m`} - basic`, () => {
+test(`01 - css line length limit - basic`, () => {
   compare(
     ok,
     m(
