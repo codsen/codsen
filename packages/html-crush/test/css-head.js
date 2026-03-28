@@ -1,13 +1,13 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { m } from "./util/util.js";
 
 // minification within style tags
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies around class names - minimal`, () => {
+test(`01 - CSS minification - minifies around class names - minimal`, () => {
   equal(
     m(equal, "<style>\n\ta {\ndisplay:block;\n}", {
       removeLineBreaks: true,
@@ -38,7 +38,7 @@ test(`01 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies aroun
   );
 });
 
-test(`02 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies around class names - spaces`, () => {
+test(`02 - CSS minification - minifies around class names - spaces`, () => {
   equal(
     m(equal, "<style>\na something here {display:block;}", {
       removeLineBreaks: true,
@@ -69,7 +69,7 @@ test(`02 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies aroun
   );
 });
 
-test(`03 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies around class names - element > element`, () => {
+test(`03 - CSS minification - minifies around class names - element > element`, () => {
   equal(
     m(equal, "<style>\na>something#here {display:block;}", {
       removeLineBreaks: true,
@@ -107,7 +107,7 @@ test(`03 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies aroun
   );
 });
 
-test(`04 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies around class names - element + element`, () => {
+test(`04 - CSS minification - minifies around class names - element + element`, () => {
   equal(
     m(equal, "<style>\na+something#here+there {display:block;}", {
       removeLineBreaks: true,
@@ -149,7 +149,7 @@ test(`04 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies aroun
   );
 });
 
-test(`05 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies around class names - element ~ element`, () => {
+test(`05 - CSS minification - minifies around class names - element ~ element`, () => {
   equal(
     m(equal, "<style>\na~something#here~there {display:block;}", {
       removeLineBreaks: true,
@@ -191,7 +191,7 @@ test(`05 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - minifies aroun
   );
 });
 
-test(`06 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - removes CSS comments`, () => {
+test(`06 - CSS minification - removes CSS comments`, () => {
   equal(
     m(equal, "<style> a { display:block; } /* TAB STYLES */", {
       removeLineBreaks: true,
@@ -208,7 +208,7 @@ test(`06 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - removes CSS co
   );
 });
 
-test(`07 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - removes whitespace in front of !important`, () => {
+test(`07 - CSS minification - removes whitespace in front of !important`, () => {
   equal(
     m(equal, "<style>\n  a { display:block!important; }", {
       removeLineBreaks: true,
@@ -239,7 +239,7 @@ test(`07 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - removes whites
   );
 });
 
-test(`08 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - removes whitespace in front of <script>`, () => {
+test(`08 - CSS minification - removes whitespace in front of <script>`, () => {
   let source =
     'a\n    <script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\n    b';
 
@@ -276,7 +276,7 @@ test(`08 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - removes whites
   );
 });
 
-test(`09 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals`, () => {
+test(`09 - CSS minification - does not remove the whitespace in front of !important within Outlook conditionals`, () => {
   equal(
     m(
       equal,
@@ -298,7 +298,7 @@ test(`09 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remov
   );
 });
 
-test(`10 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals, lineLengthLimit=off`, () => {
+test(`10 - CSS minification - does not remove the whitespace in front of !important within Outlook conditionals, lineLengthLimit=off`, () => {
   equal(
     m(
       equal,
@@ -321,7 +321,7 @@ test(`10 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remov
   );
 });
 
-test(`11 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals, mix`, () => {
+test(`11 - CSS minification - does not remove the whitespace in front of !important within Outlook conditionals, mix`, () => {
   equal(
     m(
       equal,
@@ -365,7 +365,7 @@ test(`11 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remov
   );
 });
 
-test(`12 - ${`\u001b[${34}m${"CSS minification"}\u001b[${39}m`} - does not remove the whitespace in front of !important within Outlook conditionals, mix, lineLengthLimit=off`, () => {
+test(`12 - CSS minification - does not remove the whitespace in front of !important within Outlook conditionals, mix, lineLengthLimit=off`, () => {
   equal(
     m(
       equal,
