@@ -1,13 +1,13 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { crush, defaults, version } from "../dist/html-crush.esm.js";
 
 // THROWS
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${"throws"}\u001b[${39}m`} - when first arg is wrong`, () => {
+test(`01 - throws - when first arg is wrong`, () => {
   throws(
     () => {
       crush();
@@ -25,7 +25,7 @@ test(`01 - ${`\u001b[${34}m${"throws"}\u001b[${39}m`} - when first arg is wrong`
   );
 });
 
-test(`02 - ${`\u001b[${34}m${"throws"}\u001b[${39}m`} - when second arg is wrong`, () => {
+test(`02 - throws - when second arg is wrong`, () => {
   throws(
     () => {
       crush("zzz", true);
@@ -43,14 +43,14 @@ test(`02 - ${`\u001b[${34}m${"throws"}\u001b[${39}m`} - when second arg is wrong
   );
 });
 
-test(`03 - ${`\u001b[${34}m${"throws"}\u001b[${39}m`} - when opts.breakToTheLeftOf contains non-string elements`, () => {
+test(`03 - throws - when opts.breakToTheLeftOf contains non-string elements`, () => {
   throws(
     () => {
       crush("zzz", {
         breakToTheLeftOf: ["<a", true],
       });
     },
-    /THROW_ID_05/,
+    /THROW_ID_04/,
     "03.01",
   );
 
@@ -75,7 +75,7 @@ test(`03 - ${`\u001b[${34}m${"throws"}\u001b[${39}m`} - when opts.breakToTheLeft
 // API
 // -----------------------------------------------------------------------------
 
-test(`04 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - plain object is exported and contains correct keys`, () => {
+test(`04 - API - plain object is exported and contains correct keys`, () => {
   equal(
     Object.keys(defaults).sort(),
     [
@@ -94,7 +94,7 @@ test(`04 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - plain object is exported an
   );
 });
 
-test(`05 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - plain object is exported`, () => {
+test(`05 - API - plain object is exported`, () => {
   match(version, /\d+\.\d+\.\d+/, "05.01");
 });
 
