@@ -1,15 +1,14 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
-import { m } from "./util/util.js";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import { crush } from "../dist/html-crush.esm.js";
+import { m } from "./util/util.js";
 
 // opts.reportProgressFunc
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${"opts.reportProgressFunc"}\u001b[${39}m`} - calls the progress function`, () => {
-  function shouldveBeenCalled(val) {
+test(`01 - opts.reportProgressFunc - calls the progress function`, () => {
+  function shouldHaveBeenCalled(val) {
     throw new Error(val);
   }
 
@@ -58,12 +57,13 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-        { removeLineBreaks: true, reportProgressFunc: shouldveBeenCalled },
+        { removeLineBreaks: true, reportProgressFunc: shouldHaveBeenCalled },
       );
     },
     /50/,
     "01.04",
   );
+  equal(crush("abc").result, "abc", "01.04");
 
   // long input (>1000 chars long) should report at each natural number percentage passed:
 
@@ -116,14 +116,14 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
       { removeLineBreaks: true, reportProgressFunc: countingFunction },
     ),
-    "01.05",
+    "01.06",
   );
 
   // 2. check the counter variable:
-  ok(counter > 50, "01.06");
+  ok(counter > 50, "01.07");
 });
 
-test(`02 - ${`\u001b[${36}m${"opts.reportProgressFunc"}\u001b[${39}m`} - adjusted from-to range`, () => {
+test(`02 - opts.reportProgressFunc - adjusted from-to range`, () => {
   let gather = [];
   let countingFunction = (val) => {
     gather.push(val);
@@ -319,8 +319,9 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
   }
   // since we use Math.floor, some percentages can be skipped, so let's just
   // confirm that no numbers outside of permitted values are reported
+  // biome-ignore lint/suspicious/useIterableCallbackReturn: it's a quick test
   gather.forEach((perc) => ok(compareTo.includes(perc), `checking: ${perc}%`));
-  equal(gather.length, 86 - 21, "02.02");
+  equal(gather.length, 86 - 21, "02.01");
   // equal(gather, compareTo, "03.02")
 });
 
