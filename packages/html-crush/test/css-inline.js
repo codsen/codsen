@@ -1,13 +1,13 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { m } from "./util/util.js";
 
 // 08. inline CSS minification
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - one tag, minimal - double quotes`, () => {
+test(`01 - inline CSS minification - one tag, minimal - double quotes`, () => {
   let input1 = '  <a style="a: 100%; b: c-d; ">';
   let indentationsOnly = '<a style="a: 100%; b: c-d; ">';
   equal(
@@ -42,7 +42,7 @@ test(`01 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - one tag
   );
 });
 
-test(`02 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - inline CSS comments`, () => {
+test(`02 - inline CSS minification - inline CSS comments`, () => {
   equal(
     m(equal, '<a style="a: 100%;/*b: c-d;*/e: f;">', {
       removeLineBreaks: true,
@@ -52,7 +52,7 @@ test(`02 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - inline 
   );
 });
 
-test(`03 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - line length limit falls in the middle of inline CSS comment`, () => {
+test(`03 - inline CSS minification - line length limit falls in the middle of inline CSS comment`, () => {
   equal(
     m(equal, '<a style="a: 100%;/*b: c-d;*/e: f;">', {
       removeLineBreaks: true,
@@ -63,7 +63,7 @@ test(`03 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - line le
   );
 });
 
-test(`04 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - line length becomes all right because of truncation`, () => {
+test(`04 - inline CSS minification - line length becomes all right because of truncation`, () => {
   equal(
     m(equal, '<a style="a: 100%;/*b: c-d;*/e: f;">', {
       removeLineBreaks: true,
@@ -74,7 +74,7 @@ test(`04 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - line le
   );
 });
 
-test(`05 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - leading whitespace inside double quotes`, () => {
+test(`05 - inline CSS minification - leading whitespace inside double quotes`, () => {
   equal(
     m(equal, '<a href="zzz" style=" font-size: 1px; ">', {
       removeLineBreaks: true,
@@ -84,7 +84,7 @@ test(`05 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - leading
   );
 });
 
-test(`06 - ${`\u001b[${34}m${"inline CSS minification"}\u001b[${39}m`} - leading whitespace inside single quotes`, () => {
+test(`06 - inline CSS minification - leading whitespace inside single quotes`, () => {
   equal(
     m(equal, "<a href='zzz' style=' font-size: 1px; '>", {
       removeLineBreaks: true,
