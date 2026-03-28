@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { compare } from "../../../ops/helpers/shallow-compare.js";
 import { m } from "./util/util.js";
@@ -8,7 +8,7 @@ import { m } from "./util/util.js";
 // pre + code
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${"ex-bugs"}\u001b[${39}m`} - does not mangle pre/code`, () => {
+test(`01 - ex-bugs - does not mangle pre/code`, () => {
   is(
     m(
       equal,
