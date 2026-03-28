@@ -1,13 +1,13 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { m } from "./util/util.js";
 
 // opts.breakToTheLeftOf
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${"opts.breakToTheLeftOf"}\u001b[${39}m`} - breaks based on breakpoints (no whitespace involved)`, () => {
+test(`01 - opts.breakToTheLeftOf - breaks based on breakpoints (no whitespace involved)`, () => {
   equal(
     m(equal, "<m><n><o>", {
       removeLineBreaks: false,
@@ -88,7 +88,7 @@ test(`01 - ${`\u001b[${34}m${"opts.breakToTheLeftOf"}\u001b[${39}m`} - breaks ba
   );
 });
 
-test(`02 - ${`\u001b[${34}m${"opts.breakToTheLeftOf"}\u001b[${39}m`} - breaks based on breakpoints (whitespace involved)`, () => {
+test(`02 - opts.breakToTheLeftOf - breaks based on breakpoints (whitespace involved)`, () => {
   equal(
     m(equal, "<a>\n<b><c>", {
       removeLineBreaks: true,
