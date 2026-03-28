@@ -1,13 +1,13 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { m } from "./util/util.js";
 
 // whitespace around tag brackets, inside tag
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - whitespace before closing bracket on opening tag`, () => {
+test(`01 - tag inner whitespace - whitespace before closing bracket on opening tag`, () => {
   equal(
     m(equal, "x<a >y", {
       removeLineBreaks: true,
@@ -31,7 +31,7 @@ test(`01 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - whitespace
   );
 });
 
-test(`02 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - div - block level`, () => {
+test(`02 - tag inner whitespace - div - block level`, () => {
   equal(
     m(equal, "x<div >y", {
       removeLineBreaks: true,
@@ -41,7 +41,7 @@ test(`02 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - div - bloc
   );
 });
 
-test(`03 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - a - inline tag`, () => {
+test(`03 - tag inner whitespace - a - inline tag`, () => {
   equal(
     m(equal, "x<a >y", {
       removeLineBreaks: false,
@@ -51,7 +51,7 @@ test(`03 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - a - inline
   );
 });
 
-test(`04 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - removeLineBreaks = off`, () => {
+test(`04 - tag inner whitespace - removeLineBreaks = off`, () => {
   equal(
     m(equal, "x<div >y", {
       removeLineBreaks: false,
@@ -61,7 +61,7 @@ test(`04 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - removeLine
   );
 });
 
-test(`05 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - all opts off, inline tag`, () => {
+test(`05 - tag inner whitespace - all opts off, inline tag`, () => {
   equal(
     m(equal, "x<a >y", {
       removeLineBreaks: false,
@@ -72,7 +72,7 @@ test(`05 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - all opts o
   );
 });
 
-test(`06 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - all opts off, block level tag`, () => {
+test(`06 - tag inner whitespace - all opts off, block level tag`, () => {
   equal(
     m(equal, "x<div >y", {
       removeLineBreaks: false,
@@ -83,7 +83,7 @@ test(`06 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - all opts o
   );
 });
 
-test(`07 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - before closing slash`, () => {
+test(`07 - tag inner whitespace - before closing slash`, () => {
   equal(
     m(equal, "x<a />y", {
       removeLineBreaks: true,
@@ -93,7 +93,7 @@ test(`07 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - before clo
   );
 });
 
-test(`08 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - after closing slash`, () => {
+test(`08 - tag inner whitespace - after closing slash`, () => {
   equal(
     m(equal, "x<a/ >y", {
       removeLineBreaks: true,
@@ -103,7 +103,7 @@ test(`08 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - after clos
   );
 });
 
-test(`09 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - around closing slash`, () => {
+test(`09 - tag inner whitespace - around closing slash`, () => {
   equal(
     m(equal, "x<a / >y", {
       removeLineBreaks: true,
@@ -113,7 +113,7 @@ test(`09 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - around clo
   );
 });
 
-test(`10 - ${`\u001b[${33}m${"tag inner whitespace"}\u001b[${39}m`} - around closing slash - non inline tag`, () => {
+test(`10 - tag inner whitespace - around closing slash - non inline tag`, () => {
   equal(
     m(equal, "x<div / >y", {
       removeLineBreaks: true,
