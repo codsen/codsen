@@ -5312,8 +5312,8 @@ DEV &&
 
 export {
   notEmailFriendly,
-  notEmailFriendlySetOnly,
   notEmailFriendlyLowercaseSetOnly,
-  notEmailFriendlyMinLength,
   notEmailFriendlyMaxLength,
+  notEmailFriendlyMinLength,
+  notEmailFriendlySetOnly,
 };
