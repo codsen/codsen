@@ -1,13 +1,13 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import {
   notEmailFriendly,
-  notEmailFriendlySetOnly,
   notEmailFriendlyLowercaseSetOnly,
-  notEmailFriendlyMinLength,
   notEmailFriendlyMaxLength,
+  notEmailFriendlyMinLength,
+  notEmailFriendlySetOnly,
 } from "../dist/html-entities-not-email-friendly.esm.js";
 
 // it's object, mapping entity names to numeric equivalents
