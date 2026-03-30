@@ -1,7 +1,7 @@
-import { unfancy } from "string-unfancy";
+import { checkTypesMini } from "check-types-mini";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
-import { checkTypesMini } from "check-types-mini";
+import { unfancy } from "string-unfancy";
 
 import { version as v } from "../package.json";
 
@@ -84,7 +84,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
     let charcode = str[i].charCodeAt(0);
     DEV &&
       console.log(
-        `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+        `87 \u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i].trim() ? str[i] : JSON.stringify(str[i], null, 0)
         }`}\u001b[${39}m ${`\u001b[${90}m#${charcode}\u001b[${39}m`} \u001b[${36}m${`===============================`}\u001b[${39}m`,
       );
@@ -97,7 +97,7 @@ function alts(str: string, opts?: Partial<Opts>): string {
         imageTagStartedAt = i;
       } else {
         throw new TypeError(
-          `html-img-alt/alts(): [THROW_ID_02] Something is wrong with the code - there's an image tag within an image tag. First image tag was: ${str.slice(
+          `html-img-alt/alts(): [THROW_ID_04] Something is wrong with the code - there's an image tag within an image tag. First image tag was: ${str.slice(
             imageTagStartedAt - 20,
             imageTagStartedAt + 20,
           )}, then before it was closed, we've got this: ${str.slice(
@@ -619,10 +619,10 @@ function alts(str: string, opts?: Partial<Opts>): string {
     // ================================================================
     // ================================================================
 
-    DEV && console.log("");
+    DEV && console.log("622 ");
 
     DEV &&
-      console.log(`${`\u001b[${90}m${`whitespaceStarted = ${whitespaceStarted}`}\u001b[${39}m`}
+      console.log(`625 ${`\u001b[${90}m${`whitespaceStarted = ${whitespaceStarted}`}\u001b[${39}m`}
 ${`\u001b[${90}m${`withinImageTag = ${withinImageTag}`}\u001b[${39}m`}
 ${`\u001b[${90}m${`altBegins = ${altBegins}`}\u001b[${39}m`}
 ${`\u001b[${90}m${`slashStartedAt = ${slashStartedAt}`}\u001b[${39}m`}
@@ -642,7 +642,7 @@ ${`\u001b[${90}m${`plausibleWithinQuotesRanges.current() = ${plausibleWithinQuot
 
   // crunch all the slices from rangesArr:
   // ================
-  DEV && console.log("\n\n\n=============\n\n");
+  DEV && console.log("645 \n\n\n=============\n\n");
   DEV &&
     console.log(
       `648 FINAL rangesArr.current() = ${JSON.stringify(
@@ -651,8 +651,9 @@ ${`\u001b[${90}m${`plausibleWithinQuotesRanges.current() = ${plausibleWithinQuot
         4,
       )}\n\n\n\n\n\n`,
     );
-  if (rangesArr.current() && (rangesArr.current() as any[]).length) {
-    return rApply(str, rangesArr.current());
+  const currentRanges = rangesArr.current();
+  if (currentRanges?.length) {
+    return rApply(str, currentRanges);
   }
   return str;
 }
