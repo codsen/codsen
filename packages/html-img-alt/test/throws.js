@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { alts } from "../dist/html-img-alt.esm.js";
 
@@ -12,7 +12,7 @@ test("01 - throws if encounters img tag within img tag", () => {
     () => {
       alts('zzz<img alt="  <img />zzz');
     },
-    /THROW_ID_02/g,
+    /THROW_ID_04/g,
     "01.01",
   );
 });
@@ -64,10 +64,10 @@ test("03 - throws if opts is not a plain object", () => {
     "03.01",
   );
   not.throws(() => {
-    alts("zzz", null); // it can be falsey, - we'll interpret as hardcoded choice of NO opts.
+    alts("zzz", null); // it can be falsy, - we'll interpret as hardcoded choice of NO opts.
   }, "03.02");
   not.throws(() => {
-    alts("zzz", undefined); // it can be falsey, - we'll interpret as hardcoded choice of NO opts.
+    alts("zzz", undefined); // it can be falsy, - we'll interpret as hardcoded choice of NO opts.
   }, "03.03");
   throws(
     () => {
