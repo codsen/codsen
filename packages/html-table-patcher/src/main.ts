@@ -1,7 +1,7 @@
-import { cparser } from "codsen-parser";
-import { Ranges } from "ranges-push";
-import { rApply } from "ranges-apply";
 import { traverse } from "ast-monkey-traverse-with-lookahead";
+import { cparser } from "codsen-parser";
+import { rApply } from "ranges-apply";
+import { Ranges } from "ranges-push";
 
 import { version as v } from "../package.json";
 
@@ -9,8 +9,6 @@ const version: string = v;
 
 declare let DEV: boolean;
 const htmlCommentRegex = /<!--([\s\S]*?)-->/g;
-
-const ranges = new Ranges();
 
 function isObj(something: unknown): boolean {
   return (
@@ -47,6 +45,8 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
   if (typeof str !== "string" || str.length === 0) {
     return { result: str };
   }
+  const ranges = new Ranges();
+  // Keep mutable range state isolated even when parsing aborts unexpectedly.
 
   // setup
   // ---------------------------------------------------------------------------
@@ -72,7 +72,6 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
       )}`,
     );
 
-  // the bizness
   // ---------------------------------------------------------------------------
 
   // traversal is done from a callback, same like Array.prototype.forEach()
@@ -87,7 +86,7 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
 
   DEV &&
     console.log(
-      `090 ${`\u001b[${36}m${`COMMENCE THE TRAVERSE`}\u001b[${39}m`}`,
+      `089 ${`\u001b[${36}m${`COMMENCE THE TRAVERSE`}\u001b[${39}m`}`,
     );
   traverse(cparser(str), (token, _val, innerObj) => {
     /* c8 ignore next */
@@ -123,7 +122,7 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
       // so this table does have some text nodes straight inside TABLE tag
       DEV &&
         console.log(
-          `126 ${`\u001b[${32}m${`TABLE caught!`}\u001b[${39}m`} Path: ${
+          `125 ${`\u001b[${32}m${`TABLE caught!`}\u001b[${39}m`} Path: ${
             innerObj.path
           }`,
         );
@@ -137,20 +136,16 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
       // if td we decide the colspan contains some attributes, we'll note
       // down the range of where first attrib starts and last attrib ends
       // then slice that range and insert of every td, along the colspan
-      let centered = false;
+      let centred = false;
 
-      let firstTrFound: Obj = {};
-      if (
-        // some TR's exist inside this TABLE tag
-        (token as Obj).children.some(
-          (childNodeObj: Obj) =>
-            childNodeObj.type === "tag" &&
-            childNodeObj.tagName === "tr" &&
-            !childNodeObj.closing &&
-            (firstTrFound = childNodeObj),
-        )
-      ) {
-        DEV && console.log(`153 ${`\u001b[${32}m${`TR`}\u001b[${39}m`} found`);
+      const firstTrFound = (token as Obj).children.find(
+        (childNodeObj: Obj) =>
+          childNodeObj.type === "tag" &&
+          childNodeObj.tagName === "tr" &&
+          !childNodeObj.closing,
+      );
+      if (firstTrFound) {
+        DEV && console.log(`148 ${`\u001b[${32}m${`TR`}\u001b[${39}m`} found`);
         // DEV && console.log(
         //   `108 ${`\u001b[${33}m${`firstTrFound`}\u001b[${39}m`} = ${JSON.stringify(
         //     firstTrFound,
@@ -190,7 +185,7 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
           if (obj.type === "tag" && obj.tagName === "td") {
             if (!obj.closing) {
               // detect center-alignment
-              centered = obj.attribs.some(
+              centred = obj.attribs.some(
                 (attrib: Obj) =>
                   (attrib.attribName === "align" &&
                     attrib.attribValueRaw === "center") ||
@@ -223,7 +218,7 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
 
       DEV &&
         console.log(
-          `226 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`colspanVal`}\u001b[${39}m`} = ${JSON.stringify(
+          `221 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`colspanVal`}\u001b[${39}m`} = ${JSON.stringify(
             colspanVal,
             null,
             4,
@@ -239,12 +234,12 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
       //
       // -----------------------------------------------------------------------------
 
-      DEV && console.log(" ");
+      DEV && console.log("237 ");
       DEV &&
         console.log(
-          `245                        ${`\u001b[${35}m${`TYPE I.`}\u001b[${39}m`}`,
+          `240                        ${`\u001b[${35}m${`TYPE I.`}\u001b[${39}m`}`,
         );
-      DEV && console.log(" ");
+      DEV && console.log("242 ");
 
       // now filter all "text" type children nodes from this TABLE tag
       // this key below is the table tag we filtered in the beginning
@@ -257,20 +252,20 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
         .forEach((obj: Obj) => {
           DEV &&
             console.log(
-              `260 -------------------- ${`\u001b[${32}m${`PROCESSING INSIDE TABLE`}\u001b[${39}m`} --------------------`,
+              `255 -------------------- ${`\u001b[${32}m${`PROCESSING INSIDE TABLE`}\u001b[${39}m`} --------------------`,
             );
           DEV &&
             console.log(
-              `264 text node, ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+              `259 text node, ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
                 obj,
                 null,
                 4,
               )}`,
             );
-          DEV && console.log(" ");
+          DEV && console.log("265 ");
           DEV &&
             console.log(
-              `273 ${
+              `268 ${
                 obj.value.trim()
                   ? `${`\u001b[${32}m${`this one needs wrapping`}\u001b[${39}m`}`
                   : `${`\u001b[${31}m${`this one does not need wrapping`}\u001b[${39}m`}`
@@ -280,7 +275,7 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
             // There will always be whitespace in nicely formatted tags,
             // so ignore text tokens which have values that trim to zero length.
             //
-            // Since trimmed value of zero length is already falsey, we don't
+            // Since trimmed value of zero length is already falsy, we don't
             // need to do
             // "if (obj.value.trim().length)" or
             // "if (obj.value.trim() === "")" or
@@ -292,7 +287,7 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
               `\n<tr>\n  <td${
                 colspanVal > 1 ? ` colspan="${colspanVal}"` : ""
               }${
-                resolvedOpts.alwaysCenter || centered ? ` align="center"` : ""
+                resolvedOpts.alwaysCenter || centred ? ` align="center"` : ""
               }${
                 resolvedOpts.cssStylesContent
                   ? ` style="${resolvedOpts.cssStylesContent}"`
@@ -311,12 +306,12 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
       //
       // -----------------------------------------------------------------------------
 
-      DEV && console.log(" ");
+      DEV && console.log("309 ");
       DEV &&
         console.log(
-          `317                        ${`\u001b[${35}m${`TYPE II.`}\u001b[${39}m`}`,
+          `312                        ${`\u001b[${35}m${`TYPE II.`}\u001b[${39}m`}`,
         );
-      DEV && console.log(" ");
+      DEV && console.log("314 ");
 
       (token as Obj).children
         // filter out text nodes:
@@ -340,7 +335,7 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
           for (let i = 0, len = trTag.children.length; i < len; i++) {
             DEV &&
               console.log(
-                `343 -------------------- ${`\u001b[${32}m${`PROCESSING INSIDE TR`}\u001b[${39}m`} --------------------`,
+                `338 -------------------- ${`\u001b[${32}m${`PROCESSING INSIDE TR`}\u001b[${39}m`} --------------------`,
               );
             let childNodeObj = trTag.children[i];
 
@@ -371,17 +366,17 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
             ) {
               DEV &&
                 console.log(
-                  `374 ██ ${`\u001b[${33}m${`childNodeObj`}\u001b[${39}m`} = ${JSON.stringify(
+                  `369 ██ ${`\u001b[${33}m${`childNodeObj`}\u001b[${39}m`} = ${JSON.stringify(
                     childNodeObj,
                     null,
                     4,
                   )}`,
                 );
 
-              DEV && console.log(" ");
+              DEV && console.log("376 ");
               DEV &&
                 console.log(
-                  `384 ${
+                  `379 ${
                     childNodeObj.value.trim()
                       ? `${`\u001b[${32}m${`this one needs wrapping`}\u001b[${39}m`}`
                       : `${`\u001b[${31}m${`this one does not need wrapping`}\u001b[${39}m`}`
@@ -393,7 +388,7 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
 
                 DEV &&
                   console.log(
-                    `396 ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(
+                    `391 ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(
                       i,
                       null,
                       4,
@@ -402,14 +397,14 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
 
                 if (!i) {
                   DEV &&
-                    console.log(`405 it's the first element, so TR is behind`);
+                    console.log(`400 it's the first element, so TR is behind`);
                   ranges.push(
                     childNodeObj.start,
                     childNodeObj.end,
                     `\n  <td${
                       colspanVal > 1 ? ` colspan="${colspanVal}"` : ""
                     }${
-                      resolvedOpts.alwaysCenter || centered
+                      resolvedOpts.alwaysCenter || centred
                         ? ` align="center"`
                         : ""
                     }${
@@ -421,7 +416,7 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
                 } else if (i && len > 1 && i === len - 1) {
                   DEV &&
                     console.log(
-                      `424 it's the last element, closing TR is next`,
+                      `419 it's the last element, closing TR is next`,
                     );
                   ranges.push(
                     childNodeObj.start,
@@ -429,7 +424,7 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
                     `\n</tr>\n<tr>\n  <td${
                       colspanVal > 1 ? ` colspan="${colspanVal}"` : ""
                     }${
-                      resolvedOpts.alwaysCenter || centered
+                      resolvedOpts.alwaysCenter || centred
                         ? ` align="center"`
                         : ""
                     }${
@@ -439,14 +434,14 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
                     }>\n    ${childNodeObj.value.trim()}\n  </td>\n`,
                   );
                 } else {
-                  DEV && console.log(`442 the previous tag was TD`);
+                  DEV && console.log(`437 the previous tag was TD`);
                   ranges.push(
                     childNodeObj.start,
                     childNodeObj.end,
                     `\n</tr>\n<tr>\n  <td${
                       colspanVal > 1 ? ` colspan="${colspanVal}"` : ""
                     }${
-                      resolvedOpts.alwaysCenter || centered
+                      resolvedOpts.alwaysCenter || centred
                         ? ` align="center"`
                         : ""
                     }${
@@ -463,29 +458,29 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
 
       DEV &&
         console.log(
-          `466 ---------------------------- ${`\u001b[${32}m${`DONE`}\u001b[${39}m`} ----------------------------`,
+          `461 ---------------------------- ${`\u001b[${32}m${`DONE`}\u001b[${39}m`} ----------------------------`,
         );
     }
   });
 
   DEV &&
     console.log(
-      `473 after traversal, ${`\u001b[${33}m${`knownCommentTokenPaths`}\u001b[${39}m`} = ${JSON.stringify(
+      `468 after traversal, ${`\u001b[${33}m${`knownCommentTokenPaths`}\u001b[${39}m`} = ${JSON.stringify(
         knownCommentTokenPaths,
         null,
         4,
       )}`,
     );
 
-  DEV && console.log(" ");
-  DEV && console.log(`481 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  DEV && console.log("475 ");
+  DEV && console.log(`476 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
 
-  if (ranges.current()) {
-    let result = rApply(str, ranges.current());
-    ranges.wipe();
+  const currentRanges = ranges.current();
+  if (currentRanges) {
+    const result = rApply(str, currentRanges);
     DEV &&
       console.log(
-        `488 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`result`}\u001b[${39}m`} = ${result}`,
+        `483 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`result`}\u001b[${39}m`} = ${result}`,
       );
     return { result };
   }
@@ -493,4 +488,4 @@ function patcher(str: string, opts?: Partial<Opts>): Res {
   return { result: str };
 }
 
-export { patcher, defaults, version };
+export { defaults, patcher, version };
