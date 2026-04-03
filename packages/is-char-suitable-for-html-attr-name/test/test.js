@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, ok, throws, type, not, match } from "uvu/assert";
+import { equal, match, not, ok, throws, type } from "uvu/assert";
 
 import { isAttrNameChar as is } from "../dist/is-char-suitable-for-html-attr-name.esm.js";
 
@@ -9,23 +9,23 @@ const BACKSLASH = "\u005C";
 // 00. Weird cases
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${"weird cases"}\u001b[${39}m`} - no input`, () => {
+test(`01 - weird cases - no input`, () => {
   equal(is(), false, "01.01");
 });
 
-test(`02 - ${`\u001b[${34}m${"weird cases"}\u001b[${39}m`} - input is not a string`, () => {
+test(`02 - weird cases - input is not a string`, () => {
   equal(is(2), false, "02.01");
 });
 
-test(`03 - ${`\u001b[${34}m${"weird cases"}\u001b[${39}m`} - empty string`, () => {
+test(`03 - weird cases - empty string`, () => {
   equal(is(""), false, "03.01");
 });
 
-test(`04 - ${`\u001b[${34}m${"weird cases"}\u001b[${39}m`} - more than 1 long - first char is picked`, () => {
+test(`04 - weird cases - more than 1 long - first char is picked`, () => {
   equal(is("aa"), true, "04.01");
 });
 
-test(`05 - ${`\u001b[${34}m${"weird cases"}\u001b[${39}m`} - more than 1 long - first char is picked`, () => {
+test(`05 - weird cases - more than 1 long - first char is picked`, () => {
   equal(is(" a"), false, "05.01");
 });
 
