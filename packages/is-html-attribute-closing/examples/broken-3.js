@@ -1,6 +1,6 @@
 // Broken #3
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { isAttrClosing } from "../dist/is-html-attribute-closing.esm.js";
 
