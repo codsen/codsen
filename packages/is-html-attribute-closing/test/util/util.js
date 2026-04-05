@@ -25,4 +25,4 @@ function combinations(str = "", quotesRef = "'\"") {
   );
 }
 
-export { generateVariations, combinations };
+export { combinations, generateVariations };
