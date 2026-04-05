@@ -1,15 +1,16 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js";
+
 // const BACKSLASH = "\u005C";
 
 // equals is replaced with whitespace
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-test(`01 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - one tag, three attrs`, () => {
+test(`01 - space instead of equal - one tag, three attrs`, () => {
   let str = '<a class "c" id \'e\' href "www">';
 
   // class opening at 9
@@ -52,7 +53,7 @@ test(`01 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - one tag,
 
 // S-S follows
 
-test(`02 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`02 - space instead of equal - unrecognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str = '<z bbb"c" ddd\'e\'>.<z fff"g">';
 
   // bbb opening at 6
@@ -74,7 +75,7 @@ test(`02 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - unrecogn
   // fin.
 });
 
-test(`03 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - recognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`03 - space instead of equal - recognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str = "<a class\"c\" id'e'>";
 
   // bbb opening at 8
@@ -94,7 +95,7 @@ test(`03 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - recognis
 
 // S-D follows
 
-test(`04 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`04 - space instead of equal - unrecognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   let str = '<z bbb"c" ddd\'e">';
 
   // 1. the bracket that follows is the last non-whitespace character in string:
@@ -122,7 +123,7 @@ test(`04 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - unrecogn
   // fin.
 });
 
-test(`05 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - recognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`05 - space instead of equal - recognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   let str = '<a class"c" id\'e">';
 
   // bbb opening at 8
@@ -142,7 +143,7 @@ test(`05 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - recognis
 
 // D-S follows
 
-test(`06 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`06 - space instead of equal - unrecognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str = '<z bbb"c" ddd"e\'>';
 
   // bbb opening at 6
@@ -160,7 +161,7 @@ test(`06 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - unrecogn
   // fin.
 });
 
-test(`07 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - recognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`07 - space instead of equal - recognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str = '<a class"c" id"e\'>';
 
   // bbb opening at 8
@@ -180,7 +181,7 @@ test(`07 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - recognis
 
 // D-D follows
 
-test(`08 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - unrecognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`08 - space instead of equal - unrecognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   let str = '<z bbb"c" ddd"e">';
 
   // bbb opening at 6
@@ -198,7 +199,7 @@ test(`08 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - unrecogn
   // fin.
 });
 
-test(`09 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - recognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`09 - space instead of equal - recognised everything - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   let str = '<a class"c" id"e">';
 
   // bbb opening at 8
@@ -218,7 +219,7 @@ test(`09 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - recognis
 
 // counter-cases, false positives
 
-test(`10 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`10 - space instead of equal - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str1 = '<z bbb"c" ddd\'e>';
 
   // algorithm picks the 13 because it is matching and 13 is unmatched
@@ -277,7 +278,7 @@ test(`10 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-
   // fin.
 });
 
-test(`11 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`11 - space instead of equal - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   let str = '<z bbb"c\' ddd"e>';
 
   // but if 13 is mismatching, it will jump to 13 because count of doubles is
@@ -293,7 +294,7 @@ test(`11 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-
   // fin.
 });
 
-test(`12 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`12 - space instead of equal - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   let str = '<z bbb"c\' href"e>';
 
   // but if 13 is mismatching, it will jump to 13 because count of doubles is
@@ -309,7 +310,7 @@ test(`12 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-
   // fin.
 });
 
-test(`13 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`13 - space instead of equal - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   let str = '<z bbb"c\' z href"e>';
 
   // z ruins everything, if it's not a known void attribute name
@@ -321,7 +322,7 @@ test(`13 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-
   // fin.
 });
 
-test(`14 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`14 - space instead of equal - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   let str = '<z bbb"c\' nowrap href"e>';
 
   // nowrap is recognised void attribute
@@ -333,7 +334,7 @@ test(`14 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-
   // fin.
 });
 
-test(`15 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`15 - space instead of equal - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   let str = '<z href"href\' href href"href>';
 
   // program perceives it as:
@@ -348,7 +349,7 @@ test(`15 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-
   // fin.
 });
 
-test(`16 - ${`\u001b[${34}m${"space instead of equal"}\u001b[${39}m`} - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`16 - space instead of equal - counter-case - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   // no closing slash on img
   let str1 = '<img alt="somethin\' fishy going on\' class=">z<a class="y">';
 
