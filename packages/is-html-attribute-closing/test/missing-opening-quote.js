@@ -1,15 +1,16 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js";
+
 // const BACKSLASH = "\u005C";
 
 // attribute starts without a quote
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-test(`01 - ${`\u001b[${35}m${"opening missing"}\u001b[${39}m`} - one tag pair, one attr`, () => {
+test(`01 - opening missing - one tag pair, one attr`, () => {
   let str = '<a href=z">click here</a>';
 
   ok(isCl(str, 8, 9), "01.01");
@@ -17,7 +18,7 @@ test(`01 - ${`\u001b[${35}m${"opening missing"}\u001b[${39}m`} - one tag pair, o
   // fin.
 });
 
-test(`02 - ${`\u001b[${35}m${"opening missing"}\u001b[${39}m`} - one tag pair, another attr follows`, () => {
+test(`02 - opening missing - one tag pair, another attr follows`, () => {
   // D-D follows
   let str1 = '<a href=z" class="yo">click here</a>';
 
