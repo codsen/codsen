@@ -1,8 +1,9 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js";
+
 // const BACKSLASH = "\u005C";
 
 // mismatching quotes, rest healthy
@@ -21,7 +22,7 @@ import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js"
 //
 //
 
-test(`01 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - a trap`, () => {
+test(`01 - mismatching quotes - a trap`, () => {
   // healthy tag being:
   // <img alt='so-called "artists"!' class='yo'/>
 
@@ -35,7 +36,7 @@ test(`01 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - a trap`, () 
   // fin.
 });
 
-test(`02 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - similar but opposite`, () => {
+test(`02 - mismatching quotes - similar but opposite`, () => {
   // healthy tag being:
   // <img class="so-called" alt="!" border='10'/>
 
@@ -51,7 +52,7 @@ test(`02 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - similar but 
   // fin.
 });
 
-test(`03 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - also similar`, () => {
+test(`03 - mismatching quotes - also similar`, () => {
   // healthy tag being:
   // <img class="so-called" alt="!" border='10'/>
 
@@ -65,14 +66,14 @@ test(`03 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - also similar
   // fin.
 });
 
-test(`04 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - basic, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`04 - mismatching quotes - basic, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   let str = '<img src="xyz" alt="="/>';
   ok(isCl(str, 19, 21), "04.01"); // <--
 
   // fin.
 });
 
-test(`05 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - two attr pairs, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`05 - mismatching quotes - two attr pairs, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str = "<div class=\"c' id=\"x'>.</div>";
 
   // class opening at 11
@@ -90,7 +91,7 @@ test(`05 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - two attr pai
   // fin.
 });
 
-test(`06 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - two attr pairs, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`06 - mismatching quotes - two attr pairs, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str = "<div class='c\" id='x\">.</div>";
 
   // class opening at 11
@@ -108,7 +109,7 @@ test(`06 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - two attr pai
   // fin.
 });
 
-test(`07 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - three attr pairs, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`07 - mismatching quotes - three attr pairs, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   let str = "<div class=\"c' id=\"x' style='c\">.</div>";
 
   // class opening at 11
@@ -138,7 +139,7 @@ test(`07 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - three attr p
   // fin.
 });
 
-test(`08 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - three attr pairs, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`08 - mismatching quotes - three attr pairs, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str = "<div class='c\" id='x\" style=\"c'>.</div>";
 
   // class opening at 11
@@ -168,7 +169,7 @@ test(`08 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - three attr p
   // fin.
 });
 
-test(`09 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy singles inside doubles, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`09 - mismatching quotes - healthy singles inside doubles, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str = "<img alt='so-called \"artists\"!'/>";
 
   // alt opening at 9
@@ -188,7 +189,7 @@ test(`09 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy sing
   // fin.
 });
 
-test(`10 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy singles inside doubles, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`10 - mismatching quotes - healthy singles inside doubles, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str = "<img alt=\"so-called 'artists'!\"/>";
 
   // alt opening at 9
@@ -202,7 +203,7 @@ test(`10 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy sing
 
 // S - D - D - S
 
-test(`11 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m follows`, () => {
+test(`11 - mismatching quotes - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m follows`, () => {
   let str = "<img alt='so-called \"artists\"!' class='yo'/>";
 
   // alt opening at 9
@@ -216,7 +217,7 @@ test(`11 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u00
   // fin.
 });
 
-test(`12 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m follows`, () => {
+test(`12 - mismatching quotes - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m follows`, () => {
   let str = "<img alt='so-called \"artists\"!' class='yo\"/>";
 
   // alt opening at 9
@@ -230,7 +231,7 @@ test(`12 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u00
   // fin.
 });
 
-test(`13 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m follows`, () => {
+test(`13 - mismatching quotes - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m follows`, () => {
   let str = "<img alt='so-called \"artists\"!' class=\"yo'/>";
 
   // alt opening at 9
@@ -244,7 +245,7 @@ test(`13 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u00
   // fin.
 });
 
-test(`14 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m follows`, () => {
+test(`14 - mismatching quotes - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m follows`, () => {
   let str = '<img alt=\'so-called "artists"!\' class="yo"/>';
 
   // alt opening at 9
@@ -274,7 +275,7 @@ test(`14 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u00
 
 // S - D - D - D
 
-test(`15 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m follows`, () => {
+test(`15 - mismatching quotes - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m follows`, () => {
   let str = "<img alt='so-called \"artists\"!\" class='yo'/>";
 
   // alt opening at 9
@@ -288,7 +289,7 @@ test(`15 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u00
   // fin.
 });
 
-test(`16 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m follows`, () => {
+test(`16 - mismatching quotes - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m follows`, () => {
   let str = '<img alt=\'so-called "artists"!" class=\'yo"/>';
 
   // alt opening at 9
@@ -302,7 +303,7 @@ test(`16 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u00
   // fin.
 });
 
-test(`17 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m follows`, () => {
+test(`17 - mismatching quotes - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m follows`, () => {
   let str = '<img alt=\'so-called "artists"!" class="yo\'/>';
 
   // alt opening at 9
@@ -316,7 +317,7 @@ test(`17 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u00
   // fin.
 });
 
-test(`18 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m follows`, () => {
+test(`18 - mismatching quotes - healthy \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m follows`, () => {
   let str = '<img alt=\'so-called "artists"!" class="yo"/>';
 
   // alt opening at 9
@@ -332,7 +333,7 @@ test(`18 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u00
 
 // D - D - D - S
 
-test(`19 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m follows`, () => {
+test(`19 - mismatching quotes - healthy \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m follows`, () => {
   let str = "<img alt=\"so-called \"artists\"!' class='yo'/>";
 
   // alt opening at 9
@@ -346,7 +347,7 @@ test(`19 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u00
   // fin.
 });
 
-test(`20 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - false positive of 02.19.*`, () => {
+test(`20 - mismatching quotes - false positive of 02.19.*`, () => {
   let str = '<img alt="so-called "artists"class=\'yo\'/>';
 
   // alt opening at 9
@@ -359,7 +360,7 @@ test(`20 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - false positi
   // fin.
 });
 
-test(`21 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m follows`, () => {
+test(`21 - mismatching quotes - healthy \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m follows`, () => {
   let str = '<img alt="so-called "artists"!\' class=\'yo"/>';
 
   // alt opening at 9
@@ -373,7 +374,7 @@ test(`21 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u00
   // fin.
 });
 
-test(`22 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m follows`, () => {
+test(`22 - mismatching quotes - healthy \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m follows`, () => {
   let str = '<img alt="so-called "artists"!\' class="yo\'/>';
 
   // alt opening at 9
@@ -387,7 +388,7 @@ test(`22 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u00
   // fin.
 });
 
-test(`23 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m follows`, () => {
+test(`23 - mismatching quotes - healthy \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m, \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m follows`, () => {
   let str = '<img alt="so-called "artists"!\' class="yo"/>';
 
   // alt opening at 9
@@ -419,7 +420,7 @@ test(`23 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - healthy \u00
 //
 //
 
-test(`24 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - one inside \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`24 - mismatching quotes - one inside \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str = "<img alt=\"Deal is your's!'/>";
 
   // alt opening at 9
@@ -430,7 +431,7 @@ test(`24 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - one inside \
   // fin.
 });
 
-test(`25 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - one inside \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`25 - mismatching quotes - one inside \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str = "<img alt='Deal is your's!\"/>";
 
   // alt opening at 9
@@ -465,7 +466,7 @@ test(`25 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - one inside \
   // fin.
 });
 
-test(`26 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - one inside \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m - more follows`, () => {
+test(`26 - mismatching quotes - one inside \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m - more follows`, () => {
   // D-D follows
   let str1 = '<img alt="Deal is your\'s!\' class="tralala"/>';
 
@@ -509,7 +510,7 @@ test(`26 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - one inside \
   // fin.
 });
 
-test(`27 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - one inside \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m - more follows`, () => {
+test(`27 - mismatching quotes - one inside \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m - more follows`, () => {
   // D-D follows
   let str1 = '<img alt=\'Deal is your\'s!" class="tralala"/>';
 
@@ -553,7 +554,7 @@ test(`27 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - one inside \
   // fin.
 });
 
-test(`28 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - a trap`, () => {
+test(`28 - mismatching quotes - a trap`, () => {
   // D-D-D-D
   let str1 = '<img alt="so-called "artists"!"/>';
 
@@ -589,7 +590,7 @@ test(`28 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - a trap`, () 
   // fin.
 });
 
-test(`29 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - a trap, second attr, D-D`, () => {
+test(`29 - mismatching quotes - a trap, second attr, D-D`, () => {
   // D-D-D-D
   let str1 = '<img alt="so-called "artists"!" id="yo"/>';
 
@@ -633,7 +634,7 @@ test(`29 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - a trap, seco
   // fin.
 });
 
-test(`30 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - a trap, second attr, D-S`, () => {
+test(`30 - mismatching quotes - a trap, second attr, D-S`, () => {
   // D-D-D-D
   let str1 = '<img alt="so-called "artists"!" id="yo\'/>';
 
@@ -677,7 +678,7 @@ test(`30 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - a trap, seco
   // fin.
 });
 
-test(`31 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - a trap, second attr, S-D`, () => {
+test(`31 - mismatching quotes - a trap, second attr, S-D`, () => {
   // D-D-D-D
   let str1 = '<img alt="so-called "artists"!" id=\'yo"/>';
 
@@ -721,7 +722,7 @@ test(`31 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - a trap, seco
   // fin.
 });
 
-test(`32 - ${`\u001b[${32}m${"mismatching quotes"}\u001b[${39}m`} - a trap, second attr, S-S`, () => {
+test(`32 - mismatching quotes - a trap, second attr, S-S`, () => {
   // D-D-D-D
   let str1 = '<img alt="so-called "artists"!" id=\'yo\'/>';
 
