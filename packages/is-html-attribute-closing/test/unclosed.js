@@ -1,36 +1,37 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js";
+
 // const BACKSLASH = "\u005C";
 
 // unclosed tags
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-test(`01 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - missing tag ending follows - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`01 - unclosed tags - missing tag ending follows - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   let str = '<a href="z" click here</a>';
   ok(isCl(str, 8, 10), "01.01");
 
   // fin.
 });
 
-test(`02 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - missing tag ending follows - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`02 - unclosed tags - missing tag ending follows - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str = "<a href=\"z' click here</a>";
   ok(isCl(str, 8, 10), "02.01");
 
   // fin.
 });
 
-test(`03 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - missing tag ending follows - \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`03 - unclosed tags - missing tag ending follows - \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   let str = "<a href='z\" click here</a>";
   ok(isCl(str, 8, 10), "03.01");
 
   // fin.
 });
 
-test(`04 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - missing tag ending follows - \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`04 - unclosed tags - missing tag ending follows - \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str = "<a href='z' click here</a>";
   ok(isCl(str, 8, 10), "04.01");
 
@@ -39,7 +40,7 @@ test(`04 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - missing tag endin
 
 // -----------------------------------------------------------------------------
 
-test(`05 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - attr + missing tag ending follows - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`05 - unclosed tags - attr + missing tag ending follows - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   // D-D follows
   let str1 = '<a href="z" class="yo" click here</a>';
   ok(isCl(str1, 8, 10), "05.01");
@@ -67,7 +68,7 @@ test(`05 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - attr + missing ta
   // fin.
 });
 
-test(`06 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - attr + missing tag ending follows - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`06 - unclosed tags - attr + missing tag ending follows - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   // D-D follows
   let str1 = '<a href="z\' class="yo" click here</a>';
   ok(isCl(str1, 8, 10), "06.01");
@@ -95,7 +96,7 @@ test(`06 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - attr + missing ta
   // fin.
 });
 
-test(`07 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - attr + missing tag ending follows - \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`07 - unclosed tags - attr + missing tag ending follows - \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   // D-D follows
   let str1 = '<a href=\'z" class="yo" click here</a>';
   ok(isCl(str1, 8, 10), "07.01");
@@ -123,7 +124,7 @@ test(`07 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - attr + missing ta
   // fin.
 });
 
-test(`08 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - attr + missing tag ending follows - \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`08 - unclosed tags - attr + missing tag ending follows - \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   // D-D follows
   let str1 = "<a href='z' class=\"yo\" click here</a>";
   ok(isCl(str1, 8, 10), "08.01");
@@ -153,28 +154,28 @@ test(`08 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - attr + missing ta
 
 // -----------------------------------------------------------------------------
 
-test(`09 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - tight - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`09 - unclosed tags - tight - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   let str = '<a href="z"</a>';
   ok(isCl(str, 8, 10), "09.01");
 
   // fin.
 });
 
-test(`10 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - tight - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`10 - unclosed tags - tight - \u001b[${31}m${"D"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str = "<a href=\"z'</a>";
   ok(isCl(str, 8, 10), "10.01");
 
   // fin.
 });
 
-test(`11 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - tight - \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`11 - unclosed tags - tight - \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   let str = "<a href='z\"</a>";
   ok(isCl(str, 8, 10), "11.01");
 
   // fin.
 });
 
-test(`12 - ${`\u001b[${31}m${"unclosed tags"}\u001b[${39}m`} - tight - \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`12 - unclosed tags - tight - \u001b[${33}m${"S"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   let str = "<a href='z'</a>";
   ok(isCl(str, 8, 10), "12.01");
 
