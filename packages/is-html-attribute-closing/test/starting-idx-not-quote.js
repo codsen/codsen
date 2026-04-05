@@ -1,15 +1,16 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js";
+
 // const BACKSLASH = "\u005C";
 
 // starting index is not on a quote
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-test(`01 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - control`, () => {
+test(`01 - starting quote missing - control`, () => {
   let str = '<a href="www" class=e\'>';
 
   // href opening at 8
@@ -25,7 +26,7 @@ test(`01 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - control`
 
 //              finally, the bizness
 
-test(`02 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - one tag, two attrs`, () => {
+test(`02 - starting quote missing - one tag, two attrs`, () => {
   // D-D
   let str1 = '<a href=www" class=e">';
 
@@ -74,7 +75,7 @@ test(`02 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - one tag,
 });
 
 // "X" meaning absent
-test(`03 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m + \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`03 - starting quote missing - one tag, three attrs - \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m + \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   // X-D + X-D + D-D
   let str1 = '<a href=www" class=e" id="f">';
 
@@ -190,7 +191,7 @@ test(`03 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - one tag,
   // fin.
 });
 
-test(`04 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m + \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`04 - starting quote missing - one tag, three attrs - \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m + \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   // X-D + X-S + D-D
   let str1 = '<a href=www" class=e\' id="f">';
 
@@ -306,7 +307,7 @@ test(`04 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - one tag,
   // fin.
 });
 
-test(`05 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m + \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
+test(`05 - starting quote missing - one tag, three attrs - \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m + \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${31}m${"D"}\u001b[${39}m`, () => {
   // X-S + X-D + D-D
   let str1 = '<a href=www\' class=e" id="f">';
 
@@ -422,7 +423,7 @@ test(`05 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - one tag,
   // fin.
 });
 
-test(`06 - ${`\u001b[${36}m${"starting quote missing"}\u001b[${39}m`} - one tag, three attrs - \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m + \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
+test(`06 - starting quote missing - one tag, three attrs - \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m + \u001b[${90}m${"X"}\u001b[${39}m-\u001b[${33}m${"S"}\u001b[${39}m`, () => {
   // X-S + X-S + D-D
   let str1 = "<a href=www' class=e' id=\"f\">";
 
