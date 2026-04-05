@@ -1,6 +1,8 @@
 import { isAttrNameChar } from "is-char-suitable-for-html-attr-name";
 import { left } from "string-left-right";
 
+declare let DEV: boolean;
+
 function makeTheQuoteOpposite(quoteChar: string): string {
   return quoteChar === `'` ? `"` : `'`;
 }
@@ -11,23 +13,23 @@ function ensureXIsNotPresentBeforeOneOfY(
   x: string,
   y: string[] = [],
 ): boolean {
-  DEV && console.log(`014e ensureXIsNotPresentBeforeOneOfY() called`);
+  DEV && console.log(`16 014e ensureXIsNotPresentBeforeOneOfY() called`);
   for (let i = startingIdx, len = str.length; i < len; i++) {
-    DEV && console.log(`016e str[i] = ${str[i]}`);
+    DEV && console.log(`18 016e str[i] = ${str[i]}`);
     if (y.some((oneOfStr) => str.startsWith(oneOfStr, i))) {
       // it's escape clause, bracket or whatever was reached and yet,
       // "x" hasn't been encountered yet
-      DEV && console.log(`020e return true`);
+      DEV && console.log(`22 020e return true`);
       return true;
     }
     if (str[i] === x) {
-      // if "x" was found, that's it - falsey result
-      DEV && console.log(`025e return false`);
+      // if "x" was found, that's it - falsy result
+      DEV && console.log(`27 025e return false`);
       return false;
     }
   }
   // default result
-  DEV && console.log(`030e return true`);
+  DEV && console.log(`32 030e return true`);
   return true;
 }
 
@@ -62,7 +64,7 @@ function xBeforeYOnTheRight(
 function plausibleAttrStartsAtX(str: string, start: number): boolean {
   DEV &&
     console.log(
-      `${`\u001b[${35}m${`plausibleAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`,
+      `67 ${`\u001b[${35}m${`plausibleAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`,
     );
   if (!isAttrNameChar(str[start]) || !start) {
     return false;
@@ -77,17 +79,17 @@ function plausibleAttrStartsAtX(str: string, start: number): boolean {
 function guaranteedAttrStartsAtX(str: string, start: number): boolean {
   DEV &&
     console.log(
-      `${`\u001b[${35}m${`guaranteedAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`,
+      `82 ${`\u001b[${35}m${`guaranteedAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`,
     );
   if (!start || !isAttrNameChar(str[start])) {
-    DEV && console.log(`083g return false`);
+    DEV && console.log(`85 083g return false`);
     return false;
   }
   // either quotes match or does not match but tag closing follows
   // const regex = /^[a-zA-Z0-9:-]*[=]?(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
   let regex =
     /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
-  DEV && console.log(`090g return ${regex.test(str.slice(start))}`);
+  DEV && console.log(`92 090g return ${regex.test(str.slice(start))}`);
   return regex.test(str.slice(start));
 }
 
@@ -101,7 +103,7 @@ function findAttrNameCharsChunkOnTheLeft(
   for (let y = i; y--; ) {
     DEV &&
       console.log(
-        `104 ${`\u001b[${36}m${`str[y]`}\u001b[${39}m`} = ${JSON.stringify(
+        `106 ${`\u001b[${36}m${`str[y]`}\u001b[${39}m`} = ${JSON.stringify(
           str[y],
           null,
           4,
@@ -115,9 +117,9 @@ function findAttrNameCharsChunkOnTheLeft(
 
 export {
   ensureXIsNotPresentBeforeOneOfY,
-  xBeforeYOnTheRight,
-  plausibleAttrStartsAtX,
-  guaranteedAttrStartsAtX,
   findAttrNameCharsChunkOnTheLeft,
+  guaranteedAttrStartsAtX,
   makeTheQuoteOpposite,
+  plausibleAttrStartsAtX,
+  xBeforeYOnTheRight,
 };
