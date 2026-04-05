@@ -1,15 +1,16 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { isAttrClosing as isCl } from "../dist/is-html-attribute-closing.esm.js";
+
 // const BACKSLASH = "\u005C";
 
 // repeated equals
 // -----------------------------------------------------------------------------
 //   LEGEND: S means single, D means double, X means absent
 
-test(`01 - ${`\u001b[${90}m${"repeated equal"}\u001b[${39}m`} - one tag, one attr`, () => {
+test(`01 - repeated equal - one tag, one attr`, () => {
   let str = "<a b==\"c\" d=='e'>";
 
   // b opening at 6
@@ -27,7 +28,7 @@ test(`01 - ${`\u001b[${90}m${"repeated equal"}\u001b[${39}m`} - one tag, one att
   // fin.
 });
 
-test(`02 - ${`\u001b[${90}m${"repeated equal"}\u001b[${39}m`} - one tag, one attr, three equals`, () => {
+test(`02 - repeated equal - one tag, one attr, three equals`, () => {
   let str = "<a b===\"c\" d==='e'>";
 
   // b opening at 7
@@ -45,7 +46,7 @@ test(`02 - ${`\u001b[${90}m${"repeated equal"}\u001b[${39}m`} - one tag, one att
   // fin.
 });
 
-test(`03 - ${`\u001b[${90}m${"repeated equal"}\u001b[${39}m`} - one tag, one attr, three spaced equals`, () => {
+test(`03 - repeated equal - one tag, one attr, three spaced equals`, () => {
   let str = "<a b = = = \"c\" d = = = 'e'>";
 
   // b opening at 11
