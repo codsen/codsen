@@ -1,11 +1,10 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 // mixer generates array of all variations of options' sets
 // with all possible bool flag opts keys:
 import { mixer } from "./util/util.js";
-import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 
 // false positives
 // -----------------------------------------------------------------------------
@@ -20,7 +19,7 @@ import { isOpening } from "../dist/is-html-tag-opening.esm.js";
   );
 });*/
 
-test(`01 - ${`\u001b[${32}m${"false positives"}\u001b[${39}m`} - last letter`, () => {
+test(`01 - false positives - last letter`, () => {
   mixer().forEach((opt) => {
     not.ok(isOpening("> x", 2, opt), opt);
     //            ^
@@ -104,14 +103,14 @@ test("04", () => {
   });
 });
 
-test("05 one-letter-name recognised tag", () => {
+test("05 - one-letter-name recognised tag", () => {
   mixer().forEach((opt) => {
     ok(isOpening("<p>", 0, opt), opt);
     //         ^
   });
 });
 
-test("06 one-letter-name unrecognised tag", () => {
+test("06 - one-letter-name unrecognised tag", () => {
   let input = "<x>";
   //             ^
   //           idx 0
@@ -225,7 +224,7 @@ test("10", () => {
   });
 });
 
-test("11 known tag name + an attribute", () => {
+test("11 - known tag name + an attribute", () => {
   mixer().forEach((opt) => {
     [
       '<img src="b" <img src="" />',
