@@ -140,4 +140,4 @@ const knownHtmlTags = [
   "xml",
 ];
 
-export { defaultOpts, BACKSLASH, knownHtmlTags };
+export { BACKSLASH, defaultOpts, knownHtmlTags };
