@@ -1,13 +1,13 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 
 // API
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
+test(`01 - API - throws`, () => {
   throws(
     () => {
       isOpening();
@@ -17,7 +17,7 @@ test(`01 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
   );
 });
 
-test(`02 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
+test(`02 - API - throws`, () => {
   throws(
     () => {
       isOpening(true);
@@ -27,7 +27,7 @@ test(`02 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
   );
 });
 
-test(`03 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
+test(`03 - API - throws`, () => {
   throws(
     () => {
       isOpening({ a: 1 });
@@ -37,7 +37,7 @@ test(`03 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
   );
 });
 
-test(`04 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
+test(`04 - API - throws`, () => {
   throws(
     () => {
       isOpening("z", true);
@@ -47,7 +47,7 @@ test(`04 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
   );
 });
 
-test(`05 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
+test(`05 - API - throws`, () => {
   throws(
     () => {
       isOpening("z", false);
@@ -57,7 +57,7 @@ test(`05 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
   );
 });
 
-test(`06 - ${`\u001b[${32}m${"API"}\u001b[${39}m`} - throws`, () => {
+test(`06 - API - throws`, () => {
   throws(
     () => {
       isOpening("z", null);
