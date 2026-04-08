@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 import { mixer } from "./util/util.js";
@@ -10,25 +10,25 @@ const BACKSLASH = "\u005C";
 // ad-hoc
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - idx on defaults`, () => {
+test(`01 - ad-hoc - idx on defaults`, () => {
   mixer().forEach((opt) => {
     not.ok(isOpening("a", 0, opt), opt);
   });
 });
 
-test(`02 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - idx on defaults`, () => {
+test(`02 - ad-hoc - idx on defaults`, () => {
   mixer().forEach((opt) => {
     not.ok(isOpening("<", 0, opt), opt);
   });
 });
 
-test(`03 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - idx on defaults`, () => {
+test(`03 - ad-hoc - idx on defaults`, () => {
   mixer().forEach((opt) => {
     not.ok(isOpening(">", 0, opt), opt);
   });
 });
 
-test(`04 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - unrecognised tag`, () => {
+test(`04 - ad-hoc - unrecognised tag`, () => {
   let str = '<a b="ccc"<xyz>';
   mixer().forEach((opt) => {
     ok(
@@ -86,7 +86,7 @@ test(`04 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - unrecognised tag`, () =>
   });
 });
 
-test(`05 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - recognised tag`, () => {
+test(`05 - ad-hoc - recognised tag`, () => {
   let str = '<a b="ccc"<div>';
   mixer().forEach((opt) => {
     ok(
@@ -121,13 +121,13 @@ test(`05 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - recognised tag`, () => {
   });
 });
 
-test(`06 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
+test(`06 - ad-hoc - ad-hoc`, () => {
   mixer().forEach((opt) => {
     not.ok(isOpening("a < b", 2, opt), opt);
   });
 });
 
-test(`07 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
+test(`07 - ad-hoc - ad-hoc`, () => {
   let str = "<span>a < b<span>";
   mixer().forEach((opt) => {
     ok(
@@ -145,7 +145,7 @@ test(`07 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   });
 });
 
-test(`08 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
+test(`08 - ad-hoc - ad-hoc`, () => {
   let str = "\n<table";
   mixer().forEach((opt) => {
     ok(
@@ -155,7 +155,7 @@ test(`08 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   });
 });
 
-test(`09 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
+test(`09 - ad-hoc - ad-hoc`, () => {
   let str = `<br${BACKSLASH}>`;
   mixer().forEach((opt) => {
     ok(
@@ -165,7 +165,7 @@ test(`09 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   });
 });
 
-test(`10 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
+test(`10 - ad-hoc - ad-hoc`, () => {
   let str = `< ${BACKSLASH} br ${BACKSLASH} >`;
   mixer().forEach((opt) => {
     ok(
@@ -175,7 +175,7 @@ test(`10 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   });
 });
 
-test(`11 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
+test(`11 - ad-hoc - ad-hoc`, () => {
   let str = `<\t${BACKSLASH}///\t${BACKSLASH}${BACKSLASH}${BACKSLASH} br ${BACKSLASH} >`;
   mixer().forEach((opt) => {
     ok(
@@ -185,7 +185,7 @@ test(`11 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   });
 });
 
-test(`12 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
+test(`12 - ad-hoc - ad-hoc`, () => {
   let str = "let's say that a < b and c > d.";
   mixer().forEach((opt) => {
     not.ok(
@@ -207,7 +207,7 @@ test(`12 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   });
 });
 
-test(`13 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
+test(`13 - ad-hoc - ad-hoc`, () => {
   let str = '<zzz accept="utf-8" yyy>';
   // by default, custom tag names are not allowed:
   mixer({ allowCustomTagNames: false }).forEach((opt) => {
@@ -226,7 +226,7 @@ test(`13 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   });
 });
 
-test(`14 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
+test(`14 - ad-hoc - ad-hoc`, () => {
   let str = '<zzz accept-charset="utf-8" yyy>';
   mixer({ allowCustomTagNames: false }).forEach((opt) => {
     not.ok(
@@ -242,7 +242,7 @@ test(`14 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - ad-hoc`, () => {
   });
 });
 
-test(`15 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - custom html tags with dashes`, () => {
+test(`15 - ad-hoc - custom html tags with dashes`, () => {
   let str = "<something-here>";
   mixer({ allowCustomTagNames: false }).forEach((opt) => {
     not.ok(
@@ -259,7 +259,7 @@ test(`15 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - custom html tags with da
 });
 
 // https://www.fileformat.info/info/unicode/char/1f600/index.htm
-test(`16 - ${`\u001b[${36}m${"ad-hoc"}\u001b[${39}m`} - custom html tags with dashes`, () => {
+test(`16 - ad-hoc - custom html tags with dashes`, () => {
   let str = "<emoji-\uD83D\uDE00>";
   mixer({ allowCustomTagNames: false }).forEach((opt) => {
     not.ok(
