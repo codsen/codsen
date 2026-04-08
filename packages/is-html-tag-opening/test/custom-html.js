@@ -1,18 +1,18 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 
 // custom HTML tag names
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${"custom"}\u001b[${39}m`} - starts with dash, allowCustomTagNames=off`, () => {
+test(`01 - custom - starts with dash, allowCustomTagNames=off`, () => {
   let s1 = "<-a-b>";
   not.ok(isOpening(s1, 0), "01.01");
 });
 
-test(`02 - ${`\u001b[${36}m${"custom"}\u001b[${39}m`} - starts with dash, allowCustomTagNames=on`, () => {
+test(`02 - custom - starts with dash, allowCustomTagNames=on`, () => {
   let s1 = "<-a-b>";
   not.ok(
     isOpening(s1, 0, {
@@ -22,7 +22,7 @@ test(`02 - ${`\u001b[${36}m${"custom"}\u001b[${39}m`} - starts with dash, allowC
   );
 });
 
-test(`03 - ${`\u001b[${36}m${"custom"}\u001b[${39}m`} - dash between chars`, () => {
+test(`03 - custom - dash between chars`, () => {
   let s1 = "<a-b>";
   ok(isOpening(s1, 0), "03.01");
   ok(
@@ -33,7 +33,7 @@ test(`03 - ${`\u001b[${36}m${"custom"}\u001b[${39}m`} - dash between chars`, () 
   );
 });
 
-test(`04 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - one letter tag, allowCustomTagNames=off`, () => {
+test(`04 - isOpening() - one letter tag, allowCustomTagNames=off`, () => {
   let s1 = "<c>";
   not.ok(
     isOpening(s1, 0, {
@@ -43,7 +43,7 @@ test(`04 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - one letter tag, all
   );
 });
 
-test(`05 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - one letter tag, allowCustomTagNames=on`, () => {
+test(`05 - isOpening() - one letter tag, allowCustomTagNames=on`, () => {
   let s1 = "<c>";
   ok(
     isOpening(s1, 0, {
