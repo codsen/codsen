@@ -1,13 +1,13 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { isOpening } from "../dist/is-html-tag-opening.esm.js";
 
 // closing tag
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - closing tag`, () => {
+test(`01 - isOpening() - closing tag`, () => {
   // closing tag
   let str = "</td>";
   ok(isOpening(str), "01.01");
@@ -28,7 +28,7 @@ test(`01 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - closing tag`, () =>
   );
 });
 
-test(`02 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - closing tag`, () => {
+test(`02 - isOpening() - closing tag`, () => {
   let str = "</ td>";
   ok(isOpening(str), "02.01");
   ok(isOpening(str, 0), "02.02");
@@ -48,7 +48,7 @@ test(`02 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - closing tag`, () =>
   );
 });
 
-test(`03 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - closing tag`, () => {
+test(`03 - isOpening() - closing tag`, () => {
   let str = "< / td>";
   ok(isOpening(str), "03.01");
   ok(isOpening(str, 0), "03.02");
@@ -68,7 +68,7 @@ test(`03 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - closing tag`, () =>
   );
 });
 
-test(`04 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - closing tag`, () => {
+test(`04 - isOpening() - closing tag`, () => {
   let str = "</ td >";
   ok(isOpening(str), "04.01");
   ok(isOpening(str, 0), "04.02");
@@ -88,7 +88,7 @@ test(`04 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - closing tag`, () =>
   );
 });
 
-test(`05 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - closing tag`, () => {
+test(`05 - isOpening() - closing tag`, () => {
   let str = "< / td >";
   ok(isOpening(str), "05.01");
   ok(isOpening(str, 0), "05.02");
@@ -108,7 +108,7 @@ test(`05 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - closing tag`, () =>
   );
 });
 
-test(`06 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - closing tag`, () => {
+test(`06 - isOpening() - closing tag`, () => {
   let str = "<div>some text /div>";
   ok(
     isOpening(str, 15, {
@@ -126,7 +126,7 @@ test(`06 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - closing tag`, () =>
   );
 });
 
-test(`07 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - closing tag`, () => {
+test(`07 - isOpening() - closing tag`, () => {
   let str = "<div>some text /div>";
   ok(
     isOpening(str, 15, {
@@ -158,7 +158,7 @@ test(`07 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - closing tag`, () =>
   );
 });
 
-test(`08 - ${`\u001b[${32}m${"isOpening()"}\u001b[${39}m`} - closing tag, unrecognised`, () => {
+test(`08 - isOpening() - closing tag, unrecognised`, () => {
   let str = "<div>some text /yo>";
   ok(
     isOpening(str, 15, {
