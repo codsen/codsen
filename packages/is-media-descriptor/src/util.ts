@@ -1,4 +1,4 @@
-import { Range, Ranges } from "../../../ops/typedefs/common";
+import type { Range, Ranges } from "../../../ops/typedefs/common";
 
 declare let DEV: boolean;
 
@@ -117,7 +117,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
     // -------------------------------------------------------------------------
     DEV &&
       console.log(
-        `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+        `120 \u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i]?.trim().length ? str[i] : JSON.stringify(str[i], null, 4)
         }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`,
       );
@@ -655,43 +655,43 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
     // LOGGING
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`chunkStartsAt: ${chunkStartsAt}`}\u001b[${39}m`}`,
+        `658 ${`\u001b[${90}m${`chunkStartsAt: ${chunkStartsAt}`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`chunkWithinBrackets: ${chunkWithinBrackets}`}\u001b[${39}m`}`,
+        `662 ${`\u001b[${90}m${`chunkWithinBrackets: ${chunkWithinBrackets}`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`whitespaceStartsAt: ${whitespaceStartsAt}`}\u001b[${39}m`}`,
+        `666 ${`\u001b[${90}m${`whitespaceStartsAt: ${whitespaceStartsAt}`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ nextCanBeNotOrOnly: ${nextCanBeNotOrOnly}`}\u001b[${39}m`} ${`\u001b[${
+        `670 ${`\u001b[${90}m${`██ nextCanBeNotOrOnly: ${nextCanBeNotOrOnly}`}\u001b[${39}m`} ${`\u001b[${
           nextCanBeNotOrOnly ? 32 : 31
         }m${nextCanBeNotOrOnly}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ nextCanBeMediaType: `}\u001b[${39}m`} ${`\u001b[${
+        `676 ${`\u001b[${90}m${`██ nextCanBeMediaType: `}\u001b[${39}m`} ${`\u001b[${
           nextCanBeMediaType ? 32 : 31
         }m${nextCanBeMediaType}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ nextCanBeMediaCondition: ${nextCanBeMediaCondition}`}\u001b[${39}m`} ${`\u001b[${
+        `682 ${`\u001b[${90}m${`██ nextCanBeMediaCondition: ${nextCanBeMediaCondition}`}\u001b[${39}m`} ${`\u001b[${
           nextCanBeMediaCondition ? 32 : 31
         }m${nextCanBeMediaCondition}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ nextCanBeAnd: ${nextCanBeAnd}`}\u001b[${39}m`} ${`\u001b[${
+        `688 ${`\u001b[${90}m${`██ nextCanBeAnd: ${nextCanBeAnd}`}\u001b[${39}m`} ${`\u001b[${
           nextCanBeAnd ? 32 : 31
         }m${nextCanBeAnd}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`gatheredChunksArr: ${JSON.stringify(
+        `694 ${`\u001b[${90}m${`gatheredChunksArr: ${JSON.stringify(
           gatheredChunksArr,
           null,
           0,
@@ -699,7 +699,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`bracketOpeningIndexes: ${JSON.stringify(
+        `702 ${`\u001b[${90}m${`bracketOpeningIndexes: ${JSON.stringify(
           bracketOpeningIndexes,
           null,
           0,
@@ -707,7 +707,7 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
       );
     DEV &&
       console.log(
-        `██ ${`\u001b[${90}m${`res: ${JSON.stringify(
+        `710 ██ ${`\u001b[${90}m${`res: ${JSON.stringify(
           res,
           null,
           4,
@@ -716,4 +716,4 @@ function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
   }
 }
 
-export { loop, recognisedMediaTypes, lettersOnlyRegex, Opts, ResObj };
+export { lettersOnlyRegex, loop, type Opts, type ResObj, recognisedMediaTypes };
