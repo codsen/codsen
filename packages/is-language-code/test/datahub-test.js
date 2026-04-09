@@ -769,7 +769,7 @@ test("01 - datahub language codes", () => {
     equal(
       isLangCode(codeStr),
       { res: true, message: null },
-      `01.${String(index + 1).padStart(3, "0")}`,
+      `01.01 - 01.${String(index + 1).padStart(3, "0")}`,
     );
   });
 });
