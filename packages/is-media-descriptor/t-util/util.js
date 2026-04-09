@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs";
 import { rApply } from "ranges-apply";
 
 function applyFixes(str, messages, offset = 0) {
