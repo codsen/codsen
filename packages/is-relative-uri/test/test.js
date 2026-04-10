@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { isRel } from "../dist/is-relative-uri.esm.js";
 
@@ -9,7 +9,7 @@ const BACKSLASH = "\u005C";
 // 00. API bits
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${32}m${"api bits"}\u001b[${39}m`} - 1st arg wrong`, () => {
+test(`01 - api bits - 1st arg wrong`, () => {
   throws(
     () => {
       isRel();
@@ -19,7 +19,7 @@ test(`01 - ${`\u001b[${32}m${"api bits"}\u001b[${39}m`} - 1st arg wrong`, () => 
   );
 });
 
-test(`02 - ${`\u001b[${32}m${"api bits"}\u001b[${39}m`} - 1st arg wrong`, () => {
+test(`02 - api bits - 1st arg wrong`, () => {
   throws(
     () => {
       isRel(true);
@@ -29,7 +29,7 @@ test(`02 - ${`\u001b[${32}m${"api bits"}\u001b[${39}m`} - 1st arg wrong`, () => 
   );
 });
 
-test(`03 - ${`\u001b[${32}m${"api bits"}\u001b[${39}m`} - 1st arg wrong`, () => {
+test(`03 - api bits - 1st arg wrong`, () => {
   throws(
     () => {
       isRel(1);
@@ -39,7 +39,7 @@ test(`03 - ${`\u001b[${32}m${"api bits"}\u001b[${39}m`} - 1st arg wrong`, () => 
   );
 });
 
-test(`04 - ${`\u001b[${32}m${"api bits"}\u001b[${39}m`} - 2nd arg wrong`, () => {
+test(`04 - api bits - 2nd arg wrong`, () => {
   throws(
     () => {
       isRel("", true);
@@ -49,7 +49,7 @@ test(`04 - ${`\u001b[${32}m${"api bits"}\u001b[${39}m`} - 2nd arg wrong`, () => 
   );
 });
 
-test(`05 - ${`\u001b[${32}m${"api bits"}\u001b[${39}m`} - 2nd arg wrong`, () => {
+test(`05 - api bits - 2nd arg wrong`, () => {
   throws(
     () => {
       isRel("", 1);
@@ -62,7 +62,7 @@ test(`05 - ${`\u001b[${32}m${"api bits"}\u001b[${39}m`} - 2nd arg wrong`, () => 
 // 01. correct values
 // -----------------------------------------------------------------------------
 
-test(`06 - ${`\u001b[${33}m${"correct values"}\u001b[${39}m`}`, () => {
+test(`06 - correct values`, () => {
   [
     "//example.com/path/resource.txt",
     "/path/resource.txt",
@@ -84,7 +84,7 @@ test(`06 - ${`\u001b[${33}m${"correct values"}\u001b[${39}m`}`, () => {
 
 // Examples from:
 // https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references
-test(`07 - ${`\u001b[${33}m${"correct values"}\u001b[${39}m`} Part II`, () => {
+test(`07 - correct values Part II`, () => {
   [
     "g:h", // -> "g:h"
     "g", // -> "http://a/b/c/g"
@@ -114,66 +114,66 @@ test(`07 - ${`\u001b[${33}m${"correct values"}\u001b[${39}m`} Part II`, () => {
   });
 });
 
-test(`08 - ${`\u001b[${33}m${"correct values"}\u001b[${39}m`} - isolated cases from above`, () => {
+test(`08 - correct values - isolated cases from above`, () => {
   ok(isRel(".").res, "08.01");
 });
 
-test(`09 - ${`\u001b[${33}m${"correct values"}\u001b[${39}m`} - isolated cases from above`, () => {
+test(`09 - correct values - isolated cases from above`, () => {
   ok(isRel("..").res, "09.01");
 });
 
-test(`10 - ${`\u001b[${33}m${"correct values"}\u001b[${39}m`} - isolated cases from above`, () => {
+test(`10 - correct values - isolated cases from above`, () => {
   ok(isRel("../..").res, "10.01");
 });
 
 // 02. incorrect values
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${33}m${"incorrect values"}\u001b[${39}m`} - starts with three or more slashes`, () => {
+test(`11 - incorrect values - starts with three or more slashes`, () => {
   not.ok(isRel("///example.com").res, "11.01");
 });
 
-test(`12 - ${`\u001b[${33}m${"incorrect values"}\u001b[${39}m`} - two or more slashes anywhere in the middle`, () => {
+test(`12 - incorrect values - two or more slashes anywhere in the middle`, () => {
   not.ok(isRel("path//resource.txt").res, "12.01");
 });
 
-test(`13 - ${`\u001b[${33}m${"incorrect values"}\u001b[${39}m`} - starts with more than two dots`, () => {
+test(`13 - incorrect values - starts with more than two dots`, () => {
   not.ok(isRel(".../resource.txt").res, "13.01");
 });
 
-test(`14 - ${`\u001b[${33}m${"incorrect values"}\u001b[${39}m`} - bad characters`, () => {
+test(`14 - incorrect values - bad characters`, () => {
   [BACKSLASH, "%g", "<", ">", "[", "]", "{", "}", "|", "^"].forEach((val) => {
     not.ok(isRel(`a${val}b`).res, val);
   });
 });
 
-test(`15 - ${`\u001b[${33}m${"incorrect values"}\u001b[${39}m`} - ends with dot`, () => {
+test(`15 - incorrect values - ends with dot`, () => {
   not.ok(isRel("path/resource.").res, "15.01");
 });
 
-test(`16 - ${`\u001b[${33}m${"incorrect values"}\u001b[${39}m`} - dot dot not-slash`, () => {
+test(`16 - incorrect values - dot dot not-slash`, () => {
   not.ok(isRel("..a/g").res, "16.01");
 });
 
 // 03. hash
 // -----------------------------------------------------------------------------
 
-test(`17 - ${`\u001b[${33}m${"incorrect values"}\u001b[${39}m`} - hash followed by slash`, () => {
+test(`17 - incorrect values - hash followed by slash`, () => {
   not.ok(isRel("abc/def#ghi/jkl").res, "17.01");
 });
 
-test(`18 - ${`\u001b[${33}m${"incorrect values"}\u001b[${39}m`} - ends with hash`, () => {
+test(`18 - incorrect values - ends with hash`, () => {
   not.ok(isRel("abc/def#").res, "18.01");
 });
 
 // 04. opts.flagUpUrisWithSchemes
 // -----------------------------------------------------------------------------
 
-test(`19 - ${`\u001b[${33}m${"incorrect values"}\u001b[${39}m`} - default`, () => {
+test(`19 - incorrect values - default`, () => {
   not.ok(isRel("mailto:John.Doe@example.com").res, "19.01");
 });
 
-test(`20 - ${`\u001b[${33}m${"incorrect values"}\u001b[${39}m`} - default`, () => {
+test(`20 - incorrect values - default`, () => {
   ok(
     isRel("mailto:John.Doe@example.com", {
       flagUpUrisWithSchemes: false,
