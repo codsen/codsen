@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
-import meow from "meow";
-import { promises as fs } from "fs";
-import pReduce from "p-reduce";
-import isDirectory from "is-d";
-import { globby } from "globby";
-import { promisify } from "util";
-import { createRequire } from "module";
-import { fixRowNums } from "js-row-num";
-import updateNotifier from "update-notifier";
+import { promises as fs } from "node:fs";
+import { createRequire } from "node:module";
+import { promisify } from "node:util";
 import { arrayiffy } from "arrayiffy-if-string";
+import { codsenCLI } from "codsen-utils";
+import { globby } from "globby";
+import isDirectory from "is-d";
+import { fixRowNums } from "js-row-num";
+import pReduce from "p-reduce";
+import updateNotifier from "update-notifier";
 import writeFileAtomic from "write-file-atomic";
 
 const require1 = createRequire(import.meta.url);
@@ -32,7 +32,7 @@ const locationsArr = [
   "!**/node_modules/**",
 ];
 
-const cli = meow(
+const cli = codsenCLI(
   `
   Call either way:
     $ jsrownum
@@ -55,7 +55,7 @@ const cli = meow(
     jsrownum --version
 `,
   {
-    importMeta: import.meta,
+    pkg,
     flags: {
       pad: {
         type: "number",
@@ -177,7 +177,8 @@ function processPaths(paths) {
   );
 }
 
-// Step #0. take care of -v and -h flags that are left out in meow.
+// Step #0. take care of the short -v and -h flags, which codsenCLI leaves
+// to us (it answers the long --version and --help on its own).
 // -----------------------------------------------------------------------------
 
 if (cli.flags.v) {
