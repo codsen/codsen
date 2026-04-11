@@ -1,11 +1,11 @@
-import fs from "fs-extra";
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import path from "path";
-import { fileURLToPath } from "url";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { execa } from "execa";
+import fs from "fs-extra";
 import { temporaryDirectory } from "tempy";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 const __filename2 = fileURLToPath(import.meta.url);
 const __dirname2 = path.dirname(__filename2);
@@ -101,7 +101,7 @@ test("02 - cli.js in the root", async () => {
 //                                  *
 //                                  *
 
-test("03/1 - pad override, -p", async () => {
+test("03 - /1 - pad override, -p", async () => {
   let originalFile = `${letterC}onsole.log('094 zzz');\n${letterC}onsole.log('094 zzz');`;
   let intendedFile = `${letterC}onsole.log('01 zzz');\n${letterC}onsole.log('02 zzz');`;
 
@@ -132,7 +132,7 @@ test("03/1 - pad override, -p", async () => {
   equal(await processedFileContents, intendedFile, "03.01");
 });
 
-test("04/2 - pad override, --pad", async () => {
+test("04 - /2 - pad override, --pad", async () => {
   let originalFile = `${letterC}onsole.log('125 zzz');\n${letterC}onsole.log('125 zzz');`;
   let intendedFile = `${letterC}onsole.log('01 zzz');\n${letterC}onsole.log('02 zzz');`;
 
@@ -289,7 +289,7 @@ test("06 - two files processed by calling glob with wildcard", async () => {
 //                                  *
 //                                  *
 
-test('07/1 - "t" flag, -t', async () => {
+test('07 - /1 - "t" flag, -t', async () => {
   let originalFile = "log('123 zzz');\nlog('123 zzz');";
 
   let intendedFile = "log('001 zzz');\nlog('002 zzz');";
@@ -321,7 +321,7 @@ test('07/1 - "t" flag, -t', async () => {
   equal(await processedFileContents, intendedFile, "07.01");
 });
 
-test('08/2 - "t" flag, --trigger', async () => {
+test('08 - /2 - "t" flag, --trigger', async () => {
   let originalFile = "log('123 zzz');\nlog('123 zzz');";
 
   let intendedFile = "log('001 zzz');\nlog('002 zzz');";
