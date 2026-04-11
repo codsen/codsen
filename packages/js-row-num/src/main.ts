@@ -1,12 +1,12 @@
-import { Ranges as RangesClass } from "ranges-push";
-import { rApply } from "ranges-apply";
 import { hasOwnProp } from "codsen-utils";
-import { Ranges } from "../../../ops/typedefs/common";
+import { rApply } from "ranges-apply";
+import { Ranges as RangesClass } from "ranges-push";
+import type { Ranges } from "../../../ops/typedefs/common";
 import { version as v } from "../package.json";
 
 declare let DEV: boolean;
 export const version: string = v;
-export { Ranges };
+export type { Ranges };
 
 export interface Opts {
   padStart: number;
@@ -45,7 +45,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
     );
   if (typeof str !== "string") {
     throw new TypeError(
-      `js-row-num: [THROW_ID_01] Input must be string! Currently it's: ${(typeof str).toLowerCase()}, equal to:\n${JSON.stringify(
+      `js-row-num/fixRowNums(): [THROW_ID_01] Input must be string! Currently it's: ${(typeof str).toLowerCase()}, equal to:\n${JSON.stringify(
         str,
         null,
         4,
@@ -77,7 +77,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
 
   if (hasOwnProp(resolvedOpts, "returnRangesOnly")) {
     throw new TypeError(
-      `js-row-num: [THROW_ID_02] The Optional Options Object's key "returnRangesOnly" has been removed from the API since v.6 release.`,
+      `js-row-num/fixRowNums(): [THROW_ID_02] The Optional Options Object's key "returnRangesOnly" has been removed from the API since v.6 release.`,
     );
   }
 
@@ -120,7 +120,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
   for (i = 0; i < len; i++) {
     DEV &&
       console.log(
-        `\u001b[${36}m${`--------------------------------`}\u001b[${39}m ${`\u001b[${33}m${`str[${i}]`}\u001b[${39}m`} = ${
+        `123 \u001b[${36}m${`--------------------------------`}\u001b[${39}m ${`\u001b[${33}m${`str[${i}]`}\u001b[${39}m`} = ${
           str[i].trim() ? str[i] : JSON.stringify(str[i], null, 0)
         }`,
       );
@@ -434,13 +434,13 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
           for (let y = startMarchingForwFrom as number; y < len; y++) {
             DEV &&
               console.log(
-                `\u001b[${36}m${`str[${y}] = ${str[y]}`}\u001b[${39}m`,
+                `437 \u001b[${36}m${`str[${y}] = ${str[y]}`}\u001b[${39}m`,
               );
             if (!isDigit(str[y])) {
               numbersSequenceEndsAt = y;
               DEV &&
                 console.log(
-                  `\u001b[${36}m${`not digit, so break`}\u001b[${39}m`,
+                  `443 \u001b[${36}m${`not digit, so break`}\u001b[${39}m`,
                 );
               break;
             }
@@ -582,24 +582,28 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
     }
 
     DEV &&
-      console.log(`\u001b[${90}m${`--------------------------`}\u001b[${39}m`);
-    DEV &&
-      console.log(`\u001b[${90}m${`currentRow = ${currentRow}`}\u001b[${39}m`);
-    DEV &&
       console.log(
-        `\u001b[${90}m${`digitStartsAt = ${digitStartsAt}`}\u001b[${39}m`,
+        `\u001b[${90}m${`586 --------------------------`}\u001b[${39}m`,
       );
     DEV &&
       console.log(
-        `\u001b[${90}m${`bracketOpensAt = ${bracketOpensAt}`}\u001b[${39}m`,
+        `\u001b[${90}m${`590 currentRow = ${currentRow}`}\u001b[${39}m`,
       );
     DEV &&
       console.log(
-        `\u001b[${90}m${`consoleStartsAt = ${consoleStartsAt}`}\u001b[${39}m`,
+        `\u001b[${90}m${`594 digitStartsAt = ${digitStartsAt}`}\u001b[${39}m`,
       );
     DEV &&
       console.log(
-        `\u001b[${90}m${`quotes = ${JSON.stringify(quotes, null, 0)}${
+        `\u001b[${90}m${`598 bracketOpensAt = ${bracketOpensAt}`}\u001b[${39}m`,
+      );
+    DEV &&
+      console.log(
+        `\u001b[${90}m${`602 consoleStartsAt = ${consoleStartsAt}`}\u001b[${39}m`,
+      );
+    DEV &&
+      console.log(
+        `\u001b[${90}m${`606 quotes = ${JSON.stringify(quotes, null, 0)}${
           quotes ? `\nwasLetterDetected = ${wasLetterDetected}` : ""
         }`}\u001b[${39}m`,
       );
@@ -607,7 +611,7 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
 
   DEV &&
     console.log(
-      `610 ${`\u001b[${33}m${`finalIndexesToDelete.current()`}\u001b[${39}m`} = ${JSON.stringify(
+      `614 ${`\u001b[${33}m${`finalIndexesToDelete.current()`}\u001b[${39}m`} = ${JSON.stringify(
         finalIndexesToDelete.current(),
         null,
         4,
@@ -623,11 +627,12 @@ export function fixRowNums(str: string, opts?: Partial<Opts>): Res {
   digitStartsAt = null;
   currentRow = 1;
 
+  const ranges = finalIndexesToDelete.current();
   return {
     log: {
       timeTakenInMilliseconds: Date.now() - start,
     },
-    result: rApply(str, finalIndexesToDelete.current()),
-    ranges: finalIndexesToDelete.current(),
+    result: rApply(str, ranges),
+    ranges,
   };
 }
