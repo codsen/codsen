@@ -1,23 +1,24 @@
 #!/usr/bin/env node
+
 /* eslint no-console:0 */
 
-import meow from "meow";
-import path from "path";
-import pMap from "p-map";
+import { createRequire } from "node:module";
+import path from "node:path";
+import { codsenCLI } from "codsen-utils";
 import fs from "fs-extra";
-import isDirectory from "is-d";
-import pReduce from "p-reduce";
 import { globby } from "globby";
-import { createRequire } from "module";
+import isDirectory from "is-d";
+import { enforceKeyset, getKeyset } from "json-comb-core";
+import pMap from "p-map";
+import pReduce from "p-reduce";
 import updateNotifier from "update-notifier";
-import { getKeyset, enforceKeyset } from "json-comb-core";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
 
 const messagePrefix = `\u001b[${90}m${"✨ JSON Comb: "}\u001b[${39}m`;
 const { log } = console;
-const cli = meow(
+const cli = codsenCLI(
   `
   Usage:
     $ jsoncomb -n "data/**/index.json"
@@ -39,7 +40,7 @@ const cli = meow(
     will expand them, which might yield different results.
 `,
   {
-    importMeta: import.meta,
+    pkg,
     flags: {
       normalise: {
         type: "boolean",
@@ -76,7 +77,8 @@ updateNotifier({ pkg }).notify();
 //
 // -u, --unused        Find which keys are unused across all the given JSON's
 
-// Step #0. Take care of -v and -h flags that are left out in meow.
+// Step #0. Take care of the short -v and -h flags, which codsenCLI leaves
+// to us (it answers the long --version and --help on its own).
 // -----------------------------------------------------------------------------
 
 if (cli.flags.version) {
