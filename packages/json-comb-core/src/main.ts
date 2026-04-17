@@ -1,20 +1,23 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import { flattenAllArrays } from "object-flatten-all-arrays";
-import { setAllValuesTo } from "object-set-all-values-to";
+import {
+  deepClone as clone,
+  existy,
+  isPlainObject as isObj,
+  isStr,
+  type Obj,
+} from "codsen-utils";
+import { includes } from "lodash-es";
 import { fillMissing } from "object-fill-missing-keys";
+import { flattenAllArrays } from "object-flatten-all-arrays";
 import { mergeAdvanced } from "object-merge-advanced";
 import { noNewKeys } from "object-no-new-keys";
-import { existy, isStr, isPlainObject as isObj, Obj } from "codsen-utils";
-import semverCompare from "semver-compare";
-import { includes } from "lodash-es";
-import rfdc from "rfdc";
-
-const clone = rfdc();
-import sortKeys from "sort-keys";
-import pReduce from "p-reduce";
-import typ from "type-detect";
+import { setAllValuesTo } from "object-set-all-values-to";
 import pOne from "p-one";
+import pReduce from "p-reduce";
+import semverCompare from "semver-compare";
+import sortKeys from "sort-keys";
+import typ from "type-detect";
 
 import { version as v } from "../package.json";
 
@@ -23,26 +26,6 @@ const version: string = v;
 declare let DEV: boolean;
 
 // -----------------------------------------------------------------------------
-
-// ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-tostring
-function toString(obj: unknown): string {
-  if (obj === null) {
-    return "null";
-  }
-  if (typeof obj === "boolean" || typeof obj === "number") {
-    return obj.toString();
-  }
-  if (typeof obj === "string") {
-    return obj;
-  }
-  if (typeof obj === "symbol") {
-    throw new TypeError();
-  }
-  return `${obj}`;
-}
-
-// -----------------------------------------------------------------------------
-// SORT THEM THINGIES
 
 // INFO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 // ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-sortcompare
@@ -57,8 +40,8 @@ function defaultCompare(x: any, y: any) {
   if (y === undefined) {
     return -1;
   }
-  let xString = toString(x);
-  let yString = toString(y);
+  let xString = String(x);
+  let yString = String(y);
   if (xString < yString) {
     return -1;
   }
@@ -91,14 +74,15 @@ function getKeyset(
   arrOfPromises: Iterable<PromiseLike<Obj> | Obj>,
   opts?: Partial<GetKeysetOpts>,
 ): Promise<Obj> {
+  // biome-ignore lint/complexity/noArguments: just ignore
   if (arguments.length === 0) {
     throw new Error(
-      "json-comb-core/getKeyset(): [THROW_ID_11] Inputs missing!",
+      "json-comb-core/getKeyset(): [THROW_ID_01] Inputs missing!",
     );
   }
   if (existy(opts) && !isObj(opts)) {
     throw new TypeError(
-      `json-comb-core/getKeysetSync(): [THROW_ID_12] Options object must be a plain object! Currently it's: ${typeof opts}, equal to: ${JSON.stringify(
+      `json-comb-core/getKeyset(): [THROW_ID_02] Options object must be a plain object! Currently it's: ${typeof opts}, equal to: ${JSON.stringify(
         opts,
         null,
         4,
@@ -111,7 +95,7 @@ function getKeyset(
   let resolvedOpts: GetKeysetOpts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `114 CALLING check-types-mini:\nopts = ${JSON.stringify(
+      `098 CALLING check-types-mini:\nopts = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -121,7 +105,7 @@ function getKeyset(
         4,
       )}\nopts = ${JSON.stringify(
         {
-          msg: "json-comb-core/getKeyset(): [THROW_ID_10*]",
+          msg: "json-comb-core/getKeyset(): [THROW_ID_03]",
           schema: {
             placeholder: ["null", "number", "string", "boolean", "object"],
           },
@@ -149,7 +133,7 @@ function getKeyset(
       if (res) {
         reject(
           Error(
-            `json-comb-core/getKeyset(): [THROW_ID_13] Oops! ${culpritIndex}th element resolved not to a plain object but to a ${typeof culpritVal}\n${JSON.stringify(
+            `json-comb-core/getKeyset(): [THROW_ID_04] Oops! ${culpritIndex}th element resolved not to a plain object but to a ${typeof culpritVal}\n${JSON.stringify(
               culpritVal,
               null,
               4,
@@ -186,24 +170,25 @@ interface GetKeysetOpts {
   placeholder: any;
 }
 function getKeysetSync(arr: Obj[], opts?: Partial<GetKeysetOpts>): Obj {
+  // biome-ignore lint/complexity/noArguments: just ignore
   if (arguments.length === 0) {
     throw new Error(
-      "json-comb-core/getKeysetSync(): [THROW_ID_21] Inputs missing!",
+      "json-comb-core/getKeysetSync(): [THROW_ID_05] Inputs missing!",
     );
   }
   if (!Array.isArray(arr)) {
     throw new Error(
-      `json-comb-core/getKeysetSync(): [THROW_ID_22] Input must be array! Currently it's: ${typeof arr}`,
+      `json-comb-core/getKeysetSync(): [THROW_ID_06] Input must be array! Currently it's: ${typeof arr}`,
     );
   }
   if (arr.length === 0) {
     throw new Error(
-      "json-comb-core/getKeysetSync(): [THROW_ID_23] Input array is empty!",
+      "json-comb-core/getKeysetSync(): [THROW_ID_07] Input array is empty!",
     );
   }
   if (existy(opts) && !isObj(opts)) {
     throw new TypeError(
-      `json-comb-core/getKeysetSync(): [THROW_ID_24] Options object must be a plain object! Currently it's: ${typeof opts}, equal to: ${JSON.stringify(
+      `json-comb-core/getKeysetSync(): [THROW_ID_08] Options object must be a plain object! Currently it's: ${typeof opts}, equal to: ${JSON.stringify(
         opts,
         null,
         4,
@@ -225,7 +210,7 @@ function getKeysetSync(arr: Obj[], opts?: Partial<GetKeysetOpts>): Obj {
   resolvedArr.forEach((obj, i) => {
     if (!isObj(obj)) {
       throw new TypeError(
-        `json-comb-core/getKeysetSync(): [THROW_ID_25] Non-object (${typeof obj}) detected within an array! It's the ${i}th element: ${JSON.stringify(
+        `json-comb-core/getKeysetSync(): [THROW_ID_09] Non-object (${typeof obj}) detected within an array! It's the ${i}th element: ${JSON.stringify(
           obj,
           null,
           4,
@@ -258,14 +243,16 @@ function enforceKeyset(
   schemaKeyset: Obj,
   opts?: Partial<EnforceKeysetOpts>,
 ): Promise<Obj> {
+  // biome-ignore lint/complexity/noArguments: just ignore
   if (arguments.length === 0) {
     throw new Error(
-      "json-comb-core/enforceKeyset(): [THROW_ID_31] Inputs missing!",
+      "json-comb-core/enforceKeyset(): [THROW_ID_10] Inputs missing!",
     );
   }
+  // biome-ignore lint/complexity/noArguments: just ignore
   if (arguments.length === 1) {
     throw new Error(
-      "json-comb-core/enforceKeyset(): [THROW_ID_32] Second arg missing!",
+      "json-comb-core/enforceKeyset(): [THROW_ID_11] Second arg missing!",
     );
   }
   let defaults: EnforceKeysetOpts = {
@@ -281,7 +268,7 @@ function enforceKeyset(
     )
   ) {
     throw new Error(
-      `json-comb-core/enforceKeyset(): [THROW_ID_33] Array resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${JSON.stringify(
+      `json-comb-core/enforceKeyset(): [THROW_ID_12] Array resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${JSON.stringify(
         resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders,
         null,
         4,
@@ -292,7 +279,7 @@ function enforceKeyset(
     if (!isObj(obj)) {
       reject(
         Error(
-          `json-comb-core/enforceKeyset(): [THROW_ID_34] Input must resolve to a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
+          `json-comb-core/enforceKeyset(): [THROW_ID_13] Input must resolve to a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
             obj,
             null,
             4,
@@ -304,7 +291,7 @@ function enforceKeyset(
     if (!isObj(schemaKeyset)) {
       reject(
         Error(
-          `json-comb-core/enforceKeyset(): [THROW_ID_35] Schema, 2nd arg, must resolve to a plain object! Currently it's resolving to: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
+          `json-comb-core/enforceKeyset(): [THROW_ID_14] Schema, 2nd arg, must resolve to a plain object! Currently it's resolving to: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
             schemaKeyset,
             null,
             4,
@@ -328,19 +315,21 @@ function enforceKeysetSync(
   schemaKeyset: Obj,
   opts?: Partial<EnforceKeysetOpts>,
 ): Obj {
+  // biome-ignore lint/complexity/noArguments: just ignore
   if (arguments.length === 0) {
     throw new Error(
-      "json-comb-core/enforceKeysetSync(): [THROW_ID_41] Inputs missing!",
+      "json-comb-core/enforceKeysetSync(): [THROW_ID_15] Inputs missing!",
     );
   }
+  // biome-ignore lint/complexity/noArguments: just ignore
   if (arguments.length === 1) {
     throw new Error(
-      "json-comb-core/enforceKeysetSync(): [THROW_ID_42] Second arg missing!",
+      "json-comb-core/enforceKeysetSync(): [THROW_ID_16] Second arg missing!",
     );
   }
   if (!isObj(obj)) {
     throw new Error(
-      `json-comb-core/enforceKeysetSync(): [THROW_ID_43] Input must be a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
+      `json-comb-core/enforceKeysetSync(): [THROW_ID_17] Input must be a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
         obj,
         null,
         4,
@@ -349,7 +338,7 @@ function enforceKeysetSync(
   }
   if (!isObj(schemaKeyset)) {
     throw new Error(
-      `json-comb-core/enforceKeysetSync(): [THROW_ID_44] Schema object must be a plain object! Currently it's: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
+      `json-comb-core/enforceKeysetSync(): [THROW_ID_18] Schema object must be a plain object! Currently it's: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
         schemaKeyset,
         null,
         4,
@@ -369,7 +358,7 @@ function enforceKeysetSync(
     )
   ) {
     throw new Error(
-      `json-comb-core/enforceKeyset(): [THROW_ID_45] Array resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${JSON.stringify(
+      `json-comb-core/enforceKeysetSync(): [THROW_ID_19] Array resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${JSON.stringify(
         resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders,
         null,
         4,
@@ -387,19 +376,21 @@ function enforceKeysetSync(
 // when there are rogue keys, array of paths is returned
 type NoNewKeysSyncRes = string[];
 function noNewKeysSync(obj: Obj, schemaKeyset: Obj): NoNewKeysSyncRes {
+  // biome-ignore lint/complexity/noArguments: just ignore
   if (arguments.length === 0) {
     throw new Error(
-      "json-comb-core/noNewKeysSync(): [THROW_ID_51] All inputs missing!",
+      "json-comb-core/noNewKeysSync(): [THROW_ID_20] All inputs missing!",
     );
   }
+  // biome-ignore lint/complexity/noArguments: just ignore
   if (arguments.length === 1) {
     throw new Error(
-      "json-comb-core/noNewKeysSync(): [THROW_ID_52] Schema object is missing!",
+      "json-comb-core/noNewKeysSync(): [THROW_ID_21] Schema object is missing!",
     );
   }
   if (!isObj(obj)) {
     throw new Error(
-      `json-comb-core/noNewKeysSync(): [THROW_ID_53] Main input (1st arg.) must be a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
+      `json-comb-core/noNewKeysSync(): [THROW_ID_22] Main input (1st arg.) must be a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
         obj,
         null,
         4,
@@ -408,7 +399,7 @@ function noNewKeysSync(obj: Obj, schemaKeyset: Obj): NoNewKeysSyncRes {
   }
   if (!isObj(schemaKeyset)) {
     throw new Error(
-      `json-comb-core/noNewKeysSync(): [THROW_ID_54] Schema input (2nd arg.) must be a plain object! Currently it's: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
+      `json-comb-core/noNewKeysSync(): [THROW_ID_23] Schema input (2nd arg.) must be a plain object! Currently it's: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
         schemaKeyset,
         null,
         4,
@@ -438,12 +429,13 @@ function findUnusedSync(
     }
   } else {
     throw new TypeError(
-      `json-comb-core/findUnusedSync(): [THROW_ID_61] The first argument should be an array. Currently it's: ${typeof arr}`,
+      `json-comb-core/findUnusedSync(): [THROW_ID_24] The first argument should be an array. Currently it's: ${typeof arr}`,
     );
   }
+  // biome-ignore lint/complexity/noArguments: just ignore
   if (arguments.length > 1 && !isObj(opts)) {
     throw new TypeError(
-      `json-comb-core/findUnusedSync(): [THROW_ID_62] The second argument, options object, must be a plain object, not ${typeof opts}`,
+      `json-comb-core/findUnusedSync(): [THROW_ID_25] The second argument, options object, must be a plain object, not ${typeof opts}`,
     );
   }
   let defaults = {
@@ -553,12 +545,12 @@ function findUnusedSync(
 // -----------------------------------------------------------------------------
 
 export {
-  getKeysetSync,
-  getKeyset,
   enforceKeyset,
   enforceKeysetSync,
-  sortAllObjectsSync,
-  noNewKeysSync,
   findUnusedSync,
+  getKeyset,
+  getKeysetSync,
+  noNewKeysSync,
+  sortAllObjectsSync,
   version,
 };
