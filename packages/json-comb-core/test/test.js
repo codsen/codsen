@@ -1,14 +1,14 @@
-import { test } from "uvu";
-import { equal, ok, throws, not, unreachable } from "uvu/assert";
 import pMap from "p-map";
+import { test } from "uvu";
+import { equal, not, ok, throws, unreachable } from "uvu/assert";
 
 import {
-  getKeysetSync,
-  getKeyset,
   enforceKeyset,
   enforceKeysetSync,
-  noNewKeysSync,
   findUnusedSync,
+  getKeyset,
+  getKeysetSync,
+  noNewKeysSync,
   sortAllObjectsSync,
 } from "../dist/json-comb-core.esm.js";
 
@@ -220,7 +220,7 @@ test("07 - getKeysetSync() - settings argument is not a plain object - throws", 
     () => {
       getKeysetSync([{ a: "a" }, { b: "b" }], "zzz");
     },
-    /THROW_ID_24/,
+    /THROW_ID_08/,
     "07.01",
   );
 });
@@ -1385,7 +1385,7 @@ test("34 - enforceKeysetSync() - does not mutate the input args", () => {
       c: "ccc",
       a: false,
     },
-    "34.02",
+    "34.01",
   );
 });
 
@@ -1532,35 +1532,35 @@ test("37 - noNewKeysSync() - various throws", () => {
     () => {
       noNewKeysSync();
     },
-    /THROW_ID_51/g,
+    /THROW_ID_20/g,
     "37.01",
   );
   throws(
     () => {
       noNewKeysSync({ a: "a" });
     },
-    /THROW_ID_52/g,
+    /THROW_ID_21/g,
     "37.02",
   );
   throws(
     () => {
       noNewKeysSync(1, { a: "a" });
     },
-    /THROW_ID_53/g,
+    /THROW_ID_22/g,
     "37.03",
   );
   throws(
     () => {
       noNewKeysSync(["a"], ["a"]);
     },
-    /THROW_ID_53/g,
+    /THROW_ID_22/g,
     "37.04",
   );
   throws(
     () => {
       noNewKeysSync({ a: "a" }, 1);
     },
-    /THROW_ID_54/g,
+    /THROW_ID_23/g,
     "37.05",
   );
 });
@@ -2685,7 +2685,7 @@ test("58 - does not mutate input args: enforceKeysetSync()", () => {
   };
   let dummyResult = enforceKeysetSync(source, { a: false, b: false });
   ok(dummyResult, "58.01"); // a mickey assertion to trick the Standard
-  equal(JSON.stringify(source), JSON.stringify(frozen), "58.02");
+  equal(JSON.stringify(source), JSON.stringify(frozen), "58.01");
 });
 
 test("59 - does not mutate input args: noNewKeysSync()", () => {
@@ -2697,7 +2697,7 @@ test("59 - does not mutate input args: noNewKeysSync()", () => {
   };
   let dummyResult = noNewKeysSync(source, { a: false, b: false });
   ok(dummyResult, "59.01"); // a mickey assertion to trick ESLint to think it's used
-  equal(JSON.stringify(source), JSON.stringify(frozen), "59.02");
+  equal(JSON.stringify(source), JSON.stringify(frozen), "59.01");
 });
 
 test("60 - does not mutate input args: sortAllObjectsSync()", () => {
@@ -2713,7 +2713,7 @@ test("60 - does not mutate input args: sortAllObjectsSync()", () => {
   };
   let dummyResult = sortAllObjectsSync(source); // let's try to mutate "source"
   ok(dummyResult, "60.01"); // a mickey assertion to trick ESLint to think it's used
-  equal(JSON.stringify(source), JSON.stringify(frozen), "60.02");
+  equal(JSON.stringify(source), JSON.stringify(frozen), "60.01");
 });
 
 // -----------------------------------------------------------------------------
@@ -2905,7 +2905,7 @@ test("66 - getKeyset() - settings argument is not a plain object - throws", () =
     () => {
       getKeyset([{ a: "a" }, { b: "b" }], "zzz");
     },
-    /THROW_ID_12/,
+    /THROW_ID_02/,
     "66.01",
   );
 });
@@ -3782,7 +3782,7 @@ test("83 - enforceKeyset() - all inputs missing - resolves to rejected promise",
     () => {
       enforceKeyset();
     },
-    /THROW_ID_31/g,
+    /THROW_ID_10/g,
     "83.01",
   );
 });
@@ -3792,7 +3792,7 @@ test("84 - enforceKeyset() - second input arg missing - resolves to rejected pro
     () => {
       enforceKeyset({ a: "a" });
     },
-    /THROW_ID_32/g,
+    /THROW_ID_11/g,
     "84.01",
   );
 });
@@ -3891,7 +3891,7 @@ test("88 - enforceKeyset() - wrong opts - resolves to rejected promise", async (
     ).then(() => {
       unreachable("88");
     });
-  } catch (error) {
+  } catch (_error) {
     ok("88");
   }
 });
