@@ -1,15 +1,15 @@
 // Synchronous `findUnusedSync()` - example #2
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import {
-  getKeysetSync,
-  getKeyset,
   enforceKeyset,
   enforceKeysetSync,
-  sortAllObjectsSync,
-  noNewKeysSync,
   findUnusedSync,
+  getKeyset,
+  getKeysetSync,
+  noNewKeysSync,
+  sortAllObjectsSync,
 } from "../dist/json-comb-core.esm.js";
 
 // This function will work on arrays of both normalised and not normalised object sets.
