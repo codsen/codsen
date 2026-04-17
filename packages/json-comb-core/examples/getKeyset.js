@@ -1,15 +1,15 @@
 // Asynchronous `getKeyset()`
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import {
-  getKeysetSync,
-  getKeyset,
   enforceKeyset,
   enforceKeysetSync,
-  sortAllObjectsSync,
-  noNewKeysSync,
   findUnusedSync,
+  getKeyset,
+  getKeysetSync,
+  noNewKeysSync,
+  sortAllObjectsSync,
 } from "../dist/json-comb-core.esm.js";
 
 // Let's calculate the schema of the following arrays of plain objects,
