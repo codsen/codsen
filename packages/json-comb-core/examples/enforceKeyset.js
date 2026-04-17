@@ -1,15 +1,15 @@
 // Asynchronous `enforceKeyset()`
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import {
-  getKeysetSync,
-  getKeyset,
   enforceKeyset,
   enforceKeysetSync,
-  sortAllObjectsSync,
-  noNewKeysSync,
   findUnusedSync,
+  getKeyset,
+  getKeysetSync,
+  noNewKeysSync,
+  sortAllObjectsSync,
 } from "../dist/json-comb-core.esm.js";
 
 // Let's enforce the keyset using previously-calculated schema.
