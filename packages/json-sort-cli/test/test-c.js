@@ -1,10 +1,11 @@
-import fs from "fs-extra";
-import path from "path";
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import path from "node:path";
 import { execa, execaCommand } from "execa";
+import fs from "fs-extra";
 import { temporaryDirectory } from "tempy";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+
 // import pMap from "p-map";
 // import pack from "../package.json";
 // import {
@@ -50,7 +51,7 @@ import { temporaryDirectory } from "tempy";
       ]).catch((err) => {
         throw new Error(err);
       });
-      equal(output.exitCode, 0, "01.04");
+      equal(output.exitCode, 0, "01.01");
     } else {
       // should throw, so we need to catch
       await execa("./cli.js", [tempFolder, "-c", ...ciLFlag])
@@ -59,14 +60,14 @@ import { temporaryDirectory } from "tempy";
           not.ok("execa should have exited with non-zero code");
         })
         .catch((err) => {
-          equal(err.exitCode, 9, "01.03");
+          equal(err.exitCode, 9, "01.02");
         });
     }
 
     equal(
       fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
       sortedFile,
-      "01.02",
+      "01.03",
     );
   });
 });
@@ -100,7 +101,7 @@ import { temporaryDirectory } from "tempy";
       ]).catch((err) => {
         throw new Error(err);
       });
-      equal(output.exitCode, 0, "02.04");
+      equal(output.exitCode, 0, "02.01");
     } else {
       // should throw, so we need to catch
       await execa("./cli.js", [tempFolder, "-c", ...ciLFlag])
@@ -109,14 +110,14 @@ import { temporaryDirectory } from "tempy";
           not.ok("execa should have exited with non-zero code");
         })
         .catch((err) => {
-          equal(err.exitCode, 9, "02.03");
+          equal(err.exitCode, 9, "02.02");
         });
     }
 
     equal(
       fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
       sortedFile,
-      "02.02",
+      "02.03",
     );
   });
 });
@@ -150,7 +151,7 @@ import { temporaryDirectory } from "tempy";
       ]).catch((err) => {
         throw new Error(err);
       });
-      equal(output.exitCode, 0, "03.04");
+      equal(output.exitCode, 0, "03.01");
     } else {
       // should throw, so we need to catch
       await execa("./cli.js", [tempFolder, "-c", ...ciLFlag])
@@ -159,14 +160,14 @@ import { temporaryDirectory } from "tempy";
           not.ok("execa should have exited with non-zero code");
         })
         .catch((err) => {
-          equal(err.exitCode, 9, "03.03");
+          equal(err.exitCode, 9, "03.02");
         });
     }
 
     equal(
       fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
       sortedFile,
-      "03.02",
+      "03.03",
     );
   });
 });
@@ -187,13 +188,13 @@ test("04 - one unsorted file", async () => {
       not.ok("execa should have exited with non-zero code");
     })
     .catch((err) => {
-      equal(err.exitCode, 9, "02");
+      equal(err.exitCode, 9, "04.01 - 02");
     });
 
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "04.01",
+    "04.02",
   );
 });
 
@@ -212,11 +213,11 @@ test("05 - 'dry' flag trumps 'ci' flag", async () => {
   );
 
   match(output.stdout, /try to sort/, "05.01");
-  equal(output.exitCode, 0, "05.02");
+  equal(output.exitCode, 0, "05.01");
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "05.03",
+    "05.02",
   );
 });
 
@@ -233,11 +234,11 @@ test("06 - 'dry', arg order is backwards", async () => {
   });
 
   match(output.stdout, /try to sort/, "06.01");
-  equal(output.exitCode, 0, "06.02");
+  equal(output.exitCode, 0, "06.01");
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "06.03",
+    "06.02",
   );
 });
 
