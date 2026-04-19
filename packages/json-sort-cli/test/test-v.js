@@ -1,11 +1,11 @@
-import fs from "fs-extra";
-import path from "path";
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { createRequire } from "node:module";
+import path from "node:path";
 import { execa } from "execa";
+import fs from "fs-extra";
 import { temporaryDirectory } from "tempy";
-import { createRequire } from "module";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 const require2 = createRequire(import.meta.url);
 const pack = require2("../package.json");
@@ -35,11 +35,11 @@ test("02 - version flag trumps silent flag", async () => {
   );
 
   match(output.stdout, /\d+\.\d+\.\d+/, "02.01");
-  equal(output.exitCode, 0, "02.02");
+  equal(output.exitCode, 0, "02.01");
   equal(
     fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
-    "02.03",
+    "02.02",
   );
 });
 
