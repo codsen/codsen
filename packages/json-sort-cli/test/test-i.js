@@ -1,10 +1,11 @@
-import fs from "fs-extra";
-import path from "path";
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import path from "node:path";
 import { execa, execaCommand } from "execa";
+import fs from "fs-extra";
 import { temporaryDirectory } from "tempy";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+
 // import pMap from "p-map";
 // import pack from "../package.json";
 // import {
