@@ -3,22 +3,32 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-import meow from "meow";
-import path from "path";
-import fs from "fs-extra";
-import chalk from "chalk";
-import isDirectory from "is-d";
-import pReduce from "p-reduce";
-import pFilter from "p-filter";
-import { globby } from "globby";
-import { createRequire } from "module";
-import { isPlainObject, resolveEolSetting } from "codsen-utils";
-import updateNotifier from "update-notifier";
+import { createRequire } from "node:module";
+import path from "node:path";
 import { traverse } from "ast-monkey-traverse";
+import { codsenCLI, isPlainObject, resolveEolSetting } from "codsen-utils";
+import fs from "fs-extra";
+import { globby } from "globby";
+import isDirectory from "is-d";
+import pFilter from "p-filter";
+import pReduce from "p-reduce";
 import sortPackageJson, { sortOrder } from "sort-package-json";
+import updateNotifier from "update-notifier";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
+
+const colours = {
+  green: 32,
+  grey: 90,
+  red: 31,
+  white: 37,
+  yellow: 33,
+};
+
+function colour(str, colourCode) {
+  return `\u001b[${colourCode}m${str}\u001b[39m`;
+}
 
 function isStr(something) {
   return typeof something === "string";
@@ -55,7 +65,7 @@ function sortObj(obj) {
 
 const prefix = "✨ json-sort-cli: ";
 const { log } = console;
-const cli = meow(
+const cli = codsenCLI(
   `
   Usage
     $ jsonsort YOURFILE.json
@@ -82,7 +92,7 @@ const cli = meow(
     will parse globs. If you put as system globs without quotes, your shell will expand them.
 `,
   {
-    importMeta: import.meta,
+    pkg,
     flags: {
       nodemodules: {
         type: "boolean",
@@ -180,7 +190,12 @@ function readSortAndWriteOverFile(oneOfPaths) {
       } catch (err) {
         // if it is not parseable, stop
         if (!cli.flags.silent) {
-          log(`${chalk.grey(prefix)}${oneOfPaths} - ${chalk.red(err)}`);
+          log(
+            `${colour(prefix, colours.grey)}${oneOfPaths} - ${colour(
+              err,
+              colours.red,
+            )}`,
+          );
         }
         return Promise.resolve(null);
       }
@@ -293,9 +308,10 @@ function readSortAndWriteOverFile(oneOfPaths) {
           .then(() => {
             if (!cli.flags.silent) {
               log(
-                `${chalk.grey(
+                `${colour(
                   prefix,
-                )}${oneOfPaths} - ${`\u001b[${32}m${"OK"}\u001b[${39}m`}`,
+                  colours.grey,
+                )}${oneOfPaths} - ${colour("OK", colours.green)}`,
               );
             }
             return true;
@@ -303,13 +319,12 @@ function readSortAndWriteOverFile(oneOfPaths) {
       });
     })
     .catch((err) => {
-      console.log(
-        `${oneOfPaths} - ${`\u001b[${31}m${"BAD"}\u001b[${39}m`} - ${err}`,
-      );
+      console.log(`${oneOfPaths} - ${colour("BAD", colours.red)} - ${err}`);
     });
 }
 
-// Step #0. take care of -v and -h flags that are left out in meow.
+// Step #0. take care of the short -v and -h flags, which codsenCLI leaves
+// to us (it answers the long --version and --help on its own).
 // -----------------------------------------------------------------------------
 
 if (cli.flags.version) {
@@ -336,8 +351,9 @@ globby(input, { dot: true })
     // flip out of the pipeline if there are no paths resolved
     if (paths.length === 0 && !cli.flags.silent) {
       log(
-        `${chalk.grey(prefix)}${chalk.red(
+        `${colour(prefix, colours.grey)}${colour(
           "The inputs don't lead to any json files! Exiting.",
+          colours.red,
         )}`,
       );
       process.exit(0);
@@ -407,8 +423,9 @@ globby(input, { dot: true })
   .then((paths) => {
     if (cli.flags.dry && !cli.flags.silent) {
       log(
-        `${chalk.grey(prefix)}${chalk.yellow(
+        `${colour(prefix, colours.grey)}${colour(
           "We'd try to sort the following files:",
+          colours.yellow,
         )}\n${paths.join("\n")}`,
       );
     } else {
@@ -419,15 +436,17 @@ globby(input, { dot: true })
         ).then((received2) => {
           if (received2.length && !cli.flags.silent) {
             log(
-              `${chalk.grey(prefix)}${chalk.red(
+              `${colour(prefix, colours.grey)}${colour(
                 "Unsorted files:",
+                colours.red,
               )}\n${received2.join("\n")}`,
             );
             process.exit(9);
           } else if (!cli.flags.silent) {
             log(
-              `${chalk.grey(prefix)}${chalk.white(
+              `${colour(prefix, colours.grey)}${colour(
                 "All files were already sorted:",
+                colours.white,
               )}\n${paths.join("\n")}`,
             );
             process.exit(0);
@@ -453,8 +472,9 @@ globby(input, { dot: true })
             .catch((err) => {
               if (!cli.flags.silent) {
                 log(
-                  `${chalk.grey(prefix)}${chalk.red(
+                  `${colour(prefix, colours.grey)}${colour(
                     "Could not write out the sorted file:",
+                    colours.red,
                   )} ${err}`,
                 );
               }
@@ -463,19 +483,19 @@ globby(input, { dot: true })
       ).then((counter) => {
         if (!cli.flags.silent) {
           log(
-            `\n${chalk.grey(prefix)}${chalk.green(
+            `\n${colour(prefix, colours.grey)}${colour(
               `${counter?.bad.length === 0 ? "All " : ""}${
                 counter.good.length
               } files sorted`,
+              colours.green,
             )}${
               counter?.bad.length
-                ? `\n${chalk.grey(prefix)}${chalk.red(
+                ? `\n${colour(prefix, colours.grey)}${colour(
                     `${counter.bad.length} file${
                       counter.bad.length === 1 ? "" : "s"
                     } could not be sorted`,
-                  )} ${`\u001b[${90}m - ${counter.bad.join(
-                    " - ",
-                  )}\u001b[${39}m`}`
+                    colours.red,
+                  )} ${colour(` - ${counter.bad.join(" - ")}`, colours.grey)}`
                 : ""
             }`,
           );
@@ -485,6 +505,8 @@ globby(input, { dot: true })
   })
   .catch((err) => {
     if (!cli.flags.silent) {
-      log(`${chalk.grey(prefix)}${chalk.red("Oops!")} ${err}`);
+      log(
+        `${colour(prefix, colours.grey)}${colour("Oops!", colours.red)} ${err}`,
+      );
     }
   });
