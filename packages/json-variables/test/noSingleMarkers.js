@@ -1,8 +1,8 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 /* eslint no-template-curly-in-string: 0 */
 
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { jVar } from "../dist/json-variables.esm.js";
 
@@ -37,7 +37,7 @@ test("01 - UTIL > single markers in the values", () => {
         },
       );
     },
-    /THROW_ID_16/,
+    /THROW_ID_21/,
     "01.01",
   );
 
@@ -71,7 +71,7 @@ test("01 - UTIL > single markers in the values", () => {
         },
       );
     },
-    /THROW_ID_16/,
+    /THROW_ID_21/,
     "01.02",
   );
 });
