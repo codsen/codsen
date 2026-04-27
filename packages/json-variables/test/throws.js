@@ -1,8 +1,8 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 /* eslint no-template-curly-in-string: 0 */
 
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { jVar } from "../dist/json-variables.esm.js";
 
@@ -15,7 +15,7 @@ test("01 - basic throws related to wrong input", () => {
     () => {
       jVar();
     },
-    /THROW_ID_01/,
+    /THROW_ID_07/,
     "01.01",
   );
 
@@ -23,7 +23,7 @@ test("01 - basic throws related to wrong input", () => {
     () => {
       jVar("zzzz");
     },
-    /THROW_ID_02/,
+    /THROW_ID_08/,
     "01.02",
   );
 
@@ -31,18 +31,18 @@ test("01 - basic throws related to wrong input", () => {
     () => {
       jVar("{}"); // string curlies...
     },
-    /THROW_ID_02/,
+    /THROW_ID_08/,
     "01.03",
   );
 
   // empty plain object does not throw
-  equal(jVar({}), {}, "empty plain object");
+  equal(jVar({}), {}, "01.01 - empty plain object");
 
   throws(
     () => {
       jVar([]); // empty array
     },
-    /THROW_ID_02/,
+    /THROW_ID_08/,
     "01.05",
   );
 });
@@ -57,7 +57,7 @@ test("02 - throws when options heads and/or tails are empty", () => {
         { heads: "" },
       );
     },
-    /THROW_ID_06/,
+    /THROW_ID_11/,
     "02.01",
   );
 
@@ -70,7 +70,7 @@ test("02 - throws when options heads and/or tails are empty", () => {
         { tails: "" },
       );
     },
-    /THROW_ID_07/,
+    /THROW_ID_12/,
     "02.02",
   );
 
@@ -83,7 +83,7 @@ test("02 - throws when options heads and/or tails are empty", () => {
         { heads: "", tails: "" },
       );
     },
-    /THROW_ID_06/,
+    /THROW_ID_11/,
     "02.03",
   );
 });
@@ -98,7 +98,7 @@ test("03 - throws when data container key lookup is enabled and container tails 
         { lookForDataContainers: true, dataContainerIdentifierTails: "" },
       );
     },
-    /THROW_ID_08/,
+    /THROW_ID_13/,
     "03.01",
   );
 
@@ -112,7 +112,7 @@ test("03 - throws when data container key lookup is enabled and container tails 
     {
       a: "a",
     },
-    "data store is off, so empty opts.dataContainerIdentifierTails is fine",
+    "03.01 - data store is off, so empty opts.dataContainerIdentifierTails is fine",
   );
 
   throws(
@@ -124,7 +124,7 @@ test("03 - throws when data container key lookup is enabled and container tails 
         { dataContainerIdentifierTails: "" },
       );
     },
-    /THROW_ID_08/,
+    /THROW_ID_13/,
     "03.03",
   );
 });
@@ -139,7 +139,7 @@ test("04 - throws when heads and tails are equal", () => {
         { heads: "%%", tails: "%%" },
       );
     },
-    /THROW_ID_09/,
+    /THROW_ID_14/,
     "04.01",
   );
 });
@@ -149,7 +149,7 @@ test("05 - throws when input is not a plain object", () => {
     () => {
       jVar(["zzz"], { heads: "%%", tails: "%%" });
     },
-    /THROW_ID_02/,
+    /THROW_ID_08/,
     "05.01",
   );
 });
@@ -164,7 +164,7 @@ test("06 - throws when keys contain variables", () => {
         var2: "value2",
       });
     },
-    /THROW_ID_15/,
+    /THROW_ID_20/,
     "06.01",
   );
 
@@ -180,7 +180,7 @@ test("06 - throws when keys contain variables", () => {
         { heads: "zz", tails: "yy" },
       ); // custom heads and tails
     },
-    /THROW_ID_15/,
+    /THROW_ID_20/,
     "06.02",
   );
 });
@@ -227,7 +227,7 @@ test("08 - throws when data is missing", () => {
         b: "something",
       });
     },
-    /THROW_ID_18/,
+    /THROW_ID_03/,
     "08.01",
   );
   throws(
@@ -238,7 +238,7 @@ test("08 - throws when data is missing", () => {
         a_data: "zzz",
       });
     },
-    /THROW_ID_18/,
+    /THROW_ID_03/,
     "08.02",
   );
 
@@ -259,7 +259,7 @@ test("08 - throws when data is missing", () => {
       b: "something",
       a_data: "zzz",
     },
-    "08.03",
+    "08.01",
   );
 
   // when opts.allowUnresolved is string, that is used
@@ -279,7 +279,7 @@ test("08 - throws when data is missing", () => {
       b: "something",
       a_data: "zzz",
     },
-    "08.04",
+    "08.02",
   );
 
   // when opts.allowUnresolved is empty string, that is used
@@ -299,7 +299,7 @@ test("08 - throws when data is missing", () => {
       b: "something",
       a_data: "zzz",
     },
-    "08.05",
+    "08.03",
   );
 
   // also, consider the cases when only some variables can't be resolved
@@ -323,7 +323,7 @@ test("08 - throws when data is missing", () => {
         var2: "zzz",
       },
     },
-    "08.06",
+    "08.04",
   );
 });
 
@@ -338,7 +338,7 @@ test("09 - throws when data container lookup is turned off and var is missing", 
         { lookForDataContainers: false },
       );
     },
-    /THROW_ID_18/,
+    /THROW_ID_03/,
     "09.01",
   );
 
@@ -357,7 +357,7 @@ test("09 - throws when data container lookup is turned off and var is missing", 
         var1: "something",
       },
     },
-    "data store is off, so empty opts.dataContainerIdentifierTails is fine",
+    "09.01 - data store is off, so empty opts.dataContainerIdentifierTails is fine",
   );
   // check against input argument mutation:
   equal(
@@ -368,7 +368,7 @@ test("09 - throws when data container lookup is turned off and var is missing", 
         var1: "something",
       },
     },
-    "09.03",
+    "09.02",
   );
 
   // now, the data stores (keys with _data) are used only to give preference
@@ -409,7 +409,7 @@ test("09 - throws when data container lookup is turned off and var is missing", 
       },
       var1: "222",
     },
-    "resolves to topmost root level key because data store is off",
+    "09.03 - resolves to topmost root level key because data store is off",
   );
   // mutation check:
   equal(
@@ -425,7 +425,7 @@ test("09 - throws when data container lookup is turned off and var is missing", 
       },
       var1: "222",
     },
-    "09.05",
+    "09.04",
   );
 
   // now if we enable data stores, "c" will resolve to "111" because data store
@@ -454,7 +454,7 @@ test("09 - throws when data container lookup is turned off and var is missing", 
       },
       var1: "222",
     },
-    "resolves to datastore, not using value at the root",
+    "09.05 - resolves to datastore, not using value at the root",
   );
   // mutation check:
   equal(
@@ -470,7 +470,7 @@ test("09 - throws when data container lookup is turned off and var is missing", 
       },
       var1: "222",
     },
-    "09.07",
+    "09.06",
   );
 });
 
@@ -497,7 +497,7 @@ test("11 - throws when data container name append is given empty", () => {
         { lookForDataContainers: true, dataContainerIdentifierTails: "" },
       );
     },
-    /THROW_ID_08/,
+    /THROW_ID_13/,
     "11.01",
   );
   throws(
@@ -510,7 +510,7 @@ test("11 - throws when data container name append is given empty", () => {
         { lookForDataContainers: true, dataContainerIdentifierTails: "" },
       );
     },
-    /THROW_ID_08/,
+    /THROW_ID_13/,
     "11.02",
   );
 });
@@ -526,7 +526,7 @@ test("12 - throws when opts.wrapHeadsWith is customised to anything other than s
         { wrapHeadsWith: false },
       );
     },
-    /THROW_ID_18/,
+    /THROW_ID_03/,
     "12.01",
   );
 });
@@ -542,7 +542,7 @@ test("13 - opts.wrapHeadsWith does not affect failing resolving", () => {
         { wrapHeadsWith: "" },
       );
     },
-    /THROW_ID_18/,
+    /THROW_ID_03/,
     "13.01",
   );
 });
@@ -558,7 +558,7 @@ test("14 - throws when opts.wrapTailsWith is customised to anything other than s
         { wrapTailsWith: false },
       );
     },
-    /THROW_ID_18/,
+    /THROW_ID_03/,
     "14.01",
   );
 });
@@ -586,7 +586,7 @@ test("16 - throws when opts.heads is not string", () => {
         { heads: 1 },
       );
     },
-    /THROW_ID_17/,
+    /THROW_ID_05/,
     "16.01",
   );
 });
@@ -602,7 +602,7 @@ test("17 - throws when opts.tails is not string", () => {
         { tails: 1 },
       );
     },
-    /THROW_ID_17/,
+    /THROW_ID_05/,
     "17.01",
   );
 });
@@ -612,7 +612,7 @@ test("18 - throws when all args are missing", () => {
     () => {
       jVar();
     },
-    /THROW_ID_01/,
+    /THROW_ID_07/,
     "18.01",
   );
 });
@@ -624,7 +624,7 @@ test("19 - throws when key references itself", () => {
         a: "%%_a_%%",
       });
     },
-    /THROW_ID_19/,
+    /THROW_ID_02/,
     "19.01",
   );
 
@@ -634,7 +634,7 @@ test("19 - throws when key references itself", () => {
         a: "something %%_a_%% aaaa %%_a_%%",
       });
     },
-    /THROW_ID_19/,
+    /THROW_ID_02/,
     "19.02",
   );
 });
@@ -648,7 +648,7 @@ test("20 - throws when key references itself", () => {
         c: "%%_c_%%",
       });
     },
-    /THROW_ID_19/,
+    /THROW_ID_02/,
     "20.01",
   );
 });
@@ -661,7 +661,7 @@ test("21 - throws when key references key which references itself", () => {
         a: "%%_a_%%",
       });
     },
-    /THROW_ID_19/,
+    /THROW_ID_02/,
     "21.01",
   );
 });
@@ -674,7 +674,7 @@ test("22 - throws when there's recursion (with distraction)", () => {
         a: "%%_b_%%",
       });
     },
-    /THROW_ID_19/,
+    /THROW_ID_02/,
     "22.01",
   );
 
@@ -685,7 +685,7 @@ test("22 - throws when there's recursion (with distraction)", () => {
         shorterKeyN: "%%_longerKeyName_%%",
       });
     },
-    /THROW_ID_19/,
+    /THROW_ID_02/,
     "22.02",
   );
 
@@ -705,7 +705,7 @@ test("22 - throws when there's recursion (with distraction)", () => {
         },
       });
     },
-    /THROW_ID_19/,
+    /THROW_ID_02/,
     "22.03",
   );
 
@@ -728,7 +728,7 @@ test("22 - throws when there's recursion (with distraction)", () => {
         },
       });
     },
-    /THROW_ID_19/,
+    /THROW_ID_02/,
     "22.04",
   );
 });
@@ -744,7 +744,7 @@ test("23 - throws when there's a longer recursion", () => {
         e: "%%_b_%%",
       });
     },
-    /THROW_ID_19/,
+    /THROW_ID_02/,
     "23.01",
   );
 });
@@ -763,7 +763,7 @@ test("24 - throws when opts.heads and opts.headsNoWrap are customised to be equa
         },
       );
     },
-    /THROW_ID_10/,
+    /THROW_ID_15/,
     "24.01",
   );
 
@@ -780,7 +780,7 @@ test("24 - throws when opts.heads and opts.headsNoWrap are customised to be equa
         },
       );
     },
-    /THROW_ID_10/,
+    /THROW_ID_15/,
     "24.02",
   );
 
@@ -796,7 +796,7 @@ test("24 - throws when opts.heads and opts.headsNoWrap are customised to be equa
         },
       );
     },
-    /THROW_ID_10/,
+    /THROW_ID_15/,
     "24.03",
   );
 });
@@ -815,7 +815,7 @@ test("25 - throws when opts.tails and opts.tailsNoWrap are customised to be equa
         },
       );
     },
-    /THROW_ID_11/,
+    /THROW_ID_16/,
     "25.01",
   );
 
@@ -832,7 +832,7 @@ test("25 - throws when opts.tails and opts.tailsNoWrap are customised to be equa
         },
       );
     },
-    /THROW_ID_11/,
+    /THROW_ID_16/,
     "25.02",
   );
 
@@ -848,7 +848,7 @@ test("25 - throws when opts.tails and opts.tailsNoWrap are customised to be equa
         },
       );
     },
-    /THROW_ID_11/,
+    /THROW_ID_16/,
     "25.03",
   );
 });
@@ -867,7 +867,7 @@ test("26 - empty nowraps", () => {
         },
       );
     },
-    /THROW_ID_12/,
+    /THROW_ID_17/,
     "26.01",
   );
 
@@ -884,7 +884,7 @@ test("26 - empty nowraps", () => {
         },
       );
     },
-    /THROW_ID_13/,
+    /THROW_ID_18/,
     "26.02",
   );
 
@@ -900,7 +900,7 @@ test("26 - empty nowraps", () => {
         },
       );
     },
-    /THROW_ID_12/,
+    /THROW_ID_17/,
     "26.03",
   );
 
@@ -916,7 +916,7 @@ test("26 - empty nowraps", () => {
         },
       );
     },
-    /THROW_ID_13/,
+    /THROW_ID_18/,
     "26.04",
   );
 });
@@ -935,7 +935,7 @@ test("27 - equal nowraps", () => {
         },
       );
     },
-    /THROW_ID_14/,
+    /THROW_ID_19/,
     "27.01",
   );
 
@@ -952,7 +952,7 @@ test("27 - equal nowraps", () => {
         },
       );
     },
-    /THROW_ID_14/,
+    /THROW_ID_19/,
     "27.02",
   );
 
@@ -968,7 +968,7 @@ test("27 - equal nowraps", () => {
         },
       );
     },
-    /THROW_ID_14/,
+    /THROW_ID_19/,
     "27.03",
   );
 });
@@ -980,7 +980,7 @@ test("28 - throws there's simple recursion loop in array", () => {
         a: "%%_a_%%",
       });
     },
-    /THROW_ID_19/,
+    /THROW_ID_02/,
     "28.01",
   );
 
@@ -990,7 +990,7 @@ test("28 - throws there's simple recursion loop in array", () => {
         a: { b: "%%_a_%%" },
       });
     },
-    /THROW_ID_20/,
+    /THROW_ID_01/,
     "28.02",
   );
 
@@ -1000,7 +1000,7 @@ test("28 - throws there's simple recursion loop in array", () => {
         a: ["%%_a_%%"],
       });
     },
-    /THROW_ID_20/,
+    /THROW_ID_01/,
     "28.03",
   );
 
@@ -1011,7 +1011,7 @@ test("28 - throws there's simple recursion loop in array", () => {
         b: ["%%_a_%%"],
       });
     },
-    /THROW_ID_20/,
+    /THROW_ID_01/,
     "28.04",
   );
 
@@ -1021,7 +1021,7 @@ test("28 - throws there's simple recursion loop in array", () => {
         a: ["%%_b_%%", "%%_b_%%"],
       });
     },
-    /THROW_ID_18/,
+    /THROW_ID_03/,
     "28.05",
   );
 
@@ -1029,7 +1029,7 @@ test("28 - throws there's simple recursion loop in array", () => {
     () => {
       jVar({ z: ["%%_a_%%"] });
     },
-    /THROW_ID_18/,
+    /THROW_ID_03/,
     "28.06",
   );
 });
@@ -1041,7 +1041,7 @@ test("29 - throws referencing what does not exist", () => {
         a: "%%_b_%%",
       });
     },
-    /THROW_ID_18/,
+    /THROW_ID_03/,
     "29.01",
   );
   throws(
@@ -1050,7 +1050,7 @@ test("29 - throws referencing what does not exist", () => {
         a: ["%%_b_%%"],
       });
     },
-    /THROW_ID_18/,
+    /THROW_ID_03/,
     "29.02",
   );
 });
@@ -1065,7 +1065,7 @@ test("30 - throws when referencing the multi-level object keys that don't exist"
         var2: { key2: "value2" },
       });
     },
-    /THROW_ID_18/,
+    /THROW_ID_03/,
     "30.01",
   );
 
@@ -1078,7 +1078,7 @@ test("30 - throws when referencing the multi-level object keys that don't exist"
         var2: { key4: "value4", key5: "value5", key6: "value6" },
       });
     },
-    /THROW_ID_18/,
+    /THROW_ID_03/,
     "30.02",
   );
 
@@ -1097,7 +1097,7 @@ test("30 - throws when referencing the multi-level object keys that don't exist"
         },
       );
     },
-    /THROW_ID_18/,
+    /THROW_ID_03/,
     "30.03",
   );
 });
@@ -1113,7 +1113,7 @@ test("31 - throws when opts are given truthy but not a plain object", () => {
         "zzz",
       );
     },
-    /THROW_ID_03/,
+    /THROW_ID_09/,
     "31.01",
   );
 });
