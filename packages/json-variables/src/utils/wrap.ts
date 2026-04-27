@@ -1,8 +1,8 @@
+import { isStr } from "codsen-utils";
 import { isMatch } from "matcher";
 import { remDup } from "string-remove-duplicate-heads-tails";
+import type { Opts } from "../main";
 import { removeWrappingHeadsAndTails } from "./removeWrappingHeadsAndTails";
-import { isStr } from "codsen-utils";
-import { Opts } from "../main";
 
 declare let DEV: boolean;
 
