@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { jVar } from "../dist/json-variables.esm.js";
 
@@ -74,7 +74,7 @@ test("04 - enabling the option it will throw if it's a number", () => {
         },
       );
     },
-    /THROW_ID_23/,
+    /THROW_ID_04/,
     "04.01",
   );
 });
