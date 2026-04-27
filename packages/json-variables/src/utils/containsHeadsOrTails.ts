@@ -1,5 +1,5 @@
 import { isStr } from "codsen-utils";
-import { Opts } from "../main";
+import type { Opts } from "../main";
 
 export function containsHeadsOrTails(str: string, resolvedOpts: Opts): boolean {
   if (!isStr(str) || !str.trim()) {
