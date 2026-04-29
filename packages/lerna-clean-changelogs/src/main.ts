@@ -1,4 +1,4 @@
-import { isStr, EolChar, detectEol } from "codsen-utils";
+import { detectEol, type EolChar, isStr } from "codsen-utils";
 import { version as v } from "../package.json";
 
 const version: string = v;
@@ -23,11 +23,11 @@ function cleanChangelogs(
   // validate the first input argument:
   if (changelog === undefined) {
     throw new Error(
-      `lerna-clean-changelogs: [THROW_ID_01] The first input argument is missing!`,
+      `lerna-clean-changelogs/cleanChangelogs(): [THROW_ID_01] The first input argument is missing!`,
     );
   } else if (!isStr(changelog)) {
     throw new Error(
-      `lerna-clean-changelogs: [THROW_ID_02] The first input argument must be a string! It was given as ${
+      `lerna-clean-changelogs/cleanChangelogs(): [THROW_ID_02] The first input argument must be a string! It was given as ${
         Array.isArray(changelog) ? "array" : typeof changelog
       }, equal to:\n${JSON.stringify(changelog, null, 4)}`,
     );
@@ -114,7 +114,7 @@ function cleanChangelogs(
     for (let i = linesArr.length; i--; ) {
       DEV &&
         console.log(
-          `----------------${`\u001b[${36}m${i}\u001b[${39}m`}\n${`\u001b[${33}m${`linesArr[i]`}\u001b[${39}m`} = ${JSON.stringify(
+          `117 ----------------${`\u001b[${36}m${i}\u001b[${39}m`}\n${`\u001b[${33}m${`linesArr[i]`}\u001b[${39}m`} = ${JSON.stringify(
             linesArr[i],
             null,
             4,
