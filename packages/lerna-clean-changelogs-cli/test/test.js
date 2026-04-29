@@ -1,12 +1,12 @@
-import fs from "fs-extra";
-import path from "path";
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { createRequire } from "node:module";
+import path from "node:path";
 import { execa, execaCommand } from "execa";
-import { temporaryDirectory } from "tempy";
+import fs from "fs-extra";
 import pMap from "p-map";
-import { createRequire } from "module";
+import { temporaryDirectory } from "tempy";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 const require2 = createRequire(import.meta.url);
 const pack = require2("../package.json");
@@ -65,7 +65,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 // Quick, general unit tests
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${"general parts"}\u001b[${39}m`} - version output mode`, async () => {
+test(`01 - general parts - version output mode`, async () => {
   let reportedVersion1 = await execa("./cli.js", ["-v"]);
   equal(reportedVersion1.stdout, pack.version, "01.01");
 
@@ -73,7 +73,7 @@ test(`01 - ${`\u001b[${33}m${"general parts"}\u001b[${39}m`} - version output mo
   equal(reportedVersion2.stdout, pack.version, "01.02");
 });
 
-test(`02 - ${`\u001b[${33}m${"general parts"}\u001b[${39}m`} - help output mode`, async () => {
+test(`02 - general parts - help output mode`, async () => {
   let reportedVersion1 = await execa("./cli.js", ["-h"]);
   match(reportedVersion1.stdout, /Usage/, "02.01");
   match(reportedVersion1.stdout, /Options/, "02.02");
@@ -83,7 +83,7 @@ test(`02 - ${`\u001b[${33}m${"general parts"}\u001b[${39}m`} - help output mode`
   match(reportedVersion2.stdout, /Options/, "02.04");
 });
 
-test(`03 - ${`\u001b[${33}m${"general parts"}\u001b[${39}m`} - no files found in the given directory`, async () => {
+test(`03 - general parts - no files found in the given directory`, async () => {
   // fetch us a random temp folder
   // const tempFolder = "temp";
   let tempFolder = temporaryDirectory();
@@ -100,7 +100,7 @@ test(`03 - ${`\u001b[${33}m${"general parts"}\u001b[${39}m`} - no files found in
 // Main unit tests
 // -----------------------------------------------------------------------------
 
-test(`04 - ${`\u001b[${35}m${"functionality"}\u001b[${39}m`} - pointed directly at a file`, async () => {
+test(`04 - functionality - pointed directly at a file`, async () => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
@@ -118,11 +118,7 @@ test(`04 - ${`\u001b[${35}m${"functionality"}\u001b[${39}m`} - pointed directly 
       }),
     )
     .then((execasMsg) => {
-      match(
-        execasMsg.stdout,
-        /1 updated/,
-        "02.01.01 - prints a message that all went OK",
-      );
+      match(execasMsg.stdout, /1 updated/, "04.01");
       return fs.readFile(path.join(tempFolder, "changelog.md"), "utf8");
     })
     .then((received) =>
@@ -134,7 +130,7 @@ test(`04 - ${`\u001b[${35}m${"functionality"}\u001b[${39}m`} - pointed directly 
   equal(await processedFileContents, changelog1Fixed, "04.01");
 });
 
-test(`05 - ${`\u001b[${35}m${"functionality"}\u001b[${39}m`} - globs, multiple written multiple skipped`, async () => {
+test(`05 - functionality - globs, multiple written multiple skipped`, async () => {
   // 1. set up in which folder to write:
   // const tempFolder = "temp";
   let tempFolder = temporaryDirectory();
@@ -178,11 +174,7 @@ test(`05 - ${`\u001b[${35}m${"functionality"}\u001b[${39}m`} - globs, multiple w
       }),
     )
     .then((execasMsg) => {
-      match(
-        execasMsg.stdout,
-        /5 updated, 1 skipped/,
-        "02.02.01 - prints a message that all went OK",
-      );
+      match(execasMsg.stdout, /5 updated, 1 skipped/, "05.01");
     })
     // .then(() => execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`))
     .then(() => execaCommand(`rm -rf ${tempFolder}`))
