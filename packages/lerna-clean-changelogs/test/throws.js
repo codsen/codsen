@@ -1,7 +1,7 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { createRequire } from "node:module";
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import { createRequire } from "module";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { cleanChangelogs as c } from "../dist/lerna-clean-changelogs.esm.js";
 
