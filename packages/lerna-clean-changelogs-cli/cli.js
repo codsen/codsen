@@ -3,18 +3,17 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-import meow from "meow";
-import path from "path";
+import { createRequire } from "node:module";
+import path from "node:path";
+import { promisify } from "node:util";
+import { codsenCLI } from "codsen-utils";
 import fs from "fs-extra";
-import chalk from "chalk";
-import pReduce from "p-reduce";
-import pFilter from "p-filter";
 import { globby } from "globby";
-import { promisify } from "util";
-import write from "write-file-atomic";
-import { createRequire } from "module";
-import updateNotifier from "update-notifier";
 import { cleanChangelogs } from "lerna-clean-changelogs";
+import pFilter from "p-filter";
+import pReduce from "p-reduce";
+import updateNotifier from "update-notifier";
+import write from "write-file-atomic";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
@@ -22,6 +21,16 @@ const pkg = require1("./package.json");
 const start = Date.now();
 const { log } = console;
 const isArr = Array.isArray;
+const colours = {
+  green: 32,
+  grey: 90,
+  red: 31,
+};
+
+function colour(str, colourCode) {
+  return `\u001b[${colourCode}m${str}\u001b[39m`;
+}
+
 function isStr(something) {
   return typeof something === "string";
 }
@@ -36,7 +45,7 @@ function formatTime(ms) {
   }
   return `${Math.round(ms / 1000)}s`;
 }
-const cli = meow(
+const cli = codsenCLI(
   `
   Usage
     $ lcc
@@ -52,19 +61,25 @@ const cli = meow(
     -e, --extras        Extra cleaning (h1, diffs etc.)
 `,
   {
-    importMeta: import.meta,
+    pkg,
+    flags: {
+      extras: { type: "boolean", shortFlag: "e" },
+      help: { type: "boolean", shortFlag: "h" },
+      version: { type: "boolean", shortFlag: "v" },
+    },
   },
 );
 updateNotifier({ pkg }).notify();
-const signature = chalk.grey("✨ lerna-clean-changelogs-cli: ");
+const signature = colour("✨ lerna-clean-changelogs-cli: ", colours.grey);
 
-// Step #0. take care of -v and -h flags that are left out in meow.
+// Step #0. honour help/version even when another argument is also present.
+// codsenCLI handles either flag automatically when it is the sole argument.
 // -----------------------------------------------------------------------------
 
-if (cli.flags.v) {
+if (cli.flags.version) {
   log(pkg.version);
   process.exit(0);
-} else if (cli.flags.h) {
+} else if (cli.flags.help) {
   log(cli.help);
   process.exit(0);
 }
@@ -79,9 +94,9 @@ function readSortAndWriteOverFile(oneOfPaths) {
       let preppedContents;
       try {
         preppedContents = cleanChangelogs(filesContent, {
-          extras: !!(cli.flags.e || cli.flags.extras),
+          extras: cli.flags.extras === true,
         });
-      } catch (e) {
+      } catch (_e) {
         return null;
       }
       // don't write empty files:
@@ -125,7 +140,7 @@ if (isArr(cli.input) && cli.input.length) {
     [],
   ).then((preppedPathsArr) => {
     if (!preppedPathsArr.length) {
-      log(`${signature}${chalk.red("no changelogs found")}`);
+      log(`${signature}${colour("no changelogs found", colours.red)}`);
       process.exit(0);
     }
 
@@ -157,7 +172,7 @@ if (isArr(cli.input) && cli.input.length) {
 thePromise.then((received) => {
   if (!isArr(received) || !received.length) {
     // spinner.warn("no changelogs found");
-    log(`${signature}${chalk.red("no changelogs found")}`);
+    log(`${signature}${colour("no changelogs found", colours.red)}`);
     process.exit(0);
   }
   return pReduce(
@@ -185,8 +200,9 @@ thePromise.then((received) => {
         )
         .catch((err) => {
           log(
-            `${signature}${chalk.red(
+            `${signature}${colour(
               "Could not write the cleaned file:",
+              colours.red,
             )} ${err}`,
           );
           return counter;
@@ -242,10 +258,13 @@ thePromise.then((received) => {
     log(
       `${signature}${
         writtenAndSkippedMsg
-          ? `${chalk.green(writtenAndSkippedMsg)}${errorredMsg ? " " : ""}`
+          ? `${colour(writtenAndSkippedMsg, colours.green)}${
+              errorredMsg ? " " : ""
+            }`
           : ""
-      }${errorredMsg ? chalk.red(errorredMsg) : ""} ${chalk.grey(
+      }${errorredMsg ? colour(errorredMsg, colours.red) : ""} ${colour(
         `(${formatTime(Date.now() - start)})`,
+        colours.grey,
       )}`,
     );
   });
