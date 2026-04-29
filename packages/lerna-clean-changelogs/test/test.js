@@ -1,10 +1,11 @@
-import { readFileSync, writeFileSync } from "fs";
-import path from "path";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+
+import crypto2 from "node:crypto";
+import { readFileSync, writeFileSync } from "node:fs";
+import { createRequire } from "node:module";
+import path from "node:path";
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import crypto2 from "crypto";
-import { createRequire } from "module";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { cleanChangelogs as c } from "../dist/lerna-clean-changelogs.esm.js";
 
@@ -23,7 +24,7 @@ const hashes = { ...readHashes };
 const hashesPresent = !!Object.keys(hashes).length;
 const fixtures = path.resolve("test/fixtures");
 
-function compare(name) {
+function compare(name, testNum) {
   let changelog = readFileSync(path.join(fixtures, `${name}.md`), "utf8");
   let noExtrasFileName = `${name}.expected.md`;
   let withExtrasFileName = `${name}.extras.md`;
@@ -38,12 +39,12 @@ function compare(name) {
     equal(
       sha256(noExtras),
       hashes[noExtrasFileName],
-      `${`\u001b[${31}m${`the fixture ${noExtrasFileName} was mangled!!!`}\u001b[${39}m`}`,
+      `${testNum}.01 - ${`\u001b[${31}m${`the fixture ${noExtrasFileName} was mangled!!!`}\u001b[${39}m`}`,
     );
     equal(
       sha256(withExtras),
       hashes[withExtrasFileName],
-      `${`\u001b[${31}m${`the fixture ${withExtrasFileName} was mangled!!!`}\u001b[${39}m`}`,
+      `${testNum}.02 - ${`\u001b[${31}m${`the fixture ${withExtrasFileName} was mangled!!!`}\u001b[${39}m`}`,
     );
   } else {
     // write the hash into dict
@@ -54,54 +55,54 @@ function compare(name) {
   equal(
     c(changelog.replace(/\r?\n/g, "\n")).res,
     noExtras.replace(/\r?\n/g, "\n"),
-    `01 LF - no extras (default setting), ${`\u001b[${33}m${name}\u001b[${39}m`}`,
+    `${testNum}.03 - LF - no extras (default setting), ${`\u001b[${33}m${name}\u001b[${39}m`}`,
   );
   equal(
     c(changelog.replace(/\r?\n/g, "\n"), { extras: false }).res,
     noExtras.replace(/\r?\n/g, "\n"),
-    `02 LF - hardcoded default, no extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`,
+    `${testNum}.04 - LF - hardcoded default, no extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`,
   );
   equal(
     c(changelog.replace(/\r?\n/g, "\n"), { extras: true }).res,
     withExtras.replace(/\r?\n/g, "\n"),
-    `03 LF - optional with extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`,
+    `${testNum}.05 - LF - optional with extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`,
   );
   // CRLF
   equal(
     c(changelog.replace(/\r?\n/g, "\r\n")).res,
     noExtras.replace(/\r?\n/g, "\r\n"),
-    `04 CRLF - no extras (default setting), ${`\u001b[${33}m${name}\u001b[${39}m`}`,
+    `${testNum}.06 - CRLF - no extras (default setting), ${`\u001b[${33}m${name}\u001b[${39}m`}`,
   );
   equal(
     c(changelog.replace(/\r?\n/g, "\r\n"), { extras: false }).res,
     noExtras.replace(/\r?\n/g, "\r\n"),
-    `05 CRLF - hardcoded default, no extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`,
+    `${testNum}.07 - CRLF - hardcoded default, no extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`,
   );
   equal(
     c(changelog.replace(/\r?\n/g, "\r\n"), { extras: true }).res,
     withExtras.replace(/\r?\n/g, "\r\n"),
-    `06 CRLF - optional with extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`,
+    `${testNum}.08 - CRLF - optional with extras, ${`\u001b[${33}m${name}\u001b[${39}m`}`,
   );
 }
 
 test("01 - deletes bump-only entries together with their headings", () => {
-  compare("01_deletes_bump-only");
+  compare("01_deletes_bump-only", "01");
 });
 
 test("02 - turns h1 headings within body into h2", () => {
-  compare("02_remove_h1_tags_in_body");
+  compare("02_remove_h1_tags_in_body", "02");
 });
 
 test("03 - cleans whitespace and replaces bullet dashes with asterisks", () => {
-  compare("03_whitespace");
+  compare("03_whitespace", "03");
 });
 
 test("04 - removes WIP entries", () => {
-  compare("04_wip");
+  compare("04_wip", "04");
 });
 
 test("05 - fixes plural in sourcehut links", () => {
-  compare("05_sourcehut");
+  compare("05_sourcehut", "05");
 });
 
 if (!hashesPresent) {
