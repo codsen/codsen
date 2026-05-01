@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { combinations } from "../dist/object-boolean-combinations.esm.js";
 
@@ -71,7 +71,6 @@ test("02 - first input is not an object - throws", () => {
     "02.01",
   );
 
-  // eslint-disable-next-line
   const fn = () => {};
   throws(
     () => {
