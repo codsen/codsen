@@ -1,8 +1,10 @@
-import { isPlainObject as isObj, Obj, intersection } from "codsen-utils";
-import rfdc from "rfdc";
+import {
+  deepClone as clone,
+  isPlainObject as isObj,
+  type Obj,
+} from "codsen-utils";
 import { version as v } from "../package.json";
 
-const clone = rfdc();
 const version: string = v;
 
 export interface BoolObj {
@@ -10,91 +12,61 @@ export interface BoolObj {
 }
 
 function combinations(input: Obj, Override: undefined | Obj = {}): Obj[] {
-  //
-  // FUNCTIONS
-  // =========
-
-  // Creates an n-length array with all possible combinations of true/false
-  type Combi = number[][];
-
-  function combi(n: number): Combi {
-    let r = [];
-    for (let i = 0; i < 1 << n; i++) {
-      let c = [];
-      for (let j = 0; j < n; j++) {
-        c.push(i & (1 << j) ? 1 : 0);
-      }
-      r.push(c);
-    }
-    return r;
-  }
-
   // CHECKS
   // ======
 
   if (!input) {
-    throw new Error("[THROW_ID_01] missing input object");
+    throw new Error(
+      "object-boolean-combinations/combinations(): [THROW_ID_01] missing input object",
+    );
   }
   if (!isObj(input)) {
     throw new Error(
-      "[THROW_ID_02] the first input object must be a plain object",
+      "object-boolean-combinations/combinations(): [THROW_ID_02] the first input object must be a plain object",
     );
   }
   if (Override && !isObj(Override)) {
     throw new Error(
-      "[THROW_ID_03] the second override object must be a plain object",
+      "object-boolean-combinations/combinations(): [THROW_ID_03] the second override object must be a plain object",
     );
   }
-
-  let incomingObject = clone(input);
-  let overrideObject = clone(Override);
 
   // START
   // =====
 
-  let propertiesToMix = Object.keys(incomingObject);
-  let outgoingObjectsArray: Obj[] = [];
-  let propertiesToBeOverridden: string[] = [];
+  const inputKeys = Object.keys(input);
+  const inputKeySet = new Set(inputKeys);
+  const propertiesToBeOverridden = Object.keys(Override).filter((key) =>
+    inputKeySet.has(key),
+  );
+  const overriddenKeySet = new Set(propertiesToBeOverridden);
+  const propertiesToMix = inputKeys.filter((key) => !overriddenKeySet.has(key));
+  // Clone only the part of the input that is ever returned. The input object's
+  // values are intentionally ignored; only its keys define the combinations.
+  const overrideObject = propertiesToBeOverridden.length
+    ? clone(Override)
+    : null;
 
-  // if there's override, prepare an alternative (a subset) array propertiesToMix
-  // ----------------------------------------------------------------------------
-
-  if (isObj(overrideObject) && Object.keys(overrideObject).length) {
-    // find legitimate properties from the overrideObject:
-    // enforce that override object had just a subset of incomingObject properties, nothing else
-    propertiesToBeOverridden = intersection(
-      Object.keys(overrideObject),
-      Object.keys(incomingObject),
-    );
-    // propertiesToMix = all incoming object's properties MINUS properties to override
-    propertiesToMix = propertiesToMix.filter(
-      (val) => !propertiesToBeOverridden.includes(val),
-    );
-  }
-
-  // mix up whatever propertiesToMix has came to this point
-  // ------------------------------------------------------
-
-  let boolCombinations = combi(Object.keys(propertiesToMix).length);
-
-  let tempObject: BoolObj;
-  boolCombinations.forEach((_el1, index1) => {
-    tempObject = {};
-    propertiesToMix.forEach((el2, index2) => {
-      tempObject[el2] = boolCombinations[index1][index2] === 1;
-    });
-    outgoingObjectsArray.push(tempObject);
-  });
-
-  // if there's override, append the static override values on each property of the
-  // propertiesToMix array:
-  // ------------------------------------------------------------------------------
-  if (isObj(overrideObject) && Object.keys(overrideObject).length) {
-    outgoingObjectsArray.forEach((el3) => {
-      propertiesToBeOverridden.forEach((el4) => {
-        el3[el4] = overrideObject[el4];
-      });
-    });
+  // Build each output directly instead of first allocating an equally large
+  // matrix of zeroes and ones.
+  const combinationsCount = 2 ** propertiesToMix.length;
+  const outgoingObjectsArray: Obj[] = new Array(combinationsCount);
+  for (
+    let combinationIndex = 0;
+    combinationIndex < combinationsCount;
+    combinationIndex++
+  ) {
+    const result: BoolObj = {};
+    for (let keyIndex = 0; keyIndex < propertiesToMix.length; keyIndex++) {
+      result[propertiesToMix[keyIndex]] =
+        (combinationIndex & (1 << keyIndex)) !== 0;
+    }
+    if (overrideObject) {
+      for (const key of propertiesToBeOverridden) {
+        result[key] = overrideObject[key];
+      }
+    }
+    outgoingObjectsArray[combinationIndex] = result;
   }
 
   // RETURN
