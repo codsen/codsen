@@ -1,11 +1,10 @@
-import { find, get, drop, del } from "ast-monkey";
 import { isEmpty } from "ast-is-empty";
-import rfdc from "rfdc";
+import { del, drop, find, get } from "ast-monkey";
+import { deepClone as clone, isPlainObject as isObj } from "codsen-utils";
 import { arrObjOrBoth } from "util-array-object-or-both";
 
 import { version as v } from "../package.json";
 
-const clone = rfdc();
 const version: string = v;
 
 declare let DEV: boolean;
@@ -41,6 +40,15 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
       "object-delete-key/deleteKey(): [THROW_ID_01] Please provide the first argument, something to work upon.",
     );
   }
+  if (existy(opts) && !isObj(opts)) {
+    throw new TypeError(
+      `object-delete-key/deleteKey(): [THROW_ID_02] The second input argument must be a plain object. It was given as ${JSON.stringify(
+        opts,
+        null,
+        4,
+      )} (type ${typeof opts}).`,
+    );
+  }
   let resolvedOpts: Opts = { ...defaults, ...opts };
   resolvedOpts.only = arrObjOrBoth(resolvedOpts.only, {
     msg: "object-delete-key/deleteKey(): [THROW_ID_03]",
@@ -56,7 +64,7 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
   let resolvedInput = clone(input);
   DEV &&
     console.log(
-      `059 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedInput`}\u001b[${39}m`} = ${JSON.stringify(
+      `067 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedInput`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedInput,
         null,
         4,
@@ -71,7 +79,7 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
     });
     DEV &&
       console.log(
-        `074 ${`\u001b[${33}m${`findings`}\u001b[${39}m`} = ${JSON.stringify(
+        `082 ${`\u001b[${33}m${`findings`}\u001b[${39}m`} = ${JSON.stringify(
           findings,
           null,
           4,
@@ -80,11 +88,11 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
     let currentIndex: number;
     let nodeToDelete: number;
     while (Array.isArray(findings) && findings.length) {
-      DEV && console.log(`083 ███████████████████████████████████████ LOOP`);
+      DEV && console.log(`091 ███████████████████████████████████████ LOOP`);
       nodeToDelete = findings[0].index;
       DEV &&
         console.log(
-          `087 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nodeToDelete`}\u001b[${39}m`} = ${JSON.stringify(
+          `095 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nodeToDelete`}\u001b[${39}m`} = ${JSON.stringify(
             nodeToDelete,
             null,
             4,
@@ -94,7 +102,7 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
         currentIndex = findings[0].path[len - 1 - i];
         if (
           isEmpty(
-            del(get(resolvedInput, { index: currentIndex }) as Obj, {
+            del(get(resolvedInput, { index: currentIndex }), {
               key: resolvedOpts.key,
               val: resolvedOpts.val,
               only: resolvedOpts.only,
@@ -112,10 +120,10 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
       });
     }
     DEV &&
-      console.log(`115 ███████████████████████████████████████ END OF A LOOP`);
+      console.log(`123 ███████████████████████████████████████ END OF A LOOP`);
     DEV &&
       console.log(
-        `118 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedInput`}\u001b[${39}m`} = ${JSON.stringify(
+        `126 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedInput`}\u001b[${39}m`} = ${JSON.stringify(
           resolvedInput,
           null,
           4,
@@ -123,10 +131,10 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
       );
     return resolvedInput;
   }
-  DEV && console.log(`126 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} del();`);
+  DEV && console.log(`134 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} del();`);
   DEV &&
     console.log(
-      `129 ${`\u001b[${33}m${`resolvedInput`}\u001b[${39}m`} = ${JSON.stringify(
+      `137 ${`\u001b[${33}m${`resolvedInput`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedInput,
         null,
         4,
@@ -147,4 +155,4 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
   }) as Obj;
 }
 
-export { deleteKey, defaults, version };
+export { defaults, deleteKey, version };
