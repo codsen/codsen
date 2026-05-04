@@ -1,6 +1,6 @@
 // Wildcards
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { deleteKey } from "../dist/object-delete-key.esm.js";
 
