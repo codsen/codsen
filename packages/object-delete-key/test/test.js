@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { deleteKey } from "../dist/object-delete-key.esm.js";
 
@@ -682,7 +682,7 @@ test("20 - nonsensical options object - throws", () => {
     () => {
       deleteKey({ a: "a" }, 1);
     },
-    /THROW_ID_04/,
+    /THROW_ID_02/,
     "20.01",
   );
 });
@@ -944,7 +944,7 @@ test("28 - does not mutate input args", () => {
       a: "a",
       b: "b",
     },
-    "28.02",
+    "28.01",
   ); // real deal
 });
 
@@ -1267,6 +1267,10 @@ test("43 - issue #8", () => {
     },
     "43.02",
   );
+});
+
+test("44 - rejects a non-object options argument", () => {
+  throws(() => deleteKey({}, "key"), /THROW_ID_02/, "44.01");
 });
 
 test.run();
