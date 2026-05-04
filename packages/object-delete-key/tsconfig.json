@@ -5,19 +5,21 @@
   },
   "include": [
     "src/**/*",
+    "src/**/*.json",
     "package.json",
+    "../../ops/typedefs/common.d.ts",
     "../../ops/typedefs/common.ts"
   ],
-  "exclude": [
-    ".git",
-    "node_modules"
-  ],
+  "exclude": [".git", "node_modules"],
   "references": [
     {
       "path": "../ast-is-empty"
     },
     {
       "path": "../ast-monkey"
+    },
+    {
+      "path": "../codsen-utils"
     },
     {
       "path": "../util-array-object-or-both"
