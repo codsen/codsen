@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { fillMissing } from "../dist/object-fill-missing-keys.esm.js";
 
@@ -775,7 +775,7 @@ test("25 - opts.doNotFillThesePathsIfTheyContainPlaceholders", () => {
         },
       );
     },
-    /THROW_ID_06/g,
+    /THROW_ID_05/g,
     "25.01",
   );
   throws(
@@ -797,7 +797,7 @@ test("25 - opts.doNotFillThesePathsIfTheyContainPlaceholders", () => {
         },
       );
     },
-    /THROW_ID_06/g,
+    /THROW_ID_05/g,
     "25.03",
   );
 });
@@ -821,7 +821,7 @@ test("26 - does not mutate the input args", () => {
     {
       a: "a",
     },
-    "26.02",
+    "26.01",
   ); // real deal
 });
 
