@@ -1,18 +1,17 @@
-import rfdc from "rfdc";
-import { mergeAdvanced } from "object-merge-advanced";
 import { arrayiffy } from "arrayiffy-if-string";
-import { allEq } from "object-all-values-equal-to";
 import {
-  isStr,
-  isPlainObject as isObj,
+  deepClone as clone,
   existy,
-  Obj,
-  JSONObject,
+  isPlainObject as isObj,
+  isStr,
+  type JSONObject,
+  type Obj,
 } from "codsen-utils";
+import { allEq } from "object-all-values-equal-to";
+import { mergeAdvanced } from "object-merge-advanced";
 
 import { version as v } from "../package.json";
 
-const clone = rfdc();
 const version: string = v;
 
 declare let DEV: boolean;
@@ -48,33 +47,28 @@ function fillMissingKeys(
   incompleteOriginal: Obj,
   schema: Obj,
   resolvedOpts: Opts,
+  skippedPaths: ReadonlySet<string>,
   path = "",
 ): Obj {
   DEV && console.log(`053 fillMissingKeys() starts`);
-  let incomplete = clone(incompleteOriginal);
+  const incomplete = incompleteOriginal;
   if (
     existy(incomplete) ||
     !(
       path.length &&
-      resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.includes(
-        path,
-      ) &&
+      skippedPaths.has(path) &&
       allEq(incomplete, resolvedOpts.placeholder)
     )
   ) {
-    DEV && console.log(`065`);
+    DEV && console.log(`063`);
     if (isObj(schema) && isObj(incomplete)) {
-      DEV && console.log(`067 - it's a plain object`);
+      DEV && console.log(`065 - it's a plain object`);
       // traverse the keys on schema and add them onto incomplete
       Object.keys(schema).forEach((key) => {
         // calculate the path for current key
         let currentPath = `${path ? `${path}.` : ""}${key}`;
 
-        if (
-          resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.includes(
-            currentPath,
-          )
-        ) {
+        if (skippedPaths.has(currentPath)) {
           if (existy(incomplete[key])) {
             if (allEq(incomplete[key], resolvedOpts.placeholder)) {
               incomplete[key] = resolvedOpts.placeholder;
@@ -88,23 +82,23 @@ function fillMissingKeys(
         if (
           !existy(incomplete[key]) ||
           !(
-            resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders.includes(
-              currentPath,
-            ) && allEq(incomplete[key], resolvedOpts.placeholder)
+            skippedPaths.has(currentPath) &&
+            allEq(incomplete[key], resolvedOpts.placeholder)
           )
         ) {
           incomplete[key] = fillMissingKeys(
             incomplete[key] as JSONObject,
             schema[key] as JSONObject,
             resolvedOpts,
+            skippedPaths,
             currentPath,
           );
         }
       });
     } else if (Array.isArray(schema) && Array.isArray(incomplete)) {
-      DEV && console.log(`105 - it's an array`);
+      DEV && console.log(`099 - it's an array`);
       if (incomplete.length === 0) {
-        return schema;
+        return clone(schema);
       }
       if (schema.length) {
         for (let i = incomplete.length; i--; ) {
@@ -114,13 +108,14 @@ function fillMissingKeys(
               incomplete[i],
               schema[0] as JSONObject,
               resolvedOpts,
+              skippedPaths,
               currentPath,
             );
           }
         }
       }
     } else {
-      DEV && console.log(`123 - mergeAdvanced()`);
+      DEV && console.log(`118 - mergeAdvanced()`);
       return mergeAdvanced(schema, incomplete, {
         useNullAsExplicitFalse: resolvedOpts.useNullAsExplicitFalse,
         cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
@@ -148,28 +143,29 @@ function fillMissing(incomplete: Obj, schema: Obj, opts?: Partial<Opts>): Obj {
   //
   // Also, wrapper function will shield the fourth argument from the outside API
   //
+  // biome-ignore lint/complexity/noArguments: arity distinguishes no arguments from an explicit undefined; they throw different errors
   if (arguments.length === 0) {
     throw new Error(
-      "object-fill-missing-keys: [THROW_ID_01] All arguments are missing!",
+      "object-fill-missing-keys/fillMissing(): [THROW_ID_01] All arguments are missing!",
     );
   }
   if (!isObj(incomplete)) {
     throw new Error(
-      `object-fill-missing-keys: [THROW_ID_02] First argument, input object must be a plain object. Currently it's type is "${typ(
+      `object-fill-missing-keys/fillMissing(): [THROW_ID_02] First argument, input object must be a plain object. Currently it's type is "${typ(
         incomplete,
       )}" and it's equal to: ${JSON.stringify(incomplete, null, 4)}`,
     );
   }
   if (!isObj(schema)) {
     throw new Error(
-      `object-fill-missing-keys: [THROW_ID_03] Second argument, schema object, must be a plain object. Currently it's type is "${typ(
+      `object-fill-missing-keys/fillMissing(): [THROW_ID_03] Second argument, schema object, must be a plain object. Currently it's type is "${typ(
         schema,
       )}" and it's equal to: ${JSON.stringify(schema, null, 4)}`,
     );
   }
   if (opts && !isObj(opts)) {
     throw new Error(
-      `object-fill-missing-keys: [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it's type is "${typ(
+      `object-fill-missing-keys/fillMissing(): [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it's type is "${typ(
         opts,
       )}" and it's equal to: ${JSON.stringify(opts, null, 4)}`,
     );
@@ -179,7 +175,7 @@ function fillMissing(incomplete: Obj, schema: Obj, opts?: Partial<Opts>): Obj {
   let resolvedOpts: Opts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `182 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `178 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -206,13 +202,18 @@ function fillMissing(incomplete: Obj, schema: Obj, opts?: Partial<Opts>): Obj {
     )
   ) {
     throw new Error(
-      `object-fill-missing-keys: [THROW_ID_06] resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders element with an index number "${culpritsIndex}" is not a string! It's ${typ(
+      `object-fill-missing-keys/fillMissing(): [THROW_ID_05] resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders element with an index number "${culpritsIndex}" is not a string! It's ${typ(
         culpritsVal,
       )}, equal to:\n${JSON.stringify(culpritsVal, null, 4)}`,
     );
   }
 
-  return fillMissingKeys(clone(incomplete), clone(schema), resolvedOpts);
+  return fillMissingKeys(
+    clone(incomplete),
+    schema,
+    resolvedOpts,
+    new Set(resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders),
+  );
 }
 
-export { fillMissing, defaults, version };
+export { defaults, fillMissing, version };
