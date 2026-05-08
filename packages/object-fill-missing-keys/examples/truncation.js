@@ -1,6 +1,6 @@
 // Truncation upon request, to minimize the object footprint
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { fillMissing } from "../dist/object-fill-missing-keys.esm.js";
 
