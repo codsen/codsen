@@ -1,6 +1,6 @@
 // `opts.useNullAsExplicitFalse`
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { fillMissing } from "../dist/object-fill-missing-keys.esm.js";
 
