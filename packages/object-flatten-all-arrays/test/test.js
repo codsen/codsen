@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { flattenAllArrays } from "../dist/object-flatten-all-arrays.esm.js";
 
@@ -564,7 +564,7 @@ test("19 - does not mutate input args", () => {
         },
       ],
     },
-    "19.02",
+    "19.01",
   );
 });
 
