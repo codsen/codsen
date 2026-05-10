@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { flattenReferencing as ofr } from "../dist/object-flatten-referencing.esm.js";
 
@@ -1501,7 +1501,7 @@ test("18 - opts.whatToDoWhenReferenceIsMissing", () => {
       a: "%%_c.d_%%",
       b: "%%_e.f_%%",
     },
-    "18.04",
+    "18.03",
   );
 });
 
