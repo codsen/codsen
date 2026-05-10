@@ -1,14 +1,18 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import rfdc from "rfdc";
-import { strIndexesOfPlus } from "str-indexes-of-plus";
-import { isMatch } from "matcher";
 import { arrayiffy } from "arrayiffy-if-string";
-import { existy, isStr, isPlainObject as isObj, JSONValue } from "codsen-utils";
-import { flattenObject, flattenArr, defaults, Opts } from "./util";
+import {
+  deepClone as clone,
+  existy,
+  isPlainObject as isObj,
+  isStr,
+  type JSONValue,
+} from "codsen-utils";
+import { isMatch } from "matcher";
+import { strIndexesOfPlus } from "str-indexes-of-plus";
 import { version as v } from "../package.json";
+import { defaults, flattenArr, flattenObject, type Opts } from "./util";
 
-const clone = rfdc();
 const version: string = v;
 
 function flattenReferencing(
@@ -18,7 +22,7 @@ function flattenReferencing(
 ): any {
   if (!isObj(input)) {
     throw new Error(
-      `object-flatten-referencing/ofr(): [THROW_ID_01] the first input argument must be a plain object! It was given as ${JSON.stringify(
+      `object-flatten-referencing/flattenReferencing(): [THROW_ID_01] the first input argument must be a plain object! It was given as ${JSON.stringify(
         input,
         null,
         4,
@@ -27,7 +31,7 @@ function flattenReferencing(
   }
   if (!isObj(reference)) {
     throw new Error(
-      `object-flatten-referencing/ofr(): [THROW_ID_02] the second input argument must be a plain object! It was given as ${JSON.stringify(
+      `object-flatten-referencing/flattenReferencing(): [THROW_ID_02] the second input argument must be a plain object! It was given as ${JSON.stringify(
         reference,
         null,
         4,
@@ -36,7 +40,7 @@ function flattenReferencing(
   }
   if (opts && !isObj(opts)) {
     throw new Error(
-      `object-flatten-referencing/ofr(): [THROW_ID_03] the third input argument must be a plain object! It was given as ${JSON.stringify(
+      `object-flatten-referencing/flattenReferencing(): [THROW_ID_03] the third input argument must be a plain object! It was given as ${JSON.stringify(
         opts,
         null,
         4,
@@ -67,8 +71,8 @@ function flattenReferencing(
   ): string {
     // DEV && console.log(`\n\n* originalInput = ${JSON.stringify(originalInput, null, 4)}`)
     // DEV && console.log(`* originalReference = ${JSON.stringify(originalReference, null, 4)}`)
-    let resolvedInput = clone(originalInput);
-    let resolvedReference = clone(originalReference);
+    let resolvedInput = originalInput;
+    const resolvedReference = originalReference;
 
     if (!opts2.wrapGlobalFlipSwitch) {
       wrap = false;
@@ -226,7 +230,7 @@ function flattenReferencing(
           ) {
             if (opts2.whatToDoWhenReferenceIsMissing === 1) {
               throw new Error(
-                `object-flatten-referencing/ofr(): [THROW_ID_06] resolvedReference object does not have the key ${key} and we need it. TIP: Turn off throwing via opts2.whatToDoWhenReferenceIsMissing.`,
+                `object-flatten-referencing/flattenReferencing(): [THROW_ID_04] resolvedReference object does not have the key ${key} and we need it. TIP: Turn off throwing via opts2.whatToDoWhenReferenceIsMissing.`,
               );
             }
             // when opts2.whatToDoWhenReferenceIsMissing === 2, library does nothing,
@@ -288,15 +292,15 @@ function flattenReferencing(
     return resolvedInput;
   }
 
-  return ofr(input, reference, originalOpts);
+  return ofr(clone(input), reference, originalOpts);
 }
 
 export {
-  flattenReferencing,
-  flattenObject,
-  flattenArr,
   arrayiffy,
   defaults,
+  flattenArr,
+  flattenObject,
+  flattenReferencing,
+  type Opts,
   version,
-  Opts,
 };
