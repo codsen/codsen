@@ -3,12 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 7.1.0 (2025-10-15)
-
-### Features
-
-- if value to be added is a number, keep it as is, don't stringify ([ce3e1a5](https://github.com/codsen/codsen/commit/ce3e1a525998ca3c0abf0142affef95b14cd1990))
-
 ## 7.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -221,7 +215,7 @@ For example, `['aaa', 'bbb', 'ccc']` referencing string 'zzz' would yield string
 ## 1.1.0 (2017-04-20)
 
 - New options setting `opts.ignore` which lets you skip flattening on an array (or a single string) of keys.
-- New options setting `opts.whatToDoWhenReferenceIsMissing` which allows you to specify exactly what do you want to happen when the equivalent value in the reference (object/array/string/whatever) is falsey.
+- New options setting `opts.whatToDoWhenReferenceIsMissing` which allows you to specify exactly what do you want to happen when the equivalent value in the reference (object/array/string/whatever) is falsy.
 - 🔧 Done some rebasing, for example, `util.arrayiffyString` now DRY'ies the code a bit.
 
 ## 1.0.0 (2017-04-03)
