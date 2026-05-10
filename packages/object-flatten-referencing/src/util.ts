@@ -1,12 +1,10 @@
-import rfdc from "rfdc";
 import {
-  isStr,
+  deepClone as clone,
   isPlainObject as isObj,
-  JSONObject,
+  isStr,
+  type JSONObject,
   // JSONArray,
 } from "codsen-utils";
-
-const clone = rfdc();
 
 interface Opts {
   wrapHeadsWith: string;
@@ -51,7 +49,7 @@ const defaults: Opts = {
 
 function flattenObject(obj: JSONObject, opts?: Partial<Opts>): any[] {
   let resolvedOpts: Opts = { ...defaults, ...opts };
-  if (arguments.length === 0 || Object.keys(obj).length === 0) {
+  if (!obj || Object.keys(obj).length === 0) {
     return [];
   }
   let resolvedObj = clone(obj);
@@ -85,7 +83,7 @@ function flattenArr(
   joinArraysUsingBrs = false,
 ): string {
   let resolvedOpts: Opts = { ...defaults, ...opts };
-  if (arguments.length === 0 || arr.length === 0) {
+  if (!arr || arr.length === 0) {
     return "";
   }
   let resolvedArr: any[] = clone(arr);
@@ -165,4 +163,4 @@ function arrayiffyString(something: string | any): any {
   return something;
 }
 
-export { flattenObject, flattenArr, arrayiffyString, defaults, Opts };
+export { arrayiffyString, defaults, flattenArr, flattenObject, type Opts };
