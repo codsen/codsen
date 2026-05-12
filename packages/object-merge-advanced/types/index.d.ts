@@ -1,7 +1,6 @@
 declare const version: string;
 type argType =
   | "date"
-  | "date"
   | "object"
   | "array"
   | "string"
