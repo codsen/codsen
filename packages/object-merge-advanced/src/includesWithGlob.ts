@@ -1,6 +1,6 @@
 import { isMatch } from "matcher";
 
-// it's a copy of array-includes-with-glob 3.1.0, to prevent circular deps
+// it's a copy of array-includes-with-glob 5.1.3, to prevent circular deps
 
 interface Opts {
   arrayVsArrayAllMustBeFound: "any" | "all";
@@ -17,26 +17,26 @@ const defaults: Opts = {
  */
 function includesWithGlob(
   input: string | string[],
-  stringToFind: string | string[],
+  findThis: string | string[],
   opts?: Partial<Opts>,
 ): boolean {
-  // maybe we can end prematurely:
-  if (!input.length || !stringToFind.length) {
+  // maybe we can end quicker:
+  if (!input.length || !findThis.length) {
     return false; // because nothing can be found in it
   }
 
-  let resolvedOpts = { ...defaults, ...opts };
+  const resolvedOpts = { ...defaults, ...opts };
 
-  let resolvedInput = typeof input === "string" ? [input] : Array.from(input);
+  const resolvedInput = typeof input === "string" ? [input] : Array.from(input);
 
-  if (typeof stringToFind === "string") {
+  if (typeof findThis === "string") {
     return resolvedInput.some((val) =>
-      isMatch(val, stringToFind, { caseSensitive: resolvedOpts.caseSensitive }),
+      isMatch(val, findThis, { caseSensitive: resolvedOpts.caseSensitive }),
     );
   }
   // array then.
   if (resolvedOpts.arrayVsArrayAllMustBeFound === "any") {
-    return stringToFind.some((stringToFindVal) =>
+    return findThis.some((stringToFindVal) =>
       resolvedInput.some((val) =>
         isMatch(val, stringToFindVal, {
           caseSensitive: resolvedOpts.caseSensitive,
@@ -44,7 +44,7 @@ function includesWithGlob(
       ),
     );
   }
-  return stringToFind.every((stringToFindVal) =>
+  return findThis.every((stringToFindVal) =>
     resolvedInput.some((val) =>
       isMatch(val, stringToFindVal, {
         caseSensitive: resolvedOpts.caseSensitive,
@@ -53,4 +53,4 @@ function includesWithGlob(
   );
 }
 
-export { includesWithGlob, defaults };
+export { defaults, includesWithGlob };
