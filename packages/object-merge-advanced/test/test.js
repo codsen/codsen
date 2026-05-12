@@ -1,13 +1,11 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 /* eslint max-len:0 */
 
+import { deepClone as clone } from "codsen-utils";
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import rfdc from "rfdc";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import { mergeAdvanced as m } from "../dist/object-merge-advanced.esm.js";
 import { mergeAdvanced } from "./util.js";
-
-const clone = rfdc();
 
 // There should be two (or more) tests in each, with input args swapped, in order to
 // guarantee that there are no sneaky things happening when argument order is backwards
