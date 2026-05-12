@@ -1,8 +1,8 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 /* eslint max-len:0 */
 
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import { mergeAdvanced } from "../dist/object-merge-advanced.esm.js";
 
 test("01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges", () => {
