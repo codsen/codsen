@@ -1,4 +1,8 @@
-import { hasOwnProp, isPlainObject as isObj, JSONValue } from "codsen-utils";
+import {
+  hasOwnProp,
+  isPlainObject as isObj,
+  type JSONValue,
+} from "codsen-utils";
 import { version as v } from "../package.json";
 
 const version: string = v;
@@ -22,7 +26,7 @@ function noNewKeys(
 ): string[] {
   if (opts && !isObj(opts)) {
     throw new TypeError(
-      `object-no-new-keys/noNewKeys(): [THROW_ID_02] resolvedOpts should be a plain object. It was given as ${JSON.stringify(
+      `object-no-new-keys/noNewKeys(): [THROW_ID_01] resolvedOpts should be a plain object. It was given as ${JSON.stringify(
         opts,
         null,
         4,
@@ -37,7 +41,7 @@ function noNewKeys(
     optsOuter.mode = +optsOuter.mode as 1 | 2;
   } else if (![1, 2].includes(optsOuter.mode)) {
     throw new TypeError(
-      `object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] resolvedOpts.mode should be "1" or "2" (string or number).`,
+      `object-no-new-keys/noNewKeys(): [THROW_ID_02] resolvedOpts.mode should be "1" or "2" (string or number).`,
     );
   }
 
@@ -125,4 +129,4 @@ function noNewKeys(
   }).res;
 }
 
-export { noNewKeys, defaults, version };
+export { defaults, noNewKeys, version };
