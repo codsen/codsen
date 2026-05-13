@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { noNewKeys } from "../dist/object-no-new-keys.esm.js";
 
@@ -378,14 +378,14 @@ test("12 - mode.opts customised to a wrong type - throws", () => {
     () => {
       noNewKeys({ a: "a" }, { b: "b" }, { mode: "z" });
     },
-    /THROW_ID_01/,
+    /THROW_ID_02/,
     "12.01",
   );
   throws(
     () => {
       noNewKeys({ a: "a" }, { b: "b" }, { mode: 1.5 });
     },
-    /THROW_ID_01/,
+    /THROW_ID_02/,
     "12.02",
   );
 });
@@ -395,21 +395,21 @@ test("13 - mode is given as integer - throws", () => {
     () => {
       noNewKeys({ a: "a" }, { b: "b" }, 1);
     },
-    /THROW_ID_02/,
+    /THROW_ID_01/,
     "13.01",
   );
   throws(
     () => {
       noNewKeys({ a: "a" }, { b: "b" }, 2);
     },
-    /THROW_ID_02/,
+    /THROW_ID_01/,
     "13.02",
   );
   throws(
     () => {
       noNewKeys({ a: "a" }, { b: "b" }, 2.5);
     },
-    /THROW_ID_02/,
+    /THROW_ID_01/,
     "13.03",
   );
 });
