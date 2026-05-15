@@ -1,10 +1,8 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import rfdc from "rfdc";
-import { isPlainObject as isObj } from "codsen-utils";
+import { deepClone as clone, isPlainObject as isObj } from "codsen-utils";
 import { version as v } from "../package.json";
 
-const clone = rfdc();
 const version: string = v;
 
 export interface Obj {
@@ -13,8 +11,9 @@ export interface Obj {
 
 function setAllValuesTo(input: Obj, value?: any): Obj {
   let val: any;
-  let inp = clone(input);
+  const inp = clone(input);
 
+  // biome-ignore lint/complexity/noArguments: arity distinguishes an omitted second argument from an explicit undefined
   if (arguments.length < 2) {
     val = false;
   } else if (isObj(value) || Array.isArray(value)) {
@@ -24,22 +23,36 @@ function setAllValuesTo(input: Obj, value?: any): Obj {
     val = value;
   }
 
-  if (Array.isArray(inp)) {
-    inp.forEach((_el, i) => {
-      if (isObj(inp[i]) || Array.isArray(inp[i])) {
-        inp[i] = setAllValuesTo(inp[i], val);
+  function setNestedValues(node: Obj, replacement: any): Obj {
+    if (Array.isArray(node)) {
+      for (let i = 0; i < node.length; i++) {
+        if (isObj(node[i]) || Array.isArray(node[i])) {
+          node[i] = setNestedValues(
+            node[i],
+            isObj(replacement) || Array.isArray(replacement)
+              ? clone(replacement)
+              : replacement,
+          );
+        }
       }
-    });
-  } else if (isObj(inp)) {
-    Object.keys(inp).forEach((key) => {
-      if (Array.isArray(inp[key]) || isObj(inp[key])) {
-        inp[key] = setAllValuesTo(inp[key] as Obj, val);
-      } else {
-        inp[key] = val;
+    } else if (isObj(node)) {
+      for (const key of Object.keys(node)) {
+        if (Array.isArray(node[key]) || isObj(node[key])) {
+          node[key] = setNestedValues(
+            node[key],
+            isObj(replacement) || Array.isArray(replacement)
+              ? clone(replacement)
+              : replacement,
+          );
+        } else {
+          node[key] = replacement;
+        }
       }
-    });
+    }
+    return node;
   }
-  return inp;
+
+  return setNestedValues(inp, val);
 }
 
 export { setAllValuesTo, version };
