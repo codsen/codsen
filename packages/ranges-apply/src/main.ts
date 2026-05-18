@@ -1,35 +1,50 @@
-import { rMerge } from "ranges-merge";
-
 import type { Range, Ranges } from "ranges-merge";
-import invariant from "tiny-invariant";
+import { rMerge } from "ranges-merge";
 
 import { version as v } from "../package.json";
 
 const version: string = v;
 
+type RangesInput = Range | Ranges;
+
+function isNaturalNumberOrNumericString(value: unknown): boolean {
+  if (typeof value === "number") {
+    return Number.isInteger(value) && value >= 0;
+  }
+  if (typeof value !== "string" || !value.trim()) {
+    return false;
+  }
+  const numericValue = Number(value);
+  return Number.isInteger(numericValue) && numericValue >= 0;
+}
+
 function rApply(
   str: string,
-  originalRangesArr: Ranges,
-  progressFn?: (percentageDone: number) => void,
+  originalRangesArr: RangesInput,
+  progressFn?: null | false | 0 | ((percentageDone: number) => void),
 ): string {
   let percentageDone = 0;
   let lastPercentageDone = 0;
 
-  if (arguments.length === 0) {
-    throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");
+  if (
+    str === undefined &&
+    originalRangesArr === undefined &&
+    progressFn === undefined
+  ) {
+    throw new Error("ranges-apply/rApply(): [THROW_ID_01] inputs missing!");
   }
   if (typeof str !== "string") {
     throw new TypeError(
-      `ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(
+      `ranges-apply/rApply(): [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(
         str,
         null,
         4,
       )}`,
     );
   }
-  if (originalRangesArr && !Array.isArray(originalRangesArr)) {
+  if (originalRangesArr != null && !Array.isArray(originalRangesArr)) {
     throw new TypeError(
-      `ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(
+      `ranges-apply/rApply(): [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(
         originalRangesArr,
         null,
         4,
@@ -38,7 +53,7 @@ function rApply(
   }
   if (progressFn && typeof progressFn !== "function") {
     throw new TypeError(
-      `ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(
+      `ranges-apply/rApply(): [THROW_ID_04] the third input argument must be a function (or falsy)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(
         progressFn,
         null,
         4,
@@ -46,7 +61,7 @@ function rApply(
     );
   }
   // insurance against array of nulls
-  if (!originalRangesArr?.filter((range) => range).length) {
+  if (!originalRangesArr?.some(Boolean)) {
     // quick ending - no ranges passed
     return str;
   }
@@ -54,11 +69,12 @@ function rApply(
   let rangesArr: Range[];
   if (
     Array.isArray(originalRangesArr) &&
-    Number.isInteger(originalRangesArr[0]) &&
-    Number.isInteger(originalRangesArr[1])
+    !Array.isArray(originalRangesArr[0]) &&
+    isNaturalNumberOrNumericString(originalRangesArr[0]) &&
+    isNaturalNumberOrNumericString(originalRangesArr[1])
   ) {
     // if single array was passed, wrap it into an array
-    rangesArr = [Array.from(originalRangesArr) as any];
+    rangesArr = [Array.from(originalRangesArr as Range) as Range];
   } else {
     rangesArr = Array.from(originalRangesArr as any);
   }
@@ -67,88 +83,88 @@ function rApply(
   let len = rangesArr.length;
   let counter = 0;
 
-  rangesArr
+  rangesArr.forEach((el, i) => {
     // insurance against array of nulls
+    if (!el) {
+      return;
+    }
+    if (progressFn) {
+      percentageDone = Math.floor((counter / len) * 10);
+      /* c8 ignore next */
+      if (percentageDone !== lastPercentageDone) {
+        lastPercentageDone = percentageDone;
+        progressFn(percentageDone);
+      }
+    }
 
-    .filter((range) => range)
-    .forEach((el, i) => {
-      if (progressFn) {
-        percentageDone = Math.floor((counter / len) * 10);
-        /* c8 ignore next */
-        if (percentageDone !== lastPercentageDone) {
-          lastPercentageDone = percentageDone;
-          progressFn(percentageDone);
-        }
+    if (!Array.isArray(el)) {
+      throw new TypeError(
+        `ranges-apply/rApply(): [THROW_ID_05] ranges array, second input arg., has ${i}th element not an array: ${JSON.stringify(
+          el,
+          null,
+          4,
+        )}, which is ${typeof el}`,
+      );
+    }
+    if (!isNaturalNumberOrNumericString(el[0])) {
+      throw new TypeError(
+        `ranges-apply/rApply(): [THROW_ID_06] ranges array, second input arg. has ${i}th element, array ${JSON.stringify(
+          el,
+          null,
+          0,
+        )}. Its first element is not a non-negative integer or string index, but ${typeof el[0]}, equal to: ${JSON.stringify(
+          el[0],
+          null,
+          4,
+        )}.`,
+      );
+    }
+    if (typeof el[0] === "string") {
+      rangesArr[i] = [...el] as Range;
+      rangesArr[i][0] = Number(el[0]);
+    }
+    if (!isNaturalNumberOrNumericString(el[1])) {
+      throw new TypeError(
+        `ranges-apply/rApply(): [THROW_ID_07] ranges array, second input arg. has ${i}th element, array ${JSON.stringify(
+          el,
+          null,
+          0,
+        )}. Its second element is not a non-negative integer or string index, but ${typeof el[1]}, equal to: ${JSON.stringify(
+          el[1],
+          null,
+          4,
+        )}.`,
+      );
+    }
+    if (typeof el[1] === "string") {
+      if (rangesArr[i] === el) {
+        rangesArr[i] = [...el] as Range;
       }
+      rangesArr[i][1] = Number(el[1]);
+    }
 
-      if (!Array.isArray(el)) {
-        throw new TypeError(
-          `ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${i}th element not an array: ${JSON.stringify(
-            el,
-            null,
-            4,
-          )}, which is ${typeof el}`,
-        );
-      }
-      if (!Number.isInteger(el[0])) {
-        if (!Number.isInteger(+el[0]) || +el[0] < 0) {
-          throw new TypeError(
-            `ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${i}th element, array ${JSON.stringify(
-              el,
-              null,
-              0,
-            )}. Its first element is not an integer, string index, but ${typeof el[0]}, equal to: ${JSON.stringify(
-              el[0],
-              null,
-              4,
-            )}.`,
-          );
-        } else {
-          (rangesArr as any)[i][0] = +(rangesArr as any)[i][0];
-        }
-      }
-      if (!Number.isInteger(el[1])) {
-        if (!Number.isInteger(+el[1]) || +el[1] < 0) {
-          throw new TypeError(
-            `ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${i}th element, array ${JSON.stringify(
-              el,
-              null,
-              0,
-            )}. Its second element is not an integer, string index, but ${typeof el[1]}, equal to: ${JSON.stringify(
-              el[1],
-              null,
-              4,
-            )}.`,
-          );
-        } else {
-          (rangesArr as any)[i][1] = +(rangesArr as any)[i][1];
-        }
-      }
-
-      counter += 1;
-    });
-
-  // allocate another 10% of the progress indicator length to the rangesMerge step:
-  let workingRanges = rMerge(rangesArr, {
-    progressFn: (perc) => {
-      if (progressFn) {
-        // since "perc" is already from zero to hundred, we just divide by 10 and
-        // get the range from zero to ten:
-        percentageDone = 10 + Math.floor(perc / 10);
-        /* c8 ignore next */
-        if (percentageDone !== lastPercentageDone) {
-          lastPercentageDone = percentageDone;
-          progressFn(percentageDone);
-        }
-      }
-    },
+    counter += 1;
   });
 
-  invariant(workingRanges);
+  // allocate another 10% of the progress indicator length to the rangesMerge step:
+  let workingRanges = progressFn
+    ? rMerge(rangesArr, {
+        progressFn: (perc) => {
+          // since "perc" is already from zero to hundred, we just divide by 10 and
+          // get the range from zero to ten:
+          percentageDone = 10 + Math.floor(perc / 10);
+          /* c8 ignore next */
+          if (percentageDone !== lastPercentageDone) {
+            lastPercentageDone = percentageDone;
+            progressFn(percentageDone);
+          }
+        },
+      })
+    : rMerge(rangesArr);
 
   // allocate the rest 80% to the actual string assembly:
-  let len2 = workingRanges.length;
-  if (len2 > 0) {
+  let len2 = workingRanges?.length || 0;
+  if (workingRanges && len2 > 0) {
     let tails = str.slice(workingRanges[len2 - 1][1]);
     str = workingRanges.reduce((acc, _val, i, arr) => {
       if (progressFn) {
@@ -170,4 +186,4 @@ function rApply(
   return str;
 }
 
-export { rApply, version, Range, Ranges };
+export { type Range, type Ranges, type RangesInput, rApply, version };
