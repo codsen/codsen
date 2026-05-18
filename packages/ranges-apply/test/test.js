@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { rApply } from "../dist/ranges-apply.esm.js";
 
@@ -82,7 +82,7 @@ test("01 - wrong inputs", () => {
       rApply("aaa", [[1], [10, 20]]);
     },
     /THROW_ID_07/g,
-    "01.07",
+    "01.11",
   );
 
   throws(
@@ -90,7 +90,7 @@ test("01 - wrong inputs", () => {
       rApply("aaa", [[10, 20], [30]]);
     },
     /THROW_ID_07/g,
-    "01.08",
+    "01.12",
   );
 
   throws(
@@ -98,7 +98,7 @@ test("01 - wrong inputs", () => {
       rApply("aaa", [[10.1, 20]]);
     },
     /THROW_ID_06/g,
-    "01.09",
+    "01.13",
   );
 
   throws(
@@ -106,7 +106,7 @@ test("01 - wrong inputs", () => {
       rApply("aaa", [["10.1", "20"]]);
     },
     /THROW_ID_06/g,
-    "01.10",
+    "01.14",
   );
 
   throws(
@@ -121,7 +121,7 @@ test("01 - wrong inputs", () => {
       );
     },
     /THROW_ID_04/g,
-    "01.11",
+    "01.15",
   );
 
   throws(
@@ -136,7 +136,7 @@ test("01 - wrong inputs", () => {
       );
     },
     /THROW_ID_04/g,
-    "01.12",
+    "01.16",
   );
 });
 
@@ -425,6 +425,19 @@ test("19 - progressFn - basic replacement", () => {
     "19.02",
   );
   ok(count <= 101, "19.03");
+});
+
+test("20 - validates and normalises ranges without mutating input", () => {
+  let ranges = [["1", "2"]];
+
+  equal(rApply("abc", ranges), "ac", "20.01");
+  equal(ranges, [["1", "2"]], "20.02");
+  equal(rApply("abc", ["1", "2"]), "ac", "20.03");
+  throws(() => rApply("abc", [[-1, 2]]), /THROW_ID_06/g, "20.04");
+  throws(() => rApply("abc", [[1, -2]]), /THROW_ID_07/g, "20.05");
+  throws(() => rApply("abc", false), /THROW_ID_03/g, "20.06");
+  throws(() => rApply("abc", [[null, 2]]), /THROW_ID_06/g, "20.07");
+  throws(() => rApply("abc", [[1, " "]]), /THROW_ID_07/g, "20.08");
 });
 
 test.run();
