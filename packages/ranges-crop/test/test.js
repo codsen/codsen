@@ -1,10 +1,9 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { rApply } from "ranges-apply";
-import rfdc from "rfdc";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
-const clone = rfdc();
+const clone = structuredClone;
 
 import { rCrop } from "../dist/ranges-crop.esm.js";
 
@@ -53,6 +52,14 @@ test("02 - str len is not a number", () => {
     },
     /THROW_ID_02/,
     "02.04",
+  );
+
+  throws(
+    () => {
+      rCrop([[1, 2]], -1);
+    },
+    /THROW_ID_02/,
+    "02.05",
   );
 });
 
@@ -125,6 +132,14 @@ test("04 - something's wrong with range arrays's contents", () => {
     },
     /THROW_ID_04/,
     "04.05",
+  );
+
+  throws(
+    () => {
+      rCrop([[1, 2], null, [-1, 3]], 3);
+    },
+    /THROW_ID_04/,
+    "04.06",
   );
 });
 
