@@ -1,6 +1,5 @@
-import { rMerge } from "ranges-merge";
-
 import type { Range, Ranges } from "ranges-merge";
+import { rMerge } from "ranges-merge";
 
 import { version as v } from "../package.json";
 
@@ -14,7 +13,7 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
   }
   if (!Array.isArray(arrOfRanges)) {
     throw new TypeError(
-      `ranges-crop: [THROW_ID_01] The first input's argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(
+      `ranges-crop/rCrop(): [THROW_ID_01] The first input's argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(
         arrOfRanges,
         null,
         4,
@@ -22,77 +21,61 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
     );
   }
   // strLen validation
-  if (!Number.isInteger(strLen)) {
+  if (!Number.isInteger(strLen) || strLen < 0) {
     throw new TypeError(
-      `ranges-crop: [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof strLen}, equal to: ${JSON.stringify(
+      `ranges-crop/rCrop(): [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof strLen}, equal to: ${JSON.stringify(
         strLen,
         null,
         4,
       )}`,
     );
   }
-  if (!arrOfRanges.filter((range) => range).length) {
-    return arrOfRanges.filter((range) => range);
+  if (!arrOfRanges.some(Boolean)) {
+    return [];
   }
 
-  let culpritsIndex = 0;
-
-  // validate are range indexes natural numbers:
   if (
-    !arrOfRanges
-      .filter((range) => range)
-      .every((rangeArr, indx) => {
-        if (!Number.isInteger(rangeArr[0]) || !Number.isInteger(rangeArr[1])) {
-          culpritsIndex = indx;
-          return false;
-        }
-        return true;
-      })
+    typeof arrOfRanges[0] === "number" &&
+    typeof arrOfRanges[1] === "number"
   ) {
+    throw new TypeError(
+      `ranges-crop/rCrop(): [THROW_ID_03] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(
+        arrOfRanges,
+        null,
+        0,
+      )}!`,
+    );
+  }
+
+  for (let i = 0; i < arrOfRanges.length; i++) {
+    const range = arrOfRanges[i];
+    if (!range) {
+      continue;
+    }
     if (
-      Array.isArray(arrOfRanges) &&
-      typeof arrOfRanges[0] === "number" &&
-      typeof arrOfRanges[1] === "number"
+      !Array.isArray(range) ||
+      !Number.isInteger(range[0]) ||
+      range[0] < 0 ||
+      !Number.isInteger(range[1]) ||
+      range[1] < 0
     ) {
       throw new TypeError(
-        `ranges-crop: [THROW_ID_03] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(
-          arrOfRanges,
+        `ranges-crop/rCrop(): [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${i}th range (${JSON.stringify(
+          range,
           null,
           0,
-        )}!`,
+        )}) does not consist of only natural numbers!`,
       );
     }
-
-    throw new TypeError(
-      `ranges-crop: [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${culpritsIndex}th range (${JSON.stringify(
-        arrOfRanges[culpritsIndex],
-        null,
-        0,
-      )}) does not consist of only natural numbers!`,
-    );
-  }
-
-  // validate that any third argument values (if any) are of a string-type
-  if (
-    !arrOfRanges
-      .filter((range) => range)
-      .every((rangeArr, indx) => {
-        if (rangeArr[2] != null && typeof rangeArr[2] !== "string") {
-          culpritsIndex = indx;
-          return false;
-        }
-        return true;
-      })
-  ) {
-    throw new TypeError(
-      `ranges-crop: [THROW_ID_05] The third argument, if present at all, should be of a string-type or null. Currently the ${culpritsIndex}th range ${JSON.stringify(
-        arrOfRanges[culpritsIndex],
-        null,
-        0,
-      )} has a argument in the range of a type ${typeof arrOfRanges[
-        culpritsIndex
-      ][2]}`,
-    );
+    if (range[2] != null && typeof range[2] !== "string") {
+      throw new TypeError(
+        `ranges-crop/rCrop(): [THROW_ID_05] The third argument, if present at all, should be of a string-type or null. Currently the ${i}th range ${JSON.stringify(
+          range,
+          null,
+          0,
+        )} has a argument in the range of a type ${typeof range[2]}`,
+      );
+    }
   }
 
   //                       finally, the real action
@@ -100,7 +83,7 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
 
   DEV &&
     console.log(
-      `103 ${`\u001b[${33}m${`arrOfRanges`}\u001b[${39}m`} = ${JSON.stringify(
+      `086 ${`\u001b[${33}m${`arrOfRanges`}\u001b[${39}m`} = ${JSON.stringify(
         arrOfRanges,
         null,
         4,
@@ -116,7 +99,7 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
       if (singleRangeArr[1] > strLen) {
         DEV &&
           console.log(
-            `119 - we will process the ${JSON.stringify(
+            `102 - we will process the ${JSON.stringify(
               singleRangeArr,
               null,
               0,
@@ -125,25 +108,25 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
         if (singleRangeArr[2] != null) {
           DEV &&
             console.log(
-              `128 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`,
+              `111 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`,
             );
           return [singleRangeArr[0], strLen, singleRangeArr[2]];
         }
         DEV &&
           console.log(
-            `134 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`,
+            `117 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`,
           );
         return [singleRangeArr[0], strLen];
       }
       DEV &&
         console.log(
-          `140 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`,
+          `123 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`,
         );
       return singleRangeArr;
     });
   DEV &&
     console.log(
-      `146 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
+      `129 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
         res,
         null,
         4,
@@ -153,4 +136,4 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
   return !res.length ? null : (res as Ranges);
 }
 
-export { rCrop, version, Range, Ranges };
+export { type Range, type Ranges, rCrop, version };
