@@ -32,7 +32,7 @@ npm i ranges-ent-decode
 ## Quick Take
 
 ```js
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { rEntDecode } from "ranges-ent-decode";
 
@@ -43,9 +43,10 @@ assert.deepEqual(rEntDecode("a &#x26; b &amp; c"), [
 ]);
 ```
 
+
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/ranges-ent-decode/) for a full description of the API.
+Please [visit codsen.com](https://codsen.com/os/ranges-ent-decode/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/ranges-ent-decode/CHANGELOG.md).
 
 ## Contributing
 
@@ -55,7 +56,7 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 MIT License
 
-Copyright © 2010-2025 Roy Revelt and other contributors
+Copyright © 2010-2026 Roy Revelt and other contributors
 
 Some tests and some regexes adapted from he.js
 MIT Licence - Copyright © 2013-2018 Mathias Bynens <https://mathiasbynens.be/>
