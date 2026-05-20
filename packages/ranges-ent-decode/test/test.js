@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { rEntDecode as decode } from "../dist/ranges-ent-decode.esm.js";
 
@@ -38,7 +38,7 @@ test("03 - throws when second input argument is not a plain object", () => {
   );
 });
 
-test("04 - falsey opts does not throw", () => {
+test("04 - falsy opts does not throw", () => {
   not.throws(() => {
     decode("yyy", undefined);
   }, "04.01");
