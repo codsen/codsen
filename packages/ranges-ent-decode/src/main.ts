@@ -1,7 +1,7 @@
-import he from "he";
-import { rMerge } from "ranges-merge";
 import { isPlainObject as isObj } from "codsen-utils";
+import he from "he";
 import type { Ranges } from "ranges-merge";
+import { rMerge } from "ranges-merge";
 
 import { version as v } from "../package.json";
 
@@ -37,7 +37,7 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
   // ---------------------------------------------------------------------------
   if (typeof str !== "string") {
     throw new TypeError(
-      `ranges-ent-decode/decode(): [THROW_ID_01] Expected a String! Currently it's given as ${str}, type ${typeof str}`,
+      `ranges-ent-decode/rEntDecode(): [THROW_ID_01] Expected a String! Currently it's given as ${str}, type ${typeof str}`,
     );
   } else if (!str.trim()) {
     // fast ending, matching Ranges notation - absence is marked by falsy null
@@ -45,7 +45,7 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
   }
   if (opts != null && !isObj(opts)) {
     throw new TypeError(
-      `ranges-ent-decode/decode(): [THROW_ID_02] Optional Options Object, the second in put argument, must be a plain object! Currently it's given as ${opts}, type ${typeof opts}`,
+      `ranges-ent-decode/rEntDecode(): [THROW_ID_02] Optional Options Object, the second input argument, must be a plain object! Currently it's given as ${opts}, type ${typeof opts}`,
     );
   }
   let resolvedOpts: Opts = { ...defaults, ...opts };
@@ -93,7 +93,7 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
     let matchedInvalidEntities = str.match(regexInvalidEntity);
     if (matchedInvalidEntities) {
       throw new Error(
-        `ranges-ent-decode/decode(): [THROW_ID_04] Parse error - strict mode is on and input contains an invalid entity. Here are all the invalid entities: ${JSON.stringify(
+        `ranges-ent-decode/rEntDecode(): [THROW_ID_03] Parse error - strict mode is on and input contains an invalid entity. Here are all the invalid entities: ${JSON.stringify(
           matchedInvalidEntities,
           null,
           4,
@@ -108,7 +108,7 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
   while ((array1 = entityRegex.exec(str)) !== null) {
     DEV &&
       console.log(
-        `--------\nFound ${`\u001b[${33}m${array1[0]}\u001b[${39}m`} Range: [${
+        `111 --------\nFound ${`\u001b[${33}m${array1[0]}\u001b[${39}m`} Range: [${
           entityRegex.lastIndex - array1[0].length
         }, ${entityRegex.lastIndex}]`,
       );
@@ -151,4 +151,4 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
   return rMerge(rangesArr as Ranges);
 }
 
-export { rEntDecode, defaults, Ranges, version };
+export { defaults, type Ranges, rEntDecode, version };
