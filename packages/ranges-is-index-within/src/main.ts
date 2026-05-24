@@ -1,4 +1,4 @@
-import type { Range as RangeType, Ranges } from "../../../ops/typedefs/common";
+import type { Ranges, Range as RangeType } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";
 
@@ -19,11 +19,10 @@ function isIndexWithin(
   rangesArr: Ranges,
   opts?: Partial<Opts>,
 ): boolean | RangeType {
-  let resolvedOpts = { ...defaults, ...opts };
   // insurance
-  if (!Number.isInteger(index)) {
-    throw new Error(
-      `ranges-is-index-within: [THROW_ID_01] the first input argument should be string index, a natural number (or zero). It was given as ${index} (type ${typeof index})`,
+  if (!Number.isInteger(index) || index < 0) {
+    throw new TypeError(
+      `ranges-is-index-within/isIndexWithin(): [THROW_ID_01] The first input argument should be a string index: a natural number or zero. It was ${index} (type ${typeof index}).`,
     );
   }
 
@@ -31,20 +30,24 @@ function isIndexWithin(
     return false;
   }
 
-  if (resolvedOpts.returnMatchedRangeInsteadOfTrue) {
-    return (
-      rangesArr.find((arr) =>
-        resolvedOpts.inclusiveRangeEnds
-          ? index >= arr[0] && index <= arr[1]
-          : index > arr[0] && index < arr[1],
-      ) || false
-    );
+  let inclusiveRangeEnds = opts?.inclusiveRangeEnds ?? false;
+  let returnMatchedRange = opts?.returnMatchedRangeInsteadOfTrue ?? false;
+  for (let i = 0; i < rangesArr.length; i++) {
+    let range = rangesArr[i];
+    let matches = inclusiveRangeEnds
+      ? index >= range[0] && index <= range[1]
+      : index > range[0] && index < range[1];
+    if (matches) {
+      return returnMatchedRange ? range : true;
+    }
   }
-  return rangesArr.some((arr) =>
-    resolvedOpts.inclusiveRangeEnds
-      ? index >= arr[0] && index <= arr[1]
-      : index > arr[0] && index < arr[1],
-  );
+  return false;
 }
 
-export { isIndexWithin, defaults, version, RangeType as Range, Ranges };
+export {
+  defaults,
+  isIndexWithin,
+  type Ranges,
+  type RangeType as Range,
+  version,
+};
