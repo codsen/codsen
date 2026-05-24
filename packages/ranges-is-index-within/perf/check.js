@@ -1,5 +1,5 @@
 // deps
-import path from "path";
+import path from "node:path";
 
 import { runPerf } from "../../../ops/scripts/perf.js";
 import { isIndexWithin } from "../dist/ranges-is-index-within.esm.js";
@@ -8,7 +8,7 @@ const callerDir = path.resolve(".");
 
 const testme = () =>
   isIndexWithin(
-    5,
+    57,
     [
       [2, 4],
       [6, 8],
