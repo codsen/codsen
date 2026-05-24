@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { isIndexWithin as wthn } from "../dist/ranges-is-index-within.esm.js";
 
@@ -4230,7 +4230,7 @@ test("11 - identical range endings", () => {
 // 4. AD-HOC
 // ==============================
 
-test("Ad-hoc #1", () => {
+test("12 - ad-hoc #1", () => {
   equal(
     wthn(
       130,
@@ -4282,7 +4282,7 @@ test("Ad-hoc #1", () => {
   );
 });
 
-test("Ad-hoc #2", () => {
+test("13 - ad-hoc #2", () => {
   equal(
     wthn(21, [
       [5, 10],
@@ -4304,7 +4304,7 @@ test("Ad-hoc #2", () => {
   );
 });
 
-test("Ad-hoc #3", () => {
+test("14 - ad-hoc #3", () => {
   equal(
     wthn(6, [
       [5, 10],
