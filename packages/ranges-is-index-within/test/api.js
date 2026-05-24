@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { isIndexWithin } from "../dist/ranges-is-index-within.esm.js";
 
@@ -21,6 +21,16 @@ test("02 - 1st and 2nd args swapped", () => {
     },
     /THROW_ID_01/,
     "02.01",
+  );
+});
+
+test("03 - negative indexes are rejected", () => {
+  throws(
+    () => {
+      isIndexWithin(-1, [[0, 2]]);
+    },
+    /ranges-is-index-within\/isIndexWithin\(\): \[THROW_ID_01]/,
+    "03.01",
   );
 });
 
