@@ -1,28 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-// deps
-import path from "path";
+import path from "node:path";
 
 import { runPerf } from "../../../ops/scripts/perf.js";
 import { rIterate } from "../dist/ranges-iterate.esm.js";
 
 const callerDir = path.resolve(".");
 
-let pinged = "";
-let index = 0;
-const testMe = () => {
-  rIterate(
-    "abcdefghij",
-    [
-      [0, 5],
-      [5, 10],
-    ],
-    ({ val }) => {
-      pinged += val;
-      index += 1;
-    },
-  );
+const testme = () => {
+  const gathered = [];
+  rIterate("abcdefghij", [[0, 7, "xyz"]], ({ i, val }) => {
+    gathered.push([i, val]);
+  });
+  return gathered;
 };
 
 // action
-runPerf(testMe, callerDir);
+runPerf(testme, callerDir);
