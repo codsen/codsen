@@ -1,10 +1,9 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import rfdc from "rfdc";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import { rMerge } from "../dist/ranges-merge.esm.js";
 
-const clone = rfdc();
+const clone = structuredClone;
 
 // 00. throws
 // ==========================
@@ -28,7 +27,7 @@ test("02 - throws when opts.progressFn is wrong", () => {
         { progressFn: "z" },
       );
     },
-    /THROW_ID_01/,
+    /THROW_ID_02/,
     "02.01",
   );
 });
@@ -44,7 +43,7 @@ test("03 - throws when opts.mergeType is wrong", () => {
         { mergeType: "z" },
       );
     },
-    /THROW_ID_02/,
+    /THROW_ID_03/,
     "03.01",
   );
 });
@@ -60,7 +59,7 @@ test("04 - throws when the second arg is wrong", () => {
         1,
       );
     },
-    /THROW_ID_03/,
+    /THROW_ID_01/,
     "04.01",
   );
 });
@@ -398,7 +397,7 @@ test("12 - more complex case", () => {
       [6, 10],
       [10, 30],
     ],
-    "12.06",
+    "12.05",
   );
   equal(
     rMerge(
@@ -419,7 +418,7 @@ test("12 - more complex case", () => {
       [6, 10],
       [10, 30],
     ],
-    "12.07",
+    "12.06",
   );
 });
 
@@ -623,7 +622,7 @@ test("20 - input arg mutation prevention", () => {
   ];
   let originalRef = Array.from(originalInput); // clone it
 
-  equal(rMerge(originalInput), [[1, 10, " "]], "useless test");
+  equal(rMerge(originalInput), [[1, 10, " "]], "20.01 - useless test");
   equal(originalInput, originalRef, "20.02");
 });
 
