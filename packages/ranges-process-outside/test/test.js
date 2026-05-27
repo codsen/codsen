@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { rProcessOutside as p } from "../dist/ranges-process-outside.esm.js";
 
@@ -11,7 +11,7 @@ const femaleWhiteSleuthEmoji = "\uD83D\uDD75\uD83C\uDFFC\u200D\u2640\uFE0F";
 // ==============================
 
 // throw pinning:
-test(`01 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - first arg wrong #1`, () => {
+test(`01 - throws - first arg wrong #1`, () => {
   throws(
     () => {
       p(undefined, [[0, 1]]);
@@ -21,7 +21,7 @@ test(`01 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - first arg wrong #1`, () 
   );
 });
 
-test(`02 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - first arg wrong #2`, () => {
+test(`02 - throws - first arg wrong #2`, () => {
   throws(
     () => {
       p(null, [[0, 1]]);
@@ -31,7 +31,7 @@ test(`02 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - first arg wrong #2`, () 
   );
 });
 
-test(`03 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - first arg wrong #3`, () => {
+test(`03 - throws - first arg wrong #3`, () => {
   throws(
     () => {
       p(true, [[0, 1]]);
@@ -41,7 +41,7 @@ test(`03 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - first arg wrong #3`, () 
   );
 });
 
-test(`04 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - second arg wrong #4`, () => {
+test(`04 - throws - second arg wrong #4`, () => {
   // throw pinning:
   throws(
     () => {
@@ -50,9 +50,16 @@ test(`04 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - second arg wrong #4`, ()
     /THROW_ID_03/g,
     "04.01",
   );
+  throws(
+    () => {
+      p("zzz", false, () => {});
+    },
+    /THROW_ID_03/g,
+    "04.02",
+  );
 });
 
-test(`05 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - second arg wrong #5`, () => {
+test(`05 - throws - second arg wrong #5`, () => {
   throws(
     () => {
       p("zzz", ["zzz"], () => {});
@@ -62,13 +69,13 @@ test(`05 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - second arg wrong #5`, ()
   );
 });
 
-test(`06 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - second arg null means absence of ranges`, () => {
+test(`06 - throws - second arg null means absence of ranges`, () => {
   not.throws(() => {
     p("zzz", null, () => {});
   }, "06.01");
 });
 
-test(`07 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - third arg wrong`, () => {
+test(`07 - throws - third arg wrong`, () => {
   // throw pinning:
   throws(
     () => {
@@ -83,7 +90,7 @@ test(`07 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - third arg wrong`, () => 
 // 01. Normal use
 // ==============================
 
-test(`08 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges - not touching zero - checks`, () => {
+test(`08 - one range - string covers ranges - not touching zero - checks`, () => {
   let gather = [];
   p("abcdefghij", [[1, 5]], (idx) => {
     gather.push(idx);
@@ -91,7 +98,7 @@ test(`08 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges 
   equal(gather, [0, 5, 6, 7, 8, 9], "08.01");
 });
 
-test(`09 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges - not touching zero - skip checks`, () => {
+test(`09 - one range - string covers ranges - not touching zero - skip checks`, () => {
   let gather2 = [];
   p(
     "abcdefghij",
@@ -104,7 +111,7 @@ test(`09 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges 
   equal(gather2, [0, 5, 6, 7, 8, 9], "09.01");
 });
 
-test(`10 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges - touching zero - 1 range - checks`, () => {
+test(`10 - one range - string covers ranges - touching zero - 1 range - checks`, () => {
   let gather = [];
   p("abcdefghij", [[0, 5]], (idx) => {
     gather.push(idx);
@@ -112,7 +119,7 @@ test(`10 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges 
   equal(gather, [5, 6, 7, 8, 9], "10.01");
 });
 
-test(`11 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges - touching zero - 1 range - skip checks`, () => {
+test(`11 - one range - string covers ranges - touching zero - 1 range - skip checks`, () => {
   let gathe2 = [];
   p(
     "abcdefghij",
@@ -125,7 +132,7 @@ test(`11 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges 
   equal(gathe2, [5, 6, 7, 8, 9], "11.01");
 });
 
-test(`12 - ${`\u001b[${31}m${"few ranges"}\u001b[${39}m`} - string covers ranges - touching zero - 2 ranges`, () => {
+test(`12 - few ranges - string covers ranges - touching zero - 2 ranges`, () => {
   let gather = [];
   p(
     "abcdefghij",
@@ -140,7 +147,7 @@ test(`12 - ${`\u001b[${31}m${"few ranges"}\u001b[${39}m`} - string covers ranges
   equal(gather, [5, 6, 8, 9], "12.01");
 });
 
-test(`13 - ${`\u001b[${31}m${"few ranges"}\u001b[${39}m`} - string covers ranges - touching zero - opposite order (testing ranges-merge)`, () => {
+test(`13 - few ranges - string covers ranges - touching zero - opposite order (testing ranges-merge)`, () => {
   let gather2 = [];
   let messy = [
     [7, 8],
@@ -160,7 +167,7 @@ test(`13 - ${`\u001b[${31}m${"few ranges"}\u001b[${39}m`} - string covers ranges
   equal(gather2, [5, 6, 8, 9], "13.02");
 });
 
-test(`14 - ${`\u001b[${31}m${"few ranges"}\u001b[${39}m`} - string covers ranges - touching zero - throws`, () => {
+test(`14 - few ranges - string covers ranges - touching zero - throws`, () => {
   // skipping checking/merges/sorts will trigger safety latches and cause a throw
   let gather2 = [];
   throws(
@@ -177,13 +184,13 @@ test(`14 - ${`\u001b[${31}m${"few ranges"}\u001b[${39}m`} - string covers ranges
         true,
       );
     },
-    /THROW_ID_08/g,
+    /THROW_ID_06/g,
     "14.01",
   );
 });
 
 // range outside the string length
-test(`15 - ${`\u001b[${31}m${"few ranges"}\u001b[${39}m`} - string covers ranges - touching zero - protrudes - with checks`, () => {
+test(`15 - few ranges - string covers ranges - touching zero - protrudes - with checks`, () => {
   let gather = [];
   p(
     "abcdefghij",
@@ -198,7 +205,7 @@ test(`15 - ${`\u001b[${31}m${"few ranges"}\u001b[${39}m`} - string covers ranges
   equal(gather, [5, 6], "15.01");
 });
 
-test(`16 - ${`\u001b[${31}m${"few ranges"}\u001b[${39}m`} - string covers ranges - touching zero - protrudes - with checks skip`, () => {
+test(`16 - few ranges - string covers ranges - touching zero - protrudes - with checks skip`, () => {
   let gather = [];
   // The problem is, reference string is 10 chars/indexes long and ranges span
   // up to index 100. In practice, on a clean input this should never happen so
@@ -220,12 +227,12 @@ test(`16 - ${`\u001b[${31}m${"few ranges"}\u001b[${39}m`} - string covers ranges
         true,
       );
     },
-    /THROW_ID_08/g,
+    /THROW_ID_06/g,
     "16.01",
   );
 });
 
-test(`17 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - absent ranges - empty array given`, () => {
+test(`17 - one range - absent ranges - empty array given`, () => {
   let gather = [];
   p("abcdefghij", [], (idx) => {
     gather.push(idx);
@@ -233,7 +240,7 @@ test(`17 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - absent ranges - empty
   equal(gather, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "17.01");
 });
 
-test(`18 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - absent ranges - null given`, () => {
+test(`18 - one range - absent ranges - null given`, () => {
   let gather2 = [];
   p("abcdefghij", null, (idx) => {
     gather2.push(idx);
@@ -241,7 +248,7 @@ test(`18 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - absent ranges - null 
   equal(gather2, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "18.01");
 });
 
-test(`19 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - absent ranges - null given + true (skip checks)`, () => {
+test(`19 - one range - absent ranges - null given + true (skip checks)`, () => {
   let gather = [];
   p(
     "abcdefghij",
@@ -254,7 +261,7 @@ test(`19 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - absent ranges - null 
   equal(gather, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "19.01");
 });
 
-test(`20 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - ranges completely cover str`, () => {
+test(`20 - one range - ranges completely cover str`, () => {
   let gather1 = [];
   p("abcdefghij", [[0, 100]], (idx) => {
     gather1.push(idx);
@@ -262,7 +269,7 @@ test(`20 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - ranges completely cov
   equal(gather1, [], "20.01");
 });
 
-test(`21 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - ranges not cover str at all`, () => {
+test(`21 - one range - ranges not cover str at all`, () => {
   let gather = [];
   p("abcdefghij", [[100, 200]], (idx) => {
     gather.push(idx);
@@ -270,7 +277,7 @@ test(`21 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - ranges not cover str 
   equal(gather, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "21.01");
 });
 
-test(`22 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges - emoji - checks on`, () => {
+test(`22 - one range - string covers ranges - emoji - checks on`, () => {
   let gather = [];
   p(
     "abcdef\uD834\uDF06ij",
@@ -292,7 +299,7 @@ test(`22 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges 
   );
 });
 
-test(`23 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges - emoji - checks on`, () => {
+test(`23 - one range - string covers ranges - emoji - checks on`, () => {
   equal(femaleWhiteSleuthEmoji.length, 7, "23.01");
   let gather = [];
   p(
@@ -319,7 +326,7 @@ test(`23 - ${`\u001b[${33}m${"one range"}\u001b[${39}m`} - string covers ranges 
 // 02. Index offsets
 // ==============================
 
-test(`24 - ${`\u001b[${35}m${"offsets"}\u001b[${39}m`} - offset once at index 5`, () => {
+test(`24 - offsets - offset once at index 5`, () => {
   let gather = [];
   p("abcdefghij", [[1, 5]], (idxFrom, idxTo, offsetBy) => {
     gather.push(idxFrom);
@@ -330,7 +337,7 @@ test(`24 - ${`\u001b[${35}m${"offsets"}\u001b[${39}m`} - offset once at index 5`
   equal(gather, [0, 5, 7, 8, 9], "24.01");
 });
 
-test(`25 - ${`\u001b[${35}m${"offsets"}\u001b[${39}m`} - offset once at index 6`, () => {
+test(`25 - offsets - offset once at index 6`, () => {
   let gather = [];
   p("abcdefghij", [[1, 5]], (idxFrom, idxTo, offsetBy) => {
     gather.push(idxFrom);
@@ -341,7 +348,7 @@ test(`25 - ${`\u001b[${35}m${"offsets"}\u001b[${39}m`} - offset once at index 6`
   equal(gather, [0, 5, 6, 8, 9], "25.01");
 });
 
-test(`26 - ${`\u001b[${35}m${"offsets"}\u001b[${39}m`} - sequential offsets`, () => {
+test(`26 - offsets - sequential offsets`, () => {
   let gather = [];
   p("abcdefghij", [[1, 5]], (idxFrom, idxTo, offsetBy) => {
     if (idxFrom === 5 || idxFrom === 6) {
