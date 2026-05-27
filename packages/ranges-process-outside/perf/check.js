@@ -1,16 +1,17 @@
 // deps
-import path from "path";
+import path from "node:path";
 
 import { runPerf } from "../../../ops/scripts/perf.js";
 import { rProcessOutside } from "../dist/ranges-process-outside.esm.js";
 
 const callerDir = path.resolve(".");
 
-const gather = [];
 const testme = () => {
+  const gathered = [];
   rProcessOutside("abcdefghij", [[1, 5]], (idx) => {
-    gather.push(idx);
+    gathered.push(idx);
   });
+  return gathered;
 };
 
 // action
