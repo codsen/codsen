@@ -1,9 +1,8 @@
 // Quick Take
 
-import { strict as assert } from "assert";
-
-import { Ranges } from "../dist/ranges-push.esm.js";
+import { strict as assert } from "node:assert";
 import { rApply } from "../../ranges-apply/dist/ranges-apply.esm.js";
+import { Ranges } from "../dist/ranges-push.esm.js";
 
 const gatheredRanges = new Ranges();
 
