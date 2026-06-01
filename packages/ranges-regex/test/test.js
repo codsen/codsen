@@ -116,6 +116,20 @@ test("05 - third input argument is present and is not string", () => {
     /THROW_ID_04/,
     "05.01",
   );
+  throws(
+    () => {
+      rRegex(/def/g, "abcdefghij_abcdefghij", false);
+    },
+    /THROW_ID_04/,
+    "05.02",
+  );
+  throws(
+    () => {
+      rRegex(/def/g, "abcdefghij_abcdefghij", 0);
+    },
+    /THROW_ID_04/,
+    "05.03",
+  );
 });
 
 test("06 - first input regex is not global", () => {
