@@ -31,11 +31,11 @@ function rRegex(
   // given regex validation
   if (regExp === undefined) {
     throw new TypeError(
-      `ranges-regex: [THROW_ID_01] The first input's argument must be a regex object! Currently it is missing!`,
+      `ranges-regex/rRegex(): [THROW_ID_01] The first input's argument must be a regex object! Currently it is missing!`,
     );
   } else if (!isRegExp(regExp)) {
     throw new TypeError(
-      `ranges-regex: [THROW_ID_02] The first input's argument must be a regex object! Currently its type is: ${typeof regExp}, equal to: ${JSON.stringify(
+      `ranges-regex/rRegex(): [THROW_ID_02] The first input's argument must be a regex object! Currently its type is: ${typeof regExp}, equal to: ${JSON.stringify(
         regExp,
         null,
         4,
@@ -45,7 +45,7 @@ function rRegex(
   // str validation
   if (typeof str !== "string") {
     throw new TypeError(
-      `ranges-regex: [THROW_ID_03] The second input's argument must be a string! Currently its type is: ${typeof str}, equal to: ${JSON.stringify(
+      `ranges-regex/rRegex(): [THROW_ID_03] The second input's argument must be a string! Currently its type is: ${typeof str}, equal to: ${JSON.stringify(
         str,
         null,
         4,
@@ -53,9 +53,9 @@ function rRegex(
     );
   }
   // replacement validation
-  if (replacement && typeof replacement !== "string") {
+  if (replacement != null && typeof replacement !== "string") {
     throw new TypeError(
-      `ranges-regex: [THROW_ID_04] The third input's argument must be a string or null! Currently its type is: ${typeof replacement}, equal to: ${JSON.stringify(
+      `ranges-regex/rRegex(): [THROW_ID_04] The third input's argument must be a string or null! Currently its type is: ${typeof replacement}, equal to: ${JSON.stringify(
         replacement,
         null,
         4,
@@ -66,7 +66,7 @@ function rRegex(
   // would repeat the first match forever.
   if (!regExp.global) {
     throw new TypeError(
-      `ranges-regex: [THROW_ID_05] The first input's regex must have the global ("g") flag! Currently its flags are: "${regExp.flags}".`,
+      `ranges-regex/rRegex(): [THROW_ID_05] The first input's regex must have the global ("g") flag! Currently its flags are: "${regExp.flags}".`,
     );
   }
   // if an empty string was given, return an empty (ranges) array:
@@ -85,7 +85,6 @@ function rRegex(
     replacement === null ||
     (typeof replacement === "string" && replacement.length)
   ) {
-    // biome-ignore lint/suspicious/noAssignInExpressions: RegExp.exec controls iteration
     while ((tempArr = regExp.exec(str)) !== null) {
       resRange.push([
         regExp.lastIndex - tempArr[0].length,
@@ -101,7 +100,6 @@ function rRegex(
       }
     }
   } else {
-    // biome-ignore lint/suspicious/noAssignInExpressions: RegExp.exec controls iteration
     while ((tempArr = regExp.exec(str)) !== null) {
       if (tempArr[0].length) {
         resRange.push([regExp.lastIndex - tempArr[0].length, regExp.lastIndex]);
