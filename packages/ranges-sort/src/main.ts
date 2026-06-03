@@ -58,7 +58,7 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
       })
   ) {
     throw new TypeError(
-      `ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(
+      `ranges-sort/rSort(): [THROW_ID_01] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(
         arrOfRanges[culpritsIndex],
         null,
         4,
@@ -83,7 +83,7 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
     })
   ) {
     throw new TypeError(
-      `ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(
+      `ranges-sort/rSort(): [THROW_ID_02] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(
         arrOfRanges[culpritsIndex],
         null,
         4,
@@ -117,4 +117,4 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
   });
 }
 
-export { rSort, defaults, version };
+export { defaults, rSort, version };
