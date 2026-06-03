@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { rSort as srt } from "../dist/ranges-sort.esm.js";
 
@@ -12,7 +12,7 @@ test("01 - not array", () => {
   is(srt(null), null, "01.01");
   is(srt(1), 1, "01.02");
   is(srt(true), true, "01.03");
-  equal(srt({ e: true }), { e: true }, "01.04");
+  equal(srt({ e: true }), { e: true }, "01.01");
 });
 
 test("02 - not two arguments in one of ranges", () => {
@@ -260,7 +260,7 @@ test("07 - many ranges", () => {
       [9, 12],
       [9, 15],
     ],
-    "07.06",
+    "07.05",
   );
 });
 
@@ -350,7 +350,7 @@ test("13 - an extra for readme example #4", () => {
   );
 });
 
-test("14 readme example #5", () => {
+test("14 - readme example #5", () => {
   throws(
     () => {
       srt([[1], [2]]); // throws, because one index is not a range
@@ -360,7 +360,7 @@ test("14 readme example #5", () => {
   );
 });
 
-test("15 readme example #6", () => {
+test("15 - readme example #6", () => {
   equal(
     srt([
       [3, 4, "aaa", "bbb"],
