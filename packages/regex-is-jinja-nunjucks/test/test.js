@@ -1,17 +1,17 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { isJinjaNunjucksRegex } from "../dist/regex-is-jinja-nunjucks.esm.js";
 
-test("is not nunjucks or jinja", () => {
+test("01 - is not nunjucks or jinja", () => {
   not.match("", isJinjaNunjucksRegex(), "01.01");
   not.match("\n", isJinjaNunjucksRegex(), "01.02");
   not.match("abc", isJinjaNunjucksRegex(), "01.03");
   not.match("<html><div></html>", isJinjaNunjucksRegex(), "01.04");
 });
 
-test("variables", () => {
+test("02 - variables", () => {
   match("{{count}}", isJinjaNunjucksRegex(), "02.01");
   match("{{count }}", isJinjaNunjucksRegex(), "02.02");
   match("{{ count}}", isJinjaNunjucksRegex(), "02.03");
@@ -31,14 +31,14 @@ test("variables", () => {
   );
 });
 
-test("logic", () => {
+test("03 - logic", () => {
   match("abc {% if something %}", isJinjaNunjucksRegex(), "03.01");
   match("abc {%- if something %}", isJinjaNunjucksRegex(), "03.02");
   match("abc {% if something -%}", isJinjaNunjucksRegex(), "03.03");
   match("abc {%- if something -%}", isJinjaNunjucksRegex(), "03.04");
 });
 
-test("nunjucks with template inheritance", () => {
+test("04 - nunjucks with template inheritance", () => {
   match(
     `{% block header %}
 This is the default content
