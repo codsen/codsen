@@ -1,6 +1,6 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { isJinjaNunjucksRegex } from "../dist/regex-is-jinja-nunjucks.esm.js";
 
