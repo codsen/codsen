@@ -5,4 +5,5 @@ const version: string = v;
 function isJinjaNunjucksRegex(): RegExp {
   return /{%|{{|%}|}}/gi;
 }
+
 export { isJinjaNunjucksRegex, version };
