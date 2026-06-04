@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { emptyCondCommentRegex } from "../dist/regex-empty-conditional-comments.esm.js";
 
@@ -35,8 +35,7 @@ const fixture = [
 <!--<![endif]-->`,
 ];
 
-test("matches each of comments", () => {
-  // eslint-disable-next-line
+test("01 - matches each of comments", () => {
   for (const comment of fixture) {
     match(comment, emptyCondCommentRegex());
   }
@@ -85,7 +84,7 @@ zzz
   );
 });
 
-test("returns comment on match", () => {
+test("02 - returns comment on match", () => {
   equal(
     "<html> <!--[if (gte mso 9)|(IE)]><![endif]--> <title>".match(
       emptyCondCommentRegex(),
@@ -114,7 +113,7 @@ test("returns comment on match", () => {
   );
 });
 
-test("deletes comments from code", () => {
+test("03 - deletes comments from code", () => {
   equal(
     "zzz <!--[if (gte mso 9)|(IE)]>\t<![endif]--> yyy <!-- does not touch this -->".replace(
       emptyCondCommentRegex(),
