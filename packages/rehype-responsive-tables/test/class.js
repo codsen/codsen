@@ -1,15 +1,14 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { rehype } from "rehype";
 import rehypeFormat from "rehype-format";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 
 // -----------------------------------------------------------------------------
 
 test("01 - 1x2", () => {
-  let input = `
+  const input = `
 <table>
   <tbody>
     <tr>
@@ -20,7 +19,7 @@ test("01 - 1x2", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table class="foo-table">
   <tbody>
     <tr class="foo-new-tr">
@@ -35,7 +34,7 @@ test("01 - 1x2", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables, {
       tableClassName: "foo-table",
