@@ -1,5 +1,5 @@
-import { Plugin } from "unified";
 import { Root } from "hast";
+import { Plugin } from "unified";
 
 interface Obj {
   [key: string]: any;
