@@ -1,13 +1,13 @@
-import { visit, EXIT } from "unist-util-visit";
-import { iteratee } from "lodash-es";
 import type {
-  Root,
-  Element,
   Comment,
   Doctype,
+  Element,
+  Root,
   Text,
   // ElementContent,
 } from "hast";
+import { iteratee } from "lodash-es";
+import { EXIT, visit } from "unist-util-visit";
 
 declare let DEV: boolean;
 
@@ -19,8 +19,8 @@ export const find = (
   tree: Root | Element | Comment | Doctype | Text,
   condition: any,
 ): Root | Element | Comment | Doctype | Text | undefined => {
-  let predicate = iteratee(condition);
-  let result: Root | Element | Comment | Doctype | Text | undefined = undefined;
+  const predicate = iteratee(condition);
+  let result: Root | Element | Comment | Doctype | Text | undefined;
 
   visit(tree, (node) => {
     if (predicate(node)) {
@@ -38,7 +38,7 @@ export const contains = (
 ): string | undefined => {
   DEV &&
     console.log(`040 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: start`);
-  let result: string | undefined = undefined;
+  let result: string | undefined;
 
   // early exit
   if (!something?.length) {
