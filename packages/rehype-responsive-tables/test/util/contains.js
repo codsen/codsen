@@ -1,10 +1,9 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
-import { contains } from "../../dist/rehype-responsive-tables.esm.js";
-import { unified } from "unified";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import rehypeParse from "rehype-parse";
+import { unified } from "unified";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+import { contains } from "../../dist/rehype-responsive-tables.esm.js";
 
 const parse = (str) =>
   unified().data("settings", { fragment: true }).use(rehypeParse).parse(str);
@@ -12,7 +11,7 @@ const parse = (str) =>
 // -----------------------------------------------------------------------------
 
 test("01 - spaced", () => {
-  let input = `
+  const input = `
 <table>
   <tbody>
     <tr>
