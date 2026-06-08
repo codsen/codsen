@@ -1,7 +1,7 @@
+import type { Element as Element2, ElementContent, Root } from "hast";
 import type { Plugin as Plugin2 } from "unified";
-import type { Root, Element as Element2, ElementContent } from "hast";
 import { visit } from "unist-util-visit";
-import { contains, getNthChildTag, Obj } from "./util";
+import { contains, getNthChildTag, type Obj } from "./util";
 
 export { contains, getNthChildTag };
 
@@ -71,7 +71,7 @@ function addClassToFirstTd(node: ElementContent, className: string) {
 }
 
 const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
-  let resolvedOpts: Opts = { ...defaults, ...opts };
+  const resolvedOpts: Opts = { ...defaults, ...opts };
   DEV &&
     console.log(
       `077 final ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
@@ -98,11 +98,12 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
             ).length;
             return true;
           }
+          return false;
         })
       ) {
         DEV &&
           console.log(
-            `105 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            `106 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
               node,
               null,
               4,
@@ -110,7 +111,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
           );
         DEV &&
           console.log(
-            `113 ${`\u001b[${33}m${`tdCount`}\u001b[${39}m`} = ${JSON.stringify(
+            `114 ${`\u001b[${33}m${`tdCount`}\u001b[${39}m`} = ${JSON.stringify(
               tdCount,
               null,
               4,
@@ -118,11 +119,11 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
           );
 
         if (tdCount > 1) {
-          let theadChildrenToSet: Obj[] = [];
+          const theadChildrenToSet: Obj[] = [];
 
           // 1. TACKLE THEAD VIA PARENT
           if (parent.children.some((c: Obj) => c.tagName === "thead")) {
-            DEV && console.log(`125 thead found`);
+            DEV && console.log(`126 thead found`);
             parent.children = parent.children.map((ch: Element2) => {
               if (
                 (ch as Obj).tagName === "thead" &&
@@ -150,31 +151,34 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                           (acc: Obj[], curr2: Obj) => {
                             DEV &&
                               console.log(
-                                `153 ${`\u001b[${33}m${`curr2`}\u001b[${39}m`} = ${JSON.stringify(
+                                `154 ${`\u001b[${33}m${`curr2`}\u001b[${39}m`} = ${JSON.stringify(
                                   curr2,
                                   null,
                                   4,
                                 )}`,
                               );
 
-                            let matchedUpVal: string | undefined = undefined;
+                            let matchedUpVal: string | undefined;
                             if (curr2.tagName === "th") {
                               // 1-0.
                               thCounter++;
 
                               // 1-1.
+                              const isUpWildcard = resolvedOpts.up.some(
+                                (v) => v === "*",
+                              );
+                              if (!isUpWildcard) {
+                                matchedUpVal = contains(curr2, resolvedOpts.up);
+                              }
                               if (
                                 // either wildcard,
-                                resolvedOpts.up.some((v) => v === "*") ||
+                                isUpWildcard ||
                                 // or exact match
-                                (matchedUpVal = contains(
-                                  curr2,
-                                  resolvedOpts.up,
-                                ))
+                                matchedUpVal
                               ) {
                                 DEV &&
                                   console.log(
-                                    `177 ${`\u001b[${32}m${`CONTAINS ${matchedUpVal}`}\u001b[${39}m`}`,
+                                    `181 ${`\u001b[${32}m${`CONTAINS ${matchedUpVal}`}\u001b[${39}m`}`,
                                   );
                                 // make a note of this
                                 theadChildrenToSet.push({
@@ -202,18 +206,17 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                               // 1-2.
                               if (!firstThHasBeenSet) {
                                 firstThHasBeenSet = true;
-                                return [
-                                  ...acc,
-                                  {
-                                    ...curr2,
-                                    properties: {
-                                      className: [resolvedOpts.hideTdClassName],
-                                    },
+                                acc.push({
+                                  ...curr2,
+                                  properties: {
+                                    className: [resolvedOpts.hideTdClassName],
                                   },
-                                ];
+                                });
+                                return acc;
                               }
                             }
-                            return [...acc, curr2];
+                            acc.push(curr2);
+                            return acc;
                           },
                           <Obj[]>[],
                         ),
@@ -229,7 +232,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
 
           DEV &&
             console.log(
-              `232 final gathered ${`\u001b[${33}m${`theadChildrenToSet`}\u001b[${39}m`} = ${JSON.stringify(
+              `235 final gathered ${`\u001b[${33}m${`theadChildrenToSet`}\u001b[${39}m`} = ${JSON.stringify(
                 theadChildrenToSet,
                 null,
                 4,
@@ -244,7 +247,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                 trCounter++;
                 DEV &&
                   console.log(
-                    `247 ${`\u001b[${33}m${`trCounter`}\u001b[${39}m`} = ${JSON.stringify(
+                    `250 ${`\u001b[${33}m${`trCounter`}\u001b[${39}m`} = ${JSON.stringify(
                       trCounter,
                       null,
                       4,
@@ -256,7 +259,8 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                 (curr as Obj).tagName !== "tr" ||
                 !(curr as Obj)?.children?.length
               ) {
-                return [...acc, curr];
+                acc.push(curr);
+                return acc;
               }
               let firstTdVal = "";
               let firstTdChild: Obj[] = [];
@@ -274,7 +278,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                   tdCounter++;
                   DEV &&
                     console.log(
-                      `277 - inside td ${(curr as Obj)?.children[
+                      `281 - inside td ${(curr as Obj)?.children[
                         i
                       ]?.children[0].value.trim()} #${tdCounter}`,
                     );
@@ -286,7 +290,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                         ?.value;
                       DEV &&
                         console.log(
-                          `289 SET ${`\u001b[${33}m${`firstTdVal`}\u001b[${39}m`} = ${JSON.stringify(
+                          `293 SET ${`\u001b[${33}m${`firstTdVal`}\u001b[${39}m`} = ${JSON.stringify(
                             firstTdVal,
                             null,
                             4,
@@ -296,7 +300,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                       firstTdChild = (curr as Obj).children[i].children;
                       DEV &&
                         console.log(
-                          `299 SET ${`\u001b[${33}m${`firstTdChild`}\u001b[${39}m`} = ${JSON.stringify(
+                          `303 SET ${`\u001b[${33}m${`firstTdChild`}\u001b[${39}m`} = ${JSON.stringify(
                             firstTdChild,
                             null,
                             4,
@@ -311,7 +315,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                       return c.thIdx === tdCounter - 1;
                     })
                   ) {
-                    DEV && console.log(`314 this td was moved up`);
+                    DEV && console.log(`318 this td was moved up`);
                     if (
                       !Array.isArray(
                         (curr as Obj).children[i].properties.className,
@@ -324,7 +328,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                     );
                     DEV &&
                       console.log(
-                        `327 final ${`\u001b[${33}m${`(curr as Obj).children[i]`}\u001b[${39}m`} = ${JSON.stringify(
+                        `331 final ${`\u001b[${33}m${`(curr as Obj).children[i]`}\u001b[${39}m`} = ${JSON.stringify(
                           (curr as Obj).children[i],
                           null,
                           4,
@@ -334,7 +338,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                 }
               }
 
-              let secondTdProperties =
+              const secondTdProperties =
                 tdCount > 2
                   ? {
                       colSpan: `${tdCount - 1}`,
@@ -343,38 +347,12 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
 
               // at this point, we know it's a <tr>
               // let's insert a new <tr> above it
-              return [
-                ...acc,
-                trCounter > 0
-                  ? {
-                      type: "element",
-                      tagName: "tr",
-                      properties: {
-                        className: [resolvedOpts.gapTrClassName],
-                      },
-                      children: [
-                        {
-                          type: "element",
-                          tagName: "td",
-                          properties: {
-                            className: [resolvedOpts.hideTdClassName],
-                          },
-                          children: [],
-                        },
-                        {
-                          type: "element",
-                          tagName: "td",
-                          properties: secondTdProperties,
-                          children: [],
-                        },
-                      ],
-                    }
-                  : (null as any),
-                {
+              if (trCounter > 0) {
+                acc.push({
                   type: "element",
                   tagName: "tr",
                   properties: {
-                    className: [resolvedOpts.newTrClassName],
+                    className: [resolvedOpts.gapTrClassName],
                   },
                   children: [
                     {
@@ -389,83 +367,113 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                       type: "element",
                       tagName: "td",
                       properties: secondTdProperties,
-                      children: [
-                        {
-                          type: "element",
-                          tagName: "span",
-                          properties: {
-                            className: [resolvedOpts.newTrSpanTopClassName],
-                          },
-                          children: [...firstTdChild],
-                        },
-                      ].concat(
-                        (theadChildrenToSet as any[]).reduce(
-                          (acc2, curr2) => {
-                            DEV &&
-                              console.log(
-                                `406 ███████████████████████████████████████ ${`\u001b[${33}m${`curr`}\u001b[${39}m`} = ${JSON.stringify(
-                                  curr,
-                                  null,
-                                  4,
-                                )}`,
-                              );
-
-                            let tdValue = getNthChildTag(
-                              curr,
-                              "td",
-                              curr2.thIdx,
-                            );
-                            DEV &&
-                              console.log(
-                                `420 retrieved ${`\u001b[${33}m${`tdValue`}\u001b[${39}m`} = ${JSON.stringify(
-                                  tdValue,
-                                  null,
-                                  4,
-                                )}`,
-                              );
-
-                            return acc2
-                              .concat([
-                                {
-                                  type: "element",
-                                  tagName: "br",
-                                  properties: {},
-                                  children: [],
-                                },
-                              ])
-                              .concat({
-                                type: "element",
-                                tagName: "span",
-                                properties: {
-                                  className: [
-                                    resolvedOpts.newTrSpanOtherClassName,
-                                  ],
-                                },
-                                children: [
-                                  ...curr2.children,
-                                  {
-                                    type: "text",
-                                    value: ":",
-                                  },
-                                ],
-                              })
-                              .concat([
-                                {
-                                  type: "text",
-                                  value: " ",
-                                },
-                              ])
-                              .concat(tdValue ? tdValue.children : []);
-                          },
-                          <Obj[]>[],
-                        ),
-                      ),
+                      children: [],
                     },
                   ],
+                });
+              }
+              acc.push({
+                type: "element",
+                tagName: "tr",
+                properties: {
+                  className: [resolvedOpts.newTrClassName],
                 },
+                children: [
+                  {
+                    type: "element",
+                    tagName: "td",
+                    properties: {
+                      className: [resolvedOpts.hideTdClassName],
+                    },
+                    children: [],
+                  },
+                  {
+                    type: "element",
+                    tagName: "td",
+                    properties: secondTdProperties,
+                    children: [
+                      {
+                        type: "element",
+                        tagName: "span",
+                        properties: {
+                          className: [resolvedOpts.newTrSpanTopClassName],
+                        },
+                        children: [...firstTdChild],
+                      },
+                    ].concat(
+                      (theadChildrenToSet as any[]).reduce(
+                        (acc2, curr2) => {
+                          DEV &&
+                            console.log(
+                              `408 ███████████████████████████████████████ ${`\u001b[${33}m${`curr`}\u001b[${39}m`} = ${JSON.stringify(
+                                curr,
+                                null,
+                                4,
+                              )}`,
+                            );
 
-                addClassToFirstTd(curr, resolvedOpts.hideTdClassName),
-              ].filter(Boolean);
+                          const tdValue = getNthChildTag(
+                            curr,
+                            "td",
+                            curr2.thIdx,
+                          );
+                          DEV &&
+                            console.log(
+                              `422 retrieved ${`\u001b[${33}m${`tdValue`}\u001b[${39}m`} = ${JSON.stringify(
+                                tdValue,
+                                null,
+                                4,
+                              )}`,
+                            );
+
+                          return acc2
+                            .concat([
+                              {
+                                type: "element",
+                                tagName: "br",
+                                properties: {},
+                                children: [],
+                              },
+                            ])
+                            .concat({
+                              type: "element",
+                              tagName: "span",
+                              properties: {
+                                className: [
+                                  resolvedOpts.newTrSpanOtherClassName,
+                                ],
+                              },
+                              children: [
+                                ...curr2.children,
+                                {
+                                  type: "text",
+                                  value: ":",
+                                },
+                              ],
+                            })
+                            .concat([
+                              {
+                                type: "text",
+                                value: " ",
+                              },
+                            ])
+                            .concat(tdValue ? tdValue.children : []);
+                        },
+                        <Obj[]>[],
+                      ),
+                    ),
+                  },
+                ],
+              } as ElementContent);
+
+              const firstTd = addClassToFirstTd(
+                curr,
+                resolvedOpts.hideTdClassName,
+              );
+              if (firstTd) {
+                acc.push(firstTd);
+              }
+              return acc;
             },
             <ElementContent[]>[],
           );
