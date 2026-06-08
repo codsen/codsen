@@ -1,15 +1,14 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { rehype } from "rehype";
 import rehypeFormat from "rehype-format";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 
 // -----------------------------------------------------------------------------
 
 test("01 - thead, 2x3", () => {
-  let input = `
+  const input = `
 <table>
   <thead>
     <tr>
@@ -33,7 +32,7 @@ test("01 - thead, 2x3", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table class="rrt-table">
   <thead>
     <tr>
@@ -69,7 +68,7 @@ test("01 - thead, 2x3", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables)
     .use(rehypeFormat)
@@ -80,7 +79,7 @@ test("01 - thead, 2x3", () => {
 });
 
 test("02 - empty thead, 2x2", () => {
-  let input = `
+  const input = `
 <table>
   <thead></thead>
   <tbody>
@@ -96,7 +95,7 @@ test("02 - empty thead, 2x2", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table class="rrt-table">
   <thead></thead>
   <tbody>
@@ -124,7 +123,7 @@ test("02 - empty thead, 2x2", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables)
     .use(rehypeFormat)
@@ -135,7 +134,7 @@ test("02 - empty thead, 2x2", () => {
 });
 
 test("03 - empty thead tr, 2x2", () => {
-  let input = `
+  const input = `
 <table>
   <thead>
     <tr></tr>
@@ -153,7 +152,7 @@ test("03 - empty thead tr, 2x2", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table class="rrt-table">
   <thead>
     <tr></tr>
@@ -183,7 +182,7 @@ test("03 - empty thead tr, 2x2", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables)
     .use(rehypeFormat)
@@ -194,7 +193,7 @@ test("03 - empty thead tr, 2x2", () => {
 });
 
 test("04 - thead, td with children", () => {
-  let input = `
+  const input = `
 <table>
   <thead>
     <tr>
@@ -236,7 +235,7 @@ test("04 - thead, td with children", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table class="rrt-table">
   <thead>
     <tr>
@@ -272,7 +271,7 @@ test("04 - thead, td with children", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables)
     .use(rehypeFormat)
