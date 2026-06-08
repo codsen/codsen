@@ -1,12 +1,12 @@
 // Renders markdown tables
 
-import { strict as assert } from "assert";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import remarkGfm from "remark-gfm";
+import { strict as assert } from "node:assert";
 import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
+import remarkGfm from "remark-gfm";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { unified } from "unified";
 import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 
 const markdownTable = `
@@ -52,7 +52,7 @@ const intended = `
 </table>
 `;
 
-let { value } = unified()
+const { value } = unified()
   .data("settings", { fragment: true })
   .use(remarkParse)
   .use(remarkGfm)
