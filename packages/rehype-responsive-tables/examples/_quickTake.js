@@ -1,11 +1,11 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 import { rehype } from "rehype";
 import rehypeFormat from "rehype-format";
 import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 
-let input = `
+const input = `
 <table>
   <tbody>
     <tr>
@@ -17,7 +17,7 @@ let input = `
 </table>
 `;
 
-let intended = `
+const intended = `
 <table class="rrt-table">
   <tbody>
     <tr class="rrt-new-tr">
