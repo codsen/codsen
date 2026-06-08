@@ -1,15 +1,14 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { rehype } from "rehype";
 import rehypeFormat from "rehype-format";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 
 // -----------------------------------------------------------------------------
 
 test("01 - 1x2", () => {
-  let input = `
+  const input = `
 <table>
   <tbody>
     <tr>
@@ -20,7 +19,7 @@ test("01 - 1x2", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table class="rrt-table">
   <tbody>
     <tr class="rrt-new-tr">
@@ -35,7 +34,7 @@ test("01 - 1x2", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables)
     .use(rehypeFormat)
@@ -46,7 +45,7 @@ test("01 - 1x2", () => {
 });
 
 test("02 - 1x3", () => {
-  let input = `
+  const input = `
 <table class="n" border="0">
   <tbody>
     <tr>
@@ -58,7 +57,7 @@ test("02 - 1x3", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table class="n rrt-table" border="0">
   <tbody>
     <tr class="rrt-new-tr">
@@ -74,7 +73,7 @@ test("02 - 1x3", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables)
     .use(rehypeFormat)
@@ -85,7 +84,7 @@ test("02 - 1x3", () => {
 });
 
 test("03 - 1x5", () => {
-  let input = `
+  const input = `
 <table>
   <tbody>
     <tr>
@@ -99,7 +98,7 @@ test("03 - 1x5", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table class="rrt-table">
   <tbody>
     <tr class="rrt-new-tr">
@@ -117,7 +116,7 @@ test("03 - 1x5", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables)
     .use(rehypeFormat)
@@ -128,7 +127,7 @@ test("03 - 1x5", () => {
 });
 
 test("04 - 2x3", () => {
-  let input = `
+  const input = `
 <table>
   <tbody>
     <tr>
@@ -145,7 +144,7 @@ test("04 - 2x3", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table class="rrt-table">
   <tbody>
     <tr class="rrt-new-tr">
@@ -174,7 +173,7 @@ test("04 - 2x3", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables)
     .use(rehypeFormat)
@@ -185,7 +184,7 @@ test("04 - 2x3", () => {
 });
 
 test("05 - nested tags inside, no colspan", () => {
-  let input = `
+  const input = `
 <table>
   <thead>
     <tr></tr>
@@ -203,7 +202,7 @@ test("05 - nested tags inside, no colspan", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table class="rrt-table">
   <thead>
     <tr></tr>
@@ -233,7 +232,7 @@ test("05 - nested tags inside, no colspan", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables)
     .use(rehypeFormat)
@@ -244,7 +243,7 @@ test("05 - nested tags inside, no colspan", () => {
 });
 
 test("06 - nested tags inside, colspan", () => {
-  let input = `
+  const input = `
 <table>
   <thead>
     <tr></tr>
@@ -264,7 +263,7 @@ test("06 - nested tags inside, colspan", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table class="rrt-table">
   <thead>
     <tr></tr>
@@ -296,7 +295,7 @@ test("06 - nested tags inside, colspan", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables)
     .use(rehypeFormat)
