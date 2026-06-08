@@ -1,16 +1,15 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { rehype } from "rehype";
 import rehypeFormat from "rehype-format";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 
 // target cells by their thead column's contents
 // -----------------------------------------------------------------------------
 
 test("01 - lifts Bar, text", () => {
-  let input = `
+  const input = `
 <table>
   <thead>
     <tr>
@@ -34,7 +33,7 @@ test("01 - lifts Bar, text", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table class="rrt-table">
   <thead>
     <tr>
@@ -70,7 +69,7 @@ test("01 - lifts Bar, text", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables, {
       up: ["Bar"],
@@ -83,7 +82,7 @@ test("01 - lifts Bar, text", () => {
 });
 
 test("02 - lifts Bar, code", () => {
-  let input = `
+  const input = `
 <table>
   <thead>
     <tr>
@@ -131,7 +130,7 @@ test("02 - lifts Bar, code", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table class="rrt-table">
   <thead>
     <tr>
@@ -167,7 +166,7 @@ test("02 - lifts Bar, code", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables, {
       up: ["Bar"],
@@ -180,7 +179,7 @@ test("02 - lifts Bar, code", () => {
 });
 
 test("03 - wildcard", () => {
-  let input = `
+  const input = `
 <table>
   <thead>
     <tr>
@@ -204,7 +203,7 @@ test("03 - wildcard", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table class="rrt-table">
   <thead>
     <tr>
@@ -240,7 +239,7 @@ test("03 - wildcard", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables, {
       up: ["*"],
