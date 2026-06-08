@@ -1,27 +1,26 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import remarkGfm from "remark-gfm";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
+import remarkGfm from "remark-gfm";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { unified } from "unified";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 
 // target cells by their thead column's contents
 // -----------------------------------------------------------------------------
 
 test("01 - markdown input - lifts Bar, text", () => {
-  let input = `
+  const input = `
 | Foo | Bar | Baz |
 |-----|-----|-----|
 | a   | b   | c   |
 | x   | y   | z   |
 `.trim();
 
-  let intended = `
+  const intended = `
 <table class="rrt-table">
   <thead>
     <tr>
@@ -57,7 +56,7 @@ test("01 - markdown input - lifts Bar, text", () => {
 </table>
 `;
 
-  let res = unified()
+  const res = unified()
     .data("settings", { fragment: true })
     .use(remarkParse)
     .use(remarkGfm)
