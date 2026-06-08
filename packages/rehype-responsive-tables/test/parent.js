@@ -1,15 +1,14 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { rehype } from "rehype";
 import rehypeFormat from "rehype-format";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import rehypeResponsiveTables from "../dist/rehype-responsive-tables.esm.js";
 
 // -----------------------------------------------------------------------------
 
 test("01 - adds class to parent table, no class there", () => {
-  let input = `
+  const input = `
 <table>
   <tbody>
     <tr>
@@ -19,7 +18,7 @@ test("01 - adds class to parent table, no class there", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table class="rrt-table">
   <tbody>
     <tr>
@@ -29,7 +28,7 @@ test("01 - adds class to parent table, no class there", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables)
     .use(rehypeFormat)
@@ -40,7 +39,7 @@ test("01 - adds class to parent table, no class there", () => {
 });
 
 test("02 - adds class to parent table, no class there but other attrs", () => {
-  let input = `
+  const input = `
 <table border="0">
   <tbody>
     <tr>
@@ -50,7 +49,7 @@ test("02 - adds class to parent table, no class there but other attrs", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table border="0" class="rrt-table">
   <tbody>
     <tr>
@@ -60,7 +59,7 @@ test("02 - adds class to parent table, no class there but other attrs", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables)
     .use(rehypeFormat)
@@ -71,7 +70,7 @@ test("02 - adds class to parent table, no class there but other attrs", () => {
 });
 
 test("03 - adds class to parent table, no class value", () => {
-  let input = `
+  const input = `
 <table border="0" class>
   <tbody>
     <tr>
@@ -81,7 +80,7 @@ test("03 - adds class to parent table, no class value", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table border="0" class="rrt-table">
   <tbody>
     <tr>
@@ -91,7 +90,7 @@ test("03 - adds class to parent table, no class value", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables)
     .use(rehypeFormat)
@@ -102,7 +101,7 @@ test("03 - adds class to parent table, no class value", () => {
 });
 
 test("04 - adds class to parent table, where class is empty", () => {
-  let input = `
+  const input = `
 <table border="0" class="">
   <tbody>
     <tr>
@@ -112,7 +111,7 @@ test("04 - adds class to parent table, where class is empty", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table border="0" class="rrt-table">
   <tbody>
     <tr>
@@ -122,7 +121,7 @@ test("04 - adds class to parent table, where class is empty", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables)
     .use(rehypeFormat)
@@ -133,7 +132,7 @@ test("04 - adds class to parent table, where class is empty", () => {
 });
 
 test("05 - adds class to parent table, one class exists already", () => {
-  let input = `
+  const input = `
 <table border="0" class="foo">
   <tbody>
     <tr>
@@ -143,7 +142,7 @@ test("05 - adds class to parent table, one class exists already", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table border="0" class="foo rrt-table">
   <tbody>
     <tr>
@@ -153,7 +152,7 @@ test("05 - adds class to parent table, one class exists already", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables)
     .use(rehypeFormat)
@@ -164,7 +163,7 @@ test("05 - adds class to parent table, one class exists already", () => {
 });
 
 test("06 - adds class to parent table, two classes exist already", () => {
-  let input = `
+  const input = `
 <table border="0" class="foo  bar">
   <tbody>
     <tr>
@@ -174,7 +173,7 @@ test("06 - adds class to parent table, two classes exist already", () => {
 </table>
 `;
 
-  let intended = `
+  const intended = `
 <table border="0" class="foo bar zzz">
   <tbody>
     <tr>
@@ -184,7 +183,7 @@ test("06 - adds class to parent table, two classes exist already", () => {
 </table>
 `;
 
-  let res = rehype()
+  const res = rehype()
     .data("settings", { fragment: true })
     .use(rehypeResponsiveTables, {
       tableClassName: "zzz",
