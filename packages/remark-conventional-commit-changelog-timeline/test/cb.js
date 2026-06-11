@@ -1,13 +1,12 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import remarkGfm from "remark-gfm";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
+import remarkGfm from "remark-gfm";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { unified } from "unified";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import c from "../dist/remark-conventional-commit-changelog-timeline.esm.js";
 
@@ -122,10 +121,10 @@ test("03 - arabic dates", () => {
     render(input, {
       dateDivLocale: "ar-EG",
       dateDivMarkup: ({ date, year, month, day }) => {
-        equal(date instanceof Date, true);
-        equal(year, "٢٠٢٢");
-        equal(month, "يناير");
-        equal(day, "١");
+        equal(date instanceof Date, true, "03.02");
+        equal(year, "٢٠٢٢", "03.03");
+        equal(month, "يناير", "03.04");
+        equal(day, "١", "03.05");
         return `${year}/${month}/${day}`;
       },
     }),
