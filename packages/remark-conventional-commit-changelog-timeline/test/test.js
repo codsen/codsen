@@ -1,13 +1,12 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import remarkGfm from "remark-gfm";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
+import remarkGfm from "remark-gfm";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { unified } from "unified";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import c from "../dist/remark-conventional-commit-changelog-timeline.esm.js";
 
