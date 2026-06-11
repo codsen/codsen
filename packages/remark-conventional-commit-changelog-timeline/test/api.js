@@ -1,7 +1,7 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import api from "remark-conventional-commit-changelog-timeline";
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import api from "../dist/remark-conventional-commit-changelog-timeline.esm.js";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 // API wirings
 // -----------------------------------------------------------------------------
