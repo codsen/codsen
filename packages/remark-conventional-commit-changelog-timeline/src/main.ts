@@ -1,21 +1,20 @@
+// Note for self: don't add "hast" itself as a dependency
+// This type comes from "@types/hast"
+import type { Root } from "hast";
+import { raw } from "hast-util-raw";
+import type { Raw } from "mdast-util-to-hast";
+import semverRegex from "semver-regex";
+import type { Plugin } from "unified";
+import { u } from "unist-builder";
 import {
   visit,
   // SKIP
 } from "unist-util-visit";
 import {
-  stringify,
-  extractStartingVersionString,
   extractDateString,
+  extractStartingVersionString,
+  stringify,
 } from "./util";
-import type { Plugin } from "unified";
-
-// Note for self: don't add "hast" itself as a dependency
-// This type comes from "@types/hast"
-import type { Root } from "hast";
-
-import { raw } from "hast-util-raw";
-import { u } from "unist-builder";
-import semverRegex from "semver-regex";
 
 declare let DEV: boolean;
 
@@ -43,7 +42,7 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
   let resolvedOpts: Opts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `046 final ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `045 final ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -132,7 +131,7 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
 
     DEV &&
       console.log(
-        `135 ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${stringify(tree)}`,
+        `134 ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${stringify(tree)}`,
       );
 
     visit(tree, "element", (node, index, parent) => {
@@ -152,7 +151,7 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
       ) {
         DEV &&
           console.log(
-            `155 processing: ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${stringify(
+            `154 processing: ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${stringify(
               node,
             )}`,
           );
@@ -185,11 +184,11 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
 
       if (versionStr && dateStr) {
         DEV &&
-          console.log(`188 versionStr: ${versionStr}; dateStr: ${dateStr}`);
+          console.log(`187 versionStr: ${versionStr}; dateStr: ${dateStr}`);
 
         DEV &&
           console.log(
-            `192  ███████████████████████████████████████ ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            `191  ███████████████████████████████████████ ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
               node,
               null,
               4,
@@ -203,10 +202,10 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
           },
         ];
 
-        DEV && console.log(`206 set the h2 to ${versionStr}`);
+        DEV && console.log(`205 set the h2 to ${versionStr}`);
 
         if (dateStr && typeof index === "number") {
-          DEV && console.log(`209 add the .release-date div`);
+          DEV && console.log(`208 add the .release-date div`);
           let date = new Date(dateStr);
           let formatDay = new Intl.DateTimeFormat(resolvedOpts.dateDivLocale, {
             day: "numeric",
@@ -233,20 +232,22 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
           };
           DEV &&
             console.log(
-              `236 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`dateParamsObj`}\u001b[${39}m`} = ${JSON.stringify(
+              `235 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`dateParamsObj`}\u001b[${39}m`} = ${JSON.stringify(
                 dateParamsObj,
                 null,
                 4,
               )}`,
             );
 
-          let newMarkup = raw(
-            u("raw", resolvedOpts.dateDivMarkup(dateParamsObj)) as any,
+          let rawNode: Raw = u(
+            "raw",
+            resolvedOpts.dateDivMarkup(dateParamsObj),
           );
+          let newMarkup = raw(rawNode);
 
           DEV &&
             console.log(
-              `249 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`newMarkup`}\u001b[${39}m`} = ${JSON.stringify(
+              `250 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`newMarkup`}\u001b[${39}m`} = ${JSON.stringify(
                 newMarkup,
                 null,
                 4,
@@ -316,7 +317,7 @@ const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
       ) {
         DEV &&
           console.log(
-            `319 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            `320 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
               node,
               null,
               4,
