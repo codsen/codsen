@@ -23,7 +23,7 @@
 
 ## Install
 
-This package is not pure ESM, you can `require` it.
+This package is [pure ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
 
 ```bash
 npm i remark-conventional-commit-changelog-timeline
@@ -32,13 +32,13 @@ npm i remark-conventional-commit-changelog-timeline
 ## Quick Take
 
 ```js
-import { strict as assert } from "assert";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import remarkGfm from "remark-gfm";
+import { strict as assert } from "node:assert";
 import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
+import remarkGfm from "remark-gfm";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { unified } from "unified";
 
 import c from "remark-conventional-commit-changelog-timeline";
 
@@ -92,6 +92,7 @@ assert.equal(
 );
 ```
 
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/remark-conventional-commit-changelog-timeline/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/remark-conventional-commit-changelog-timeline/CHANGELOG.md).
@@ -104,6 +105,6 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 MIT License
 
-Copyright © 2010-2025 Roy Revelt and other contributors
+Copyright © 2010-2026 Roy Revelt and other contributors
 
 <p align="center"><img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center"></p>
