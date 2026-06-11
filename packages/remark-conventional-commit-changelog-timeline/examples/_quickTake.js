@@ -1,12 +1,12 @@
 // Quick Take
 
-import { strict as assert } from "assert";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import remarkGfm from "remark-gfm";
+import { strict as assert } from "node:assert";
 import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
+import remarkGfm from "remark-gfm";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { unified } from "unified";
 
 import c from "../dist/remark-conventional-commit-changelog-timeline.esm.js";
 
