@@ -1,8 +1,8 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { ellipsis, rawNbsp, rightSingleQuote } from "codsen-utils";
 import { remark } from "remark";
-import { ellipsis, rightSingleQuote, rawNbsp } from "codsen-utils";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import fixTypography from "../dist/remark-typography.esm.js";
 
