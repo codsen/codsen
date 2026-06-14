@@ -1,11 +1,11 @@
+import { ellipsis, multiplicationSign, rightSingleQuote } from "codsen-utils";
 import { pipe } from "fp-ts/lib/function.js";
-import { visit } from "unist-util-visit";
-import type { Plugin } from "unified";
 import type { Root } from "hast";
 import { convertAll as convertApostrophesOriginal } from "string-apostrophes";
 import { convertAll as convertDashesOriginal } from "string-dashes";
 import { removeWidows as removeWidowsOriginal } from "string-remove-widows";
-import { multiplicationSign, ellipsis, rightSingleQuote } from "codsen-utils";
+import type { Plugin } from "unified";
+import { visit } from "unist-util-visit";
 
 type UnifiedPlugin<T> = Plugin<[T], Root>;
 // declare let DEV: boolean;
