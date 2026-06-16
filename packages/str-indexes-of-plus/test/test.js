@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { strIndexesOfPlus } from "../dist/str-indexes-of-plus.esm.js";
 
@@ -42,6 +42,27 @@ test("03 - throws when the third argument is not natural number", () => {
   not.throws(() => {
     strIndexesOfPlus("a", "a", 1);
   }, "03.03");
+  throws(
+    () => {
+      strIndexesOfPlus("a", "a", -1);
+    },
+    /THROW_ID_03/,
+    "03.04",
+  );
+  throws(
+    () => {
+      strIndexesOfPlus("a", "a", 1.5);
+    },
+    /THROW_ID_03/,
+    "03.05",
+  );
+  throws(
+    () => {
+      strIndexesOfPlus("a", "a", Infinity);
+    },
+    /THROW_ID_03/,
+    "03.06",
+  );
 });
 
 // -----------------------------------------------------------------------------
@@ -152,6 +173,12 @@ test("14 - finds in real text, no offset", () => {
   // following two are offset by one, because emoji pushed them by one:
   equal(text.charAt(123), "c", "14.05");
   equal(text.charAt(168), "c", "14.06");
+});
+
+test("15 - finds overlapping matches", () => {
+  equal(strIndexesOfPlus("aaa", "aa"), [0, 1], "15.01");
+  equal(strIndexesOfPlus("aaab", "aab"), [1], "15.02");
+  equal(strIndexesOfPlus("🦄🦄🦄", "🦄🦄"), [0, 1], "15.03");
 });
 
 test.run();
