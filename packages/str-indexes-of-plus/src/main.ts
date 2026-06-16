@@ -9,64 +9,46 @@ function strIndexesOfPlus(
 ): number[] {
   if (typeof str !== "string") {
     throw new TypeError(
-      `str-indexes-of-plus/strIndexesOfPlus(): first input argument must be a string! Currently it's: ${typeof str}`,
+      `str-indexes-of-plus/strIndexesOfPlus(): [THROW_ID_01] first input argument must be a string! Currently it's: ${typeof str}`,
     );
   }
   if (typeof searchValue !== "string") {
     throw new TypeError(
-      `str-indexes-of-plus/strIndexesOfPlus(): second input argument must be a string! Currently it's: ${typeof searchValue}`,
+      `str-indexes-of-plus/strIndexesOfPlus(): [THROW_ID_02] second input argument must be a string! Currently it's: ${typeof searchValue}`,
     );
   }
+  const numericFromIndex = Number(fromIndex);
   if (
-    isNaN(+fromIndex) ||
-    (typeof fromIndex === "string" && !/^\d*$/.test(fromIndex))
+    !Number.isInteger(numericFromIndex) ||
+    numericFromIndex < 0 ||
+    (typeof fromIndex === "string" && !/^\d+$/.test(fromIndex))
   ) {
     throw new TypeError(
-      `str-indexes-of-plus/strIndexesOfPlus(): third input argument must be a natural number! Currently it's: ${fromIndex}`,
+      `str-indexes-of-plus/strIndexesOfPlus(): [THROW_ID_03] third input argument must be a natural number! Currently it's: ${fromIndex}`,
     );
   }
-  let strArr: string[] = Array.from(str);
-  let searchValueArr: string[] = Array.from(searchValue);
+  const strArr = Array.from(str);
+  const searchValueArr = Array.from(searchValue);
   if (
-    strArr.length === 0 ||
-    searchValueArr.length === 0 ||
-    (fromIndex != null && +fromIndex >= strArr.length)
+    !strArr.length ||
+    !searchValueArr.length ||
+    numericFromIndex >= strArr.length
   ) {
     return [];
   }
-  if (!fromIndex) {
-    fromIndex = 0;
-  }
 
-  let res: number[] = [];
-  let matchMode = false;
-  let potentialFinding;
-
-  for (let i = fromIndex as number, len = strArr.length; i < len; i++) {
-    if (matchMode) {
-      if (strArr[i] === searchValueArr[i - +(potentialFinding as number)]) {
-        if (i - +(potentialFinding as number) + 1 === searchValueArr.length) {
-          res.push(+(potentialFinding as number));
-        }
-      } else {
-        potentialFinding = null;
-        matchMode = false;
+  const result: number[] = [];
+  const lastPossibleStart = strArr.length - searchValueArr.length;
+  candidate: for (let i = numericFromIndex; i <= lastPossibleStart; i++) {
+    for (let j = 0; j < searchValueArr.length; j++) {
+      if (strArr[i + j] !== searchValueArr[j]) {
+        continue candidate;
       }
     }
-
-    if (!matchMode) {
-      if (strArr[i] === searchValueArr[0]) {
-        if (searchValueArr.length === 1) {
-          res.push(i);
-        } else {
-          matchMode = true;
-          potentialFinding = i;
-        }
-      }
-    }
+    result.push(i);
   }
 
-  return res;
+  return result;
 }
 
 export { strIndexesOfPlus, version };
