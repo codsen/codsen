@@ -5,12 +5,11 @@
   },
   "include": [
     "src/**/*",
+    "src/**/*.json",
     "package.json",
+    "../../ops/typedefs/common.d.ts",
     "../../ops/typedefs/common.ts"
   ],
-  "exclude": [
-    ".git",
-    "node_modules"
-  ],
+  "exclude": [".git", "node_modules"],
   "references": []
 }
