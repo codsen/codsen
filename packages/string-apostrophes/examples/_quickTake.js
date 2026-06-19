@@ -1,8 +1,8 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
-import { convertOne, convertAll } from "../dist/string-apostrophes.esm.js";
+import { convertAll, convertOne } from "../dist/string-apostrophes.esm.js";
 
 assert.deepEqual(
   convertAll("In the '60s, rock 'n' roll", {
