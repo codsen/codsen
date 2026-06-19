@@ -1,8 +1,8 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
-import { convertOne, convertAll } from "../dist/string-apostrophes.esm.js";
+import { convertAll, convertOne } from "../dist/string-apostrophes.esm.js";
 
 // convertOne()
 // -----------------------------------------------------------------------------
@@ -105,7 +105,7 @@ test("10 - 1st input arg is wrong", () => {
     () => {
       convertAll();
     },
-    /THROW_ID_10/,
+    /THROW_ID_05/,
     "10.01",
   );
 });
@@ -115,7 +115,7 @@ test("11 - 1st input arg is wrong", () => {
     () => {
       convertAll(true);
     },
-    /THROW_ID_10/,
+    /THROW_ID_05/,
     "11.01",
   );
 });
@@ -125,7 +125,7 @@ test("12 - 2nd input arg is wrong", () => {
     () => {
       convertAll("abc", true);
     },
-    /THROW_ID_11/,
+    /THROW_ID_06/,
     "12.01",
   );
 });
@@ -135,7 +135,7 @@ test("13 - 2nd input arg is wrong", () => {
     () => {
       convertAll("abc", []);
     },
-    /THROW_ID_11/,
+    /THROW_ID_06/,
     "13.01",
   );
 });
