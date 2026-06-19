@@ -1,18 +1,18 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import {
-  leftSingleQuote,
-  rightSingleQuote,
   leftDoubleQuote,
+  leftSingleQuote,
   rightDoubleQuote,
+  rightSingleQuote,
 } from "codsen-utils";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
-import { convertOne, convertAll } from "../dist/string-apostrophes.esm.js";
+import { convertAll, convertOne } from "../dist/string-apostrophes.esm.js";
 
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - with entities`, () => {
+test(`01 - single apostrophes - with entities`, () => {
   equal(
     convertOne("test's", {
       from: 4,
@@ -24,7 +24,7 @@ test(`01 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - with entitie
   );
 });
 
-test(`02 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - with entities`, () => {
+test(`02 - single apostrophes - with entities`, () => {
   equal(
     convertOne("test's", {
       from: 4,
@@ -37,7 +37,7 @@ test(`02 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - with entitie
   );
 });
 
-test(`03 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - with entities`, () => {
+test(`03 - single apostrophes - with entities`, () => {
   equal(
     convertOne("test's", {
       from: 4,
@@ -50,7 +50,7 @@ test(`03 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - with entitie
   );
 });
 
-test(`04 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - with entities - convertApostrophes=off`, () => {
+test(`04 - single apostrophes - with entities - convertApostrophes=off`, () => {
   equal(
     convertOne("test's", {
       from: 4,
@@ -62,7 +62,7 @@ test(`04 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - with entitie
   );
 });
 
-test(`05 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - with entities - convertApostrophes=off`, () => {
+test(`05 - single apostrophes - with entities - convertApostrophes=off`, () => {
   equal(
     convertOne("test's", {
       from: 4,
@@ -75,7 +75,7 @@ test(`05 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - with entitie
   );
 });
 
-test(`06 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - with entities - convertApostrophes=off`, () => {
+test(`06 - single apostrophes - with entities - convertApostrophes=off`, () => {
   equal(
     convertOne("test's", {
       from: 4,
@@ -88,7 +88,7 @@ test(`06 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - with entitie
   );
 });
 
-test(`07 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - exclamation mark + space`, () => {
+test(`07 - single apostrophes - exclamation mark + space`, () => {
   equal(
     convertAll("'What!' he said", {
       convertApostrophes: 1,
@@ -99,7 +99,7 @@ test(`07 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - exclamation 
   );
 });
 
-test(`08 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - full stop + space`, () => {
+test(`08 - single apostrophes - full stop + space`, () => {
   equal(
     convertAll("'What.' he said", {
       convertApostrophes: 1,
@@ -110,7 +110,7 @@ test(`08 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - full stop + 
   );
 });
 
-test(`09 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - semicolon + space`, () => {
+test(`09 - single apostrophes - semicolon + space`, () => {
   equal(
     convertAll("'What;' he said", {
       convertApostrophes: 1,
@@ -121,7 +121,7 @@ test(`09 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - semicolon + 
   );
 });
 
-test(`10 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - question mark + space`, () => {
+test(`10 - single apostrophes - question mark + space`, () => {
   equal(
     convertAll("'What?' he said", {
       convertApostrophes: 1,
@@ -132,7 +132,7 @@ test(`10 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - question mar
   );
 });
 
-test(`11 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - exclamation mark`, () => {
+test(`11 - single apostrophes - exclamation mark`, () => {
   equal(
     convertAll("\"'What!'\" he said", {
       convertApostrophes: 1,
@@ -143,7 +143,7 @@ test(`11 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - exclamation 
   );
 });
 
-test(`12 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - full stop`, () => {
+test(`12 - single apostrophes - full stop`, () => {
   equal(
     convertAll("\"'What.'\" he said", {
       convertApostrophes: 1,
@@ -154,7 +154,7 @@ test(`12 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - full stop`, 
   );
 });
 
-test(`13 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - comma`, () => {
+test(`13 - single apostrophes - comma`, () => {
   equal(
     convertAll("\"'What,'\" he said", {
       convertApostrophes: 1,
@@ -165,7 +165,7 @@ test(`13 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - comma`, () =
   );
 });
 
-test(`14 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - semicolon`, () => {
+test(`14 - single apostrophes - semicolon`, () => {
   equal(
     convertAll("\"'What;'\" he said", {
       convertApostrophes: 1,
@@ -176,7 +176,7 @@ test(`14 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - semicolon`, 
   );
 });
 
-test(`15 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - question mark`, () => {
+test(`15 - single apostrophes - question mark`, () => {
   equal(
     convertAll("\"'What;'\" he said", {
       convertApostrophes: 1,
@@ -187,7 +187,7 @@ test(`15 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - question mar
   );
 });
 
-test(`16 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - comma + space`, () => {
+test(`16 - single apostrophes - comma + space`, () => {
   equal(
     convertAll("'What,' he said", {
       convertApostrophes: 1,
@@ -198,7 +198,7 @@ test(`16 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - comma + spac
   );
 });
 
-test(`17 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - HTML-escaped apostrophe`, () => {
+test(`17 - single apostrophes - HTML-escaped apostrophe`, () => {
   equal(
     convertOne("test&apos;s", {
       from: 4,
@@ -211,7 +211,7 @@ test(`17 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - HTML-escaped
   );
 });
 
-test(`18 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - with entities`, () => {
+test(`18 - single apostrophes - with entities`, () => {
   equal(
     convertOne("'", {
       from: 0,
@@ -223,7 +223,7 @@ test(`18 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - with entitie
   );
 });
 
-test(`19 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=on`, () => {
+test(`19 - single apostrophes - left instead of right single quote - convertApostrophes=on`, () => {
   equal(
     convertOne(`test${leftSingleQuote}s`, {
       from: 4,
@@ -235,7 +235,7 @@ test(`19 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - left instead
   );
 });
 
-test(`20 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=on`, () => {
+test(`20 - single apostrophes - left instead of right single quote - convertApostrophes=on`, () => {
   equal(
     convertOne(`test${leftSingleQuote}s`, {
       from: 4,
@@ -248,7 +248,7 @@ test(`20 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - left instead
   );
 });
 
-test(`21 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=on`, () => {
+test(`21 - single apostrophes - left instead of right single quote - convertApostrophes=on`, () => {
   equal(
     convertOne(`test${leftSingleQuote}s`, {
       from: 4,
@@ -261,7 +261,7 @@ test(`21 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - left instead
   );
 });
 
-test(`22 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=off`, () => {
+test(`22 - single apostrophes - left instead of right single quote - convertApostrophes=off`, () => {
   equal(
     convertOne(`test${leftSingleQuote}s`, {
       from: 4,
@@ -273,7 +273,7 @@ test(`22 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - left instead
   );
 });
 
-test(`23 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=off`, () => {
+test(`23 - single apostrophes - left instead of right single quote - convertApostrophes=off`, () => {
   equal(
     convertOne(`test${leftSingleQuote}s`, {
       from: 4,
@@ -286,7 +286,7 @@ test(`23 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - left instead
   );
 });
 
-test(`24 - ${`\u001b[${33}m${"single apostrophes"}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=off`, () => {
+test(`24 - single apostrophes - left instead of right single quote - convertApostrophes=off`, () => {
   equal(
     convertOne(`test${leftSingleQuote}s`, {
       from: 4,
