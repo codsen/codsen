@@ -1,7 +1,7 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { leftSingleQuote, rightSingleQuote } from "codsen-utils";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { convertAll } from "../dist/string-apostrophes.esm.js";
 
@@ -9,7 +9,7 @@ import { convertAll } from "../dist/string-apostrophes.esm.js";
 // https://practicaltypography.com/apostrophes.html
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${"Buttericks Practical Typography"}\u001b[${39}m`} - 'n' - on`, () => {
+test(`01 - Buttericks Practical Typography - 'n' - on`, () => {
   equal(
     convertAll("In the '60s, rock 'n' roll", {
       convertApostrophes: 1,
@@ -26,7 +26,7 @@ test(`01 - ${`\u001b[${34}m${"Buttericks Practical Typography"}\u001b[${39}m`} -
   );
 });
 
-test(`02 - ${`\u001b[${34}m${"Buttericks Practical Typography"}\u001b[${39}m`} - 'n' - off`, () => {
+test(`02 - Buttericks Practical Typography - 'n' - off`, () => {
   equal(
     convertAll("In the '60s, rock 'n' roll", {
       convertApostrophes: 0,
@@ -37,7 +37,7 @@ test(`02 - ${`\u001b[${34}m${"Buttericks Practical Typography"}\u001b[${39}m`} -
   );
 });
 
-test(`03 - ${`\u001b[${34}m${"Buttericks Practical Typography"}\u001b[${39}m`} - Hawai${leftSingleQuote}i - sets okina #1`, () => {
+test(`03 - Buttericks Practical Typography - Hawai${leftSingleQuote}i - sets okina #1`, () => {
   equal(
     convertAll("Hawai'i", {
       convertApostrophes: 1,
@@ -48,7 +48,7 @@ test(`03 - ${`\u001b[${34}m${"Buttericks Practical Typography"}\u001b[${39}m`} -
   );
 });
 
-test(`04 - ${`\u001b[${34}m${"Buttericks Practical Typography"}\u001b[${39}m`} - O${leftSingleQuote}ahu - sets okina #2`, () => {
+test(`04 - Buttericks Practical Typography - O${leftSingleQuote}ahu - sets okina #2`, () => {
   equal(
     convertAll("O'ahu", {
       convertApostrophes: 1,
