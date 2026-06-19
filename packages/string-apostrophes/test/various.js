@@ -1,11 +1,11 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { leftDoubleQuote, rightDoubleQuote } from "codsen-utils";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { convertAll } from "../dist/string-apostrophes.esm.js";
 
-test(`01 - ${`\u001b[${35}m${"various"}\u001b[${39}m`} - edge cases`, () => {
+test(`01 - various - edge cases`, () => {
   let input = '" " ';
   equal(
     convertAll(input, {
@@ -17,7 +17,7 @@ test(`01 - ${`\u001b[${35}m${"various"}\u001b[${39}m`} - edge cases`, () => {
   );
 });
 
-test(`02 - ${`\u001b[${35}m${"various"}\u001b[${39}m`} - edge cases`, () => {
+test(`02 - various - edge cases`, () => {
   let input = ' " " ';
   equal(
     convertAll(input, {
@@ -29,7 +29,7 @@ test(`02 - ${`\u001b[${35}m${"various"}\u001b[${39}m`} - edge cases`, () => {
   );
 });
 
-test(`03 - ${`\u001b[${35}m${"various"}\u001b[${39}m`} - edge cases`, () => {
+test(`03 - various - edge cases`, () => {
   let input = ' " "';
   equal(
     convertAll(input, {
@@ -41,7 +41,7 @@ test(`03 - ${`\u001b[${35}m${"various"}\u001b[${39}m`} - edge cases`, () => {
   );
 });
 
-test(`04 - ${`\u001b[${35}m${"various"}\u001b[${39}m`} - edge cases`, () => {
+test(`04 - various - edge cases`, () => {
   let input = ` ${leftDoubleQuote}-${rightDoubleQuote} `;
   equal(
     convertAll(input, {
@@ -53,7 +53,7 @@ test(`04 - ${`\u001b[${35}m${"various"}\u001b[${39}m`} - edge cases`, () => {
   );
 });
 
-test(`05 - ${`\u001b[${35}m${"various"}\u001b[${39}m`} - target 776`, () => {
+test(`05 - various - target 776`, () => {
   let input = ` a${rightDoubleQuote}`;
   equal(
     convertAll(input, {
