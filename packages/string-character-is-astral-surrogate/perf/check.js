@@ -1,5 +1,5 @@
 // deps
-import path from "path";
+import path from "node:path";
 
 import { runPerf } from "../../../ops/scripts/perf.js";
 import { isHighSurrogate } from "../dist/string-character-is-astral-surrogate.esm.js";
