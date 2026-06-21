@@ -1,23 +1,27 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { collWhitespace as c } from "../dist/string-collapse-leading-whitespace.esm.js";
 
-test("01 - multiple lines - mac endings", () => {
-  equal(c("  abc  \n  def  \n  ghi  "), " abc  \n  def  \n  ghi ", "01.01");
+test("001 - multiple lines - mac endings", () => {
+  equal(c("  abc  \n  def  \n  ghi  "), " abc  \n  def  \n  ghi ", "001.01");
 });
 
-test("02 - multiple lines - windows endings, clean", () => {
+test("002 - multiple lines - windows endings, clean", () => {
   equal(
     c("  abc  \r\n  def  \r\n  ghi  "),
     " abc  \r\n  def  \r\n  ghi ",
-    "02.01",
+    "002.01",
   );
 });
 
-test("03 - multiple lines - windows endings, mixed", () => {
-  equal(c("  abc  \n  def  \r\n  ghi  "), " abc  \n  def  \r\n  ghi ", "03.01");
+test("003 - multiple lines - windows endings, mixed", () => {
+  equal(
+    c("  abc  \n  def  \r\n  ghi  "),
+    " abc  \n  def  \r\n  ghi ",
+    "003.01",
+  );
 });
 
 test.run();
