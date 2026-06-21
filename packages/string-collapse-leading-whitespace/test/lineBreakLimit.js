@@ -1,87 +1,87 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { collWhitespace as c } from "../dist/string-collapse-leading-whitespace.esm.js";
 
 // testing the second input argument, the line break limit
 // -----------------------------------------------------------------------------
 
-test("01", () => {
-  equal(c("zzz", 9), "zzz", "01.01");
+test("001", () => {
+  equal(c("zzz", 9), "zzz", "001.01");
 });
 
 // erroneous, but behind the scenes it's set to 1
-test("02", () => {
-  equal(c("zzz", 9.1), "zzz", "02.01");
+test("002", () => {
+  equal(c("zzz", 9.1), "zzz", "002.01");
 });
 
-test("03 - CRLF", () => {
+test("003 - CRLF", () => {
   equal(
     c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 9),
     "\r\n\r\n\r\nzzz\r\n\r\n\r\n",
-    "03.01",
+    "003.01",
   );
 });
 
-test("04 - LF", () => {
-  equal(c("\n\n\nzzz\n\n\n", 9), "\n\n\nzzz\n\n\n", "04.01");
+test("004 - LF", () => {
+  equal(c("\n\n\nzzz\n\n\n", 9), "\n\n\nzzz\n\n\n", "004.01");
 });
 
-test("05 - CR", () => {
-  equal(c("\r\r\rzzz\r\r\r", 9), "\r\r\rzzz\r\r\r", "05.01");
+test("005 - CR", () => {
+  equal(c("\r\r\rzzz\r\r\r", 9), "\r\r\rzzz\r\r\r", "005.01");
 });
 
-test("06 - CRLF", () => {
+test("006 - CRLF", () => {
   equal(
     c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 3),
     "\r\n\r\n\r\nzzz\r\n\r\n\r\n",
-    "06.01",
+    "006.01",
   );
 });
 
-test("07 - CR", () => {
-  equal(c("\r\r\rzzz\r\r\r", 3), "\r\r\rzzz\r\r\r", "07.01");
+test("007 - CR", () => {
+  equal(c("\r\r\rzzz\r\r\r", 3), "\r\r\rzzz\r\r\r", "007.01");
 });
 
-test("08 - LF", () => {
-  equal(c("\n\n\nzzz\n\n\n", 3), "\n\n\nzzz\n\n\n", "08.01");
+test("008 - LF", () => {
+  equal(c("\n\n\nzzz\n\n\n", 3), "\n\n\nzzz\n\n\n", "008.01");
 });
 
-test("09 - CRLF", () => {
-  equal(c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 2), "\r\n\r\nzzz\r\n\r\n", "09.01");
+test("009 - CRLF", () => {
+  equal(c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 2), "\r\n\r\nzzz\r\n\r\n", "009.01");
 });
 
-test("10 - CR", () => {
-  equal(c("\r\r\rzzz\r\r\r", 2), "\r\rzzz\r\r", "10.01");
+test("010 - CR", () => {
+  equal(c("\r\r\rzzz\r\r\r", 2), "\r\rzzz\r\r", "010.01");
 });
 
-test("11 - LF", () => {
-  equal(c("\n\n\nzzz\n\n\n", 2), "\n\nzzz\n\n", "11.01");
+test("011 - LF", () => {
+  equal(c("\n\n\nzzz\n\n\n", 2), "\n\nzzz\n\n", "011.01");
 });
 
-test("12 - CRLF", () => {
-  equal(c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 1), "\r\nzzz\r\n", "12.01");
+test("012 - CRLF", () => {
+  equal(c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 1), "\r\nzzz\r\n", "012.01");
 });
 
-test("13 - LF", () => {
-  equal(c("\n\n\nzzz\n\n\n", 1), "\nzzz\n", "13.01");
+test("013 - LF", () => {
+  equal(c("\n\n\nzzz\n\n\n", 1), "\nzzz\n", "013.01");
 });
 
-test("14 - CR", () => {
-  equal(c("\r\r\rzzz\r\r\r", 1), "\rzzz\r", "14.01");
+test("014 - CR", () => {
+  equal(c("\r\r\rzzz\r\r\r", 1), "\rzzz\r", "014.01");
 });
 
-test("15 - CRLF", () => {
-  equal(c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 0), "zzz", "15.01");
+test("015 - CRLF", () => {
+  equal(c("\r\n\r\n\r\nzzz\r\n\r\n\r\n", 0), "zzz", "015.01");
 });
 
-test("16 - LF", () => {
-  equal(c("\n\n\nzzz\n\n\n", 0), "zzz", "16.01");
+test("016 - LF", () => {
+  equal(c("\n\n\nzzz\n\n\n", 0), "zzz", "016.01");
 });
 
-test("17 - CR", () => {
-  equal(c("\r\r\rzzz\r\r\r", 0), "zzz", "17.01");
+test("017 - CR", () => {
+  equal(c("\r\r\rzzz\r\r\r", 0), "zzz", "017.01");
 });
 
 test.run();
