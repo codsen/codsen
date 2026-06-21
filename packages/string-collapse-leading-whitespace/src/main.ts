@@ -18,12 +18,12 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
     limit: number,
     trailing: boolean,
   ): string {
-    DEV && console.log(` `);
-    DEV && console.log(` `);
-    DEV && console.log(` `);
+    DEV && console.log(`21  `);
+    DEV && console.log(`22  `);
+    DEV && console.log(`23  `);
     DEV &&
       console.log(
-        `${`\u001b[${34}m${`============== prep() ==============`}\u001b[${39}m`}`,
+        `26 ${`\u001b[${34}m${`============== prep() ==============`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
@@ -222,7 +222,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
         }
       }
     }
-    DEV && console.log(".");
+    DEV && console.log("225 .");
     DEV &&
       console.log(
         `228 ${`\u001b[${35}m${`██ frontPart`}\u001b[${39}m`} = ${JSON.stringify(
@@ -231,7 +231,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
           4,
         )}`,
       );
-    DEV && console.log(".");
+    DEV && console.log("234 .");
 
     // if whole string is whitespace, endPart is empty string
     if (
@@ -253,7 +253,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
         }
       }
     }
-    DEV && console.log(".");
+    DEV && console.log("256 .");
     DEV &&
       console.log(
         `259 ${`\u001b[${35}m${`██ endPart`}\u001b[${39}m`} = ${JSON.stringify(
@@ -262,7 +262,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
           4,
         )}`,
       );
-    DEV && console.log(".");
+    DEV && console.log("265 .");
 
     // -------------------------------------------------------------------------
 
