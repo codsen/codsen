@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { collapse } from "../dist/string-collapse-white-space.esm.js";
 import { mixer } from "./util/util.js";
@@ -18,7 +18,7 @@ test("01", () => {
       equal(
         collapse(`   a   bbb  ${eol}   c   d   `, opt).result,
         ` a bbb ${eol} c d `,
-        JSON.stringify(opt, null, 0),
+        `01.01 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
 
@@ -30,7 +30,7 @@ test("01", () => {
       equal(
         collapse(`   a   bbb  ${eol}   c   d   `, opt).result,
         `a bbb ${eol} c d`,
-        JSON.stringify(opt, null, 0),
+        `01.02 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -39,7 +39,7 @@ test("01", () => {
       equal(
         collapse(`   a   bbb  ${eol}   c   d   `, opt).result,
         `a bbb${eol}c d`,
-        JSON.stringify(opt, null, 0),
+        `01.03 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
@@ -60,7 +60,7 @@ test("02", () => {
           opt,
         ).result,
         ` \xa0 aaa bbb \xa0 ${eol} \xa0 ccc ddd \xa0 `,
-        JSON.stringify(opt, null, 0),
+        `02.01 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -76,7 +76,7 @@ test("02", () => {
           opt,
         ).result,
         `\xa0 aaa bbb \xa0${eol}\xa0 ccc ddd \xa0`,
-        JSON.stringify(opt, null, 0),
+        `02.02 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
@@ -164,6 +164,7 @@ test("06", () => {
         { trimLines: true, trimnbsp: false },
       ).result,
       `a b${eol}c d${eol}e f${eol}${eol}${eol}g h`,
+      "06.01",
     );
     equal(
       collapse(
@@ -171,6 +172,7 @@ test("06", () => {
         { trimLines: true, trimnbsp: true },
       ).result,
       `a b${eol}c d${eol}e f${eol}${eol}${eol}g h`,
+      "06.02",
     );
     equal(
       collapse(
@@ -178,6 +180,7 @@ test("06", () => {
         { trimLines: true, trimnbsp: true },
       ).result,
       `a b${eol}c d${eol}e f${eol}${eol}${eol}g h`,
+      "06.03",
     );
   });
 });
@@ -197,7 +200,7 @@ test("07", () => {
           opt,
         ).result,
         `a b${eol}c d${eol}e f${eol}${eol}${eol}g h`,
-        JSON.stringify(opt, null, 0),
+        `07.01 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
@@ -212,7 +215,7 @@ test("08", () => {
     equal(
       collapse("a \n \n b", opt).result,
       "a \n \n b",
-      JSON.stringify(opt, null, 0),
+      `08.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -222,7 +225,7 @@ test("08", () => {
     equal(
       collapse("a \n \n b", opt).result,
       "a\n\nb",
-      JSON.stringify(opt, null, 0),
+      `08.02 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   // removeEmptyLines=1
@@ -233,7 +236,7 @@ test("08", () => {
     equal(
       collapse("a \n \n b", opt).result,
       "a \n b",
-      JSON.stringify(opt, null, 0),
+      `08.03 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -243,7 +246,7 @@ test("08", () => {
     equal(
       collapse("a \n \n b", opt).result,
       "a\nb",
-      JSON.stringify(opt, null, 0),
+      `08.04 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
