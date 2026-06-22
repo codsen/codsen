@@ -3,12 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 11.1.0 (2025-10-15)
-
-### Features
-
-- if value to be added is a number, keep it as is, don't stringify ([ce3e1a5](https://github.com/codsen/codsen/commit/ce3e1a525998ca3c0abf0142affef95b14cd1990))
-
 ## 11.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
@@ -202,7 +196,7 @@ Hopefully bugs like the one we just fixed should not happen any more 🤞
 
 ## 4.0.0 (2018-07-23)
 
-- When `opts.returnRangesOnly` is on and there are no results, instead of `null` (_a falsey thing_) now we return empty array (_a truthy thing_). It's better now because while you can't easily check for its existence (a la `if result`), actually you don't have to any more. Just map over its result. It will always be array, albeit sometimes empty.
+- When `opts.returnRangesOnly` is on and there are no results, instead of `null` (_a falsy thing_) now we return empty array (_a truthy thing_). It's better now because while you can't easily check for its existence (a la `if result`), actually you don't have to any more. Just map over its result. It will always be array, albeit sometimes empty.
 
 ## 3.7.0 (2018-06-20)
 
