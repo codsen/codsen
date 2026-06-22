@@ -1,8 +1,8 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
-import { collapse, cbSchema } from "../dist/string-collapse-white-space.esm.js";
+import { cbSchema, collapse } from "../dist/string-collapse-white-space.esm.js";
 import { mixer } from "./util/util.js";
 
 // -----------------------------------------------------------------------------
@@ -15,7 +15,7 @@ test("01", () => {
       collapse("a b", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "01.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -29,7 +29,7 @@ test("01", () => {
         },
       }),
       { result: "a b", ranges: null },
-      JSON.stringify(opt, null, 0),
+      `01.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -40,7 +40,7 @@ test("02", () => {
       collapse("a  b", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "02.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -54,7 +54,7 @@ test("02", () => {
         },
       }),
       { result: "a b", ranges: [[1, 2]] },
-      JSON.stringify(opt, null, 0),
+      `02.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -66,7 +66,7 @@ test("03", () => {
         collapse("aaa     bbb    ccc   dddd", {
           ...opt,
           cb: ({ ...props }) => {
-            equal(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema, "03.03");
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
                 is(typeof props[key], "number");
@@ -87,9 +87,11 @@ test("03", () => {
             [18, 20],
           ],
         },
-        JSON.stringify(opt, null, 0),
+        `03.02 - ${JSON.stringify(opt, null, 0)}`,
       );
     }),
+    undefined,
+    "03.01",
   );
 });
 
@@ -103,7 +105,7 @@ test("04 - sequences of spaces outside of string - defaults", () => {
       collapse("  a b  ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "04.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -123,7 +125,7 @@ test("04 - sequences of spaces outside of string - defaults", () => {
           [5, 7],
         ],
       },
-      JSON.stringify(opt, null, 0),
+      `04.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -135,7 +137,7 @@ test("04 - sequences of spaces outside of string - defaults", () => {
       collapse("  a b  ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "04.04");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -155,7 +157,7 @@ test("04 - sequences of spaces outside of string - defaults", () => {
           [5, 7],
         ],
       },
-      JSON.stringify(opt, null, 0),
+      `04.03 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -167,7 +169,7 @@ test("04 - sequences of spaces outside of string - defaults", () => {
       collapse("  a b  ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "04.06");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -187,7 +189,7 @@ test("04 - sequences of spaces outside of string - defaults", () => {
           [5, 6],
         ],
       },
-      JSON.stringify(opt, null, 0),
+      `04.05 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -199,7 +201,7 @@ test("04 - sequences of spaces outside of string - defaults", () => {
       collapse("  a b  ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "04.08");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -219,7 +221,7 @@ test("04 - sequences of spaces outside of string - defaults", () => {
           [5, 6],
         ],
       },
-      JSON.stringify(opt, null, 0),
+      `04.07 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -234,7 +236,7 @@ test("05 - sequences of spaces outside of string - defaults", () => {
       collapse(" a b ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "05.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -254,7 +256,7 @@ test("05 - sequences of spaces outside of string - defaults", () => {
           [4, 5],
         ],
       },
-      JSON.stringify(opt, null, 0),
+      `05.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -266,7 +268,7 @@ test("05 - sequences of spaces outside of string - defaults", () => {
       collapse(" a b ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "05.04");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -283,7 +285,7 @@ test("05 - sequences of spaces outside of string - defaults", () => {
         result: "a b ",
         ranges: [[0, 1]],
       },
-      JSON.stringify(opt, null, 0),
+      `05.03 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -295,7 +297,7 @@ test("05 - sequences of spaces outside of string - defaults", () => {
       collapse(" a b ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "05.06");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -312,7 +314,7 @@ test("05 - sequences of spaces outside of string - defaults", () => {
         result: " a b",
         ranges: [[4, 5]],
       },
-      JSON.stringify(opt, null, 0),
+      `05.05 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -324,7 +326,7 @@ test("05 - sequences of spaces outside of string - defaults", () => {
       collapse(" a b ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "05.08");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -341,7 +343,7 @@ test("05 - sequences of spaces outside of string - defaults", () => {
         result: " a b ",
         ranges: null,
       },
-      JSON.stringify(opt, null, 0),
+      `05.07 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -361,7 +363,7 @@ test("06 - sequences of spaces outside of string - defaults", () => {
       collapse("\ta b\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "06.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -381,7 +383,7 @@ test("06 - sequences of spaces outside of string - defaults", () => {
           [4, 5],
         ],
       },
-      JSON.stringify(opt, null, 0),
+      `06.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -395,7 +397,7 @@ test("06 - sequences of spaces outside of string - defaults", () => {
       collapse("\ta b\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "06.04");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -412,7 +414,7 @@ test("06 - sequences of spaces outside of string - defaults", () => {
         result: "a b\t",
         ranges: [[0, 1]],
       },
-      JSON.stringify(opt, null, 0),
+      `06.03 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -425,7 +427,7 @@ test("06 - sequences of spaces outside of string - defaults", () => {
       collapse("\ta b\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "06.06");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -442,7 +444,7 @@ test("06 - sequences of spaces outside of string - defaults", () => {
         result: "\ta b",
         ranges: [[4, 5]],
       },
-      JSON.stringify(opt, null, 0),
+      `06.05 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -455,7 +457,7 @@ test("06 - sequences of spaces outside of string - defaults", () => {
       collapse("\ta b\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "06.08");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -472,7 +474,7 @@ test("06 - sequences of spaces outside of string - defaults", () => {
         result: "\ta b\t",
         ranges: null,
       },
-      JSON.stringify(opt, null, 0),
+      `06.07 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -490,7 +492,7 @@ test("06 - sequences of spaces outside of string - defaults", () => {
       collapse("\ta b\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "06.10");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -510,7 +512,7 @@ test("06 - sequences of spaces outside of string - defaults", () => {
           [4, 5, " "],
         ],
       },
-      JSON.stringify(opt, null, 0),
+      `06.09 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -523,7 +525,7 @@ test("06 - sequences of spaces outside of string - defaults", () => {
       collapse("\ta b\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "06.12");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -543,7 +545,7 @@ test("06 - sequences of spaces outside of string - defaults", () => {
           [4, 5],
         ],
       },
-      JSON.stringify(opt, null, 0),
+      `06.11 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -556,7 +558,7 @@ test("06 - sequences of spaces outside of string - defaults", () => {
       collapse("\ta b\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "06.14");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -576,7 +578,7 @@ test("06 - sequences of spaces outside of string - defaults", () => {
           [4, 5, " "],
         ],
       },
-      JSON.stringify(opt, null, 0),
+      `06.13 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -587,7 +589,7 @@ test("07 - double inner space", () => {
       collapse("a  b", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "07.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -604,7 +606,7 @@ test("07 - double inner space", () => {
         result: "a b",
         ranges: [[1, 2]],
       },
-      JSON.stringify(opt, null, 0),
+      `07.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -615,7 +617,7 @@ test("08 - sequences of spaces outside of string - defaults", () => {
       collapse("aaa     bbb    ccc   dddd", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "08.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -636,7 +638,7 @@ test("08 - sequences of spaces outside of string - defaults", () => {
           [18, 20],
         ],
       },
-      JSON.stringify(opt, null, 0),
+      `08.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -657,7 +659,7 @@ test("09 - sequences of spaces outside of string - opts.trimStart", () => {
         collapse(`${eol} \ta b\t ${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            equal(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema, "09.02");
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
                 is(typeof props[key], "number");
@@ -674,7 +676,7 @@ test("09 - sequences of spaces outside of string - opts.trimStart", () => {
           result: `${eol} \ta b\t ${eol}`,
           ranges: null,
         },
-        JSON.stringify(opt, null, 0),
+        `09.01 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -687,7 +689,7 @@ test("09 - sequences of spaces outside of string - opts.trimStart", () => {
       equal(
         collapse(`${eol} \ta b\t ${eol}`, opt).result,
         `${eol} a b ${eol}`,
-        JSON.stringify(opt, null, 0),
+        `09.03 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
 
@@ -703,7 +705,7 @@ test("09 - sequences of spaces outside of string - opts.trimStart", () => {
       equal(
         collapse(`${eol} \ta b\t ${eol}`, opt).result,
         `${eol} \ta b`,
-        JSON.stringify(opt, null, 0),
+        `09.04 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -716,7 +718,7 @@ test("09 - sequences of spaces outside of string - opts.trimStart", () => {
       equal(
         collapse(`${eol} \ta b\t ${eol}`, opt).result,
         `${eol} a b`,
-        JSON.stringify(opt, null, 0),
+        `09.05 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
 
@@ -732,7 +734,7 @@ test("09 - sequences of spaces outside of string - opts.trimStart", () => {
       equal(
         collapse(`${eol} \ta b\t ${eol}`, opt).result,
         `a b\t ${eol}`,
-        JSON.stringify(opt, null, 0),
+        `09.06 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -745,7 +747,7 @@ test("09 - sequences of spaces outside of string - opts.trimStart", () => {
       equal(
         collapse(`${eol} \ta b\t ${eol}`, opt).result,
         `a b ${eol}`,
-        JSON.stringify(opt, null, 0),
+        `09.07 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
 
@@ -759,7 +761,7 @@ test("09 - sequences of spaces outside of string - opts.trimStart", () => {
       equal(
         collapse(`${eol} \ta b\t ${eol}`, opt).result,
         "a b",
-        JSON.stringify(opt, null, 0),
+        `09.08 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
@@ -773,7 +775,7 @@ test("10 - sequences of line breaks", () => {
       equal(
         collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
         `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `10.01 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -782,7 +784,7 @@ test("10 - sequences of line breaks", () => {
       equal(
         collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
         `a${eol}b${eol}c${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `10.02 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -792,7 +794,7 @@ test("10 - sequences of line breaks", () => {
       equal(
         collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
         `a${eol}b${eol}c${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `10.03 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -802,7 +804,7 @@ test("10 - sequences of line breaks", () => {
       equal(
         collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
         `a${eol}b${eol}c${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `10.04 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -812,7 +814,7 @@ test("10 - sequences of line breaks", () => {
       equal(
         collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
         `a${eol}b${eol}c${eol}${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `10.05 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -822,7 +824,7 @@ test("10 - sequences of line breaks", () => {
       equal(
         collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
         `a${eol}b${eol}c${eol}${eol}${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `10.06 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -832,7 +834,7 @@ test("10 - sequences of line breaks", () => {
       equal(
         collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
         `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `10.07 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -842,7 +844,7 @@ test("10 - sequences of line breaks", () => {
       equal(
         collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
         `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `10.08 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -852,7 +854,7 @@ test("10 - sequences of line breaks", () => {
       equal(
         collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
         `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `10.09 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
@@ -868,7 +870,7 @@ test("11 - sequences of line breaks", () => {
         collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
           .result,
         `a${eol}b${eol}c${eol} ${eol}${eol}${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `11.01 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -879,7 +881,7 @@ test("11 - sequences of line breaks", () => {
         collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
           .result,
         `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `11.02 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -890,7 +892,7 @@ test("11 - sequences of line breaks", () => {
         collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
           .result,
         `a${eol}b${eol}c${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `11.03 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -902,7 +904,7 @@ test("11 - sequences of line breaks", () => {
         collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
           .result,
         `a${eol}b${eol}c${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `11.04 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -914,7 +916,7 @@ test("11 - sequences of line breaks", () => {
         collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
           .result,
         `a${eol}b${eol}c${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `11.05 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -926,7 +928,7 @@ test("11 - sequences of line breaks", () => {
         collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
           .result,
         `a${eol}b${eol}c${eol}${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `11.06 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -938,7 +940,7 @@ test("11 - sequences of line breaks", () => {
         collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
           .result,
         `a${eol}b${eol}c${eol}${eol}${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `11.07 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -950,7 +952,7 @@ test("11 - sequences of line breaks", () => {
         collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
           .result,
         `a${eol}b${eol}c${eol} ${eol}${eol}${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `11.08 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -962,7 +964,7 @@ test("11 - sequences of line breaks", () => {
         collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
           .result,
         `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `11.09 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -974,7 +976,7 @@ test("11 - sequences of line breaks", () => {
         collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
           .result,
         `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `11.10 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -986,7 +988,7 @@ test("11 - sequences of line breaks", () => {
         collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
           .result,
         `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
-        JSON.stringify(opt, null, 0),
+        `11.11 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
@@ -998,7 +1000,7 @@ test("12 - tag and linebreak chain", () => {
       equal(
         collapse(`a<br>${presentEolType}b`, opt).result,
         `a<br>${presentEolType}b`,
-        JSON.stringify(opt, null, 0),
+        `12.01 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
@@ -1010,7 +1012,7 @@ test("13 - tag and linebreak chain", () => {
       equal(
         collapse(`a<br>${presentEolType}b<br>${presentEolType}c`, opt).result,
         `a<br>${presentEolType}b<br>${presentEolType}c`,
-        JSON.stringify(opt, null, 0),
+        `13.01 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
@@ -1025,7 +1027,7 @@ test("14 - tag and linebreak chain", () => {
           opt,
         ).result,
         `a<br>${presentEolType}b<br>${presentEolType}c<br>${presentEolType}d`,
-        JSON.stringify(opt, null, 0),
+        `14.01 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
