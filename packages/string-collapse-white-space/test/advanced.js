@@ -1,8 +1,8 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
-import { collapse, cbSchema } from "../dist/string-collapse-white-space.esm.js";
+import { cbSchema, collapse } from "../dist/string-collapse-white-space.esm.js";
 import { mixer } from "./util/util.js";
 
 // More tests on trimming, targetting algorithm's weakest spots
@@ -24,7 +24,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
       collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "01.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -38,7 +38,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "\t\t\t \t\t\taaa\t\t\t \t\t\t",
-      JSON.stringify(opt, null, 0),
+      `01.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -51,7 +51,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
       collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "01.04");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -65,7 +65,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "\t\t\t \t\t\taaa",
-      JSON.stringify(opt, null, 0),
+      `01.03 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -78,7 +78,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
       collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "01.06");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -92,7 +92,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa\t\t\t \t\t\t",
-      JSON.stringify(opt, null, 0),
+      `01.05 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -107,7 +107,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
       collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "01.08");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -121,7 +121,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " aaa ",
-      JSON.stringify(opt, null, 0),
+      `01.07 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -134,7 +134,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
       collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "01.10");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -148,7 +148,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " aaa",
-      JSON.stringify(opt, null, 0),
+      `01.09 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -161,7 +161,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
       collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "01.12");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -175,7 +175,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa ",
-      JSON.stringify(opt, null, 0),
+      `01.11 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -189,7 +189,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
       collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "01.14");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -203,7 +203,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa",
-      JSON.stringify(opt, null, 0),
+      `01.13 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -217,7 +217,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
       collapse("\t\t\t   \t\t\taaa\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "01.16");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(
@@ -239,7 +239,7 @@ test("01 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa",
-      JSON.stringify(opt, null, 0),
+      `01.15 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -287,7 +287,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "03.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -301,7 +301,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " \t\t\t aaa \t\t\t ",
-      JSON.stringify(opt, null, 0),
+      `03.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -314,7 +314,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "03.04");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -328,7 +328,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " \t\t\t aaa",
-      JSON.stringify(opt, null, 0),
+      `03.03 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -341,7 +341,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "03.06");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -355,7 +355,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa \t\t\t ",
-      JSON.stringify(opt, null, 0),
+      `03.05 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -371,7 +371,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "03.08");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -385,7 +385,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " aaa ",
-      JSON.stringify(opt, null, 0),
+      `03.07 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -398,7 +398,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "03.10");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -412,7 +412,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " aaa",
-      JSON.stringify(opt, null, 0),
+      `03.09 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -425,7 +425,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "03.12");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -439,7 +439,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa ",
-      JSON.stringify(opt, null, 0),
+      `03.11 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -451,7 +451,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "03.14");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -465,7 +465,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa",
-      JSON.stringify(opt, null, 0),
+      `03.13 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -478,7 +478,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t\t\t   aaa   \t\t\t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "03.16");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -492,7 +492,7 @@ test("03 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa",
-      JSON.stringify(opt, null, 0),
+      `03.15 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -514,7 +514,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "04.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -528,7 +528,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " \t \t \t aaa \t \t \t ",
-      JSON.stringify(opt, null, 0),
+      `04.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -541,7 +541,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "04.04");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -555,7 +555,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " \t \t \t aaa",
-      JSON.stringify(opt, null, 0),
+      `04.03 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -568,7 +568,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "04.06");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -582,7 +582,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa \t \t \t ",
-      JSON.stringify(opt, null, 0),
+      `04.05 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -598,7 +598,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "04.08");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -612,7 +612,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " aaa ",
-      JSON.stringify(opt, null, 0),
+      `04.07 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -625,7 +625,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "04.10");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -639,7 +639,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       " aaa",
-      JSON.stringify(opt, null, 0),
+      `04.09 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -652,7 +652,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "04.12");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -666,7 +666,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa ",
-      JSON.stringify(opt, null, 0),
+      `04.11 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -678,7 +678,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "04.14");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -692,7 +692,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa",
-      JSON.stringify(opt, null, 0),
+      `04.13 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -705,7 +705,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
       collapse("   \t \t \t   aaa   \t \t \t   ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "04.16");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -719,7 +719,7 @@ test("04 - trimming mixed lumps of trimmable characters", () => {
         },
       }).result,
       "aaa",
-      JSON.stringify(opt, null, 0),
+      `04.15 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -743,7 +743,7 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
           opt,
         ).result,
         `\t ${eol} \t \r ${eol}aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-        JSON.stringify(opt, null, 0),
+        `05.01 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -759,7 +759,7 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
           opt,
         ).result,
         `aaa\t \n \t ${eol} \t ${eol} \r\n \t \n`,
-        JSON.stringify(opt, null, 0),
+        `05.02 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -775,7 +775,7 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
           opt,
         ).result,
         `\t ${eol} \t \r ${eol}aaa`,
-        JSON.stringify(opt, null, 0),
+        `05.03 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
 
@@ -790,7 +790,7 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
           opt,
         ).result,
         "aaa",
-        JSON.stringify(opt, null, 0),
+        `05.04 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
 
@@ -809,7 +809,7 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
           opt,
         ).result,
         ` ${eol} \r ${eol}aaa \n ${eol} ${eol} \r\n \n`,
-        JSON.stringify(opt, null, 0),
+        `05.05 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -825,7 +825,7 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
           opt,
         ).result,
         `aaa \n ${eol} ${eol} \r\n \n`,
-        JSON.stringify(opt, null, 0),
+        `05.06 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -841,7 +841,7 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
           opt,
         ).result,
         ` ${eol} \r ${eol}aaa`,
-        JSON.stringify(opt, null, 0),
+        `05.07 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
 
@@ -862,7 +862,7 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
           opt,
         ).result,
         `${eol}\r${eol}aaa\n${eol}${eol}\r\n\n`,
-        JSON.stringify(opt, null, 0),
+        `05.08 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -878,7 +878,7 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
           opt,
         ).result,
         `aaa\n${eol}${eol}\r\n\n`,
-        JSON.stringify(opt, null, 0),
+        `05.09 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -894,7 +894,7 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
           opt,
         ).result,
         `${eol}\r${eol}aaa`,
-        JSON.stringify(opt, null, 0),
+        `05.10 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
 
@@ -909,7 +909,7 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
           opt,
         ).result,
         "aaa",
-        JSON.stringify(opt, null, 0),
+        `05.11 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
 
@@ -928,7 +928,7 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
           opt,
         ).result,
         `${eol}\r${eol}aaa\n${eol}${eol}\r\n\n`,
-        JSON.stringify(opt, null, 0),
+        `05.12 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -944,7 +944,7 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
           opt,
         ).result,
         `aaa\n${eol}${eol}\r\n\n`,
-        JSON.stringify(opt, null, 0),
+        `05.13 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -960,7 +960,7 @@ test("05 - trimming mixed lumps of trimmable characters, removeEmptyLines=false"
           opt,
         ).result,
         `${eol}\r${eol}aaa`,
-        JSON.stringify(opt, null, 0),
+        `05.14 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
@@ -975,7 +975,7 @@ test("06", () => {
       collapse("      ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "06.03");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -989,7 +989,7 @@ test("06", () => {
         },
       }).result,
       "",
-      JSON.stringify(opt, null, 0),
+      `06.02 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -999,7 +999,7 @@ test("06", () => {
       collapse("      ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "06.05");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1013,7 +1013,7 @@ test("06", () => {
         },
       }).result,
       "",
-      JSON.stringify(opt, null, 0),
+      `06.04 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -1023,7 +1023,7 @@ test("06", () => {
       collapse("      ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "06.07");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1037,7 +1037,7 @@ test("06", () => {
         },
       }).result,
       "",
-      JSON.stringify(opt, null, 0),
+      `06.06 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -1049,7 +1049,7 @@ test("06", () => {
       collapse("      ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "06.09");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1063,7 +1063,7 @@ test("06", () => {
         },
       }).result,
       " ",
-      JSON.stringify(opt, null, 0),
+      `06.08 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -1077,7 +1077,7 @@ test("07", () => {
       collapse("\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "07.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1091,7 +1091,7 @@ test("07", () => {
         },
       }),
       { result: "", ranges: [[0, 9]] },
-      JSON.stringify(opt, null, 0),
+      `07.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -1101,7 +1101,7 @@ test("07", () => {
       collapse("\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "07.04");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1115,7 +1115,7 @@ test("07", () => {
         },
       }),
       { result: "", ranges: [[0, 9]] },
-      JSON.stringify(opt, null, 0),
+      `07.03 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -1125,7 +1125,7 @@ test("07", () => {
       collapse("\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "07.06");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1139,7 +1139,7 @@ test("07", () => {
         },
       }),
       { result: "", ranges: [[0, 9]] },
-      JSON.stringify(opt, null, 0),
+      `07.05 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -1152,7 +1152,7 @@ test("07", () => {
       collapse("\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "07.08");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1166,7 +1166,7 @@ test("07", () => {
         },
       }),
       { result: "\t\t\t \t\t\t", ranges: [[3, 5]] },
-      JSON.stringify(opt, null, 0),
+      `07.07 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -1179,7 +1179,7 @@ test("07", () => {
       collapse("\t\t\t   \t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "07.10");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1193,7 +1193,7 @@ test("07", () => {
         },
       }),
       { result: " ", ranges: [[0, 9, " "]] },
-      JSON.stringify(opt, null, 0),
+      `07.09 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -1207,7 +1207,7 @@ test("08", () => {
       collapse("\t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "08.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1221,7 +1221,7 @@ test("08", () => {
         },
       }),
       { result: "", ranges: [[0, 3]] },
-      JSON.stringify(opt, null, 0),
+      `08.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -1231,7 +1231,7 @@ test("08", () => {
       collapse("\t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "08.04");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1245,7 +1245,7 @@ test("08", () => {
         },
       }),
       { result: "", ranges: [[0, 3]] },
-      JSON.stringify(opt, null, 0),
+      `08.03 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -1255,7 +1255,7 @@ test("08", () => {
       collapse("\t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "08.06");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1269,7 +1269,7 @@ test("08", () => {
         },
       }),
       { result: "", ranges: [[0, 3]] },
-      JSON.stringify(opt, null, 0),
+      `08.05 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -1282,7 +1282,7 @@ test("08", () => {
       collapse("\t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "08.08");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1296,7 +1296,7 @@ test("08", () => {
         },
       }),
       { result: "\t\t\t", ranges: null },
-      JSON.stringify(opt, null, 0),
+      `08.07 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -1309,7 +1309,7 @@ test("08", () => {
       collapse("\t\t\t", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "08.10");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1323,7 +1323,7 @@ test("08", () => {
         },
       }),
       { result: " ", ranges: [[0, 3, " "]] },
-      JSON.stringify(opt, null, 0),
+      `08.09 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -1339,7 +1339,7 @@ test("09", () => {
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            equal(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema, "09.02");
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
                 is(typeof props[key], "number");
@@ -1362,7 +1362,7 @@ test("09", () => {
           },
         }).result,
         "",
-        JSON.stringify(opt, null, 0),
+        `09.01 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -1373,7 +1373,7 @@ test("09", () => {
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            equal(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema, "09.04");
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
                 is(typeof props[key], "number");
@@ -1396,7 +1396,7 @@ test("09", () => {
           },
         }).result,
         "",
-        JSON.stringify(opt, null, 0),
+        `09.03 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -1408,7 +1408,7 @@ test("09", () => {
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            equal(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema, "09.06");
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
                 is(typeof props[key], "number");
@@ -1431,7 +1431,7 @@ test("09", () => {
           },
         }).result,
         `${eol}${eol}${eol}`,
-        JSON.stringify(opt, null, 0),
+        `09.05 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
 
@@ -1446,7 +1446,7 @@ test("09", () => {
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            equal(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema, "09.08");
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
                 is(typeof props[key], "number");
@@ -1469,7 +1469,7 @@ test("09", () => {
           },
         }).result,
         `${eol}`,
-        JSON.stringify(opt, null, 0),
+        `09.07 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -1482,7 +1482,7 @@ test("09", () => {
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            equal(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema, "09.10");
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
                 is(typeof props[key], "number");
@@ -1505,7 +1505,7 @@ test("09", () => {
           },
         }).result,
         `${eol}${eol}`,
-        JSON.stringify(opt, null, 0),
+        `09.09 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -1518,7 +1518,7 @@ test("09", () => {
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            equal(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema, "09.12");
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
                 is(typeof props[key], "number");
@@ -1541,7 +1541,7 @@ test("09", () => {
           },
         }).result,
         `${eol}${eol}${eol}`,
-        JSON.stringify(opt, null, 0),
+        `09.11 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -1554,7 +1554,7 @@ test("09", () => {
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            equal(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema, "09.14");
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
                 is(typeof props[key], "number");
@@ -1577,7 +1577,7 @@ test("09", () => {
           },
         }).result,
         `${eol}${eol}${eol}`,
-        JSON.stringify(opt, null, 0),
+        `09.13 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -1590,7 +1590,7 @@ test("09", () => {
         collapse(`${eol}${eol}${eol}`, {
           ...opt,
           cb: ({ ...props }) => {
-            equal(Object.keys(props), cbSchema);
+            equal(Object.keys(props), cbSchema, "09.16");
             Object.keys(props).forEach((key) => {
               if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
                 is(typeof props[key], "number");
@@ -1613,7 +1613,7 @@ test("09", () => {
           },
         }).result,
         `${eol}${eol}${eol}`,
-        JSON.stringify(opt, null, 0),
+        `09.15 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
@@ -1653,7 +1653,7 @@ test("11 - trim involving non-breaking spaces", () => {
       collapse("\xa0   a   \xa0", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "11.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1667,7 +1667,7 @@ test("11 - trim involving non-breaking spaces", () => {
         },
       }).result,
       "a",
-      JSON.stringify(opt, null, 0),
+      `11.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -1678,7 +1678,7 @@ test("11 - trim involving non-breaking spaces", () => {
       collapse("\xa0   a   \xa0", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "11.04");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1692,7 +1692,7 @@ test("11 - trim involving non-breaking spaces", () => {
         },
       }).result,
       "a",
-      JSON.stringify(opt, null, 0),
+      `11.03 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -1704,7 +1704,7 @@ test("11 - trim involving non-breaking spaces", () => {
       collapse("\xa0   a   \xa0", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "11.06");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1718,7 +1718,7 @@ test("11 - trim involving non-breaking spaces", () => {
         },
       }).result,
       "\xa0 a \xa0",
-      JSON.stringify(opt, null, 0),
+      `11.05 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -1733,7 +1733,7 @@ test("11 - trim involving non-breaking spaces", () => {
       collapse("\xa0   a   \xa0", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "11.08");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1747,7 +1747,7 @@ test("11 - trim involving non-breaking spaces", () => {
         },
       }).result,
       " a ",
-      JSON.stringify(opt, null, 0),
+      `11.07 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -1761,7 +1761,7 @@ test("11 - trim involving non-breaking spaces", () => {
       collapse("\xa0   a   \xa0", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "11.10");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -1775,7 +1775,7 @@ test("11 - trim involving non-breaking spaces", () => {
         },
       }).result,
       "a",
-      JSON.stringify(opt, null, 0),
+      `11.09 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -2028,7 +2028,7 @@ test("26 - trim involving non-breaking spaces", () => {
       collapse("  \xa0  ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "26.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -2042,7 +2042,7 @@ test("26 - trim involving non-breaking spaces", () => {
         },
       }).result,
       " \xa0 ",
-      JSON.stringify(opt, null, 0),
+      `26.01 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -2055,7 +2055,7 @@ test("26 - trim involving non-breaking spaces", () => {
       collapse("  \xa0  ", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "26.04");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -2069,7 +2069,7 @@ test("26 - trim involving non-breaking spaces", () => {
         },
       }).result,
       " ",
-      JSON.stringify(opt, null, 0),
+      `26.03 - ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -2080,7 +2080,7 @@ test("27 - bracket", () => {
       collapse("a > b", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "27.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
@@ -2105,7 +2105,7 @@ test("28 - bracket", () => {
       collapse("<span>zzz</span> abc def ghij klm", {
         ...opt,
         cb: ({ ...props }) => {
-          equal(Object.keys(props), cbSchema);
+          equal(Object.keys(props), cbSchema, "28.02");
           Object.keys(props).forEach((key) => {
             if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
               is(typeof props[key], "number");
