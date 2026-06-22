@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { collapse } from "../dist/string-collapse-white-space.esm.js";
 
@@ -41,10 +41,10 @@ function nothingToCollapseGenerator() {
 // check a ten thousand randomly-generated strings that don't need collapsing
 // -----------------------------------------------------------------------------
 
-test(`01.XX - ${`\u001b[${36}m${"GENERATED TESTS"}\u001b[${39}m`}`, () => {
+test(`01 - ${`\u001b[${36}m${"GENERATED TESTS"}\u001b[${39}m`}`, () => {
   for (let i = 10000; i--; ) {
     let temp = nothingToCollapseGenerator();
-    equal(collapse(temp), { result: temp, ranges: null });
+    equal(collapse(temp), { result: temp, ranges: null }, "01.01");
     temp = undefined;
   }
 });
