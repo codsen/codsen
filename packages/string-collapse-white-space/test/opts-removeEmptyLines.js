@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { collapse } from "../dist/string-collapse-white-space.esm.js";
 import { mixer } from "./util/util.js";
@@ -16,7 +16,7 @@ test("01", () => {
       equal(
         collapse(`a${eol}b`, opt).result,
         `a${eol}b`,
-        JSON.stringify(opt, null, 0),
+        `01.01 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
@@ -30,7 +30,7 @@ test("02", () => {
       equal(
         collapse(`a${eol}${eol}b`, opt).result,
         `a${eol}${eol}b`,
-        JSON.stringify(opt, null, 0),
+        `02.01 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -39,7 +39,7 @@ test("02", () => {
       equal(
         collapse(`a${eol}${eol}b`, opt).result,
         `a${eol}b`,
-        JSON.stringify(opt, null, 0),
+        `02.02 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
@@ -80,7 +80,7 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a ${eol} ${eol} b`,
-        JSON.stringify(opt, null, 0),
+        `05.01 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -91,7 +91,7 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a${eol}${eol}b`,
-        JSON.stringify(opt, null, 0),
+        `05.02 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
 
@@ -104,7 +104,7 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a ${eol} b`,
-        JSON.stringify(opt, null, 0),
+        `05.03 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -115,7 +115,7 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a${eol}b`,
-        JSON.stringify(opt, null, 0),
+        `05.04 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
 
@@ -128,7 +128,7 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a ${eol} ${eol} b`,
-        JSON.stringify(opt, null, 0),
+        `05.05 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -139,7 +139,7 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a${eol}${eol}b`,
-        JSON.stringify(opt, null, 0),
+        `05.06 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
 
@@ -152,7 +152,7 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a ${eol} ${eol} b`,
-        JSON.stringify(opt, null, 0),
+        `05.07 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
     mixer({
@@ -163,13 +163,13 @@ test("05", () => {
       equal(
         collapse(`a ${eol} ${eol} b`, opt).result,
         `a${eol}${eol}b`,
-        JSON.stringify(opt, null, 0),
+        `05.08 - ${JSON.stringify(opt, null, 0)}`,
       );
     });
   });
 });
 
-test(`06 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - one - remove`, () => {
+test(`06 - opts.removeEmptyLines - one - remove`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(`a${presentEolType}${presentEolType}b`, {
@@ -178,7 +178,7 @@ test(`06 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - one - rem
         removeEmptyLines: true,
       }).result,
       `a${presentEolType}b`,
-      `EOL ${key[idx]}`,
+      `06.01 - ${`EOL ${key[idx]}`}`,
     );
     equal(
       collapse(`a${presentEolType}${presentEolType}b`, {
@@ -187,12 +187,12 @@ test(`06 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - one - rem
         removeEmptyLines: true,
       }).result,
       `a${presentEolType}b`,
-      `EOL ${key[idx]}`,
+      `06.02 - ${`EOL ${key[idx]}`}`,
     );
   });
 });
 
-test(`07 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - one - don't remove`, () => {
+test(`07 - opts.removeEmptyLines - one - don't remove`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(`a${presentEolType}${presentEolType}b`, {
@@ -201,7 +201,7 @@ test(`07 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - one - don
         removeEmptyLines: false,
       }).result,
       `a${presentEolType}${presentEolType}b`,
-      `EOL ${key[idx]}`,
+      `07.01 - ${`EOL ${key[idx]}`}`,
     );
     equal(
       collapse(`a${presentEolType}${presentEolType}b`, {
@@ -210,12 +210,12 @@ test(`07 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - one - don
         removeEmptyLines: false,
       }).result,
       `a${presentEolType}${presentEolType}b`,
-      `EOL ${key[idx]}`,
+      `07.02 - ${`EOL ${key[idx]}`}`,
     );
   });
 });
 
-test(`08 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - two, spaced - remove`, () => {
+test(`08 - opts.removeEmptyLines - two, spaced - remove`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(` a ${presentEolType} ${presentEolType} b `, {
@@ -224,7 +224,7 @@ test(`08 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - two, spac
         removeEmptyLines: true,
       }).result,
       `a${presentEolType}b`,
-      `EOL ${key[idx]}`,
+      `08.01 - ${`EOL ${key[idx]}`}`,
     );
     equal(
       collapse(` a ${presentEolType} ${presentEolType} b `, {
@@ -233,12 +233,12 @@ test(`08 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - two, spac
         removeEmptyLines: true,
       }).result,
       `a${presentEolType}b`,
-      `EOL ${key[idx]}`,
+      `08.02 - ${`EOL ${key[idx]}`}`,
     );
   });
 });
 
-test(`09 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - two, spaced - don't remove`, () => {
+test(`09 - opts.removeEmptyLines - two, spaced - don't remove`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(` a ${presentEolType} ${presentEolType} b `, {
@@ -247,7 +247,7 @@ test(`09 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - two, spac
         removeEmptyLines: false,
       }).result,
       `a${presentEolType}${presentEolType}b`,
-      `EOL ${key[idx]}`,
+      `09.01 - ${`EOL ${key[idx]}`}`,
     );
     equal(
       collapse(` a ${presentEolType} ${presentEolType} b `, {
@@ -256,12 +256,12 @@ test(`09 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - two, spac
         removeEmptyLines: false,
       }).result,
       `a${presentEolType}${presentEolType}b`,
-      `EOL ${key[idx]}`,
+      `09.02 - ${`EOL ${key[idx]}`}`,
     );
   });
 });
 
-test(`10 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - empty lines removal off + per-line trimming off`, () => {
+test(`10 - opts.removeEmptyLines - empty lines removal off + per-line trimming off`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(` a ${presentEolType} ${presentEolType} b `, {
@@ -270,7 +270,7 @@ test(`10 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - empty lin
         removeEmptyLines: false,
       }).result,
       `a ${presentEolType} ${presentEolType} b`,
-      `EOL ${key[idx]}`,
+      `10.01 - ${`EOL ${key[idx]}`}`,
     );
     equal(
       collapse(` a ${presentEolType} ${presentEolType} b `, {
@@ -279,12 +279,12 @@ test(`10 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - empty lin
         removeEmptyLines: false,
       }).result,
       `a ${presentEolType} ${presentEolType} b`,
-      `EOL ${key[idx]}`,
+      `10.02 - ${`EOL ${key[idx]}`}`,
     );
   });
 });
 
-test(`11 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - \\n - empty lines removal off + per-line trimming off - multiple spaces`, () => {
+test(`11 - opts.removeEmptyLines - \\n - empty lines removal off + per-line trimming off - multiple spaces`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(`  a  ${presentEolType}  ${presentEolType}  b  `, {
@@ -293,7 +293,7 @@ test(`11 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - \\n - emp
         removeEmptyLines: false,
       }).result,
       `a ${presentEolType} ${presentEolType} b`,
-      `EOL ${key[idx]}`,
+      `11.01 - ${`EOL ${key[idx]}`}`,
     );
     equal(
       collapse(`  a  ${presentEolType}  ${presentEolType}  b  `, {
@@ -302,12 +302,12 @@ test(`11 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - \\n - emp
         removeEmptyLines: false,
       }).result,
       `a ${presentEolType} ${presentEolType} b`,
-      `EOL ${key[idx]}`,
+      `11.02 - ${`EOL ${key[idx]}`}`,
     );
   });
 });
 
-test(`12 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - advanced`, () => {
+test(`12 - opts.removeEmptyLines - advanced`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(
@@ -315,12 +315,12 @@ test(`12 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - advanced`
         { trimLines: true, trimnbsp: true, removeEmptyLines: true },
       ).result,
       `a b\r\nc d\re f${presentEolType}g h`,
-      `EOL ${key[idx]}`,
+      `12.01 - ${`EOL ${key[idx]}`}`,
     );
   });
 });
 
-test(`13 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - leading/trailing empty lines`, () => {
+test(`13 - opts.removeEmptyLines - leading/trailing empty lines`, () => {
   ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
     equal(
       collapse(
@@ -332,7 +332,7 @@ test(`13 - ${`\u001b[${33}m${"opts.removeEmptyLines"}\u001b[${39}m`} - leading/t
         },
       ).result,
       `a${presentEolType}b`,
-      `EOL ${key[idx]}`,
+      `13.01 - ${`EOL ${key[idx]}`}`,
     );
   });
 });
