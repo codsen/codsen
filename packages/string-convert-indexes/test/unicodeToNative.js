@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { unicodeToNative } from "../dist/string-convert-indexes.esm.js";
 
@@ -48,7 +48,7 @@ test("03 - one letter string", () => {
 
 test("04 - single astral symbol", () => {
   is(unicodeToNative("\uD834\uDF06", 0), 0, "04.01");
-  throws(() => unicodeToNative("\uD834\uDF06", 1), /THROW_ID_06/, "04.02");
+  throws(() => unicodeToNative("\uD834\uDF06", 1), /THROW_ID_02/, "04.02");
 });
 
 test("05 - multiple consecutive astral symbols", () => {
@@ -90,7 +90,7 @@ test("10 - two astral characters offsetting the rest", () => {
 test("11 - two astral characters offsetting the rest", () => {
   throws(
     () => unicodeToNative("\uD834\uDF06aa", [1, 0, 2, 3, 4]),
-    /THROW_ID_06/,
+    /THROW_ID_02/,
     "11.01",
   );
 });
@@ -98,7 +98,7 @@ test("11 - two astral characters offsetting the rest", () => {
 test("12 - two astral characters offsetting the rest", () => {
   throws(
     () => unicodeToNative("\uD834\uDF06aa", ["1", "0", "2", "3", "4"]),
-    /THROW_ID_06/,
+    /THROW_ID_02/,
     "12.01",
   );
 });
