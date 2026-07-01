@@ -34,19 +34,17 @@
   "types": "types/index.d.ts",
   "scripts": {
     "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-    "cjs-off": "exit 0",
-    "cjs-on": "exit 0",
     "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
     "devtest": "c8 npm run unit && npm run examples && npm run lint",
-    "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+    "dts": "rollup -c && npm run prettier:format",
     "examples": "node '../../ops/scripts/run-examples.js'",
-    "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-    "letspublish": "npm publish --provenance || :",
-    "lint": "eslint . --fix --concurrency=auto --cache",
+    "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+    "letspublish": "npm publish --provenance",
+    "lint": "biome lint --write .",
     "perf": "node perf/check.js",
     "prep": "echo 'ready'",
-    "prettier": "prettier",
-    "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+    "prettier": "biome format",
+    "prettier:format": "biome format --write .",
     "pretest": "npm run lect && npm run build",
     "test": "npm run devtest",
     "unit": "uvu test"
@@ -56,16 +54,12 @@
   },
   "c8": {
     "check-coverage": true,
-    "exclude": [
-      "**/test/**/*.*"
-    ],
+    "exclude": ["**/test/**/*.*"],
     "lines": 100
   },
   "lect": {
     "licence": {
-      "extras": [
-        ""
-      ]
+      "extras": [""]
     },
     "various": {}
   },

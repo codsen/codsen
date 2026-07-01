@@ -32,9 +32,12 @@ npm i string-convert-indexes
 ## Quick Take
 
 ```js
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
-import { nativeToUnicode, unicodeToNative } from "string-convert-indexes";
+import {
+  nativeToUnicode,
+  unicodeToNative,
+} from "string-convert-indexes";
 
 // CONVERTING NATIVE JS INDEXES TO UNICODE-CHAR-COUNT-BASED
 // 𝌆 - \uD834\uDF06
@@ -70,6 +73,7 @@ assert.throws(() => unicodeToNative("\uD834\uDF06aa", [1, 0, 2, 3]));
 // we have only three Unicode characters, so indexes go only up until 2
 ```
 
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/string-convert-indexes/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/string-convert-indexes/CHANGELOG.md).
@@ -82,6 +86,6 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 MIT License
 
-Copyright © 2010-2025 Roy Revelt and other contributors
+Copyright © 2010-2026 Roy Revelt and other contributors
 
 <p align="center"><img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center"></p>
