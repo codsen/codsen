@@ -9,15 +9,22 @@ const version: string = v;
 
 declare let DEV: boolean;
 
+function isStringOrNumber(value: unknown): value is string | number {
+  const valueType = typeof value;
+  return valueType === "string" || valueType === "number";
+}
+
 // inner function, common for both external API's methods that does the job:
 function strConvertIndexes(
   mode: "n" | "u",
   str: string,
   indexes: any,
 ): string | number {
+  const functionName = mode === "n" ? "nativeToUnicode" : "unicodeToNative";
+
   function isItOk(something: any): boolean {
     if (
-      !["string", "number"].includes(typeof something) ||
+      !isStringOrNumber(something) ||
       (typeof something === "string" && !/^\d*$/.test(something)) ||
       (typeof something === "number" &&
         (!Number.isInteger(something) || something < 0))
@@ -39,7 +46,7 @@ function strConvertIndexes(
 
       DEV &&
         console.log(
-          `042 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
+          `049 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
             graphemeStrArr[i]
           } (${graphemeStrArr[i].split("").length})`,
         );
@@ -53,14 +60,14 @@ function strConvertIndexes(
 
     // if end is reached, it's an error
     throw new Error(
-      `string-convert-indexes: [THROW_ID_05] the "indexes" value, ${indexes}, is not covered by graphemes length!`,
+      `string-convert-indexes/${functionName}(): [THROW_ID_01] the "indexes" value, ${indexes}, is not covered by graphemes length!`,
     );
   }
 
   function oneUnicodeToNative(graphemeStrArr: string[], idx: number): number {
     if (idx >= graphemeStrArr.length) {
       throw new Error(
-        `string-convert-indexes: [THROW_ID_06] the index to convert, ${idx}, is not covered by graphemes length!`,
+        `string-convert-indexes/${functionName}(): [THROW_ID_02] the index to convert, ${idx}, is not covered by graphemes length!`,
       );
     }
     return graphemeStrArr.slice(0, idx).join("").length;
@@ -71,7 +78,7 @@ function strConvertIndexes(
   // ---------
   if (typeof str !== "string" || !str) {
     throw new TypeError(
-      `string-convert-indexes: [THROW_ID_01] the first input argument, input string, must be a non-zero-length string! Currently it's: ${typeof str}, equal to:\n${str}`,
+      `string-convert-indexes/${functionName}(): [THROW_ID_03] the first input argument, input string, must be a non-zero-length string! Currently it's: ${typeof str}, equal to:\n${str}`,
     );
   }
 
@@ -93,12 +100,12 @@ function strConvertIndexes(
   // easy - index will be the total count of all native JS index characters
   // leading up to this
 
-  if (["string", "number"].includes(typeof indexes)) {
-    DEV && console.log(`097 ██ no AST`);
+  if (isStringOrNumber(indexes)) {
+    DEV && console.log(`104 ██ no AST`);
     // no need for traversal
     // validate
     if (isItOk(indexes)) {
-      DEV && console.log(`OK`);
+      DEV && console.log(`108 OK`);
 
       if (mode === "u") {
         return typeof indexes === "string"
@@ -112,19 +119,19 @@ function strConvertIndexes(
     }
     // else - error - messy string or number
     throw new Error(
-      `string-convert-indexes: [THROW_ID_02] the second input argument, "indexes" is not suitable to describe string index - it was given as ${JSON.stringify(
+      `string-convert-indexes/${functionName}(): [THROW_ID_04] the second input argument, "indexes" is not suitable to describe string index - it was given as ${JSON.stringify(
         indexes,
         null,
         4,
       )} (${typeof indexes})`,
     );
   } else if (indexes && typeof indexes === "object") {
-    DEV && console.log(`122 ██ AST - traverse!`);
+    DEV && console.log(`129 ██ AST - traverse!`);
     // if it's array or object, traverse
     return mode === "u"
       ? traverse(indexes, (key, val, innerObj) => {
           let current = val !== undefined ? val : key;
-          if (["string", "number"].includes(typeof current)) {
+          if (isStringOrNumber(current)) {
             // process it then
             if (isItOk(current)) {
               return typeof current === "string"
@@ -132,7 +139,7 @@ function strConvertIndexes(
                 : oneUnicodeToNative(graphemeStrArr, +current);
             }
             throw new Error(
-              `string-convert-indexes: [THROW_ID_03] bad value was encountered, ${JSON.stringify(
+              `string-convert-indexes/${functionName}(): [THROW_ID_05] bad value was encountered, ${JSON.stringify(
                 current,
                 null,
                 4,
@@ -144,7 +151,7 @@ function strConvertIndexes(
         })
       : traverse(indexes, (key, val, innerObj) => {
           let current = val !== undefined ? val : key;
-          if (["string", "number"].includes(typeof current)) {
+          if (isStringOrNumber(current)) {
             // process it then
             if (isItOk(current)) {
               return typeof current === "string"
@@ -152,7 +159,7 @@ function strConvertIndexes(
                 : oneNativeToUnicode(graphemeStrArr, +current);
             }
             throw new Error(
-              `string-convert-indexes: [THROW_ID_04] bad value was encountered, ${JSON.stringify(
+              `string-convert-indexes/${functionName}(): [THROW_ID_06] bad value was encountered, ${JSON.stringify(
                 current,
                 null,
                 4,
@@ -164,7 +171,7 @@ function strConvertIndexes(
         });
   } else {
     throw new Error(
-      `string-convert-indexes: [THROW_ID_07] the first input argument, a source string should be a string but it was given as ${str}, type ${typeof str}`,
+      `string-convert-indexes/${functionName}(): [THROW_ID_07] the first input argument, a source string should be a string but it was given as ${str}, type ${typeof str}`,
     );
   }
 }
