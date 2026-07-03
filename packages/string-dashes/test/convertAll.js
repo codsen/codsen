@@ -1,10 +1,9 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { rawMDash, rawNDash } from "codsen-utils";
-
-import { convertAll } from "../dist/string-dashes.esm.js";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import { pad } from "../../../ops/helpers/common.js";
+import { convertAll } from "../dist/string-dashes.esm.js";
 import { mixer } from "./_util.js";
 
 // -----------------------------------------------------------------------------
@@ -25,7 +24,7 @@ test("01 - combo", () => {
         result: input,
         ranges: [],
       },
-      `01.01.${pad(n)}`,
+      `01.01 - ${pad(n)}`,
     );
   });
   mixer({
@@ -41,7 +40,7 @@ test("01 - combo", () => {
           [44, 45, "&ndash;"],
         ],
       },
-      `01.03.${pad(n)}`,
+      `01.02 - ${pad(n)}`,
     );
     // nothing to offset, we're processing only one character, so callback is not called,
     // we're not pinging zero to callback:
@@ -59,7 +58,7 @@ test("01 - combo", () => {
           [44, 45, rawNDash],
         ],
       },
-      `01.05.${pad(n)}`,
+      `01.03 - ${pad(n)}`,
     );
     // nothing to offset, we're processing only one character, so callback is not called,
     // we're not pinging zero to callback:
