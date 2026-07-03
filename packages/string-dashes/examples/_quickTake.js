@@ -1,8 +1,8 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
-import { convertOne, convertAll } from "../dist/string-dashes.esm.js";
+import { convertAll, convertOne } from "../dist/string-dashes.esm.js";
 
 assert.deepEqual(
   convertAll("Dashes come in two sizes - the en dash and the em dash.", {
