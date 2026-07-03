@@ -1,11 +1,10 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
-import { convertOne } from "../dist/string-dashes.esm.js";
-import { pad } from "../../../ops/helpers/common.js";
-import { mixer } from "./_util.js";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { findAllIdx, rawNDash } from "codsen-utils";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+import { pad } from "../../../ops/helpers/common.js";
+import { convertOne } from "../dist/string-dashes.esm.js";
+import { mixer } from "./_util.js";
 
 // for debug purposes only
 // -----------------------------------------------------------------------------
@@ -37,7 +36,7 @@ test("01 - digit-dash-digit × 2", () => {
     equal(
       convertOne(input, opt),
       null,
-      `02.01.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `01.01 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -48,7 +47,7 @@ test("01 - digit-dash-digit × 2", () => {
     equal(
       convertOne(input, opt),
       [[4, 5, "&ndash;"]],
-      `02.02.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `01.02 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -59,7 +58,7 @@ test("01 - digit-dash-digit × 2", () => {
     equal(
       convertOne(input, opt),
       [[4, 5, rawNDash]],
-      `02.03.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `01.03 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -72,7 +71,7 @@ test("01 - digit-dash-digit × 2", () => {
     equal(
       convertOne(input, opt),
       null,
-      `02.04.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `01.04 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -83,7 +82,7 @@ test("01 - digit-dash-digit × 2", () => {
     equal(
       convertOne(input, opt),
       [[20, 21, "&ndash;"]],
-      `02.05.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `01.05 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -94,7 +93,7 @@ test("01 - digit-dash-digit × 2", () => {
     equal(
       convertOne(input, opt),
       [[20, 21, rawNDash]],
-      `02.06.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `01.06 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -106,7 +105,7 @@ test("01 - digit-dash-digit × 2", () => {
     equal(
       convertOne(input, opt),
       null,
-      `02.07.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `01.07 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -123,7 +122,7 @@ test("02 - n-dash minimal", () => {
     equal(
       convertOne(input, opt),
       null,
-      `03.01.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `02.01 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -134,7 +133,7 @@ test("02 - n-dash minimal", () => {
     equal(
       convertOne(input, opt),
       [[4, 5, "&ndash;"]],
-      `03.02.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `02.02 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -145,7 +144,7 @@ test("02 - n-dash minimal", () => {
     equal(
       convertOne(input, opt),
       [[4, 5, rawNDash]],
-      `03.03.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `02.03 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 
@@ -156,7 +155,7 @@ test("02 - n-dash minimal", () => {
     equal(
       convertOne(input, opt),
       null,
-      `03.04.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `02.04 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -165,7 +164,7 @@ test("02 - n-dash minimal", () => {
     equal(
       convertOne(input, opt),
       null,
-      `03.05.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `02.05 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -196,7 +195,7 @@ test("02 - n-dash minimal", () => {
         equal(
           convertOne(input, opt),
           null,
-          `03.01.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+          `03.01 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
         );
       });
     });
