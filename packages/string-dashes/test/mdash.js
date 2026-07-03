@@ -1,10 +1,9 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { rawMDash, rawNDash } from "codsen-utils";
-
-import { convertOne } from "../dist/string-dashes.esm.js";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import { pad } from "../../../ops/helpers/common.js";
+import { convertOne } from "../dist/string-dashes.esm.js";
 import { mixer } from "./_util.js";
 
 // -----------------------------------------------------------------------------
@@ -15,21 +14,21 @@ test("01 - m-dash minimal", () => {
     from: 25,
     convertDashes: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `01.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `01.01 - ${pad(n)}`);
   });
   mixer({
     from: 25,
     convertDashes: true,
     convertEntities: true,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[25, 26, "&mdash;"]], `01.02.${pad(n)}`);
+    equal(convertOne(input, opt), [[25, 26, "&mdash;"]], `01.02 - ${pad(n)}`);
   });
   mixer({
     from: 25,
     convertDashes: true,
     convertEntities: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[25, 26, rawMDash]], `01.03.${pad(n)}`);
+    equal(convertOne(input, opt), [[25, 26, rawMDash]], `01.03 - ${pad(n)}`);
   });
 
   // nothing to find
@@ -39,7 +38,7 @@ test("01 - m-dash minimal", () => {
     equal(
       convertOne(input, opt),
       null,
-      `01.04.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `01.04 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -48,7 +47,7 @@ test("01 - m-dash minimal", () => {
     equal(
       convertOne(input, opt),
       null,
-      `01.05.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `01.05 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -59,21 +58,21 @@ test("02 - n-dash instead of m-dash", () => {
     from: 25,
     convertDashes: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `02.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `02.01 - ${pad(n)}`);
   });
   mixer({
     from: 25,
     convertDashes: true,
     convertEntities: true,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[25, 26, "&mdash;"]], `02.02.${pad(n)}`);
+    equal(convertOne(input, opt), [[25, 26, "&mdash;"]], `02.02 - ${pad(n)}`);
   });
   mixer({
     from: 25,
     convertDashes: true,
     convertEntities: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[25, 26, rawMDash]], `02.03.${pad(n)}`);
+    equal(convertOne(input, opt), [[25, 26, rawMDash]], `02.03 - ${pad(n)}`);
   });
 
   // nothing to find
@@ -83,7 +82,7 @@ test("02 - n-dash instead of m-dash", () => {
     equal(
       convertOne(input, opt),
       null,
-      `02.04.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `02.04 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -92,7 +91,7 @@ test("02 - n-dash instead of m-dash", () => {
     equal(
       convertOne(input, opt),
       null,
-      `02.05.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `02.05 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -102,7 +101,7 @@ test("03 - already m-dash, spaced", () => {
   mixer({
     from: 25,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `03.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `03.01 - ${pad(n)}`);
   });
 
   // nothing to find
@@ -112,7 +111,7 @@ test("03 - already m-dash, spaced", () => {
     equal(
       convertOne(input, opt),
       null,
-      `03.02.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `03.02 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -121,7 +120,7 @@ test("03 - already m-dash, spaced", () => {
     equal(
       convertOne(input, opt),
       null,
-      `03.03.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `03.03 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -131,7 +130,7 @@ test("04 - edge case - one dash", () => {
   mixer({
     from: 0,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `04.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `04.01 - ${pad(n)}`);
   });
 });
 
@@ -140,7 +139,7 @@ test("05 - edge case - one m-dash", () => {
   mixer({
     from: 0,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `05.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `05.01 - ${pad(n)}`);
   });
 });
 
@@ -149,7 +148,7 @@ test("06 - edge case - one n-dash", () => {
   mixer({
     from: 0,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `06.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `06.01 - ${pad(n)}`);
   });
 });
 
@@ -158,7 +157,7 @@ test("07 - already m-dash, tight", () => {
   mixer({
     from: 24,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `07.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `07.01 - ${pad(n)}`);
   });
 
   // nothing to find
@@ -168,7 +167,7 @@ test("07 - already m-dash, tight", () => {
     equal(
       convertOne(input, opt),
       null,
-      `07.02.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `07.02 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
   mixer({
@@ -177,7 +176,7 @@ test("07 - already m-dash, tight", () => {
     equal(
       convertOne(input, opt),
       null,
-      `07.03.${pad(n)} ${JSON.stringify(opt, null, 0)}`,
+      `07.03 - ${pad(n)} ${JSON.stringify(opt, null, 0)}`,
     );
   });
 });
@@ -188,21 +187,21 @@ test("08 - math, spaces", () => {
     from: 2,
     convertDashes: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `08.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `08.01 - ${pad(n)}`);
   });
   mixer({
     from: 2,
     convertDashes: true,
     convertEntities: true,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[2, 3, "&ndash;"]], `08.02.${pad(n)}`);
+    equal(convertOne(input, opt), [[2, 3, "&ndash;"]], `08.02 - ${pad(n)}`);
   });
   mixer({
     from: 2,
     convertDashes: true,
     convertEntities: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[2, 3, rawNDash]], `08.03.${pad(n)}`);
+    equal(convertOne(input, opt), [[2, 3, rawNDash]], `08.03 - ${pad(n)}`);
   });
 });
 
@@ -212,21 +211,21 @@ test("09 - math, one tab", () => {
     from: 2,
     convertDashes: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `08.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `09.01 - ${pad(n)}`);
   });
   mixer({
     from: 2,
     convertDashes: true,
     convertEntities: true,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[2, 3, "&ndash;"]], `08.02.${pad(n)}`);
+    equal(convertOne(input, opt), [[2, 3, "&ndash;"]], `09.02 - ${pad(n)}`);
   });
   mixer({
     from: 2,
     convertDashes: true,
     convertEntities: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[2, 3, rawNDash]], `08.03.${pad(n)}`);
+    equal(convertOne(input, opt), [[2, 3, rawNDash]], `09.03 - ${pad(n)}`);
   });
 });
 
@@ -236,21 +235,21 @@ test("10 - math, lots of whitespace", () => {
     from: 6,
     convertDashes: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `08.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `10.01 - ${pad(n)}`);
   });
   mixer({
     from: 6,
     convertDashes: true,
     convertEntities: true,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[6, 7, "&ndash;"]], `08.02.${pad(n)}`);
+    equal(convertOne(input, opt), [[6, 7, "&ndash;"]], `10.02 - ${pad(n)}`);
   });
   mixer({
     from: 6,
     convertDashes: true,
     convertEntities: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[6, 7, rawNDash]], `08.03.${pad(n)}`);
+    equal(convertOne(input, opt), [[6, 7, rawNDash]], `10.03 - ${pad(n)}`);
   });
 });
 
@@ -260,21 +259,21 @@ test("11 - currencies, usual position, one space", () => {
     from: 3,
     convertDashes: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `09.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `11.01 - ${pad(n)}`);
   });
   mixer({
     from: 3,
     convertDashes: true,
     convertEntities: true,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[3, 4, "&ndash;"]], `09.02.${pad(n)}`);
+    equal(convertOne(input, opt), [[3, 4, "&ndash;"]], `11.02 - ${pad(n)}`);
   });
   mixer({
     from: 3,
     convertDashes: true,
     convertEntities: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[3, 4, rawNDash]], `09.03.${pad(n)}`);
+    equal(convertOne(input, opt), [[3, 4, rawNDash]], `11.03 - ${pad(n)}`);
   });
 });
 
@@ -284,21 +283,21 @@ test("12 - currencies, usual position, lots of whitespace", () => {
     from: 5,
     convertDashes: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `09.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `12.01 - ${pad(n)}`);
   });
   mixer({
     from: 5,
     convertDashes: true,
     convertEntities: true,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[5, 6, "&ndash;"]], `09.02.${pad(n)}`);
+    equal(convertOne(input, opt), [[5, 6, "&ndash;"]], `12.02 - ${pad(n)}`);
   });
   mixer({
     from: 5,
     convertDashes: true,
     convertEntities: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[5, 6, rawNDash]], `09.03.${pad(n)}`);
+    equal(convertOne(input, opt), [[5, 6, rawNDash]], `12.03 - ${pad(n)}`);
   });
 });
 
@@ -308,21 +307,21 @@ test("13 - currencies, unusual position, one space", () => {
     from: 3,
     convertDashes: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `10.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `13.01 - ${pad(n)}`);
   });
   mixer({
     from: 3,
     convertDashes: true,
     convertEntities: true,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[3, 4, "&ndash;"]], `10.02.${pad(n)}`);
+    equal(convertOne(input, opt), [[3, 4, "&ndash;"]], `13.02 - ${pad(n)}`);
   });
   mixer({
     from: 3,
     convertDashes: true,
     convertEntities: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[3, 4, rawNDash]], `10.03.${pad(n)}`);
+    equal(convertOne(input, opt), [[3, 4, rawNDash]], `13.03 - ${pad(n)}`);
   });
 });
 
@@ -332,21 +331,21 @@ test("14 - currencies, unusual position, lots of whitespace", () => {
     from: 5,
     convertDashes: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `10.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `14.01 - ${pad(n)}`);
   });
   mixer({
     from: 5,
     convertDashes: true,
     convertEntities: true,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[5, 6, "&ndash;"]], `10.02.${pad(n)}`);
+    equal(convertOne(input, opt), [[5, 6, "&ndash;"]], `14.02 - ${pad(n)}`);
   });
   mixer({
     from: 5,
     convertDashes: true,
     convertEntities: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[5, 6, rawNDash]], `10.03.${pad(n)}`);
+    equal(convertOne(input, opt), [[5, 6, rawNDash]], `14.03 - ${pad(n)}`);
   });
 });
 
@@ -356,21 +355,21 @@ test("15 - m-dash, sentence with digits", () => {
     from: 18,
     convertDashes: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `01.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `15.01 - ${pad(n)}`);
   });
   mixer({
     from: 18,
     convertDashes: true,
     convertEntities: true,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[18, 19, "&mdash;"]], `01.02.${pad(n)}`);
+    equal(convertOne(input, opt), [[18, 19, "&mdash;"]], `15.02 - ${pad(n)}`);
   });
   mixer({
     from: 18,
     convertDashes: true,
     convertEntities: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[18, 19, rawMDash]], `01.03.${pad(n)}`);
+    equal(convertOne(input, opt), [[18, 19, rawMDash]], `15.03 - ${pad(n)}`);
   });
 });
 
@@ -380,21 +379,21 @@ test("16 - cut-off in citation", () => {
     from: 47,
     convertDashes: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `01.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `16.01 - ${pad(n)}`);
   });
   mixer({
     from: 47,
     convertDashes: true,
     convertEntities: true,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[47, 48, "&mdash;"]], `01.02.${pad(n)}`);
+    equal(convertOne(input, opt), [[47, 48, "&mdash;"]], `16.02 - ${pad(n)}`);
   });
   mixer({
     from: 47,
     convertDashes: true,
     convertEntities: false,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), [[47, 48, rawMDash]], `01.03.${pad(n)}`);
+    equal(convertOne(input, opt), [[47, 48, rawMDash]], `16.03 - ${pad(n)}`);
   });
 });
 
@@ -403,7 +402,7 @@ test("17 - vague case", () => {
   mixer({
     from: 1,
   }).forEach((opt, n) => {
-    equal(convertOne(input, opt), null, `17.01.${pad(n)}`);
+    equal(convertOne(input, opt), null, `17.01 - ${pad(n)}`);
   });
 });
 
