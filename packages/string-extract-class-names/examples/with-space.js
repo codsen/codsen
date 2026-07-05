@@ -1,6 +1,6 @@
 // Processes whole CSS selectors
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { extract } from "../dist/string-extract-class-names.esm.js";
 
