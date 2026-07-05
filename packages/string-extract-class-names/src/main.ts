@@ -20,7 +20,7 @@ function extract(str: string): Result {
   // =========
   if (typeof str !== "string") {
     throw new TypeError(
-      `string-extract-class-names: [THROW_ID_01] first str should be string, not ${typeof str}, currently equal to ${JSON.stringify(
+      `string-extract-class-names/extract(): [THROW_ID_01] first str should be string, not ${typeof str}, currently equal to ${JSON.stringify(
         str,
         null,
         4,
@@ -60,7 +60,7 @@ function extract(str: string): Result {
   for (let i = 0, len = str.length; i <= len; i++) {
     DEV &&
       console.log(
-        `${`\u001b[${36}m${`============================`}\u001b[${39}m`} ${`\u001b[${33}m${str[i]}\u001b[${39}m`} (${`\u001b[${31}m${i}\u001b[${39}m`})`,
+        `63 ${`\u001b[${36}m${`============================`}\u001b[${39}m`} ${`\u001b[${33}m${str[i]}\u001b[${39}m`} (${`\u001b[${31}m${i}\u001b[${39}m`})`,
       );
 
     // catch the ending of a selector's name:
@@ -136,7 +136,7 @@ function extract(str: string): Result {
         DEV && console.log(`136 SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp1) as number]) &&
-        isLatinLetter(str[right(str, right(str, temp1) as number) as number])
+        isLatinLetter(str[right(str, right(str, temp1)) as number])
       ) {
         selectorStartsAt = right(str, right(str, temp1));
         DEV && console.log(`142 SET selectorStartsAt = ${selectorStartsAt}`);
@@ -159,7 +159,7 @@ function extract(str: string): Result {
         DEV && console.log(`159 SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp2) as number]) &&
-        isLatinLetter(str[right(str, right(str, temp2) as number) as number])
+        isLatinLetter(str[right(str, right(str, temp2)) as number])
       ) {
         selectorStartsAt = right(str, right(str, temp2));
         DEV && console.log(`165 SET selectorStartsAt = ${selectorStartsAt}`);
