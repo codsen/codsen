@@ -1,6 +1,6 @@
 // Supports legacy bracket notation emails used to use
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { extract } from "../dist/string-extract-class-names.esm.js";
 
