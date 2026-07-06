@@ -1,8 +1,9 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+
+import crypto2 from "node:crypto";
+import fs from "node:fs";
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import fs from "fs";
-import crypto2 from "crypto";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { extractVars as e } from "../dist/string-extract-sass-vars.esm.js";
 
@@ -32,7 +33,7 @@ test("01 - fixture 01 - a healthy file", () => {
       customValue3: "tralala",
       customValue4: 10,
     },
-    "01.02",
+    "01.01",
   );
 });
 
@@ -49,7 +50,7 @@ test("02 - fixture 02 - lots of comments and some styling unrelated to variables
       me: 0,
       andMe: 999,
     },
-    "02.02",
+    "02.01",
   );
 });
 
@@ -67,7 +68,7 @@ test("03 - fixture 03 - curlies", () => {
       var2: 2,
       var3: ";",
     },
-    "03.02",
+    "03.01",
   );
 });
 
@@ -78,7 +79,7 @@ test("04 - fixture 04 - file of comments only", () => {
     "c0ac0273bf64f3574402333e2b37a42ea4f8fa4e026b0b4f7dc8d7bfcc6ec2de",
     "04.01",
   );
-  equal(e(f04), {}, "04.02");
+  equal(e(f04), {}, "04.01");
 });
 
 test("05 - fixture 05 - inline comments", () => {
@@ -93,7 +94,7 @@ test("05 - fixture 05 - inline comments", () => {
     {
       red: "#ff6565",
     },
-    "05.02",
+    "05.01",
   );
 });
 
