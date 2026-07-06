@@ -27,7 +27,7 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
   }
   if (opts && typeof opts !== "object") {
     throw new Error(
-      `string-extract-sass-vars: [THROW_ID_01] the second input argument should be a plain object but it was given as ${JSON.stringify(
+      `string-extract-sass-vars/extractVars(): [THROW_ID_01] the second input argument should be a plain object but it was given as ${JSON.stringify(
         opts,
         null,
         4,
@@ -45,7 +45,7 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
     );
   if (resolvedOpts.cb && typeof resolvedOpts.cb !== "function") {
     throw new Error(
-      `string-extract-sass-vars: [THROW_ID_02] resolvedOpts.cb should be function! But it was given as ${JSON.stringify(
+      `string-extract-sass-vars/extractVars(): [THROW_ID_02] resolvedOpts.cb should be function! But it was given as ${JSON.stringify(
         opts,
         null,
         4,
@@ -178,7 +178,7 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
     // -------------------------------------------------------------------------
     DEV &&
       console.log(
-        `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${
+        `181 \u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${
           withinComments ? 90 : 35
         }m${`str[ ${i} ] = ${
           str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
@@ -308,39 +308,39 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
 
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ withinComments`}\u001b[${39}m`} = ${`\u001b[${
+        `311 ${`\u001b[${90}m${`██ withinComments`}\u001b[${39}m`} = ${`\u001b[${
           withinComments ? 32 : 31
         }m${withinComments}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ withinQuotes`}\u001b[${39}m`} = ${`\u001b[${
+        `317 ${`\u001b[${90}m${`██ withinQuotes`}\u001b[${39}m`} = ${`\u001b[${
           withinQuotes ? 32 : 31
         }m${withinQuotes}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ withinSlashSlashComment`}\u001b[${39}m`} = ${`\u001b[${
+        `323 ${`\u001b[${90}m${`██ withinSlashSlashComment`}\u001b[${39}m`} = ${`\u001b[${
           withinSlashSlashComment ? 32 : 31
         }m${withinSlashSlashComment}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ withinSlashAsteriskComment`}\u001b[${39}m`} = ${`\u001b[${
+        `329 ${`\u001b[${90}m${`██ withinSlashAsteriskComment`}\u001b[${39}m`} = ${`\u001b[${
           withinSlashAsteriskComment ? 32 : 31
         }m${withinSlashAsteriskComment}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ varNameStartsAt`}\u001b[${39}m`} = ${varNameStartsAt}`,
+        `335 ${`\u001b[${90}m${`██ varNameStartsAt`}\u001b[${39}m`} = ${varNameStartsAt}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ varValueStartsAt`}\u001b[${39}m`} = ${varValueStartsAt}`,
+        `339 ${`\u001b[${90}m${`██ varValueStartsAt`}\u001b[${39}m`} = ${varValueStartsAt}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██ lastNonQuoteCharAt`}\u001b[${39}m`} = ${JSON.stringify(
+        `343 ${`\u001b[${90}m${`██ lastNonQuoteCharAt`}\u001b[${39}m`} = ${JSON.stringify(
           lastNonQuoteCharAt,
           null,
           4,
@@ -348,7 +348,7 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
       );
     DEV &&
       console.log(
-        `${
+        `351 ${
           varName
             ? `${`\u001b[${33}m${`varName`}\u001b[${39}m`} = ${varName}; `
             : ""
@@ -373,11 +373,11 @@ function extractVars(str: string, opts?: Partial<Opts>): UnknownValueObj {
   if (!Object.keys(res).length && resolvedOpts.throwIfEmpty) {
     DEV && console.log(`374 ${`\u001b[${31}m${`throw`}\u001b[${39}m`}`);
     throw new Error(
-      `string-extract-sass-vars: [THROW_ID_03] no keys extracted! (setting resolvedOpts.opts)`,
+      `string-extract-sass-vars/extractVars(): [THROW_ID_03] no keys extracted! (setting resolvedOpts.opts)`,
     );
   }
 
   return res;
 }
 
-export { extractVars, defaults, version };
+export { defaults, extractVars, version };
