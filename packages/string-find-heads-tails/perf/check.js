@@ -1,5 +1,5 @@
 // deps
-import path from "path";
+import path from "node:path";
 
 import { runPerf } from "../../../ops/scripts/perf.js";
 import { strFindHeadsTails } from "../dist/string-find-heads-tails.esm.js";
