@@ -1,6 +1,6 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { strFindHeadsTails } from "../dist/string-find-heads-tails.esm.js";
 
