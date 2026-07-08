@@ -1,6 +1,6 @@
-import { isStr, isPlainObject as isObj, existy } from "codsen-utils";
-import { matchRightIncl } from "string-match-left-right";
 import { arrayiffy } from "arrayiffy-if-string";
+import { existy, isPlainObject as isObj, isStr } from "codsen-utils";
+import { matchRightIncl } from "string-match-left-right";
 
 import { version as v } from "../package.json";
 
@@ -42,11 +42,13 @@ function strFindHeadsTails(
   // prep resolvedOpts
   if (existy(opts) && !isObj(opts)) {
     throw new TypeError(
-      `string-find-heads-tails: [THROW_ID_01] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: ${opts} (type: ${typeof opts})`,
+      `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_01] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: ${opts} (type: ${typeof opts})`,
     );
   }
 
   let resolvedOpts = { ...defaults, ...opts };
+  const sourceLabel =
+    resolvedOpts.source === defaults.source ? "" : `${resolvedOpts.source}: `;
 
   if (isStr(resolvedOpts.fromIndex) && /^\d*$/.test(resolvedOpts.fromIndex)) {
     resolvedOpts.fromIndex = Number(resolvedOpts.fromIndex);
@@ -55,12 +57,12 @@ function strFindHeadsTails(
     resolvedOpts.fromIndex < 0
   ) {
     throw new TypeError(
-      `${resolvedOpts.source} [THROW_ID_18] the fourth input argument must be a natural number or zero! Currently it's: ${resolvedOpts.fromIndex}`,
+      `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_02] ${sourceLabel}the fourth input argument must be a natural number or zero! Currently it's: ${resolvedOpts.fromIndex}`,
     );
   }
   DEV &&
     console.log(
-      `063 FINAL ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `065 FINAL ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -76,7 +78,7 @@ function strFindHeadsTails(
       return [];
     }
     throw new TypeError(
-      `string-find-heads-tails: [THROW_ID_02] the first input argument, input string, must be a non-zero-length string! Currently it's: ${typeof str}, equal to: ${str}`,
+      `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_03] the first input argument, input string, must be a non-zero-length string! Currently it's: ${typeof str}, equal to: ${str}`,
     );
   }
 
@@ -89,7 +91,7 @@ function strFindHeadsTails(
       return [];
     }
     throw new TypeError(
-      `string-find-heads-tails: [THROW_ID_03] the second input argument, heads, must be either a string or an array of strings! Currently it's: ${typeof heads}, equal to:\n${JSON.stringify(
+      `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_04] the second input argument, heads, must be either a string or an array of strings! Currently it's: ${typeof heads}, equal to:\n${JSON.stringify(
         heads,
         null,
         4,
@@ -101,7 +103,7 @@ function strFindHeadsTails(
         return [];
       }
       throw new TypeError(
-        "string-find-heads-tails: [THROW_ID_04] the second input argument, heads, must be a non-empty string! Currently it's empty.",
+        "string-find-heads-tails/strFindHeadsTails(): [THROW_ID_05] the second input argument, heads, must be a non-empty string! Currently it's empty.",
       );
     } else {
       heads = arrayiffy(heads);
@@ -112,7 +114,7 @@ function strFindHeadsTails(
         return [];
       }
       throw new TypeError(
-        "string-find-heads-tails: [THROW_ID_05] the second input argument, heads, must be a non-empty array and contain at least one string! Currently it's empty.",
+        "string-find-heads-tails/strFindHeadsTails(): [THROW_ID_06] the second input argument, heads, must be a non-empty array and contain at least one string! Currently it's empty.",
       );
     } else if (
       !heads.every((val, index) => {
@@ -128,7 +130,7 @@ function strFindHeadsTails(
         }
       } else {
         throw new TypeError(
-          `string-find-heads-tails: [THROW_ID_06] the second input argument, heads, contains non-string elements! For example, element at ${culpritsIndex}th index is ${typeof culpritsVal}, equal to:\n${JSON.stringify(
+          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_07] the second input argument, heads, contains non-string elements! For example, element at ${culpritsIndex}th index is ${typeof culpritsVal}, equal to:\n${JSON.stringify(
             culpritsVal,
             null,
             4,
@@ -148,7 +150,7 @@ function strFindHeadsTails(
         }
       } else {
         throw new TypeError(
-          `string-find-heads-tails: [THROW_ID_07] the second input argument, heads, should not contain empty strings! For example, there's one detected at index ${culpritsIndex} of heads array:\n${JSON.stringify(
+          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_08] the second input argument, heads, should not contain empty strings! For example, there's one detected at index ${culpritsIndex} of heads array:\n${JSON.stringify(
             heads,
             null,
             4,
@@ -164,7 +166,7 @@ function strFindHeadsTails(
       return [];
     }
     throw new TypeError(
-      `string-find-heads-tails: [THROW_ID_08] the third input argument, tails, must be either a string or an array of strings! Currently it's: ${typeof tails}, equal to:\n${JSON.stringify(
+      `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_09] the third input argument, tails, must be either a string or an array of strings! Currently it's: ${typeof tails}, equal to:\n${JSON.stringify(
         tails,
         null,
         4,
@@ -176,7 +178,7 @@ function strFindHeadsTails(
         return [];
       }
       throw new TypeError(
-        "string-find-heads-tails: [THROW_ID_09] the third input argument, tails, must be a non-empty string! Currently it's empty.",
+        "string-find-heads-tails/strFindHeadsTails(): [THROW_ID_10] the third input argument, tails, must be a non-empty string! Currently it's empty.",
       );
     } else {
       tails = arrayiffy(tails);
@@ -187,7 +189,7 @@ function strFindHeadsTails(
         return [];
       }
       throw new TypeError(
-        "string-find-heads-tails: [THROW_ID_10] the third input argument, tails, must be a non-empty array and contain at least one string! Currently it's empty.",
+        "string-find-heads-tails/strFindHeadsTails(): [THROW_ID_11] the third input argument, tails, must be a non-empty array and contain at least one string! Currently it's empty.",
       );
     } else if (
       !tails.every((val, index) => {
@@ -203,7 +205,7 @@ function strFindHeadsTails(
         }
       } else {
         throw new TypeError(
-          `string-find-heads-tails: [THROW_ID_11] the third input argument, tails, contains non-string elements! For example, element at ${culpritsIndex}th index is ${typeof culpritsVal}, equal to:\n${JSON.stringify(
+          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_12] the third input argument, tails, contains non-string elements! For example, element at ${culpritsIndex}th index is ${typeof culpritsVal}, equal to:\n${JSON.stringify(
             culpritsVal,
             null,
             4,
@@ -227,7 +229,7 @@ function strFindHeadsTails(
         }
       } else {
         throw new TypeError(
-          `string-find-heads-tails: [THROW_ID_12] the third input argument, tails, should not contain empty strings! For example, there's one detected at index ${culpritsIndex}. Whole tails array is equal to:\n${JSON.stringify(
+          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_13] the third input argument, tails, should not contain empty strings! For example, there's one detected at index ${culpritsIndex}. Whole tails array is equal to:\n${JSON.stringify(
             tails,
             null,
             4,
@@ -237,26 +239,19 @@ function strFindHeadsTails(
     }
   }
 
-  // inner variable meaning is resolvedOpts.source the default-one
-  let s = resolvedOpts.source === defaults.source;
-
   if (
     resolvedOpts.throwWhenSomethingWrongIsDetected &&
     !resolvedOpts.allowWholeValueToBeOnlyHeadsOrTails
   ) {
     if (arrayiffy(heads).includes(str)) {
       throw new Error(
-        `${resolvedOpts.source}${
-          s ? ": [THROW_ID_16]" : ""
-        } the whole input string can't be equal to ${
+        `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_14] ${sourceLabel}the whole input string can't be equal to ${
           isStr(heads) ? "" : "one of "
         }heads (${str})!`,
       );
     } else if (arrayiffy(tails).includes(str)) {
       throw new Error(
-        `${resolvedOpts.source}${
-          s ? ": [THROW_ID_17]" : ""
-        } the whole input string can't be equal to ${
+        `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_15] ${sourceLabel}the whole input string can't be equal to ${
           isStr(tails) ? "" : "one of "
         }tails (${str})!`,
       );
@@ -320,7 +315,7 @@ function strFindHeadsTails(
     );
   DEV &&
     console.log(
-      `323 headsAndTailsFirstCharIndexesRange = ${JSON.stringify(
+      `318 headsAndTailsFirstCharIndexesRange = ${JSON.stringify(
         headsAndTailsFirstCharIndexesRange,
         null,
         4,
@@ -330,7 +325,7 @@ function strFindHeadsTails(
   let res = [];
   let oneHeadFound = false;
   let tempResObj: Partial<ResObj> = {};
-  let tailSuspicionRaised = "";
+  let tailSuspicionRaised: Error | undefined;
 
   // if resolvedOpts.resolvedOpts.matchHeadsAndTailsStrictlyInPairsByTheirOrder is on and heads
   // matched was i-th in the array, we will record its index "i" and later match
@@ -341,7 +336,7 @@ function strFindHeadsTails(
     let firstCharsIndex = str[i].charCodeAt(0);
     DEV &&
       console.log(
-        `---------------------------------------> ${str[i]} i=${i} (#${firstCharsIndex})`,
+        `339 ---------------------------------------> ${str[i]} i=${i} (#${firstCharsIndex})`,
       );
     if (
       firstCharsIndex <= headsAndTailsFirstCharIndexesRange[1] &&
@@ -361,7 +356,7 @@ function strFindHeadsTails(
       }
       DEV &&
         console.log(
-          `364 matchedHeads = ${JSON.stringify(matchedHeads, null, 4)}`,
+          `359 matchedHeads = ${JSON.stringify(matchedHeads, null, 4)}`,
         );
       if (isStr(matchedHeads)) {
         if (!oneHeadFound) {
@@ -370,23 +365,21 @@ function strFindHeadsTails(
           tempResObj.headsStartAt = i;
           tempResObj.headsEndAt = i + matchedHeads.length;
           oneHeadFound = true;
-          DEV && console.log("373 head pushed");
+          DEV && console.log("368 head pushed");
           // offset the index so the characters of the confirmed heads can't be "reused"
           // again for subsequent, false detections:
           i += matchedHeads.length - 1;
           if (tailSuspicionRaised) {
-            tailSuspicionRaised = "";
+            tailSuspicionRaised = undefined;
             DEV &&
               console.log(
-                `381 !!! tailSuspicionRaised = ${!!tailSuspicionRaised}`,
+                `376 !!! tailSuspicionRaised = ${!!tailSuspicionRaised}`,
               );
           }
           continue;
         } else if (resolvedOpts.throwWhenSomethingWrongIsDetected) {
           throw new TypeError(
-            `${resolvedOpts.source}${
-              s ? ": [THROW_ID_19]" : ""
-            } When processing "${str}", we found heads (${str.slice(
+            `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_16] ${sourceLabel}When processing "${str}", we found heads (${str.slice(
               i,
               i + matchedHeads.length,
             )}) starting at character with index number "${i}" and there was another set of heads before it! Generally speaking, there should be "heads-tails-heads-tails", not "heads-heads-tails"!\nWe're talking about the area of the code:\n\n\n--------------------------------------starts\n${str.slice(
@@ -405,7 +398,7 @@ function strFindHeadsTails(
       let matchedTails = matchRightIncl(str, i, tails);
       DEV &&
         console.log(
-          `408 matchedTails = ${JSON.stringify(matchedTails, null, 4)}`,
+          `401 matchedTails = ${JSON.stringify(matchedTails, null, 4)}`,
         );
 
       if (
@@ -425,9 +418,7 @@ function strFindHeadsTails(
           }
         }
         throw new TypeError(
-          `${resolvedOpts.source}${
-            s ? ": [THROW_ID_20]" : ""
-          } When processing "${str}", we had "resolvedOpts.matchHeadsAndTailsStrictlyInPairsByTheirOrder" on. We found heads (${
+          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_17] ${sourceLabel}When processing "${str}", we had "resolvedOpts.matchHeadsAndTailsStrictlyInPairsByTheirOrder" on. We found heads (${
             heads[strictMatchingIndex]
           }) but the tails the followed it were not of the same index, ${strictMatchingIndex} (${
             tails[strictMatchingIndex]
@@ -442,21 +433,21 @@ function strFindHeadsTails(
           res.push(tempResObj);
           tempResObj = {};
           oneHeadFound = false;
-          DEV && console.log("445 tail pushed");
+          DEV && console.log("436 tail pushed");
           // same for tails, offset the index to prevent partial, erroneous detections:
           i += matchedTails.length - 1;
           continue;
         } else if (resolvedOpts.throwWhenSomethingWrongIsDetected) {
           // this means it's tails found, without preceding heads
-          tailSuspicionRaised = `${resolvedOpts.source}${
-            s ? ": [THROW_ID_21]" : ""
-          } When processing "${str}", we found tails (${str.slice(
-            i,
-            i + matchedTails.length,
-          )}) starting at character with index number "${i}" but there were no heads preceding it. That's very naughty!`;
+          tailSuspicionRaised = new Error(
+            `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_18] ${sourceLabel}When processing "${str}", we found tails (${str.slice(
+              i,
+              i + matchedTails.length,
+            )}) starting at character with index number "${i}" but there were no heads preceding it. That's very naughty!`,
+          );
           DEV &&
             console.log(
-              `459 !!! tailSuspicionRaised = ${!!tailSuspicionRaised}`,
+              `450 !!! tailSuspicionRaised = ${!!tailSuspicionRaised}`,
             );
         }
       }
@@ -465,16 +456,14 @@ function strFindHeadsTails(
     // closing, global checks:
 
     DEV &&
-      console.log(`468 tempResObj = ${JSON.stringify(tempResObj, null, 4)}`);
+      console.log(`459 tempResObj = ${JSON.stringify(tempResObj, null, 4)}`);
     // if it's the last character and some heads were found but no tails:
     if (resolvedOpts.throwWhenSomethingWrongIsDetected && i === len - 1) {
-      DEV && console.log("471");
+      DEV && console.log("462");
       if (Object.keys(tempResObj).length !== 0) {
-        DEV && console.log("473");
+        DEV && console.log("464");
         throw new TypeError(
-          `${resolvedOpts.source}${
-            s ? ": [THROW_ID_22]" : ""
-          } When processing "${str}", we reached the end of the string and yet didn't find any tails (${JSON.stringify(
+          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_19] ${sourceLabel}When processing "${str}", we reached the end of the string and yet didn't find any tails (${JSON.stringify(
             tails,
             null,
             4,
@@ -484,13 +473,13 @@ function strFindHeadsTails(
           )})!`,
         );
       } else if (tailSuspicionRaised) {
-        DEV && console.log("487");
-        throw new Error(tailSuspicionRaised);
+        DEV && console.log("476");
+        throw tailSuspicionRaised;
       }
     }
   }
-  DEV && console.log(`492 final res = ${JSON.stringify(res, null, 4)}`);
+  DEV && console.log(`481 final res = ${JSON.stringify(res, null, 4)}`);
   return res as ResObj[];
 }
 
-export { strFindHeadsTails, defaults, version };
+export { defaults, strFindHeadsTails, version };
