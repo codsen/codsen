@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { strFindHeadsTails } from "../dist/string-find-heads-tails.esm.js";
 
@@ -13,14 +13,14 @@ test("01 - throws when the first argument, source string, is not a string", () =
     () => {
       strFindHeadsTails(1);
     },
-    /THROW_ID_02/,
+    /THROW_ID_03/,
     "01.01",
   );
   throws(
     () => {
       strFindHeadsTails(1, "a", "b");
     },
-    /THROW_ID_02/,
+    /THROW_ID_03/,
     "01.02",
   );
 });
@@ -30,7 +30,7 @@ test("02 - throws when there's no input", () => {
     () => {
       strFindHeadsTails();
     },
-    /THROW_ID_02/,
+    /THROW_ID_03/,
     "02.01",
   );
 });
@@ -40,7 +40,7 @@ test("03 - throws when the second argument, heads, is not a string", () => {
     () => {
       strFindHeadsTails("a", 1, "a");
     },
-    /THROW_ID_03/,
+    /THROW_ID_04/,
     "03.01",
   );
 
@@ -48,7 +48,7 @@ test("03 - throws when the second argument, heads, is not a string", () => {
     () => {
       strFindHeadsTails("a", 1, "z");
     },
-    /THROW_ID_03/,
+    /THROW_ID_04/,
     "03.02",
   );
 
@@ -56,7 +56,7 @@ test("03 - throws when the second argument, heads, is not a string", () => {
     () => {
       strFindHeadsTails("a", 1, "a");
     },
-    /THROW_ID_03/,
+    /THROW_ID_04/,
     "03.03",
   );
 
@@ -64,7 +64,7 @@ test("03 - throws when the second argument, heads, is not a string", () => {
     () => {
       strFindHeadsTails("a", "", "z");
     },
-    /THROW_ID_04/,
+    /THROW_ID_05/,
     "03.04",
   );
 
@@ -72,7 +72,7 @@ test("03 - throws when the second argument, heads, is not a string", () => {
     () => {
       strFindHeadsTails("a", [], "z");
     },
-    /THROW_ID_05/,
+    /THROW_ID_06/,
     "03.05",
   );
 
@@ -80,7 +80,7 @@ test("03 - throws when the second argument, heads, is not a string", () => {
     () => {
       strFindHeadsTails("a", ["z", 1, null], ["z"]);
     },
-    /THROW_ID_06/,
+    /THROW_ID_07/,
     "03.06",
   );
 
@@ -88,7 +88,7 @@ test("03 - throws when the second argument, heads, is not a string", () => {
     () => {
       strFindHeadsTails("a", ["z", 1, undefined], "z");
     },
-    /THROW_ID_06/,
+    /THROW_ID_07/,
     "03.07",
   );
 
@@ -96,7 +96,7 @@ test("03 - throws when the second argument, heads, is not a string", () => {
     () => {
       strFindHeadsTails("a", ["z", true], "z");
     },
-    /THROW_ID_06/,
+    /THROW_ID_07/,
     "03.08",
   );
 
@@ -104,7 +104,7 @@ test("03 - throws when the second argument, heads, is not a string", () => {
     () => {
       strFindHeadsTails("a", ["b", ""], "c");
     },
-    /THROW_ID_07/,
+    /THROW_ID_08/,
     "03.09",
   );
 });
@@ -114,7 +114,7 @@ test("04 - throws when the third argument, tails, is not a string", () => {
     () => {
       strFindHeadsTails("a", "a");
     },
-    /THROW_ID_08/,
+    /THROW_ID_09/,
     "04.01",
   );
 
@@ -122,7 +122,7 @@ test("04 - throws when the third argument, tails, is not a string", () => {
     () => {
       strFindHeadsTails("a", "a", null);
     },
-    /THROW_ID_08/,
+    /THROW_ID_09/,
     "04.02",
   );
 
@@ -130,7 +130,7 @@ test("04 - throws when the third argument, tails, is not a string", () => {
     () => {
       strFindHeadsTails("a", "a", 1);
     },
-    /THROW_ID_08/,
+    /THROW_ID_09/,
     "04.03",
   );
 
@@ -138,7 +138,7 @@ test("04 - throws when the third argument, tails, is not a string", () => {
     () => {
       strFindHeadsTails("a", "a", "");
     },
-    /THROW_ID_09/,
+    /THROW_ID_10/,
     "04.04",
   );
 
@@ -146,7 +146,7 @@ test("04 - throws when the third argument, tails, is not a string", () => {
     () => {
       strFindHeadsTails("a", "a", []);
     },
-    /THROW_ID_10/,
+    /THROW_ID_11/,
     "04.05",
   );
 
@@ -154,7 +154,7 @@ test("04 - throws when the third argument, tails, is not a string", () => {
     () => {
       strFindHeadsTails("a", "a", ["z", 1]);
     },
-    /THROW_ID_11/,
+    /THROW_ID_12/,
     "04.06",
   );
 
@@ -162,7 +162,7 @@ test("04 - throws when the third argument, tails, is not a string", () => {
     () => {
       strFindHeadsTails("a", "a", [null]);
     },
-    /THROW_ID_11/,
+    /THROW_ID_12/,
     "04.07",
   );
 
@@ -170,7 +170,7 @@ test("04 - throws when the third argument, tails, is not a string", () => {
     () => {
       strFindHeadsTails("a", "a", [true]);
     },
-    /THROW_ID_11/,
+    /THROW_ID_12/,
     "04.08",
   );
 
@@ -178,7 +178,7 @@ test("04 - throws when the third argument, tails, is not a string", () => {
     () => {
       strFindHeadsTails("a", "a", ["z", ""]);
     },
-    /THROW_ID_12/,
+    /THROW_ID_13/,
     "04.09",
   );
 });
@@ -193,10 +193,10 @@ test("05 - throws when the fourth argument, opts, is of a wrong type", () => {
   );
 
   not.throws(() => {
-    strFindHeadsTails("a", "a", "a", null); // falsey is OK
+    strFindHeadsTails("a", "a", "a", null); // falsy is OK
   }, "05.02");
   not.throws(() => {
-    strFindHeadsTails("a", "a", "a", undefined); // falsey is OK
+    strFindHeadsTails("a", "a", "a", undefined); // falsy is OK
   }, "05.03");
   not.throws(() => {
     strFindHeadsTails("a", "a", "a", { fromIndex: "1" }); // OK, will be parsed
@@ -212,7 +212,7 @@ test("06 - opts.fromIndex is not a natural number", () => {
     () => {
       strFindHeadsTails("a", "a", "a", { fromIndex: 1.5 });
     },
-    /THROW_ID_18/,
+    /THROW_ID_02/,
     "06.01",
   );
 });
@@ -223,7 +223,7 @@ test("07 - opts.fromIndex is not a natural number", () => {
     () => {
       strFindHeadsTails("a", "a", "a", { fromIndex: 1.5, source: "TEST 1.8:" });
     },
-    /THROW_ID_18/,
+    /THROW_ID_02/,
     "07.01",
   );
 });
@@ -233,7 +233,7 @@ test("08 - unmatched heads and tails", () => {
     () => {
       strFindHeadsTails("abc%%_def_%ghi", "%%_", "_%%");
     },
-    /THROW_ID_22/,
+    /THROW_ID_19/,
     "08.01",
   ); // sneaky - tails' second percentage char is missing, hence unrecognised and throws
 
@@ -241,7 +241,7 @@ test("08 - unmatched heads and tails", () => {
     () => {
       strFindHeadsTails("abcdef", "x", "e"); // heads not found
     },
-    /THROW_ID_21/,
+    /THROW_ID_18/,
     "08.02",
   );
 
@@ -249,7 +249,7 @@ test("08 - unmatched heads and tails", () => {
     () => {
       strFindHeadsTails("abcdef", "x", ["e", "$"]); // heads not found
     },
-    /THROW_ID_21/,
+    /THROW_ID_18/,
     "08.03",
   );
 
@@ -257,7 +257,7 @@ test("08 - unmatched heads and tails", () => {
     () => {
       strFindHeadsTails("abcdef", ["_", "x"], ["e", "$"]); // heads not found
     },
-    /THROW_ID_21/,
+    /THROW_ID_18/,
     "08.04",
   );
 
@@ -275,7 +275,7 @@ test("08 - unmatched heads and tails", () => {
     () => {
       strFindHeadsTails("abcdef", "b", "x"); // tails not found
     },
-    /THROW_ID_22/,
+    /THROW_ID_19/,
     "08.06",
   );
 
@@ -291,7 +291,7 @@ test("08 - unmatched heads and tails", () => {
     () => {
       strFindHeadsTails("abcdef", ["&", "b"], "x"); // tails not found
     },
-    /THROW_ID_22/,
+    /THROW_ID_19/,
     "08.08",
   );
 
@@ -305,7 +305,7 @@ test("09 - both heads and tails found but wrong order", () => {
     () => {
       strFindHeadsTails("abc___def---ghi", "---", "___"); // opposite order
     },
-    /THROW_ID_22/,
+    /THROW_ID_19/,
     "09.01",
   );
 
@@ -313,7 +313,7 @@ test("09 - both heads and tails found but wrong order", () => {
     () => {
       strFindHeadsTails("abc___def---ghi", ["***", "---"], "___"); // opposite order
     },
-    /THROW_ID_22/,
+    /THROW_ID_19/,
     "09.02",
   );
 
@@ -321,7 +321,7 @@ test("09 - both heads and tails found but wrong order", () => {
     () => {
       strFindHeadsTails("abc___def---ghi", ["***", "---"], ["^^^", "___"]); // opposite order
     },
-    /THROW_ID_22/,
+    /THROW_ID_19/,
     "09.03",
   );
 
@@ -329,7 +329,7 @@ test("09 - both heads and tails found but wrong order", () => {
     () => {
       strFindHeadsTails("--a__bcdef**", ["--", "__"], ["**", "^^"]); // two consecutive heads
     },
-    /THROW_ID_19/,
+    /THROW_ID_16/,
     "09.04",
   );
 
@@ -347,7 +347,7 @@ test("09 - both heads and tails found but wrong order", () => {
     () => {
       strFindHeadsTails("--a**bcdefghij^^", ["--", "__"], ["**", "^^"]); // two consecutive tails
     },
-    /THROW_ID_21/,
+    /THROW_ID_18/,
     "09.06",
   );
 
@@ -355,7 +355,7 @@ test("09 - both heads and tails found but wrong order", () => {
     () => {
       strFindHeadsTails("--a^^bc__defghij", ["--", "__"], ["**", "^^"]); // second heads unmatched
     },
-    /THROW_ID_22/,
+    /THROW_ID_19/,
     "09.07",
   );
 });
@@ -397,7 +397,7 @@ test("11 - heads of one type, tails of another", () => {
         },
       );
     },
-    /THROW_ID_20/,
+    /THROW_ID_17/,
     "11.01",
   );
 });
@@ -586,7 +586,7 @@ test("16 - multi-char markers", () => {
     () => {
       strFindHeadsTails("abc%%_def_%%ghi", "%%_", "_%%", { fromIndex: 4 });
     },
-    /THROW_ID_21/,
+    /THROW_ID_18/,
     "16.02",
   );
 
@@ -596,7 +596,7 @@ test("16 - multi-char markers", () => {
       throwWhenSomethingWrongIsDetected: false,
     }),
     [],
-    "16.03",
+    "16.02",
   );
   equal(
     strFindHeadsTails("abczz-def--aghi", "zz-", "--a"),
@@ -608,7 +608,7 @@ test("16 - multi-char markers", () => {
         tailsEndAt: 12,
       },
     ],
-    "16.04",
+    "16.03",
   );
   equal(
     strFindHeadsTails(
@@ -630,7 +630,7 @@ test("16 - multi-char markers", () => {
         tailsEndAt: 24,
       },
     ],
-    "16.05",
+    "16.04",
   );
 });
 
@@ -654,7 +654,7 @@ test("18 - sneaky tails precede heads", () => {
     () => {
       strFindHeadsTails("aaa_%%bbb%%_ccc", "%%_", "_%%");
     },
-    /THROW_ID_22/,
+    /THROW_ID_19/,
     "18.01",
   );
 
@@ -663,7 +663,7 @@ test("18 - sneaky tails precede heads", () => {
       throwWhenSomethingWrongIsDetected: false,
     }),
     [],
-    "18.02",
+    "18.01",
   );
 });
 
@@ -731,7 +731,7 @@ test("20 - input is equal to heads or tails", () => {
         allowWholeValueToBeOnlyHeadsOrTails: false,
       });
     },
-    /THROW_ID_16/,
+    /THROW_ID_14/,
     "20.05",
   );
 
@@ -767,7 +767,7 @@ test("20 - input is equal to heads or tails", () => {
         allowWholeValueToBeOnlyHeadsOrTails: false,
       });
     },
-    /THROW_ID_17/,
+    /THROW_ID_15/,
     "20.08",
   );
 
