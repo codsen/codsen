@@ -1,4 +1,4 @@
-import { existy, isStr, isPlainObject as isObj } from "codsen-utils";
+import { existy, isPlainObject as isObj, isStr } from "codsen-utils";
 import { right } from "string-left-right";
 
 import { version as v } from "../package.json";
@@ -32,7 +32,7 @@ function findMalformed(
   DEV && console.log(`032 strFindMalformed() START:`);
   DEV &&
     console.log(
-      `* ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
+      `35 * ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
         str,
         null,
         4,
@@ -40,7 +40,7 @@ function findMalformed(
     );
   DEV &&
     console.log(
-      `* ${`\u001b[${33}m${`refStr`}\u001b[${39}m`} = ${JSON.stringify(
+      `43 * ${`\u001b[${33}m${`refStr`}\u001b[${39}m`} = ${JSON.stringify(
         refStr,
         null,
         4,
@@ -52,7 +52,7 @@ function findMalformed(
 
   if (!isStr(str)) {
     throw new TypeError(
-      `string-find-malformed: [THROW_ID_01] the first input argument, string where to look for, must be a string! Currently it's equal to: ${str} (type: ${typeof str})`,
+      `string-find-malformed/findMalformed(): [THROW_ID_01] the first input argument, string where to look for, must be a string! Currently it's equal to: ${str} (type: ${typeof str})`,
     );
   } else if (!str.length) {
     // empty string - quick ending
@@ -61,7 +61,7 @@ function findMalformed(
   }
   if (!isStr(refStr)) {
     throw new TypeError(
-      `string-find-malformed: [THROW_ID_02] the second input argument, string we should find, must be a string! Currently it's equal to: ${refStr} (type: ${typeof refStr})`,
+      `string-find-malformed/findMalformed(): [THROW_ID_02] the second input argument, string we should find, must be a string! Currently it's equal to: ${refStr} (type: ${typeof refStr})`,
     );
   } else if (!refStr.length) {
     // empty string to look for - quick ending
@@ -70,12 +70,12 @@ function findMalformed(
   }
   if (typeof cb !== "function") {
     throw new TypeError(
-      `string-find-malformed: [THROW_ID_03] the third input argument, a callback function, must be a function! Currently it's equal to: ${cb} (type: ${typeof cb})`,
+      `string-find-malformed/findMalformed(): [THROW_ID_03] the third input argument, a callback function, must be a function! Currently it's equal to: ${cb} (type: ${typeof cb})`,
     );
   }
   if (existy(opts) && !isObj(opts)) {
     throw new TypeError(
-      `string-find-malformed: [THROW_ID_04] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: ${opts} (type: ${typeof opts})`,
+      `string-find-malformed/findMalformed(): [THROW_ID_04] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: ${opts} (type: ${typeof opts})`,
     );
   }
 
@@ -98,7 +98,7 @@ function findMalformed(
     resolvedOpts.stringOffset < 0
   ) {
     throw new TypeError(
-      `[THROW_ID_05] resolvedOpts.stringOffset must be a natural number or zero! Currently it's: ${resolvedOpts.stringOffset}`,
+      `string-find-malformed/findMalformed(): [THROW_ID_05] resolvedOpts.stringOffset must be a natural number or zero! Currently it's: ${resolvedOpts.stringOffset}`,
     );
   }
   DEV &&
@@ -153,7 +153,7 @@ function findMalformed(
     // -------------------------------------------------------------------------
     DEV &&
       console.log(
-        `\u001b[${36}m${`================================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+        `156 \u001b[${36}m${`================================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
         }`}\u001b[${39}m \u001b[${36}m${`================================`}\u001b[${39}m\n`,
       );
@@ -179,9 +179,9 @@ function findMalformed(
         `179 ${`\u001b[${34}m${`I. tend the existing entries in pendingMatchesArr[]`}\u001b[${39}m`}`,
       );
     for (let z = 0, len3 = pendingMatchesArr.length; z < len3; z++) {
-      DEV && console.log(" ");
-      DEV && console.log(`-----------------------------------`);
-      DEV && console.log(" ");
+      DEV && console.log("182  ");
+      DEV && console.log(`183 -----------------------------------`);
+      DEV && console.log("184  ");
       DEV &&
         console.log(
           `187 ${`\u001b[${33}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
@@ -303,8 +303,8 @@ function findMalformed(
         }
       }
     }
-    DEV && console.log(" ");
-    DEV && console.log(`-----------------------------------`);
+    DEV && console.log("306  ");
+    DEV && console.log(`307 -----------------------------------`);
     pendingMatchesArr = pendingMatchesArr.filter(
       (obj) => obj.patienceLeft >= 0,
     );
@@ -400,7 +400,7 @@ function findMalformed(
 
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`██  pendingMatchesArr = ${JSON.stringify(
+        `403 ${`\u001b[${90}m${`██  pendingMatchesArr = ${JSON.stringify(
           pendingMatchesArr,
           null,
           4,
@@ -409,4 +409,4 @@ function findMalformed(
   }
 }
 
-export { findMalformed, defaults, version };
+export { defaults, findMalformed, version };
