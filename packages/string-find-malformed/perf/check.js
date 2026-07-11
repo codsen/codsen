@@ -1,13 +1,13 @@
 // deps
-import path from "path";
+import path from "node:path";
 
 import { runPerf } from "../../../ops/scripts/perf.js";
 import { findMalformed } from "../dist/string-find-malformed.esm.js";
 
 const callerDir = path.resolve(".");
 
-const gathered = [];
 const testme = () => {
+  const gathered = [];
   findMalformed(
     "abcabcd.f",
     "abcdef",
@@ -18,6 +18,7 @@ const testme = () => {
       maxDistance: 2,
     },
   );
+  return gathered;
 };
 
 // action
