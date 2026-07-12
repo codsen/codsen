@@ -1,10 +1,10 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm.js";
 
-test(`01 - ${`\u001b[${32}m${"opts.progressFn"}\u001b[${39}m`} - reports progress - baseline`, () => {
+test(`01 - opts.progressFn - reports progress - baseline`, () => {
   equal(
     fix(
       "text &ang text&ang text text &ang text&ang text text &ang text&ang text",
