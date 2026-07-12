@@ -1,11 +1,10 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-
-import fix from "./util/util.js";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import { fixEnt } from "../dist/string-fix-broken-named-entities.esm.js";
+import fix from "./util/util.js";
 
-test(`01 - ${`\u001b[${36}m${"false positives"}\u001b[${39}m`} - legit pound, no decode`, () => {
+test(`01 - false positives - legit pound, no decode`, () => {
   let inp1 = "one pound;";
   equal(
     fix(ok, inp1, {
@@ -17,7 +16,7 @@ test(`01 - ${`\u001b[${36}m${"false positives"}\u001b[${39}m`} - legit pound, no
   );
 });
 
-test(`02 - ${`\u001b[${36}m${"false positives"}\u001b[${39}m`} - legit pound, no decode`, () => {
+test(`02 - false positives - legit pound, no decode`, () => {
   let inp1 = "one pound;";
   equal(
     fix(ok, inp1, {
