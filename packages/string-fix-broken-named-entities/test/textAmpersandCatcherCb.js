@@ -1,11 +1,11 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 // import fix from "./util/util.js";
 import {
-  fixEnt,
   allRules,
+  fixEnt,
 } from "../dist/string-fix-broken-named-entities.esm.js";
 
 test("01 - text amps and a healthy named entity, default settings", () => {
@@ -28,8 +28,8 @@ test("02 - text amps and a healthy named entity", () => {
   let ruleName = "bad-html-entity-encoded-nbsp";
   ok(allRules.includes(ruleName), "02.01");
   ok(res[0].ruleName, "02.02");
-  equal(res.length, 1, "02.03");
-  equal(gathered, [13, 35], "02.04");
+  equal(res.length, 1, "02.01");
+  equal(gathered, [13, 35], "02.02");
 });
 
 test("03 - sandwitched, healthy entities", () => {
@@ -70,9 +70,9 @@ test("04 - sandwitched, broken entities", () => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "04.02",
+    "04.01",
   );
-  equal(gathered, [0, 6, 12], "04.03");
+  equal(gathered, [0, 6, 12], "04.02");
 });
 
 test("05", () => {
@@ -95,9 +95,9 @@ test("05", () => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "05.02",
+    "05.01",
   );
-  equal(gathered, [], "05.03");
+  equal(gathered, [], "05.02");
 });
 
 test("06", () => {
@@ -120,9 +120,9 @@ test("06", () => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "06.02",
+    "06.01",
   );
-  equal(gathered, [6, 12], "06.03");
+  equal(gathered, [6, 12], "06.02");
 });
 
 test("07", () => {
@@ -155,9 +155,9 @@ test("08", () => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "08.02",
+    "08.01",
   );
-  equal(gathered, [], "08.03");
+  equal(gathered, [], "08.02");
 });
 
 test("09", () => {
@@ -180,9 +180,9 @@ test("09", () => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "09.02",
+    "09.01",
   );
-  equal(gathered, [], "09.03");
+  equal(gathered, [], "09.02");
 });
 
 test("10", () => {
@@ -205,9 +205,9 @@ test("10", () => {
         rangeValDecoded: "\u00A0",
       },
     ],
-    "10.02",
+    "10.01",
   );
-  equal(gathered, [6, 14], "10.03");
+  equal(gathered, [6, 14], "10.02");
 });
 
 // TODO
