@@ -1,13 +1,13 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
   allRules as allRulesESM,
   fixEnt as fix,
 } from "../dist/string-fix-broken-named-entities.esm.js";
 
-test(`01 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - 1st input arg is wrong`, () => {
+test(`01 - throws - 1st input arg is wrong`, () => {
   not.throws(() => {
     fix("");
   }, "01.01");
@@ -52,7 +52,7 @@ test(`01 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - 1st input arg is wrong`,
   );
 });
 
-test(`02 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - 2nd input arg is wrong`, () => {
+test(`02 - throws - 2nd input arg is wrong`, () => {
   throws(
     () => {
       fix("aaa", "bbb");
@@ -69,7 +69,7 @@ test(`02 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - 2nd input arg is wrong`,
     "02.02",
   );
 
-  // does not throw on falsey:
+  // does not throw on falsy:
   not.throws(() => {
     fix("zzz", {});
   }, "02.03");
@@ -78,7 +78,7 @@ test(`02 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - 2nd input arg is wrong`,
   }, "02.04");
 });
 
-test(`03 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - opts.cb is not function`, () => {
+test(`03 - throws - opts.cb is not function`, () => {
   throws(
     () => {
       fix("aaa", { cb: "bbb" });
@@ -88,7 +88,7 @@ test(`03 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - opts.cb is not function`
   );
 });
 
-test(`04 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - opts.entityCatcherCb is not function`, () => {
+test(`04 - throws - opts.entityCatcherCb is not function`, () => {
   throws(
     () => {
       fix("aaa", { entityCatcherCb: "bbb" });
@@ -98,7 +98,7 @@ test(`04 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - opts.entityCatcherCb is 
   );
 });
 
-test(`05 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - opts.progressFn is not function`, () => {
+test(`05 - throws - opts.progressFn is not function`, () => {
   throws(
     () => {
       fix("aaa", { progressFn: "bbb" });
@@ -108,7 +108,7 @@ test(`05 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - opts.progressFn is not f
   );
 });
 
-test(`06 - ${`\u001b[${35}m${"throws"}\u001b[${39}m`} - opts.textAmpersandCatcherCb is not function`, () => {
+test(`06 - throws - opts.textAmpersandCatcherCb is not function`, () => {
   throws(
     () => {
       fix("aaa", { textAmpersandCatcherCb: "bbb" });
