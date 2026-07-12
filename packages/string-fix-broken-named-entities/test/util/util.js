@@ -1,6 +1,6 @@
 import {
-  fixEnt as fixEntESM,
   allRules,
+  fixEnt as fixEntESM,
 } from "../../dist/string-fix-broken-named-entities.esm.js";
 
 function fix(ok, ...args) {
