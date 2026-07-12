@@ -1,7 +1,7 @@
 // Sift raw ampersands in a string from broken character references
 // encode those raw ampersands and fix broken character references
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 import { rApply } from "ranges-apply";
 
 import { fixEnt } from "../dist/string-fix-broken-named-entities.esm.js";
