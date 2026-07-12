@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm.js";
 
@@ -18,7 +18,7 @@ function cb(obj) {
 // 06. opts.cb
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${31}m${"opts.cb"}\u001b[${39}m`} - \u001b[${33}m${"default callback"}\u001b[${39}m mimicking non-cb result`, () => {
+test(`01 - opts.cb - \u001b[${33}m${"default callback"}\u001b[${39}m mimicking non-cb result`, () => {
   equal(
     fix("zzznbsp;zzznbsp;", {
       cb,
@@ -31,7 +31,7 @@ test(`01 - ${`\u001b[${31}m${"opts.cb"}\u001b[${39}m`} - \u001b[${33}m${"default
   );
 });
 
-test(`02 - ${`\u001b[${31}m${"opts.cb"}\u001b[${39}m`} - \u001b[${33}m${"emlint issue spec"}\u001b[${39}m callback`, () => {
+test(`02 - opts.cb - \u001b[${33}m${"emlint issue spec"}\u001b[${39}m callback`, () => {
   equal(
     fix("zzznbsp;zzznbsp;", {
       cb: (oodles) => {
