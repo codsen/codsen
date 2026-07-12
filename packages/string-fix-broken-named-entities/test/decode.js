@@ -1,7 +1,7 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { allNamedEntities, decode } from "all-named-html-entities";
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import { decode, allNamedEntities } from "all-named-html-entities";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import fix from "./util/util.js";
 
@@ -9,9 +9,9 @@ import fix from "./util/util.js";
 // programmatic tests
 // -----------------------------------------------------------------------------
 
-test(`${
+test(`01 - ${`${
   Object.keys(allNamedEntities).length
-} - ${`\u001b[${36}m${"programmatic tests"}\u001b[${39}m`}`, () => {
+} - ${`\u001b[${36}m${"programmatic tests"}\u001b[${39}m`}`}`, () => {
   Object.keys(allNamedEntities)
     .filter((entity) => entity !== "nbsp")
     .forEach((singleEntity, i, arr) => {
@@ -33,12 +33,12 @@ test(`${
             rangeValDecoded: decode(`&${singleEntity};`),
           },
         ],
-        `${singleEntity} - 05; ${i + 1}/${arr.length}`,
+        `01.01 - ${`${singleEntity} - 05; ${i + 1}/${arr.length}`}`,
       );
     });
 });
 
-test(`02 - ${`\u001b[${36}m${"decode"}\u001b[${39}m`} - one of entities`, () => {
+test(`02 - decode - one of entities`, () => {
   let gathered = [];
   equal(
     fix(ok, "&EmptyVerySmallSquare;", {
