@@ -1,12 +1,12 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import fix from "./util/util.js";
 
 // decode on
 
-test(`01 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decode within ASCII range - A`, () => {
+test(`01 - numeric entities - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decode within ASCII range - A`, () => {
   let gathered = [];
   let inp1 = "&#65;";
   equal(
@@ -29,7 +29,7 @@ test(`01 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
   equal(gathered, [], "01.02");
 });
 
-test(`02 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decode outside ASCII range - pound`, () => {
+test(`02 - numeric entities - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decode outside ASCII range - pound`, () => {
   let gathered = [];
   let inp1 = "&#163;";
   equal(
@@ -55,7 +55,7 @@ test(`02 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
   equal(gathered, [], "02.02");
 });
 
-test(`03 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decode outside ASCII range - non-existing number`, () => {
+test(`03 - numeric entities - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decode outside ASCII range - non-existing number`, () => {
   let gathered = [];
   let inp1 = "&#99999999999999999;";
   equal(
@@ -83,7 +83,7 @@ test(`03 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
 
 // decode off
 
-test(`04 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - no decode, within ASCII range - A`, () => {
+test(`04 - numeric entities - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - no decode, within ASCII range - A`, () => {
   let gathered = [];
   let inp1 = "&#65;";
   equal(
@@ -100,7 +100,7 @@ test(`04 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
   equal(gathered, [], "04.02");
 });
 
-test(`05 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - no decode, outside ASCII range - pound`, () => {
+test(`05 - numeric entities - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - no decode, outside ASCII range - pound`, () => {
   let gathered = [];
   let inp1 = "&#163;";
   equal(
@@ -117,7 +117,7 @@ test(`05 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
   equal(gathered, [], "05.02");
 });
 
-test(`06 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - no decode, outside ASCII range - non-existing number`, () => {
+test(`06 - numeric entities - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - no decode, outside ASCII range - non-existing number`, () => {
   let gathered = [];
   let inp1 = "&#99999999999999999;";
   equal(
@@ -143,7 +143,7 @@ test(`06 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
   equal(gathered, [], "06.02");
 });
 
-test(`07 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - dollar instead of hash`, () => {
+test(`07 - numeric entities - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - dollar instead of hash`, () => {
   let gathered = [];
   let inp1 = "&$65;";
   equal(
@@ -168,7 +168,7 @@ test(`07 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
   equal(gathered, [], "07.02");
 });
 
-test(`08 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decoding text with healthy numeric entities`, () => {
+test(`08 - numeric entities - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decoding text with healthy numeric entities`, () => {
   let gathered = [];
   let inp1 = "something here &#163;";
   equal(
@@ -203,7 +203,7 @@ test(`08 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${31
   equal(gathered, [], "08.04");
 });
 
-test(`09 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - decode outside ASCII range - pound`, () => {
+test(`09 - numeric entities - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - decode outside ASCII range - pound`, () => {
   let gathered = [];
   let inp1 = "&#xA3;";
   equal(fix(ok, inp1, { decode: true }), [[0, 6, "\xA3"]], "09.01");
@@ -230,7 +230,7 @@ test(`09 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${34
   equal(gathered, [], "09.03");
 });
 
-test(`10 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - swapped hash and x, no decode - pound`, () => {
+test(`10 - numeric entities - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - swapped hash and x, no decode - pound`, () => {
   let gathered = [];
   let inp1 = "&x#A3;";
   equal(
@@ -256,7 +256,7 @@ test(`10 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${34
   equal(gathered, [], "10.02");
 });
 
-test(`11 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - swapped hash and x, with decode - pound`, () => {
+test(`11 - numeric entities - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - swapped hash and x, with decode - pound`, () => {
   let gathered = [];
   let inp1 = "&x#A3;";
   equal(fix(ok, inp1, { decode: true }), [[0, 6]], "11.01");
@@ -283,7 +283,7 @@ test(`11 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${34
   equal(gathered, [], "11.03");
 });
 
-test(`12 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - &#x pattern with hash missing`, () => {
+test(`12 - numeric entities - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - &#x pattern with hash missing`, () => {
   let gathered = [];
   let inp1 = "&x1000;";
   equal(
@@ -308,7 +308,7 @@ test(`12 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${34
   equal(gathered, [], "12.02");
 });
 
-test(`13 - ${`\u001b[${33}m${"numeric entities"}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - missing ampersand`, () => {
+test(`13 - numeric entities - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - missing ampersand`, () => {
   let gathered = [];
   let inp1 = "abc#x26;def";
   equal(
