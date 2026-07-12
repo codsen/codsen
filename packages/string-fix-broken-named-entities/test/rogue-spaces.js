@@ -1,7 +1,7 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { allNamedEntities, decode, uncertain } from "all-named-html-entities";
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
-import { decode, uncertain, allNamedEntities } from "all-named-html-entities";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import fix from "./util/util.js";
 
@@ -9,9 +9,9 @@ import fix from "./util/util.js";
 // programmatic tests
 // -----------------------------------------------------------------------------
 
-test(`${
+test(`01 - ${`${
   Object.keys(allNamedEntities).length
-} - ${`\u001b[${36}m${"rogue-spaces"}\u001b[${39}m`}`, () => {
+} - ${`\u001b[${36}m${"rogue-spaces"}\u001b[${39}m`}`}`, () => {
   Object.keys(allNamedEntities)
     .filter(
       (entity) => entity !== "nbsp" && !Object.keys(uncertain).includes(entity),
@@ -50,13 +50,13 @@ test(`${
               rangeValDecoded: decode(`&${singleEntity};`),
             },
           ],
-          `"${entityWithSpaceInserted}" - 03; ${i + 1}/${arr.length}`,
+          `01.01 - ${`"${entityWithSpaceInserted}" - 03; ${i + 1}/${arr.length}`}`,
         );
       }
     });
 });
 
-test(`02 - ${`\u001b[${36}m${"rogue-spaces"}\u001b[${39}m`} - \u001b[${36}m${"nbsp"}\u001b[${39}m - space after ampersand`, () => {
+test(`02 - rogue-spaces - \u001b[${36}m${"nbsp"}\u001b[${39}m - space after ampersand`, () => {
   let inp1 = "& nbsp;";
   let outp1 = [
     {
@@ -85,7 +85,7 @@ test(`02 - ${`\u001b[${36}m${"rogue-spaces"}\u001b[${39}m`} - \u001b[${36}m${"nb
   equal(gathered, [], "02.03");
 });
 
-test(`03 - ${`\u001b[${36}m${"rogue-spaces"}\u001b[${39}m`} - \u001b[${36}m${"nbsp"}\u001b[${39}m - space before semicolon`, () => {
+test(`03 - rogue-spaces - \u001b[${36}m${"nbsp"}\u001b[${39}m - space before semicolon`, () => {
   let inp5 = "&nbsp ;";
   let outp5 = [
     {
@@ -113,7 +113,7 @@ test(`03 - ${`\u001b[${36}m${"rogue-spaces"}\u001b[${39}m`} - \u001b[${36}m${"nb
   equal(gathered, [], "03.03");
 });
 
-test(`04 - ${`\u001b[${36}m${"rogue-spaces"}\u001b[${39}m`} - \u001b[${36}m${"nbsp"}\u001b[${39}m - space before and after semicolon`, () => {
+test(`04 - rogue-spaces - \u001b[${36}m${"nbsp"}\u001b[${39}m - space before and after semicolon`, () => {
   let inp5 = "& nbsp ;";
   let outp5 = [
     {
