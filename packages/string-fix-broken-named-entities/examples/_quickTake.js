@@ -1,6 +1,6 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 import { rApply } from "ranges-apply";
 
 import { fixEnt } from "../dist/string-fix-broken-named-entities.esm.js";
