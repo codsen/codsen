@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import { right } from "string-left-right";
 import { isNumberChar } from "codsen-utils";
+import { right } from "string-left-right";
 
 declare let DEV: boolean;
 
@@ -114,7 +114,7 @@ interface TempObj {
   };
 }
 
-function findLongest(temp1: TempObj[]) {
+function findLongest(temp1: TempObj[]): TempObj | undefined {
   // we are filtering something like this:
   // [
   //   {
@@ -151,12 +151,18 @@ function findLongest(temp1: TempObj[]) {
       return accum;
     });
   }
-  return temp1;
+  return undefined;
 }
 
-function removeGappedFromMixedCases(str: string, temp1: TempObj[]) {
+function removeGappedFromMixedCases(
+  str: string,
+  temp1: TempObj[],
+): TempObj | undefined {
+  // biome-ignore lint/complexity/noArguments: internal arity assertion guarding against miscalls
   if (arguments.length !== 2) {
-    throw new Error("removeGappedFromMixedCases(): wrong amount of inputs!");
+    throw new Error(
+      "string-fix-broken-named-entities/removeGappedFromMixedCases(): [THROW_ID_07] wrong amount of inputs!",
+    );
   }
   // If there is one without gaps and all others with gaps, gapless
   // wins, regardless of length.
@@ -251,7 +257,7 @@ function removeGappedFromMixedCases(str: string, temp1: TempObj[]) {
       );
       DEV &&
         console.log(
-          `254 stringFixBrokenNamedEntities: we filtered only entities with semicolons to the right: ${JSON.stringify(
+          `260 stringFixBrokenNamedEntities: we filtered only entities with semicolons to the right: ${JSON.stringify(
             copy,
             null,
             4,
@@ -294,7 +300,7 @@ function removeGappedFromMixedCases(str: string, temp1: TempObj[]) {
 }
 
 export {
-  resemblesNumericEntity,
-  removeGappedFromMixedCases,
   isLatinLetterOrNumberOrHash,
+  removeGappedFromMixedCases,
+  resemblesNumericEntity,
 };
