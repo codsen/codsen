@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { chompRight } from "../dist/string-left-right.esm.js";
 
@@ -120,13 +120,15 @@ test("05", () => {
 });
 
 test("06", () => {
-  throws(
-    () => {
-      chompRight("a b c d  c dx", 2, { mode: "z" }, "k", "l");
-    },
-    /THROW_ID_02/,
-    "06.01",
-  );
+  ["z", "01", -1, 4, 1.5].forEach((mode, idx) => {
+    throws(
+      () => {
+        chompRight("a b c d  c dx", 2, { mode }, "k", "l");
+      },
+      /THROW_ID_04/,
+      `06.${String(idx + 1).padStart(2, "0")}`,
+    );
+  });
 });
 
 test("07", () => {
