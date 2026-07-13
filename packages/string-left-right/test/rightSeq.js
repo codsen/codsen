@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { rightSeq } from "../dist/string-left-right.esm.js";
 
@@ -84,7 +84,7 @@ test("05 - optional - existing", () => {
   );
 });
 
-test(`06 - ${`\u001b[${31}m${"optional"}\u001b[${39}m`} - 1 not existing, no whitespace`, () => {
+test(`06 - optional - 1 not existing, no whitespace`, () => {
   equal(
     rightSeq("abcefghijklmnop", 2, "d?", "e", "f"),
     {
@@ -96,7 +96,7 @@ test(`06 - ${`\u001b[${31}m${"optional"}\u001b[${39}m`} - 1 not existing, no whi
   );
 });
 
-test(`07 - ${`\u001b[${31}m${"optional"}\u001b[${39}m`} - 1 not existing, with whitespace`, () => {
+test(`07 - optional - 1 not existing, with whitespace`, () => {
   equal(
     rightSeq("abc  e   f   g   hijklmnop", 2, "d?", "e", "f"),
     {
@@ -111,7 +111,7 @@ test(`07 - ${`\u001b[${31}m${"optional"}\u001b[${39}m`} - 1 not existing, with w
   );
 });
 
-test(`08 - ${`\u001b[${31}m${"optional"}\u001b[${39}m`} - ends with non-existing optional`, () => {
+test(`08 - optional - ends with non-existing optional`, () => {
   equal(
     rightSeq("abc  e   f   g   hijklmnop", 2, "y?", "e", "z?"),
     {
