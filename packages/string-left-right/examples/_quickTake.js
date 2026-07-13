@@ -1,15 +1,15 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import {
-  left,
-  right,
-  leftSeq,
-  rightSeq,
   chompLeft,
   chompRight,
+  left,
+  leftSeq,
   leftStopAtNewLines,
+  right,
+  rightSeq,
   rightStopAtNewLines,
 } from "../dist/string-left-right.esm.js";
 
