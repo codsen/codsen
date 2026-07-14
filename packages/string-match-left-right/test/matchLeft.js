@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
   // matchLeftIncl,
@@ -12,7 +12,7 @@ import {
 // matchLeft()
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          on a simple string`, () => {
+test(`01 - matchLeft()          on a simple string`, () => {
   equal(matchLeft("abc", 2, "b"), "b", "01.01");
   equal(matchLeft("abcdefghi", 3, ["abc"]), "abc", "01.02");
   equal(
@@ -26,12 +26,12 @@ test(`01 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          on a simple 
   equal(matchLeft("abc", 2, "zab"), false, "01.07");
 });
 
-test(`02 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          case insensitive`, () => {
+test(`02 - matchLeft()          case insensitive`, () => {
   equal(matchLeft("abc", 2, "B"), false, "02.01");
   equal(matchLeft("abc", 2, "B", { i: true }), "B", "02.02");
 });
 
-test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, three-char set`, () => {
+test(`03 - matchLeft()          opts.maxMismatches === 1, three-char set`, () => {
   //
   // first char, "d" is dot
   equal(
@@ -172,7 +172,7 @@ test(`03 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
   );
 });
 
-test(`04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, two-char set`, () => {
+test(`04 - matchLeft()          opts.maxMismatches === 1, two-char set`, () => {
   // lastMustMatch=false
   equal(
     matchLeft("_abc.efghi", 5, ["zc"], {
@@ -290,7 +290,7 @@ test(`04 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
   );
 });
 
-test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, pin the maxMismatches cut-off point, protruding value`, () => {
+test(`05 - matchLeft()          opts.maxMismatches === 1, pin the maxMismatches cut-off point, protruding value`, () => {
   //
   // firstMustMatch = true
   equal(
@@ -410,7 +410,7 @@ test(`05 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMism
   );
 });
 
-test(`06 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          opts.maxMismatches === 1, pin the maxMismatches cut-off point, non-protruding value`, () => {
+test(`06 - matchLeft()          opts.maxMismatches === 1, pin the maxMismatches cut-off point, non-protruding value`, () => {
   equal(
     matchLeft("_abcdef", 5, ["....d"], {
       maxMismatches: 1,
