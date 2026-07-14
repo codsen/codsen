@@ -1,18 +1,18 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
-  // matchLeftIncl,
-  matchRightIncl,
   // matchLeft,
   matchRight,
+  // matchLeftIncl,
+  matchRightIncl,
 } from "../dist/string-match-left-right.esm.js";
 
 // matchRight()
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}         on a simple string, non zero arg`, () => {
+test(`01 - matchRight()         on a simple string, non zero arg`, () => {
   equal(matchRight("abcdef", 2, "d"), "d", "01.01");
   equal(matchRight("abcdef", 2, ["d"]), "d", "01.02");
   equal(matchRight("abcdef", 2, "def"), "def", "01.03");
@@ -30,28 +30,28 @@ test(`01 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}         on a simple 
   matchRight("ab      cdef", 1, "cd", {
     trimBeforeMatching: true,
     cb: (char, theRemainderOfTheString, index) => {
-      equal(char, "e");
-      equal(theRemainderOfTheString, "ef");
-      equal(index, 10);
+      equal(char, "e", "01.08");
+      equal(theRemainderOfTheString, "ef", "01.09");
+      equal(index, 10, "01.10");
     },
   });
 });
 
-test(`02 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}         on a simple string, non zero arg`, () => {
+test(`02 - matchRight()         on a simple string, non zero arg`, () => {
   equal(matchRight("abcdef", 0, "b"), "b", "02.01");
   equal(matchRight("abcdef", 0, ["b"]), "b", "02.02");
   equal(matchRight("abcdef", 0, ["bc"]), "bc", "02.03");
   equal(matchRight("abcdef", 0, ["hfd", "ghja", "bc"]), "bc", "02.04");
 });
 
-test(`03 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}         on a simple string, case insensitive`, () => {
+test(`03 - matchRight()         on a simple string, case insensitive`, () => {
   equal(matchRight("abcdef", 2, "D"), false, "03.01");
   equal(matchRight("abcdef", 2, "D", { i: true }), "D", "03.02");
   equal(matchRight("abcdef", 2, ["D"], { i: true }), "D", "03.03");
   equal(matchRight("abcdef", 2, ["gDSS", "D"], { i: true }), "D", "03.04");
 });
 
-test(`04 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}         adhoc test #1`, () => {
+test(`04 - matchRight()         adhoc test #1`, () => {
   equal(
     matchRight("aaaa<<<<<<div>>>>something</div>bbbbb", 13, ">"),
     ">",
@@ -64,14 +64,14 @@ test(`04 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}         adhoc test #
   );
 });
 
-test(`05 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char`, () => {
+test(`05 - matchRight()      opts.maxMismatches === 1, omitted char`, () => {
   equal(
     matchRight("a<!->z", 0, ["<!-->"], {
       maxMismatches: 1,
       cb: (characterAfter, theRemainderOfTheString, index) => {
-        equal(characterAfter, "z");
-        equal(theRemainderOfTheString, "z");
-        equal(index, 5);
+        equal(characterAfter, "z", "05.02");
+        equal(theRemainderOfTheString, "z", "05.03");
+        equal(index, 5, "05.04");
         return true;
       },
     }),
@@ -82,25 +82,25 @@ test(`05 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
     matchRightIncl("a<!->z", 1, ["<!-->"], {
       maxMismatches: 1,
       cb: (characterAfter, theRemainderOfTheString, index) => {
-        equal(characterAfter, "z");
-        equal(theRemainderOfTheString, "z");
-        equal(index, 5);
+        equal(characterAfter, "z", "05.06");
+        equal(theRemainderOfTheString, "z", "05.07");
+        equal(index, 5, "05.08");
         return true;
       },
     }),
     "<!-->",
-    "05.02",
+    "05.05",
   );
 });
 
-test(`06 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char, space follows`, () => {
+test(`06 - matchRight()      opts.maxMismatches === 1, omitted char, space follows`, () => {
   equal(
     matchRight("a<!-> ", 0, ["<!-->"], {
       maxMismatches: 1,
       cb: (characterAfter, theRemainderOfTheString, index) => {
-        equal(characterAfter, " ");
-        equal(theRemainderOfTheString, " ");
-        equal(index, 5);
+        equal(characterAfter, " ", "06.02");
+        equal(theRemainderOfTheString, " ", "06.03");
+        equal(index, 5, "06.04");
         return true;
       },
     }),
@@ -111,25 +111,25 @@ test(`06 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
     matchRightIncl("a<!-> ", 1, ["<!-->"], {
       maxMismatches: 1,
       cb: (characterAfter, theRemainderOfTheString, index) => {
-        equal(characterAfter, " ");
-        equal(theRemainderOfTheString, " ");
-        equal(index, 5);
+        equal(characterAfter, " ", "06.06");
+        equal(theRemainderOfTheString, " ", "06.07");
+        equal(index, 5, "06.08");
         return true;
       },
     }),
     "<!-->",
-    "06.02",
+    "06.05",
   );
 });
 
-test(`07 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char, EOF follows`, () => {
+test(`07 - matchRight()      opts.maxMismatches === 1, omitted char, EOF follows`, () => {
   equal(
     matchRight("a<!->", 0, ["<!-->"], {
       maxMismatches: 1,
       cb: (characterAfter, theRemainderOfTheString, index) => {
-        equal(characterAfter, undefined);
-        equal(theRemainderOfTheString, "");
-        equal(index, 5);
+        equal(characterAfter, undefined, "07.02");
+        equal(theRemainderOfTheString, "", "07.03");
+        equal(index, 5, "07.04");
         return true;
       },
     }),
@@ -140,18 +140,18 @@ test(`07 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
     matchRightIncl("a<!->", 1, ["<!-->"], {
       maxMismatches: 1,
       cb: (characterAfter, theRemainderOfTheString, index) => {
-        equal(characterAfter, undefined);
-        equal(theRemainderOfTheString, "");
-        equal(index, 5);
+        equal(characterAfter, undefined, "07.06");
+        equal(theRemainderOfTheString, "", "07.07");
+        equal(index, 5, "07.08");
         return true;
       },
     }),
     "<!-->",
-    "07.02",
+    "07.05",
   );
 });
 
-test(`08 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, first char enforced, fail`, () => {
+test(`08 - matchRight()      opts.maxMismatches === 1, first char enforced, fail`, () => {
   equal(
     matchRight("a<--b", 1, ["!--"], {
       maxMismatches: 1,
@@ -162,7 +162,7 @@ test(`08 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
   );
 });
 
-test(`09 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, first char enforced, pass`, () => {
+test(`09 - matchRight()      opts.maxMismatches === 1, first char enforced, pass`, () => {
   // enforcing the exclamation mark:
   equal(
     matchRight("a<--b", 1, ["!--"], {
@@ -175,7 +175,7 @@ test(`09 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
   );
 });
 
-test(`10 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, first char enforced, succeed`, () => {
+test(`10 - matchRight()      opts.maxMismatches === 1, first char enforced, succeed`, () => {
   equal(
     matchRight("a<!-b", 1, ["!--"], {
       maxMismatches: 1,
@@ -219,7 +219,7 @@ test(`10 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
   );
 });
 
-test(`11 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, false`, () => {
+test(`11 - matchRight()      opts.maxMismatches === 1, false`, () => {
   equal(
     matchRight("a<!--[if gte mso 9]>x<![endif]-->z", 1, ["![cdata"], {
       i: true,
@@ -231,7 +231,7 @@ test(`11 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
   );
 });
 
-test(`12 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1, adhoc 1`, () => {
+test(`12 - matchRight()      opts.maxMismatches === 1, adhoc 1`, () => {
   equal(
     matchRight("a<!--[if gte mso 9]>x<![endif]-->z", 19, ["<!-->"], {
       trimBeforeMatching: true,
@@ -242,7 +242,7 @@ test(`12 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
   );
 });
 
-test(`13 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, one mismatch`, () => {
+test(`13 - matchRight()      opts.maxMismatches === 2, one mismatch`, () => {
   equal(
     matchRightIncl("<!--[if gte mso 9]>x<1[endif]-->", 20, ["<![endif]"], {
       i: true,
@@ -254,7 +254,7 @@ test(`13 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
   );
 });
 
-test(`14 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`, () => {
+test(`14 - matchRight()      opts.maxMismatches === 2, two mismatches`, () => {
   equal(
     matchRightIncl("<!--[if gte mso 9]>x<1[endf]-->", 20, ["<![endif]"], {
       i: true,
@@ -266,7 +266,7 @@ test(`14 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
   );
 });
 
-test(`15 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`, () => {
+test(`15 - matchRight()      opts.maxMismatches === 2, two mismatches`, () => {
   equal(
     matchRight("<!--[if gte mso 9]>x<[endif]-->", 20, ["![endif]"], {
       i: true,
@@ -278,7 +278,7 @@ test(`15 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
   );
 });
 
-test(`16 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`, () => {
+test(`16 - matchRight()      opts.maxMismatches === 2, two mismatches`, () => {
   equal(
     matchRight("<!--[if gte mso 9]>x<endif]-->", 20, ["![endif]"], {
       i: true,
@@ -290,7 +290,7 @@ test(`16 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
   );
 });
 
-test(`17 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`, () => {
+test(`17 - matchRight()      opts.maxMismatches === 2, three mismatches`, () => {
   equal(
     matchRight("<!--[if gte mso 9]>x<endif-->", 20, ["![endif]"], {
       i: true,
@@ -302,7 +302,7 @@ test(`17 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
   );
 });
 
-test(`18 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`, () => {
+test(`18 - matchRight()      opts.maxMismatches === 2, three mismatches`, () => {
   equal(
     matchRight("<!--[if gte mso 9]>x<ndif]-->", 20, ["![endif]"], {
       i: true,
@@ -314,7 +314,7 @@ test(`18 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
   );
 });
 
-test(`19 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`, () => {
+test(`19 - matchRight()      opts.maxMismatches === 2, three mismatches`, () => {
   equal(
     matchRight("<!--[if gte mso 9]>x<[ndif-->", 20, ["![endif]"], {
       i: true,
@@ -326,7 +326,7 @@ test(`19 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
   );
 });
 
-test(`20 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`, () => {
+test(`20 - matchRight()      opts.maxMismatches === 2, three mismatches`, () => {
   equal(
     matchRight("abc<!--[if gte mso 9]><xml>", 3, ["!--"], {
       maxMismatches: 1,
@@ -338,7 +338,7 @@ test(`20 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
   );
 });
 
-test(`21 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}     opts.maxMismatches - 3-char string`, () => {
+test(`21 - matchRight()     opts.maxMismatches - 3-char string`, () => {
   equal(matchRight("abcdef", 1, ["cde"]), "cde", "21.01");
 
   // first char, "c" mismatching
@@ -578,7 +578,7 @@ test(`21 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}     opts.maxMismatch
   );
 });
 
-test(`22 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 1 + lastMustMatch`, () => {
+test(`22 - matchRight()      opts.maxMismatches === 1 + lastMustMatch`, () => {
   equal(
     matchRight("><!--z>", 0, ["<!-->"], {
       trimBeforeMatching: true,
@@ -590,7 +590,7 @@ test(`22 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatc
   );
 });
 
-test(`23 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, three mismatches`, () => {
+test(`23 - matchRight()      opts.maxMismatches === 2, three mismatches`, () => {
   equal(
     matchRight(
       `a<!--[if]><z>
