@@ -1,18 +1,18 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
-  // matchLeftIncl,
-  matchRightIncl,
   // matchLeft,
   matchRight,
+  // matchLeftIncl,
+  matchRightIncl,
 } from "../dist/string-match-left-right.esm.js";
 
 // 4. matchRightIncl()
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simple string, non zero arg`, () => {
+test(`01 - matchRightIncl()     on a simple string, non zero arg`, () => {
   equal(matchRightIncl("abcdef", 2, "c"), "c", "01.01");
   equal(matchRightIncl("abcdef", 2, "cde"), "cde", "01.02");
   equal(matchRightIncl("abcdef", 2, ["cde"]), "cde", "01.03");
@@ -23,9 +23,9 @@ test(`01 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simple 
     matchRightIncl("ab      cdef", 2, "cd", {
       trimBeforeMatching: true,
       cb: (characterAfter, theRemainderOfTheString, index) => {
-        equal(characterAfter, "e");
-        equal(theRemainderOfTheString, "ef");
-        equal(index, 10);
+        equal(characterAfter, "e", "01.07");
+        equal(theRemainderOfTheString, "ef", "01.08");
+        equal(index, 10, "01.09");
         return true;
       },
     }),
@@ -34,14 +34,14 @@ test(`01 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simple 
   );
 });
 
-test(`02 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simple string, index zero`, () => {
+test(`02 - matchRightIncl()     on a simple string, index zero`, () => {
   equal(matchRightIncl("abcdef", 0, "a"), "a", "02.01");
   equal(matchRightIncl("abcdef", 0, "abc"), "abc", "02.02");
   equal(matchRightIncl("abcdef", 0, ["abc"]), "abc", "02.03");
   equal(matchRightIncl("abcdef", 0, ["fiuhjd", "gfds", "abc"]), "abc", "02.04");
 });
 
-test(`03 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simple string, case insensitive`, () => {
+test(`03 - matchRightIncl()     on a simple string, case insensitive`, () => {
   equal(matchRightIncl("abcdef", 2, "C"), false, "03.01");
   equal(matchRightIncl("abcdef", 2, "C", { i: true }), "C", "03.02");
   equal(matchRightIncl("abcdef", 2, ["C"], { i: true }), "C", "03.03");
@@ -52,11 +52,11 @@ test(`03 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simple 
   );
 });
 
-test(`04 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     cb gives outside index which is outside of string length`, () => {
+test(`04 - matchRightIncl()     cb gives outside index which is outside of string length`, () => {
   let matcher = (char, theRemainderOfTheString, index) => {
-    equal(char, undefined);
-    equal(theRemainderOfTheString, "");
-    equal(index, 6);
+    equal(char, undefined, "04.01");
+    equal(theRemainderOfTheString, "", "04.02");
+    equal(index, 6, "04.03");
   };
 
   // both functions should receive the same values in the callbacks:
@@ -68,7 +68,7 @@ test(`04 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     cb gives out
       },
     }),
     "def",
-    "04.01",
+    "04.04",
   );
   equal(
     matchRight("abcdef", 2, ["def"], {
@@ -78,11 +78,11 @@ test(`04 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     cb gives out
       },
     }),
     "def",
-    "04.02",
+    "04.05",
   );
 });
 
-test(`05 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     opts.maxMismatches - middle of the string`, () => {
+test(`05 - matchRightIncl()     opts.maxMismatches - middle of the string`, () => {
   equal(matchRightIncl("abcdef", 2, ["cde"]), "cde", "05.01");
 
   // first char, "c" mismatching
