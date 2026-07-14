@@ -1,18 +1,18 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
-  matchLeftIncl,
   // matchRightIncl,
   matchLeft,
+  matchLeftIncl,
   // matchRight,
 } from "../dist/string-match-left-right.esm.js";
 
 // matchLeftIncl()
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      on a simple string`, () => {
+test(`01 - matchLeftIncl()      on a simple string`, () => {
   equal(matchLeftIncl("abc", 2, "c"), "c", "01.01");
   equal(matchLeftIncl("zabcdefghi", 4, ["bcd"]), "bcd", "01.02");
   equal(
@@ -36,9 +36,9 @@ test(`01 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      on a simple 
     matchLeftIncl("zxab      cdef", 9, ["zz", "ab"], {
       trimBeforeMatching: true,
       cb: (characterAfter, theRemainderOfTheString, index) => {
-        equal(characterAfter, "x");
-        equal(theRemainderOfTheString, "zx");
-        equal(index, 1);
+        equal(characterAfter, "x", "01.09");
+        equal(theRemainderOfTheString, "zx", "01.10");
+        equal(index, 1, "01.11");
         return true;
       },
     }),
@@ -47,14 +47,14 @@ test(`01 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      on a simple 
   );
 });
 
-test(`02 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      case insensitive`, () => {
+test(`02 - matchLeftIncl()      case insensitive`, () => {
   equal(matchLeftIncl("abc", 2, "C"), false, "02.01");
   equal(matchLeftIncl("abc", 2, "C", { i: true }), "C", "02.02");
   equal(matchLeftIncl("abc", 2, "BC", { i: true }), "BC", "02.03");
   equal(matchLeftIncl("abC", 2, "c", { i: true }), "c", "02.04");
 });
 
-test(`03 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      left substring to check is longer than what's on the left`, () => {
+test(`03 - matchLeftIncl()      left substring to check is longer than what's on the left`, () => {
   equal(matchLeftIncl("abc", 2, ["cjsldfdjshfjkdfhgkdkgfhkd"]), false, "03.01");
   equal(
     matchLeftIncl("abc", 2, ["cjsldfdjshfjkdfhgkdkgfhkd"], { i: true }),
@@ -63,13 +63,13 @@ test(`03 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      left substri
   );
 });
 
-test(`04 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}     cb gives outside index which is outside of string length`, () => {
+test(`04 - matchLeftIncl()     cb gives outside index which is outside of string length`, () => {
   equal(
     matchLeftIncl("abcdef", 3, ["abcd"], {
       cb: (char, theRemainderOfTheString, index) => {
-        equal(char, undefined);
-        equal(theRemainderOfTheString, "");
-        equal(index, undefined);
+        equal(char, undefined, "04.02");
+        equal(theRemainderOfTheString, "", "04.03");
+        equal(index, undefined, "04.04");
         return true;
       },
     }),
@@ -78,7 +78,7 @@ test(`04 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}     cb gives outs
   );
 });
 
-test(`05 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMismatches === 1, one char`, () => {
+test(`05 - matchLeftIncl()      opts.maxMismatches === 1, one char`, () => {
   equal(matchLeftIncl("abc", 2, "c"), "c", "05.01");
   equal(
     matchLeftIncl("abcd", 2, "c", {
@@ -114,7 +114,7 @@ test(`05 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
   );
 });
 
-test(`06 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMismatches === 1, omitted char`, () => {
+test(`06 - matchLeftIncl()      opts.maxMismatches === 1, omitted char`, () => {
   equal(
     matchLeftIncl("_abdefghi", 3, ["bcd"], {
       maxMismatches: 1,
@@ -131,7 +131,7 @@ test(`06 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
   );
 });
 
-test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMismatches === 1, one char`, () => {
+test(`07 - matchLeftIncl()      opts.maxMismatches === 1, one char`, () => {
   // hungry=false
 
   equal(
@@ -235,7 +235,7 @@ test(`07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMism
   );
 });
 
-test(`08 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          opts.maxMismatches === 1, three char set`, () => {
+test(`08 - matchLeftIncl()          opts.maxMismatches === 1, three char set`, () => {
   equal(
     matchLeftIncl("_abc.efghi", 4, ["bcd"], {
       maxMismatches: 1,
@@ -353,7 +353,7 @@ test(`08 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          opts.max
   );
 });
 
-test(`09 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}          adhoc`, () => {
+test(`09 - matchLeftIncl()          adhoc`, () => {
   equal(
     matchLeftIncl("_abc.efghi", 4, ["bcd"], {
       maxMismatches: 1,
