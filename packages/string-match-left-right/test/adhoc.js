@@ -1,22 +1,22 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
-  // matchLeftIncl,
-  matchRightIncl,
   // matchLeft,
   matchRight,
+  // matchLeftIncl,
+  matchRightIncl,
 } from "../dist/string-match-left-right.esm.js";
 
 // 13. Ad-hoc
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+test(`01 - ADHOC, tests set #01`, () => {
   equal(matchRight('<a class="something"> text', 19, ">"), ">", "01.01");
 });
 
-test(`02 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+test(`02 - ADHOC, tests set #01`, () => {
   equal(
     matchRight('<a class="something"> text', 19, ">", {
       cb: (char) => typeof char === "string" && char.trim() === "",
@@ -26,7 +26,7 @@ test(`02 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
   );
 });
 
-test(`03 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+test(`03 - ADHOC, tests set #01`, () => {
   equal(
     matchRightIncl('<a class="something"> text', 20, "> t"),
     "> t",
@@ -34,11 +34,11 @@ test(`03 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
   );
 });
 
-test(`04 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+test(`04 - ADHOC, tests set #01`, () => {
   equal(matchRight('<a class="something"> text', 19, "> t"), "> t", "04.01");
 });
 
-test(`05 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+test(`05 - ADHOC, tests set #01`, () => {
   equal(
     matchRight("ab      cdef", 1, "cde", { trimBeforeMatching: true }),
     "cde",
@@ -46,7 +46,7 @@ test(`05 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
   );
 });
 
-test(`06 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+test(`06 - ADHOC, tests set #01`, () => {
   equal(
     matchRight('<a class="something"> text', 19, ">", {
       cb: (char) => char === " ",
@@ -56,7 +56,7 @@ test(`06 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
   );
 });
 
-test(`07 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+test(`07 - ADHOC, tests set #01`, () => {
   equal(
     matchRight("ab      cdef", 1, "cde", {
       cb: (char) => char === "f",
@@ -67,18 +67,18 @@ test(`07 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
   );
 });
 
-test(`08 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, () => {
+test(`08 - ADHOC, tests set #01`, () => {
   matchRight("ab      cdef", 1, "cd", {
     trimBeforeMatching: true,
     cb: (char, theRemainderOfTheString, index) => {
-      equal(char, "e");
-      equal(theRemainderOfTheString, "ef");
-      equal(index, 10);
+      equal(char, "e", "08.01");
+      equal(theRemainderOfTheString, "ef", "08.02");
+      equal(index, 10, "08.03");
     },
   });
 });
 
-test(`09 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, set #02`, () => {
+test(`09 - ADHOC, set #02`, () => {
   equal(
     matchRight("a<!DOCTYPE html>b", 1, ["!--", "doctype", "xml", "cdata"], {
       i: true,
