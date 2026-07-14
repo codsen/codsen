@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
   matchLeftIncl,
@@ -18,7 +18,7 @@ test("01 - throws", () => {
     () => {
       matchLeftIncl("zzz", 1);
     },
-    /THROW_ID_08/,
+    /THROW_ID_06/,
     "01.01",
   );
 
@@ -26,7 +26,7 @@ test("01 - throws", () => {
     () => {
       matchRightIncl("zzz", 1);
     },
-    /THROW_ID_08/,
+    /THROW_ID_06/,
     "01.02",
   );
 
@@ -36,7 +36,7 @@ test("01 - throws", () => {
     () => {
       matchRightIncl("zzz", 1, 1);
     },
-    /THROW_ID_05/,
+    /THROW_ID_03/,
     "01.03",
   );
 
@@ -44,7 +44,7 @@ test("01 - throws", () => {
     () => {
       matchRightIncl("zzz", "aaa", 1);
     },
-    /THROW_ID_03/,
+    /THROW_ID_02/,
     "01.04",
   );
 
@@ -52,7 +52,7 @@ test("01 - throws", () => {
     () => {
       matchRightIncl("zzz", "aaa", "");
     },
-    /THROW_ID_03/,
+    /THROW_ID_02/,
     "01.05",
   );
 
@@ -60,7 +60,7 @@ test("01 - throws", () => {
     () => {
       matchRightIncl("zzz", "aaa", [""]);
     },
-    /THROW_ID_03/,
+    /THROW_ID_02/,
     "01.06",
   );
 
@@ -68,7 +68,7 @@ test("01 - throws", () => {
     () => {
       matchRightIncl("zzz", "aaa", ["", ""]);
     },
-    /THROW_ID_03/,
+    /THROW_ID_02/,
     "01.07",
   );
 
@@ -78,7 +78,7 @@ test("01 - throws", () => {
     () => {
       matchLeftIncl("zzz", null, ["aaa"]);
     },
-    /THROW_ID_03/,
+    /THROW_ID_02/,
     "01.08",
   );
 
@@ -86,7 +86,7 @@ test("01 - throws", () => {
     () => {
       matchRightIncl("zzz", null, ["aaa"]);
     },
-    /THROW_ID_03/,
+    /THROW_ID_02/,
     "01.09",
   );
 
@@ -94,7 +94,7 @@ test("01 - throws", () => {
     () => {
       matchRightIncl("zzz", null, []);
     },
-    /THROW_ID_03/,
+    /THROW_ID_02/,
     "01.10",
   );
 
@@ -102,7 +102,7 @@ test("01 - throws", () => {
     () => {
       matchRightIncl("zzz", null, "");
     },
-    /THROW_ID_03/,
+    /THROW_ID_02/,
     "01.11",
   );
 
@@ -112,7 +112,7 @@ test("01 - throws", () => {
     () => {
       matchLeftIncl("zzz");
     },
-    /THROW_ID_03/,
+    /THROW_ID_02/,
     "01.12",
   );
 
@@ -120,7 +120,7 @@ test("01 - throws", () => {
     () => {
       matchRightIncl("zzz");
     },
-    /THROW_ID_03/,
+    /THROW_ID_02/,
     "01.13",
   );
 
@@ -129,7 +129,7 @@ test("01 - throws", () => {
     () => {
       matchRightIncl("zzz", 1, ["aaa"], true);
     },
-    /THROW_ID_06/,
+    /THROW_ID_04/,
     "01.14",
   );
 
@@ -140,7 +140,7 @@ test("01 - throws", () => {
         trimBeforeMatching: "z",
       });
     },
-    /THROW_ID_09/,
+    /THROW_ID_01/,
     "01.15",
   );
 
