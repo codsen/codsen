@@ -1,12 +1,12 @@
 // The Callback Use
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import {
-  matchLeftIncl,
-  matchRightIncl,
   matchLeft,
+  matchLeftIncl,
   matchRight,
+  matchRightIncl,
 } from "../dist/string-match-left-right.esm.js";
 
 // imagine you looped the string and wanted to catch where does attribute "class" start
