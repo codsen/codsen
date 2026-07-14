@@ -1,7 +1,7 @@
 /* eslint no-plusplus:0 */
 
 import { arrayiffy } from "arrayiffy-if-string";
-import { isPlainObject as isObj, isStr, hasOwnProp } from "codsen-utils";
+import { hasOwnProp, isPlainObject as isObj, isStr } from "codsen-utils";
 
 import { version as v } from "../package.json";
 
@@ -50,7 +50,7 @@ function march(
   DEV && console.log(`050 \u001b[${35}m${"CALLED march()"}\u001b[${39}m`);
   DEV &&
     console.log(
-      `======\nargs:
+      `53 ======\nargs:
 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${str}
 ${`\u001b[${33}m${`position`}\u001b[${39}m`} = ${position}
 ${`\u001b[${33}m${`whatToMatchVal`}\u001b[${39}m`} = ${whatToMatchVal}
@@ -252,7 +252,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
         ? (whatToMatchVal as string)[whatToMatchVal.length - charsToCheckCount]
         : (whatToMatchVal as string)[charsToCheckCount - 1];
 
-    DEV && console.log(" ");
+    DEV && console.log("255  ");
     DEV &&
       console.log(`257 \u001b[${35}m${"██ str[i]"}\u001b[${39}m = ${str[i]}`);
     DEV &&
@@ -297,9 +297,9 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
           );
       }
 
-      DEV && console.log(" ");
+      DEV && console.log("300  ");
       DEV && console.log(`301 ${`\u001b[${32}m${`MATCHED!`}\u001b[${39}m`}`);
-      DEV && console.log(" ");
+      DEV && console.log("302  ");
       charsToCheckCount -= 1;
       charsMatchedTotal++;
       DEV &&
@@ -351,10 +351,10 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
           `351 ${`\u001b[${32}m${`${`\u001b[${32}m${`OK.`}\u001b[${39}m`} Reduced charsToCheckCount to ${charsToCheckCount}`}\u001b[${39}m`}`,
         );
     } else {
-      DEV && console.log(" ");
+      DEV && console.log("354  ");
       DEV &&
         console.log(`356 ${`\u001b[${31}m${`DIDN'T MATCH!`}\u001b[${39}m`}`);
-      DEV && console.log(" ");
+      DEV && console.log("357  ");
       DEV &&
         console.log(`359 str[i = ${i}] = ${JSON.stringify(str[i], null, 4)}`);
       DEV &&
@@ -405,10 +405,10 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
                 ]
               : (whatToMatchVal as string)[charsToCheckCount - 2 - y];
 
-          DEV && console.log(" ");
+          DEV && console.log("408  ");
           DEV &&
             console.log(
-              `██ ${`\u001b[${33}m${`whatToMatchVal.length`}\u001b[${39}m`} = ${JSON.stringify(
+              `411 ██ ${`\u001b[${33}m${`whatToMatchVal.length`}\u001b[${39}m`} = ${JSON.stringify(
                 whatToMatchVal.length,
                 null,
                 4,
@@ -416,7 +416,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
             );
           DEV &&
             console.log(
-              `██ ${`\u001b[${33}m${`charsToCheckCount`}\u001b[${39}m`} = ${JSON.stringify(
+              `419 ██ ${`\u001b[${33}m${`charsToCheckCount`}\u001b[${39}m`} = ${JSON.stringify(
                 charsToCheckCount,
                 null,
                 4,
@@ -434,7 +434,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
             console.log(
               `435 \u001b[${35}m${"██ nextCharToCompareAgainst"}\u001b[${39}m = ${nextCharToCompareAgainst}`,
             );
-          DEV && console.log(" ");
+          DEV && console.log("437  ");
 
           let nextCharInSource = str[getNextIdx(i)];
 
@@ -450,7 +450,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
             console.log(
               `451 \u001b[${35}m${"██ nextCharToCompareAgainst"}\u001b[${39}m = ${nextCharToCompareAgainst}`,
             );
-          DEV && console.log(" ");
+          DEV && console.log("453  ");
 
           if (
             nextCharToCompareAgainst &&
@@ -462,10 +462,10 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
             (!opts.firstMustMatch ||
               charsToCheckCount !== whatToMatchVal.length)
           ) {
-            DEV && console.log(" ");
+            DEV && console.log("465  ");
             DEV &&
               console.log(`467 ${`\u001b[${32}m${`MATCHED!`}\u001b[${39}m`}`);
-            DEV && console.log(" ");
+            DEV && console.log("468  ");
             charsMatchedTotal++;
 
             // bail early if there's whitespace in front, imagine:
@@ -506,10 +506,10 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
             (!opts.firstMustMatch ||
               charsToCheckCount !== whatToMatchVal.length)
           ) {
-            DEV && console.log(" ");
+            DEV && console.log("509  ");
             DEV &&
               console.log(`511 ${`\u001b[${32}m${`MATCHED!`}\u001b[${39}m`}`);
-            DEV && console.log(" ");
+            DEV && console.log("512  ");
 
             if (!charsMatchedTotal && !opts.hungry) {
               DEV &&
@@ -605,11 +605,11 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
 
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`--------------------- ending with: ---------------------`}\u001b[${39}m`}`,
+        `608 ${`\u001b[${90}m${`--------------------- ending with: ---------------------`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`charsToCheckCount = ${JSON.stringify(
+        `612 ${`\u001b[${90}m${`charsToCheckCount = ${JSON.stringify(
           charsToCheckCount,
           null,
           4,
@@ -617,7 +617,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`charsMatchedTotal = ${JSON.stringify(
+        `620 ${`\u001b[${90}m${`charsMatchedTotal = ${JSON.stringify(
           charsMatchedTotal,
           null,
           4,
@@ -625,7 +625,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`lastWasMismatched = ${JSON.stringify(
+        `628 ${`\u001b[${90}m${`lastWasMismatched = ${JSON.stringify(
           lastWasMismatched,
           null,
           4,
@@ -633,7 +633,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`patience = ${JSON.stringify(
+        `636 ${`\u001b[${90}m${`patience = ${JSON.stringify(
           patience,
           null,
           4,
@@ -641,7 +641,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`atLeastSomethingWasMatched = ${JSON.stringify(
+        `644 ${`\u001b[${90}m${`atLeastSomethingWasMatched = ${JSON.stringify(
           atLeastSomethingWasMatched,
           null,
           4,
@@ -649,7 +649,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`firstCharacterMatched = ${JSON.stringify(
+        `652 ${`\u001b[${90}m${`firstCharacterMatched = ${JSON.stringify(
           firstCharacterMatched,
           null,
           4,
@@ -657,7 +657,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`lastCharacterMatched = ${JSON.stringify(
+        `660 ${`\u001b[${90}m${`lastCharacterMatched = ${JSON.stringify(
           lastCharacterMatched,
           null,
           4,
@@ -744,7 +744,7 @@ function main(
     typeof originalOpts.trimBeforeMatching !== "boolean"
   ) {
     throw new Error(
-      `string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${
+      `string-match-left-right/${mode}(): [THROW_ID_01] opts.trimBeforeMatching should be boolean!${
         Array.isArray(originalOpts.trimBeforeMatching)
           ? ` Did you mean to use opts.trimCharsBeforeMatching?`
           : ""
@@ -771,16 +771,16 @@ function main(
 
   if (!Number.isInteger(position) || position < 0) {
     throw new Error(
-      `string-match-left-right/${mode}(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ${typeof position}, equal to:\n${JSON.stringify(
+      `string-match-left-right/${mode}(): [THROW_ID_02] the second argument should be a natural number. Currently it's of a type: ${typeof position}, equal to:\n${JSON.stringify(
         position,
         null,
         4,
       )}`,
     );
   }
-  let whatToMatch;
+  let whatToMatch: Array<string | (() => string)> | undefined;
 
-  let special;
+  let special: boolean;
   if (isStr(originalWhatToMatch)) {
     DEV && console.log("785");
     whatToMatch = [originalWhatToMatch];
@@ -803,7 +803,7 @@ function main(
   } else {
     DEV && console.log("804");
     throw new Error(
-      `string-match-left-right/${mode}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${JSON.stringify(
+      `string-match-left-right/${mode}(): [THROW_ID_03] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${JSON.stringify(
         originalWhatToMatch,
         null,
         4,
@@ -811,13 +811,13 @@ function main(
     );
   }
 
-  DEV && console.log("\n\n");
+  DEV && console.log("814 \n\n");
   DEV &&
     console.log(`816 whatToMatch = ${JSON.stringify(whatToMatch, null, 4)}`);
 
   if (originalOpts && !isObj(originalOpts)) {
     throw new Error(
-      `string-match-left-right/${mode}(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type "${typeof originalOpts}", and equal to:\n${JSON.stringify(
+      `string-match-left-right/${mode}(): [THROW_ID_04] the fourth argument, options object, should be a plain object. Currently it's of a type "${typeof originalOpts}", and equal to:\n${JSON.stringify(
         originalOpts,
         null,
         4,
@@ -838,14 +838,14 @@ function main(
     })
   ) {
     throw new Error(
-      `string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`,
+      `string-match-left-right/${mode}(): [THROW_ID_05] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`,
     );
   }
 
   // action
 
   // CASE 1. If it's driven by callback-only, the 3rd input argument, what to look
-  // for - is falsey - empty string within array (or not), OR given null
+  // for - is falsy - empty string within array (or not), OR given null
 
   if (
     !whatToMatch ||
@@ -858,7 +858,7 @@ function main(
   ) {
     if (typeof opts.cb === "function") {
       DEV && console.log("860");
-      let firstCharOutsideIndex;
+      let firstCharOutsideIndex: number | undefined;
 
       // matchLeft() or matchRightIncl() methods start at index "position"
       let startingPosition = position;
@@ -947,7 +947,7 @@ function main(
         " More so, the whole options object, the fourth input argument, is missing!";
     }
     throw new Error(
-      `string-match-left-right/${mode}(): [THROW_ID_08] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!${extraNote}`,
+      `string-match-left-right/${mode}(): [THROW_ID_06] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!${extraNote}`,
     );
   }
 
@@ -977,8 +977,8 @@ function main(
     // since input can be function, we need to grab the value explicitly:
     let whatToMatchVal = whatToMatch[i];
 
-    let fullCharacterInFront;
-    let indexOfTheCharacterInFront;
+    let fullCharacterInFront: string | undefined;
+    let indexOfTheCharacterInFront: number | undefined;
     let restOfStringInFront = "";
 
     let startingPosition = position;
@@ -996,7 +996,7 @@ function main(
           4,
         )}\n* whatToMatchVal = "${whatToMatchVal}"\n`,
       );
-    DEV && console.log("\n\n\n\n\n\n");
+    DEV && console.log("999 \n\n\n\n\n\n");
     DEV &&
       console.log(
         `1002 ███████████████████████████████████████ march() STARTS BELOW ███████████████████████████████████████`,
@@ -1151,10 +1151,10 @@ function matchRight(
 }
 
 export {
-  matchLeftIncl,
-  matchRightIncl,
-  matchLeft,
-  matchRight,
   defaults,
+  matchLeft,
+  matchLeftIncl,
+  matchRight,
+  matchRightIncl,
   version,
 };
