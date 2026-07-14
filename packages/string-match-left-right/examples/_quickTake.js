@@ -1,12 +1,12 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import {
-  matchLeftIncl,
-  matchRightIncl,
   matchLeft,
+  matchLeftIncl,
   matchRight,
+  matchRightIncl,
 } from "../dist/string-match-left-right.esm.js";
 
 // 3rd character is "d" because indexes start from zero.
