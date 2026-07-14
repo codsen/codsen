@@ -1,18 +1,18 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
-  matchLeftIncl,
-  matchRightIncl,
   matchLeft,
+  matchLeftIncl,
   matchRight,
+  matchRightIncl,
 } from "../dist/string-match-left-right.esm.js";
 
 // opts.trimCharsBeforeMatching
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}       pt.1`, () => {
+test(`01 - opts.trimCharsBeforeMatching       pt.1`, () => {
   function isSpace(char) {
     return typeof char === "string" && char.trim() === "";
   }
@@ -36,19 +36,19 @@ test(`01 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["/", " "],
     }),
     "div",
-    "01.04",
+    "01.03",
   );
   equal(
     matchRight("< / div>", 0, ["hgfdf", "hkjh", "div", "00"], {
       trimCharsBeforeMatching: ["/", " "],
     }),
     "div",
-    "01.05",
+    "01.04",
   );
   equal(
     matchRight("< / div>", 0, ["div"], { trimCharsBeforeMatching: ["/"] }),
     false,
-    "01.06",
+    "01.05",
   );
 
   // opts.cb
@@ -58,10 +58,18 @@ test(`01 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["/", " "],
     }),
     false,
-    "01.07",
+    "01.06",
   );
   equal(
     matchRight("< / div>", 0, ["zzzz", "div"], {
+      cb: isSpace,
+      trimCharsBeforeMatching: ["/", " "],
+    }),
+    false,
+    "01.07",
+  );
+  equal(
+    matchRight("< / div>", 0, ["div"], {
       cb: isSpace,
       trimCharsBeforeMatching: ["/", " "],
     }),
@@ -71,27 +79,19 @@ test(`01 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
   equal(
     matchRight("< / div>", 0, ["div"], {
       cb: isSpace,
-      trimCharsBeforeMatching: ["/", " "],
+      trimCharsBeforeMatching: ["/"],
     }),
     false,
     "01.09",
   );
   equal(
-    matchRight("< / div>", 0, ["div"], {
-      cb: isSpace,
-      trimCharsBeforeMatching: ["/"],
-    }),
-    false,
-    "01.10",
-  );
-  equal(
     matchRight("</div>", 0, ["div"], { trimCharsBeforeMatching: ["/", 1] }),
     "div",
-    "01.11",
+    "01.10",
   );
 });
 
-test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}       pt.2`, () => {
+test(`02 - opts.trimCharsBeforeMatching       pt.2`, () => {
   // matchRight
   equal(matchRight("</div>", 0, ["div"]), false, "02.01");
   equal(
@@ -277,7 +277,7 @@ test(`02 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
   );
 });
 
-test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}       throws`, () => {
+test(`03 - opts.trimCharsBeforeMatching       throws`, () => {
   equal(
     matchRight("</div>", 0, ["zz", "div"], {
       trimCharsBeforeMatching: ["/", "<"],
@@ -300,7 +300,7 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["/", "<"],
     }),
     "div",
-    "03.03",
+    "03.02",
   );
   throws(
     () => {
@@ -317,7 +317,7 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["/", "<"],
     }),
     "div",
-    "03.05",
+    "03.03",
   );
   throws(
     () => {
@@ -334,7 +334,7 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
       trimCharsBeforeMatching: ["/", "<"],
     }),
     "div",
-    "03.07",
+    "03.04",
   );
   throws(
     () => {
@@ -347,11 +347,11 @@ test(`03 - ${`\u001b[${34}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}     
   );
 });
 
-test(`04 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
+test(`04 - matchLeft()       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
   equal(matchLeft("za", 1, [() => "EOL"]), false, "04.01");
 });
 
-test(`05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
+test(`05 - matchLeft()       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
   equal(
     matchLeft("za", 1, [() => "EOL"], {
       trimCharsBeforeMatching: ["z"],
@@ -361,15 +361,15 @@ test(`05 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mch
   );
 });
 
-test(`06 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
+test(`06 - matchLeft()       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
   equal(matchLeft("za", 1, ["a", () => "EOL"]), false, "06.01");
 });
 
-test(`07 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
+test(`07 - matchLeft()       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
   equal(matchLeft("za", 1, ["z", () => "EOL"]), "z", "07.01");
 });
 
-test(`08 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
+test(`08 - matchLeft()       \u001b[${33}mcharacter trims\u001b[${39}m`, () => {
   equal(
     matchLeft("za", 1, ["a", () => "EOL"], {
       trimCharsBeforeMatching: ["z"],
