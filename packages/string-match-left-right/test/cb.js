@@ -1,18 +1,18 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
-  matchLeftIncl,
-  matchRightIncl,
   matchLeft,
+  matchLeftIncl,
   matchRight,
+  matchRightIncl,
 } from "../dist/string-match-left-right.esm.js";
 
 // opts.cb callbacks
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is called back. haha!`, () => {
+test(`01 - opts.cb()            callback is called back. haha!`, () => {
   function isSpace(char) {
     return typeof char === "string" && char.trim() === "";
   }
@@ -79,7 +79,7 @@ test(`01 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
   );
 });
 
-test(`02 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLeft() - various combos`, () => {
+test(`02 - opts.cb()            opts.matchLeft() - various combos`, () => {
   function isSpace(char) {
     return typeof char === "string" && char.trim() === "";
   }
@@ -119,7 +119,7 @@ test(`02 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLe
   );
 });
 
-test(`03 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLeftIncl() - callback and trimming`, () => {
+test(`03 - opts.cb()            opts.matchLeftIncl() - callback and trimming`, () => {
   function isSpace(char) {
     return typeof char === "string" && char.trim() === "";
   }
@@ -209,7 +209,7 @@ test(`03 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            opts.matchLe
   );
 });
 
-test(`04 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is called back, pt.1`, () => {
+test(`04 - opts.cb()            callback is called back, pt.1`, () => {
   function isSpace(char) {
     return typeof char === "string" && char.trim() === "";
   }
@@ -240,7 +240,7 @@ test(`04 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
   );
 });
 
-test(`05 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is called, pt.2`, () => {
+test(`05 - opts.cb()            callback is called, pt.2`, () => {
   function isSpace(char) {
     return typeof char === "string" && char.trim() === "";
   }
@@ -365,12 +365,12 @@ test(`05 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback is 
 });
 
 // new in v2.1.0
-test(`06 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            matchRight - third callback argument (index)`, () => {
+test(`06 - opts.cb()            matchRight - third callback argument (index)`, () => {
   let inputStr = "some text and some more text";
   function testMe(char, theRemainderOfTheString, index) {
-    equal(char, "r");
-    equal(theRemainderOfTheString, "re text");
-    equal(index, 21);
+    equal(char, "r", "06.01");
+    equal(theRemainderOfTheString, "re text", "06.02");
+    equal(index, 21, "06.03");
   }
   matchRight(inputStr, 18, ["z", "mo"], { cb: testMe });
   matchRight(inputStr, 18, ["z", "mo"], { cb: testMe });
@@ -381,26 +381,26 @@ test(`06 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            matchRight -
   matchRight(inputStr, 18, ["z", "mo"], { i: true, cb: testMe });
 });
 
-test(`07 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            matchRight - third callback argument null`, () => {
+test(`07 - opts.cb()            matchRight - third callback argument null`, () => {
   let inputStr = "abc";
   function testMe(char, theRemainderOfTheString, index) {
-    equal(char, undefined);
-    equal(theRemainderOfTheString, "");
-    equal(index, 3);
+    equal(char, undefined, "07.01");
+    equal(theRemainderOfTheString, "", "07.02");
+    equal(index, 3, "07.03");
   }
   matchRight(inputStr, 0, ["z", "bc"], { cb: testMe });
 });
 
-test(`08 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            matchLeft -  third callback argument (index)`, () => {
+test(`08 - opts.cb()            matchLeft -  third callback argument (index)`, () => {
   let inputStr = "some text and some more text";
   function testMe1(char) {
-    equal(char, "o");
+    equal(char, "o", "08.01");
   }
   function testMe2(char, theRemainderOfTheString) {
-    equal(theRemainderOfTheString, "some text and so");
+    equal(theRemainderOfTheString, "some text and so", "08.02");
   }
   function testMe3(char, theRemainderOfTheString, index) {
-    equal(index, 15);
+    equal(index, 15, "08.03");
   }
   matchLeft(inputStr, 18, ["z", "me"], { cb: testMe1 });
   matchLeft(inputStr, 18, ["z", "me"], { cb: testMe2 });
@@ -422,9 +422,9 @@ test(`09 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${3
     wholeSubstring,
     indexOfFirstChar,
   ) {
-    equal(firstCharacter, " ");
-    equal(wholeSubstring, ' class="">');
-    equal(indexOfFirstChar, 5);
+    equal(firstCharacter, " ", "09.01");
+    equal(wholeSubstring, ' class="">', "09.02");
+    equal(indexOfFirstChar, 5, "09.03");
   }
 
   let input = '</div class="">';
@@ -433,7 +433,7 @@ test(`09 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${3
       cb: hasEmptyClassRightAfterTheTagName,
     }),
     false, // because slash hasn't been accounted for, it's to the right of index 0 character, "<".
-    "09.01",
+    "09.04",
   );
   equal(
     matchRight(input, 0, ["hello", "div"], {
@@ -441,7 +441,7 @@ test(`09 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${3
       trimCharsBeforeMatching: ["/", " "],
     }),
     "div", // trims slash, finds div, calls the callback with args, they trim and check for "class".
-    "09.02",
+    "09.05",
   );
   equal(
     matchRight(input, 0, ["hello", "div"], {
@@ -449,7 +449,7 @@ test(`09 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${3
       trimCharsBeforeMatching: ["/", " "],
     }),
     "div", // trims slash, finds div, calls the callback with args, they trim and check for "class".
-    "09.03",
+    "09.06",
   );
 
   matchRight(input, 0, ["zz", "div"], {
@@ -613,7 +613,7 @@ test(`12 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${3
 // Relying only on callback to calculate result - empty input is passed
 // -----------------------------------------------------------------------------
 
-test(`13 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()`, () => {
+test(`13 - opts.cb()   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()`, () => {
   ok(
     matchLeft("abc", 1, null, {
       i: true,
@@ -634,12 +634,12 @@ test(`13 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
         i: true,
       });
     },
-    /THROW_ID_08/,
+    /THROW_ID_06/,
     "13.02",
   );
 });
 
-test(`14 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()`, () => {
+test(`14 - opts.cb()   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()`, () => {
   not.ok(
     matchLeftIncl("abc", 1, "", {
       i: true,
@@ -660,12 +660,12 @@ test(`14 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
         i: true,
       });
     },
-    /THROW_ID_08/,
+    /THROW_ID_06/,
     "14.02",
   );
 });
 
-test(`15 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()`, () => {
+test(`15 - opts.cb()   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()`, () => {
   ok(
     matchRight("abc", 1, "", {
       i: true,
@@ -686,12 +686,12 @@ test(`15 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
         i: true,
       });
     },
-    /THROW_ID_08/,
+    /THROW_ID_06/,
     "15.02",
   );
 });
 
-test(`16 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl()`, () => {
+test(`16 - opts.cb()   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl()`, () => {
   not.ok(
     matchRightIncl("abc", 1, "", {
       i: true,
@@ -712,12 +712,12 @@ test(`16 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
         i: true,
       });
     },
-    /THROW_ID_08/,
+    /THROW_ID_06/,
     "16.02",
   );
 });
 
-test(`17 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight() other cb args`, () => {
+test(`17 - opts.cb()   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight() other cb args`, () => {
   ok(
     matchRight("abcdef", 2, "", {
       i: true,
@@ -741,7 +741,7 @@ test(`17 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
   );
 });
 
-test(`18 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()     + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`, () => {
+test(`18 - opts.cb()   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()     + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`, () => {
   // control
   not.ok(
     matchRight("abc   def", 2, "", {
@@ -786,7 +786,7 @@ test(`18 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
   );
 });
 
-test(`19 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl() + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`, () => {
+test(`19 - opts.cb()   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl() + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`, () => {
   // control
   not.ok(
     matchRightIncl("abc   def", 3, "", {
@@ -831,7 +831,7 @@ test(`19 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
   );
 });
 
-test(`20 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()      + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`, () => {
+test(`20 - opts.cb()   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()      + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`, () => {
   // control
   not.ok(
     matchLeft(
@@ -886,7 +886,7 @@ test(`20 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
   );
 });
 
-test(`21 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`, () => {
+test(`21 - opts.cb()   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`, () => {
   // control
   not.ok(
     matchLeftIncl(
@@ -945,7 +945,7 @@ test(`21 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
 // We test, what happens when the decision is driven by a callback and opts
 // trimming is on, and because of trimming, string is skipped up to the ending,
 // with nothing left to check against.
-test(`22 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m - trims to nothing`}`, () => {
+test(`22 - opts.cb()   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m - trims to nothing`}`, () => {
   // In this case, callback always yields "true", no matter what. Input string
   // traversal starts on index 5, which is space to the left of "a". Since the
   // trimming is off, iteration stops at it, calls callback, returns its true.
@@ -978,7 +978,7 @@ test(`22 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
   );
 });
 
-test(`23 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`, () => {
+test(`23 - opts.cb()   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`, () => {
   // control
   not.ok(
     matchLeftIncl(
@@ -1005,7 +1005,7 @@ test(`23 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
   );
 });
 
-test(`24 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl() + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`, () => {
+test(`24 - opts.cb()   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl() + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`, () => {
   // control
   not.ok(
     matchRightIncl("_bcbcbcbc+", 1, "", {
@@ -1022,7 +1022,7 @@ test(`24 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
   );
 });
 
-test(`25 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()      + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`, () => {
+test(`25 - opts.cb()   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()      + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`, () => {
   // control
   not.ok(
     matchLeft(
@@ -1049,7 +1049,7 @@ test(`25 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"ca
   );
 });
 
-test(`26 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()     + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`, () => {
+test(`26 - opts.cb()   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()     + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`, () => {
   // control
   not.ok(
     matchRight("_bcbcbcbc+", 1, "", {
