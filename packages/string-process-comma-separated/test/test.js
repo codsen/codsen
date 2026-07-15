@@ -1,8 +1,8 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 /* eslint no-param-reassign:0 */
 
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { processCommaSep } from "../dist/string-process-comma-separated.esm.js";
 
@@ -31,7 +31,7 @@ function helper(str, opts, gatheredChunks, gatheredErrors) {
 // 01. edge cases - unusual, broken or strange inputs
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${"edge cases"}\u001b[${39}m`} - empty string`, () => {
+test(`01 - edge cases - empty string`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -48,13 +48,13 @@ test(`01 - ${`\u001b[${36}m${"edge cases"}\u001b[${39}m`} - empty string`, () =>
   equal(gatheredErrors.length, 0, "01.02");
 });
 
-test(`02 - ${`\u001b[${36}m${"edge cases"}\u001b[${39}m`} - empty string, empty opts`, () => {
+test(`02 - edge cases - empty string, empty opts`, () => {
   not.throws(() => {
     processCommaSep("");
   }, "02.01");
 });
 
-test(`03 - ${`\u001b[${36}m${"edge cases"}\u001b[${39}m`} - not a string`, () => {
+test(`03 - edge cases - not a string`, () => {
   throws(
     () => {
       processCommaSep(true);
@@ -67,7 +67,7 @@ test(`03 - ${`\u001b[${36}m${"edge cases"}\u001b[${39}m`} - not a string`, () =>
 // 02. B.A.U
 // -----------------------------------------------------------------------------
 
-test(`04 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - one chunk`, () => {
+test(`04 - normal use - one chunk`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -84,7 +84,7 @@ test(`04 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - one chunk`, () => {
   equal(gatheredErrors.length, 0, "04.02");
 });
 
-test(`05 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - two chunks`, () => {
+test(`05 - normal use - two chunks`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -108,7 +108,7 @@ test(`05 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - two chunks`, () => {
   equal(gatheredErrors, [], "05.02");
 });
 
-test(`06 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - space after comma, default`, () => {
+test(`06 - normal use - space after comma, default`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -136,7 +136,7 @@ test(`06 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - space after comma, d
   );
 });
 
-test(`07 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - starts with separator, ends with separator`, () => {
+test(`07 - normal use - starts with separator, ends with separator`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -170,7 +170,7 @@ test(`07 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - starts with separato
   );
 });
 
-test(`08 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - starts with separator, ends with separator`, () => {
+test(`08 - normal use - starts with separator, ends with separator`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -210,7 +210,7 @@ test(`08 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - starts with separato
   );
 });
 
-test(`09 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - 2 spaces after comma, default`, () => {
+test(`09 - normal use - 2 spaces after comma, default`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -244,7 +244,7 @@ test(`09 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - 2 spaces after comma
   );
 });
 
-test(`10 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - 2 spaces after comma, oneSpaceAfterCommaOK = true`, () => {
+test(`10 - normal use - 2 spaces after comma, oneSpaceAfterCommaOK = true`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -280,7 +280,7 @@ test(`10 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - 2 spaces after comma
   );
 });
 
-test(`11 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - 2 spaces after comma, oneSpaceAfterCommaOK = true`, () => {
+test(`11 - normal use - 2 spaces after comma, oneSpaceAfterCommaOK = true`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -316,7 +316,7 @@ test(`11 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - 2 spaces after comma
   );
 });
 
-test(`12 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - with URL, offset`, () => {
+test(`12 - normal use - with URL, offset`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -366,7 +366,7 @@ test(`12 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - with URL, offset`, (
   );
 });
 
-test(`13 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - with URL, offset`, () => {
+test(`13 - normal use - with URL, offset`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -417,7 +417,7 @@ test(`13 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - with URL, offset`, (
 // 03. opts.leadingWhitespaceOK
 // -----------------------------------------------------------------------------
 
-test(`14 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - from-to ranges`, () => {
+test(`14 - normal use - from-to ranges`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -435,7 +435,7 @@ test(`14 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - from-to ranges`, () 
   equal(gatheredErrors, [], "14.02");
 });
 
-test(`15 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - whole string`, () => {
+test(`15 - normal use - whole string`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -451,7 +451,7 @@ test(`15 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - whole string`, () =>
   equal(gatheredErrors, [], "15.02");
 });
 
-test(`16 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - whole string + offset`, () => {
+test(`16 - normal use - whole string + offset`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -468,7 +468,7 @@ test(`16 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - whole string + offse
   equal(gatheredErrors, [], "16.02");
 });
 
-test(`17 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`, () => {
+test(`17 - normal use - trailing whitespace`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -496,7 +496,7 @@ test(`17 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
   );
 });
 
-test(`18 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`, () => {
+test(`18 - normal use - trailing whitespace`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -515,7 +515,7 @@ test(`18 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
   equal(gatheredErrors, [], "18.02"); // <--- none
 });
 
-test(`19 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`, () => {
+test(`19 - normal use - trailing whitespace`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -543,7 +543,7 @@ test(`19 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
   );
 });
 
-test(`20 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`, () => {
+test(`20 - normal use - trailing whitespace`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -571,7 +571,7 @@ test(`20 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
   );
 });
 
-test(`21 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - more complex`, () => {
+test(`21 - normal use - more complex`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   let offset = 17;
@@ -627,7 +627,7 @@ test(`21 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - more complex`, () =>
 // 04. opts.innerWhitespaceAllowed
 // -----------------------------------------------------------------------------
 
-test(`22 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`, () => {
+test(`22 - normal use - trailing whitespace`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
@@ -673,7 +673,7 @@ test(`22 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`
   );
 });
 
-test(`23 - ${`\u001b[${33}m${"normal use"}\u001b[${39}m`} - trailing whitespace`, () => {
+test(`23 - normal use - trailing whitespace`, () => {
   let gatheredChunks = [];
   let gatheredErrors = [];
   helper(
