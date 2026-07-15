@@ -1,5 +1,5 @@
+import type { JSONValue } from "codsen-utils";
 import { version as v } from "../package.json";
-import { JSONValue } from "codsen-utils";
 
 const version: string = v;
 
@@ -49,7 +49,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
   // insurance:
   if (typeof str !== "string") {
     throw new Error(
-      `string-process-comma-separated: [THROW_ID_01] input must be string! It was given as ${typeof str}, equal to:\n${JSON.stringify(
+      `string-process-comma-separated/processCommaSep(): [THROW_ID_01] input must be string! It was given as ${typeof str}, equal to:\n${JSON.stringify(
         str,
         null,
         4,
@@ -105,7 +105,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
   for (let i = resolvedOpts.from; i < resolvedOpts.to; i++) {
     DEV &&
       console.log(
-        `${`\u001b[${36}m${`----------------------------------- str[${i}] = ${JSON.stringify(
+        `108 ${`\u001b[${36}m${`----------------------------------- str[${i}] = ${JSON.stringify(
           str[i],
           null,
           0,
@@ -352,7 +352,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
           );
         let whatToAdd = "";
         if (resolvedOpts.oneSpaceAfterCommaOK) {
-          DEV && console.log(`resolvedOpts.oneSpaceAfterCommaOK is on`);
+          DEV && console.log(`355 resolvedOpts.oneSpaceAfterCommaOK is on`);
           if (
             str[whitespaceStartsAt] === " " &&
             str[whitespaceStartsAt - 1] === resolvedOpts.separator
@@ -503,10 +503,10 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
     }
 
     // logging
-    DEV && console.log(`${`\u001b[${90}m${`ENDING`}\u001b[${39}m`}`);
+    DEV && console.log(`506 ${`\u001b[${90}m${`ENDING`}\u001b[${39}m`}`);
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`separatorsArr = ${JSON.stringify(
+        `509 ${`\u001b[${90}m${`separatorsArr = ${JSON.stringify(
           separatorsArr,
           null,
           0,
