@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { expander as e } from "../dist/string-range-expander.esm.js";
 
@@ -790,7 +790,7 @@ test("09 - addSingleSpaceToPreventAccidentalConcatenation ignored", () => {
 // 06. opts.wipeAllWhitespaceOnLeft & opts.wipeAllWhitespaceOnRight
 // -----------------------------------------------------------------------------
 
-test(`10 - ${`\u001b[${33}m${"opts.wipeAllWhitespaceOnLeft"}\u001b[${39}m`} - extends to both sides`, () => {
+test(`10 - opts.wipeAllWhitespaceOnLeft - extends to both sides`, () => {
   equal(
     e({
       str: "a>     <b",
@@ -836,7 +836,7 @@ test(`10 - ${`\u001b[${33}m${"opts.wipeAllWhitespaceOnLeft"}\u001b[${39}m`} - ex
 // 07. Various
 // -----------------------------------------------------------------------------
 
-test(`11 - ${`\u001b[${36}m${"various"}\u001b[${39}m`} - adhoc #1`, () => {
+test(`11 - various - adhoc #1`, () => {
   let str = `<head>
 <style type="text/css">
   aa, .unused[z], bb {z:2;}
@@ -858,7 +858,7 @@ test(`11 - ${`\u001b[${36}m${"various"}\u001b[${39}m`} - adhoc #1`, () => {
   );
 });
 
-test(`12 - ${`\u001b[${36}m${"various"}\u001b[${39}m`} - adhoc #2`, () => {
+test(`12 - various - adhoc #2`, () => {
   let str = `<head>
 <style>
   @media screen {.col-1,.col-2 {z: y;}}
@@ -881,7 +881,7 @@ test(`12 - ${`\u001b[${36}m${"various"}\u001b[${39}m`} - adhoc #2`, () => {
   );
 });
 
-test(`13 - ${`\u001b[${36}m${"various"}\u001b[${39}m`} - adhoc #3`, () => {
+test(`13 - various - adhoc #3`, () => {
   let str = `<head>
 <style>
   @media screen {.col-1,.col-2 {z: y;}}
