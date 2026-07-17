@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { expander as e } from "../dist/string-range-expander.esm.js";
 
@@ -148,7 +148,7 @@ test("03 - range within characters, no whitespace", () => {
 // 03. opts.ifRightSideIncludesThisThenCropTightly
 // -----------------------------------------------------------------------------
 
-test(`04 - ${`\u001b[${33}m${"opts.ifRightSideIncludesThisThenCropTightly"}\u001b[${39}m`} - normal use, both sides extended`, () => {
+test(`04 - opts.ifRightSideIncludesThisThenCropTightly - normal use, both sides extended`, () => {
   equal(
     e({
       str: "a>     <b",
@@ -191,7 +191,7 @@ test(`04 - ${`\u001b[${33}m${"opts.ifRightSideIncludesThisThenCropTightly"}\u001
   );
 });
 
-test(`05 - ${`\u001b[${33}m${"opts.ifRightSideIncludesThisThenCropTightly"}\u001b[${39}m`} - normal use, mismatching value`, () => {
+test(`05 - opts.ifRightSideIncludesThisThenCropTightly - normal use, mismatching value`, () => {
   equal(
     e({
       str: "a>     <b",
@@ -254,7 +254,7 @@ test(`05 - ${`\u001b[${33}m${"opts.ifRightSideIncludesThisThenCropTightly"}\u001
   );
 });
 
-test(`06 - ${`\u001b[${33}m${"opts.ifRightSideIncludesThisThenCropTightly"}\u001b[${39}m`} - range within characters, no whitespace`, () => {
+test(`06 - opts.ifRightSideIncludesThisThenCropTightly - range within characters, no whitespace`, () => {
   equal(
     e({
       str: "aaaaaaaaaaaaa",
