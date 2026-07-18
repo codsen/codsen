@@ -1,6 +1,6 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { remDup } from "../dist/string-remove-duplicate-heads-tails.esm.js";
 
