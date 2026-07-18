@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { remDup as rem } from "../dist/string-remove-duplicate-heads-tails.esm.js";
 
@@ -26,14 +26,14 @@ test("02 - wrong opts", () => {
     () => {
       rem("a", "a");
     },
-    /THROW_ID_03/g,
+    /THROW_ID_02/g,
     "02.01",
   );
   throws(
     () => {
       rem("a", 1);
     },
-    /THROW_ID_03/g,
+    /THROW_ID_02/g,
     "02.02",
   );
   throws(
@@ -43,7 +43,7 @@ test("02 - wrong opts", () => {
         tails: ["}}"],
       });
     },
-    /THROW_ID_04/g,
+    /THROW_ID_03/g,
     "02.03",
   );
   throws(
@@ -53,7 +53,7 @@ test("02 - wrong opts", () => {
         tails: ["}}", 1],
       });
     },
-    /THROW_ID_05/g,
+    /THROW_ID_04/g,
     "02.04",
   );
 });
