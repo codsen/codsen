@@ -1,6 +1,6 @@
+import { trim } from "lodash-es";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
-import { trim } from "lodash-es";
 
 import { version as v } from "../package.json";
 
@@ -69,7 +69,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
     // -------------------------------------------------------------------------
     DEV &&
       console.log(
-        `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+        `72 \u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
         }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`,
       );
@@ -238,4 +238,4 @@ function remSep(str: string, opts?: Partial<Opts>): string {
   return res;
 }
 
-export { remSep, defaults, version };
+export { defaults, remSep, version };
