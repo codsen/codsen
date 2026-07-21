@@ -37,4 +37,14 @@ test(`04 - api bits - empty opts obj`, () => {
   equal(removeWidows("aaa bbb ccc", {}).res, "aaa bbb ccc", "04.01");
 });
 
+test("05 - options must be a plain object", () => {
+  throws(
+    () => {
+      removeWidows("aaa bbb ccc", []);
+    },
+    /THROW_ID_03/,
+    "05.01",
+  );
+});
+
 test.run();
