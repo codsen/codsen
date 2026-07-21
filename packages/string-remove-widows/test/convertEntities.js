@@ -125,7 +125,7 @@ test("09 - nbsp's not added within hidden HTML tags", () => {
     "aaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@@@1hr @@@2aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   ];
   sources.forEach((str, idx) => {
-    equal(removeWidows(str).res, str, `02.09.0${1 + idx}`);
+    equal(removeWidows(str).res, str, `09.01 - 0${1 + idx}`);
   });
 });
 
