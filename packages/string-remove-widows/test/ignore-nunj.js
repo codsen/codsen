@@ -36,7 +36,7 @@ test(`01 - opts.ignore, nunjucks - widow removal detects template code and nothi
         ignore: "jinja",
       }).res,
       val,
-      `05.01.0${1 + i} - templating chunks`,
+      `01.01 - 0${1 + i} - templating chunks`,
     );
   });
 });
@@ -69,7 +69,7 @@ test(`03 - opts.ignore, nunjucks - widow removal detects template code and widow
         },
       ).res,
       `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${rawnbsp}text.`,
-      `03.03.003.0${1 + i} - min word count threshold + ignore jinja combo`,
+      `03.01 - 003.0${1 + i} - min word count threshold + ignore jinja combo`,
     );
     equal(
       removeWidows(
@@ -82,7 +82,7 @@ test(`03 - opts.ignore, nunjucks - widow removal detects template code and widow
         },
       ).res,
       `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${encodedNbsps[i]}text.`,
-      `03.03.003.0${2 + i} - min word count threshold + ignore jinja combo`,
+      `03.02 - 003.0${2 + i} - min word count threshold + ignore jinja combo`,
     );
     equal(
       removeWidows(
@@ -95,7 +95,7 @@ test(`03 - opts.ignore, nunjucks - widow removal detects template code and widow
         },
       ).res,
       `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${rawnbsp}text.`,
-      `03.03.003.0${1 + i} - min word count threshold + ignore jinja combo`,
+      `03.03 - 003.0${1 + i} - min word count threshold + ignore jinja combo`,
     );
     equal(
       removeWidows(
@@ -108,7 +108,7 @@ test(`03 - opts.ignore, nunjucks - widow removal detects template code and widow
         },
       ).res,
       `Some text {% if something %}fancy{% else %}something else{% endif %}\n\nmore text and more${encodedNbsps[i]}text.`,
-      `03.03.003.0${2 + i} - min word count threshold + ignore jinja combo`,
+      `03.04 - 003.0${2 + i} - min word count threshold + ignore jinja combo`,
     );
   });
 });
