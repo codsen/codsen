@@ -1,4 +1,4 @@
-import { rawMDash, rawNbsp, rawNDash } from "codsen-utils";
+import { isPlainObject, rawMDash, rawNbsp, rawNDash } from "codsen-utils";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 import { left, right } from "string-left-right";
@@ -93,11 +93,11 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
   if (typeof str !== "string") {
     if (str === undefined) {
       throw new Error(
-        "string-remove-widows: [THROW_ID_01] the first input argument is completely missing! It should be given as string.",
+        "string-remove-widows/removeWidows(): [THROW_ID_01] the first input argument is completely missing! It should be given as string.",
       );
     } else {
       throw new Error(
-        `string-remove-widows: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(
+        `string-remove-widows/removeWidows(): [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(
           str,
           null,
           4,
@@ -106,9 +106,9 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
     }
   }
 
-  if (opts && typeof opts !== "object") {
+  if (opts && !isPlainObject(opts)) {
     throw new Error(
-      `string-remove-widows: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ${typeof opts}, equal to ${JSON.stringify(
+      `string-remove-widows/removeWidows(): [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ${typeof opts}, equal to ${JSON.stringify(
         opts,
         null,
         4,
