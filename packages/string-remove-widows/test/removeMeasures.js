@@ -60,7 +60,7 @@ test(`03 - opts.removeWidowPreventionMeasures - comes in with nbsp's`, () => {
           },
         ).res,
         `Lorem${encodedNbsps[i]}ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.${eolType}${eolType}Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-        `07.03.0${1 + i + idx} - ${targetLanguage} - ${
+        `03.01 - 0${1 + i + idx} - ${targetLanguage} - ${
           eolTypes[idx]
         } - convertEntities=true`,
       );
