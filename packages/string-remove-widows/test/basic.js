@@ -62,7 +62,7 @@ test("03 - single sentence, no full stop", () => {
         minCharCount: 5,
       }).res,
       `aaa bbb ccc${encodedNbsps[i]}ddd`,
-      `03.03.003.0${1 + i} - ${targetLanguage}`,
+      `03.01 - 003.0${1 + i} - ${targetLanguage}`,
     );
     equal(
       removeWidows("aaa bbb ccc ddd", {
@@ -71,7 +71,7 @@ test("03 - single sentence, no full stop", () => {
         minCharCount: 5,
       }).res,
       `aaa bbb ccc${rawnbsp}ddd`,
-      `03.03.003.0${2 + i} - ${targetLanguage}`,
+      `03.02 - 003.0${2 + i} - ${targetLanguage}`,
     );
     equal(
       removeWidows("aaa bbb ccc ddd", {
@@ -81,7 +81,7 @@ test("03 - single sentence, no full stop", () => {
         minCharCount: 5,
       }).res,
       "aaa bbb ccc ddd",
-      `03.03.003.0${3 + i} - ${targetLanguage}`,
+      `03.03 - 003.0${3 + i} - ${targetLanguage}`,
     );
   });
 });
@@ -95,7 +95,7 @@ test("04 - single sentence, full stop", () => {
         minCharCount: 5,
       }).res,
       `Aaa bbb ccc${encodedNbsps[i]}ddd.`,
-      `04.04.004.0${1 + i} - ${targetLanguage}`,
+      `04.01 - 004.0${1 + i} - ${targetLanguage}`,
     );
     equal(
       removeWidows("Aaa bbb ccc ddd.", {
@@ -104,7 +104,7 @@ test("04 - single sentence, full stop", () => {
         minCharCount: 5,
       }).res,
       `Aaa bbb ccc${rawnbsp}ddd.`,
-      `04.04.004.0${2 + i} - ${targetLanguage}`,
+      `04.02 - 004.0${2 + i} - ${targetLanguage}`,
     );
     equal(
       removeWidows("Aaa bbb ccc ddd.", {
@@ -114,7 +114,7 @@ test("04 - single sentence, full stop", () => {
         minCharCount: 5,
       }).res,
       "Aaa bbb ccc ddd.",
-      `04.04.004.0${3 + i} - ${targetLanguage}`,
+      `04.03 - 004.0${3 + i} - ${targetLanguage}`,
     );
   });
 });
@@ -132,7 +132,7 @@ test("05 - paragraphs, full stops", () => {
           },
         ).res,
         `Aaa bbb ccc${encodedNbsps[i]}ddd.${eolType}${eolType}Ddd eee fff ggg${encodedNbsps[i]}hhh.`,
-        `01.05.0${1 + i + idx} - ${targetLanguage} - ${
+        `05.01 - 0${1 + i + idx} - ${targetLanguage} - ${
           eolTypes[idx]
         } - convertEntities=true`,
       );
@@ -146,7 +146,7 @@ test("05 - paragraphs, full stops", () => {
           },
         ).res,
         `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
-        `01.05.0${2 + i + idx} - ${targetLanguage} - ${
+        `05.02 - 0${2 + i + idx} - ${targetLanguage} - ${
           eolTypes[idx]
         } - convertEntities=false`,
       );
@@ -162,7 +162,7 @@ test("05 - paragraphs, full stops", () => {
           },
         ).res,
         `Aaa bbb ccc${encodedNbsps[i]}ddd.${eolType}${eolType}Ddd eee fff ggg${encodedNbsps[i]}hhh.`,
-        `01.05.0${3 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`,
+        `05.03 - 0${3 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`,
       );
       equal(
         removeWidows(
@@ -174,7 +174,7 @@ test("05 - paragraphs, full stops", () => {
           },
         ).res,
         `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
-        `01.05.0${4 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`,
+        `05.04 - 0${4 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`,
       );
 
       // opts.removeWidowPreventionMeasures=on
@@ -189,7 +189,7 @@ test("05 - paragraphs, full stops", () => {
           },
         ).res,
         `Aaa bbb ccc ddd.${eolType}${eolType}Ddd eee fff ggg hhh.`,
-        `01.05.0${5 + i + idx} - ${targetLanguage} - ${
+        `05.05 - 0${5 + i + idx} - ${targetLanguage} - ${
           eolTypes[idx]
         } - convertEntities=false`,
       );
@@ -203,7 +203,7 @@ test("05 - paragraphs, full stops", () => {
           },
         ).res,
         `Aaa bbb ccc ddd.${eolType}${eolType}Ddd eee fff ggg hhh.`,
-        `01.05.0${6 + i + idx} - ${targetLanguage} - ${
+        `05.06 - 0${6 + i + idx} - ${targetLanguage} - ${
           eolTypes[idx]
         } - convertEntities=true`,
       );
@@ -221,12 +221,16 @@ test("06 - raw non-breaking space already there", () => {
     equal(
       val1.res,
       `aaa bbb ccc${encodedNbsps[i]}ddd`,
-      `06.06.006.0${1 + i} - ${targetLanguage}`,
+      `06.01 - 006.0${1 + i} - ${targetLanguage}`,
     );
-    equal(val1.whatWasDone, {
-      removeWidows: true,
-      convertEntities: false,
-    });
+    equal(
+      val1.whatWasDone,
+      {
+        removeWidows: true,
+        convertEntities: false,
+      },
+      "06.02",
+    );
 
     let val2 = removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
       convertEntities: false,
@@ -235,12 +239,16 @@ test("06 - raw non-breaking space already there", () => {
     equal(
       val2.res,
       `aaa bbb ccc${rawnbsp}ddd`,
-      `06.06.006.0${2 + i} - ${targetLanguage}`,
+      `06.03 - 006.0${2 + i} - ${targetLanguage}`,
     );
-    equal(val2.whatWasDone, {
-      removeWidows: true,
-      convertEntities: false,
-    });
+    equal(
+      val2.whatWasDone,
+      {
+        removeWidows: true,
+        convertEntities: false,
+      },
+      "06.04",
+    );
 
     let val3 = removeWidows(`aaa bbb ccc${rawnbsp}ddd`, {
       removeWidowPreventionMeasures: true,
@@ -250,12 +258,16 @@ test("06 - raw non-breaking space already there", () => {
     equal(
       val3.res,
       "aaa bbb ccc ddd",
-      `06.06.006.0${3 + i} - ${targetLanguage}`,
+      `06.05 - 006.0${3 + i} - ${targetLanguage}`,
     );
-    equal(val3.whatWasDone, {
-      removeWidows: true,
-      convertEntities: false,
-    });
+    equal(
+      val3.whatWasDone,
+      {
+        removeWidows: true,
+        convertEntities: false,
+      },
+      "06.06",
+    );
   });
 });
 
@@ -272,7 +284,7 @@ test("07 - paragraphs, coming already fixed", () => {
           },
         ).res,
         `Aaa bbb ccc${encodedNbsps[i]}ddd.${eolType}${eolType}Ddd eee fff ggg${encodedNbsps[i]}hhh.`,
-        `01.07.0${1 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`,
+        `07.01 - 0${1 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`,
       );
       equal(
         removeWidows(
@@ -285,7 +297,7 @@ test("07 - paragraphs, coming already fixed", () => {
           },
         ).res,
         `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
-        `01.07.0${2 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`,
+        `07.02 - 0${2 + i + idx} - ${targetLanguage} - ${eolTypes[idx]}`,
       );
 
       // removeWidowPreventionMeasures: true
@@ -299,7 +311,7 @@ test("07 - paragraphs, coming already fixed", () => {
           },
         ).res,
         `Aaa bbb ccc ddd.${eolType}${eolType}Ddd eee fff ggg hhh.`,
-        `01.07.0${3 + i + idx} - ${targetLanguage} - ${
+        `07.03 - 0${3 + i + idx} - ${targetLanguage} - ${
           eolTypes[idx]
         } - removeWidowPreventionMeasures`,
       );
@@ -314,7 +326,7 @@ test("07 - paragraphs, coming already fixed", () => {
           },
         ).res,
         `Aaa bbb ccc ddd.${eolType}${eolType}Ddd eee fff ggg hhh.`,
-        `01.07.0${4 + i + idx} - ${targetLanguage} - ${
+        `07.04 - 0${4 + i + idx} - ${targetLanguage} - ${
           eolTypes[idx]
         } - removeWidowPreventionMeasures`,
       );
@@ -336,7 +348,7 @@ test("08 - paragraphs, coming already fixed and encoded but in wrong format", ()
             },
           ).res,
           `Aaa bbb ccc${encodedNbsps[i]}ddd.${eolType}${eolType}Ddd eee fff ggg${encodedNbsps[i]}hhh.`,
-          `01.08.0${
+          `08.01 - 0${
             1 + i + idx + z
           } - requested lang. ${targetLanguage} - existing lang. ${
             languages[z]
@@ -353,7 +365,7 @@ test("08 - paragraphs, coming already fixed and encoded but in wrong format", ()
             },
           ).res,
           `Aaa bbb ccc${rawnbsp}ddd.${eolType}${eolType}Ddd eee fff ggg${rawnbsp}hhh.`,
-          `01.08.0${
+          `08.02 - 0${
             2 + i + idx + z
           } - requested lang. ${targetLanguage} - existing lang. ${
             languages[z]
@@ -374,7 +386,7 @@ test("09 - single word", () => {
         targetLanguage,
       }).res,
       str,
-      `01.09.0${1 + i} - ${targetLanguage}`,
+      `09.01 - 0${1 + i} - ${targetLanguage}`,
     );
     equal(
       removeWidows(str, {
@@ -382,7 +394,7 @@ test("09 - single word", () => {
         targetLanguage,
       }).res,
       str,
-      `01.09.0${2 + i} - ${targetLanguage}`,
+      `09.02 - 0${2 + i} - ${targetLanguage}`,
     );
 
     // removeWidowPreventionMeasures: true
@@ -392,7 +404,7 @@ test("09 - single word", () => {
         targetLanguage,
       }).res,
       str,
-      `01.09.0${3 + i} - ${targetLanguage}`,
+      `09.03 - 0${3 + i} - ${targetLanguage}`,
     );
     equal(
       removeWidows(str, {
@@ -401,7 +413,7 @@ test("09 - single word", () => {
         targetLanguage,
       }).res,
       str,
-      `01.09.0${4 + i} - ${targetLanguage}`,
+      `09.04 - 0${4 + i} - ${targetLanguage}`,
     );
 
     equal(
@@ -411,7 +423,7 @@ test("09 - single word", () => {
         minCharCount: 0,
       }).res,
       str,
-      `01.09.0${5 + i} - ${targetLanguage}`,
+      `09.05 - 0${5 + i} - ${targetLanguage}`,
     );
   });
 });
@@ -445,7 +457,7 @@ test("10 - doesn't touch empty strings", () => {
         convertEntities: true,
       }).res,
       "",
-      `01.10 - ${JSON.stringify(str, null, 4)}`,
+      `10.01 - ${JSON.stringify(str, null, 4)}`,
     );
   });
 });
