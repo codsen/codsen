@@ -157,7 +157,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
   gather.forEach((perc) => {
     ok(compareTo.includes(perc), `checking: ${perc}%`);
   });
-  equal(gather.length, 86 - 21 + 1, "02.02");
+  equal(gather.length, 86 - 21 + 1, "02.01");
   // equal(gather, compareTo, `10.02`)
 });
 
