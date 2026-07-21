@@ -34,7 +34,7 @@ test(`01 - line endings - does not mangle string with consistent line endings`, 
           },
         ).res,
         `Here is a very long line of${rawnbsp}text${eolType}${eolType}Here is a another long line of${rawnbsp}text${eolType}${eolType}Here is a another long line of${rawnbsp}text`,
-        `04.01.01.0${1 + i + idx} - ${targetLanguage} - raw - two ${
+        `01.01 - 01.0${1 + i + idx} - ${targetLanguage} - raw - two ${
           eolTypes[idx]
         }`,
       );
@@ -49,7 +49,7 @@ test(`01 - line endings - does not mangle string with consistent line endings`, 
           },
         ).res,
         `Here is a very long line of${encodedNbsps[i]}text${eolType}${eolType}Here is a another long line of${encodedNbsps[i]}text${eolType}${eolType}Here is a another long line of${encodedNbsps[i]}text`,
-        `04.01.02.0${2 + i + idx} - ${targetLanguage} - encoded - two ${
+        `01.02 - 02.0${2 + i + idx} - ${targetLanguage} - encoded - two ${
           eolTypes[idx]
         }`,
       );
@@ -66,7 +66,7 @@ test(`01 - line endings - does not mangle string with consistent line endings`, 
           },
         ).res,
         `Here is a very long line of${rawnbsp}text${eolType}${eolType}Here is a another long line of${rawnbsp}text${eolType}${eolType}Here is a another long line of${rawnbsp}text${eolType}${eolType}`,
-        `04.01.03.0${3 + i + idx} - ${targetLanguage} - raw - two ${
+        `01.03 - 03.0${3 + i + idx} - ${targetLanguage} - raw - two ${
           eolTypes[idx]
         } - trailing line breaks`,
       );
@@ -81,7 +81,7 @@ test(`01 - line endings - does not mangle string with consistent line endings`, 
           },
         ).res,
         `Here is a very long line of${encodedNbsps[i]}text${eolType}${eolType}Here is a another long line of${encodedNbsps[i]}text${eolType}${eolType}Here is a another long line of${encodedNbsps[i]}text${eolType}${eolType}`,
-        `04.01.04.0${4 + i + idx} - ${targetLanguage} - encoded - two ${
+        `01.04 - 04.0${4 + i + idx} - ${targetLanguage} - encoded - two ${
           eolTypes[idx]
         } - trailing line breaks`,
       );
