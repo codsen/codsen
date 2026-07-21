@@ -36,7 +36,7 @@ test(`01 - opts.hyphens - in front of dashes`, () => {
           },
         ).res,
         `Here is a very long line of text${rawnbsp}${oneOfDashes} not too long${rawnbsp}though`,
-        `03.01.01 - ${oneOfDashes} - ${targetLanguage}`,
+        `01.01 - 01 -${oneOfDashes} - ${targetLanguage}`,
       );
       equal(
         removeWidows(
@@ -49,7 +49,7 @@ test(`01 - opts.hyphens - in front of dashes`, () => {
           },
         ).res,
         `Here is a very long line of text${encodedNbsps[i]}${oneOfDashes} not too long${encodedNbsps[i]}though`,
-        `03.01.02 - ${oneOfDashes} - ${targetLanguage}`,
+        `01.02 - 02 -${oneOfDashes} - ${targetLanguage}`,
       );
       equal(
         removeWidows(
@@ -62,7 +62,7 @@ test(`01 - opts.hyphens - in front of dashes`, () => {
           },
         ).res,
         `Here is a very long line of text ${oneOfDashes} not too long${rawnbsp}though`,
-        `03.01.03 - ${oneOfDashes} - ${targetLanguage}`,
+        `01.03 - 03 -${oneOfDashes} - ${targetLanguage}`,
       );
       equal(
         removeWidows(
@@ -75,7 +75,7 @@ test(`01 - opts.hyphens - in front of dashes`, () => {
           },
         ).res,
         `Here is a very long line of text ${oneOfDashes} not too long${encodedNbsps[i]}though`,
-        `03.01.04 - ${oneOfDashes} - ${targetLanguage}`,
+        `01.04 - 04 -${oneOfDashes} - ${targetLanguage}`,
       );
     });
   });
@@ -92,7 +92,7 @@ test(`02 - opts.hyphens - hyphen is minus where currency follows`, () => {
           minCharCount: 5,
         }).res,
         `Discount: ${oneOfDashes}&pound;10.00`,
-        `03.02.0${i + y} - ${oneOfDashes} - ${targetLanguage}`,
+        `02.01 - 0${i + y} - ${oneOfDashes} - ${targetLanguage}`,
       );
     });
   });
@@ -108,7 +108,7 @@ test(`03 - opts.hyphens - with ${encodedNbspHtml} and double space`, () => {
         minCharCount: 5,
       }).res,
       `HOORAY${encodedNbsps[i]}&mdash;  IT&rsquo;S${encodedNbsps[i]}HERE`,
-      `03.03.0${i} - ${targetLanguage}`,
+      `03.01 - 0${i} - ${targetLanguage}`,
     );
   });
 });
