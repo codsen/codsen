@@ -23,9 +23,8 @@ type Res =
       message: string;
     };
 
-// Ranged subtag regexps — these are constants and must only be added once at
-// module init, not on every call to isLangCode(). Pushing them inside the
-// function caused the arrays to grow unboundedly (memory leak).
+// -----------------------------------------------------------------------------
+
 const language: (string | RegExp)[] = languageJson;
 const extlang: string[] = extlangJson;
 const grandfathered: string[] = grandfatheredJson;
@@ -33,10 +32,27 @@ const region: (string | RegExp)[] = regionJson as (string | RegExp)[];
 const script: (string | RegExp)[] = scriptJson as (string | RegExp)[];
 const variant: string[] = variantJson;
 
-language.push(/^q[a-t][a-z]$/gi); // subtags qaa..qtz
-script.push(/^qa[a-b][a-x]$/gi); // subtags Qaaa..Qabx
-region.push(/^q[m-z]$/gi); // subtags qm..qz
-region.push(/^x[a-z]$/gi); // subtags xa..xz
+// -----------------------------------------------------------------------------
+
+// https://www.ietf.org/rfc/rfc1766.txt
+// https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
+// ---------------------------------------------------------------------------
+
+// Ranged subtag regexps — these are constants and must only be added once at
+// module init, not on every call to isLangCode(). Pushing them inside the
+// function caused the arrays to grow unboundedly (memory leak).
+language.push(/^q[a-t][a-z]$/gi);  // subtags qaa..qtz - "language" subtag
+script.push(/^qa[a-b][a-x]$/gi); // subtags Qaaa..Qabx  - "script" subtag
+region.push(/^q[m-z]$/gi); // subtags qm..qz  - "region" subtag
+region.push(/^x[a-z]$/gi); // subtags xa..xz - "region" subtag
+
+// r1. very rough regex to ensure letters are separated with dashes, in chunks
+// of up to eight characters
+const r1 = /^[a-z0-9]{1,8}(-[a-z0-9]{1,8})*$/gi;
+
+// 6. singleton
+const singletonRegex = /^[0-9a-wy-z]$/gi;
+// the "x" is reserved for private use, that is, singletons can't be "...-x-..."
 
 function isLangCode(str: string): Res {
   if (typeof str !== "string") {
@@ -57,20 +73,6 @@ function isLangCode(str: string): Res {
   // track repeated variant subtags
   let variantGathered: string[] | undefined = [];
   let singletonGathered: string[] | undefined = [];
-
-  // -----------------------------------------------------------------------------
-
-  // https://www.ietf.org/rfc/rfc1766.txt
-  // https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
-  // ---------------------------------------------------------------------------
-
-  // r1. very rough regex to ensure letters are separated with dashes, in chunks
-  // of up to eight characters
-  let r1 = /^[a-z0-9]{1,8}(-[a-z0-9]{1,8})*$/gi;
-
-  // 6. singleton
-  let singletonRegex = /^[0-9a-wy-z]$/gi;
-  // the "x" is reserved for private use, that is, singletons can't be "...-x-..."
 
   // AA and ZZ
 
