@@ -23,6 +23,21 @@ type Res =
       message: string;
     };
 
+// Ranged subtag regexps — these are constants and must only be added once at
+// module init, not on every call to isLangCode(). Pushing them inside the
+// function caused the arrays to grow unboundedly (memory leak).
+const language: (string | RegExp)[] = languageJson;
+const extlang: string[] = extlangJson;
+const grandfathered: string[] = grandfatheredJson;
+const region: (string | RegExp)[] = regionJson as (string | RegExp)[];
+const script: (string | RegExp)[] = scriptJson as (string | RegExp)[];
+const variant: string[] = variantJson;
+
+language.push(/^q[a-t][a-z]$/gi); // subtags qaa..qtz
+script.push(/^qa[a-b][a-x]$/gi); // subtags Qaaa..Qabx
+region.push(/^q[m-z]$/gi); // subtags qm..qz
+region.push(/^x[a-z]$/gi); // subtags xa..xz
+
 function isLangCode(str: string): Res {
   if (typeof str !== "string") {
     return {
@@ -39,13 +54,6 @@ function isLangCode(str: string): Res {
 
   // -----------------------------------------------------------------------------
 
-  let language: (string | RegExp)[] | undefined = languageJson;
-  let extlang: string[] | undefined = extlangJson;
-  let grandfathered: string[] | undefined = grandfatheredJson;
-  let region: (string | RegExp)[] | undefined = regionJson;
-  let script: (string | RegExp)[] | undefined = scriptJson;
-  let variant: string[] | undefined = variantJson;
-
   // track repeated variant subtags
   let variantGathered: string[] | undefined = [];
   let singletonGathered: string[] | undefined = [];
@@ -59,22 +67,6 @@ function isLangCode(str: string): Res {
   // r1. very rough regex to ensure letters are separated with dashes, in chunks
   // of up to eight characters
   let r1 = /^[a-z0-9]{1,8}(-[a-z0-9]{1,8})*$/gi;
-
-  // r2. subtags qaa..qtz - "language" subtag
-  let r2 = /^q[a-t][a-z]$/gi;
-  language.push(r2);
-
-  // r3. subtags Qaaa..Qabx - "script" subtag
-  let r3 = /^qa[a-b][a-x]$/gi;
-  script.push(r3);
-
-  // r4. subtags qm..qz - "region" subtag
-  let r4 = /^q[m-z]$/gi;
-  region.push(r4);
-
-  // r5. subtags xa..xz - "region" subtag
-  let r5 = /^x[a-z]$/gi;
-  region.push(r5);
 
   // 6. singleton
   let singletonRegex = /^[0-9a-wy-z]$/gi;
@@ -93,13 +85,6 @@ function isLangCode(str: string): Res {
         `093 isLangCode(): ${`\u001b[${31}m${`R1`}\u001b[${39}m`} failed`,
       );
 
-    // wipe all arrays:
-    language = undefined;
-    extlang = undefined;
-    grandfathered = undefined;
-    region = undefined;
-    script = undefined;
-    variant = undefined;
     variantGathered = undefined;
     singletonGathered = undefined;
 
@@ -114,13 +99,6 @@ function isLangCode(str: string): Res {
         `114 ${`\u001b[${32}m${`MATCHED`}\u001b[${39}m`} grandfathered tag`,
       );
 
-    // wipe all arrays:
-    language = undefined;
-    extlang = undefined;
-    grandfathered = undefined;
-    region = undefined;
-    script = undefined;
-    variant = undefined;
     variantGathered = undefined;
     singletonGathered = undefined;
 
@@ -203,13 +181,6 @@ function isLangCode(str: string): Res {
         DEV &&
           console.log(`204 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
 
-        // wipe all arrays:
-        language = undefined;
-        extlang = undefined;
-        grandfathered = undefined;
-        region = undefined;
-        script = undefined;
-        variant = undefined;
         variantGathered = undefined;
         singletonGathered = undefined;
         split = undefined;
@@ -228,13 +199,6 @@ function isLangCode(str: string): Res {
       DEV && console.log(`228 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} true`);
       // TODO - add more logic
 
-      // wipe all arrays:
-      language = undefined;
-      extlang = undefined;
-      grandfathered = undefined;
-      region = undefined;
-      script = undefined;
-      variant = undefined;
       variantGathered = undefined;
       singletonGathered = undefined;
       split = undefined;
@@ -251,13 +215,6 @@ function isLangCode(str: string): Res {
 
       let message = `Two region subtags, "${regionMatched}" and "${split[i]}".`;
 
-      // wipe all arrays:
-      language = undefined;
-      extlang = undefined;
-      grandfathered = undefined;
-      region = undefined;
-      script = undefined;
-      variant = undefined;
       variantGathered = undefined;
       singletonGathered = undefined;
       split = undefined;
@@ -417,13 +374,6 @@ function isLangCode(str: string): Res {
 
             let message = `Repeated variant subtag, "${split[i]}".`;
 
-            // wipe all arrays:
-            language = undefined;
-            extlang = undefined;
-            grandfathered = undefined;
-            region = undefined;
-            script = undefined;
-            variant = undefined;
             variantGathered = undefined;
             singletonGathered = undefined;
             split = undefined;
@@ -551,13 +501,6 @@ function isLangCode(str: string): Res {
 
               let message = `Repeated variant subtag, "${split[i]}".`;
 
-              // wipe all arrays:
-              language = undefined;
-              extlang = undefined;
-              grandfathered = undefined;
-              region = undefined;
-              script = undefined;
-              variant = undefined;
               variantGathered = undefined;
               singletonGathered = undefined;
               split = undefined;
@@ -639,13 +582,6 @@ function isLangCode(str: string): Res {
 
         let message = `Starts with singleton, "${split[i]}".`;
 
-        // wipe all arrays:
-        language = undefined;
-        extlang = undefined;
-        grandfathered = undefined;
-        region = undefined;
-        script = undefined;
-        variant = undefined;
         variantGathered = undefined;
         singletonGathered = undefined;
         split = undefined;
@@ -662,13 +598,6 @@ function isLangCode(str: string): Res {
         DEV &&
           console.log(`663 ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} false`);
 
-        // wipe all arrays:
-        language = undefined;
-        extlang = undefined;
-        grandfathered = undefined;
-        region = undefined;
-        script = undefined;
-        variant = undefined;
         variantGathered = undefined;
         singletonGathered = undefined;
         split = undefined;
@@ -699,13 +628,6 @@ function isLangCode(str: string): Res {
 
         let message = `Two extensions with same single-letter prefix "${split[i]}".`;
 
-        // wipe all arrays:
-        language = undefined;
-        extlang = undefined;
-        grandfathered = undefined;
-        region = undefined;
-        script = undefined;
-        variant = undefined;
         variantGathered = undefined;
         singletonGathered = undefined;
         split = undefined;
@@ -744,13 +666,6 @@ function isLangCode(str: string): Res {
             split[i + 1]
           }".`;
 
-          // wipe all arrays:
-          language = undefined;
-          extlang = undefined;
-          grandfathered = undefined;
-          region = undefined;
-          script = undefined;
-          variant = undefined;
           variantGathered = undefined;
           singletonGathered = undefined;
           split = undefined;
@@ -767,13 +682,6 @@ function isLangCode(str: string): Res {
 
         let message = `Ends with singleton, "${split[i]}".`;
 
-        // wipe all arrays:
-        language = undefined;
-        extlang = undefined;
-        grandfathered = undefined;
-        region = undefined;
-        script = undefined;
-        variant = undefined;
         variantGathered = undefined;
         singletonGathered = undefined;
         split = undefined;
@@ -805,13 +713,6 @@ function isLangCode(str: string): Res {
 
           let message = `Repeated variant subtag, "${split[i]}".`;
 
-          // wipe all arrays:
-          language = undefined;
-          extlang = undefined;
-          grandfathered = undefined;
-          region = undefined;
-          script = undefined;
-          variant = undefined;
           variantGathered = undefined;
           singletonGathered = undefined;
           split = undefined;
@@ -841,13 +742,6 @@ function isLangCode(str: string): Res {
           .map((val) => `"${val}"`)
           .join(", ")}  not in a sequence.`;
 
-        // wipe all arrays:
-        language = undefined;
-        extlang = undefined;
-        grandfathered = undefined;
-        region = undefined;
-        script = undefined;
-        variant = undefined;
         variantGathered = undefined;
         singletonGathered = undefined;
         split = undefined;
@@ -902,13 +796,6 @@ function isLangCode(str: string): Res {
 
       let message = `Unrecognised language subtag, "${split[i]}".`;
 
-      // wipe all arrays:
-      language = undefined;
-      extlang = undefined;
-      grandfathered = undefined;
-      region = undefined;
-      script = undefined;
-      variant = undefined;
       variantGathered = undefined;
       singletonGathered = undefined;
       split = undefined;
@@ -972,13 +859,6 @@ function isLangCode(str: string): Res {
 
   DEV && console.log(`973 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} true`);
 
-  // wipe all arrays:
-  language = undefined;
-  extlang = undefined;
-  grandfathered = undefined;
-  region = undefined;
-  script = undefined;
-  variant = undefined;
   variantGathered = undefined;
   singletonGathered = undefined;
   split = undefined;
