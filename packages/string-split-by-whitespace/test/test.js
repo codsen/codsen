@@ -1,7 +1,7 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { strFindHeadsTails } from "string-find-heads-tails";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { splitByW as split } from "../dist/string-split-by-whitespace.esm.js";
 
@@ -25,9 +25,9 @@ test("01 - wrong/missing input = throw", () => {
     "01.02",
   );
 
-  equal(split(1), 1, "01.03");
-  equal(split(null), null, "01.04");
-  equal(split(true), true, "01.05");
+  equal(split(1), 1, "01.01");
+  equal(split(null), null, "01.02");
+  equal(split(true), true, "01.03");
 });
 
 test("02 - empty string as input", () => {
@@ -39,7 +39,7 @@ test("03 - opts contain non-array elements", () => {
     () => {
       split("a b", { ignoreRanges: ["a"] });
     },
-    /THROW_ID_03/g,
+    /THROW_ID_02/g,
     "03.01",
   );
 });
