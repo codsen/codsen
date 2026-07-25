@@ -33,7 +33,7 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
   // insurance:
   if (typeof str !== "string") {
     throw new Error(
-      `string-trim-spaces-only: [THROW_ID_01] input must be string! It was given as ${typeof str}, equal to:\n${JSON.stringify(
+      `string-trim-spaces-only/trimSpaces(): [THROW_ID_01] input must be string! It was given as ${typeof str}, equal to:\n${JSON.stringify(
         str,
         null,
         4,
@@ -68,7 +68,7 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
       for (let i = 0, len = str.length; i < len; i++) {
         DEV &&
           console.log(
-            `\u001b[${36}m${`046 ------ str[${i}] = ${JSON.stringify(
+            `\u001b[${36}m${`071 ------ str[${i}] = ${JSON.stringify(
               str[i],
               null,
               0,
@@ -110,7 +110,7 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
       for (let i = str.length; i--; ) {
         DEV &&
           console.log(
-            `\u001b[${36}m${`085 ------ str[${i}] = ${str[i]}`}\u001b[${39}m`,
+            `\u001b[${36}m${`113 ------ str[${i}] = ${str[i]}`}\u001b[${39}m`,
           );
         if (!check(str[i])) {
           newEnd = i + 1;
@@ -180,4 +180,4 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
   };
 }
 
-export { trimSpaces, defaults, version };
+export { defaults, trimSpaces, version };
