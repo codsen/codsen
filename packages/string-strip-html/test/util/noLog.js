@@ -1,5 +1,5 @@
 // import fs from "node:fs";
-// import path from "path";
+// import path from "node:path";
 import { stripHtml as originalStripHtml } from "../../dist/string-strip-html.esm.js";
 
 // the "log" output key's value is indeterminable so we omit that
