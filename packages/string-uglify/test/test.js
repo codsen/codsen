@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { uglifyArr, uglifyById, version } from "../dist/string-uglify.esm.js";
 
@@ -16,11 +16,11 @@ function rand(from, to) {
 // 00. api bits
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${"api bits"}\u001b[${39}m`} - exported uglify is a function`, () => {
+test(`01 - api bits - exported uglify is a function`, () => {
   equal(typeof uglifyById, "function", "01.01");
 });
 
-test(`02 - ${`\u001b[${33}m${"api bits"}\u001b[${39}m`} - exported version is a semver version`, () => {
+test(`02 - api bits - exported version is a semver version`, () => {
   equal(String(version).match(/\d+\.\d+\.\d+/gi).length, 1, "02.01");
 });
 
@@ -55,17 +55,17 @@ test("03 - generates unique and short class names", () => {
     equal(
       key[0],
       uglifyById(randomArr, idx)[0],
-      `03.03 - ${key[0]} is retained`,
+      `03.01 - ${key[0]} is retained`,
     );
   });
 });
 
-test(`04 - ${`\u001b[${35}m${"makeRandomArr"}\u001b[${39}m`} - generates uglified array from reference array`, () => {
+test(`04 - makeRandomArr - generates uglified array from reference array`, () => {
   let generated = makeRandomArr(5000);
   equal(generated.length, uglifyArr(generated).length, "04.01");
 });
 
-test(`05 - ${`\u001b[${35}m${"makeRandomArr"}\u001b[${39}m`} - generates unique elements array`, () => {
+test(`05 - makeRandomArr - generates unique elements array`, () => {
   // all are unique
   let length = 1000;
   let generated = uglifyArr(makeRandomArr(length));
@@ -74,12 +74,12 @@ test(`05 - ${`\u001b[${35}m${"makeRandomArr"}\u001b[${39}m`} - generates unique 
     equal(
       generated.some((name2, index2) => name1 === name2 && index1 !== index2),
       false,
-      `${name1} is not unique`,
+      `05.02 - ${`${name1} is not unique`}`,
     );
   });
 });
 
-test(`06 - ${`\u001b[${31}m${"wrong cases"}\u001b[${39}m`} - bypasses for everything else`, () => {
+test(`06 - wrong cases - bypasses for everything else`, () => {
   equal(uglifyArr(true), true, "06.01");
   equal(uglifyArr("z"), "z", "06.02");
   equal(uglifyArr(1), 1, "06.03");
@@ -90,7 +90,7 @@ test(`06 - ${`\u001b[${31}m${"wrong cases"}\u001b[${39}m`} - bypasses for everyt
 // -----------------------------------------------------------------------------
 
 const howMany = 5000;
-test(`07 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - ${howMany} random string array should be 99% resilient`, () => {
+test(`07 - aims - ${howMany} random string array should be 99% resilient`, () => {
   // generate two arrays: {howMany}-long random class/id names array and clone of it
   // where there's extra thing on top.
   let randArr1 = makeRandomArr(howMany);
@@ -120,7 +120,7 @@ test(`07 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - ${howMany} random string a
   ok(counter < generated2.length * 0.001, "07.03");
 });
 
-test(`08 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - repetitions should be OK`, () => {
+test(`08 - aims - repetitions should be OK`, () => {
   let randArr1 = makeRandomArr(1);
 
   for (let i = 0; i < 100; i++) {
@@ -130,12 +130,12 @@ test(`08 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - repetitions should be OK`,
   equal(generated.length, randArr1.length, "08.01");
   generated.forEach((val, i) => {
     // all values are repeated on both:
-    equal(generated[i], generated[0]);
-    equal(randArr1[i], randArr1[0]);
+    equal(generated[i], generated[0], "08.02");
+    equal(randArr1[i], randArr1[0], "08.03");
   });
 });
 
-test(`09 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - should work if strings don't have hashes/dots`, () => {
+test(`09 - aims - should work if strings don't have hashes/dots`, () => {
   // all are still unique
   let length = 1000;
   let generated = uglifyArr(makeRandomArr(length, false));
@@ -144,12 +144,12 @@ test(`09 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - should work if strings don
     equal(
       generated.some((name2, index2) => name1 === name2 && index1 !== index2),
       false,
-      `${name1} is not unique`,
+      `09.02 - ${`${name1} is not unique`}`,
     );
   });
 });
 
-test(`10 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - should work if strings don't have hashes/dots`, () => {
+test(`10 - aims - should work if strings don't have hashes/dots`, () => {
   equal(
     uglifyArr([
       ".class1",
@@ -170,7 +170,7 @@ test(`10 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - should work if strings don
   );
 });
 
-test(`11 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - bunch of identical just-names should be turned into single letter`, () => {
+test(`11 - aims - bunch of identical just-names should be turned into single letter`, () => {
   equal(
     uglifyArr([
       "zzz",
@@ -191,7 +191,7 @@ test(`11 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - bunch of identical just-na
   );
 });
 
-test(`12 - ${`\u001b[${36}m${"aims"}\u001b[${39}m`} - single and double letter name, repeating, cross-type`, () => {
+test(`12 - aims - single and double letter name, repeating, cross-type`, () => {
   equal(
     uglifyArr([
       "a",
@@ -313,6 +313,43 @@ test("13 - readme examples", () => {
     output1[input1.indexOf(".oscar")],
     output2[input2.indexOf(".oscar")],
     ".oscar",
+  );
+});
+
+test("14 - uglifyById validates the index", () => {
+  let input = [".alpha", ".bravo"];
+
+  equal(uglifyById(input, 0), uglifyArr(input)[0], "14.01");
+  equal(uglifyById(input, 1), uglifyArr(input)[1], "14.02");
+
+  [undefined, "0", 0.5, Number.NaN, Number.POSITIVE_INFINITY].forEach(
+    (idx, i) => {
+      throws(
+        () => {
+          uglifyById(input, idx);
+        },
+        /THROW_ID_01/,
+        `14.${String(i + 3).padStart(2, "0")}`,
+      );
+    },
+  );
+
+  [-1, 2].forEach((idx, i) => {
+    throws(
+      () => {
+        uglifyById(input, idx);
+      },
+      /THROW_ID_02/,
+      `14.${String(i + 8).padStart(2, "0")}`,
+    );
+  });
+
+  throws(
+    () => {
+      uglifyById([], 0);
+    },
+    /THROW_ID_02/,
+    "14.10",
   );
 });
 
