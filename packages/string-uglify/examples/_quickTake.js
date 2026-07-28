@@ -1,8 +1,8 @@
 // Quick Take
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
-import { uglifyById, uglifyArr, version } from "../dist/string-uglify.esm.js";
+import { uglifyArr, uglifyById, version } from "../dist/string-uglify.esm.js";
 
 // notice we put dots and hashes for classes and id's but algorithm will work
 // fine too if you won't.
