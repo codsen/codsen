@@ -5,7 +5,7 @@ const version: string = v;
 declare let DEV: boolean;
 
 // tells code point of a given id number
-function tellcp(str: string, idNum = 0): number {
+function tellCP(str: string, idNum = 0): number {
   return str.codePointAt(idNum) || 0;
 }
 
@@ -74,7 +74,7 @@ function uglifyArr(arr: string[]): string[] {
     y: false,
     z: false,
   };
-  let singleNameonly: Obj = {
+  let singleNameOnly: Obj = {
     a: false,
     b: false,
     c: false,
@@ -105,6 +105,8 @@ function uglifyArr(arr: string[]): string[] {
 
   // final array we'll assemble and eventually return
   let res: string[] = [];
+  const generatedNames = new Set<string>();
+  const generatedByOriginal = new Map<string, string>();
 
   // quick end
   if (!Array.isArray(arr) || !arr.length) {
@@ -113,25 +115,28 @@ function uglifyArr(arr: string[]): string[] {
 
   for (let id = 0, len = arr.length; id < len; id++) {
     // insurance against duplicate reference array values
-    if (arr.indexOf(arr[id]) < id) {
+    const previousResult = generatedByOriginal.get(arr[id]);
+    if (previousResult !== undefined) {
       // push again the calculated value from "res":
-      res.push(res[arr.indexOf(arr[id])]);
+      res.push(previousResult);
       continue;
     }
 
     let prefix = `.#`.includes(arr[id][0]) ? arr[id][0] : "";
-    let codePointSum = Array.from(arr[id]).reduce(
-      (acc, curr) => acc + tellcp(curr),
-      0,
-    );
+    let codePointSum = 0;
+    for (const character of arr[id]) {
+      codePointSum += tellCP(character);
+    }
 
     if (
       (`.#`.includes(arr[id][0]) && arr[id].length < 4) ||
       (!`.#`.includes(arr[id][0]) && arr[id].length < 3)
     ) {
       let val = arr[id];
-      if (!res.includes(val)) {
+      if (!generatedNames.has(val)) {
         res.push(val);
+        generatedNames.add(val);
+        generatedByOriginal.set(arr[id], val);
 
         // the first candidates for single-character value are 2-char long classes:
         if (
@@ -152,10 +157,10 @@ function uglifyArr(arr: string[]): string[] {
           !val.startsWith(".") &&
           !val.startsWith("#") &&
           val.length === 1 &&
-          singleNameonly[val] === false
+          singleNameOnly[val] === false
         ) {
           // mark the letter as used
-          singleNameonly[val] = true;
+          singleNameOnly[val] = true;
         }
         continue;
       }
@@ -165,29 +170,29 @@ function uglifyArr(arr: string[]): string[] {
       lettersAndNumbers[codePointSum % lettersAndNumbers.length]
     }`;
 
-    if (res.includes(generated)) {
+    if (generatedNames.has(generated)) {
       // add more characters:
-      let soFarWeveGot = generated;
+      let soFarWeGot = generated;
       let counter = 0;
 
-      let reducedCodePointSum = Array.from(arr[id]).reduce(
-        (acc, curr) =>
-          acc < 200
-            ? acc + tellcp(curr)
-            : (acc + tellcp(curr)) % lettersAndNumbers.length,
-        0,
-      );
-      let magicNumber = Array.from(arr[id])
-        .map((val) => tellcp(val))
-        .reduce((accum, curr) => {
-          let temp = accum + curr;
-          do {
-            temp = String(temp)
-              .split("")
-              .reduce((acc, curr1) => acc + Number.parseInt(curr1, 10), 0);
-          } while (temp >= 10);
-          return temp;
-        }, 0);
+      let reducedCodePointSum = 0;
+      let magicNumber = 0;
+      for (const character of arr[id]) {
+        const codePoint = tellCP(character);
+        reducedCodePointSum =
+          reducedCodePointSum < 200
+            ? reducedCodePointSum + codePoint
+            : (reducedCodePointSum + codePoint) % lettersAndNumbers.length;
+        magicNumber += codePoint;
+        while (magicNumber >= 10) {
+          let digitSum = 0;
+          while (magicNumber > 0) {
+            digitSum += magicNumber % 10;
+            magicNumber = Math.floor(magicNumber / 10);
+          }
+          magicNumber = digitSum;
+        }
+      }
       // DEV && console.log(
       //   `${`\u001b[${33}m${`magicNumber`}\u001b[${39}m`} = ${JSON.stringify(
       //     magicNumber,
@@ -196,18 +201,20 @@ function uglifyArr(arr: string[]): string[] {
       //   )}`
       // );
 
-      while (res.includes(soFarWeveGot)) {
+      while (generatedNames.has(soFarWeGot)) {
         counter += 1;
-        soFarWeveGot +=
+        soFarWeGot +=
           lettersAndNumbers[
             (reducedCodePointSum * magicNumber * counter) %
               lettersAndNumbers.length
           ];
       }
-      generated = soFarWeveGot;
+      generated = soFarWeGot;
     }
 
     res.push(generated);
+    generatedNames.add(generated);
+    generatedByOriginal.set(arr[id], generated);
     if (
       generated.startsWith(".") &&
       generated.length === 2 &&
@@ -224,15 +231,15 @@ function uglifyArr(arr: string[]): string[] {
       !generated.startsWith(".") &&
       !generated.startsWith("#") &&
       generated.length === 1 &&
-      singleNameonly[generated] === false
+      singleNameOnly[generated] === false
     ) {
-      singleNameonly[generated] = true;
+      singleNameOnly[generated] = true;
     }
   }
 
   DEV &&
     console.log(
-      `235 ${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
+      `242 ${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
         singleClasses,
         null,
         4,
@@ -240,8 +247,8 @@ function uglifyArr(arr: string[]): string[] {
         singleIds,
         null,
         4,
-      )}\n${`\u001b[${33}m${`singleNameonly`}\u001b[${39}m`} = ${JSON.stringify(
-        singleNameonly,
+      )}\n${`\u001b[${33}m${`singleNameOnly`}\u001b[${39}m`} = ${JSON.stringify(
+        singleNameOnly,
         null,
         4,
       )}`,
@@ -251,10 +258,10 @@ function uglifyArr(arr: string[]): string[] {
   // matches current name's first letter (considering it might be id, class or
   // just name), shorten that value up to that single letter.
   for (let i = 0, len = res.length; i < len; i++) {
-    DEV && console.log("----------------------------------------");
+    DEV && console.log("261 ----------------------------------------");
     DEV &&
       console.log(
-        `257 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`,
+        `264 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`,
       );
     if (res[i].startsWith(".")) {
       // if particular class name starts with a letter which hasn't been taken
@@ -262,7 +269,7 @@ function uglifyArr(arr: string[]): string[] {
         singleClasses[res[i].slice(1, 2)] = res[i];
         DEV &&
           console.log(
-            `265 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
+            `272 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
               i
             ].slice(
               0,
@@ -277,7 +284,7 @@ function uglifyArr(arr: string[]): string[] {
       } else if (singleClasses[res[i].slice(1, 2)] === res[i]) {
         DEV &&
           console.log(
-            `280 res[i] = ${res[i]} will also be shortened to ${res[i].slice(
+            `287 res[i] = ${res[i]} will also be shortened to ${res[i].slice(
               0,
               2,
             )}`,
@@ -291,7 +298,7 @@ function uglifyArr(arr: string[]): string[] {
         singleIds[res[i].slice(1, 2)] = res[i];
         DEV &&
           console.log(
-            `294 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
+            `301 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
               i
             ].slice(0, 2)}\u001b[${39}m`};`,
           );
@@ -302,16 +309,16 @@ function uglifyArr(arr: string[]): string[] {
         res[i] = res[i].slice(0, 2);
       }
     } else if (!res[i].startsWith(".") && !res[i].startsWith("#")) {
-      if (!singleNameonly[res[i].slice(0, 1)]) {
-        singleNameonly[res[i].slice(0, 1)] = res[i];
+      if (!singleNameOnly[res[i].slice(0, 1)]) {
+        singleNameOnly[res[i].slice(0, 1)] = res[i];
         DEV &&
           console.log(
-            `309 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
+            `316 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
               i
             ].slice(0, 1)}\u001b[${39}m`}`,
           );
         res[i] = res[i].slice(0, 1);
-      } else if (singleNameonly[res[i].slice(0, 1)] === res[i]) {
+      } else if (singleNameOnly[res[i].slice(0, 1)] === res[i]) {
         // This means, particular id name was repeated in the list and
         // was shortened. We must shorten it to the same value.
         res[i] = res[i].slice(0, 1);
@@ -324,8 +331,18 @@ function uglifyArr(arr: string[]): string[] {
 
 // main function - converts n-th string in a given reference array of strings
 function uglifyById(refArr: string[], idNum: number): string {
+  if (!Number.isInteger(idNum)) {
+    throw new TypeError(
+      `string-uglify/uglifyById(): [THROW_ID_01] The second input argument, idNum, must be an integer. It was given as ${String(idNum)} (type ${typeof idNum}).`,
+    );
+  }
+  if (idNum < 0 || idNum >= refArr.length) {
+    throw new RangeError(
+      `string-uglify/uglifyById(): [THROW_ID_02] The second input argument, idNum, must point to an item in refArr. It was given as ${idNum}, while refArr contains ${refArr.length} item${refArr.length === 1 ? "" : "s"}.`,
+    );
+  }
   return uglifyArr(refArr)[idNum];
 }
 
 // main export
-export { uglifyById, uglifyArr, version };
+export { uglifyArr, uglifyById, version };
