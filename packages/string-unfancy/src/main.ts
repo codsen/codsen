@@ -1,7 +1,7 @@
 /* eslint quote-props:0 */
 
+import { isStr, type Obj } from "codsen-utils";
 import he from "he";
-import { Obj, isStr } from "codsen-utils";
 
 import { version as v } from "../package.json";
 
