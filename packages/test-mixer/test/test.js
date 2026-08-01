@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { mixer } from "../dist/test-mixer.esm.js";
 
@@ -173,9 +173,9 @@ test("04 - ensure values are cloned, not referenced", () => {
     },
     obj,
   );
-  // then, modify the value within the source - if it was referenced,
+  // then, mutate the value within the source - if it was referenced,
   // values will change! If it was cloned, values won't change.
-  obj.baz = null;
+  obj.baz.x = "z";
 
   equal(
     result,
