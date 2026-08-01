@@ -1,7 +1,5 @@
+import { deepClone as clone } from "codsen-utils";
 import { combinations } from "object-boolean-combinations";
-import rfdc from "rfdc";
-
-const clone = rfdc();
 
 import { version as v } from "../package.json";
 
@@ -45,12 +43,12 @@ function mixer(
 ): PlainObjectOfBool[] {
   if (ref && typeof ref !== "object") {
     throw new Error(
-      `test-mixer: [THROW_ID_01] the first input arg is missing!`,
+      `test-mixer/mixer(): [THROW_ID_01] the first input arg is missing!`,
     );
   }
   if (defaultsObj && typeof defaultsObj !== "object") {
     throw new Error(
-      `test-mixer: [THROW_ID_02] the second input arg is missing!`,
+      `test-mixer/mixer(): [THROW_ID_02] the second input arg is missing!`,
     );
   }
   let caught;
@@ -71,7 +69,7 @@ function mixer(
       // and defaults don't have this "from".
       .filter((refKey) => typeof ref[refKey] === "boolean")
       .some((refKey) => {
-        if (!Object.keys(defaultsObj).includes(refKey)) {
+        if (!Object.hasOwn(defaultsObj, refKey)) {
           caught = refKey;
           return true;
         }
@@ -79,13 +77,13 @@ function mixer(
       })
   ) {
     throw new Error(
-      `test-mixer: [THROW_ID_03] the second input arg object should be defaults; it should be a superset of 1st input arg object. However, 1st input arg object contains key "${caught}" which 2nd input arg object doesn't have.`,
+      `test-mixer/mixer(): [THROW_ID_03] the second input arg object should be defaults; it should be a superset of 1st input arg object. However, 1st input arg object contains key "${caught}" which 2nd input arg object doesn't have.`,
     );
   }
 
   // quick end
   if (!Object.keys(defaultsObj).length) {
-    DEV && console.log(`088 early return []`);
+    DEV && console.log(`086 early return []`);
     return [];
   }
 
@@ -100,7 +98,7 @@ function mixer(
     // add it to "optsWithBoolValues"
     if (
       typeof defaultsObjClone[key] === "boolean" &&
-      !Object.keys(ref).includes(key)
+      !Object.hasOwn(ref, key)
     ) {
       optsWithBoolValues[key] = defaultsObjClone[key];
     }
@@ -108,7 +106,7 @@ function mixer(
 
   DEV &&
     console.log(
-      `111 ${`\u001b[${33}m${`refClone`}\u001b[${39}m`} = ${JSON.stringify(
+      `109 ${`\u001b[${33}m${`refClone`}\u001b[${39}m`} = ${JSON.stringify(
         refClone,
         null,
         4,
@@ -116,7 +114,7 @@ function mixer(
     );
   DEV &&
     console.log(
-      `119 ${`\u001b[${33}m${`defaultsObjClone`}\u001b[${39}m`} = ${JSON.stringify(
+      `117 ${`\u001b[${33}m${`defaultsObjClone`}\u001b[${39}m`} = ${JSON.stringify(
         defaultsObjClone,
         null,
         4,
@@ -124,7 +122,7 @@ function mixer(
     );
   DEV &&
     console.log(
-      `127 ${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} = ${JSON.stringify(
+      `125 ${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} = ${JSON.stringify(
         optsWithBoolValues,
         null,
         4,
@@ -134,12 +132,12 @@ function mixer(
   // calculate combinations using combinations() - object-boolean-combinations
   // then restore the non-bool keys
   let res = combinations(optsWithBoolValues).map((obj) => ({
-    ...defaultsObj,
+    ...defaultsObjClone,
     ...refClone,
     ...obj,
   }));
 
-  DEV && console.log(`142 RETURN res = ${JSON.stringify(res, null, 4)}`);
+  DEV && console.log(`140 RETURN res = ${JSON.stringify(res, null, 4)}`);
 
   return res;
 }
