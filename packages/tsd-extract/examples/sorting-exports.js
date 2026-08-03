@@ -1,6 +1,6 @@
 // Sorting exports
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 import { extract, roysSort } from "../dist/tsd-extract.esm.js";
 
 // Often, in .d.ts files, the main function is not the first in the list:
