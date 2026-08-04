@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { findAllIdx } from "../dist/codsen-utils.esm.js";
 
@@ -34,4 +34,8 @@ test("02", () => {
 test("03", () => {
   equal(findAllIdx("abc def", "a"), [0], "03.01");
   equal(findAllIdx("abc def aaa", "a"), [0, 8, 9, 10], "03.02");
+  equal(findAllIdx("abc", ""), [], "03.03");
+  equal(findAllIdx("aaaa", "aa"), [0, 1, 2], "03.04");
 });
+
+test.run();

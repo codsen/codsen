@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { pullAll } from "../dist/codsen-utils.esm.js";
 
@@ -83,7 +83,7 @@ test("13 - both empty strings", () => {
 });
 
 test("14 - both undefined", () => {
-  let input = undefined;
+  let input;
   let result = pullAll(input, undefined);
   equal(result, [], "14.01");
 });

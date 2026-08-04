@@ -69,7 +69,6 @@ declare function isRegExp(something: any): something is RegExp;
  * @param string source string
  * @param substring what to look for
  * @returns array of findings' position indexes
- * adapted from https://stackoverflow.com/a/10710406
  * console.log(findAllIdx("scissors", "s"));
  * -> [0, 3, 4, 7]
  */

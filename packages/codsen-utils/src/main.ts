@@ -1,5 +1,5 @@
-import { version as v } from "../package.json";
 import rfdc from "rfdc";
+import { version as v } from "../package.json";
 
 const clone = rfdc();
 
@@ -245,18 +245,23 @@ export function isRegExp(something: any): something is RegExp {
  * @param string source string
  * @param substring what to look for
  * @returns array of findings' position indexes
- * adapted from https://stackoverflow.com/a/10710406
  * console.log(findAllIdx("scissors", "s"));
  * -> [0, 3, 4, 7]
  */
-export function findAllIdx(value: unknown, substring: unknown) {
-  if (!isStr(value) || !isStr(substring)) {
+export function findAllIdx(value: unknown, substring: unknown): number[] {
+  if (!isStr(value) || !isStr(substring) || substring.length === 0) {
     return [];
   }
-  let a = [];
-  let i = -1;
-  while ((i = value.indexOf(substring, i + 1)) >= 0) a.push(i);
-  return a;
+
+  const indexes: number[] = [];
+  let index = value.indexOf(substring);
+
+  while (index !== -1) {
+    indexes.push(index);
+    index = value.indexOf(substring, index + 1);
+  }
+
+  return indexes;
 }
 
 // ----------------------------------------------------------------

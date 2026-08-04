@@ -1,11 +1,11 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
+  hairspace,
   isWhitespaceChar,
   rawNbsp,
-  hairspace,
   thinSpace,
 } from "../dist/codsen-utils.esm.js";
 
@@ -53,3 +53,5 @@ test("11 - Start of Heading character (U+0001)", () => {
   // https://www.fileformat.info/info/unicode/char/0001/index.htm
   equal(isWhitespaceChar("\u0001"), false, "11.01");
 });
+
+test.run();
