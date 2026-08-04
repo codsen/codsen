@@ -4,7 +4,7 @@ import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { stripHtml } from "./util/noLog.js";
 
-test("01 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all", () => {
+test("001 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all", () => {
   is(
     stripHtml('{"Operator":"<","IsValid":true}').result,
     '{"Operator":"<","IsValid":true}',
@@ -12,7 +12,7 @@ test("01 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all"
   );
 });
 
-test("02 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all", () => {
+test("002 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all", () => {
   is(
     stripHtml('{"Operator":"a <div>b</div> c","IsValid":true}').result,
     '{"Operator":"a b c","IsValid":true}',

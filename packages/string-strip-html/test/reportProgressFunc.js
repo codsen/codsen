@@ -8,28 +8,28 @@ let thrower = (val) => {
   throw new Error(val);
 };
 
-test("01 - progress won't be reported under string length 1001", () => {
+test("001 - progress won't be reported under string length 1001", () => {
   equal(
     stripHtml("<body>text<script>zzz</script</body>", {
       reportProgressFunc: thrower,
     }).result,
     "text",
-    "01.01",
+    "001.01",
   );
 });
 
-test("02 - progress won't be reported, length exactly 1000", () => {
+test("002 - progress won't be reported, length exactly 1000", () => {
   equal(
     // (length 10) × 100 = 1000
     stripHtml("<em>a</em>".repeat(100), {
       reportProgressFunc: thrower,
     }).result,
     "a".repeat(100),
-    "02.01",
+    "002.01",
   );
 });
 
-test("03 - reports only at 50% if length is between 1000 and 2000", () => {
+test("003 - reports only at 50% if length is between 1000 and 2000", () => {
   // short input string should report only when passing at 50%:
   throws(
     () => {
@@ -42,7 +42,7 @@ test("03 - reports only at 50% if length is between 1000 and 2000", () => {
   );
 });
 
-test("04 - reports all percentages is input is beyond 2000 length - default range 0-100", () => {
+test("004 - reports all percentages is input is beyond 2000 length - default range 0-100", () => {
   let gather = [];
   let counter = (num) => {
     gather.push(num);
@@ -56,10 +56,10 @@ test("04 - reports all percentages is input is beyond 2000 length - default rang
     compareTo.push(i);
   }
 
-  equal(gather, compareTo, "04.01");
+  equal(gather, compareTo, "004.01");
 });
 
-test("05 - reports all percentages is input is beyond 2000 length - custom range 21-86", () => {
+test("005 - reports all percentages is input is beyond 2000 length - custom range 21-86", () => {
   let gather = [];
   let counter = (num) => {
     gather.push(num);
@@ -75,7 +75,19 @@ test("05 - reports all percentages is input is beyond 2000 length - custom range
     compareTo.push(i);
   }
 
-  equal(gather, compareTo, "05.01");
+  equal(gather, compareTo, "005.01");
+});
+
+test("006 - maps the midpoint into a custom range for medium inputs", () => {
+  const gather = [];
+
+  stripHtml("<em>a</em>".repeat(150), {
+    reportProgressFunc: (percentage) => gather.push(percentage),
+    reportProgressFuncFrom: 80,
+    reportProgressFuncTo: 100,
+  });
+
+  equal(gather, [90], "006.01");
 });
 
 test.run();

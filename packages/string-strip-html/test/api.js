@@ -7,7 +7,7 @@ import { stripHtml } from "./util/noLog.js";
 // throws
 // -----------------------------------------------------------------------------
 
-test("01 - wrong input type", () => {
+test("001 - wrong input type", () => {
   throws(
     () => {
       stripHtml(true);
@@ -17,7 +17,7 @@ test("01 - wrong input type", () => {
   );
 });
 
-test("02 - wrong input type", () => {
+test("002 - wrong input type", () => {
   throws(
     () => {
       stripHtml(false);
@@ -27,7 +27,7 @@ test("02 - wrong input type", () => {
   );
 });
 
-test("03 - wrong input type", () => {
+test("003 - wrong input type", () => {
   throws(
     () => {
       stripHtml(null);
@@ -37,7 +37,7 @@ test("03 - wrong input type", () => {
   );
 });
 
-test("04 - wrong input type", () => {
+test("004 - wrong input type", () => {
   throws(
     () => {
       stripHtml(1);
@@ -47,7 +47,7 @@ test("04 - wrong input type", () => {
   );
 });
 
-test("05 - wrong opts", () => {
+test("005 - wrong opts", () => {
   throws(
     () => {
       stripHtml("zzz", 1);
@@ -57,7 +57,7 @@ test("05 - wrong opts", () => {
   );
 });
 
-test("06 - wrong opts", () => {
+test("006 - wrong opts", () => {
   throws(
     () => {
       stripHtml("zzz", true);
@@ -67,7 +67,7 @@ test("06 - wrong opts", () => {
   );
 });
 
-test("07 - wrong opts.reportProgressFunc", () => {
+test("007 - wrong opts.reportProgressFunc", () => {
   throws(
     () => {
       stripHtml("zzz", { reportProgressFunc: 1 });
@@ -77,7 +77,7 @@ test("07 - wrong opts.reportProgressFunc", () => {
   );
 });
 
-test("08 - wrong opts.dumpLinkHrefsNearby", () => {
+test("008 - wrong opts.dumpLinkHrefsNearby", () => {
   throws(
     () => {
       stripHtml("zzz", { dumpLinkHrefsNearby: true });
@@ -87,7 +87,7 @@ test("08 - wrong opts.dumpLinkHrefsNearby", () => {
   );
 });
 
-test("09 - wrong opts", () => {
+test("009 - wrong opts", () => {
   throws(
     () => {
       stripHtml("zzz", {
@@ -126,7 +126,7 @@ test("09 - wrong opts", () => {
   );
 });
 
-test("10 - wrong reportProgressFuncFrom", () => {
+test("010 - wrong reportProgressFuncFrom", () => {
   throws(
     () => {
       stripHtml("zzz", {
@@ -149,7 +149,7 @@ test("10 - wrong reportProgressFuncFrom", () => {
   );
 });
 
-test("11 - ignores wrong reportProgressFuncFrom when reportProgressFunc is off", () => {
+test("011 - ignores wrong reportProgressFuncFrom when reportProgressFunc is off", () => {
   equal(
     stripHtml("zzz", {
       reportProgressFunc: null,
@@ -161,7 +161,7 @@ test("11 - ignores wrong reportProgressFuncFrom when reportProgressFunc is off",
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "11.01",
+    "011.01",
   );
   equal(
     stripHtml("zzz", {
@@ -173,11 +173,11 @@ test("11 - ignores wrong reportProgressFuncFrom when reportProgressFunc is off",
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "11.02",
+    "011.02",
   );
 });
 
-test("12 - wrong opts.reportProgressFuncTo", () => {
+test("012 - wrong opts.reportProgressFuncTo", () => {
   throws(
     () => {
       stripHtml("zzz", {
@@ -200,7 +200,7 @@ test("12 - wrong opts.reportProgressFuncTo", () => {
   );
 });
 
-test("13 - ignores wrong reportProgressFuncTo when reportProgressFunc is off", () => {
+test("013 - ignores wrong reportProgressFuncTo when reportProgressFunc is off", () => {
   equal(
     stripHtml("zzz", {
       reportProgressFunc: null,
@@ -212,7 +212,7 @@ test("13 - ignores wrong reportProgressFuncTo when reportProgressFunc is off", (
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "13.01",
+    "013.01",
   );
   equal(
     stripHtml("zzz", {
@@ -224,16 +224,16 @@ test("13 - ignores wrong reportProgressFuncTo when reportProgressFunc is off", (
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "13.02",
+    "013.02",
   );
 });
 
-test("14 - wrong opts.stripTogetherWithTheirContents", () => {
+test("014 - wrong opts.stripTogetherWithTheirContents", () => {
   throws(
     () => {
       stripHtml("zzz", { stripTogetherWithTheirContents: ["div", 1] });
     },
-    /THROW_ID_08/,
+    /THROW_ID_09/,
     "14.01",
   );
 });
@@ -241,7 +241,7 @@ test("14 - wrong opts.stripTogetherWithTheirContents", () => {
 // legit input
 // -----------------------------------------------------------------------------
 
-test("15 - empty input", () => {
+test("015 - empty input", () => {
   let { result, ranges, allTagLocations, filteredTagLocations } = stripHtml("");
   equal(
     { result, ranges, allTagLocations, filteredTagLocations },
@@ -251,11 +251,11 @@ test("15 - empty input", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "15.01",
+    "015.01",
   );
 });
 
-test("16 - tabs only", () => {
+test("016 - tabs only", () => {
   let input = "\t\t\t";
   equal(
     stripHtml(input, {
@@ -267,7 +267,7 @@ test("16 - tabs only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "16.01",
+    "016.01",
   );
   equal(
     stripHtml(input, {
@@ -279,11 +279,11 @@ test("16 - tabs only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "16.02",
+    "016.02",
   );
 });
 
-test("17 - spaces only", () => {
+test("017 - spaces only", () => {
   let input = "   ";
   equal(
     stripHtml(input, {
@@ -295,7 +295,7 @@ test("17 - spaces only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "17.01",
+    "017.01",
   );
   equal(
     stripHtml(input, {
@@ -307,7 +307,7 @@ test("17 - spaces only", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "17.02",
+    "017.02",
   );
 });
 

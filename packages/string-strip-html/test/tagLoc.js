@@ -7,7 +7,7 @@ import { stripHtml } from "./util/noLog.js";
 // tag locations
 // -----------------------------------------------------------------------------
 
-test("01 - tag locations - anchor wrapping text", () => {
+test("001 - tag locations - anchor wrapping text", () => {
   equal(
     stripHtml("abc<a>click me</a>def"),
     {
@@ -25,7 +25,7 @@ test("01 - tag locations - anchor wrapping text", () => {
         [14, 18],
       ],
     },
-    "01.01",
+    "001.01",
   );
   equal(
     stripHtml("abc<div>click me</div>def"),
@@ -44,11 +44,11 @@ test("01 - tag locations - anchor wrapping text", () => {
         [16, 22],
       ],
     },
-    "01.02",
+    "001.02",
   );
 });
 
-test("02 - tag locations - no tags were present at all", () => {
+test("002 - tag locations - no tags were present at all", () => {
   equal(
     stripHtml("abc def"),
     {
@@ -57,11 +57,11 @@ test("02 - tag locations - no tags were present at all", () => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "02.01",
+    "002.01",
   );
 });
 
-test("03 - tag locations - opts.ignoreTags", () => {
+test("003 - tag locations - opts.ignoreTags", () => {
   equal(
     stripHtml("<a><span>z</span></a>", {
       ignoreTags: ["a"],
@@ -83,7 +83,7 @@ test("03 - tag locations - opts.ignoreTags", () => {
         [10, 17],
       ],
     },
-    "03.01",
+    "003.01",
   );
   equal(
     stripHtml("<div><span>z</span></div>", {
@@ -106,11 +106,11 @@ test("03 - tag locations - opts.ignoreTags", () => {
         [12, 19],
       ],
     },
-    "03.02",
+    "003.02",
   );
 });
 
-test("04 - tag locations - opts.ignoreTags", () => {
+test("004 - tag locations - opts.ignoreTags", () => {
   let input = "<a><span>z</span></a>";
   equal(
     stripHtml(input, {
@@ -127,11 +127,11 @@ test("04 - tag locations - opts.ignoreTags", () => {
       ],
       filteredTagLocations: [],
     },
-    "04.01",
+    "004.01",
   );
 });
 
-test("05 - tag locations - opts.onlyStripTags", () => {
+test("005 - tag locations - opts.onlyStripTags", () => {
   let input = "<a><span>z</span></a>";
   equal(
     stripHtml(input, {
@@ -154,11 +154,11 @@ test("05 - tag locations - opts.onlyStripTags", () => {
         [10, 17],
       ],
     },
-    "05.01",
+    "005.01",
   );
 });
 
-test("06 - tag locations - opts.onlyStripTags", () => {
+test("006 - tag locations - opts.onlyStripTags", () => {
   let input = "<a><span>z</span></a>";
   equal(
     stripHtml(input, {
@@ -183,11 +183,11 @@ test("06 - tag locations - opts.onlyStripTags", () => {
         [17, 21],
       ],
     },
-    "06.01",
+    "006.01",
   );
 });
 
-test("07 - tag locations - closing bracket missing", () => {
+test("007 - tag locations - closing bracket missing", () => {
   let input = '<div class="container" <div class="inner"';
   equal(
     stripHtml(input),
@@ -203,11 +203,11 @@ test("07 - tag locations - closing bracket missing", () => {
         [23, 41],
       ],
     },
-    "07.01",
+    "007.01",
   );
 });
 
-test("08 - tag locations - closing bracket missing", () => {
+test("008 - tag locations - closing bracket missing", () => {
   let input = '<div class="container" <div class="inner"';
   equal(
     stripHtml(input, {
@@ -222,11 +222,11 @@ test("08 - tag locations - closing bracket missing", () => {
       ],
       filteredTagLocations: [[0, 41]],
     },
-    "08.01",
+    "008.01",
   );
 });
 
-test("09 - tag locations - closing bracket missing on ignored tag", () => {
+test("009 - tag locations - closing bracket missing on ignored tag", () => {
   let input = '<div class="container" <div class="inner"';
   equal(
     stripHtml(input, {
@@ -241,7 +241,7 @@ test("09 - tag locations - closing bracket missing on ignored tag", () => {
       ],
       filteredTagLocations: [],
     },
-    "09.01",
+    "009.01",
   );
 });
 

@@ -8,7 +8,7 @@ import { stripHtml } from "./util/noLog.js";
 // XML (sprinkled within HTML)
 // -----------------------------------------------------------------------------
 
-test("01 - strips XML - strips Outlook XML fix block, tight", () => {
+test("001 - strips XML - strips Outlook XML fix block, tight", () => {
   let input = `abc<!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
 <o:AllowPNG/>
@@ -16,11 +16,11 @@ test("01 - strips XML - strips Outlook XML fix block, tight", () => {
 </o:OfficeDocumentSettings>
 </xml><![endif]-->def`;
   let result = "abc def";
-  equal(stripHtml(input).result, result, "01.01");
-  equal(rApply(input, stripHtml(input).ranges), result, "01.02");
+  equal(stripHtml(input).result, result, "001.01");
+  equal(rApply(input, stripHtml(input).ranges), result, "001.02");
 });
 
-test("02 - strips XML - strips Outlook XML fix block, leading space", () => {
+test("002 - strips XML - strips Outlook XML fix block, leading space", () => {
   let input = `abc <!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
 <o:AllowPNG/>
@@ -28,11 +28,11 @@ test("02 - strips XML - strips Outlook XML fix block, leading space", () => {
 </o:OfficeDocumentSettings>
 </xml><![endif]-->def`;
   let result = "abc def";
-  equal(stripHtml(input).result, result, "02.01");
-  equal(rApply(input, stripHtml(input).ranges), result, "02.02");
+  equal(stripHtml(input).result, result, "002.01");
+  equal(rApply(input, stripHtml(input).ranges), result, "002.02");
 });
 
-test("03 - strips XML - strips Outlook XML fix block, trailing space", () => {
+test("003 - strips XML - strips Outlook XML fix block, trailing space", () => {
   let input = `abc<!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
 <o:AllowPNG/>
@@ -40,11 +40,11 @@ test("03 - strips XML - strips Outlook XML fix block, trailing space", () => {
 </o:OfficeDocumentSettings>
 </xml><![endif]--> def`;
   let result = "abc def";
-  equal(stripHtml(input).result, result, "03.01");
-  equal(rApply(input, stripHtml(input).ranges), result, "03.02");
+  equal(stripHtml(input).result, result, "003.01");
+  equal(rApply(input, stripHtml(input).ranges), result, "003.02");
 });
 
-test("04 - strips XML - strips Outlook XML fix block, spaces around", () => {
+test("004 - strips XML - strips Outlook XML fix block, spaces around", () => {
   let input = `abc <!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
 <o:AllowPNG/>
@@ -52,11 +52,11 @@ test("04 - strips XML - strips Outlook XML fix block, spaces around", () => {
 </o:OfficeDocumentSettings>
 </xml><![endif]--> def`;
   let result = "abc def";
-  equal(stripHtml(input).result, result, "04.01");
-  equal(rApply(input, stripHtml(input).ranges), result, "04.02");
+  equal(stripHtml(input).result, result, "004.01");
+  equal(rApply(input, stripHtml(input).ranges), result, "004.02");
 });
 
-test("05 - strips XML - generous trailing space", () => {
+test("005 - strips XML - generous trailing space", () => {
   let input = `abc <!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
 <o:AllowPNG/>
@@ -66,11 +66,11 @@ test("05 - strips XML - generous trailing space", () => {
 
   def`;
   let result = "abc\n\ndef";
-  equal(stripHtml(input).result, result, "05.01");
-  equal(rApply(input, stripHtml(input).ranges), result, "05.02");
+  equal(stripHtml(input).result, result, "005.01");
+  equal(rApply(input, stripHtml(input).ranges), result, "005.02");
 });
 
-test("06 - strips XML - text-whitespace-tag", () => {
+test("006 - strips XML - text-whitespace-tag", () => {
   let input = `abc  <!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
 <o:AllowPNG/>
@@ -80,12 +80,12 @@ test("06 - strips XML - text-whitespace-tag", () => {
 
   `;
   let { result, ranges } = stripHtml(input);
-  equal(result, "abc", "06.01");
-  equal(ranges, [[3, 159]], "06.02");
-  equal(rApply(input, ranges), result, "06.03");
+  equal(result, "abc", "006.01");
+  equal(ranges, [[3, 159]], "006.02");
+  equal(rApply(input, ranges), result, "006.03");
 });
 
-test("07 - strips XML - text-tabs-tag", () => {
+test("007 - strips XML - text-tabs-tag", () => {
   let input = `abc\t\t<!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
 <o:AllowPNG/>
@@ -95,11 +95,11 @@ test("07 - strips XML - text-tabs-tag", () => {
 
   `;
   let { result, ranges } = stripHtml(input);
-  equal(result, "abc", "07.01");
-  equal(rApply(input, ranges), result, "07.02");
+  equal(result, "abc", "007.01");
+  equal(rApply(input, ranges), result, "007.02");
 });
 
-test("08 - strips XML - tag-whitespace-text", () => {
+test("008 - strips XML - tag-whitespace-text", () => {
   let input = `    <!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
 <o:AllowPNG/>
@@ -109,11 +109,11 @@ test("08 - strips XML - tag-whitespace-text", () => {
 
   `;
   let { result, ranges } = stripHtml(input);
-  equal(result, "abc", "08.01");
-  equal(rApply(input, ranges), result, "08.02");
+  equal(result, "abc", "008.01");
+  equal(rApply(input, ranges), result, "008.02");
 });
 
-test("09 - strips XML - tag-tabs-text", () => {
+test("009 - strips XML - tag-tabs-text", () => {
   let input = `    <!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
 <o:AllowPNG/>
@@ -123,11 +123,11 @@ test("09 - strips XML - tag-tabs-text", () => {
 
   `;
   let { result, ranges } = stripHtml(input);
-  equal(result, "abc", "09.01");
-  equal(rApply(input, ranges), result, "09.02");
+  equal(result, "abc", "009.01");
+  equal(rApply(input, ranges), result, "009.02");
 });
 
-test("10 - strips XML - leading content", () => {
+test("010 - strips XML - leading content", () => {
   let input = `abc <xml>
 <o:OfficeDocumentSettings>
 <o:AllowPNG/>
@@ -137,11 +137,11 @@ test("10 - strips XML - leading content", () => {
 
   `;
   let { result, ranges } = stripHtml(input);
-  equal(result, "abc", "10.01");
-  equal(rApply(input, ranges), result, "10.02");
+  equal(result, "abc", "010.01");
+  equal(rApply(input, ranges), result, "010.02");
 });
 
-test("11 - strips XML - leading content", () => {
+test("011 - strips XML - leading content", () => {
   let input = `      <xml>
 <o:OfficeDocumentSettings>
 <o:AllowPNG/>
@@ -151,8 +151,8 @@ test("11 - strips XML - leading content", () => {
 
   abc`;
   let { result, ranges } = stripHtml(input);
-  equal(result, "abc", "11.01");
-  equal(rApply(input, ranges), result, "11.02");
+  equal(result, "abc", "011.01");
+  equal(rApply(input, ranges), result, "011.02");
 });
 
 test.run();

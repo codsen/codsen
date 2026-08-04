@@ -7,7 +7,7 @@ import { stripHtml } from "./util/noLog.js";
 // CDATA
 // -----------------------------------------------------------------------------
 
-test("01 - CDATA - tight", () => {
+test("001 - CDATA - tight", () => {
   // surroundings are not a linebreaks
   equal(
     stripHtml(`a<![CDATA[
@@ -20,11 +20,11 @@ test("01 - CDATA - tight", () => {
       allTagLocations: [[1, 95]],
       filteredTagLocations: [[1, 95]],
     },
-    "01.01",
+    "001.01",
   );
 });
 
-test("02 - CDATA - normal", () => {
+test("002 - CDATA - normal", () => {
   equal(
     stripHtml(`a <![CDATA[
   The <, &, ', and " can be used,
@@ -36,11 +36,11 @@ test("02 - CDATA - normal", () => {
       allTagLocations: [[2, 90]],
       filteredTagLocations: [[2, 90]],
     },
-    "02.01",
+    "002.01",
   );
 });
 
-test("03 - CDATA - loose", () => {
+test("003 - CDATA - loose", () => {
   equal(
     stripHtml(`a \t\t<![CDATA[
     The <, &, ', and " can be used,
@@ -52,11 +52,11 @@ test("03 - CDATA - loose", () => {
       allTagLocations: [[4, 98]],
       filteredTagLocations: [[4, 98]],
     },
-    "03.01",
+    "003.01",
   );
 });
 
-test("04 - CDATA - single linebreaks", () => {
+test("004 - CDATA - single linebreaks", () => {
   // surroundings are linebreaks
   equal(
     stripHtml(`a\n<![CDATA[
@@ -69,11 +69,11 @@ test("04 - CDATA - single linebreaks", () => {
       allTagLocations: [[2, 96]],
       filteredTagLocations: [[2, 96]],
     },
-    "04.01",
+    "004.01",
   );
 });
 
-test("05 - CDATA - excessive linebreaks", () => {
+test("005 - CDATA - excessive linebreaks", () => {
   equal(
     stripHtml(`a\n\n\n<![CDATA[
     The <, &, ', and " can be used,
@@ -85,11 +85,11 @@ test("05 - CDATA - excessive linebreaks", () => {
       allTagLocations: [[4, 98]],
       filteredTagLocations: [[4, 98]],
     },
-    "05.01",
+    "005.01",
   );
 });
 
-test("06 - CDATA - mixed linebreaks", () => {
+test("006 - CDATA - mixed linebreaks", () => {
   equal(
     stripHtml(`a\n \t\n\n<![CDATA[
     The <, &, ', and " can be used,
@@ -101,7 +101,7 @@ test("06 - CDATA - mixed linebreaks", () => {
       allTagLocations: [[6, 100]],
       filteredTagLocations: [[6, 100]],
     },
-    "06.01",
+    "006.01",
   );
 });
 

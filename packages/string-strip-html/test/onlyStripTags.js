@@ -7,13 +7,13 @@ import { stripHtml } from "./util/noLog.js";
 // opts.onlyStripTags
 // -----------------------------------------------------------------------------
 
-test("01 - opts.onlyStripTags - base cases", () => {
+test("001 - opts.onlyStripTags - base cases", () => {
   equal(
     stripHtml(
       'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening',
     ).result,
     "Let's watch news this evening",
-    "01.01",
+    "001.01",
   );
   equal(
     stripHtml(
@@ -23,7 +23,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       },
     ).result,
     'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening',
-    "01.02",
+    "001.02",
   );
   equal(
     stripHtml(
@@ -33,7 +33,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       },
     ).result,
     "Let's watch news this evening",
-    "01.03",
+    "001.03",
   );
   equal(
     stripHtml(
@@ -43,7 +43,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       },
     ).result,
     "Let's watch news this evening",
-    "01.04",
+    "001.04",
   );
   equal(
     stripHtml(
@@ -53,7 +53,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       },
     ).result,
     "Let's watch news this evening",
-    "01.05",
+    "001.05",
   );
   equal(
     stripHtml(
@@ -63,14 +63,14 @@ test("01 - opts.onlyStripTags - base cases", () => {
       },
     ).result,
     "Let's watch news this evening",
-    "01.06",
+    "001.06",
   );
   equal(
     stripHtml(
       'Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening',
     ).result,
     "Let's watch news this evening",
-    "01.07",
+    "001.07",
   );
   equal(
     stripHtml(
@@ -80,7 +80,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       },
     ).result,
     "Let's watch <b>news</b> this evening",
-    "01.08",
+    "001.08",
   );
   equal(
     stripHtml(
@@ -90,7 +90,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       },
     ).result,
     "Let's watch <b>news</b> this evening",
-    "01.09",
+    "001.09",
   );
   equal(
     stripHtml(
@@ -100,7 +100,7 @@ test("01 - opts.onlyStripTags - base cases", () => {
       },
     ).result,
     'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
-    "01.10",
+    "001.10",
   );
   equal(
     stripHtml(
@@ -110,17 +110,17 @@ test("01 - opts.onlyStripTags - base cases", () => {
       },
     ).result,
     'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
-    "01.11",
+    "001.11",
   );
 });
 
-test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
+test("002 - opts.onlyStripTags + opts.ignoreTags combo", () => {
   equal(
     stripHtml(
       '<div>Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening</div>',
     ).result,
     "Let's watch news this evening",
-    "02.01",
+    "002.01",
   );
   equal(
     stripHtml(
@@ -130,7 +130,7 @@ test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
       },
     ).result,
     "<div>Let's watch <b>news</b> this evening</div>",
-    "02.02",
+    "002.02",
   );
   equal(
     stripHtml(
@@ -140,7 +140,7 @@ test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
       },
     ).result,
     'Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening',
-    "02.03",
+    "002.03",
   );
   equal(
     stripHtml(
@@ -151,7 +151,7 @@ test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
       },
     ).result,
     '<div>Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening</div>',
-    "02.04",
+    "002.04",
   );
   equal(
     stripHtml(
@@ -162,7 +162,7 @@ test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
       },
     ).result,
     '<div>Let\'s watch <a href="https://www.news.com/" target="_blank">news</a> this evening</div>',
-    "02.05",
+    "002.05",
   );
   equal(
     stripHtml(
@@ -173,11 +173,11 @@ test("02 - opts.onlyStripTags + opts.ignoreTags combo", () => {
       },
     ).result,
     '<div>Let\'s watch <a href="https://www.news.com/" target="_blank"><b>news</b></a> this evening</div>',
-    "02.06",
+    "002.06",
   );
 });
 
-test("03 - opts.onlyStripTags - multiline text - defaults", () => {
+test("003 - opts.onlyStripTags - multiline text - defaults", () => {
   equal(
     stripHtml(
       `Abc
@@ -191,11 +191,11 @@ def`,
 mn
 
 def`,
-    "03.01",
+    "003.01",
   );
 });
 
-test("04 - opts.onlyStripTags - multiline text - option on", () => {
+test("004 - opts.onlyStripTags - multiline text - option on", () => {
   equal(
     stripHtml(
       `Abc
@@ -240,7 +240,7 @@ st
 uv
 
 def`,
-    "04.01",
+    "004.01",
   );
 });
 

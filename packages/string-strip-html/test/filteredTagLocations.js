@@ -7,7 +7,7 @@ import { stripHtml } from "./util/noLog.js";
 // tag pairs vs content
 // -----------------------------------------------------------------------------
 
-test("01 - tag pair among defaults", () => {
+test("001 - tag pair among defaults", () => {
   equal(
     stripHtml("abc<script>const x = 1;</script>xyz"),
     {
@@ -19,11 +19,11 @@ test("01 - tag pair among defaults", () => {
       ],
       filteredTagLocations: [[3, 32]],
     },
-    "01.01",
+    "001.01",
   );
 });
 
-test("02 - tag pair custom-defined", () => {
+test("002 - tag pair custom-defined", () => {
   equal(
     stripHtml("abc<script>const x = 1;</script>xyz", {
       stripTogetherWithTheirContents: ["script"],
@@ -37,11 +37,11 @@ test("02 - tag pair custom-defined", () => {
       ],
       filteredTagLocations: [[3, 32]],
     },
-    "02.01",
+    "002.01",
   );
 });
 
-test("03 - tag pair's contents not deleted upon request", () => {
+test("003 - tag pair's contents not deleted upon request", () => {
   equal(
     stripHtml("abc<script>const x = 1;</script>xyz", {
       stripTogetherWithTheirContents: ["div"],
@@ -61,7 +61,7 @@ test("03 - tag pair's contents not deleted upon request", () => {
         [23, 32],
       ],
     },
-    "03.01",
+    "003.01",
   );
 });
 

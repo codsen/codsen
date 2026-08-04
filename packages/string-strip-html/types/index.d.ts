@@ -20,7 +20,7 @@ interface Tag {
   attributes: Attribute[];
   lastClosingBracketAt: number;
   lastOpeningBracketAt: number;
-  slashPresent: number;
+  slashPresent: number | false;
   leftOuterWhitespace: number;
   onlyPlausible: boolean;
   nameStarts: number;

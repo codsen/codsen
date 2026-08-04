@@ -7,7 +7,7 @@ import { stripHtml } from "./util/noLog.js";
 // opts.ignoreTagsWithTheirContents
 // -----------------------------------------------------------------------------
 
-test("01 - minimal, code blocks", () => {
+test("001 - minimal, code blocks", () => {
   let source = "<code><div>x</div></code>";
   equal(
     stripHtml(source),
@@ -30,7 +30,7 @@ test("01 - minimal, code blocks", () => {
         [18, 25],
       ],
     },
-    "01.01",
+    "001.01",
   );
   equal(
     stripHtml(source, {
@@ -47,11 +47,11 @@ test("01 - minimal, code blocks", () => {
       ],
       filteredTagLocations: [],
     },
-    "01.02",
+    "001.02",
   );
 });
 
-test("02 - nested, code blocks", () => {
+test("002 - nested, code blocks", () => {
   let source = `<table width="100" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
@@ -59,10 +59,10 @@ test("02 - nested, code blocks", () => {
     </td>
   </tr>
 </table>`;
-  equal(stripHtml(source).result, "x", "02.01");
+  equal(stripHtml(source).result, "x", "002.01");
 });
 
-test("03 - nested, code blocks", () => {
+test("003 - nested, code blocks", () => {
   let source = `<table width="100" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
@@ -75,11 +75,11 @@ test("03 - nested, code blocks", () => {
       ignoreTagsWithTheirContents: ["table"],
     }).result,
     source,
-    "03.01",
+    "003.01",
   );
 });
 
-test("04 - nested, code blocks", () => {
+test("004 - nested, code blocks", () => {
   let source = `<table width="100">
   <tr>
     <td>
@@ -96,11 +96,11 @@ test("04 - nested, code blocks", () => {
       x
     </td>
   </tr>`,
-    "04.01",
+    "004.01",
   );
 });
 
-test("05 - nested, code blocks", () => {
+test("005 - nested, code blocks", () => {
   let source = `<table width="100" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
@@ -115,11 +115,11 @@ test("05 - nested, code blocks", () => {
     `<td>
       x
     </td>`,
-    "05.01",
+    "005.01",
   );
 });
 
-test("06 - nested, code blocks", () => {
+test("006 - nested, code blocks", () => {
   let source = `<table width="100" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
@@ -132,11 +132,11 @@ test("06 - nested, code blocks", () => {
       ignoreTagsWithTheirContents: ["*"],
     }).result,
     source,
-    "06.01",
+    "006.01",
   );
 });
 
-test("07 - nested, code blocks", () => {
+test("007 - nested, code blocks", () => {
   let source = `<table width="100" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
@@ -149,11 +149,11 @@ test("07 - nested, code blocks", () => {
       ignoreTagsWithTheirContents: ["table", "td"],
     }).result,
     source,
-    "07.01",
+    "007.01",
   );
 });
 
-test("08 - nested, code blocks", () => {
+test("008 - nested, code blocks", () => {
   let source = `<table width="100" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
@@ -166,11 +166,11 @@ test("08 - nested, code blocks", () => {
       ignoreTagsWithTheirContents: ["table", "tr"],
     }).result,
     source,
-    "08.01",
+    "008.01",
   );
 });
 
-test("09 - nested, code blocks", () => {
+test("009 - nested, code blocks", () => {
   let source = `<table width="100" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
@@ -187,11 +187,11 @@ test("09 - nested, code blocks", () => {
       x
     </td>
   </tr>`,
-    "09.01",
+    "009.01",
   );
 });
 
-test("10 - nested, code blocks", () => {
+test("010 - nested, code blocks", () => {
   let source = `<table width="100" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>
@@ -204,34 +204,34 @@ test("10 - nested, code blocks", () => {
       ignoreTagsWithTheirContents: ["td", "tr", "table"],
     }).result,
     source,
-    "10.01",
+    "010.01",
   );
 });
 
-test("11 - contrived example of Venn-style ignored overlap", () => {
+test("011 - contrived example of Venn-style ignored overlap", () => {
   let source =
     "a <div> b </div> c <tr> <div> d </div> e <td> <div> f </div> g </tr> <div> h </div> i </td> <div> j </div> k";
   //                                  |--------------------------------------------|
   //                                                         |--------------------------------------------|
-  equal(stripHtml(source).result, "a b c d e f g h i j k", "11.01");
+  equal(stripHtml(source).result, "a b c d e f g h i j k", "011.01");
 });
 
 // ERRONEOUS INPUTS
 // -----------------------------------------------------------------------------
 
 // the following test checks, does the "strip" flag deactivate
-test("12 - minimal, to test the disabling of ignoring flags", () => {
+test("012 - minimal, to test the disabling of ignoring flags", () => {
   let source = "<code><div>x</div></code><div>";
   equal(
     stripHtml(source, {
       ignoreTagsWithTheirContents: ["code"],
     }).result,
     "<code><div>x</div></code>",
-    "12.01",
+    "012.01",
   );
 });
 
-test("13 - contrived example of Venn-style ignored overlap", () => {
+test("013 - contrived example of Venn-style ignored overlap", () => {
   let source =
     "a <div> b </div> c <tr> <div> d </div> e <td> <div> f </div> g </tr> <div> h </div> i </td> <div> j </div> k";
   //                                  |--------------------------------------------|
@@ -241,12 +241,12 @@ test("13 - contrived example of Venn-style ignored overlap", () => {
       ignoreTagsWithTheirContents: ["tr", "td"],
     }).result,
     "a b c <tr> <div> d </div> e <td> <div> f </div> g </tr> <div> h </div> i </td> j k",
-    "13.01",
+    "013.01",
   );
 });
 
 // insurance against a double opening
-test("14 - two layers of the same tag, one closing missing", () => {
+test("014 - two layers of the same tag, one closing missing", () => {
   let source = "<table><tr><tr><td>x</td></tr></table>a<div>b</div>c";
   //                       |   |
   //                       !   !
@@ -255,230 +255,230 @@ test("14 - two layers of the same tag, one closing missing", () => {
       ignoreTagsWithTheirContents: ["tr"],
     }).result,
     "<tr><tr><td>x</td></tr> a b c",
-    "14.01",
+    "014.01",
   );
 });
 
-test("15 - rogue opening tag", () => {
+test("015 - rogue opening tag", () => {
   let source = "<div>a</div> b <tr> c <div>d</div>";
   equal(
     stripHtml(source, {
       ignoreTagsWithTheirContents: ["tr"],
     }).result,
     "a b <tr> c d",
-    "15.01",
+    "015.01",
   );
 });
 
-test("16 - rogue closing tag", () => {
+test("016 - rogue closing tag", () => {
   let source = "<div>a</div> b </tr> c <div>d</div>";
   equal(
     stripHtml(source, {
       ignoreTagsWithTheirContents: ["tr"],
     }).result,
     "a b </tr> c d",
-    "16.01",
+    "016.01",
   );
 });
 
-test("17 - rogue self-closing tag", () => {
+test("017 - rogue self-closing tag", () => {
   let source = "<div>a</div> b <zz/> c <div>d</div>";
   equal(
     stripHtml(source, {
       ignoreTagsWithTheirContents: ["zz"],
     }).result,
     "a b <zz/> c d",
-    "17.01",
+    "017.01",
   );
 });
 
-test("18 - rogue two-slashes tag", () => {
+test("018 - rogue two-slashes tag", () => {
   let source = "<div>a</div> b </zz/> c <div>d</div>";
   equal(
     stripHtml(source, {
       ignoreTagsWithTheirContents: ["zz"],
     }).result,
     "a b </zz/> c d",
-    "18.01",
+    "018.01",
   );
 });
 
-test("19 - closing-opening", () => {
+test("019 - closing-opening", () => {
   let source = "<div>a</div> b </tr><tr> c <div>d</div>";
   equal(
     stripHtml(source, {
       ignoreTagsWithTheirContents: ["tr"],
     }).result,
     "a b </tr><tr> c d",
-    "19.01",
+    "019.01",
   );
 });
 
-test("20 - closing-closing-opening", () => {
+test("020 - closing-closing-opening", () => {
   let source = "</tr> <div>a</div> b </tr> c <div>d</div> <tr> <div>e</div>";
   equal(
     stripHtml(source, {
       ignoreTagsWithTheirContents: ["tr"],
     }).result,
     "</tr> a b </tr> c d <tr> e",
-    "20.01",
+    "020.01",
   );
 });
 
-test("21 - closing-opening-opening", () => {
+test("021 - closing-opening-opening", () => {
   let source = "</tr> <div>a</div> b <tr> c <div>d</div> <tr> <div>e</div>";
   equal(
     stripHtml(source, {
       ignoreTagsWithTheirContents: ["tr"],
     }).result,
     "</tr> a b <tr> c d <tr> e",
-    "21.01",
+    "021.01",
   );
 });
 
-test("22 - closing-opening-opening", () => {
+test("022 - closing-opening-opening", () => {
   let source = "</tr> <div>a</div> b <tr> c <div>d</div> </tr> <div>e</div>";
   equal(
     stripHtml(source, {
       ignoreTagsWithTheirContents: ["tr"],
     }).result,
     "</tr> a b <tr> c <div>d</div> </tr> e",
-    "22.01",
+    "022.01",
   );
 });
 
-test("23 - custom tags, no attrs", () => {
+test("023 - custom tags, no attrs", () => {
   equal(
     stripHtml("a<MyTag />b <div>c</div>", {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     "a<MyTag />b c",
-    "23.01",
+    "023.01",
   );
   equal(
     stripHtml("a<MyTag/>b <div>c</div>", {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     "a<MyTag/>b c",
-    "23.02",
+    "023.02",
   );
   equal(
     stripHtml("a<MyTag >b <div>c</div>", {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     "a<MyTag >b c",
-    "23.03",
+    "023.03",
   );
   equal(
     stripHtml("a<MyTag>b <div>c</div>", {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     "a<MyTag>b c",
-    "23.04",
+    "023.04",
   );
   equal(
     stripHtml("a</MyTag>b <div>c</div>", {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     "a</MyTag>b c",
-    "23.05",
+    "023.05",
   );
   equal(
     stripHtml("a</MyTag/>b <div>c</div>", {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     "a</MyTag/>b c",
-    "23.06",
+    "023.06",
   );
 });
 
-test("24 - custom tags, with attrs", () => {
+test("024 - custom tags, with attrs", () => {
   equal(
     stripHtml("a<MyTag zzz />b <div>c</div>", {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     "a<MyTag zzz />b c",
-    "24.01",
+    "024.01",
   );
   equal(
     stripHtml("a<MyTag zzz/>b <div>c</div>", {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     "a<MyTag zzz/>b c",
-    "24.02",
+    "024.02",
   );
   equal(
     stripHtml("a<MyTag zzz >b <div>c</div>", {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     "a<MyTag zzz >b c",
-    "24.03",
+    "024.03",
   );
   equal(
     stripHtml("a<MyTag zzz>b <div>c</div>", {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     "a<MyTag zzz>b c",
-    "24.04",
+    "024.04",
   );
   equal(
     stripHtml("a</MyTag zzz>b <div>c</div>", {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     "a</MyTag zzz>b c",
-    "24.05",
+    "024.05",
   );
   equal(
     stripHtml("a</MyTag zzz/>b <div>c</div>", {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     "a</MyTag zzz/>b c",
-    "24.06",
+    "024.06",
   );
 });
 
-test("25 - custom tags, with proper attrs", () => {
+test("025 - custom tags, with proper attrs", () => {
   equal(
     stripHtml('a<MyTag class="z" />b <div>c</div>', {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     'a<MyTag class="z" />b c',
-    "25.01",
+    "025.01",
   );
   equal(
     stripHtml('a<MyTag class="z"/>b <div>c</div>', {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     'a<MyTag class="z"/>b c',
-    "25.02",
+    "025.02",
   );
   equal(
     stripHtml('a<MyTag class="z" >b <div>c</div>', {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     'a<MyTag class="z" >b c',
-    "25.03",
+    "025.03",
   );
   equal(
     stripHtml('a<MyTag class="z">b <div>c</div>', {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     'a<MyTag class="z">b c',
-    "25.04",
+    "025.04",
   );
   equal(
     stripHtml('a</MyTag class="z">b <div>c</div>', {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     'a</MyTag class="z">b c',
-    "25.05",
+    "025.05",
   );
   equal(
     stripHtml('a</MyTag class="z"/>b <div>c</div>', {
       ignoreTagsWithTheirContents: ["MyTag"],
     }).result,
     'a</MyTag class="z"/>b c',
-    "25.06",
+    "025.06",
   );
 });
 

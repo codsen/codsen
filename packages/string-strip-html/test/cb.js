@@ -7,7 +7,7 @@ import { stripHtml } from "./util/noLog.js";
 // opts.cb
 // -----------------------------------------------------------------------------
 
-test("01 - opts.cb - baseline", () => {
+test("001 - opts.cb - baseline", () => {
   // baseline, notice dirty whitespace:
   equal(
     stripHtml('<div style="display: inline !important;" >abc</ div>'),
@@ -26,11 +26,11 @@ test("01 - opts.cb - baseline", () => {
         [45, 52],
       ],
     },
-    "01.01",
+    "001.01",
   );
 });
 
-test("02 - opts.cb - baseline 2", () => {
+test("002 - opts.cb - baseline 2", () => {
   equal(
     stripHtml("<div >abc</ div>"),
     {
@@ -48,11 +48,11 @@ test("02 - opts.cb - baseline 2", () => {
         [9, 16],
       ],
     },
-    "02.01",
+    "002.01",
   );
 });
 
-test("03 - opts.cb - replace hr with tralala", () => {
+test("003 - opts.cb - replace hr with tralala", () => {
   let cb = ({
     // tag,
     deleteFrom,
@@ -71,11 +71,11 @@ test("03 - opts.cb - replace hr with tralala", () => {
       allTagLocations: [[3, 7]],
       filteredTagLocations: [[3, 7]],
     },
-    "03.01",
+    "003.01",
   );
 });
 
-test("04 - opts.cb - replace div with tralala", () => {
+test("004 - opts.cb - replace div with tralala", () => {
   let cb = ({
     tag,
     deleteFrom,
@@ -107,11 +107,11 @@ test("04 - opts.cb - replace div with tralala", () => {
         [9, 16],
       ],
     },
-    "04.01",
+    "004.01",
   );
 });
 
-test("05 - opts.cb - replace only hr", () => {
+test("005 - opts.cb - replace only hr", () => {
   let cb = ({
     tag,
     deleteFrom,
@@ -144,11 +144,11 @@ test("05 - opts.cb - replace only hr", () => {
         [19, 26],
       ],
     },
-    "05.01",
+    "005.01",
   );
 });
 
-test("06 - opts.cb - readme example one", () => {
+test("006 - opts.cb - readme example one", () => {
   let cb = ({
     // tag,
     deleteFrom,
@@ -167,11 +167,11 @@ test("06 - opts.cb - readme example one", () => {
       allTagLocations: [[3, 7]],
       filteredTagLocations: [[3, 7]],
     },
-    "06.01",
+    "006.01",
   );
 });
 
-test("07 - opts.cb - ignored tags are also being pinged, with null deletion range values", () => {
+test("007 - opts.cb - ignored tags are also being pinged, with null deletion range values", () => {
   let capturedTags = [];
   let cb = ({
     tag,
@@ -195,12 +195,12 @@ test("07 - opts.cb - ignored tags are also being pinged, with null deletion rang
       ],
       filteredTagLocations: [[10, 14]],
     },
-    "07.01",
+    "007.01",
   );
-  equal(capturedTags, ["hr", "br"], "07.02");
+  equal(capturedTags, ["hr", "br"], "007.02");
 });
 
-test("08 - opts.cb - cb.tag contents are correct on ignored tags", () => {
+test("008 - opts.cb - cb.tag contents are correct on ignored tags", () => {
   let capturedTags = [];
   // const rangesArr = [];
   let cb = ({
@@ -246,11 +246,11 @@ test("08 - opts.cb - cb.tag contents are correct on ignored tags", () => {
         name: "br",
       },
     ],
-    "08.01",
+    "008.01",
   );
 });
 
-test("09 - opts.cb - cb.tag contents are right on non-ignored tags", () => {
+test("009 - opts.cb - cb.tag contents are right on non-ignored tags", () => {
   let capturedTags = [];
   // const rangesArr = [];
   let cb = ({
@@ -332,7 +332,7 @@ test("09 - opts.cb - cb.tag contents are right on non-ignored tags", () => {
         slashPresent: 30,
       },
     ],
-    "09.01",
+    "009.01",
   );
 });
 

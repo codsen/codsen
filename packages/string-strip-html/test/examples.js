@@ -10,7 +10,7 @@ import validateTagLocations from "./util/validateTagLocations.js";
 // 1. Remove HTML tags, give me a clean string.
 // -----------------------------------------------------------------------------
 
-test("01 - Remove HTML tags, give me a clean string.", () => {
+test("001 - Remove HTML tags, give me a clean string.", () => {
   let input = `<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -63,14 +63,14 @@ test("01 - Remove HTML tags, give me a clean string.", () => {
       allTagLocations,
       filteredTagLocations: allTagLocations,
     },
-    "01.01",
+    "001.01",
   );
 });
 
 // 2. Leave only HTML tags.
 // -----------------------------------------------------------------------------
 
-test("02 - Leave only HTML tags.", () => {
+test("002 - Leave only HTML tags.", () => {
   let input = `<div class="module-container">
 {% if data.customer.purchases[0].spendTotal < 100 %}
 You earned a discount!
@@ -84,7 +84,7 @@ The promo is still on!
   equal(
     result,
     "{% if data.customer.purchases[0].spendTotal < 100 %}\nYou earned a discount!\n{% else %}\nThe promo is still on!\n{% endif %}",
-    "02.01",
+    "002.01",
   );
   equal(
     ranges,
@@ -92,7 +92,7 @@ The promo is still on!
       [0, 31],
       [152, 160],
     ],
-    "02.02",
+    "002.02",
   );
   equal(
     allTagLocations,
@@ -100,7 +100,7 @@ The promo is still on!
       [0, 30],
       [153, 159],
     ],
-    "02.03",
+    "002.03",
   );
   equal(
     filteredTagLocations,
@@ -108,19 +108,19 @@ The promo is still on!
       [0, 30],
       [153, 159],
     ],
-    "02.04",
+    "002.04",
   );
   equal(
     rApply(input, rInvert(allTagLocations, input.length)),
     '<div class="module-container"></div>',
-    "02.05",
+    "002.05",
   );
 });
 
 // 03. Tell me String indexes of where the <tr> tags are.
 // -----------------------------------------------------------------------------
 
-test("03 - Tell me String indexes of where the <tr> tags are.", () => {
+test("003 - Tell me String indexes of where the <tr> tags are.", () => {
   let input = `<table width="100">
   <tr>
     <td>
@@ -145,7 +145,7 @@ test("03 - Tell me String indexes of where the <tr> tags are.", () => {
       [143, 148],
       [176, 181],
     ],
-    "03.01",
+    "003.01",
   );
   let gatheredExtractedTagStrings = [];
   filteredTagLocations.forEach(([from, to]) => {
@@ -155,7 +155,7 @@ test("03 - Tell me String indexes of where the <tr> tags are.", () => {
   equal(
     gatheredExtractedTagStrings,
     ["<tr>", "<tr>", "</tr>", "</tr>"],
-    "03.02",
+    "003.02",
   );
 });
 

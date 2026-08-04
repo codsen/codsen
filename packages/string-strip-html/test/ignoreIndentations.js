@@ -7,48 +7,48 @@ import { stripHtml } from "./util/noLog.js";
 // opts.ignoreIndentations
 // -----------------------------------------------------------------------------
 
-test("01 - minimal, off", () => {
+test("001 - minimal, off", () => {
   equal(
     stripHtml("  x <a> y", {
       ignoreIndentations: false,
     }).result,
     "x y",
-    "01.01",
+    "001.01",
   );
 });
 
-test("02 - minimal, on, tight", () => {
+test("002 - minimal, on, tight", () => {
   equal(
     stripHtml("  x <a> y", {
       ignoreIndentations: true,
     }).result,
     "  x y",
-    "02.01",
+    "002.01",
   );
 });
 
-test("03 - minimal, on, excessive whitespace", () => {
+test("003 - minimal, on, excessive whitespace", () => {
   equal(
     stripHtml("  x   <a>   y\n      n     <b>      m", {
       ignoreIndentations: true,
     }).result,
     "  x y\n      n m",
-    "03.01",
+    "003.01",
   );
 });
 
-test("04 - minimal, ignores", () => {
+test("004 - minimal, ignores", () => {
   equal(
     stripHtml("  x   <a>   y\n      n     <b>      m", {
       ignoreIndentations: true,
       ignoreTags: ["b"],
     }).result,
     "  x y\n      n     <b>      m",
-    "04.01",
+    "004.01",
   );
 });
 
-test("05 - three lines, off", () => {
+test("005 - three lines, off", () => {
   equal(
     stripHtml(
       `  a <i> b
@@ -61,11 +61,11 @@ test("05 - three lines, off", () => {
     `a b
 c d
 e f`,
-    "05.01",
+    "005.01",
   );
 });
 
-test("06 - three lines, on", () => {
+test("006 - three lines, on", () => {
   equal(
     stripHtml(
       `  a <i> b
@@ -78,11 +78,11 @@ test("06 - three lines, on", () => {
     `  a b
     c d
     e f`,
-    "06.01",
+    "006.01",
   );
 });
 
-test("07 - markdown, real-life, nothing to do, enabled", () => {
+test("007 - markdown, real-life, nothing to do, enabled", () => {
   let input = `
   1. top level 1
      - sub list 1
@@ -105,11 +105,11 @@ test("07 - markdown, real-life, nothing to do, enabled", () => {
       ignoreIndentations: true,
     }).result,
     input,
-    "07.01",
+    "007.01",
   );
 });
 
-test("08 - markdown, real-life, nothing to do, disabled", () => {
+test("008 - markdown, real-life, nothing to do, disabled", () => {
   let input = `
   1. top level 1
      - sub list 1
@@ -148,11 +148,11 @@ more text
 * bullet 1
 * bullet 2
 3. top level 3`,
-    "08.01",
+    "008.01",
   );
 });
 
-test("09 - markdown, real-life, strips one tag, ignores indentations", () => {
+test("009 - markdown, real-life, strips one tag, ignores indentations", () => {
   let input = `
   1. top level 1
      - sub list 1
@@ -191,11 +191,11 @@ test("09 - markdown, real-life, strips one tag, ignores indentations", () => {
      * bullet 1
      * bullet 2
   3. top level 3`,
-    "09.01",
+    "009.01",
   );
 });
 
-test("10 - markdown, real-life, strips one tag, ignores indentations", () => {
+test("010 - markdown, real-life, strips one tag, ignores indentations", () => {
   let input = `  1. top level 1
      - sub list 1
      - sub list 2
@@ -232,7 +232,7 @@ more text
 * bullet 1
 * bullet 2
 3. top level 3`,
-    "10.01",
+    "010.01",
   );
 });
 

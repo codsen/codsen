@@ -7,69 +7,69 @@ import { stripHtml } from "./util/noLog.js";
 // false positives
 // -----------------------------------------------------------------------------
 
-test("01 - false positives - equations: very sneaky considering b is a legit tag name", () => {
+test("001 - false positives - equations: very sneaky considering b is a legit tag name", () => {
   equal(
     stripHtml("Equations are: a < b and c > d").result,
     "Equations are: a < b and c > d",
-    "01.01",
+    "001.01",
   );
 });
 
-test("02 - false positives - inwards-pointing arrows", () => {
+test("002 - false positives - inwards-pointing arrows", () => {
   equal(
     stripHtml("Look here: ---> a <---").result,
     "Look here: ---> a <---",
-    "02.01",
+    "002.01",
   );
 });
 
-test("03 - false positives - arrows mixed with tags", () => {
+test("003 - false positives - arrows mixed with tags", () => {
   equal(
     stripHtml(
       "Look here: ---> a <--- and here: ---> b <--- oh, and few tags: <div><article>\nzz</article></div>",
     ).result,
     "Look here: ---> a <--- and here: ---> b <--- oh, and few tags:\nzz",
-    "03.01",
+    "003.01",
   );
 });
 
-test("04 - false positives - opening bracket", () => {
-  equal(stripHtml("<").result, "<", "04.01");
+test("004 - false positives - opening bracket", () => {
+  equal(stripHtml("<").result, "<", "004.01");
 });
 
-test("05 - false positives - closing bracket", () => {
-  equal(stripHtml(">").result, ">", "05.01");
+test("005 - false positives - closing bracket", () => {
+  equal(stripHtml(">").result, ">", "005.01");
 });
 
-test("06 - false positives - three openings", () => {
-  equal(stripHtml(">>>").result, ">>>", "06.01");
+test("006 - false positives - three openings", () => {
+  equal(stripHtml(">>>").result, ">>>", "006.01");
 });
 
-test("07 - false positives - three closings", () => {
-  equal(stripHtml("<<<").result, "<<<", "07.01");
+test("007 - false positives - three closings", () => {
+  equal(stripHtml("<<<").result, "<<<", "007.01");
 });
 
-test("08 - false positives - spaced three openings", () => {
-  equal(stripHtml(" <<< ").result, "<<<", "08.01");
+test("008 - false positives - spaced three openings", () => {
+  equal(stripHtml(" <<< ").result, "<<<", "008.01");
 });
 
-test("09 - false positives - tight recognised opening tag name, missing closing", () => {
-  equal(stripHtml("<a").result, "", "09.01");
+test("009 - false positives - tight recognised opening tag name, missing closing", () => {
+  equal(stripHtml("<a").result, "", "009.01");
 });
 
-test("10 - false positives - unrecognised opening tag, missing closing", () => {
-  equal(stripHtml("<yo").result, "", "10.01");
+test("010 - false positives - unrecognised opening tag, missing closing", () => {
+  equal(stripHtml("<yo").result, "", "010.01");
 });
 
-test("11 - false positives - missing opening, recognised tag", () => {
-  equal(stripHtml("a>").result, "a>", "11.01");
+test("011 - false positives - missing opening, recognised tag", () => {
+  equal(stripHtml("a>").result, "a>", "011.01");
 });
 
-test("12 - false positives - missing opening, unrecognised tag", () => {
-  equal(stripHtml("yo>").result, "yo>", "12.01");
+test("012 - false positives - missing opening, unrecognised tag", () => {
+  equal(stripHtml("yo>").result, "yo>", "012.01");
 });
 
-test("13 - false positives - conditionals that appear on Outlook only", () => {
+test("013 - false positives - conditionals that appear on Outlook only", () => {
   equal(
     stripHtml(`<!--[if (gte mso 9)|(IE)]>
   <table width="540" align="center" cellpadding="0" cellspacing="0" border="0">
@@ -83,31 +83,31 @@ zzz
   </table>
 <![endif]-->`).result,
     "zzz",
-    "13.01",
+    "013.01",
   );
 });
 
-test("14 - false positives - conditionals that are visible for Outlook only", () => {
+test("014 - false positives - conditionals that are visible for Outlook only", () => {
   equal(
     stripHtml(`<!--[if !mso]><!-->
   shown for everything except Outlook
   <!--<![endif]-->`).result,
     "shown for everything except Outlook",
-    "14.01",
+    "014.01",
   );
 });
 
-test("15 - false positives - conditionals that are visible for Outlook only", () => {
+test("015 - false positives - conditionals that are visible for Outlook only", () => {
   equal(
     stripHtml(`a<!--[if !mso]><!-->
   shown for everything except Outlook
   <!--<![endif]-->b`).result,
     "a\nshown for everything except Outlook\nb",
-    "15.01",
+    "015.01",
   );
 });
 
-test("16 - false positives - conditionals that are visible for Outlook only", () => {
+test("016 - false positives - conditionals that are visible for Outlook only", () => {
   equal(
     stripHtml(`<!--[if !mso]><!--><table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
@@ -117,162 +117,162 @@ test("16 - false positives - conditionals that are visible for Outlook only", ()
     </tr>
   </table><!--<![endif]-->`).result,
     "shown for everything except Outlook",
-    "16.01",
+    "016.01",
   );
 });
 
-test("17 - false positives - consecutive tags", () => {
+test("017 - false positives - consecutive tags", () => {
   equal(
     stripHtml(
       "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after",
     ).result,
     "Text First point Second point Third point Text straight after",
-    "17.01",
+    "017.01",
   );
 });
 
-test("18 - digit is the first character following the opening bracket, quote", () => {
+test("018 - digit is the first character following the opening bracket, quote", () => {
   let input = '"<5 text here';
-  equal(stripHtml(input).result, input, "18.01");
+  equal(stripHtml(input).result, input, "018.01");
 });
 
-test("19 - digit is the first character following the opening bracket", () => {
+test("019 - digit is the first character following the opening bracket", () => {
   let input = "<5 text here";
-  equal(stripHtml(input).result, input, "19.01");
+  equal(stripHtml(input).result, input, "019.01");
 });
 
-test("20 - digit is the first character following the opening bracket", () => {
+test("020 - digit is the first character following the opening bracket", () => {
   let input = "< 5 text here";
-  equal(stripHtml(input).result, input, "20.01");
+  equal(stripHtml(input).result, input, "020.01");
 });
 
-test("21 - numbers compared", () => {
+test("021 - numbers compared", () => {
   let input = "1 < 5 for sure";
-  equal(stripHtml(input).result, input, "21.01");
+  equal(stripHtml(input).result, input, "021.01");
 });
 
-test("22 - numbers compared, tight", () => {
+test("022 - numbers compared, tight", () => {
   let input = "1 <5 for sure";
-  equal(stripHtml(input).result, input, "22.01");
+  equal(stripHtml(input).result, input, "022.01");
 });
 
-test("23 - number letter", () => {
+test("023 - number letter", () => {
   let input = "aaa 1 < 5s bbb";
-  equal(stripHtml(input).result, input, "23.01");
+  equal(stripHtml(input).result, input, "023.01");
 });
 
-test("24 - number letter, tight", () => {
+test("024 - number letter, tight", () => {
   let input = "aaa 1 <5s bbb";
-  equal(stripHtml(input).result, input, "24.01");
+  equal(stripHtml(input).result, input, "024.01");
 });
 
-test("25 - number letter, tight around", () => {
+test("025 - number letter, tight around", () => {
   let input = "aaa 1<5s bbb";
-  equal(stripHtml(input).result, input, "25.01");
+  equal(stripHtml(input).result, input, "025.01");
 });
 
-test("26 - tag name with closing bracket in front", () => {
+test("026 - tag name with closing bracket in front", () => {
   let input = ">table";
-  equal(stripHtml(input).result, input, "26.01");
+  equal(stripHtml(input).result, input, "026.01");
 });
 
-test("27", () => {
+test("027", () => {
   let input = '{"Operator":"<=","IsValid":true}';
-  equal(stripHtml(input).result, input, "27.01");
+  equal(stripHtml(input).result, input, "027.01");
 });
 
-test("28", () => {
+test("028", () => {
   let input = '<a">';
-  equal(stripHtml(input).result, "", "28.01");
+  equal(stripHtml(input).result, "", "028.01");
 });
 
-test("29", () => {
+test("029", () => {
   let input = '<a"">';
-  equal(stripHtml(input).result, "", "29.01");
+  equal(stripHtml(input).result, "", "029.01");
 });
 
-test("30", () => {
+test("030", () => {
   let input = "<a'>";
-  equal(stripHtml(input).result, "", "30.01");
+  equal(stripHtml(input).result, "", "030.01");
 });
 
-test("31", () => {
+test("031", () => {
   let input = "<a''>";
-  equal(stripHtml(input).result, "", "31.01");
+  equal(stripHtml(input).result, "", "031.01");
 });
 
-test("32", () => {
+test("032", () => {
   let input = "H4<bE77]7oQL";
-  equal(stripHtml(input).result, "H4", "32.01");
+  equal(stripHtml(input).result, "H4", "032.01");
 });
 
-test("33", () => {
+test("033", () => {
   let input = "head > shoulders > knees > toes";
-  equal(stripHtml(input).result, input, "33.01");
+  equal(stripHtml(input).result, input, "033.01");
 });
 
-test("34", () => {
+test("034", () => {
   let input = "hat > head > shoulders > knees > toes";
-  equal(stripHtml(input).result, input, "34.01");
+  equal(stripHtml(input).result, input, "034.01");
 });
 
-test("35", () => {
+test("035", () => {
   let input = "aaa hat > head > shoulders > knees > toes";
-  equal(stripHtml(input).result, input, "35.01");
+  equal(stripHtml(input).result, input, "035.01");
 });
 
 // https://github.com/codsen/codsen/issues/78
 // presence of closing slash is a sign of being a tag:
-test("36", () => {
+test("036", () => {
   let input = "head /> shoulders > knees > toes";
-  equal(stripHtml(input).result, "shoulders > knees > toes", "36.01");
+  equal(stripHtml(input).result, "shoulders > knees > toes", "036.01");
 });
-test("37", () => {
+test("037", () => {
   let input = "head / > shoulders > knees > toes";
-  equal(stripHtml(input).result, "shoulders > knees > toes", "37.01");
+  equal(stripHtml(input).result, "shoulders > knees > toes", "037.01");
 });
-test("38", () => {
+test("038", () => {
   let input = "head/ > shoulders > knees > toes";
-  equal(stripHtml(input).result, "shoulders > knees > toes", "38.01");
+  equal(stripHtml(input).result, "shoulders > knees > toes", "038.01");
 });
-test("39", () => {
+test("039", () => {
   let input = "head/> shoulders > knees > toes";
-  equal(stripHtml(input).result, "shoulders > knees > toes", "39.01");
+  equal(stripHtml(input).result, "shoulders > knees > toes", "039.01");
 });
 
-test("40", () => {
+test("040", () => {
   let input = "hat > head /> shoulders > knees > toes";
-  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "40.01");
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "040.01");
 });
-test("41", () => {
+test("041", () => {
   let input = "hat > head / > shoulders > knees > toes";
-  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "41.01");
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "041.01");
 });
-test("42", () => {
+test("042", () => {
   let input = "hat > head/ > shoulders > knees > toes";
-  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "42.01");
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "042.01");
 });
-test("43", () => {
+test("043", () => {
   let input = "hat > head/> shoulders > knees > toes";
-  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "43.01");
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "043.01");
 });
 
 // HTML attribute presence incriminates being a tag
-test("44 - double quotes", () => {
+test("044 - double quotes", () => {
   let input = 'hat > head class="z"> shoulders > knees > toes';
-  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "44.01");
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "044.01");
 });
-test("45 - double quotes", () => {
+test("045 - double quotes", () => {
   let input = 'hat > head class="z"/> shoulders > knees > toes';
-  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "45.01");
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "045.01");
 });
-test("46 - single quotes", () => {
+test("046 - single quotes", () => {
   let input = "hat > head class='z'> shoulders > knees > toes";
-  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "46.01");
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "046.01");
 });
-test("47 - single quotes", () => {
+test("047 - single quotes", () => {
   let input = "hat > head class='z'/> shoulders > knees > toes";
-  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "47.01");
+  equal(stripHtml(input).result, "hat > shoulders > knees > toes", "047.01");
 });
 
 test.run();

@@ -4,7 +4,7 @@ import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { stripHtml } from "./util/noLog.js";
 
-test("01 - a basic JSX pattern", () => {
+test("001 - a basic JSX pattern", () => {
   equal(
     stripHtml(`<A b>c</A>
 </>`),
@@ -25,7 +25,7 @@ test("01 - a basic JSX pattern", () => {
         [6, 14],
       ],
     },
-    "01.01",
+    "001.01",
   );
 });
 

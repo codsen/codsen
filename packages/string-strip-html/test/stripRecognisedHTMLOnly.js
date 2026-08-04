@@ -4,24 +4,24 @@ import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { stripHtml } from "./util/noLog.js";
 
-test("01 - multiple letter tag", () => {
+test("001 - multiple letter tag", () => {
   equal(
     stripHtml("<tr><zz>a</zz></tr>", {
       stripRecognisedHTMLOnly: false,
     }).result,
     "a",
-    "01.01",
+    "001.01",
   );
   equal(
     stripHtml("<tr><zz>a</zz></tr>", {
       stripRecognisedHTMLOnly: true,
     }).result,
     "<zz>a</zz>",
-    "01.02",
+    "001.02",
   );
 });
 
-test("02 - single letter tag", () => {
+test("002 - single letter tag", () => {
   equal(
     stripHtml("<a>z</y>", {
       stripRecognisedHTMLOnly: true,
@@ -35,7 +35,7 @@ test("02 - single letter tag", () => {
       ],
       filteredTagLocations: [[0, 3]],
     },
-    "02.01",
+    "002.01",
   );
   equal(
     stripHtml("<a>z</y>", {
@@ -56,7 +56,7 @@ test("02 - single letter tag", () => {
         [4, 8],
       ],
     },
-    "02.02",
+    "002.02",
   );
 });
 
