@@ -1,18 +1,18 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
   removeWidows,
   // version
 } from "../dist/string-remove-widows.esm.js";
 import {
-  rawnbsp,
-  encodedNbspHtml,
   encodedNbspCss,
+  encodedNbspHtml,
   encodedNbspJs,
-  rawNdash,
   rawMdash,
+  rawNdash,
+  rawnbsp,
 } from "./util.js";
 
 const languages = ["html`, `css`, `js"];
@@ -22,7 +22,7 @@ const encodedNbsps = [encodedNbspHtml, encodedNbspCss, encodedNbspJs];
 // hyphens
 // -----------------------------------------------------------------------------
 
-test(`01 - \u001b[${31}m${"opts.hyphens"}\u001b[${39}m - in front of dashes`, () => {
+test(`01 - opts.hyphens - in front of dashes`, () => {
   [rawMdash, rawNdash, "-"].forEach((oneOfDashes) => {
     languages.forEach((targetLanguage, i) => {
       equal(
@@ -81,7 +81,7 @@ test(`01 - \u001b[${31}m${"opts.hyphens"}\u001b[${39}m - in front of dashes`, ()
   });
 });
 
-test(`02 - \u001b[${31}m${"opts.hyphens"}\u001b[${39}m - hyphen is minus where currency follows`, () => {
+test(`02 - opts.hyphens - hyphen is minus where currency follows`, () => {
   [rawMdash, rawNdash, "-"].forEach((oneOfDashes, y) => {
     languages.forEach((targetLanguage, i) => {
       equal(
@@ -98,7 +98,7 @@ test(`02 - \u001b[${31}m${"opts.hyphens"}\u001b[${39}m - hyphen is minus where c
   });
 });
 
-test(`03 - \u001b[${31}m${"opts.hyphens"}\u001b[${39}m - with ${encodedNbspHtml} and double space`, () => {
+test(`03 - opts.hyphens - with ${encodedNbspHtml} and double space`, () => {
   languages.forEach((targetLanguage, i) => {
     equal(
       removeWidows("HOORAY  &mdash;  IT&rsquo;S HERE", {

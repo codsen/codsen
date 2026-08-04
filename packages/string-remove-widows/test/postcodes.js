@@ -1,13 +1,13 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { removeWidows } from "../dist/string-remove-widows.esm.js";
 import {
-  rawnbsp,
-  encodedNbspHtml,
   encodedNbspCss,
+  encodedNbspHtml,
   encodedNbspJs,
+  rawnbsp,
   // rawNdash,
   // rawMdash,
 } from "./util.js";
@@ -20,7 +20,7 @@ import {
 // opts.UKPostcodes
 // -----------------------------------------------------------------------------
 
-test(`01 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted UK postcode, in caps`, () => {
+test(`01 - opts.UKPostcodes - properly formatted UK postcode, in caps`, () => {
   equal(
     removeWidows("Some text SW1A 1AA and some more text.", {
       UKPostcodes: false,
@@ -31,7 +31,7 @@ test(`01 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted 
   );
 });
 
-test(`02 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted UK postcode, in caps`, () => {
+test(`02 - opts.UKPostcodes - properly formatted UK postcode, in caps`, () => {
   equal(
     removeWidows("Some text SW1A 1AA and some more text.", {
       UKPostcodes: true,
@@ -42,7 +42,7 @@ test(`02 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted 
   );
 });
 
-test(`03 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted UK postcode, in caps`, () => {
+test(`03 - opts.UKPostcodes - properly formatted UK postcode, in caps`, () => {
   equal(
     removeWidows("Some text SW1A 1AA and some more text.", {
       UKPostcodes: true,
@@ -54,7 +54,7 @@ test(`03 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted 
   );
 });
 
-test(`04 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted UK postcode, in caps`, () => {
+test(`04 - opts.UKPostcodes - properly formatted UK postcode, in caps`, () => {
   equal(
     removeWidows("Some text SW1A 1AA and some more text.", {
       UKPostcodes: true,
@@ -67,7 +67,7 @@ test(`04 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted 
   );
 });
 
-test(`05 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - multiple properly formatted postcodes`, () => {
+test(`05 - opts.UKPostcodes - multiple properly formatted postcodes`, () => {
   equal(
     removeWidows(
       "Some text SW1A 1AA and some more text SW1A 1AA and some more text.",
@@ -78,7 +78,7 @@ test(`05 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - multiple properly f
   );
 });
 
-test(`06 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - multiple properly formatted postcodes`, () => {
+test(`06 - opts.UKPostcodes - multiple properly formatted postcodes`, () => {
   equal(
     removeWidows(
       "Some text SW1A 1AA and some more text SW1A 1AA and some more text.",
@@ -89,7 +89,7 @@ test(`06 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - multiple properly f
   );
 });
 
-test(`07 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - line ends with a postcode (full stop)`, () => {
+test(`07 - opts.UKPostcodes - line ends with a postcode (full stop)`, () => {
   equal(
     removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
       UKPostcodes: false,
@@ -100,7 +100,7 @@ test(`07 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - line ends with a po
   );
 });
 
-test(`08 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - line ends with a postcode (full stop)`, () => {
+test(`08 - opts.UKPostcodes - line ends with a postcode (full stop)`, () => {
   equal(
     removeWidows("Postcode SW1A 1AA.", {
       UKPostcodes: false,
@@ -111,7 +111,7 @@ test(`08 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - line ends with a po
   );
 });
 
-test(`09 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - line ends with a postcode (full stop)`, () => {
+test(`09 - opts.UKPostcodes - line ends with a postcode (full stop)`, () => {
   equal(
     removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
       UKPostcodes: true,
@@ -122,7 +122,7 @@ test(`09 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - line ends with a po
   );
 });
 
-test(`10 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - ${`\u001b[${33}m${"js"}\u001b[${39}m`} - line ends with a postcode (full stop)`, () => {
+test(`10 - opts.UKPostcodes - ${`\u001b[${33}m${"js"}\u001b[${39}m`} - line ends with a postcode (full stop)`, () => {
   equal(
     removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
       targetLanguage: "js",
@@ -134,7 +134,7 @@ test(`10 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - ${`\u001b[${33}m${"
   );
 });
 
-test(`11 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - ${`\u001b[${33}m${"js"}\u001b[${39}m`} - line ends with a postcode (full stop) - default minimum word count (4) kicks in`, () => {
+test(`11 - opts.UKPostcodes - ${`\u001b[${33}m${"js"}\u001b[${39}m`} - line ends with a postcode (full stop) - default minimum word count (4) kicks in`, () => {
   equal(
     removeWidows("Postcode SW1A 1AA.", {
       targetLanguage: "js",
@@ -146,7 +146,7 @@ test(`11 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - ${`\u001b[${33}m${"
   );
 });
 
-test(`12 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - ${`\u001b[${33}m${"js"}\u001b[${39}m`} - line ends with a postcode (full stop)`, () => {
+test(`12 - opts.UKPostcodes - ${`\u001b[${33}m${"js"}\u001b[${39}m`} - line ends with a postcode (full stop)`, () => {
   equal(
     removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
       targetLanguage: "js",
@@ -158,7 +158,7 @@ test(`12 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - ${`\u001b[${33}m${"
   );
 });
 
-test(`13 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - ${`\u001b[${33}m${"js"}\u001b[${39}m`} - line ends with a postcode (full stop)`, () => {
+test(`13 - opts.UKPostcodes - ${`\u001b[${33}m${"js"}\u001b[${39}m`} - line ends with a postcode (full stop)`, () => {
   equal(
     removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
       targetLanguage: "js",
@@ -171,7 +171,7 @@ test(`13 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - ${`\u001b[${33}m${"
   );
 });
 
-test(`14 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - ${`\u001b[${33}m${"js"}\u001b[${39}m`} - line ends with a postcode (full stop)`, () => {
+test(`14 - opts.UKPostcodes - ${`\u001b[${33}m${"js"}\u001b[${39}m`} - line ends with a postcode (full stop)`, () => {
   equal(
     removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
       targetLanguage: "js",
@@ -185,7 +185,7 @@ test(`14 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - ${`\u001b[${33}m${"
   );
 });
 
-test(`15 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - ${`\u001b[${33}m${"js"}\u001b[${39}m`} - line ends with a postcode (full stop)`, () => {
+test(`15 - opts.UKPostcodes - ${`\u001b[${33}m${"js"}\u001b[${39}m`} - line ends with a postcode (full stop)`, () => {
   equal(
     removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
       targetLanguage: "js",
@@ -199,7 +199,7 @@ test(`15 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - ${`\u001b[${33}m${"
   );
 });
 
-test(`16 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - vs. removeWidowPreventionMeasures`, () => {
+test(`16 - opts.UKPostcodes - vs. removeWidowPreventionMeasures`, () => {
   equal(
     removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
       removeWidowPreventionMeasures: true,
@@ -211,7 +211,7 @@ test(`16 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - vs. removeWidowPrev
   );
 });
 
-test(`17 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - vs. removeWidowPreventionMeasures`, () => {
+test(`17 - opts.UKPostcodes - vs. removeWidowPreventionMeasures`, () => {
   equal(
     removeWidows(
       `This very long line of text ends with a postcode SW1A${rawnbsp}1AA.`,
@@ -226,7 +226,7 @@ test(`17 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - vs. removeWidowPrev
   );
 });
 
-test(`18 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - vs. removeWidowPreventionMeasures`, () => {
+test(`18 - opts.UKPostcodes - vs. removeWidowPreventionMeasures`, () => {
   equal(
     removeWidows("This very long line of text ends with a postcode SW1A 1AA.", {
       removeWidowPreventionMeasures: false,
@@ -238,7 +238,7 @@ test(`18 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - vs. removeWidowPrev
   );
 });
 
-test(`19 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - vs. removeWidowPreventionMeasures`, () => {
+test(`19 - opts.UKPostcodes - vs. removeWidowPreventionMeasures`, () => {
   equal(
     removeWidows(
       `This very long line of text ends with a postcode SW1A${rawnbsp}1AA.`,
@@ -253,7 +253,7 @@ test(`19 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - vs. removeWidowPrev
   );
 });
 
-test(`20 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted UK postcode, horse emoji`, () => {
+test(`20 - opts.UKPostcodes - properly formatted UK postcode, horse emoji`, () => {
   equal(
     removeWidows(
       "\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa",
@@ -268,7 +268,7 @@ test(`20 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted 
   );
 });
 
-test(`21 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted UK postcode, horse emoji`, () => {
+test(`21 - opts.UKPostcodes - properly formatted UK postcode, horse emoji`, () => {
   equal(
     removeWidows(
       "\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa",
@@ -283,7 +283,7 @@ test(`21 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted 
   );
 });
 
-test(`22 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted UK postcode, horse emoji`, () => {
+test(`22 - opts.UKPostcodes - properly formatted UK postcode, horse emoji`, () => {
   equal(
     removeWidows(
       "\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa",
@@ -298,7 +298,7 @@ test(`22 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted 
   );
 });
 
-test(`23 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted UK postcode, horse emoji`, () => {
+test(`23 - opts.UKPostcodes - properly formatted UK postcode, horse emoji`, () => {
   equal(
     removeWidows(
       "\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa",
@@ -313,7 +313,7 @@ test(`23 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted 
   );
 });
 
-test(`24 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - improperly formatted UK postcode`, () => {
+test(`24 - opts.UKPostcodes - improperly formatted UK postcode`, () => {
   equal(
     removeWidows("Some text SW1A 1Aa and some more text.", {
       UKPostcodes: false,
@@ -325,7 +325,7 @@ test(`24 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - improperly formatte
   );
 });
 
-test(`25 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - improperly formatted UK postcode`, () => {
+test(`25 - opts.UKPostcodes - improperly formatted UK postcode`, () => {
   equal(
     removeWidows("Some text SW1A 1Aa and some more text.", {
       UKPostcodes: true,
@@ -337,7 +337,7 @@ test(`25 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - improperly formatte
   );
 });
 
-test(`26 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted UK postcode, in caps`, () => {
+test(`26 - opts.UKPostcodes - properly formatted UK postcode, in caps`, () => {
   equal(
     removeWidows("Some text SW1A 1AA and some more text.", {
       UKPostcodes: false,
@@ -349,7 +349,7 @@ test(`26 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted 
   );
 });
 
-test(`27 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted UK postcode, in caps`, () => {
+test(`27 - opts.UKPostcodes - properly formatted UK postcode, in caps`, () => {
   equal(
     removeWidows("Some text SW1A 1AA and some more text.", {
       UKPostcodes: true,
@@ -361,7 +361,7 @@ test(`27 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted 
   );
 });
 
-test(`28 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - multiple properly formatted postcodes`, () => {
+test(`28 - opts.UKPostcodes - multiple properly formatted postcodes`, () => {
   equal(
     removeWidows(
       "Some text SW1A 1AA and some more text SW1A 1AA and some more text.",
@@ -375,7 +375,7 @@ test(`28 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - multiple properly f
   );
 });
 
-test(`29 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - multiple properly formatted postcodes`, () => {
+test(`29 - opts.UKPostcodes - multiple properly formatted postcodes`, () => {
   equal(
     removeWidows(
       "Some text SW1A 1AA and some more text SW1A 1AA and some more text.",
@@ -389,7 +389,7 @@ test(`29 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - multiple properly f
   );
 });
 
-test(`30 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted UK postcode, some emoji`, () => {
+test(`30 - opts.UKPostcodes - properly formatted UK postcode, some emoji`, () => {
   equal(
     removeWidows(
       "\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa",
@@ -404,7 +404,7 @@ test(`30 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted 
   );
 });
 
-test(`31 - \u001b[${36}m${"opts.UKPostcodes"}\u001b[${39}m - properly formatted UK postcode, some emoji`, () => {
+test(`31 - opts.UKPostcodes - properly formatted UK postcode, some emoji`, () => {
   equal(
     removeWidows(
       "\uD83E\uDD84 some text text text SW1A 1AA more text text text \uD83E\uDD84 aaa",

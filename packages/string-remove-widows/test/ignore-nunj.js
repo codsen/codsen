@@ -1,13 +1,13 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { removeWidows } from "../dist/string-remove-widows.esm.js";
 import {
-  rawnbsp,
-  encodedNbspHtml,
   encodedNbspCss,
+  encodedNbspHtml,
   encodedNbspJs,
+  rawnbsp,
   // rawNdash,
   // rawMdash,
 } from "./util.js";
@@ -20,7 +20,7 @@ const encodedNbsps = [encodedNbspHtml, encodedNbspCss, encodedNbspJs];
 // opts.ignore - Nunjucks
 // -----------------------------------------------------------------------------
 
-test(`01 - \u001b[${35}m${"opts.ignore, nunjucks"}\u001b[${39}m - widow removal detects template code and nothing happens`, () => {
+test(`01 - opts.ignore, nunjucks - widow removal detects template code and nothing happens`, () => {
   //
   // ganged cases where nothing should happen:
   let vals = [
@@ -41,7 +41,7 @@ test(`01 - \u001b[${35}m${"opts.ignore, nunjucks"}\u001b[${39}m - widow removal 
   });
 });
 
-test(`02 - \u001b[${35}m${"opts.ignore, nunjucks"}\u001b[${39}m - widow removal detects template code and widows are prevented`, () => {
+test(`02 - opts.ignore, nunjucks - widow removal detects template code and widows are prevented`, () => {
   let source =
     "{% if something else and also another thing %}tralala {% endif %}some text here";
   let res = `{% if something else and also another thing %}tralala {% endif %}some text${encodedNbspHtml}here`;
@@ -56,7 +56,7 @@ test(`02 - \u001b[${35}m${"opts.ignore, nunjucks"}\u001b[${39}m - widow removal 
   );
 });
 
-test(`03 - \u001b[${35}m${"opts.ignore, nunjucks"}\u001b[${39}m - widow removal detects template code and widows are prevented`, () => {
+test(`03 - opts.ignore, nunjucks - widow removal detects template code and widows are prevented`, () => {
   languages.forEach((targetLanguage, i) => {
     equal(
       removeWidows(

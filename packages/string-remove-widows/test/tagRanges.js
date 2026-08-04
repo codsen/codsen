@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { removeWidows } from "../dist/string-remove-widows.esm.js";
 import {
@@ -19,7 +19,7 @@ import {
 // opts.tagRanges
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${"opts.tagRanges"}\u001b[${39}m`} - accepts known tag ranges and ignores everything`, () => {
+test(`01 - opts.tagRanges - accepts known tag ranges and ignores everything`, () => {
   let source =
     '<a href="zzz" target="_blank" style="font-size: 10px; line-height: 14px;">';
   equal(
@@ -31,7 +31,7 @@ test(`01 - ${`\u001b[${33}m${"opts.tagRanges"}\u001b[${39}m`} - accepts known ta
   );
 });
 
-test(`02 - ${`\u001b[${33}m${"opts.tagRanges"}\u001b[${39}m`} - widow space between tags`, () => {
+test(`02 - opts.tagRanges - widow space between tags`, () => {
   equal(
     removeWidows(
       'something in front here <a style="display: block;">x</a> <b style="display: block;">y</b>',
@@ -56,7 +56,7 @@ test(`02 - ${`\u001b[${33}m${"opts.tagRanges"}\u001b[${39}m`} - widow space betw
   );
 });
 
-test(`03 - ${`\u001b[${33}m${"opts.tagRanges"}\u001b[${39}m`} - widow space between tags`, () => {
+test(`03 - opts.tagRanges - widow space between tags`, () => {
   equal(
     removeWidows(
       "Very long line, long-enough to trigger widow removal.<br/>\n<br/>\n Text.",

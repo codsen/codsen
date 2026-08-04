@@ -1,13 +1,13 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { removeWidows } from "../dist/string-remove-widows.esm.js";
 import {
-  rawnbsp,
-  encodedNbspHtml,
   encodedNbspCss,
+  encodedNbspHtml,
   encodedNbspJs,
+  rawnbsp,
   // rawNdash,
   // rawMdash,
 } from "./util.js";
@@ -20,7 +20,7 @@ const eolTypes = ["LF`, `CR`, `CRLF"];
 // line endings
 // -----------------------------------------------------------------------------
 
-test(`01 - \u001b[${34}m${"line endings"}\u001b[${39}m - does not mangle string with consistent line endings`, () => {
+test(`01 - line endings - does not mangle string with consistent line endings`, () => {
   ["\n`, `\r`, `\r\n"].forEach((eolType, idx) => {
     languages.forEach((targetLanguage, i) => {
       equal(

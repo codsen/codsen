@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { removeWidows } from "../dist/string-remove-widows.esm.js";
 import {
@@ -20,7 +20,7 @@ import {
 // opts.minCharCount
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${33}m${"opts.minCharCount"}\u001b[${39}m`} - opts.minCharCount = zero`, () => {
+test(`01 - opts.minCharCount - opts.minCharCount = zero`, () => {
   equal(
     removeWidows("aaa bbb", {
       minCharCount: 0,
@@ -70,7 +70,7 @@ test(`01 - ${`\u001b[${33}m${"opts.minCharCount"}\u001b[${39}m`} - opts.minCharC
   );
 });
 
-test(`02 - ${`\u001b[${33}m${"opts.minCharCount"}\u001b[${39}m`} - opts.minCharCount = falsey`, () => {
+test(`02 - opts.minCharCount - opts.minCharCount = falsy`, () => {
   equal(
     removeWidows("aaa bbb", {
       minCharCount: false,

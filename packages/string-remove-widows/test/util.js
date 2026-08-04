@@ -14,16 +14,16 @@ const encodedMdashCss = "\\2014";
 const encodedMdashJs = "\\u2014";
 
 export {
-  rawnbsp,
-  encodedNbspHtml,
+  encodedMdashCss,
+  encodedMdashHtml,
+  encodedMdashJs,
   encodedNbspCss,
+  encodedNbspHtml,
   encodedNbspJs,
-  rawNdash,
-  encodedNdashHtml,
   encodedNdashCss,
+  encodedNdashHtml,
   encodedNdashJs,
   rawMdash,
-  encodedMdashHtml,
-  encodedMdashCss,
-  encodedMdashJs,
+  rawNdash,
+  rawnbsp,
 };

@@ -167,8 +167,8 @@ const knownHTMLTags = [
 
 // finally,
 export {
-  headsAndTailsJinja,
-  headsAndTailsHugo,
   headsAndTailsHexo,
+  headsAndTailsHugo,
+  headsAndTailsJinja,
   knownHTMLTags,
 };

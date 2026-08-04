@@ -1,8 +1,9 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { removeWidows } from "../dist/string-remove-widows.esm.js";
+
 // import {
 //   rawnbsp,
 //   encodedNbspHtml,
@@ -20,7 +21,7 @@ import { removeWidows } from "../dist/string-remove-widows.esm.js";
 // opts.reportProgressFunc
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${36}m${"opts.reportProgressFunc"}\u001b[${39}m`} - calls the progress function`, () => {
+test(`01 - opts.reportProgressFunc - calls the progress function`, () => {
   let counter = 0;
   let countingFunction = () => {
     // const countingFunction = val => {
@@ -67,7 +68,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
   ok(counter > 95, "01.05");
 });
 
-test(`02 - ${`\u001b[${36}m${"opts.reportProgressFunc"}\u001b[${39}m`} - adjusted from-to range`, () => {
+test(`02 - opts.reportProgressFunc - adjusted from-to range`, () => {
   let gather = [];
   let countingFunction = (val) => {
     gather.push(val);
@@ -153,7 +154,9 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
   // );
   // since we use Math.floor, some percentages can be skipped, so let's just
   // confirm that no numbers outside of permitted values are reported
-  gather.forEach((perc) => ok(compareTo.includes(perc), `checking: ${perc}%`));
+  gather.forEach((perc) => {
+    ok(compareTo.includes(perc), `checking: ${perc}%`);
+  });
   equal(gather.length, 86 - 21 + 1, "02.02");
   // equal(gather, compareTo, `10.02`)
 });

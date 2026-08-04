@@ -1,6 +1,6 @@
 // Widow word removal from text within HTML
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 import { stripHtml } from "string-strip-html";
 
 import { removeWidows } from "../dist/string-remove-widows.esm.js";

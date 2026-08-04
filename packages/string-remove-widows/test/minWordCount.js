@@ -1,12 +1,12 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { removeWidows } from "../dist/string-remove-widows.esm.js";
 import {
+  encodedNbspCss,
   // rawnbsp,
   encodedNbspHtml,
-  encodedNbspCss,
   // encodedNbspJs,
   // rawNdash,
   // rawMdash,
@@ -20,7 +20,7 @@ import {
 // opts.minWordCount
 // -----------------------------------------------------------------------------
 
-test(`01 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - opts.minWordCount = zero`, () => {
+test(`01 - opts.minWordCount - opts.minWordCount = zero`, () => {
   equal(
     removeWidows("aaa bbb", {
       minWordCount: 0,
@@ -31,7 +31,7 @@ test(`01 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - opts.minWordC
   );
 });
 
-test(`02 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - opts.minWordCount = falsey`, () => {
+test(`02 - opts.minWordCount - opts.minWordCount = falsy`, () => {
   equal(
     removeWidows("aaa bbb", {
       targetLanguage: "css",
@@ -43,7 +43,7 @@ test(`02 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - opts.minWordC
   );
 });
 
-test(`03 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - opts.minWordCount = falsey`, () => {
+test(`03 - opts.minWordCount - opts.minWordCount = falsy`, () => {
   equal(
     removeWidows("aaa bbb", {
       targetLanguage: "css",
@@ -55,7 +55,7 @@ test(`03 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - opts.minWordC
   );
 });
 
-test(`04 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - setting is less than words in the input`, () => {
+test(`04 - opts.minWordCount - setting is less than words in the input`, () => {
   equal(
     removeWidows("aaa bbb ccc ddd", {
       minWordCount: 2,
@@ -66,7 +66,7 @@ test(`04 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - setting is le
   );
 });
 
-test(`05 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - setting is equal to words count in the input`, () => {
+test(`05 - opts.minWordCount - setting is equal to words count in the input`, () => {
   equal(
     removeWidows("aaa bbb ccc ddd", {
       minWordCount: 4,
@@ -77,7 +77,7 @@ test(`05 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - setting is eq
   );
 });
 
-test(`06 - ${`\u001b[${32}m${"opts.minWordCount"}\u001b[${39}m`} - setting is more than words in the input`, () => {
+test(`06 - opts.minWordCount - setting is more than words in the input`, () => {
   equal(
     removeWidows("aaa bbb ccc ddd", {
       minWordCount: 999,
