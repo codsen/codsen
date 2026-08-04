@@ -3,20 +3,19 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-import meow from "meow";
-import pacote from "pacote";
-import pReduce from "p-reduce";
+import { promises, readFileSync } from "node:fs";
+import { createRequire } from "node:module";
+import diff1 from "ansi-diff-stream";
+import { codsenCLI, isPlainObject } from "codsen-utils";
+import { del, set } from "edit-package-json";
 import { globby } from "globby";
 import isOnline from "is-online";
-import diff1 from "ansi-diff-stream";
 import objectPath from "object-path";
-import write from "write-file-atomic";
-import { createRequire } from "module";
-import { isPlainObject } from "codsen-utils";
-import { promises, readFileSync } from "fs";
-import { set, del } from "edit-package-json";
-import updateNotifier from "update-notifier";
 import pProgress, { PProgress } from "p-progress";
+import pReduce from "p-reduce";
+import pacote from "pacote";
+import updateNotifier from "update-notifier";
+import write from "write-file-atomic";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
@@ -28,7 +27,7 @@ const { log } = console;
 const sparkles = "\u2728"; // https://emojipedia.org/sparkles/
 const messagePrefix = `\u001b[${90}m${`${sparkles} update-versions: `}\u001b[${39}m`;
 
-const cli = meow(
+const cli = codsenCLI(
   `
   Usage:
     $ upd
@@ -41,39 +40,29 @@ const cli = meow(
     -v, --version       Shows the current installed version
 `,
   {
-    importMeta: import.meta,
+    pkg,
+    flags: {
+      module: { type: "boolean", shortFlag: "m" },
+      help: { type: "boolean", shortFlag: "h" },
+      version: { type: "boolean", shortFlag: "v" },
+    },
   },
 );
 updateNotifier({ pkg }).notify();
 
-// Step #0. take care of -v and -h flags that are left out in meow.
+// Step #0. honour help/version even when another argument is also present.
+// codsenCLI handles either flag automatically when it is the sole argument.
 // -----------------------------------------------------------------------------
 
-if (cli.flags.v) {
+if (cli.flags.version) {
   log(pkg.version);
   process.exit(0);
-} else if (cli.flags.h) {
+} else if (cli.flags.help) {
   log(cli.help);
   process.exit(0);
 }
 
-// Step #1. set up the cli
-// -----------------------------------------------------------------------------
-
-let { input } = cli;
-// if the folder/file name follows the flag (for example "-d templates1"),
-// that name will be put under the flag's key value, not into cli.input.
-// That's handy for certain types of CLI apps, but not this one, as in our case
-// the flags position does not matter, they don't affect the keywords that follow.
-if (cli.flags) {
-  Object.keys(cli.flags).forEach((flag) => {
-    if (typeof cli.flags[flag] === "string") {
-      input = input.concat(cli.flags[flag]);
-    }
-  });
-}
-
-// Step #2. the main function
+// Step #1. the main function
 // -----------------------------------------------------------------------------
 
 (async () => {
@@ -109,7 +98,7 @@ if (cli.flags) {
   // try to read the local config if it's present
   try {
     newConfig = JSON.parse(readFileSync(confLocation, "utf8"));
-  } catch (e) {
+  } catch (_e) {
     console.log(
       `\n${messagePrefix}${`\u001b[${90}m${"No config found, moving on."}\u001b[${39}m`}\n`,
     );
@@ -214,15 +203,12 @@ if (cli.flags) {
                   } else {
                     compiledDepNameVersionPairs[singleDepName] = pkg1.version;
 
-                    if (
-                      (cli.flags.m || cli.flags.module) &&
-                      pkg1.type === "module"
-                    ) {
+                    if (cli.flags.module && pkg1.type === "module") {
                       newConfig.noMajorBumping.push(pkg1.name);
                     }
                   }
                 });
-            } catch (e) {
+            } catch (_e) {
               // no response from npm
               compiledDepNameVersionPairs[singleDepName] = null;
             }
@@ -305,12 +291,7 @@ if (cli.flags) {
                 newConfig.pin[singleDepName],
               );
               amended = true;
-              if (
-                !Object.prototype.hasOwnProperty.call(
-                  updatedPackages,
-                  singleDepName,
-                )
-              ) {
+              if (!Object.hasOwn(updatedPackages, singleDepName)) {
                 updatedPackages[singleDepName] = newConfig.pin[singleDepName];
               }
             } else if (
@@ -329,12 +310,7 @@ if (cli.flags) {
                 `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}`,
               );
               amended = true;
-              if (
-                !Object.prototype.hasOwnProperty.call(
-                  updatedPackages,
-                  singleDepName,
-                )
-              ) {
+              if (!Object.hasOwn(updatedPackages, singleDepName)) {
                 updatedPackages[singleDepName] =
                   compiledDepNameVersionPairs[singleDepName];
               }
@@ -401,12 +377,7 @@ if (cli.flags) {
                 newConfig.pin[singleDepName],
               );
               amended = true;
-              if (
-                !Object.prototype.hasOwnProperty.call(
-                  updatedPackages,
-                  singleDepName,
-                )
-              ) {
+              if (!Object.hasOwn(updatedPackages, singleDepName)) {
                 updatedPackages[singleDepName] = newConfig.pin[singleDepName];
               }
             } else if (
@@ -427,12 +398,7 @@ if (cli.flags) {
               amended = true;
 
               // update logging:
-              if (
-                !Object.prototype.hasOwnProperty.call(
-                  updatedPackages,
-                  singleDepName,
-                )
-              ) {
+              if (!Object.hasOwn(updatedPackages, singleDepName)) {
                 updatedPackages[singleDepName] =
                   `${compiledDepNameVersionPairs[singleDepName]}`;
               }
@@ -446,7 +412,7 @@ if (cli.flags) {
 
         if (
           isPlainObject(parsedContents) &&
-          Object.prototype.hasOwnProperty.call(parsedContents, "gitHead")
+          Object.hasOwn(parsedContents, "gitHead")
         ) {
           finalContents = del(finalContents, "gitHead");
         }
