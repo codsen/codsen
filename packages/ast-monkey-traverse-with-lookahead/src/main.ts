@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import rfdc from "rfdc";
 import { isPlainObject as isObj } from "codsen-utils";
+import rfdc from "rfdc";
 import { version as v } from "../package.json";
 
 const clone = rfdc();
@@ -129,7 +129,6 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
       }
     } else if (isObj(tree)) {
       DEV && console.log(`131 tree is object`);
-      // eslint-disable-next-line
       for (const key in tree) {
         DEV &&
           console.log(
