@@ -1,6 +1,6 @@
 // Retain href and link label
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
@@ -26,6 +26,7 @@ assert.equal(
             temp = attr.value;
             return true;
           }
+          return false;
         })
       ) {
         rangesArr.push([deleteFrom, deleteTo, `${temp} ${insert || ""}`]);

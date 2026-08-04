@@ -1,4 +1,4 @@
-// import fs from "fs";
+// import fs from "node:fs";
 // import path from "path";
 import { stripHtml as originalStripHtml } from "../../dist/string-strip-html.esm.js";
 

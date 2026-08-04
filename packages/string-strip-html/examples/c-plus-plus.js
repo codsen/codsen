@@ -1,6 +1,6 @@
 // Ignores code tags and their contents
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 

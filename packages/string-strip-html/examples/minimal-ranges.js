@@ -3,11 +3,11 @@
 // We strip tags and fix apostrophes
 // that's part of what https://codsen.com/os/detergent/ does
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { rApply } from "../../ranges-apply/dist/ranges-apply.esm.js";
-import { stripHtml } from "../dist/string-strip-html.esm.js";
 import { convertAll } from "../../string-apostrophes/dist/string-apostrophes.esm.js";
+import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 function stripAndFixApos(str) {
   if (!str || typeof str !== "string") {

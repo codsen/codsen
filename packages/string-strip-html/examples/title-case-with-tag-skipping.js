@@ -3,11 +3,10 @@
 // This program will not touch any single tags (<br class="z"/> for example)
 // or in case of paired tags, paired tags and content between
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 import title from "title";
-
-import { rInvert } from "../../ranges-invert/dist/ranges-invert.esm.js";
 import { rApply } from "../../ranges-apply/dist/ranges-apply.esm.js";
+import { rInvert } from "../../ranges-invert/dist/ranges-invert.esm.js";
 import { rRegex } from "../../ranges-regex/dist/ranges-regex.esm.js";
 import { stripHtml } from "../dist/string-strip-html.esm.js";
 
