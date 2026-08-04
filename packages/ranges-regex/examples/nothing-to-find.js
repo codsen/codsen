@@ -1,6 +1,6 @@
 // Nothing was found
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { rRegex } from "../dist/ranges-regex.esm.js";
 

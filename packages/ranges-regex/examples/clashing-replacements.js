@@ -1,10 +1,9 @@
 // Clashing replacement values
 
-import { strict as assert } from "assert";
-
-import { rRegex } from "../dist/ranges-regex.esm.js";
+import { strict as assert } from "node:assert";
 import { rApply } from "../../ranges-apply/dist/ranges-apply.esm.js";
 import { Ranges } from "../../ranges-push/dist/ranges-push.esm.js";
+import { rRegex } from "../dist/ranges-regex.esm.js";
 
 // Two tasks:
 // 1. replace numbers with asterisks (*)

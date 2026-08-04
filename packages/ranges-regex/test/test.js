@@ -1,7 +1,7 @@
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { rApply } from "ranges-apply";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { rRegex } from "../dist/ranges-regex.esm.js";
 
@@ -118,18 +118,35 @@ test("05 - third input argument is present and is not string", () => {
   );
 });
 
+test("06 - first input regex is not global", () => {
+  throws(
+    () => {
+      rRegex(/def/, "abcdef");
+    },
+    /THROW_ID_05/,
+    "06.01",
+  );
+  throws(
+    () => {
+      rRegex(/def/y, "abcdef");
+    },
+    /THROW_ID_05/,
+    "06.02",
+  );
+});
+
 // ==============================
 // 01. B.A.U.
 // ==============================
 
-test("06 - crops out few ranges outside the strlen", () => {
+test("07 - crops out few ranges outside the strlen", () => {
   equal(
     rRegex(/def/g, "abcdefghij_abcdefghij"),
     [
       [3, 6],
       [14, 17],
     ],
-    "06.01",
+    "07.01",
   );
   equal(
     rRegex(/def/g, "abcdefghij_abcdefghij", "yo"),
@@ -137,7 +154,7 @@ test("06 - crops out few ranges outside the strlen", () => {
       [3, 6, "yo"],
       [14, 17, "yo"],
     ],
-    "06.02",
+    "07.02",
   );
   equal(
     rRegex(/def/g, "abcdefghij_abcdefghij", null),
@@ -145,7 +162,7 @@ test("06 - crops out few ranges outside the strlen", () => {
       [3, 6, null],
       [14, 17, null],
     ],
-    "06.03",
+    "07.03",
   );
   equal(
     rRegex(/def/g, "abcdefghij_abcdefghij", ""),
@@ -153,17 +170,17 @@ test("06 - crops out few ranges outside the strlen", () => {
       [3, 6],
       [14, 17],
     ],
-    "06.04",
+    "07.04",
   );
 });
 
-test("07 - nothing found", () => {
-  equal(rRegex(/def/g, ""), null, "07.01");
-  equal(rRegex(/def/g, "", "yo"), null, "07.02");
-  equal(rRegex(/def/g, "", null), null, "07.03");
+test("08 - nothing found", () => {
+  equal(rRegex(/def/g, ""), null, "08.01");
+  equal(rRegex(/def/g, "", "yo"), null, "08.02");
+  equal(rRegex(/def/g, "", null), null, "08.03");
 });
 
-test("08 - result ranges are consecutive so their ranges are merged into one", () => {
+test("09 - result ranges are consecutive so their ranges are merged into one", () => {
   let reg = /def/g;
   let str = "abcdefdefghij_abcdefghij";
   equal(
@@ -172,16 +189,50 @@ test("08 - result ranges are consecutive so their ranges are merged into one", (
       [3, 9],
       [17, 20],
     ],
-    "08.01",
+    "09.01",
   );
-  equal(rApply(str, rRegex(reg, str)), str.replace(reg, ""), "08.02");
+  equal(rApply(str, rRegex(reg, str)), str.replace(reg, ""), "09.02");
 });
 
-test("09 - no findings - returns null", () => {
+test("10 - no findings - returns null", () => {
   let reg = /yyy/g;
   let str = "zzzzzzzz";
-  equal(rRegex(reg, str), null, "09.01");
-  equal(rRegex(reg, str, "yo"), null, "09.02");
+  equal(rRegex(reg, str), null, "10.01");
+  equal(rRegex(reg, str, "yo"), null, "10.02");
+});
+
+test("11 - zero-width matches advance safely", () => {
+  equal(
+    rRegex(/(?:)/g, "ab", "x"),
+    [
+      [0, 0, "x"],
+      [1, 1, "x"],
+      [2, 2, "x"],
+    ],
+    "11.01",
+  );
+  equal(rApply("ab", rRegex(/(?:)/g, "ab", "x")), "xaxbx", "11.02");
+  equal(rRegex(/(?:)/g, "ab"), null, "11.03");
+  equal(rRegex(/(?:)/g, "ab", ""), null, "11.04");
+  equal(
+    rRegex(/(?:)/g, "ab", null),
+    [
+      [0, 0, null],
+      [1, 1, null],
+      [2, 2, null],
+    ],
+    "11.05",
+  );
+  equal(rRegex(/^|b/g, "ab"), [[1, 2]], "11.06");
+  equal(
+    rRegex(/(?:)/gu, "😀", "x"),
+    [
+      [0, 0, "x"],
+      [2, 2, "x"],
+    ],
+    "11.07",
+  );
+  equal(rRegex(/(?:)/g, "", "x"), null, "11.08");
 });
 
 test.run();
