@@ -1,18 +1,17 @@
-import { promises } from "fs";
-import { ensureDirSync } from "fs-extra";
-import writeFileAtomic from "write-file-atomic";
-import path from "path";
-import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { promises } from "node:fs";
+import { createRequire } from "node:module";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { execa, execaCommand } from "execa";
-import { temporaryDirectory } from "tempy";
+import { ensureDirSync } from "fs-extra";
 import pMap from "p-map";
-import rfdc from "rfdc";
-import { createRequire } from "module";
-import { fileURLToPath } from "url";
+import { temporaryDirectory } from "tempy";
+import { test } from "uvu";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+import writeFileAtomic from "write-file-atomic";
 
-const clone = rfdc();
+const clone = structuredClone;
 
 const require2 = createRequire(import.meta.url);
 const pack = require2("../package.json");
@@ -176,10 +175,10 @@ test("01 - monorepo", async () => {
       );
 
       // lib3 in node_modules should be intact:
-      equal(contents[2].dependencies["check-types-mini"], "*");
-      equal(contents[2].devDependencies.husky, "latest");
-      equal(contents[2].devDependencies.commitizen, "*");
-      equal(contents[2].devDependencies.prettier, "1.16.1");
+      equal(contents[2].dependencies["check-types-mini"], "*", "01.01");
+      equal(contents[2].devDependencies.husky, "latest", "01.02");
+      equal(contents[2].devDependencies.commitizen, "*", "01.03");
+      equal(contents[2].devDependencies.prettier, "1.16.1", "01.04");
 
       // root package.json:
       // at the time of writing this, latest Detergent is 4.0.4. We set original
@@ -234,10 +233,10 @@ test("02 - normal repo", async () => {
       let contents = incomingContents.map((arr) => JSON.parse(arr));
 
       // node_modules/lib3/package.json:
-      equal(contents[0].dependencies["check-types-mini"], "*");
-      equal(contents[0].devDependencies.husky, "latest");
-      equal(contents[0].devDependencies.commitizen, "*");
-      equal(contents[0].devDependencies.prettier, "1.16.1");
+      equal(contents[0].dependencies["check-types-mini"], "*", "02.01");
+      equal(contents[0].devDependencies.husky, "latest", "02.02");
+      equal(contents[0].devDependencies.commitizen, "*", "02.03");
+      equal(contents[0].devDependencies.prettier, "1.16.1", "02.04");
 
       // root package.json:
       match(contents[1].dependencies.detergent, /\^\d+\.\d+\.\d+/);
