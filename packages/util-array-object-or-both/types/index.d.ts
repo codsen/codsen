@@ -4,10 +4,11 @@ interface Opts {
   optsVarName: string;
 }
 declare const defaults: Opts;
+type ArrayObjectOrBoth = "array" | "object" | "any";
 declare function arrObjOrBoth(
   str: string,
   opts?: Partial<Opts>,
-): "array" | "object" | "any";
+): ArrayObjectOrBoth;
 
 export { arrObjOrBoth, defaults, version };
-export type { Opts };
+export type { ArrayObjectOrBoth, Opts };
