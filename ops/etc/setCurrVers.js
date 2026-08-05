@@ -4,9 +4,9 @@
 // wrongly, to a previous version. This script pulls the latest version from
 // npm and sets all local versions to that.
 
-import fs from "fs";
-import pacote from "pacote";
+import fs from "node:fs";
 import { set } from "edit-package-json";
+import pacote from "pacote";
 
 function getDirectories(p) {
   return fs.readdirSync(p).filter((file) => {
@@ -19,11 +19,11 @@ await getDirectories("./packages").forEach(async (dirName) => {
     console.log(`\n----\n\n${dirName}\n`);
     let existingPackageJson = fs.readFileSync(
       `./packages/${dirName}/package.json`,
-      "utf8"
+      "utf8",
     );
     fs.writeFileSync(
       `./packages/${dirName}/package.json`,
-      set(existingPackageJson, "version", pkg.version)
+      set(existingPackageJson, "version", pkg.version),
     );
     //
   });

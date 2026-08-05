@@ -1,22 +1,20 @@
-import { promises as fs, accessSync } from "fs";
-import path from "path";
+import { accessSync, promises as fs } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import objectPath from "object-path";
-import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
 import writeFileAtomic from "write-file-atomic";
-
+import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
+import { getLicenceContents } from "./common/getLicenceContents.js";
+import allContrib from "./plugins/allContributors.js";
+import hardDelete from "./plugins/hardDelete.js";
+import hardWrite from "./plugins/hardWrite.js";
+import licence from "./plugins/licence.js";
+import pack from "./plugins/pack.js";
 // import tasks:
 import readme from "./plugins/readme.js";
-import hardWrite from "./plugins/hardWrite.js";
-import hardDelete from "./plugins/hardDelete.js";
-import pack from "./plugins/pack.js";
 // import npmIgnore from "./plugins/npmIgnore.js";
 import rollupConfig from "./plugins/rollupConfig.js";
 import tsconfig from "./plugins/tsconfig.js";
-import allContrib from "./plugins/allContributors.js";
-import licence from "./plugins/licence.js";
-import { getLicenceContents } from "./common/getLicenceContents.js";
-
-import { fileURLToPath } from "url";
 
 const __dirname2 = path.dirname(fileURLToPath(import.meta.url));
 
@@ -25,7 +23,6 @@ const __dirname2 = path.dirname(fileURLToPath(import.meta.url));
 
 const state = {
   isRollup: false,
-  isCJS: false,
   isBin: false,
   pack: { name: null, version: null, description: null },
   originalLectrc: {},
@@ -46,27 +43,17 @@ state.root = path.resolve("./");
 
 // - Is it a program? - code in TS, built using esbuild, types via rollup:
 state.isRollup = false;
-// - Is it CJS program? - no rollup, built using esbuild
-state.isCJS = false;
 
 // also present in ./scripts/generate-info.js:
 try {
   accessSync(path.join(state.root, "rollup.config.js"));
   state.isRollup = true;
-} catch (error) {
+} catch (_error) {
   //
 }
 
 // - Is it a CLI?
 state.isBin = objectPath.has(packageJson, "bin");
-
-// - Is it CJS?
-if (
-  typeof packageJson.main === "string" &&
-  packageJson.main.endsWith(".cjs.js")
-) {
-  state.isCJS = true;
-}
 
 const lectrc = JSON.parse(
   await fs.readFile(path.join(__dirname2, ".lectrc.json"), "utf8"),
@@ -78,7 +65,7 @@ try {
   quickTakeExample = prepExampleFileStr(
     await fs.readFile(path.join(state.root, "examples/_quickTake.js"), "utf8"),
   ).str;
-} catch (error) {
+} catch (_error) {
   // console.log(`079 lect: ${`\u001b[${31}m${`no examples`}\u001b[${39}m`}`);
 }
 

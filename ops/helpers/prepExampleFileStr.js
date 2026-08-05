@@ -38,6 +38,11 @@ function prepExampleFileStr(originalStr) {
     // console.log(`046 oneLineBefore=${JSON.stringify(oneLineBefore, null, 4)};`);
     // console.log(`${`\u001b[${36}m${`-`.repeat(80)}\u001b[${39}m`}`);
 
+    if (!codeStarted && lines[i].startsWith("// biome-ignore")) {
+      // console.log(`${`\u001b[${31}m${`CONTINUE`}\u001b[${39}m`}`);
+      continue;
+    }
+
     // catch the title
     if (!codeStarted && !titleFound && lines[i].startsWith("//")) {
       titleFound = true;
@@ -49,11 +54,6 @@ function prepExampleFileStr(originalStr) {
       //   )}`
       // );
       title = lines[i].slice(2).trim();
-      // console.log(`${`\u001b[${31}m${`CONTINUE`}\u001b[${39}m`}`);
-      continue;
-    }
-
-    if (!codeStarted && lines[i].startsWith("/* eslint")) {
       // console.log(`${`\u001b[${31}m${`CONTINUE`}\u001b[${39}m`}`);
       continue;
     }

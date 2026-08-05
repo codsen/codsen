@@ -1,18 +1,16 @@
 import {
   accessSync,
   readdirSync,
-  writeFile,
-  statSync,
   readFileSync,
+  statSync,
+  writeFile,
 } from "node:fs";
-import path from "path";
-import git from "simple-git";
-import { sortAllObjectsSync } from "json-comb-core";
-import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
-// eslint-disable-next-line n/no-extraneous-import
+import path from "node:path";
 import { programClassification } from "@codsen/data";
 import { det } from "detergent";
-import { removeTbc } from "../lect/plugins/_util.js";
+import { sortAllObjectsSync } from "json-comb-core";
+import git from "simple-git";
+import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
 
 const isCI = process?.env?.CI || false;
 
@@ -36,6 +34,10 @@ const packagesOutsideMonorepoObj = {
     description:
       "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline",
   },
+  "array-of-arrays-into-ast": {
+    description:
+      "Turns an array of arrays of data into a nested tree of plain objects",
+  },
   "array-of-arrays-sort-by-col": {
     description:
       "Sort array of arrays by column, rippling the sorting outwards from that column",
@@ -58,6 +60,10 @@ const packagesOutsideMonorepoObj = {
   "email-homey": {
     description:
       "Generate homepage in the BrowserSync root with links/screenshots to all your email templates",
+  },
+  "gulp-email-remove-unused-css": {
+    description:
+      "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
   },
   helga: {
     description: "Your next best friend when editing complex nested code",
@@ -153,7 +159,7 @@ const splitListBlackList = [
 const exportedDefaults = {};
 
 const packageNames = readdirSync(path.resolve("packages")).filter((d) =>
-  removeTbc(statSync(path.join("packages", d)).isDirectory()),
+  statSync(path.join("packages", d)).isDirectory(),
 );
 
 for (let packageName of packageNames) {
@@ -163,11 +169,11 @@ for (let packageName of packageNames) {
     );
     let name = packageJsonContents.name;
 
-    packageJSONData[removeTbc(name)] = packageJsonContents;
-    if (packageJSONData[removeTbc(name)].description) {
+    packageJSONData[name] = packageJsonContents;
+    if (packageJSONData[name].description) {
       // fix typography
-      packageJSONData[removeTbc(name)].description = det(
-        packageJSONData[removeTbc(name)].description,
+      packageJSONData[name].description = det(
+        packageJSONData[name].description,
         {
           fixBrokenEntities: true,
           removeWidows: false,
@@ -216,7 +222,7 @@ for (let packageName of packageNames) {
         if (defaults) {
           exportedDefaults[name] = JSON.stringify(defaults, null, 2);
         }
-      } catch (e) {
+      } catch (_e) {
         // nothing happens
       }
       if (name === "detergent" && !exportedDefaults[name]) {
@@ -227,7 +233,7 @@ for (let packageName of packageNames) {
           if (opts) {
             exportedDefaults[name] = JSON.stringify(opts, null, 2);
           }
-        } catch (e) {
+        } catch (_e) {
           // nothing happens
         }
       }
@@ -254,7 +260,7 @@ for (let packageName of packageNames) {
         };
         return accumulatedObj;
       }, {});
-    } catch (e) {
+    } catch (_e) {
       // nothing happens
     }
 
@@ -271,7 +277,7 @@ for (let packageName of packageNames) {
 // -----------------------------------------------------------------------------
 
 for (let packageName of packageNames) {
-  let p = removeTbc(packageName);
+  let p = packageName;
   if (!splitListBlackList.includes(p)) {
     if (programClassification.flagshipLibsList.includes(p)) {
       splitListFlagshipLibs.push(p);
@@ -350,7 +356,7 @@ interface DependencyStats {
 const dependencyStats = { dependencies: {}, devDependencies: {} };
 
 for (let i = 0, len = allPackages.length; i < len; i++) {
-  let packageName = removeTbc(allPackages[i]);
+  let packageName = allPackages[i];
   if (
     packagesOutsideMonorepo.includes(packageName) ||
     deprecated.includes(packageName)
@@ -362,8 +368,7 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
   //   `077 ======== processing ${`\u001b[${35}m${name}\u001b[${39}m`} ========`
   // );
   let pack = JSON.parse(
-    // beware, "packageName" has "-tbc" removed! That's why we use "allPackages[i]":
-    readFileSync(path.join("packages", allPackages[i], "package.json")),
+    readFileSync(path.join("packages", packageName, "package.json")),
   );
 
   let size = 0;
@@ -379,13 +384,13 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
       size = readFileSync(
         path.join("packages", packageName, "dist", `${packageName}.esm.js`),
       ).length;
-    } catch (e) {
+    } catch (_e) {
       try {
         // gulp plugins etc. don't have "dist/*"
         size = readFileSync(
           path.join("packages", packageName, "index.js"),
         ).length;
-      } catch (error) {
+      } catch (_error) {
         // let's ignore all other unique ad-hoc packages like perf-ref
       }
     }
@@ -400,13 +405,11 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
   });
 
   // compile dependency stats
-  if (Object.prototype.hasOwnProperty.call(pack, "dependencies")) {
+  if (Object.hasOwn(pack, "dependencies")) {
     // has deps
     Object.keys(pack.dependencies).forEach((dep) => {
       // if dependency's name doesn't exist in compiled obj., create key
-      if (
-        !Object.prototype.hasOwnProperty.call(dependencyStats.dependencies, dep)
-      ) {
+      if (!Object.hasOwn(dependencyStats.dependencies, dep)) {
         dependencyStats.dependencies[dep] = 1;
       } else {
         dependencyStats.dependencies[dep] =
@@ -414,16 +417,11 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
       }
     });
   }
-  if (Object.prototype.hasOwnProperty.call(pack, "devDependencies")) {
+  if (Object.hasOwn(pack, "devDependencies")) {
     // has deps
     Object.keys(pack.devDependencies).forEach((dep) => {
       // if dev-dependency's name doesn't exist in compiled obj., create key
-      if (
-        !Object.prototype.hasOwnProperty.call(
-          dependencyStats.devDependencies,
-          dep,
-        )
-      ) {
+      if (!Object.hasOwn(dependencyStats.devDependencies, dep)) {
         dependencyStats.devDependencies[dep] = 1;
       } else {
         dependencyStats.devDependencies[dep] =
@@ -677,7 +675,7 @@ if (!isCI) {
         console.log(`\u001b[${32}m${"gitStats.ts written OK"}\u001b[${39}m`);
       },
     );
-  } catch (e) {
+  } catch (_e) {
     throw new Error("generate-info.js: can't access git data for gitStats.ts");
   }
 }

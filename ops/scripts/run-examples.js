@@ -1,6 +1,6 @@
-import fs from "fs";
-import util from "util";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
+import util from "node:util";
 import { execa } from "execa";
 
 // we don't want to deal with callbacks so let's promisify:

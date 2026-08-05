@@ -1,6 +1,7 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 import objectPath from "object-path";
+
 // import rimraf from "rimraf";
 
 // delete all requested files

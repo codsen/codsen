@@ -1,0 +1,10 @@
+engine biome(1.0)
+language js(typescript, jsx)
+
+JsModuleSource() as $source where {
+  $source <: `"uvu/assert"`,
+  $source <: within JsImport() as $import ,
+  $import <: within JsModule() as $module ,
+  $module <: not contains `test.run()`,
+  register_diagnostic(span=$source, message="Files importing `uvu/assert` must call `test.run()`.", severity="error")
+}

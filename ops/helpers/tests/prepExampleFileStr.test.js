@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { prepExampleFileStr } from "../prepExampleFileStr.js";
 
@@ -32,8 +32,8 @@ import { strict as assert } from "assert";\n\n`;
   equal(prepExampleFileStr(source), { str, title: `Quick Take` });
 });
 
-test(`03 - eslint configs, title, import`, () => {
-  let source = `\n\n/* eslint-disable no-unused-vars */
+test(`03 - biome configs, title, import`, () => {
+  let source = `\n\n// biome-ignore-all lint/correctness/noUnusedImports: example file
 // Quick Take
 
 import { strict as assert } from "assert";\n\n`;
@@ -41,12 +41,12 @@ import { strict as assert } from "assert";\n\n`;
   equal(prepExampleFileStr(source), { str, title: `Quick Take` });
 });
 
-test(`04 - title, eslint configs, import`, () => {
+test(`04 - title, biome configs, import`, () => {
   let source = `// Quick Take
 
-/* eslint-disable no-unused-vars */
+// biome-ignore lint/correctness/noUnusedImports: example file
 
-/* eslint-disable no-unused-vars */
+// biome-ignore lint/correctness/noUnusedVariables: example file
 
 import { strict as assert } from "assert";\n\n`;
   let str = `import { strict as assert } from "assert";`;
@@ -109,7 +109,7 @@ assert.equal(Object.keys(allNamedEntities).length, 2125);`;
   });
 });
 
-test(`07 - import, title, no eslint configs`, () => {
+test(`07 - import, title, no biome configs`, () => {
   let source = `import { strict as assert } from "assert";\n\n// Quick Take\n\nconst z = 1;`;
   let str = `import { strict as assert } from "assert";\n\nconst z = 1;`;
   equal(prepExampleFileStr(source), { str, title: "Quick Take" });

@@ -1,9 +1,8 @@
-import { promises as fs, statSync } from "fs";
-import objectPath from "object-path";
-import partition from "lodash.partition";
+import { promises as fs, statSync } from "node:fs";
 import { pull } from "array-pull-all-with-glob";
+import partition from "lodash.partition";
+import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
-// import { removeTbc } from "./_util.js";
 
 // writes .npmignore
 async function npmIgnore({
@@ -117,7 +116,7 @@ async function npmIgnore({
       } else {
         filesList.push(files[i]);
       }
-    } catch (e) {
+    } catch (_e) {
       //
     }
   }
@@ -157,9 +156,6 @@ async function npmIgnore({
   [badFiles, unclearFiles] = partition(filesList, (filesName) =>
     get("npmignore.badFiles").includes(filesName),
   );
-  // if (state.isCJS) {
-  //   badFiles.push(`dist/${removeTbc(state.pack.name)}.esm.js`);
-  // }
   unclearFiles = pull(unclearFiles, get("npmignore.goodFiles"), {
     caseSensitive: false,
   });

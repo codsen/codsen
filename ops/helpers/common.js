@@ -1,5 +1,5 @@
-import fs from "fs";
-import crypto from "crypto";
+import crypto from "node:crypto";
+import fs from "node:fs";
 
 export const read = (what, extension = "zz") => {
   return fs.readFileSync(`test/fixtures/${what}.${extension}`, "utf8");

@@ -29,13 +29,6 @@
       }
     },
     {
-      "runkit": {
-        "alt": "Test in browser",
-        "img": "https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square",
-        "url": "https://npm.runkit.com/%REPONAME%"
-      }
-    },
-    {
       "prettier": {
         "alt": "Code style: prettier",
         "img": "https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square",
@@ -62,7 +55,6 @@
       ".gitignore",
       ".editorconfig",
       ".gitattributes",
-      ".bithoundrc",
       ".eslintrc.json",
       ".travis.yml",
       "bitbucket-pipelines.yml",
@@ -74,16 +66,13 @@
       "testStats.md",
       "tsconfig.build.json",
       "package.json.lerna_backup",
-      "yarn-error.log"
+      "yarn-error.log",
+      ".eslintcache"
     ],
     "write_hard": [
       {
         "name": "",
         "contents": ""
-      },
-      {
-        "name": ".prettierignore",
-        "contents": "dist/\ntest/fixtures\nfixtures/\n*.json\n"
       }
     ]
   },
@@ -100,9 +89,11 @@
   "npmignore": {
     "badFiles": [
       ".all-contributorsrc",
+      ".babelrc",
       ".editorconfig",
-      ".eslintrc",
+      ".eslintcache",
       ".eslintrc.json",
+      ".eslintrc",
       ".gitattributes",
       ".gitignore",
       ".npmignore",
@@ -118,16 +109,15 @@
       "ideas.md",
       "package.json.lerna_backup",
       "rollup.config.js",
+      "test_bak.js",
       "test.js",
       "test.zip",
       "testStats.json",
       "testStats.md",
-      "test_bak.js",
       "travis.js",
       "tsconfig.build.json",
       "tsconfig.json",
-      "yarn-error.log",
-      ".babelrc"
+      "yarn-error.log"
     ],
     "badFolders": [
       ".turbo",
@@ -185,37 +175,16 @@
     }
   },
   "scripts": {
-    "cjs": {
-      "build": "node '../../ops/scripts/esbuild.js' && node '../../ops/scripts/fix-cjs.js' && npm run dts",
-      "cjs-off": "node '../../ops/scripts/cjs-off.js'",
-      "cjs-on": "node '../../ops/scripts/cjs-on.js'",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' --write --log-level 'silent'",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "perf": "exit 0",
-      "prep": "echo 'ready'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "devtest": "c8 npm run unit && npm run lint",
-      "unit": "uvu test"
-    },
     "cli": {
       "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "exit 0",
       "dts": "exit 0",
       "examples": "exit 0",
       "lect": "node '../../ops/lect/lect.js'",
       "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "lint": "biome lint --write .",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "perf": "exit 0",
       "prep": "echo 'ready'",
       "pretest": "exit 0",
@@ -225,16 +194,14 @@
     },
     "rollup": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
       "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "lint": "biome lint --write .",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
       "pretest": "npm run lect && npm run build",

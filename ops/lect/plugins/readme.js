@@ -1,9 +1,8 @@
 import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
-import arrayiffy from "../../helpers/arrayiffy.js";
 import { esmBump } from "../../../data/dist/sources/esmBump.js";
+import arrayiffy from "../../helpers/arrayiffy.js";
 import { getLicenceShortVersion } from "../common/getLicenceContents.js";
-import { removeTbc } from "./_util.js";
 
 const playgroundLibs = [
   "string-strip-html",
@@ -23,6 +22,7 @@ function hasPlayground(name) {
 }
 
 async function readme({ state, quickTakeExample }) {
+  const packageName = state.pack.name;
   let badge1 = `<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center">`;
 
   let badge2 = `<img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center">`;
@@ -45,22 +45,16 @@ async function readme({ state, quickTakeExample }) {
       : ""
   }`;
 
-  let cjsNotice = "This package is not pure ESM, you can `require` it.";
-
   // start setting up the final readme's string:
-  let content = `<h1 align="center">${removeTbc(state.pack.name)}</h1>
+  let content = `<h1 align="center">${packageName}</h1>
 
 <p align="center">${state.pack.description}</p>
 
 <p align="center">
-  <a href="https://codsen.com/os/${removeTbc(
-    state.pack.name,
-  )}" rel="nofollow noreferrer noopener">
+  <a href="https://codsen.com/os/${packageName}" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/-codsen-blue?style=flat-square" alt="page on codsen.com">
   </a>
-  <a href="https://www.npmjs.com/package/${removeTbc(
-    state.pack.name,
-  )}" rel="nofollow noreferrer noopener">
+  <a href="https://www.npmjs.com/package/${packageName}" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/-npm-blue?style=flat-square" alt="page on npm">
   </a>
   <a href="https://github.com/codsen/codsen/tree/main/packages/${
@@ -68,35 +62,23 @@ async function readme({ state, quickTakeExample }) {
   }" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/-github-blue?style=flat-square" alt="page on github">
   </a>
-  <a href="https://npmcharts.com/compare/${removeTbc(
-    state.pack.name,
-  )}?interval=30" rel="nofollow noreferrer noopener" target="_blank">
-    <img src="https://img.shields.io/npm/dm/${removeTbc(
-      state.pack.name,
-    )}.svg?style=flat-square" alt="Downloads per month">
+  <a href="https://npmcharts.com/compare/${packageName}?interval=30" rel="nofollow noreferrer noopener" target="_blank">
+    <img src="https://img.shields.io/npm/dm/${packageName}.svg?style=flat-square" alt="Downloads per month">
   </a>
-  <a href="https://codsen.com/os/${removeTbc(
-    state.pack.name,
-  )}/changelog" rel="nofollow noreferrer noopener">
+  <a href="https://codsen.com/os/${packageName}/changelog" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/changelog-here-brightgreen?style=flat-square" alt="changelog">
   </a>
   <img src="https://img.shields.io/badge/licence-MIT-brightgreen.svg?style=flat-square" alt="MIT Licence">${
-    hasPlayground(removeTbc(state.pack.name))
-      ? `\n  <a href="https://codsen.com/os/${removeTbc(
-          state.pack.name,
-        )}/play"><img src="https://img.shields.io/badge/playground-here-brightgreen?style=flat-square" alt="playground"></a>`
+    hasPlayground(packageName)
+      ? `\n  <a href="https://codsen.com/os/${packageName}/play"><img src="https://img.shields.io/badge/playground-here-brightgreen?style=flat-square" alt="playground"></a>`
       : ""
   }
 </p>
 
-## Install${state.pack?.exports ? `\n\n${esmNotice}` : ""}${
-    state.pack?.main?.includes(".cjs") ? `\n\n${cjsNotice}` : ""
-  }
+## Install${state.pack?.exports ? `\n\n${esmNotice}` : ""}
 
 \`\`\`bash
-npm i${!state.isRollup && state.isBin ? " -g" : ""} ${removeTbc(
-    state.pack.name,
-  )}
+npm i${!state.isRollup && state.isBin ? " -g" : ""} ${packageName}
 \`\`\`${
     !state.isRollup && state.pack.bin
       ? `\n\nThen, call it from the command line using ${
@@ -121,13 +103,9 @@ ${quickTakeExample}
   }
 ## Documentation
 
-Please [visit codsen.com](https://codsen.com/os/${removeTbc(
-    state.pack.name,
-  )}/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/${state.pack.name}/CHANGELOG.md).${
-    hasPlayground(removeTbc(state.pack.name))
-      ? ` Also, try the [GUI playground](https://codsen.com/os/${removeTbc(
-          state.pack.name,
-        )}/play).`
+Please [visit codsen.com](https://codsen.com/os/${packageName}/) for a full description of the API. If you’re looking for the **Changelog**, it’s [here](https://github.com/codsen/codsen/blob/main/packages/${state.pack.name}/CHANGELOG.md).${
+    hasPlayground(packageName)
+      ? ` Also, try the [GUI playground](https://codsen.com/os/${packageName}/play).`
       : ""
   }
 

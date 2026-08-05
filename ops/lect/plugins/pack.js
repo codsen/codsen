@@ -1,9 +1,8 @@
-import objectPath from "object-path";
-import writeFileAtomic from "write-file-atomic";
-import sortPackageJson, { sortOrder } from "sort-package-json";
-import { dequal } from "dequal";
 import { intersection, omit } from "codsen-utils";
-import { removeTbc } from "./_util.js";
+import { dequal } from "dequal";
+import objectPath from "object-path";
+import sortPackageJson, { sortOrder } from "sort-package-json";
+import writeFileAtomic from "write-file-atomic";
 
 function format(obj) {
   if (typeof obj !== "object") {
@@ -34,23 +33,8 @@ function format(obj) {
 async function packageJson({ state, lectrc, rootPackageJSON }) {
   let content = { ...state.pack };
 
-  // 0. back up "examples", because CJS may or may not run them
-  // and the incoming "default" preset has "examples" script as "exit 0"
-  //
-  let oldExamplesScript = state.pack?.scripts?.examples;
-  let oldDevTestScript = state.pack?.scripts?.devtest;
-
   // 1. set scripts
-  if (state.isCJS) {
-    content.scripts = objectPath.get(lectrc, "scripts.cjs");
-    if (
-      typeof oldExamplesScript === "string" &&
-      oldExamplesScript.includes("node")
-    ) {
-      objectPath.set(content, "scripts.examples", oldExamplesScript);
-      objectPath.set(content, "scripts.devtest", oldDevTestScript);
-    }
-  } else if (!state.isRollup) {
+  if (!state.isRollup) {
     content.scripts = objectPath.get(lectrc, "scripts.cli");
   } else {
     content.scripts = objectPath.get(lectrc, "scripts.rollup");
@@ -78,7 +62,7 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
     }
   }
 
-  content.homepage = `https://codsen.com/os/${removeTbc(content.name)}`;
+  content.homepage = `https://codsen.com/os/${content.name}`;
 
   // 3. write adhoc keys
   let lectKeysHardWrite = objectPath.get(lectrc, "package_keys.write") || {};

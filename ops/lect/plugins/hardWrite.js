@@ -1,4 +1,4 @@
-import { promises as fs } from "fs";
+import { promises as fs } from "node:fs";
 import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
 
@@ -44,7 +44,7 @@ async function hardWrite({ lectrc }) {
             return Promise.resolve(null);
           }
         });
-      } catch (error) {
+      } catch (_error) {
         // file does not exist, so write it:
         // console.log(
         //   `050 lect/hardWrite: ${`\u001b[${32}m${`file ${oneToDoObj.name} does not exist, will write`}\u001b[${39}m`}`

@@ -3,21 +3,19 @@ import {
   // F_OK,
   // accessSync,
   readdirSync,
+  readFileSync,
   statSync,
   writeFile,
-  readFileSync,
-} from "fs";
-import path from "path";
-
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import remarkGfm from "remark-gfm";
-import changelogTimeline from "./remark-conventional-commit-changelog-timeline.esm.js";
-import remarkTypography from "remark-typography/dist/remark-typography.esm.js";
+} from "node:fs";
+import path from "node:path";
 // import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
-import { removeTbc } from "../lect/plugins/_util.js";
+import remarkGfm from "remark-gfm";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import remarkTypography from "remark-typography";
+import { unified } from "unified";
+import changelogTimeline from "./remark-conventional-commit-changelog-timeline.esm.js";
 
 // ------------------------------------------------------------------------------
 
@@ -66,12 +64,9 @@ for (let packageName of packageNames) {
     changelogContents = value;
 
     // if (packageName === "email-comb") {
-    gatheredChangelogs[removeTbc(packageName)] = changelogContents;
+    gatheredChangelogs[packageName] = changelogContents;
     // }
-  } catch (error) {
-    // nothing happens and we skip it
-    continue;
-  }
+  } catch (_error) {}
 }
 
 // write files

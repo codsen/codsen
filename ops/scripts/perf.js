@@ -1,6 +1,6 @@
+import fs from "node:fs";
+import path from "node:path";
 import Benchmark from "benchmark";
-import fs from "fs";
-import path from "path";
 import { sortAllObjectsSync } from "json-comb-core";
 import { perfRef, opsPerSec as refOpsPerSec } from "perf-ref";
 
@@ -74,7 +74,7 @@ export const runPerf = async (cb, callerDir) => {
       let normalisedBenchmarkedOpsPerSec =
         (this[0].hz * refOpsPerSec) / freshlyRanRefOpsPerSec;
 
-      if (!Object.prototype.hasOwnProperty.call(historicalData, version)) {
+      if (!Object.hasOwn(historicalData, version)) {
         historicalData[version] = normalisedBenchmarkedOpsPerSec;
       }
       historicalData.lastVersion = historicalData[version];

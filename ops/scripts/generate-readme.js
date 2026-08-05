@@ -2,12 +2,11 @@
 // GENERATES THE MONOREPO ROOT README
 // ==================================
 
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 const today = new Date();
 const year = today.getFullYear();
-import { removeTbc } from "../lect/plugins/_util.js";
 
 // READ ALL LIBS
 // =============
@@ -26,8 +25,7 @@ const allPackages = fs
           "utf8",
         ),
       ).private,
-  )
-  .map((p) => removeTbc(p));
+  );
 
 // ASSEMBLE THE TEMPLATE
 // =====================

@@ -1,6 +1,6 @@
 // lints/generates/refreshes the .all-contributorsrc
 
-import { promises as fs } from "fs";
+import { promises as fs } from "node:fs";
 import writeFileAtomic from "write-file-atomic";
 
 const ROY = {
@@ -36,7 +36,7 @@ async function allContrib({ state }) {
 
     // extract "contributors" key from existing file
     finalFileToWrite.contributors = existingAllContribFile.contributors;
-  } catch (e) {
+  } catch (_e) {
     // console.log(
     //   `${`\u001b[${31}m${`could not read ${ALL_CONTRIB_FILE}`}\u001b[${39}m`}`
     // );

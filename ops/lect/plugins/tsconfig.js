@@ -1,5 +1,5 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 import writeFileAtomic from "write-file-atomic";
 
 // writes TS configs
@@ -9,7 +9,7 @@ async function tsconfig({ state }) {
     fs.unlink(path.resolve("tsconfig.json"))
       .then(() => {
         console.log(
-          `lect tsconfig.json ${`\u001b[${31}m${"DELETED"}\u001b[${39}m`}`
+          `lect tsconfig.json ${`\u001b[${31}m${"DELETED"}\u001b[${39}m`}`,
         );
       })
       .catch(() => Promise.resolve(null));
@@ -56,8 +56,9 @@ async function tsconfig({ state }) {
     include: [
       ...new Set([
         "src/**/*",
+        "src/**/*.json",
         "package.json",
-        "../../ops/typedefs/common.ts",
+        "../../ops/typedefs/common.d.ts",
         ...oldIncludes,
       ]),
     ],
@@ -67,7 +68,7 @@ async function tsconfig({ state }) {
   try {
     await writeFileAtomic(
       "tsconfig.json",
-      `${JSON.stringify(newTsConfig, null, 2)}\n`
+      `${JSON.stringify(newTsConfig, null, 2)}\n`,
     );
     // happy path end - resolve
     return Promise.resolve(null);
