@@ -3,11 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 5.1.0 (2025-10-15)
+## 5.2.0 (2026-08-05)
 
 ### Features
 
-- if value to be added is a number, keep it as is, don't stringify ([ce3e1a5](https://github.com/codsen/codsen/commit/ce3e1a525998ca3c0abf0142affef95b14cd1990))
+- Replace the positional parser with an RFC 5646 cursor parser.
+- Eliminate per-call RegExp retention; lookup sets and ranges are initialized once.
+- Fix grandfathered casing, extlang prefixes/count, script→variant parsing, duplicate variants/singletons, extension/private-use handling, and private script endpoints.
+- Update the registry from 2019 to the official IANA 2026-06-14 snapshot.
+- Make [runme.js (line 1)](/Users/royrevelt/Documents/__PROJECTS/_____mono/packages/is-language-code/reference/runme.js:1) deterministic, cwd-independent, and prefix-aware.
+- Fix the vacuous Datahub assertions and added regressions through test 65.
+- Remove the now-unused codsen-utils dependency and synchronized the lockfile.
+- Remove obsolete debug logging, resolving the line-label violations.
+
+Thank you https://github.com/DamilojuVeriff for alerting about the leak and raising a POC PR.
 
 ## 5.0.0 (2022-12-01)
 

@@ -1,6 +1,5 @@
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal } from "uvu/assert";
 
 import { isLangCode } from "../dist/is-language-code.esm.js";
 
@@ -765,9 +764,13 @@ const datahubLangCodes = [
   "zu-ZA",
 ];
 
-test(`${`\u001b[${32}m${"datahub language codes"}\u001b[${39}m`}`, () => {
-  datahubLangCodes.forEach((codeStr) => {
-    ok(isLangCode(codeStr), codeStr);
+test("01 - datahub language codes", () => {
+  datahubLangCodes.forEach((codeStr, index) => {
+    equal(
+      isLangCode(codeStr),
+      { res: true, message: null },
+      `01.${String(index + 1).padStart(3, "0")}`,
+    );
   });
 });
 

@@ -1,6 +1,6 @@
 // Various examples
 
-import { strict as assert } from "assert";
+import { strict as assert } from "node:assert";
 
 import { isLangCode } from "../dist/is-language-code.esm.js";
 

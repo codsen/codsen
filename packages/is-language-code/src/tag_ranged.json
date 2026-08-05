@@ -1,18 +1,18 @@
 [
-    {
-        "type": "language",
-        "value": "qaa..qtz"
-    },
-    {
-        "type": "script",
-        "value": "qaaa..qabx"
-    },
-    {
-        "type": "region",
-        "value": "qm..qz"
-    },
-    {
-        "type": "region",
-        "value": "xa..xz"
-    }
+  {
+    "type": "language",
+    "value": "qaa..qtz"
+  },
+  {
+    "type": "region",
+    "value": "qm..qz"
+  },
+  {
+    "type": "region",
+    "value": "xa..xz"
+  },
+  {
+    "type": "script",
+    "value": "qaaa..qabx"
+  }
 ]
