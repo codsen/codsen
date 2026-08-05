@@ -13,7 +13,7 @@ function nonEmpty(input: unknown): boolean {
     return !!input.length;
   }
   if (isPlainObject(input)) {
-    return !!Object.keys(input as object).length;
+    return !!Object.keys(input).length;
   }
   return typeof input === "number";
 }
