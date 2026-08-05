@@ -1,6 +1,6 @@
+// biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { test } from "uvu";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { equal, is, ok, throws, type, not, match } from "uvu/assert";
+import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import { arrObjOrBoth } from "../dist/util-array-object-or-both.esm.js";
 
@@ -56,7 +56,7 @@ test("04 - opts.msg", () => {
         msg: "z",
       });
     },
-    "z The given variable was customised to an unrecognised value: aaa. Please check it against the API documentation.",
+    "util-array-object-or-both/arrObjOrBoth(): [THROW_ID_02] z The given variable was customised to an unrecognised value: aaa. Please check it against the API documentation.",
     "04.02",
   );
   throws(
@@ -65,7 +65,7 @@ test("04 - opts.msg", () => {
         msg: "some-library/some-function(): [THROW_ID_99]",
       });
     },
-    "some-library/some-function(): [THROW_ID_99] The given variable was customised to an unrecognised value: aaa. Please check it against the API documentation.",
+    "util-array-object-or-both/arrObjOrBoth(): [THROW_ID_02] some-library/some-function(): [THROW_ID_99] The given variable was customised to an unrecognised value: aaa. Please check it against the API documentation.",
     "04.03",
   );
   throws(
@@ -75,8 +75,18 @@ test("04 - opts.msg", () => {
         optsVarName: "only",
       });
     },
-    'some-library/some-function(): [THROW_ID_99] The variable "only" was customised to an unrecognised value: bbb. Please check it against the API documentation.',
+    'util-array-object-or-both/arrObjOrBoth(): [THROW_ID_02] some-library/some-function(): [THROW_ID_99] The variable "only" was customised to an unrecognised value: bbb. Please check it against the API documentation.',
     "04.04",
+  );
+});
+
+test("05 - non-string input", () => {
+  throws(
+    () => {
+      arrObjOrBoth();
+    },
+    /util-array-object-or-both\/arrObjOrBoth\(\): \[THROW_ID_01]/,
+    "05.01",
   );
 });
 
