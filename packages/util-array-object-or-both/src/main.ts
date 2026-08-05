@@ -1,4 +1,3 @@
-import { includes } from "lodash-es";
 import { version as v } from "../package.json";
 
 const version: string = v;
@@ -12,44 +11,48 @@ const defaults: Opts = {
   optsVarName: "given variable",
 };
 
-function arrObjOrBoth(
-  str: string,
-  opts?: Partial<Opts>,
-): "array" | "object" | "any" {
-  let onlyObjectValues = ["object", "objects", "obj", "ob", "o"];
-  let onlyArrayValues = ["array", "arrays", "arr", "aray", "arr", "a"];
-  let onlyAnyValues = [
-    "any",
-    "all",
-    "everything",
-    "both",
-    "either",
-    "each",
-    "whatever",
-    "whatevs",
-    "e",
-  ];
+export type ArrayObjectOrBoth = "array" | "object" | "any";
 
-  let resolvedOpts: Opts = { ...defaults, ...opts };
-
-  if (resolvedOpts?.msg?.length) {
-    resolvedOpts.msg = `${resolvedOpts.msg.trim()} `;
-  }
-  if (resolvedOpts.optsVarName !== "given variable") {
-    resolvedOpts.optsVarName = `variable "${resolvedOpts.optsVarName}"`;
+function arrObjOrBoth(str: string, opts?: Partial<Opts>): ArrayObjectOrBoth {
+  if (typeof str !== "string") {
+    throw new TypeError(
+      `util-array-object-or-both/arrObjOrBoth(): [THROW_ID_01] The first argument must be a string; it was ${typeof str}.`,
+    );
   }
 
-  if (includes(onlyObjectValues, str.toLowerCase().trim())) {
-    return "object";
+  let normalized = str.trim().toLowerCase();
+  switch (normalized) {
+    case "object":
+    case "objects":
+    case "obj":
+    case "ob":
+    case "o":
+      return "object";
+    case "array":
+    case "arrays":
+    case "arr":
+    case "aray":
+    case "a":
+      return "array";
+    case "any":
+    case "all":
+    case "everything":
+    case "both":
+    case "either":
+    case "each":
+    case "whatever":
+    case "whatevs":
+    case "e":
+      return "any";
   }
-  if (includes(onlyArrayValues, str.toLowerCase().trim())) {
-    return "array";
-  }
-  if (includes(onlyAnyValues, str.toLowerCase().trim())) {
-    return "any";
+
+  let msg = opts?.msg?.length ? `${opts.msg.trim()} ` : "";
+  let optsVarName = opts?.optsVarName ?? defaults.optsVarName;
+  if (optsVarName !== defaults.optsVarName) {
+    optsVarName = `variable "${optsVarName}"`;
   }
   throw new TypeError(
-    `${resolvedOpts.msg}The ${resolvedOpts.optsVarName} was customised to an unrecognised value: ${str}. Please check it against the API documentation.`,
+    `util-array-object-or-both/arrObjOrBoth(): [THROW_ID_02] ${msg}The ${optsVarName} was customised to an unrecognised value: ${str}. Please check it against the API documentation.`,
   );
 }
 
