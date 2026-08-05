@@ -110,18 +110,12 @@ jobs:
           name: codsen-data-dist
           path: data/dist/
 
-      - name: remove type=module from CJS packages
-        run: npm run cjs-on
-
       - name: publish all packages to npm
         run: |
           npm run letspublish --workspace=packages
           npm run publ --workspace=data
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: restore type=module in CJS packages
-        run: npm run cjs-off
 
       - name: commit the latest
         run: |
