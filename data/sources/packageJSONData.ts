@@ -39,29 +39,30 @@ export const packageJSONData = {
       "url": "https://codsen.com"
     },
     "type": "module",
-    "main": "dist/remark-conventional-commit-changelog-timeline.cjs.js",
+    "exports": {
+      "types": "./types/index.d.ts",
+      "default": "./dist/remark-conventional-commit-changelog-timeline.esm.js"
+    },
     "types": "types/index.d.ts",
     "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && node '../../ops/scripts/fix-cjs.js' && npm run dts",
-      "cjs-off": "node '../../ops/scripts/cjs-off.js'",
-      "cjs-on": "node '../../ops/scripts/cjs-on.js'",
+      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' --write --log-level 'silent'",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "echo 'skip perf'",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -85,11 +86,14 @@ export const packageJSONData = {
       "semver-regex": "^4.0.5",
       "unified": "^11.0.5",
       "unist-builder": "^4.0.0",
-      "unist-util-visit": "^5.0.0"
+      "unist-util-visit": "^5.1.0"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
     }
+  },
+  "array-of-arrays-into-ast": {
+    "description": "Turns an array of arrays of data into a nested tree of plain objects"
   },
   "array-of-arrays-sort-by-col": {
     "description": "Sort array of arrays by column, rippling the sorting outwards from that column"
@@ -108,6 +112,9 @@ export const packageJSONData = {
   },
   "email-homey": {
     "description": "Generate homepage in the BrowserSync root with links/screenshots to all your email templates"
+  },
+  "gulp-email-remove-unused-css": {
+    "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY"
   },
   "helga": {
     "description": "Your next best friend when editing complex nested code"
@@ -176,25 +183,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -252,25 +257,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -335,25 +338,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -371,85 +372,6 @@ export const packageJSONData = {
     },
     "dependencies": {
       "matcher": "^6.0.0"
-    },
-    "publishConfig": {
-      "registry": "https://registry.npmjs.org/"
-    }
-  },
-  "array-of-arrays-into-ast": {
-    "name": "array-of-arrays-into-ast",
-    "version": "4.1.3",
-    "description": "Turns an array of arrays of data into a nested tree of plain objects",
-    "keywords": [
-      "array",
-      "ast",
-      "from",
-      "generate",
-      "into",
-      "nested",
-      "object",
-      "plain",
-      "put",
-      "turn"
-    ],
-    "homepage": "https://codsen.com/os/array-of-arrays-into-ast",
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/codsen/codsen.git",
-      "directory": "packages/array-of-arrays-into-ast"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "script": "./dist/array-of-arrays-into-ast.umd.js",
-      "default": "./dist/array-of-arrays-into-ast.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
-      "perf": "node perf/check.js",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "npm run lect && npm run build",
-      "test": "npm run devtest",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=14.18.0"
-    },
-    "c8": {
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    },
-    "dependencies": {
-      "check-types-mini": "^8.1.3",
-      "object-merge-advanced": "^14.1.3"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -497,25 +419,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -578,25 +498,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -661,25 +579,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -698,12 +614,7 @@ export const packageJSONData = {
     "dependencies": {
       "ast-contains-only-empty-space": "^4.1.3",
       "codsen-utils": "^1.7.3",
-      "matcher": "^6.0.0",
-      "type-detect": "^4.1.0"
-    },
-    "devDependencies": {
-      "@types/type-detect": "^4.0.3",
-      "type-fest": "^5.4.1"
+      "matcher": "^6.0.0"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -750,25 +661,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -783,9 +692,6 @@ export const packageJSONData = {
           ""
         ]
       }
-    },
-    "dependencies": {
-      "ast-monkey-traverse": "^4.1.3"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -843,25 +749,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -879,7 +783,6 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@sindresorhus/is": "^7.2.0",
       "ast-monkey-traverse": "^4.1.3",
       "object-path": "^0.11.8"
     },
@@ -933,25 +836,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -970,8 +871,7 @@ export const packageJSONData = {
     "dependencies": {
       "ast-compare": "^4.1.3",
       "ast-monkey-traverse": "^4.1.3",
-      "codsen-utils": "^1.7.3",
-      "rfdc": "^1.4.1"
+      "codsen-utils": "^1.7.3"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1023,25 +923,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -1060,8 +958,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-compare": "^4.1.3",
-      "codsen-utils": "^1.7.3",
-      "rfdc": "^1.4.1"
+      "codsen-utils": "^1.7.3"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1114,25 +1011,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -1150,8 +1045,8 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-monkey-traverse": "^4.1.3",
-      "matcher": "^6.0.0",
-      "rfdc": "^1.4.1"
+      "codsen-utils": "^1.7.3",
+      "matcher": "^6.0.0"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1205,25 +1100,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -1292,25 +1185,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -1382,25 +1273,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -1475,25 +1364,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -1510,9 +1397,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ast-monkey-util": "^3.1.3",
-      "codsen-utils": "^1.7.3",
-      "rfdc": "^1.4.1"
+      "codsen-utils": "^1.7.3"
     },
     "devDependencies": {
       "deep-equal": "^2.2.3"
@@ -1570,25 +1455,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -1606,8 +1489,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "codsen-utils": "^1.7.3",
-      "rfdc": "^1.4.1"
+      "codsen-utils": "^1.7.3"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1656,25 +1538,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -1736,25 +1616,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -1816,25 +1694,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -1851,11 +1727,8 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "arrayiffy-if-string": "^5.1.3",
-      "ast-monkey-traverse": "^4.1.3",
       "codsen-utils": "^1.7.3",
       "matcher": "^6.0.0",
-      "object-path": "^0.11.8",
       "type-detect": "^4.1.0"
     },
     "publishConfig": {
@@ -1888,25 +1761,23 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
       "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js'",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "exit 0",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=18"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": false,
@@ -1922,7 +1793,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "meow": "^14.0.0",
+      "codsen-utils": "^1.7.3",
       "update-notifier": "^7.3.1"
     },
     "publishConfig": {
@@ -1959,25 +1830,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "branches": 100,
@@ -1994,9 +1863,6 @@ export const packageJSONData = {
           ""
         ]
       }
-    },
-    "dependencies": {
-      "rfdc": "^1.4.1"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2042,25 +1908,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -2077,12 +1941,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "codsen-utils": "^1.7.3",
-      "hex-color-regex": "^1.1.0",
-      "rfdc": "^1.4.1"
-    },
-    "devDependencies": {
-      "@types/hex-color-regex": "^1.1.3"
+      "codsen-utils": "^1.7.3"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2130,25 +1989,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -2169,7 +2026,7 @@ export const packageJSONData = {
       "@types/lodash-es": "^4.17.12",
       "csv-split-easy": "^7.1.3",
       "currency.js": "^2.0.4",
-      "lodash-es": "^4.17.22"
+      "lodash-es": "^4.18.1"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2215,25 +2072,23 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
       "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js'",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "exit 0",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=18"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": false,
@@ -2249,12 +2104,10 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@inquirer/prompts": "^8.2.0",
-      "chalk": "^5.6.2",
+      "@inquirer/prompts": "^8.5.2",
       "codsen-utils": "^1.7.3",
       "csv-sort": "^7.1.3",
-      "globby": "^16.1.0",
-      "meow": "^14.0.0",
+      "globby": "^16.2.0",
       "update-notifier": "^7.3.1"
     },
     "publishConfig": {
@@ -2302,25 +2155,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -2384,25 +2235,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -2455,25 +2304,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -2537,25 +2384,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -2593,7 +2438,6 @@ export const packageJSONData = {
       "string-trim-spaces-only": "^5.1.3"
     },
     "devDependencies": {
-      "rfdc": "^1.4.1",
       "test-mixer": "^4.2.3"
     },
     "publishConfig": {
@@ -2638,25 +2482,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -2680,9 +2522,8 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ast-monkey-traverse": "^4.1.3",
-      "globby": "^16.1.0",
-      "p-map": "^7.0.4",
-      "rfdc": "^1.4.1"
+      "globby": "^16.2.0",
+      "p-map": "^7.0.4"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2724,25 +2565,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -2800,25 +2639,23 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
       "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js'",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "exit 0",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=18"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": false,
@@ -2836,13 +2673,11 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@inquirer/prompts": "^8.2.0",
+      "@inquirer/prompts": "^8.5.2",
       "@ljharb/through": "^2.3.14",
-      "chalk": "^5.6.2",
       "codsen-utils": "^1.7.3",
       "email-all-chars-within-ascii": "^5.1.3",
-      "globby": "^16.1.0",
-      "minimist": "^1.2.8",
+      "globby": "^16.2.0",
       "string-left-right": "^6.1.3",
       "update-notifier": "^7.3.1"
     },
@@ -2887,25 +2722,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -2977,25 +2810,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -3056,25 +2887,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -3137,25 +2966,23 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
       "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js'",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "exit 0",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=18"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": false,
@@ -3172,92 +2999,13 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
+      "codsen-utils": "^1.7.3",
       "generate-atomic-css": "^3.1.3",
-      "globby": "^16.1.0",
+      "globby": "^16.2.0",
       "is-d": "^1.0.0",
-      "meow": "^14.0.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
-      "write-file-atomic": "^7.0.0"
-    },
-    "publishConfig": {
-      "registry": "https://registry.npmjs.org/"
-    }
-  },
-  "gulp-email-remove-unused-css": {
-    "name": "gulp-email-remove-unused-css",
-    "version": "6.1.3",
-    "description": "Gulp plugin to remove unused CSS classes/id’s from styles in HTML HEAD and inline within BODY",
-    "keywords": [
-      "body",
-      "css",
-      "email",
-      "from",
-      "gulp",
-      "gulpplugin",
-      "head",
-      "inline",
-      "remove",
-      "styles",
-      "uncss",
-      "unused"
-    ],
-    "homepage": "https://codsen.com/os/gulp-email-remove-unused-css",
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/codsen/codsen.git",
-      "directory": "packages/gulp-email-remove-unused-css"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": "./index.js",
-    "scripts": {
-      "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
-      "dev": "exit 0",
-      "devtest": "npm run test",
-      "dts": "exit 0",
-      "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js'",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
-      "perf": "exit 0",
-      "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
-      "pretest": "exit 0",
-      "test": "c8 npm run unit && npm run lint",
-      "unit": "uvu test"
-    },
-    "engines": {
-      "node": ">=18"
-    },
-    "c8": {
-      "check-coverage": false,
-      "exclude": [
-        "**/test/**/*.*"
-      ]
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      }
-    },
-    "dependencies": {
-      "email-comb": "^7.1.3",
-      "plugin-error": "^2.0.1"
-    },
-    "devDependencies": {
-      "map-stream": "^0.0.7",
-      "vinyl-string": "^1.0.2"
+      "write-file-atomic": "^8.0.0"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -3298,25 +3046,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -3383,25 +3129,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -3465,25 +3209,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -3546,25 +3288,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -3631,25 +3371,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -3717,25 +3455,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -3796,25 +3532,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -3881,25 +3615,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -3969,25 +3701,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -4002,9 +3732,6 @@ export const packageJSONData = {
           ""
         ]
       }
-    },
-    "dependencies": {
-      "codsen-utils": "^1.7.3"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4051,25 +3778,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -4131,25 +3856,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -4213,25 +3936,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -4296,25 +4017,23 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
       "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js'",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "exit 0",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=18"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": false,
@@ -4331,13 +4050,13 @@ export const packageJSONData = {
     },
     "dependencies": {
       "arrayiffy-if-string": "^5.1.3",
-      "globby": "^16.1.0",
+      "codsen-utils": "^1.7.3",
+      "globby": "^16.2.0",
       "is-d": "^1.0.0",
       "js-row-num": "^7.1.3",
-      "meow": "^14.0.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
-      "write-file-atomic": "^7.0.0"
+      "write-file-atomic": "^8.0.0"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4380,25 +4099,23 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
       "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js'",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "exit 0",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=18"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": false,
@@ -4414,11 +4131,11 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "fs-extra": "^11.3.3",
-      "globby": "^16.1.0",
+      "codsen-utils": "^1.7.3",
+      "fs-extra": "^11.3.5",
+      "globby": "^16.2.0",
       "is-d": "^1.0.0",
       "json-comb-core": "^8.1.3",
-      "meow": "^14.0.0",
       "p-map": "^7.0.4",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1"
@@ -4464,25 +4181,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -4503,7 +4218,7 @@ export const packageJSONData = {
       "@types/lodash-es": "^4.17.12",
       "@types/semver-compare": "^1.0.3",
       "codsen-utils": "^1.7.3",
-      "lodash-es": "^4.17.22",
+      "lodash-es": "^4.18.1",
       "object-fill-missing-keys": "^11.1.3",
       "object-flatten-all-arrays": "^7.1.3",
       "object-merge-advanced": "^14.1.3",
@@ -4512,7 +4227,6 @@ export const packageJSONData = {
       "p-map": "^7.0.4",
       "p-one": "^2.0.0",
       "p-reduce": "^3.0.0",
-      "rfdc": "^1.4.1",
       "semver-compare": "^1.0.0",
       "sort-keys": "^6.0.0",
       "type-detect": "^4.1.0"
@@ -4556,25 +4270,23 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
       "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js'",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "exit 0",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=18"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": false,
@@ -4591,15 +4303,13 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-monkey-traverse": "^4.1.3",
-      "chalk": "^5.6.2",
       "codsen-utils": "^1.7.3",
-      "fs-extra": "^11.3.3",
-      "globby": "^16.1.0",
+      "fs-extra": "^11.3.5",
+      "globby": "^16.2.0",
       "is-d": "^1.0.0",
-      "meow": "^14.0.0",
       "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
-      "sort-package-json": "^3.6.0",
+      "sort-package-json": "^4.0.0",
       "update-notifier": "^7.3.1"
     },
     "devDependencies": {
@@ -4653,25 +4363,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -4744,25 +4452,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -4822,25 +4528,23 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
       "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js'",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "exit 0",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=18"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": false,
@@ -4858,15 +4562,14 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "chalk": "^5.6.2",
-      "fs-extra": "^11.3.3",
-      "globby": "^16.1.0",
+      "codsen-utils": "^1.7.3",
+      "fs-extra": "^11.3.5",
+      "globby": "^16.2.0",
       "lerna-clean-changelogs": "^5.1.3",
-      "meow": "^14.0.0",
       "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
-      "write-file-atomic": "^7.0.0"
+      "write-file-atomic": "^8.0.0"
     },
     "devDependencies": {
       "p-map": "^7.0.4"
@@ -4913,25 +4616,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -4950,7 +4651,7 @@ export const packageJSONData = {
     "dependencies": {
       "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.7.3",
-      "lodash-es": "^4.17.22"
+      "lodash-es": "^4.18.1"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4990,25 +4691,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -5025,8 +4724,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "codsen-utils": "^1.7.3",
-      "rfdc": "^1.4.1"
+      "codsen-utils": "^1.7.3"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5075,25 +4773,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -5112,7 +4808,7 @@ export const packageJSONData = {
     "dependencies": {
       "ast-is-empty": "^4.1.3",
       "ast-monkey": "^9.1.3",
-      "rfdc": "^1.4.1",
+      "codsen-utils": "^1.7.3",
       "util-array-object-or-both": "^5.1.3"
     },
     "publishConfig": {
@@ -5160,25 +4856,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -5198,8 +4892,7 @@ export const packageJSONData = {
       "arrayiffy-if-string": "^5.1.3",
       "codsen-utils": "^1.7.3",
       "object-all-values-equal-to": "^4.1.3",
-      "object-merge-advanced": "^14.1.3",
-      "rfdc": "^1.4.1"
+      "object-merge-advanced": "^14.1.3"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5243,25 +4936,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -5280,8 +4971,7 @@ export const packageJSONData = {
     "dependencies": {
       "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.7.3",
-      "lodash-es": "^4.17.22",
-      "rfdc": "^1.4.1"
+      "lodash-es": "^4.18.1"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5324,25 +5014,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -5362,7 +5050,6 @@ export const packageJSONData = {
       "arrayiffy-if-string": "^5.1.3",
       "codsen-utils": "^1.7.3",
       "matcher": "^6.0.0",
-      "rfdc": "^1.4.1",
       "str-indexes-of-plus": "^5.1.3"
     },
     "publishConfig": {
@@ -5409,25 +5096,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -5446,9 +5131,8 @@ export const packageJSONData = {
     "dependencies": {
       "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.7.3",
-      "lodash-es": "^4.17.22",
+      "lodash-es": "^4.18.1",
       "matcher": "^6.0.0",
-      "rfdc": "^1.4.1",
       "util-nonempty": "^5.1.3"
     },
     "devDependencies": {
@@ -5497,25 +5181,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -5576,25 +5258,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -5611,8 +5291,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "codsen-utils": "^1.7.3",
-      "rfdc": "^1.4.1"
+      "codsen-utils": "^1.7.3"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5655,25 +5334,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -5690,8 +5367,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "ranges-merge": "^9.1.3",
-      "tiny-invariant": "^1.3.3"
+      "ranges-merge": "^9.1.3"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5733,25 +5409,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -5771,8 +5445,7 @@ export const packageJSONData = {
       "ranges-merge": "^9.1.3"
     },
     "devDependencies": {
-      "ranges-apply": "^7.1.3",
-      "rfdc": "^1.4.1"
+      "ranges-apply": "^7.1.3"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5816,25 +5489,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -5895,25 +5566,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -5969,25 +5638,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -6044,25 +5711,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -6123,25 +5788,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -6160,9 +5823,6 @@ export const packageJSONData = {
     "dependencies": {
       "ranges-push": "^7.1.3",
       "ranges-sort": "^6.1.3"
-    },
-    "devDependencies": {
-      "rfdc": "^1.4.1"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6200,25 +5860,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -6283,25 +5941,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -6367,25 +6023,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -6403,7 +6057,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@types/lodash-es": "^4.17.12",
-      "lodash-es": "^4.17.22",
+      "lodash-es": "^4.18.1",
       "ranges-merge": "^9.1.3"
     },
     "devDependencies": {
@@ -6445,25 +6099,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -6522,25 +6174,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -6599,25 +6249,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -6678,25 +6326,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -6755,25 +6401,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -6819,29 +6463,30 @@ export const packageJSONData = {
       "url": "https://codsen.com"
     },
     "type": "module",
-    "main": "dist/rehype-responsive-tables.cjs.js",
+    "exports": {
+      "types": "./types/index.d.ts",
+      "default": "./dist/rehype-responsive-tables.esm.js"
+    },
     "types": "types/index.d.ts",
     "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && node '../../ops/scripts/fix-cjs.js' && npm run dts",
-      "cjs-off": "node '../../ops/scripts/cjs-off.js'",
-      "cjs-on": "node '../../ops/scripts/cjs-on.js'",
+      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' --write --log-level 'silent'",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "echo 'skip perf'",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -6861,11 +6506,11 @@ export const packageJSONData = {
     "dependencies": {
       "@types/hast": "^3.0.4",
       "@types/lodash-es": "^4.17.12",
-      "lodash-es": "^4.17.22",
+      "lodash-es": "^4.18.1",
       "rehype": "^13.0.2",
       "rehype-parse": "^9.0.1",
       "unified": "^11.0.5",
-      "unist-util-visit": "^5.0.0"
+      "unist-util-visit": "^5.1.0"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6901,29 +6546,30 @@ export const packageJSONData = {
       "url": "https://codsen.com"
     },
     "type": "module",
-    "main": "dist/remark-typography.cjs.js",
+    "exports": {
+      "types": "./types/index.d.ts",
+      "default": "./dist/remark-typography.esm.js"
+    },
     "types": "types/index.d.ts",
     "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && node '../../ops/scripts/fix-cjs.js' && npm run dts",
-      "cjs-off": "node '../../ops/scripts/cjs-off.js'",
-      "cjs-on": "node '../../ops/scripts/cjs-on.js'",
+      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' --write --log-level 'silent'",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "echo 'skip perf'",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -6948,7 +6594,7 @@ export const packageJSONData = {
       "string-dashes": "^1.3.3",
       "string-remove-widows": "^4.1.3",
       "unified": "^11.0.5",
-      "unist-util-visit": "^5.0.0"
+      "unist-util-visit": "^5.1.0"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6991,25 +6637,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -7065,25 +6709,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -7148,25 +6790,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -7227,25 +6867,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -7301,25 +6939,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -7383,25 +7019,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -7464,25 +7098,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -7543,25 +7175,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -7623,25 +7253,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -7703,25 +7331,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -7786,25 +7412,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -7869,25 +7493,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -7908,7 +7530,6 @@ export const packageJSONData = {
       "all-named-html-entities": "^3.1.3",
       "codsen-utils": "^1.7.3",
       "leven": "^4.1.0",
-      "rfdc": "^1.4.1",
       "string-left-right": "^6.1.3"
     },
     "publishConfig": {
@@ -7955,25 +7576,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -7990,8 +7609,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "codsen-utils": "^1.7.3",
-      "rfdc": "^1.4.1"
+      "codsen-utils": "^1.7.3"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -8032,25 +7650,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -8112,25 +7728,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -8189,25 +7803,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "branches": 100,
@@ -8272,25 +7884,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -8356,25 +7966,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -8392,7 +8000,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@types/lodash-es": "^4.17.12",
-      "lodash-es": "^4.17.22",
+      "lodash-es": "^4.18.1",
       "ranges-apply": "^7.1.3",
       "ranges-push": "^7.1.3"
     },
@@ -8442,25 +8050,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -8531,25 +8137,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -8617,25 +8221,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -8655,7 +8257,7 @@ export const packageJSONData = {
       "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.7.3",
       "html-entities": "^2.6.0",
-      "lodash-es": "^4.17.22",
+      "lodash-es": "^4.18.1",
       "ranges-apply": "^7.1.3",
       "ranges-push": "^7.1.3",
       "string-left-right": "^6.1.3"
@@ -8706,25 +8308,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -8747,7 +8347,7 @@ export const packageJSONData = {
   "string-uglify": {
     "name": "string-uglify",
     "version": "3.1.3",
-    "description": "Shorten sets of strings deterministically, to be git-friendly",
+    "description": "Shorten sets of strings deterministically",
     "keywords": [
       "class",
       "classes",
@@ -8787,25 +8387,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -8867,25 +8465,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -8947,25 +8543,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -8982,8 +8576,8 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "object-boolean-combinations": "^6.2.3",
-      "rfdc": "^1.4.1"
+      "codsen-utils": "^1.7.3",
+      "object-boolean-combinations": "^6.2.3"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -9031,25 +8625,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -9115,25 +8707,23 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
       "examples": "exit 0",
-      "lect": "node '../../ops/lect/lect.js'",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "exit 0",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{js,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "exit 0",
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=18"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": false,
@@ -9152,21 +8742,19 @@ export const packageJSONData = {
       "ansi-diff-stream": "^1.2.1",
       "codsen-utils": "^1.7.3",
       "edit-package-json": "^0.9.3",
-      "globby": "^16.1.0",
+      "globby": "^16.2.0",
       "is-online": "^12.0.2",
-      "log-update": "^7.0.2",
-      "meow": "^14.0.0",
+      "log-update": "^8.0.0",
       "object-path": "^0.11.8",
       "p-map": "^7.0.4",
       "p-progress": "^1.0.0",
       "p-reduce": "^3.0.0",
-      "pacote": "^21.0.4",
+      "pacote": "^22.0.0",
       "update-notifier": "^7.3.1",
-      "write-file-atomic": "^7.0.0"
+      "write-file-atomic": "^8.0.0"
     },
     "devDependencies": {
-      "fs-extra": "^11.3.3",
-      "rfdc": "^1.4.1"
+      "fs-extra": "^11.3.5"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -9208,25 +8796,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,
@@ -9242,10 +8828,6 @@ export const packageJSONData = {
         ]
       },
       "various": {}
-    },
-    "dependencies": {
-      "@types/lodash-es": "^4.17.12",
-      "lodash-es": "^4.17.22"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -9285,25 +8867,23 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "cjs-off": "exit 0",
-      "cjs-on": "exit 0",
       "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && npm run prettier -- 'types/index.d.ts' --write --log-level 'silent'",
+      "dts": "rollup -c && npm run prettier:format",
       "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js' && npm run prettier -- 'README.md' '.all-contributorsrc' 'rollup.config.js' --write",
-      "letspublish": "npm publish --provenance || :",
-      "lint": "eslint . --fix --concurrency=auto --cache",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --write .",
       "perf": "node perf/check.js",
       "prep": "echo 'ready'",
-      "prettier": "prettier",
-      "prettier:format": "npm run prettier -- --write '**/*.{ts,tsx,md}' --no-error-on-unmatched-pattern --log-level 'silent'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
       "pretest": "npm run lect && npm run build",
       "test": "npm run devtest",
       "unit": "uvu test"
     },
     "engines": {
-      "node": ">=14.18.0"
+      "node": ">=22"
     },
     "c8": {
       "check-coverage": true,

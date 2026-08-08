@@ -321,7 +321,6 @@ const programs = [
   "all-named-html-entities",
   "array-group-str-omit-num-char",
   "array-includes-with-glob",
-  "array-of-arrays-into-ast",
   "array-pull-all-with-glob",
   "arrayiffy-if-string",
   "ast-compare",
@@ -421,14 +420,11 @@ const programs = [
   "util-array-object-or-both",
   "util-nonempty"
 ] as const;
-const special = [
-  "gulp-email-remove-unused-css"
-] as const;
+const special = [] as const;
 const script = [
   "all-named-html-entities",
   "array-group-str-omit-num-char",
   "array-includes-with-glob",
-  "array-of-arrays-into-ast",
   "array-pull-all-with-glob",
   "arrayiffy-if-string",
   "ast-compare",
@@ -526,6 +522,7 @@ const script = [
   "util-nonempty"
 ] as const;
 const packagesOutsideMonorepo = [
+  "array-of-arrays-into-ast",
   "array-of-arrays-sort-by-col",
   "bitbucket-slug",
   "codsen-parser",
@@ -533,6 +530,7 @@ const packagesOutsideMonorepo = [
   "easy-replace",
   "email-homey",
   "emlint",
+  "gulp-email-remove-unused-css",
   "helga",
   "lect",
   "lerna-link-dep",
@@ -575,7 +573,6 @@ const splitListHtmlLibs = [
   "detect-is-it-html-or-xhtml",
   "detect-templating-language",
   "generate-atomic-css",
-  "gulp-email-remove-unused-css",
   "html-all-known-attributes",
   "html-entities-not-email-friendly",
   "html-img-alt",
@@ -618,7 +615,6 @@ const splitListStringLibs = [
 const splitListObjectOrArrLibs = [
   "array-group-str-omit-num-char",
   "array-includes-with-glob",
-  "array-of-arrays-into-ast",
   "array-pull-all-with-glob",
   "json-comb-core",
   "json-variables",
@@ -692,10 +688,10 @@ export const packages = {
     totalPackageCount: 151,
     currentPackagesCount: 133,
     cliCount: 9,
-    programsCount: 102,
-    specialCount: 1,
-    scriptCount: 99,
-    packagesOutsideMonorepoCount: 21,
+    programsCount: 101,
+    specialCount: 0,
+    scriptCount: 98,
+    packagesOutsideMonorepoCount: 23,
     splitListFlagshipLibs,
     splitListRangeLibs,
     splitListHtmlLibs,

@@ -15,20 +15,17 @@ export const dependencyStats: DependencyStats = {
   "allExternalDeps": [
     "@inquirer/prompts",
     "@ljharb/through",
-    "@sindresorhus/is",
     "@types/hast",
     "@types/lodash-es",
     "@types/semver-compare",
     "ansi-diff-stream",
     "ansi-regex",
-    "chalk",
     "currency.js",
     "fp-ts",
     "fs-extra",
     "globby",
     "grapheme-splitter",
     "he",
-    "hex-color-regex",
     "html-entities",
     "is-d",
     "is-online",
@@ -36,8 +33,6 @@ export const dependencyStats: DependencyStats = {
     "lodash-es",
     "log-update",
     "matcher",
-    "meow",
-    "minimist",
     "object-path",
     "p-filter",
     "p-map",
@@ -45,15 +40,12 @@ export const dependencyStats: DependencyStats = {
     "p-progress",
     "p-reduce",
     "pacote",
-    "plugin-error",
     "rehype",
     "rehype-parse",
-    "rfdc",
     "runes",
     "semver-compare",
     "sort-keys",
     "sort-package-json",
-    "tiny-invariant",
     "type-detect",
     "unified",
     "unist-util-visit",
@@ -71,7 +63,6 @@ export const dependencyStats: DependencyStats = {
     "ast-monkey",
     "ast-monkey-traverse",
     "ast-monkey-traverse-with-lookahead",
-    "ast-monkey-util",
     "check-types-mini",
     "codsen-parser",
     "codsen-utils",
@@ -79,7 +70,6 @@ export const dependencyStats: DependencyStats = {
     "csv-split-easy",
     "edit-package-json",
     "email-all-chars-within-ascii",
-    "email-comb",
     "generate-atomic-css",
     "html-all-known-attributes",
     "html-crush",
@@ -134,40 +124,35 @@ export const dependencyStats: DependencyStats = {
   "dependencies": {
     "@inquirer/prompts": 2,
     "@ljharb/through": 1,
-    "@sindresorhus/is": 1,
     "@types/hast": 2,
-    "@types/lodash-es": 10,
+    "@types/lodash-es": 9,
     "@types/semver-compare": 1,
     "all-named-html-entities": 2,
     "ansi-diff-stream": 1,
     "ansi-regex": 1,
     "array-pull-all-with-glob": 1,
-    "arrayiffy-if-string": 8,
+    "arrayiffy-if-string": 7,
     "ast-compare": 3,
     "ast-contains-only-empty-space": 2,
     "ast-get-values-by-key": 1,
     "ast-is-empty": 1,
     "ast-monkey": 1,
-    "ast-monkey-traverse": 9,
+    "ast-monkey-traverse": 7,
     "ast-monkey-traverse-with-lookahead": 1,
-    "ast-monkey-util": 1,
-    "chalk": 4,
-    "check-types-mini": 4,
+    "check-types-mini": 3,
     "codsen-parser": 1,
-    "codsen-utils": 50,
+    "codsen-utils": 57,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
     "edit-package-json": 1,
     "email-all-chars-within-ascii": 1,
-    "email-comb": 1,
     "fp-ts": 1,
     "fs-extra": 3,
     "generate-atomic-css": 1,
     "globby": 8,
     "grapheme-splitter": 1,
     "he": 3,
-    "hex-color-regex": 1,
     "html-all-known-attributes": 1,
     "html-crush": 1,
     "html-entities": 1,
@@ -179,18 +164,16 @@ export const dependencyStats: DependencyStats = {
     "json-comb-core": 1,
     "lerna-clean-changelogs": 1,
     "leven": 2,
-    "lodash-es": 10,
+    "lodash-es": 9,
     "log-update": 1,
     "matcher": 9,
-    "meow": 8,
-    "minimist": 1,
     "object-all-values-equal-to": 1,
     "object-boolean-combinations": 1,
     "object-fill-missing-keys": 1,
     "object-flatten-all-arrays": 1,
-    "object-merge-advanced": 3,
+    "object-merge-advanced": 2,
     "object-no-new-keys": 1,
-    "object-path": 4,
+    "object-path": 3,
     "object-set-all-values-to": 1,
     "p-filter": 2,
     "p-map": 3,
@@ -198,7 +181,6 @@ export const dependencyStats: DependencyStats = {
     "p-progress": 1,
     "p-reduce": 7,
     "pacote": 1,
-    "plugin-error": 1,
     "ranges-apply": 16,
     "ranges-crop": 2,
     "ranges-invert": 2,
@@ -213,7 +195,6 @@ export const dependencyStats: DependencyStats = {
     "regex-jinja-specific": 1,
     "rehype": 1,
     "rehype-parse": 1,
-    "rfdc": 18,
     "runes": 1,
     "semver-compare": 1,
     "sort-keys": 1,
@@ -239,8 +220,7 @@ export const dependencyStats: DependencyStats = {
     "string-uglify": 1,
     "string-unfancy": 2,
     "test-mixer": 1,
-    "tiny-invariant": 1,
-    "type-detect": 3,
+    "type-detect": 2,
     "unified": 2,
     "unist-util-visit": 2,
     "update-notifier": 9,
@@ -250,34 +230,22 @@ export const dependencyStats: DependencyStats = {
   },
   "devDependencies": {
     "@types/he": 2,
-    "@types/hex-color-regex": 1,
     "@types/runes": 1,
-    "@types/type-detect": 1,
     "ast-monkey-traverse": 2,
     "color-shorthand-hex-to-six-digit": 1,
     "deep-equal": 2,
     "fs-extra": 1,
     "globby": 1,
-    "map-stream": 1,
     "p-map": 3,
     "ranges-apply": 5,
     "ranges-invert": 1,
     "ranges-merge": 1,
-    "rfdc": 5,
     "string-find-heads-tails": 1,
     "string-strip-html": 1,
     "test-mixer": 4,
-    "title": 1,
-    "type-fest": 1,
-    "vinyl-string": 1
+    "title": 1
   },
   "top10ExternalDeps": [
-    {
-      "rfdc": 18
-    },
-    {
-      "@types/lodash-es": 10
-    },
     {
       "matcher": 9
     },
@@ -285,42 +253,45 @@ export const dependencyStats: DependencyStats = {
       "update-notifier": 9
     },
     {
-      "meow": 8
+      "@types/lodash-es": 9
     },
     {
-      "object-path": 4
+      "lodash-es": 9
     },
     {
-      "type-detect": 3
+      "globby": 8
     },
     {
-      "@sindresorhus/is": 1
+      "object-path": 3
     },
     {
-      "hex-color-regex": 1
+      "type-detect": 2
+    },
+    {
+      "@inquirer/prompts": 2
     },
     {
       "currency.js": 1
+    },
+    {
+      "ansi-regex": 1
     }
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 50
+      "codsen-utils": 57
     },
     {
       "ranges-apply": 16
     },
     {
-      "ast-monkey-traverse": 9
-    },
-    {
-      "check-types-mini": 4
-    },
-    {
-      "object-merge-advanced": 3
+      "ast-monkey-traverse": 7
     },
     {
       "ast-compare": 3
+    },
+    {
+      "check-types-mini": 3
     },
     {
       "ast-contains-only-empty-space": 2
@@ -332,7 +303,10 @@ export const dependencyStats: DependencyStats = {
       "ranges-is-index-within": 2
     },
     {
-      "ast-monkey-util": 1
+      "csv-split-easy": 1
+    },
+    {
+      "csv-sort": 1
     }
   ]
 };
