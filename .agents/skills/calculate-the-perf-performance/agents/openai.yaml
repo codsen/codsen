@@ -1,0 +1,4 @@
+interface:
+  display_name: "Calculate Performance"
+  short_description: "Audit, run, and compare Codsen benchmarks"
+  default_prompt: "Use $calculate-the-perf-performance to audit and run all monorepo benchmarks, then summarize how normalized performance changed."
