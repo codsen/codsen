@@ -10,11 +10,19 @@
     "ignoreUnknown": false,
     "includes": [
       "**",
-      "!!data/sources",
+      "!!data/sources/allDTS.ts",
+      "!!data/sources/changelogs.ts",
+      "!!data/sources/dependencyStats.ts",
+      "!!data/sources/examples.ts",
+      "!!data/sources/exportedDefaults.ts",
+      "!!data/sources/gitStats.ts",
+      "!!data/sources/interdeps.ts",
+      "!!data/sources/packageJSONData.ts",
+      "!!data/sources/packages.ts",
       "!!ops/**/*.esm.js",
       "!!packages/*/tap",
-      "!!packages/email-comb/perf",
-      "!!packages/html-crush/perf",
+      "!!packages/email-comb/perf/dummy_file.html",
+      "!!packages/html-crush/perf/dummy_file.html",
       "!!packages/*/test/fixtures",
       "!!packages/*/perf/historical.json"
     ]
@@ -30,35 +38,136 @@
     "bracketSameLine": false,
     "bracketSpacing": true,
     "expand": "auto",
-    "useEditorconfig": true,
-    "includes": ["**"]
+    "useEditorconfig": true
   },
   "linter": {
     "enabled": true,
+    "domains": {
+      "test": "recommended"
+    },
     "rules": {
       "preset": "recommended",
-      "complexity": {
-        "useRegexLiterals": "off"
-      },
       "style": {
         "useConst": "off"
       },
       "suspicious": {
-        "noAssignInExpressions": "off",
         "noExplicitAny": "off",
-        "noImplicitAnyLet": "off"
+        "noSkippedTests": "error"
       }
     }
   },
   "overrides": [
     {
-      "includes": ["packages/*/examples/**", "packages/*/test/**"],
+      "includes": [
+        "packages/ast-delete-object/src/main.ts",
+        "packages/ast-loose-compare/src/main.ts",
+        "packages/ast-monkey-traverse/src/main.ts",
+        "packages/csv-sort/src/main.ts",
+        "packages/detergent/src/main.ts",
+        "packages/detergent/src/processCharacter.ts",
+        "packages/email-comb/src/main.ts",
+        "packages/generate-atomic-css/src/util.ts",
+        "packages/html-crush/src/main.ts",
+        "packages/html-img-alt/src/main.ts",
+        "packages/is-html-attribute-closing/src/main.ts",
+        "packages/is-media-descriptor/src/main.ts",
+        "packages/js-row-num/src/main.ts",
+        "packages/json-variables/src/main.ts",
+        "packages/json-variables/src/utils/removeWrappingHeadsAndTails.ts",
+        "packages/lerna-clean-changelogs/src/main.ts",
+        "packages/object-flatten-referencing/src/util.ts",
+        "packages/object-merge-advanced/src/main.ts",
+        "packages/object-no-new-keys/src/main.ts",
+        "packages/ranges-ent-decode/src/main.ts",
+        "packages/ranges-merge/src/main.ts",
+        "packages/ranges-push/src/rMerge.ts",
+        "packages/ranges-regex/src/main.ts",
+        "packages/string-find-heads-tails/src/main.ts",
+        "packages/string-find-malformed/src/main.ts",
+        "packages/string-fix-broken-named-entities/src/main.ts",
+        "packages/string-fix-broken-named-entities/src/util.ts",
+        "packages/string-left-right/src/main.ts",
+        "packages/string-range-expander/src/main.ts",
+        "packages/string-remove-duplicate-heads-tails/src/main.ts",
+        "packages/string-remove-thousand-separators/src/main.ts",
+        "packages/string-remove-widows/src/main.ts",
+        "packages/string-trim-spaces-only/src/main.ts",
+        "packages/test-mixer/src/main.ts",
+        "packages/tsd-extract/src/main.ts"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noImplicitAnyLet": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "packages/js-row-num/test/test.js",
+        "packages/object-merge-advanced/test/opts-cb-test.js",
+        "packages/object-merge-advanced/test/test.js",
+        "packages/ranges-process-outside/examples/_quickTake.js",
+        "packages/ranges-process-outside/test/test.js",
+        "packages/remark-conventional-commit-changelog-timeline/examples/_quickTake.js",
+        "packages/string-convert-indexes/test/nativeToUnicode.js",
+        "packages/string-convert-indexes/test/unicodeToNative.js",
+        "packages/string-match-left-right/test/cb.js",
+        "packages/string-strip-html/examples/cb-which-does-nothing.js",
+        "packages/string-strip-html/examples/leave-only-opening-td.js",
+        "packages/string-strip-html/test/ranges.js",
+        "packages/string-uglify/test/test.js"
+      ],
       "linter": {
         "rules": {
           "correctness": {
-            "noUnusedFunctionParameters": "off",
+            "noUnusedFunctionParameters": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "packages/all-named-html-entities/examples/_quickTake.js",
+        "packages/detergent/examples/_quickTake.js",
+        "packages/email-comb/examples/_quickTake.js",
+        "packages/generate-atomic-css/examples/_quickTake.js",
+        "packages/html-crush/examples/_quickTake.js",
+        "packages/html-entities-not-email-friendly/examples/_quickTake.js",
+        "packages/json-comb-core/examples/_quickTake.js",
+        "packages/json-comb-core/examples/enforceKeyset.js",
+        "packages/json-comb-core/examples/enforceKeysetSync.js",
+        "packages/json-comb-core/examples/findUnusedSync-2.js",
+        "packages/json-comb-core/examples/findUnusedSync.js",
+        "packages/json-comb-core/examples/getKeyset.js",
+        "packages/json-comb-core/examples/getKeysetSync.js",
+        "packages/json-comb-core/examples/noNewKeys-2.js",
+        "packages/json-comb-core/examples/noNewKeys.js",
+        "packages/json-comb-core/examples/sortAllObjectsSync.js",
+        "packages/string-left-right/examples/_quickTake.js",
+        "packages/string-match-left-right/examples/cb.js",
+        "packages/string-uglify/examples/_quickTake.js"
+      ],
+      "linter": {
+        "rules": {
+          "correctness": {
             "noUnusedImports": "off"
-          },
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "packages/detect-templating-language/examples/_quickTake.js",
+        "packages/js-row-num/examples/_quickTake.js",
+        "packages/js-row-num/test/test.js",
+        "packages/json-variables/test/basic.js",
+        "packages/object-flatten-referencing/test/flattenReferencing.js",
+        "packages/regex-is-jsp/test/test.js"
+      ],
+      "linter": {
+        "rules": {
           "suspicious": {
             "noTemplateCurlyInString": "off"
           }

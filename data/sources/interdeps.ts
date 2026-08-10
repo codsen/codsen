@@ -326,7 +326,7 @@ export const interdeps = [
   },
   {
     "name": "is-html-tag-opening",
-    "size": 3954,
+    "size": 3939,
     "imports": [
       "string-left-right",
       "string-match-left-right"
@@ -503,7 +503,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-ent-decode",
-    "size": 2094,
+    "size": 2097,
     "imports": [
       "codsen-utils",
       "ranges-merge"
@@ -550,7 +550,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-regex",
-    "size": 1792,
+    "size": 1798,
     "imports": [
       "ranges-merge"
     ]
@@ -741,7 +741,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 23109,
+    "size": 23121,
     "imports": [
       "codsen-utils",
       "ranges-apply",

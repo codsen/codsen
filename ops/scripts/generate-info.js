@@ -676,7 +676,7 @@ if (shouldGenerateGitStats) {
         { commitTotal: commitTotal.trim() },
         null,
         2,
-      )}`,
+      )}\n`,
       (err) => {
         if (err) {
           throw err;

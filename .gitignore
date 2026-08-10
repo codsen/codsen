@@ -39,6 +39,9 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# local agent settings
+.claude/settings.local.json
+
 # turbo
 .turbo
 

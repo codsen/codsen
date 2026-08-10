@@ -1223,7 +1223,11 @@ function localSpecifiers(source) {
   ];
   for (const expression of expressions) {
     let match;
-    while ((match = expression.exec(source))) {
+    for (
+      match = expression.exec(source);
+      match;
+      match = expression.exec(source)
+    ) {
       if (match[1].startsWith(".")) {
         specifiers.add(match[1]);
       }

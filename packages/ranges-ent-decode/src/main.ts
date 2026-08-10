@@ -105,7 +105,7 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
   // action
   // ---------------------------------------------------------------------------
 
-  while ((array1 = entityRegex.exec(str)) !== null) {
+  for (array1 = entityRegex.exec(str); array1; array1 = entityRegex.exec(str)) {
     DEV &&
       console.log(
         `111 --------\nFound ${`\u001b[${33}m${array1[0]}\u001b[${39}m`} Range: [${

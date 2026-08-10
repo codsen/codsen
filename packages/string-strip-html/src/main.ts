@@ -3386,7 +3386,7 @@ function collectEntityDecodeRanges(str: string): RangesType {
   const ranges: Range[] = [];
   let match: RegExpExecArray | null;
 
-  while ((match = entityRegex.exec(str))) {
+  for (match = entityRegex.exec(str); match; match = entityRegex.exec(str)) {
     let decoded = match[0];
     let next = decode(decoded, { scope: "strict" });
 

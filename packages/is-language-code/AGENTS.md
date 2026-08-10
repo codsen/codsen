@@ -9,7 +9,7 @@ artifacts and do not edit them manually.
 
 The authoritative registry is:
 
-https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
+<https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry>
 
 After installing the monorepo root dependencies, regenerate from the repository
 root with:

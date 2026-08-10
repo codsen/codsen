@@ -38,6 +38,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Lint maintained Markdown
+        run: npm run lint:markdown
+
       - name: Assert the complete workspace set
         run: node ops/scripts/npm-release.js assert-workspaces --expected 111
 
@@ -71,8 +74,8 @@ jobs:
           package_node_matrix=$(node ops/scripts/verify-node-compatibility.js --github-actions-matrix)
           echo "matrix=$package_node_matrix" >> "$GITHUB_OUTPUT"
 
-      - name: Check formatting and linting without changing files
-        run: npm exec -- biome check .
+      - name: Check formatting, linting and assists without changing files
+        run: npm exec -- biome ci --error-on-warnings .
 
       - name: Verify the release commit is reproducible
         run: |

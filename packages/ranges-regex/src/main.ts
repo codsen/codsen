@@ -85,7 +85,7 @@ function rRegex(
     replacement === null ||
     (typeof replacement === "string" && replacement.length)
   ) {
-    while ((tempArr = regExp.exec(str)) !== null) {
+    for (tempArr = regExp.exec(str); tempArr; tempArr = regExp.exec(str)) {
       resRange.push([
         regExp.lastIndex - tempArr[0].length,
         regExp.lastIndex,
@@ -100,7 +100,7 @@ function rRegex(
       }
     }
   } else {
-    while ((tempArr = regExp.exec(str)) !== null) {
+    for (tempArr = regExp.exec(str); tempArr; tempArr = regExp.exec(str)) {
       if (tempArr[0].length) {
         resRange.push([regExp.lastIndex - tempArr[0].length, regExp.lastIndex]);
       } else {

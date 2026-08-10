@@ -125,7 +125,7 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
   );
   // =======
   // r10. closing tag with slash present but opening bracket missing
-  let r10 = new RegExp(`^\\/\\s*\\w+s*>`);
+  let r10 = /^\/\s*\w+s*>/;
 
   // =======
 

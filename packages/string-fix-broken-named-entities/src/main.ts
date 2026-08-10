@@ -1160,7 +1160,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                 // we still consider that whole chunk (from ampersand to semi)
                 // might be a value of an entity
                 potentialEntity.length < maxLength + 2 &&
-                // a) either one character is different:
+                // biome-ignore lint/suspicious/noAssignInExpressions: retain the first non-empty Levenshtein candidate set for the branch body
                 (((temp = [...allNamedEntitiesSetOnly].filter(
                   (curr) => leven(curr, potentialEntity) === 1,
                 )) &&
@@ -1168,7 +1168,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   //
                   // OR
                   //
-                  // b) two are different but entity is at least 4 chars long:
+                  // biome-ignore lint/suspicious/noAssignInExpressions: retain distance-two candidates when distance one found none
                   ((temp = [...allNamedEntitiesSetOnly].filter(
                     (curr) =>
                       /* c8 ignore next */

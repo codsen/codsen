@@ -454,7 +454,7 @@ test(`024 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
     convertEntities: true,
     convertDashes: true,
   }).forEach((opt, n) => {
-    ok(det(ok, not, n, "a - b", opt).applicableOpts.convertDashes, "24.01");
+    ok(det(ok, not, n, "a - b", opt).applicableOpts.convertDashes, "024.01");
   });
 });
 
@@ -477,7 +477,7 @@ test(`026 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &ndash; b", opt).applicableOpts.convertDashes,
-      "26.01",
+      "026.01",
     );
   });
 });
@@ -501,7 +501,7 @@ test(`028 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &mdash; b", opt).applicableOpts.convertDashes,
-      "28.01",
+      "028.01",
     );
   });
 });
@@ -525,7 +525,7 @@ test(`030 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, `a ${rawNDash} b`, opt).applicableOpts.convertDashes,
-      "30.01",
+      "030.01",
     );
   });
 });
@@ -549,7 +549,7 @@ test(`032 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, `a ${rawMDash} b`, opt).applicableOpts.convertDashes,
-      "32.01",
+      "032.01",
     );
   });
 });
@@ -574,7 +574,7 @@ test(`034 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &#x2D; b", opt).applicableOpts.convertDashes,
-      "34.01",
+      "034.01",
     );
   });
 });
@@ -599,7 +599,7 @@ test(`036 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &#x2013; b", opt).applicableOpts.convertDashes,
-      "36.01",
+      "036.01",
     );
   });
 });
@@ -624,7 +624,7 @@ test(`038 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &#x2014; b", opt).applicableOpts.convertDashes,
-      "38.01",
+      "038.01",
     );
   });
 });
@@ -646,7 +646,7 @@ test(`040 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
     convertEntities: true,
     convertDashes: false,
   }).forEach((opt, n) => {
-    ok(det(ok, not, n, "a - b", opt).applicableOpts.convertDashes, "40.01");
+    ok(det(ok, not, n, "a - b", opt).applicableOpts.convertDashes, "040.01");
   });
 });
 
@@ -669,7 +669,7 @@ test(`042 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &ndash; b", opt).applicableOpts.convertDashes,
-      "42.01",
+      "042.01",
     );
   });
 });
@@ -693,7 +693,7 @@ test(`044 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &mdash; b", opt).applicableOpts.convertDashes,
-      "44.01",
+      "044.01",
     );
   });
 });
@@ -717,7 +717,7 @@ test(`046 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, `a ${rawNDash} b`, opt).applicableOpts.convertDashes,
-      "46.01",
+      "046.01",
     );
   });
 });
@@ -741,7 +741,7 @@ test(`048 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, `a ${rawMDash} b`, opt).applicableOpts.convertDashes,
-      "48.01",
+      "048.01",
     );
   });
 });
@@ -765,7 +765,7 @@ test(`050 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &#x2D; b", opt).applicableOpts.convertDashes,
-      "50.01",
+      "050.01",
     );
   });
 });
@@ -790,7 +790,7 @@ test(`052 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &#x2013; b", opt).applicableOpts.convertDashes,
-      "52.01",
+      "052.01",
     );
   });
 });
@@ -815,7 +815,7 @@ test(`054 - opts.convertDashes - \u001b[${31}m${"m-dash"}\u001b[${39}m - opts ar
   }).forEach((opt, n) => {
     ok(
       det(ok, not, n, "a &#x2014; b", opt).applicableOpts.convertDashes,
-      "54.01",
+      "054.01",
     );
   });
 });
@@ -935,7 +935,7 @@ test(`064 - opts.convertDashes - \u001b[${33}m${"insurance"}\u001b[${39}m - repo
       "{% if x %}a{% endif %} a&nbsp;&mdash;&nbsp;b",
       "064.02",
     );
-    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "64.03");
+    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "064.03");
   });
 });
 
@@ -947,7 +947,7 @@ test(`065 - opts.convertDashes - \u001b[${33}m${"insurance"}\u001b[${39}m - repo
     convertDashes: true,
   }).forEach((opt, n) => {
     equal(det(ok, not, n, source, opt).res, source, "065.01");
-    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "65.02");
+    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "065.02");
   });
 });
 
@@ -963,7 +963,7 @@ test(`066 - opts.convertDashes - \u001b[${33}m${"insurance"}\u001b[${39}m - repo
       `{% if x %}a{% endif %} a${rawNbsp}${rawMDash}${rawNbsp}b`,
       "066.01",
     );
-    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "66.02");
+    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "066.02");
   });
 });
 
@@ -979,7 +979,7 @@ test(`067 - opts.convertDashes - \u001b[${33}m${"insurance"}\u001b[${39}m - repo
       `{% if x %}a{% endif %} a ${rawMDash} b`,
       "067.01",
     );
-    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "67.02");
+    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "067.02");
   });
 });
 
@@ -995,7 +995,7 @@ test(`068 - opts.convertDashes - \u001b[${33}m${"insurance"}\u001b[${39}m - repo
       "{% if x %}a{% endif %} a&nbsp;-&nbsp;b",
       "068.01",
     );
-    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "68.02");
+    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "068.02");
   });
 });
 
@@ -1011,7 +1011,7 @@ test(`069 - opts.convertDashes - \u001b[${33}m${"insurance"}\u001b[${39}m - repo
       "{% if x %}a{% endif %} a - b",
       "069.01",
     );
-    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "69.02");
+    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "069.02");
   });
 });
 
@@ -1027,7 +1027,7 @@ test(`070 - opts.convertDashes - \u001b[${33}m${"insurance"}\u001b[${39}m - repo
       `{% if x %}a{% endif %} a${rawNbsp}-${rawNbsp}b`,
       "070.01",
     );
-    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "70.02");
+    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "070.02");
   });
 });
 
@@ -1043,7 +1043,7 @@ test(`071 - opts.convertDashes - \u001b[${33}m${"insurance"}\u001b[${39}m - repo
       "{% if x %}a{% endif %} a - b",
       "071.01",
     );
-    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "71.02");
+    ok(det(ok, not, n, source, opt).applicableOpts.convertDashes, "071.02");
   });
 });
 
@@ -1263,6 +1263,7 @@ test(`084 - opts.convertDashes - \u001b[${36}m${"hyphens"}\u001b[${39}m - dashes
   });
 });
 
+// biome-ignore lint/suspicious/noSkippedTests: known removeWidows/convertDashes=false behavior since the string-dashes migration; retain as pending regression coverage
 test.skip(`085 - \u001b[${35}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"hyphens"}\u001b[${39}m - when dashes are off, widow removal still works`, () => {
   equal(
     det1("a - b", {
@@ -1279,7 +1280,7 @@ test.skip(`085 - \u001b[${35}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36
       convertEntities: false,
       convertDashes: false,
     }).applicableOpts.removeWidows,
-    "85.02",
+    "085.02",
   );
 
   mixer({

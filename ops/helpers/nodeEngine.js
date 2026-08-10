@@ -24,7 +24,11 @@ function lowestNodeMajor(nodeEngineRange) {
     const lowerBoundPattern =
       /(?:^|\s)(>=|>|=|\^|~)?\s*v?(\d+)(?:\.(?:\d+|x|X|\*))?(?:\.(?:\d+|x|X|\*))?(?=$|\s)/g;
     let match;
-    while ((match = lowerBoundPattern.exec(trimmed))) {
+    for (
+      match = lowerBoundPattern.exec(trimmed);
+      match;
+      match = lowerBoundPattern.exec(trimmed)
+    ) {
       lowerBounds.push(Number(match[2]));
     }
 
