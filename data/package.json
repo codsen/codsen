@@ -24,7 +24,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "rimraf ./dist && tsc --project tsconfig.json",
+    "build": "node --input-type=commonjs -e \"require('node:fs').rmSync('./dist',{recursive:true,force:true})\" && tsc --project tsconfig.json",
     "test": "echo 'no tests'",
     "publ": "npm publish --provenance",
     "dev": "exit 0",
@@ -40,8 +40,5 @@
     "prettier:format": "exit 0",
     "pretest": "exit 0",
     "unit": "exit 0"
-  },
-  "devDependencies": {
-    "rimraf": "^6.1.3"
   }
 }

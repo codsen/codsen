@@ -2,17 +2,9 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import objectPath from "object-path";
 
-// import rimraf from "rimraf";
-
 // delete all requested files
 // key files.delete from packages/ root .lectrc.json
 async function hardDelete({ lectrc }) {
-  // rimraf(path.resolve(".nyc_output/"), {}, (e) => {
-  //   if (e) {
-  //     console.log(e);
-  //   }
-  // });
-
   let thingsToDelete = (objectPath.get(lectrc, "files.delete") || []).filter(
     (val) => {
       return val && val.trim() !== "";

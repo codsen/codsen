@@ -1,5 +1,4 @@
 import { ellipsis, multiplicationSign, rightSingleQuote } from "codsen-utils";
-import { pipe } from "fp-ts/lib/function.js";
 import type { Root } from "hast";
 import { convertAll as convertApostrophesOriginal } from "string-apostrophes";
 import { convertAll as convertDashesOriginal } from "string-dashes";
@@ -41,12 +40,8 @@ const fixTypography: UnifiedPlugin<any[]> = () => {
     visit(tree, "text", (node, index, parent) => {
       let originalNodeValue = node.value;
 
-      node.value = pipe(
-        node.value,
-        convertApostrophes,
-        convertDashes,
-        extras,
-        removeWidows,
+      node.value = removeWidows(
+        extras(convertDashes(convertApostrophes(node.value))),
       );
 
       // correction for:

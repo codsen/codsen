@@ -582,7 +582,7 @@ export const interdeps = [
   },
   {
     "name": "remark-typography",
-    "size": 1036,
+    "size": 992,
     "imports": [
       "codsen-utils",
       "string-apostrophes",
