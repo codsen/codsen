@@ -1,8 +1,8 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import * as fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { execa } from "execa";
-import fs from "fs-extra";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";

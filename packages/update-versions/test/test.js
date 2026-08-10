@@ -1,10 +1,9 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
-import { promises } from "node:fs";
+import { mkdirSync, promises } from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { execa } from "execa";
-import { ensureDirSync } from "fs-extra";
 import pMap from "p-map";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
@@ -132,9 +131,9 @@ test("01 - monorepo", async () => {
 
   // 1. The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:
-  ensureDirSync(path.join(tempFolder, "packages/lib1"));
-  ensureDirSync(path.join(tempFolder, "packages/lib2"));
-  ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
+  mkdirSync(path.join(tempFolder, "packages/lib1"), { recursive: true });
+  mkdirSync(path.join(tempFolder, "packages/lib2"), { recursive: true });
+  mkdirSync(path.join(tempFolder, "node_modules/lib3"), { recursive: true });
 
   // 2. asynchronously write all test files
 
@@ -182,7 +181,7 @@ test("02 - normal repo", async () => {
   let tempFolder = temporaryDirectory();
 
   // 1. create folders:
-  ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
+  mkdirSync(path.join(tempFolder, "node_modules/lib3"), { recursive: true });
 
   // asynchronously write all test files
 
@@ -221,7 +220,7 @@ test("03 - deletes deps from dev-deps if they are among normal deps", async () =
   // it will contain commitizen on both deps and dev deps
 
   // 1. create folders:
-  ensureDirSync(path.join(tempFolder, "node_modules/lib3"));
+  mkdirSync(path.join(tempFolder, "node_modules/lib3"), { recursive: true });
 
   // asynchronously write all test files
 
@@ -262,7 +261,7 @@ test("05 - help output mode", async () => {
 test("06 - no files found in the given directory", async () => {
   let tempFolder = temporaryDirectory();
   // create folder:
-  ensureDirSync(path.resolve(tempFolder));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
 
   // call execa on that empty folder
   let stdOutContents = await execa(path.join(__dirname2, "../", "cli.js"), {

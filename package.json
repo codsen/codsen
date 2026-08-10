@@ -23,7 +23,6 @@
     "ci:verify:node-compatibility": "node ./ops/scripts/verify-node-compatibility.js",
     "ci:verify:data": "node ./ops/scripts/verify-data.js",
     "lernacleanchangelog": "lernacleanchangelog '**' --extras",
-    "cm": "git-cz -n",
     "dev": "turbo run dev --parallel",
     "format": "biome format --write .",
     "format:check": "biome format .",
@@ -37,6 +36,7 @@
     "nuke": "git clean -fdx",
     "perf": "turbo run perf",
     "prep": "turbo run prep",
+    "prepare": "git config core.hooksPath ops/git-hooks || true",
     "prettier": "npm run check",
     "prettier:format": "npm run check:fix",
     "test": "npm run house && npm run lect && npm run test:compatibility && npm run test:quality && npm run perf",
@@ -46,15 +46,10 @@
     "turbo": "turbo",
     "unit": "npm run house && turbo run unit",
     "wipe": "rm package-lock.json || true && rm -rf node_modules && git clean -fXd && npm i",
-    "knip": "knip"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
+    "knip": "npx knip"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.6",
+    "@biomejs/biome": "2.5.7",
     "@lerna-lite/cli": "^5.4.2",
     "@lerna-lite/version": "^5.4.2",
     "@rollup/plugin-json": "^6.1.0",
@@ -66,8 +61,6 @@
     "benchmark": "^2.1.4",
     "c8": "^11.0.0",
     "codsen-utils": "^1.7.3",
-    "commitizen": "^4.3.2",
-    "cz-conventional-changelog": "^3.3.0",
     "dequal": "^2.0.3",
     "detergent": "^9.3.3",
     "edit-package-json": "^0.9.3",
@@ -76,7 +69,6 @@
     "execa": "^9.6.1",
     "hast-util-raw": "^9.1.0",
     "json-comb-core": "^8.1.3",
-    "knip": "^6.17.1",
     "lerna-clean-changelogs-cli": "^4.1.3",
     "lodash.camelcase": "^4.3.0",
     "lodash.chunk": "^4.2.0",
@@ -124,6 +116,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "allowScripts": {
-    "fsevents@2.3.3": true
+    "fsevents@2.3.3": true,
+    "esbuild@0.28.1": true
   }
 }

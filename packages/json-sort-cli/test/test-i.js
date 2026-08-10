@@ -1,7 +1,7 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { execa, execaCommand } from "execa";
-import fs from "fs-extra";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
@@ -25,16 +25,16 @@ test("01 - indentationCount set to 3, spaces", async () => {
 
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
   let pathOfTestFile = path.join(tempFolder, "sortme.json");
 
-  fs.writeFileSync(pathOfTestFile, originalContents);
+  writeFileSync(pathOfTestFile, originalContents);
 
   await execa("./cli.js", [tempFolder, "-i 3"]).catch((err) => {
     throw new Error(err);
   });
 
-  equal(fs.readFileSync(pathOfTestFile, "utf8"), sortedContents, "01.01");
+  equal(readFileSync(pathOfTestFile, "utf8"), sortedContents, "01.01");
 
   await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {
     throw new Error(err);
@@ -47,16 +47,16 @@ test("02 - indentationCount set to 3, tabs", async () => {
 
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
   let pathOfTestFile = path.join(tempFolder, "sortme.json");
 
-  fs.writeFileSync(pathOfTestFile, originalContents);
+  writeFileSync(pathOfTestFile, originalContents);
 
   await execa("./cli.js", [tempFolder, "-i 3", "-t"]).catch((err) => {
     throw new Error(err);
   });
 
-  equal(fs.readFileSync(pathOfTestFile, "utf8"), sortedContents, "02.01");
+  equal(readFileSync(pathOfTestFile, "utf8"), sortedContents, "02.01");
 
   await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {
     throw new Error(err);
@@ -69,16 +69,16 @@ test("03 - indentationCount set to 3, tabs, array", async () => {
 
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
   let pathOfTestFile = path.join(tempFolder, "sortme.json");
 
-  fs.writeFileSync(pathOfTestFile, originalContents);
+  writeFileSync(pathOfTestFile, originalContents);
 
   await execa("./cli.js", [tempFolder, "-i 3", "-t", "-a"]).catch((err) => {
     throw new Error(err);
   });
 
-  equal(fs.readFileSync(pathOfTestFile, "utf8"), sortedContents, "03.01");
+  equal(readFileSync(pathOfTestFile, "utf8"), sortedContents, "03.01");
 
   await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {
     throw new Error(err);

@@ -359,7 +359,7 @@ export const interdeps = [
   },
   {
     "name": "json-comb",
-    "size": 6974,
+    "size": 7806,
     "imports": [
       "codsen-utils",
       "json-comb-core"
@@ -409,7 +409,7 @@ export const interdeps = [
   },
   {
     "name": "lerna-clean-changelogs-cli",
-    "size": 7824,
+    "size": 7837,
     "imports": [
       "codsen-utils",
       "lerna-clean-changelogs"

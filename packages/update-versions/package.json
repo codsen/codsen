@@ -79,7 +79,6 @@
     "write-file-atomic": "^6.0.0"
   },
   "devDependencies": {
-    "fs-extra": "^11.3.5",
     "p-map": "^7.0.4"
   },
   "engines": {

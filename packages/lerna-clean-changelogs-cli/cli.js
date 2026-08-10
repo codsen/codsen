@@ -3,11 +3,11 @@
 // VARS
 // -----------------------------------------------------------------------------
 
+import { readFile, stat } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { promisify } from "node:util";
 import { codsenCLI } from "codsen-utils";
-import fs from "fs-extra";
 import { globby } from "globby";
 import { cleanChangelogs } from "lerna-clean-changelogs";
 import pFilter from "p-filter";
@@ -88,8 +88,7 @@ if (cli.flags.version) {
 // -----------------------------------------------------------------------------
 
 function readSortAndWriteOverFile(oneOfPaths) {
-  return fs
-    .readFile(oneOfPaths, "utf8")
+  return readFile(oneOfPaths, "utf8")
     .then((filesContent) => {
       let preppedContents;
       try {
@@ -145,7 +144,7 @@ if (isArr(cli.input) && cli.input.length) {
     }
 
     return pFilter(preppedPathsArr, (onePath) =>
-      fs.stat(path.resolve(onePath)).catch(() => {
+      stat(path.resolve(onePath)).catch(() => {
         return Promise.resolve(false);
       }),
     ).then((resultArr) => {

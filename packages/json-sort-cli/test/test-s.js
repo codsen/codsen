@@ -1,11 +1,13 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { mkdirSync } from "node:fs";
+import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { execa, execaCommand } from "execa";
-import fs from "fs-extra";
 import pMap from "p-map";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+import { readJson, writeJson } from "../json-file.js";
 
 // import pack from "../package.json";
 import {
@@ -29,41 +31,41 @@ test("01 - sort, -s (silent) mode", async () => {
 
   // The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:
-  fs.ensureDirSync(path.join(tempFolder, "test1"));
-  fs.ensureDirSync(path.join(tempFolder, "test1/folder1"));
-  fs.ensureDirSync(path.join(tempFolder, "test2"));
+  mkdirSync(path.join(tempFolder, "test1"), { recursive: true });
+  mkdirSync(path.join(tempFolder, "test1/folder1"), { recursive: true });
+  mkdirSync(path.join(tempFolder, "test2"), { recursive: true });
 
   // 2. asynchronously write all test files
 
   let processedFileContents = await pMap(
     testFilePaths,
     (oneOfTestFilePaths, testIndex) =>
-      fs.writeJson(
+      writeJson(
         path.join(tempFolder, oneOfTestFilePaths),
         testFileContents[testIndex],
       ),
   )
     .then(() =>
-      fs.writeFile(
+      writeFile(
         path.join(tempFolder, "test1/.something.yml"), // - dotfile in yml with yml extension
         "foo:\n  bar",
       ),
     )
     .then(() =>
-      fs.writeFile(
+      writeFile(
         path.join(tempFolder, "test1/.somethinginyml"), // - dotfile in yml without yml extension
         "foo:\n  bar",
       ),
     )
     .then(() =>
-      fs.writeFile(path.join(tempFolder, "test1/broken.json"), '{a": "b"}\n'),
+      writeFile(path.join(tempFolder, "test1/broken.json"), '{a": "b"}\n'),
     )
     .then(() => execa("./cli.js", [tempFolder, "-s"]))
     .then(() => {
       // not.match(receivedStdOut.stdout, /OK/);
       // not.match(receivedStdOut.stdout, /sorted/);
       return pMap(testFilePaths, (oneOfPaths) =>
-        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8"),
+        readJson(path.join(tempFolder, oneOfPaths), "utf8"),
       ).then((contentsArray) => {
         return pMap(contentsArray, (oneOfArrays) =>
           JSON.stringify(oneOfArrays, null, 2),

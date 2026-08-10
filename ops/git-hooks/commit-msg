@@ -1,0 +1,2 @@
+#!/bin/sh
+exec node "$(git rev-parse --show-toplevel)/ops/scripts/verify-commit-msg.js" "$1"

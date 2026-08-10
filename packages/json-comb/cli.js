@@ -2,10 +2,10 @@
 
 /* eslint no-console:0 */
 
+import { readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { codsenCLI } from "codsen-utils";
-import fs from "fs-extra";
 import { globby } from "globby";
 import isDirectory from "is-d";
 import { enforceKeyset, getKeyset } from "json-comb-core";
@@ -15,6 +15,38 @@ import updateNotifier from "update-notifier";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
+
+const filesystemConcurrency = 32;
+
+async function readJson(file) {
+  const contents = (await readFile(file, "utf8")).replace(/^\uFEFF/, "");
+
+  try {
+    return JSON.parse(contents);
+  } catch (error) {
+    error.message = `${file}: ${error.message}`;
+    throw error;
+  }
+}
+
+async function writeJson(
+  file,
+  value,
+  { EOL = "\n", finalEOL = true, replacer = null, spaces } = {},
+) {
+  const stringified = JSON.stringify(value, replacer, spaces);
+
+  if (stringified === undefined) {
+    throw new TypeError(
+      `json-comb/writeJson(): [THROW_ID_01] Converting ${typeof value} value to JSON is not supported`,
+    );
+  }
+
+  await writeFile(
+    file,
+    stringified.replace(/\n/g, EOL) + (finalEOL ? EOL : ""),
+  );
+}
 
 const messagePrefix = `\u001b[${90}m${"✨ JSON Comb: "}\u001b[${39}m`;
 const { log } = console;
@@ -194,7 +226,7 @@ globby(input)
         );
         process.exit(0);
       }
-      return pMap(paths, (oneOfPaths) => fs.readJson(oneOfPaths))
+      return pMap(paths, readJson, { concurrency: filesystemConcurrency })
         .then((allJsonValuesArr) => {
           // console.log(
           //   `201${`\u001b[${33}m${`allJsonValuesArr`}\u001b[${39}m`} = ${JSON.stringify(
@@ -215,23 +247,25 @@ globby(input)
           //   )}`
           // );
           referenceKeyset = keyset;
-          return pMap(paths, (singlePath, i) => {
-            return enforceKeyset(
-              allFileContentsArr[i],
-              referenceKeyset,
-              enforceOpts,
-            ).then((newValue) =>
-              fs
-                .writeJson(singlePath, newValue, {
+          return pMap(
+            paths,
+            (singlePath, i) => {
+              return enforceKeyset(
+                allFileContentsArr[i],
+                referenceKeyset,
+                enforceOpts,
+              ).then((newValue) =>
+                writeJson(singlePath, newValue, {
                   spaces: cli.flags.tabs ? "\t" : 2,
-                })
-                .then(() => {
+                }).then(() => {
                   log(
                     `${messagePrefix}${singlePath} - ${`\u001b[${32}m${"NORMALISED"}\u001b[${39}m`}`,
                   );
                 }),
-            );
-          });
+              );
+            },
+            { concurrency: filesystemConcurrency },
+          );
         });
     }
   });

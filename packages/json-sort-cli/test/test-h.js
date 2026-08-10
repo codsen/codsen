@@ -1,7 +1,7 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { execa } from "execa";
-import fs from "fs-extra";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
@@ -36,8 +36,8 @@ test("02 - help flag trumps silent flag", async () => {
 
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
-  fs.writeFileSync(path.join(tempFolder, "sortme.json"), unsortedFile);
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
+  writeFileSync(path.join(tempFolder, "sortme.json"), unsortedFile);
 
   let output = await execa("./cli.js", [tempFolder, "-h", "-s"]).catch(
     (err) => {
@@ -49,7 +49,7 @@ test("02 - help flag trumps silent flag", async () => {
   match(output.stdout, /Options/, "02.02");
   equal(output.exitCode, 0, "02.01");
   equal(
-    fs.readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
+    readFileSync(path.join(tempFolder, "sortme.json"), "utf8"),
     unsortedFile,
     "02.02",
   );

@@ -1,7 +1,8 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { execa, execaCommand } from "execa";
-import fs from "fs-extra";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
@@ -22,8 +23,8 @@ import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 test("01 - unsorted package.json, targetting two folders simultaneously", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(path.join(tempFolder, "fol1")));
-  fs.ensureDirSync(path.resolve(path.join(tempFolder, "fol2")));
+  mkdirSync(path.resolve(path.join(tempFolder, "fol1")), { recursive: true });
+  mkdirSync(path.resolve(path.join(tempFolder, "fol2")), { recursive: true });
   let pathOfTheTestfile1 = path.join(
     path.join(tempFolder, "fol1"),
     "package.json",
@@ -39,16 +40,16 @@ test("01 - unsorted package.json, targetting two folders simultaneously", async 
   "name": "tester"
 }`;
 
-  fs.writeFileSync(pathOfTheTestfile1, contents);
-  fs.writeFileSync(pathOfTheTestfile2, contents);
+  writeFileSync(pathOfTheTestfile1, contents);
+  writeFileSync(pathOfTheTestfile2, contents);
 
   await execa("./cli.js", [
     path.join(tempFolder, "fol1"),
     path.join(tempFolder, "fol2"),
   ]);
 
-  let file1 = fs.readFileSync(pathOfTheTestfile1, "utf8");
-  let file2 = fs.readFileSync(pathOfTheTestfile2, "utf8");
+  let file1 = readFileSync(pathOfTheTestfile1, "utf8");
+  let file2 = readFileSync(pathOfTheTestfile2, "utf8");
 
   await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {
     throw new Error(err);
@@ -87,13 +88,12 @@ test("02 - already sorted package.json", async () => {
 }
 `;
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
   let pathOfTheTestfile = path.join(tempFolder, "package.json");
 
-  let processedFileContents = fs
-    .writeFile(pathOfTheTestfile, source)
+  let processedFileContents = writeFile(pathOfTheTestfile, source)
     .then(() => execa("./cli.js", [tempFolder, "-p", "package.json"]))
-    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(() => readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
       execaCommand(`rm -rf ${tempFolder}`).then(() => received),
@@ -109,13 +109,12 @@ test("03 - empty array as package.json", async () => {
   let tempFolder = temporaryDirectory();
   let source = "[]\n";
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
   let pathOfTheTestfile = path.join(tempFolder, "package.json");
 
-  let processedFileContents = fs
-    .writeFile(pathOfTheTestfile, source)
+  let processedFileContents = writeFile(pathOfTheTestfile, source)
     .then(() => execa("./cli.js", [tempFolder]))
-    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(() => readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
       execaCommand(`rm -rf ${tempFolder}`).then(() => received),

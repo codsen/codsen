@@ -1,7 +1,8 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { execa, execaCommand } from "execa";
-import fs from "fs-extra";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
@@ -22,15 +23,16 @@ import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 test("01 - only node_modules with one file, flag disabled", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
-  fs.ensureDirSync(path.resolve(path.join(tempFolder, "/node_modules/")));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
+  mkdirSync(path.resolve(path.join(tempFolder, "/node_modules/")), {
+    recursive: true,
+  });
   let pathOfTheTestfile = path.join(tempFolder, "/node_modules/sortme.json");
   let originalContents = '{\n  "z": 1,\n  "a": 2\n}\n';
 
-  let processedFilesContents = fs
-    .writeFile(pathOfTheTestfile, originalContents)
+  let processedFilesContents = writeFile(pathOfTheTestfile, originalContents)
     .then(() => execa("./cli.js", [tempFolder]))
-    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(() => readFile(pathOfTheTestfile, "utf8"))
     .then((testFile) =>
       execaCommand(`rm -rf ${tempFolder}`)
         .then(() => testFile)
@@ -48,14 +50,18 @@ test("01 - only node_modules with one file, flag disabled", async () => {
 test("02 - only node_modules with one file, flag enabled", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
-  fs.ensureDirSync(path.resolve(path.join(tempFolder, "/node_modules/")));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
+  mkdirSync(path.resolve(path.join(tempFolder, "/node_modules/")), {
+    recursive: true,
+  });
   let pathOfTheTestfile = path.join(tempFolder, "/node_modules/sortme.json");
 
-  let processedFilesContents = fs
-    .writeFile(pathOfTheTestfile, '{\n  "z": 1,\n  "a": 2\n}\n')
+  let processedFilesContents = writeFile(
+    pathOfTheTestfile,
+    '{\n  "z": 1,\n  "a": 2\n}\n',
+  )
     .then(() => execa("./cli.js", [tempFolder, "-n"]))
-    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(() => readFile(pathOfTheTestfile, "utf8"))
     .then((testFile) =>
       execaCommand(`rm -rf ${tempFolder}`)
         .then(() => testFile)
@@ -76,20 +82,22 @@ test("03 - files inside and outside node_modules, flag enabled", async () => {
 
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
-  fs.ensureDirSync(path.resolve(path.join(tempFolder, "/node_modules/")));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
+  mkdirSync(path.resolve(path.join(tempFolder, "/node_modules/")), {
+    recursive: true,
+  });
   let pathOfTestFile1 = path.join(tempFolder, "/node_modules/sortme.json");
   let pathOfTestFile2 = path.join(tempFolder, "sortme.json");
 
-  fs.writeFileSync(pathOfTestFile1, originalContents);
-  fs.writeFileSync(pathOfTestFile2, originalContents);
+  writeFileSync(pathOfTestFile1, originalContents);
+  writeFileSync(pathOfTestFile2, originalContents);
 
   await execa("./cli.js", [tempFolder, "-n"]).catch((err) => {
     throw new Error(err);
   });
 
-  equal(fs.readFileSync(pathOfTestFile1, "utf8"), sortedContents, "03.01");
-  equal(fs.readFileSync(pathOfTestFile2, "utf8"), sortedContents, "03.02");
+  equal(readFileSync(pathOfTestFile1, "utf8"), sortedContents, "03.01");
+  equal(readFileSync(pathOfTestFile2, "utf8"), sortedContents, "03.02");
 
   await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {
     throw new Error(err);
@@ -102,20 +110,22 @@ test("04 - files inside and outside node_modules, flag disabled", async () => {
 
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
-  fs.ensureDirSync(path.resolve(path.join(tempFolder, "/node_modules/dir1/")));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
+  mkdirSync(path.resolve(path.join(tempFolder, "/node_modules/dir1/")), {
+    recursive: true,
+  });
   let pathOfTestFile1 = path.join(tempFolder, "/node_modules/dir1/sortme.json");
   let pathOfTestFile2 = path.join(tempFolder, "sortme.json");
 
-  fs.writeFileSync(pathOfTestFile1, originalContents);
-  fs.writeFileSync(pathOfTestFile2, originalContents);
+  writeFileSync(pathOfTestFile1, originalContents);
+  writeFileSync(pathOfTestFile2, originalContents);
 
   await execa("./cli.js", [tempFolder]).catch((err) => {
     throw new Error(err);
   });
 
-  equal(fs.readFileSync(pathOfTestFile1, "utf8"), originalContents, "04.01");
-  equal(fs.readFileSync(pathOfTestFile2, "utf8"), sortedContents, "04.02");
+  equal(readFileSync(pathOfTestFile1, "utf8"), originalContents, "04.01");
+  equal(readFileSync(pathOfTestFile2, "utf8"), sortedContents, "04.02");
 
   await execaCommand(`rm -rf ${tempFolder}`).catch((err) => {
     throw new Error(err);

@@ -3,17 +3,18 @@
 // VARS
 // -----------------------------------------------------------------------------
 
+import { readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { traverse } from "ast-monkey-traverse";
 import { codsenCLI, isPlainObject, resolveEolSetting } from "codsen-utils";
-import fs from "fs-extra";
 import { globby } from "globby";
 import isDirectory from "is-d";
 import pFilter from "p-filter";
 import pReduce from "p-reduce";
 import sortPackageJson, { sortOrder } from "sort-package-json";
 import updateNotifier from "update-notifier";
+import { writeJson } from "./json-file.js";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
@@ -178,8 +179,7 @@ if (cli.flags.indentationCount) {
 // -----------------------------------------------------------------------------
 
 function readSortAndWriteOverFile(oneOfPaths) {
-  return fs
-    .readFile(oneOfPaths, "utf8")
+  return readFile(oneOfPaths, "utf8")
     .then((filesContent) => {
       let eolChar = resolveEolSetting(filesContent, cli.flags.lineEnding);
 
@@ -210,7 +210,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
         parsedJson.every(isStr)
       ) {
         // if it was an array full of strings, it's an early ending:
-        return fs.writeJson(
+        return writeJson(
           oneOfPaths,
           parsedJson.sort((a, b) => a.localeCompare(b)),
           {
@@ -279,43 +279,41 @@ function readSortAndWriteOverFile(oneOfPaths) {
         }
 
         // ELSE,
-        return fs
-          .writeJson(
-            oneOfPaths,
-            traverse(obj, (key, val) => {
-              let current = val !== undefined ? val : key;
-              if (isPlainObject(current)) {
-                return sortObj(current);
-              }
-              if (
-                cli.flags.arrays &&
-                Array.isArray(current) &&
-                current.length > 1 &&
-                current.every(isStr)
-              ) {
-                // alphabetical sort
-                return current.sort((a, b) => a.localeCompare(b));
-              }
-              return current;
-            }),
-            {
-              spaces: cli.flags.tabs
-                ? "\t".repeat(indentationCount)
-                : indentationCount,
-              EOL: resolveEolSetting(filesContent, cli.flags.lineEnding),
-            },
-          )
-          .then(() => {
-            if (!cli.flags.silent) {
-              log(
-                `${colour(
-                  prefix,
-                  colours.grey,
-                )}${oneOfPaths} - ${colour("OK", colours.green)}`,
-              );
+        return writeJson(
+          oneOfPaths,
+          traverse(obj, (key, val) => {
+            let current = val !== undefined ? val : key;
+            if (isPlainObject(current)) {
+              return sortObj(current);
             }
-            return true;
-          });
+            if (
+              cli.flags.arrays &&
+              Array.isArray(current) &&
+              current.length > 1 &&
+              current.every(isStr)
+            ) {
+              // alphabetical sort
+              return current.sort((a, b) => a.localeCompare(b));
+            }
+            return current;
+          }),
+          {
+            spaces: cli.flags.tabs
+              ? "\t".repeat(indentationCount)
+              : indentationCount,
+            EOL: resolveEolSetting(filesContent, cli.flags.lineEnding),
+          },
+        ).then(() => {
+          if (!cli.flags.silent) {
+            log(
+              `${colour(
+                prefix,
+                colours.grey,
+              )}${oneOfPaths} - ${colour("OK", colours.green)}`,
+            );
+          }
+          return true;
+        });
       });
     })
     .catch((err) => {
@@ -431,8 +429,10 @@ globby(input, { dot: true })
     } else {
       if (cli.flags.ci) {
         // CI setting
-        return pFilter(paths, (currentPath) =>
-          readSortAndWriteOverFile(currentPath),
+        return pFilter(
+          paths,
+          (currentPath) => readSortAndWriteOverFile(currentPath),
+          { concurrency: 16 },
         ).then((received2) => {
           if (received2.length && !cli.flags.silent) {
             log(

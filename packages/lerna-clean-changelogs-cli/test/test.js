@@ -1,8 +1,9 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { mkdirSync } from "node:fs";
+import { readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { execa, execaCommand } from "execa";
-import fs from "fs-extra";
 import pMap from "p-map";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
@@ -87,7 +88,7 @@ test(`03 - general parts - no files found in the given directory`, async () => {
   // fetch us a random temp folder
   // const tempFolder = "temp";
   let tempFolder = temporaryDirectory();
-  fs.ensureDirSync(path.resolve(tempFolder));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
 
   // call execa on that empty folder
   let stdOutContents = await execa("./cli.js", [tempFolder]);
@@ -107,11 +108,13 @@ test(`04 - functionality - pointed directly at a file`, async () => {
   // troubleshooting. Just comment out one of two:
   // const tempFolder = "temp";
   let tempFolder = temporaryDirectory();
-  fs.ensureDirSync(path.resolve(tempFolder));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
 
   // write a changelog:
-  let processedFileContents = fs
-    .writeFile(path.join(tempFolder, "changelog.md"), changelog1)
+  let processedFileContents = writeFile(
+    path.join(tempFolder, "changelog.md"),
+    changelog1,
+  )
     .then(() =>
       execa(`cd ${tempFolder} && ${path.resolve()}/cli.js changelog.md`, {
         shell: true,
@@ -119,7 +122,7 @@ test(`04 - functionality - pointed directly at a file`, async () => {
     )
     .then((execasMsg) => {
       match(execasMsg.stdout, /1 updated/, "04.01");
-      return fs.readFile(path.join(tempFolder, "changelog.md"), "utf8");
+      return readFile(path.join(tempFolder, "changelog.md"), "utf8");
     })
     .then((received) =>
       execaCommand(`rm -rf ${tempFolder}`, {
@@ -127,7 +130,7 @@ test(`04 - functionality - pointed directly at a file`, async () => {
       }).then(() => received),
     );
 
-  equal(await processedFileContents, changelog1Fixed, "04.01");
+  equal(await processedFileContents, changelog1Fixed, "04.02");
 });
 
 test(`05 - functionality - globs, multiple written multiple skipped`, async () => {
@@ -146,7 +149,7 @@ test(`05 - functionality - globs, multiple written multiple skipped`, async () =
   ];
 
   foldersToCreate.forEach((p) => {
-    fs.ensureDirSync(path.join(tempFolder, p));
+    mkdirSync(path.join(tempFolder, p), { recursive: true });
   });
 
   // define files that will be written:
@@ -160,10 +163,10 @@ test(`05 - functionality - globs, multiple written multiple skipped`, async () =
 
   // 2. asynchronously write test files, all get the same messy changelog:
   await pMap(testFilePaths, (oneOfTestFilePaths) =>
-    fs.writeFile(oneOfTestFilePaths, changelog1),
+    writeFile(oneOfTestFilePaths, changelog1),
   )
     .then(() =>
-      fs.writeFile(
+      writeFile(
         path.join(tempFolder, "fol3/fol31/changelog.md"), // <--- clean file
         changelog1Fixed,
       ),

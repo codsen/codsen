@@ -1,7 +1,8 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { mkdirSync } from "node:fs";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { execa, execaCommand } from "execa";
-import fs from "fs-extra";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
@@ -22,16 +23,15 @@ import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 test("01 - when asked, sorts arrays which contain only strings", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
   let pathOfTheTestfile = path.join(tempFolder, "sortme.json");
 
-  let processedFileContents = fs
-    .writeFile(
-      pathOfTheTestfile,
-      JSON.stringify(["a", "A", "z", "Z", "m", "M"], null, 2),
-    )
+  let processedFileContents = writeFile(
+    pathOfTheTestfile,
+    JSON.stringify(["a", "A", "z", "Z", "m", "M"], null, 2),
+  )
     .then(() => execa("./cli.js", [tempFolder, "-a", "sortme.json"]))
-    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(() => readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
       execaCommand(`rm -rf ${tempFolder}`).then(() => received),
@@ -57,14 +57,16 @@ test("01 - when asked, sorts arrays which contain only strings", async () => {
 test("02 - when not asked, does not sort arrays which contain only strings", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
   let pathOfTheTestfile = path.join(tempFolder, "sortme.json");
   let sourceArr = ["Z", "A", "z", "m", "M", "a"];
 
-  let processedFileContents = fs
-    .writeFile(pathOfTheTestfile, JSON.stringify(sourceArr, null, 2))
+  let processedFileContents = writeFile(
+    pathOfTheTestfile,
+    JSON.stringify(sourceArr, null, 2),
+  )
     .then(() => execa("./cli.js", [tempFolder, "sortme.json"]))
-    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(() => readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
       execaCommand(`rm -rf ${tempFolder}`).then(() => received),
@@ -82,29 +84,28 @@ test("02 - when not asked, does not sort arrays which contain only strings", asy
 test("03 - array in deeper levels sorted (upon request)", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
   let pathOfTheTestfile = path.join(tempFolder, "sortme.json");
 
-  let processedFileContents = fs
-    .writeFile(
-      pathOfTheTestfile,
-      JSON.stringify(
-        {
-          a: {
-            b: [
-              {
-                c: "d",
-              },
-              ["z", "m", "A"],
-            ],
-          },
+  let processedFileContents = writeFile(
+    pathOfTheTestfile,
+    JSON.stringify(
+      {
+        a: {
+          b: [
+            {
+              c: "d",
+            },
+            ["z", "m", "A"],
+          ],
         },
-        null,
-        2,
-      ),
-    )
+      },
+      null,
+      2,
+    ),
+  )
     .then(() => execa("./cli.js", [tempFolder, "-a", "sortme.json"]))
-    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(() => readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
       execaCommand(`rm -rf ${tempFolder}`).then(() => received),

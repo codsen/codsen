@@ -62,7 +62,6 @@
   },
   "dependencies": {
     "codsen-utils": "^1.7.3",
-    "fs-extra": "^11.3.5",
     "globby": "^14.1.0",
     "is-d": "^1.0.0",
     "json-comb-core": "^8.1.3",

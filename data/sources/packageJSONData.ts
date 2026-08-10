@@ -80,6 +80,7 @@ export const packageJSONData = {
     "dependencies": {
       "@types/hast": "^3.0.4",
       "hast-util-raw": "^9.1.0",
+      "mdast-util-to-hast": "^12.0.0",
       "object-delete-key": "^4.1.3",
       "semver-regex": "^4.0.5",
       "unified": "^11.0.5",
@@ -4173,7 +4174,6 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.7.3",
-      "fs-extra": "^11.3.5",
       "globby": "^14.1.0",
       "is-d": "^1.0.0",
       "json-comb-core": "^8.1.3",
@@ -4347,7 +4347,6 @@ export const packageJSONData = {
     "dependencies": {
       "ast-monkey-traverse": "^4.1.3",
       "codsen-utils": "^1.7.3",
-      "fs-extra": "^11.3.5",
       "globby": "^14.1.0",
       "is-d": "^1.0.0",
       "p-filter": "^4.1.0",
@@ -4608,7 +4607,6 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.7.3",
-      "fs-extra": "^11.3.5",
       "globby": "^14.1.0",
       "lerna-clean-changelogs": "^5.1.3",
       "p-filter": "^4.1.0",
@@ -8842,7 +8840,6 @@ export const packageJSONData = {
       "write-file-atomic": "^6.0.0"
     },
     "devDependencies": {
-      "fs-extra": "^11.3.5",
       "p-map": "^7.0.4"
     },
     "engines": {

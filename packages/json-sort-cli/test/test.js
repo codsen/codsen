@@ -1,11 +1,13 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { mkdirSync } from "node:fs";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { execa, execaCommand } from "execa";
-import fs from "fs-extra";
 import pMap from "p-map";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+import { readJson, writeJson } from "../json-file.js";
 
 // import pack from "../package.json";
 import {
@@ -29,28 +31,28 @@ test("01 - default sort, called on the whole folder", async () => {
 
   // The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:
-  fs.ensureDirSync(path.join(tempFolder, "test1"));
-  fs.ensureDirSync(path.join(tempFolder, "test1/folder1"));
-  fs.ensureDirSync(path.join(tempFolder, "test2"));
+  mkdirSync(path.join(tempFolder, "test1"), { recursive: true });
+  mkdirSync(path.join(tempFolder, "test1/folder1"), { recursive: true });
+  mkdirSync(path.join(tempFolder, "test2"), { recursive: true });
 
   // 2. asynchronously write all test files
 
   let processedFileContents = pMap(
     testFilePaths,
     (oneOfTestFilePaths, testIndex) =>
-      fs.writeJson(
+      writeJson(
         path.join(tempFolder, oneOfTestFilePaths),
         testFileContents[testIndex],
       ),
   )
     .then(() =>
-      fs.writeFile(
+      writeFile(
         path.join(tempFolder, "test1/.something.yml"), //  - dotfile in yml with yml extension
         "foo:\n  bar",
       ),
     )
     .then(() =>
-      fs.writeFile(
+      writeFile(
         path.join(tempFolder, "test1/.somethinginyml"), // - dotfile in yml without yml extension
         "foo:\n  bar",
       ),
@@ -58,7 +60,7 @@ test("01 - default sort, called on the whole folder", async () => {
     .then(() => execa("./cli.js", [tempFolder]))
     .then(() =>
       pMap(testFilePaths, (oneOfPaths) =>
-        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8"),
+        readJson(path.join(tempFolder, oneOfPaths), "utf8"),
       ).then((contentsArray) => {
         return pMap(contentsArray, (oneOfArrays) =>
           JSON.stringify(oneOfArrays, null, 2),
@@ -86,40 +88,40 @@ test("02 - sort, there's a broken JSON among files", async () => {
 
   // The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:
-  fs.ensureDirSync(path.join(tempFolder, "test1"));
-  fs.ensureDirSync(path.join(tempFolder, "test1/folder1"));
-  fs.ensureDirSync(path.join(tempFolder, "test2"));
+  mkdirSync(path.join(tempFolder, "test1"), { recursive: true });
+  mkdirSync(path.join(tempFolder, "test1/folder1"), { recursive: true });
+  mkdirSync(path.join(tempFolder, "test2"), { recursive: true });
 
   // 2. asynchronously write all test files
 
   let processedFileContents = pMap(
     testFilePaths,
     (oneOfTestFilePaths, testIndex) =>
-      fs.writeJson(
+      writeJson(
         path.join(tempFolder, oneOfTestFilePaths),
         testFileContents[testIndex],
       ),
   )
     .then(() =>
-      fs.writeFile(
+      writeFile(
         path.join(tempFolder, "test1/.something.yml"), // - dotfile in yml with yml extension
         "foo:\n  bar",
       ),
     )
     .then(() =>
-      fs.writeFile(
+      writeFile(
         path.join(tempFolder, "test1/.somethinginyml"), // - dotfile in yml without yml extension
         "foo:\n  bar",
       ),
     )
     .then(() =>
-      fs.writeFile(path.join(tempFolder, "test1/broken.json"), '{a": "b"}\n'),
+      writeFile(path.join(tempFolder, "test1/broken.json"), '{a": "b"}\n'),
     )
     .then(() => execa("./cli.js", [tempFolder]))
     .then((receivedStdOut) => {
       match(receivedStdOut.stdout, /broken\.json/);
       return pMap(testFilePaths, (oneOfPaths) =>
-        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8"),
+        readJson(path.join(tempFolder, oneOfPaths), "utf8"),
       ).then((contentsArray) => {
         return pMap(contentsArray, (oneOfArrays) =>
           JSON.stringify(oneOfArrays, null, 2),
@@ -140,13 +142,12 @@ test("02 - sort, there's a broken JSON among files", async () => {
 test("03 - fixes minified dotfiles in JSON format", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
   let pathOfTheTestfile = path.join(tempFolder, ".eslintrc.json");
 
-  let processedFileContents = fs
-    .writeFile(pathOfTheTestfile, minifiedContents)
+  let processedFileContents = writeFile(pathOfTheTestfile, minifiedContents)
     .then(() => execa("./cli.js", [tempFolder, ".eslintrc.json"]))
-    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(() => readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
       execaCommand(`rm -rf ${tempFolder}`).then(() => received),
@@ -161,29 +162,28 @@ test("03 - fixes minified dotfiles in JSON format", async () => {
 test("04 - topmost level is array", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
   let pathOfTheTestfile = path.join(tempFolder, "sortme.json");
 
-  let processedFileContents = fs
-    .writeFile(
-      pathOfTheTestfile,
-      JSON.stringify(
-        [
-          {
-            x: "y",
-            a: "b",
-          },
-          {
-            p: "r",
-            c: "d",
-          },
-        ],
-        null,
-        2,
-      ),
-    )
+  let processedFileContents = writeFile(
+    pathOfTheTestfile,
+    JSON.stringify(
+      [
+        {
+          x: "y",
+          a: "b",
+        },
+        {
+          p: "r",
+          c: "d",
+        },
+      ],
+      null,
+      2,
+    ),
+  )
     .then(() => execa("./cli.js", [tempFolder, "sortme.json"]))
-    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(() => readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
       execaCommand(`rm -rf ${tempFolder}`).then(() => received),

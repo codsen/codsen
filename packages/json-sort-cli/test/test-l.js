@@ -1,7 +1,8 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { mkdirSync } from "node:fs";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { execa, execaCommand } from "execa";
-import fs from "fs-extra";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
@@ -23,29 +24,28 @@ import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 test("01 - array, CRLF line endings, no setting", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
   let pathOfTheTestFile = path.join(tempFolder, "sortme.json");
 
-  let processedFileContents = fs
-    .writeFile(
-      pathOfTheTestFile,
-      JSON.stringify(
-        [
-          {
-            x: "y",
-            a: "b",
-          },
-          {
-            p: "r",
-            c: "d",
-          },
-        ],
-        null,
-        2,
-      ).replace(/\n/g, "\r\n"),
-    )
+  let processedFileContents = writeFile(
+    pathOfTheTestFile,
+    JSON.stringify(
+      [
+        {
+          x: "y",
+          a: "b",
+        },
+        {
+          p: "r",
+          c: "d",
+        },
+      ],
+      null,
+      2,
+    ).replace(/\n/g, "\r\n"),
+  )
     .then(() => execa("./cli.js", [tempFolder, "sortme.json"]))
-    .then(() => fs.readFile(pathOfTheTestFile, "utf8"))
+    .then(() => readFile(pathOfTheTestFile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
       execaCommand(`rm -rf ${tempFolder}`).then(() => received),
@@ -73,29 +73,28 @@ test("01 - array, CRLF line endings, no setting", async () => {
 test("02 - CRLF in, CR out", async () => {
   let tempFolder = temporaryDirectory();
   // const tempFolder = "temp";
-  fs.ensureDirSync(path.resolve(tempFolder));
+  mkdirSync(path.resolve(tempFolder), { recursive: true });
   let pathOfTheTestfile = path.join(tempFolder, "sortme.json");
 
-  let processedFileContents = fs
-    .writeFile(
-      pathOfTheTestfile,
-      JSON.stringify(
-        [
-          {
-            x: "y",
-            a: "b",
-          },
-          {
-            p: "r",
-            c: "d",
-          },
-        ],
-        null,
-        2,
-      ).replace(/\n/g, "\r\n"),
-    )
+  let processedFileContents = writeFile(
+    pathOfTheTestfile,
+    JSON.stringify(
+      [
+        {
+          x: "y",
+          a: "b",
+        },
+        {
+          p: "r",
+          c: "d",
+        },
+      ],
+      null,
+      2,
+    ).replace(/\n/g, "\r\n"),
+  )
     .then(() => execa("./cli.js", [tempFolder, "sortme.json", "-l", "cr"]))
-    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(() => readFile(pathOfTheTestfile, "utf8"))
     .then((received) =>
       // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
       execaCommand(`rm -rf ${tempFolder}`).then(() => received),

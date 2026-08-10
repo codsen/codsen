@@ -1,11 +1,12 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { execa } from "execa";
-import fs from "fs-extra";
 import pMap from "p-map";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+import { readJson, writeJson } from "../json-file.js";
 
 // import pack from "../package.json";
 import {
@@ -25,16 +26,16 @@ test("01 - sort, -t (tabs) mode", async () => {
   // const tempFolder = "temp";
   // The temp folder needs subfolders. Those have to be in place before we start
   // writing the files:
-  fs.ensureDirSync(path.join(tempFolder, "test1"));
-  fs.ensureDirSync(path.join(tempFolder, "test1/folder1"));
-  fs.ensureDirSync(path.join(tempFolder, "test2"));
+  mkdirSync(path.join(tempFolder, "test1"), { recursive: true });
+  mkdirSync(path.join(tempFolder, "test1/folder1"), { recursive: true });
+  mkdirSync(path.join(tempFolder, "test2"), { recursive: true });
 
   // asynchronously write all test files
 
   let processedFileContents = pMap(
     testFilePaths,
     (oneOfTestFilePaths, testIndex) =>
-      fs.writeJson(
+      writeJson(
         path.join(tempFolder, oneOfTestFilePaths),
         testFileContents[testIndex],
       ),
@@ -44,7 +45,7 @@ test("01 - sort, -t (tabs) mode", async () => {
     )
     .then(() =>
       pMap(testFilePaths, (oneOfPaths) =>
-        fs.readJson(path.join(tempFolder, oneOfPaths), "utf8"),
+        readJson(path.join(tempFolder, oneOfPaths), "utf8"),
       ),
     )
     .then((contentsArray) =>
