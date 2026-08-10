@@ -10,16 +10,5 @@
     "../../ops/typedefs/common.d.ts",
     "../../ops/typedefs/common.ts"
   ],
-  "exclude": [".git", "node_modules"],
-  "references": [
-    {
-      "path": "../string-left-right"
-    },
-    {
-      "path": "../string-match-left-right"
-    },
-    {
-      "path": "../test-mixer"
-    }
-  ]
+  "exclude": [".git", "node_modules"]
 }

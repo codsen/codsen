@@ -10,6 +10,5 @@
     "rootDir": ".",
     "skipLibCheck": true,
     "types": ["node"]
-  },
-  "references": []
+  }
 }

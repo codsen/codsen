@@ -10,19 +10,5 @@
     "../../ops/typedefs/common.d.ts",
     "../../ops/typedefs/common.ts"
   ],
-  "exclude": [".git", "node_modules"],
-  "references": [
-    {
-      "path": "../check-types-mini"
-    },
-    {
-      "path": "../ranges-apply"
-    },
-    {
-      "path": "../ranges-push"
-    },
-    {
-      "path": "../string-unfancy"
-    }
-  ]
+  "exclude": [".git", "node_modules"]
 }

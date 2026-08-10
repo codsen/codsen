@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "incremental": true,
     "module": "esnext",
     "allowSyntheticDefaultImports": true,
     "newLine": "LF",
@@ -10,7 +9,6 @@
     "jsx": "preserve",
     "lib": ["DOM", "ES2020", "ESNext"],
     "rootDir": ".",
-    "composite": true,
     "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true,
     "types": ["node"],

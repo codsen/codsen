@@ -10,13 +10,5 @@
     "../../ops/typedefs/common.d.ts",
     "../../ops/typedefs/common.ts"
   ],
-  "exclude": [".git", "node_modules"],
-  "references": [
-    {
-      "path": "../string-process-comma-separated"
-    },
-    {
-      "path": "../ranges-apply"
-    }
-  ]
+  "exclude": [".git", "node_modules"]
 }

@@ -10,10 +10,5 @@
     "../../ops/typedefs/common.d.ts",
     "../../ops/typedefs/common.ts"
   ],
-  "exclude": [".git", "node_modules"],
-  "references": [
-    {
-      "path": "../object-delete-key"
-    }
-  ]
+  "exclude": [".git", "node_modules"]
 }

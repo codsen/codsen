@@ -10,13 +10,5 @@
     "../../ops/typedefs/common.d.ts",
     "../../ops/typedefs/common.ts"
   ],
-  "exclude": [".git", "node_modules"],
-  "references": [
-    {
-      "path": "../codsen-utils"
-    },
-    {
-      "path": "../ranges-merge"
-    }
-  ]
+  "exclude": [".git", "node_modules"]
 }

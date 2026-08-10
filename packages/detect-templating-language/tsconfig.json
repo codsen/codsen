@@ -10,16 +10,5 @@
     "../../ops/typedefs/common.d.ts",
     "../../ops/typedefs/common.ts"
   ],
-  "exclude": [".git", "node_modules"],
-  "references": [
-    {
-      "path": "../regex-is-jinja-nunjucks"
-    },
-    {
-      "path": "../regex-is-jsp"
-    },
-    {
-      "path": "../regex-jinja-specific"
-    }
-  ]
+  "exclude": [".git", "node_modules"]
 }

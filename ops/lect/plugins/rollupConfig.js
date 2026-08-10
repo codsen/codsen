@@ -20,15 +20,7 @@ export default () => [
   {
     input: "src/main.ts",
     output: [{ file: "types/index.d.ts", format: "es" }],
-    plugins: [
-      json(),
-      dts({
-        compilerOptions: {
-          composite: false,
-          incremental: false,
-        },
-      }),
-    ],
+    plugins: [json(), dts()],
   },
 ];
 `,

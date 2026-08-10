@@ -16,6 +16,5 @@
     "./src/tag_script.json",
     "./src/tag_variant.json"
   ],
-  "exclude": [".git", "node_modules"],
-  "references": []
+  "exclude": [".git", "node_modules"]
 }

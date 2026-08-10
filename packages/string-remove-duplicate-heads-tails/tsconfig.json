@@ -10,25 +10,5 @@
     "../../ops/typedefs/common.d.ts",
     "../../ops/typedefs/common.ts"
   ],
-  "exclude": [".git", "node_modules"],
-  "references": [
-    {
-      "path": "../arrayiffy-if-string"
-    },
-    {
-      "path": "../codsen-utils"
-    },
-    {
-      "path": "../ranges-apply"
-    },
-    {
-      "path": "../ranges-push"
-    },
-    {
-      "path": "../string-match-left-right"
-    },
-    {
-      "path": "../string-trim-spaces-only"
-    }
-  ]
+  "exclude": [".git", "node_modules"]
 }

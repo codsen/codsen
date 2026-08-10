@@ -209,8 +209,7 @@ erase.
   config. A package without a Rollup config gets no config.
 - `tsconfig.json` is rewritten for packages with a Rollup config. The standard
   config extends `../../tsconfig.base.json`, uses `dist` as `outDir`, adds the
-  standard include/exclude entries, and preserves existing `include` and
-  `references` arrays.
+  standard include/exclude entries, and preserves the existing `include` array.
   - Current implementation checks `state.isCLI`, while the classifier defines
     `state.isBin`. Consequently, a package without `rollup.config.js` has its
     `tsconfig.json` deleted, including a CLI. Preserve this behaviour unless a

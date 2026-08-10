@@ -44,7 +44,7 @@ Please [visit codsen.com](https://codsen.com/os/) for an overview and full docum
 - \`lerna-lite\` + \`conventional-changelogs\` — automates versioning and changelogs
 - \`turborepo\` — to run tasks within monorepo
 - \`uvu\` + \`c8\` — program unit test runner and code coverage
-- \`typescript\` — with Project References — for all source code
+- \`typescript\` — for all source code
 - \`esbuild\` — to build \`*.ts\` into ESM and IIFE
 - \`rollup\` + \`rollup-plugin-dts\` — to generate \`*.d.ts\`
 

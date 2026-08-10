@@ -10,13 +10,5 @@
     "../../ops/typedefs/common.d.ts",
     "../../ops/typedefs/common.ts"
   ],
-  "exclude": [".git", "node_modules"],
-  "references": [
-    {
-      "path": "../ast-contains-only-empty-space"
-    },
-    {
-      "path": "../codsen-utils"
-    }
-  ]
+  "exclude": [".git", "node_modules"]
 }
