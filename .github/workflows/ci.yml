@@ -19,6 +19,8 @@ jobs:
     name: Build and validate
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    outputs:
+      package_node_matrix: ${{ steps.package_node_matrix.outputs.matrix }}
     steps:
       - name: Check out the exact revision
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -56,52 +58,49 @@ jobs:
       - name: Verify complete and freshly compiled repository data
         run: npm run ci:verify:data
 
+      - name: Run package examples on the root toolchain
+        run: npm run turbo -- run examples --filter='./packages/**' --only
+
+      - name: Verify package Node compatibility policy
+        run: npm run ci:verify:node-compatibility
+
+      - name: Define package Node compatibility matrix
+        id: package_node_matrix
+        run: |
+          package_node_matrix=$(node ops/scripts/verify-node-compatibility.js --github-actions-matrix)
+          echo "matrix=$package_node_matrix" >> "$GITHUB_OUTPUT"
+
       - name: Check formatting and linting without changing files
         run: npm exec -- biome check .
-
-      - name: Dry-run every npm package
-        env:
-          PACK_REPORT: ${{ runner.temp }}/npm-pack-dry-run.json
-        run: |
-          npm pack --dry-run --json --workspaces --ignore-scripts > "$PACK_REPORT"
-          node --input-type=module -e '
-            import fs from "node:fs";
-            const report = JSON.parse(fs.readFileSync(process.env.PACK_REPORT, "utf8"));
-            if (report.length !== 111) {
-              throw new Error(`Expected 111 npm pack results, received ${report.length}`);
-            }
-          '
 
       - name: Verify generated files are current
         run: |
           git diff --exit-code
           test -z "$(git status --porcelain --untracked-files=all)"
 
-      - name: Archive built test inputs
+      - name: Pack all Node compatibility artifacts
         run: >-
-          tar --create --gzip
-          --file "${{ runner.temp }}/built-packages.tar.gz"
-          packages/*/dist packages/*/types data/dist
+          node ops/scripts/package-node-compatibility.js pack
+          --output "${{ runner.temp }}/package-node-artifacts"
 
-      - name: Upload built test inputs
+      - name: Upload all Node compatibility artifacts
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
-          name: ci-built-packages
-          path: ${{ runner.temp }}/built-packages.tar.gz
+          name: ci-package-node-artifacts
+          path: ${{ runner.temp }}/package-node-artifacts/
           compression-level: 0
           if-no-files-found: error
           overwrite: true
           retention-days: 1
 
-  library-compatibility:
-    name: Libraries / Node ${{ matrix.node-version }}
+  package-node-compatibility:
+    name: All packages / Node ${{ matrix.node-major }}
     needs: validate
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     strategy:
       fail-fast: false
-      matrix:
-        node-version: ["22", "24"]
+      matrix: ${{ fromJSON(needs.validate.outputs.package_node_matrix) }}
     steps:
       - name: Check out the exact revision
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -109,62 +108,25 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Set up Node and npm
-        uses: ./.github/actions/setup-node
+      - name: Set up package runtime
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build and test Rollup-family libraries
-        shell: bash
+      - name: Report the isolated runtime
         run: |
-          filters=()
-          for config in packages/*/rollup.config.js; do
-            package_dir=${config%/rollup.config.js}
-            filters+=("--filter=./${package_dir}")
-          done
+          node --version
+          npm --version
 
-          npm run turbo -- run build "${filters[@]}" --only
-          npm run turbo -- run unit examples "${filters[@]}" --only
-
-  cli-tests:
-    name: CLI unit tests / Node 24
-    needs: validate
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - name: Check out the exact revision
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-
-      - name: Set up Node and npm
-        uses: ./.github/actions/setup-node
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Download built test inputs
+      - name: Download package compatibility artifacts
         uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
         with:
-          name: ci-built-packages
-          path: ${{ runner.temp }}/built-packages
+          name: ci-package-node-artifacts
+          path: ${{ runner.temp }}/package-node-artifacts
 
-      - name: Restore built test inputs
-        run: tar --extract --gzip --file "${{ runner.temp }}/built-packages/built-packages.tar.gz"
-
-      - name: Run CLI unit tests
-        shell: bash
-        run: |
-          filters=()
-          for package_json in packages/*/package.json; do
-            package_dir=${package_json%/package.json}
-            if [[ ! -f "${package_dir}/rollup.config.js" ]]; then
-              filters+=("--filter=./${package_dir}")
-            fi
-          done
-
-          npm run turbo -- run unit "${filters[@]}" --only
+      - name: Install, import, smoke-test and unit-test every eligible package
+        run: >-
+          node ops/scripts/package-node-compatibility.js verify
+          --artifacts "${{ runner.temp }}/package-node-artifacts"
+          --node-major "${{ matrix.node-major }}"
+          --unit-concurrency 4

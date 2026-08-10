@@ -55,9 +55,6 @@
     "test": "npm run devtest",
     "unit": "uvu test"
   },
-  "engines": {
-    "node": ">=14.18.0"
-  },
   "c8": {
     "check-coverage": true,
     "exclude": ["**/test/**/*.*"],
@@ -76,6 +73,9 @@
     "csv-split-easy": "^7.1.3",
     "currency.js": "^2.0.4",
     "lodash-es": "^4.18.1"
+  },
+  "engines": {
+    "node": ">=18.20.8"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

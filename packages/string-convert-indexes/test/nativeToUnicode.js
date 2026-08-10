@@ -248,4 +248,12 @@ test("16 - multiple consecutive astral symbols", () => {
   );
 });
 
+test("17 - modern emoji ZWJ sequence", () => {
+  equal(
+    nativeToUnicode("a🧑‍🤝‍🧑b", [1, 2, 3, 4, 5, 6, 7, 8, 9]),
+    [1, 1, 1, 1, 1, 1, 1, 1, 2],
+    "17.01",
+  );
+});
+
 test.run();

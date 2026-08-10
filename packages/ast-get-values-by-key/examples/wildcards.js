@@ -1,4 +1,4 @@
-// Using wildcards (`matcher` api)
+// Using wildcard patterns
 
 import { strict as assert } from "node:assert";
 

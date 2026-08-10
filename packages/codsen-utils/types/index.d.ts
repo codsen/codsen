@@ -183,6 +183,36 @@ interface CliResult {
 declare function codsenCLI(helpText?: string, options?: CliOptions): CliResult;
 /** Alternative to lodash.omit */
 declare function omit(obj: JSONObject, keysToRemove?: string[]): JSONObject;
+interface MatchOptions {
+  /** Match letter case exactly. Off by default. */
+  caseSensitiveMatch?: boolean;
+}
+/**
+ * Match a whole string against one or more wildcard patterns.
+ *
+ * Patterns are anchored — they must consume the whole input, not a part of
+ * it. `*` stands for zero or more characters and does cross line breaks.
+ * A leading `!` negates a pattern: any negative pattern which matches vetoes
+ * the result outright, no matter what the positive ones did. Given only
+ * negative patterns, anything they don't catch passes. An empty pattern
+ * array matches nothing.
+ *
+ * `\` escapes the character after it, so `\*` means a literal asterisk and
+ * `\\` means a literal backslash.
+ *
+ * Matching walks code points, not UTF-16 code units, so a wildcard can never
+ * consume half of a surrogate pair.
+ * @param input string to match
+ * @param patterns one pattern or an array of them
+ * @returns boolean
+ * console.log(match("index.js", ["*.js", "!*.test.js"]));
+ * -> true
+ */
+declare function match(
+  input: string,
+  patterns: string | readonly string[],
+  options?: MatchOptions,
+): boolean;
 
 export {
   backslash,
@@ -218,6 +248,7 @@ export {
   isWhitespaceChar,
   leftDoubleQuote,
   leftSingleQuote,
+  match,
   multiplicationSign,
   omit,
   pullAll,
@@ -249,5 +280,6 @@ export type {
   JSONObject,
   JSONValue,
   JsonObject,
+  MatchOptions,
   Obj,
 };

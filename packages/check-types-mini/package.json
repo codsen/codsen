@@ -52,9 +52,6 @@
     "test": "npm run devtest",
     "unit": "uvu test"
   },
-  "engines": {
-    "node": ">=14.18.0"
-  },
   "c8": {
     "check-coverage": true,
     "exclude": ["**/test/**/*.*"],
@@ -67,8 +64,10 @@
   },
   "dependencies": {
     "codsen-utils": "^1.7.3",
-    "matcher": "^6.0.0",
     "type-detect": "^4.1.0"
+  },
+  "engines": {
+    "node": ">=18.20.8"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

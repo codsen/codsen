@@ -4,24 +4,22 @@ import objectPath from "object-path";
 import sortPackageJson, { sortOrder } from "sort-package-json";
 import writeFileAtomic from "write-file-atomic";
 
-// import { applyNodeEnginePolicy } from "../common/applyNodeEnginePolicy.js";
-
 function format(obj) {
   if (typeof obj !== "object") {
     return obj;
   }
   let newSortOrder = sortOrder
-    // 1. delete tap and lect fields
-    .filter((field) => !["lect", "tap", "c8", "engines"].includes(field));
+    // 1. remove package-specific fields before placing them together
+    .filter((field) => !["lect", "tap", "c8"].includes(field));
 
-  // 2. then, insert both after resolutions, first tap then lect
+  // 2. then, insert them before resolutions
   // console.log(sortOrder);
 
   let idxOfResolutions = newSortOrder.indexOf("resolutions");
   // console.log(idxOfResolutions);
   // => 63
 
-  newSortOrder.splice(idxOfResolutions, 0, "engines", "tap", "c8", "lect");
+  newSortOrder.splice(idxOfResolutions, 0, "tap", "c8", "lect");
 
   // use custom array for sorting order:
   return sortPackageJson(obj, {
@@ -111,8 +109,6 @@ async function packageJson({ state, lectrc, rootPackageJSON }) {
   if (!Object.keys(content.devDependencies || {}).length) {
     objectPath.del(content, "devDependencies");
   }
-
-  // content = applyNodeEnginePolicy(content);
 
   // 7. write
   try {

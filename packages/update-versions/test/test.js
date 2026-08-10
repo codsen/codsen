@@ -3,13 +3,14 @@ import { promises } from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { execa, execaCommand } from "execa";
+import { execa } from "execa";
 import { ensureDirSync } from "fs-extra";
 import pMap from "p-map";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import writeFileAtomic from "write-file-atomic";
+import { updateVersions } from "../cli.js";
 
 const clone = structuredClone;
 
@@ -112,6 +113,16 @@ const test1FileContents = [
 
 const test2FileContents = [packTest12Lib3, rootPack];
 
+async function fetchPackageFixture(name) {
+  if (name === "slfjdlkjglkdflgjdlkjljf") {
+    throw new Error("Package does not exist");
+  }
+  return {
+    name,
+    version: "9.9.9",
+  };
+}
+
 // Unit tests
 // -----------------------------------------------------------------------------
 
@@ -132,66 +143,39 @@ test("01 - monorepo", async () => {
       path.join(tempFolder, oneOfTestFilePaths),
       JSON.stringify(test1FileContents[testIndex], null, 2),
     ),
-  )
-    .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")}`, {
-        shell: true,
-      }),
-    )
-    .then((received) => {
-      if (received?.stdout.includes("FetchError")) {
-        not.ok("Internet is down");
-      }
-    })
-    .then(() =>
-      pMap(test1FilePaths, (oneOfPaths) =>
-        promises.readFile(path.join(tempFolder, oneOfPaths), "utf8"),
-      ),
-    )
-    // .then(received =>
-    //   execa(`rm -rf ${path.join(__dirname, "../temp")}`, { shell: true }).then(
-    //     () => received
-    //   )
-    // )
-    .then((receivedContents) => {
-      // array comes in, but each JSON inside in unparsed and in string format:
-      let contents = receivedContents.map((arr) => JSON.parse(arr));
+  );
+  await updateVersions({ cwd: tempFolder, fetchPackage: fetchPackageFixture });
+  let receivedContents = await pMap(test1FilePaths, (oneOfPaths) =>
+    promises.readFile(path.join(tempFolder, oneOfPaths), "utf8"),
+  );
+  // array comes in, but each JSON inside in unparsed and in string format:
+  let contents = receivedContents.map((arr) => JSON.parse(arr));
 
-      // lib1:
-      match(contents[0].dependencies["check-types-mini"], /\^\d+\.\d+\.\d+/);
-      match(contents[0].devDependencies.husky, /\^\d+\.\d+\.\d+/);
-      match(contents[0].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
-      match(contents[0].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
-      // lib2:
-      match(contents[1].dependencies["check-types-mini"], /\^\d+\.\d+\.\d+/);
-      match(contents[1].devDependencies.husky, /\^\d+\.\d+\.\d+/);
-      match(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
-      match(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
+  // lib1:
+  match(contents[0].dependencies["check-types-mini"], /\^\d+\.\d+\.\d+/);
+  match(contents[0].devDependencies.husky, /\^\d+\.\d+\.\d+/);
+  match(contents[0].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
+  match(contents[0].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
+  // lib2:
+  match(contents[1].dependencies["check-types-mini"], /\^\d+\.\d+\.\d+/);
+  match(contents[1].devDependencies.husky, /\^\d+\.\d+\.\d+/);
+  match(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
+  match(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
 
-      // workspace: should be retained
-      match(
-        contents[1].devDependencies["cz-conventional-changelog"],
-        /workspace:\^\d+\.\d+\.\d+/,
-      );
+  // workspace: should be retained
+  match(
+    contents[1].devDependencies["cz-conventional-changelog"],
+    /workspace:\^\d+\.\d+\.\d+/,
+  );
 
-      // lib3 in node_modules should be intact:
-      equal(contents[2].dependencies["check-types-mini"], "*", "01.01");
-      equal(contents[2].devDependencies.husky, "latest", "01.02");
-      equal(contents[2].devDependencies.commitizen, "*", "01.03");
-      equal(contents[2].devDependencies.prettier, "1.16.1", "01.04");
+  // lib3 in node_modules should be intact:
+  equal(contents[2].dependencies["check-types-mini"], "*", "01.01");
+  equal(contents[2].devDependencies.husky, "latest", "01.02");
+  equal(contents[2].devDependencies.commitizen, "*", "01.03");
+  equal(contents[2].devDependencies.prettier, "1.16.1", "01.04");
 
-      // root package.json:
-      // at the time of writing this, latest Detergent is 4.0.4. We set original
-      // version in root as ^1.0.0, so check is, is the second digit greater than
-      // or equal to 4.
-      ok(
-        Number.parseInt(contents[3].dependencies.detergent.slice(1, 2), 10) >=
-          4,
-      );
-    })
-    .catch((err) => {
-      throw new Error(err);
-    });
+  // root package.json:
+  ok(contents[3].dependencies.detergent === "^9.9.9");
 });
 
 test("02 - normal repo", async () => {
@@ -207,46 +191,25 @@ test("02 - normal repo", async () => {
       path.join(tempFolder, oneOfTestFilePaths),
       JSON.stringify(test2FileContents[testIndex], null, 2),
     ),
-  )
-    .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")}`, {
-        shell: true,
-      }),
-    )
-    .then((received) => {
-      if (received?.stdout.includes("FetchError")) {
-        not.ok("Internet is down");
-      }
-    })
-    .then(() =>
-      pMap(test2FilePaths, (oneOfPaths) =>
-        promises.readFile(path.join(tempFolder, oneOfPaths), "utf8"),
-      ),
-    )
-    .then((received) =>
-      execa(`rm -rf ${path.join(__dirname2, "../temp")}`, { shell: true }).then(
-        () => received,
-      ),
-    )
-    .then((incomingContents) => {
-      // array comes in, but each JSON inside in unparsed and in string format:
-      let contents = incomingContents.map((arr) => JSON.parse(arr));
+  );
+  await updateVersions({ cwd: tempFolder, fetchPackage: fetchPackageFixture });
+  let incomingContents = await pMap(test2FilePaths, (oneOfPaths) =>
+    promises.readFile(path.join(tempFolder, oneOfPaths), "utf8"),
+  );
+  // array comes in, but each JSON inside in unparsed and in string format:
+  let contents = incomingContents.map((arr) => JSON.parse(arr));
 
-      // node_modules/lib3/package.json:
-      equal(contents[0].dependencies["check-types-mini"], "*", "02.01");
-      equal(contents[0].devDependencies.husky, "latest", "02.02");
-      equal(contents[0].devDependencies.commitizen, "*", "02.03");
-      equal(contents[0].devDependencies.prettier, "1.16.1", "02.04");
+  // node_modules/lib3/package.json:
+  equal(contents[0].dependencies["check-types-mini"], "*", "02.01");
+  equal(contents[0].devDependencies.husky, "latest", "02.02");
+  equal(contents[0].devDependencies.commitizen, "*", "02.03");
+  equal(contents[0].devDependencies.prettier, "1.16.1", "02.04");
 
-      // root package.json:
-      match(contents[1].dependencies.detergent, /\^\d+\.\d+\.\d+/);
-      match(contents[1].devDependencies.husky, /\^\d+\.\d+\.\d+/);
-      match(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
-      match(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
-    })
-    .catch((err) => {
-      throw new Error(err);
-    });
+  // root package.json:
+  match(contents[1].dependencies.detergent, /\^\d+\.\d+\.\d+/);
+  match(contents[1].devDependencies.husky, /\^\d+\.\d+\.\d+/);
+  match(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
+  match(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
 });
 
 test("03 - deletes deps from dev-deps if they are among normal deps", async () => {
@@ -267,36 +230,15 @@ test("03 - deletes deps from dev-deps if they are among normal deps", async () =
       path.join(tempFolder, oneOfTestFilePaths),
       JSON.stringify(tweakedContents[testIndex], null, 2),
     ),
-  )
-    .then(() =>
-      execa(`cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")}`, {
-        shell: true,
-      }),
-    )
-    .then((received) => {
-      if (received?.stdout.includes("FetchError")) {
-        not.ok("Internet is down");
-      }
-    })
-    .then(() =>
-      pMap(test2FilePaths, (oneOfPaths) =>
-        promises.readFile(path.join(tempFolder, oneOfPaths), "utf8"),
-      ),
-    )
-    .then((received) =>
-      execa(`rm -rf ${path.join(__dirname2, "../temp")}`, {
-        shell: true,
-      }).then(() => received),
-    )
-    .then((incomingContents) => {
-      // array comes in, but each JSON inside in unparsed and in string format:
-      let contents = incomingContents.map((arr) => JSON.parse(arr));
-      // root package.json dev-deps should not contain the commitizen:
-      ok(!Object.keys(contents[1].devDependencies).includes("commitizen"));
-    })
-    .catch((err) => {
-      throw new Error(err);
-    });
+  );
+  await updateVersions({ cwd: tempFolder, fetchPackage: fetchPackageFixture });
+  let incomingContents = await pMap(test2FilePaths, (oneOfPaths) =>
+    promises.readFile(path.join(tempFolder, oneOfPaths), "utf8"),
+  );
+  // array comes in, but each JSON inside in unparsed and in string format:
+  let contents = incomingContents.map((arr) => JSON.parse(arr));
+  // root package.json dev-deps should not contain the commitizen:
+  ok(!Object.keys(contents[1].devDependencies).includes("commitizen"));
 });
 
 test("04 - version output mode", async () => {
@@ -323,16 +265,66 @@ test("06 - no files found in the given directory", async () => {
   ensureDirSync(path.resolve(tempFolder));
 
   // call execa on that empty folder
-  let stdOutContents = await execa(
-    `cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")}`,
-    { shell: true },
-  );
+  let stdOutContents = await execa(path.join(__dirname2, "../", "cli.js"), {
+    cwd: tempFolder,
+  });
 
   // CLI should exit with a non-error code zero:
   equal(stdOutContents.exitCode, 0, "06.01");
+});
 
-  // delete folder:
-  await execaCommand(`rm -rf ${path.join(__dirname2, "../temp")}`);
+test("07 - resolves registry metadata before writing", async () => {
+  let tempFolder = temporaryDirectory();
+  let packagePath = path.join(tempFolder, "package.json");
+  let original = JSON.stringify(
+    {
+      name: "fixture",
+      version: "1.0.0",
+      dependencies: {
+        alpha: "^1.0.0",
+        beta: "^1.0.0",
+      },
+    },
+    null,
+    2,
+  );
+  await writeFileAtomic(packagePath, original);
+
+  let releaseBeta;
+  let betaMetadata = new Promise((resolve) => {
+    releaseBeta = resolve;
+  });
+  let updatePromise = updateVersions({
+    cwd: tempFolder,
+    fetchPackage: (name) =>
+      name === "alpha"
+        ? Promise.resolve({ name, version: "2.0.0" })
+        : betaMetadata,
+  });
+
+  await new Promise((resolve) => setImmediate(resolve));
+  equal(await promises.readFile(packagePath, "utf8"), original, "07.01");
+
+  releaseBeta({ name: "beta", version: "3.0.0" });
+  await updatePromise;
+  let updated = JSON.parse(await promises.readFile(packagePath, "utf8"));
+  equal(updated.dependencies.alpha, "^2.0.0", "07.02");
+  equal(updated.dependencies.beta, "^3.0.0", "07.03");
+
+  await writeFileAtomic(packagePath, original);
+  let receivedError;
+  try {
+    await updateVersions({
+      cwd: tempFolder,
+      fetchPackage: async () => {
+        throw new Error("registry unavailable");
+      },
+    });
+  } catch (error) {
+    receivedError = error;
+  }
+  match(receivedError.message, /Nothing was written/);
+  equal(await promises.readFile(packagePath, "utf8"), original, "07.04");
 });
 
 test.run();

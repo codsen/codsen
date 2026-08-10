@@ -1,4 +1,4 @@
-import { isMatch } from "matcher";
+import { match } from "codsen-utils";
 
 // it's a copy of array-includes-with-glob 5.1.3, to prevent circular deps
 
@@ -31,23 +31,23 @@ function includesWithGlob(
 
   if (typeof findThis === "string") {
     return resolvedInput.some((val) =>
-      isMatch(val, findThis, { caseSensitive: resolvedOpts.caseSensitive }),
+      match(val, findThis, { caseSensitiveMatch: resolvedOpts.caseSensitive }),
     );
   }
   // array then.
   if (resolvedOpts.arrayVsArrayAllMustBeFound === "any") {
     return findThis.some((stringToFindVal) =>
       resolvedInput.some((val) =>
-        isMatch(val, stringToFindVal, {
-          caseSensitive: resolvedOpts.caseSensitive,
+        match(val, stringToFindVal, {
+          caseSensitiveMatch: resolvedOpts.caseSensitive,
         }),
       ),
     );
   }
   return findThis.every((stringToFindVal) =>
     resolvedInput.some((val) =>
-      isMatch(val, stringToFindVal, {
-        caseSensitive: resolvedOpts.caseSensitive,
+      match(val, stringToFindVal, {
+        caseSensitiveMatch: resolvedOpts.caseSensitive,
       }),
     ),
   );

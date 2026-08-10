@@ -24,25 +24,20 @@ export const dependencyStats: DependencyStats = {
     "fp-ts",
     "fs-extra",
     "globby",
-    "grapheme-splitter",
     "he",
     "html-entities",
     "is-d",
-    "is-online",
     "leven",
     "lodash-es",
-    "log-update",
-    "matcher",
     "object-path",
     "p-filter",
     "p-map",
     "p-one",
     "p-progress",
     "p-reduce",
-    "pacote",
+    "package-json",
     "rehype",
     "rehype-parse",
-    "runes",
     "semver-compare",
     "sort-keys",
     "sort-package-json",
@@ -139,9 +134,9 @@ export const dependencyStats: DependencyStats = {
     "ast-monkey": 1,
     "ast-monkey-traverse": 7,
     "ast-monkey-traverse-with-lookahead": 1,
-    "check-types-mini": 3,
+    "check-types-mini": 2,
     "codsen-parser": 1,
-    "codsen-utils": 57,
+    "codsen-utils": 59,
     "csv-sort": 1,
     "csv-split-easy": 1,
     "currency.js": 1,
@@ -151,7 +146,6 @@ export const dependencyStats: DependencyStats = {
     "fs-extra": 3,
     "generate-atomic-css": 1,
     "globby": 8,
-    "grapheme-splitter": 1,
     "he": 3,
     "html-all-known-attributes": 1,
     "html-crush": 1,
@@ -159,14 +153,11 @@ export const dependencyStats: DependencyStats = {
     "html-entities-not-email-friendly": 1,
     "is-char-suitable-for-html-attr-name": 1,
     "is-d": 4,
-    "is-online": 1,
     "js-row-num": 1,
     "json-comb-core": 1,
     "lerna-clean-changelogs": 1,
     "leven": 2,
     "lodash-es": 9,
-    "log-update": 1,
-    "matcher": 9,
     "object-all-values-equal-to": 1,
     "object-boolean-combinations": 1,
     "object-fill-missing-keys": 1,
@@ -176,11 +167,11 @@ export const dependencyStats: DependencyStats = {
     "object-path": 3,
     "object-set-all-values-to": 1,
     "p-filter": 2,
-    "p-map": 3,
+    "p-map": 2,
     "p-one": 1,
     "p-progress": 1,
     "p-reduce": 7,
-    "pacote": 1,
+    "package-json": 1,
     "ranges-apply": 16,
     "ranges-crop": 2,
     "ranges-invert": 2,
@@ -195,7 +186,6 @@ export const dependencyStats: DependencyStats = {
     "regex-jinja-specific": 1,
     "rehype": 1,
     "rehype-parse": 1,
-    "runes": 1,
     "semver-compare": 1,
     "sort-keys": 1,
     "sort-package-json": 1,
@@ -230,13 +220,12 @@ export const dependencyStats: DependencyStats = {
   },
   "devDependencies": {
     "@types/he": 2,
-    "@types/runes": 1,
     "ast-monkey-traverse": 2,
     "color-shorthand-hex-to-six-digit": 1,
     "deep-equal": 2,
     "fs-extra": 1,
     "globby": 1,
-    "p-map": 3,
+    "p-map": 4,
     "ranges-apply": 5,
     "ranges-invert": 1,
     "ranges-merge": 1,
@@ -246,9 +235,6 @@ export const dependencyStats: DependencyStats = {
     "title": 1
   },
   "top10ExternalDeps": [
-    {
-      "matcher": 9
-    },
     {
       "update-notifier": 9
     },
@@ -265,6 +251,9 @@ export const dependencyStats: DependencyStats = {
       "object-path": 3
     },
     {
+      "he": 3
+    },
+    {
       "type-detect": 2
     },
     {
@@ -279,7 +268,7 @@ export const dependencyStats: DependencyStats = {
   ],
   "top10OwnDeps": [
     {
-      "codsen-utils": 57
+      "codsen-utils": 59
     },
     {
       "ranges-apply": 16
@@ -291,10 +280,10 @@ export const dependencyStats: DependencyStats = {
       "ast-compare": 3
     },
     {
-      "check-types-mini": 3
+      "ast-contains-only-empty-space": 2
     },
     {
-      "ast-contains-only-empty-space": 2
+      "check-types-mini": 2
     },
     {
       "util-array-object-or-both": 2

@@ -56,9 +56,6 @@
     "test": "npm run devtest",
     "unit": "uvu test"
   },
-  "engines": {
-    "node": ">=14.18.0"
-  },
   "c8": {
     "check-coverage": true,
     "exclude": ["**/test/**/*.*"],
@@ -69,6 +66,9 @@
       "extras": [""]
     },
     "various": {}
+  },
+  "engines": {
+    "node": ">=18.20.8"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

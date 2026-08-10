@@ -7,12 +7,12 @@ import {
   intersection,
   isLatinLetter,
   isPlainObject as isObj,
+  match,
   pullAll,
   uniq,
 } from "codsen-utils";
 import type { Opts as HtmlCrushOpts } from "html-crush";
 import { crush } from "html-crush";
-import { isMatch, matcher } from "matcher";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 import { emptyCondCommentRegex } from "regex-empty-conditional-comments";
@@ -1719,7 +1719,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
               resolvedOpts.uglify &&
               (!Array.isArray(resolvedOpts.whitelist) ||
                 !resolvedOpts.whitelist.length ||
-                !matcher([singleSelector], resolvedOpts.whitelist).length)
+                !match(singleSelector, resolvedOpts.whitelist))
             ) {
               DEV &&
                 console.log(
@@ -1811,7 +1811,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
             round === 2 &&
             selectorChunkCanBeDeleted &&
             strArrToMatchAgainstChunks.length &&
-            matcher([currentChunk], strArrToMatchAgainstChunks).length
+            match(currentChunk, strArrToMatchAgainstChunks)
           ) {
             selectorChunkCanBeDeleted = false;
             DEV &&
@@ -2712,7 +2712,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
               !(
                 Array.isArray(resolvedOpts.whitelist) &&
                 resolvedOpts.whitelist.length &&
-                matcher([`.${carvedClass}`], resolvedOpts.whitelist).length
+                match(`.${carvedClass}`, resolvedOpts.whitelist)
               )
             ) {
               DEV &&
@@ -2842,8 +2842,8 @@ function comb(str: string, opts?: InputOpts | null): Res {
             );
           DEV &&
             console.log(
-              `2845 matcher([#${carvedId}], resolvedOpts.whitelist) = ${matcher(
-                [`#${carvedId}`],
+              `2845 match(#${carvedId}, resolvedOpts.whitelist) = ${match(
+                `#${carvedId}`,
                 resolvedOpts.whitelist,
               )}`,
             );
@@ -2854,7 +2854,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
             !(
               Array.isArray(resolvedOpts.whitelist) &&
               resolvedOpts.whitelist.length &&
-              matcher([`#${carvedId}`], resolvedOpts.whitelist).length
+              match(`#${carvedId}`, resolvedOpts.whitelist)
             )
           ) {
             DEV &&
@@ -4034,7 +4034,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
           )}`,
         );
 
-      let allClassesAndIdsWithinBodyThatWereWhitelisted = matcher(
+      let allClassesAndIdsWithinBodyThatWereWhitelisted = filterMatches(
         allClassesAndIdsWithinBody,
         resolvedOpts.whitelist,
       );
@@ -4096,7 +4096,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
             .filter(
               (arr) =>
                 !resolvedOpts.whitelist.some((whitelistVal) =>
-                  isMatch(arr[0], whitelistVal),
+                  match(arr[0], whitelistVal),
                 ),
             ) as StringifiedLegend[])
         : null;
@@ -4463,6 +4463,13 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
     deletedFromHead: headCssToDelete.sort(compareFn),
     deletedFromBody: bodyCssToDelete.sort(compareFn),
   };
+}
+
+function filterMatches(
+  inputs: readonly string[],
+  patterns: string | readonly string[],
+): string[] {
+  return inputs.filter((input) => match(input, patterns));
 }
 
 export { comb, defaults, version };

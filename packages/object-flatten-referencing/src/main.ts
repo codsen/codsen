@@ -7,8 +7,8 @@ import {
   isPlainObject as isObj,
   isStr,
   type JSONValue,
+  match,
 } from "codsen-utils";
-import { isMatch } from "matcher";
 import { strIndexesOfPlus } from "str-indexes-of-plus";
 import { version as v } from "../package.json";
 import { defaults, flattenArr, flattenObject, type Opts } from "./util";
@@ -90,7 +90,7 @@ function flattenReferencing(
               wrap =
                 wrap &&
                 !opts2.dontWrapKeys.some((elem) =>
-                  isMatch(key, elem, { caseSensitive: true }),
+                  match(key, elem, { caseSensitiveMatch: true }),
                 );
             }
             if (opts2.dontWrapPaths.length) {

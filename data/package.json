@@ -12,7 +12,7 @@
   "type": "module",
   "exports": "./dist/index.js",
   "engines": {
-    "node": ">=24"
+    "node": ">=18.20.8"
   },
   "repository": {
     "type": "git",

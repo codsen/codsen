@@ -1,4 +1,4 @@
-import { isMatch } from "matcher";
+import { match } from "codsen-utils";
 
 import { version as v } from "../package.json";
 
@@ -8,7 +8,7 @@ export interface Opts {
   caseSensitive: boolean;
 }
 
-// resolvedOpts are mirroring matcher's at the moment, can't promise that for the future
+// Matching is case-sensitive by default.
 const defaults: Opts = {
   caseSensitive: true,
 };
@@ -35,8 +35,8 @@ function pull(
   const res = Array.from(strArr).filter(
     (originalVal) =>
       !resolvedToBeRemoved.some((remVal) =>
-        isMatch(originalVal, remVal, {
-          caseSensitive: resolvedOpts.caseSensitive,
+        match(originalVal, remVal, {
+          caseSensitiveMatch: resolvedOpts.caseSensitive,
         }),
       ),
   );

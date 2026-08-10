@@ -3,11 +3,13 @@ import { createRequire } from "node:module";
 import path from "node:path";
 import esbuild from "esbuild";
 import camelCase from "lodash.camelcase";
+import { nodeTargetFromEngineRange } from "../helpers/nodeEngine.js";
 
 const require2 = createRequire(import.meta.url);
 const name2 = path.basename(path.resolve("./"));
 
 const pkg = require2(path.join(path.resolve("./"), "package.json"));
+const nodeTarget = nodeTargetFromEngineRange(pkg.engines?.node);
 
 // Builds must not leave output from older compiler layouts behind.
 rmSync(path.join(path.resolve("./"), "dist"), {
@@ -46,7 +48,7 @@ if (
     define: { DEV: String(!!process.env.DEV) },
     minify: !process.env.DEV,
     sourcemap: false,
-    target: ["node22"],
+    target: [nodeTarget],
     outfile: path.join(path.resolve("./"), `dist/${name2}.esm.js`),
     // pure,
     banner,

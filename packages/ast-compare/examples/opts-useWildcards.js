@@ -14,8 +14,8 @@ assert.equal(
   false,
 );
 
-// once enabled, strings are matched via https://www.npmjs.com/package/matcher
-// where "*" means any sequence of characters
+// once enabled, strings use wildcard matching, where "*" means any sequence
+// of characters
 assert.equal(
   compare(
     { a: "1", b: "2a", c: "3" },

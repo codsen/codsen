@@ -1,8 +1,7 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import { traverse } from "ast-monkey-traverse";
-import { deepClone as clone } from "codsen-utils";
-import { isMatch } from "matcher";
+import { deepClone as clone, match } from "codsen-utils";
 import { version as v } from "../package.json";
 
 const version: string = v;
@@ -33,7 +32,7 @@ function getByKey(
     let current = val !== undefined ? val : key;
     if (
       val !== undefined &&
-      isMatch(key, whatToFind, { caseSensitive: true })
+      match(key, whatToFind, { caseSensitiveMatch: true })
     ) {
       if (replacement === undefined) {
         findings.push({

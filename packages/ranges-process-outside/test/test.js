@@ -299,7 +299,7 @@ test(`22 - one range - string covers ranges - emoji - checks on`, () => {
   );
 });
 
-test(`23 - one range - string covers ranges - emoji - checks on`, () => {
+test(`23 - one range - string covers ranges - emoji code points - checks on`, () => {
   equal(femaleWhiteSleuthEmoji.length, 7, "23.01");
   let gather = [];
   p(
@@ -314,7 +314,11 @@ test(`23 - one range - string covers ranges - emoji - checks on`, () => {
     gather,
     [
       [5, 6],
-      [6, 13],
+      [6, 8],
+      [8, 10],
+      [10, 11],
+      [11, 12],
+      [12, 13],
       [13, 14],
       [14, 15],
     ],

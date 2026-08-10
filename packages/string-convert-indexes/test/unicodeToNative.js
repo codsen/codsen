@@ -103,4 +103,8 @@ test("12 - two astral characters offsetting the rest", () => {
   );
 });
 
+test("13 - modern emoji ZWJ sequence", () => {
+  equal(unicodeToNative("a🧑‍🤝‍🧑b", [0, 1, 2]), [0, 1, 9], "13.01");
+});
+
 test.run();

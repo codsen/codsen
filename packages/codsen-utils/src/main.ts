@@ -1119,3 +1119,727 @@ export function omit(obj: JSONObject, keysToRemove: string[] = []): JSONObject {
   }
   return result;
 }
+
+// ----------------------------------------------------------------
+
+export interface MatchOptions {
+  /** Match letter case exactly. Off by default. */
+  caseSensitiveMatch?: boolean;
+}
+
+interface CompiledMatchSegment {
+  values: number[];
+  failure?: Uint32Array;
+}
+
+interface CompiledMatchPattern {
+  asciiOnly: boolean;
+  endsWithWildcard: boolean;
+  hasWildcard: boolean;
+  minimumInputLength: number;
+  segments: CompiledMatchSegment[];
+  startsWithWildcard: boolean;
+}
+
+interface MatchInputState {
+  tokens?: MatchInputTokens;
+}
+
+type MatchInputTokens = number[] | Uint32Array;
+
+const matchPatternCacheLimit = 256;
+const matchPatternCacheMaxLength = 1024;
+const matchShortSegmentLimit = 1;
+const caseSensitiveMatchPatternCache = new Map<string, CompiledMatchPattern>();
+const caseInsensitiveMatchPatternCache = new Map<
+  string,
+  CompiledMatchPattern
+>();
+
+function canonicaliseMatchCodePoint(codePoint: number): number {
+  if (codePoint >= 97 && codePoint <= 122) {
+    return codePoint - 32;
+  }
+
+  if (codePoint > 0xffff) {
+    return codePoint;
+  }
+
+  const uppercased = String.fromCharCode(codePoint).toUpperCase();
+
+  if (uppercased.length !== 1) {
+    return codePoint;
+  }
+
+  const uppercasedCodePoint = uppercased.charCodeAt(0);
+  if (codePoint > 127 && uppercasedCodePoint < 128) {
+    return codePoint;
+  }
+
+  return uppercasedCodePoint;
+}
+
+function matchAsciiRegion(
+  input: string,
+  inputStart: number,
+  pattern: string,
+  patternStart: number,
+  length: number,
+  caseSensitiveMatch: boolean,
+): boolean {
+  for (let offset = 0; offset < length; offset++) {
+    let inputCodePoint = input.charCodeAt(inputStart + offset);
+    let patternCodePoint = pattern.charCodeAt(patternStart + offset);
+
+    if (!caseSensitiveMatch) {
+      if (inputCodePoint >= 97 && inputCodePoint <= 122) {
+        inputCodePoint -= 32;
+      }
+      if (patternCodePoint >= 97 && patternCodePoint <= 122) {
+        patternCodePoint -= 32;
+      }
+    }
+
+    if (inputCodePoint !== patternCodePoint) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function matchesSimpleMatchPattern(
+  input: string,
+  pattern: string,
+  caseSensitiveMatch: boolean,
+): boolean | undefined {
+  const firstBackslashIndex = pattern.indexOf("\\");
+
+  if (firstBackslashIndex === -1 && input === pattern) {
+    return true;
+  }
+
+  const firstWildcardIndex = pattern.indexOf("*");
+
+  if (firstBackslashIndex === -1 && firstWildcardIndex === -1) {
+    if (caseSensitiveMatch) {
+      return false;
+    }
+
+    for (let index = 0; index < pattern.length; index++) {
+      if (pattern.charCodeAt(index) > 127) {
+        return undefined;
+      }
+    }
+
+    return (
+      input.length === pattern.length &&
+      matchAsciiRegion(input, 0, pattern, 0, pattern.length, false)
+    );
+  }
+
+  if (firstBackslashIndex !== -1) {
+    return undefined;
+  }
+
+  let wildcardRunCount = 0;
+  let inWildcardRun = false;
+  let lastWildcardIndex = -1;
+
+  for (let index = 0; index < pattern.length; index++) {
+    const codePoint = pattern.charCodeAt(index);
+    if (codePoint > 127) {
+      return undefined;
+    }
+
+    if (codePoint === 42) {
+      lastWildcardIndex = index;
+      if (!inWildcardRun) {
+        wildcardRunCount++;
+        if (wildcardRunCount > 1) {
+          return undefined;
+        }
+        inWildcardRun = true;
+      }
+    } else {
+      inWildcardRun = false;
+    }
+  }
+
+  const suffixPatternStart = lastWildcardIndex + 1;
+  const suffixLength = pattern.length - suffixPatternStart;
+  if (input.length < firstWildcardIndex + suffixLength) {
+    return false;
+  }
+
+  return (
+    matchAsciiRegion(
+      input,
+      0,
+      pattern,
+      0,
+      firstWildcardIndex,
+      caseSensitiveMatch,
+    ) &&
+    matchAsciiRegion(
+      input,
+      input.length - suffixLength,
+      pattern,
+      suffixPatternStart,
+      suffixLength,
+      caseSensitiveMatch,
+    )
+  );
+}
+
+function buildMatchFailure(values: number[]): Uint32Array {
+  const failure = new Uint32Array(values.length);
+  let matchedLength = 0;
+
+  for (let index = 1; index < values.length; index++) {
+    while (matchedLength > 0 && values[index] !== values[matchedLength]) {
+      matchedLength = failure[matchedLength - 1];
+    }
+    if (values[index] === values[matchedLength]) {
+      matchedLength++;
+    }
+    failure[index] = matchedLength;
+  }
+
+  return failure;
+}
+
+function createCompiledMatchPattern(
+  pattern: string,
+  caseSensitiveMatch: boolean,
+): CompiledMatchPattern {
+  const rawSegments: number[][] = [[]];
+  let asciiOnly = true;
+  let hasWildcard = false;
+  let lastWasWildcard = false;
+  let minimumInputLength = 0;
+
+  for (let index = 0; index < pattern.length; ) {
+    const codePoint = pattern.codePointAt(index) as number;
+
+    if (codePoint !== 92) {
+      if (codePoint === 42) {
+        hasWildcard = true;
+        if (!lastWasWildcard) {
+          rawSegments.push([]);
+          lastWasWildcard = true;
+        }
+      } else {
+        const canonicalCodePoint = caseSensitiveMatch
+          ? codePoint
+          : canonicaliseMatchCodePoint(codePoint);
+        rawSegments[rawSegments.length - 1].push(canonicalCodePoint);
+        asciiOnly &&= canonicalCodePoint <= 127;
+        minimumInputLength++;
+        lastWasWildcard = false;
+      }
+
+      index += codePoint > 0xffff ? 2 : 1;
+      continue;
+    }
+
+    let runEnd = index + 1;
+    while (pattern.charCodeAt(runEnd) === 92) {
+      runEnd++;
+    }
+
+    const runLength = runEnd - index;
+    const nextCodePoint = pattern.codePointAt(runEnd);
+    let literalBackslashCount: number;
+
+    if (nextCodePoint === 42) {
+      literalBackslashCount = Math.floor((runLength - 1) / 2);
+    } else if (
+      nextCodePoint === undefined ||
+      nextCodePoint === 10 ||
+      nextCodePoint === 13 ||
+      nextCodePoint === 0x2028 ||
+      nextCodePoint === 0x2029
+    ) {
+      literalBackslashCount = Math.ceil(runLength / 2);
+    } else {
+      literalBackslashCount = Math.floor(runLength / 2);
+    }
+
+    for (let count = 0; count < literalBackslashCount; count++) {
+      rawSegments[rawSegments.length - 1].push(92);
+      minimumInputLength++;
+    }
+
+    if (nextCodePoint !== undefined) {
+      const canonicalCodePoint = caseSensitiveMatch
+        ? nextCodePoint
+        : canonicaliseMatchCodePoint(nextCodePoint);
+      rawSegments[rawSegments.length - 1].push(canonicalCodePoint);
+      asciiOnly &&= canonicalCodePoint <= 127;
+      minimumInputLength++;
+      runEnd += nextCodePoint > 0xffff ? 2 : 1;
+    }
+
+    lastWasWildcard = false;
+    index = runEnd;
+  }
+
+  const startsWithWildcard = hasWildcard && rawSegments[0].length === 0;
+  const endsWithWildcard =
+    hasWildcard && rawSegments[rawSegments.length - 1].length === 0;
+  const segments: CompiledMatchSegment[] = [];
+
+  for (const values of rawSegments) {
+    if (values.length) {
+      segments.push({ values });
+    }
+  }
+
+  const firstSearchableSegment = startsWithWildcard ? 0 : 1;
+  const searchableSegmentEnd = segments.length - (endsWithWildcard ? 0 : 1);
+  for (
+    let index = firstSearchableSegment;
+    index < searchableSegmentEnd;
+    index++
+  ) {
+    if (segments[index].values.length > matchShortSegmentLimit) {
+      segments[index].failure = buildMatchFailure(segments[index].values);
+    }
+  }
+
+  return {
+    asciiOnly,
+    endsWithWildcard,
+    hasWildcard,
+    minimumInputLength,
+    segments,
+    startsWithWildcard,
+  };
+}
+
+function compileMatchPattern(
+  pattern: string,
+  caseSensitiveMatch: boolean,
+): CompiledMatchPattern {
+  const cache = caseSensitiveMatch
+    ? caseSensitiveMatchPatternCache
+    : caseInsensitiveMatchPatternCache;
+  const cacheable = pattern.length <= matchPatternCacheMaxLength;
+
+  if (cacheable) {
+    const cached = cache.get(pattern);
+    if (cached) {
+      return cached;
+    }
+  }
+
+  const compiled = createCompiledMatchPattern(pattern, caseSensitiveMatch);
+
+  if (cacheable) {
+    if (cache.size >= matchPatternCacheLimit) {
+      const oldestKey = cache.keys().next().value;
+      if (oldestKey !== undefined) {
+        cache.delete(oldestKey);
+      }
+    }
+    cache.set(pattern, compiled);
+  }
+
+  return compiled;
+}
+
+function tokeniseMatchInput(
+  input: string,
+  caseSensitiveMatch: boolean,
+): MatchInputTokens {
+  if (caseSensitiveMatch) {
+    const tokens: number[] = [];
+
+    for (let index = 0; index < input.length; ) {
+      const codePoint = input.codePointAt(index) as number;
+      tokens.push(codePoint);
+      index += codePoint > 0xffff ? 2 : 1;
+    }
+
+    return tokens;
+  }
+
+  const tokens = new Uint32Array(input.length);
+  let tokenCount = 0;
+
+  for (let index = 0; index < input.length; ) {
+    const codePoint = input.codePointAt(index) as number;
+    tokens[tokenCount] = canonicaliseMatchCodePoint(codePoint);
+    tokenCount++;
+    index += codePoint > 0xffff ? 2 : 1;
+  }
+
+  return tokenCount === tokens.length ? tokens : tokens.subarray(0, tokenCount);
+}
+
+function matchAsciiSegmentAt(
+  input: string,
+  inputStart: number,
+  segment: CompiledMatchSegment,
+  caseSensitiveMatch: boolean,
+): boolean {
+  for (let index = 0; index < segment.values.length; index++) {
+    let inputCodePoint = input.charCodeAt(inputStart + index);
+    if (!caseSensitiveMatch && inputCodePoint >= 97 && inputCodePoint <= 122) {
+      inputCodePoint -= 32;
+    }
+    if (inputCodePoint !== segment.values[index]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function findAsciiMatchSegment(
+  input: string,
+  segment: CompiledMatchSegment,
+  start: number,
+  end: number,
+  caseSensitiveMatch: boolean,
+): number {
+  const maxStart = end - segment.values.length;
+
+  if (maxStart < start) {
+    return -1;
+  }
+
+  if (!segment.failure) {
+    for (let candidate = start; candidate <= maxStart; candidate++) {
+      if (matchAsciiSegmentAt(input, candidate, segment, caseSensitiveMatch)) {
+        return candidate;
+      }
+    }
+    return -1;
+  }
+
+  let matchedLength = 0;
+  for (let index = start; index < end; index++) {
+    let inputCodePoint = input.charCodeAt(index);
+    if (!caseSensitiveMatch && inputCodePoint >= 97 && inputCodePoint <= 122) {
+      inputCodePoint -= 32;
+    }
+
+    while (
+      matchedLength > 0 &&
+      inputCodePoint !== segment.values[matchedLength]
+    ) {
+      matchedLength = segment.failure[matchedLength - 1];
+    }
+    if (inputCodePoint === segment.values[matchedLength]) {
+      matchedLength++;
+      if (matchedLength === segment.values.length) {
+        return index - matchedLength + 1;
+      }
+    }
+  }
+
+  return -1;
+}
+
+function matchesAsciiCompiledPattern(
+  input: string,
+  compiled: CompiledMatchPattern,
+  caseSensitiveMatch: boolean,
+): boolean {
+  if (input.length < compiled.minimumInputLength) {
+    return false;
+  }
+  if (!compiled.hasWildcard) {
+    return (
+      input.length === compiled.minimumInputLength &&
+      matchAsciiSegmentAt(input, 0, compiled.segments[0], caseSensitiveMatch)
+    );
+  }
+
+  let firstSearchableSegment = 0;
+  let searchableSegmentEnd = compiled.segments.length;
+  let inputCursor = 0;
+  let inputEnd = input.length;
+
+  if (!compiled.startsWithWildcard) {
+    const prefix = compiled.segments[0];
+    if (!matchAsciiSegmentAt(input, 0, prefix, caseSensitiveMatch)) {
+      return false;
+    }
+    inputCursor = prefix.values.length;
+    firstSearchableSegment++;
+  }
+
+  if (!compiled.endsWithWildcard) {
+    searchableSegmentEnd--;
+    const suffix = compiled.segments[searchableSegmentEnd];
+    inputEnd -= suffix.values.length;
+    if (!matchAsciiSegmentAt(input, inputEnd, suffix, caseSensitiveMatch)) {
+      return false;
+    }
+  }
+
+  for (
+    let index = firstSearchableSegment;
+    index < searchableSegmentEnd;
+    index++
+  ) {
+    const segment = compiled.segments[index];
+    const foundAt = findAsciiMatchSegment(
+      input,
+      segment,
+      inputCursor,
+      inputEnd,
+      caseSensitiveMatch,
+    );
+    if (foundAt === -1) {
+      return false;
+    }
+    inputCursor = foundAt + segment.values.length;
+  }
+
+  return true;
+}
+
+function matchTokenSegmentAt(
+  input: MatchInputTokens,
+  inputStart: number,
+  segment: CompiledMatchSegment,
+): boolean {
+  for (let index = 0; index < segment.values.length; index++) {
+    if (input[inputStart + index] !== segment.values[index]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function findTokenMatchSegment(
+  input: MatchInputTokens,
+  segment: CompiledMatchSegment,
+  start: number,
+  end: number,
+): number {
+  const maxStart = end - segment.values.length;
+
+  if (maxStart < start) {
+    return -1;
+  }
+
+  if (!segment.failure) {
+    for (let candidate = start; candidate <= maxStart; candidate++) {
+      if (matchTokenSegmentAt(input, candidate, segment)) {
+        return candidate;
+      }
+    }
+    return -1;
+  }
+
+  let matchedLength = 0;
+  for (let index = start; index < end; index++) {
+    while (
+      matchedLength > 0 &&
+      input[index] !== segment.values[matchedLength]
+    ) {
+      matchedLength = segment.failure[matchedLength - 1];
+    }
+    if (input[index] === segment.values[matchedLength]) {
+      matchedLength++;
+      if (matchedLength === segment.values.length) {
+        return index - matchedLength + 1;
+      }
+    }
+  }
+
+  return -1;
+}
+
+function matchesTokenCompiledPattern(
+  input: MatchInputTokens,
+  compiled: CompiledMatchPattern,
+): boolean {
+  if (input.length < compiled.minimumInputLength) {
+    return false;
+  }
+  if (!compiled.hasWildcard) {
+    return (
+      input.length === compiled.minimumInputLength &&
+      matchTokenSegmentAt(input, 0, compiled.segments[0])
+    );
+  }
+
+  let firstSearchableSegment = 0;
+  let searchableSegmentEnd = compiled.segments.length;
+  let inputCursor = 0;
+  let inputEnd = input.length;
+
+  if (!compiled.startsWithWildcard) {
+    const prefix = compiled.segments[0];
+    if (!matchTokenSegmentAt(input, 0, prefix)) {
+      return false;
+    }
+    inputCursor = prefix.values.length;
+    firstSearchableSegment++;
+  }
+
+  if (!compiled.endsWithWildcard) {
+    searchableSegmentEnd--;
+    const suffix = compiled.segments[searchableSegmentEnd];
+    inputEnd -= suffix.values.length;
+    if (!matchTokenSegmentAt(input, inputEnd, suffix)) {
+      return false;
+    }
+  }
+
+  for (
+    let index = firstSearchableSegment;
+    index < searchableSegmentEnd;
+    index++
+  ) {
+    const segment = compiled.segments[index];
+    const foundAt = findTokenMatchSegment(
+      input,
+      segment,
+      inputCursor,
+      inputEnd,
+    );
+    if (foundAt === -1) {
+      return false;
+    }
+    inputCursor = foundAt + segment.values.length;
+  }
+
+  return true;
+}
+
+function matchesScalarMatchPattern(
+  input: string,
+  pattern: string,
+  caseSensitiveMatch: boolean,
+): boolean {
+  const simpleResult = matchesSimpleMatchPattern(
+    input,
+    pattern,
+    caseSensitiveMatch,
+  );
+  if (simpleResult !== undefined) {
+    return simpleResult;
+  }
+
+  const compiled = compileMatchPattern(pattern, caseSensitiveMatch);
+  return compiled.asciiOnly
+    ? matchesAsciiCompiledPattern(input, compiled, caseSensitiveMatch)
+    : matchesTokenCompiledPattern(
+        tokeniseMatchInput(input, caseSensitiveMatch),
+        compiled,
+      );
+}
+
+function matchesArrayMatchPattern(
+  input: string,
+  pattern: string,
+  caseSensitiveMatch: boolean,
+  inputState: MatchInputState,
+): boolean {
+  const simpleResult = matchesSimpleMatchPattern(
+    input,
+    pattern,
+    caseSensitiveMatch,
+  );
+  if (simpleResult !== undefined) {
+    return simpleResult;
+  }
+
+  const compiled = compileMatchPattern(pattern, caseSensitiveMatch);
+  if (compiled.asciiOnly) {
+    return matchesAsciiCompiledPattern(input, compiled, caseSensitiveMatch);
+  }
+
+  inputState.tokens ??= tokeniseMatchInput(input, caseSensitiveMatch);
+  return matchesTokenCompiledPattern(inputState.tokens, compiled);
+}
+
+/**
+ * Match a whole string against one or more wildcard patterns.
+ *
+ * Patterns are anchored — they must consume the whole input, not a part of
+ * it. `*` stands for zero or more characters and does cross line breaks.
+ * A leading `!` negates a pattern: any negative pattern which matches vetoes
+ * the result outright, no matter what the positive ones did. Given only
+ * negative patterns, anything they don't catch passes. An empty pattern
+ * array matches nothing.
+ *
+ * `\` escapes the character after it, so `\*` means a literal asterisk and
+ * `\\` means a literal backslash.
+ *
+ * Matching walks code points, not UTF-16 code units, so a wildcard can never
+ * consume half of a surrogate pair.
+ * @param input string to match
+ * @param patterns one pattern or an array of them
+ * @returns boolean
+ * console.log(match("index.js", ["*.js", "!*.test.js"]));
+ * -> true
+ */
+export function match(
+  input: string,
+  patterns: string | readonly string[],
+  options?: MatchOptions,
+): boolean {
+  if (typeof patterns !== "string" && !patterns.length) {
+    return false;
+  }
+
+  const caseSensitiveMatch =
+    options === undefined ? false : options.caseSensitiveMatch === true;
+
+  if (typeof patterns === "string") {
+    const negative = patterns.charCodeAt(0) === 33;
+    const pattern = negative ? patterns.slice(1) : patterns;
+    const matched = matchesScalarMatchPattern(
+      input,
+      pattern,
+      caseSensitiveMatch,
+    );
+    return negative ? !matched : matched;
+  }
+
+  const inputState: MatchInputState = {};
+  let hasPositive = false;
+  let positiveMatched = false;
+
+  for (const pattern of patterns) {
+    const negative = pattern.charCodeAt(0) === 33;
+    const wildcardPattern = negative ? pattern.slice(1) : pattern;
+
+    if (negative) {
+      if (
+        matchesArrayMatchPattern(
+          input,
+          wildcardPattern,
+          caseSensitiveMatch,
+          inputState,
+        )
+      ) {
+        return false;
+      }
+    } else {
+      hasPositive = true;
+      if (
+        !positiveMatched &&
+        matchesArrayMatchPattern(
+          input,
+          wildcardPattern,
+          caseSensitiveMatch,
+          inputState,
+        )
+      ) {
+        positiveMatched = true;
+      }
+    }
+  }
+
+  return hasPositive ? positiveMatched : true;
+}

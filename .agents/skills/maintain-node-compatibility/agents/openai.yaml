@@ -1,0 +1,4 @@
+interface:
+  display_name: "Maintain Node Compatibility"
+  short_description: "Preserve Codsen’s low Node runtime support"
+  default_prompt: "Use $maintain-node-compatibility to audit and preserve the lowest tested Node.js floor for Codsen packages."

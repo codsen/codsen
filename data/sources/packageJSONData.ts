@@ -61,9 +61,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -87,6 +84,9 @@ export const packageJSONData = {
       "unified": "^11.0.5",
       "unist-builder": "^4.0.0",
       "unist-util-visit": "^5.1.0"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -198,9 +198,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -214,6 +211,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -272,9 +272,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -292,6 +289,9 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.7.3",
       "ranges-apply": "^7.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -353,9 +353,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -371,7 +368,10 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "matcher": "^6.0.0"
+      "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -434,9 +434,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -452,7 +449,10 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "matcher": "^6.0.0"
+      "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -513,9 +513,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -530,6 +527,9 @@ export const packageJSONData = {
           "Thanks to KRyan for types https://stackoverflow.com/a/71834598/3943954"
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -594,9 +594,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -613,8 +610,10 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-contains-only-empty-space": "^4.1.3",
-      "codsen-utils": "^1.7.3",
-      "matcher": "^6.0.0"
+      "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -676,9 +675,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -692,6 +688,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -764,9 +763,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -785,6 +781,9 @@ export const packageJSONData = {
     "dependencies": {
       "ast-monkey-traverse": "^4.1.3",
       "object-path": "^0.11.8"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -851,9 +850,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -872,6 +868,9 @@ export const packageJSONData = {
       "ast-compare": "^4.1.3",
       "ast-monkey-traverse": "^4.1.3",
       "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -938,9 +937,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -959,6 +955,9 @@ export const packageJSONData = {
     "dependencies": {
       "ast-compare": "^4.1.3",
       "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1026,9 +1025,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -1045,8 +1041,10 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-monkey-traverse": "^4.1.3",
-      "codsen-utils": "^1.7.3",
-      "matcher": "^6.0.0"
+      "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1115,9 +1113,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -1134,6 +1129,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1200,9 +1198,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -1220,6 +1215,9 @@ export const packageJSONData = {
     "dependencies": {
       "ast-contains-only-empty-space": "^4.1.3",
       "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1288,9 +1286,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -1311,6 +1306,9 @@ export const packageJSONData = {
       "check-types-mini": "^8.1.3",
       "codsen-utils": "^1.7.3",
       "util-array-object-or-both": "^5.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1379,9 +1377,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -1401,6 +1396,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "deep-equal": "^2.2.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1470,9 +1468,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -1490,6 +1485,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1553,9 +1551,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -1569,6 +1564,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1631,9 +1629,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -1650,6 +1645,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ranges-is-index-within": "^4.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1709,9 +1707,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -1728,8 +1723,10 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.7.3",
-      "matcher": "^6.0.0",
       "type-detect": "^4.1.0"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1776,9 +1773,6 @@ export const packageJSONData = {
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": false,
       "exclude": [
@@ -1795,6 +1789,9 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.7.3",
       "update-notifier": "^7.3.1"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1845,9 +1842,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "branches": 100,
       "check-coverage": true,
@@ -1855,7 +1849,8 @@ export const packageJSONData = {
         "**/test/**/*.*"
       ],
       "functions": 100,
-      "lines": 100
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -1863,6 +1858,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -1923,9 +1921,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -1942,6 +1937,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2004,9 +2002,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -2027,6 +2022,9 @@ export const packageJSONData = {
       "csv-split-easy": "^7.1.3",
       "currency.js": "^2.0.4",
       "lodash-es": "^4.18.1"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2087,9 +2085,6 @@ export const packageJSONData = {
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": false,
       "exclude": [
@@ -2104,11 +2099,14 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@inquirer/prompts": "^8.5.2",
+      "@inquirer/prompts": "^7.10.1",
       "codsen-utils": "^1.7.3",
       "csv-sort": "^7.1.3",
-      "globby": "^16.2.0",
+      "globby": "^14.1.0",
       "update-notifier": "^7.3.1"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2170,9 +2168,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -2189,6 +2184,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "string-remove-thousand-separators": "^7.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2250,9 +2248,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -2266,6 +2261,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2319,9 +2317,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -2340,6 +2335,9 @@ export const packageJSONData = {
       "regex-is-jinja-nunjucks": "^4.1.3",
       "regex-is-jsp": "^4.1.3",
       "regex-jinja-specific": "^4.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2399,9 +2397,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -2439,6 +2434,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "test-mixer": "^4.2.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2497,9 +2495,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -2522,8 +2517,11 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ast-monkey-traverse": "^4.1.3",
-      "globby": "^16.2.0",
+      "globby": "^14.1.0",
       "p-map": "^7.0.4"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2580,9 +2578,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -2597,8 +2592,8 @@ export const packageJSONData = {
         ]
       }
     },
-    "dependencies": {
-      "check-types-mini": "^8.1.3"
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2654,9 +2649,6 @@ export const packageJSONData = {
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": false,
       "exclude": [
@@ -2673,13 +2665,16 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@inquirer/prompts": "^8.5.2",
+      "@inquirer/prompts": "^7.10.1",
       "@ljharb/through": "^2.3.14",
       "codsen-utils": "^1.7.3",
       "email-all-chars-within-ascii": "^5.1.3",
-      "globby": "^16.2.0",
+      "globby": "^14.1.0",
       "string-left-right": "^6.1.3",
       "update-notifier": "^7.3.1"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2737,9 +2732,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -2758,7 +2750,6 @@ export const packageJSONData = {
       "array-pull-all-with-glob": "^7.1.3",
       "codsen-utils": "^1.7.3",
       "html-crush": "^6.1.3",
-      "matcher": "^6.0.0",
       "ranges-apply": "^7.1.3",
       "ranges-push": "^7.1.3",
       "regex-empty-conditional-comments": "^3.1.3",
@@ -2767,6 +2758,9 @@ export const packageJSONData = {
       "string-match-left-right": "^9.1.3",
       "string-range-expander": "^4.1.3",
       "string-uglify": "^3.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2825,9 +2819,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -2845,6 +2836,9 @@ export const packageJSONData = {
     "dependencies": {
       "string-strip-html": "^13.5.3",
       "string-unfancy": "^6.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2902,9 +2896,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -2922,6 +2913,9 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.7.3",
       "string-left-right": "^6.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -2981,9 +2975,6 @@ export const packageJSONData = {
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": false,
       "exclude": [
@@ -3001,11 +2992,14 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.7.3",
       "generate-atomic-css": "^3.1.3",
-      "globby": "^16.2.0",
+      "globby": "^14.1.0",
       "is-d": "^1.0.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
-      "write-file-atomic": "^8.0.0"
+      "write-file-atomic": "^6.0.0"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -3061,9 +3055,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -3077,6 +3068,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -3144,9 +3138,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -3169,6 +3160,9 @@ export const packageJSONData = {
       "string-match-left-right": "^9.1.3",
       "string-range-expander": "^4.1.3",
       "test-mixer": "^4.2.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -3224,9 +3218,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -3240,6 +3231,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -3303,9 +3297,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -3325,6 +3316,9 @@ export const packageJSONData = {
       "ranges-apply": "^7.1.3",
       "ranges-push": "^7.1.3",
       "string-unfancy": "^6.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -3386,9 +3380,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -3408,6 +3399,9 @@ export const packageJSONData = {
       "codsen-parser": "^0.14.25",
       "ranges-apply": "^7.1.3",
       "ranges-push": "^7.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -3470,9 +3464,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -3486,6 +3477,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -3547,9 +3541,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -3570,6 +3561,9 @@ export const packageJSONData = {
       "is-char-suitable-for-html-attr-name": "^4.1.3",
       "string-left-right": "^6.1.3",
       "string-match-left-right": "^9.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -3630,9 +3624,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -3653,6 +3644,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "test-mixer": "^4.2.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -3716,9 +3710,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -3732,6 +3723,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -3793,9 +3787,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -3814,6 +3805,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ranges-apply": "^7.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -3871,9 +3865,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -3890,6 +3881,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ranges-apply": "^7.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -3951,9 +3945,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -3972,6 +3963,9 @@ export const packageJSONData = {
       "codsen-utils": "^1.7.3",
       "ranges-apply": "^7.1.3",
       "ranges-push": "^7.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4032,9 +4026,6 @@ export const packageJSONData = {
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": false,
       "exclude": [
@@ -4051,12 +4042,15 @@ export const packageJSONData = {
     "dependencies": {
       "arrayiffy-if-string": "^5.1.3",
       "codsen-utils": "^1.7.3",
-      "globby": "^16.2.0",
+      "globby": "^14.1.0",
       "is-d": "^1.0.0",
       "js-row-num": "^7.1.3",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
-      "write-file-atomic": "^8.0.0"
+      "write-file-atomic": "^6.0.0"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4114,9 +4108,6 @@ export const packageJSONData = {
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": false,
       "exclude": [
@@ -4133,12 +4124,15 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.7.3",
       "fs-extra": "^11.3.5",
-      "globby": "^16.2.0",
+      "globby": "^14.1.0",
       "is-d": "^1.0.0",
       "json-comb-core": "^8.1.3",
       "p-map": "^7.0.4",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4196,9 +4190,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -4228,8 +4219,11 @@ export const packageJSONData = {
       "p-one": "^2.0.0",
       "p-reduce": "^3.0.0",
       "semver-compare": "^1.0.0",
-      "sort-keys": "^6.0.0",
+      "sort-keys": "^5.1.0",
       "type-detect": "^4.1.0"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4285,9 +4279,6 @@ export const packageJSONData = {
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": false,
       "exclude": [
@@ -4305,15 +4296,18 @@ export const packageJSONData = {
       "ast-monkey-traverse": "^4.1.3",
       "codsen-utils": "^1.7.3",
       "fs-extra": "^11.3.5",
-      "globby": "^16.2.0",
+      "globby": "^14.1.0",
       "is-d": "^1.0.0",
       "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
-      "sort-package-json": "^4.0.0",
+      "sort-package-json": "^2.15.1",
       "update-notifier": "^7.3.1"
     },
     "devDependencies": {
       "p-map": "^7.0.4"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4378,9 +4372,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -4401,13 +4392,15 @@ export const packageJSONData = {
       "ast-get-values-by-key": "^5.1.3",
       "ast-monkey-traverse": "^4.1.3",
       "codsen-utils": "^1.7.3",
-      "matcher": "^6.0.0",
       "object-path": "^0.11.8",
       "ranges-apply": "^7.1.3",
       "ranges-push": "^7.1.3",
       "string-find-heads-tails": "^6.1.3",
       "string-match-left-right": "^9.1.3",
       "string-remove-duplicate-heads-tails": "^7.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4467,9 +4460,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -4486,6 +4476,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4543,9 +4536,6 @@ export const packageJSONData = {
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": false,
       "exclude": [
@@ -4564,15 +4554,18 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.7.3",
       "fs-extra": "^11.3.5",
-      "globby": "^16.2.0",
+      "globby": "^14.1.0",
       "lerna-clean-changelogs": "^5.1.3",
       "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
-      "write-file-atomic": "^8.0.0"
+      "write-file-atomic": "^6.0.0"
     },
     "devDependencies": {
       "p-map": "^7.0.4"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4631,9 +4624,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -4652,6 +4642,9 @@ export const packageJSONData = {
       "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.7.3",
       "lodash-es": "^4.18.1"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4706,9 +4699,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -4725,6 +4715,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4788,9 +4781,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -4810,6 +4800,9 @@ export const packageJSONData = {
       "ast-monkey": "^9.1.3",
       "codsen-utils": "^1.7.3",
       "util-array-object-or-both": "^5.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4871,9 +4864,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -4893,6 +4883,9 @@ export const packageJSONData = {
       "codsen-utils": "^1.7.3",
       "object-all-values-equal-to": "^4.1.3",
       "object-merge-advanced": "^14.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -4951,9 +4944,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -4972,6 +4962,9 @@ export const packageJSONData = {
       "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.7.3",
       "lodash-es": "^4.18.1"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5029,9 +5022,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -5049,8 +5039,10 @@ export const packageJSONData = {
     "dependencies": {
       "arrayiffy-if-string": "^5.1.3",
       "codsen-utils": "^1.7.3",
-      "matcher": "^6.0.0",
       "str-indexes-of-plus": "^5.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5111,9 +5103,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -5132,11 +5121,13 @@ export const packageJSONData = {
       "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.7.3",
       "lodash-es": "^4.18.1",
-      "matcher": "^6.0.0",
       "util-nonempty": "^5.1.3"
     },
     "devDependencies": {
       "deep-equal": "^2.2.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5196,9 +5187,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -5215,6 +5203,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5273,9 +5264,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -5292,6 +5280,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5349,9 +5340,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -5368,6 +5356,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ranges-merge": "^9.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5424,9 +5415,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -5446,6 +5434,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ranges-apply": "^7.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5504,9 +5495,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -5529,6 +5517,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/he": "^1.2.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5581,9 +5572,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -5601,6 +5589,9 @@ export const packageJSONData = {
     "dependencies": {
       "ranges-crop": "^6.1.3",
       "ranges-merge": "^9.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5653,9 +5644,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -5669,6 +5657,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5726,9 +5717,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -5746,6 +5734,9 @@ export const packageJSONData = {
     "devDependencies": {
       "ranges-apply": "^7.1.3",
       "ranges-merge": "^9.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5803,9 +5794,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -5823,6 +5811,9 @@ export const packageJSONData = {
     "dependencies": {
       "ranges-push": "^7.1.3",
       "ranges-sort": "^6.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5875,9 +5866,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -5894,11 +5882,10 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ranges-crop": "^6.1.3",
-      "ranges-invert": "^6.1.3",
-      "runes": "^0.4.3"
+      "ranges-invert": "^6.1.3"
     },
-    "devDependencies": {
-      "@types/runes": "^0.4.3"
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -5956,9 +5943,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -5979,6 +5963,9 @@ export const packageJSONData = {
       "ranges-sort": "^6.1.3",
       "string-collapse-leading-whitespace": "^7.1.3",
       "string-trim-spaces-only": "^5.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6038,9 +6025,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -6062,6 +6046,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ranges-apply": "^7.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6114,9 +6101,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -6130,6 +6114,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6189,9 +6176,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -6205,6 +6189,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6264,9 +6251,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -6280,6 +6264,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6341,9 +6328,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -6357,6 +6341,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6416,9 +6403,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -6432,6 +6416,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6485,9 +6472,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -6511,6 +6495,9 @@ export const packageJSONData = {
       "rehype-parse": "^9.0.1",
       "unified": "^11.0.5",
       "unist-util-visit": "^5.1.0"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6568,9 +6555,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -6595,6 +6579,9 @@ export const packageJSONData = {
       "string-remove-widows": "^4.1.3",
       "unified": "^11.0.5",
       "unist-util-visit": "^5.1.0"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6652,9 +6639,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -6668,6 +6652,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6724,9 +6711,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -6744,6 +6728,9 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.7.3",
       "ranges-apply": "^7.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6805,9 +6792,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -6821,6 +6805,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6882,9 +6869,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -6898,6 +6882,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -6954,9 +6941,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -6978,6 +6962,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "test-mixer": "^4.2.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -7034,9 +7021,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -7053,8 +7037,10 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "ast-monkey-traverse": "^4.1.3",
-      "grapheme-splitter": "^1.0.4"
+      "ast-monkey-traverse": "^4.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -7113,9 +7099,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -7137,6 +7120,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "test-mixer": "^4.2.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -7190,9 +7176,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -7209,6 +7192,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "string-left-right": "^6.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -7268,9 +7254,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -7288,6 +7271,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "color-shorthand-hex-to-six-digit": "^5.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -7346,9 +7332,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -7367,6 +7350,9 @@ export const packageJSONData = {
       "arrayiffy-if-string": "^5.1.3",
       "codsen-utils": "^1.7.3",
       "string-match-left-right": "^9.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -7427,9 +7413,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -7447,6 +7430,9 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.7.3",
       "string-left-right": "^6.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -7508,9 +7494,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -7531,6 +7514,9 @@ export const packageJSONData = {
       "codsen-utils": "^1.7.3",
       "leven": "^4.1.0",
       "string-left-right": "^6.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -7591,9 +7577,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -7610,6 +7593,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -7665,9 +7651,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -7686,6 +7669,9 @@ export const packageJSONData = {
       "arrayiffy-if-string": "^5.1.3",
       "codsen-utils": "^1.7.3",
       "string-character-is-astral-surrogate": "^3.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -7743,9 +7729,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -7762,6 +7745,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -7818,9 +7804,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "branches": 100,
       "check-coverage": true,
@@ -7838,6 +7821,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -7899,9 +7885,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -7923,6 +7906,9 @@ export const packageJSONData = {
       "ranges-push": "^7.1.3",
       "string-match-left-right": "^9.1.3",
       "string-trim-spaces-only": "^5.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -7981,9 +7967,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -8003,6 +7986,9 @@ export const packageJSONData = {
       "lodash-es": "^4.18.1",
       "ranges-apply": "^7.1.3",
       "ranges-push": "^7.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -8065,9 +8051,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -8091,6 +8074,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "string-strip-html": "^13.5.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -8152,9 +8138,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -8174,6 +8157,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "string-find-heads-tails": "^6.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -8236,9 +8222,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -8266,6 +8249,9 @@ export const packageJSONData = {
       "ast-monkey-traverse": "^4.1.3",
       "ranges-invert": "^6.1.3",
       "title": "^4.0.1"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -8323,9 +8309,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -8339,6 +8322,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -8402,9 +8388,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -8419,6 +8402,9 @@ export const packageJSONData = {
         ]
       },
       "various": {}
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -8480,9 +8466,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -8503,6 +8486,9 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "@types/he": "^1.2.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -8558,9 +8544,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -8578,6 +8561,9 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.7.3",
       "object-boolean-combinations": "^6.2.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -8640,9 +8626,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -8659,6 +8642,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "string-left-right": "^6.1.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -8722,9 +8708,6 @@ export const packageJSONData = {
       "test": "c8 npm run unit && npm run lint",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": false,
       "exclude": [
@@ -8742,19 +8725,20 @@ export const packageJSONData = {
       "ansi-diff-stream": "^1.2.1",
       "codsen-utils": "^1.7.3",
       "edit-package-json": "^0.9.3",
-      "globby": "^16.2.0",
-      "is-online": "^12.0.2",
-      "log-update": "^8.0.0",
+      "globby": "^14.1.0",
       "object-path": "^0.11.8",
-      "p-map": "^7.0.4",
       "p-progress": "^1.0.0",
       "p-reduce": "^3.0.0",
-      "pacote": "^22.0.0",
+      "package-json": "^10.0.1",
       "update-notifier": "^7.3.1",
-      "write-file-atomic": "^8.0.0"
+      "write-file-atomic": "^6.0.0"
     },
     "devDependencies": {
-      "fs-extra": "^11.3.5"
+      "fs-extra": "^11.3.5",
+      "p-map": "^7.0.4"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -8811,9 +8795,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -8828,6 +8809,9 @@ export const packageJSONData = {
         ]
       },
       "various": {}
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"
@@ -8882,9 +8866,6 @@ export const packageJSONData = {
       "test": "npm run devtest",
       "unit": "uvu test"
     },
-    "engines": {
-      "node": ">=22"
-    },
     "c8": {
       "check-coverage": true,
       "exclude": [
@@ -8901,6 +8882,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.7.3"
+    },
+    "engines": {
+      "node": ">=18.20.8"
     },
     "publishConfig": {
       "registry": "https://registry.npmjs.org/"

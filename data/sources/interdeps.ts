@@ -13,9 +13,18 @@ export const interdeps = [
     ]
   },
   {
+    "name": "array-includes-with-glob",
+    "size": 740,
+    "imports": [
+      "codsen-utils"
+    ]
+  },
+  {
     "name": "array-pull-all-with-glob",
-    "size": 565,
-    "imports": []
+    "size": 573,
+    "imports": [
+      "codsen-utils"
+    ]
   },
   {
     "name": "arrayiffy-if-string",
@@ -24,7 +33,7 @@ export const interdeps = [
   },
   {
     "name": "ast-compare",
-    "size": 3628,
+    "size": 3615,
     "imports": [
       "ast-contains-only-empty-space",
       "codsen-utils"
@@ -61,7 +70,7 @@ export const interdeps = [
   },
   {
     "name": "ast-get-values-by-key",
-    "size": 677,
+    "size": 659,
     "imports": [
       "ast-monkey-traverse",
       "codsen-utils"
@@ -116,7 +125,7 @@ export const interdeps = [
   },
   {
     "name": "check-types-mini",
-    "size": 5986,
+    "size": 5968,
     "imports": [
       "codsen-utils"
     ]
@@ -130,7 +139,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-utils",
-    "size": 9638,
+    "size": 14354,
     "imports": []
   },
   {
@@ -205,9 +214,7 @@ export const interdeps = [
   {
     "name": "email-all-chars-within-ascii",
     "size": 1263,
-    "imports": [
-      "check-types-mini"
-    ]
+    "imports": []
   },
   {
     "name": "email-all-chars-within-ascii-cli",
@@ -220,7 +227,7 @@ export const interdeps = [
   },
   {
     "name": "email-comb",
-    "size": 22756,
+    "size": 22730,
     "imports": [
       "array-pull-all-with-glob",
       "codsen-utils",
@@ -380,7 +387,7 @@ export const interdeps = [
   },
   {
     "name": "json-variables",
-    "size": 10246,
+    "size": 10223,
     "imports": [
       "arrayiffy-if-string",
       "ast-get-values-by-key",
@@ -451,7 +458,7 @@ export const interdeps = [
   },
   {
     "name": "object-flatten-referencing",
-    "size": 4960,
+    "size": 4942,
     "imports": [
       "arrayiffy-if-string",
       "codsen-utils",
@@ -460,7 +467,7 @@ export const interdeps = [
   },
   {
     "name": "object-merge-advanced",
-    "size": 7218,
+    "size": 7236,
     "imports": [
       "codsen-utils",
       "util-nonempty"
@@ -525,7 +532,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-process-outside",
-    "size": 1554,
+    "size": 1530,
     "imports": [
       "ranges-crop",
       "ranges-invert"
@@ -617,7 +624,7 @@ export const interdeps = [
   },
   {
     "name": "string-convert-indexes",
-    "size": 2497,
+    "size": 2534,
     "imports": [
       "ast-monkey-traverse"
     ]
@@ -776,7 +783,7 @@ export const interdeps = [
   },
   {
     "name": "update-versions",
-    "size": 14871,
+    "size": 15754,
     "imports": [
       "codsen-utils",
       "edit-package-json"

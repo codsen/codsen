@@ -1,11 +1,13 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
 
 import { traverse } from "ast-monkey-traverse";
-import GraphemeSplitter from "grapheme-splitter";
 
 import { version as v } from "../package.json";
 
 const version: string = v;
+const graphemeSegmenter = new Intl.Segmenter(undefined, {
+  granularity: "grapheme",
+});
 
 declare let DEV: boolean;
 
@@ -46,7 +48,7 @@ function strConvertIndexes(
 
       DEV &&
         console.log(
-          `049 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
+          `051 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
             graphemeStrArr[i]
           } (${graphemeStrArr[i].split("").length})`,
         );
@@ -94,18 +96,20 @@ function strConvertIndexes(
 
   // ---------------------------------------------------------------------------
 
-  let splitter = new GraphemeSplitter();
-  let graphemeStrArr = splitter.splitGraphemes(str);
+  const graphemeStrArr = Array.from(
+    graphemeSegmenter.segment(str),
+    ({ segment }) => segment,
+  );
 
   // easy - index will be the total count of all native JS index characters
   // leading up to this
 
   if (isStringOrNumber(indexes)) {
-    DEV && console.log(`104 ██ no AST`);
+    DEV && console.log(`108 ██ no AST`);
     // no need for traversal
     // validate
     if (isItOk(indexes)) {
-      DEV && console.log(`108 OK`);
+      DEV && console.log(`112 OK`);
 
       if (mode === "u") {
         return typeof indexes === "string"
@@ -126,7 +130,7 @@ function strConvertIndexes(
       )} (${typeof indexes})`,
     );
   } else if (indexes && typeof indexes === "object") {
-    DEV && console.log(`129 ██ AST - traverse!`);
+    DEV && console.log(`133 ██ AST - traverse!`);
     // if it's array or object, traverse
     return mode === "u"
       ? traverse(indexes, (key, val, innerObj) => {

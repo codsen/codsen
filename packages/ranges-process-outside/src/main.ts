@@ -1,7 +1,6 @@
 import type { Ranges } from "ranges-crop";
 import { rCrop } from "ranges-crop";
 import { rInvert } from "ranges-invert";
-import runes from "runes";
 
 import { version as v } from "../package.json";
 
@@ -68,11 +67,11 @@ function rProcessOutside(
   function iterator(str: string, arrOfArrays: Ranges): void {
     DEV &&
       console.log(
-        `071 iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`,
+        `070 iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`,
       );
     DEV &&
       console.log(
-        `075 ${`\u001b[${36}m${`loop [${JSON.stringify(
+        `074 ${`\u001b[${36}m${`loop [${JSON.stringify(
           arrOfArrays,
           null,
           0,
@@ -80,7 +79,7 @@ function rProcessOutside(
       );
     const characterLengths = new Uint32Array(str.length);
     let characterIndex = 0;
-    for (const character of runes(str)) {
+    for (const character of str) {
       characterLengths[characterIndex] = character.length;
       characterIndex += character.length;
     }
@@ -88,34 +87,34 @@ function rProcessOutside(
     (arrOfArrays || []).forEach(([fromIdx, toIdx]) => {
       DEV &&
         console.log(
-          `091 ${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`,
+          `090 ${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`,
         );
-      DEV && console.log(`093 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
+      DEV && console.log(`092 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
       for (let i = fromIdx; i < toIdx; i++) {
-        DEV && console.log(`095 ${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
+        DEV && console.log(`094 ${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
         const charLength = characterLengths[i] || 1;
 
-        DEV && console.log(`098 charLength = ${charLength}`);
+        DEV && console.log(`097 charLength = ${charLength}`);
 
         cb(i, i + charLength, (offsetValue) => {
           /* c8 ignore next */
           if (offsetValue != null) {
-            DEV && console.log(`103 offset i by "${offsetValue}" requested`);
-            DEV && console.log(`104 old i = ${i}`);
+            DEV && console.log(`102 offset i by "${offsetValue}" requested`);
+            DEV && console.log(`103 old i = ${i}`);
             i += offsetValue;
-            DEV && console.log(`106 new i = ${i}`);
+            DEV && console.log(`105 new i = ${i}`);
           }
         });
         if (charLength && charLength > 1) {
-          DEV && console.log(`110 old i = ${i}`);
+          DEV && console.log(`109 old i = ${i}`);
           i += charLength - 1;
-          DEV && console.log(`112 new i = ${i}`);
+          DEV && console.log(`111 new i = ${i}`);
         }
       }
     });
     DEV &&
       console.log(
-        `118 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`,
+        `117 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`,
       );
   }
 
@@ -129,7 +128,7 @@ function rProcessOutside(
     );
     DEV &&
       console.log(
-        `132 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+        `131 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
           temp,
           null,
           0,

@@ -27,6 +27,49 @@ These signals are implementation details, not just documentation:
   `rollup.config.js` to classify program packages. Keep both consumers in mind
   when changing classification.
 
+## Node runtime compatibility
+
+Supporting older Node.js release lines than competing packages is a Codsen USP.
+Treat a low, truthful runtime floor as a product feature rather than incidental
+legacy support.
+
+- Keep `package.json#engines.node` owned by each package manifest. `lect` must
+  neither add, remove, default, normalise, nor otherwise manage it.
+- Use the exact lowest patch release actually exercised in compatibility tests,
+  such as `>=18.20.8`; do not broaden that evidence to a blanket `>=18`.
+- Prefer retaining the existing low floor when changing code or dependencies.
+  Audit the complete production dependency closure and use a compatible
+  dependency release when that remains sound and maintainable. Do not raise the
+  floor merely because the newest dependency major did so.
+- If the current floor genuinely fails, test the repository's exact configured
+  patch for the next even Node major, proceeding through 20, 22, 24, and 26 only
+  as needed. The canonical patches live in
+  `ops/helpers/nodeCompatibility.js`. Record the concrete blocker when raising
+  a package floor.
+- Run every package's unit suite on every configured even Node major at or above
+  its declared floor. Runtime tests and engine-strict installation checks are
+  complementary; one does not replace the other.
+- Treat the runtime matrix as cumulative. A Node 18 package is tested on 18,
+  20, 22, 24, and 26; a Node 22 package is tested on 22, 24, and 26. Iterate all
+  configured even lanes, not only the distinct majors currently present in
+  package manifests, because a repository with only Node 18 floors still needs
+  forward-compatibility coverage.
+- Build and pack once under the root-supported toolchain. In CI, fan the packed
+  artifacts out to parallel exact-runtime workers. Locally, use `n which` or
+  `n exec` with exact versions; do not repeatedly replace the global Node
+  installation during one parent npm process.
+- Run package `unit` scripts for runtime compatibility. Package `test` and
+  `devtest` also invoke coverage, builds, `lect`, examples, or lint tooling whose
+  higher engine requirements are not evidence about the published runtime.
+- Keep root-toolchain quality checks (generation, build, coverage, examples,
+  lint, and perf) separate from the cumulative published-runtime matrix, even
+  when a root `npm test` command orchestrates both.
+- Keep coupled CLIs and their same-purpose libraries on the lowest floor that
+  the complete pair and its runtime closure can support.
+- Esbuild derives its target from the package's explicit engine declaration.
+  A lower target is acceptable when tests pass; do not assume a newer target is
+  inherently faster or better.
+
 ## Biome scope
 
 `packages/*/tap` directories are DIY testbeds, not maintained source. They may

@@ -36,9 +36,6 @@
     "test": "c8 npm run unit && npm run lint",
     "unit": "uvu test"
   },
-  "engines": {
-    "node": ">=18"
-  },
   "c8": {
     "check-coverage": false,
     "exclude": ["**/test/**/*.*"]
@@ -51,6 +48,9 @@
   "dependencies": {
     "codsen-utils": "^1.7.3",
     "update-notifier": "^7.3.1"
+  },
+  "engines": {
+    "node": ">=18.20.8"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

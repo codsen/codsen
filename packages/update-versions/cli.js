@@ -3,17 +3,18 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-import { promises, readFileSync } from "node:fs";
+import { promises, readFileSync, realpathSync } from "node:fs";
 import { createRequire } from "node:module";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import diff1 from "ansi-diff-stream";
 import { codsenCLI, isPlainObject } from "codsen-utils";
 import { del, set } from "edit-package-json";
 import { globby } from "globby";
-import isOnline from "is-online";
 import objectPath from "object-path";
 import pProgress, { PProgress } from "p-progress";
 import pReduce from "p-reduce";
-import pacote from "pacote";
+import packageJson from "package-json";
 import updateNotifier from "update-notifier";
 import write from "write-file-atomic";
 
@@ -21,14 +22,12 @@ const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
 
 const { readFile } = promises;
-const diff = diff1();
 
 const { log } = console;
 const sparkles = "\u2728"; // https://emojipedia.org/sparkles/
 const messagePrefix = `\u001b[${90}m${`${sparkles} update-versions: `}\u001b[${39}m`;
 
-const cli = codsenCLI(
-  `
+const helpText = `
   Usage:
     $ upd
     $ or...
@@ -38,34 +37,29 @@ const cli = codsenCLI(
     -m, --module        Blacklist against bumping major any type=module packages
     -h, --help          Shows this help
     -v, --version       Shows the current installed version
-`,
-  {
+`;
+
+function parseCli(argv = process.argv.slice(2)) {
+  return codsenCLI(helpText, {
     pkg,
+    argv,
     flags: {
       module: { type: "boolean", shortFlag: "m" },
       help: { type: "boolean", shortFlag: "h" },
       version: { type: "boolean", shortFlag: "v" },
     },
-  },
-);
-updateNotifier({ pkg }).notify();
-
-// Step #0. honour help/version even when another argument is also present.
-// codsenCLI handles either flag automatically when it is the sole argument.
-// -----------------------------------------------------------------------------
-
-if (cli.flags.version) {
-  log(pkg.version);
-  process.exit(0);
-} else if (cli.flags.help) {
-  log(cli.help);
-  process.exit(0);
+  });
 }
 
 // Step #1. the main function
 // -----------------------------------------------------------------------------
 
-(async () => {
+export async function updateVersions({
+  cwd = process.cwd(),
+  fetchPackage = packageJson,
+  moduleMode = false,
+  reportProgress = false,
+} = {}) {
   // we'll use the object below to distil all unique package updates
   let updatedPackages = {};
   function printUpdated() {
@@ -81,19 +75,11 @@ if (cli.flags.version) {
     return versNum;
   }
 
-  let confLocation = "./upd.config.json";
+  let confLocation = path.join(cwd, "upd.config.json");
   let newConfig = {
     noMajorBumping: [],
     pin: {},
   };
-
-  let online = await isOnline();
-  if (!online) {
-    console.error(
-      `\n${messagePrefix}${`\u001b[${31}m${"Please check your internet connection."}\u001b[${39}m`}\n`,
-    );
-    process.exit(1);
-  }
 
   // try to read the local config if it's present
   try {
@@ -104,15 +90,14 @@ if (cli.flags.version) {
     );
   }
 
-  let pathsPromise = await globby([
-    "**/package.json",
-    "!**/node_modules/**",
-    "!**/test/**",
-  ]).then((paths) =>
+  let pathsPromise = await globby(
+    ["**/package.json", "!**/node_modules/**", "!**/test/**"],
+    { cwd },
+  ).then((paths) =>
     pReduce(
       paths,
       (mapReceived, currentPath) =>
-        readFile(currentPath, "utf8")
+        readFile(path.join(cwd, currentPath), "utf8")
           .then((packContentsStr) => {
             let parsedContents = JSON.parse(packContentsStr);
             mapReceived.namesList.push(parsedContents.name);
@@ -137,6 +122,61 @@ if (cli.flags.version) {
       },
     ),
   );
+
+  // Resolve the complete registry view before touching any package.json. This
+  // makes a failed registry run atomic from the caller's point of view and also
+  // deduplicates lookups shared by packages in a monorepo.
+  let externalNames = new Set();
+  for (let oneOfPaths of pathsPromise.pathsList) {
+    let parsedContents = pathsPromise.contentsObj[oneOfPaths];
+    for (let dependencyKey of ["dependencies", "devDependencies"]) {
+      if (isPlainObject(parsedContents[dependencyKey])) {
+        for (let [name, spec] of Object.entries(
+          parsedContents[dependencyKey],
+        )) {
+          if (
+            typeof spec === "string" &&
+            !spec.startsWith("file:") &&
+            !pathsPromise.namesList.includes(name)
+          ) {
+            externalNames.add(name);
+          }
+        }
+      }
+    }
+  }
+
+  let registryMetadata = new Map();
+  await Promise.all(
+    [...externalNames].map(async (name) => {
+      try {
+        let metadata = await fetchPackage(name, { fullMetadata: true });
+        if (!metadata || typeof metadata.version !== "string") {
+          throw new TypeError(`${name} returned no version`);
+        }
+        registryMetadata.set(name, metadata);
+      } catch (_e) {
+        registryMetadata.set(name, null);
+      }
+    }),
+  );
+
+  if (externalNames.size > 0 && ![...registryMetadata.values()].some(Boolean)) {
+    throw new Error(
+      "Could not fetch any package metadata. Please check your internet connection. Nothing was written.",
+    );
+  }
+
+  if (moduleMode) {
+    for (let metadata of registryMetadata.values()) {
+      if (
+        metadata?.type === "module" &&
+        !newConfig.noMajorBumping.includes(metadata.name)
+      ) {
+        newConfig.noMajorBumping.push(metadata.name);
+      }
+    }
+  }
 
   let allProgressPromise = PProgress.all(
     pathsPromise.pathsList.map((oneOfPaths) =>
@@ -173,61 +213,21 @@ if (cli.flags.version) {
         //
         //
 
-        // As dependency lookup is process-heavy and will take time, we need
-        // to track it. The total progress of this single package we're processing
-        // is divided 75% to compile new versions, 25% to write/skip
-
-        // this is the first 75% of per-package progress
-        // https://github.com/sindresorhus/p-progress#pprogressallpromises-options
-
+        // All external metadata was resolved before this processing phase, so
+        // no package can be written while another registry request is pending.
         let compiledDepNameVersionPairs = {};
-        let allProgressPromise2 = PProgress.all(
-          totalDeps.map(async (singleDepName) => {
-            if (pathsPromise.namesList.includes(singleDepName)) {
-              compiledDepNameVersionPairs[singleDepName] =
-                pathsPromise.contentsObj[
-                  pathsPromise.pathsByName[singleDepName]
-                ].version;
-              return;
-            }
-            try {
-              await pacote
-                .manifest(singleDepName, {
-                  fullMetadata: true,
-                })
-                .then((pkg1) => {
-                  if (pkg1.version === null) {
-                    throw new Error(
-                      `${messagePrefix}${singleDepName} version from npm came as null, CLI will exit now, nothing was written.`,
-                    );
-                  } else {
-                    compiledDepNameVersionPairs[singleDepName] = pkg1.version;
-
-                    if (cli.flags.module && pkg1.type === "module") {
-                      newConfig.noMajorBumping.push(pkg1.name);
-                    }
-                  }
-                });
-            } catch (_e) {
-              // no response from npm
-              compiledDepNameVersionPairs[singleDepName] = null;
-            }
-          }),
-        );
-        allProgressPromise2.onProgress((val) => {
-          // console.log(
-          //   `197 ${`\u001b[${32}m${`CALL PROGRESS():`} ${val *
-          //     0.75}\u001b[${39}m`}`
-          // );
-          progress(val * 0.75);
-        });
-        await allProgressPromise2;
-
-        // Now we need to simultaneously query all the deps, dev and normal ones.
-        // We rely on pacote's caching mechanism.
-
-        // The plan is to query all the deps at once, then await the result,
-        // then process received result, picking values we need from it.
+        for (let singleDepName of totalDeps) {
+          if (pathsPromise.namesList.includes(singleDepName)) {
+            compiledDepNameVersionPairs[singleDepName] =
+              pathsPromise.contentsObj[
+                pathsPromise.pathsByName[singleDepName]
+              ].version;
+          } else {
+            compiledDepNameVersionPairs[singleDepName] =
+              registryMetadata.get(singleDepName)?.version ?? null;
+          }
+        }
+        progress(0.75);
 
         //
         //
@@ -419,7 +419,7 @@ if (cli.flags.version) {
 
         if (amended) {
           try {
-            await write(oneOfPaths, finalContents);
+            await write(path.join(cwd, oneOfPaths), finalContents);
           } catch (e) {
             console.error(
               `${messagePrefix}error happened when writing package.json:\n${e}`,
@@ -430,22 +430,67 @@ if (cli.flags.version) {
     ),
   );
 
-  allProgressPromise.onProgress((val) =>
-    diff.write(
-      val === 1
-        ? `${messagePrefix}${
-            Object.keys(updatedPackages).length
-              ? `all updated:\n${printUpdated()}`
-              : "everything was already up-to-date"
-          }`
-        : `${messagePrefix}${Math.floor(val * 100)}% ${
-            Object.keys(updatedPackages).length
-              ? `updated:\n${printUpdated()}`
-              : "done"
-          }`,
-    ),
-  );
-  diff.pipe(process.stdout);
+  if (reportProgress) {
+    const diff = diff1();
+    allProgressPromise.onProgress((val) =>
+      diff.write(
+        val === 1
+          ? `${messagePrefix}${
+              Object.keys(updatedPackages).length
+                ? `all updated:\n${printUpdated()}`
+                : "everything was already up-to-date"
+            }`
+          : `${messagePrefix}${Math.floor(val * 100)}% ${
+              Object.keys(updatedPackages).length
+                ? `updated:\n${printUpdated()}`
+                : "done"
+            }`,
+      ),
+    );
+    diff.pipe(process.stdout);
+  }
 
   await allProgressPromise;
-})();
+  return updatedPackages;
+}
+
+async function runCli() {
+  const cli = parseCli();
+  updateNotifier({ pkg }).notify();
+
+  // Honour help/version even when another argument is also present. codsenCLI
+  // handles either flag automatically when it is the sole argument.
+  if (cli.flags.version) {
+    log(pkg.version);
+    return;
+  }
+  if (cli.flags.help) {
+    log(cli.help);
+    return;
+  }
+
+  await updateVersions({
+    moduleMode: Boolean(cli.flags.module),
+    reportProgress: true,
+  });
+}
+
+function isDirectExecution() {
+  if (!process.argv[1]) {
+    return false;
+  }
+  try {
+    return realpathSync(process.argv[1]) === fileURLToPath(import.meta.url);
+  } catch (_e) {
+    return false;
+  }
+}
+
+if (isDirectExecution()) {
+  runCli().catch((error) => {
+    console.error(
+      `\n${messagePrefix}${`\u001b[${31}m${error.message}\u001b[${39}m`}\n`,
+    );
+    process.exitCode = 1;
+  });
+}
