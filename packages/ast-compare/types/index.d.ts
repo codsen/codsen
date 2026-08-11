@@ -8,6 +8,7 @@ interface AnyObject {
   [key: string]: any;
 }
 interface Opts {
+  arrayOrder: "ordered" | "any";
   hungryForWhitespace: boolean;
   matchStrictly: boolean;
   verboseWhenMismatches: boolean;
