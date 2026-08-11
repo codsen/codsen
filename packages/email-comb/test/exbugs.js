@@ -1037,4 +1037,171 @@ color:red;
   equal(actual.result, intended, "33.01");
 });
 
+test("34 - #91 HTML comments inside style tags don't consume sibling HTML", () => {
+  let source = `<style type="text/css" style="display:none;"><!-- P {margin-top:0;margin-bottom:0;} --></style>
+<p>some content that should be visible</p>
+<style>.anyRule { color: red; }</style>`;
+
+  let intended = `<style type="text/css" style="display:none;"><!-- P {margin-top:0;margin-bottom:0;} --></style>
+<p>some content that should be visible</p>\n`;
+
+  let mixedCaseSource = `<style><!-- P {x:y} --></STYLE><p>visible</p><style>.unused{x:y}</style>`;
+  let mixedCaseIntended = `<style><!-- P {x:y} --></STYLE><p>visible</p>\n`;
+  let uppercaseSource =
+    "<STYLE>.used{x:y}</STYLE><body><p class=used>visible</p></body><style>.unused{x:y}</style>";
+  let uppercaseIntended =
+    "<STYLE>.used{x:y}</STYLE><body><p class=used>visible</p></body>\n";
+  let unclosedCssCommentSource =
+    "<style>/* unclosed</style><p>visible /* outside */</p><style>.unused{x:y}</style>";
+  let unclosedCssCommentIntended =
+    "<style>/* unclosed</style><p>visible /* outside */</p>\n";
+  let unclosedHtmlCommentSource =
+    "<style><!-- unclosed</style><p>visible</p><style>.unused{x:y}</style>";
+  let unclosedHtmlCommentIntended =
+    "<style><!-- unclosed</style><p>visible</p>\n";
+  let styleLikeElementSource =
+    "<stylesheet>.unused{x:y}</stylesheet><p>visible</p>";
+
+  equal(comb(source).result, intended, "34.01");
+  equal(comb(mixedCaseSource).result, mixedCaseIntended, "34.02");
+  equal(comb(uppercaseSource).result, uppercaseIntended, "34.03");
+  equal(
+    comb(unclosedCssCommentSource).result,
+    unclosedCssCommentIntended,
+    "34.04",
+  );
+  equal(
+    comb(unclosedHtmlCommentSource).result,
+    unclosedHtmlCommentIntended,
+    "34.05",
+  );
+  equal(comb(styleLikeElementSource).result, styleLikeElementSource, "34.06");
+});
+
+test("35 - #96 CSS comments outside an empty style tag are preserved", () => {
+  let source = "<style>\n \n</style>  \n\nhello world /* good bye world */";
+
+  equal(comb(source).result, "hello world /* good bye world */", "35.01");
+});
+
+test("36 - #105 IDs referenced by label and output for attributes are kept", () => {
+  let labelSource =
+    '<body><label for="car1-radio-1"></label><input id="car1-radio-1"></body>';
+  let outputSource =
+    "<body><output for='first second'></output><input id='first'><input id='second'><input id='unused'></body>";
+  let outputIntended =
+    "<body><output for='first second'></output><input id='first'><input id='second'><input></body>";
+  let uglifySource =
+    '<style>#car1-radio-1{color:red}</style><body><label for="car1-radio-1"></label><input id="car1-radio-1"></body>';
+  let punctuationSource =
+    '<body><label for="field:one.@x"></label><input id="field:one.@x"><input id="unused.punct"></body>';
+  let punctuationIntended =
+    '<body><label for="field:one.@x"></label><input id="field:one.@x"><input></body>';
+  let quotedGreaterThanSource =
+    '<body><label title="1 > 0" for="target"></label><input id="target"></body>';
+  let decoyForSource =
+    '<body><label title="x for=\'fake\'" for="real"></label><input id="real"><input id="fake"></body>';
+  let decoyForIntended =
+    '<body><label title="x for=\'fake\'" for="real"></label><input id="real"><input></body>';
+  let entitySource =
+    '<body><label for="a&amp;b"></label><input id="a&b"></body>';
+  let oppositeQuotesSource =
+    "<body><label for=\"john's\"></label><input id=\"john's\"><label for='say\"hi'></label><input id='say\"hi'></body>";
+  let unquotedSlashSource =
+    "<body><label for=a/b></label><input id=a/b></body>";
+
+  equal(comb(labelSource).result, labelSource, "36.01");
+  equal(comb(labelSource, { uglify: true }).result, labelSource, "36.02");
+  equal(comb(outputSource).result, outputIntended, "36.03");
+  equal(comb(uglifySource, { uglify: true }).result, uglifySource, "36.04");
+  equal(comb(punctuationSource).result, punctuationIntended, "36.05");
+  equal(
+    comb(punctuationSource, { uglify: true }).result,
+    punctuationIntended,
+    "36.06",
+  );
+  equal(comb(quotedGreaterThanSource).result, quotedGreaterThanSource, "36.07");
+  equal(comb(decoyForSource).result, decoyForIntended, "36.08");
+  equal(comb(entitySource).result, entitySource, "36.09");
+  equal(comb(entitySource, { uglify: true }).result, entitySource, "36.10");
+  equal(comb(oppositeQuotesSource).result, oppositeQuotesSource, "36.11");
+  equal(
+    comb(oppositeQuotesSource, { uglify: true }).result,
+    oppositeQuotesSource,
+    "36.12",
+  );
+  equal(comb(unquotedSlashSource).result, unquotedSlashSource, "36.13");
+  equal(
+    comb(unquotedSlashSource, { uglify: true }).result,
+    unquotedSlashSource,
+    "36.14",
+  );
+});
+
+test("37 - #106 escaped CSS class and ID selectors", () => {
+  let source = `<head>
+<style>
+  .\\@sm\\:block {
+    @container (width >= 600px) {
+      display: block;
+    }
+  }
+</style>
+</head>
+
+<body>
+<img class="@sm:block">
+</body>`;
+  let intended = `<head>
+<style>
+  .\\@sm\\:block {
+    @container (width >= 600px) {
+      display: block;
+    }
+  }
+</style>
+</head>
+<body>
+<img class="@sm:block">
+</body>`;
+  let intendedUglified = `<head>
+<style>
+  .f {
+    @container (width >= 600px) {
+      display: block;
+    }
+  }
+</style>
+</head>
+<body>
+<img class="f">
+</body>`;
+  let pseudoSource =
+    '<style>.foo:hover{color:red}.foo\\:hover{color:blue}</style><body><div class="foo:hover"></div></body>';
+  let pseudoIntended =
+    '<style>.foo\\:hover{color:blue}</style><body><div class="foo:hover"></div></body>';
+  let pseudoIntendedUglified =
+    '<style>.o{color:blue}</style><body><div class="o"></div></body>';
+  let hexSource =
+    '<style>.\\40 sm\\3A block{display:block}</style><body><i class="@sm:block"></i></body>';
+  let nbspSource =
+    '<style>.foo\u00a0bar{display:block}</style><body><i class="foo\u00a0bar"></i></body>';
+
+  equal(comb(source, { uglify: false }).result, intended, "37.01");
+  equal(comb(source, { uglify: true }).result, intendedUglified, "37.02");
+  equal(comb(pseudoSource).result, pseudoIntended, "37.03");
+  equal(
+    comb(pseudoSource, { uglify: true }).result,
+    pseudoIntendedUglified,
+    "37.04",
+  );
+  equal(comb(hexSource).result, hexSource, "37.05");
+  equal(
+    comb(hexSource, { uglify: true }).result,
+    '<style>.f{display:block}</style><body><i class="f"></i></body>',
+    "37.06",
+  );
+  equal(comb(nbspSource).result, nbspSource, "37.07");
+});
+
 test.run();
