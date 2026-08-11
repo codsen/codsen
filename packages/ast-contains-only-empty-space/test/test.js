@@ -227,4 +227,8 @@ test("18 - null deeper in an array", () => {
   );
 });
 
+test("19 - non-plain objects are not traversed", () => {
+  equal(empty(new Date(0)), true, "19.01");
+});
+
 test.run();
