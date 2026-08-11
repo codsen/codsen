@@ -76,4 +76,13 @@ test("01 - wrong input types causes throwing up", () => {
   throws(() => splitEasy("a", new Date()), /THROW_ID_01/, "01.12");
 });
 
+test("02 - validates the delimiter", () => {
+  throws(() => splitEasy("a", { delimiter: "" }), /THROW_ID_03/, "02.01");
+  throws(() => splitEasy("a", { delimiter: "||" }), /THROW_ID_03/, "02.02");
+  throws(() => splitEasy("a", { delimiter: false }), /THROW_ID_03/, "02.03");
+  throws(() => splitEasy("a", { delimiter: '"' }), /THROW_ID_03/, "02.04");
+  throws(() => splitEasy("a", { delimiter: "\n" }), /THROW_ID_03/, "02.05");
+  throws(() => splitEasy("a", { delimiter: "\r" }), /THROW_ID_03/, "02.06");
+});
+
 test.run();

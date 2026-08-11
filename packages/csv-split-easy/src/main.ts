@@ -7,12 +7,14 @@ import { version as v } from "../package.json";
 const version: string = v;
 
 export interface Opts {
+  delimiter: string;
   removeThousandSeparatorsFromNumbers: boolean;
   padSingleDecimalPlaceNumbers: boolean;
   forceUKStyle: boolean;
 }
 
 const defaults: Opts = {
+  delimiter: ",",
   removeThousandSeparatorsFromNumbers: true,
   padSingleDecimalPlaceNumbers: true,
   forceUKStyle: false,
@@ -26,6 +28,24 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
   return prototype === null || prototype === Object.prototype;
 }
 
+function trimOuterWhitespace(str: string, delimiter: string): string {
+  let start = 0;
+  let end = str.length;
+
+  while (start < end && str[start] !== delimiter && str[start].trim() === "") {
+    start += 1;
+  }
+  while (
+    end > start &&
+    str[end - 1] !== delimiter &&
+    str[end - 1].trim() === ""
+  ) {
+    end -= 1;
+  }
+
+  return str.slice(start, end);
+}
+
 function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
   // traverse the string and push each column into array
   // when line break is detected, push what's gathered into main array
@@ -33,7 +53,7 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
   let lineBreakStarts = 0;
   let rowArray = [];
   let resArray = [];
-  let ignoreCommasThatFollow = false;
+  let ignoreDelimitersThatFollow = false;
   let thisRowContainsOnlyEmptySpace = true; // we need at least one non-empty element to
   // flip it to `false` on each line
 
@@ -59,16 +79,29 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
       )}`,
     );
   } else {
+    if (
+      typeof resolvedOpts.delimiter !== "string" ||
+      resolvedOpts.delimiter.length !== 1 ||
+      resolvedOpts.delimiter === '"' ||
+      resolvedOpts.delimiter === "\n" ||
+      resolvedOpts.delimiter === "\r"
+    ) {
+      throw new TypeError(
+        `csv-split-easy/splitEasy(): [THROW_ID_03] The "delimiter" option must be a single character other than a double quote or a line break! Currently it's: ${typeof resolvedOpts.delimiter}, equal to: ${JSON.stringify(
+          resolvedOpts.delimiter,
+        )}`,
+      );
+    }
     if (str === "") {
       return [[""]];
     }
-    str = str.trim();
+    str = trimOuterWhitespace(str, resolvedOpts.delimiter);
   }
   for (let i = 0, len = str.length; i < len; i++) {
     if (
       thisRowContainsOnlyEmptySpace &&
       str[i] !== '"' &&
-      str[i] !== "," &&
+      str[i] !== resolvedOpts.delimiter &&
       str[i].trim() !== ""
     ) {
       thisRowContainsOnlyEmptySpace = false;
@@ -78,12 +111,12 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
     // ======================
     if (str[i] === '"') {
       // if this is a double quote escape character
-      if (ignoreCommasThatFollow && str[i + 1] === '"') {
+      if (ignoreDelimitersThatFollow && str[i + 1] === '"') {
         // skip it and the next
         i += 1;
-      } else if (ignoreCommasThatFollow) {
+      } else if (ignoreDelimitersThatFollow) {
         // 1. turn off the flag:
-        ignoreCommasThatFollow = false;
+        ignoreDelimitersThatFollow = false;
         // 2. dump the value that ends here:
         let newElem = str.slice(colStarts, i);
         // if the element contains only empty space,
@@ -105,15 +138,15 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
         // later if whole row comprises of empty columns (thisRowContainsOnlyEmptySpace still
         // equals `true`), we won't push that `rowArray` into `resArray`.
       } else {
-        ignoreCommasThatFollow = true;
+        ignoreDelimitersThatFollow = true;
         colStarts = i + 1;
       }
     }
     //
-    // detect a comma
+    // detect a delimiter
     // ======================
-    else if (!ignoreCommasThatFollow && str[i] === ",") {
-      if (str[i - 1] !== '"' && !ignoreCommasThatFollow) {
+    else if (!ignoreDelimitersThatFollow && str[i] === resolvedOpts.delimiter) {
+      if (str[i - 1] !== '"' && !ignoreDelimitersThatFollow) {
         // dump the previous value into array if the character before it, the double
         // quote, hasn't dumped the value already:
         let newElem = str.slice(colStarts, i);
@@ -151,7 +184,7 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
         // 1. mark where line break starts:
         lineBreakStarts = i;
         // 2. dump the value into rowArray only if closing double quote hasn't dumped already:
-        if (!ignoreCommasThatFollow && str[i - 1] !== '"') {
+        if (!ignoreDelimitersThatFollow && str[i - 1] !== '"') {
           let newElem = str.slice(colStarts, i);
           // if the element contains only empty space,
           if (newElem.trim() !== "") {

@@ -1,5 +1,6 @@
 declare const version: string;
 interface Opts {
+  delimiter: string;
   removeThousandSeparatorsFromNumbers: boolean;
   padSingleDecimalPlaceNumbers: boolean;
   forceUKStyle: boolean;
