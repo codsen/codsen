@@ -1,6 +1,6 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { mkdirSync } from "node:fs";
-import { readFile, writeFile } from "node:fs/promises";
+import { chmod, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { execa, execaCommand } from "execa";
 import pMap from "p-map";
@@ -221,6 +221,46 @@ test("05 - no files found in the given directory", async () => {
     /The inputs don't lead to any json files! Exiting./,
     "05.01",
   );
+});
+
+test("06 - defaults to JSON files in cwd and accepts primitive JSON", async () => {
+  let tempFolder = temporaryDirectory();
+  let pathOfTheTestfile = path.join(tempFolder, "package.json");
+  await writeFile(pathOfTheTestfile, '"hello"');
+
+  await execa(path.resolve("./cli.js"), [], { cwd: tempFolder });
+
+  equal(await readFile(pathOfTheTestfile, "utf8"), '"hello"\n', "06.01");
+});
+
+test("07 - includes node_modules when requested for a directory", async () => {
+  let tempFolder = temporaryDirectory();
+  let nestedFolder = path.join(tempFolder, "node_modules", "fixture");
+  mkdirSync(nestedFolder, { recursive: true });
+  let pathOfTheTestfile = path.join(nestedFolder, "package.json");
+  await writeFile(pathOfTheTestfile, '{"z":1,"a":2}');
+
+  await execa("./cli.js", [tempFolder, "-n"]);
+
+  equal(
+    await readFile(pathOfTheTestfile, "utf8"),
+    '{\n  "a": 2,\n  "z": 1\n}\n',
+    "07.01",
+  );
+});
+
+test("08 - reports a file which cannot be written", async () => {
+  let tempFolder = temporaryDirectory();
+  let pathOfTheTestfile = path.join(tempFolder, "readonly.json");
+  await writeFile(pathOfTheTestfile, '{"z":1,"a":2}');
+  await chmod(pathOfTheTestfile, 0o444);
+
+  try {
+    let result = await execa("./cli.js", [pathOfTheTestfile]);
+    match(result.stdout, /readonly\.json.*BAD/, "08.01");
+  } finally {
+    await chmod(pathOfTheTestfile, 0o644);
+  }
 });
 
 test.run();
