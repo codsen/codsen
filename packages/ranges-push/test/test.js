@@ -1234,4 +1234,31 @@ test("110 - constructor rejects non-object options", () => {
   throws(() => new Ranges("1"), /THROW_ID_01/, "110.01");
 });
 
+test("111 - constructor normalises and validates mergeType", () => {
+  const ranges = new Ranges({ mergeType: "2" });
+  ranges.add(1, 2, "a");
+  ranges.add(1, 3, "b");
+  equal(ranges.current(), [[1, 3, "b"]], "111.01");
+
+  const mergeTypeOneRanges = new Ranges({ mergeType: "1" });
+  mergeTypeOneRanges.add(1, 2, "a");
+  mergeTypeOneRanges.add(1, 3, "b");
+  equal(mergeTypeOneRanges.current(), [[1, 3, "ab"]], "111.02");
+
+  throws(() => new Ranges({ mergeType: "3" }), /THROW_ID_02/, "111.03");
+});
+
+test("112 - ADD() ignores non-range items in a ranges array", () => {
+  const ranges = new Ranges();
+  ranges.add([null, [1, 2], "not a range", [3, 4]]);
+  equal(
+    ranges.current(),
+    [
+      [1, 2],
+      [3, 4],
+    ],
+    "112.01",
+  );
+});
+
 test.run();
