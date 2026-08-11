@@ -78,6 +78,13 @@ test("04 - opts.msg", () => {
     'util-array-object-or-both/arrObjOrBoth(): [THROW_ID_02] some-library/some-function(): [THROW_ID_99] The variable "only" was customised to an unrecognised value: bbb. Please check it against the API documentation.',
     "04.04",
   );
+  throws(
+    () => {
+      arrObjOrBoth("aaa");
+    },
+    "util-array-object-or-both/arrObjOrBoth(): [THROW_ID_02] The given variable was customised to an unrecognised value: aaa. Please check it against the API documentation.",
+    "04.05",
+  );
 });
 
 test("05 - non-string input", () => {
