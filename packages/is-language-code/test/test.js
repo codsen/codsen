@@ -896,4 +896,15 @@ test(`66 - repeated variants are detected case-insensitively`, () => {
   );
 });
 
+test(`67 - a bare private-use singleton is rejected`, () => {
+  equal(
+    isLangCode("x"),
+    {
+      res: false,
+      message: 'Ends with private use subtag, "x".',
+    },
+    "67.01",
+  );
+});
+
 test.run();
