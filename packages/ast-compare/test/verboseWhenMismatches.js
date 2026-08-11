@@ -28,4 +28,25 @@ test("02 - plain objects, useWildcards, key with wildcard", () => {
   );
 });
 
+test("03 - mismatch messages label nested value types", () => {
+  type(
+    compare({ a: [] }, { a: null }, { verboseWhenMismatches: true }),
+    "string",
+    "03.01",
+  );
+  type(
+    compare({ a: {} }, { a: "" }, { verboseWhenMismatches: true }),
+    "string",
+    "03.02",
+  );
+  equal(
+    compare(new Date(0), new Date(0), {
+      hungryForWhitespace: true,
+      matchStrictly: true,
+    }),
+    false,
+    "03.03",
+  );
+});
+
 test.run();
