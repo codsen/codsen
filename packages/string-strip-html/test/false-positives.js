@@ -275,4 +275,31 @@ test("047 - single quotes", () => {
   equal(stripHtml(input).result, "hat > shoulders > knees > toes", "047.01");
 });
 
+// https://github.com/codsen/codsen/issues/97
+test("048 - dollar sign is not a tag-name starter", () => {
+  let input =
+    "I make <$2k/month right now and looking to add a new income source";
+  equal(
+    stripHtml(input),
+    {
+      result: input,
+      ranges: null,
+      allTagLocations: [],
+      filteredTagLocations: [],
+    },
+    "048.01",
+  );
+});
+
+test("049 - whitespace before an invalid tag-name starter", () => {
+  let input =
+    "I make <   $2k/month right now and looking to add a new income source";
+  equal(stripHtml(input).result, input, "049.01");
+});
+
+test("050 - valid tags around an invalid tag candidate", () => {
+  let input = "<b>I make <$2k/month right now</b>";
+  equal(stripHtml(input).result, "I make <$2k/month right now", "050.01");
+});
+
 test.run();
