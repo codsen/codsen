@@ -168,6 +168,18 @@ compile-time `DEV` global, commonly in the form `DEV && console.log(...)`.
   Update only the navigation label: ANSI codes such as `90` and `39`, plus
   numbers in the diagnostic payload, are not line-number labels.
 
+## Examples and Quick Takes
+
+- Keep `examples/_quickTake.js` focused on one introductory scenario. Add each
+  further option, integration, or substantially different usage scenario as a
+  descriptively named file under `examples/` instead of appending it to the
+  quick take.
+- Keep at most one `assert.deepEqual()` call in each example file. When another
+  deep-equality example is useful, create another example file for it.
+- Examples may import other libraries when that makes realistic composition or
+  the expected result clearer, provided those libraries are already available
+  to the package's example runner.
+
 ## `lect` is the source of truth
 
 `ops/lect/lect.js` runs from a package directory. It reads that package's
