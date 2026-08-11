@@ -3,6 +3,7 @@ import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
 import {
+  defaultGetNextIdx,
   matchLeftIncl,
   matchRightIncl,
   // matchLeft,
@@ -153,6 +154,10 @@ test("01 - throws", () => {
     /trimCharsBeforeMatching/,
     "01.16",
   );
+});
+
+test("02 - default index stepper", () => {
+  equal(defaultGetNextIdx(4), 5, "02.01");
 });
 
 test.run();
