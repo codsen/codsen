@@ -438,6 +438,7 @@ test("20 - validates and normalises ranges without mutating input", () => {
   throws(() => rApply("abc", false), /THROW_ID_03/g, "20.06");
   throws(() => rApply("abc", [[null, 2]]), /THROW_ID_06/g, "20.07");
   throws(() => rApply("abc", [[1, " "]]), /THROW_ID_07/g, "20.08");
+  equal(rApply("abc", [[1, 1]]), "abc", "20.09");
 });
 
 test.run();
