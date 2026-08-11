@@ -232,6 +232,15 @@ test("18 - avoids likely CSS selectors and references", () => {
   equal(conv("color: #abc;"), "color: #aabbcc;", "18.10");
   equal(conv("the colour #abc."), "the colour #aabbcc.", "18.11");
   equal(conv("#abc"), "#aabbcc", "18.12");
+  equal(
+    conv('svg { fill: URL(  "#abc"); }'),
+    'svg { fill: URL(  "#abc"); }',
+    "18.13",
+  );
+  equal(conv('<a HREF =  "#abc">'), '<a HREF =  "#abc">', "18.14");
+  equal(conv('<a data-href="#abc">'), '<a data-href="#aabbcc">', "18.15");
+  equal(conv(`the colour\u00a0#abc.`), `the colour\u00a0#aabbcc.`, "18.16");
+  equal(conv('fn("#abc")'), 'fn("#aabbcc")', "18.17");
 });
 
 test.run();
