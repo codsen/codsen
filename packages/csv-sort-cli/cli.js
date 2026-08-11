@@ -15,7 +15,7 @@ import { sort } from "csv-sort";
 import { globbySync } from "globby";
 import updateNotifier from "update-notifier";
 
-const { log } = console;
+const { error: logError, log } = console;
 
 const colours = {
   green: 32,
@@ -29,15 +29,20 @@ const pkg = require1("./package.json");
 const state = {
   toDoList: [],
   overwrite: false,
+  stdout: false,
 };
 const cli = codsenCLI(
   `
   Usage
     $ csvsort YOURFILE.csv
+    $ csvsort YOURFILE.csv --stdout
+    $ csvsort - < YOURFILE.csv
+    $ cat YOURFILE.csv | csvsort
   or, just type "csvsort" and it will let you pick a file.
 
   Options
     -o, --overwrite   Will overwrite the target file instead
+        --stdout      Print the result without writing any files
     -h, --help        Shows this help
     -v, --version     Shows the version of your ${pkg.name}
 
@@ -52,6 +57,10 @@ const cli = codsenCLI(
         shortFlag: "o",
         default: false,
       },
+      stdout: {
+        type: "boolean",
+        default: false,
+      },
     },
   },
 );
@@ -62,6 +71,57 @@ updateNotifier({ pkg }).notify();
 
 function colour(str, colourCode) {
   return `\u001b[${colourCode}m${str}\u001b[39m`;
+}
+
+async function readStdin() {
+  let result = "";
+  process.stdin.setEncoding("utf8");
+  for await (const chunk of process.stdin) {
+    result += chunk;
+  }
+  return result;
+}
+
+async function readCsv(requestedCSVsPath, readStdinOnce) {
+  if (requestedCSVsPath === "-") {
+    return readStdinOnce();
+  }
+
+  try {
+    return await readFile(requestedCSVsPath, "utf8");
+  } catch {
+    throw new Error(
+      `\ncsv-sort-cli: Alas, we couldn't fetch the file "${path.basename(
+        requestedCSVsPath,
+      )}" you requested!`,
+    );
+  }
+}
+
+function sortCsv(csvData) {
+  try {
+    return sort(csvData).res.join("\n");
+  } catch (error) {
+    throw new Error(`\ncsv-sort-cli: Alas, we encountered an error:\n${error}`);
+  }
+}
+
+async function runFilterMode(requestedCSVsPaths) {
+  let stdinPromise;
+  function readStdinOnce() {
+    if (!stdinPromise) {
+      stdinPromise = readStdin();
+    }
+    return stdinPromise;
+  }
+  const results = [];
+
+  // Process in operand order so multiple inputs produce deterministic stdout.
+  for (const requestedCSVsPath of requestedCSVsPaths) {
+    results.push(sortCsv(await readCsv(requestedCSVsPath, readStdinOnce)));
+  }
+
+  process.stdout.write(results.join("\n"));
 }
 
 async function offerAListOfCSVsToPickFrom(stateObj) {
@@ -112,28 +172,29 @@ if (cli.input.length > 0) {
   state.toDoList = cli.input;
 }
 
-// if --overwrite/-o flag is used, the following argument will be put as flag's
-// value, not in "cli.input[]":
-// we anticipate the can be multiple, potentially-false flags mixed with valid file names
-if (Object.keys(cli.flags).length !== 0) {
-  state.toDoList = [...new Set(cli.input)];
-}
-
 // short flags resolve onto their long names, so "-o" arrives as "overwrite"
 if (cli.flags.overwrite) {
   state.overwrite = true; // we normalise the flag since its value in CLI can precede
 }
+if (cli.flags.stdout) {
+  state.stdout = true;
+}
+
+state.toDoList = [...new Set(state.toDoList)];
+
+const hasExplicitStdin = state.toDoList.includes("-");
+const hasImplicitStdin =
+  state.toDoList.length === 0 && process.stdin.isTTY !== true;
+const isFilterMode = state.stdout || hasExplicitStdin || hasImplicitStdin;
 
 // Step #2. create a promise variable and assign it to one of the promises,
 // depending on was the acceptable file passed via args or queries afterwards.
 // -----------------------------------------------------------------------------
 let thePromise;
-if (
-  state.toDoList.length === 0 &&
-  // no input args given
-  (Object.keys(cli.flags).length === 0 ||
-    (Object.keys(cli.flags).length === 1 && cli.flags.overwrite !== undefined))
-) {
+if (isFilterMode) {
+  const filterSources = state.toDoList.length ? state.toDoList : ["-"];
+  thePromise = runFilterMode(filterSources);
+} else if (state.toDoList.length === 0) {
   // ---------------------------------  1  -------------------------------------
   // if no arguments were given, offer a list:
   thePromise = offerAListOfCSVsToPickFrom(state);
@@ -152,7 +213,7 @@ if (
 
   // write the list of unrecognised file names into the console:
   if (erroneous.length > 0) {
-    log(
+    logError(
       colour(
         `\ncsv-sort-cli: Alas, the following file${
           erroneous.length > 1 ? "s don't" : " doesn't"
@@ -175,7 +236,7 @@ if (
   if (state.overwrite) {
     butStateWasRecognisedMsg = 'But it recognised your "-o" flag.';
   }
-  log(
+  logError(
     colour(
       `\ncsv-sort-cli: Program didn't recognise any CSV files in your input!\n${butStateWasRecognisedMsg}`,
       colours.yellow,
@@ -190,30 +251,17 @@ if (
 // Step #3.
 // -----------------------------------------------------------------------------
 
-thePromise
-  .then(async (receivedState) => {
+if (!isFilterMode) {
+  thePromise = thePromise.then(async (receivedState) => {
     await Promise.all(
       receivedState.toDoList.map(async (requestedCSVsPath) => {
-        let csvData;
-        try {
-          csvData = await readFile(requestedCSVsPath, "utf8");
-        } catch {
-          throw new Error(
-            `\ncsv-sort-cli: Alas, we couldn't fetch the file "${path.basename(
-              requestedCSVsPath,
-            )}" you requested!`,
-          );
-        }
+        const csvData = await readCsv(requestedCSVsPath);
+        const cleaned = sortCsv(csvData);
 
         try {
-          const cleaned = sort(csvData);
           if (receivedState.overwrite) {
-            await writeFile(
-              path.basename(requestedCSVsPath),
-              cleaned.res.join("\n"),
-              "utf8",
-            );
-            log(
+            await writeFile(path.basename(requestedCSVsPath), cleaned, "utf8");
+            logError(
               colour(
                 `csv-sort-cli: Yay! The ${path.basename(
                   requestedCSVsPath,
@@ -231,12 +279,8 @@ thePromise
               path.extname(requestedCSVsPath),
             )}-${i}${path.extname(requestedCSVsPath)}`;
             if (!fs.existsSync(path.resolve(proposedNewFileName))) {
-              await writeFile(
-                proposedNewFileName,
-                cleaned.res.join("\n"),
-                "utf8",
-              );
-              log(
+              await writeFile(proposedNewFileName, cleaned, "utf8");
+              logError(
                 colour(
                   `csv-sort-cli: Yay! A new file, ${proposedNewFileName} has been created! Check it out.`,
                   colours.green,
@@ -258,8 +302,10 @@ thePromise
         }
       }),
     );
-  })
-  .catch((err) => {
-    log(colour(err, colours.red));
-    process.exitCode = 1;
   });
+}
+
+thePromise.catch((err) => {
+  logError(colour(err, colours.red));
+  process.exitCode = 1;
+});
