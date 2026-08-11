@@ -56,7 +56,7 @@ function combinations(input: Obj, Override: undefined | Obj = {}): Obj[] {
     combinationIndex < combinationsCount;
     combinationIndex++
   ) {
-    const result: BoolObj = {};
+    const result: Obj = {};
     for (let keyIndex = 0; keyIndex < propertiesToMix.length; keyIndex++) {
       result[propertiesToMix[keyIndex]] =
         (combinationIndex & (1 << keyIndex)) !== 0;
