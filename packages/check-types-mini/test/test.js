@@ -2878,4 +2878,20 @@ test("39 - strict-keyset errors omit ignored keys", () => {
   );
 });
 
+test("40 - root arrays, sparse values and message normalisation", () => {
+  not.throws(() => {
+    checkTypesMini([1], [1], { enforceStrictKeyset: false });
+  }, "40.01");
+  not.throws(() => {
+    checkTypesMini({ a: [undefined] }, { a: [undefined] });
+  }, "40.02");
+  throws(
+    () => {
+      checkTypesMini({ a: 1 }, { a: "" }, { msg: " custom: " });
+    },
+    /custom: opts\.a was customised/,
+    "40.03",
+  );
+});
+
 test.run();
