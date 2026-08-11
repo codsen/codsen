@@ -2,7 +2,11 @@
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
-import { extract as e } from "../dist/string-extract-class-names.esm.js";
+import {
+  decodeCssSelector,
+  extract as e,
+  readCssSelectorToken,
+} from "../dist/string-extract-class-names.esm.js";
 
 // ~!@$%^&*()+=,./';:"?><[]\{}|`# ++++ space char
 
@@ -1721,6 +1725,270 @@ test("66 - recognises JS escaped strings and repeated dots & hashes", () => {
     },
     "66.01",
   );
+});
+
+test("67 - escaped punctuation stays within the raw selector", () => {
+  equal(
+    e(String.raw`.\@sm\:block`),
+    {
+      res: [String.raw`.\@sm\:block`],
+      ranges: [[0, 12]],
+    },
+    "67.01",
+  );
+  equal(
+    e(String.raw`#item\#one`),
+    {
+      res: [String.raw`#item\#one`],
+      ranges: [[0, 10]],
+    },
+    "67.02",
+  );
+  equal(e(".foo:hover"), { res: [".foo"], ranges: [[0, 4]] }, "67.03");
+  equal(
+    e(String.raw`.foo\:hover`),
+    {
+      res: [String.raw`.foo\:hover`],
+      ranges: [[0, 11]],
+    },
+    "67.04",
+  );
+  equal(
+    e(String.raw`.foo\.bar`),
+    {
+      res: [String.raw`.foo\.bar`],
+      ranges: [[0, 9]],
+    },
+    "67.05",
+  );
+  equal(
+    e(String.raw`div\.not-a-class .actual`),
+    { res: [".actual"], ranges: [[17, 24]] },
+    "67.06",
+  );
+  equal(
+    e(String.raw`.foo\\.bar`),
+    {
+      res: [String.raw`.foo\\`, ".bar"],
+      ranges: [
+        [0, 6],
+        [6, 10],
+      ],
+    },
+    "67.07",
+  );
+});
+
+test("68 - escaped identifiers in attribute selector notation", () => {
+  equal(
+    e(String.raw`td[class=\@sm\:block]`),
+    {
+      res: [String.raw`.\@sm\:block`],
+      ranges: [[9, 20]],
+    },
+    "68.01",
+  );
+  equal(
+    e(String.raw`td[class="\@sm\:block"]`),
+    {
+      res: [String.raw`.\@sm\:block`],
+      ranges: [[10, 21]],
+    },
+    "68.02",
+  );
+  equal(
+    e(String.raw`td[id=\@sm\:block]`),
+    {
+      res: [String.raw`#\@sm\:block`],
+      ranges: [[6, 17]],
+    },
+    "68.03",
+  );
+  equal(
+    e(String.raw`td[id='\@sm\:block']`),
+    {
+      res: [String.raw`#\@sm\:block`],
+      ranges: [[7, 18]],
+    },
+    "68.04",
+  );
+});
+
+test("69 - CSS selector escape decoding", () => {
+  equal(decodeCssSelector(String.raw`.\@sm\:block`), ".@sm:block", "69.01");
+  equal(decodeCssSelector(".foo:hover"), ".foo:hover", "69.02");
+  equal(decodeCssSelector(String.raw`.foo\:hover`), ".foo:hover", "69.03");
+  equal(decodeCssSelector(String.raw`#item\#one`), "#item#one", "69.04");
+  equal(decodeCssSelector(String.raw`.\40 sm\3A block`), ".@sm:block", "69.05");
+  equal(
+    decodeCssSelector(String.raw`.\000040sm\00003Ablock`),
+    ".@sm:block",
+    "69.06",
+  );
+  equal(decodeCssSelector(String.raw`#\31 23`), "#123", "69.07");
+  equal(decodeCssSelector(String.raw`.\0 x`), ".�x", "69.08");
+  equal(decodeCssSelector(String.raw`.\D800 x`), ".�x", "69.09");
+  equal(decodeCssSelector(String.raw`.\110000 x`), ".�x", "69.10");
+  equal(decodeCssSelector(String.raw`.\💩-pile`), ".💩-pile", "69.11");
+  equal(decodeCssSelector(String.raw`.foo\\bar`), ".foo\\bar", "69.12");
+  equal(decodeCssSelector(".foo\\"), ".foo\\", "69.13");
+  equal(decodeCssSelector(".foo\\\nbar"), ".foo\\\nbar", "69.14");
+  equal(decodeCssSelector(".\\40\r\nsm"), ".@sm", "69.15");
+});
+
+test("70 - reads one lossless and canonical selector token", () => {
+  equal(
+    readCssSelectorToken(String.raw`x.\@sm\:block:hover`, 1),
+    {
+      value: ".@sm:block",
+      raw: String.raw`.\@sm\:block`,
+      range: [1, 13],
+    },
+    "70.01",
+  );
+  equal(
+    readCssSelectorToken(".foo:hover", 0),
+    { value: ".foo", raw: ".foo", range: [0, 4] },
+    "70.02",
+  );
+  equal(
+    readCssSelectorToken(String.raw`.foo\:hover`, 0),
+    {
+      value: ".foo:hover",
+      raw: String.raw`.foo\:hover`,
+      range: [0, 11],
+    },
+    "70.03",
+  );
+  equal(
+    readCssSelectorToken(".foo.bar", 0),
+    { value: ".foo", raw: ".foo", range: [0, 4] },
+    "70.04",
+  );
+  equal(readCssSelectorToken(String.raw`x\.not-a-class`, 2), null, "70.05");
+  equal(
+    readCssSelectorToken(String.raw`x\\.actual`, 3),
+    { value: ".actual", raw: ".actual", range: [3, 10] },
+    "70.06",
+  );
+  equal(readCssSelectorToken(".", 0), null, "70.07");
+  equal(readCssSelectorToken("plain", 0), null, "70.08");
+  equal(readCssSelectorToken(".foo", -1), null, "70.09");
+  equal(readCssSelectorToken(".foo", 99), null, "70.10");
+});
+
+test("71 - hexadecimal escapes retain their raw terminators and ranges", () => {
+  equal(
+    e(String.raw`.\40 sm\3A block:hover`),
+    {
+      res: [String.raw`.\40 sm\3A block`],
+      ranges: [[0, 16]],
+    },
+    "71.01",
+  );
+  equal(
+    e(String.raw`.\000040sm\00003Ablock:hover`),
+    {
+      res: [String.raw`.\000040sm\00003Ablock`],
+      ranges: [[0, 22]],
+    },
+    "71.02",
+  );
+  equal(
+    e(".\\40\r\nsm:hover"),
+    {
+      res: [".\\40\r\nsm"],
+      ranges: [[0, 8]],
+    },
+    "71.03",
+  );
+  equal(
+    readCssSelectorToken(String.raw`x#\31 23:hover`, 1),
+    {
+      value: "#123",
+      raw: String.raw`#\31 23`,
+      range: [1, 8],
+    },
+    "71.04",
+  );
+});
+
+test("72 - escape helper input validation", () => {
+  throws(
+    () => {
+      decodeCssSelector();
+    },
+    /THROW_ID_02/g,
+    "72.01",
+  );
+  throws(
+    () => {
+      readCssSelectorToken(undefined, 0);
+    },
+    /THROW_ID_03/g,
+    "72.02",
+  );
+  throws(
+    () => {
+      readCssSelectorToken(".foo", "0");
+    },
+    /THROW_ID_04/g,
+    "72.03",
+  );
+});
+
+test("73 - only CSS whitespace terminates selector identifiers", () => {
+  let nbspSelector = ".foo\u00a0bar";
+  let emSpaceSelector = ".foo\u2003bar";
+  let escapedNbspSelector = ".foo\\\u00a0bar";
+
+  equal(e(nbspSelector), { res: [nbspSelector], ranges: [[0, 8]] }, "73.01");
+  equal(
+    e(emSpaceSelector),
+    { res: [emSpaceSelector], ranges: [[0, 8]] },
+    "73.02",
+  );
+  equal(
+    readCssSelectorToken(`x${nbspSelector}:hover`, 1),
+    {
+      value: nbspSelector,
+      raw: nbspSelector,
+      range: [1, 9],
+    },
+    "73.03",
+  );
+  equal(decodeCssSelector(nbspSelector), nbspSelector, "73.04");
+  equal(
+    e(escapedNbspSelector),
+    { res: [escapedNbspSelector], ranges: [[0, 9]] },
+    "73.05",
+  );
+  equal(
+    readCssSelectorToken(escapedNbspSelector, 0),
+    {
+      value: nbspSelector,
+      raw: escapedNbspSelector,
+      range: [0, 9],
+    },
+    "73.06",
+  );
+  equal(decodeCssSelector(escapedNbspSelector), nbspSelector, "73.07");
+  equal(
+    e(".a\t.b\n#c\r.d\f#e .f"),
+    {
+      res: [".a", ".b", "#c", ".d", "#e", ".f"],
+      ranges: [
+        [0, 2],
+        [3, 5],
+        [6, 8],
+        [9, 11],
+        [12, 14],
+        [15, 17],
+      ],
+    },
+    "73.08",
+  );
+  equal(decodeCssSelector(emSpaceSelector), emSpaceSelector, "73.09");
 });
 
 test.run();
