@@ -154,4 +154,43 @@ test("11 - no findings", () => {
   );
 });
 
+test("12 - hungry and optional-hungry flags", () => {
+  equal(
+    rightSeq("abbbbc", 0, "b*", "c"),
+    {
+      gaps: [],
+      leftmostChar: 1,
+      rightmostChar: 5,
+    },
+    "12.01",
+  );
+  equal(
+    rightSeq("abbbbc", 0, "b*?", "c"),
+    {
+      gaps: [],
+      leftmostChar: 1,
+      rightmostChar: 5,
+    },
+    "12.02",
+  );
+  equal(
+    rightSeq("ac", 0, "b?*", "c"),
+    {
+      gaps: [],
+      leftmostChar: 1,
+      rightmostChar: 1,
+    },
+    "12.03",
+  );
+  equal(
+    rightSeq("aBBBBc", 0, { i: true }, "b*", "c"),
+    {
+      gaps: [],
+      leftmostChar: 1,
+      rightmostChar: 5,
+    },
+    "12.04",
+  );
+});
+
 test.run();
