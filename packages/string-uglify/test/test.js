@@ -351,6 +351,13 @@ test("14 - uglifyById validates the index", () => {
     /THROW_ID_02/,
     "14.10",
   );
+  throws(
+    () => {
+      uglifyById([".alpha"], 1);
+    },
+    /contains 1 item\./,
+    "14.11",
+  );
 });
 
 test.run();
