@@ -1,0 +1,13 @@
+{
+  "name": "@octokit/plugin-enterprise-rest",
+  "version": "6.0.1",
+  "description": "Local stub replacing the real @octokit/plugin-enterprise-rest, which ships 8.7MB (7.7MB of it its own build scripts) of GitHub Enterprise route definitions we never load. See ops/stubs/README.md.",
+  "license": "MIT",
+  "private": true,
+  "type": "commonjs",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./*": "./index.js"
+  }
+}

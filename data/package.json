@@ -33,12 +33,13 @@
     "examples": "exit 0",
     "lect": "exit 0",
     "letspublish": "exit 0",
-    "lint": "exit 0",
+    "lint": "npm run typecheck",
     "perf": "exit 0",
     "prep": "exit 0",
     "prettier": "exit 0",
     "prettier:format": "exit 0",
     "pretest": "exit 0",
+    "typecheck": "tsc --noEmit --pretty false --project tsconfig.json",
     "unit": "exit 0"
   }
 }

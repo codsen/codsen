@@ -52,6 +52,17 @@
       "outputs": [],
       "cache": false
     },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!dist/**",
+        "!types/**",
+        "$TURBO_ROOT$/ops/typedefs/common.d.ts",
+        "$TURBO_ROOT$/tsconfig.base.json"
+      ],
+      "outputs": []
+    },
     "unit": {
       "dependsOn": ["build"],
       "outputs": []

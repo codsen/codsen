@@ -41,14 +41,15 @@
     "examples": "node '../../ops/scripts/run-examples.js'",
     "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
     "letspublish": "npm publish --provenance",
-    "lint": "biome lint --error-on-warnings .",
-    "lint:fix": "biome lint --write --error-on-warnings .",
+    "lint": "biome lint --error-on-warnings . && npm run typecheck",
+    "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
     "perf": "node perf/check.js",
     "prep": "echo 'ready'",
     "prettier": "biome format",
     "prettier:format": "biome format --write .",
     "pretest": "npm run lect && npm run build",
     "test": "npm run devtest",
+    "typecheck": "tsc --noEmit --pretty false --project tsconfig.json",
     "unit": "uvu test"
   },
   "c8": {
@@ -60,10 +61,6 @@
     "licence": {
       "extras": [""]
     }
-  },
-  "devDependencies": {
-    "ranges-apply": "^7.1.3",
-    "ranges-merge": "^9.1.3"
   },
   "engines": {
     "node": ">=18.20.8"

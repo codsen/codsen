@@ -62,7 +62,6 @@
   },
   "dependencies": {
     "@inquirer/prompts": "^7.10.1",
-    "@ljharb/through": "^2.3.14",
     "codsen-utils": "^1.7.3",
     "email-all-chars-within-ascii": "^5.1.3",
     "globby": "^14.1.0",

@@ -280,8 +280,7 @@ export const interdeps = [
       "ranges-push",
       "string-left-right",
       "string-match-left-right",
-      "string-range-expander",
-      "test-mixer"
+      "string-range-expander"
     ]
   },
   {
@@ -526,7 +525,6 @@ export const interdeps = [
     "name": "ranges-merge",
     "size": 2336,
     "imports": [
-      "ranges-push",
       "ranges-sort"
     ]
   },
@@ -544,8 +542,7 @@ export const interdeps = [
     "imports": [
       "codsen-utils",
       "ranges-sort",
-      "string-collapse-leading-whitespace",
-      "string-trim-spaces-only"
+      "string-collapse-leading-whitespace"
     ]
   },
   {
@@ -602,11 +599,6 @@ export const interdeps = [
       "codsen-utils",
       "ranges-apply"
     ]
-  },
-  {
-    "name": "string-character-is-astral-surrogate",
-    "size": 865,
-    "imports": []
   },
   {
     "name": "string-collapse-leading-whitespace",
@@ -683,8 +675,7 @@ export const interdeps = [
     "size": 5635,
     "imports": [
       "arrayiffy-if-string",
-      "codsen-utils",
-      "string-character-is-astral-surrogate"
+      "codsen-utils"
     ]
   },
   {
