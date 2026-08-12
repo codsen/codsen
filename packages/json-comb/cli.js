@@ -4,13 +4,10 @@
 
 import { readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
-import path from "node:path";
+import { glob } from "codsen-glob";
 import { codsenCLI } from "codsen-utils";
-import { globby } from "globby";
-import isDirectory from "is-d";
 import { enforceKeyset, getKeyset } from "json-comb-core";
 import pMap from "p-map";
-import pReduce from "p-reduce";
 import updateNotifier from "update-notifier";
 
 const require1 = createRequire(import.meta.url);
@@ -156,27 +153,9 @@ if (cli.flags.ignore) {
   };
 }
 
-globby(input)
-  .then((resolvedPathsArray) =>
-    pReduce(
-      resolvedPathsArray, // input
-      (concattedTotal, singleDirOrFilePath) =>
-        concattedTotal // reducer
-          .concat(
-            isDirectory(singleDirOrFilePath).then((bool) =>
-              bool
-                ? globby(
-                    path.join(singleDirOrFilePath, "**/*.json"),
-                    "!node_modules",
-                  )
-                : [singleDirOrFilePath],
-            ),
-          ),
-      [], // initialValue
-    ).then((received) =>
-      pReduce(received, (total, single) => total.concat(single), []),
-    ),
-  )
+glob([...input, "!**/node_modules/**", "!**/package-lock.json"], {
+  expandDirectories: { files: ["*.json"] },
+})
   .then((res) =>
     res.filter(
       (oneOfPaths) =>

@@ -356,6 +356,46 @@ test('08 - /2 - "t" flag, --trigger', async () => {
   equal(await processedFileContents, intendedFile, "08.01");
 });
 
+test("09 - a directory operand expands recursively", async () => {
+  let tempFolder = temporaryDirectory();
+  let sourceFolder = path.join(tempFolder, "source");
+  let nestedFolder = path.join(sourceFolder, "nested");
+  let dependencyFolder = path.join(sourceFolder, "node_modules");
+  let originalFile = `${letterC}onsole.log('123 zzz');`;
+  let intendedFile = `${letterC}onsole.log('001 zzz');`;
+
+  await Promise.all([
+    fs.mkdir(nestedFolder, { recursive: true }),
+    fs.mkdir(dependencyFolder, { recursive: true }),
+  ]);
+  await Promise.all([
+    fs.writeFile(path.join(sourceFolder, "first.js"), originalFile),
+    fs.writeFile(path.join(nestedFolder, "second.js"), originalFile),
+    fs.writeFile(path.join(dependencyFolder, "dependency.js"), originalFile),
+  ]);
+
+  await execa(
+    `cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")} source`,
+    { shell: true },
+  );
+
+  equal(
+    await fs.readFile(path.join(sourceFolder, "first.js"), "utf8"),
+    intendedFile,
+    "09.01",
+  );
+  equal(
+    await fs.readFile(path.join(nestedFolder, "second.js"), "utf8"),
+    intendedFile,
+    "09.02",
+  );
+  equal(
+    await fs.readFile(path.join(dependencyFolder, "dependency.js"), "utf8"),
+    originalFile,
+    "09.03",
+  );
+});
+
 //                                  *
 //                                  *
 //                                  *

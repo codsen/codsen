@@ -7,9 +7,9 @@ import fs from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { select } from "@inquirer/prompts";
+import { globSync } from "codsen-glob";
 import { codsenCLI, pullAll } from "codsen-utils";
 import { within } from "email-all-chars-within-ascii";
-import { globbySync } from "globby";
 import { right } from "string-left-right";
 import updateNotifier from "update-notifier";
 
@@ -64,7 +64,7 @@ function inverse(str) {
 }
 
 async function offerAListOfFilesToPickFrom() {
-  let allFilesHere = globbySync("./*.*", "!**/node_modules/**");
+  let allFilesHere = globSync(["./*.*", "!**/node_modules/**"]);
   if (!allFilesHere.length) {
     log(
       colour(

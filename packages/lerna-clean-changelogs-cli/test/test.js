@@ -186,4 +186,23 @@ test(`05 - functionality - globs, multiple written multiple skipped`, async () =
     });
 });
 
+test("06 - default search is case-insensitive and excludes node_modules", async () => {
+  let tempFolder = temporaryDirectory();
+  let dependencyFolder = path.join(tempFolder, "node_modules", "fixture");
+  mkdirSync(dependencyFolder, { recursive: true });
+  let upperCaseChangelog = path.join(tempFolder, "CHANGELOG.md");
+  let dependencyChangelog = path.join(dependencyFolder, "changelog.md");
+
+  await Promise.all([
+    writeFile(upperCaseChangelog, changelog1),
+    writeFile(dependencyChangelog, changelog1),
+  ]);
+
+  let result = await execa(path.resolve("./cli.js"), [], { cwd: tempFolder });
+
+  match(result.stdout, /1 updated/, "06.01");
+  equal(await readFile(upperCaseChangelog, "utf8"), changelog1Fixed, "06.02");
+  equal(await readFile(dependencyChangelog, "utf8"), changelog1, "06.03");
+});
+
 test.run();

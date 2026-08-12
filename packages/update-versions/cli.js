@@ -8,9 +8,9 @@ import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import diff1 from "ansi-diff-stream";
+import { glob } from "codsen-glob";
 import { codsenCLI, isPlainObject } from "codsen-utils";
 import { del, set } from "edit-package-json";
-import { globby } from "globby";
 import objectPath from "object-path";
 import pProgress, { PProgress } from "p-progress";
 import pReduce from "p-reduce";
@@ -90,7 +90,7 @@ export async function updateVersions({
     );
   }
 
-  let pathsPromise = await globby(
+  let pathsPromise = await glob(
     ["**/package.json", "!**/node_modules/**", "!**/test/**"],
     { cwd },
   ).then((paths) =>

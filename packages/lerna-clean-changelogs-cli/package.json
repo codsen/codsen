@@ -63,8 +63,8 @@
     }
   },
   "dependencies": {
+    "codsen-glob": "^1.0.0",
     "codsen-utils": "^1.7.3",
-    "globby": "^14.1.0",
     "lerna-clean-changelogs": "^5.1.3",
     "p-filter": "^4.1.0",
     "p-reduce": "^3.0.0",

@@ -326,4 +326,36 @@ test("07 - resolves registry metadata before writing", async () => {
   equal(await promises.readFile(packagePath, "utf8"), original, "07.04");
 });
 
+test("08 - cwd discovery excludes test package manifests", async () => {
+  let tempFolder = temporaryDirectory();
+  let testFolder = path.join(tempFolder, "test", "fixture");
+  mkdirSync(testFolder, { recursive: true });
+  let rootPath = path.join(tempFolder, "package.json");
+  let testPath = path.join(testFolder, "package.json");
+  let rootContents = JSON.stringify({
+    name: "root-fixture",
+    dependencies: { alpha: "^1.0.0" },
+  });
+  let testContents = JSON.stringify({
+    name: "test-fixture",
+    dependencies: { beta: "^1.0.0" },
+  });
+  await Promise.all([
+    writeFileAtomic(rootPath, rootContents),
+    writeFileAtomic(testPath, testContents),
+  ]);
+
+  await updateVersions({
+    cwd: tempFolder,
+    fetchPackage: async (name) => ({ name, version: "2.0.0" }),
+  });
+
+  equal(
+    JSON.parse(await promises.readFile(rootPath, "utf8")).dependencies.alpha,
+    "^2.0.0",
+    "08.01",
+  );
+  equal(await promises.readFile(testPath, "utf8"), testContents, "08.02");
+});
+
 test.run();

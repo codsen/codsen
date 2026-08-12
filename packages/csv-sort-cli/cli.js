@@ -10,9 +10,9 @@ import { readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { confirm, select } from "@inquirer/prompts";
+import { globSync } from "codsen-glob";
 import { codsenCLI, pullAll } from "codsen-utils";
 import { sort } from "csv-sort";
-import { globbySync } from "globby";
 import updateNotifier from "update-notifier";
 
 const { error: logError, log } = console;
@@ -125,7 +125,7 @@ async function runFilterMode(requestedCSVsPaths) {
 }
 
 async function offerAListOfCSVsToPickFrom(stateObj) {
-  let allCSVsHere = globbySync("./*.csv", "!**/node_modules/**");
+  let allCSVsHere = globSync(["./*.csv", "!**/node_modules/**"]);
   if (!allCSVsHere.length) {
     return Promise.reject(
       new Error(

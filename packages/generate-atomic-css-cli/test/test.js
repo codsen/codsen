@@ -1,5 +1,5 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { execa } from "execa";
@@ -198,6 +198,49 @@ GENERATE-ATOMIC-CSS-CONTENT-ENDS */
   // 3. compare:
   match(file1contents, /\.pt3 { padding-top: 3px !important; }/g, "03.01");
   match(file2contents, /\.mt3 { margin-top: 3px !important; }/g, "03.02"); // both updated
+});
+
+test("04 - a directory operand expands recursively", async () => {
+  let tempFolder = temporaryDirectory();
+  let templatesFolder = path.join(tempFolder, "templates");
+  let nestedFolder = path.join(templatesFolder, "nested");
+  let dependencyFolder = path.join(templatesFolder, "node_modules");
+  let originalFile = `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+.pt$$$ { padding-top: $$$px !important; } | 0 | 1 |
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS
+GENERATE-ATOMIC-CSS-CONTENT-ENDS */`;
+
+  await Promise.all([
+    mkdir(nestedFolder, { recursive: true }),
+    mkdir(dependencyFolder, { recursive: true }),
+  ]);
+  await Promise.all([
+    writeFile(path.join(templatesFolder, "first.html"), originalFile),
+    writeFile(path.join(nestedFolder, "second.html"), originalFile),
+    writeFile(path.join(dependencyFolder, "dependency.html"), originalFile),
+  ]);
+
+  await execa(
+    `cd ${tempFolder} && ${path.join(__dirname2, "../", "cli.js")} templates`,
+    { shell: true },
+  );
+
+  match(
+    await readFile(path.join(templatesFolder, "first.html"), "utf8"),
+    /\.pt1 { padding-top: 1px !important; }/,
+    "04.01",
+  );
+  match(
+    await readFile(path.join(nestedFolder, "second.html"), "utf8"),
+    /\.pt1 { padding-top: 1px !important; }/,
+    "04.02",
+  );
+  equal(
+    await readFile(path.join(dependencyFolder, "dependency.html"), "utf8"),
+    originalFile,
+    "04.03",
+  );
 });
 
 //                                  *

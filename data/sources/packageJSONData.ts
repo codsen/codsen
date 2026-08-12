@@ -365,11 +365,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -448,11 +451,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -529,11 +535,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -612,11 +621,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -695,11 +707,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -1143,11 +1158,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -1320,11 +1338,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -1413,11 +1434,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -1591,11 +1615,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -1833,6 +1860,85 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.7.3",
       "update-notifier": "^7.3.1"
+    },
+    "engines": {
+      "node": ">=18.20.8"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
+    }
+  },
+  "codsen-glob": {
+    "name": "codsen-glob",
+    "version": "1.0.0",
+    "description": "Fast TypeScript file globbing",
+    "keywords": [
+      "files",
+      "filesystem",
+      "glob",
+      "globbing",
+      "typescript"
+    ],
+    "homepage": "https://codsen.com/os/codsen-glob",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/codsen/codsen.git",
+      "directory": "packages/codsen-glob"
+    },
+    "license": "MIT",
+    "author": {
+      "name": "Roy Revelt",
+      "email": "roy@codsen.com",
+      "url": "https://codsen.com"
+    },
+    "type": "module",
+    "exports": {
+      "types": "./types/index.d.ts",
+      "default": "./dist/codsen-glob.esm.js"
+    },
+    "types": "types/index.d.ts",
+    "scripts": {
+      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
+      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
+      "devtest": "c8 npm run unit && npm run examples && npm run lint",
+      "dts": "rollup -c && npm run prettier:format",
+      "examples": "node '../../ops/scripts/run-examples.js'",
+      "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+      "letspublish": "npm publish --provenance",
+      "lint": "biome lint --error-on-warnings . && npm run typecheck",
+      "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
+      "perf": "node perf/check.js",
+      "prep": "echo 'ready'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
+      "pretest": "npm run lect && npm run build",
+      "test": "npm run devtest",
+      "typecheck": "tsc --noEmit --pretty false --project tsconfig.json",
+      "unit": "uvu test"
+    },
+    "c8": {
+      "branches": 100,
+      "check-coverage": true,
+      "exclude": [
+        "**/test/**/*.*"
+      ],
+      "functions": 100,
+      "lines": 100,
+      "reporter": [
+        "text",
+        "text-summary"
+      ],
+      "statements": 100
+    },
+    "lect": {
+      "licence": {
+        "extras": [
+          ""
+        ]
+      }
+    },
+    "dependencies": {
+      "picomatch": "^4.0.5"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -2151,9 +2257,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@inquirer/prompts": "^7.10.1",
+      "codsen-glob": "^1.0.0",
       "codsen-utils": "^1.7.3",
       "csv-sort": "^7.1.3",
-      "globby": "^14.1.0",
       "update-notifier": "^7.3.1"
     },
     "engines": {
@@ -2578,7 +2684,7 @@ export const packageJSONData = {
     },
     "devDependencies": {
       "ast-monkey-traverse": "^4.1.3",
-      "globby": "^14.1.0",
+      "codsen-glob": "^1.0.0",
       "p-map": "^7.0.4"
     },
     "engines": {
@@ -2730,9 +2836,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@inquirer/prompts": "^7.10.1",
+      "codsen-glob": "^1.0.0",
       "codsen-utils": "^1.7.3",
       "email-all-chars-within-ascii": "^5.1.3",
-      "globby": "^14.1.0",
       "string-left-right": "^6.1.3",
       "update-notifier": "^7.3.1"
     },
@@ -2815,6 +2921,7 @@ export const packageJSONData = {
       "array-pull-all-with-glob": "^7.1.3",
       "codsen-utils": "^1.7.3",
       "html-crush": "^6.1.3",
+      "html-entities": "^2.6.0",
       "ranges-apply": "^7.1.3",
       "ranges-push": "^7.1.3",
       "regex-empty-conditional-comments": "^3.1.3",
@@ -3060,10 +3167,9 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
+      "codsen-glob": "^1.0.0",
       "codsen-utils": "^1.7.3",
       "generate-atomic-css": "^3.1.3",
-      "globby": "^14.1.0",
-      "is-d": "^1.0.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
       "write-file-atomic": "^6.0.0"
@@ -4135,9 +4241,8 @@ export const packageJSONData = {
     },
     "dependencies": {
       "arrayiffy-if-string": "^5.1.3",
+      "codsen-glob": "^1.0.0",
       "codsen-utils": "^1.7.3",
-      "globby": "^14.1.0",
-      "is-d": "^1.0.0",
       "js-row-num": "^7.1.3",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
@@ -4217,12 +4322,10 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-glob": "^1.0.0",
       "codsen-utils": "^1.7.3",
-      "globby": "^14.1.0",
-      "is-d": "^1.0.0",
       "json-comb-core": "^8.1.3",
       "p-map": "^7.0.4",
-      "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1"
     },
     "engines": {
@@ -4393,9 +4496,8 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-monkey-traverse": "^4.1.3",
+      "codsen-glob": "^1.0.0",
       "codsen-utils": "^1.7.3",
-      "globby": "^14.1.0",
-      "is-d": "^1.0.0",
       "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
       "sort-package-json": "^2.15.1",
@@ -4655,8 +4757,8 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-glob": "^1.0.0",
       "codsen-utils": "^1.7.3",
-      "globby": "^14.1.0",
       "lerna-clean-changelogs": "^5.1.3",
       "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
@@ -4806,11 +4908,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -4890,11 +4995,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -5463,11 +5571,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -5925,11 +6036,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -6238,11 +6352,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -6315,11 +6432,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -6706,11 +6826,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -6948,11 +7071,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -7027,11 +7153,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -7342,11 +7471,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -7990,7 +8122,9 @@ export const packageJSONData = {
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -8502,11 +8636,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -8743,11 +8880,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -8924,9 +9064,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ansi-diff-stream": "^1.2.1",
+      "codsen-glob": "^1.0.0",
       "codsen-utils": "^1.7.3",
       "edit-package-json": "^0.9.3",
-      "globby": "^14.1.0",
       "object-path": "^0.11.8",
       "p-progress": "^1.0.0",
       "p-reduce": "^3.0.0",
@@ -8998,11 +9138,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {
@@ -9071,11 +9214,14 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 100
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
     },
     "lect": {
       "licence": {

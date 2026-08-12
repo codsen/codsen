@@ -33,7 +33,7 @@ export const interdeps = [
   },
   {
     "name": "ast-compare",
-    "size": 3615,
+    "size": 4133,
     "imports": [
       "ast-contains-only-empty-space",
       "codsen-utils"
@@ -138,6 +138,11 @@ export const interdeps = [
     ]
   },
   {
+    "name": "codsen-glob",
+    "size": 12766,
+    "imports": []
+  },
+  {
     "name": "codsen-utils",
     "size": 14354,
     "imports": []
@@ -158,15 +163,16 @@ export const interdeps = [
   },
   {
     "name": "csv-sort-cli",
-    "size": 7822,
+    "size": 8975,
     "imports": [
+      "codsen-glob",
       "codsen-utils",
       "csv-sort"
     ]
   },
   {
     "name": "csv-split-easy",
-    "size": 2370,
+    "size": 2905,
     "imports": [
       "string-remove-thousand-separators"
     ]
@@ -218,8 +224,9 @@ export const interdeps = [
   },
   {
     "name": "email-all-chars-within-ascii-cli",
-    "size": 9129,
+    "size": 9132,
     "imports": [
+      "codsen-glob",
       "codsen-utils",
       "email-all-chars-within-ascii",
       "string-left-right"
@@ -227,7 +234,7 @@ export const interdeps = [
   },
   {
     "name": "email-comb",
-    "size": 22730,
+    "size": 25082,
     "imports": [
       "array-pull-all-with-glob",
       "codsen-utils",
@@ -260,8 +267,9 @@ export const interdeps = [
   },
   {
     "name": "generate-atomic-css-cli",
-    "size": 4689,
+    "size": 3849,
     "imports": [
+      "codsen-glob",
       "codsen-utils",
       "generate-atomic-css"
     ]
@@ -349,17 +357,19 @@ export const interdeps = [
   },
   {
     "name": "js-row-num-cli",
-    "size": 5518,
+    "size": 4662,
     "imports": [
       "arrayiffy-if-string",
+      "codsen-glob",
       "codsen-utils",
       "js-row-num"
     ]
   },
   {
     "name": "json-comb",
-    "size": 7806,
+    "size": 7207,
     "imports": [
+      "codsen-glob",
       "codsen-utils",
       "json-comb-core"
     ]
@@ -378,9 +388,10 @@ export const interdeps = [
   },
   {
     "name": "json-sort-cli",
-    "size": 14798,
+    "size": 14134,
     "imports": [
       "ast-monkey-traverse",
+      "codsen-glob",
       "codsen-utils"
     ]
   },
@@ -408,8 +419,9 @@ export const interdeps = [
   },
   {
     "name": "lerna-clean-changelogs-cli",
-    "size": 7837,
+    "size": 7841,
     "imports": [
+      "codsen-glob",
       "codsen-utils",
       "lerna-clean-changelogs"
     ]
@@ -632,7 +644,7 @@ export const interdeps = [
   },
   {
     "name": "string-extract-class-names",
-    "size": 1389,
+    "size": 3374,
     "imports": [
       "string-left-right"
     ]
@@ -732,7 +744,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 23121,
+    "size": 23159,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -774,8 +786,9 @@ export const interdeps = [
   },
   {
     "name": "update-versions",
-    "size": 15754,
+    "size": 15755,
     "imports": [
+      "codsen-glob",
       "codsen-utils",
       "edit-package-json"
     ]

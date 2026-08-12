@@ -7,8 +7,8 @@ import { readFile, stat } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { promisify } from "node:util";
+import { glob } from "codsen-glob";
 import { codsenCLI } from "codsen-utils";
-import { globby } from "globby";
 import { cleanChangelogs } from "lerna-clean-changelogs";
 import pFilter from "p-filter";
 import pReduce from "p-reduce";
@@ -124,11 +124,11 @@ let thePromise;
 
 // SYNCHRONOUS PART:
 if (isArr(cli.input) && cli.input.length) {
-  // expand each path under globby:
+  // expand each path under the globber:
   thePromise = pReduce(
     cli.input,
     (total, curr) => {
-      return globby([curr, "!**/node_modules/**"]).then((res) => {
+      return glob([curr, "!**/node_modules/**"]).then((res) => {
         if (res) {
           // add only unique paths:
           return total.concat(res.filter((p) => !total.includes(p)));
@@ -162,7 +162,7 @@ if (isArr(cli.input) && cli.input.length) {
     });
   });
 } else {
-  thePromise = globby(["**/changelog.md", "!**/node_modules/**"], {
+  thePromise = glob(["**/changelog.md", "!**/node_modules/**"], {
     caseSensitiveMatch: false,
   });
 }

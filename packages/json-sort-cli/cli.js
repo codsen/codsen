@@ -7,9 +7,8 @@ import { readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { traverse } from "ast-monkey-traverse";
+import { glob } from "codsen-glob";
 import { codsenCLI, isPlainObject, resolveEolSetting } from "codsen-utils";
-import { globby } from "globby";
-import isDirectory from "is-d";
 import pFilter from "p-filter";
 import pReduce from "p-reduce";
 import sortPackageJson, { sortOrder } from "sort-package-json";
@@ -344,7 +343,19 @@ if (Array.isArray(input) && !input.length) {
 // Step #2. query the glob and follow the pipeline
 // -----------------------------------------------------------------------------
 
-globby(input, { dot: true })
+glob(
+  [
+    ...input,
+    "!**/package-lock.json",
+    "!**/yarn.lock",
+    ...(cli.flags.nodemodules ? [] : ["!**/node_modules/**"]),
+    ...(cli.flags.pack ? ["!**/package.json"] : []),
+  ],
+  {
+    dot: true,
+    expandDirectories: { files: [".*", "*.json"] },
+  },
+)
   .then((paths) => {
     // flip out of the pipeline if there are no paths resolved
     if (paths.length === 0 && !cli.flags.silent) {
@@ -358,33 +369,6 @@ globby(input, { dot: true })
     }
     return paths;
   })
-  // glob each directory, reduce'ing all results (in promise shape) until all are resolved
-  .then((paths) =>
-    pReduce(
-      paths,
-      (concatTotal, singleDirOrFilePath) =>
-        concatTotal.concat(
-          isDirectory(singleDirOrFilePath).then((bool) =>
-            bool
-              ? globby(
-                  cli.flags.nodemodules
-                    ? singleDirOrFilePath
-                    : [singleDirOrFilePath, "!**/node_modules/**"],
-                  {
-                    expandDirectories: {
-                      files: [".*", "*.json"],
-                    },
-                  },
-                )
-              : [singleDirOrFilePath],
-          ),
-        ),
-      [],
-      // then reduce again, now actually concatenating them all together
-    ).then((received) =>
-      pReduce(received, (total, single) => total.concat(single), []),
-    ),
-  )
   .then((paths) =>
     paths.filter(
       (oneOfPaths) =>

@@ -214,6 +214,53 @@ test("05 - normalisation stops if one file is given [ID_2]", async () => {
   match(stdOutContents.stdout, /ID_2/g, "05.01");
 });
 
+test("06 - directory expansion excludes node_modules", async () => {
+  let tempFolder = temporaryDirectory();
+  let dependencyFolder = path.join(tempFolder, "node_modules", "fixture");
+  mkdirSync(dependencyFolder, { recursive: true });
+
+  await Promise.all([
+    writeJson(path.join(tempFolder, "one.json"), { a: "one" }),
+    writeJson(path.join(tempFolder, "two.json"), { b: "two" }),
+    writeJson(path.join(dependencyFolder, "package.json"), {
+      untouched: true,
+    }),
+  ]);
+
+  await execa("./cli.js", ["-n", tempFolder]);
+
+  equal(
+    await fs.readFile(path.join(dependencyFolder, "package.json"), "utf8"),
+    '{"untouched":true}\n',
+    "06.01",
+  );
+});
+
+test("07 - absolute negative patterns exclude matched files", async () => {
+  let tempFolder = temporaryDirectory();
+  let ignoredFolder = path.join(tempFolder, "ignored");
+  mkdirSync(ignoredFolder, { recursive: true });
+  let ignoredPath = path.join(ignoredFolder, "three.json");
+
+  await Promise.all([
+    writeJson(path.join(tempFolder, "one.json"), { a: "one" }),
+    writeJson(path.join(tempFolder, "two.json"), { b: "two" }),
+    writeJson(ignoredPath, { untouched: true }),
+  ]);
+
+  await execa("./cli.js", [
+    "-n",
+    path.join(tempFolder, "**/*.json"),
+    `!${path.join(ignoredFolder, "**")}`,
+  ]);
+
+  equal(
+    await fs.readFile(ignoredPath, "utf8"),
+    '{"untouched":true}\n',
+    "07.01",
+  );
+});
+
 // tap.todo("01.05 - sort, there's a broken JSON among files");
 
 test.run();

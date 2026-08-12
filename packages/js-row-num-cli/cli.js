@@ -4,9 +4,8 @@ import { promises as fs } from "node:fs";
 import { createRequire } from "node:module";
 import { promisify } from "node:util";
 import { arrayiffy } from "arrayiffy-if-string";
+import { glob } from "codsen-glob";
 import { codsenCLI } from "codsen-utils";
-import { globby } from "globby";
-import isDirectory from "is-d";
 import { fixRowNums } from "js-row-num";
 import pReduce from "p-reduce";
 import updateNotifier from "update-notifier";
@@ -98,83 +97,57 @@ function readUpdateAndWriteOverFile(oneOfPaths) {
 }
 
 function processPaths(paths) {
-  return (
-    globby(paths)
-      .then((receivedPaths) =>
-        pReduce(
-          receivedPaths,
-          (concattedTotal, singleDirOrFilePath) =>
-            concattedTotal.concat(
-              isDirectory(singleDirOrFilePath).then((bool) =>
-                bool
-                  ? globby(singleDirOrFilePath, {
-                      expandDirectories: {
-                        files: ["*.js"],
-                      },
-                    })
-                  : [singleDirOrFilePath],
-              ),
-            ),
-          [],
-        ),
-      )
-      // then reduce again, now actually concatenating them all together
-      .then((received) =>
-        pReduce(received, (total, single) => total.concat(single), []),
-      )
-      .then((res) =>
-        res.filter((oneOfPaths) => !oneOfPaths.includes("node_modules")),
-      )
-      .then((received) =>
-        pReduce(
-          received,
-          (counter, currentPath) =>
-            readUpdateAndWriteOverFile(currentPath)
-              .then((res) =>
-                res
-                  ? {
-                      good: counter.good.concat([currentPath]),
-                      bad: counter.bad,
-                    }
-                  : {
-                      good: counter.good,
-                      bad: counter.bad.concat([currentPath]),
-                    },
-              )
-              .catch((err) => {
-                log(
-                  `${messagePrefix}${`\u001b[${31}m${"Could not write out the file:"}\u001b[${39}m`}\n${err}`,
-                );
-                return counter;
-              }),
-          { good: [], bad: [] },
-        ).then((counter) => {
-          let message;
-          if (!counter.bad?.length && !counter.good?.length) {
-            message = "Nothing to fix.";
-          } else {
-            message = `${`\u001b[${32}m${`${
-              counter.bad?.length === 0 && counter.good.length !== 1
-                ? "All "
-                : ""
-            }${counter.good.length} file${
-              counter.good.length === 1 ? "" : "s"
-            } updated`}\u001b[${39}m`}${
-              counter?.bad.length
-                ? `\n${messagePrefix}${`\u001b[${31}m${`${
-                    counter.bad.length
-                  } file${
-                    counter.bad.length === 1 ? "" : "s"
-                  } could not be updated`}\u001b[${39}m`} ${`\u001b[${90}m - ${counter.bad.join(
-                    " - ",
-                  )}\u001b[${39}m`}`
-                : ""
-            }`;
-          }
-          log(`\n${messagePrefix}${message}`);
-        }),
-      )
-  );
+  return glob([...paths, "!**/node_modules/**"])
+    .then((res) =>
+      res.filter((oneOfPaths) => !oneOfPaths.includes("node_modules")),
+    )
+    .then((received) =>
+      pReduce(
+        received,
+        (counter, currentPath) =>
+          readUpdateAndWriteOverFile(currentPath)
+            .then((res) =>
+              res
+                ? {
+                    good: counter.good.concat([currentPath]),
+                    bad: counter.bad,
+                  }
+                : {
+                    good: counter.good,
+                    bad: counter.bad.concat([currentPath]),
+                  },
+            )
+            .catch((err) => {
+              log(
+                `${messagePrefix}${`\u001b[${31}m${"Could not write out the file:"}\u001b[${39}m`}\n${err}`,
+              );
+              return counter;
+            }),
+        { good: [], bad: [] },
+      ).then((counter) => {
+        let message;
+        if (!counter.bad?.length && !counter.good?.length) {
+          message = "Nothing to fix.";
+        } else {
+          message = `${`\u001b[${32}m${`${
+            counter.bad?.length === 0 && counter.good.length !== 1 ? "All " : ""
+          }${counter.good.length} file${
+            counter.good.length === 1 ? "" : "s"
+          } updated`}\u001b[${39}m`}${
+            counter?.bad.length
+              ? `\n${messagePrefix}${`\u001b[${31}m${`${
+                  counter.bad.length
+                } file${
+                  counter.bad.length === 1 ? "" : "s"
+                } could not be updated`}\u001b[${39}m`} ${`\u001b[${90}m - ${counter.bad.join(
+                  " - ",
+                )}\u001b[${39}m`}`
+              : ""
+          }`;
+        }
+        log(`\n${messagePrefix}${message}`);
+      }),
+    );
 }
 
 // Step #0. take care of the short -v and -h flags, which codsenCLI leaves

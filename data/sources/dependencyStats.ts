@@ -20,10 +20,8 @@ export const dependencyStats: DependencyStats = {
     "ansi-diff-stream",
     "ansi-regex",
     "currency.js",
-    "globby",
     "he",
     "html-entities",
-    "is-d",
     "leven",
     "lodash-es",
     "object-path",
@@ -33,6 +31,7 @@ export const dependencyStats: DependencyStats = {
     "p-progress",
     "p-reduce",
     "package-json",
+    "picomatch",
     "semver-compare",
     "sort-keys",
     "sort-package-json",
@@ -54,6 +53,7 @@ export const dependencyStats: DependencyStats = {
     "ast-monkey-traverse",
     "ast-monkey-traverse-with-lookahead",
     "check-types-mini",
+    "codsen-glob",
     "codsen-parser",
     "codsen-utils",
     "csv-sort",
@@ -127,6 +127,7 @@ export const dependencyStats: DependencyStats = {
     "ast-monkey-traverse": 7,
     "ast-monkey-traverse-with-lookahead": 1,
     "check-types-mini": 2,
+    "codsen-glob": 8,
     "codsen-parser": 1,
     "codsen-utils": 59,
     "csv-sort": 1,
@@ -135,14 +136,12 @@ export const dependencyStats: DependencyStats = {
     "edit-package-json": 1,
     "email-all-chars-within-ascii": 1,
     "generate-atomic-css": 1,
-    "globby": 8,
     "he": 3,
     "html-all-known-attributes": 1,
     "html-crush": 1,
-    "html-entities": 1,
+    "html-entities": 2,
     "html-entities-not-email-friendly": 1,
     "is-char-suitable-for-html-attr-name": 1,
-    "is-d": 4,
     "js-row-num": 1,
     "json-comb-core": 1,
     "lerna-clean-changelogs": 1,
@@ -160,8 +159,9 @@ export const dependencyStats: DependencyStats = {
     "p-map": 1,
     "p-one": 1,
     "p-progress": 1,
-    "p-reduce": 7,
+    "p-reduce": 6,
     "package-json": 1,
+    "picomatch": 1,
     "ranges-apply": 16,
     "ranges-crop": 2,
     "ranges-invert": 2,
@@ -207,9 +207,9 @@ export const dependencyStats: DependencyStats = {
   "devDependencies": {
     "@types/he": 2,
     "ast-monkey-traverse": 2,
+    "codsen-glob": 1,
     "color-shorthand-hex-to-six-digit": 1,
     "deep-equal": 2,
-    "globby": 1,
     "p-map": 5,
     "ranges-apply": 3,
     "ranges-invert": 1,
@@ -231,9 +231,6 @@ export const dependencyStats: DependencyStats = {
       "lodash-es": 9
     },
     {
-      "globby": 8
-    },
-    {
       "object-path": 3
     },
     {
@@ -244,6 +241,9 @@ export const dependencyStats: DependencyStats = {
     },
     {
       "@inquirer/prompts": 2
+    },
+    {
+      "picomatch": 1
     },
     {
       "currency.js": 1
@@ -258,6 +258,9 @@ export const dependencyStats: DependencyStats = {
     },
     {
       "ranges-apply": 16
+    },
+    {
+      "codsen-glob": 8
     },
     {
       "ast-monkey-traverse": 7
@@ -279,9 +282,6 @@ export const dependencyStats: DependencyStats = {
     },
     {
       "csv-split-easy": 1
-    },
-    {
-      "csv-sort": 1
     }
   ]
 };
