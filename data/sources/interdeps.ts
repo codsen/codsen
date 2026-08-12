@@ -139,7 +139,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-glob",
-    "size": 12766,
+    "size": 12743,
     "imports": []
   },
   {
