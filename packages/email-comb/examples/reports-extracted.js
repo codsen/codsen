@@ -29,20 +29,12 @@ table#other div#non-existent-id{width:100%; display: inline-block;}
 `,
 );
 
-assert.deepEqual(allInHead, [
-  ".non-existent-class",
-  "#non-existent-id",
-  "#other",
-]);
-assert.deepEqual(allInBody, [".unused1", ".unused2", ".unused3", "#unused4"]);
-assert.deepEqual(deletedFromHead, [
-  ".non-existent-class",
-  "#non-existent-id",
-  "#other",
-]);
-assert.deepEqual(deletedFromBody, [
-  ".unused1",
-  ".unused2",
-  ".unused3",
-  "#unused4",
-]);
+assert.deepEqual(
+  { allInHead, allInBody, deletedFromHead, deletedFromBody },
+  {
+    allInHead: [".non-existent-class", "#non-existent-id", "#other"],
+    allInBody: [".unused1", ".unused2", ".unused3", "#unused4"],
+    deletedFromHead: [".non-existent-class", "#non-existent-id", "#other"],
+    deletedFromBody: [".unused1", ".unused2", ".unused3", "#unused4"],
+  },
+);

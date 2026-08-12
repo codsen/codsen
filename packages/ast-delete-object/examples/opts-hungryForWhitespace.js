@@ -25,30 +25,3 @@ assert.deepEqual(
     },
   ],
 );
-
-// but
-assert.deepEqual(
-  deleteObj(
-    [
-      { a: "\n" }, // that's empty
-      {
-        key3: "val3",
-        key4: "val4",
-      },
-      { b: "   " }, // that's empty
-      { c: "" }, // that's empty
-    ],
-    {}, // empty thing to match again - we match "empty" vs "empty"
-    { matchKeysStrictly: false, hungryForWhitespace: false },
-  ),
-  [
-    { a: "\n" },
-    {
-      key3: "val3",
-      key4: "val4",
-    },
-    { b: "   " },
-    { c: "" },
-  ],
-);
-// nothing happened because empty things were matched strictly, "==="

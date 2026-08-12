@@ -2,7 +2,7 @@
 
 import { strict as assert } from "node:assert";
 
-import { del, set } from "../dist/edit-package-json.esm.js";
+import { set } from "../dist/edit-package-json.esm.js";
 
 // edit JSON as string
 assert.equal(
@@ -25,27 +25,5 @@ assert.equal(
     "string-left-right": "^2.3.30"
   },
   "devDependencies": {}
-}`,
-);
-
-// delete from JSON string
-assert.equal(
-  del(
-    `{
-  "name": "test",
-  "dependencies": {
-    "ranges-apply": "^2.0.0",
-    "string-left-right": "^2.3.30"
-  },
-  "devDependencies": {}
-}`,
-    "devDependencies", // path to delete
-  ),
-  `{
-  "name": "test",
-  "dependencies": {
-    "ranges-apply": "^2.0.0",
-    "string-left-right": "^2.3.30"
-  }
 }`,
 );

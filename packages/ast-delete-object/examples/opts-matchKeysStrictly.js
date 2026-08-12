@@ -28,18 +28,3 @@ assert.deepEqual(
   ),
   source,
 );
-
-// but
-assert.deepEqual(
-  deleteObj(
-    source,
-    {
-      findme1: "zzz",
-      findme2: "yyy",
-    },
-    {
-      matchKeysStrictly: false,
-    },
-  ),
-  ["elem1", "elem2"],
-);

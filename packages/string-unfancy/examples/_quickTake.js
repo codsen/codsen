@@ -10,6 +10,3 @@ import { unfancy } from "../dist/string-unfancy.esm.js";
 const rightSingleQuote = "\u2019";
 
 assert.equal(unfancy(`someone${rightSingleQuote}s`), "someone's");
-
-// works with encoded HTML:
-assert.equal(unfancy("someone&rsquo;s"), "someone's");

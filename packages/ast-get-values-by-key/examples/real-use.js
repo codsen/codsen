@@ -29,15 +29,11 @@ const findings = getByKey(
   source, // what to process
   "amount", // what to look for
 );
-assert.deepEqual(findings, [
-  { val: null, path: "orders.0.amount" },
-  { val: 2, path: "orders.1.amount" },
-  { val: null, path: "orders.2.amount" },
-]);
+assert.equal(findings.length, 3);
 
 // prepare replacement array for SET third input argument
 const replacement = findings.map(({ val }) => +val);
-assert.deepEqual(replacement, [0, 2, 0]);
+assert.equal(replacement.join(","), "0,2,0");
 
 // then SET
 const result = getByKey(

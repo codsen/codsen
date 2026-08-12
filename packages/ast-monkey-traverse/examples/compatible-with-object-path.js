@@ -16,11 +16,14 @@ traverse(input, (key1, val1, innerObj) => {
   return current;
 });
 
-// notice the object-path notation is "b.0.c" not "b[0].c"
-assert.deepEqual(result1, ["a", "b", "b.0", "b.0.c"]);
-
-// each reported path is fully compatible with `object-path` get() method
-assert.deepEqual(op.get(input, "a"), "1");
-assert.deepEqual(op.get(input, "b"), [{ c: "2" }]);
-assert.deepEqual(op.get(input, "b.0"), { c: "2" });
-assert.deepEqual(op.get(input, "b.0.c"), "2");
+// Each reported path is fully compatible with `object-path` get(). Notice that
+// the path notation is "b.0.c", not "b[0].c".
+assert.deepEqual(
+  Object.fromEntries(result1.map((path) => [path, op.get(input, path)])),
+  {
+    a: "1",
+    b: [{ c: "2" }],
+    "b.0": { c: "2" },
+    "b.0.c": "2",
+  },
+);

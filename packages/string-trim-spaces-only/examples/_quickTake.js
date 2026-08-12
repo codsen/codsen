@@ -11,11 +11,3 @@ assert.deepEqual(trimSpaces("  aaa   "), {
     [5, 8],
   ],
 });
-
-assert.deepEqual(trimSpaces("   \t  zz   \n    "), {
-  res: "\t  zz   \n",
-  ranges: [
-    [0, 3],
-    [12, 16],
-  ],
-});

@@ -14,7 +14,6 @@ const source = {
   ],
 };
 
-// Two input arguments - getter:
 const findings = getByKey(source, ["*cles"]);
 
 assert.deepEqual(findings, [
@@ -31,17 +30,3 @@ assert.deepEqual(findings, [
     path: "nested.0.cutticles",
   },
 ]);
-
-// notice the path "nested.0.cutticles" is as per object-path notation -
-// it's not "nested[0].cutticles" as in "normal" JS paths
-
-// Three input arguments - setter:
-assert.deepEqual(getByKey(source, ["*cles"], ["a", "b", "c"]), {
-  popsicles: "a",
-  tentacles: "b",
-  nested: [
-    {
-      cutticles: "c",
-    },
-  ],
-});

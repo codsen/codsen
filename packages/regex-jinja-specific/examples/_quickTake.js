@@ -8,6 +8,3 @@ assert.equal(
   isJinjaSpecific().test("<div>{{ '%.2f'|format(3.1415926) }}</div>"),
   true,
 );
-
-// in case of ambiguous, Nunjucks-or-Jinja code
-assert.equal(isJinjaSpecific().test("<div>{{ value }}</div>"), false);

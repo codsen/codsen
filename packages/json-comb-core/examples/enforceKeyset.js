@@ -2,15 +2,7 @@
 
 import { strict as assert } from "node:assert";
 
-import {
-  enforceKeyset,
-  enforceKeysetSync,
-  findUnusedSync,
-  getKeyset,
-  getKeysetSync,
-  noNewKeysSync,
-  sortAllObjectsSync,
-} from "../dist/json-comb-core.esm.js";
+import { enforceKeyset, getKeyset } from "../dist/json-comb-core.esm.js";
 
 // Let's enforce the keyset using previously-calculated schema.
 
@@ -36,49 +28,23 @@ import {
   // calculate the schema:
   let schema = await getKeyset([obj1, obj2, obj3]);
 
-  assert.deepEqual(schema, {
-    a: false,
-    b: [
-      {
-        c: false,
-        d: false,
-      },
-    ],
-    e: false,
-  });
+  const enforced = await Promise.all(
+    [obj1, obj2, obj3].map((object) => enforceKeyset(object, schema)),
+  );
 
-  assert.deepEqual(await enforceKeyset(obj1, schema), {
-    a: "aaa",
-    b: [
-      {
-        c: "ccc",
-        d: "ddd",
+  assert.deepEqual(
+    { schema, enforced },
+    {
+      schema: {
+        a: false,
+        b: [{ c: false, d: false }],
+        e: false,
       },
-    ],
-    e: false, // <------ new key added
-  });
-
-  assert.deepEqual(await enforceKeyset(obj2, schema), {
-    a: "ccc",
-    b: [
-      // <------- new key added
-      {
-        c: false,
-        d: false,
-      },
-    ],
-    e: "eee",
-  });
-
-  assert.deepEqual(await enforceKeyset(obj3, schema), {
-    a: "zzz",
-    b: [
-      // <------- new key added
-      {
-        c: false,
-        d: false,
-      },
-    ],
-    e: false, // <------- new key added
-  });
+      enforced: [
+        { a: "aaa", b: [{ c: "ccc", d: "ddd" }], e: false },
+        { a: "ccc", b: [{ c: false, d: false }], e: "eee" },
+        { a: "zzz", b: [{ c: false, d: false }], e: false },
+      ],
+    },
+  );
 })();

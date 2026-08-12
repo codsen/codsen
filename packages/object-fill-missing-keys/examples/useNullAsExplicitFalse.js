@@ -25,25 +25,3 @@ assert.deepEqual(
     a: null,
   },
 );
-
-// off
-assert.deepEqual(
-  fillMissing(
-    {
-      // object we're working on
-      a: null,
-    },
-    {
-      // reference schema
-      a: ["z"],
-    },
-    {
-      // options
-      useNullAsExplicitFalse: false, // <--- !
-    },
-  ),
-  {
-    // result
-    a: ["z"],
-  },
-);

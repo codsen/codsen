@@ -187,7 +187,7 @@ function sort(input: string): Res {
   //   be strictly numeric, and will be present across all rows. These are the
   //   two first signs of a "current balance" column.
   // - "current balance" should also match up with at least one field under it,
-  //   if subracted/added the value from one field in its row
+  //   if subtracted/added the value from one field in its row
 
   // swoop in traversing the schema array to get "numeric" columns:
   // ----------------
