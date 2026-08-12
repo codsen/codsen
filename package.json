@@ -28,7 +28,7 @@
     "format": "biome format --write .",
     "format:check": "biome format .",
     "graph": "turbo run build --graph=deps-graph.html",
-    "house": "npm run lernacleanchangelog && npm run lint:fix && uvu ops/helpers && npm run ci:verify:node-compatibility && npm run ci:generate:info && npm run ci:generate:changelogs && npm run ci:build:root-readme",
+    "house": "npm run lernacleanchangelog && npm run check:fix && npm run lint:markdown && uvu ops/helpers && npm run ci:verify:node-compatibility && npm run ci:generate:info && npm run ci:generate:changelogs && npm run ci:build:root-readme",
     "lect": "turbo run lect",
     "lerna": "lerna",
     "lint": "npm run check && npm run typecheck && npm run lint:markdown",
