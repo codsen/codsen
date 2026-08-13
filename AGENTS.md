@@ -1,5 +1,14 @@
 # Repository guidance
 
+## Repository improvement backlog
+
+`.agents/CODE_REVIEW_PLAN.md` records audited architectural, CI, release,
+testing, and package-quality improvements. Read it when the task concerns this
+backlog or the user asks to continue the monorepo review plan. Treat it as a
+backlog, not as authority to expand the current task. Revalidate each finding
+against the current tree before implementation, and update the item's status
+and evidence when work is completed.
+
 ## Monorepo package families
 
 Published packages live under `packages/`. The root workspace uses npm and Turbo.
@@ -80,6 +89,29 @@ contain committed legacy fixtures such as old Vue.js distributions.
   and scanner indexing.
 - Do not run Biome directly on files inside these directories or replace the
   global exclusion with tool-specific formatter or linter exceptions.
+
+## Performance is a product requirement
+
+Runtime performance is one of the primary aims of publishing these open-source
+programs. Users experience the program's speed even when they never read its
+source, and competing packages can win adoption by being faster. Treat a
+performance regression as a product regression, not as an acceptable price for
+code that merely looks cleaner.
+
+Prefer the fastest correct implementation, even when it uses an unconventional
+algorithm, deliberate duplication, large branches, or a structure that appears
+monstrous at first sight. Do not simplify, abstract, or replace proven fast code
+solely to improve readability or conformity. At the same time, complexity must
+earn its place through measurements on representative public-API workloads;
+avoid speculative cleverness, bloat, and over-engineering.
+
+Use normalised historical scores, not raw operations per second from one
+computer, as performance evidence. In the same benchmark run, measure
+`perf-ref` at rate `R` and the target at rate `T`. Let `C` be the canonical score
+exported by `perf-ref` (`183` currently). The target's normalised score is
+`T * C / R`. For example, if `R = 250` and `T = 300`, the normalised target score
+is `219.6`. This reference ratio makes scores approximately comparable across
+hardware, although ordinary benchmark noise still applies.
 
 ## Performance benchmarks
 
