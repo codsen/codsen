@@ -1,3 +1,4 @@
+import path from "node:path";
 import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
 import { esmBump } from "../../../data/sources/esmBump.ts";
@@ -116,7 +117,7 @@ To report bugs or request features or assistance, [raise an issue](https://githu
 
 ## Licence
 
-${getLicenceShortVersion(new Date().getFullYear())}`;
+${getLicenceShortVersion(state.currentYear)}`;
 
   // licence module
   let licenceExtras = objectPath.get(state.pack, "lect.licence.extras");
@@ -137,7 +138,7 @@ ${getLicenceShortVersion(new Date().getFullYear())}`;
   content += `\n\n<p align="center">${badge1} ${badge2} ${badge3}</p>\n`;
 
   try {
-    await writeFileAtomic("README.md", content);
+    await writeFileAtomic(path.join(state.root, "README.md"), content);
     // console.log(`lect README.md ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`);
     return Promise.resolve(null);
   } catch (err) {

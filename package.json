@@ -35,7 +35,7 @@
     "format:check": "biome format .",
     "graph": "turbo run build --graph=deps-graph.html",
     "house": "npm run ci:verify:root-toolchain && npm run ci:verify:package-kinds && npm run lernacleanchangelog && npm run check:fix && npm run lint:markdown && uvu ops/helpers && npm run ci:verify:coverage-policy && npm run ci:verify:node-compatibility && npm run ci:generate:info && npm run ci:generate:changelogs && npm run ci:build:root-readme",
-    "lect": "npm run ci:generate:package-kind-config && turbo run lect",
+    "lect": "npm run ci:generate:package-kind-config && node ./ops/lect/root.js && turbo run lect",
     "lerna": "lerna",
     "lint": "npm run check && npm run typecheck && npm run lint:markdown",
     "lint:fix": "npm run check:fix && npm run typecheck && npm run lint:markdown",

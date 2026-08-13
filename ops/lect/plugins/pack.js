@@ -1,3 +1,4 @@
+import path from "node:path";
 import { dequal } from "dequal";
 import objectPath from "object-path";
 import sortPackageJson, { sortOrder } from "sort-package-json";
@@ -30,15 +31,19 @@ function format(obj) {
 
 // -----------------------------------------------------------------------------
 
-// writes package.json
-async function packageJson({ state, lectrc, rootPackageJSON, coveragePolicy }) {
-  let content = { ...state.pack };
+function normalisePackageJson({
+  state,
+  lectrc,
+  rootPackageJSON,
+  coveragePolicy,
+}) {
+  const content = { ...state.pack };
 
   // 1. set scripts
   if (state.packageKind === PACKAGE_KINDS.CLI) {
-    content.scripts = objectPath.get(lectrc, "scripts.cli");
+    content.scripts = { ...objectPath.get(lectrc, "scripts.cli") };
   } else {
-    content.scripts = objectPath.get(lectrc, "scripts.rollup");
+    content.scripts = { ...objectPath.get(lectrc, "scripts.rollup") };
   }
 
   // if perf script mentions "skip", don't change it
@@ -52,7 +57,7 @@ async function packageJson({ state, lectrc, rootPackageJSON, coveragePolicy }) {
 
   // 2. append any add-ons from .lectrc.json > "scripts_extras"
   if (objectPath.get(lectrc, `scripts_extras.${state.pack.name}`)) {
-    let extras = objectPath.get(lectrc, `scripts_extras.${state.pack.name}`);
+    const extras = objectPath.get(lectrc, `scripts_extras.${state.pack.name}`);
     if (extras) {
       Object.keys(extras).forEach((key) => {
         // append the extra script
@@ -69,7 +74,7 @@ async function packageJson({ state, lectrc, rootPackageJSON, coveragePolicy }) {
   });
 
   // 3. write adhoc keys
-  let lectKeysHardWrite = objectPath.get(lectrc, "package_keys.write") || {};
+  const lectKeysHardWrite = objectPath.get(lectrc, "package_keys.write") || {};
   Object.keys(lectKeysHardWrite).forEach((key) => {
     if (!dequal(content[key], lectKeysHardWrite[key])) {
       content[key] = lectKeysHardWrite[key];
@@ -78,7 +83,7 @@ async function packageJson({ state, lectrc, rootPackageJSON, coveragePolicy }) {
   });
 
   // 4. delete adhoc keys
-  let lectKeysDelete = objectPath.get(lectrc, "package_keys.delete") || [];
+  const lectKeysDelete = objectPath.get(lectrc, "package_keys.delete") || [];
   lectKeysDelete.forEach((key) => {
     if (objectPath.has(content, key)) {
       console.log(`lect: deleted key "${key}" from package.json`);
@@ -114,16 +119,27 @@ async function packageJson({ state, lectrc, rootPackageJSON, coveragePolicy }) {
   if (!Object.keys(content.devDependencies || {}).length) {
     objectPath.del(content, "devDependencies");
   }
+  return format(content);
+}
+
+// writes package.json
+async function packageJson({ state, lectrc, rootPackageJSON, coveragePolicy }) {
+  const content = normalisePackageJson({
+    state,
+    lectrc,
+    rootPackageJSON,
+    coveragePolicy,
+  });
 
   // 7. write
   try {
     await writeFileAtomic(
-      "package.json",
-      `${JSON.stringify(format(content), null, 2)}\n`,
+      path.join(state.root, "package.json"),
+      `${JSON.stringify(content, null, 2)}\n`,
     );
     // console.log(`lect package.json ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`);
 
-    return Promise.resolve(null);
+    return content;
   } catch (err) {
     console.log(
       `lect: ${`\u001b[${31}m${"ERROR"}\u001b[${39}m`} could not write package.json - ${err}`,
@@ -132,4 +148,5 @@ async function packageJson({ state, lectrc, rootPackageJSON, coveragePolicy }) {
   }
 }
 
+export { normalisePackageJson };
 export default packageJson;

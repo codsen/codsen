@@ -1,6 +1,7 @@
 // lints/generates/refreshes the .all-contributorsrc
 
 import { promises as fs } from "node:fs";
+import path from "node:path";
 import writeFileAtomic from "write-file-atomic";
 
 const ROY = {
@@ -13,7 +14,8 @@ const ROY = {
 const ALL_CONTRIB_FILE = `.all-contributorsrc`;
 
 async function allContrib({ state }) {
-  let finalFileToWrite = {
+  const filename = path.join(state.root, ALL_CONTRIB_FILE);
+  const finalFileToWrite = {
     projectName: state.pack.name,
     projectOwner: "codsen",
     files: ["README.md"],
@@ -22,8 +24,8 @@ async function allContrib({ state }) {
   };
 
   try {
-    let existingAllContribFile = JSON.parse(
-      await fs.readFile(ALL_CONTRIB_FILE, "utf8"),
+    const existingAllContribFile = JSON.parse(
+      await fs.readFile(filename, "utf8"),
     );
     // console.log(
     //   `${`\u001b[${32}m${`read ${ALL_CONTRIB_FILE} OK`}\u001b[${39}m`}`
@@ -36,10 +38,10 @@ async function allContrib({ state }) {
 
     // extract "contributors" key from existing file
     finalFileToWrite.contributors = existingAllContribFile.contributors;
-  } catch (_e) {
-    // console.log(
-    //   `${`\u001b[${31}m${`could not read ${ALL_CONTRIB_FILE}`}\u001b[${39}m`}`
-    // );
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      throw error;
+    }
   }
 
   // update Roy's record
@@ -52,10 +54,7 @@ async function allContrib({ state }) {
 
   // whatever the outcome, write what we've got
   try {
-    await writeFileAtomic(
-      ALL_CONTRIB_FILE,
-      JSON.stringify(finalFileToWrite, null, 2),
-    );
+    await writeFileAtomic(filename, JSON.stringify(finalFileToWrite, null, 2));
     // console.log(
     //   `lect ${ALL_CONTRIB_FILE} ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`
     // );

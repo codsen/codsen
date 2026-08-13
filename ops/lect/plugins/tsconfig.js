@@ -5,24 +5,27 @@ import { PACKAGE_KINDS } from "../../helpers/packageKinds.js";
 
 // writes TS configs
 async function tsconfig({ state }) {
+  const filename = path.join(state.root, "tsconfig.json");
   // Preserve the established policy: non-library workspaces do not keep this
   // generated file.
   if (state.packageKind !== PACKAGE_KINDS.TYPESCRIPT_LIBRARY) {
-    fs.unlink(path.resolve("tsconfig.json"))
-      .then(() => {
-        console.log(
-          `lect tsconfig.json ${`\u001b[${31}m${"DELETED"}\u001b[${39}m`}`,
-        );
-      })
-      .catch(() => Promise.resolve(null));
-
-    return Promise.resolve(null);
+    try {
+      await fs.unlink(filename);
+      console.log(
+        `lect tsconfig.json ${`\u001b[${31}m${"DELETED"}\u001b[${39}m`}`,
+      );
+    } catch (error) {
+      if (error.code !== "ENOENT") {
+        throw error;
+      }
+    }
+    return null;
   }
 
   // read the old config and preserve custom include entries
   let oldIncludes;
   try {
-    let contents = JSON.parse(await fs.readFile("tsconfig.json", "utf8"));
+    const contents = JSON.parse(await fs.readFile(filename, "utf8"));
     oldIncludes = contents.include;
     // console.log(
     //   `${`\u001b[${33}m${`oldIncludes`}\u001b[${39}m`} = ${JSON.stringify(
@@ -32,13 +35,15 @@ async function tsconfig({ state }) {
     //   )}`
     // );
   } catch (error) {
-    console.log(`lect: could not extract old TS config contents: ${error}`);
+    if (error.code !== "ENOENT") {
+      throw error;
+    }
   }
   if (!Array.isArray(oldIncludes)) {
     oldIncludes = [];
   }
 
-  let newTsConfig = {
+  const newTsConfig = {
     extends: "../../tsconfig.base.json",
     compilerOptions: {
       outDir: "dist",
@@ -56,7 +61,7 @@ async function tsconfig({ state }) {
   };
   try {
     await writeFileAtomic(
-      "tsconfig.json",
+      filename,
       `${JSON.stringify(newTsConfig, null, 2)}\n`,
     );
     // happy path end - resolve

@@ -1,3 +1,4 @@
+import path from "node:path";
 import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
 import { PACKAGE_KINDS } from "../../helpers/packageKinds.js";
@@ -12,7 +13,7 @@ async function rollupConfig({ state }) {
   if (objectPath.has(state.pack, "exports")) {
     try {
       await writeFileAtomic(
-        "rollup.config.js",
+        path.join(state.root, "rollup.config.js"),
         `import json from "@rollup/plugin-json";
 import dts from "rollup-plugin-dts";
 

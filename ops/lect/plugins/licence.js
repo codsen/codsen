@@ -1,10 +1,14 @@
+import path from "node:path";
 import writeFileAtomic from "write-file-atomic";
 import { getLicenceContents } from "../common/getLicenceContents.js";
 
 // writes LICENCE file
 async function licenceTheFile({ state }) {
   try {
-    await writeFileAtomic("LICENSE", getLicenceContents(state.currentYear));
+    await writeFileAtomic(
+      path.join(state.root, "LICENSE"),
+      getLicenceContents(state.currentYear),
+    );
   } catch (err) {
     console.log(`lect: could not write LICENSE file - ${err}`);
     return Promise.reject(err);

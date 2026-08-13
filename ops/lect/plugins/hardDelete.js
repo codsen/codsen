@@ -4,8 +4,8 @@ import objectPath from "object-path";
 
 // delete all requested files
 // key files.delete from packages/ root .lectrc.json
-async function hardDelete({ lectrc }) {
-  let thingsToDelete = (objectPath.get(lectrc, "files.delete") || []).filter(
+async function hardDelete({ lectrc, root = process.cwd() }) {
+  const thingsToDelete = (objectPath.get(lectrc, "files.delete") || []).filter(
     (val) => {
       return val && val.trim() !== "";
     },
@@ -15,21 +15,19 @@ async function hardDelete({ lectrc }) {
     return Promise.resolve(null);
   }
 
-  return Promise.all(
-    thingsToDelete.map((fileName) =>
-      fs
-        .access(path.resolve(fileName))
-        .then(() =>
-          fs.unlink(fileName).then(() => {
-            console.log(
-              `lect ${fileName} ${`\u001b[${31}m${"DELETED"}\u001b[${39}m`}`,
-            );
-            return Promise.resolve(null);
-          }),
-        )
-        .catch(() => Promise.resolve(null)),
-    ),
-  );
+  for (const fileName of thingsToDelete) {
+    try {
+      await fs.unlink(path.resolve(root, fileName));
+      console.log(
+        `lect ${fileName} ${`\u001b[${31}m${"DELETED"}\u001b[${39}m`}`,
+      );
+    } catch (error) {
+      if (error.code !== "ENOENT") {
+        throw error;
+      }
+    }
+  }
+  return null;
 }
 
 export default hardDelete;

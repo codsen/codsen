@@ -86,7 +86,7 @@ Priorities have the following meanings:
 | REV-009 | P2 | Completed | Coverage policy | Centralise thresholds and waivers |
 | REV-010 | P2 | Completed | Package architecture | Centralise package classification |
 | REV-011 | P2 | Completed | Repository tooling | Centralise workspace discovery |
-| REV-012 | P2 | Pending | Generators | Make `lect` mutations reliable |
+| REV-012 | P2 | Completed | Generators | Make `lect` mutations reliable |
 | REV-013 | P2 | Pending | Developer workflow | Separate mutation from verification |
 | REV-014 | P2 | Pending | Release tooling | Modularise and test release-critical code |
 | REV-015 | P2 | Pending | Error handling | Format arbitrary invalid inputs safely |
@@ -606,8 +606,9 @@ Priorities have the following meanings:
 
 ### REV-012 — Make `lect` mutations reliable
 
-- Status: Pending
-- Evidence status: Confirmed from implementation
+- Status: Completed
+- Completed: 2026-08-13
+- Evidence status: Reproduced, fixed, and exercised through failure fixtures
 - Evidence:
   - `ops/lect/lect.js:75-97` starts independent mutations concurrently and
     exits on rejection.
@@ -624,6 +625,20 @@ Priorities have the following meanings:
   - Propagate errors other than expected missing-path cases.
   - Generate root-owned files once from the root.
   - Add failure-path tests using temporary package fixtures.
+- Resolution:
+  - `runLect.js` now owns an importable, ordered pipeline. Each phase completes
+    before the next starts, and the CLI sets a non-zero exit code only after the
+    failure has propagated to its single top-level boundary.
+  - File deletion and `tsconfig.json` deletion ignore only `ENOENT`. Invalid
+    TypeScript configuration, malformed quick-take examples, malformed
+    contributor data, and other filesystem failures now stop generation.
+  - Package normalization completes before downstream files render, so a
+    capitalized description appears consistently in `package.json` and README
+    output after one pass.
+  - Package runs write only their package licence. Root `npm run lect` invokes a
+    dedicated root generator once before Turbo starts package generation.
+  - Plugins resolve their targets from the explicit package root, which makes
+    temporary-fixture testing independent of process-wide directory changes.
 - Done when:
   - A failed plugin produces a non-zero exit without unobserved background work.
   - Non-`ENOENT` deletion errors are reported.
@@ -632,6 +647,19 @@ Priorities have the following meanings:
   - Focused temporary-fixture tests
   - Targeted CLI and Rollup `lect` runs
   - Repository-wide regeneration followed by a clean diff check
+- Validation results:
+  - Ten focused tests cover missing versus non-missing deletion failures,
+    awaited CLI deletion, invalid library configuration preservation, malformed
+    hard-write and contributor inputs, ordered phase failure, malformed quick
+    takes, one-pass package/README consistency, CLI exit status, and root file
+    ownership.
+  - The complete helper suite passed 74 tests. Targeted `lect` runs passed for
+    `arrayiffy-if-string` and `csv-sort-cli`.
+  - Two consecutive full `npm run lect` runs completed all 112 workspaces. The
+    tracked diff hash was identical before and after the second run, and no
+    generated package files changed.
+  - Package-kind verification, targeted Biome, Markdown lint, and
+    `git diff --check` passed.
 
 ### REV-013 — Separate mutation from verification
 
