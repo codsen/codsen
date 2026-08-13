@@ -5,6 +5,7 @@ import {
   coverageConfigForPackage,
   validateCoveragePolicy,
 } from "../coveragePolicy.js";
+import { PACKAGE_KINDS } from "../packageKinds.js";
 
 function policy() {
   return {
@@ -33,14 +34,17 @@ function policy() {
   };
 }
 
-function record(name, { bin = false, c8, isRollup = true } = {}) {
+function record(
+  name,
+  { bin = false, c8, packageKind = PACKAGE_KINDS.TYPESCRIPT_LIBRARY } = {},
+) {
   const manifest = { name };
   if (bin) {
     manifest.bin = { [name]: "cli.js" };
   }
   manifest.c8 =
-    c8 ?? coverageConfigForPackage(policy(), manifest, { isRollup });
-  return { directory: `packages/${name}`, isRollup, manifest };
+    c8 ?? coverageConfigForPackage(policy(), manifest, { packageKind });
+  return { directory: `packages/${name}`, packageKind, manifest };
 }
 
 test("01 - resolves default, Rollup, full, override, CLI, and waiver layers", () => {
@@ -48,7 +52,7 @@ test("01 - resolves default, Rollup, full, override, CLI, and waiver layers", ()
     coverageConfigForPackage(
       policy(),
       { name: "default-package" },
-      { isRollup: true },
+      { packageKind: PACKAGE_KINDS.TYPESCRIPT_LIBRARY },
     ),
     {
       "check-coverage": true,
@@ -63,7 +67,7 @@ test("01 - resolves default, Rollup, full, override, CLI, and waiver layers", ()
     coverageConfigForPackage(
       policy(),
       { name: "strict-package" },
-      { isRollup: true },
+      { packageKind: PACKAGE_KINDS.TYPESCRIPT_LIBRARY },
     ),
     {
       "check-coverage": true,
@@ -85,7 +89,7 @@ test("01 - resolves default, Rollup, full, override, CLI, and waiver layers", ()
         name: "waived-cli",
         bin: { waived: "cli.js" },
       },
-      { isRollup: false },
+      { packageKind: PACKAGE_KINDS.CLI },
     ),
     {
       "check-coverage": true,
@@ -101,7 +105,7 @@ test("02 - accepts matching package configs and documented waivers", () => {
   const records = [
     record("default-package"),
     record("strict-package"),
-    record("waived-cli", { bin: true, isRollup: false }),
+    record("waived-cli", { bin: true, packageKind: PACKAGE_KINDS.CLI }),
   ];
 
   equal(
@@ -117,7 +121,7 @@ test("03 - reports manifest drift and unknown policy package names", () => {
   const records = [
     record("default-package", { c8: { "check-coverage": false } }),
     record("strict-package"),
-    record("waived-cli", { bin: true, isRollup: false }),
+    record("waived-cli", { bin: true, packageKind: PACKAGE_KINDS.CLI }),
   ];
   const message = validateCoveragePolicy({
     policy: currentPolicy,
@@ -138,7 +142,7 @@ test("04 - rejects undocumented and non-enforcing waivers", () => {
   const records = [
     record("default-package"),
     record("strict-package"),
-    record("waived-cli", { bin: true, isRollup: false }),
+    record("waived-cli", { bin: true, packageKind: PACKAGE_KINDS.CLI }),
   ];
   const message = validateCoveragePolicy({
     policy: currentPolicy,
@@ -157,7 +161,7 @@ test("05 - rejects a CLI-family profile that can pass at zero files", () => {
   const records = [
     record("default-package"),
     record("strict-package"),
-    record("waived-cli", { isRollup: false }),
+    record("waived-cli", { packageKind: PACKAGE_KINDS.CLI }),
   ];
   const message = validateCoveragePolicy({
     policy: currentPolicy,
@@ -180,10 +184,10 @@ test("06 - package overrides cannot bypass coverage enforcement", () => {
       c8: coverageConfigForPackage(
         currentPolicy,
         { name: "strict-package" },
-        { isRollup: true },
+        { packageKind: PACKAGE_KINDS.TYPESCRIPT_LIBRARY },
       ),
     }),
-    record("waived-cli", { isRollup: false }),
+    record("waived-cli", { packageKind: PACKAGE_KINDS.CLI }),
   ];
   const message = validateCoveragePolicy({
     policy: currentPolicy,
@@ -207,10 +211,10 @@ test("07 - full-profile waivers lower an applicable metric", () => {
     record("default-package"),
     record("strict-package", {
       c8: coverageConfigForPackage(currentPolicy, strictManifest, {
-        isRollup: true,
+        packageKind: PACKAGE_KINDS.TYPESCRIPT_LIBRARY,
       }),
     }),
-    record("waived-cli", { isRollup: false }),
+    record("waived-cli", { packageKind: PACKAGE_KINDS.CLI }),
   ];
 
   equal(
@@ -226,7 +230,7 @@ test("08 - rejects Rollup discovery that can pass at zero files", () => {
   const records = [
     record("default-package"),
     record("strict-package"),
-    record("waived-cli", { isRollup: false }),
+    record("waived-cli", { packageKind: PACKAGE_KINDS.CLI }),
   ];
   const message = validateCoveragePolicy({
     policy: currentPolicy,
@@ -248,7 +252,7 @@ test("09 - rejects exclusion bypasses and missing family classification", () => 
     record("default-package"),
     record("strict-package"),
     { directory: "packages/unclassified", manifest: { name: "unclassified" } },
-    record("waived-cli", { isRollup: false }),
+    record("waived-cli", { packageKind: PACKAGE_KINDS.CLI }),
   ];
   const message = validateCoveragePolicy({
     policy: currentPolicy,
@@ -258,7 +262,11 @@ test("09 - rejects exclusion bypasses and missing family classification", () => 
   match(message, /profiles.cli contains unsupported keys: exclude/, "09.01");
   match(message, /packageOverrides.*unsupported keys: exclude/, "09.02");
   match(message, /contains non-threshold keys: exclude/, "09.03");
-  match(message, /unclassified: isRollup must be a boolean/, "09.04");
+  match(
+    message,
+    /unclassified: packageKind must be cli or typescript-library/,
+    "09.04",
+  );
 });
 
 test("10 - requires every non-package workspace to be documented", () => {
@@ -266,11 +274,11 @@ test("10 - requires every non-package workspace to be documented", () => {
   const records = [
     record("default-package"),
     record("strict-package"),
-    record("waived-cli", { isRollup: false }),
+    record("waived-cli", { packageKind: PACKAGE_KINDS.CLI }),
   ];
   const generatedWorkspace = {
     directory: "data",
-    isRollup: false,
+    packageKind: PACKAGE_KINDS.GENERATED_DATA,
     manifest: { name: "@example/data" },
   };
   let message = validateCoveragePolicy({
@@ -304,7 +312,7 @@ test("11 - rejects a weakened default line threshold", () => {
   const records = [
     record("default-package"),
     record("strict-package"),
-    record("waived-cli", { isRollup: false }),
+    record("waived-cli", { packageKind: PACKAGE_KINDS.CLI }),
   ];
   const message = validateCoveragePolicy({
     policy: currentPolicy,

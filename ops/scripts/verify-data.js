@@ -4,6 +4,8 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { isDeepStrictEqual } from "node:util";
+import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
+import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
 
 const ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -68,6 +70,7 @@ function packageDirectories() {
 }
 
 async function verifyData() {
+  const packageKinds = readPackageKindResolver(ROOT);
   const data = await import(
     `${pathToFileURL(path.join(ROOT, "data", "dist", "index.js")).href}?verify=${Date.now()}`
   );
@@ -104,7 +107,10 @@ async function verifyData() {
     }
   }
 
+  const cliNames = [];
   const programNames = [];
+  const scriptNames = [];
+  const specialNames = [];
   for (const directory of directories) {
     const packageDirectory = path.join(ROOT, "packages", directory);
     const manifest = JSON.parse(
@@ -128,7 +134,14 @@ async function verifyData() {
       fail(`packages.current is missing ${manifest.name}`);
     }
 
-    if (existsSync(path.join(packageDirectory, "rollup.config.js"))) {
+    const kind = packageKinds.kindFor(manifest.name);
+    if (manifest.bin) {
+      cliNames.push(manifest.name);
+    }
+    if (manifest.exports?.script) {
+      scriptNames.push(manifest.name);
+    }
+    if (kind === PACKAGE_KINDS.TYPESCRIPT_LIBRARY) {
       programNames.push(manifest.name);
       const declarations = readFileSync(
         path.join(packageDirectory, "types", "index.d.ts"),
@@ -137,12 +150,37 @@ async function verifyData() {
       if (data.allDTS[manifest.name] !== declarations) {
         fail(`allDTS is stale or missing for ${manifest.name}`);
       }
+    } else if (!manifest.bin) {
+      specialNames.push(manifest.name);
     }
   }
 
+  cliNames.sort();
   programNames.sort();
+  scriptNames.sort();
+  specialNames.sort();
   assertSameList(sortedKeys(data.allDTS), programNames, "allDTS keys");
   assertSameList(sortedKeys(data.examples), programNames, "examples keys");
+  assertSameList(
+    [...data.packages.programs],
+    programNames,
+    "packages.programs",
+  );
+  assertSameList([...data.packages.cli], cliNames, "packages.cli");
+  assertSameList([...data.packages.script], scriptNames, "packages.script");
+  assertSameList([...data.packages.special], specialNames, "packages.special");
+  for (const [countName, expected] of [
+    ["programsCount", programNames.length],
+    ["cliCount", cliNames.length],
+    ["scriptCount", scriptNames.length],
+    ["specialCount", specialNames.length],
+  ]) {
+    if (data.packages[countName] !== expected) {
+      fail(
+        `packages.${countName} is ${data.packages[countName]}; expected ${expected}`,
+      );
+    }
+  }
 
   console.log(
     `Verified @codsen/data: ${directories.length} package manifests and changelogs, ${programNames.length} declaration/example sets, and ${generatedJsonExports.length} fresh compiled exports.`,

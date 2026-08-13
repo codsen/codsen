@@ -18,32 +18,40 @@ backlog, not as authority to expand the current task. Revalidate each finding
 against the current tree before implementation, and update the item's status
 and evidence when work is completed.
 
-## Monorepo package families
+## Monorepo package kinds
 
-Published packages live under `packages/`. The root workspace uses npm and Turbo.
-Most package-level boilerplate is maintained by `ops/lect`; do not assume that a
-file inside a package is hand-maintained just because it is checked into Git.
+The root workspace uses npm and Turbo. Most published packages live under
+`packages/`, and the generated aggregate package lives under `data/`. Most
+package-level boilerplate is maintained by `ops/lect`; do not assume that a file
+inside a package is hand-maintained just because it is checked into Git.
 
-There are two main package families:
+`ops/package-kinds.json` declares every workspace's primary architectural kind.
+The declaration is authoritative; files such as `rollup.config.js` and manifest
+fields such as `bin` are validated outputs or capabilities, not classifiers.
 
-| Family | How `lect` recognises it | Build shape | Example |
-| --- | --- | --- | --- |
-| TypeScript library | `rollup.config.js` exists in the package | esbuild builds TS into JS; Rollup with `rollup-plugin-dts` builds `types/index.d.ts` so that type defs is one file and all type imports are baked-in | `string-strip-html` |
-| CLI | No `rollup.config.js`; normally has `package.json#bin` pointing at `cli.js` | Uses the CLI script preset; build, declaration, example, and perf scripts are normally no-ops | `csv-sort-cli` |
+| Kind | Build shape | Example |
+| --- | --- | --- |
+| TypeScript library | esbuild compiles TypeScript into JavaScript; Rollup with `rollup-plugin-dts` emits one self-contained `types/index.d.ts` | `string-strip-html` |
+| CLI | Uses the CLI script preset; build, declaration, example, and performance scripts are normally no-ops | `csv-sort-cli` |
+| Generated data | Compiles generated TypeScript sources with `tsc` and publishes after the other packages | `@codsen/data` |
 
-These signals are implementation details, not just documentation:
+When adding or changing a workspace:
 
-- Among current packages, one without a Rollup config gets the CLI preset;
-  otherwise, it gets the Rollup preset.
-- `package.json#bin` only controls CLI-specific README text. It does not choose
-  the CLI script preset. An otherwise unclassified package also receives the CLI
-  scripts.
-- `rollup.config.js` must already exist before `lect` runs for a new TypeScript
-  library. `lect` uses the file as the type marker and does not create a missing
-  marker from scratch.
-- `ops/scripts/generate-info.js` also uses the presence of
-  `rollup.config.js` to classify program packages. Keep both consumers in mind
-  when changing classification.
+- Declare its name exactly once in the appropriate sorted list in
+  `ops/package-kinds.json`.
+- From the repository root, run `npm run lect`. This projects kind-specific
+  build profiles into `turbo.json` and generates the package boilerplate. If you
+  run a targeted package's `lect` script instead, also run
+  `npm run ci:generate:package-kind-config` from the root.
+- Run `npm run ci:verify:package-kinds` to validate complete inventory parity,
+  structural invariants, generated build profiles, coverage exemptions, and the
+  generated-data release role.
+
+Keep capabilities independent from the primary kind. `package.json#bin`
+declares executable commands, while `package.json#exports.script` declares an
+IIFE build. A future TypeScript library can therefore expose a CLI without
+changing its build kind. `data/sources/programClassification.ts` is a separate
+website taxonomy and does not define workspace architecture.
 
 ## Node runtime compatibility
 
@@ -224,9 +232,11 @@ compile-time `DEV` global, commonly in the form `DEV && console.log(...)`.
 ## `lect` is the source of truth
 
 `ops/lect/lect.js` runs from a package directory. It reads that package's
-`package.json`, the root `package.json`, and `ops/lect/.lectrc.json`, classifies
-the package, and runs its file-maintenance plugins. The main sources of truth are:
+`package.json`, the root `package.json`, `ops/package-kinds.json`, and
+`ops/lect/.lectrc.json`, resolves the declared kind, and runs its
+file-maintenance plugins. The main sources of truth are:
 
+- `ops/package-kinds.json`: each workspace's primary architectural kind.
 - `ops/lect/.lectrc.json`: script presets, package keys, deletion list, and
   static hard-write configuration.
 - `ops/lect/plugins/`: generation and normalisation logic.
@@ -247,7 +257,7 @@ erase.
   `ops/lect/plugins/readme.js`, not the generated README.
 - `package.json` is rewritten and sorted. For current packages, its whole
   `scripts` object is replaced from `scripts.cli` or `scripts.rollup` in
-  `.lectrc.json`.
+  `.lectrc.json`, based on the declared kind.
   Package-specific additions belong in `scripts_extras`.
   - A previous `perf` command containing `skip` is preserved.
   - `homepage` is normalised to `https://codsen.com/os/<package>`,
@@ -259,16 +269,15 @@ erase.
   - Other package metadata is preserved, but direct edits to generated fields
     will not survive.
 - `rollup.config.js` is fully overwritten with the standard declaration-only
-  config when the package was classified as Rollup and has
-  `package.json#exports`. A Rollup package without `exports` keeps its existing
-  config. A package without a Rollup config gets no config.
-- `tsconfig.json` is rewritten for packages with a Rollup config. The standard
+  config for a declared TypeScript library. Every TypeScript library must expose
+  `package.json#exports`; a missing config is created and does not need to exist
+  before `lect` runs.
+- `tsconfig.json` is rewritten for declared TypeScript libraries. The standard
   config extends `../../tsconfig.base.json`, uses `dist` as `outDir`, adds the
   standard include/exclude entries, and preserves the existing `include` array.
-  - Current implementation checks `state.isCLI`, while the classifier defines
-    `state.isBin`. Consequently, a package without `rollup.config.js` has its
-    `tsconfig.json` deleted, including a CLI. Preserve this behaviour unless a
-    task explicitly changes the generator.
+  It is deleted from declared CLIs. `@codsen/data` is not maintained by `lect`
+  and keeps its own `data/tsconfig.json`. The CLI deletion explicitly preserves
+  the behaviour that existed before package kinds were centralised.
 - `.all-contributorsrc` is rewritten with standard project metadata. An existing
   contributors list is preserved when readable, and Roy's contributor record is
   normalised.
@@ -292,13 +301,14 @@ erase.
 ## Running and validating the automation
 
 - From one package, run `npm run lect` to regenerate that package.
-- From the repository root, `npm run lect` runs every workspace's `lect` task
-  through Turbo. The task is uncached.
+- From the repository root, `npm run lect` regenerates the kind-derived Turbo
+  profiles, then runs every workspace's `lect` task through Turbo. The task is
+  uncached.
 - Root `npm test` depends on `lect` and `build`; many package `pretest` scripts
   also run both. Generated-file changes can therefore appear during an ordinary
   test run.
 - Prefer a targeted package run while changing the generator. Validate at least
-  one representative CLI and Rollup library when shared classification or
+  one representative CLI and TypeScript library when shared classification or
   templates change, then inspect the complete diff before accepting it.
 - Do not hand-polish regenerated output. If the output is wrong across packages,
   fix the template or preset. If one package is a legitimate exception, encode

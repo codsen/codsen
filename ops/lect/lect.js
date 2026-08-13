@@ -1,8 +1,10 @@
-import { accessSync, promises as fs } from "node:fs";
+import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
+import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
+import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
 import { getLicenceContents } from "./common/getLicenceContents.js";
 import allContrib from "./plugins/allContributors.js";
@@ -22,8 +24,8 @@ const __dirname2 = path.dirname(fileURLToPath(import.meta.url));
 // -----------------------------------------------------------------------------
 
 const state = {
-  isRollup: false,
   isBin: false,
+  packageKind: null,
   pack: { name: null, version: null, description: null },
   originalLectrc: {},
   currentYear: new Date().getFullYear(),
@@ -38,21 +40,16 @@ const rootPackageJSON = JSON.parse(
 state.pack = packageJson;
 state.root = path.resolve("./");
 
-// 2. Categorise. Categories are mutually exclusive - emlint is both
-// a program and a cli; gulp plugins are neither;
-
-// - Is it a program? - code in TS, built using esbuild, types via rollup:
-state.isRollup = false;
-
-// also present in ./scripts/generate-info.js:
-try {
-  accessSync(path.join(state.root, "rollup.config.js"));
-  state.isRollup = true;
-} catch (_error) {
-  //
+// 2. Resolve the package's declared primary kind. Runtime capabilities such as
+// a bin entry remain independent manifest properties.
+const packageKinds = readPackageKindResolver(path.resolve(__dirname2, "../.."));
+state.packageKind = packageKinds.kindFor(packageJson.name);
+if (state.packageKind === PACKAGE_KINDS.GENERATED_DATA) {
+  throw new Error(
+    `lect does not maintain generated-data workspace ${packageJson.name}`,
+  );
 }
 
-// - Is it a CLI?
 state.isBin = objectPath.has(packageJson, "bin");
 
 const lectrc = JSON.parse(

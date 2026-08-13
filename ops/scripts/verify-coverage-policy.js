@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -9,6 +9,8 @@ import {
   validateCoveragePolicy,
 } from "../helpers/coveragePolicy.js";
 import { readPackageRecords } from "../helpers/nodeCompatibility.js";
+import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
+import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
 
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -16,11 +18,10 @@ const repositoryRoot = path.resolve(
 );
 
 function workspaceRecords() {
+  const packageKinds = readPackageKindResolver(repositoryRoot);
   return readPackageRecords(repositoryRoot).map((record) => ({
     ...record,
-    isRollup: existsSync(
-      path.join(repositoryRoot, record.directory, "rollup.config.js"),
-    ),
+    packageKind: packageKinds.kindFor(record.manifest.name),
   }));
 }
 
@@ -42,8 +43,8 @@ if (process.argv.length !== 2) {
   process.exitCode = 1;
 } else {
   const workspaces = workspaceRecords();
-  const records = workspaces.filter(({ directory }) =>
-    directory.startsWith(`packages${path.sep}`),
+  const records = workspaces.filter(
+    ({ packageKind }) => packageKind !== PACKAGE_KINDS.GENERATED_DATA,
   );
   const policy = readCoveragePolicy();
   const { errors } = validateCoveragePolicy({
@@ -55,13 +56,15 @@ if (process.argv.length !== 2) {
   if (errors.length) {
     reportErrors(errors);
   } else {
-    const cliCount = records.filter(({ isRollup }) => !isRollup).length;
+    const cliCount = records.filter(
+      ({ packageKind }) => packageKind === PACKAGE_KINDS.CLI,
+    ).length;
     const waivedCount = Object.keys(policy.waivers).length;
     const exemptionCount = workspaces.length - records.length;
-    const fullCount = records.filter(({ isRollup, manifest }) =>
+    const fullCount = records.filter(({ packageKind, manifest }) =>
       ["branches", "functions", "statements"].every(
         (threshold) =>
-          coverageConfigForPackage(policy, manifest, { isRollup })[
+          coverageConfigForPackage(policy, manifest, { packageKind })[
             threshold
           ] === 100,
       ),

@@ -2,6 +2,7 @@ import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
 import { esmBump } from "../../../data/sources/esmBump.ts";
 import arrayiffy from "../../helpers/arrayiffy.js";
+import { PACKAGE_KINDS } from "../../helpers/packageKinds.js";
 import { getLicenceShortVersion } from "../common/getLicenceContents.js";
 
 const playgroundLibs = [
@@ -78,9 +79,9 @@ async function readme({ state, quickTakeExample }) {
 ## Install${state.pack?.exports ? `\n\n${esmNotice}` : ""}
 
 \`\`\`bash
-npm i${!state.isRollup && state.isBin ? " -g" : ""} ${packageName}
+npm i${state.packageKind === PACKAGE_KINDS.CLI && state.isBin ? " -g" : ""} ${packageName}
 \`\`\`${
-    !state.isRollup && state.pack.bin
+    state.packageKind === PACKAGE_KINDS.CLI && state.pack.bin
       ? `\n\nThen, call it from the command line using ${
           state.pack.bin && Object.keys(state.pack.bin).length > 1
             ? "one of the following keywords"

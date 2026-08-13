@@ -1,10 +1,11 @@
 import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
+import { PACKAGE_KINDS } from "../../helpers/packageKinds.js";
 
 // writes rollup.config.js
 async function rollupConfig({ state }) {
-  // bail early if it's a CLI
-  if (!state.isRollup) {
+  // Only declared TypeScript libraries own this generated file.
+  if (state.packageKind !== PACKAGE_KINDS.TYPESCRIPT_LIBRARY) {
     return Promise.resolve(null);
   }
 

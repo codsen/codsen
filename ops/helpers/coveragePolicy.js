@@ -1,4 +1,5 @@
 import { isDeepStrictEqual } from "node:util";
+import { PACKAGE_KINDS } from "./packageKinds.js";
 
 const thresholdNames = Object.freeze([
   "branches",
@@ -15,20 +16,26 @@ function packageNamesFrom(value) {
   return isObject(value) ? Object.keys(value) : [];
 }
 
-function coverageConfigForPackage(policy, manifest, { isRollup } = {}) {
+function coverageConfigForPackage(policy, manifest, { packageKind } = {}) {
   if (!isObject(policy?.profiles?.default)) {
     throw new TypeError("Coverage policy has no default profile");
   }
   if (typeof manifest?.name !== "string" || !manifest.name) {
     throw new TypeError("Cannot resolve coverage without a package name");
   }
-  if (typeof isRollup !== "boolean") {
-    throw new TypeError("Cannot resolve coverage without an isRollup boolean");
+  if (
+    ![PACKAGE_KINDS.CLI, PACKAGE_KINDS.TYPESCRIPT_LIBRARY].includes(packageKind)
+  ) {
+    throw new TypeError(
+      "Cannot resolve package coverage without a CLI or TypeScript-library kind",
+    );
   }
 
   return {
     ...policy.profiles.default,
-    ...(isRollup ? policy.profiles.rollup : policy.profiles.cli),
+    ...(packageKind === PACKAGE_KINDS.TYPESCRIPT_LIBRARY
+      ? policy.profiles.rollup
+      : policy.profiles.cli),
     ...(policy.fullCoveragePackages?.includes(manifest.name)
       ? policy.profiles.full
       : {}),
@@ -215,7 +222,7 @@ function validateCoveragePolicy({
       }
       if (knownNames.has(name)) {
         errors.push(
-          `workspaceExemptions.${name} must not exempt a packages workspace`,
+          `workspaceExemptions.${name} must not exempt a covered workspace`,
         );
       }
       if (!isObject(exemption)) {
@@ -293,7 +300,9 @@ function validateCoveragePolicy({
       if (record) {
         const baseConfig = {
           ...policy.profiles.default,
-          ...(record.isRollup ? policy.profiles.rollup : policy.profiles.cli),
+          ...(record.packageKind === PACKAGE_KINDS.TYPESCRIPT_LIBRARY
+            ? policy.profiles.rollup
+            : policy.profiles.cli),
           ...(policy.fullCoveragePackages?.includes(name)
             ? policy.profiles.full
             : {}),
@@ -320,14 +329,20 @@ function validateCoveragePolicy({
     errors,
   );
 
-  for (const { isRollup, manifest } of records) {
-    if (typeof isRollup !== "boolean") {
-      errors.push(`${manifest.name}: isRollup must be a boolean`);
+  for (const { packageKind, manifest } of records) {
+    if (
+      ![PACKAGE_KINDS.CLI, PACKAGE_KINDS.TYPESCRIPT_LIBRARY].includes(
+        packageKind,
+      )
+    ) {
+      errors.push(
+        `${manifest.name}: packageKind must be cli or typescript-library`,
+      );
       continue;
     }
     let expected;
     try {
-      expected = coverageConfigForPackage(policy, manifest, { isRollup });
+      expected = coverageConfigForPackage(policy, manifest, { packageKind });
     } catch (error) {
       errors.push(`${manifest.name}: ${error.message}`);
       continue;
@@ -343,13 +358,13 @@ function validateCoveragePolicy({
     if (typeof expected.lines !== "number" || expected.lines <= 0) {
       errors.push(`${manifest.name}: resolved line threshold must be positive`);
     }
-    if (!isRollup && expected.all !== true) {
+    if (packageKind === PACKAGE_KINDS.CLI && expected.all !== true) {
       errors.push(
         `${manifest.name}: resolved CLI-family config must set all=true`,
       );
     }
     if (
-      isRollup &&
+      packageKind === PACKAGE_KINDS.TYPESCRIPT_LIBRARY &&
       (expected.all !== true ||
         !Array.isArray(expected.include) ||
         expected.include.length !== 1 ||

@@ -84,7 +84,7 @@ Priorities have the following meanings:
 | REV-007 | P1 | Completed | Generated data | Calculate dependency top tens correctly |
 | REV-008 | P1 | Pending | Task graph | Make root quality and perf tasks hermetic |
 | REV-009 | P2 | Completed | Coverage policy | Centralise thresholds and waivers |
-| REV-010 | P2 | Pending | Package architecture | Centralise package classification |
+| REV-010 | P2 | Completed | Package architecture | Centralise package classification |
 | REV-011 | P2 | Pending | Repository tooling | Centralise workspace discovery |
 | REV-012 | P2 | Pending | Generators | Make `lect` mutations reliable |
 | REV-013 | P2 | Pending | Developer workflow | Separate mutation from verification |
@@ -508,15 +508,21 @@ Priorities have the following meanings:
 
 ### REV-010 — Centralise package classification
 
-- Status: Pending
-- Evidence status: Confirmed from duplicated rules
+- Status: Completed
+- Completion date: 2026-08-13
+- Evidence status: Implemented and validated
 - Evidence:
-  - `ops/lect/lect.js:44-53` classifies libraries by the presence of
-    `rollup.config.js`.
-  - `ops/scripts/generate-info.js:211-215` repeats the marker rule.
-  - `turbo.json:14-50` hard-codes package-specific build exceptions.
-  - `ops/lect/plugins/tsconfig.js:8` checks `state.isCLI`, while `lect` defines
-    `state.isBin`.
+  - `ops/package-kinds.json` declares the complete, sorted workspace partition:
+    102 TypeScript libraries, nine CLIs, and one generated-data workspace.
+  - `ops/helpers/packageKinds.js` validates the registry, fails closed on
+    unknown names, and projects all three build profiles into `turbo.json`.
+  - `lect`, generated-data collection and verification, coverage policy,
+    package-build preflight, and unit inventory consume the same resolver.
+  - `package.json`, CI, prepare-release, and release workflows verify the
+    committed registry and generated Turbo profiles before build orchestration.
+  - `bin`, `exports.script`, and the website's
+    `programClassification.ts` remain separate capability or presentation
+    signals rather than alternate architectural classifiers.
 - Problem: File presence acts as schema, and consumers can disagree as the
   package set evolves.
 - Recommended change: Define one explicit, tested package-kind model and make
@@ -529,8 +535,26 @@ Priorities have the following meanings:
     or deliberately corrected with migration coverage.
 - Validation:
   - Classification inventory test for all workspaces
-  - Targeted `lect` runs for a CLI and Rollup library
+  - Targeted `lect` runs for a CLI and TypeScript library
   - Generated-data verification and full diff inspection
+- Validation results:
+  - `npm run ci:verify:package-kinds` passed the exact 112-workspace inventory
+    and the 102/9/1 kind partition, including structure, build profiles,
+    coverage exemption, and generated-data release invariants.
+  - The package-kind helper suite passed 10 focused tests covering malformed,
+    missing, duplicate, and stale inventory; fail-closed lookup; isolated Turbo
+    projections; and preservation of custom tasks.
+  - Targeted `lect` runs passed for `csv-sort-cli` and
+    `arrayiffy-if-string`. A seeded CLI `tsconfig.json` was deleted, preserving
+    the established policy, and a declared library bootstrapped a missing
+    `rollup.config.js` without using that file as its classifier.
+  - Turbo dry runs resolved the declared CLI with no build outputs, the library
+    with `dist/**` and `types/**`, and `@codsen/data` with `dist/**` plus its
+    actual TypeScript inputs.
+  - The complete 55-test helper suite, full 112-workspace `lect`, all 111
+    package builds, data regeneration and compilation, `ci:verify:data`,
+    coverage and Node-policy verifiers, Biome, maintained Markdown lint, and
+    `git diff --check` passed.
 
 ### REV-011 — Centralise workspace discovery
 

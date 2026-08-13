@@ -1,15 +1,19 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
+import { PACKAGE_KINDS } from "./packageKinds.js";
 
 function missingPackageBuildArtifacts(
   packageNames,
-  { exists = existsSync, packagesDirectory = "packages" } = {},
+  { exists = existsSync, packageKinds, packagesDirectory = "packages" } = {},
 ) {
   const missing = [];
+  if (!packageKinds) {
+    throw new TypeError("packageKinds resolver is required");
+  }
 
   for (const packageName of packageNames) {
     if (
-      !exists(path.join(packagesDirectory, packageName, "rollup.config.js"))
+      packageKinds.kindFor(packageName) !== PACKAGE_KINDS.TYPESCRIPT_LIBRARY
     ) {
       continue;
     }

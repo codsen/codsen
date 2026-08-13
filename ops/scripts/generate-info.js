@@ -1,14 +1,10 @@
-import {
-  existsSync,
-  readdirSync,
-  readFileSync,
-  statSync,
-  writeFile,
-} from "node:fs";
+import { readdirSync, readFileSync, statSync, writeFile } from "node:fs";
 import path from "node:path";
 import git from "simple-git";
 import { programClassification } from "../../data/sources/programClassification.ts";
 import { missingPackageBuildArtifacts } from "../helpers/packageBuildArtifacts.js";
+import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
+import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
 import { topDependencies } from "../helpers/topDependencies.js";
 
@@ -20,6 +16,7 @@ if (arguments_.some((argument) => argument !== "--git-stats")) {
   );
 }
 const shouldGenerateGitStats = !isCI || arguments_.includes("--git-stats");
+const packageKinds = readPackageKindResolver(path.resolve("."));
 
 // READ ALL LIBS
 // =============
@@ -169,7 +166,9 @@ const packageNames = readdirSync(path.resolve("packages")).filter((d) =>
   statSync(path.join("packages", d)).isDirectory(),
 );
 
-const missingBuildArtifacts = missingPackageBuildArtifacts(packageNames);
+const missingBuildArtifacts = missingPackageBuildArtifacts(packageNames, {
+  packageKinds,
+});
 
 if (missingBuildArtifacts.length) {
   throw new Error(
@@ -224,7 +223,7 @@ for (let packageName of packageNames) {
       scriptAvailable.push(name);
     }
     // also present in ./ops/lect/lect.js:
-    if (existsSync(path.join("packages", name, "rollup.config.js"))) {
+    if (packageKinds.kindFor(name) === PACKAGE_KINDS.TYPESCRIPT_LIBRARY) {
       // 1. add program to the "programs" list
       programPackages.push(name);
 
@@ -395,7 +394,7 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
   );
 
   let size = 0;
-  if (pack.bin && !programPackages.includes(packageName)) {
+  if (packageKinds.kindFor(packageName) === PACKAGE_KINDS.CLI) {
     // cli's
     size = readFileSync(path.join("packages", packageName, "cli.js")).length;
   } else {

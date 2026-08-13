@@ -10,6 +10,8 @@ import {
 } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
+import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
 
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -20,6 +22,7 @@ const runtimeDependencyFields = [
   "optionalDependencies",
   "peerDependencies",
 ];
+const packageKinds = readPackageKindResolver(repositoryRoot);
 
 function fail(message) {
   throw new Error(message);
@@ -162,13 +165,12 @@ function discoverWorkspaces() {
 }
 
 function packageType(record) {
-  if (existsSync(path.join(record.directory, "rollup.config.js"))) {
-    return "rollup";
-  }
-  if (record.packageJson.bin) {
-    return "cli";
-  }
-  return "other";
+  const kind = packageKinds.kindFor(record.packageJson.name);
+  return kind === PACKAGE_KINDS.TYPESCRIPT_LIBRARY
+    ? "rollup"
+    : kind === PACKAGE_KINDS.CLI
+      ? "cli"
+      : "other";
 }
 
 function internalRuntimeDependencies(record, names) {

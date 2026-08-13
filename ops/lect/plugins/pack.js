@@ -3,6 +3,7 @@ import objectPath from "object-path";
 import sortPackageJson, { sortOrder } from "sort-package-json";
 import writeFileAtomic from "write-file-atomic";
 import { coverageConfigForPackage } from "../../helpers/coveragePolicy.js";
+import { PACKAGE_KINDS } from "../../helpers/packageKinds.js";
 
 function format(obj) {
   if (typeof obj !== "object") {
@@ -34,7 +35,7 @@ async function packageJson({ state, lectrc, rootPackageJSON, coveragePolicy }) {
   let content = { ...state.pack };
 
   // 1. set scripts
-  if (!state.isRollup) {
+  if (state.packageKind === PACKAGE_KINDS.CLI) {
     content.scripts = objectPath.get(lectrc, "scripts.cli");
   } else {
     content.scripts = objectPath.get(lectrc, "scripts.rollup");
@@ -64,7 +65,7 @@ async function packageJson({ state, lectrc, rootPackageJSON, coveragePolicy }) {
 
   content.homepage = `https://codsen.com/os/${content.name}`;
   content.c8 = coverageConfigForPackage(coveragePolicy, content, {
-    isRollup: state.isRollup,
+    packageKind: state.packageKind,
   });
 
   // 3. write adhoc keys

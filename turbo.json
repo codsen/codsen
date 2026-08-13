@@ -14,39 +14,58 @@
     },
     "codsen#build": {
       "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$"],
       "outputs": []
     },
     "csv-sort-cli#build": {
       "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$"],
       "outputs": []
     },
     "email-all-chars-within-ascii-cli#build": {
       "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$"],
       "outputs": []
     },
     "generate-atomic-css-cli#build": {
       "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$"],
       "outputs": []
     },
     "js-row-num-cli#build": {
       "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$"],
       "outputs": []
     },
     "json-comb#build": {
       "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$"],
       "outputs": []
     },
     "json-sort-cli#build": {
       "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$"],
       "outputs": []
     },
     "lerna-clean-changelogs-cli#build": {
       "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$"],
       "outputs": []
     },
     "update-versions#build": {
       "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$"],
       "outputs": []
+    },
+    "@codsen/data#build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!dist/**",
+        "$TURBO_ROOT$/.node-version",
+        "$TURBO_ROOT$/tsconfig.base.json"
+      ],
+      "outputs": ["dist/**"]
     },
     "lint": {
       "dependsOn": ["build"],

@@ -1,11 +1,13 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import writeFileAtomic from "write-file-atomic";
+import { PACKAGE_KINDS } from "../../helpers/packageKinds.js";
 
 // writes TS configs
 async function tsconfig({ state }) {
-  // bail early if it's a CLI
-  if (!state.isRollup && !state.isCLI) {
+  // Preserve the established policy: non-library workspaces do not keep this
+  // generated file.
+  if (state.packageKind !== PACKAGE_KINDS.TYPESCRIPT_LIBRARY) {
     fs.unlink(path.resolve("tsconfig.json"))
       .then(() => {
         console.log(

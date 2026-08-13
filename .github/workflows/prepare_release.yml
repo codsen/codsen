@@ -60,6 +60,9 @@ jobs:
       - name: Assert the complete workspace set
         run: node ops/scripts/npm-release.js assert-workspaces
 
+      - name: Verify declared package kinds and generated task profiles
+        run: npm run ci:verify:package-kinds
+
       - name: Record the release base and create a branch
         id: release
         env:
