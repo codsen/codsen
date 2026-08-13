@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 import objectPath from "object-path";
 
+import { GENERATION_MODES } from "../helpers/generatedFiles.js";
 import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
 import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
@@ -53,28 +54,31 @@ async function runLectPhases({
   coveragePolicy,
   lectrc,
   operations = defaultOperations,
+  mode = GENERATION_MODES.WRITE,
   quickTakeExample,
   rootPackageJSON,
   state,
 }) {
-  await operations.hardDelete({ lectrc, root: state.root });
-  await operations.hardWrite({ lectrc, root: state.root });
+  await operations.hardDelete({ lectrc, mode, root: state.root });
+  await operations.hardWrite({ lectrc, mode, root: state.root });
   state.pack = await operations.pack({
     coveragePolicy,
     lectrc,
     rootPackageJSON,
     state,
+    mode,
   });
-  await operations.rollupConfig({ state });
-  await operations.tsconfig({ state });
-  await operations.allContrib({ state });
-  await operations.licence({ state });
-  await operations.readme({ quickTakeExample, state });
+  await operations.rollupConfig({ mode, state });
+  await operations.tsconfig({ mode, state });
+  await operations.allContrib({ mode, state });
+  await operations.licence({ mode, state });
+  await operations.readme({ mode, quickTakeExample, state });
   return state;
 }
 
 async function runLect({
   currentYear = new Date().getFullYear(),
+  mode = GENERATION_MODES.WRITE,
   operations = defaultOperations,
   packageRoot = process.cwd(),
   repositoryRoot = repositoryRootFromFile,
@@ -99,6 +103,7 @@ async function runLect({
     isBin: objectPath.has(packageJson, "bin"),
     packageKind,
     pack: packageJson,
+    repositoryRoot,
     root: absolutePackageRoot,
   };
   const lectrc = await readJson(
@@ -115,6 +120,7 @@ async function runLect({
     coveragePolicy,
     lectrc,
     operations,
+    mode,
     quickTakeExample,
     rootPackageJSON,
     state,

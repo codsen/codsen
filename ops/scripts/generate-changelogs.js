@@ -1,5 +1,6 @@
-import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
+import { cleanChangelogs } from "lerna-clean-changelogs";
 // import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
@@ -7,7 +8,16 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import remarkTypography from "remark-typography";
 import { unified } from "unified";
+import { writeGeneratedFile } from "../helpers/generatedFiles.js";
 import changelogTimeline from "./remark-conventional-commit-changelog-timeline.esm.js";
+
+const arguments_ = process.argv.slice(2);
+if (arguments_.some((argument) => argument !== "--check")) {
+  throw new Error(
+    `generate-changelogs.js: unsupported argument(s): ${arguments_.join(", ")}`,
+  );
+}
+const mode = arguments_.includes("--check") ? "check" : "write";
 
 // ------------------------------------------------------------------------------
 
@@ -19,11 +29,39 @@ const packageNames = readdirSync(path.resolve("packages"))
 
 const gatheredChangelogs = {};
 
+async function cleanSourceChangelog(filename, label) {
+  try {
+    const original = readFileSync(filename, "utf8");
+    const cleaned = cleanChangelogs(original, { extras: true }).res;
+    await writeGeneratedFile({
+      contents: cleaned,
+      filename: path.resolve(filename),
+      fixCommand: "npm run ci:generate:changelogs",
+      mode,
+    });
+    return cleaned;
+  } catch (error) {
+    throw new Error(
+      `Could not clean the ${label} changelog: ${error.message}`,
+      {
+        cause: error,
+      },
+    );
+  }
+}
+
+await cleanSourceChangelog(path.join("data", "CHANGELOG.md"), "@codsen/data");
+
 for (let packageName of packageNames) {
   try {
-    let changelogContents = readFileSync(
-      path.join("packages", packageName, "CHANGELOG.md"),
-      "utf8",
+    const changelogFilename = path.join(
+      "packages",
+      packageName,
+      "CHANGELOG.md",
+    );
+    let changelogContents = await cleanSourceChangelog(
+      changelogFilename,
+      packageName,
     );
 
     const { value } = unified()
@@ -61,12 +99,13 @@ if (JSON.stringify(gatheredNames) !== JSON.stringify(packageNames)) {
   );
 }
 
-writeFileSync(
-  path.resolve("./data/sources/changelogs.ts"),
-  `export const changelogs = ${JSON.stringify(gatheredChangelogs, null, 0)};\n`,
-  "utf8",
-);
+await writeGeneratedFile({
+  contents: `export const changelogs = ${JSON.stringify(gatheredChangelogs, null, 0)};\n`,
+  filename: path.resolve("./data/sources/changelogs.ts"),
+  fixCommand: "npm run ci:generate:changelogs",
+  mode,
+});
 
 console.log(
-  `\u001b[${32}mGenerated ${gatheredNames.length} changelogs in data/sources/changelogs.ts\u001b[${39}m`,
+  `\u001b[${32}m${mode === "check" ? "Verified" : "Generated"} ${gatheredNames.length} changelogs in data/sources/changelogs.ts\u001b[${39}m`,
 );

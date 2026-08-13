@@ -57,14 +57,14 @@ jobs:
       - name: Verify declared package kinds and generated task profiles
         run: npm run ci:verify:package-kinds
 
-      - name: Regenerate lect-managed package files
-        run: npm run lect
+      - name: Verify lect-managed package files
+        run: npm run lect:check
 
-      - name: Build package inputs and regenerate repository data
+      - name: Build package inputs and verify repository data sources
         run: |
-          npm run ci:generate:info
-          npm run ci:generate:changelogs
-          npm run ci:build:root-readme
+          npm run ci:verify:info
+          npm run ci:verify:changelogs
+          npm run ci:verify:root-readme
 
       - name: Build @codsen/data from regenerated sources
         run: npm run build -- '--filter=./data/**'

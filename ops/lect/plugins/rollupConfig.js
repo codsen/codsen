@@ -1,10 +1,10 @@
 import path from "node:path";
 import objectPath from "object-path";
-import writeFileAtomic from "write-file-atomic";
+import { writeGeneratedFile } from "../../helpers/generatedFiles.js";
 import { PACKAGE_KINDS } from "../../helpers/packageKinds.js";
 
 // writes rollup.config.js
-async function rollupConfig({ state }) {
+async function rollupConfig({ mode, state }) {
   // Only declared TypeScript libraries own this generated file.
   if (state.packageKind !== PACKAGE_KINDS.TYPESCRIPT_LIBRARY) {
     return Promise.resolve(null);
@@ -12,9 +12,8 @@ async function rollupConfig({ state }) {
 
   if (objectPath.has(state.pack, "exports")) {
     try {
-      await writeFileAtomic(
-        path.join(state.root, "rollup.config.js"),
-        `import json from "@rollup/plugin-json";
+      await writeGeneratedFile({
+        contents: `import json from "@rollup/plugin-json";
 import dts from "rollup-plugin-dts";
 
 export default () => [
@@ -26,7 +25,10 @@ export default () => [
   },
 ];
 `,
-      );
+        filename: path.join(state.root, "rollup.config.js"),
+        fixCommand: "npm run lect",
+        mode,
+      });
       return Promise.resolve(null);
     } catch (err) {
       console.log(`lect: could not write rollup.config.js - ${err}`);

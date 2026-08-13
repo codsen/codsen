@@ -87,7 +87,7 @@ Priorities have the following meanings:
 | REV-010 | P2 | Completed | Package architecture | Centralise package classification |
 | REV-011 | P2 | Completed | Repository tooling | Centralise workspace discovery |
 | REV-012 | P2 | Completed | Generators | Make `lect` mutations reliable |
-| REV-013 | P2 | Pending | Developer workflow | Separate mutation from verification |
+| REV-013 | P2 | Completed | Developer workflow | Separate mutation from verification |
 | REV-014 | P2 | Pending | Release tooling | Modularise and test release-critical code |
 | REV-015 | P2 | Pending | Error handling | Format arbitrary invalid inputs safely |
 | REV-016 | P2 | Pending | Performance | Repair misleading benchmark workloads |
@@ -663,19 +663,48 @@ Priorities have the following meanings:
 
 ### REV-013 — Separate mutation from verification
 
-- Status: Pending
-- Evidence status: Confirmed from root scripts
+- Status: Completed
+- Completed: 2026-08-14
+- Evidence status: Reproduced, expanded, fixed, and validated across the full
+  repository
 - Evidence:
-  - `package.json:31` defines `house` with generators and `check:fix`.
-  - `package.json:43` makes root `test` invoke `house` and `lect`.
-  - `package.json:49` makes root `unit` invoke `house`.
-  - `ops/scripts/generate-info.js:15-22` regenerates Git-derived data locally by
-    default.
+  - The original root `test` and `unit` scripts invoked `house` and `lect`, and
+    `test` also ran the history-writing performance recorder.
+  - The generated library `dts` script ran package-wide formatting, so builds
+    used by unit and typecheck could rewrite maintained source files.
+  - `ops/scripts/generate-info.js` regenerated Git-derived statistics locally
+    by default even though release preparation was their intended owner.
+  - The generator audit also found callback writes, unsorted inventories, and
+    no general exact-byte freshness check outside mutate-then-diff CI steps.
 - Problem: Routine test commands rewrite files. Failures can leave unrelated
   diffs, and test outcomes can depend on repository history or formatting.
 - Recommended change: Provide explicit mutation commands such as `generate`
   and `fix`, plus read-only verification commands that generate into temporary
   locations or compare deterministic output.
+- Resolution:
+  - Added a shared exact-byte generated-file write/check abstraction. Check
+    mode reports the stale path and its fix command without changing bytes,
+    timestamps, or required absence.
+  - Check mode exempts an explicit set of ignored, cleanup-only artifacts such
+    as `.DS_Store`, while write mode still removes them. Obsolete
+    tracked-capable configuration remains enforced as required absence.
+  - `lect`, package metadata, root licence, generated info, changelogs, and the
+    root README now have deterministic check modes. JSON projections are
+    formatted in memory before either comparison or atomic write.
+    Changelog verification includes the generated-data workspace while the
+    website projection intentionally remains the 111-package map.
+  - `lect` now renders the canonical normalised manifest before dependent
+    output, runs mutation phases in order, and keeps every asynchronous write
+    observable. Package scripts expose `lect:check`; package pretests use it.
+  - Library builds format only the ignored generated declaration instead of
+    the whole package. Root `unit`, `lint`, `typecheck`, and `test` now call
+    read-only verification paths. Performance history recording remains an
+    explicit command outside `test`.
+  - Root `generate` and `fix` own mutation. The compatible `house` alias points
+    to `fix`. Git statistics are unchanged by default and are updated only by
+    explicit `generate-info --git-stats` release preparation.
+  - CI and release verification use check mode; prepare-release retains
+    explicit generation after versioning.
 - Done when:
   - `test`, `unit`, `lint`, and typecheck verification leave a clean tracked
     tree when started from one.
@@ -685,6 +714,27 @@ Priorities have the following meanings:
   - Record `git status`, run each verification command, and confirm no new diff.
   - Deliberately stale one generated fixture in a temporary checkout and verify
     detection.
+- Validation results:
+  - The generated-file suite passed 7 tests and the `lect` reliability suite
+    passed 12 tests, including missing, stale, forbidden, cleanup-only,
+    unchanged-timestamp, one-pass canonicalisation, failure-ordering, and
+    write-then-check cases. The complete ops helper suite passed all 83 tests.
+  - Full write and check passes completed all 112 workspaces. Info, changelog,
+    root README, package-kind, coverage, Node-policy, and generated-data checks
+    passed; default info generation preserved the exact `gitStats.ts` hash.
+  - Full `unit` (224 Turbo tasks plus helper tests), `typecheck` (175 tasks),
+    lint, Markdown lint, and the 112-workspace quality suite passed.
+  - The canonical packed-artifact compatibility harness passed all 112
+    packages cumulatively on exact Node 18.20.8, 20.19.4, 22.21.1, 24.19.0,
+    and 26.7.0 lanes.
+  - A review retry encountered ignored `.DS_Store` files and exposed a conflict
+    between cleanup and read-only verification. The restarted review made that
+    exemption explicit, retained strict checks for obsolete tracked-capable
+    files, and confirmed a subsequent 112-workspace pack did not recreate them.
+  - The tracked diff hash stayed identical across generation, unit, typecheck,
+    lint, compatibility, and quality runs. No declaration or performance
+    history diff appeared. Biome, workflow YAML parsing, Markdown lint, and
+    `git diff --check` passed; `actionlint` was not installed locally.
 
 ### REV-014 — Modularise and test release-critical code
 

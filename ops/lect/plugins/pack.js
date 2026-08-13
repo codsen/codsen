@@ -2,8 +2,9 @@ import path from "node:path";
 import { dequal } from "dequal";
 import objectPath from "object-path";
 import sortPackageJson, { sortOrder } from "sort-package-json";
-import writeFileAtomic from "write-file-atomic";
 import { coverageConfigForPackage } from "../../helpers/coveragePolicy.js";
+import { writeGeneratedFile } from "../../helpers/generatedFiles.js";
+import { formatGeneratedContents } from "../../helpers/generatedFormatting.js";
 import { PACKAGE_KINDS } from "../../helpers/packageKinds.js";
 
 function format(obj) {
@@ -123,7 +124,13 @@ function normalisePackageJson({
 }
 
 // writes package.json
-async function packageJson({ state, lectrc, rootPackageJSON, coveragePolicy }) {
+async function packageJson({
+  state,
+  lectrc,
+  rootPackageJSON,
+  coveragePolicy,
+  mode,
+}) {
   const content = normalisePackageJson({
     state,
     lectrc,
@@ -133,10 +140,17 @@ async function packageJson({ state, lectrc, rootPackageJSON, coveragePolicy }) {
 
   // 7. write
   try {
-    await writeFileAtomic(
-      path.join(state.root, "package.json"),
-      `${JSON.stringify(content, null, 2)}\n`,
-    );
+    const filename = path.join(state.root, "package.json");
+    await writeGeneratedFile({
+      contents: formatGeneratedContents({
+        contents: `${JSON.stringify(content, null, 2)}\n`,
+        filename,
+        repositoryRoot: state.repositoryRoot,
+      }),
+      filename,
+      fixCommand: "npm run lect",
+      mode,
+    });
     // console.log(`lect package.json ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`);
 
     return content;

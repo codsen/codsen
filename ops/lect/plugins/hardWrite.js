@@ -1,7 +1,6 @@
-import { promises as fs } from "node:fs";
 import path from "node:path";
 import objectPath from "object-path";
-import writeFileAtomic from "write-file-atomic";
+import { writeGeneratedFile } from "../../helpers/generatedFiles.js";
 
 function resolve(str) {
   return str.replace("%YEAR%", new Date().getFullYear());
@@ -9,7 +8,7 @@ function resolve(str) {
 
 // hard write all static files
 // key files.write_hard from packages/ root .lectrc.json
-async function hardWrite({ lectrc, root = process.cwd() }) {
+async function hardWrite({ lectrc, mode, root = process.cwd() }) {
   const contentsToWriteHard = (
     objectPath.get(lectrc, "files.write_hard") || []
   ).filter((obj) => {
@@ -30,17 +29,12 @@ async function hardWrite({ lectrc, root = process.cwd() }) {
     const filename = resolve(oneToDoObj.name);
     const absoluteFilename = path.resolve(root, filename);
     const expected = resolve(oneToDoObj.contents);
-    let contents;
-    try {
-      contents = await fs.readFile(absoluteFilename, "utf8");
-    } catch (error) {
-      if (error.code !== "ENOENT") {
-        throw error;
-      }
-    }
-    if (contents === undefined || contents.trim() !== expected.trim()) {
-      await writeFileAtomic(absoluteFilename, expected);
-    }
+    await writeGeneratedFile({
+      contents: expected,
+      filename: absoluteFilename,
+      fixCommand: "npm run lect",
+      mode,
+    });
   }
   return null;
 }

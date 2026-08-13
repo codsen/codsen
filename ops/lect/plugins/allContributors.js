@@ -2,7 +2,8 @@
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import writeFileAtomic from "write-file-atomic";
+import { writeGeneratedFile } from "../../helpers/generatedFiles.js";
+import { formatGeneratedContents } from "../../helpers/generatedFormatting.js";
 
 const ROY = {
   login: "revelt",
@@ -13,7 +14,7 @@ const ROY = {
 };
 const ALL_CONTRIB_FILE = `.all-contributorsrc`;
 
-async function allContrib({ state }) {
+async function allContrib({ mode, state }) {
   const filename = path.join(state.root, ALL_CONTRIB_FILE);
   const finalFileToWrite = {
     projectName: state.pack.name,
@@ -54,7 +55,16 @@ async function allContrib({ state }) {
 
   // whatever the outcome, write what we've got
   try {
-    await writeFileAtomic(filename, JSON.stringify(finalFileToWrite, null, 2));
+    await writeGeneratedFile({
+      contents: formatGeneratedContents({
+        contents: JSON.stringify(finalFileToWrite, null, 2),
+        filename,
+        repositoryRoot: state.repositoryRoot,
+      }),
+      filename,
+      fixCommand: "npm run lect",
+      mode,
+    });
     // console.log(
     //   `lect ${ALL_CONTRIB_FILE} ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`
     // );

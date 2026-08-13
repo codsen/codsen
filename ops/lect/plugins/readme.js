@@ -1,8 +1,8 @@
 import path from "node:path";
 import objectPath from "object-path";
-import writeFileAtomic from "write-file-atomic";
 import { esmBump } from "../../../data/sources/esmBump.ts";
 import arrayiffy from "../../helpers/arrayiffy.js";
+import { writeGeneratedFile } from "../../helpers/generatedFiles.js";
 import { PACKAGE_KINDS } from "../../helpers/packageKinds.js";
 import { getLicenceShortVersion } from "../common/getLicenceContents.js";
 
@@ -23,7 +23,7 @@ function hasPlayground(name) {
   return playgroundLibs.includes(name);
 }
 
-async function readme({ state, quickTakeExample }) {
+async function readme({ mode, state, quickTakeExample }) {
   const packageName = state.pack.name;
   let badge1 = `<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center">`;
 
@@ -138,7 +138,12 @@ ${getLicenceShortVersion(state.currentYear)}`;
   content += `\n\n<p align="center">${badge1} ${badge2} ${badge3}</p>\n`;
 
   try {
-    await writeFileAtomic(path.join(state.root, "README.md"), content);
+    await writeGeneratedFile({
+      contents: content,
+      filename: path.join(state.root, "README.md"),
+      fixCommand: "npm run lect",
+      mode,
+    });
     // console.log(`lect README.md ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`);
     return Promise.resolve(null);
   } catch (err) {

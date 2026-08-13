@@ -37,7 +37,8 @@
     "devtest": "npm run test",
     "dts": "exit 0",
     "examples": "exit 0",
-    "lect": "node '../../ops/lect/lect.js' && npm run prettier:format",
+    "lect": "node '../../ops/lect/lect.js'",
+    "lect:check": "node '../../ops/lect/lect.js' --check",
     "letspublish": "npm publish --provenance",
     "lint": "biome lint --error-on-warnings .",
     "lint:fix": "biome lint --write --error-on-warnings .",
@@ -45,7 +46,7 @@
     "prep": "echo 'ready'",
     "prettier": "biome format",
     "prettier:format": "biome format --write .",
-    "pretest": "exit 0",
+    "pretest": "npm run lect:check",
     "test": "c8 npm run unit && npm run lint",
     "unit": "uvu test"
   },

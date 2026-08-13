@@ -4,6 +4,15 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { writeGeneratedFile } from "../helpers/generatedFiles.js";
+
+const arguments_ = process.argv.slice(2);
+if (arguments_.some((argument) => argument !== "--check")) {
+  throw new Error(
+    `generate-readme.js: unsupported argument(s): ${arguments_.join(", ")}`,
+  );
+}
+const mode = arguments_.includes("--check") ? "check" : "write";
 
 const today = new Date();
 const year = today.getFullYear();
@@ -25,7 +34,8 @@ const allPackages = fs
           "utf8",
         ),
       ).private,
-  );
+  )
+  .sort();
 
 // ASSEMBLE THE TEMPLATE
 // =====================
@@ -59,8 +69,9 @@ MIT License
 Copyright (c) 2010-${year} Roy Revelt and other contributors
 `;
 
-fs.writeFile("README.md", template, (err) => {
-  if (err) {
-    throw err;
-  }
+await writeGeneratedFile({
+  contents: template,
+  filename: path.resolve("README.md"),
+  fixCommand: "npm run ci:build:root-readme",
+  mode,
 });

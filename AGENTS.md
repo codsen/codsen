@@ -287,6 +287,9 @@ erase.
   `.npmignore`, legacy lint/build/CI configs, lock files, temporary stats, and
   other obsolete generated files. Check the current list before adding a
   package-local configuration file with a conventional name.
+- `.lectrc.json#files.cleanup_only` lists ignored ephemeral artifacts such as
+  `.DS_Store`. Write mode removes them opportunistically; read-only check mode
+  does not treat their presence as stale generated state.
 - `.lectrc.json#files.write_hard` can hard-write static files, but its current
   placeholder is empty, so it performs no writes.
 
@@ -304,9 +307,10 @@ erase.
 - From the repository root, `npm run lect` regenerates the kind-derived Turbo
   profiles, then runs every workspace's `lect` task through Turbo. The task is
   uncached.
-- Root `npm test` depends on `lect` and `build`; many package `pretest` scripts
-  also run both. Generated-file changes can therefore appear during an ordinary
-  test run.
+- Root `npm run generate` and `npm run fix` are the explicit mutation commands.
+  Root `npm test`, `npm run unit`, `npm run lint`, and `npm run typecheck` are
+  read-only verification commands. Package `pretest` scripts verify `lect`
+  output before building; they do not regenerate package files.
 - Prefer a targeted package run while changing the generator. Validate at least
   one representative CLI and TypeScript library when shared classification or
   templates change, then inspect the complete diff before accepting it.

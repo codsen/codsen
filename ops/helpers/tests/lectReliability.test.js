@@ -67,7 +67,7 @@ test("01 - deletion ignores only a missing path", async () => {
 
 test("02 - CLI tsconfig deletion is awaited and reports failures", async () => {
   const root = createTemporaryRoot();
-  const state = { packageKind: PACKAGE_KINDS.CLI, root };
+  const state = { packageKind: PACKAGE_KINDS.CLI, repositoryRoot, root };
   try {
     const filename = path.join(root, "tsconfig.json");
     writeFileSync(filename, "{}\n");
@@ -96,7 +96,11 @@ test("03 - malformed library tsconfig is preserved and rejected", async () => {
     let error;
     try {
       await tsconfig({
-        state: { packageKind: PACKAGE_KINDS.TYPESCRIPT_LIBRARY, root },
+        state: {
+          packageKind: PACKAGE_KINDS.TYPESCRIPT_LIBRARY,
+          repositoryRoot,
+          root,
+        },
       });
     } catch (caught) {
       error = caught;
@@ -129,7 +133,9 @@ test("04 - malformed hard-write and contributor files reject", async () => {
     writeFileSync(path.join(root, ".all-contributorsrc"), "{");
     let contributorError;
     try {
-      await allContrib({ state: { pack: { name: "example" }, root } });
+      await allContrib({
+        state: { pack: { name: "example" }, repositoryRoot, root },
+      });
     } catch (caught) {
       contributorError = caught;
     }
@@ -283,14 +289,14 @@ test("09 - CLI failure exits nonzero before later files are written", () => {
   }
 });
 
-test("10 - root licence generation writes only the root-owned file", () => {
+test("10 - root licence check does not touch package licences", () => {
   const beforePackageLicence = readFileSync(
     path.join(repositoryRoot, "packages/arrayiffy-if-string/LICENSE"),
     "utf8",
   );
   const result = spawnSync(
     process.execPath,
-    [path.join(repositoryRoot, "ops/lect/root.js")],
+    [path.join(repositoryRoot, "ops/lect/root.js"), "--check"],
     { cwd: repositoryRoot, encoding: "utf8" },
   );
 
@@ -303,6 +309,69 @@ test("10 - root licence generation writes only the root-owned file", () => {
     beforePackageLicence,
     "10.02",
   );
+});
+
+test("11 - check mode reports stale output without changing it", async () => {
+  const root = createTemporaryRoot();
+  try {
+    copyExampleManifest(root, "A valid description");
+    await runLect({ packageRoot: root, repositoryRoot });
+    const readmeFilename = path.join(root, "README.md");
+    writeFileSync(readmeFilename, "stale\n");
+    let error;
+    try {
+      await runLect({ mode: "check", packageRoot: root, repositoryRoot });
+    } catch (caught) {
+      error = caught;
+    }
+
+    match(error.message, /README\.md.*npm run lect/, "11.01");
+    equal(readFileSync(readmeFilename, "utf8"), "stale\n", "11.02");
+    await runLect({ packageRoot: root, repositoryRoot });
+    await runLect({ mode: "check", packageRoot: root, repositoryRoot });
+    match(
+      readFileSync(readmeFilename, "utf8"),
+      /<p align="center">A valid description<\/p>/,
+      "11.03",
+    );
+  } finally {
+    removeTemporaryRoot(root);
+  }
+});
+
+test("12 - check ignores cleanup-only files but enforces obsolete files", async () => {
+  const root = createTemporaryRoot();
+  const lectrc = {
+    files: {
+      cleanup_only: [".DS_Store"],
+      delete: [".npmignore"],
+    },
+  };
+  try {
+    writeFileSync(path.join(root, ".DS_Store"), "ignored cleanup\n");
+    await hardDelete({ lectrc, mode: "check", root });
+    equal(existsSync(path.join(root, ".DS_Store")), true, "12.01");
+
+    writeFileSync(path.join(root, ".npmignore"), "obsolete\n");
+    let error;
+    try {
+      await hardDelete({ lectrc, mode: "check", root });
+    } catch (caught) {
+      error = caught;
+    }
+    match(error.message, /\.npmignore.*npm run lect/, "12.02");
+    equal(
+      readFileSync(path.join(root, ".npmignore"), "utf8"),
+      "obsolete\n",
+      "12.03",
+    );
+
+    await hardDelete({ lectrc, root });
+    equal(existsSync(path.join(root, ".DS_Store")), false, "12.04");
+    equal(existsSync(path.join(root, ".npmignore")), false, "12.05");
+  } finally {
+    removeTemporaryRoot(root);
+  }
 });
 
 test.run();

@@ -99,6 +99,10 @@
       "outputs": [],
       "cache": false
     },
+    "lect:check": {
+      "outputs": [],
+      "cache": false
+    },
     "prettier:format": {
       "outputs": [],
       "cache": false

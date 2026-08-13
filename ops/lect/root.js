@@ -3,8 +3,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import writeFileAtomic from "write-file-atomic";
-
+import { writeGeneratedFile } from "../helpers/generatedFiles.js";
 import { getLicenceContents } from "./common/getLicenceContents.js";
 
 const repositoryRoot = path.resolve(
@@ -12,7 +11,14 @@ const repositoryRoot = path.resolve(
   "../..",
 );
 
-await writeFileAtomic(
-  path.join(repositoryRoot, "LICENSE"),
-  getLicenceContents(new Date().getFullYear()),
-);
+const arguments_ = process.argv.slice(2);
+if (arguments_.some((argument) => argument !== "--check")) {
+  throw new Error(`Unsupported argument(s): ${arguments_.join(", ")}`);
+}
+
+await writeGeneratedFile({
+  contents: getLicenceContents(new Date().getFullYear()),
+  filename: path.join(repositoryRoot, "LICENSE"),
+  fixCommand: "npm run lect",
+  mode: arguments_.includes("--check") ? "check" : "write",
+});

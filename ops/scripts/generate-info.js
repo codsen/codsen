@@ -1,21 +1,31 @@
-import { readdirSync, readFileSync, statSync, writeFile } from "node:fs";
+import { readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import git from "simple-git";
 import { programClassification } from "../../data/sources/programClassification.ts";
+import { writeGeneratedFile } from "../helpers/generatedFiles.js";
 import { missingPackageBuildArtifacts } from "../helpers/packageBuildArtifacts.js";
 import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
 import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
 import { topDependencies } from "../helpers/topDependencies.js";
 
-const isCI = process?.env?.CI || false;
 const arguments_ = process.argv.slice(2);
-if (arguments_.some((argument) => argument !== "--git-stats")) {
+if (
+  arguments_.some(
+    (argument) => !new Set(["--check", "--git-stats"]).has(argument),
+  )
+) {
   throw new Error(
     `generate-info.js: unsupported argument(s): ${arguments_.join(", ")}`,
   );
 }
-const shouldGenerateGitStats = !isCI || arguments_.includes("--git-stats");
+if (arguments_.includes("--check") && arguments_.includes("--git-stats")) {
+  throw new Error(
+    "generate-info.js: --check and --git-stats cannot be combined",
+  );
+}
+const mode = arguments_.includes("--check") ? "check" : "write";
+const shouldGenerateGitStats = arguments_.includes("--git-stats");
 const packageKinds = readPackageKindResolver(path.resolve("."));
 
 // READ ALL LIBS
@@ -162,9 +172,9 @@ const splitListBlackList = [
 // extracted and written as a string, to this object:
 const exportedDefaults = {};
 
-const packageNames = readdirSync(path.resolve("packages")).filter((d) =>
-  statSync(path.join("packages", d)).isDirectory(),
-);
+const packageNames = readdirSync(path.resolve("packages"))
+  .filter((d) => statSync(path.join("packages", d)).isDirectory())
+  .sort();
 
 const missingBuildArtifacts = missingPackageBuildArtifacts(packageNames, {
   packageKinds,
@@ -261,27 +271,27 @@ for (let packageName of packageNames) {
       }
 
       // 4. compile all examples, including Quick Take
-      examples[name] = readdirSync(
-        path.join("packages", name, "examples"),
-      ).reduce((accumulatedObj, fileName) => {
-        let exampleContents = readFileSync(
-          path.join("packages", name, "examples", fileName),
-          "utf-8",
-        );
-        let title =
-          exampleContents
-            .split(/(\r?\n)/)
-            .find((lineStr) => lineStr.trim().startsWith("//")) || "";
-        if (title) {
-          // remove "// " part in front of the title
-          title = title.slice(3);
-        }
-        accumulatedObj[fileName] = {
-          title,
-          code: prepExampleFileStr(exampleContents).str,
-        };
-        return accumulatedObj;
-      }, {});
+      examples[name] = readdirSync(path.join("packages", name, "examples"))
+        .sort()
+        .reduce((accumulatedObj, fileName) => {
+          let exampleContents = readFileSync(
+            path.join("packages", name, "examples", fileName),
+            "utf-8",
+          );
+          let title =
+            exampleContents
+              .split(/(\r?\n)/)
+              .find((lineStr) => lineStr.trim().startsWith("//")) || "";
+          if (title) {
+            // remove "// " part in front of the title
+            title = title.slice(3);
+          }
+          accumulatedObj[fileName] = {
+            title,
+            code: prepExampleFileStr(exampleContents).str,
+          };
+          return accumulatedObj;
+        }, {});
     }
 
     if (!programPackages.includes(name) && !packageJsonContents.bin) {
@@ -483,30 +493,26 @@ dependencyStats.allExternalDeps = [...allExternalDeps].sort();
 // 4. write files
 // -----------------------------------------------------------------------------
 
-writeFile(
-  path.resolve("./data/sources/interdeps.ts"),
-  // JSON.stringify(interdep, null, 2),
-  `export const interdeps = ${JSON.stringify(
-    interdep.filter((obj1) => {
-      return !(
-        !obj1.imports.length &&
-        !interdep.some((obj2) => obj2.imports.includes(obj1.name))
-      );
-    }),
-    null,
-    2,
-  )};\n`,
-  (err) => {
-    if (err) {
-      throw err;
-    }
-    console.log(`\u001b[${32}m${"interdeps.ts written OK"}\u001b[${39}m`);
-  },
-);
+await writeGeneratedFile({
+  contents:
+    // JSON.stringify(interdep, null, 2),
+    `export const interdeps = ${JSON.stringify(
+      interdep.filter((obj1) => {
+        return !(
+          !obj1.imports.length &&
+          !interdep.some((obj2) => obj2.imports.includes(obj1.name))
+        );
+      }),
+      null,
+      2,
+    )};\n`,
+  filename: path.resolve("./data/sources/interdeps.ts"),
+  fixCommand: "npm run ci:generate:info",
+  mode,
+});
 
-writeFile(
-  path.resolve("./data/sources/packages.ts"),
-  `const all = ${JSON.stringify(allPackages.sort(), null, 2)} as const;
+await writeGeneratedFile({
+  contents: `const all = ${JSON.stringify(allPackages.sort(), null, 2)} as const;
 const current = ${JSON.stringify(currentPackages.sort(), null, 2)} as const;
 const cli = ${JSON.stringify(cliPackages.sort(), null, 2)} as const;
 const deprecated = ${JSON.stringify(deprecated.sort(), null, 2)} as const;
@@ -584,82 +590,57 @@ export const packages = {
     splitListASTApps,
     splitListMiscLibs,
 };\n`,
-  (err) => {
-    if (err) {
-      throw err;
-    }
-    console.log(`\u001b[${32}m${"packages.ts written OK"}\u001b[${39}m`);
-  },
-);
+  filename: path.resolve("./data/sources/packages.ts"),
+  fixCommand: "npm run ci:generate:info",
+  mode,
+});
 
-writeFile(
-  path.resolve("./data/sources/dependencyStats.ts"),
-  `${dependencyStatsTypings}\nexport const dependencyStats: DependencyStats = ${JSON.stringify(
+await writeGeneratedFile({
+  contents: `${dependencyStatsTypings}\nexport const dependencyStats: DependencyStats = ${JSON.stringify(
     sortAllObjectsSync(dependencyStats),
     null,
     2,
   )};\n`,
-  (err) => {
-    if (err) {
-      throw err;
-    }
-    console.log(`\u001b[${32}m${"dependencyStats.ts written OK"}\u001b[${39}m`);
-  },
-);
+  filename: path.resolve("./data/sources/dependencyStats.ts"),
+  fixCommand: "npm run ci:generate:info",
+  mode,
+});
 
-writeFile(
-  path.resolve("./data/sources/packageJSONData.ts"),
-  `export const packageJSONData = ${JSON.stringify(
+await writeGeneratedFile({
+  contents: `export const packageJSONData = ${JSON.stringify(
     packageJSONData,
     null,
     2,
   )};\n`,
-  (err) => {
-    if (err) {
-      throw err;
-    }
-    console.log(`\u001b[${32}m${"packageJSONData.ts written OK"}\u001b[${39}m`);
-  },
-);
+  filename: path.resolve("./data/sources/packageJSONData.ts"),
+  fixCommand: "npm run ci:generate:info",
+  mode,
+});
 
-writeFile(
-  path.resolve("./data/sources/allDTS.ts"),
-  `export const allDTS = ${JSON.stringify(allDTS, null, 0)};\n`,
-  (err) => {
-    if (err) {
-      throw err;
-    }
-    console.log(`\u001b[${32}m${"allDTS.ts written OK"}\u001b[${39}m`);
-  },
-);
+await writeGeneratedFile({
+  contents: `export const allDTS = ${JSON.stringify(allDTS, null, 0)};\n`,
+  filename: path.resolve("./data/sources/allDTS.ts"),
+  fixCommand: "npm run ci:generate:info",
+  mode,
+});
 
-writeFile(
-  path.resolve("./data/sources/exportedDefaults.ts"),
-  `export const exportedDefaults = ${JSON.stringify(
+await writeGeneratedFile({
+  contents: `export const exportedDefaults = ${JSON.stringify(
     exportedDefaults,
     null,
     0,
   )};\n`,
-  (err) => {
-    if (err) {
-      throw err;
-    }
-    console.log(
-      `\u001b[${32}m${"exportedDefaults.ts written OK"}\u001b[${39}m`,
-    );
-  },
-);
+  filename: path.resolve("./data/sources/exportedDefaults.ts"),
+  fixCommand: "npm run ci:generate:info",
+  mode,
+});
 
-writeFile(
-  path.resolve("./data/sources/examples.ts"),
-  `export const examples = ${JSON.stringify(examples, null, 0)};\n`,
-  (err) => {
-    if (err) {
-      throw err;
-    }
-    console.log(`\u001b[${32}m${"examples.ts written OK"}\u001b[${39}m`);
-  },
-);
+await writeGeneratedFile({
+  contents: `export const examples = ${JSON.stringify(examples, null, 0)};\n`,
+  filename: path.resolve("./data/sources/examples.ts"),
+  fixCommand: "npm run ci:generate:info",
+  mode,
+});
 
 // 5. gather git repo info
 // ---------------------------------------------------------------------------
@@ -672,20 +653,16 @@ if (shouldGenerateGitStats) {
   try {
     // git rev-list --count HEAD
     commitTotal = await git(".git").raw(["rev-list", "--count", "HEAD"]);
-    writeFile(
-      path.join("./data/sources/gitStats.ts"),
-      `export const gitStats = ${JSON.stringify(
+    await writeGeneratedFile({
+      contents: `export const gitStats = ${JSON.stringify(
         { commitTotal: commitTotal.trim() },
         null,
         2,
       )}\n`,
-      (err) => {
-        if (err) {
-          throw err;
-        }
-        console.log(`\u001b[${32}m${"gitStats.ts written OK"}\u001b[${39}m`);
-      },
-    );
+      filename: path.join("./data/sources/gitStats.ts"),
+      fixCommand: "npm run ci:generate:info -- --git-stats",
+      mode,
+    });
   } catch (_e) {
     throw new Error("generate-info.js: can't access git data for gitStats.ts");
   }
