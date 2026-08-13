@@ -20,11 +20,15 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { assertCanonicalNodeVersion } from "../helpers/localNodeCompatibility.js";
+import { supportedNodeMajors } from "../helpers/nodeCompatibility.js";
 import {
-  supportedNodeEngines,
-  supportedNodeMajors,
-} from "../helpers/nodeCompatibility.js";
-import { lowestNodeMajor } from "../helpers/nodeEngine.js";
+  assertCompatibilityManifestMatchesPlan,
+  COMPATIBILITY_MANIFEST_KIND,
+  COMPATIBILITY_SCHEMA_VERSION,
+  createCompatibilityPlan as createCompatibilityPlanCore,
+  safeTarballFilename,
+  validateCompatibilityManifest,
+} from "../helpers/packageNodeCompatibility.js";
 import { readWorkspaceRecords } from "../helpers/workspaceInventoryFile.js";
 
 const ROOT = path.resolve(
@@ -32,8 +36,8 @@ const ROOT = path.resolve(
   "../..",
 );
 const MANIFEST_FILENAME = "manifest.json";
-const MANIFEST_KIND = "codsen-package-node-compatibility";
-const SCHEMA_VERSION = 2;
+const MANIFEST_KIND = COMPATIBILITY_MANIFEST_KIND;
+const SCHEMA_VERSION = COMPATIBILITY_SCHEMA_VERSION;
 const SUPPORTED_NODE_MAJORS = supportedNodeMajors;
 const PRODUCTION_DEPENDENCY_FIELDS = [
   "dependencies",
@@ -160,26 +164,10 @@ function parseArguments(argv) {
   };
 }
 
-function normaliseBins(packageJson) {
-  if (typeof packageJson.bin === "string") {
-    const name = packageJson.name.includes("/")
-      ? packageJson.name.slice(packageJson.name.lastIndexOf("/") + 1)
-      : packageJson.name;
-    return { [name]: packageJson.bin };
-  }
-  if (packageJson.bin && typeof packageJson.bin === "object") {
-    return Object.fromEntries(
-      Object.entries(packageJson.bin).sort(([left], [right]) =>
-        left.localeCompare(right),
-      ),
-    );
-  }
-  return {};
-}
-
-function discoverWorkspaces() {
-  return new Map(
-    readWorkspaceRecords(ROOT).map(({ directory, manifest }) => [
+function createCompatibilityPlan() {
+  const records = readWorkspaceRecords(ROOT);
+  const workspaces = new Map(
+    records.map(({ directory, manifest }) => [
       manifest.name,
       {
         directory: path.join(ROOT, directory),
@@ -187,51 +175,13 @@ function discoverWorkspaces() {
       },
     ]),
   );
-}
-
-function createCompatibilityPlan() {
-  const workspaces = discoverWorkspaces();
-  const clis = [...workspaces.entries()]
-    .filter(
-      ([, workspace]) =>
-        Object.keys(normaliseBins(workspace.packageJson)).length,
-    )
-    .map(([name, workspace]) => ({
-      name,
-      version: workspace.packageJson.version,
-      engines: workspace.packageJson.engines ?? {},
-      bins: normaliseBins(workspace.packageJson),
-    }))
-    .sort((left, right) => left.name.localeCompare(right.name));
-
-  if (clis.length === 0) {
-    fail("No workspace CLI packages were discovered");
-  }
-
-  const packages = [...workspaces.entries()]
-    .map(([name, workspace]) => {
-      const engines = workspace.packageJson.engines ?? {};
-      const nodeFloor = lowestNodeMajor(engines.node);
-      if (supportedNodeEngines.get(nodeFloor) !== engines.node) {
-        fail(
-          `${name} must declare one of the exact supported Node floors: ${[
-            ...supportedNodeEngines.values(),
-          ].join(", ")}`,
-        );
-      }
-      return {
-        name,
-        version: workspace.packageJson.version,
-        engines,
-        nodeFloor,
-        directory: path.relative(ROOT, workspace.directory),
-        importable: Boolean(workspace.packageJson.exports),
-        unitCommand: workspace.packageJson.scripts?.unit ?? null,
-        hasUnitFiles: existsSync(path.join(workspace.directory, "test")),
-      };
-    })
-    .sort((left, right) => left.name.localeCompare(right.name));
-  return { clis, packages, workspaces };
+  return {
+    ...createCompatibilityPlanCore(records, {
+      hasUnitFiles: (directory) =>
+        existsSync(path.join(ROOT, directory, "test")),
+    }),
+    workspaces,
+  };
 }
 
 function commandFailure(command, args, result) {
@@ -343,7 +293,12 @@ function packCompatibilityArtifacts(outputDirectory) {
           `npm pack reported ${entry.name}@${entry.version}, expected ${workspace.name}@${workspace.version}`,
         );
       }
-      const filename = path.basename(entry.filename);
+      if (!safeTarballFilename(entry.filename)) {
+        fail(
+          `npm pack returned an unsafe tarball filename for ${workspace.name}`,
+        );
+      }
+      const filename = entry.filename;
       const absoluteFilename = path.join(outputDirectory, filename);
       if (!existsSync(absoluteFilename)) {
         fail(`npm pack did not create ${absoluteFilename}`);
@@ -371,69 +326,55 @@ function packCompatibilityArtifacts(outputDirectory) {
     packages: packedPackages,
     clis: plan.clis,
   };
+  validateCompatibilityManifest(manifest, {
+    inspectArtifact: (filename) => {
+      const absolute = path.join(outputDirectory, filename);
+      if (!existsSync(absolute)) {
+        return { exists: false };
+      }
+      const fileStat = lstatSync(absolute);
+      return {
+        exists: true,
+        isFile: fileStat.isFile(),
+        isSymbolicLink: fileStat.isSymbolicLink(),
+        sha256: fileStat.isFile() ? sha256(absolute) : undefined,
+      };
+    },
+  });
   writeJson(path.join(outputDirectory, MANIFEST_FILENAME), manifest);
   console.log(
     `Packed all ${manifest.packages.length} workspaces, including ${manifest.clis.length} CLIs, into ${outputDirectory}`,
   );
 }
 
+function verifyManifestMatchesCheckout(manifest) {
+  const plan = createCompatibilityPlan();
+  assertCompatibilityManifestMatchesPlan(manifest, {
+    clis: plan.clis,
+    packages: plan.packages,
+  });
+}
+
 function stableJson(value) {
   return JSON.stringify(value);
 }
 
-function verifyManifestMatchesCheckout(manifest) {
-  const plan = createCompatibilityPlan();
-  const currentPackages = plan.packages;
-  const manifestPackages = manifest.packages.map(
-    ({ filename: _filename, sha256: _sha256, ...rest }) => rest,
-  );
-  if (stableJson(manifestPackages) !== stableJson(currentPackages)) {
-    fail("Compatibility artifacts do not match the current workspace packages");
-  }
-  if (stableJson(manifest.clis) !== stableJson(plan.clis)) {
-    fail(
-      "Compatibility artifact CLI graph does not match the current checkout",
-    );
-  }
-}
-
 function validateManifest(manifest, artifactsDirectory) {
-  if (
-    manifest.kind !== MANIFEST_KIND ||
-    manifest.schemaVersion !== SCHEMA_VERSION
-  ) {
-    fail("Unsupported compatibility artifact manifest");
-  }
-  if (!Array.isArray(manifest.packages) || !Array.isArray(manifest.clis)) {
-    fail("Compatibility artifact manifest is incomplete");
-  }
-
-  const names = new Set();
-  const filenames = new Set();
-  for (const packageArtifact of manifest.packages) {
-    if (names.has(packageArtifact.name)) {
-      fail(
-        `Duplicate package in compatibility manifest: ${packageArtifact.name}`,
-      );
-    }
-    if (filenames.has(packageArtifact.filename)) {
-      fail(
-        `Duplicate tarball filename in compatibility manifest: ${packageArtifact.filename}`,
-      );
-    }
-    if (path.basename(packageArtifact.filename) !== packageArtifact.filename) {
-      fail(`Unsafe tarball filename: ${packageArtifact.filename}`);
-    }
-    names.add(packageArtifact.name);
-    filenames.add(packageArtifact.filename);
-    const filename = path.join(artifactsDirectory, packageArtifact.filename);
-    if (!existsSync(filename)) {
-      fail(`Missing compatibility tarball: ${filename}`);
-    }
-    if (sha256(filename) !== packageArtifact.sha256) {
-      fail(`Checksum mismatch for compatibility tarball: ${filename}`);
-    }
-  }
+  return validateCompatibilityManifest(manifest, {
+    inspectArtifact: (filename) => {
+      const absolute = path.join(artifactsDirectory, filename);
+      if (!existsSync(absolute)) {
+        return { exists: false };
+      }
+      const fileStat = lstatSync(absolute);
+      return {
+        exists: true,
+        isFile: fileStat.isFile(),
+        isSymbolicLink: fileStat.isSymbolicLink(),
+        sha256: fileStat.isFile() ? sha256(absolute) : undefined,
+      };
+    },
+  });
 }
 
 function compatibilityEnvironment(extra = {}) {

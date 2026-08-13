@@ -88,7 +88,7 @@ Priorities have the following meanings:
 | REV-011 | P2 | Completed | Repository tooling | Centralise workspace discovery |
 | REV-012 | P2 | Completed | Generators | Make `lect` mutations reliable |
 | REV-013 | P2 | Completed | Developer workflow | Separate mutation from verification |
-| REV-014 | P2 | Pending | Release tooling | Modularise and test release-critical code |
+| REV-014 | P2 | Completed | Release tooling | Modularise and test release-critical code |
 | REV-015 | P2 | Pending | Error handling | Format arbitrary invalid inputs safely |
 | REV-016 | P2 | Pending | Performance | Repair misleading benchmark workloads |
 | REV-017 | P2 | Pending | Release safety | Retire or guard direct-publish scripts |
@@ -738,20 +738,52 @@ Priorities have the following meanings:
 
 ### REV-014 — Modularise and test release-critical code
 
-- Status: Pending
-- Evidence status: Confirmed from code structure
+- Status: Completed
+- Completed: 2026-08-14
+- Evidence status: Reproduced, expanded, fixed, and validated with pure fakes
+  and an offline command-boundary fixture
 - Evidence:
-  - `ops/scripts/npm-release.js` is approximately 2,178 lines and owns argument
-    parsing, workspace validation, planning, payload traversal, packing,
-    publication, verification, and tagging.
-  - `ops/scripts/package-node-compatibility.js` is approximately 1,261 lines.
-  - Existing `ops/helpers/tests` focus on helper modules rather than complete
-    release and archive flows.
+  - At the review baseline, `ops/scripts/npm-release.js` was approximately
+    2,178 lines and owned argument parsing, workspace validation, planning,
+    payload traversal, packing, publication, verification, and tagging.
+  - `ops/scripts/package-node-compatibility.js` was approximately 1,261 lines,
+    with compatibility-plan and artifact-manifest invariants embedded in its
+    effectful orchestration.
+  - Existing `ops/helpers/tests` did not exercise a complete offline release
+    plan, summary, and reproducible pack flow or the publish retry state
+    machine with controlled capabilities.
 - Problem: Many release invariants live in large scripts whose pure logic and
   failure paths are difficult to exercise independently.
 - Recommended change: Extract pure modules for release planning, payload and
   archive validation, registry state, tagging, and compatibility manifests.
   Add temporary-repository integration tests around command boundaries.
+- Resolution:
+  - Extracted release dependency planning, layer and schema validation, plan
+    projection, SemVer bump classification, and Markdown summary rendering to
+    `npmReleasePlan.js`.
+  - Extracted recursive export and bin target discovery, package-path checks,
+    archive payload reporting, tarball metadata, and release-manifest
+    validation to `npmPackagePayload.js`. Packing now requires every file in
+    the computed local-import payload closure, rejects duplicate report paths
+    and release tarball names, and applies host-independent slash and
+    backslash filename checks.
+  - Extracted the publish/verify retry state machine and tag decisions to
+    `npmReleaseRegistry.js`. Publishing has no default network capability:
+    callers must inject registry reads, the publish action, delays, and
+    logging. Controlled tests prove the exact read, publish, and retry-delay
+    counts for skip, success, mismatch, failure, and exhaustion paths.
+  - Extracted compatibility plan and manifest validation to
+    `packageNodeCompatibility.js`. It enforces exact record schemas, sorted
+    unique packages, CLIs, aliases and tarballs, safe bin targets and tarball
+    names, checksum presence, and referential parity between CLI and package
+    records while retaining the exact supported Node floors.
+  - Kept process, filesystem, Git, npm, registry, and clock effects in the two
+    script shells. Existing command names, plan and manifest schemas, output
+    text, and workflow entrypoints remain compatible.
+  - Added an offline integration fixture that creates a real temporary Git
+    repository at a path containing spaces, copies the real CLI and helper
+    boundary into it, and runs plan, summary, pack, and `pack --reference`
+    without registry access or publish credentials.
 - Done when:
   - Critical invariants have focused unit tests.
   - Pack and plan commands have offline integration fixtures.
@@ -761,6 +793,26 @@ Priorities have the following meanings:
   - Ops unit and integration suites
   - Release plan, summary, and pack against temporary fixtures
   - Existing CI and release workflow linting
+- Validation results:
+  - Thirty-one focused tests passed: 5 release-plan, 8 payload/archive, 10 registry
+    state-machine, 7 compatibility-plan/manifest, and 1 end-to-end offline CLI
+    fixture.
+  - The complete ops helper suite passed all 114 tests. The real CLI validated
+    all 112 workspaces, and both release and compatibility scripts accepted
+    their existing help boundaries.
+  - The integration fixture produced a release plan and Markdown summary,
+    packed its real staged npm tarball, then independently repacked and
+    verified it with `--reference`.
+  - A review restart expanded the initial entrypoint check to require the full
+    computed payload closure and replaced host-dependent basename checks with
+    explicit cross-platform separators. A second review removed the temporary
+    root hook from production code; the fixture now runs a copied real CLI
+    whose root remains file-relative.
+  - The independent review found no correctness defects. Its one minor
+    coverage gap prompted a final restart that extracted sequential layer
+    publishing and proved a failed layer prevents every later layer.
+  - Targeted Biome, syntax checks, and `git diff --check` passed. No workflow
+    contract changed, so existing workflow YAML required no edit.
 
 ### REV-015 — Format arbitrary invalid inputs safely
 

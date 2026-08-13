@@ -22,6 +22,39 @@ import { devNull, tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import {
+  entrypointTargets,
+  forbiddenPackedPath,
+  localSpecifiers,
+  MANIFEST_KIND,
+  packageTarget,
+  safeTarballFilename,
+  validatePackedFiles,
+  validateReleaseManifest as validateReleaseManifestCore,
+  validateTarball as validateTarballCore,
+  wildcardRegExp,
+} from "../helpers/npmPackagePayload.js";
+import {
+  assertPackageName,
+  assertSha,
+  assertVersion,
+  COMMITTED_PLAN_PATH,
+  DATA_PACKAGE,
+  DEPENDENCY_FIELDS,
+  PLAN_KIND,
+  planProjection,
+  RELEASE_SCHEMA_VERSION,
+  releasePackages,
+  releaseSummary,
+  safeRepositoryPath as resolveSafeRepositoryPath,
+  validatePlan as validateReleasePlan,
+} from "../helpers/npmReleasePlan.js";
+import {
+  assertRegistryIntegrity,
+  publishPackage,
+  publishReleaseLayers,
+  releaseTagDecisions,
+} from "../helpers/npmReleaseRegistry.js";
 import { assertReproducibleReleaseManifests } from "../helpers/releaseReproducibility.js";
 import { readWorkspaceRecords } from "../helpers/workspaceInventoryFile.js";
 
@@ -31,31 +64,12 @@ const ROOT = path.resolve(
 );
 const NPM = process.platform === "win32" ? "npm.cmd" : "npm";
 const REGISTRY = "https://registry.npmjs.org/";
-const DATA_PACKAGE = "@codsen/data";
 const EXPECTED_WORKSPACE_COUNT = 112;
-const DEPENDENCY_FIELDS = [
-  "dependencies",
-  "optionalDependencies",
-  "peerDependencies",
-];
-const PLAN_KIND = "codsen-npm-release-plan";
-const MANIFEST_KIND = "codsen-npm-release-manifest";
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = RELEASE_SCHEMA_VERSION;
 const DEFAULT_CONCURRENCY = 8;
 const MAX_OUTPUT_BYTES = 50 * 1024 * 1024;
 const MAX_SUMMARY_BYTES = 60 * 1024;
-const COMMITTED_PLAN_PATH = ".github/npm-release-plan.json";
-const FORBIDDEN_PACKED_PARTS = new Set([
-  ".git",
-  ".turbo",
-  "coverage",
-  "node_modules",
-  "tap",
-  "perf",
-]);
 const DOC_FILES = ["CHANGELOG.md", "LICENSE", "README.md"];
-const VERSION_RE =
-  /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/;
 
 function fail(message) {
   throw new Error(message);
@@ -277,68 +291,8 @@ function requireSuccess(result, description) {
   return result;
 }
 
-function assertObjectKeys(value, required, context) {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    fail(`${context} must be an object`);
-  }
-  const actual = Object.keys(value).sort();
-  const expected = [...required].sort();
-  if (JSON.stringify(actual) !== JSON.stringify(expected)) {
-    fail(
-      `${context} must contain exactly [${expected.join(", ")}], received [${actual.join(", ")}]`,
-    );
-  }
-}
-
-function assertSha(value, context) {
-  if (typeof value !== "string" || !/^[0-9a-f]{40}$/.test(value)) {
-    fail(`${context} must be a full lowercase Git commit SHA`);
-  }
-}
-
-function assertVersion(value, context) {
-  if (typeof value !== "string" || !VERSION_RE.test(value)) {
-    fail(`${context} must be a valid SemVer version`);
-  }
-}
-
-function assertPackageName(value, context) {
-  if (
-    typeof value !== "string" ||
-    value.length === 0 ||
-    value.length > 214 ||
-    /\s/.test(value) ||
-    [...value].some((character) => {
-      const code = character.codePointAt(0);
-      return code < 32 || code === 127;
-    })
-  ) {
-    fail(`${context} is not a safe npm package name`);
-  }
-}
-
 function safeRepositoryPath(relative, context) {
-  if (
-    typeof relative !== "string" ||
-    !relative ||
-    path.posix.isAbsolute(relative) ||
-    relative.includes("\\")
-  ) {
-    fail(`${context} must be a repository-relative POSIX path`);
-  }
-  const normalized = path.posix.normalize(relative);
-  if (
-    normalized !== relative ||
-    normalized === ".." ||
-    normalized.startsWith("../")
-  ) {
-    fail(`${context} escapes the repository: ${relative}`);
-  }
-  const absolute = path.resolve(ROOT, ...relative.split("/"));
-  if (!absolute.startsWith(`${ROOT}${path.sep}`)) {
-    fail(`${context} escapes the repository: ${relative}`);
-  }
-  return absolute;
+  return resolveSafeRepositoryPath(relative, context, ROOT);
 }
 
 function validateWorkspaceManifest(manifest, directory) {
@@ -468,75 +422,6 @@ function manifestAtCommit(commit, directory) {
   return parseJson(git(["show", object]).stdout, object);
 }
 
-function selectedDependencies(manifest, selectedNames) {
-  const dependencies = new Set();
-  for (const field of DEPENDENCY_FIELDS) {
-    if (manifest[field] === undefined) {
-      continue;
-    }
-    if (!manifest[field] || typeof manifest[field] !== "object") {
-      fail(`${manifest.name} ${field} must be an object`);
-    }
-    for (const name of Object.keys(manifest[field])) {
-      if (selectedNames.has(name)) {
-        dependencies.add(name);
-      }
-    }
-  }
-  return [...dependencies].sort();
-}
-
-function buildLayers(packages) {
-  const packageByName = new Map(packages.map((item) => [item.name, item]));
-  const selectedNames = new Set(packageByName.keys());
-  const data = packageByName.get(DATA_PACKAGE);
-  if (data) {
-    for (const item of packages) {
-      if (
-        item.name !== DATA_PACKAGE &&
-        item.dependencies.includes(DATA_PACKAGE)
-      ) {
-        fail(
-          `${item.name} depends on ${DATA_PACKAGE}, which must publish last`,
-        );
-      }
-    }
-  }
-
-  const pending = new Set(
-    [...selectedNames].filter((name) => name !== DATA_PACKAGE),
-  );
-  const layers = [];
-  while (pending.size > 0) {
-    const ready = [...pending]
-      .filter((name) =>
-        packageByName
-          .get(name)
-          .dependencies.filter((dependency) => dependency !== DATA_PACKAGE)
-          .every((dependency) => !pending.has(dependency)),
-      )
-      .sort();
-    if (ready.length === 0) {
-      const cycle = [...pending].sort().map(
-        (name) =>
-          `${name} -> ${packageByName
-            .get(name)
-            .dependencies.filter((dependency) => pending.has(dependency))
-            .join(", ")}`,
-      );
-      fail(`Selected workspace dependency cycle:\n${cycle.join("\n")}`);
-    }
-    layers.push(ready);
-    for (const name of ready) {
-      pending.delete(name);
-    }
-  }
-  if (data) {
-    layers.push([DATA_PACKAGE]);
-  }
-  return layers;
-}
-
 function calculatePlan(
   baseRef,
   baseSha = resolveCommit(baseRef, "release base"),
@@ -565,26 +450,7 @@ function calculatePlan(
       });
     }
   }
-  selected.sort((left, right) => left.name.localeCompare(right.name));
-  const selectedNames = new Set(selected.map(({ name }) => name));
-  const packages = selected.map((item) => ({
-    baseVersion: item.baseVersion,
-    dependencies: selectedDependencies(item.manifest, selectedNames),
-    directory: item.directory,
-    layer: -1,
-    name: item.name,
-    version: item.version,
-  }));
-  const layers = buildLayers(packages);
-  const layerByName = new Map();
-  layers.forEach((layer, index) => {
-    layer.forEach((name) => {
-      layerByName.set(name, index);
-    });
-  });
-  for (const item of packages) {
-    item.layer = layerByName.get(item.name);
-  }
+  const { layers, packages } = releasePackages(selected);
 
   return {
     baseRef,
@@ -602,151 +468,8 @@ function calculatePlan(
   };
 }
 
-function validateLayers(packages, layers, context) {
-  if (!Array.isArray(layers) || layers.some((layer) => !Array.isArray(layer))) {
-    fail(`${context}.layers must be an array of arrays`);
-  }
-  const flattened = layers.flat();
-  const names = packages.map(({ name }) => name);
-  if (
-    flattened.length !== names.length ||
-    new Set(flattened).size !== flattened.length ||
-    [...flattened].sort().join("\0") !== [...names].sort().join("\0")
-  ) {
-    fail(`${context}.layers must contain every package exactly once`);
-  }
-  for (const layer of layers) {
-    if (JSON.stringify(layer) !== JSON.stringify([...layer].sort())) {
-      fail(`${context}.layers entries must be sorted`);
-    }
-  }
-  const dataLayer = layers.findIndex((layer) => layer.includes(DATA_PACKAGE));
-  if (
-    dataLayer !== -1 &&
-    (dataLayer !== layers.length - 1 || layers[dataLayer].length !== 1)
-  ) {
-    fail(`${DATA_PACKAGE} must be alone in the final release layer`);
-  }
-  const layerByName = new Map();
-  layers.forEach((layer, index) => {
-    layer.forEach((name) => {
-      layerByName.set(name, index);
-    });
-  });
-  for (const item of packages) {
-    if (item.layer !== layerByName.get(item.name)) {
-      fail(`${item.name} has an incorrect layer number`);
-    }
-    for (const dependency of item.dependencies) {
-      if (!layerByName.has(dependency)) {
-        fail(`${item.name} lists an unselected dependency: ${dependency}`);
-      }
-      if (layerByName.get(dependency) >= item.layer) {
-        fail(`${item.name} is not after dependency ${dependency}`);
-      }
-    }
-  }
-}
-
 function validatePlan(plan) {
-  assertObjectKeys(
-    plan,
-    [
-      "baseRef",
-      "baseSha",
-      "createdAt",
-      "dependencyFields",
-      "kind",
-      "layers",
-      "packages",
-      "plannedAtSha",
-      "preparedTreeSha256",
-      "schemaVersion",
-      "selectedCount",
-      "workspaceCount",
-    ],
-    "release plan",
-  );
-  if (plan.kind !== PLAN_KIND || plan.schemaVersion !== SCHEMA_VERSION) {
-    fail("Unsupported release plan kind or schema version");
-  }
-  assertSha(plan.baseSha, "release plan baseSha");
-  assertSha(plan.plannedAtSha, "release plan plannedAtSha");
-  if (!/^[0-9a-f]{64}$/.test(plan.preparedTreeSha256)) {
-    fail("release plan preparedTreeSha256 is invalid");
-  }
-  if (typeof plan.baseRef !== "string" || !plan.baseRef) {
-    fail("release plan baseRef must be a non-empty string");
-  }
-  if (Number.isNaN(Date.parse(plan.createdAt))) {
-    fail("release plan createdAt must be an ISO timestamp");
-  }
-  if (
-    JSON.stringify(plan.dependencyFields) !== JSON.stringify(DEPENDENCY_FIELDS)
-  ) {
-    fail("release plan dependencyFields is unsupported");
-  }
-  if (!Number.isInteger(plan.workspaceCount) || plan.workspaceCount < 1) {
-    fail("release plan workspaceCount must be a positive integer");
-  }
-  if (!Array.isArray(plan.packages)) {
-    fail("release plan packages must be an array");
-  }
-  if (plan.selectedCount !== plan.packages.length || plan.selectedCount < 1) {
-    fail(
-      "release plan must select at least one package and selectedCount must match packages.length",
-    );
-  }
-  for (const [index, item] of plan.packages.entries()) {
-    assertObjectKeys(
-      item,
-      ["baseVersion", "dependencies", "directory", "layer", "name", "version"],
-      `release plan packages[${index}]`,
-    );
-    assertPackageName(item.name, `release plan packages[${index}].name`);
-    assertVersion(item.version, `${item.name} version`);
-    if (item.baseVersion !== null) {
-      assertVersion(item.baseVersion, `${item.name} baseVersion`);
-    }
-    safeRepositoryPath(item.directory, `${item.name} directory`);
-    if (!Array.isArray(item.dependencies)) {
-      fail(`${item.name} dependencies must be an array`);
-    }
-    for (const dependency of item.dependencies) {
-      assertPackageName(dependency, `${item.name} dependency`);
-    }
-    if (
-      new Set(item.dependencies).size !== item.dependencies.length ||
-      JSON.stringify(item.dependencies) !==
-        JSON.stringify([...item.dependencies].sort())
-    ) {
-      fail(`${item.name} dependencies must be unique and sorted`);
-    }
-    if (!Number.isInteger(item.layer) || item.layer < 0) {
-      fail(`${item.name} layer must be a non-negative integer`);
-    }
-  }
-  const names = plan.packages.map(({ name }) => name);
-  if (
-    new Set(names).size !== names.length ||
-    JSON.stringify(names) !== JSON.stringify([...names].sort())
-  ) {
-    fail("release plan packages must have unique, sorted names");
-  }
-  validateLayers(plan.packages, plan.layers, "release plan");
-  return plan;
-}
-
-function planProjection(plan) {
-  return {
-    baseSha: plan.baseSha,
-    dependencyFields: plan.dependencyFields,
-    layers: plan.layers,
-    packages: plan.packages,
-    preparedTreeSha256: plan.preparedTreeSha256,
-    selectedCount: plan.selectedCount,
-    workspaceCount: plan.workspaceCount,
-  };
+  return validateReleasePlan(plan, { repositoryRoot: ROOT });
 }
 
 function commandPlan(options) {
@@ -759,139 +482,6 @@ function commandPlan(options) {
   console.log(
     `Planned ${plan.selectedCount} package(s) in ${plan.layers.length} layer(s): ${absolute}`,
   );
-}
-
-function parseVersion(value) {
-  const match = VERSION_RE.exec(value);
-  if (!match) {
-    fail(`${value} must be a valid SemVer version`);
-  }
-  const withoutBuild = value.split("+", 1)[0];
-  const prereleaseAt = withoutBuild.indexOf("-");
-  return {
-    core: match.slice(1, 4),
-    prerelease:
-      prereleaseAt === -1
-        ? []
-        : withoutBuild.slice(prereleaseAt + 1).split("."),
-  };
-}
-
-function compareNumericIdentifier(left, right) {
-  if (left.length !== right.length) {
-    return left.length < right.length ? -1 : 1;
-  }
-  return left === right ? 0 : left < right ? -1 : 1;
-}
-
-function comparePrerelease(left, right) {
-  if (left.length === 0 || right.length === 0) {
-    return left.length === right.length ? 0 : left.length === 0 ? 1 : -1;
-  }
-  const length = Math.max(left.length, right.length);
-  for (let index = 0; index < length; index += 1) {
-    const leftPart = left[index];
-    const rightPart = right[index];
-    if (leftPart === undefined || rightPart === undefined) {
-      return leftPart === rightPart ? 0 : leftPart === undefined ? -1 : 1;
-    }
-    if (leftPart === rightPart) {
-      continue;
-    }
-    const leftNumeric = /^\d+$/.test(leftPart);
-    const rightNumeric = /^\d+$/.test(rightPart);
-    if (leftNumeric && rightNumeric) {
-      return compareNumericIdentifier(leftPart, rightPart);
-    }
-    if (leftNumeric !== rightNumeric) {
-      return leftNumeric ? -1 : 1;
-    }
-    return leftPart < rightPart ? -1 : 1;
-  }
-  return 0;
-}
-
-function versionChange(baseVersion, version, packageName) {
-  if (baseVersion === null) {
-    return "new";
-  }
-  if (baseVersion === version) {
-    fail(`${packageName} release plan does not change its version`);
-  }
-  const base = parseVersion(baseVersion);
-  const next = parseVersion(version);
-  const labels = ["major", "minor", "patch"];
-  for (let index = 0; index < labels.length; index += 1) {
-    if (next.core[index] !== base.core[index]) {
-      if (compareNumericIdentifier(next.core[index], base.core[index]) < 0) {
-        fail(`${packageName} release plan lowers ${baseVersion} to ${version}`);
-      }
-      return `${next.prerelease.length === 0 ? "" : "pre"}${labels[index]}`;
-    }
-  }
-  const prereleaseOrder = comparePrerelease(base.prerelease, next.prerelease);
-  if (prereleaseOrder > 0) {
-    fail(`${packageName} release plan lowers ${baseVersion} to ${version}`);
-  }
-  if (prereleaseOrder < 0) {
-    return next.prerelease.length === 0 ? "stable" : "prerelease";
-  }
-  fail(
-    `${packageName} release plan changes ${baseVersion} to equal-precedence ${version}`,
-  );
-}
-
-function markdownCode(value) {
-  return `<code>${String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll("|", "&#124;")}</code>`;
-}
-
-function releaseSummary(plan) {
-  const rows = plan.packages.map((item) => ({
-    ...item,
-    change: versionChange(item.baseVersion, item.version, item.name),
-  }));
-  const counts = new Map();
-  for (const { change } of rows) {
-    counts.set(change, (counts.get(change) ?? 0) + 1);
-  }
-  const order = [
-    "major",
-    "minor",
-    "patch",
-    "premajor",
-    "preminor",
-    "prepatch",
-    "prerelease",
-    "stable",
-    "new",
-  ];
-  const breakdown = order
-    .filter((change) => counts.has(change))
-    .map((change) => `${counts.get(change)} ${change}`)
-    .join(", ");
-  const table = rows
-    .map(
-      ({ baseVersion, change, layer, name, version }) =>
-        `| ${markdownCode(name)} | ${baseVersion === null ? "—" : markdownCode(baseVersion)} | ${markdownCode(version)} | **${change}** | ${layer + 1} |`,
-    )
-    .join("\n");
-
-  return `## npm release proposal
-
-**${plan.selectedCount} package${plan.selectedCount === 1 ? "" : "s"} selected across ${plan.layers.length} publish layer${plan.layers.length === 1 ? "" : "s"}** from base ${markdownCode(plan.baseSha)}.
-
-**Bump summary:** ${breakdown}.
-
-| Package | Current | Proposed | Bump | Publish layer |
-| :-- | --: | --: | :-- | --: |
-${table}
-
-Lower-numbered layers publish first. Publishing starts only after this PR is merged, CI passes, and the protected ${markdownCode("npm-production")} deployment is approved. The committed ${markdownCode(COMMITTED_PLAN_PATH)} file is the source of truth for the exact versions above.
-`;
 }
 
 function commandSummary(options) {
@@ -932,109 +522,6 @@ function assertHeadBinding(headSha, context) {
   }
 }
 
-function packageTarget(value, context) {
-  if (typeof value !== "string" || !value) {
-    fail(`${context} must be a non-empty string`);
-  }
-  const stripped = value.startsWith("./") ? value.slice(2) : value;
-  if (
-    !stripped ||
-    path.posix.isAbsolute(stripped) ||
-    stripped.includes("\\") ||
-    path.posix.normalize(stripped) !== stripped ||
-    stripped === ".." ||
-    stripped.startsWith("../")
-  ) {
-    fail(`${context} is not a safe package-relative path: ${value}`);
-  }
-  return stripped;
-}
-
-function collectStringTargets(value, context, output) {
-  if (typeof value === "string") {
-    if (!value.startsWith("./")) {
-      fail(`${context} target must begin with ./: ${value}`);
-    }
-    output.add(packageTarget(value, context));
-    return;
-  }
-  if (value === null) {
-    return;
-  }
-  if (Array.isArray(value)) {
-    value.forEach((item, index) => {
-      collectStringTargets(item, `${context}[${index}]`, output);
-    });
-    return;
-  }
-  if (value && typeof value === "object") {
-    Object.entries(value).forEach(([key, item]) => {
-      collectStringTargets(item, `${context}.${key}`, output);
-    });
-    return;
-  }
-  fail(`${context} contains an unsupported package target`);
-}
-
-function entrypointTargets(manifest) {
-  const targets = new Set();
-  if (manifest.exports !== undefined) {
-    collectStringTargets(manifest.exports, `${manifest.name} exports`, targets);
-  }
-  for (const field of ["types", "typings", "main", "module"]) {
-    if (manifest[field] !== undefined) {
-      targets.add(packageTarget(manifest[field], `${manifest.name} ${field}`));
-    }
-  }
-  if (manifest.browser !== undefined) {
-    if (typeof manifest.browser === "string") {
-      targets.add(packageTarget(manifest.browser, `${manifest.name} browser`));
-    } else if (manifest.browser && typeof manifest.browser === "object") {
-      for (const [key, value] of Object.entries(manifest.browser)) {
-        if (typeof value === "string" && value.startsWith("./")) {
-          targets.add(packageTarget(value, `${manifest.name} browser.${key}`));
-        }
-      }
-    } else {
-      fail(`${manifest.name} browser must be a string or object`);
-    }
-  }
-  if (manifest.bin !== undefined) {
-    let bins;
-    if (typeof manifest.bin === "string") {
-      bins = [manifest.bin];
-    } else if (
-      manifest.bin &&
-      typeof manifest.bin === "object" &&
-      !Array.isArray(manifest.bin)
-    ) {
-      bins = Object.values(manifest.bin);
-    } else {
-      fail(`${manifest.name} bin must be a string or string-valued object`);
-    }
-    if (bins.some((value) => typeof value !== "string")) {
-      fail(`${manifest.name} bin must be a string or string-valued object`);
-    }
-    for (const target of bins) {
-      targets.add(packageTarget(target, `${manifest.name} bin`));
-    }
-  }
-  if (targets.size === 0) {
-    fail(
-      `${manifest.name} has no exports, types, bin, main, module, or browser entrypoint`,
-    );
-  }
-  return [...targets].sort();
-}
-
-function escapeRegExp(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function wildcardRegExp(pattern) {
-  return new RegExp(`^${pattern.split("*").map(escapeRegExp).join("[^/]+")}$`);
-}
-
 function walkFiles(directory, relative = "") {
   const files = [];
   for (const entry of readdirSync(path.join(directory, relative), {
@@ -1054,16 +541,6 @@ function walkFiles(directory, relative = "") {
     }
   }
   return files;
-}
-
-function forbiddenPackedPath(relative) {
-  const parts = relative.split("/");
-  return (
-    parts.some((part) => FORBIDDEN_PACKED_PARTS.has(part)) ||
-    parts.includes(".eslintcache") ||
-    parts.includes(".DS_Store") ||
-    relative.endsWith(".tsbuildinfo")
-  );
 }
 
 function resolveLocalSpecifier(packageDirectory, fromRelative, specifier) {
@@ -1121,29 +598,6 @@ function resolveLocalSpecifier(packageDirectory, fromRelative, specifier) {
     fail(`${fromRelative} imports missing local file ${specifier}`);
   }
   return [...results];
-}
-
-function localSpecifiers(source) {
-  const specifiers = new Set();
-  const expressions = [
-    /(?:import|export)\s+(?:[^"']*?\s+from\s*)?["']([^"']+)["']/g,
-    /import\s*\(\s*["']([^"']+)["']\s*\)/g,
-    /require\s*\(\s*["']([^"']+)["']\s*\)/g,
-    /new\s+URL\s*\(\s*["']([^"']+)["']\s*,\s*import\.meta\.url\s*\)/g,
-  ];
-  for (const expression of expressions) {
-    let match;
-    for (
-      match = expression.exec(source);
-      match;
-      match = expression.exec(source)
-    ) {
-      if (match[1].startsWith(".")) {
-        specifiers.add(match[1]);
-      }
-    }
-  }
-  return [...specifiers];
 }
 
 function payloadFiles(packageDirectory, targets) {
@@ -1244,7 +698,7 @@ function createStagingPackage(item, manifest, temporaryRoot) {
   for (const file of payload) {
     copyPayloadFile(sourceDirectory, stagingDirectory, file);
   }
-  return { staged, stagingDirectory, targets };
+  return { payload, staged, stagingDirectory, targets };
 }
 
 function parseNpmJson(stdout, context) {
@@ -1280,65 +734,6 @@ function hashFile(file) {
     sha512: sha512Buffer.toString("hex"),
     size: contents.length,
   };
-}
-
-function validatePackedFiles(item, manifest, packResult, staged, targets) {
-  if (!Array.isArray(packResult.files)) {
-    fail(`npm pack did not report files for ${item.name}`);
-  }
-  const files = new Map();
-  for (const entry of packResult.files) {
-    if (!entry || typeof entry.path !== "string") {
-      fail(`npm pack reported an invalid file for ${item.name}`);
-    }
-    const relative = entry.path.replace(/^package\//, "");
-    packageTarget(relative, `${item.name} packed file`);
-    if (forbiddenPackedPath(relative)) {
-      fail(
-        `${item.name} tarball contains forbidden transient path ${relative}`,
-      );
-    }
-    if (!staged.has(relative)) {
-      fail(
-        `${item.name} tarball contains a file outside the controlled staging set: ${relative}`,
-      );
-    }
-    files.set(relative, entry);
-  }
-  if (!files.has("package.json")) {
-    fail(`${item.name} tarball does not contain package.json`);
-  }
-  for (const target of targets) {
-    if (target.includes("*")) {
-      if (
-        ![...files.keys()].some((file) => wildcardRegExp(target).test(file))
-      ) {
-        fail(
-          `${item.name} tarball does not satisfy entrypoint pattern ${target}`,
-        );
-      }
-    } else if (!files.has(target)) {
-      fail(`${item.name} tarball does not contain entrypoint ${target}`);
-    }
-  }
-  const binTargets =
-    manifest.bin === undefined
-      ? []
-      : typeof manifest.bin === "string"
-        ? [manifest.bin]
-        : Object.values(manifest.bin ?? {});
-  for (const targetValue of binTargets) {
-    const target = packageTarget(targetValue, `${item.name} bin`);
-    const packed = files.get(target);
-    if (!packed) {
-      fail(`${item.name} tarball does not contain bin target ${target}`);
-    }
-    if (typeof packed.mode === "number" && (packed.mode & 0o111) === 0) {
-      fail(
-        `${item.name} bin target ${target} is not executable in the tarball`,
-      );
-    }
-  }
 }
 
 async function mapLimit(items, concurrency, worker) {
@@ -1377,7 +772,7 @@ async function packOne(item, outputDirectory, temporaryRoot) {
       `${item.directory}/package.json no longer matches planned ${item.name}@${item.version}`,
     );
   }
-  const { staged, stagingDirectory, targets } = createStagingPackage(
+  const { payload, staged, stagingDirectory, targets } = createStagingPackage(
     item,
     manifest,
     temporaryRoot,
@@ -1407,12 +802,8 @@ async function packOne(item, outputDirectory, temporaryRoot) {
       `npm pack returned ${packed.name}@${packed.version}, expected ${item.name}@${item.version}`,
     );
   }
-  validatePackedFiles(item, manifest, packed, staged, targets);
-  if (
-    typeof packed.filename !== "string" ||
-    path.basename(packed.filename) !== packed.filename ||
-    !packed.filename.endsWith(".tgz")
-  ) {
+  validatePackedFiles(item, manifest, packed, staged, targets, payload);
+  if (!safeTarballFilename(packed.filename)) {
     fail(`npm pack returned an unsafe tarball filename for ${item.name}`);
   }
   const tarballPath = path.resolve(outputDirectory, packed.filename);
@@ -1534,141 +925,37 @@ async function commandPack(options) {
 }
 
 function validateTarball(item, manifestDirectory) {
-  assertObjectKeys(
-    item.tarball,
-    ["entryCount", "file", "integrity", "sha1", "sha256", "sha512", "size"],
-    `${item.name} tarball`,
-  );
-  const tarball = item.tarball;
-  if (
-    typeof tarball.file !== "string" ||
-    path.basename(tarball.file) !== tarball.file ||
-    !tarball.file.endsWith(".tgz")
-  ) {
-    fail(`${item.name} has an unsafe tarball filename`);
-  }
-  if (!Number.isInteger(tarball.entryCount) || tarball.entryCount < 1) {
-    fail(`${item.name} tarball entryCount must be a positive integer`);
-  }
-  if (!Number.isInteger(tarball.size) || tarball.size < 1) {
-    fail(`${item.name} tarball size must be a positive integer`);
-  }
-  if (!/^[0-9a-f]{40}$/.test(tarball.sha1)) {
-    fail(`${item.name} tarball sha1 is invalid`);
-  }
-  if (!/^[0-9a-f]{64}$/.test(tarball.sha256)) {
-    fail(`${item.name} tarball sha256 is invalid`);
-  }
-  if (!/^[0-9a-f]{128}$/.test(tarball.sha512)) {
-    fail(`${item.name} tarball sha512 is invalid`);
-  }
-  if (!/^sha512-[A-Za-z0-9+/]+={0,2}$/.test(tarball.integrity)) {
-    fail(`${item.name} tarball integrity is not a sha512 SRI`);
-  }
-  const absolute = path.resolve(manifestDirectory, tarball.file);
-  if (path.dirname(absolute) !== manifestDirectory) {
-    fail(`${item.name} tarball escapes the artifact directory`);
-  }
-  if (!existsSync(absolute)) {
-    fail(`${item.name} tarball is missing: ${absolute}`);
-  }
-  const fileStat = lstatSync(absolute);
-  if (!fileStat.isFile() || fileStat.isSymbolicLink()) {
-    fail(`${item.name} tarball is not a regular file`);
-  }
-  const hashes = hashFile(absolute);
-  for (const field of ["integrity", "sha1", "sha256", "sha512", "size"]) {
-    if (hashes[field] !== tarball[field]) {
-      fail(`${item.name} tarball ${field} does not match manifest.json`);
+  return validateTarballCore(item, manifestDirectory, (absolute) => {
+    if (!existsSync(absolute)) {
+      return { exists: false };
     }
-  }
-  return absolute;
+    const fileStat = lstatSync(absolute);
+    return {
+      exists: true,
+      hashes: fileStat.isFile() ? hashFile(absolute) : undefined,
+      isFile: fileStat.isFile(),
+      isSymbolicLink: fileStat.isSymbolicLink(),
+    };
+  });
 }
 
 function validateReleaseManifest(manifest, manifestDirectory) {
-  assertObjectKeys(
-    manifest,
-    [
-      "baseSha",
-      "createdAt",
-      "headSha",
-      "kind",
-      "layers",
-      "packageCount",
-      "packages",
-      "planSha256",
-      "schemaVersion",
-      "workspaceCount",
-    ],
-    "release manifest",
-  );
-  if (
-    manifest.kind !== MANIFEST_KIND ||
-    manifest.schemaVersion !== SCHEMA_VERSION
-  ) {
-    fail("Unsupported release manifest kind or schema version");
-  }
-  assertSha(manifest.baseSha, "release manifest baseSha");
-  assertSha(manifest.headSha, "release manifest headSha");
-  if (Number.isNaN(Date.parse(manifest.createdAt))) {
-    fail("release manifest createdAt must be an ISO timestamp");
-  }
-  if (!/^[0-9a-f]{64}$/.test(manifest.planSha256)) {
-    fail("release manifest planSha256 is invalid");
-  }
-  if (
-    !Number.isInteger(manifest.workspaceCount) ||
-    manifest.workspaceCount < 1
-  ) {
-    fail("release manifest workspaceCount must be a positive integer");
-  }
-  if (!Array.isArray(manifest.packages)) {
-    fail("release manifest packages must be an array");
-  }
-  if (
-    manifest.packageCount !== manifest.packages.length ||
-    manifest.packageCount < 1
-  ) {
-    fail(
-      "release manifest must contain at least one package and packageCount must match packages.length",
-    );
-  }
-  for (const [index, item] of manifest.packages.entries()) {
-    assertObjectKeys(
-      item,
-      ["dependencies", "directory", "layer", "name", "tarball", "version"],
-      `release manifest packages[${index}]`,
-    );
-    assertPackageName(item.name, `release manifest packages[${index}].name`);
-    assertVersion(item.version, `${item.name} version`);
-    safeRepositoryPath(item.directory, `${item.name} directory`);
-    if (!Array.isArray(item.dependencies)) {
-      fail(`${item.name} dependencies must be an array`);
-    }
-    item.dependencies.forEach((dependency) => {
-      assertPackageName(dependency, `${item.name} dependency`);
-    });
-    if (
-      new Set(item.dependencies).size !== item.dependencies.length ||
-      JSON.stringify(item.dependencies) !==
-        JSON.stringify([...item.dependencies].sort())
-    ) {
-      fail(`${item.name} dependencies must be unique and sorted`);
-    }
-    if (!Number.isInteger(item.layer) || item.layer < 0) {
-      fail(`${item.name} layer must be a non-negative integer`);
-    }
-    validateTarball(item, manifestDirectory);
-  }
-  const names = manifest.packages.map(({ name }) => name);
-  if (
-    new Set(names).size !== names.length ||
-    JSON.stringify(names) !== JSON.stringify([...names].sort())
-  ) {
-    fail("release manifest packages must have unique, sorted names");
-  }
-  validateLayers(manifest.packages, manifest.layers, "release manifest");
-  return manifest;
+  return validateReleaseManifestCore(manifest, {
+    inspectTarball: (absolute) => {
+      if (!existsSync(absolute)) {
+        return { exists: false };
+      }
+      const fileStat = lstatSync(absolute);
+      return {
+        exists: true,
+        hashes: fileStat.isFile() ? hashFile(absolute) : undefined,
+        isFile: fileStat.isFile(),
+        isSymbolicLink: fileStat.isSymbolicLink(),
+      };
+    },
+    manifestDirectory,
+    repositoryRoot: ROOT,
+  });
 }
 
 function loadReleaseManifest(file) {
@@ -1785,36 +1072,8 @@ async function registryState(item) {
   return { exists: true, integrity, version };
 }
 
-function assertRegistryIntegrity(item, state) {
-  if (state.version !== item.version) {
-    fail(
-      `npm returned ${state.version}, expected ${item.name}@${item.version}`,
-    );
-  }
-  if (state.integrity !== item.tarball.integrity) {
-    fail(
-      `${item.name}@${item.version} exists on npm with different tarball integrity (${state.integrity} != ${item.tarball.integrity})`,
-    );
-  }
-}
-
 function delay(milliseconds) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
-}
-
-async function verifyPublished(item) {
-  const waits = [0, 1_000, 2_000, 4_000, 8_000, 8_000, 8_000];
-  for (const wait of waits) {
-    if (wait > 0) {
-      await delay(wait);
-    }
-    const state = await registryState(item);
-    if (state.exists) {
-      assertRegistryIntegrity(item, state);
-      return;
-    }
-  }
-  fail(`${item.name}@${item.version} was not visible on npm after publishing`);
 }
 
 async function commandPreflight(options) {
@@ -1866,35 +1125,30 @@ function validateCurrentPackageManifests(packages) {
 }
 
 async function publishOne(item, tarballPath) {
-  const state = await registryState(item);
-  if (state.exists) {
-    assertRegistryIntegrity(item, state);
-    console.log(
-      `Already published with matching integrity: ${item.name}@${item.version}.`,
-    );
-    return "skipped";
-  }
-  console.log(`Publishing ${item.name}@${item.version}...`);
-  requireSuccess(
-    await run(
-      NPM,
-      [
-        "publish",
-        tarballPath,
-        "--ignore-scripts",
-        "--provenance",
-        "--access",
-        "public",
-        `--registry=${REGISTRY}`,
-        "--loglevel=notice",
-      ],
-      { env: sanitizedNpmEnvironment() },
-    ),
-    `npm publish ${item.name}@${item.version}`,
-  );
-  await verifyPublished(item);
-  console.log(`Published and verified ${item.name}@${item.version}.`);
-  return "published";
+  return publishPackage(item, tarballPath, {
+    delay,
+    log: (message) => console.log(message),
+    publish: async () => {
+      requireSuccess(
+        await run(
+          NPM,
+          [
+            "publish",
+            tarballPath,
+            "--ignore-scripts",
+            "--provenance",
+            "--access",
+            "public",
+            `--registry=${REGISTRY}`,
+            "--loglevel=notice",
+          ],
+          { env: sanitizedNpmEnvironment() },
+        ),
+        `npm publish ${item.name}@${item.version}`,
+      );
+    },
+    readState: registryState,
+  });
 }
 
 async function commandPublish(options) {
@@ -1913,20 +1167,15 @@ async function commandPublish(options) {
   const packageByName = new Map(
     manifest.packages.map((item) => [item.name, item]),
   );
-  const counts = { published: 0, skipped: 0 };
-  for (const [index, layer] of manifest.layers.entries()) {
-    console.log(
-      `Publishing layer ${index + 1}/${manifest.layers.length}: ${layer.join(", ")}`,
-    );
-    const outcomes = await mapLimit(layer, concurrency, async (name) => {
-      const item = packageByName.get(name);
-      const tarballPath = validateTarball(item, directory);
-      return publishOne(item, tarballPath);
-    });
-    for (const outcome of outcomes) {
-      counts[outcome] += 1;
-    }
-  }
+  const counts = await publishReleaseLayers(manifest.layers, {
+    log: (message) => console.log(message),
+    publishLayer: (layer) =>
+      mapLimit(layer, concurrency, async (name) => {
+        const item = packageByName.get(name);
+        const tarballPath = validateTarball(item, directory);
+        return publishOne(item, tarballPath);
+      }),
+  });
   console.log(
     `Release complete: ${counts.published} published, ${counts.skipped} already present with matching integrity.`,
   );
@@ -2023,28 +1272,14 @@ async function commandTags(options) {
     tag: tagName(item),
   }));
   const remoteState = shouldPush ? remoteTags(remote) : new Map();
-  const create = [];
-  const push = [];
-  for (const item of desired) {
-    const published = remoteState.get(item.tag);
-    if (published) {
-      if (!published.target) {
-        fail(`Existing remote tag ${item.tag} is not annotated`);
-      }
-      if (published.target !== manifest.headSha) {
-        fail(
-          `Existing remote tag ${item.tag} targets ${published.target}, expected ${manifest.headSha}`,
-        );
-      }
-      console.log(`Remote tag already correct: ${item.tag}.`);
-      continue;
-    }
-    if (!item.local.exists) {
-      create.push(item.tag);
-    }
-    if (shouldPush) {
-      push.push(item.tag);
-    }
+  const { alreadyRemote, create, push } = releaseTagDecisions(
+    desired,
+    remoteState,
+    shouldPush,
+    manifest.headSha,
+  );
+  for (const tag of alreadyRemote) {
+    console.log(`Remote tag already correct: ${tag}.`);
   }
   for (const tag of create) {
     git(["tag", "--annotate", "--message", tag, tag, manifest.headSha]);
