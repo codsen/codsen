@@ -55,9 +55,11 @@
     "unit": "uvu test"
   },
   "c8": {
+    "all": true,
     "check-coverage": true,
     "exclude": ["**/test/**/*.*"],
-    "lines": 95
+    "include": ["dist/*.esm.js"],
+    "lines": 97
   },
   "lect": {
     "licence": {

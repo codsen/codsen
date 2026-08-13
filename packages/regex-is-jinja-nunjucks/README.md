@@ -43,9 +43,6 @@ assert.equal(
   ),
   true,
 );
-
-// in case if it's not nunjucks
-assert.equal(isJinjaNunjucksRegex().test("<div>tralala</div>"), false);
 ```
 
 

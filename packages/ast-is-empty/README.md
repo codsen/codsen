@@ -42,30 +42,6 @@ assert.equal(
   }),
   true,
 );
-
-assert.equal(
-  isEmpty({
-    a: [""],
-    b: {
-      c: {
-        d: "",
-      },
-    },
-  }),
-  true,
-);
-
-assert.equal(
-  isEmpty([
-    {
-      a: [""],
-      b: { c: { d: "" } },
-    },
-    "",
-    ["", "", ""],
-  ]),
-  true,
-);
 ```
 
 

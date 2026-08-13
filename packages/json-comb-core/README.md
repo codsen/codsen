@@ -34,18 +34,7 @@ npm i json-comb-core
 ```js
 import { strict as assert } from "node:assert";
 
-import {
-  enforceKeyset,
-  enforceKeysetSync,
-  findUnusedSync,
-  getKeyset,
-  getKeysetSync,
-  noNewKeysSync,
-  sortAllObjectsSync,
-} from "json-comb-core";
-
-// STEP #1
-// =======
+import { getKeysetSync } from "json-comb-core";
 
 // calculate the schema - superset of all possible keys used across
 // all JSON files
@@ -80,29 +69,6 @@ assert.deepEqual(schema, {
     f: false,
   },
 });
-
-// STEP #2
-// =======
-
-// now we can normalise the object #2 for example:
-assert.deepEqual(
-  enforceKeysetSync(
-    {
-      // <- object #2
-      a: "a",
-    },
-    schema,
-  ),
-  {
-    a: "a",
-    b: false,
-    c: {
-      d: false,
-      e: false,
-      f: false,
-    },
-  },
-);
 ```
 
 

@@ -41,10 +41,12 @@
     "unit": "uvu test"
   },
   "c8": {
+    "all": true,
     "branches": 100,
     "check-coverage": true,
     "exclude": ["**/test/**/*.*"],
     "functions": 100,
+    "include": ["dist/*.esm.js"],
     "lines": 100,
     "reporter": ["text", "text-summary"],
     "statements": 100

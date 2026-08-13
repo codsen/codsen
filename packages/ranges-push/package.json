@@ -53,9 +53,11 @@
     "unit": "uvu test"
   },
   "c8": {
+    "all": true,
     "check-coverage": true,
-    "exclude": ["**/test/**/*.*", "rMerge.ts"],
-    "lines": 0
+    "exclude": ["**/test/**/*.*"],
+    "include": ["dist/*.esm.js"],
+    "lines": 100
   },
   "lect": {
     "licence": {

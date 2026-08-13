@@ -6,9 +6,9 @@
   "include": [
     "src/**/*",
     "src/**/*.json",
-    "test-types/**/*.ts",
     "package.json",
     "../../ops/typedefs/common.d.ts",
+    "test-types/**/*.ts",
     "../../ops/typedefs/common.ts"
   ],
   "exclude": [".git", "node_modules"]

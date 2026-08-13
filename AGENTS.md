@@ -213,6 +213,8 @@ erase.
     `publishConfig` is hard-written, selected obsolete keys are deleted, the
     description's first letter is capitalised, and dev dependencies already
     present in the root are removed.
+  - `c8` is generated from `ops/coverage-policy.json`, including package
+    waivers. Edit that policy instead of a package's generated coverage fields.
   - Other package metadata is preserved, but direct edits to generated fields
     will not survive.
 - `rollup.config.js` is fully overwritten with the standard declaration-only

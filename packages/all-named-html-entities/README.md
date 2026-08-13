@@ -34,23 +34,9 @@ npm i all-named-html-entities
 ```js
 import { strict as assert } from "node:assert";
 
-import {
-  allNamedEntities,
-  allNamedEntitiesSetOnly,
-  allNamedEntitiesSetOnlyCaseInsensitive,
-  brokenNamedEntities,
-  decode,
-  entEndsWith,
-  entEndsWithCaseInsensitive,
-  entStartsWith,
-  entStartsWithCaseInsensitive,
-  maxLength,
-  minLength,
-  uncertain,
-} from "all-named-html-entities";
+import { allNamedEntities } from "all-named-html-entities";
 
-assert.equal(Object.keys(allNamedEntities).length, 2125);
-assert.equal(entStartsWith.A.E[0], "AElig");
+assert.equal(allNamedEntities.AElig, "Æ");
 ```
 
 

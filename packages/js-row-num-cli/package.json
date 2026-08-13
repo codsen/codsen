@@ -55,8 +55,10 @@
     "unit": "uvu test"
   },
   "c8": {
-    "check-coverage": false,
-    "exclude": ["**/test/**/*.*"]
+    "all": true,
+    "check-coverage": true,
+    "exclude": ["**/test/**/*.*"],
+    "lines": 87
   },
   "lect": {
     "licence": {

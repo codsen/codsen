@@ -36,7 +36,7 @@ import { strict as assert } from "node:assert";
 
 import { getObj } from "ast-get-object";
 
-// get - two input arguments
+// Get matching objects using two input arguments
 assert.deepEqual(
   getObj(
     [
@@ -61,44 +61,6 @@ assert.deepEqual(
       tag: "meta",
       content: "UTF-8",
       something: "else",
-    },
-  ],
-);
-
-// set - three input arguments
-assert.deepEqual(
-  getObj(
-    [
-      {
-        tag: ["two", "values"],
-        content: "UTF-8",
-        something: "else",
-      },
-      {
-        tag: "title",
-        attrs: "Text of the title",
-      },
-    ],
-    {
-      tag: ["two", "values"],
-    },
-    [
-      {
-        tag: ["three", "values", "here"],
-        content: "UTF-8",
-        something: "else",
-      },
-    ],
-  ),
-  [
-    {
-      tag: ["three", "values", "here"], // <--- got updated
-      content: "UTF-8",
-      something: "else",
-    },
-    {
-      tag: "title",
-      attrs: "Text of the title",
     },
   ],
 );

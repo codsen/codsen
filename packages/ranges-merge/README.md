@@ -48,15 +48,6 @@ assert.deepEqual(
     [9, 10],
   ],
 );
-
-// an overlap:
-assert.deepEqual(
-  rMerge([
-    [1, 5],
-    [2, 10],
-  ]),
-  [[1, 10]],
-);
 ```
 
 

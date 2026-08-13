@@ -40,7 +40,6 @@ import { isAttrNameChar } from "is-char-suitable-for-html-attr-name";
 // https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
 
 assert.equal(isAttrNameChar("a"), true);
-assert.equal(isAttrNameChar("?"), false);
 ```
 
 

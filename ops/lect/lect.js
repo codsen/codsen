@@ -58,6 +58,9 @@ state.isBin = objectPath.has(packageJson, "bin");
 const lectrc = JSON.parse(
   await fs.readFile(path.join(__dirname2, ".lectrc.json"), "utf8"),
 );
+const coveragePolicy = JSON.parse(
+  await fs.readFile(path.join(__dirname2, "../coverage-policy.json"), "utf8"),
+);
 state.originalLectrc = { ...lectrc };
 
 let quickTakeExample;
@@ -80,7 +83,7 @@ await Promise.all([
   // delete bad files
   Promise.resolve(hardDelete({ lectrc })),
   // write package.json
-  Promise.resolve(pack({ state, lectrc, rootPackageJSON })),
+  Promise.resolve(pack({ state, lectrc, rootPackageJSON, coveragePolicy })),
   // write .npmignore
   // Promise.resolve(npmIgnore({ state, lectrc })),
   // write rollup.config.js

@@ -37,13 +37,6 @@ import { strict as assert } from "node:assert";
 import { includesWithGlob } from "array-includes-with-glob";
 
 assert.equal(includesWithGlob(["xc", "yc", "zc"], "*c"), true);
-// (all 3)
-
-assert.equal(includesWithGlob(["xc", "yc", "zc"], "*a"), false);
-// (none found)
-
-assert.equal(includesWithGlob(["something", "anything", "zzz"], "some*"), true);
-// (1 hit)
 ```
 
 

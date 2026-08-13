@@ -83,7 +83,7 @@ Priorities have the following meanings:
 | REV-006 | P1 | Completed | Published types | Repair the remark plugin declarations |
 | REV-007 | P1 | Completed | Generated data | Calculate dependency top tens correctly |
 | REV-008 | P1 | Pending | Task graph | Make root quality and perf tasks hermetic |
-| REV-009 | P2 | Pending | Coverage policy | Centralise thresholds and waivers |
+| REV-009 | P2 | Completed | Coverage policy | Centralise thresholds and waivers |
 | REV-010 | P2 | Pending | Package architecture | Centralise package classification |
 | REV-011 | P2 | Pending | Repository tooling | Centralise workspace discovery |
 | REV-012 | P2 | Pending | Generators | Make `lect` mutations reliable |
@@ -419,8 +419,9 @@ Priorities have the following meanings:
 
 ### REV-009 — Centralise coverage thresholds and waivers
 
-- Status: Pending
-- Evidence status: Quantified at the review baseline
+- Status: Completed
+- Completed: 2026-08-13
+- Evidence status: Revalidated, centralised, generated, and enforced
 - Evidence:
   - All nine CLI-family packages set `check-coverage` to `false`.
   - Of 102 Rollup-family packages, 26 gate branches, functions, statements, and
@@ -430,6 +431,28 @@ Priorities have the following meanings:
   repository check that distinguishes deliberate waivers from drift.
 - Recommended change: Define the minimum policy and an explicit, reviewed
   waiver mechanism. Add a verifier that reports packages below the policy.
+- Resolution:
+  - `ops/coverage-policy.json` now defines the common 100% line floor, the 26
+    packages retaining 100% four-metric enforcement, family-specific source
+    discovery, reporting overrides, and every documented waiver.
+  - `lect` generates each of the 111 package manifests' `c8` configuration from
+    that policy using the same Rollup-file family signal as its script presets.
+    The verifier rejects manifest drift, unknown or unclassified packages,
+    vacuous source discovery, disabled or zero enforcement, unsafe overrides,
+    and undocumented workspaces or threshold reductions.
+  - All Rollup packages now include their built ESM entry under `all` discovery.
+    The three former zero thresholds pass the 100% line default; `detergent`
+    has the sole Rollup waiver at 97% for its measured 97.61% bundle coverage.
+  - All nine CLI-family packages now enable checks and `all` discovery. Eight
+    established subprocess suites have measured integer line floors from 76%
+    to 97%, each with a reason and removal follow-up. `codsen` replaces its
+    placeholder with default, version, and help subprocess tests and reaches
+    100% across all four metrics.
+  - The generated `@codsen/data` workspace is explicitly documented outside
+    package coverage because `ci:verify:data` validates its generated exports;
+    the exemption requires removal if hand-authored runtime behaviour appears.
+  - CI and the root `house` command run the policy verifier, so a new workspace
+    must receive generated defaults or be explicitly reviewed.
 - Done when:
   - Every exception has a documented reason and intended follow-up.
   - New packages receive the default policy automatically or fail validation.
@@ -438,6 +461,17 @@ Priorities have the following meanings:
 - Validation:
   - Run the policy verifier across all workspaces.
   - Run the CI coverage phase from REV-003.
+- Validation results:
+  - `npm run ci:verify:coverage-policy` passed for all 112 workspaces: 111
+    covered packages, nine subprocess CLIs, 26 full-coverage packages, nine
+    threshold waivers, and one generated-data workspace exemption.
+  - The coverage-policy helper suite passed all 11 focused tests; the complete
+    `ops/helpers` suite passed 34 tests.
+  - A full `npm run lect` completed across all 112 workspaces and produced
+    policy-matching coverage fields for every package manifest.
+  - `npm run test:quality` passed all 112 workspace tasks with zero Turbo cache
+    hits, exercising every new threshold and source-discovery rule.
+  - Targeted Biome checks and `git diff --check` passed.
 
 ### REV-010 — Centralise package classification
 

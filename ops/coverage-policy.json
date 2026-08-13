@@ -1,0 +1,125 @@
+{
+  "profiles": {
+    "default": {
+      "check-coverage": true,
+      "exclude": ["**/test/**/*.*"],
+      "lines": 100
+    },
+    "cli": {
+      "all": true
+    },
+    "rollup": {
+      "all": true,
+      "include": ["dist/*.esm.js"]
+    },
+    "full": {
+      "branches": 100,
+      "functions": 100,
+      "statements": 100
+    }
+  },
+  "fullCoveragePackages": [
+    "array-includes-with-glob",
+    "array-pull-all-with-glob",
+    "arrayiffy-if-string",
+    "ast-compare",
+    "ast-contains-only-empty-space",
+    "ast-is-empty",
+    "ast-monkey",
+    "ast-monkey-traverse",
+    "ast-monkey-util",
+    "codsen-glob",
+    "codsen-utils",
+    "object-boolean-combinations",
+    "object-delete-key",
+    "ranges-apply",
+    "ranges-merge",
+    "ranges-sort",
+    "regex-empty-conditional-comments",
+    "remark-typography",
+    "string-character-is-astral-surrogate",
+    "string-collapse-leading-whitespace",
+    "string-extract-class-names",
+    "string-range-expander",
+    "string-trim-spaces-only",
+    "test-mixer",
+    "util-array-object-or-both",
+    "util-nonempty"
+  ],
+  "packageOverrides": {
+    "codsen-glob": {
+      "reporter": ["text", "text-summary"]
+    }
+  },
+  "workspaceExemptions": {
+    "@codsen/data": {
+      "reason": "This generated aggregate-data workspace is validated by ci:verify:data and has no hand-authored runtime behaviour to unit test.",
+      "followUp": "Add package coverage and remove this exemption if hand-authored runtime behaviour is introduced."
+    }
+  },
+  "waivers": {
+    "csv-sort-cli": {
+      "config": {
+        "lines": 76
+      },
+      "reason": "Subprocess tests cover file, stdin, overwrite, and error behaviour, while interactive picker and failure branches keep current line coverage below the default.",
+      "followUp": "Add subprocess cases for the remaining interactive and failure paths, raising this threshold with each improvement until the waiver can be removed."
+    },
+    "detergent": {
+      "config": {
+        "lines": 97
+      },
+      "reason": "The generated ESM bundle retains one uncovered minified line and reports 97.61% under full-source discovery, below the repository's 100% default line threshold.",
+      "followUp": "Add a focused regression case for the remaining uncovered path, raise the line threshold to 100%, and remove this waiver."
+    },
+    "email-all-chars-within-ascii-cli": {
+      "config": {
+        "lines": 83
+      },
+      "reason": "Subprocess tests cover successful, invalid-character, version, help, and missing-file behaviour, while interactive selection and reporting branches remain uncovered.",
+      "followUp": "Exercise the interactive selection and remaining reporting paths in subprocess tests, raising this threshold until the waiver can be removed."
+    },
+    "generate-atomic-css-cli": {
+      "config": {
+        "lines": 84
+      },
+      "reason": "Subprocess tests cover the main file and directory workflows, while help, version, and exceptional read/write paths remain uncovered.",
+      "followUp": "Add subprocess coverage for help, version, and error handling, raising this threshold until the waiver can be removed."
+    },
+    "js-row-num-cli": {
+      "config": {
+        "lines": 87
+      },
+      "reason": "Subprocess tests cover the principal rewrite modes, while help, version, and exceptional file-processing paths remain uncovered.",
+      "followUp": "Add subprocess coverage for the remaining flag and error paths, raising this threshold until the waiver can be removed."
+    },
+    "json-comb": {
+      "config": {
+        "lines": 94
+      },
+      "reason": "Subprocess tests cover the normal CLI workflows, while malformed input, unsupported serialization, and write-failure paths remain uncovered.",
+      "followUp": "Add subprocess fixtures for the remaining validation and failure paths, raising this threshold until the waiver can be removed."
+    },
+    "json-sort-cli": {
+      "config": {
+        "lines": 97
+      },
+      "reason": "The extensive subprocess suite covers normal and flag-driven behaviour, while rare read/write failure and summary branches remain uncovered.",
+      "followUp": "Add subprocess fixtures for the remaining failure branches, raise the line threshold to 100%, and remove this waiver."
+    },
+    "lerna-clean-changelogs-cli": {
+      "config": {
+        "lines": 83
+      },
+      "reason": "Subprocess tests cover help, version, direct-file, glob, and default-search behaviour, while error and formatting branches remain uncovered.",
+      "followUp": "Add subprocess coverage for invalid paths and the remaining error and formatting branches, raising this threshold until the waiver can be removed."
+    },
+    "update-versions": {
+      "config": {
+        "lines": 80
+      },
+      "reason": "Subprocess tests cover CLI discovery, help, and version while injected unit tests cover safe update behaviour; progress, configuration, and failure branches remain uncovered.",
+      "followUp": "Expand subprocess and injected-dependency cases for the remaining CLI branches, raising this threshold until the waiver can be removed."
+    }
+  }
+}

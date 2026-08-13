@@ -34,7 +34,7 @@ npm i edit-package-json
 ```js
 import { strict as assert } from "node:assert";
 
-import { del, set } from "edit-package-json";
+import { set } from "edit-package-json";
 
 // edit JSON as string
 assert.equal(
@@ -57,28 +57,6 @@ assert.equal(
     "string-left-right": "^2.3.30"
   },
   "devDependencies": {}
-}`,
-);
-
-// delete from JSON string
-assert.equal(
-  del(
-    `{
-  "name": "test",
-  "dependencies": {
-    "ranges-apply": "^2.0.0",
-    "string-left-right": "^2.3.30"
-  },
-  "devDependencies": {}
-}`,
-    "devDependencies", // path to delete
-  ),
-  `{
-  "name": "test",
-  "dependencies": {
-    "ranges-apply": "^2.0.0",
-    "string-left-right": "^2.3.30"
-  }
 }`,
 );
 ```

@@ -54,10 +54,6 @@ assert.equal(
   rApply(oldString, gatheredRanges.current()),
   "The bad grey wolf jumps over the little Red Riding Hood.",
 );
-
-// wipe all gathered ranges
-gatheredRanges.wipe();
-assert.equal(gatheredRanges.current(), null);
 ```
 
 

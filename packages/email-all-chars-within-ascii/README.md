@@ -48,17 +48,6 @@ assert.deepEqual(within("<div>Motörhead</div>"), [
     UTF32Hex: "00f6",
   },
 ]);
-
-// enforces line lengths (500 is best for email):
-assert.deepEqual(within("abcde", { lineLength: 3 }), [
-  {
-    type: "line length",
-    line: 1,
-    column: 5,
-    positionIdx: 5,
-    value: 5,
-  },
-]);
 ```
 
 

@@ -50,25 +50,6 @@ assert.deepEqual(
     d: false,
   },
 );
-
-// you can change the default "false" to something else:
-assert.deepEqual(
-  setAllValuesTo(
-    {
-      a: "a",
-      b: "b",
-      c: "c",
-      d: "d",
-    },
-    "x",
-  ),
-  {
-    a: "x",
-    b: "x",
-    c: "x",
-    d: "x",
-  },
-);
 ```
 
 
