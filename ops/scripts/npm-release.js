@@ -22,6 +22,8 @@ import { devNull, tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { assertReproducibleReleaseManifests } from "../helpers/releaseReproducibility.js";
+
 const ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "../..",
@@ -68,7 +70,7 @@ function printUsage() {
   node ops/scripts/npm-release.js plan --base <git-ref> --output <plan.json>
   node ops/scripts/npm-release.js summary --plan <plan.json> --output <summary.md>
   node ops/scripts/npm-release.js preflight --plan <plan.json> [--concurrency 8]
-  node ops/scripts/npm-release.js pack --plan <plan.json> --output <directory> [--concurrency 8]
+  node ops/scripts/npm-release.js pack --plan <plan.json> --output <directory> [--reference <manifest.json>] [--concurrency 8]
   node ops/scripts/npm-release.js publish --manifest <manifest.json> [--concurrency 8]
   node ops/scripts/npm-release.js tags --manifest <manifest.json> [--concurrency 8] [--push] [--remote origin]`);
 }
@@ -123,7 +125,7 @@ function parseArguments(argv) {
     plan: new Set(["base", "output"]),
     summary: new Set(["plan", "output"]),
     preflight: new Set(["plan", "concurrency"]),
-    pack: new Set(["plan", "output", "concurrency"]),
+    pack: new Set(["plan", "output", "reference", "concurrency"]),
     publish: new Set(["manifest", "concurrency"]),
     tags: new Set(["manifest", "concurrency", "remote"]),
   }[command];
@@ -1548,6 +1550,7 @@ async function commandPack(options) {
     process.cwd(),
     requiredOption(options, "output"),
   );
+  const referenceManifest = options.values.get("reference");
   const concurrency = positiveInteger(
     options.values.get("concurrency"),
     "--concurrency",
@@ -1608,6 +1611,13 @@ async function commandPack(options) {
       workspaceCount: plan.workspaceCount,
     };
     validateReleaseManifest(releaseManifest, outputDirectory);
+    if (referenceManifest) {
+      const reference = loadReleaseManifest(referenceManifest).manifest;
+      assertReproducibleReleaseManifests(reference, releaseManifest);
+      console.log(
+        `Verified reproducible release artifacts against ${path.resolve(process.cwd(), referenceManifest)}.`,
+      );
+    }
     const manifestFile = writeJsonAtomic(
       path.join(outputDirectory, "manifest.json"),
       releaseManifest,

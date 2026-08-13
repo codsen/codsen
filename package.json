@@ -11,6 +11,7 @@
   "type": "module",
   "workspaces": ["packages/*", "data/"],
   "scripts": {
+    "prebuild": "node ./ops/scripts/verify-root-toolchain.js",
     "build": "turbo run build",
     "cache:prune": "node ./ops/scripts/prune-turbo-cache.js",
     "check": "biome check --error-on-warnings .",
@@ -23,13 +24,14 @@
     "ci:release": "node ./ops/scripts/npm-release.js",
     "ci:verify:coverage-policy": "node ./ops/scripts/verify-coverage-policy.js",
     "ci:verify:node-compatibility": "node ./ops/scripts/verify-node-compatibility.js",
+    "ci:verify:root-toolchain": "node ./ops/scripts/verify-root-toolchain.js",
     "ci:verify:data": "node ./ops/scripts/verify-data.js",
     "lernacleanchangelog": "lernacleanchangelog '**' --extras",
     "dev": "turbo run dev --parallel",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "graph": "turbo run build --graph=deps-graph.html",
-    "house": "npm run lernacleanchangelog && npm run check:fix && npm run lint:markdown && uvu ops/helpers && npm run ci:verify:coverage-policy && npm run ci:verify:node-compatibility && npm run ci:generate:info && npm run ci:generate:changelogs && npm run ci:build:root-readme",
+    "house": "npm run ci:verify:root-toolchain && npm run lernacleanchangelog && npm run check:fix && npm run lint:markdown && uvu ops/helpers && npm run ci:verify:coverage-policy && npm run ci:verify:node-compatibility && npm run ci:generate:info && npm run ci:generate:changelogs && npm run ci:build:root-readme",
     "lect": "turbo run lect",
     "lerna": "lerna",
     "lint": "npm run check && npm run typecheck && npm run lint:markdown",
@@ -106,8 +108,8 @@
     "conventional-changelog": "8.1.0"
   },
   "engines": {
-    "node": ">=24",
-    "npm": ">=11.10.0"
+    "node": ">=24.19.0",
+    "npm": ">=11.16.0"
   },
   "packageManager": "npm@11.16.0",
   "publishConfig": {

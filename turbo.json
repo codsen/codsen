@@ -6,6 +6,7 @@
         "$TURBO_DEFAULT$",
         "!dist/**",
         "!types/**",
+        "$TURBO_ROOT$/.node-version",
         "$TURBO_ROOT$/ops/scripts/esbuild.js",
         "$TURBO_ROOT$/tsconfig.base.json"
       ],

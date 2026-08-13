@@ -4,10 +4,10 @@ name: Setup Node and npm
 description: Set up the repository's pinned Node.js and npm versions
 
 inputs:
-  node-version:
-    description: Node.js version to install
+  cache:
+    description: Cache npm's download directory
     required: false
-    default: "24"
+    default: "true"
 
 runs:
   using: composite
@@ -15,10 +15,17 @@ runs:
     - name: Setup Node
       uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
       with:
-        node-version: ${{ inputs.node-version }}
-        cache: npm
+        node-version-file: .node-version
+        cache: ${{ inputs.cache == 'true' && 'npm' || '' }}
         cache-dependency-path: "./package-lock.json"
+        package-manager-cache: false
 
     - name: Install the pinned npm version
       shell: bash
-      run: npm install --global npm@11.16.0
+      run: |
+        npm_spec="$(node ops/scripts/verify-root-toolchain.js --npm-spec)"
+        npm install --global "$npm_spec"
+
+    - name: Verify and report the root toolchain
+      shell: bash
+      run: node ops/scripts/verify-root-toolchain.js

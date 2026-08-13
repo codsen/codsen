@@ -97,6 +97,15 @@ jobs:
           --plan .github/npm-release-plan.json
           --output npm-release-artifacts
 
+      - name: Rebuild and verify reproducible npm artifacts
+        run: |
+          npm run build -- '--filter=./packages/**' --force
+          npm run build -- '--filter=./data/**' --force
+          node ops/scripts/npm-release.js pack \
+            --plan .github/npm-release-plan.json \
+            --output "${{ runner.temp }}/npm-release-reproducibility" \
+            --reference npm-release-artifacts/manifest.json
+
       - name: Pack all Node compatibility artifacts
         run: >-
           node ops/scripts/package-node-compatibility.js pack
@@ -225,13 +234,10 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Set up Node
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+      - name: Set up Node and npm
+        uses: ./.github/actions/setup-node
         with:
-          node-version: "24"
-
-      - name: Install the trusted-publishing npm version
-        run: npm install --global npm@11.16.0
+          cache: "false"
 
       - name: Download immutable npm artifacts
         uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
@@ -261,13 +267,10 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 0
 
-      - name: Set up Node
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+      - name: Set up Node and npm
+        uses: ./.github/actions/setup-node
         with:
-          node-version: "24"
-
-      - name: Install the pinned npm version
-        run: npm install --global npm@11.16.0
+          cache: "false"
 
       - name: Download the published manifest
         uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0

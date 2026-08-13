@@ -6,7 +6,6 @@ import {
   mkdirSync,
   mkdtempSync,
   readdirSync,
-  readFileSync,
   realpathSync,
   rmSync,
 } from "node:fs";
@@ -21,7 +20,7 @@ import {
   readPackageRecords,
   supportedNodeMajors,
 } from "../helpers/nodeCompatibility.js";
-import { lowestNodeMajor } from "../helpers/nodeEngine.js";
+import { readRootToolchainPolicy } from "../helpers/rootToolchain.js";
 
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -88,29 +87,6 @@ function parseArguments(argv) {
   return options;
 }
 
-function readJson(filename) {
-  return JSON.parse(readFileSync(filename, "utf8"));
-}
-
-function versionAtLeast(actual, minimum) {
-  const actualParts = actual.split(".").map(Number);
-  const minimumParts = minimum.split(".").map(Number);
-  for (let index = 0; index < 3; index += 1) {
-    if (actualParts[index] !== minimumParts[index]) {
-      return actualParts[index] > minimumParts[index];
-    }
-  }
-  return true;
-}
-
-function minimumVersion(engine, label) {
-  const match = engine?.match(/^>=(\d+\.\d+\.\d+)$/);
-  if (!match) {
-    fail(`${label} engine must be an exact lower bound; received ${engine}`);
-  }
-  return match[1];
-}
-
 function npmCliPath(nodeExecutable) {
   const candidate = path.resolve(
     path.dirname(nodeExecutable),
@@ -174,23 +150,17 @@ function rootEnvironment() {
 }
 
 function assertRootToolchain() {
-  const rootManifest = readJson(path.join(repositoryRoot, "package.json"));
-  const minimumNodeMajor = lowestNodeMajor(rootManifest.engines?.node);
-  const actualNodeMajor = Number(process.versions.node.split(".")[0]);
-  if (actualNodeMajor < minimumNodeMajor) {
-    fail(
-      `Local compatibility orchestration needs root Node ${rootManifest.engines.node}; received ${process.version}`,
-    );
-  }
-
   const npmCli = npmCliPath(process.execPath);
   const npmVersion = runOrFail(process.execPath, [npmCli, "--version"], {
     env: rootEnvironment(),
   }).stdout.trim();
-  const minimumNpm = minimumVersion(rootManifest.engines?.npm, "npm");
-  if (!versionAtLeast(npmVersion, minimumNpm)) {
+  const policy = readRootToolchainPolicy(repositoryRoot, {
+    actualNodeVersion: process.versions.node,
+    actualNpmVersion: npmVersion,
+  });
+  if (policy.errors.length) {
     fail(
-      `Local compatibility orchestration needs root npm ${rootManifest.engines.npm}; received ${npmVersion}`,
+      `Local compatibility orchestration needs the pinned root toolchain:\n- ${policy.errors.join("\n- ")}`,
     );
   }
   return { npmCli, npmVersion };

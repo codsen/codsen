@@ -93,7 +93,7 @@ Priorities have the following meanings:
 | REV-016 | P2 | Pending | Performance | Repair misleading benchmark workloads |
 | REV-017 | P2 | Pending | Release safety | Retire or guard direct-publish scripts |
 | REV-018 | P2 | Pending | Supply chain | Add dependency update and security checks |
-| REV-019 | P3 | Pending | Reproducibility | Pin the root build runtime |
+| REV-019 | P3 | Completed | Reproducibility | Pin the root build runtime |
 | REV-020 | P3 | Pending | Portability | Add targeted Windows smoke tests |
 | REV-021 | P3 | Pending | Dependencies | Audit production `@types/*` edges |
 
@@ -711,20 +711,41 @@ Priorities have the following meanings:
 
 ### REV-019 — Pin the root build runtime
 
-- Status: Pending
-- Evidence status: Confirmed from root and workflow configuration
+- Status: Completed
+- Completed: 2026-08-13
+- Evidence status: Revalidated, fixed, and tested with the exact root toolchain
 - Evidence:
-  - Root `package.json` accepts Node `>=24` and npm `>=11.10.0` while declaring
-    `packageManager: npm@11.16.0`.
-  - `.github/actions/setup-node/action.yml:6-24` installs floating Node major 24
-    and npm 11.16.0.
-  - `ops/helpers/nodeCompatibility.js:12` already records Node 24.19.0 as the
-    canonical exact compatibility patch.
+  - `.node-version` selects Node 24.19.0 for root builds.
+  - Root `package.json` selects npm 11.16.0 and declares matching minimum Node
+    and npm versions. The lockfile mirrors those minimums.
+  - `.github/actions/setup-node/action.yml` installs both selected versions,
+    then reports and verifies the running toolchain.
+  - `ops/helpers/rootToolchain.js` validates the selectors, root engine floors,
+    lockfile declarations, and running versions without coupling this policy to
+    published package compatibility.
+  - `ops/scripts/npm-release.js pack --reference` compares independently
+    packed release manifests and every tarball hash, excluding only the
+    generated manifest timestamp.
 - Problem: Separate CI or release reruns can build publishable artifacts under
   different Node 24 patch releases.
 - Recommended change: Pin the root CI and release build patch, and centralise
   the root Node/npm version declarations as far as the tooling permits. Keep
   this policy separate from published package engine floors.
+- Resolution:
+  - The root toolchain now selects exact Node 24.19.0 and npm 11.16.0 versions.
+    The verifier rejects floating selectors, declaration drift, and different
+    running patches within the same major.
+  - CI validation, release preparation, release packing, release tests,
+    publishing, and tagging use the same composite setup action. Publishing and
+    tagging disable npm caching because those jobs don't install dependencies
+    and hold elevated permissions.
+  - The Node selector participates in Turbo build hashes, so a toolchain update
+    invalidates cached build artifacts.
+  - Release packing now forces a second package and data build, packs into a
+    separate directory, and requires the second controlled manifest and all
+    tarball hashes to match the first pack.
+  - The cumulative Node 18, 20, 22, 24, and 26 package compatibility matrix is
+    unchanged. All 112 published workspaces retain `>=18.20.8`.
 - Done when:
   - Validation and release builds use the same exact root runtime.
   - Version drift is detected automatically.
@@ -733,6 +754,23 @@ Priorities have the following meanings:
   - Workflow linting
   - Root toolchain version report in CI
   - Build and pack reproducibility check
+- Validation results:
+  - The root verifier passed under exact Node 24.19.0 and npm 11.16.0. It and
+    the local compatibility orchestrator both rejected the ambient npm 11.17.0
+    patch.
+  - All 43 helper tests passed, including exact-selector, declaration-drift,
+    runtime-patch-drift, timestamp-exclusion, and tarball-hash-drift cases.
+  - `actionlint` 1.7.12 passed all workflows. Ruby parsed every workflow and
+    local action YAML file. The repository-wide Biome check covered 2,038
+    files, and the maintained Markdown lint passed.
+  - The exact root toolchain built all 112 workspaces successfully with no
+    cache hits. Type checking completed all 171 tasks, and the dry-run pack
+    validated all 112 workspaces and 785 entries.
+  - A representative controlled package was packed, forcibly rebuilt, and
+    packed again. Both tarballs were byte-identical with SHA-256
+    `a60a4b1597024f9d0a08b293b7f091c1c7e7da25173480edc172c67a8fdf9759`.
+  - `npm run ci:verify:node-compatibility` passed for all 112 workspaces across
+    the cumulative Node 18, 20, 22, 24, and 26 policy lanes.
 
 ### REV-020 — Add targeted Windows smoke tests
 
