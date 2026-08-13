@@ -1,5 +1,14 @@
 # Repository guidance
 
+## Architecture principles
+
+`.agents/ARCHITECTURE_PRINCIPLES.md` defines the repository's direction for
+typed source, generated declarations, monorepo scale, distribution formats,
+purity boundaries, and the JavaScript/TypeScript toolchain seam. Read it before
+making architectural, build, packaging, declaration-generation, or test-pipeline
+decisions. Treat the principles as constraints, and verify the current
+implementation before describing it as compliant.
+
 ## Repository improvement backlog
 
 `.agents/CODE_REVIEW_PLAN.md` records audited architectural, CI, release,
