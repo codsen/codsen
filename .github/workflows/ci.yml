@@ -81,6 +81,9 @@ jobs:
       - name: Run package examples on the root toolchain
         run: npm run turbo -- run examples --filter='./packages/**' --only
 
+      - name: Enforce package coverage on the root toolchain
+        run: npm run test:quality
+
       - name: Verify package Node compatibility policy
         run: npm run ci:verify:node-compatibility
 

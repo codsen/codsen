@@ -77,7 +77,7 @@ Priorities have the following meanings:
 | --- | --- | --- | --- | --- |
 | REV-001 | P0 | Completed | CI and release | Restore the workspace invariant |
 | REV-002 | P0 | Pending | Bootstrap | Make a clean checkout self-bootstrapping |
-| REV-003 | P1 | Pending | CI | Enforce package coverage in CI |
+| REV-003 | P1 | Completed | CI | Enforce package coverage in CI |
 | REV-004 | P1 | Completed | Package correctness | Process minified responsive tables |
 | REV-005 | P1 | Completed | CLI correctness | Overwrite the requested CSV path |
 | REV-006 | P1 | Completed | Published types | Repair the remark plugin declarations |
@@ -179,13 +179,16 @@ Priorities have the following meanings:
 
 ### REV-003 — Enforce package coverage in CI
 
-- Status: Pending
-- Evidence status: Confirmed from task definitions
+- Status: Completed
+- Completed: 2026-08-13
+- Evidence status: Confirmed, fixed, and validated against the current CI and
+  package task definitions
 - Evidence:
   - `package.json:43-45` defines `test:quality` and includes it in root `test`.
   - `ops/lect/.lectrc.json:196-213` makes Rollup `devtest` run c8, examples,
     and lint.
-  - `.github/workflows/ci.yml:81-101` does not run `test:quality` or `devtest`.
+  - `.github/workflows/ci.yml:81-88` runs package examples and coverage under
+    the root-supported toolchain.
   - `ops/scripts/audit-package-units.js:209-235` intentionally runs direct
     `unit` scripts without coverage.
 - Problem: The Node compatibility matrix correctly avoids root-toolchain
@@ -193,6 +196,11 @@ Priorities have the following meanings:
 - Recommended change: Add `npm run test:quality`, or an equivalent dedicated
   coverage task, under the root-supported Node toolchain. Keep it separate from
   compatibility lanes.
+- Resolution:
+  - The CI validation job now runs `npm run test:quality` in a separately named
+    coverage step after the root-toolchain build and example phases.
+  - The cumulative Node compatibility job is unchanged and continues to run
+    direct package `unit` scripts without root-toolchain coverage tooling.
 - Done when:
   - A coverage regression fails CI.
   - Compatibility lanes continue to run direct unit suites only.
@@ -201,6 +209,16 @@ Priorities have the following meanings:
   - `npm run test:quality`
   - A temporary local threshold violation produces a non-zero exit, then is
     reverted before commit.
+- Validation results:
+  - `npm run test:quality` passed all 112 workspace tasks uncached in 6m36s.
+  - A command-line c8 override raised `arrayiffy-if-string`'s line threshold to
+    101%. Its two tests passed at 100% coverage, after which c8 exited 1 with the
+    expected threshold failure. Reports were written outside the repository,
+    so no tracked threshold edit or reversion was required.
+  - `actionlint` 1.7.12 passed all workflows, Ruby parsed every workflow and
+    local action YAML file, and `git diff --check` passed for the CI workflow.
+  - The compatibility verifier still invokes `npm run unit --silent`; its
+    workflow command and matrix job were not changed.
 
 ### REV-004 — Process minified responsive tables
 
