@@ -1,7 +1,7 @@
-import { Root } from "hast";
+import { Root } from "mdast";
 import { Plugin } from "unified";
 
-type UnifiedPlugin<T> = Plugin<[T], Root>;
-declare const fixTypography: UnifiedPlugin<any[]>;
+type UnifiedPlugin<T extends unknown[]> = Plugin<T, Root>;
+declare const fixTypography: UnifiedPlugin<[options?: Record<string, never>]>;
 
 export { fixTypography as default };

@@ -35,10 +35,10 @@ export const defaults: Opts = {
     `${month} ${day}, <span>${year}</span>`,
 };
 
-type UnifiedPlugin<T> = Plugin<[T], Root>;
+type UnifiedPlugin<T extends unknown[]> = Plugin<T, Root>;
 // declare let DEV: boolean;
 
-const changelogTimeline: UnifiedPlugin<[Partial<Opts>?]> = (opts) => {
+const changelogTimeline: UnifiedPlugin<[options?: Partial<Opts>]> = (opts) => {
   let resolvedOpts: Opts = { ...defaults, ...opts };
   DEV &&
     console.log(

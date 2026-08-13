@@ -3,7 +3,7 @@ import { spawn as spawnChild, spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { temporaryDirectory } from "tempy";
+import { temporaryDirectory, temporaryDirectoryTask } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
@@ -324,6 +324,59 @@ test("13 - an earlier file error does not wait for a later stdin operand", async
   equal(stdout, "", "13.03");
   match(stderr, /couldn't fetch the file "missing\.csv"/, "13.04");
   equal(fs.readdirSync(tempFolder), [], "13.05");
+});
+
+test("14 - --overwrite replaces a nested relative path", async () => {
+  await temporaryDirectoryTask((tempFolder) => {
+    let nestedFolder = path.join(tempFolder, "nested");
+    let inputPath = path.join(nestedFolder, "input.csv");
+    fs.mkdirSync(nestedFolder);
+    fs.writeFileSync(inputPath, pipelineInput);
+
+    let result = spawnWithInput(
+      tempFolder,
+      undefined,
+      "nested/input.csv",
+      "--overwrite",
+    );
+
+    equal(result.status, 0, "14.01");
+    equal(result.stdout, "", "14.02");
+    equal(fs.readFileSync(inputPath, "utf8"), pipelineOutput, "14.03");
+    equal(fs.readdirSync(tempFolder), ["nested"], "14.04");
+    equal(fs.readdirSync(nestedFolder), ["input.csv"], "14.05");
+  });
+});
+
+test("15 - --overwrite keeps same-basename relative and absolute paths separate", async () => {
+  await temporaryDirectoryTask((tempFolder) => {
+    let relativeFolder = path.join(tempFolder, "relative");
+    let absoluteFolder = path.join(tempFolder, "absolute");
+    let relativePath = path.join(relativeFolder, "input.csv");
+    let absolutePath = path.join(absoluteFolder, "input.csv");
+    let absoluteInput = pipelineInput.replaceAll("123456", "654321");
+    let absoluteOutput = pipelineOutput.replaceAll("123456", "654321");
+    fs.mkdirSync(relativeFolder);
+    fs.mkdirSync(absoluteFolder);
+    fs.writeFileSync(relativePath, pipelineInput);
+    fs.writeFileSync(absolutePath, absoluteInput);
+
+    let result = spawnWithInput(
+      tempFolder,
+      undefined,
+      "relative/input.csv",
+      absolutePath,
+      "--overwrite",
+    );
+
+    equal(result.status, 0, "15.01");
+    equal(result.stdout, "", "15.02");
+    equal(fs.readFileSync(relativePath, "utf8"), pipelineOutput, "15.03");
+    equal(fs.readFileSync(absolutePath, "utf8"), absoluteOutput, "15.04");
+    equal(fs.readdirSync(tempFolder).sort(), ["absolute", "relative"], "15.05");
+    equal(fs.readdirSync(relativeFolder), ["input.csv"], "15.06");
+    equal(fs.readdirSync(absoluteFolder), ["input.csv"], "15.07");
+  });
 });
 
 //                                  *

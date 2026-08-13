@@ -6844,7 +6844,7 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@types/hast": "^3.0.4",
+      "@types/mdast": "^4.0.4",
       "codsen-utils": "^1.7.3",
       "string-apostrophes": "^4.1.3",
       "string-dashes": "^1.3.3",

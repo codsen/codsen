@@ -163,7 +163,7 @@ export const interdeps = [
   },
   {
     "name": "csv-sort-cli",
-    "size": 8975,
+    "size": 8974,
     "imports": [
       "codsen-glob",
       "codsen-utils",

@@ -260,7 +260,7 @@ if (!isFilterMode) {
 
         try {
           if (receivedState.overwrite) {
-            await writeFile(path.basename(requestedCSVsPath), cleaned, "utf8");
+            await writeFile(path.resolve(requestedCSVsPath), cleaned, "utf8");
             logError(
               colour(
                 `csv-sort-cli: Yay! The ${path.basename(

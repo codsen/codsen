@@ -1,15 +1,15 @@
 import { ellipsis, multiplicationSign, rightSingleQuote } from "codsen-utils";
-import type { Root } from "hast";
+import type { Root } from "mdast";
 import { convertAll as convertApostrophesOriginal } from "string-apostrophes";
 import { convertAll as convertDashesOriginal } from "string-dashes";
 import { removeWidows as removeWidowsOriginal } from "string-remove-widows";
 import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";
 
-type UnifiedPlugin<T> = Plugin<[T], Root>;
+type UnifiedPlugin<T extends unknown[]> = Plugin<T, Root>;
 // declare let DEV: boolean;
 
-const fixTypography: UnifiedPlugin<any[]> = () => {
+const fixTypography: UnifiedPlugin<[options?: Record<string, never>]> = () => {
   // -----------------------------------------------------------------------------
 
   function removeWidows(val: string): string {

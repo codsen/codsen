@@ -86,7 +86,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
       let tdCount = 0;
       if (
         parent &&
-        index &&
+        typeof index === "number" &&
         node.tagName === "tbody" &&
         // with children
         Array.isArray(node.children) &&

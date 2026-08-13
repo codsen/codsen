@@ -11,6 +11,7 @@ import { det } from "detergent";
 import { sortAllObjectsSync } from "json-comb-core";
 import git from "simple-git";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
+import { topDependencies } from "../helpers/topDependencies.js";
 
 const isCI = process?.env?.CI || false;
 const arguments_ = process.argv.slice(2);
@@ -441,40 +442,27 @@ for (let i = 0, len = allPackages.length; i < len; i++) {
 // 3. compile top 10 of own and external deps and dev-deps
 // -----------------------------------------------------------------------------
 
-const top10OwnDeps = [];
-const top10ExternalDeps = [];
 const allOwnDeps = new Set();
 const allExternalDeps = new Set();
-
-function getFirstKey(obj) {
-  return Object.keys(obj)[0];
-}
-function depsSort(depObj1, depObj2) {
-  return depObj2[getFirstKey(depObj2)] - depObj1[getFirstKey(depObj1)];
-}
 
 for (let depName in dependencyStats.dependencies) {
   if (allPackages.includes(depName)) {
     // it's one of ours
-    if (top10OwnDeps.length < 10) {
-      top10OwnDeps.push({
-        [depName]: dependencyStats.dependencies[depName],
-      });
-    }
     allOwnDeps.add(depName);
   } else {
     // it's external
-    if (top10ExternalDeps.length < 10) {
-      top10ExternalDeps.push({
-        [depName]: dependencyStats.dependencies[depName],
-      });
-    }
     allExternalDeps.add(depName);
   }
 }
 
-dependencyStats.top10OwnDeps = top10OwnDeps.sort(depsSort);
-dependencyStats.top10ExternalDeps = top10ExternalDeps.sort(depsSort);
+dependencyStats.top10OwnDeps = topDependencies(
+  dependencyStats.dependencies,
+  (depName) => allPackages.includes(depName),
+);
+dependencyStats.top10ExternalDeps = topDependencies(
+  dependencyStats.dependencies,
+  (depName) => !allPackages.includes(depName),
+);
 dependencyStats.allOwnDeps = [...allOwnDeps].sort();
 dependencyStats.allExternalDeps = [...allExternalDeps].sort();
 

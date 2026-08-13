@@ -16,6 +16,7 @@ export const dependencyStats: DependencyStats = {
     "@inquirer/prompts",
     "@types/hast",
     "@types/lodash-es",
+    "@types/mdast",
     "@types/semver-compare",
     "ansi-diff-stream",
     "ansi-regex",
@@ -111,8 +112,9 @@ export const dependencyStats: DependencyStats = {
   ],
   "dependencies": {
     "@inquirer/prompts": 2,
-    "@types/hast": 2,
+    "@types/hast": 1,
     "@types/lodash-es": 9,
+    "@types/mdast": 1,
     "@types/semver-compare": 1,
     "all-named-html-entities": 2,
     "ansi-diff-stream": 1,
@@ -222,34 +224,34 @@ export const dependencyStats: DependencyStats = {
   },
   "top10ExternalDeps": [
     {
-      "update-notifier": 9
-    },
-    {
       "@types/lodash-es": 9
     },
     {
       "lodash-es": 9
     },
     {
-      "object-path": 3
+      "update-notifier": 9
+    },
+    {
+      "p-reduce": 6
+    },
+    {
+      "write-file-atomic": 4
     },
     {
       "he": 3
     },
     {
-      "type-detect": 2
+      "object-path": 3
     },
     {
       "@inquirer/prompts": 2
     },
     {
-      "picomatch": 1
+      "html-entities": 2
     },
     {
-      "currency.js": 1
-    },
-    {
-      "ansi-regex": 1
+      "leven": 2
     }
   ],
   "top10OwnDeps": [
@@ -260,28 +262,28 @@ export const dependencyStats: DependencyStats = {
       "ranges-apply": 16
     },
     {
+      "string-left-right": 16
+    },
+    {
+      "ranges-push": 12
+    },
+    {
       "codsen-glob": 8
+    },
+    {
+      "string-match-left-right": 8
+    },
+    {
+      "arrayiffy-if-string": 7
     },
     {
       "ast-monkey-traverse": 7
     },
     {
+      "ranges-merge": 5
+    },
+    {
       "ast-compare": 3
-    },
-    {
-      "ast-contains-only-empty-space": 2
-    },
-    {
-      "check-types-mini": 2
-    },
-    {
-      "util-array-object-or-both": 2
-    },
-    {
-      "ranges-is-index-within": 2
-    },
-    {
-      "csv-split-easy": 1
     }
   ]
 };

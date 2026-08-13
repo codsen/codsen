@@ -305,4 +305,43 @@ test("06 - nested tags inside, colspan", () => {
   equal(res, intended, "06.01");
 });
 
+test("07 - compact and formatted tables produce the same structure", () => {
+  const compactInput =
+    "<table><tbody><tr><td>a</td><td>b</td></tr></tbody></table>";
+  const formattedInput = `<table>
+  <tbody>
+    <tr><td>a</td><td>b</td></tr>
+  </tbody>
+</table>`;
+
+  const intended = `
+<table class="rrt-table">
+  <tbody>
+    <tr class="rrt-new-tr">
+      <td class="rrt-del-td"></td>
+      <td><span class="rrt-new-tr__span-top">a</span></td>
+    </tr>
+    <tr>
+      <td class="rrt-del-td">a</td>
+      <td>b</td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+  const process = (input) =>
+    rehype()
+      .data("settings", { fragment: true })
+      .use(rehypeResponsiveTables)
+      .use(rehypeFormat)
+      .processSync(input)
+      .toString();
+
+  const compactResult = process(compactInput);
+  const formattedResult = process(formattedInput);
+
+  equal(compactResult, intended, "07.01");
+  equal(compactResult, formattedResult, "07.02");
+});
+
 test.run();
