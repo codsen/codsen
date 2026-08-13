@@ -52,7 +52,7 @@ jobs:
         run: npm run lint:markdown
 
       - name: Assert the complete workspace set
-        run: node ops/scripts/npm-release.js assert-workspaces --expected 111
+        run: node ops/scripts/npm-release.js assert-workspaces
 
       - name: Regenerate lect-managed package files
         run: npm run lect

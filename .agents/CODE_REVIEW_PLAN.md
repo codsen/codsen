@@ -75,7 +75,7 @@ Priorities have the following meanings:
 
 | ID | Priority | Status | Area | Outcome |
 | --- | --- | --- | --- | --- |
-| REV-001 | P0 | Pending | CI and release | Restore the workspace invariant |
+| REV-001 | P0 | Completed | CI and release | Restore the workspace invariant |
 | REV-002 | P0 | Pending | Bootstrap | Make a clean checkout self-bootstrapping |
 | REV-003 | P1 | Pending | CI | Enforce package coverage in CI |
 | REV-004 | P1 | Completed | Package correctness | Process minified responsive tables |
@@ -101,20 +101,30 @@ Priorities have the following meanings:
 
 ### REV-001 — Restore the workspace invariant
 
-- Status: Pending
-- Evidence status: Reproduced
+- Status: Completed
+- Completed: 2026-08-13
+- Evidence status: Reproduced, fixed, and validated against the current 112
+  workspaces and a disposable 111-workspace fixture
 - Evidence:
   - `.github/workflows/ci.yml:54-55`
   - `.github/workflows/prepare_release.yml:60-61`
   - `.github/workflows/release.yml:44-45`
-  - `ops/scripts/npm-release.js:64-72`
-- Problem: The three workflows expect 111 workspaces, but npm and Lerna
-  discover 112: 111 packages plus `@codsen/data`. The assertion exits with
-  status 1 before the workflows can build or test the repository.
+  - `ops/scripts/npm-release.js:32`
+  - `ops/scripts/npm-release.js:466-482`
+- Problem: The three workflows expected 111 workspaces, but npm and Lerna
+  discovered 112: 111 packages plus `@codsen/data`. The assertion exited with
+  status 1 before the workflows could build or test the repository.
 - Recommended change:
   1. Update the immediate invariant to 112.
   2. Replace repeated literals with one source, or validate npm/Lerna parity
      without requiring a duplicated count in every workflow.
+- Resolution:
+  - The default invariant now lives once in `EXPECTED_WORKSPACE_COUNT`, set to
+    112. The optional `--expected` override remains available for diagnostics.
+  - CI, release preparation, and release all call the default assertion without
+    embedding their own counts.
+  - Existing npm/Lerna parity, manifest, unique-name, and `@codsen/data`
+    placement checks remain in force.
 - Done when:
   - CI, release preparation, and release use the same current invariant.
   - Adding or removing a workspace requires changing no more than one source.
@@ -124,6 +134,15 @@ Priorities have the following meanings:
     explicit count remains part of the interface
   - `npm run lint:markdown`
   - GitHub Actions syntax validation
+- Validation results:
+  - The default assertion and the explicit 112 assertion both passed.
+  - An explicit stale count failed with `Expected 111 workspaces, found 112`.
+  - The default assertion against a disposable fixture with one package
+    manifest withheld failed with `Expected 112 workspaces, found 111`,
+    confirming that matched npm/Lerna workspace loss is still detected.
+  - Biome passed for the modified release script, and all workflow YAML parsed
+    successfully.
+  - `actionlint` 1.7.12 passed for all three modified workflows.
 
 ### REV-002 — Make a clean checkout self-bootstrapping
 

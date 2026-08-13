@@ -29,6 +29,7 @@ const ROOT = path.resolve(
 const NPM = process.platform === "win32" ? "npm.cmd" : "npm";
 const REGISTRY = "https://registry.npmjs.org/";
 const DATA_PACKAGE = "@codsen/data";
+const EXPECTED_WORKSPACE_COUNT = 112;
 const DEPENDENCY_FIELDS = [
   "dependencies",
   "optionalDependencies",
@@ -63,7 +64,7 @@ function environmentValue(name) {
 
 function printUsage() {
   console.log(`Usage:
-  node ops/scripts/npm-release.js assert-workspaces [--expected 111]
+  node ops/scripts/npm-release.js assert-workspaces [--expected <count>]
   node ops/scripts/npm-release.js plan --base <git-ref> --output <plan.json>
   node ops/scripts/npm-release.js summary --plan <plan.json> --output <summary.md>
   node ops/scripts/npm-release.js preflight --plan <plan.json> [--concurrency 8]
@@ -465,13 +466,15 @@ function discoverWorkspaces() {
 function commandAssertWorkspaces(options) {
   const workspaces = discoverWorkspaces();
   const expectedRaw = options.values.get("expected");
+  let expected = EXPECTED_WORKSPACE_COUNT;
   if (expectedRaw !== undefined) {
     if (!/^\d+$/.test(expectedRaw)) {
       fail("--expected must be a non-negative integer");
     }
-    if (workspaces.length !== Number(expectedRaw)) {
-      fail(`Expected ${expectedRaw} workspaces, found ${workspaces.length}`);
-    }
+    expected = Number(expectedRaw);
+  }
+  if (workspaces.length !== expected) {
+    fail(`Expected ${expected} workspaces, found ${workspaces.length}`);
   }
   console.log(
     `Validated ${workspaces.length} npm/Lerna workspaces, including ${DATA_PACKAGE}.`,
