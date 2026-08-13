@@ -4,16 +4,16 @@ import { fileURLToPath } from "node:url";
 
 import {
   githubActionsNodeMatrix,
-  readPackageRecords,
   validateNodeCompatibility,
 } from "../helpers/nodeCompatibility.js";
+import { readWorkspaceRecords } from "../helpers/workspaceInventoryFile.js";
 
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "../..",
 );
 function readRepositoryPolicy() {
-  const records = readPackageRecords(repositoryRoot);
+  const records = readWorkspaceRecords(repositoryRoot);
   const packageLock = JSON.parse(
     readFileSync(path.join(repositoryRoot, "package-lock.json")),
   );

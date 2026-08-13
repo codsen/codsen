@@ -16,11 +16,9 @@ import {
   assertCanonicalNodeVersion,
   localCompatibilityLanePlan,
 } from "../helpers/localNodeCompatibility.js";
-import {
-  readPackageRecords,
-  supportedNodeMajors,
-} from "../helpers/nodeCompatibility.js";
+import { supportedNodeMajors } from "../helpers/nodeCompatibility.js";
 import { readRootToolchainPolicy } from "../helpers/rootToolchain.js";
+import { readWorkspaceRecords } from "../helpers/workspaceInventoryFile.js";
 
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -232,7 +230,7 @@ function main() {
     `Root toolchain: Node ${process.versions.node}, npm ${npmVersion}; unit concurrency ${options.concurrency}`,
   );
 
-  const records = readPackageRecords(repositoryRoot);
+  const records = readWorkspaceRecords(repositoryRoot);
   const lanes = localCompatibilityLanePlan(records).map((lane) => ({
     ...lane,
     status: "pending",

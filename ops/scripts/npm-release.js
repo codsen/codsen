@@ -23,6 +23,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { assertReproducibleReleaseManifests } from "../helpers/releaseReproducibility.js";
+import { readWorkspaceRecords } from "../helpers/workspaceInventoryFile.js";
 
 const ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -340,72 +341,6 @@ function safeRepositoryPath(relative, context) {
   return absolute;
 }
 
-function workspacePatterns(manifest, context) {
-  const value = Array.isArray(manifest.workspaces)
-    ? manifest.workspaces
-    : manifest.workspaces?.packages;
-  if (
-    !Array.isArray(value) ||
-    value.some((entry) => typeof entry !== "string")
-  ) {
-    fail(`${context} must provide a string array of workspace patterns`);
-  }
-  return value;
-}
-
-function expandWorkspacePatterns(
-  patterns,
-  context,
-  { rejectTrailingSlash = false } = {},
-) {
-  const directories = new Set();
-  for (const original of patterns) {
-    if (rejectTrailingSlash && original.endsWith("/")) {
-      fail(
-        `${context} pattern ${JSON.stringify(original)} must not end in a slash`,
-      );
-    }
-    const pattern = original.replace(/^\.\//, "").replace(/\/+$/, "");
-    if (
-      !pattern ||
-      pattern.startsWith("../") ||
-      path.posix.isAbsolute(pattern)
-    ) {
-      fail(`${context} contains an unsafe workspace pattern: ${original}`);
-    }
-
-    if (pattern.endsWith("/*") && !pattern.slice(0, -2).includes("*")) {
-      const parentRelative = pattern.slice(0, -2);
-      const parent = safeRepositoryPath(parentRelative, `${context} pattern`);
-      if (!existsSync(parent)) {
-        continue;
-      }
-      for (const entry of readdirSync(parent, { withFileTypes: true })) {
-        if (entry.isDirectory()) {
-          const relative = `${parentRelative}/${entry.name}`;
-          if (existsSync(path.join(parent, entry.name, "package.json"))) {
-            directories.add(relative);
-          }
-        }
-      }
-      continue;
-    }
-
-    if (
-      pattern.includes("*") ||
-      pattern.includes("?") ||
-      pattern.includes("[")
-    ) {
-      fail(`${context} uses an unsupported workspace pattern: ${original}`);
-    }
-    const absolute = safeRepositoryPath(pattern, `${context} pattern`);
-    if (existsSync(path.join(absolute, "package.json"))) {
-      directories.add(pattern);
-    }
-  }
-  return [...directories].sort();
-}
-
 function validateWorkspaceManifest(manifest, directory) {
   assertPackageName(manifest.name, `${directory}/package.json name`);
   assertVersion(manifest.version, `${manifest.name} version`);
@@ -413,49 +348,19 @@ function validateWorkspaceManifest(manifest, directory) {
 }
 
 function discoverWorkspaces() {
-  const rootManifest = readJson(
-    path.join(ROOT, "package.json"),
-    "root package.json",
-  );
-  const rootDirectories = expandWorkspacePatterns(
-    workspacePatterns(rootManifest, "root package.json workspaces"),
-    "root package.json workspaces",
-  );
-  const lerna = readJson(path.join(ROOT, "lerna.json"), "lerna.json");
-  if (!Array.isArray(lerna.packages)) {
-    fail("lerna.json packages must be an array");
-  }
-  const lernaDirectories = expandWorkspacePatterns(
-    lerna.packages,
-    "lerna.json packages",
-    { rejectTrailingSlash: true },
-  );
-  if (JSON.stringify(rootDirectories) !== JSON.stringify(lernaDirectories)) {
-    const rootOnly = rootDirectories.filter(
-      (item) => !lernaDirectories.includes(item),
-    );
-    const lernaOnly = lernaDirectories.filter(
-      (item) => !rootDirectories.includes(item),
-    );
-    fail(
-      `npm/Lerna workspace mismatch (npm-only: ${rootOnly.join(", ") || "none"}; Lerna-only: ${lernaOnly.join(", ") || "none"})`,
-    );
-  }
-
   const seen = new Map();
-  const workspaces = rootDirectories.map((directory) => {
-    const manifest = validateWorkspaceManifest(
-      readJson(path.join(ROOT, directory, "package.json")),
-      directory,
-    );
-    if (seen.has(manifest.name)) {
-      fail(
-        `Duplicate package name ${manifest.name} in ${seen.get(manifest.name)} and ${directory}`,
-      );
-    }
-    seen.set(manifest.name, directory);
-    return { directory, manifest };
-  });
+  const workspaces = readWorkspaceRecords(ROOT).map(
+    ({ directory, manifest }) => {
+      validateWorkspaceManifest(manifest, directory);
+      if (seen.has(manifest.name)) {
+        fail(
+          `Duplicate package name ${manifest.name} in ${seen.get(manifest.name)} and ${directory}`,
+        );
+      }
+      seen.set(manifest.name, directory);
+      return { directory, manifest };
+    },
+  );
   const data = workspaces.find(
     ({ manifest }) => manifest.name === DATA_PACKAGE,
   );

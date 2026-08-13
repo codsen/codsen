@@ -8,9 +8,9 @@ import {
   coverageConfigForPackage,
   validateCoveragePolicy,
 } from "../helpers/coveragePolicy.js";
-import { readPackageRecords } from "../helpers/nodeCompatibility.js";
 import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
 import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
+import { readWorkspaceRecords } from "../helpers/workspaceInventoryFile.js";
 
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -19,7 +19,7 @@ const repositoryRoot = path.resolve(
 
 function workspaceRecords() {
   const packageKinds = readPackageKindResolver(repositoryRoot);
-  return readPackageRecords(repositoryRoot).map((record) => ({
+  return readWorkspaceRecords(repositoryRoot).map((record) => ({
     ...record,
     packageKind: packageKinds.kindFor(record.manifest.name),
   }));

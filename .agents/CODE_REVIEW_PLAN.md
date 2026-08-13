@@ -85,7 +85,7 @@ Priorities have the following meanings:
 | REV-008 | P1 | Pending | Task graph | Make root quality and perf tasks hermetic |
 | REV-009 | P2 | Completed | Coverage policy | Centralise thresholds and waivers |
 | REV-010 | P2 | Completed | Package architecture | Centralise package classification |
-| REV-011 | P2 | Pending | Repository tooling | Centralise workspace discovery |
+| REV-011 | P2 | Completed | Repository tooling | Centralise workspace discovery |
 | REV-012 | P2 | Pending | Generators | Make `lect` mutations reliable |
 | REV-013 | P2 | Pending | Developer workflow | Separate mutation from verification |
 | REV-014 | P2 | Pending | Release tooling | Modularise and test release-critical code |
@@ -558,8 +558,9 @@ Priorities have the following meanings:
 
 ### REV-011 — Centralise workspace discovery
 
-- Status: Pending
-- Evidence status: Confirmed from duplicated implementations
+- Status: Completed
+- Completed: 2026-08-13
+- Evidence status: Revalidated, centralised, and tested across every consumer
 - Evidence:
   - `ops/helpers/nodeCompatibility.js:22-85`
   - `ops/scripts/package-node-compatibility.js`, starting near its workspace
@@ -570,6 +571,16 @@ Priorities have the following meanings:
   and validate identities with different safety and parity checks.
 - Recommended change: Extract one pure, tested workspace inventory module.
   Keep command-specific policy layered on top of that inventory.
+- Resolution:
+  - `ops/helpers/workspaceInventory.js` owns pure pattern, parity, and manifest
+    identity validation. `workspaceInventoryFile.js` is the filesystem adapter
+    that reads npm and Lerna inputs and returns one sorted POSIX-path inventory.
+  - Release planning, package compatibility, unit inventory, Node policy,
+    coverage policy, package-kind verification, and local compatibility now
+    consume the same inventory. Release-only SemVer and `@codsen/data` placement
+    checks remain layered in the release command.
+  - Unsafe or unsupported patterns, malformed lists and manifests, duplicate or
+    blank package names, and npm/Lerna disagreement fail consistently.
 - Done when:
   - All repository tools return the same ordered workspace set.
   - Unsupported patterns, duplicates, missing names, and npm/Lerna disagreement
@@ -579,6 +590,19 @@ Priorities have the following meanings:
   - Unit tests for inventory edge cases
   - Node-policy verification
   - Release plan and package compatibility dry runs
+- Validation results:
+  - Nine focused tests cover both npm workspace forms, deterministic glob
+    expansion and deduplication, unsafe and unsupported patterns, malformed npm
+    and Lerna lists, duplicate and blank names, npm/Lerna disagreement,
+    malformed JSON, and the current repository inventory.
+  - The complete helper suite passed 64 tests. Node compatibility, package-kind,
+    and coverage-policy verification agreed on all 112 workspaces.
+  - `assert-workspaces` passed. A three-workspace unit inventory dry run found a
+    library, CLI, and generated-data workspace, and the package compatibility
+    CLI loaded successfully.
+  - A release plan and summary generated successfully from a historical base,
+    selecting `codsen-glob` in one layer while reporting 112 workspaces.
+  - Targeted Biome checks and `git diff --check` passed.
 
 ### REV-012 — Make `lect` mutations reliable
 

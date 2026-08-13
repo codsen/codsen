@@ -1,6 +1,3 @@
-import { existsSync, readdirSync, readFileSync } from "node:fs";
-import path from "node:path";
-
 import { lowestNodeMajor } from "./nodeEngine.js";
 
 const supportedNodeMajors = Object.freeze([18, 20, 22, 24, 26]);
@@ -19,20 +16,6 @@ const runtimeDependencyFields = Object.freeze([
   "peerDependencies",
 ]);
 
-function expandWorkspacePattern(repositoryRoot, pattern) {
-  const normalised = pattern.replaceAll("\\", "/").replace(/\/$/, "");
-  if (normalised.endsWith("/*")) {
-    const parent = path.resolve(repositoryRoot, normalised.slice(0, -2));
-    return readdirSync(parent, { withFileTypes: true })
-      .filter((entry) => entry.isDirectory())
-      .map((entry) => path.join(parent, entry.name));
-  }
-  if (normalised.includes("*")) {
-    throw new TypeError(`Unsupported workspace pattern: ${pattern}`);
-  }
-  return [path.resolve(repositoryRoot, normalised)];
-}
-
 function runtimeDependencyNames(manifest) {
   return [
     ...new Set(
@@ -41,48 +24,6 @@ function runtimeDependencyNames(manifest) {
       ),
     ),
   ];
-}
-
-function readPackageRecords(repositoryRoot) {
-  const rootManifest = JSON.parse(
-    readFileSync(path.join(repositoryRoot, "package.json")),
-  );
-  const workspacePatterns = Array.isArray(rootManifest.workspaces)
-    ? rootManifest.workspaces
-    : rootManifest.workspaces?.packages;
-  if (!Array.isArray(workspacePatterns)) {
-    throw new TypeError(
-      "The root package.json has no supported workspace list",
-    );
-  }
-
-  const records = workspacePatterns
-    .flatMap((pattern) => expandWorkspacePattern(repositoryRoot, pattern))
-    .filter((directory) => existsSync(path.join(directory, "package.json")))
-    .map((absoluteDirectory) => {
-      const directory = path.relative(repositoryRoot, absoluteDirectory);
-      return {
-        directory,
-        manifest: JSON.parse(
-          readFileSync(path.join(absoluteDirectory, "package.json")),
-        ),
-      };
-    })
-    .sort((left, right) =>
-      left.manifest.name.localeCompare(right.manifest.name),
-    );
-
-  const names = new Set();
-  for (const { directory, manifest } of records) {
-    if (typeof manifest.name !== "string" || !manifest.name) {
-      throw new TypeError(`Workspace has no package name: ${directory}`);
-    }
-    if (names.has(manifest.name)) {
-      throw new TypeError(`Duplicate workspace package name: ${manifest.name}`);
-    }
-    names.add(manifest.name);
-  }
-  return records;
 }
 
 function eligiblePackageNamesForMajor(records, nodeMajor) {
@@ -207,7 +148,6 @@ function validateNodeCompatibility({ records, lockPackages }) {
 export {
   eligiblePackageNamesForMajor,
   githubActionsNodeMatrix,
-  readPackageRecords,
   runtimeDependencyFields,
   runtimeDependencyNames,
   supportedNodeEngines,

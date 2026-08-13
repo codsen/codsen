@@ -1,17 +1,12 @@
 #!/usr/bin/env node
 
 import { spawn, spawnSync } from "node:child_process";
-import {
-  existsSync,
-  readdirSync,
-  readFileSync,
-  realpathSync,
-  writeFileSync,
-} from "node:fs";
+import { existsSync, realpathSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { PACKAGE_KINDS } from "../helpers/packageKinds.js";
 import { readPackageKindResolver } from "../helpers/packageKindsFile.js";
+import { readWorkspaceRecords } from "../helpers/workspaceInventoryFile.js";
 
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -26,10 +21,6 @@ const packageKinds = readPackageKindResolver(repositoryRoot);
 
 function fail(message) {
   throw new Error(message);
-}
-
-function readJson(filename) {
-  return JSON.parse(readFileSync(filename, "utf8"));
 }
 
 function printUsage() {
@@ -119,48 +110,12 @@ function parseArguments(argv) {
   return options;
 }
 
-function expandWorkspacePattern(pattern) {
-  const normalised = pattern.replaceAll("\\", "/").replace(/\/$/, "");
-  if (normalised.endsWith("/*")) {
-    const parent = path.resolve(repositoryRoot, normalised.slice(0, -2));
-    return readdirSync(parent, { withFileTypes: true })
-      .filter((entry) => entry.isDirectory())
-      .map((entry) => path.join(parent, entry.name));
-  }
-  if (normalised.includes("*")) {
-    fail(`Unsupported workspace pattern: ${pattern}`);
-  }
-  return [path.resolve(repositoryRoot, normalised)];
-}
-
 function discoverWorkspaces() {
-  const rootPackage = readJson(path.join(repositoryRoot, "package.json"));
-  const patterns = Array.isArray(rootPackage.workspaces)
-    ? rootPackage.workspaces
-    : rootPackage.workspaces?.packages;
-  if (!Array.isArray(patterns)) {
-    fail("The root package.json has no supported workspace list");
-  }
-
-  const records = patterns
-    .flatMap(expandWorkspacePattern)
-    .filter((directory) => existsSync(path.join(directory, "package.json")))
-    .map((directory) => ({
-      directory,
-      packageJson: readJson(path.join(directory, "package.json")),
-    }));
-  const names = new Set();
-  for (const record of records) {
-    if (!record.packageJson.name) {
-      fail(`Workspace has no name: ${record.directory}`);
-    }
-    if (names.has(record.packageJson.name)) {
-      fail(`Duplicate workspace name: ${record.packageJson.name}`);
-    }
-    names.add(record.packageJson.name);
-  }
-  return records.sort((left, right) =>
-    left.packageJson.name.localeCompare(right.packageJson.name),
+  return readWorkspaceRecords(repositoryRoot).map(
+    ({ directory, manifest }) => ({
+      directory: path.join(repositoryRoot, directory),
+      packageJson: manifest,
+    }),
   );
 }
 

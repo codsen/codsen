@@ -25,6 +25,7 @@ import {
   supportedNodeMajors,
 } from "../helpers/nodeCompatibility.js";
 import { lowestNodeMajor } from "../helpers/nodeEngine.js";
+import { readWorkspaceRecords } from "../helpers/workspaceInventoryFile.js";
 
 const ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -159,20 +160,6 @@ function parseArguments(argv) {
   };
 }
 
-function expandWorkspacePattern(pattern) {
-  const normalised = pattern.replaceAll("\\", "/").replace(/\/$/, "");
-  if (normalised.endsWith("/*")) {
-    const parent = path.resolve(ROOT, normalised.slice(0, -2));
-    return readdirSync(parent, { withFileTypes: true })
-      .filter((entry) => entry.isDirectory())
-      .map((entry) => path.join(parent, entry.name));
-  }
-  if (normalised.includes("*")) {
-    fail(`Unsupported workspace pattern: ${pattern}`);
-  }
-  return [path.resolve(ROOT, normalised)];
-}
-
 function normaliseBins(packageJson) {
   if (typeof packageJson.bin === "string") {
     const name = packageJson.name.includes("/")
@@ -191,30 +178,15 @@ function normaliseBins(packageJson) {
 }
 
 function discoverWorkspaces() {
-  const rootPackage = readJson(path.join(ROOT, "package.json"));
-  const patterns = Array.isArray(rootPackage.workspaces)
-    ? rootPackage.workspaces
-    : rootPackage.workspaces?.packages;
-  if (!Array.isArray(patterns)) {
-    fail("The root package.json does not declare a supported workspace list");
-  }
-
-  const byName = new Map();
-  for (const directory of patterns.flatMap(expandWorkspacePattern)) {
-    const filename = path.join(directory, "package.json");
-    if (!existsSync(filename)) {
-      continue;
-    }
-    const packageJson = readJson(filename);
-    if (typeof packageJson.name !== "string" || !packageJson.name) {
-      fail(`Workspace has no package name: ${filename}`);
-    }
-    if (byName.has(packageJson.name)) {
-      fail(`Duplicate workspace package name: ${packageJson.name}`);
-    }
-    byName.set(packageJson.name, { directory, packageJson });
-  }
-  return byName;
+  return new Map(
+    readWorkspaceRecords(ROOT).map(({ directory, manifest }) => [
+      manifest.name,
+      {
+        directory: path.join(ROOT, directory),
+        packageJson: manifest,
+      },
+    ]),
+  );
 }
 
 function createCompatibilityPlan() {

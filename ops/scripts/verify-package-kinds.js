@@ -5,7 +5,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { dequal } from "dequal";
 
-import { readPackageRecords } from "../helpers/nodeCompatibility.js";
 import {
   createPackageKindResolver,
   PACKAGE_KINDS,
@@ -13,6 +12,7 @@ import {
   validatePackageKindInventory,
 } from "../helpers/packageKinds.js";
 import { readPackageKindRegistry } from "../helpers/packageKindsFile.js";
+import { readWorkspaceRecords } from "../helpers/workspaceInventoryFile.js";
 
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -50,7 +50,7 @@ if (process.argv.length !== 2) {
   process.exitCode = 1;
 } else {
   const registry = readPackageKindRegistry(repositoryRoot);
-  const records = readPackageRecords(repositoryRoot);
+  const records = readWorkspaceRecords(repositoryRoot);
   const errors = validatePackageKindInventory({
     registry,
     workspaceNames: records.map(({ manifest }) => manifest.name),
@@ -75,7 +75,7 @@ if (process.argv.length !== 2) {
       const hasRollupConfig = fileExists(record, "rollup.config.js");
 
       if (kind === PACKAGE_KINDS.TYPESCRIPT_LIBRARY) {
-        if (record.directory !== path.join("packages", manifest.name)) {
+        if (record.directory !== path.posix.join("packages", manifest.name)) {
           errors.push(
             `${manifest.name}: TypeScript-library directory must be packages/${manifest.name}`,
           );
@@ -100,7 +100,7 @@ if (process.argv.length !== 2) {
           );
         }
       } else if (kind === PACKAGE_KINDS.CLI) {
-        if (record.directory !== path.join("packages", manifest.name)) {
+        if (record.directory !== path.posix.join("packages", manifest.name)) {
           errors.push(
             `${manifest.name}: CLI directory must be packages/${manifest.name}`,
           );
