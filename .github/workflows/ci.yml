@@ -57,19 +57,13 @@ jobs:
       - name: Regenerate lect-managed package files
         run: npm run lect
 
-      - name: Build packages
-        run: npm run build -- '--filter=./packages/**'
-
-      - name: Bootstrap @codsen/data
-        run: npm run build -- '--filter=./data/**'
-
-      - name: Regenerate repository data
+      - name: Build package inputs and regenerate repository data
         run: |
           npm run ci:generate:info
           npm run ci:generate:changelogs
           npm run ci:build:root-readme
 
-      - name: Rebuild @codsen/data from regenerated sources
+      - name: Build @codsen/data from regenerated sources
         run: npm run build -- '--filter=./data/**'
 
       - name: Type-check TypeScript sources

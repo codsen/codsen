@@ -64,9 +64,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -206,9 +210,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -282,9 +290,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -365,12 +377,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -451,12 +467,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -535,12 +555,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -621,12 +645,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -707,12 +735,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -800,9 +832,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -889,9 +925,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -978,9 +1018,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -1068,9 +1112,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -1158,12 +1206,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -1248,9 +1300,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -1338,12 +1394,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -1434,12 +1494,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -1530,9 +1594,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -1615,12 +1683,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -1698,9 +1770,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -1778,9 +1854,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -1845,10 +1925,12 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
-      "check-coverage": false,
+      "all": true,
+      "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
-      ]
+      ],
+      "lines": 100
     },
     "lect": {
       "licence": {
@@ -1917,12 +1999,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "reporter": [
         "text",
@@ -1995,12 +2081,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -2076,9 +2166,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -2159,9 +2253,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -2243,10 +2341,12 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
-      "check-coverage": false,
+      "all": true,
+      "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
-      ]
+      ],
+      "lines": 76
     },
     "lect": {
       "licence": {
@@ -2328,9 +2428,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -2410,9 +2514,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -2481,9 +2589,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -2563,11 +2675,15 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 95
+      "include": [
+        "dist/*.esm.js"
+      ],
+      "lines": 97
     },
     "lect": {
       "licence": {
@@ -2663,9 +2779,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -2748,9 +2868,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -2820,10 +2944,12 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
-      "check-coverage": false,
+      "all": true,
+      "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
-      ]
+      ],
+      "lines": 83
     },
     "lect": {
       "cliSpecialKeyword": "tinaturner",
@@ -2904,9 +3030,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -2994,9 +3124,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -3073,9 +3207,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -3153,10 +3291,12 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
-      "check-coverage": false,
+      "all": true,
+      "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
-      ]
+      ],
+      "lines": 84
     },
     "lect": {
       "licence": {
@@ -3234,9 +3374,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -3319,9 +3463,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -3403,9 +3551,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -3484,9 +3636,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -3569,9 +3725,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -3587,6 +3747,12 @@ export const packageJSONData = {
       "codsen-parser": "^0.14.25",
       "ranges-apply": "^7.1.3",
       "ranges-push": "^7.1.3"
+    },
+    "devDependencies": {
+      "ast-monkey-util": "^3.1.3",
+      "is-html-attribute-closing": "^4.1.3",
+      "is-html-tag-opening": "^4.1.3",
+      "string-find-malformed": "^4.1.3"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -3655,9 +3821,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -3734,9 +3904,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -3819,9 +3993,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -3907,9 +4085,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -3986,9 +4168,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -4066,9 +4252,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -4145,9 +4335,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -4227,10 +4421,12 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
-      "check-coverage": false,
+      "all": true,
+      "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
-      ]
+      ],
+      "lines": 87
     },
     "lect": {
       "licence": {
@@ -4309,10 +4505,12 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
-      "check-coverage": false,
+      "all": true,
+      "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
-      ]
+      ],
+      "lines": 94
     },
     "lect": {
       "licence": {
@@ -4390,9 +4588,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -4482,10 +4684,12 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
-      "check-coverage": false,
+      "all": true,
+      "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
-      ]
+      ],
+      "lines": 97
     },
     "lect": {
       "licence": {
@@ -4575,9 +4779,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -4665,9 +4873,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -4742,10 +4954,12 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
-      "check-coverage": false,
+      "all": true,
+      "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
-      ]
+      ],
+      "lines": 83
     },
     "lect": {
       "cliSpecialKeyword": "",
@@ -4831,9 +5045,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -4908,12 +5126,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -4995,12 +5217,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -5083,9 +5309,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -5165,9 +5395,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -5245,9 +5479,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -5328,9 +5566,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -5414,9 +5656,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -5493,9 +5739,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -5571,12 +5821,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -5651,9 +5905,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -5733,9 +5991,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -5812,9 +6074,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -5886,9 +6152,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -5961,9 +6231,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -6036,12 +6310,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -6112,9 +6390,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -6191,12 +6473,15 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
-        "**/test/**/*.*",
-        "rMerge.ts"
+        "**/test/**/*.*"
       ],
-      "lines": 0
+      "include": [
+        "dist/*.esm.js"
+      ],
+      "lines": 100
     },
     "lect": {
       "licence": {
@@ -6274,9 +6559,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -6352,12 +6641,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -6432,12 +6725,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -6512,9 +6809,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -6591,9 +6892,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -6668,9 +6973,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -6739,9 +7048,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -6826,12 +7139,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -6914,9 +7231,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -6988,11 +7309,15 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 0
+      "include": [
+        "dist/*.esm.js"
+      ],
+      "lines": 100
     },
     "lect": {
       "licence": {
@@ -7071,12 +7396,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -7153,12 +7482,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -7230,9 +7563,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -7312,9 +7649,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -7392,11 +7733,15 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
-      "lines": 0
+      "include": [
+        "dist/*.esm.js"
+      ],
+      "lines": 100
     },
     "lect": {
       "licence": {
@@ -7471,12 +7816,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -7554,9 +7903,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -7634,9 +7987,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -7717,9 +8074,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -7800,9 +8161,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -7885,9 +8250,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -7961,9 +8330,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -8040,9 +8413,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -8117,12 +8494,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -8202,9 +8583,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -8286,9 +8671,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -8372,9 +8761,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -8461,9 +8854,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -8547,9 +8944,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -8636,12 +9037,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -8720,9 +9125,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -8800,9 +9209,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -8880,12 +9293,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -8967,9 +9384,13 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
       ],
       "lines": 100
     },
@@ -9050,10 +9471,12 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
-      "check-coverage": false,
+      "all": true,
+      "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
-      ]
+      ],
+      "lines": 80
     },
     "lect": {
       "licence": {
@@ -9138,12 +9561,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },
@@ -9214,12 +9641,16 @@ export const packageJSONData = {
       "unit": "uvu test"
     },
     "c8": {
+      "all": true,
       "branches": 100,
       "check-coverage": true,
       "exclude": [
         "**/test/**/*.*"
       ],
       "functions": 100,
+      "include": [
+        "dist/*.esm.js"
+      ],
       "lines": 100,
       "statements": 100
     },

@@ -1,15 +1,14 @@
 import {
-  accessSync,
+  existsSync,
   readdirSync,
   readFileSync,
   statSync,
   writeFile,
 } from "node:fs";
 import path from "node:path";
-import { programClassification } from "@codsen/data";
-import { det } from "detergent";
-import { sortAllObjectsSync } from "json-comb-core";
 import git from "simple-git";
+import { programClassification } from "../../data/sources/programClassification.ts";
+import { missingPackageBuildArtifacts } from "../helpers/packageBuildArtifacts.js";
 import { prepExampleFileStr } from "../helpers/prepExampleFileStr.js";
 import { topDependencies } from "../helpers/topDependencies.js";
 
@@ -170,6 +169,21 @@ const packageNames = readdirSync(path.resolve("packages")).filter((d) =>
   statSync(path.join("packages", d)).isDirectory(),
 );
 
+const missingBuildArtifacts = missingPackageBuildArtifacts(packageNames);
+
+if (missingBuildArtifacts.length) {
+  throw new Error(
+    `generate-info.js: package build prerequisites are missing: ${missingBuildArtifacts.join(
+      ", ",
+    )}. Run "npm run build:packages" before generating repository data.`,
+  );
+}
+
+const [{ det }, { sortAllObjectsSync }] = await Promise.all([
+  import("detergent"),
+  import("json-comb-core"),
+]);
+
 for (let packageName of packageNames) {
   try {
     let packageJsonContents = JSON.parse(
@@ -210,8 +224,7 @@ for (let packageName of packageNames) {
       scriptAvailable.push(name);
     }
     // also present in ./ops/lect/lect.js:
-    try {
-      accessSync(path.join("packages", name, "rollup.config.js"));
+    if (existsSync(path.join("packages", name, "rollup.config.js"))) {
       // 1. add program to the "programs" list
       programPackages.push(name);
 
@@ -223,26 +236,28 @@ for (let packageName of packageNames) {
       allDTS[name] = dts;
 
       // 3. extract defaults if they're exported
+      let packageExports;
       try {
-        let { defaults } = await import(
+        packageExports = await import(
           `../../packages/${name}/dist/${name}.esm.js`
         );
-        if (defaults) {
-          exportedDefaults[name] = JSON.stringify(defaults, null, 2);
-        }
-      } catch (_e) {
-        // nothing happens
+      } catch (error) {
+        throw new Error(
+          `generate-info.js: could not import the built ${name} package`,
+          { cause: error },
+        );
+      }
+
+      if (packageExports.defaults) {
+        exportedDefaults[name] = JSON.stringify(
+          packageExports.defaults,
+          null,
+          2,
+        );
       }
       if (name === "detergent" && !exportedDefaults[name]) {
-        try {
-          let { opts } = await import(
-            `../../packages/${name}/dist/${name}.esm.js`
-          );
-          if (opts) {
-            exportedDefaults[name] = JSON.stringify(opts, null, 2);
-          }
-        } catch (_e) {
-          // nothing happens
+        if (packageExports.opts) {
+          exportedDefaults[name] = JSON.stringify(packageExports.opts, null, 2);
         }
       }
 
@@ -268,16 +283,16 @@ for (let packageName of packageNames) {
         };
         return accumulatedObj;
       }, {});
-    } catch (_e) {
-      // nothing happens
     }
 
     if (!programPackages.includes(name) && !packageJsonContents.bin) {
       specialPackages.push(name);
     }
   } catch (error) {
-    // nothing happens and we skip it
-    console.log(`error! ${error}`);
+    throw new Error(
+      `generate-info.js: could not collect data for ${packageName}`,
+      { cause: error },
+    );
   }
 }
 

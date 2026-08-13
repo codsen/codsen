@@ -149,6 +149,7 @@
     "trimnbsp",
     "truncator",
     "tseslint",
+    "typechecks",
     "typedefs",
     "unfancy",
     "unist",

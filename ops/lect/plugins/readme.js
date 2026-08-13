@@ -1,6 +1,6 @@
 import objectPath from "object-path";
 import writeFileAtomic from "write-file-atomic";
-import { esmBump } from "../../../data/dist/sources/esmBump.js";
+import { esmBump } from "../../../data/sources/esmBump.ts";
 import arrayiffy from "../../helpers/arrayiffy.js";
 import { getLicenceShortVersion } from "../common/getLicenceContents.js";
 

@@ -1,4 +1,3 @@
-import { intersection, omit } from "codsen-utils";
 import { dequal } from "dequal";
 import objectPath from "object-path";
 import sortPackageJson, { sortOrder } from "sort-package-json";
@@ -101,11 +100,12 @@ async function packageJson({ state, lectrc, rootPackageJSON, coveragePolicy }) {
   // 6. remove dev deps from this package.json which are already present
   // in root package.json dev deps
   if (Object.keys(content.devDependencies || {}).length) {
-    content.devDependencies = omit(
-      content.devDependencies,
-      intersection(
-        Object.keys(rootPackageJSON.devDependencies),
-        Object.keys(content.devDependencies || {}),
+    const rootDevDependencies = new Set(
+      Object.keys(rootPackageJSON.devDependencies || {}),
+    );
+    content.devDependencies = Object.fromEntries(
+      Object.entries(content.devDependencies).filter(
+        ([name]) => !rootDevDependencies.has(name),
       ),
     );
   }

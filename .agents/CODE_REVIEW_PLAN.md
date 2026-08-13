@@ -76,7 +76,7 @@ Priorities have the following meanings:
 | ID | Priority | Status | Area | Outcome |
 | --- | --- | --- | --- | --- |
 | REV-001 | P0 | Completed | CI and release | Restore the workspace invariant |
-| REV-002 | P0 | Pending | Bootstrap | Make a clean checkout self-bootstrapping |
+| REV-002 | P0 | Completed | Bootstrap | Make a clean checkout self-bootstrapping |
 | REV-003 | P1 | Completed | CI | Enforce package coverage in CI |
 | REV-004 | P1 | Completed | Package correctness | Process minified responsive tables |
 | REV-005 | P1 | Completed | CLI correctness | Overwrite the requested CSV path |
@@ -146,25 +146,43 @@ Priorities have the following meanings:
 
 ### REV-002 — Make a clean checkout self-bootstrapping
 
-- Status: Pending
-- Evidence status: Strong structural evidence; clean-room reproduction pending
+- Status: Completed
+- Completed: 2026-08-13
+- Evidence status: Reproduced, fixed, and validated in an exact-toolchain clean
+  checkout
 - Evidence:
   - `.gitignore:11-16` ignores all `dist/` output.
-  - `package-lock.json:299-301` links `@codsen/data` to `data`.
-  - `package-lock.json:4211-4213` links `codsen-utils` to its workspace.
-  - `package-lock.json:4662-4664` links `detergent` to its workspace.
-  - `package-lock.json:6522-6524` links `json-comb-core` to its workspace.
-  - `ops/lect/plugins/pack.js:1` imports `codsen-utils`.
-  - `ops/lect/plugins/readme.js:3` imports `@codsen/data` through its built
-    export.
-  - `ops/scripts/generate-info.js:9-11` imports three built workspaces.
-  - `.github/workflows/ci.yml:48-64` runs `lect` before the first build.
+  - Before the fix, clean-checkout `lect` failed first on the missing
+    `codsen-utils` bundle and then, after that package was built, on the missing
+    `@codsen/data` bundle used for `esmBump`.
+  - A clean full-package build also exposed an undeclared build-order edge in
+    `html-table-patcher`: its IIFE follows the published
+    `codsen-parser`/`codsen-tokenizer` closure back into workspace packages.
+  - `ops/lect/plugins/pack.js` now uses native manifest filtering, and
+    `ops/lect/plugins/readme.js` reads tracked `esmBump` source directly.
+  - `package.json#ci:generate:info` owns the complete package build prerequisite,
+    while `ops/scripts/generate-info.js` reads tracked classification source and
+    rejects missing Rollup bundles or declarations before generation.
+  - `packages/html-table-patcher/package.json` declares the four build-only
+    workspace roots needed to make the hidden IIFE dependency closure visible
+    to Turbo.
+  - All three generation workflows build `@codsen/data` once, after regenerating
+    its sources.
 - Problem: A warm working tree contains ignored build output that can satisfy
   repository-tool imports. A fresh checkout has no tracked build output, while
   npm links those imports to unbuilt workspaces.
 - Recommended change: Make bootstrap tooling source-self-contained. If that is
   not practical, encode and test an explicit private tooling build DAG before
   any generator imports workspace output.
+- Resolution:
+  - `lect` no longer imports any workspace build output during startup.
+  - `generate-info` has an explicit full-package build prerequisite and a tested
+    artifact preflight instead of silently producing incomplete sizes or
+    exported defaults.
+  - The package graph now orders `html-table-patcher` after the build-only
+    workspace dependencies reached through its IIFE bundle.
+  - Generated package and dependency metadata was refreshed so regeneration is
+    clean from the new baseline.
 - Done when:
   - A disposable, clean checkout succeeds with `npm ci` followed by the same
     generation and build order used in CI.
@@ -174,6 +192,21 @@ Priorities have the following meanings:
   - Run the CI sequence in a disposable checkout with no `dist/` directories.
   - Verify `git diff --exit-code` after regeneration.
   - Test at least one CLI package and one Rollup package through `lect`.
+- Validation results:
+  - Under the pinned Node 24.19.0 and npm 11.16.0, an archive-based clean
+    checkout passed offline `npm ci` and started with no package or data
+    `dist/` directories.
+  - Targeted `lect` runs passed for CLI package `csv-sort-cli` and Rollup package
+    `arrayiffy-if-string`; the full build-free `lect` run then passed all 112
+    workspaces and left the checkout unchanged.
+  - `ci:generate:info` passed a first-run, uncached 111-package build and
+    generation. Changelog and root README generation, the subsequent data
+    build, all 175 typecheck tasks, and `ci:verify:data` also passed.
+  - Final `git diff --exit-code` and `git status --short --untracked-files=all`
+    were empty in the clean checkout.
+  - The artifact-helper unit tests passed 2/2. Biome, Markdown lint,
+    `actionlint`, workflow YAML parsing, and `git diff --check` passed for the
+    changed files.
 
 ## P1 — Fix correctness and quality enforcement
 

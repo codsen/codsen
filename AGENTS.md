@@ -232,7 +232,7 @@ the package, and runs its file-maintenance plugins. The main sources of truth ar
 - `ops/lect/plugins/`: generation and normalisation logic.
 - `ops/helpers/prepExampleFileStr.js`: conversion of
   `examples/_quickTake.js` into README code.
-- `data/dist/sources/esmBump.js`: older-version guidance used in generated ESM
+- `data/sources/esmBump.ts`: older-version guidance used in generated ESM
   notices.
 
 Change these sources rather than making changes that the next `lect` run will
