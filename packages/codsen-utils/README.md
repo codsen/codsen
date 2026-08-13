@@ -36,7 +36,6 @@ import { strict as assert } from "node:assert";
 
 import { isNumberChar } from "codsen-utils";
 
-assert.equal(isNumberChar("z"), false);
 assert.equal(isNumberChar("0"), true);
 ```
 
