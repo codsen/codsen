@@ -1079,6 +1079,8 @@ Priorities have the following meanings:
 
 - Status: Completed
 - Completed: 2026-08-13
+- Revalidated: 2026-08-14
+- Implemented in: `9283ad5107` (`ci: pin root build toolchain`)
 - Evidence status: Revalidated, fixed, and tested with the exact root toolchain
 - Evidence:
   - `.node-version` selects Node 24.19.0 for root builds.
@@ -1105,8 +1107,10 @@ Priorities have the following meanings:
     publishing, and tagging use the same composite setup action. Publishing and
     tagging disable npm caching because those jobs don't install dependencies
     and hold elevated permissions.
-  - The Node selector participates in Turbo build hashes, so a toolchain update
-    invalidates cached build artifacts.
+  - Artifact-producing TypeScript-library and generated-data build profiles
+    include `.node-version` in their Turbo inputs, so a toolchain update
+    invalidates their cached build artifacts. CLI build overrides remain
+    intentional no-ops.
   - Release packing now forces a second package and data build, packs into a
     separate directory, and requires the second controlled manifest and all
     tarball hashes to match the first pack.
@@ -1124,14 +1128,18 @@ Priorities have the following meanings:
   - The root verifier passed under exact Node 24.19.0 and npm 11.16.0. It and
     the local compatibility orchestrator both rejected the ambient npm 11.17.0
     patch.
-  - All 43 helper tests passed, including exact-selector, declaration-drift,
-    runtime-patch-drift, timestamp-exclusion, and tarball-hash-drift cases.
+  - The focused root-toolchain tests passed 5/5, release-reproducibility tests
+    passed 4/4, and the current complete helper suite passed 140/140. These
+    include exact-selector, declaration-drift, runtime-patch-drift,
+    timestamp-exclusion, and tarball-hash-drift cases.
   - `actionlint` 1.7.12 passed all workflows. Ruby parsed every workflow and
     local action YAML file. The repository-wide Biome check covered 2,038
     files, and the maintained Markdown lint passed.
   - The exact root toolchain built all 112 workspaces successfully with no
-    cache hits. Type checking completed all 171 tasks, and the dry-run pack
-    validated all 112 workspaces and 785 entries.
+    cache hits. The 2026-08-14 revalidation repeated that forced 112-workspace
+    build successfully and left the tracked tree unchanged. The original
+    implementation validation also completed all 171 type-checking tasks, and
+    the dry-run pack validated all 112 workspaces and 785 entries.
   - A representative controlled package was packed, forcibly rebuilt, and
     packed again. Both tarballs were byte-identical with SHA-256
     `a60a4b1597024f9d0a08b293b7f091c1c7e7da25173480edc172c67a8fdf9759`.
