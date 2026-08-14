@@ -45,6 +45,17 @@ jobs:
       - name: Set up Node and npm
         uses: ./.github/actions/setup-node
 
+      - name: Prevent automated Node engine changes
+        if: github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]'
+        env:
+          BASE_REVISION: ${{ github.event.pull_request.base.sha }}
+        run: >-
+          node ops/scripts/verify-node-compatibility.js
+          --unchanged-from "$BASE_REVISION"
+
+      - name: Verify dependency-security waiver policy
+        run: node ops/scripts/audit-production-dependencies.js --check-policy
+
       - name: Install dependencies
         run: npm ci
 

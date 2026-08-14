@@ -6,6 +6,7 @@ import {
   githubActionsNodeMatrix,
   supportedNodeEngines,
   validateNodeCompatibility,
+  validateUnchangedNodeEngines,
 } from "../nodeCompatibility.js";
 
 function record(name, { dependencies = {}, engine = ">=18.20.8" } = {}) {
@@ -133,6 +134,50 @@ test("07 - matrix rejects empty or unsupported package inventories", () => {
       githubActionsNodeMatrix([record("imprecise-floor", { engine: ">=20" })]),
     /unsupported engine/,
     "07.02",
+  );
+});
+
+test("08 - automated dependency updates must preserve every Node floor", () => {
+  const baseRecords = [
+    record("alpha"),
+    record("beta", { engine: ">=20.19.4" }),
+    {
+      directory: ".",
+      manifest: { name: "root", engines: { node: ">=24.19.0" } },
+    },
+  ];
+  equal(
+    validateUnchangedNodeEngines({
+      baseRecords,
+      currentRecords: structuredClone(baseRecords),
+    }),
+    [],
+    "08.01",
+  );
+
+  const currentRecords = structuredClone(baseRecords);
+  currentRecords[0].manifest.engines.node = ">=20.19.4";
+  currentRecords[1].manifest.engines = {};
+  currentRecords.pop();
+  currentRecords.push(record("gamma"));
+  equal(
+    validateUnchangedNodeEngines({ baseRecords, currentRecords }),
+    [
+      "package.json: package was removed; automated dependency updates must not change the package inventory",
+      "packages/alpha/package.json: engines.node changed from >=18.20.8 to >=20.19.4; automated dependency updates must preserve Node floors",
+      "packages/beta/package.json: engines.node changed from >=20.19.4 to <missing>; automated dependency updates must preserve Node floors",
+      "packages/gamma/package.json: package was added; automated dependency updates must not change the package inventory",
+    ],
+    "08.02",
+  );
+  throws(
+    () =>
+      validateUnchangedNodeEngines({
+        baseRecords: [record("alpha"), record("alpha")],
+        currentRecords: [],
+      }),
+    /duplicate directory packages\/alpha/,
+    "08.03",
   );
 });
 

@@ -26,6 +26,61 @@ function runtimeDependencyNames(manifest) {
   ];
 }
 
+function nodeEngineInventory(records, label) {
+  if (!Array.isArray(records)) {
+    throw new TypeError(`${label} package records must be an array`);
+  }
+  const inventory = new Map();
+  for (const record of records) {
+    if (
+      !record ||
+      typeof record !== "object" ||
+      typeof record.directory !== "string" ||
+      !record.directory ||
+      !record.manifest ||
+      typeof record.manifest !== "object" ||
+      Array.isArray(record.manifest)
+    ) {
+      throw new TypeError(`${label} contains an invalid package record`);
+    }
+    if (inventory.has(record.directory)) {
+      throw new TypeError(
+        `${label} contains duplicate directory ${record.directory}`,
+      );
+    }
+    inventory.set(record.directory, {
+      engine: record.manifest.engines?.node,
+      name: record.manifest.name,
+    });
+  }
+  return inventory;
+}
+
+function validateUnchangedNodeEngines({ baseRecords, currentRecords }) {
+  const base = nodeEngineInventory(baseRecords, "Base");
+  const current = nodeEngineInventory(currentRecords, "Current");
+  const errors = [];
+
+  for (const directory of [
+    ...new Set([...base.keys(), ...current.keys()]),
+  ].sort()) {
+    const before = base.get(directory);
+    const after = current.get(directory);
+    const manifestPath =
+      directory === "." ? "package.json" : `${directory}/package.json`;
+    if (!before || !after) {
+      errors.push(
+        `${manifestPath}: package ${before ? "was removed" : "was added"}; automated dependency updates must not change the package inventory`,
+      );
+    } else if (before.engine !== after.engine) {
+      errors.push(
+        `${manifestPath}: engines.node changed from ${before.engine ?? "<missing>"} to ${after.engine ?? "<missing>"}; automated dependency updates must preserve Node floors`,
+      );
+    }
+  }
+  return errors;
+}
+
 function eligiblePackageNamesForMajor(records, nodeMajor) {
   if (!supportedNodeMajors.includes(nodeMajor)) {
     throw new TypeError(
@@ -153,4 +208,5 @@ export {
   supportedNodeEngines,
   supportedNodeMajors,
   validateNodeCompatibility,
+  validateUnchangedNodeEngines,
 };

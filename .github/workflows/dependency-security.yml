@@ -1,0 +1,48 @@
+---
+name: Dependency security
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 4 * * 1"
+      timezone: Europe/London
+  push:
+    branches: [main]
+    paths:
+      - ".github/actions/setup-node/action.yml"
+      - ".github/workflows/dependency-security.yml"
+      - ".node-version"
+      - ".npmrc"
+      - "data/package.json"
+      - "ops/helpers/dependencySecurity.js"
+      - "ops/scripts/audit-production-dependencies.js"
+      - "ops/security-advisory-waivers.json"
+      - "package-lock.json"
+      - "package.json"
+      - "packages/*/package.json"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dependency-security
+  cancel-in-progress: true
+
+jobs:
+  audit-production:
+    name: Audit production dependencies
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the exact revision
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
+
+      - name: Set up the pinned Node and npm toolchain
+        uses: ./.github/actions/setup-node
+        with:
+          cache: "false"
+
+      - name: Audit the complete production lockfile
+        run: npm run --ignore-scripts ci:audit:production

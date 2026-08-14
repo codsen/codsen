@@ -92,7 +92,7 @@ Priorities have the following meanings:
 | REV-015 | P2 | Completed | Error handling | Format arbitrary invalid inputs safely |
 | REV-016 | P2 | Completed | Performance | Repair misleading benchmark workloads |
 | REV-017 | P2 | Completed | Release safety | Retire or guard direct-publish scripts |
-| REV-018 | P2 | Pending | Supply chain | Add dependency update and security checks |
+| REV-018 | P2 | Completed | Supply chain | Add dependency update and security checks |
 | REV-019 | P3 | Completed | Reproducibility | Pin the root build runtime |
 | REV-020 | P3 | Pending | Portability | Add targeted Windows smoke tests |
 | REV-021 | P3 | Pending | Dependencies | Audit production `@types/*` edges |
@@ -999,8 +999,11 @@ Priorities have the following meanings:
 
 ### REV-018 — Add dependency update and security checks
 
-- Status: Pending
-- Evidence status: Confirmed absence at the review baseline; no network audit run
+- Status: Completed
+- Completed: 2026-08-14
+- Evidence status: Repository automation complete; the first live advisory
+  baseline awaits an authorized registry audit after the commit reaches the
+  default branch
 - Evidence:
   - CI installs with `npm ci` but has no separate dependency review, OSV, or
     production-closure audit step.
@@ -1015,6 +1018,30 @@ Priorities have the following meanings:
     waiver policy.
   - Let the exact Node compatibility matrix reject updates that raise supported
     runtime floors.
+- Resolution:
+  - Added weekly, staggered Dependabot updates for npm 11 and SHA-pinned GitHub
+    Actions. The Actions inventory covers both workflows and the nested local
+    setup action. Ordinary version updates have an explicit three-day cooldown;
+    security updates are not delayed by that Dependabot cooldown.
+  - Added a separate pull-request dependency review pinned to
+    `actions/dependency-review-action` v5.0.0. It rejects newly introduced high
+    or critical runtime vulnerabilities without repository-configured advisory
+    waivers, write permissions, license enforcement, or Scorecard requests.
+  - Added a scheduled, manually dispatchable, and main-input-triggered
+    production audit over the committed lockfile, workspace root, and every
+    workspace. The pinned npm process runs without lifecycle scripts and the
+    repository policy never invokes `npm audit fix`.
+  - Added a pure, fail-closed npm audit v2 normalizer and policy evaluator. It
+    validates metadata counts, recursively resolves meta-vulnerability chains,
+    preserves leaf-advisory severity, and requires exact GHSA/package waivers
+    that are tracked, substantive, canonically sorted, and valid for at most 90
+    days. An offline policy-only command is part of root verification and CI.
+  - Added a Dependabot-PR-only base-commit comparison before `npm ci`. It rejects
+    any root/workspace package addition, removal, or `engines.node` change, so a
+    raised floor cannot hide a package from the cumulative runtime matrix.
+  - Documented ownership, data sent by npm audit, remediation and waiver rules,
+    Node-floor policy, local commands, and the administrator settings required
+    after merge.
 - Done when:
   - Dependency advisories have an owned, visible workflow.
   - Waivers are time-bounded and explain impact.
@@ -1024,6 +1051,27 @@ Priorities have the following meanings:
   - Exercise the security job with a controlled fixture where practical.
   - Run the full compatibility policy and packed consumer checks for runtime
     dependency updates.
+- Validation results:
+  - Sixteen controlled dependency-security tests passed without network access,
+    including mixed severities, meta chains, malformed reports, exact waiver
+    matching and expiry, structured registry errors, and injected npm process
+    boundaries. The complete helper suite passed 140 tests.
+  - The empty real waiver policy, all 112 workspace Node declarations, and a
+    full-base-SHA engine comparison passed. No package engine or runtime
+    dependency changed in this REV.
+  - Biome checked 2,073 files; Markdown lint, actionlint 1.7.12, workflow and
+    Dependabot YAML parsing, script syntax checks, action-pin checks, and
+    `git diff --check` passed.
+  - Current GitHub and npm documentation confirmed npm 11 support, Dependabot's
+    directories/cooldown behavior, DST-aware workflow scheduling, the pinned v5
+    dependency-review action, and the npm audit flags used here.
+  - The current production-advisory count is deliberately recorded as unknown,
+    not zero. Local registry access was unavailable and escalation was rejected
+    because npm audit transmits dependency metadata. The first authorized
+    scheduled or manual workflow run will establish the live baseline.
+  - Independent review found no remaining blocker, major, or minor issue. Once
+    pushed and merged, an administrator must enable the dependency graph,
+    Dependabot alerts and security updates, and require **Dependency review**.
 
 ## P3 — Add reproducibility and portability hardening
 
