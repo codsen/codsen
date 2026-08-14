@@ -57,6 +57,9 @@
       "extras": [""]
     }
   },
+  "dependencies": {
+    "codsen-utils": "^1.7.3"
+  },
   "engines": {
     "node": ">=18.20.8"
   },

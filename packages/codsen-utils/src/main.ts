@@ -1,4 +1,7 @@
 import { version as v } from "../package.json";
+import { formatDiagnosticValue } from "./formatDiagnosticValue";
+
+export { formatDiagnosticValue };
 
 export const version: string = v;
 
@@ -521,11 +524,7 @@ export function resolveEolSetting(
     defaultEolChar !== "\r"
   ) {
     throw new Error(
-      `codsen-utils/resolveEolSetting(): [THROW_ID_01] the input argument defaultEolChar should be one of EOL values: "\\n", "\\r", or "\\r\\n", but it was given as ${JSON.stringify(
-        defaultEolChar,
-        null,
-        0,
-      )}`,
+      `codsen-utils/resolveEolSetting(): [THROW_ID_01] the input argument defaultEolChar should be one of EOL values: "\\n", "\\r", or "\\r\\n", but it was given as ${formatDiagnosticValue(defaultEolChar)}`,
     );
   }
 
@@ -1097,11 +1096,7 @@ export function omit(obj: JSONObject, keysToRemove: string[] = []): JSONObject {
   if (!obj) return obj;
   if (!isPlainObject(obj))
     throw new Error(
-      `codsen-utils/omit(): [THROW_ID_02] Input must be a plain object! It was given as ${JSON.stringify(
-        obj,
-        null,
-        4,
-      )} (typeof is "${typeof obj}")`,
+      `codsen-utils/omit(): [THROW_ID_02] Input must be a plain object! It was given as ${formatDiagnosticValue(obj, 4)} (typeof is "${typeof obj}")`,
     );
   const result: JSONObject = {};
   const memo: CloneMemo = new WeakMap([[obj, result]]);

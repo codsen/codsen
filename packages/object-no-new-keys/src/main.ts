@@ -1,4 +1,5 @@
 import {
+  formatDiagnosticValue,
   hasOwnProp,
   isPlainObject as isObj,
   type JSONValue,
@@ -26,11 +27,7 @@ function noNewKeys(
 ): string[] {
   if (opts && !isObj(opts)) {
     throw new TypeError(
-      `object-no-new-keys/noNewKeys(): [THROW_ID_01] resolvedOpts should be a plain object. It was given as ${JSON.stringify(
-        opts,
-        null,
-        4,
-      )} (type ${typeof opts})`,
+      `object-no-new-keys/noNewKeys(): [THROW_ID_01] resolvedOpts should be a plain object. It was given as ${formatDiagnosticValue(opts, 4)} (type ${typeof opts})`,
     );
   }
   let optsOuter: Opts = { ...defaults, ...opts };

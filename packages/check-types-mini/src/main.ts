@@ -1,4 +1,8 @@
-import { isPlainObject as isObj, match } from "codsen-utils";
+import {
+  formatDiagnosticValue,
+  isPlainObject as isObj,
+  match,
+} from "codsen-utils";
 import typ from "type-detect";
 
 import { version as v } from "../package.json";
@@ -206,11 +210,7 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
     resolvedOpts.schema = normalizeSchema(resolvedOpts.schema);
   } else if (resolvedOpts.schema != null) {
     throw new Error(
-      `check-types-mini/checkTypesMini(): [THROW_ID_02] opts.schema was customised to ${JSON.stringify(
-        resolvedOpts.schema,
-        null,
-        0,
-      )} which is not object but ${typeof resolvedOpts.schema}`,
+      `check-types-mini/checkTypesMini(): [THROW_ID_02] opts.schema was customised to ${formatDiagnosticValue(resolvedOpts.schema)} which is not object but ${typeof resolvedOpts.schema}`,
     );
   }
 
@@ -559,11 +559,11 @@ function internalApi(obj: Obj, ref: Obj | null, opts?: Partial<Opts>): void {
         }.enforceStrictKeyset or provide some type reference (2nd argument or ${
           resolvedOpts.optsVarName
         }.schema).\n\nDebug info:\n
-obj = ${JSON.stringify(obj, null, 4)}\n
-ref = ${JSON.stringify(ref, null, 4)}\n
-innerObj = ${JSON.stringify(innerObj, null, 4)}\n
-resolvedOpts = ${JSON.stringify(resolvedOpts, null, 4)}\n
-current = ${JSON.stringify(current, null, 4)}\n\n`,
+obj = ${formatDiagnosticValue(obj, 4)}\n
+ref = ${formatDiagnosticValue(ref, 4)}\n
+innerObj = ${formatDiagnosticValue(innerObj, 4)}\n
+resolvedOpts = ${formatDiagnosticValue(resolvedOpts, 4)}\n
+current = ${formatDiagnosticValue(current, 4)}\n\n`,
       );
     } else if (optsSchemaHasThisPathDefined) {
       DEV &&
@@ -632,43 +632,31 @@ current = ${JSON.stringify(current, null, 4)}\n\n`,
                 throw new TypeError(
                   `check-types-mini/checkTypesMini(): [THROW_ID_08] ${resolvedOpts.msg}: ${resolvedOpts.optsVarName}.${
                     innerObj.path
-                  }.${i}, the ${i}th element (equal to ${JSON.stringify(
-                    current[i],
-                    null,
-                    0,
-                  )}) is of a type ${elementType}, but only the following are allowed by the ${
+                  }.${i}, the ${i}th element (equal to ${formatDiagnosticValue(current[i])}) is of a type ${elementType}, but only the following are allowed by the ${
                     resolvedOpts.optsVarName
                   }.schema: ${currentKeysSchema.join(", ")}`,
                 );
               }
             }
           } else {
-            DEV && console.log("646 1-2: matching against schema");
+            DEV && console.log("642 1-2: matching against schema");
             // only then do throw...
             throw new TypeError(
               `check-types-mini/checkTypesMini(): [THROW_ID_09] ${resolvedOpts.msg}: ${resolvedOpts.optsVarName}.${
                 innerObj.path
-              } was customised to ${currentType !== "string" ? '"' : ""}${JSON.stringify(
-                current,
-                null,
-                0,
-              )}${currentType !== "string" ? '"' : ""} (type: ${currentType}) which is not among the allowed types in schema (which is equal to ${JSON.stringify(
-                currentKeysSchema,
-                null,
-                0,
-              )})`,
+              } was customised to ${currentType !== "string" ? '"' : ""}${formatDiagnosticValue(current)}${currentType !== "string" ? '"' : ""} (type: ${currentType}) which is not among the allowed types in schema (which is equal to ${formatDiagnosticValue(currentKeysSchema)})`,
             );
           }
         }
       } else {
         DEV &&
           console.log(
-            `666 names were blanket: ${JSON.stringify(blanketTypes, null, 4)}`,
+            `654 names were blanket: ${JSON.stringify(blanketTypes, null, 4)}`,
           );
         ignoredPathsArr.push(innerObj.path);
         DEV &&
           console.log(
-            `671 ${`\u001b[${33}m${`ignoredPathsArr`}\u001b[${39}m`} = ${JSON.stringify(
+            `659 ${`\u001b[${33}m${`ignoredPathsArr`}\u001b[${39}m`} = ${JSON.stringify(
               ignoredPathsArr,
               null,
               4,
@@ -680,11 +668,11 @@ current = ${JSON.stringify(current, null, 4)}\n\n`,
       let compareType = typ(compareTo);
       DEV &&
         console.log(
-          `\u001b[${31}m${`683 II. matching against ref.`}\u001b[${39}m`,
+          `\u001b[${31}m${`671 II. matching against ref.`}\u001b[${39}m`,
         );
       DEV &&
         console.log(
-          `* 687 ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
+          `* 675 ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
             current,
             null,
             4,
@@ -692,7 +680,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`,
         );
       DEV &&
         console.log(
-          `* 695 ${`\u001b[${33}m${`compareTo`}\u001b[${39}m`} = "${JSON.stringify(
+          `* 683 ${`\u001b[${33}m${`compareTo`}\u001b[${39}m`} = "${JSON.stringify(
             compareTo,
             null,
             4,
@@ -704,7 +692,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`,
         Array.isArray(current) &&
         !acceptArraysIgnore.includes(key)
       ) {
-        DEV && console.log("707 2-1: check accept arrays");
+        DEV && console.log("695 2-1: check accept arrays");
         let compareTypeLower = compareType.toLowerCase();
         let allMatch = current.every(
           (el) => typ(el).toLowerCase() === compareTypeLower,
@@ -717,28 +705,24 @@ current = ${JSON.stringify(current, null, 4)}\n\n`,
           );
         }
       } else if (currentType !== compareType) {
-        DEV && console.log("720 - 2-2: match against ref");
+        DEV && console.log("708 - 2-2: match against ref");
         let currentTypeLower = currentType.toLowerCase();
         throw new TypeError(
           `check-types-mini/checkTypesMini(): [THROW_ID_11] ${resolvedOpts.msg}: ${resolvedOpts.optsVarName}.${
             innerObj.path
-          } was customised to ${currentTypeLower === "string" ? "" : '"'}${JSON.stringify(
-            current,
-            null,
-            0,
-          )}${currentTypeLower === "string" ? "" : '"'} which is not ${compareType.toLowerCase()} but ${currentTypeLower}`,
+          } was customised to ${currentTypeLower === "string" ? "" : '"'}${formatDiagnosticValue(current)}${currentTypeLower === "string" ? "" : '"'} which is not ${compareType.toLowerCase()} but ${currentTypeLower}`,
         );
       }
     } else {
-      DEV && console.log("733 do nothing");
+      DEV && console.log("717 do nothing");
     }
 
-    DEV && console.log(`736 return: ${JSON.stringify(current, null, 4)}`);
+    DEV && console.log(`720 return: ${JSON.stringify(current, null, 4)}`);
     return current;
   });
   DEV &&
     console.log(
-      `741 ${`${`\u001b[${32}m${`█`}\u001b[${39}m`} `.repeat(
+      `725 ${`${`\u001b[${32}m${`█`}\u001b[${39}m`} `.repeat(
         39,
       )} TRAVERSAL ENDS\n\n\n`,
     );

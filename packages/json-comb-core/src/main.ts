@@ -3,6 +3,7 @@
 import {
   deepClone as clone,
   existy,
+  formatDiagnosticValue,
   isPlainObject as isObj,
   isStr,
   type Obj,
@@ -82,11 +83,7 @@ function getKeyset(
   }
   if (existy(opts) && !isObj(opts)) {
     throw new TypeError(
-      `json-comb-core/getKeyset(): [THROW_ID_02] Options object must be a plain object! Currently it's: ${typeof opts}, equal to: ${JSON.stringify(
-        opts,
-        null,
-        4,
-      )}`,
+      `json-comb-core/getKeyset(): [THROW_ID_02] Options object must be a plain object! Currently it's: ${typeof opts}, equal to: ${formatDiagnosticValue(opts, 4)}`,
     );
   }
   let defaults: GetKeysetOpts = {
@@ -95,7 +92,7 @@ function getKeyset(
   let resolvedOpts: GetKeysetOpts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `098 CALLING check-types-mini:\nopts = ${JSON.stringify(
+      `095 CALLING check-types-mini:\nopts = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -188,11 +185,7 @@ function getKeysetSync(arr: Obj[], opts?: Partial<GetKeysetOpts>): Obj {
   }
   if (existy(opts) && !isObj(opts)) {
     throw new TypeError(
-      `json-comb-core/getKeysetSync(): [THROW_ID_08] Options object must be a plain object! Currently it's: ${typeof opts}, equal to: ${JSON.stringify(
-        opts,
-        null,
-        4,
-      )}`,
+      `json-comb-core/getKeysetSync(): [THROW_ID_08] Options object must be a plain object! Currently it's: ${typeof opts}, equal to: ${formatDiagnosticValue(opts, 4)}`,
     );
   }
 
@@ -210,11 +203,7 @@ function getKeysetSync(arr: Obj[], opts?: Partial<GetKeysetOpts>): Obj {
   resolvedArr.forEach((obj, i) => {
     if (!isObj(obj)) {
       throw new TypeError(
-        `json-comb-core/getKeysetSync(): [THROW_ID_09] Non-object (${typeof obj}) detected within an array! It's the ${i}th element: ${JSON.stringify(
-          obj,
-          null,
-          4,
-        )}`,
+        `json-comb-core/getKeysetSync(): [THROW_ID_09] Non-object (${typeof obj}) detected within an array! It's the ${i}th element: ${formatDiagnosticValue(obj, 4)}`,
       );
     }
     schemaObj = mergeAdvanced(
@@ -268,11 +257,7 @@ function enforceKeyset(
     )
   ) {
     throw new Error(
-      `json-comb-core/enforceKeyset(): [THROW_ID_12] Array resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${JSON.stringify(
-        resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders,
-        null,
-        4,
-      )}`,
+      `json-comb-core/enforceKeyset(): [THROW_ID_12] Array resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${formatDiagnosticValue(resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders, 4)}`,
     );
   }
   return new Promise((resolve, reject) => {
@@ -329,20 +314,12 @@ function enforceKeysetSync(
   }
   if (!isObj(obj)) {
     throw new Error(
-      `json-comb-core/enforceKeysetSync(): [THROW_ID_17] Input must be a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
-        obj,
-        null,
-        4,
-      )}`,
+      `json-comb-core/enforceKeysetSync(): [THROW_ID_17] Input must be a plain object! Currently it's: ${typeof obj}, equal to: ${formatDiagnosticValue(obj, 4)}`,
     );
   }
   if (!isObj(schemaKeyset)) {
     throw new Error(
-      `json-comb-core/enforceKeysetSync(): [THROW_ID_18] Schema object must be a plain object! Currently it's: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
-        schemaKeyset,
-        null,
-        4,
-      )}`,
+      `json-comb-core/enforceKeysetSync(): [THROW_ID_18] Schema object must be a plain object! Currently it's: ${typeof schemaKeyset}, equal to: ${formatDiagnosticValue(schemaKeyset, 4)}`,
     );
   }
   let defaults: EnforceKeysetOpts = {
@@ -358,11 +335,7 @@ function enforceKeysetSync(
     )
   ) {
     throw new Error(
-      `json-comb-core/enforceKeysetSync(): [THROW_ID_19] Array resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${JSON.stringify(
-        resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders,
-        null,
-        4,
-      )}`,
+      `json-comb-core/enforceKeysetSync(): [THROW_ID_19] Array resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${formatDiagnosticValue(resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders, 4)}`,
     );
   }
   return sortAllObjectsSync(
@@ -390,20 +363,12 @@ function noNewKeysSync(obj: Obj, schemaKeyset: Obj): NoNewKeysSyncRes {
   }
   if (!isObj(obj)) {
     throw new Error(
-      `json-comb-core/noNewKeysSync(): [THROW_ID_22] Main input (1st arg.) must be a plain object! Currently it's: ${typeof obj}, equal to: ${JSON.stringify(
-        obj,
-        null,
-        4,
-      )}`,
+      `json-comb-core/noNewKeysSync(): [THROW_ID_22] Main input (1st arg.) must be a plain object! Currently it's: ${typeof obj}, equal to: ${formatDiagnosticValue(obj, 4)}`,
     );
   }
   if (!isObj(schemaKeyset)) {
     throw new Error(
-      `json-comb-core/noNewKeysSync(): [THROW_ID_23] Schema input (2nd arg.) must be a plain object! Currently it's: ${typeof schemaKeyset}, equal to: ${JSON.stringify(
-        schemaKeyset,
-        null,
-        4,
-      )}`,
+      `json-comb-core/noNewKeysSync(): [THROW_ID_23] Schema input (2nd arg.) must be a plain object! Currently it's: ${typeof schemaKeyset}, equal to: ${formatDiagnosticValue(schemaKeyset, 4)}`,
     );
   }
   return noNewKeys(obj, schemaKeyset);

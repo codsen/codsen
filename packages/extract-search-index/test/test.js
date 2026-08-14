@@ -91,6 +91,78 @@ test("12 - strips URL's (markdown)", () => {
   equal(extract("[visit](https://www.bbc.co.uk)"), "visit", "12.01");
 });
 
+test("13 - hostile invalid inputs preserve the validation error", () => {
+  function caughtFrom(value) {
+    try {
+      extract(value);
+    } catch (error) {
+      return error;
+    }
+    throw new Error("expected extract() to reject the hostile input");
+  }
+
+  const circular = {};
+  circular.self = circular;
+  let getterCalls = 0;
+  const getterInput = {};
+  Object.defineProperty(getterInput, "hostile", {
+    enumerable: true,
+    get() {
+      getterCalls += 1;
+      throw new Error("getter must not run");
+    },
+  });
+  let toJsonCalls = 0;
+  const toJsonInput = {
+    value: 1,
+    toJSON() {
+      toJsonCalls += 1;
+      throw new Error("toJSON must not run");
+    },
+  };
+  const toJsonDescriptors = Object.getOwnPropertyDescriptors(toJsonInput);
+  const hostileProxy = new Proxy(
+    {},
+    {
+      ownKeys() {
+        throw new Error("ownKeys trap");
+      },
+    },
+  );
+  const errors = [
+    caughtFrom(1n),
+    caughtFrom(circular),
+    caughtFrom(getterInput),
+    caughtFrom(toJsonInput),
+    caughtFrom(hostileProxy),
+    caughtFrom(Symbol("hostile")),
+    caughtFrom(() => "hostile"),
+    caughtFrom({ value: "x".repeat(100_000) }),
+  ];
+
+  errors.forEach((error, index) => {
+    is(
+      error.constructor,
+      Error,
+      `13.${String(index * 2 + 1).padStart(2, "0")}`,
+    );
+    match(
+      error.message,
+      /^extract-search-index\/extract\(\): \[THROW_ID_01\]/,
+      `13.${String(index * 2 + 2).padStart(2, "0")}`,
+    );
+  });
+  is(circular.self, circular, "13.17");
+  is(getterCalls, 0, "13.18");
+  is(toJsonCalls, 0, "13.19");
+  equal(
+    Object.getOwnPropertyDescriptors(toJsonInput),
+    toJsonDescriptors,
+    "13.20",
+  );
+  ok(errors.at(-1).message.length <= 2200, "13.21");
+});
+
 // TODO - blocked by string-strip-html
 // test("12 - tackles markdown quote blocks", () => {
 //   equal(

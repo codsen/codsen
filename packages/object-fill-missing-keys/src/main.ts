@@ -2,6 +2,7 @@ import { arrayiffy } from "arrayiffy-if-string";
 import {
   deepClone as clone,
   existy,
+  formatDiagnosticValue,
   isPlainObject as isObj,
   isStr,
   type JSONObject,
@@ -50,7 +51,7 @@ function fillMissingKeys(
   skippedPaths: ReadonlySet<string>,
   path = "",
 ): Obj {
-  DEV && console.log(`053 fillMissingKeys() starts`);
+  DEV && console.log(`054 fillMissingKeys() starts`);
   const incomplete = incompleteOriginal;
   if (
     existy(incomplete) ||
@@ -60,9 +61,9 @@ function fillMissingKeys(
       allEq(incomplete, resolvedOpts.placeholder)
     )
   ) {
-    DEV && console.log(`063`);
+    DEV && console.log(`064`);
     if (isObj(schema) && isObj(incomplete)) {
-      DEV && console.log(`065 - it's a plain object`);
+      DEV && console.log(`066 - it's a plain object`);
       // traverse the keys on schema and add them onto incomplete
       Object.keys(schema).forEach((key) => {
         // calculate the path for current key
@@ -96,7 +97,7 @@ function fillMissingKeys(
         }
       });
     } else if (Array.isArray(schema) && Array.isArray(incomplete)) {
-      DEV && console.log(`099 - it's an array`);
+      DEV && console.log(`100 - it's an array`);
       if (incomplete.length === 0) {
         return clone(schema);
       }
@@ -115,7 +116,7 @@ function fillMissingKeys(
         }
       }
     } else {
-      DEV && console.log(`118 - mergeAdvanced()`);
+      DEV && console.log(`119 - mergeAdvanced()`);
       return mergeAdvanced(schema, incomplete, {
         useNullAsExplicitFalse: resolvedOpts.useNullAsExplicitFalse,
         cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
@@ -153,21 +154,21 @@ function fillMissing(incomplete: Obj, schema: Obj, opts?: Partial<Opts>): Obj {
     throw new Error(
       `object-fill-missing-keys/fillMissing(): [THROW_ID_02] First argument, input object must be a plain object. Currently it's type is "${typ(
         incomplete,
-      )}" and it's equal to: ${JSON.stringify(incomplete, null, 4)}`,
+      )}" and it's equal to: ${formatDiagnosticValue(incomplete, 4)}`,
     );
   }
   if (!isObj(schema)) {
     throw new Error(
       `object-fill-missing-keys/fillMissing(): [THROW_ID_03] Second argument, schema object, must be a plain object. Currently it's type is "${typ(
         schema,
-      )}" and it's equal to: ${JSON.stringify(schema, null, 4)}`,
+      )}" and it's equal to: ${formatDiagnosticValue(schema, 4)}`,
     );
   }
   if (opts && !isObj(opts)) {
     throw new Error(
       `object-fill-missing-keys/fillMissing(): [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it's type is "${typ(
         opts,
-      )}" and it's equal to: ${JSON.stringify(opts, null, 4)}`,
+      )}" and it's equal to: ${formatDiagnosticValue(opts, 4)}`,
     );
   }
 
@@ -175,7 +176,7 @@ function fillMissing(incomplete: Obj, schema: Obj, opts?: Partial<Opts>): Obj {
   let resolvedOpts: Opts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `178 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `179 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -204,7 +205,7 @@ function fillMissing(incomplete: Obj, schema: Obj, opts?: Partial<Opts>): Obj {
     throw new Error(
       `object-fill-missing-keys/fillMissing(): [THROW_ID_05] resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders element with an index number "${culpritsIndex}" is not a string! It's ${typ(
         culpritsVal,
-      )}, equal to:\n${JSON.stringify(culpritsVal, null, 4)}`,
+      )}, equal to:\n${formatDiagnosticValue(culpritsVal, 4)}`,
     );
   }
 

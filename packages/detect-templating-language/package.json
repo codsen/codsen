@@ -55,6 +55,7 @@
     }
   },
   "dependencies": {
+    "codsen-utils": "^1.7.3",
     "regex-is-jinja-nunjucks": "^4.1.3",
     "regex-is-jsp": "^4.1.3",
     "regex-jinja-specific": "^4.1.3"

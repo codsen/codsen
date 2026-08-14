@@ -1,3 +1,4 @@
+import { formatDiagnosticValue } from "codsen-utils";
 import { trim } from "lodash-es";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
@@ -26,20 +27,12 @@ function remSep(str: string, opts?: Partial<Opts>): string {
   // validation
   if (typeof str !== "string") {
     throw new TypeError(
-      `string-remove-thousand-separators/remSep(): [THROW_ID_01] Input must be string! Currently it's: ${typeof str}, equal to:\n${JSON.stringify(
-        str,
-        null,
-        4,
-      )}`,
+      `string-remove-thousand-separators/remSep(): [THROW_ID_01] Input must be string! Currently it's: ${typeof str}, equal to:\n${formatDiagnosticValue(str, 4)}`,
     );
   }
   if (opts && typeof opts !== "object") {
     throw new TypeError(
-      `string-remove-thousand-separators/remSep(): [THROW_ID_02] Options object must be a plain object! Currently it's: ${typeof opts}, equal to:\n${JSON.stringify(
-        opts,
-        null,
-        4,
-      )}`,
+      `string-remove-thousand-separators/remSep(): [THROW_ID_02] Options object must be a plain object! Currently it's: ${typeof opts}, equal to:\n${formatDiagnosticValue(opts, 4)}`,
     );
   }
 
@@ -51,12 +44,12 @@ function remSep(str: string, opts?: Partial<Opts>): string {
 
   // end sooner if it's an empty string:
   if (res === "") {
-    DEV && console.log(`054 early return`);
+    DEV && console.log(`047 early return`);
     return res;
   }
 
   if (+str > 0 && +str < 1) {
-    DEV && console.log(`059 early return - less than 1`);
+    DEV && console.log(`052 early return - less than 1`);
     return str;
   }
 
@@ -69,7 +62,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
     // -------------------------------------------------------------------------
     DEV &&
       console.log(
-        `72 \u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+        `65 \u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
         }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`,
       );
@@ -82,7 +75,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
     ) {
       DEV &&
         console.log(
-          `085 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${i + 1}]`,
+          `078 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${i + 1}]`,
         );
       rangesToDelete.add(i, i + 1);
     }
@@ -93,7 +86,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
       rangesToDelete.add(i, i + 1);
       DEV &&
         console.log(
-          `096 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${i + 1}]`,
+          `089 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${i + 1}]`,
         );
       // but if single quote follows this, that's dodgy and let's bail
       if (res[i + 1] === "'") {
@@ -120,7 +113,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
                   allOK = false;
                   DEV &&
                     console.log(
-                      `123 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${JSON.stringify(
+                      `116 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${JSON.stringify(
                         allOK,
                         null,
                         4,
@@ -136,7 +129,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
                     rangesToDelete.add(i, i + 1);
                     DEV &&
                       console.log(
-                        `139 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${
+                        `132 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${
                           i + 1
                         }]`,
                       );
@@ -173,7 +166,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
               rangesToDelete.add(i, i + 1, ".");
               DEV &&
                 console.log(
-                  `176 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${
+                  `169 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${
                     i + 1
                   }, "."]`,
                 );
@@ -194,7 +187,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
             rangesToDelete.add(i, i + 1, ".");
             DEV &&
               console.log(
-                `197 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${
+                `190 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i}, ${
                   i + 1
                 }, "."]`,
               );
@@ -204,7 +197,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
             rangesToDelete.add(i + 2, i + 2, "0");
             DEV &&
               console.log(
-                `207 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i + 2}, ${
+                `200 ${`\u001b[${33}m${`ADD`}\u001b[${39}m`} [${i + 2}, ${
                   i + 2
                 }, "0"]`,
               );
@@ -219,7 +212,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
       allOK = false;
       DEV &&
         console.log(
-          `222 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${JSON.stringify(
+          `215 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`allOK`}\u001b[${39}m`} = ${JSON.stringify(
             allOK,
             null,
             4,
@@ -230,11 +223,11 @@ function remSep(str: string, opts?: Partial<Opts>): string {
   }
 
   if (allOK && rangesToDelete.current()) {
-    DEV && console.log(`233 RETURN`);
+    DEV && console.log(`226 RETURN`);
     return rApply(res, rangesToDelete.current());
   }
 
-  DEV && console.log(`237 RETURN`);
+  DEV && console.log(`230 RETURN`);
   return res;
 }
 

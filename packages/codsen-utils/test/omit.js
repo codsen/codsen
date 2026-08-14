@@ -93,4 +93,22 @@ test("06 - uses a Set for large objects and removal lists", () => {
   is.not(result.key2, input.key2, "06.04");
 });
 
+test("07 - circular invalid input retains the validation error contract", () => {
+  let input = [];
+  input.push(input);
+  let caught;
+  try {
+    omit(input, []);
+  } catch (error) {
+    caught = error;
+  }
+
+  ok(caught instanceof Error, "07.01");
+  match(
+    caught.message,
+    /^codsen-utils\/omit\(\): \[THROW_ID_02\].*\[Circular\]/s,
+    "07.02",
+  );
+});
+
 test.run();

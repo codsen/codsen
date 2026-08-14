@@ -276,4 +276,29 @@ test("15 - throws when opts.ifRightSideIncludesThisCropItToo is wrong", () => {
   );
 });
 
+test("16 - hostile non-object inputs preserve the validation error", () => {
+  throws(
+    () => {
+      e(1n);
+    },
+    (error) =>
+      error.constructor === Error &&
+      /^string-range-expander\/expander\(\): \[THROW_ID_01\]/.test(
+        error.message,
+      ),
+    "16.01",
+  );
+  throws(
+    () => {
+      e(Symbol("hostile"));
+    },
+    (error) =>
+      error.constructor === Error &&
+      /^string-range-expander\/expander\(\): \[THROW_ID_01\]/.test(
+        error.message,
+      ),
+    "16.02",
+  );
+});
+
 test.run();

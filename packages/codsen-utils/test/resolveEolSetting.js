@@ -141,4 +141,20 @@ test("03 - decision is made based on the reference string", () => {
   equal(resolveEolSetting("a\nb", "lf", "\n"), "\n", "03.68");
 });
 
+test("04 - hostile defaults retain the validation error contract", () => {
+  let caught;
+  try {
+    resolveEolSetting("a", null, 1n);
+  } catch (error) {
+    caught = error;
+  }
+
+  ok(caught instanceof Error, "04.01");
+  match(
+    caught.message,
+    /^codsen-utils\/resolveEolSetting\(\): \[THROW_ID_01\].*1n$/,
+    "04.02",
+  );
+});
+
 test.run();

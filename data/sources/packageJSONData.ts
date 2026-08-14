@@ -2298,6 +2298,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@types/lodash-es": "^4.17.12",
+      "codsen-utils": "^1.7.3",
       "csv-split-easy": "^7.1.3",
       "currency.js": "^2.0.4",
       "lodash-es": "^4.18.1"
@@ -2473,6 +2474,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.7.3",
       "string-remove-thousand-separators": "^7.1.3"
     },
     "engines": {
@@ -2559,6 +2561,9 @@ export const packageJSONData = {
         ]
       }
     },
+    "dependencies": {
+      "codsen-utils": "^1.7.3"
+    },
     "engines": {
       "node": ">=18.20.8"
     },
@@ -2636,6 +2641,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.7.3",
       "regex-is-jinja-nunjucks": "^4.1.3",
       "regex-is-jsp": "^4.1.3",
       "regex-jinja-specific": "^4.1.3"
@@ -2917,6 +2923,9 @@ export const packageJSONData = {
         ]
       }
     },
+    "dependencies": {
+      "codsen-utils": "^1.7.3"
+    },
     "engines": {
       "node": ">=18.20.8"
     },
@@ -3177,6 +3186,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.7.3",
       "string-strip-html": "^13.5.3",
       "string-unfancy": "^6.1.3"
     },
@@ -3696,6 +3706,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "check-types-mini": "^8.1.3",
+      "codsen-utils": "^1.7.3",
       "ranges-apply": "^7.1.3",
       "ranges-push": "^7.1.3",
       "string-unfancy": "^6.1.3"
@@ -4056,6 +4067,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.7.3",
       "string-left-right": "^6.1.3",
       "string-match-left-right": "^9.1.3"
     },
@@ -5908,6 +5920,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.7.3",
       "ranges-merge": "^9.1.3"
     },
     "engines": {
@@ -5990,6 +6003,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.7.3",
       "ranges-merge": "^9.1.3"
     },
     "devDependencies": {
@@ -6161,6 +6175,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.7.3",
       "ranges-crop": "^6.1.3",
       "ranges-merge": "^9.1.3"
     },
@@ -6319,6 +6334,9 @@ export const packageJSONData = {
         ]
       }
     },
+    "dependencies": {
+      "codsen-utils": "^1.7.3"
+    },
     "engines": {
       "node": ">=18.20.8"
     },
@@ -6403,6 +6421,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.7.3",
       "ranges-sort": "^6.1.3"
     },
     "engines": {
@@ -6481,6 +6500,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.7.3",
       "ranges-crop": "^6.1.3",
       "ranges-invert": "^6.1.3"
     },
@@ -6653,6 +6673,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@types/lodash-es": "^4.17.12",
+      "codsen-utils": "^1.7.3",
       "lodash-es": "^4.18.1",
       "ranges-merge": "^9.1.3"
     },
@@ -6736,6 +6757,9 @@ export const packageJSONData = {
           ""
         ]
       }
+    },
+    "dependencies": {
+      "codsen-utils": "^1.7.3"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -7668,6 +7692,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.7.3",
       "ranges-apply": "^7.1.3",
       "ranges-push": "^7.1.3",
       "string-left-right": "^6.1.3"
@@ -7756,7 +7781,8 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "ast-monkey-traverse": "^4.1.3"
+      "ast-monkey-traverse": "^4.1.3",
+      "codsen-utils": "^1.7.3"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -7927,6 +7953,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.7.3",
       "string-left-right": "^6.1.3"
     },
     "engines": {
@@ -8011,6 +8038,9 @@ export const packageJSONData = {
         ]
       },
       "various": {}
+    },
+    "dependencies": {
+      "codsen-utils": "^1.7.3"
     },
     "devDependencies": {
       "color-shorthand-hex-to-six-digit": "^5.1.3"
@@ -8790,6 +8820,7 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@types/lodash-es": "^4.17.12",
+      "codsen-utils": "^1.7.3",
       "lodash-es": "^4.18.1",
       "ranges-apply": "^7.1.3",
       "ranges-push": "^7.1.3"
@@ -9161,6 +9192,9 @@ export const packageJSONData = {
         ]
       }
     },
+    "dependencies": {
+      "codsen-utils": "^1.7.3"
+    },
     "engines": {
       "node": ">=18.20.8"
     },
@@ -9510,6 +9544,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
+      "codsen-utils": "^1.7.3",
       "string-left-right": "^6.1.3"
     },
     "engines": {

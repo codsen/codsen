@@ -1,3 +1,4 @@
+import { formatDiagnosticValue } from "codsen-utils";
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
 
 import { traverse } from "ast-monkey-traverse";
@@ -48,7 +49,7 @@ function strConvertIndexes(
 
       DEV &&
         console.log(
-          `051 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
+          `052 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
             graphemeStrArr[i]
           } (${graphemeStrArr[i].split("").length})`,
         );
@@ -105,11 +106,11 @@ function strConvertIndexes(
   // leading up to this
 
   if (isStringOrNumber(indexes)) {
-    DEV && console.log(`108 ██ no AST`);
+    DEV && console.log(`109 ██ no AST`);
     // no need for traversal
     // validate
     if (isItOk(indexes)) {
-      DEV && console.log(`112 OK`);
+      DEV && console.log(`113 OK`);
 
       if (mode === "u") {
         return typeof indexes === "string"
@@ -123,14 +124,10 @@ function strConvertIndexes(
     }
     // else - error - messy string or number
     throw new Error(
-      `string-convert-indexes/${functionName}(): [THROW_ID_04] the second input argument, "indexes" is not suitable to describe string index - it was given as ${JSON.stringify(
-        indexes,
-        null,
-        4,
-      )} (${typeof indexes})`,
+      `string-convert-indexes/${functionName}(): [THROW_ID_04] the second input argument, "indexes" is not suitable to describe string index - it was given as ${formatDiagnosticValue(indexes, 4)} (${typeof indexes})`,
     );
   } else if (indexes && typeof indexes === "object") {
-    DEV && console.log(`133 ██ AST - traverse!`);
+    DEV && console.log(`130 ██ AST - traverse!`);
     // if it's array or object, traverse
     return mode === "u"
       ? traverse(indexes, (key, val, innerObj) => {
@@ -143,11 +140,7 @@ function strConvertIndexes(
                 : oneUnicodeToNative(graphemeStrArr, +current);
             }
             throw new Error(
-              `string-convert-indexes/${functionName}(): [THROW_ID_05] bad value was encountered, ${JSON.stringify(
-                current,
-                null,
-                4,
-              )}, its path is ${innerObj.path}`,
+              `string-convert-indexes/${functionName}(): [THROW_ID_05] bad value was encountered, ${formatDiagnosticValue(current, 4)}, its path is ${innerObj.path}`,
             );
           }
           // else - return as is
@@ -163,11 +156,7 @@ function strConvertIndexes(
                 : oneNativeToUnicode(graphemeStrArr, +current);
             }
             throw new Error(
-              `string-convert-indexes/${functionName}(): [THROW_ID_06] bad value was encountered, ${JSON.stringify(
-                current,
-                null,
-                4,
-              )}, its path is ${innerObj.path}`,
+              `string-convert-indexes/${functionName}(): [THROW_ID_06] bad value was encountered, ${formatDiagnosticValue(current, 4)}, its path is ${innerObj.path}`,
             );
           }
           // else - return as is

@@ -1,5 +1,10 @@
 import { arrayiffy } from "arrayiffy-if-string";
-import { existy, isPlainObject as isObj, isStr } from "codsen-utils";
+import {
+  existy,
+  formatDiagnosticValue,
+  isPlainObject as isObj,
+  isStr,
+} from "codsen-utils";
 import { matchRightIncl } from "string-match-left-right";
 
 import { version as v } from "../package.json";
@@ -62,7 +67,7 @@ function strFindHeadsTails(
   }
   DEV &&
     console.log(
-      `065 FINAL ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `070 FINAL ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -91,11 +96,7 @@ function strFindHeadsTails(
       return [];
     }
     throw new TypeError(
-      `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_04] the second input argument, heads, must be either a string or an array of strings! Currently it's: ${typeof heads}, equal to:\n${JSON.stringify(
-        heads,
-        null,
-        4,
-      )}`,
+      `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_04] the second input argument, heads, must be either a string or an array of strings! Currently it's: ${typeof heads}, equal to:\n${formatDiagnosticValue(heads, 4)}`,
     );
   } else if (isStr(heads)) {
     if (heads.length === 0) {
@@ -130,11 +131,7 @@ function strFindHeadsTails(
         }
       } else {
         throw new TypeError(
-          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_07] the second input argument, heads, contains non-string elements! For example, element at ${culpritsIndex}th index is ${typeof culpritsVal}, equal to:\n${JSON.stringify(
-            culpritsVal,
-            null,
-            4,
-          )}. Whole heads array looks like:\n${JSON.stringify(heads, null, 4)}`,
+          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_07] the second input argument, heads, contains non-string elements! For example, element at ${culpritsIndex}th index is ${typeof culpritsVal}, equal to:\n${formatDiagnosticValue(culpritsVal, 4)}. Whole heads array looks like:\n${formatDiagnosticValue(heads, 4)}`,
         );
       }
     } else if (
@@ -150,11 +147,7 @@ function strFindHeadsTails(
         }
       } else {
         throw new TypeError(
-          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_08] the second input argument, heads, should not contain empty strings! For example, there's one detected at index ${culpritsIndex} of heads array:\n${JSON.stringify(
-            heads,
-            null,
-            4,
-          )}.`,
+          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_08] the second input argument, heads, should not contain empty strings! For example, there's one detected at index ${culpritsIndex} of heads array:\n${formatDiagnosticValue(heads, 4)}.`,
         );
       }
     }
@@ -166,11 +159,7 @@ function strFindHeadsTails(
       return [];
     }
     throw new TypeError(
-      `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_09] the third input argument, tails, must be either a string or an array of strings! Currently it's: ${typeof tails}, equal to:\n${JSON.stringify(
-        tails,
-        null,
-        4,
-      )}`,
+      `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_09] the third input argument, tails, must be either a string or an array of strings! Currently it's: ${typeof tails}, equal to:\n${formatDiagnosticValue(tails, 4)}`,
     );
   } else if (isStr(tails)) {
     if (tails.length === 0) {
@@ -205,15 +194,7 @@ function strFindHeadsTails(
         }
       } else {
         throw new TypeError(
-          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_12] the third input argument, tails, contains non-string elements! For example, element at ${culpritsIndex}th index is ${typeof culpritsVal}, equal to:\n${JSON.stringify(
-            culpritsVal,
-            null,
-            4,
-          )}. Whole tails array is equal to:\n${JSON.stringify(
-            tails,
-            null,
-            4,
-          )}`,
+          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_12] the third input argument, tails, contains non-string elements! For example, element at ${culpritsIndex}th index is ${typeof culpritsVal}, equal to:\n${formatDiagnosticValue(culpritsVal, 4)}. Whole tails array is equal to:\n${formatDiagnosticValue(tails, 4)}`,
         );
       }
     } else if (
@@ -229,11 +210,7 @@ function strFindHeadsTails(
         }
       } else {
         throw new TypeError(
-          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_13] the third input argument, tails, should not contain empty strings! For example, there's one detected at index ${culpritsIndex}. Whole tails array is equal to:\n${JSON.stringify(
-            tails,
-            null,
-            4,
-          )}`,
+          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_13] the third input argument, tails, should not contain empty strings! For example, there's one detected at index ${culpritsIndex}. Whole tails array is equal to:\n${formatDiagnosticValue(tails, 4)}`,
         );
       }
     }
@@ -315,7 +292,7 @@ function strFindHeadsTails(
     );
   DEV &&
     console.log(
-      `318 headsAndTailsFirstCharIndexesRange = ${JSON.stringify(
+      `295 headsAndTailsFirstCharIndexesRange = ${JSON.stringify(
         headsAndTailsFirstCharIndexesRange,
         null,
         4,
@@ -336,7 +313,7 @@ function strFindHeadsTails(
     let firstCharsIndex = str[i].charCodeAt(0);
     DEV &&
       console.log(
-        `339 ---------------------------------------> ${str[i]} i=${i} (#${firstCharsIndex})`,
+        `316 ---------------------------------------> ${str[i]} i=${i} (#${firstCharsIndex})`,
       );
     if (
       firstCharsIndex <= headsAndTailsFirstCharIndexesRange[1] &&
@@ -356,7 +333,7 @@ function strFindHeadsTails(
       }
       DEV &&
         console.log(
-          `359 matchedHeads = ${JSON.stringify(matchedHeads, null, 4)}`,
+          `336 matchedHeads = ${JSON.stringify(matchedHeads, null, 4)}`,
         );
       if (isStr(matchedHeads)) {
         if (!oneHeadFound) {
@@ -365,7 +342,7 @@ function strFindHeadsTails(
           tempResObj.headsStartAt = i;
           tempResObj.headsEndAt = i + matchedHeads.length;
           oneHeadFound = true;
-          DEV && console.log("368 head pushed");
+          DEV && console.log("345 head pushed");
           // offset the index so the characters of the confirmed heads can't be "reused"
           // again for subsequent, false detections:
           i += matchedHeads.length - 1;
@@ -373,7 +350,7 @@ function strFindHeadsTails(
             tailSuspicionRaised = undefined;
             DEV &&
               console.log(
-                `376 !!! tailSuspicionRaised = ${!!tailSuspicionRaised}`,
+                `353 !!! tailSuspicionRaised = ${!!tailSuspicionRaised}`,
               );
           }
           continue;
@@ -398,7 +375,7 @@ function strFindHeadsTails(
       let matchedTails = matchRightIncl(str, i, tails);
       DEV &&
         console.log(
-          `401 matchedTails = ${JSON.stringify(matchedTails, null, 4)}`,
+          `378 matchedTails = ${JSON.stringify(matchedTails, null, 4)}`,
         );
 
       if (
@@ -433,7 +410,7 @@ function strFindHeadsTails(
           res.push(tempResObj);
           tempResObj = {};
           oneHeadFound = false;
-          DEV && console.log("436 tail pushed");
+          DEV && console.log("413 tail pushed");
           // same for tails, offset the index to prevent partial, erroneous detections:
           i += matchedTails.length - 1;
           continue;
@@ -447,7 +424,7 @@ function strFindHeadsTails(
           );
           DEV &&
             console.log(
-              `450 !!! tailSuspicionRaised = ${!!tailSuspicionRaised}`,
+              `427 !!! tailSuspicionRaised = ${!!tailSuspicionRaised}`,
             );
         }
       }
@@ -456,29 +433,25 @@ function strFindHeadsTails(
     // closing, global checks:
 
     DEV &&
-      console.log(`459 tempResObj = ${JSON.stringify(tempResObj, null, 4)}`);
+      console.log(`436 tempResObj = ${JSON.stringify(tempResObj, null, 4)}`);
     // if it's the last character and some heads were found but no tails:
     if (resolvedOpts.throwWhenSomethingWrongIsDetected && i === len - 1) {
-      DEV && console.log("462");
+      DEV && console.log("439");
       if (Object.keys(tempResObj).length !== 0) {
-        DEV && console.log("464");
+        DEV && console.log("441");
         throw new TypeError(
-          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_19] ${sourceLabel}When processing "${str}", we reached the end of the string and yet didn't find any tails (${JSON.stringify(
-            tails,
-            null,
-            4,
-          )}) to match the last detected heads (${str.slice(
+          `string-find-heads-tails/strFindHeadsTails(): [THROW_ID_19] ${sourceLabel}When processing "${str}", we reached the end of the string and yet didn't find any tails (${formatDiagnosticValue(tails, 4)}) to match the last detected heads (${str.slice(
             tempResObj.headsStartAt,
             tempResObj.headsEndAt,
           )})!`,
         );
       } else if (tailSuspicionRaised) {
-        DEV && console.log("476");
+        DEV && console.log("449");
         throw tailSuspicionRaised;
       }
     }
   }
-  DEV && console.log(`481 final res = ${JSON.stringify(res, null, 4)}`);
+  DEV && console.log(`454 final res = ${JSON.stringify(res, null, 4)}`);
   return res as ResObj[];
 }
 

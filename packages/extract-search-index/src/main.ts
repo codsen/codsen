@@ -1,3 +1,4 @@
+import { formatDiagnosticValue } from "codsen-utils";
 import { stripHtml } from "string-strip-html";
 import { unfancy } from "string-unfancy";
 import { version as v } from "../package.json";
@@ -8,11 +9,7 @@ function extract(str: string): string {
   // Insurance
   if (typeof str !== "string") {
     throw new Error(
-      `extract-search-index/extract(): [THROW_ID_01] The input is not string! It was given as ${JSON.stringify(
-        str,
-        null,
-        4,
-      )} (typeof is ${typeof str})`,
+      `extract-search-index/extract(): [THROW_ID_01] The input is not string! It was given as ${formatDiagnosticValue(str, 4)} (typeof is ${typeof str})`,
     );
   }
 

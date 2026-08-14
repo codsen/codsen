@@ -1,3 +1,4 @@
+import { formatDiagnosticValue } from "codsen-utils";
 import type { Range, Ranges } from "ranges-merge";
 import { rMerge } from "ranges-merge";
 
@@ -35,29 +36,17 @@ function rApply(
   }
   if (typeof str !== "string") {
     throw new TypeError(
-      `ranges-apply/rApply(): [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(
-        str,
-        null,
-        4,
-      )}`,
+      `ranges-apply/rApply(): [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${formatDiagnosticValue(str, 4)}`,
     );
   }
   if (originalRangesArr != null && !Array.isArray(originalRangesArr)) {
     throw new TypeError(
-      `ranges-apply/rApply(): [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(
-        originalRangesArr,
-        null,
-        4,
-      )}`,
+      `ranges-apply/rApply(): [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${formatDiagnosticValue(originalRangesArr, 4)}`,
     );
   }
   if (progressFn && typeof progressFn !== "function") {
     throw new TypeError(
-      `ranges-apply/rApply(): [THROW_ID_04] the third input argument must be a function (or falsy)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(
-        progressFn,
-        null,
-        4,
-      )}`,
+      `ranges-apply/rApply(): [THROW_ID_04] the third input argument must be a function (or falsy)! Currently it's: ${typeof progressFn}, equal to: ${formatDiagnosticValue(progressFn, 4)}`,
     );
   }
   // insurance against array of nulls
@@ -99,24 +88,12 @@ function rApply(
 
     if (!Array.isArray(el)) {
       throw new TypeError(
-        `ranges-apply/rApply(): [THROW_ID_05] ranges array, second input arg., has ${i}th element not an array: ${JSON.stringify(
-          el,
-          null,
-          4,
-        )}, which is ${typeof el}`,
+        `ranges-apply/rApply(): [THROW_ID_05] ranges array, second input arg., has ${i}th element not an array: ${formatDiagnosticValue(el, 4)}, which is ${typeof el}`,
       );
     }
     if (!isNaturalNumberOrNumericString(el[0])) {
       throw new TypeError(
-        `ranges-apply/rApply(): [THROW_ID_06] ranges array, second input arg. has ${i}th element, array ${JSON.stringify(
-          el,
-          null,
-          0,
-        )}. Its first element is not a non-negative integer or string index, but ${typeof el[0]}, equal to: ${JSON.stringify(
-          el[0],
-          null,
-          4,
-        )}.`,
+        `ranges-apply/rApply(): [THROW_ID_06] ranges array, second input arg. has ${i}th element, array ${formatDiagnosticValue(el)}. Its first element is not a non-negative integer or string index, but ${typeof el[0]}, equal to: ${formatDiagnosticValue(el[0], 4)}.`,
       );
     }
     if (typeof el[0] === "string") {
@@ -125,15 +102,7 @@ function rApply(
     }
     if (!isNaturalNumberOrNumericString(el[1])) {
       throw new TypeError(
-        `ranges-apply/rApply(): [THROW_ID_07] ranges array, second input arg. has ${i}th element, array ${JSON.stringify(
-          el,
-          null,
-          0,
-        )}. Its second element is not a non-negative integer or string index, but ${typeof el[1]}, equal to: ${JSON.stringify(
-          el[1],
-          null,
-          4,
-        )}.`,
+        `ranges-apply/rApply(): [THROW_ID_07] ranges array, second input arg. has ${i}th element, array ${formatDiagnosticValue(el)}. Its second element is not a non-negative integer or string index, but ${typeof el[1]}, equal to: ${formatDiagnosticValue(el[1], 4)}.`,
       );
     }
     if (typeof el[1] === "string") {

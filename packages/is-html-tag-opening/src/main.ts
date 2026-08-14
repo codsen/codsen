@@ -1,3 +1,4 @@
+import { formatDiagnosticValue } from "codsen-utils";
 import { left } from "string-left-right";
 import { matchRight, matchRightIncl } from "string-match-left-right";
 import { version as v } from "../package.json";
@@ -19,20 +20,12 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
 
   if (typeof str !== "string") {
     throw new Error(
-      `is-html-tag-opening/isOpening(): [THROW_ID_01] the first input argument should have been a string but it was given as "${typeof str}", value being ${JSON.stringify(
-        str,
-        null,
-        4,
-      )}`,
+      `is-html-tag-opening/isOpening(): [THROW_ID_01] the first input argument should have been a string but it was given as "${typeof str}", value being ${formatDiagnosticValue(str, 4)}`,
     );
   }
   if (!Number.isInteger(idx) || idx < 0) {
     throw new Error(
-      `is-html-tag-opening/isOpening(): [THROW_ID_02] the second input argument should have been a natural number string index but it was given as "${typeof idx}", value being ${JSON.stringify(
-        idx,
-        null,
-        4,
-      )}`,
+      `is-html-tag-opening/isOpening(): [THROW_ID_02] the second input argument should have been a natural number string index but it was given as "${typeof idx}", value being ${formatDiagnosticValue(idx, 4)}`,
     );
   }
 
@@ -143,13 +136,13 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
 
   DEV &&
     console.log(
-      `146 ██ ${`\u001b[${33}m${`whatToTest`}\u001b[${39}m`} = "${whatToTest}"`,
+      `139 ██ ${`\u001b[${33}m${`whatToTest`}\u001b[${39}m`} = "${whatToTest}"`,
     );
 
   // -----------------------------------------------------------------------------
 
   if (resolvedOpts.allowCustomTagNames) {
-    DEV && console.log(`152 entering the custom tag name clauses`);
+    DEV && console.log(`145 entering the custom tag name clauses`);
     if (
       ((resolvedOpts.skipOpeningBracket &&
         (str[idx - 1] === "<" ||
@@ -158,26 +151,26 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
         (whatToTest[0] === "<" && whatToTest[1]?.trim())) &&
       (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))
     ) {
-      DEV && console.log(`161 ${`\u001b[${31}m${`R9`}\u001b[${39}m`} passed`);
+      DEV && console.log(`154 ${`\u001b[${31}m${`R9`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r5.test(whatToTest) && extraRequirements(str, idx)) {
-      DEV && console.log(`164 ${`\u001b[${31}m${`R5`}\u001b[${39}m`} passed`);
+      DEV && console.log(`157 ${`\u001b[${31}m${`R5`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r6.test(whatToTest)) {
-      DEV && console.log(`167 ${`\u001b[${31}m${`R6`}\u001b[${39}m`} passed`);
+      DEV && console.log(`160 ${`\u001b[${31}m${`R6`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r7.test(whatToTest) && extraRequirements(str, idx)) {
-      DEV && console.log(`170 ${`\u001b[${31}m${`R7`}\u001b[${39}m`} passed`);
+      DEV && console.log(`163 ${`\u001b[${31}m${`R7`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r8.test(whatToTest)) {
-      DEV && console.log(`173 ${`\u001b[${31}m${`R8`}\u001b[${39}m`} passed`);
+      DEV && console.log(`166 ${`\u001b[${31}m${`R8`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (
       str[idx] === "/" &&
       str[leftSideIdx] !== "<" &&
       r10.test(whatToTest)
     ) {
-      DEV && console.log(`180 ${`\u001b[${31}m${`R10`}\u001b[${39}m`} passed`);
+      DEV && console.log(`173 ${`\u001b[${31}m${`R10`}\u001b[${39}m`} passed`);
       passed = true;
     }
   } else {
@@ -195,29 +188,29 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
       r9.test(whatToTest)
     ) {
       DEV &&
-        console.log(`198 ${`\u001b[${31}m${`R9`}\u001b[${39}m`} qualified`);
+        console.log(`191 ${`\u001b[${31}m${`R9`}\u001b[${39}m`} qualified`);
       qualified = true;
     } else if (r1.test(whatToTest) && extraRequirements(str, idx)) {
       DEV &&
-        console.log(`202 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} qualified`);
+        console.log(`195 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} qualified`);
       qualified = true;
     } else if (r2.test(whatToTest)) {
       DEV &&
-        console.log(`206 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} qualified`);
+        console.log(`199 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} qualified`);
       qualified = true;
     } else if (r3.test(whatToTest) && extraRequirements(str, idx)) {
       DEV &&
-        console.log(`210 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} qualified`);
+        console.log(`203 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} qualified`);
       qualified = true;
     } else if (r4.test(whatToTest)) {
       DEV &&
-        console.log(`214 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} qualified`);
+        console.log(`207 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} qualified`);
       qualified = true;
     }
 
     DEV &&
       console.log(
-        `220 FIY ${`\u001b[${33}m${`qualified`}\u001b[${39}m`} = ${JSON.stringify(
+        `213 FIY ${`\u001b[${33}m${`qualified`}\u001b[${39}m`} = ${JSON.stringify(
           qualified,
           null,
           4,
@@ -229,7 +222,7 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
       matchRightIncl(str, idx, knownHtmlTags, {
         cb: (char) => {
           if (char === undefined) {
-            DEV && console.log(`232`);
+            DEV && console.log(`225`);
             if (
               (str[idx] === "<" && str[idx + 1]?.trim()) ||
               str[idx - 1] === "<"
@@ -237,7 +230,7 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
               passed = true;
               DEV &&
                 console.log(
-                  `240 ${`\u001b[${31}m${`EOL after tag name`}\u001b[${39}m`}`,
+                  `233 ${`\u001b[${31}m${`EOL after tag name`}\u001b[${39}m`}`,
                 );
             }
             return true;
@@ -261,14 +254,14 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
         ],
       })
     ) {
-      DEV && console.log(`264 SET passed = true`);
+      DEV && console.log(`257 SET passed = true`);
       passed = true;
     }
   }
 
   DEV &&
     console.log(
-      `271 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+      `264 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
         passed,
         null,
         4,
@@ -282,12 +275,12 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
     matchRight(str, idx, knownHtmlTags, matchingOptions)
   ) {
     passed = true;
-    DEV && console.log(`285 SET passed = true`);
+    DEV && console.log(`278 SET passed = true`);
   }
 
   DEV &&
     console.log(
-      `290 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+      `283 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
         passed,
         null,
         4,
@@ -297,7 +290,7 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
   //
   DEV &&
     console.log(
-      `300 ${`\u001b[${33}m${`isNotLetter(str[${
+      `293 ${`\u001b[${33}m${`isNotLetter(str[${
         idx + 1
       }])`}\u001b[${39}m`} = ${JSON.stringify(
         isNotLetter(str[idx + 1]),
@@ -306,7 +299,7 @@ function isOpening(str: string, idx = 0, opts?: Partial<Opts>): boolean {
       )}`,
     );
   let res = typeof str === "string" && idx < str.length && passed;
-  DEV && console.log(`309 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
+  DEV && console.log(`302 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
   return res;
 }
 

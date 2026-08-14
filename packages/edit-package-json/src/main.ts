@@ -1,4 +1,4 @@
-import { isNum, isStr } from "codsen-utils";
+import { formatDiagnosticValue, isNum, isStr } from "codsen-utils";
 import { rApply } from "ranges-apply";
 import { chompLeft, left, right } from "string-left-right";
 
@@ -996,25 +996,17 @@ function set(str: string, path: string, valToInsert: string | number): string {
   DEV && console.log(`996 set()`);
   if (!isStr(str) || !str.length) {
     throw new Error(
-      `edit-package-json/set(): [THROW_ID_01] first input argument must be a non-empty string. It was given as ${JSON.stringify(
-        str,
-        null,
-        4,
-      )} (type ${typeof str})`,
+      `edit-package-json/set(): [THROW_ID_01] first input argument must be a non-empty string. It was given as ${formatDiagnosticValue(str, 4)} (type ${typeof str})`,
     );
   }
   return main({ str, path, valToInsert, mode: "set" });
 }
 
 function del(str: string, path: string): string {
-  DEV && console.log(`1010 del()`);
+  DEV && console.log(`1006 del()`);
   if (!isStr(str) || !str.length) {
     throw new Error(
-      `edit-package-json/del(): [THROW_ID_02] first input argument must be a non-empty string. It was given as ${JSON.stringify(
-        str,
-        null,
-        4,
-      )} (type ${typeof str})`,
+      `edit-package-json/del(): [THROW_ID_02] first input argument must be a non-empty string. It was given as ${formatDiagnosticValue(str, 4)} (type ${typeof str})`,
     );
   }
   // absence of what to insert means delete

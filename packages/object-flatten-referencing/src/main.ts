@@ -4,6 +4,7 @@ import { arrayiffy } from "arrayiffy-if-string";
 import {
   deepClone as clone,
   existy,
+  formatDiagnosticValue,
   isPlainObject as isObj,
   isStr,
   type JSONValue,
@@ -22,29 +23,17 @@ function flattenReferencing(
 ): any {
   if (!isObj(input)) {
     throw new Error(
-      `object-flatten-referencing/flattenReferencing(): [THROW_ID_01] the first input argument must be a plain object! It was given as ${JSON.stringify(
-        input,
-        null,
-        4,
-      )} (its typeof was ${typeof input}).`,
+      `object-flatten-referencing/flattenReferencing(): [THROW_ID_01] the first input argument must be a plain object! It was given as ${formatDiagnosticValue(input, 4)} (its typeof was ${typeof input}).`,
     );
   }
   if (!isObj(reference)) {
     throw new Error(
-      `object-flatten-referencing/flattenReferencing(): [THROW_ID_02] the second input argument must be a plain object! It was given as ${JSON.stringify(
-        reference,
-        null,
-        4,
-      )} (its typeof was ${typeof reference}).`,
+      `object-flatten-referencing/flattenReferencing(): [THROW_ID_02] the second input argument must be a plain object! It was given as ${formatDiagnosticValue(reference, 4)} (its typeof was ${typeof reference}).`,
     );
   }
   if (opts && !isObj(opts)) {
     throw new Error(
-      `object-flatten-referencing/flattenReferencing(): [THROW_ID_03] the third input argument must be a plain object! It was given as ${JSON.stringify(
-        opts,
-        null,
-        4,
-      )} (its typeof was ${typeof opts}).`,
+      `object-flatten-referencing/flattenReferencing(): [THROW_ID_03] the third input argument must be a plain object! It was given as ${formatDiagnosticValue(opts, 4)} (its typeof was ${typeof opts}).`,
     );
   }
 

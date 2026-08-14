@@ -68,6 +68,9 @@
     },
     "various": {}
   },
+  "dependencies": {
+    "codsen-utils": "^1.7.3"
+  },
   "devDependencies": {
     "color-shorthand-hex-to-six-digit": "^5.1.3"
   },

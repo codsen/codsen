@@ -89,7 +89,7 @@ Priorities have the following meanings:
 | REV-012 | P2 | Completed | Generators | Make `lect` mutations reliable |
 | REV-013 | P2 | Completed | Developer workflow | Separate mutation from verification |
 | REV-014 | P2 | Completed | Release tooling | Modularise and test release-critical code |
-| REV-015 | P2 | Pending | Error handling | Format arbitrary invalid inputs safely |
+| REV-015 | P2 | Completed | Error handling | Format arbitrary invalid inputs safely |
 | REV-016 | P2 | Pending | Performance | Repair misleading benchmark workloads |
 | REV-017 | P2 | Pending | Release safety | Retire or guard direct-publish scripts |
 | REV-018 | P2 | Pending | Supply chain | Add dependency update and security checks |
@@ -816,11 +816,14 @@ Priorities have the following meanings:
 
 ### REV-015 — Format arbitrary invalid inputs safely
 
-- Status: Pending
-- Evidence status: Reproduced for representative inputs
+- Status: Completed
+- Completed: 2026-08-14
+- Evidence status: Reproduced repository-wide, fixed, and validated against
+  hostile values and packed runtime artifacts
 - Evidence:
-  - At the review baseline, 163 throws across 52 source files interpolated a
-    direct `JSON.stringify(...)` call into an error message.
+  - At the review baseline, 163 throws across 52 source files interpolated 174
+    direct `JSON.stringify(...)` calls into error messages. One further call in
+    `string-range-expander` composed the same unsafe diagnostic indirectly.
   - `packages/extract-search-index/src/main.ts:9-16` is one representative
     example.
   - Calling that package with BigInt or a circular object produced native
@@ -830,6 +833,26 @@ Priorities have the following meanings:
 - Recommended change: Add one small safe diagnostic formatter that handles
   BigInt, circular references, symbols, functions, and values with throwing
   accessors. Adopt it incrementally in validation paths.
+- Resolution:
+  - Added the browser-safe `codsen-utils/formatDiagnosticValue()` utility and
+    migrated all 175 unsafe diagnostic paths. The renderer reads property
+    descriptors instead of values, never calls accessors or `toJSON`, contains
+    hostile reflection failures, distinguishes circular from repeated
+    references, and represents unsupported primitive values explicitly.
+  - Bounded every diagnostic to 2,000 UTF-16 code units, five levels, and 50
+    reflected entries. Strings and symbol descriptions escape control
+    characters, and the implementation avoids APIs newer than the package's
+    Chrome 58 IIFE target.
+  - Added the required direct `codsen-utils` runtime edge to 23 packages and
+    regenerated the exact lockfile and dependency-derived data. All 50
+    external consumers now declare the utility directly; no Node floor moved.
+  - Added focused formatter coverage and hostile validation cases in
+    `extract-search-index`, `ranges-apply`, and `string-range-expander` for
+    BigInt, circular values, accessors, `toJSON`, proxies, symbols, functions,
+    large inputs, exact error classes, prefixes, and throw IDs.
+  - Added a syntax-aware debug-log line-label verifier and wired it into both
+    root verification and CI. It checks active `DEV`-guarded logs after source
+    formatting without confusing ANSI codes or diagnostic payload numbers.
 - Done when:
   - Representative hostile values preserve the intended error class, prefix,
     and throw ID.
@@ -839,6 +862,31 @@ Priorities have the following meanings:
   - Focused formatter tests
   - Numbered validation tests for representative packages
   - Throw-ID sequence audit after each affected edit
+- Validation results:
+  - `codsen-utils` passed 317 tests and retained 100% statement, branch,
+    function, and line coverage. The three representative hostile-input suites
+    and their development coverage runs passed.
+  - A repository AST audit found all 174 direct migrations plus the one
+    indirect migration, with every original argument and compact/indented
+    layout preserved. All affected `Error` versus `TypeError` constructors and
+    ordered throw IDs match the baseline; the other 995 serialization calls
+    remain unchanged.
+  - The debug-label verifier passed all 2,845 active logs across 134 TypeScript
+    source files. After normalising navigation numbers, their call bodies match
+    the baseline.
+  - Full generation, data verification, 224 package unit tasks, 175 typecheck
+    tasks, package-kind and Node-policy checks, Biome, Markdown lint, workflow
+    YAML parsing, and `git diff --check` passed.
+  - One immutable pack of all 112 workspaces passed cumulative install, import,
+    CLI-smoke, and actual-unit verification on exact Node 18.20.8, 20.19.4,
+    22.21.1, 24.19.0, and 26.7.0.
+  - Review restarts closed an unbounded non-enumerable proxy-key path, an
+    escaped-newline label offset, missing CI enforcement, raw symbol control
+    characters, and two Chrome-target compatibility issues. The final
+    independent review found no remaining correctness defect.
+  - The first final root gate caught stale generated dependency data after the
+    exact-toolchain rebuild. Regeneration followed by a complete restarted
+    `npm run verify` passed, including all 122 ops tests and 175 typecheck tasks.
 
 ### REV-016 — Repair misleading benchmark workloads
 

@@ -1,3 +1,4 @@
+import { formatDiagnosticValue } from "codsen-utils";
 import { isJinjaNunjucksRegex } from "regex-is-jinja-nunjucks";
 import { isJSP } from "regex-is-jsp";
 import { isJinjaSpecific } from "regex-jinja-specific";
@@ -13,11 +14,7 @@ function detectLang(str: string): { name: Output } {
 
   if (typeof str !== "string") {
     throw new TypeError(
-      `detect-templating-language/detectLang(): [THROW_ID_01] Input must be string! It was given as ${JSON.stringify(
-        str,
-        null,
-        4,
-      )} (type ${typeof str}).`,
+      `detect-templating-language/detectLang(): [THROW_ID_01] Input must be string! It was given as ${formatDiagnosticValue(str, 4)} (type ${typeof str}).`,
     );
   }
 

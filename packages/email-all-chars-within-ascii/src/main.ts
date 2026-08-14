@@ -1,3 +1,4 @@
+import { formatDiagnosticValue } from "codsen-utils";
 import { version as v } from "../package.json";
 
 const version: string = v;
@@ -25,20 +26,12 @@ const defaults: Opts = {
 function within(str: string, opts?: Partial<Opts>): Res[] {
   if (typeof str !== "string") {
     throw new Error(
-      `email-all-chars-within-ascii/within(): [THROW_ID_01] The input is not string but ${typeof str}, equal to: ${JSON.stringify(
-        str,
-        null,
-        4,
-      )}`,
+      `email-all-chars-within-ascii/within(): [THROW_ID_01] The input is not string but ${typeof str}, equal to: ${formatDiagnosticValue(str, 4)}`,
     );
   }
   if (opts && typeof opts !== "object") {
     throw new Error(
-      `email-all-chars-within-ascii/within(): [THROW_ID_02] The resolvedOpts is not a plain object but ${typeof opts}, equal to:\n${JSON.stringify(
-        opts,
-        null,
-        4,
-      )}`,
+      `email-all-chars-within-ascii/within(): [THROW_ID_02] The resolvedOpts is not a plain object but ${typeof opts}, equal to:\n${formatDiagnosticValue(opts, 4)}`,
     );
   }
   // quick ending
@@ -73,7 +66,7 @@ function within(str: string, opts?: Partial<Opts>): Res[] {
       (!str[i] || str[i] === "\r" || str[i] === "\n") &&
       column > resolvedOpts.lineLength
     ) {
-      DEV && console.log(`076 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+      DEV && console.log(`069 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
       res.push({
         type: "line length",
         line: currLine,
@@ -107,7 +100,7 @@ function within(str: string, opts?: Partial<Opts>): Res[] {
 
     DEV &&
       console.log(
-        `110 \u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+        `103 \u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
         }; column = ${column}; line = ${currLine}`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`,
       );
@@ -133,7 +126,7 @@ function within(str: string, opts?: Partial<Opts>): Res[] {
         currCodePoint === 12 ||
         (currCodePoint > 13 && currCodePoint < 32)
       ) {
-        DEV && console.log(`136 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+        DEV && console.log(`129 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
         res.push({
           type: "character",
           line: currLine,
@@ -157,7 +150,7 @@ function within(str: string, opts?: Partial<Opts>): Res[] {
 
   DEV &&
     console.log(
-      `160 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+      `153 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
         res,
         null,
         4,

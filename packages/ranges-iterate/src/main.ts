@@ -1,3 +1,4 @@
+import { formatDiagnosticValue } from "codsen-utils";
 import type { Ranges } from "../../../ops/typedefs/common";
 
 import { version as v } from "../package.json";
@@ -15,11 +16,7 @@ export type Callback = (obj: Obj) => void;
 function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
   if (typeof str !== "string") {
     throw new TypeError(
-      `ranges-iterate/rIterate(): [THROW_ID_01] Input string must be a string! It was given as ${typeof str}, equal to: ${JSON.stringify(
-        str,
-        null,
-        0,
-      )}`,
+      `ranges-iterate/rIterate(): [THROW_ID_01] Input string must be a string! It was given as ${typeof str}, equal to: ${formatDiagnosticValue(str)}`,
     );
   } else if (!str.length) {
     throw new TypeError(
@@ -28,11 +25,7 @@ function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
   }
   if (input != null && !Array.isArray(input)) {
     throw new TypeError(
-      `ranges-iterate/rIterate(): [THROW_ID_03] Input ranges must be an array, consisting of zero or more arrays! Currently its type is: ${typeof input}, equal to: ${JSON.stringify(
-        input,
-        null,
-        0,
-      )}`,
+      `ranges-iterate/rIterate(): [THROW_ID_03] Input ranges must be an array, consisting of zero or more arrays! Currently its type is: ${typeof input}, equal to: ${formatDiagnosticValue(input)}`,
     );
   }
   if (!cb) {
@@ -41,11 +34,7 @@ function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
     );
   } else if (typeof cb !== "function") {
     throw new TypeError(
-      `ranges-iterate/rIterate(): [THROW_ID_05] The callback function (third input argument) must be a function. It was given as: ${typeof cb}, equal to: ${JSON.stringify(
-        cb,
-        null,
-        0,
-      )}`,
+      `ranges-iterate/rIterate(): [THROW_ID_05] The callback function (third input argument) must be a function. It was given as: ${typeof cb}, equal to: ${formatDiagnosticValue(cb)}`,
     );
   }
 
@@ -84,14 +73,14 @@ function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
 
     DEV &&
       console.log(
-        `087 starting finalIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`,
+        `076 starting finalIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`,
       );
 
     // cover the first characters up to starting range
     if (finalIdx < resolvedRanges[0][0]) {
       DEV &&
         console.log(
-          `094 finalIdx ${`\u001b[${34}m${finalIdx}\u001b[${39}m`} is before first range's starting index ${`\u001b[${34}m${resolvedRanges[0][0]}\u001b[${39}m`} so ping all characters up to it`,
+          `083 finalIdx ${`\u001b[${34}m${finalIdx}\u001b[${39}m`} is before first range's starting index ${`\u001b[${34}m${resolvedRanges[0][0]}\u001b[${39}m`} so ping all characters up to it`,
         );
 
       for (; finalIdx < resolvedRanges[0][0]; finalIdx++, currentIdx++) {
@@ -100,7 +89,7 @@ function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
           break;
         }
         // ELSE
-        DEV && console.log(`103 \u001b[${90}m${`ping CB`}\u001b[${39}m`);
+        DEV && console.log(`092 \u001b[${90}m${`ping CB`}\u001b[${39}m`);
         // TODO - add push
         cb({
           i: finalIdx,
@@ -111,7 +100,7 @@ function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
 
     DEV &&
       console.log(
-        `114 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`,
+        `103 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`,
       );
 
     // check, if the next range reaches before the end of the string
@@ -127,7 +116,7 @@ function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
         const rangeArr = resolvedRanges[rangeArrIdx];
         DEV &&
           console.log(
-            `130 ${`\u001b[${36}m${`---------- rangeArr = ${JSON.stringify(
+            `119 ${`\u001b[${36}m${`---------- rangeArr = ${JSON.stringify(
               rangeArr,
               null,
               0,
@@ -135,7 +124,7 @@ function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
           );
         DEV &&
           console.log(
-            `138 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`,
+            `127 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`,
           );
 
         // 1. if "to insert" value, third range's argument is given, loop through it,
@@ -144,7 +133,7 @@ function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
         if (rangeArr[2]) {
           DEV &&
             console.log(
-              `147 loop "to insert value", ${`\u001b[${36}m${JSON.stringify(
+              `136 loop "to insert value", ${`\u001b[${36}m${JSON.stringify(
                 rangeArr[2],
                 null,
                 0,
@@ -153,7 +142,7 @@ function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
           for (let y = 0, len = rangeArr[2].length; y < len; y++) {
             DEV &&
               console.log(
-                `156 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`,
+                `145 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`,
               );
             cb({
               i: finalIdx,
@@ -167,7 +156,7 @@ function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
         while (currentIdx < rangeArr[1]) {
           DEV &&
             console.log(
-              `170 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`} -> ${`\u001b[${35}m${
+              `159 finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`} -> ${`\u001b[${35}m${
                 currentIdx + 1
               }\u001b[${39}m`}`,
             );
@@ -181,25 +170,25 @@ function rIterate(str: string, input: Ranges, cb: Callback, offset = 0): void {
         if (resolvedRanges[rangeArrIdx + 1]) {
           loopUntil = resolvedRanges[rangeArrIdx + 1][0];
         }
-        DEV && console.log(`184 loopUntil = ${loopUntil}`);
+        DEV && console.log(`173 loopUntil = ${loopUntil}`);
 
         for (; currentIdx < loopUntil; finalIdx++, currentIdx++) {
-          DEV && console.log(`187 \u001b[${90}m${`ping CB`}\u001b[${39}m`);
+          DEV && console.log(`176 \u001b[${90}m${`ping CB`}\u001b[${39}m`);
           cb({
             i: finalIdx,
             val: str[currentIdx],
           });
         }
 
-        DEV && console.log("194 ");
+        DEV && console.log("183 ");
         DEV &&
           console.log(
-            `197 after while loop, finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`,
+            `186 after while loop, finalIdx = ${`\u001b[${35}m${finalIdx}\u001b[${39}m`}; currentIdx = ${`\u001b[${35}m${currentIdx}\u001b[${39}m`}`,
           );
       }
     }
     DEV &&
-      console.log(`202 ${`\u001b[${36}m${`---------- fin.`}\u001b[${39}m`}`);
+      console.log(`191 ${`\u001b[${36}m${`---------- fin.`}\u001b[${39}m`}`);
   }
 }
 

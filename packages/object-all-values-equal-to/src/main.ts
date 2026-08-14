@@ -1,6 +1,6 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import { isPlainObject as isObj } from "codsen-utils";
+import { formatDiagnosticValue, isPlainObject as isObj } from "codsen-utils";
 import { isEqual } from "lodash-es";
 
 import { version as v } from "../package.json";
@@ -71,11 +71,7 @@ function allEq(input: any, value: any, opts?: Partial<Opts>): boolean {
   }
   if (opts && !isObj(opts)) {
     throw new Error(
-      `object-all-values-equal-to/allEq(): [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ${typeof opts}, equal to:\n${JSON.stringify(
-        opts,
-        null,
-        4,
-      )}`,
+      `object-all-values-equal-to/allEq(): [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ${typeof opts}, equal to:\n${formatDiagnosticValue(opts, 4)}`,
     );
   }
 

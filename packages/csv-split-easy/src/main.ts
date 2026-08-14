@@ -1,3 +1,4 @@
+import { formatDiagnosticValue } from "codsen-utils";
 /* eslint no-param-reassign:0 */
 
 import { remSep } from "string-remove-thousand-separators";
@@ -59,11 +60,7 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
 
   if (opts && !isPlainObject(opts)) {
     throw new Error(
-      `csv-split-easy/splitEasy(): [THROW_ID_01] Options object must be a plain object! Currently it's of a type ${typeof opts} equal to:\n${JSON.stringify(
-        opts,
-        null,
-        4,
-      )}`,
+      `csv-split-easy/splitEasy(): [THROW_ID_01] Options object must be a plain object! Currently it's of a type ${typeof opts} equal to:\n${formatDiagnosticValue(opts, 4)}`,
     );
   }
 
@@ -72,11 +69,7 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
 
   if (typeof str !== "string") {
     throw new TypeError(
-      `csv-split-easy/splitEasy(): [THROW_ID_02] input must be string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(
-        str,
-        null,
-        4,
-      )}`,
+      `csv-split-easy/splitEasy(): [THROW_ID_02] input must be string! Currently it's: ${typeof str}, equal to: ${formatDiagnosticValue(str, 4)}`,
     );
   } else {
     if (
@@ -87,9 +80,7 @@ function splitEasy(str: string, opts?: Partial<Opts>): string[][] {
       resolvedOpts.delimiter === "\r"
     ) {
       throw new TypeError(
-        `csv-split-easy/splitEasy(): [THROW_ID_03] The "delimiter" option must be a single character other than a double quote or a line break! Currently it's: ${typeof resolvedOpts.delimiter}, equal to: ${JSON.stringify(
-          resolvedOpts.delimiter,
-        )}`,
+        `csv-split-easy/splitEasy(): [THROW_ID_03] The "delimiter" option must be a single character other than a double quote or a line break! Currently it's: ${typeof resolvedOpts.delimiter}, equal to: ${formatDiagnosticValue(resolvedOpts.delimiter)}`,
       );
     }
     if (str === "") {

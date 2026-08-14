@@ -441,4 +441,42 @@ test("20 - validates and normalises ranges without mutating input", () => {
   equal(rApply("abc", [[1, 1]]), "abc", "20.09");
 });
 
+test("21 - hostile invalid inputs preserve typed validation errors", () => {
+  const circular = {};
+  circular.self = circular;
+  const accessor = {};
+  let getterCalls = 0;
+  Object.defineProperty(accessor, "hostile", {
+    enumerable: true,
+    get() {
+      getterCalls += 1;
+      throw new Error("accessor should not run");
+    },
+  });
+
+  throws(
+    () => rApply(circular),
+    (error) =>
+      error instanceof TypeError &&
+      /^ranges-apply\/rApply\(\): \[THROW_ID_02\]/.test(error.message),
+    "21.01",
+  );
+  throws(
+    () => rApply("abc", accessor),
+    (error) =>
+      error instanceof TypeError &&
+      /^ranges-apply\/rApply\(\): \[THROW_ID_03\]/.test(error.message),
+    "21.02",
+  );
+  throws(
+    () => rApply("abc", [[1n, 2]]),
+    (error) =>
+      error instanceof TypeError &&
+      /^ranges-apply\/rApply\(\): \[THROW_ID_06\]/.test(error.message),
+    "21.03",
+  );
+  is(circular.self, circular, "21.04");
+  is(getterCalls, 0, "21.05");
+});
+
 test.run();

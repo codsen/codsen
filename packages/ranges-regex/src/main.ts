@@ -1,3 +1,4 @@
+import { formatDiagnosticValue } from "codsen-utils";
 import { isRegExp } from "lodash-es";
 import type { Range, Ranges } from "ranges-merge";
 import { rMerge } from "ranges-merge";
@@ -35,31 +36,19 @@ function rRegex(
     );
   } else if (!isRegExp(regExp)) {
     throw new TypeError(
-      `ranges-regex/rRegex(): [THROW_ID_02] The first input's argument must be a regex object! Currently its type is: ${typeof regExp}, equal to: ${JSON.stringify(
-        regExp,
-        null,
-        4,
-      )}`,
+      `ranges-regex/rRegex(): [THROW_ID_02] The first input's argument must be a regex object! Currently its type is: ${typeof regExp}, equal to: ${formatDiagnosticValue(regExp, 4)}`,
     );
   }
   // str validation
   if (typeof str !== "string") {
     throw new TypeError(
-      `ranges-regex/rRegex(): [THROW_ID_03] The second input's argument must be a string! Currently its type is: ${typeof str}, equal to: ${JSON.stringify(
-        str,
-        null,
-        4,
-      )}`,
+      `ranges-regex/rRegex(): [THROW_ID_03] The second input's argument must be a string! Currently its type is: ${typeof str}, equal to: ${formatDiagnosticValue(str, 4)}`,
     );
   }
   // replacement validation
   if (replacement != null && typeof replacement !== "string") {
     throw new TypeError(
-      `ranges-regex/rRegex(): [THROW_ID_04] The third input's argument must be a string or null! Currently its type is: ${typeof replacement}, equal to: ${JSON.stringify(
-        replacement,
-        null,
-        4,
-      )}`,
+      `ranges-regex/rRegex(): [THROW_ID_04] The third input's argument must be a string or null! Currently its type is: ${typeof replacement}, equal to: ${formatDiagnosticValue(replacement, 4)}`,
     );
   }
   // A non-global RegExp does not advance lastIndex, so an all-matches loop

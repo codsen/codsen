@@ -67,6 +67,7 @@
     }
   },
   "dependencies": {
+    "codsen-utils": "^1.7.3",
     "string-strip-html": "^13.5.3",
     "string-unfancy": "^6.1.3"
   },

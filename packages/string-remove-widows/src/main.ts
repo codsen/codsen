@@ -1,4 +1,10 @@
-import { isPlainObject, rawMDash, rawNbsp, rawNDash } from "codsen-utils";
+import {
+  formatDiagnosticValue,
+  isPlainObject,
+  rawMDash,
+  rawNbsp,
+  rawNDash,
+} from "codsen-utils";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 import { left, right } from "string-left-right";
@@ -80,7 +86,7 @@ export interface Res {
 function removeWidows(str: string, opts?: Partial<Opts>): Res {
   DEV &&
     console.log(
-      `083 called removeWidows() on\n"${str}"\nusing opts = ${JSON.stringify(
+      `089 called removeWidows() on\n"${str}"\nusing opts = ${JSON.stringify(
         opts,
         null,
         4,
@@ -97,22 +103,14 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       );
     } else {
       throw new Error(
-        `string-remove-widows/removeWidows(): [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(
-          str,
-          null,
-          4,
-        )}`,
+        `string-remove-widows/removeWidows(): [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${formatDiagnosticValue(str, 4)}`,
       );
     }
   }
 
   if (opts && !isPlainObject(opts)) {
     throw new Error(
-      `string-remove-widows/removeWidows(): [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ${typeof opts}, equal to ${JSON.stringify(
-        opts,
-        null,
-        4,
-      )}`,
+      `string-remove-widows/removeWidows(): [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ${typeof opts}, equal to ${formatDiagnosticValue(opts, 4)}`,
     );
   }
 
@@ -226,7 +224,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
     );
     DEV &&
       console.log(
-        `229 ${`\u001b[${33}m${`ceil`}\u001b[${39}m`} = ${JSON.stringify(
+        `227 ${`\u001b[${33}m${`ceil`}\u001b[${39}m`} = ${JSON.stringify(
           ceil,
           null,
           4,
@@ -253,7 +251,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       rangesArr.push(finalStart, finalEnd, finalWhatToInsert);
       DEV &&
         console.log(
-          `256 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${finalStart}, ${finalEnd}, "${finalWhatToInsert}"]`,
+          `254 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${finalStart}, ${finalEnd}, "${finalWhatToInsert}"]`,
         );
     }
   }
@@ -274,7 +272,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
 
   DEV &&
     console.log(
-      `277 ${`\u001b[${32}m${`USING`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `275 ${`\u001b[${32}m${`USING`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -297,7 +295,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
     // ███████████████████████████████████████
     DEV &&
       console.log(
-        `\n\u001b[${36}m${`300 ===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+        `\n\u001b[${36}m${`298 ===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 0)
         }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`,
       );
@@ -316,13 +314,13 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         ) {
           DEV &&
             console.log(
-              `319 ${`\u001b[${31}m${`heads detected!`}\u001b[${39}m`}`,
+              `317 ${`\u001b[${31}m${`heads detected!`}\u001b[${39}m`}`,
             );
           wordCount += 1;
           doNothingUntil = (resolvedOpts.ignore[y] as Obj).tails;
           DEV &&
             console.log(
-              `325 ${`\u001b[${90}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = ${doNothingUntil}`,
+              `323 ${`\u001b[${90}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = ${doNothingUntil}`,
             );
           return true;
         }
@@ -335,7 +333,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
     if (!doNothingUntil && bumpWordCountAt && bumpWordCountAt === i) {
       DEV &&
         console.log(
-          `338 FIY, ${`\u001b[${33}m${`bumpWordCountAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `336 FIY, ${`\u001b[${33}m${`bumpWordCountAt`}\u001b[${39}m`} = ${JSON.stringify(
             bumpWordCountAt,
             null,
             4,
@@ -346,7 +344,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       bumpWordCountAt = undefined;
       DEV &&
         console.log(
-          `349 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wordCount`}\u001b[${39}m`} = ${wordCount}; ${`\u001b[${33}m${`bumpWordCountAt`}\u001b[${39}m`} = ${bumpWordCountAt}`,
+          `347 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wordCount`}\u001b[${39}m`} = ${wordCount}; ${`\u001b[${33}m${`bumpWordCountAt`}\u001b[${39}m`} = ${bumpWordCountAt}`,
         );
     }
 
@@ -380,7 +378,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       lastWhitespaceEndedAt = i;
       DEV &&
         console.log(
-          `383 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastWhitespaceEndedAt`}\u001b[${39}m`} = ${lastWhitespaceEndedAt}`,
+          `381 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastWhitespaceEndedAt`}\u001b[${39}m`} = ${lastWhitespaceEndedAt}`,
         );
     }
 
@@ -420,16 +418,16 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       str[i + 1] &&
       (!str[i + 1].trim() || str[i] === "&")
     ) {
-      DEV && console.log(`423 dash starts here`);
+      DEV && console.log(`421 dash starts here`);
       if (str[i - 1] && !str[i - 1].trim() && str[left(str, i) as number]) {
         push((left(str, i) as number) + 1, i);
-        DEV && console.log(`426 push [${(left(str, i) as number) + 1}, ${i}]`);
+        DEV && console.log(`424 push [${(left(str, i) as number) + 1}, ${i}]`);
 
         // report what was done:
         whatWasDone.removeWidows = true;
         DEV &&
           console.log(
-            `432 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.removeWidows`}\u001b[${39}m`} = true`,
+            `430 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.removeWidows`}\u001b[${39}m`} = true`,
           );
       }
     }
@@ -439,12 +437,12 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       !doNothingUntil &&
       (str.startsWith("&nbsp;", i) || str.startsWith("&#160;", i))
     ) {
-      DEV && console.log(`442 HTML-encoded NBSP caught!`);
+      DEV && console.log(`440 HTML-encoded NBSP caught!`);
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = i + 6;
       DEV &&
         console.log(
-          `447 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastEncodedNbspStartedAt`}\u001b[${39}m`} = ${lastEncodedNbspStartedAt}; ${`\u001b[${33}m${`lastEncodedNbspEndedAt`}\u001b[${39}m`} = ${lastEncodedNbspEndedAt}`,
+          `445 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastEncodedNbspStartedAt`}\u001b[${39}m`} = ${lastEncodedNbspStartedAt}; ${`\u001b[${33}m${`lastEncodedNbspEndedAt`}\u001b[${39}m`} = ${lastEncodedNbspEndedAt}`,
         );
 
       // since there was no whitespace, word counting needs to ba taken care of
@@ -453,7 +451,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         bumpWordCountAt = i + 6;
         DEV &&
           console.log(
-            `456 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`bumpWordCountAt`}\u001b[${39}m`} = ${JSON.stringify(
+            `454 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`bumpWordCountAt`}\u001b[${39}m`} = ${JSON.stringify(
               bumpWordCountAt,
               null,
               4,
@@ -466,7 +464,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         rangesArr.push(i, i + 6, rawNbsp);
         DEV &&
           console.log(
-            `469 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${
+            `467 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${
               i + 6
             }, "${rawNbsp}"]`,
           );
@@ -474,7 +472,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         whatWasDone.convertEntities = true;
         DEV &&
           console.log(
-            `477 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.convertEntities`}\u001b[${39}m`} = true`,
+            `475 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.convertEntities`}\u001b[${39}m`} = true`,
           );
       } else if (
         resolvedOpts.targetLanguage === "css" ||
@@ -489,7 +487,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         );
         DEV &&
           console.log(
-            `492 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 6}, "${
+            `490 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 6}, "${
               resolvedOpts.targetLanguage === "css"
                 ? encodedNbspCss
                 : encodedNbspJs
@@ -499,7 +497,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         whatWasDone.convertEntities = true;
         DEV &&
           console.log(
-            `502 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.convertEntities`}\u001b[${39}m`} = true`,
+            `500 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.convertEntities`}\u001b[${39}m`} = true`,
           );
       }
     }
@@ -514,12 +512,12 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       str[i + 3].toUpperCase() === "A" &&
       str[i + 4] === "0"
     ) {
-      DEV && console.log(`517 CSS-encoded NBSP caught!`);
+      DEV && console.log(`515 CSS-encoded NBSP caught!`);
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = i + 5;
       DEV &&
         console.log(
-          `522 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastEncodedNbspStartedAt`}\u001b[${39}m`} = ${lastEncodedNbspStartedAt}; ${`\u001b[${33}m${`lastEncodedNbspEndedAt`}\u001b[${39}m`} = ${lastEncodedNbspEndedAt}`,
+          `520 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastEncodedNbspStartedAt`}\u001b[${39}m`} = ${lastEncodedNbspStartedAt}; ${`\u001b[${33}m${`lastEncodedNbspEndedAt`}\u001b[${39}m`} = ${lastEncodedNbspEndedAt}`,
         );
 
       // since there was no whitespace, word counting needs to ba taken care of
@@ -528,7 +526,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         bumpWordCountAt = i + 5;
         DEV &&
           console.log(
-            `531 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`bumpWordCountAt`}\u001b[${39}m`} = ${JSON.stringify(
+            `529 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`bumpWordCountAt`}\u001b[${39}m`} = ${JSON.stringify(
               bumpWordCountAt,
               null,
               4,
@@ -541,7 +539,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         rangesArr.push(i, i + 5, rawNbsp);
         DEV &&
           console.log(
-            `544 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${
+            `542 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${
               i + 5
             }, "${rawNbsp}"]`,
           );
@@ -549,7 +547,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         whatWasDone.convertEntities = true;
         DEV &&
           console.log(
-            `552 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.convertEntities`}\u001b[${39}m`} = true`,
+            `550 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.convertEntities`}\u001b[${39}m`} = true`,
           );
       } else if (
         resolvedOpts.targetLanguage === "html" ||
@@ -564,7 +562,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         );
         DEV &&
           console.log(
-            `567 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 5}, "${
+            `565 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 5}, "${
               resolvedOpts.targetLanguage === "html"
                 ? encodedNbspHtml
                 : encodedNbspJs
@@ -574,7 +572,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         whatWasDone.convertEntities = true;
         DEV &&
           console.log(
-            `577 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.convertEntities`}\u001b[${39}m`} = true`,
+            `575 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.convertEntities`}\u001b[${39}m`} = true`,
           );
       }
     }
@@ -589,12 +587,12 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       str[i + 4]?.toUpperCase() === "A" &&
       str[i + 5] === "0"
     ) {
-      DEV && console.log(`592 JS-encoded NBSP caught!`);
+      DEV && console.log(`590 JS-encoded NBSP caught!`);
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = i + 6;
       DEV &&
         console.log(
-          `597 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastEncodedNbspStartedAt`}\u001b[${39}m`} = ${lastEncodedNbspStartedAt}; ${`\u001b[${33}m${`lastEncodedNbspEndedAt`}\u001b[${39}m`} = ${lastEncodedNbspEndedAt}`,
+          `595 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastEncodedNbspStartedAt`}\u001b[${39}m`} = ${lastEncodedNbspStartedAt}; ${`\u001b[${33}m${`lastEncodedNbspEndedAt`}\u001b[${39}m`} = ${lastEncodedNbspEndedAt}`,
         );
 
       // since there was no whitespace, word counting needs to ba taken care of
@@ -603,7 +601,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         bumpWordCountAt = i + 6;
         DEV &&
           console.log(
-            `606 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`bumpWordCountAt`}\u001b[${39}m`} = ${JSON.stringify(
+            `604 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`bumpWordCountAt`}\u001b[${39}m`} = ${JSON.stringify(
               bumpWordCountAt,
               null,
               4,
@@ -616,7 +614,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         rangesArr.push(i, i + 6, rawNbsp);
         DEV &&
           console.log(
-            `619 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${
+            `617 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${
               i + 6
             }, "${rawNbsp}"]`,
           );
@@ -633,7 +631,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         );
         DEV &&
           console.log(
-            `636 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 6}, "${
+            `634 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 6}, "${
               resolvedOpts.targetLanguage === "html"
                 ? encodedNbspHtml
                 : encodedNbspCss
@@ -644,12 +642,12 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
 
     // catch raw nbsp's:
     if (!doNothingUntil && str[i] === rawNbsp) {
-      DEV && console.log(`647 raw unencoded NBSP caught!`);
+      DEV && console.log(`645 raw unencoded NBSP caught!`);
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = i + 1;
       DEV &&
         console.log(
-          `652 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastEncodedNbspStartedAt`}\u001b[${39}m`} = ${lastEncodedNbspStartedAt}; ${`\u001b[${33}m${`lastEncodedNbspEndedAt`}\u001b[${39}m`} = ${lastEncodedNbspEndedAt}`,
+          `650 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastEncodedNbspStartedAt`}\u001b[${39}m`} = ${lastEncodedNbspStartedAt}; ${`\u001b[${33}m${`lastEncodedNbspEndedAt`}\u001b[${39}m`} = ${lastEncodedNbspEndedAt}`,
         );
 
       // if it resolvedOpts.convertEntities is off, replace it right away
@@ -665,7 +663,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         );
         DEV &&
           console.log(
-            `668 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 1}, "${
+            `666 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${i + 1}, "${
               resolvedOpts.targetLanguage === "css"
                 ? encodedNbspCss
                 : resolvedOpts.targetLanguage === "js"
@@ -682,7 +680,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       wordCount += 1;
       DEV &&
         console.log(
-          `685 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wordCount`}\u001b[${39}m`} = ${wordCount}`,
+          `683 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wordCount`}\u001b[${39}m`} = ${wordCount}`,
         );
     }
 
@@ -701,7 +699,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
     ) {
       DEV &&
         console.log(
-          `704 ${`\u001b[${32}m${`██`}\u001b[${39}m`} PARAGRAPH ENDING!`,
+          `702 ${`\u001b[${32}m${`██`}\u001b[${39}m`} PARAGRAPH ENDING!`,
         );
 
       if (
@@ -711,7 +709,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       ) {
         DEV &&
           console.log(
-            `714 ${`\u001b[${32}m${`passed min length requirements`}\u001b[${39}m`}`,
+            `712 ${`\u001b[${32}m${`passed min length requirements`}\u001b[${39}m`}`,
           );
         let finalStart;
         let finalEnd;
@@ -723,7 +721,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
           lastEncodedNbspStartedAt !== undefined &&
           lastEncodedNbspEndedAt !== undefined
         ) {
-          DEV && console.log(`726`);
+          DEV && console.log(`724`);
           if (lastWhitespaceStartedAt > lastEncodedNbspStartedAt) {
             finalStart = lastWhitespaceStartedAt;
             finalEnd = lastWhitespaceEndedAt;
@@ -735,14 +733,14 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
           lastWhitespaceStartedAt !== undefined &&
           lastWhitespaceEndedAt !== undefined
         ) {
-          DEV && console.log(`738`);
+          DEV && console.log(`736`);
           finalStart = lastWhitespaceStartedAt;
           finalEnd = lastWhitespaceEndedAt;
         } else if (
           lastEncodedNbspStartedAt !== undefined &&
           lastEncodedNbspEndedAt !== undefined
         ) {
-          DEV && console.log(`745`);
+          DEV && console.log(`743`);
           finalStart = lastEncodedNbspStartedAt;
           finalEnd = lastEncodedNbspEndedAt;
         }
@@ -755,13 +753,13 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
           secondToLastWhitespaceStartedAt &&
           secondToLastWhitespaceEndedAt
         ) {
-          DEV && console.log(`758`);
+          DEV && console.log(`756`);
           finalStart = secondToLastWhitespaceStartedAt;
           finalEnd = secondToLastWhitespaceEndedAt;
         }
 
         DEV &&
-          console.log(`764 finalStart = ${finalStart}; finalEnd = ${finalEnd}`);
+          console.log(`762 finalStart = ${finalStart}; finalEnd = ${finalEnd}`);
 
         if (finalStart && finalEnd) {
           push(finalStart, finalEnd);
@@ -769,13 +767,13 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
           whatWasDone.removeWidows = true;
           DEV &&
             console.log(
-              `772 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.removeWidows`}\u001b[${39}m`} = true`,
+              `770 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.removeWidows`}\u001b[${39}m`} = true`,
             );
         }
       }
 
       resetAll();
-      DEV && console.log(`778 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
+      DEV && console.log(`776 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
     }
 
     // catch postcodes
@@ -789,13 +787,13 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       str[right(str, i) as number] &&
       postcodeRegexEnd.test(str.slice(right(str, i) as number))
     ) {
-      DEV && console.log(`792 POSTCODE caught: [${i}, ${right(str, i)}]`);
+      DEV && console.log(`790 POSTCODE caught: [${i}, ${right(str, i)}]`);
       push(i, right(str, i) as number);
 
       whatWasDone.removeWidows = true;
       DEV &&
         console.log(
-          `798 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.removeWidows`}\u001b[${39}m`} = true`,
+          `796 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatWasDone.removeWidows`}\u001b[${39}m`} = true`,
         );
     }
 
@@ -839,7 +837,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         )
       )
     ) {
-      DEV && console.log(`842`);
+      DEV && console.log(`840`);
       // 1. current value becomes second-to-last
       secondToLastWhitespaceStartedAt = lastWhitespaceStartedAt;
       secondToLastWhitespaceEndedAt = lastWhitespaceEndedAt;
@@ -852,7 +850,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
 
       DEV &&
         console.log(
-          `855 ${`\u001b[${32}m${`SET 2`}\u001b[${39}m`} ${`\u001b[${33}m${`secondToLastWhitespaceStartedAt`}\u001b[${39}m`} = ${secondToLastWhitespaceStartedAt};${" ".repeat(
+          `853 ${`\u001b[${32}m${`SET 2`}\u001b[${39}m`} ${`\u001b[${33}m${`secondToLastWhitespaceStartedAt`}\u001b[${39}m`} = ${secondToLastWhitespaceStartedAt};${" ".repeat(
             String(secondToLastWhitespaceStartedAt).length <
               String(lastWhitespaceStartedAt).length
               ? Math.max(
@@ -868,7 +866,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         );
       DEV &&
         console.log(
-          `871 ${`\u001b[${32}m${`SET 2`}\u001b[${39}m`} ${`\u001b[${33}m${`lastWhitespaceStartedAt`}\u001b[${39}m`}         = ${lastWhitespaceStartedAt};${" ".repeat(
+          `869 ${`\u001b[${32}m${`SET 2`}\u001b[${39}m`} ${`\u001b[${33}m${`lastWhitespaceStartedAt`}\u001b[${39}m`}         = ${lastWhitespaceStartedAt};${" ".repeat(
             String(secondToLastWhitespaceStartedAt).length >
               String(lastWhitespaceStartedAt).length
               ? Math.max(
@@ -892,7 +890,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         lastEncodedNbspEndedAt = undefined;
         DEV &&
           console.log(
-            `895 ${`\u001b[${90}m${`RESET`}\u001b[${39}m`} lastEncodedNbspStartedAt, lastEncodedNbspEndedAt`,
+            `893 ${`\u001b[${90}m${`RESET`}\u001b[${39}m`} lastEncodedNbspStartedAt, lastEncodedNbspEndedAt`,
           );
       }
     }
@@ -919,11 +917,11 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         doNothingUntil = undefined;
         DEV &&
           console.log(
-            `922 RESET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`}`,
+            `920 RESET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`}`,
           );
         DEV &&
           console.log(
-            `926 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} i: ${`\u001b[${33}m${i}\u001b[${39}m`}=>${`\u001b[${33}m${
+            `924 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} i: ${`\u001b[${33}m${i}\u001b[${39}m`}=>${`\u001b[${33}m${
               i + (tempTailFinding as any).length
             }\u001b[${39}m`}`,
           );
@@ -935,7 +933,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
         // we need to tackle the "%}" that follows.
         DEV &&
           console.log(
-            `938 \u001b[${32}m${`██`}\u001b[${39}m we're at i=${i}, to the right is: ${str.slice(
+            `936 \u001b[${32}m${`██`}\u001b[${39}m we're at i=${i}, to the right is: ${str.slice(
               i,
             )}`,
           );
@@ -961,11 +959,11 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
                 trimBeforeMatching: true,
                 cb: (_char, _theRemainderOfTheString, index) => {
                   if (index) {
-                    DEV && console.log(`964 RECEIVED by CB() index = ${index}`);
+                    DEV && console.log(`962 RECEIVED by CB() index = ${index}`);
                     i = index - 1;
                     DEV &&
                       console.log(
-                        `968 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} i = ${
+                        `966 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} i = ${
                           i - 1
                         }`,
                       );
@@ -973,7 +971,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
                       wordCount += 1;
                       DEV &&
                         console.log(
-                          `976 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} wordCount now = ${wordCount}`,
+                          `974 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} wordCount now = ${wordCount}`,
                         );
                     }
                   }
@@ -992,7 +990,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       charCount = 0;
       DEV &&
         console.log(
-          `995 RESET wordCount = ${wordCount}; charCount = ${charCount}`,
+          `993 RESET wordCount = ${wordCount}; charCount = ${charCount}`,
         );
     }
 
@@ -1001,16 +999,16 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       isArr(resolvedOpts.tagRanges) &&
       resolvedOpts.tagRanges.length &&
       resolvedOpts.tagRanges.some((rangeArr) => {
-        DEV && console.log(`1004`);
+        DEV && console.log(`1002`);
         if (i >= rangeArr[0] && i <= rangeArr[1] && rangeArr[1] - 1 > i) {
           i = rangeArr[1] - 1;
-          DEV && console.log(`1007 SET i = ${i}; then CONTINUE`);
+          DEV && console.log(`1005 SET i = ${i}; then CONTINUE`);
           return true;
         }
         return false;
       })
     ) {
-      DEV && console.log(`1013`);
+      DEV && console.log(`1011`);
       // continue;
     }
 
@@ -1018,23 +1016,23 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
     // ███████████████████████████████████████
     DEV &&
       console.log(
-        `    \u001b[${90}m${`1021 ██ ██ ██ ██ ██ END ██ ██ ██ ██ ██`}\u001b[${39}m`,
+        `    \u001b[${90}m${`1019 ██ ██ ██ ██ ██ END ██ ██ ██ ██ ██`}\u001b[${39}m`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`1025 second-to-last whitespace: [${secondToLastWhitespaceStartedAt}, ${secondToLastWhitespaceEndedAt}]`}\u001b[${39}m`}`,
+        `${`\u001b[${90}m${`1023 second-to-last whitespace: [${secondToLastWhitespaceStartedAt}, ${secondToLastWhitespaceEndedAt}]`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`1029 last whitespace: [${lastWhitespaceStartedAt}, ${lastWhitespaceEndedAt}]`}\u001b[${39}m`}`,
+        `${`\u001b[${90}m${`1027 last whitespace: [${lastWhitespaceStartedAt}, ${lastWhitespaceEndedAt}]`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`1033 last encoded nbsp: [${lastEncodedNbspStartedAt}, ${lastEncodedNbspEndedAt}]`}\u001b[${39}m`}`,
+        `${`\u001b[${90}m${`1031 last encoded nbsp: [${lastEncodedNbspStartedAt}, ${lastEncodedNbspEndedAt}]`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`1037 word count ${wordCount}; char count ${charCount}`}\u001b[${39}m`}${
+        `${`\u001b[${90}m${`1035 word count ${wordCount}; char count ${charCount}`}\u001b[${39}m`}${
           bumpWordCountAt
             ? `${`\u001b[${90}m${`;`}\u001b[${39}m`}${`\u001b[${90}m${` bumpWordCountAt = ${bumpWordCountAt}`}\u001b[${39}m`}`
             : ""
@@ -1042,7 +1040,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
       );
     DEV &&
       console.log(
-        `${`\u001b[${90}m${`1045 rangesArr: ${JSON.stringify(
+        `${`\u001b[${90}m${`1043 rangesArr: ${JSON.stringify(
           rangesArr.current(),
           null,
           0,
@@ -1065,14 +1063,14 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
 
   DEV &&
     console.log(
-      `1068 string-remove-widows: ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}:`,
+      `1066 string-remove-widows: ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}:`,
     );
   rApply(str, rangesArr.current())
     .split("")
     .forEach((key, i) => {
       DEV &&
         console.log(
-          `1075 ${`\u001b[${33}m${`#${i}`}\u001b[${39}m`}: ${key} - ${key.charCodeAt(
+          `1073 ${`\u001b[${33}m${`#${i}`}\u001b[${39}m`}: ${key} - ${key.charCodeAt(
             0,
           )}`,
         );
@@ -1095,7 +1093,7 @@ function removeWidows(str: string, opts?: Partial<Opts>): Res {
             );
             DEV &&
               console.log(
-                `1098 ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
+                `1096 ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
                   currentPercentageDone,
                   null,
                   4,

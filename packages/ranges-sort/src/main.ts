@@ -1,3 +1,4 @@
+import { formatDiagnosticValue } from "codsen-utils";
 import { version as v } from "../package.json";
 
 export type Range =
@@ -58,11 +59,7 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
       })
   ) {
     throw new TypeError(
-      `ranges-sort/rSort(): [THROW_ID_01] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(
-        arrOfRanges[culpritsIndex],
-        null,
-        4,
-      )}) has not two but ${culpritsLen} elements!`,
+      `ranges-sort/rSort(): [THROW_ID_01] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${culpritsIndex}th range (${formatDiagnosticValue(arrOfRanges[culpritsIndex], 4)}) has not two but ${culpritsLen} elements!`,
     );
   }
 
@@ -83,11 +80,7 @@ function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
     })
   ) {
     throw new TypeError(
-      `ranges-sort/rSort(): [THROW_ID_02] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(
-        arrOfRanges[culpritsIndex],
-        null,
-        4,
-      )}) does not consist of only natural numbers!`,
+      `ranges-sort/rSort(): [THROW_ID_02] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${culpritsIndex}th range (${formatDiagnosticValue(arrOfRanges[culpritsIndex], 4)}) does not consist of only natural numbers!`,
     );
   }
 

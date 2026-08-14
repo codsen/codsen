@@ -1,4 +1,4 @@
-import { isPlainObject as isObj } from "codsen-utils";
+import { formatDiagnosticValue, isPlainObject as isObj } from "codsen-utils";
 import he from "he";
 import type { Ranges } from "ranges-merge";
 import { rMerge } from "ranges-merge";
@@ -93,11 +93,7 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
     let matchedInvalidEntities = str.match(regexInvalidEntity);
     if (matchedInvalidEntities) {
       throw new Error(
-        `ranges-ent-decode/rEntDecode(): [THROW_ID_03] Parse error - strict mode is on and input contains an invalid entity. Here are all the invalid entities: ${JSON.stringify(
-          matchedInvalidEntities,
-          null,
-          4,
-        )}`,
+        `ranges-ent-decode/rEntDecode(): [THROW_ID_03] Parse error - strict mode is on and input contains an invalid entity. Here are all the invalid entities: ${formatDiagnosticValue(matchedInvalidEntities, 4)}`,
       );
     }
   }
@@ -108,13 +104,13 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
   for (array1 = entityRegex.exec(str); array1; array1 = entityRegex.exec(str)) {
     DEV &&
       console.log(
-        `111 --------\nFound ${`\u001b[${33}m${array1[0]}\u001b[${39}m`} Range: [${
+        `107 --------\nFound ${`\u001b[${33}m${array1[0]}\u001b[${39}m`} Range: [${
           entityRegex.lastIndex - array1[0].length
         }, ${entityRegex.lastIndex}]`,
       );
     let chomped = chomp(array1[0]);
     if (chomped === "&") {
-      DEV && console.log('117 chomped === "&"');
+      DEV && console.log('113 chomped === "&"');
       rangesArr.push([
         entityRegex.lastIndex - array1[0].length,
         entityRegex.lastIndex,
@@ -124,12 +120,12 @@ function rEntDecode(str: string, opts?: Partial<Opts>): Ranges {
       let decoded = he.decode(chomped, resolvedOpts);
       DEV &&
         console.log(
-          `127 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`,
+          `123 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`,
         );
       if (decoded !== chomped) {
         DEV &&
           console.log(
-            `132 will push "${`\u001b[${33}m${JSON.stringify(
+            `128 will push "${`\u001b[${33}m${JSON.stringify(
               [
                 entityRegex.lastIndex - array1[0].length,
                 entityRegex.lastIndex,

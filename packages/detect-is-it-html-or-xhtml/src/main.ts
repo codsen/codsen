@@ -1,3 +1,4 @@
+import { formatDiagnosticValue } from "codsen-utils";
 import { version as v } from "../package.json";
 
 const version: string = v;
@@ -19,11 +20,7 @@ function detectIsItHTMLOrXhtml(input: string): Output {
 
   if (typeof input !== "string") {
     throw new TypeError(
-      `detect-is-it-html-or-xhtml/detectIsItHTMLOrXhtml(): [THROW_ID_01] Input must be a string! It was given as ${JSON.stringify(
-        input,
-        null,
-        4,
-      )} (type ${typeof input})`,
+      `detect-is-it-html-or-xhtml/detectIsItHTMLOrXhtml(): [THROW_ID_01] Input must be a string! It was given as ${formatDiagnosticValue(input, 4)} (type ${typeof input})`,
     );
   }
 

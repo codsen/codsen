@@ -55,6 +55,7 @@
     }
   },
   "dependencies": {
+    "codsen-utils": "^1.7.3",
     "ranges-crop": "^6.1.3",
     "ranges-merge": "^9.1.3"
   },

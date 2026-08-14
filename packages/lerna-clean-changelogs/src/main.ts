@@ -1,4 +1,9 @@
-import { detectEol, type EolChar, isStr } from "codsen-utils";
+import {
+  detectEol,
+  type EolChar,
+  formatDiagnosticValue,
+  isStr,
+} from "codsen-utils";
 import { version as v } from "../package.json";
 
 const version: string = v;
@@ -29,18 +34,18 @@ function cleanChangelogs(
     throw new Error(
       `lerna-clean-changelogs/cleanChangelogs(): [THROW_ID_02] The first input argument must be a string! It was given as ${
         Array.isArray(changelog) ? "array" : typeof changelog
-      }, equal to:\n${JSON.stringify(changelog, null, 4)}`,
+      }, equal to:\n${formatDiagnosticValue(changelog, 4)}`,
     );
   }
 
   let resolvedOpts: Opts = { ...defaults, ...opts };
-  DEV && console.log(`037`);
+  DEV && console.log(`042`);
 
   let currentLineBreakStyle: EolChar = detectEol(changelog) || "\n";
 
   DEV &&
     console.log(
-      `043 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentLineBreakStyle`}\u001b[${39}m`} = ${JSON.stringify(
+      `048 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentLineBreakStyle`}\u001b[${39}m`} = ${JSON.stringify(
         currentLineBreakStyle,
         null,
         4,
@@ -51,7 +56,7 @@ function cleanChangelogs(
   let lastLineWasEmpty = false;
 
   if (typeof changelog === "string" && changelog?.trim()) {
-    DEV && console.log(`054`);
+    DEV && console.log(`059`);
     /* c8 ignore next */
     let changelogEndedWithLinebreak =
       isStr(changelog) &&
@@ -68,7 +73,7 @@ function cleanChangelogs(
     let linesArr = changelog.split(/\r?\n/);
     DEV &&
       console.log(
-        `071 ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
+        `076 ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
           linesArr,
           null,
           4,
@@ -94,7 +99,7 @@ function cleanChangelogs(
       });
       DEV &&
         console.log(
-          `097 AFTER STEP 1, ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
+          `102 AFTER STEP 1, ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
             linesArr,
             null,
             4,
@@ -114,7 +119,7 @@ function cleanChangelogs(
     for (let i = linesArr.length; i--; ) {
       DEV &&
         console.log(
-          `117 ----------------${`\u001b[${36}m${i}\u001b[${39}m`}\n${`\u001b[${33}m${`linesArr[i]`}\u001b[${39}m`} = ${JSON.stringify(
+          `122 ----------------${`\u001b[${36}m${i}\u001b[${39}m`}\n${`\u001b[${33}m${`linesArr[i]`}\u001b[${39}m`} = ${JSON.stringify(
             linesArr[i],
             null,
             4,
@@ -149,7 +154,7 @@ function cleanChangelogs(
           lastLineWasEmpty = true;
           DEV &&
             console.log(
-              `152 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`,
+              `157 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`,
             );
         }
       }
@@ -165,7 +170,7 @@ function cleanChangelogs(
         lastLineWasEmpty = false;
         DEV &&
           console.log(
-            `168 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`,
+            `173 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`,
           );
       }
     }

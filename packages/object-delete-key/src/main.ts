@@ -1,6 +1,10 @@
 import { isEmpty } from "ast-is-empty";
 import { del, drop, find, get } from "ast-monkey";
-import { deepClone as clone, isPlainObject as isObj } from "codsen-utils";
+import {
+  deepClone as clone,
+  formatDiagnosticValue,
+  isPlainObject as isObj,
+} from "codsen-utils";
 import { arrObjOrBoth } from "util-array-object-or-both";
 
 import { version as v } from "../package.json";
@@ -42,11 +46,7 @@ function deleteKey(input: Obj, opts?: Partial<Opts>): Obj {
   }
   if (existy(opts) && !isObj(opts)) {
     throw new TypeError(
-      `object-delete-key/deleteKey(): [THROW_ID_02] The second input argument must be a plain object. It was given as ${JSON.stringify(
-        opts,
-        null,
-        4,
-      )} (type ${typeof opts}).`,
+      `object-delete-key/deleteKey(): [THROW_ID_02] The second input argument must be a plain object. It was given as ${formatDiagnosticValue(opts, 4)} (type ${typeof opts}).`,
     );
   }
   let resolvedOpts: Opts = { ...defaults, ...opts };

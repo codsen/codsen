@@ -1,3 +1,4 @@
+import { formatDiagnosticValue } from "codsen-utils";
 import { left, right } from "string-left-right";
 import type { Ranges } from "../../../ops/typedefs/common";
 
@@ -20,11 +21,7 @@ function extract(str: string): Result {
   // =========
   if (typeof str !== "string") {
     throw new TypeError(
-      `string-extract-class-names/extract(): [THROW_ID_01] first str should be string, not ${typeof str}, currently equal to ${JSON.stringify(
-        str,
-        null,
-        4,
-      )}`,
+      `string-extract-class-names/extract(): [THROW_ID_01] first str should be string, not ${typeof str}, currently equal to ${formatDiagnosticValue(str, 4)}`,
     );
   }
 
@@ -60,7 +57,7 @@ function extract(str: string): Result {
   for (let i = 0, len = str.length; i <= len; i++) {
     DEV &&
       console.log(
-        `63 ${`\u001b[${36}m${`============================`}\u001b[${39}m`} ${`\u001b[${33}m${str[i]}\u001b[${39}m`} (${`\u001b[${31}m${i}\u001b[${39}m`})`,
+        `60 ${`\u001b[${36}m${`============================`}\u001b[${39}m`} ${`\u001b[${33}m${str[i]}\u001b[${39}m`} (${`\u001b[${31}m${i}\u001b[${39}m`})`,
       );
 
     // A CSS escape is part of the current identifier. Skipping its complete
@@ -104,14 +101,14 @@ function extract(str: string): Result {
           stateCurrentlyIs = undefined;
           DEV &&
             console.log(
-              `107 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stateCurrentlyIs = undefined`,
+              `104 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stateCurrentlyIs = undefined`,
             );
         }
       }
       selectorStartsAt = null;
       DEV &&
         console.log(
-          `114 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`,
+          `111 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`,
         );
     }
 
@@ -124,7 +121,7 @@ function extract(str: string): Result {
       selectorStartsAt = i;
       DEV &&
         console.log(
-          `127 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`,
+          `124 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`,
         );
     }
 
@@ -137,7 +134,7 @@ function extract(str: string): Result {
       typeof temp1 === "number" &&
       str[temp1] === "="
     ) {
-      DEV && console.log(`140 [class= caught`);
+      DEV && console.log(`137 [class= caught`);
       // if it's zzz[class=something] (without quotes)
       /* c8 ignore next */
       if (
@@ -146,7 +143,7 @@ function extract(str: string): Result {
           cssEscapeEndsAt(str, right(str, temp1) as number) !== null)
       ) {
         selectorStartsAt = right(str, temp1);
-        DEV && console.log(`149 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`146 SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp1) as number]) &&
         (isLatinLetter(str[right(str, right(str, temp1)) as number]) ||
@@ -154,7 +151,7 @@ function extract(str: string): Result {
             null)
       ) {
         selectorStartsAt = right(str, right(str, temp1));
-        DEV && console.log(`157 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`154 SET selectorStartsAt = ${selectorStartsAt}`);
       }
       stateCurrentlyIs = ".";
     }
@@ -167,14 +164,14 @@ function extract(str: string): Result {
       temp2 !== null &&
       str[temp2] === "="
     ) {
-      DEV && console.log(`170 [id= caught`);
+      DEV && console.log(`167 [id= caught`);
       // if it's zzz[id=something] (without quotes)
       if (
         isLatinLetter(str[right(str, temp2) as number]) ||
         cssEscapeEndsAt(str, right(str, temp2) as number) !== null
       ) {
         selectorStartsAt = right(str, temp2);
-        DEV && console.log(`177 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`174 SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp2) as number]) &&
         (isLatinLetter(str[right(str, right(str, temp2)) as number]) ||
@@ -182,14 +179,14 @@ function extract(str: string): Result {
             null)
       ) {
         selectorStartsAt = right(str, right(str, temp2));
-        DEV && console.log(`185 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`182 SET selectorStartsAt = ${selectorStartsAt}`);
       }
       stateCurrentlyIs = "#";
     }
 
     DEV &&
       console.log(
-        `192 \u001b[${90}m${`ended with: selectorStartsAt = ${selectorStartsAt}; result = ${JSON.stringify(
+        `189 \u001b[${90}m${`ended with: selectorStartsAt = ${selectorStartsAt}; result = ${JSON.stringify(
           result,
           null,
           0,
@@ -319,11 +316,7 @@ function readCssSelectorTokenInternal(
 function decodeCssSelector(selector: string): string {
   if (typeof selector !== "string") {
     throw new TypeError(
-      `string-extract-class-names/decodeCssSelector(): [THROW_ID_02] first selector should be string, not ${typeof selector}, currently equal to ${JSON.stringify(
-        selector,
-        null,
-        4,
-      )}`,
+      `string-extract-class-names/decodeCssSelector(): [THROW_ID_02] first selector should be string, not ${typeof selector}, currently equal to ${formatDiagnosticValue(selector, 4)}`,
     );
   }
 
@@ -367,20 +360,12 @@ function readCssSelectorToken(
 ): CssSelectorToken | null {
   if (typeof str !== "string") {
     throw new TypeError(
-      `string-extract-class-names/readCssSelectorToken(): [THROW_ID_03] first str should be string, not ${typeof str}, currently equal to ${JSON.stringify(
-        str,
-        null,
-        4,
-      )}`,
+      `string-extract-class-names/readCssSelectorToken(): [THROW_ID_03] first str should be string, not ${typeof str}, currently equal to ${formatDiagnosticValue(str, 4)}`,
     );
   }
   if (!Number.isInteger(start)) {
     throw new TypeError(
-      `string-extract-class-names/readCssSelectorToken(): [THROW_ID_04] second start should be an integer, not ${typeof start}, currently equal to ${JSON.stringify(
-        start,
-        null,
-        4,
-      )}`,
+      `string-extract-class-names/readCssSelectorToken(): [THROW_ID_04] second start should be an integer, not ${typeof start}, currently equal to ${formatDiagnosticValue(start, 4)}`,
     );
   }
 

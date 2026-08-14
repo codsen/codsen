@@ -125,7 +125,7 @@ export const interdeps = [
   },
   {
     "name": "check-types-mini",
-    "size": 5968,
+    "size": 5805,
     "imports": [
       "codsen-utils"
     ]
@@ -144,7 +144,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-utils",
-    "size": 14354,
+    "size": 17039,
     "imports": []
   },
   {
@@ -156,8 +156,9 @@ export const interdeps = [
   },
   {
     "name": "csv-sort",
-    "size": 4812,
+    "size": 4847,
     "imports": [
+      "codsen-utils",
       "csv-split-easy"
     ]
   },
@@ -172,15 +173,24 @@ export const interdeps = [
   },
   {
     "name": "csv-split-easy",
-    "size": 2905,
+    "size": 2909,
     "imports": [
+      "codsen-utils",
       "string-remove-thousand-separators"
     ]
   },
   {
-    "name": "detect-templating-language",
-    "size": 764,
+    "name": "detect-is-it-html-or-xhtml",
+    "size": 873,
     "imports": [
+      "codsen-utils"
+    ]
+  },
+  {
+    "name": "detect-templating-language",
+    "size": 799,
+    "imports": [
+      "codsen-utils",
       "regex-is-jinja-nunjucks",
       "regex-is-jsp",
       "regex-jinja-specific"
@@ -188,7 +198,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "size": 24277,
+    "size": 24267,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -210,7 +220,7 @@ export const interdeps = [
   },
   {
     "name": "edit-package-json",
-    "size": 9419,
+    "size": 9410,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -219,8 +229,10 @@ export const interdeps = [
   },
   {
     "name": "email-all-chars-within-ascii",
-    "size": 1263,
-    "imports": []
+    "size": 1280,
+    "imports": [
+      "codsen-utils"
+    ]
   },
   {
     "name": "email-all-chars-within-ascii-cli",
@@ -234,7 +246,7 @@ export const interdeps = [
   },
   {
     "name": "email-comb",
-    "size": 25082,
+    "size": 24874,
     "imports": [
       "array-pull-all-with-glob",
       "codsen-utils",
@@ -251,15 +263,16 @@ export const interdeps = [
   },
   {
     "name": "extract-search-index",
-    "size": 1221,
+    "size": 1256,
     "imports": [
+      "codsen-utils",
       "string-strip-html",
       "string-unfancy"
     ]
   },
   {
     "name": "generate-atomic-css",
-    "size": 8125,
+    "size": 8160,
     "imports": [
       "codsen-utils",
       "string-left-right"
@@ -281,7 +294,7 @@ export const interdeps = [
   },
   {
     "name": "html-crush",
-    "size": 10917,
+    "size": 10892,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -298,9 +311,10 @@ export const interdeps = [
   },
   {
     "name": "html-img-alt",
-    "size": 3080,
+    "size": 3097,
     "imports": [
       "check-types-mini",
+      "codsen-utils",
       "ranges-apply",
       "ranges-push",
       "string-unfancy"
@@ -333,8 +347,9 @@ export const interdeps = [
   },
   {
     "name": "is-html-tag-opening",
-    "size": 3939,
+    "size": 3956,
     "imports": [
+      "codsen-utils",
       "string-left-right",
       "string-match-left-right"
     ]
@@ -348,7 +363,7 @@ export const interdeps = [
   },
   {
     "name": "js-row-num",
-    "size": 3099,
+    "size": 3108,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -376,7 +391,7 @@ export const interdeps = [
   },
   {
     "name": "json-comb-core",
-    "size": 7005,
+    "size": 6870,
     "imports": [
       "codsen-utils",
       "object-fill-missing-keys",
@@ -397,7 +412,7 @@ export const interdeps = [
   },
   {
     "name": "json-variables",
-    "size": 10223,
+    "size": 10234,
     "imports": [
       "arrayiffy-if-string",
       "ast-get-values-by-key",
@@ -412,7 +427,7 @@ export const interdeps = [
   },
   {
     "name": "lerna-clean-changelogs",
-    "size": 1620,
+    "size": 1629,
     "imports": [
       "codsen-utils"
     ]
@@ -428,7 +443,7 @@ export const interdeps = [
   },
   {
     "name": "object-all-values-equal-to",
-    "size": 1336,
+    "size": 1345,
     "imports": [
       "codsen-utils"
     ]
@@ -442,7 +457,7 @@ export const interdeps = [
   },
   {
     "name": "object-delete-key",
-    "size": 1621,
+    "size": 1630,
     "imports": [
       "ast-is-empty",
       "ast-monkey",
@@ -452,7 +467,7 @@ export const interdeps = [
   },
   {
     "name": "object-fill-missing-keys",
-    "size": 2716,
+    "size": 2671,
     "imports": [
       "arrayiffy-if-string",
       "codsen-utils",
@@ -469,7 +484,7 @@ export const interdeps = [
   },
   {
     "name": "object-flatten-referencing",
-    "size": 4942,
+    "size": 4915,
     "imports": [
       "arrayiffy-if-string",
       "codsen-utils",
@@ -478,7 +493,7 @@ export const interdeps = [
   },
   {
     "name": "object-merge-advanced",
-    "size": 7236,
+    "size": 7245,
     "imports": [
       "codsen-utils",
       "util-nonempty"
@@ -486,7 +501,7 @@ export const interdeps = [
   },
   {
     "name": "object-no-new-keys",
-    "size": 1499,
+    "size": 1508,
     "imports": [
       "codsen-utils"
     ]
@@ -500,21 +515,23 @@ export const interdeps = [
   },
   {
     "name": "ranges-apply",
-    "size": 2644,
+    "size": 2549,
     "imports": [
+      "codsen-utils",
       "ranges-merge"
     ]
   },
   {
     "name": "ranges-crop",
-    "size": 1883,
+    "size": 1840,
     "imports": [
+      "codsen-utils",
       "ranges-merge"
     ]
   },
   {
     "name": "ranges-ent-decode",
-    "size": 2097,
+    "size": 2106,
     "imports": [
       "codsen-utils",
       "ranges-merge"
@@ -522,8 +539,9 @@ export const interdeps = [
   },
   {
     "name": "ranges-invert",
-    "size": 2496,
+    "size": 2433,
     "imports": [
+      "codsen-utils",
       "ranges-crop",
       "ranges-merge"
     ]
@@ -534,23 +552,32 @@ export const interdeps = [
     "imports": []
   },
   {
-    "name": "ranges-merge",
-    "size": 2336,
+    "name": "ranges-iterate",
+    "size": 1532,
     "imports": [
+      "codsen-utils"
+    ]
+  },
+  {
+    "name": "ranges-merge",
+    "size": 2317,
+    "imports": [
+      "codsen-utils",
       "ranges-sort"
     ]
   },
   {
     "name": "ranges-process-outside",
-    "size": 1530,
+    "size": 1529,
     "imports": [
+      "codsen-utils",
       "ranges-crop",
       "ranges-invert"
     ]
   },
   {
     "name": "ranges-push",
-    "size": 5894,
+    "size": 5714,
     "imports": [
       "codsen-utils",
       "ranges-sort",
@@ -559,15 +586,18 @@ export const interdeps = [
   },
   {
     "name": "ranges-regex",
-    "size": 1798,
+    "size": 1797,
     "imports": [
+      "codsen-utils",
       "ranges-merge"
     ]
   },
   {
     "name": "ranges-sort",
-    "size": 1339,
-    "imports": []
+    "size": 1356,
+    "imports": [
+      "codsen-utils"
+    ]
   },
   {
     "name": "regex-empty-conditional-comments",
@@ -606,7 +636,7 @@ export const interdeps = [
   },
   {
     "name": "string-apostrophes",
-    "size": 7226,
+    "size": 7217,
     "imports": [
       "codsen-utils",
       "ranges-apply"
@@ -619,8 +649,9 @@ export const interdeps = [
   },
   {
     "name": "string-collapse-white-space",
-    "size": 3547,
+    "size": 3564,
     "imports": [
+      "codsen-utils",
       "ranges-apply",
       "ranges-push",
       "string-left-right"
@@ -628,14 +659,15 @@ export const interdeps = [
   },
   {
     "name": "string-convert-indexes",
-    "size": 2534,
+    "size": 2533,
     "imports": [
-      "ast-monkey-traverse"
+      "ast-monkey-traverse",
+      "codsen-utils"
     ]
   },
   {
     "name": "string-dashes",
-    "size": 2815,
+    "size": 2806,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -644,14 +676,22 @@ export const interdeps = [
   },
   {
     "name": "string-extract-class-names",
-    "size": 3374,
+    "size": 3355,
     "imports": [
+      "codsen-utils",
       "string-left-right"
     ]
   },
   {
+    "name": "string-extract-sass-vars",
+    "size": 1679,
+    "imports": [
+      "codsen-utils"
+    ]
+  },
+  {
     "name": "string-find-heads-tails",
-    "size": 7684,
+    "size": 7549,
     "imports": [
       "arrayiffy-if-string",
       "codsen-utils",
@@ -668,7 +708,7 @@ export const interdeps = [
   },
   {
     "name": "string-fix-broken-named-entities",
-    "size": 11128,
+    "size": 11047,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -684,7 +724,7 @@ export const interdeps = [
   },
   {
     "name": "string-match-left-right",
-    "size": 5635,
+    "size": 5608,
     "imports": [
       "arrayiffy-if-string",
       "codsen-utils"
@@ -692,14 +732,14 @@ export const interdeps = [
   },
   {
     "name": "string-process-comma-separated",
-    "size": 2590,
+    "size": 2625,
     "imports": [
       "codsen-utils"
     ]
   },
   {
     "name": "string-range-expander",
-    "size": 6157,
+    "size": 6046,
     "imports": [
       "codsen-utils"
     ]
@@ -718,15 +758,16 @@ export const interdeps = [
   },
   {
     "name": "string-remove-thousand-separators",
-    "size": 1888,
+    "size": 1905,
     "imports": [
+      "codsen-utils",
       "ranges-apply",
       "ranges-push"
     ]
   },
   {
     "name": "string-remove-widows",
-    "size": 7304,
+    "size": 7297,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -744,7 +785,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 23159,
+    "size": 23081,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -754,8 +795,10 @@ export const interdeps = [
   },
   {
     "name": "string-trim-spaces-only",
-    "size": 1118,
-    "imports": []
+    "size": 1153,
+    "imports": [
+      "codsen-utils"
+    ]
   },
   {
     "name": "string-uglify",
@@ -779,8 +822,9 @@ export const interdeps = [
   },
   {
     "name": "tsd-extract",
-    "size": 7579,
+    "size": 7578,
     "imports": [
+      "codsen-utils",
       "string-left-right"
     ]
   },
