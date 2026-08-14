@@ -7,6 +7,7 @@ import {
   turboConfigForPackageKinds,
   validatePackageKindInventory,
   validatePackageKindRegistry,
+  validatePackagePublishScripts,
 } from "../packageKinds.js";
 
 function registry() {
@@ -204,6 +205,65 @@ test("10 - rejects malformed Turbo configuration", () => {
     () => turboConfigForPackageKinds({ tasks: {} }, registry()),
     /generic build task/,
     "10.02",
+  );
+});
+
+test("11 - rejects direct package publish scripts", () => {
+  equal(
+    validatePackagePublishScripts([
+      {
+        name: "repository-root",
+        scripts: {
+          aggregate: "npm --workspace example-package publish",
+          abbreviated1: "npm pu",
+          abbreviated2: "npm pub",
+          abbreviated3: "npm publ",
+          abbreviated4: "npm publi",
+          abbreviated5: "npm publis",
+        },
+      },
+      {
+        name: "example-package",
+        scripts: {
+          leading: "  npm publish --provenance",
+          linebreak: "echo ready\nnpm publish --provenance",
+          nested: "npm run build && npm\n publish --provenance",
+          optioned: "npm --registry=https://registry.npmjs.org publish",
+          parenthesized: "(npm publish)",
+          pathful: "/usr/local/bin/npm publish",
+          prefixed: 'CHANNEL="stable release" env npm publish',
+          release: "npm publish --provenance",
+          safe: "node ../../ops/scripts/npm-release.js publish --manifest plan.json",
+          terminated: "npm publish; echo done",
+          workspace: "npm --workspace example-package publish",
+        },
+      },
+    ]),
+    [
+      "repository-root: scripts.aggregate directly runs npm publish; use the protected release workflow",
+      "repository-root: scripts.abbreviated1 directly runs npm publish; use the protected release workflow",
+      "repository-root: scripts.abbreviated2 directly runs npm publish; use the protected release workflow",
+      "repository-root: scripts.abbreviated3 directly runs npm publish; use the protected release workflow",
+      "repository-root: scripts.abbreviated4 directly runs npm publish; use the protected release workflow",
+      "repository-root: scripts.abbreviated5 directly runs npm publish; use the protected release workflow",
+      "example-package: scripts.leading directly runs npm publish; use the protected release workflow",
+      "example-package: scripts.linebreak directly runs npm publish; use the protected release workflow",
+      "example-package: scripts.nested directly runs npm publish; use the protected release workflow",
+      "example-package: scripts.optioned directly runs npm publish; use the protected release workflow",
+      "example-package: scripts.parenthesized directly runs npm publish; use the protected release workflow",
+      "example-package: scripts.pathful directly runs npm publish; use the protected release workflow",
+      "example-package: scripts.prefixed directly runs npm publish; use the protected release workflow",
+      "example-package: scripts.release directly runs npm publish; use the protected release workflow",
+      "example-package: scripts.terminated directly runs npm publish; use the protected release workflow",
+      "example-package: scripts.workspace directly runs npm publish; use the protected release workflow",
+    ],
+    "11.01",
+  );
+  equal(validatePackagePublishScripts([]), [], "11.02");
+  equal(
+    validatePackagePublishScripts(null),
+    ["Package manifests must be an array"],
+    "11.03",
   );
 });
 

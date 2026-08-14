@@ -91,7 +91,7 @@ Priorities have the following meanings:
 | REV-014 | P2 | Completed | Release tooling | Modularise and test release-critical code |
 | REV-015 | P2 | Completed | Error handling | Format arbitrary invalid inputs safely |
 | REV-016 | P2 | Completed | Performance | Repair misleading benchmark workloads |
-| REV-017 | P2 | Pending | Release safety | Retire or guard direct-publish scripts |
+| REV-017 | P2 | Completed | Release safety | Retire or guard direct-publish scripts |
 | REV-018 | P2 | Pending | Supply chain | Add dependency update and security checks |
 | REV-019 | P3 | Completed | Reproducibility | Pin the root build runtime |
 | REV-020 | P3 | Pending | Portability | Add targeted Windows smoke tests |
@@ -940,12 +940,16 @@ Priorities have the following meanings:
 
 ### REV-017 — Retire or guard direct-publish scripts
 
-- Status: Pending
-- Evidence status: Confirmed from generated scripts
+- Status: Completed
+- Completed: 2026-08-14
+- Evidence status: Confirmed repository-wide, removed at the generator, and
+  guarded by CI verification
 - Evidence:
-  - `ops/lect/.lectrc.json:177-203` generates
-    `letspublish: npm publish --provenance` for both package families.
-  - `data/package.json:27-35` exposes a separate direct publish alias.
+  - `ops/lect/.lectrc.json` generated
+    `letspublish: npm publish --provenance` for all 111 package manifests.
+  - `data/package.json` exposed a separate direct `publ` alias and a no-op
+    `letspublish` placeholder. Turbo also declared an aggregate `letspublish`
+    task.
   - The primary workflow uses planned, immutable, verified artifacts through
     `ops/scripts/npm-release.js`.
 - Problem: Convenience scripts bypass release planning, dependency ordering,
@@ -954,6 +958,22 @@ Priorities have the following meanings:
 - Recommended change: Remove the alternative scripts or make them exit with
   instructions to use the release workflow. Document any intentional emergency
   path separately with equivalent safeguards.
+- Resolution:
+  - Removed `letspublish` from both `lect` script profiles and regenerated all
+    111 package manifests. Removed `publ` and the obsolete no-op alias from
+    `@codsen/data`, deleted the aggregate Turbo task, and regenerated the
+    package-manifest data projection.
+  - Added a pure package-script invariant to package-kind verification. It
+    covers the private root and every workspace, rejects direct, abbreviated,
+    optioned, workspace-targeted, wrapped, path-qualified, and shell-sequenced
+    npm publication commands, and allows the guarded release coordinator.
+  - Documented **Prepare npm release** → reviewed release PR → protected
+    `release.yml` as the sole supported production path. No local or emergency
+    publish alias remains; partial-release recovery continues to require a
+    retry of the same exact workflow run.
+  - Retained the coordinator's intentional tarball publication capability. It
+    remains behind trusted-environment, plan, staging, checksum, ordering,
+    registry-state, and post-publication verification checks.
 - Done when:
   - Normal package scripts cannot bypass the hardened release path.
   - The release documentation names one supported production procedure.
@@ -963,6 +983,19 @@ Priorities have the following meanings:
   - Regenerate representative package manifests through `lect`.
   - Inspect the release plan and pack path.
   - Verify no generated script calls bare `npm publish` for production use.
+- Validation results:
+  - Full `lect` generation completed all 112 workspaces, and package-kind
+    verification passed the 102-library, 9-CLI, and generated-data inventory.
+  - A manifest audit found zero publish-named or direct-publish scripts across
+    all 112 workspaces. Repository search confirmed that the guarded release
+    coordinator is the sole remaining executable npm publication path.
+  - Package-kind helper tests, generated-info verification, root workspace
+    assertion, Biome, Markdown lint, workflow YAML parsing, and
+    `git diff --check` passed.
+  - Independent review restarted the invariant twice and closed trailing shell
+    boundaries, npm's accepted `pu` through `publis` command abbreviations, and
+    the previously omitted private-root manifest. The restarted review found no
+    remaining blocker, major, or minor issue.
 
 ### REV-018 — Add dependency update and security checks
 

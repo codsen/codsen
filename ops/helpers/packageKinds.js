@@ -49,6 +49,14 @@ const GENERATED_BUILD_PROFILES = Object.freeze([
   LEGACY_CLI_BUILD_PROFILE,
 ]);
 
+const DIRECT_NPM_PUBLISH = new RegExp(
+  String.raw`(?:^|[;&|()\r\n])\s*` +
+    String.raw`(?:(?:command|env)\s+|[A-Za-z_][A-Za-z0-9_]*=(?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[^\s;&|()]+)\s+)*` +
+    String.raw`(?:npm(?:\.cmd)?|[^\s;&|()]+[\\/]npm(?:\.cmd)?)\s+` +
+    String.raw`[^;&|()\r\n]*\bpu(?:b(?:l(?:i(?:s(?:h)?)?)?)?)?(?=\s|[;&|()\r\n]|$)`,
+  "u",
+);
+
 function isPlainObject(value) {
   return (
     value !== null &&
@@ -189,6 +197,31 @@ function validatePackageKindInventory({ registry, workspaceNames }) {
   return errors;
 }
 
+function validatePackagePublishScripts(packageManifests) {
+  if (!Array.isArray(packageManifests)) {
+    return ["Package manifests must be an array"];
+  }
+
+  const errors = [];
+  for (const manifest of packageManifests) {
+    if (!isPlainObject(manifest) || !isPlainObject(manifest.scripts)) {
+      continue;
+    }
+    const packageName =
+      typeof manifest.name === "string" && manifest.name
+        ? manifest.name
+        : "<unnamed package>";
+    for (const [scriptName, command] of Object.entries(manifest.scripts)) {
+      if (typeof command === "string" && DIRECT_NPM_PUBLISH.test(command)) {
+        errors.push(
+          `${packageName}: scripts.${scriptName} directly runs npm publish; use the protected release workflow`,
+        );
+      }
+    }
+  }
+  return errors;
+}
+
 function turboConfigForPackageKinds(turboConfig, registry) {
   if (!isPlainObject(turboConfig) || !isPlainObject(turboConfig.tasks)) {
     throw new TypeError("turbo.json must contain a tasks object");
@@ -259,4 +292,5 @@ export {
   turboConfigForPackageKinds,
   validatePackageKindInventory,
   validatePackageKindRegistry,
+  validatePackagePublishScripts,
 };

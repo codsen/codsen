@@ -10,6 +10,7 @@ import {
   PACKAGE_KINDS,
   turboConfigForPackageKinds,
   validatePackageKindInventory,
+  validatePackagePublishScripts,
 } from "../helpers/packageKinds.js";
 import { readPackageKindRegistry } from "../helpers/packageKindsFile.js";
 import { readWorkspaceRecords } from "../helpers/workspaceInventoryFile.js";
@@ -51,10 +52,19 @@ if (process.argv.length !== 2) {
 } else {
   const registry = readPackageKindRegistry(repositoryRoot);
   const records = readWorkspaceRecords(repositoryRoot);
+  const rootManifest = JSON.parse(
+    readFileSync(path.join(repositoryRoot, "package.json"), "utf8"),
+  );
   const errors = validatePackageKindInventory({
     registry,
     workspaceNames: records.map(({ manifest }) => manifest.name),
   });
+  errors.push(
+    ...validatePackagePublishScripts([
+      rootManifest,
+      ...records.map(({ manifest }) => manifest),
+    ]),
+  );
 
   let resolver;
   try {

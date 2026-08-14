@@ -26,13 +26,11 @@
   "scripts": {
     "build": "node --input-type=commonjs -e \"require('node:fs').rmSync('./dist',{recursive:true,force:true})\" && tsc --project tsconfig.json",
     "test": "echo 'no tests'",
-    "publ": "npm publish --provenance",
     "dev": "exit 0",
     "devtest": "exit 0",
     "dts": "exit 0",
     "examples": "exit 0",
     "lect": "exit 0",
-    "letspublish": "exit 0",
     "lint": "npm run typecheck",
     "perf": "exit 0",
     "prep": "exit 0",

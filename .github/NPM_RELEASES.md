@@ -4,6 +4,10 @@ The release process is split into a version-preparation pull request and an
 OIDC-authenticated publish of the exact commit that passed CI. Publishing does
 not use a long-lived npm token.
 
+The only supported production path is **Prepare npm release** → reviewed
+release PR → protected `release.yml`. Workspace manifests intentionally expose
+no local or emergency publish alias.
+
 ## One-time setup
 
 ### GitHub

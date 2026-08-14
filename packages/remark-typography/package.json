@@ -41,7 +41,6 @@
     "examples": "node '../../ops/scripts/run-examples.js'",
     "lect": "node '../../ops/lect/lect.js'",
     "lect:check": "node '../../ops/lect/lect.js' --check",
-    "letspublish": "npm publish --provenance",
     "lint": "biome lint --error-on-warnings . && npm run typecheck",
     "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
     "perf": "echo 'skip perf'",
