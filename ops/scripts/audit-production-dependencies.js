@@ -57,9 +57,21 @@ function loadWaiverPolicy() {
   }
 }
 
-function locatePairedNpmCli(nodeExecutable = process.execPath) {
-  const candidates = pairedNpmCliCandidates(nodeExecutable);
-  const npmCli = candidates.find((candidate) => existsSync(candidate));
+function locatePairedNpmCli(
+  nodeExecutable = process.execPath,
+  {
+    // biome-ignore lint/suspicious/noUndeclaredEnvVars: This direct audit boundary reads a machine-local executable path outside Turbo tasks.
+    explicitNpmCli = process.env.CODSEN_NPM_CLI,
+    exists = existsSync,
+    platform = process.platform,
+  } = {},
+) {
+  const candidates = pairedNpmCliCandidates(
+    nodeExecutable,
+    platform,
+    explicitNpmCli,
+  );
+  const npmCli = candidates.find((candidate) => exists(candidate));
   if (!npmCli) {
     throw new Error(
       `could not find npm paired with ${nodeExecutable}; checked ${candidates.join(

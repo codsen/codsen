@@ -25,6 +25,10 @@ runs:
       run: |
         npm_spec="$(node ops/scripts/verify-root-toolchain.js --npm-spec)"
         npm install --global "$npm_spec"
+        npm_root="$(npm root --global | tr -d '\r')"
+        npm_cli="${npm_root%/}/npm/bin/npm-cli.js"
+        node "$npm_cli" --version
+        printf 'CODSEN_NPM_CLI=%s\n' "$npm_cli" >> "$GITHUB_ENV"
 
     - name: Verify and report the root toolchain
       shell: bash

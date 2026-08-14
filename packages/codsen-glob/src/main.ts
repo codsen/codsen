@@ -102,7 +102,7 @@ function assertPatterns(
       `codsen-glob/${functionName}(): [THROW_ID_01] The patterns argument must be a glob or an array of globs`,
     );
   }
-  return [...new Set(result)];
+  return [...new Set(result.map(slash))];
 }
 
 function resolveOptions(
@@ -140,7 +140,9 @@ function resolveOptions(
     dot: options.dot === true,
     expandDirectories: options.expandDirectories ?? true,
     followSymbolicLinks: options.followSymbolicLinks !== false,
-    ignore: typeof ignore === "string" ? [ignore] : Array.from(ignore),
+    ignore: (typeof ignore === "string" ? [ignore] : Array.from(ignore)).map(
+      slash,
+    ),
     onlyDirectories,
     onlyFiles: onlyDirectories ? false : options.onlyFiles !== false,
     signal: options.signal,
@@ -1196,7 +1198,7 @@ function selectMatches(
     );
   if (canReturnCandidatesDirectly) {
     return candidates.map((candidate) =>
-      options.absolute ? slash(candidate.absolutePath) : candidate.relativePath,
+      options.absolute ? candidate.absolutePath : candidate.relativePath,
     );
   }
   const selected = new Map<string, string>();
@@ -1235,7 +1237,9 @@ function selectMatches(
         ) {
           selected.set(
             absoluteName,
-            options.absolute || pattern.absolute ? absoluteName : relativeName,
+            options.absolute || pattern.absolute
+              ? candidate.absolutePath
+              : relativeName,
           );
         }
       }

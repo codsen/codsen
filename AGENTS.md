@@ -84,6 +84,12 @@ legacy support.
   artifacts out to parallel exact-runtime workers. Locally, use `n which` or
   `n exec` with exact versions; do not repeatedly replace the global Node
   installation during one parent npm process.
+- Keep the Windows portability lane targeted. Reuse the Linux-built packed
+  artifacts, discover every workspace with a `bin` capability, include its
+  complete internal runtime closure plus `codsen-glob`, and exercise nested
+  paths and spaces. Do not turn this smoke into a second all-package runtime
+  matrix; the cumulative exact-Node lanes remain the authority for package
+  unit compatibility.
 - Run package `unit` scripts for runtime compatibility. Package `test` and
   `devtest` also invoke coverage, builds, `lect`, examples, or lint tooling whose
   higher engine requirements are not evidence about the published runtime.

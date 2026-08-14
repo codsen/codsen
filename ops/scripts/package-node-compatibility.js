@@ -20,7 +20,14 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { assertCanonicalNodeVersion } from "../helpers/localNodeCompatibility.js";
-import { supportedNodeMajors } from "../helpers/nodeCompatibility.js";
+import {
+  runtimeDependencyClosureNames,
+  supportedNodeMajors,
+} from "../helpers/nodeCompatibility.js";
+import {
+  installedPackageBinInvocation,
+  pairedNpmCliCandidates,
+} from "../helpers/nodeProcessInvocation.js";
 import {
   assertCompatibilityManifestMatchesPlan,
   COMPATIBILITY_MANIFEST_KIND,
@@ -75,15 +82,19 @@ function printUsage() {
   console.log(`Usage:
   node ops/scripts/package-node-compatibility.js pack --output <directory>
   node ops/scripts/package-node-compatibility.js verify --artifacts <directory> --node-major <major> [options]
+  node ops/scripts/package-node-compatibility.js smoke --artifacts <directory> [options]
 
-Verify options:
+Verify and smoke options:
   --npm-cache <directory>  Reuse an npm cache owned by the caller
   --temp-root <directory>  Place the isolated consumer under this directory
+
+Verify-only options:
   --unit-concurrency <n>   Maximum simultaneous unit suites (default: 1)
 
 The pack command runs once after the root-supported build. Verification runs in
 an isolated consumer on each of Node ${SUPPORTED_NODE_MAJORS.join(", ")}, selecting every
-workspace whose declared Node floor is at or below that major.`);
+workspace whose declared Node floor is at or below that major. Smoke installs
+only the CLI and codsen-glob runtime closure for cross-platform checks.`);
 }
 
 function parseArguments(argv) {
@@ -93,7 +104,7 @@ function parseArguments(argv) {
   }
 
   const command = argv[0];
-  if (!new Set(["pack", "verify"]).has(command)) {
+  if (!new Set(["pack", "smoke", "verify"]).has(command)) {
     fail(`Unknown command: ${command}`);
   }
 
@@ -105,16 +116,19 @@ function parseArguments(argv) {
     }
     const equalsAt = argument.indexOf("=");
     const name = argument.slice(2, equalsAt === -1 ? undefined : equalsAt);
-    const allowed =
+    const allowed = new Set(
       command === "pack"
-        ? new Set(["output"])
-        : new Set([
-            "artifacts",
-            "node-major",
-            "npm-cache",
-            "temp-root",
-            "unit-concurrency",
-          ]);
+        ? ["output"]
+        : command === "verify"
+          ? [
+              "artifacts",
+              "node-major",
+              "npm-cache",
+              "temp-root",
+              "unit-concurrency",
+            ]
+          : ["artifacts", "npm-cache", "temp-root"],
+    );
     if (!allowed.has(name)) {
       fail(`Unknown option for ${command}: --${name}`);
     }
@@ -180,6 +194,7 @@ function createCompatibilityPlan() {
       hasUnitFiles: (directory) =>
         existsSync(path.join(ROOT, directory, "test")),
     }),
+    records,
     workspaces,
   };
 }
@@ -218,12 +233,17 @@ function runCommand(command, args, options = {}) {
 }
 
 function npmCliPath() {
-  const candidate = path.resolve(
-    path.dirname(process.execPath),
-    "../lib/node_modules/npm/bin/npm-cli.js",
+  const candidates = pairedNpmCliCandidates(
+    process.execPath,
+    process.platform,
+    // biome-ignore lint/suspicious/noUndeclaredEnvVars: This direct compatibility boundary reads a machine-local executable path outside Turbo tasks.
+    process.env.CODSEN_NPM_CLI,
   );
-  if (!existsSync(candidate)) {
-    fail(`Could not find npm paired with ${process.execPath}`);
+  const candidate = candidates.find((filename) => existsSync(filename));
+  if (!candidate) {
+    fail(
+      `Could not find npm paired with ${process.execPath}; checked ${candidates.join(", ")}`,
+    );
   }
   return realpathSync(candidate);
 }
@@ -662,16 +682,18 @@ function importInstalledPackages(consumerDirectory, eligiblePackages) {
 }
 
 function runInstalledBinary(consumerDirectory, alias, args, cwd) {
-  if (path.basename(alias) !== alias) {
-    fail(`Unsafe bin alias: ${alias}`);
-  }
-  const binary = path.join(consumerDirectory, "node_modules", ".bin", alias);
-  if (!existsSync(binary)) {
+  const invocation = installedPackageBinInvocation({
+    alias,
+    args,
+    consumerDirectory,
+  });
+  if (!existsSync(invocation.filename)) {
     fail(`npm did not install bin alias ${alias}`);
   }
-  return runCommand(binary, args, {
+  return runCommand(invocation.command, invocation.args, {
     cwd,
     env: compatibilityEnvironment(),
+    shell: invocation.shell,
   });
 }
 
@@ -684,9 +706,9 @@ function assertIncludes(haystack, needle, message) {
 function runMetadataSmokes(consumerDirectory, cli) {
   const cwd = path.join(
     consumerDirectory,
-    "cli-smokes",
+    "cli smokes",
     cli.name.replaceAll("/", "-"),
-    "metadata",
+    "metadata checks",
   );
   mkdirSync(cwd, { recursive: true });
   for (const alias of Object.keys(cli.bins)) {
@@ -726,17 +748,17 @@ const SMOKE_TESTS = {
 123456,Bought pens,10,,1000
 123456,Bought chairs,20,,980
 `;
-    writeFileSync(path.join(cwd, "input.csv"), original);
-    run(["input.csv"]);
-    const output = readFileSync(path.join(cwd, "input-1.csv"), "utf8");
+    writeFileSync(path.join(cwd, "input records.csv"), original);
+    run(["input records.csv"]);
+    const output = readFileSync(path.join(cwd, "input records-1.csv"), "utf8");
     if (output.indexOf("Bought table") > output.indexOf("Bought carpet")) {
       fail("csv-sort-cli did not sort the fixture");
     }
   },
 
   "email-all-chars-within-ascii-cli"({ cwd, run }) {
-    writeFileSync(path.join(cwd, "healthy.html"), "<p>ASCII only</p>\n");
-    const result = run(["healthy.html"]);
+    writeFileSync(path.join(cwd, "healthy email.html"), "<p>ASCII only</p>\n");
+    const result = run(["healthy email.html"]);
     assertIncludes(
       result.stdout,
       "ALL OK",
@@ -752,9 +774,9 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 old
 /* GENERATE-ATOMIC-CSS-CONTENT-ENDS */
 `;
-    const filename = path.join(cwd, "index.html");
+    const filename = path.join(cwd, "index fixture.html");
     writeFileSync(filename, fixture);
-    run(["index.html"]);
+    run(["index fixture.html"]);
     assertIncludes(
       readFileSync(filename, "utf8"),
       ".pt2 { padding-top: 2px !important; }",
@@ -763,22 +785,22 @@ old
   },
 
   "js-row-num-cli"({ cwd, run }) {
-    const filename = path.join(cwd, "sample.js");
+    const filename = path.join(cwd, "sample rows.js");
     writeFileSync(
       filename,
       "console.log('999 first');\nconsole.log('999 second');\n",
     );
-    run(["sample.js"]);
+    run(["sample rows.js"]);
     const output = readFileSync(filename, "utf8");
     assertIncludes(output, "001 first", "js-row-num-cli missed row one");
     assertIncludes(output, "002 second", "js-row-num-cli missed row two");
   },
 
   "json-comb"({ cwd, run }) {
-    writeJson(path.join(cwd, "first.json"), { a: "one" });
-    writeJson(path.join(cwd, "second.json"), { b: "two" });
-    run(["--normalise", "first.json", "second.json"]);
-    for (const filename of ["first.json", "second.json"]) {
+    writeJson(path.join(cwd, "first input.json"), { a: "one" });
+    writeJson(path.join(cwd, "second input.json"), { b: "two" });
+    run(["--normalise", "first input.json", "second input.json"]);
+    for (const filename of ["first input.json", "second input.json"]) {
       const keys = Object.keys(readJson(path.join(cwd, filename))).sort();
       if (stableJson(keys) !== stableJson(["a", "b"])) {
         fail(`json-comb did not normalise ${filename}`);
@@ -787,9 +809,9 @@ old
   },
 
   "json-sort-cli"({ cwd, run }) {
-    const filename = path.join(cwd, "sort-me.json");
+    const filename = path.join(cwd, "sort me.json");
     writeFileSync(filename, '{"z":1,"a":2}\n');
-    run(["sort-me.json"]);
+    run(["sort me.json"]);
     const output = readFileSync(filename, "utf8");
     if (output.indexOf('"a"') > output.indexOf('"z"')) {
       fail("json-sort-cli did not sort the fixture keys");
@@ -820,15 +842,26 @@ old
 
   "update-versions"({ cwd, run }) {
     const filename = path.join(cwd, "package.json");
-    const fixture = {
+    const dependencyDirectory = path.join(
+      cwd,
+      "local packages",
+      "fixture dependency",
+    );
+    mkdirSync(dependencyDirectory, { recursive: true });
+    writeJson(path.join(dependencyDirectory, "package.json"), {
+      name: "fixture-dependency",
+      version: "2.0.0",
+      private: true,
+    });
+    writeJson(filename, {
       name: "update-versions-node18-smoke",
       version: "1.0.0",
       private: true,
-    };
-    writeJson(filename, fixture);
+      dependencies: { "fixture-dependency": "^1.0.0" },
+    });
     run([]);
-    if (stableJson(readJson(filename)) !== stableJson(fixture)) {
-      fail("update-versions changed a dependency-free package.json fixture");
+    if (readJson(filename).dependencies["fixture-dependency"] !== "^2.0.0") {
+      fail("update-versions did not update the local dependency fixture");
     }
   },
 };
@@ -842,9 +875,9 @@ function runFunctionalSmoke(consumerDirectory, cli) {
   }
   const cwd = path.join(
     consumerDirectory,
-    "cli-smokes",
+    "cli smokes",
     cli.name.replaceAll("/", "-"),
-    "functional",
+    "functional fixture",
   );
   mkdirSync(cwd, { recursive: true });
   const alias = Object.keys(cli.bins)[0];
@@ -853,6 +886,58 @@ function runFunctionalSmoke(consumerDirectory, cli) {
     run(args) {
       return runInstalledBinary(consumerDirectory, alias, args, cwd);
     },
+  });
+}
+
+function assertSmokeRegistrations(manifest) {
+  const registeredSmokes = Object.keys(SMOKE_TESTS).sort();
+  const discoveredClis = manifest.clis.map((cli) => cli.name).sort();
+  if (stableJson(registeredSmokes) !== stableJson(discoveredClis)) {
+    fail(
+      "Meaningful smoke-test registrations do not match the discovered CLIs",
+    );
+  }
+}
+
+function runCodsenGlobSmoke(consumerDirectory) {
+  const cwd = path.join(
+    consumerDirectory,
+    "library smokes",
+    "codsen glob",
+    "fixture root",
+  );
+  const nestedDirectory = path.join(cwd, "level one", "level two");
+  mkdirSync(nestedDirectory, { recursive: true });
+  writeFileSync(path.join(nestedDirectory, "keep file.js"), "export {};\n");
+  writeFileSync(path.join(nestedDirectory, "ignore file.js"), "export {};\n");
+
+  const script = `import assert from "node:assert/strict";
+import path from "node:path";
+import { glob, globSync } from "codsen-glob";
+
+const relativePattern = path.join("level one", "**", "*.js");
+const relativeIgnore = path.join("level one", "**", "ignore *.js");
+const relativeExpected = ["level one/level two/keep file.js"];
+assert.deepEqual(await glob(relativePattern, { cwd: process.cwd(), ignore: relativeIgnore }), relativeExpected);
+assert.deepEqual(globSync(relativePattern, { cwd: process.cwd(), ignore: relativeIgnore }), relativeExpected);
+const relativeSingleStarPattern = path.join("level one", "level two", "*.js");
+const relativeSingleStarIgnore = path.join("level one", "level two", "ignore *.js");
+assert.deepEqual(await glob(relativeSingleStarPattern, { cwd: process.cwd(), ignore: relativeSingleStarIgnore }), relativeExpected);
+assert.deepEqual(globSync(relativeSingleStarPattern, { cwd: process.cwd(), ignore: relativeSingleStarIgnore }), relativeExpected);
+
+const absolutePattern = path.join(process.cwd(), "level one", "**", "*.js");
+const absoluteIgnore = path.join(process.cwd(), "level one", "**", "ignore *.js");
+const absoluteExpected = [path.join(process.cwd(), "level one", "level two", "keep file.js")];
+assert.deepEqual(await glob(absolutePattern, { ignore: absoluteIgnore }), absoluteExpected);
+assert.deepEqual(globSync(absolutePattern, { ignore: absoluteIgnore }), absoluteExpected);
+const absoluteSingleStarPattern = path.join(process.cwd(), "level one", "level two", "*.js");
+const absoluteSingleStarIgnore = path.join(process.cwd(), "level one", "level two", "ignore *.js");
+assert.deepEqual(await glob(absoluteSingleStarPattern, { ignore: absoluteSingleStarIgnore }), absoluteExpected);
+assert.deepEqual(globSync(absoluteSingleStarPattern, { ignore: absoluteSingleStarIgnore }), absoluteExpected);
+console.log("codsen-glob packed-artifact smoke passed");`;
+  runCommand(process.execPath, ["--input-type=module", "--eval", script], {
+    cwd,
+    env: compatibilityEnvironment(),
   });
 }
 
@@ -1077,6 +1162,131 @@ function installAndVerifyPackages(
   }
 }
 
+function installAndSmokePackages(
+  artifactsDirectory,
+  smokePackages,
+  manifest,
+  npmCache,
+  suppliedTempRoot,
+) {
+  const consumerRoot = suppliedTempRoot
+    ? path.resolve(suppliedTempRoot)
+    : tmpdir();
+  if (suppliedTempRoot) {
+    mkdirSync(consumerRoot, { recursive: true });
+  }
+  const consumerDirectory = mkdtempSync(
+    path.join(consumerRoot, "codsen windows smoke packages -"),
+  );
+  let succeeded = false;
+  try {
+    writeJson(path.join(consumerDirectory, "package.json"), {
+      name: "codsen-windows-smoke-consumer",
+      version: "1.0.0",
+      private: true,
+      type: "module",
+    });
+    const tarballs = smokePackages.map((artifact) =>
+      path.join(artifactsDirectory, artifact.filename),
+    );
+    console.log(
+      `Installing ${smokePackages.length} CLI and codsen-glob runtime-closure artifacts`,
+    );
+    runNpm(
+      [
+        "install",
+        "--engine-strict",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "--omit=dev",
+        ...tarballs,
+      ],
+      {
+        cwd: consumerDirectory,
+        env: compatibilityEnvironment({ npm_config_cache: npmCache }),
+        timeout: INSTALL_TIMEOUT_MS,
+      },
+    );
+    verifyInstalledArtifacts(consumerDirectory, smokePackages, manifest);
+    for (const cli of manifest.clis) {
+      runMetadataSmokes(consumerDirectory, cli);
+      runFunctionalSmoke(consumerDirectory, cli);
+    }
+    runCodsenGlobSmoke(consumerDirectory);
+    succeeded = true;
+    console.log(
+      `Verified ${manifest.clis.length} packed CLIs and codsen-glob in ${consumerDirectory}`,
+    );
+  } finally {
+    if (succeeded) {
+      rmSync(consumerDirectory, { recursive: true, force: true });
+    } else {
+      console.error(`Preserved failing consumer at ${consumerDirectory}`);
+    }
+  }
+}
+
+function smokeCompatibilityArtifacts(
+  artifactsDirectory,
+  suppliedNpmCache,
+  suppliedTempRoot,
+) {
+  const npmVersion = runNpm(["--version"], {
+    env: compatibilityEnvironment(),
+  }).stdout.trim();
+  const manifestFilename = path.join(artifactsDirectory, MANIFEST_FILENAME);
+  if (!existsSync(manifestFilename)) {
+    fail(`Missing compatibility manifest: ${manifestFilename}`);
+  }
+  const manifest = readJson(manifestFilename);
+  validateManifest(manifest, artifactsDirectory);
+  verifyManifestMatchesCheckout(manifest);
+  assertSmokeRegistrations(manifest);
+
+  const plan = createCompatibilityPlan();
+  const seedNames = [
+    ...new Set(["codsen-glob", ...manifest.clis.map((cli) => cli.name)]),
+  ].sort();
+  const closureNames = runtimeDependencyClosureNames(plan.records, seedNames);
+  const closureSet = new Set(closureNames);
+  const smokePackages = manifest.packages.filter(({ name }) =>
+    closureSet.has(name),
+  );
+  if (smokePackages.length !== closureNames.length) {
+    const selectedNames = new Set(smokePackages.map(({ name }) => name));
+    fail(
+      `Compatibility manifest is missing smoke closure packages: ${closureNames
+        .filter((name) => !selectedNames.has(name))
+        .join(", ")}`,
+    );
+  }
+
+  const ownsNpmCache = !suppliedNpmCache;
+  const npmCache = suppliedNpmCache
+    ? path.resolve(suppliedNpmCache)
+    : mkdtempSync(path.join(tmpdir(), "codsen-windows-smoke-cache-"));
+  if (suppliedNpmCache) {
+    mkdirSync(npmCache, { recursive: true });
+  }
+  try {
+    installAndSmokePackages(
+      artifactsDirectory,
+      smokePackages,
+      manifest,
+      npmCache,
+      suppliedTempRoot,
+    );
+  } finally {
+    if (ownsNpmCache) {
+      rmSync(npmCache, { recursive: true, force: true });
+    }
+  }
+  console.log(
+    `Node ${process.versions.node}/npm ${npmVersion}: ${smokePackages.length} runtime-closure packages, ${manifest.clis.length} CLIs and codsen-glob passed smoke verification`,
+  );
+}
+
 function verifyCompatibilityArtifacts(
   artifactsDirectory,
   nodeMajor,
@@ -1098,13 +1308,7 @@ function verifyCompatibilityArtifacts(
   verifyManifestMatchesCheckout(manifest);
   const plan = createCompatibilityPlan();
 
-  const registeredSmokes = Object.keys(SMOKE_TESTS).sort();
-  const discoveredClis = manifest.clis.map((cli) => cli.name).sort();
-  if (stableJson(registeredSmokes) !== stableJson(discoveredClis)) {
-    fail(
-      "Meaningful smoke-test registrations do not match the discovered CLIs",
-    );
-  }
+  assertSmokeRegistrations(manifest);
 
   const eligiblePackages = manifest.packages.filter(
     ({ nodeFloor }) => nodeFloor <= nodeMajor,
@@ -1155,6 +1359,8 @@ function main() {
     parseArguments(process.argv.slice(2));
   if (command === "pack") {
     packCompatibilityArtifacts(directory);
+  } else if (command === "smoke") {
+    smokeCompatibilityArtifacts(directory, npmCache, tempRoot);
   } else {
     verifyCompatibilityArtifacts(
       directory,

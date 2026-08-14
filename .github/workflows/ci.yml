@@ -167,3 +167,31 @@ jobs:
           --artifacts "${{ runner.temp }}/package-node-artifacts"
           --node-major "${{ matrix.node-major }}"
           --unit-concurrency 4
+
+  windows-smoke:
+    name: Packed CLIs and codsen-glob / Windows
+    needs: validate
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out the exact revision
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up the pinned root toolchain
+        uses: ./.github/actions/setup-node
+        with:
+          cache: "false"
+
+      - name: Download package compatibility artifacts
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        with:
+          name: ci-package-node-artifacts
+          path: ${{ runner.temp }}/package-node-artifacts
+
+      - name: Smoke-test packed CLIs and codsen-glob
+        run: >-
+          node ops/scripts/package-node-compatibility.js smoke
+          --artifacts "${{ runner.temp }}/package-node-artifacts"

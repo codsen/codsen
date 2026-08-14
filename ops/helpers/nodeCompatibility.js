@@ -26,6 +26,98 @@ function runtimeDependencyNames(manifest) {
   ];
 }
 
+function runtimeDependencyClosureNames(records, seedNames) {
+  if (!Array.isArray(records) || records.length === 0) {
+    throw new TypeError(
+      "Runtime dependency closure records must be a non-empty array",
+    );
+  }
+  const recordsByName = new Map();
+  const directories = new Set();
+  for (const [index, record] of records.entries()) {
+    if (
+      !record ||
+      typeof record !== "object" ||
+      Array.isArray(record) ||
+      !record.manifest ||
+      typeof record.manifest !== "object" ||
+      Array.isArray(record.manifest) ||
+      typeof record.directory !== "string" ||
+      record.directory.length === 0 ||
+      typeof record.manifest.name !== "string" ||
+      record.manifest.name.trim().length === 0
+    ) {
+      throw new TypeError(
+        `Runtime dependency closure contains an invalid package record at index ${index}`,
+      );
+    }
+    const { manifest } = record;
+    if (recordsByName.has(manifest.name)) {
+      throw new TypeError(
+        `Runtime dependency closure contains duplicate package ${manifest.name}`,
+      );
+    }
+    if (directories.has(record.directory)) {
+      throw new TypeError(
+        `Runtime dependency closure contains duplicate directory ${record.directory}`,
+      );
+    }
+    for (const field of runtimeDependencyFields) {
+      const dependencies = manifest[field];
+      if (
+        dependencies !== undefined &&
+        (!dependencies ||
+          typeof dependencies !== "object" ||
+          Array.isArray(dependencies))
+      ) {
+        throw new TypeError(
+          `Runtime dependency closure package ${manifest.name} has invalid ${field}`,
+        );
+      }
+    }
+    directories.add(record.directory);
+    recordsByName.set(manifest.name, record);
+  }
+
+  if (
+    !Array.isArray(seedNames) ||
+    seedNames.length === 0 ||
+    seedNames.some((name) => typeof name !== "string" || name.length === 0)
+  ) {
+    throw new TypeError(
+      "Runtime dependency closure seeds must be a non-empty array of package names",
+    );
+  }
+  if (new Set(seedNames).size !== seedNames.length) {
+    throw new TypeError("Runtime dependency closure seeds must be unique");
+  }
+  for (const seedName of seedNames) {
+    if (!recordsByName.has(seedName)) {
+      throw new TypeError(
+        `Runtime dependency closure seed ${seedName} is not a workspace package`,
+      );
+    }
+  }
+
+  const closure = new Set();
+  const pending = [...seedNames];
+  while (pending.length > 0) {
+    const name = pending.pop();
+    if (closure.has(name)) {
+      continue;
+    }
+    closure.add(name);
+    for (const dependencyName of runtimeDependencyNames(
+      recordsByName.get(name).manifest,
+    )) {
+      if (recordsByName.has(dependencyName) && !closure.has(dependencyName)) {
+        pending.push(dependencyName);
+      }
+    }
+  }
+  return [...closure].sort();
+}
+
 function nodeEngineInventory(records, label) {
   if (!Array.isArray(records)) {
     throw new TypeError(`${label} package records must be an array`);
@@ -203,6 +295,7 @@ function validateNodeCompatibility({ records, lockPackages }) {
 export {
   eligiblePackageNamesForMajor,
   githubActionsNodeMatrix,
+  runtimeDependencyClosureNames,
   runtimeDependencyFields,
   runtimeDependencyNames,
   supportedNodeEngines,

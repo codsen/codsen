@@ -4,17 +4,22 @@ import { equal, match, throws } from "uvu/assert";
 import {
   eligiblePackageNamesForMajor,
   githubActionsNodeMatrix,
+  runtimeDependencyClosureNames,
   supportedNodeEngines,
   validateNodeCompatibility,
   validateUnchangedNodeEngines,
 } from "../nodeCompatibility.js";
 
-function record(name, { dependencies = {}, engine = ">=18.20.8" } = {}) {
+function record(
+  name,
+  { dependencies = {}, devDependencies = {}, engine = ">=18.20.8" } = {},
+) {
   return {
     directory: `packages/${name}`,
     manifest: {
       name,
       dependencies,
+      devDependencies,
       engines: { node: engine },
     },
   };
@@ -178,6 +183,111 @@ test("08 - automated dependency updates must preserve every Node floor", () => {
       }),
     /duplicate directory packages\/alpha/,
     "08.03",
+  );
+});
+
+test("09 - closes internal runtime dependencies deterministically", () => {
+  const records = [
+    record("z-cli", {
+      dependencies: { alpha: "^1.0.0", external: "^1.0.0" },
+      devDependencies: { "dev-only": "^1.0.0" },
+    }),
+    {
+      directory: "packages/alpha",
+      manifest: {
+        name: "alpha",
+        optionalDependencies: { beta: "^1.0.0" },
+      },
+    },
+    {
+      directory: "packages/beta",
+      manifest: {
+        name: "beta",
+        peerDependencies: { gamma: "^1.0.0" },
+      },
+    },
+    record("gamma", { dependencies: { alpha: "^1.0.0" } }),
+    record("dev-only"),
+    record("codsen-glob"),
+  ];
+  const expected = ["alpha", "beta", "codsen-glob", "gamma", "z-cli"];
+
+  equal(
+    runtimeDependencyClosureNames(records, ["z-cli", "codsen-glob"]),
+    expected,
+    "09.01",
+  );
+  equal(
+    runtimeDependencyClosureNames(records.toReversed(), [
+      "codsen-glob",
+      "z-cli",
+    ]),
+    expected,
+    "09.02",
+  );
+});
+
+test("10 - rejects invalid and duplicate package records", () => {
+  throws(
+    () => runtimeDependencyClosureNames(undefined, ["alpha"]),
+    /records must be a non-empty array/,
+    "10.01",
+  );
+  throws(
+    () => runtimeDependencyClosureNames([null], ["alpha"]),
+    /invalid package record at index 0/,
+    "10.02",
+  );
+  throws(
+    () =>
+      runtimeDependencyClosureNames(
+        [record("alpha"), record("alpha")],
+        ["alpha"],
+      ),
+    /duplicate package alpha/,
+    "10.03",
+  );
+  const invalidDependencies = record("alpha");
+  invalidDependencies.manifest.optionalDependencies = [];
+  throws(
+    () => runtimeDependencyClosureNames([invalidDependencies], ["alpha"]),
+    /alpha has invalid optionalDependencies/,
+    "10.04",
+  );
+  const duplicateDirectory = record("beta");
+  duplicateDirectory.directory = "packages/alpha";
+  throws(
+    () =>
+      runtimeDependencyClosureNames(
+        [record("alpha"), duplicateDirectory],
+        ["alpha"],
+      ),
+    /duplicate directory packages\/alpha/,
+    "10.05",
+  );
+});
+
+test("11 - rejects invalid, duplicate, and missing closure seeds", () => {
+  const records = [record("alpha")];
+  throws(
+    () => runtimeDependencyClosureNames(records),
+    /seeds must be a non-empty array of package names/,
+    "11.01",
+  );
+  throws(
+    () => runtimeDependencyClosureNames(records, [42]),
+    /seeds must be a non-empty array of package names/,
+    "11.02",
+  );
+  throws(
+    () => runtimeDependencyClosureNames(records, ["alpha", "alpha"]),
+    /seeds must be unique/,
+    "11.03",
+  );
+  throws(
+    () => runtimeDependencyClosureNames(records, ["missing"]),
+    /seed missing is not a workspace package/,
+    "11.04",
   );
 });
 

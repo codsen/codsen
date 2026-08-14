@@ -3,7 +3,10 @@ import { fileURLToPath } from "node:url";
 
 import { test } from "uvu";
 import { equal, match } from "uvu/assert";
-import { runDependencyAudit } from "../../scripts/audit-production-dependencies.js";
+import {
+  locatePairedNpmCli,
+  runDependencyAudit,
+} from "../../scripts/audit-production-dependencies.js";
 import {
   evaluateDependencySecurity,
   normalizeAuditReport,
@@ -586,6 +589,21 @@ test("16 - distinguishes structured npm transport errors", () => {
     ],
     "16.02",
   );
+});
+
+test("17 - audit npm discovery honors the explicit CLI path first", () => {
+  const checked = [];
+  const npmCli = locatePairedNpmCli("C:\\runtime\\node.exe", {
+    exists: (candidate) => {
+      checked.push(candidate);
+      return candidate === "D:\\global npm\\npm\\bin\\npm-cli.js";
+    },
+    explicitNpmCli: "D:\\global npm\\npm\\bin\\npm-cli.js",
+    platform: "win32",
+  });
+
+  equal(npmCli, "D:\\global npm\\npm\\bin\\npm-cli.js", "17.01");
+  equal(checked, [npmCli], "17.02");
 });
 
 test.run();

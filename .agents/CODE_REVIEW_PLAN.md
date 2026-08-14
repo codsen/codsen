@@ -94,7 +94,7 @@ Priorities have the following meanings:
 | REV-017 | P2 | Completed | Release safety | Retire or guard direct-publish scripts |
 | REV-018 | P2 | Completed | Supply chain | Add dependency update and security checks |
 | REV-019 | P3 | Completed | Reproducibility | Pin the root build runtime |
-| REV-020 | P3 | Pending | Portability | Add targeted Windows smoke tests |
+| REV-020 | P3 | Completed | Portability | Add targeted Windows smoke tests |
 | REV-021 | P3 | Pending | Dependencies | Audit production `@types/*` edges |
 
 ## P0 — Restore normal CI and release operation
@@ -1148,16 +1148,46 @@ Priorities have the following meanings:
 
 ### REV-020 — Add targeted Windows smoke tests
 
-- Status: Pending
-- Evidence status: Confirmed Linux-only CI at the review baseline
+- Status: Completed
+- Completed: 2026-08-14
+- Evidence status: Reproduced, fixed, and locally validated against the packed
+  artifact boundary; hosted Windows execution awaits the first pushed run
 - Evidence:
-  - Main validation and all Node compatibility jobs use `ubuntu-latest`.
-  - The monorepo contains nine CLI workspaces plus filesystem and glob logic.
+  - At the review baseline, main validation and all Node compatibility jobs
+    used `ubuntu-latest`.
+  - Nine workspaces expose 15 executable aliases. Those packages plus
+    `codsen-glob` have an exact 35-workspace internal runtime closure; every
+    workspace in the repository remains at `>=18.20.8`.
 - Problem: Linux-only validation does not exercise Windows paths, npm command
   shims, quoting, or glob behaviour.
 - Recommended change: Add a small Windows job for the nine CLIs and
   `codsen-glob`. Keep the full 112-package by five-runtime matrix on Linux unless
   evidence justifies expanding it.
+- Resolution:
+  - CI now adds one `windows-latest` smoke job after Linux validation. It
+    downloads the existing 112-workspace artifact set and installs only the
+    35-package CLI and `codsen-glob` runtime closure; it does not rebuild, run
+    package unit mirrors, or duplicate the five-lane Linux matrix.
+  - The smoke checks help and version output for all 15 aliases, one meaningful
+    operation for each of the nine CLIs, and installed `codsen-glob` async and
+    sync behavior with native-separator patterns, ignores, absolute paths, and
+    slash-normalised relative results. Consumer, working-directory, and
+    argument paths deliberately contain nested spaces.
+  - Pure helpers now derive deterministic internal runtime closures across
+    dependencies, optional dependencies, and peer dependencies, locate the npm
+    CLI selected for the running Node, and construct one validated, safely
+    quoted Windows `.cmd` command line instead of passing unescaped arguments
+    to the shell.
+  - The composite setup action records the exact post-install npm JavaScript
+    CLI path and every direct tooling boundary executes it through
+    `process.execPath`. This avoids both `npm.cmd` portability failures and an
+    accidental fallback to the Node distribution's bundled npm on Windows.
+  - `codsen-glob` normalises native Windows separators before parsing patterns
+    and ignores, retains slash-normalised relative results, and now returns
+    native absolute paths, matching its existing `path.join()` contract on
+    Windows. The packed smoke covers both single-star and globstar native
+    patterns so a separator immediately before the first metacharacter cannot
+    be mistaken for an escape.
 - Done when:
   - Packed CLIs start and perform one meaningful operation on Windows.
   - Nested paths and spaces in paths are covered.
@@ -1165,6 +1195,27 @@ Priorities have the following meanings:
 - Validation:
   - Targeted `windows-latest` workflow
   - Existing Linux compatibility matrix
+- Validation results:
+  - The exact root toolchain packed all 112 workspaces, then the new smoke mode
+    installed the 35-package closure in a nested, space-bearing temporary path.
+    All nine functional CLI checks, all 15 alias help/version checks, and the
+    installed `codsen-glob` checks passed.
+  - The complete helper suite passed 154/154, including deterministic closure,
+    cycle, missing-seed, paired-npm, Windows `.cmd`, quoting, and CLI argument
+    boundary cases. The `codsen-glob` direct unit suite passed 14/14 on both
+    exact Node 18.20.8 and the root Node 24.19.0 toolchain.
+  - Exact Node compatibility policy still passed all 112 workspaces across the
+    cumulative Node 18, 20, 22, 24, and 26 lanes. No package engine or runtime
+    dependency declaration changed.
+  - The root verifier passed through the explicit npm CLI path, the
+    dependency-audit locator test confirmed the same precedence, and the
+    dependency-security policy check passed independently. All 175 type-check
+    tasks passed. Biome checked 2,077 files; actionlint 1.7.12, maintained
+    Markdown, workflow/action YAML parsing, script syntax, and
+    `git diff --check` passed.
+  - The unpushed local checkout cannot start a hosted Windows runner. The new
+    job is the authoritative remaining platform execution and will run on the
+    first pushed pull request or main revision.
 
 ### REV-021 — Audit production `@types/*` edges
 

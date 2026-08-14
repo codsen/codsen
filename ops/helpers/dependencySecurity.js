@@ -1,4 +1,4 @@
-import path from "node:path";
+import { pairedNpmCliCandidates } from "./nodeProcessInvocation.js";
 
 const AUDIT_SEVERITIES = Object.freeze([
   "info",
@@ -493,24 +493,6 @@ function evaluateDependencySecurity({ auditReport, today, waiverPolicy }) {
     waived,
     warnings,
   };
-}
-
-function pairedNpmCliCandidates(nodeExecutable, platform = process.platform) {
-  if (typeof nodeExecutable !== "string" || nodeExecutable.length === 0) {
-    throw new TypeError("nodeExecutable must be a non-empty path");
-  }
-  const paths = platform === "win32" ? path.win32 : path.posix;
-  const directory = paths.dirname(nodeExecutable);
-  if (platform === "win32") {
-    return [
-      paths.resolve(directory, "node_modules/npm/bin/npm-cli.js"),
-      paths.resolve(directory, "../lib/node_modules/npm/bin/npm-cli.js"),
-    ];
-  }
-  return [
-    paths.resolve(directory, "../lib/node_modules/npm/bin/npm-cli.js"),
-    paths.resolve(directory, "node_modules/npm/bin/npm-cli.js"),
-  ];
 }
 
 function npmAuditInvocation(nodeExecutable, npmCli) {
