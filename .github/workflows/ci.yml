@@ -89,6 +89,9 @@ jobs:
       - name: Verify complete and freshly compiled repository data
         run: npm run ci:verify:data
 
+      - name: Verify browser IIFEs against the minimum runtime API surface
+        run: npm run ci:verify:browser-iifes
+
       - name: Run package examples on the root toolchain
         run: npm run turbo -- run examples --filter='./packages/**' --only
 
@@ -119,6 +122,22 @@ jobs:
         run: >-
           node ops/scripts/package-node-compatibility.js pack
           --output "${{ runner.temp }}/package-node-artifacts"
+
+      - name: Archive built browser IIFEs
+        run: >-
+          tar --create --gzip
+          --file "${{ runner.temp }}/browser-iifes.tar.gz"
+          packages/*/dist/*.umd.js
+
+      - name: Upload built browser IIFEs
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        with:
+          name: ci-browser-iifes
+          path: ${{ runner.temp }}/browser-iifes.tar.gz
+          compression-level: 0
+          if-no-files-found: error
+          overwrite: true
+          retention-days: 1
 
       - name: Upload all Node compatibility artifacts
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
@@ -167,6 +186,46 @@ jobs:
           --artifacts "${{ runner.temp }}/package-node-artifacts"
           --node-major "${{ matrix.node-major }}"
           --unit-concurrency 4
+
+  browser-iife-compatibility:
+    name: All browser IIFEs / Chromium 58
+    needs: validate
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out the exact revision
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up the repository Node runtime
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Download built browser IIFEs
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        with:
+          name: ci-browser-iifes
+          path: ${{ runner.temp }}/browser-iifes
+
+      - name: Restore built browser IIFEs
+        run: >-
+          tar --extract --gzip
+          --file "${{ runner.temp }}/browser-iifes/browser-iifes.tar.gz"
+
+      - name: Set up the minimum IIFE browser
+        id: browser
+        uses: ./.github/actions/setup-iife-browser
+
+      - name: Load and smoke-test every IIFE in Chromium 58
+        run: >-
+          xvfb-run --auto-servernum
+          --server-args="-screen 0 1280x720x24 -nolisten tcp"
+          node ops/scripts/verify-browser-iifes.js
+          --browser "${{ steps.browser.outputs.chrome-path }}"
 
   windows-smoke:
     name: Build scripts, packed CLIs and codsen-glob / Windows

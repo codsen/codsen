@@ -463,7 +463,7 @@ function extractFromToSource(
     str.lastIndexOf("}") > 0 &&
     str.slice(str.lastIndexOf("}") + 1).includes("|")
   ) {
-    source = str.slice(0, str.indexOf("|", str.lastIndexOf("}") + 1)).trimEnd();
+    source = rtrim(str.slice(0, str.indexOf("|", str.lastIndexOf("}") + 1)));
     if (source.trim().startsWith("|")) {
       DEV && console.log(`468 util: crop leading pipe`);
       while (source.trim().startsWith("|")) {
@@ -556,7 +556,7 @@ lastPipeWasAt = ${lastPipeWasAt}
         );
     }
     DEV && console.log(`558 startFrom = ${startFrom}; endTo = ${endTo}`);
-    source = str.slice(startFrom, endTo).trimEnd();
+    source = rtrim(str.slice(startFrom, endTo));
     DEV &&
       console.log(
         `562 FINAL ${`\u001b[${33}m${`source`}\u001b[${39}m`} = ${source}`,
@@ -969,6 +969,8 @@ function prepConfig(
     trim,
   ).join("\n");
 }
+
+const rtrim = (str: string): string => str.trimRight();
 
 export {
   extractConfig,

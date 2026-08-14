@@ -7703,7 +7703,8 @@ export const packageJSONData = {
     },
     "dependencies": {
       "ast-monkey-traverse": "^4.1.3",
-      "codsen-utils": "^1.7.3"
+      "codsen-utils": "^1.7.3",
+      "unicode-segmenter": "^0.17.3"
     },
     "engines": {
       "node": ">=18.20.8"

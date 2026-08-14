@@ -46,7 +46,7 @@ export const interdeps = [
   },
   {
     "name": "ast-deep-contains",
-    "size": 2524,
+    "size": 2555,
     "imports": [
       "ast-monkey-traverse"
     ]
@@ -144,7 +144,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-utils",
-    "size": 17039,
+    "size": 17071,
     "imports": []
   },
   {
@@ -198,7 +198,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "size": 24267,
+    "size": 24294,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -246,7 +246,7 @@ export const interdeps = [
   },
   {
     "name": "email-comb",
-    "size": 24874,
+    "size": 24873,
     "imports": [
       "array-pull-all-with-glob",
       "codsen-utils",
@@ -272,7 +272,7 @@ export const interdeps = [
   },
   {
     "name": "generate-atomic-css",
-    "size": 8160,
+    "size": 8169,
     "imports": [
       "codsen-utils",
       "string-left-right"
@@ -666,7 +666,7 @@ export const interdeps = [
   },
   {
     "name": "string-convert-indexes",
-    "size": 2533,
+    "size": 3816,
     "imports": [
       "ast-monkey-traverse",
       "codsen-utils"
@@ -792,7 +792,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 23081,
+    "size": 23085,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -821,7 +821,7 @@ export const interdeps = [
   },
   {
     "name": "test-mixer",
-    "size": 1163,
+    "size": 1187,
     "imports": [
       "codsen-utils",
       "object-boolean-combinations"

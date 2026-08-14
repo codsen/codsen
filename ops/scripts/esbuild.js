@@ -2,7 +2,10 @@ import { rmSync } from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
 import esbuild from "esbuild";
-import camelCase from "lodash.camelcase";
+import {
+  IIFE_BROWSER_POLICY,
+  iifeGlobalName,
+} from "../helpers/browserCompatibility.js";
 import { nodeTargetFromEngineRange } from "../helpers/nodeEngine.js";
 
 const arguments_ = process.argv.slice(2);
@@ -70,12 +73,12 @@ if (pkg.exports?.script) {
   esbuild.buildSync({
     entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
     format: "iife",
-    globalName: camelCase(name2),
+    globalName: iifeGlobalName(name2),
     bundle: true,
     define: { DEV: String(isDevelopment) },
     minify: !isDevelopment,
     sourcemap: false,
-    target: ["chrome58"],
+    target: [IIFE_BROWSER_POLICY.esbuildTarget],
     outfile: path.join(path.resolve("./"), `dist/${name2}.umd.js`),
     // pure,
     banner,

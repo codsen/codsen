@@ -800,7 +800,7 @@ function processCharacter(
                 }
               } else if (
                 opts.convertEntities &&
-                Object.hasOwn(
+                hasOwn.call(
                   notEmailFriendly,
                   str.slice(i + 1, i + temp.length + 1),
                 )
@@ -2242,7 +2242,7 @@ function processCharacter(
             )}`,
           );
         if (
-          Object.hasOwn(
+          hasOwn.call(
             notEmailFriendly,
             convertedCharVal.slice(1, convertedCharVal.length - 1),
           )
@@ -2329,5 +2329,7 @@ function processCharacter(
       )}`,
     );
 }
+
+const hasOwn = Object.prototype.hasOwnProperty;
 
 export { processCharacter };

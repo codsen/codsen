@@ -49,4 +49,13 @@ test("05 - inherited properties are not own properties", () => {
   equal(hasOwnProp(value, "toString"), true, "05.02");
 });
 
+test("06 - supports objects without Object.prototype", () => {
+  let value = Object.create(null);
+  value.answer = 42;
+  value.hasOwnProperty = () => false;
+
+  equal(hasOwnProp(value, "answer"), true, "06.01");
+  equal(hasOwnProp(value, "missing"), false, "06.02");
+});
+
 test.run();

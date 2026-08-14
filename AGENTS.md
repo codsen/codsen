@@ -129,6 +129,29 @@ legacy support.
   A lower target is acceptable when tests pass; do not assume a newer target is
   inherently faster or better.
 
+## Browser IIFE compatibility
+
+Chromium 58 is the minimum runtime for every package that declares
+`package.json#exports.script`. Treat this low, truthful floor as a distribution
+contract.
+
+- Keep the esbuild target, exact Chromium snapshot, archive hash, and IIFE
+  global-name rule in `ops/helpers/browserCompatibility.js`. Do not duplicate or
+  override the target in package code.
+- Remember that esbuild lowers syntax but does not polyfill runtime APIs. Avoid
+  APIs newer than the floor in the complete bundled dependency closure. When a
+  newer native API materially improves behavior or performance, feature-detect
+  it and retain an equivalent Chrome 58 fallback.
+- Build all packages before running `npm run ci:verify:browser-iifes`. The
+  verifier scans the emitted bundles, loads all of them in isolated legacy API
+  realms, checks every documented global, and runs representative API smokes.
+  Hosted CI repeats the gate in the exact SHA-verified Chromium 58 binary under
+  Xvfb.
+- If the floor must change, audit every `exports.script` package and its bundled
+  production dependency closure. Update the central policy, architecture
+  principle, local emulation, pinned browser job, and validation evidence in
+  the same change.
+
 ## Biome scope
 
 `packages/*/tap` directories are DIY testbeds, not maintained source. They may

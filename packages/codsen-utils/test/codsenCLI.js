@@ -564,4 +564,41 @@ test("58 - called with no arguments at all", () => {
   equal(res.pkg, {}, "58.04");
 });
 
+test("59 - works without newer globals when argv is explicit", () => {
+  const globalObject = globalThis;
+  const globalThisDescriptor = Object.getOwnPropertyDescriptor(
+    globalObject,
+    "globalThis",
+  );
+  const processDescriptor = Object.getOwnPropertyDescriptor(
+    globalObject,
+    "process",
+  );
+  const hasOwnDescriptor = Object.getOwnPropertyDescriptor(Object, "hasOwn");
+
+  Reflect.deleteProperty(globalObject, "process");
+  Reflect.deleteProperty(Object, "hasOwn");
+  Reflect.deleteProperty(globalObject, "globalThis");
+
+  let flags;
+  try {
+    flags = codsenCLI("", {
+      argv: [],
+      flags: {
+        a: { type: "boolean" },
+        b: { type: "string", default: "x" },
+      },
+      booleanDefault: undefined,
+      autoHelp: false,
+      autoVersion: false,
+    }).flags;
+  } finally {
+    Object.defineProperty(globalObject, "globalThis", globalThisDescriptor);
+    Object.defineProperty(globalObject, "process", processDescriptor);
+    Object.defineProperty(Object, "hasOwn", hasOwnDescriptor);
+  }
+
+  equal(flags, { b: "x" }, "59.01");
+});
+
 test.run();

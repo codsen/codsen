@@ -1,4 +1,29 @@
 import { formatDiagnosticValue } from "codsen-utils";
+
+/*!
+ * unicode-segmenter
+ * MIT License
+ * Copyright (c) 2024 Hyeseong Kim <hey@hyeseong.kim>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+import { collectGraphemes } from "unicode-segmenter/grapheme";
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
 
 import { traverse } from "ast-monkey-traverse";
@@ -6,9 +31,10 @@ import { traverse } from "ast-monkey-traverse";
 import { version as v } from "../package.json";
 
 const version: string = v;
-const graphemeSegmenter = new Intl.Segmenter(undefined, {
-  granularity: "grapheme",
-});
+const graphemeSegmenter =
+  typeof Intl.Segmenter === "function"
+    ? new Intl.Segmenter(undefined, { granularity: "grapheme" })
+    : undefined;
 
 declare let DEV: boolean;
 
@@ -49,7 +75,7 @@ function strConvertIndexes(
 
       DEV &&
         console.log(
-          `052 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
+          `078 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
             graphemeStrArr[i]
           } (${graphemeStrArr[i].split("").length})`,
         );
@@ -97,20 +123,19 @@ function strConvertIndexes(
 
   // ---------------------------------------------------------------------------
 
-  const graphemeStrArr = Array.from(
-    graphemeSegmenter.segment(str),
-    ({ segment }) => segment,
-  );
+  const graphemeStrArr = graphemeSegmenter
+    ? Array.from(graphemeSegmenter.segment(str), ({ segment }) => segment)
+    : collectGraphemes(str);
 
   // easy - index will be the total count of all native JS index characters
   // leading up to this
 
   if (isStringOrNumber(indexes)) {
-    DEV && console.log(`109 ██ no AST`);
+    DEV && console.log(`134 ██ no AST`);
     // no need for traversal
     // validate
     if (isItOk(indexes)) {
-      DEV && console.log(`113 OK`);
+      DEV && console.log(`138 OK`);
 
       if (mode === "u") {
         return typeof indexes === "string"
@@ -127,7 +152,7 @@ function strConvertIndexes(
       `string-convert-indexes/${functionName}(): [THROW_ID_04] the second input argument, "indexes" is not suitable to describe string index - it was given as ${formatDiagnosticValue(indexes, 4)} (${typeof indexes})`,
     );
   } else if (indexes && typeof indexes === "object") {
-    DEV && console.log(`130 ██ AST - traverse!`);
+    DEV && console.log(`155 ██ AST - traverse!`);
     // if it's array or object, traverse
     return mode === "u"
       ? traverse(indexes, (key, val, innerObj) => {

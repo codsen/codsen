@@ -65,6 +65,28 @@ artifact is. Although `*.iife.js` would describe the artifact more accurately,
 never rename these files. Preserving established CDN filename patterns takes
 priority over correcting the suffix.
 
+### Browser IIFE runtime contract
+
+Every package that declares `package.json#exports.script` supports Chromium 58
+and later runtimes with an equivalent JavaScript API surface. The repository
+keeps the esbuild target, expected global-name rule, and exact Chromium test
+snapshot in `ops/helpers/browserCompatibility.js`. Build and test code must read
+that policy instead of repeating a browser target.
+
+An esbuild target controls emitted syntax. It does not add runtime APIs. Code
+bundled into an IIFE must therefore use APIs available at the declared floor or
+feature-detect newer APIs and provide a behaviorally equivalent fallback. Keep
+a newer native implementation as the fast path when it provides the same
+observable behavior as the fallback.
+
+Test the artifacts that browsers receive. `npm run ci:verify:browser-iifes`
+checks every current `exports.script` file, loads each bundle in an isolated
+legacy API realm, verifies its global, and runs representative public-API
+smokes. CI repeats those checks in the exact SHA-verified Chromium 58 snapshot.
+Do not raise the floor for one package or dependency in isolation. A floor
+change requires a complete IIFE inventory audit, an updated central policy, and
+successful tests for every browser bundle.
+
 ## Keep pure computation separate from effects
 
 Only pure code can provide fully deterministic test guarantees. Impure code can

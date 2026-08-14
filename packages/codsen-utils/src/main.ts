@@ -65,6 +65,8 @@ const currencySymbols = new Set([
   "Lek",
 ]);
 
+const hasOwn = Object.prototype.hasOwnProperty;
+
 // From "type-fest" by Sindre Sorhus:
 export type JSONValue =
   | string
@@ -545,7 +547,7 @@ export function resolveEolSetting(
 // ----------------------------------------------------------------
 
 export function hasOwnProp(obj: unknown, prop: string): boolean {
-  return isPlainObject(obj) && isStr(prop) && Object.hasOwn(obj, prop);
+  return isPlainObject(obj) && isStr(prop) && hasOwn.call(obj, prop);
 }
 
 // ----------------------------------------------------------------
@@ -886,14 +888,14 @@ function coerceValue(
  * @returns the parsed `input` and `flags`, plus `help`/`showHelp`/`showVersion`
  */
 export function codsenCLI(helpText = "", options: CliOptions = {}): CliResult {
-  const { process: proc } = globalThis;
+  const proc = typeof process === "undefined" ? undefined : process;
   const pkg = options.pkg ?? {};
-  const argv = options.argv ?? proc.argv.slice(2);
+  const argv = options.argv ?? proc?.argv.slice(2) ?? [];
   const helpIndent = options.helpIndent ?? 2;
   const autoHelp = options.autoHelp ?? true;
   const autoVersion = options.autoVersion ?? true;
   const version = options.version ?? pkg.version ?? "No version found";
-  const booleanDefault = Object.hasOwn(options, "booleanDefault")
+  const booleanDefault = hasOwn.call(options, "booleanDefault")
     ? options.booleanDefault
     : false;
 
@@ -906,12 +908,12 @@ export function codsenCLI(helpText = "", options: CliOptions = {}): CliResult {
   function showHelp(exitCode?: number): void {
     console.log(help);
     // 2 is the conventional "you used this wrong" code
-    proc.exit(isNum(exitCode) ? exitCode : 2);
+    proc?.exit(isNum(exitCode) ? exitCode : 2);
   }
 
   function showVersion(): void {
     console.log(version);
-    proc.exit(0);
+    proc?.exit(0);
   }
 
   // 1. resolve the schema into a lookup covering every spelling of each flag
@@ -1058,10 +1060,10 @@ export function codsenCLI(helpText = "", options: CliOptions = {}): CliResult {
   // ---------------------------------------------------------------------------
 
   for (const def of declared) {
-    if (Object.hasOwn(flags, def.key)) {
+    if (hasOwn.call(flags, def.key)) {
       continue;
     }
-    if (Object.hasOwn(def.source, "default")) {
+    if (hasOwn.call(def.source, "default")) {
       flags[def.key] = def.source.default;
     } else if (def.isMultiple) {
       flags[def.key] = [];
@@ -1082,7 +1084,7 @@ export function codsenCLI(helpText = "", options: CliOptions = {}): CliResult {
   }
 
   const title = processTitle(pkg);
-  if (title) {
+  if (title && proc) {
     proc.title = title;
   }
 

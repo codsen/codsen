@@ -69,7 +69,7 @@ function mixer(
       // and defaults don't have this "from".
       .filter((refKey) => typeof ref[refKey] === "boolean")
       .some((refKey) => {
-        if (!Object.hasOwn(defaultsObj, refKey)) {
+        if (!hasOwn.call(defaultsObj, refKey)) {
           caught = refKey;
           return true;
         }
@@ -96,17 +96,14 @@ function mixer(
   Object.keys(defaultsObj).forEach((key) => {
     // if key's value is bool AND it's not present in ref,
     // add it to "optsWithBoolValues"
-    if (
-      typeof defaultsObjClone[key] === "boolean" &&
-      !Object.hasOwn(ref, key)
-    ) {
+    if (typeof defaultsObjClone[key] === "boolean" && !hasOwn.call(ref, key)) {
       optsWithBoolValues[key] = defaultsObjClone[key];
     }
   });
 
   DEV &&
     console.log(
-      `109 ${`\u001b[${33}m${`refClone`}\u001b[${39}m`} = ${JSON.stringify(
+      `106 ${`\u001b[${33}m${`refClone`}\u001b[${39}m`} = ${JSON.stringify(
         refClone,
         null,
         4,
@@ -114,7 +111,7 @@ function mixer(
     );
   DEV &&
     console.log(
-      `117 ${`\u001b[${33}m${`defaultsObjClone`}\u001b[${39}m`} = ${JSON.stringify(
+      `114 ${`\u001b[${33}m${`defaultsObjClone`}\u001b[${39}m`} = ${JSON.stringify(
         defaultsObjClone,
         null,
         4,
@@ -122,7 +119,7 @@ function mixer(
     );
   DEV &&
     console.log(
-      `125 ${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} = ${JSON.stringify(
+      `122 ${`\u001b[${33}m${`optsWithBoolValues`}\u001b[${39}m`} = ${JSON.stringify(
         optsWithBoolValues,
         null,
         4,
@@ -137,9 +134,11 @@ function mixer(
     ...obj,
   }));
 
-  DEV && console.log(`140 RETURN res = ${JSON.stringify(res, null, 4)}`);
+  DEV && console.log(`137 RETURN res = ${JSON.stringify(res, null, 4)}`);
 
   return res;
 }
+
+const hasOwn = Object.prototype.hasOwnProperty;
 
 export { mixer, version };

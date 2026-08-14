@@ -555,7 +555,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
       if (toIdx && !right(str, toIdx - 1)) {
         DEV &&
           console.log(`557 trim ${`\u001b[${33}m${`temp`}\u001b[${39}m`} end`);
-        temp = temp.trimEnd();
+        temp = temp.trimRight();
         DEV &&
           console.log(
             `561 now ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
@@ -3321,7 +3321,7 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         // for cases of resolvedOpts.dumpLinkHrefsNearby
         if (backupWhatToAdd?.trim()) {
           rangesToDelete.ranges[rangesToDelete.ranges.length - 1].push(
-            backupWhatToAdd.trimEnd() as any,
+            backupWhatToAdd.trimRight() as any,
           );
         }
       }

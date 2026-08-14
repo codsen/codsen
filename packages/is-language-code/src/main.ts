@@ -46,17 +46,23 @@ function numberToAlpha(value: number, width: number): string {
 }
 
 function rangedSubtags(ranged: readonly RangedEntry[], type: string): string[] {
-  return ranged
-    .filter((entry) => entry.type === type)
-    .flatMap(({ value }) => {
-      const [from, to] = value.split("..");
-      const fromNumber = alphaToNumber(from);
-      const toNumber = alphaToNumber(to);
+  const result: string[] = [];
 
-      return Array.from({ length: toNumber - fromNumber + 1 }, (_, index) =>
-        numberToAlpha(fromNumber + index, from.length),
-      );
-    });
+  for (const entry of ranged) {
+    if (entry.type !== type) {
+      continue;
+    }
+
+    const [from, to] = entry.value.split("..");
+    const fromNumber = alphaToNumber(from);
+    const toNumber = alphaToNumber(to);
+
+    for (let current = fromNumber; current <= toNumber; current += 1) {
+      result.push(numberToAlpha(current, from.length));
+    }
+  }
+
+  return result;
 }
 
 const LANGUAGES = new Set([

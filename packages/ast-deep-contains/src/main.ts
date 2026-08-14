@@ -266,6 +266,8 @@ function deepContains(
   }
 }
 
+const hasOwn = Object.prototype.hasOwnProperty;
+
 function similarityScore(rightValue: unknown, leftValue: unknown): number {
   if (!isPlainObject(rightValue) || !isPlainObject(leftValue)) {
     return 0;
@@ -273,7 +275,7 @@ function similarityScore(rightValue: unknown, leftValue: unknown): number {
 
   let score = 0;
   for (const key of Object.keys(rightValue)) {
-    if (Object.hasOwn(leftValue, key)) {
+    if (hasOwn.call(leftValue, key)) {
       score += leftValue[key] === rightValue[key] ? 6 : 1;
     }
   }

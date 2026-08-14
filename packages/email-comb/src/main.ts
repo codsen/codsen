@@ -4515,7 +4515,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
     ) {
       nonIndentationsWhitespaceLength += str.length - str.trim().length;
     }
-    str = str.trimStart();
+    str = str.trimLeft();
   }
 
   DEV &&
