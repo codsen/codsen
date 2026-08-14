@@ -7,7 +7,13 @@
         "!dist/**",
         "!types/**",
         "$TURBO_ROOT$/.node-version",
+        "$TURBO_ROOT$/.npmrc",
+        "$TURBO_ROOT$/biome.json",
+        "$TURBO_ROOT$/ops/biome/**",
+        "$TURBO_ROOT$/ops/helpers/nodeEngine.js",
         "$TURBO_ROOT$/ops/scripts/esbuild.js",
+        "$TURBO_ROOT$/ops/typedefs/**",
+        "$TURBO_ROOT$/package.json",
         "$TURBO_ROOT$/tsconfig.base.json"
       ],
       "outputs": ["dist/**", "types/**"]
@@ -92,6 +98,7 @@
       "cache": false
     },
     "devtest": {
+      "dependsOn": ["build"],
       "outputs": [],
       "cache": false
     },
@@ -108,6 +115,7 @@
       "cache": false
     },
     "perf": {
+      "dependsOn": ["build", "json-comb-core#build"],
       "outputs": [],
       "cache": false
     },

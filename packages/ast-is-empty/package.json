@@ -48,7 +48,7 @@
     "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
     "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
     "devtest": "c8 npm run unit && npm run examples && npm run lint",
-    "dts": "rollup -c && biome format --write types/index.d.ts",
+    "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
     "examples": "node '../../ops/scripts/run-examples.js'",
     "lect": "node '../../ops/lect/lect.js'",
     "lect:check": "node '../../ops/lect/lect.js' --check",
