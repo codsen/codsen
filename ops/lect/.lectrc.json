@@ -196,8 +196,8 @@
       "unit": "uvu test"
     },
     "rollup": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
+      "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
       "examples": "node '../../ops/scripts/run-examples.js'",
       "lect": "node '../../ops/lect/lect.js'",

@@ -183,21 +183,6 @@
           }
         }
       }
-    },
-    {
-      "includes": ["ops/scripts/esbuild.js"],
-      "linter": {
-        "rules": {
-          "suspicious": {
-            "noUndeclaredEnvVars": {
-              "level": "warn",
-              "options": {
-                "allowedEnvVars": ["DEV"]
-              }
-            }
-          }
-        }
-      }
     }
   ],
   "javascript": {

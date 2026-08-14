@@ -18,6 +18,9 @@ review plan. Treat it as a backlog, not as authority to expand the current task.
 Revalidate each finding against the current tree before implementation, and
 update the item's status and evidence when work is completed.
 
+When a user references an item by a `REV-*` identifier, search the files in
+`secret-plans/` for that identifier before planning or making changes.
+
 ## Agent planning documents
 
 Put new agent-authored reviews, investigations, and implementation plans in the
@@ -219,14 +222,15 @@ interpreting `packages/*/perf/check.js` benchmarks.
 Many files under `packages/*/src/*.ts` contain debug logging guarded by the
 compile-time `DEV` global, commonly in the form `DEV && console.log(...)`.
 
-- The Rollup-family `dev` script sets the `DEV` environment variable before it
-  runs `ops/scripts/esbuild.js`. Esbuild replaces the source-level `DEV` global
-  with `true`, keeps the logging for debugging, and leaves the development
-  bundle unminified. A production build replaces `DEV` with `false`; minification
-  then removes the unreachable logging branch and its `console.log` call. Keep
-  this build-time guard instead of replacing it with a runtime environment
-  check. An accompanying `declare let DEV: boolean` is an ambient TypeScript
-  declaration and does not create a runtime variable.
+- The Rollup-family `dev` script passes `--dev` to
+  `ops/scripts/esbuild.js`. Esbuild replaces the source-level `DEV` global with
+  `true`, keeps the logging for debugging, and leaves the development bundle
+  unminified. The production `build` script omits the flag, replaces `DEV` with
+  `false`, and ignores any ambient `DEV` environment variable. Minification then
+  removes the unreachable logging branch and its `console.log` call. Keep this
+  build-time guard instead of replacing it with a runtime environment check. An
+  accompanying `declare let DEV: boolean` is an ambient TypeScript declaration
+  and does not create a runtime variable.
 - These logs deliberately make heavy use of ANSI colour escapes. Preserve that
   colouring, including its reset sequences, when moving or editing an existing
   log unless the task asks for a different output format.

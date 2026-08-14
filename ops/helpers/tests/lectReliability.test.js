@@ -265,6 +265,16 @@ test("08 - one pass uses the normalised manifest in the README", async () => {
 
     equal(manifest.description, "Lowercase description", "08.01");
     match(readme, /<p align="center">Lowercase description<\/p>/, "08.02");
+    equal(
+      manifest.scripts.build,
+      "node ../../ops/scripts/esbuild.js && npm run dts",
+      "08.03",
+    );
+    equal(
+      manifest.scripts.dev,
+      "node ../../ops/scripts/esbuild.js --dev && npm run dts",
+      "08.04",
+    );
   } finally {
     removeTemporaryRoot(root);
   }

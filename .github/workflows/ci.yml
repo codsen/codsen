@@ -169,10 +169,10 @@ jobs:
           --unit-concurrency 4
 
   windows-smoke:
-    name: Packed CLIs and codsen-glob / Windows
+    name: Build scripts, packed CLIs and codsen-glob / Windows
     needs: validate
     runs-on: windows-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: Check out the exact revision
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -182,8 +182,15 @@ jobs:
 
       - name: Set up the pinned root toolchain
         uses: ./.github/actions/setup-node
-        with:
-          cache: "false"
+
+      - name: Install build dependencies
+        run: npm ci
+
+      - name: Smoke-test the generated production build script
+        run: npm run build --workspace=ast-contains-only-empty-space
+
+      - name: Smoke-test the generated development build script
+        run: npm run dev --workspace=ast-contains-only-empty-space
 
       - name: Download package compatibility artifacts
         uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0

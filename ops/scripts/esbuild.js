@@ -5,6 +5,15 @@ import esbuild from "esbuild";
 import camelCase from "lodash.camelcase";
 import { nodeTargetFromEngineRange } from "../helpers/nodeEngine.js";
 
+const arguments_ = process.argv.slice(2);
+if (
+  arguments_.length > 1 ||
+  (arguments_.length === 1 && arguments_[0] !== "--dev")
+) {
+  throw new TypeError("Usage: node ops/scripts/esbuild.js [--dev]");
+}
+
+const isDevelopment = arguments_[0] === "--dev";
 const require2 = createRequire(import.meta.url);
 const name2 = path.basename(path.resolve("./"));
 
@@ -45,8 +54,8 @@ if (
     platform: "node",
     format: "esm",
     bundle: true,
-    define: { DEV: String(!!process.env.DEV) },
-    minify: !process.env.DEV,
+    define: { DEV: String(isDevelopment) },
+    minify: !isDevelopment,
     sourcemap: false,
     target: [nodeTarget],
     outfile: path.join(path.resolve("./"), `dist/${name2}.esm.js`),
@@ -63,8 +72,8 @@ if (pkg.exports?.script) {
     format: "iife",
     globalName: camelCase(name2),
     bundle: true,
-    define: { DEV: String(!!process.env.DEV) },
-    minify: !process.env.DEV,
+    define: { DEV: String(isDevelopment) },
+    minify: !isDevelopment,
     sourcemap: false,
     target: ["chrome58"],
     outfile: path.join(path.resolve("./"), `dist/${name2}.umd.js`),
