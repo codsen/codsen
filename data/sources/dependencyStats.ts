@@ -213,6 +213,7 @@ export const dependencyStats: DependencyStats = {
   "devDependencies": {
     "@types/he": 2,
     "@types/lodash-es": 9,
+    "@types/picomatch": 1,
     "@types/semver-compare": 1,
     "ast-monkey-traverse": 2,
     "ast-monkey-util": 1,

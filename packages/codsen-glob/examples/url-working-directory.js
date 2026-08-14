@@ -7,5 +7,5 @@ import { glob } from "../dist/codsen-glob.esm.js";
 
 assert.deepEqual(
   await glob("src/*.ts", { cwd: pathToFileURL(process.cwd()) }),
-  ["src/main.ts", "src/picomatch.d.ts"],
+  ["src/main.ts"],
 );

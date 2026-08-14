@@ -4,4 +4,4 @@ type Range =
 
 type Ranges = Range[] | null;
 
-export { Range, Ranges };
+export type { Range, Ranges };

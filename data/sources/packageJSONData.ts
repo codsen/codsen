@@ -1936,6 +1936,9 @@ export const packageJSONData = {
     "dependencies": {
       "picomatch": "^4.0.5"
     },
+    "devDependencies": {
+      "@types/picomatch": "^4.0.3"
+    },
     "engines": {
       "node": ">=18.20.8"
     },

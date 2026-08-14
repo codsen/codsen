@@ -7,6 +7,14 @@ import {
 import { formatGeneratedContents } from "../../helpers/generatedFormatting.js";
 import { PACKAGE_KINDS } from "../../helpers/packageKinds.js";
 
+const STANDARD_INCLUDES = [
+  "src/**/*",
+  "src/**/*.json",
+  "package.json",
+  "../../ops/typedefs/common.ts",
+];
+const RETIRED_STANDARD_INCLUDES = new Set(["../../ops/typedefs/common.d.ts"]);
+
 // writes TS configs
 async function tsconfig({ mode, state }) {
   const filename = path.join(state.root, "tsconfig.json");
@@ -43,21 +51,16 @@ async function tsconfig({ mode, state }) {
   if (!Array.isArray(oldIncludes)) {
     oldIncludes = [];
   }
+  const preservedIncludes = oldIncludes.filter(
+    (include) => !RETIRED_STANDARD_INCLUDES.has(include),
+  );
 
   const newTsConfig = {
     extends: "../../tsconfig.base.json",
     compilerOptions: {
       outDir: "dist",
     },
-    include: [
-      ...new Set([
-        "src/**/*",
-        "src/**/*.json",
-        "package.json",
-        "../../ops/typedefs/common.d.ts",
-        ...oldIncludes,
-      ]),
-    ],
+    include: [...new Set([...STANDARD_INCLUDES, ...preservedIncludes])],
     exclude: [".git", "node_modules"],
   };
   try {

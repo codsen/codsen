@@ -374,4 +374,52 @@ test("12 - check ignores cleanup-only files but enforces obsolete files", async 
   }
 });
 
+test("13 - library tsconfig retires stale includes and is idempotent", async () => {
+  const root = createTemporaryRoot();
+  const filename = path.join(root, "tsconfig.json");
+  const state = {
+    packageKind: PACKAGE_KINDS.TYPESCRIPT_LIBRARY,
+    repositoryRoot,
+    root,
+  };
+  try {
+    writeFileSync(
+      filename,
+      `${JSON.stringify(
+        {
+          include: [
+            "src/**/*",
+            "src/**/*.json",
+            "package.json",
+            "../../ops/typedefs/common.d.ts",
+            "../../ops/typedefs/common.ts",
+            "fixtures/**/*.ts",
+          ],
+        },
+        null,
+        2,
+      )}\n`,
+    );
+
+    await tsconfig({ state });
+    const firstPass = readFileSync(filename, "utf8");
+    equal(
+      JSON.parse(firstPass).include,
+      [
+        "src/**/*",
+        "src/**/*.json",
+        "package.json",
+        "../../ops/typedefs/common.ts",
+        "fixtures/**/*.ts",
+      ],
+      "13.01",
+    );
+
+    await tsconfig({ state });
+    equal(readFileSync(filename, "utf8"), firstPass, "13.02");
+  } finally {
+    removeTemporaryRoot(root);
+  }
+});
+
 test.run();
