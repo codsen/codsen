@@ -139,7 +139,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-glob",
-    "size": 12743,
+    "size": 12769,
     "imports": []
   },
   {
@@ -618,6 +618,13 @@ export const interdeps = [
     "name": "regex-jinja-specific",
     "size": 414,
     "imports": []
+  },
+  {
+    "name": "remark-conventional-commit-changelog-timeline",
+    "size": 3263,
+    "imports": [
+      "object-delete-key"
+    ]
   },
   {
     "name": "remark-typography",

@@ -15,12 +15,11 @@ export const dependencyStats: DependencyStats = {
   "allExternalDeps": [
     "@inquirer/prompts",
     "@types/hast",
-    "@types/lodash-es",
     "@types/mdast",
-    "@types/semver-compare",
     "ansi-diff-stream",
     "ansi-regex",
     "currency.js",
+    "hast-util-raw",
     "he",
     "html-entities",
     "leven",
@@ -34,10 +33,12 @@ export const dependencyStats: DependencyStats = {
     "package-json",
     "picomatch",
     "semver-compare",
+    "semver-regex",
     "sort-keys",
     "sort-package-json",
     "type-detect",
     "unified",
+    "unist-builder",
     "unist-util-visit",
     "update-notifier",
     "write-file-atomic"
@@ -71,6 +72,7 @@ export const dependencyStats: DependencyStats = {
     "lerna-clean-changelogs",
     "object-all-values-equal-to",
     "object-boolean-combinations",
+    "object-delete-key",
     "object-fill-missing-keys",
     "object-flatten-all-arrays",
     "object-merge-advanced",
@@ -112,10 +114,8 @@ export const dependencyStats: DependencyStats = {
   ],
   "dependencies": {
     "@inquirer/prompts": 2,
-    "@types/hast": 1,
-    "@types/lodash-es": 9,
+    "@types/hast": 2,
     "@types/mdast": 1,
-    "@types/semver-compare": 1,
     "all-named-html-entities": 2,
     "ansi-diff-stream": 1,
     "ansi-regex": 1,
@@ -138,6 +138,7 @@ export const dependencyStats: DependencyStats = {
     "edit-package-json": 1,
     "email-all-chars-within-ascii": 1,
     "generate-atomic-css": 1,
+    "hast-util-raw": 1,
     "he": 3,
     "html-all-known-attributes": 1,
     "html-crush": 1,
@@ -151,6 +152,7 @@ export const dependencyStats: DependencyStats = {
     "lodash-es": 9,
     "object-all-values-equal-to": 1,
     "object-boolean-combinations": 1,
+    "object-delete-key": 1,
     "object-fill-missing-keys": 1,
     "object-flatten-all-arrays": 1,
     "object-merge-advanced": 2,
@@ -177,6 +179,7 @@ export const dependencyStats: DependencyStats = {
     "regex-is-jsp": 1,
     "regex-jinja-specific": 1,
     "semver-compare": 1,
+    "semver-regex": 1,
     "sort-keys": 1,
     "sort-package-json": 1,
     "str-indexes-of-plus": 1,
@@ -199,8 +202,9 @@ export const dependencyStats: DependencyStats = {
     "string-uglify": 1,
     "string-unfancy": 2,
     "type-detect": 2,
-    "unified": 2,
-    "unist-util-visit": 2,
+    "unified": 3,
+    "unist-builder": 1,
+    "unist-util-visit": 3,
     "update-notifier": 9,
     "util-array-object-or-both": 2,
     "util-nonempty": 1,
@@ -208,6 +212,8 @@ export const dependencyStats: DependencyStats = {
   },
   "devDependencies": {
     "@types/he": 2,
+    "@types/lodash-es": 9,
+    "@types/semver-compare": 1,
     "ast-monkey-traverse": 2,
     "ast-monkey-util": 1,
     "codsen-glob": 1,
@@ -215,6 +221,7 @@ export const dependencyStats: DependencyStats = {
     "deep-equal": 2,
     "is-html-attribute-closing": 1,
     "is-html-tag-opening": 1,
+    "mdast-util-to-hast": 1,
     "p-map": 5,
     "ranges-apply": 3,
     "ranges-invert": 1,
@@ -227,9 +234,6 @@ export const dependencyStats: DependencyStats = {
     "title": 1
   },
   "top10ExternalDeps": [
-    {
-      "@types/lodash-es": 9
-    },
     {
       "lodash-es": 9
     },
@@ -249,13 +253,16 @@ export const dependencyStats: DependencyStats = {
       "object-path": 3
     },
     {
+      "unified": 3
+    },
+    {
+      "unist-util-visit": 3
+    },
+    {
       "@inquirer/prompts": 2
     },
     {
-      "html-entities": 2
-    },
-    {
-      "leven": 2
+      "@types/hast": 2
     }
   ],
   "top10OwnDeps": [

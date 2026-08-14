@@ -53,6 +53,19 @@ IIFE build. A future TypeScript library can therefore expose a CLI without
 changing its build kind. `data/sources/programClassification.ts` is a separate
 website taxonomy and does not define workspace architecture.
 
+## Published type dependencies
+
+- Keep an `@types/*` package in a workspace's production dependencies when the
+  published `types/index.d.ts` still imports the corresponding public module.
+- When a type package is needed only to compile source and Rollup has removed
+  that reference from the self-contained declaration bundle, keep it in that
+  workspace's `devDependencies` instead.
+- Prove a move at the package boundary: pack the workspace, install it with
+  `--omit=dev --ignore-scripts --engine-strict` in a clean consumer, and compile
+  representative imports with strict TypeScript and `skipLibCheck: false`.
+  Confirm that build-only typings are absent and any public declaration typings
+  remain installed without the consumer adding them manually.
+
 ## Node runtime compatibility
 
 Supporting older Node.js release lines than competing packages is a Codsen USP.

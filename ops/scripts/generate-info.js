@@ -44,10 +44,6 @@ const packagesOutsideMonorepoObj = {
   emlint: {
     description: "Pluggable email template code linter",
   },
-  "remark-conventional-commit-changelog-timeline": {
-    description:
-      "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline",
-  },
   "array-of-arrays-into-ast": {
     description:
       "Turns an array of arrays of data into a nested tree of plain objects",
@@ -199,6 +195,11 @@ for (let packageName of packageNames) {
       readFileSync(path.join("packages", packageName, "package.json"), "utf8"),
     );
     let name = packageJsonContents.name;
+    if (packagesOutsideMonorepo.includes(name)) {
+      throw new Error(
+        `generate-info.js: current workspace ${name} is still listed as outside the monorepo`,
+      );
+    }
 
     packageJSONData[name] = packageJsonContents;
     if (packageJSONData[name].description) {

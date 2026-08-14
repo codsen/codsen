@@ -11,96 +11,6 @@ export const packageJSONData = {
   "emlint": {
     "description": "Pluggable email template code linter"
   },
-  "remark-conventional-commit-changelog-timeline": {
-    "name": "remark-conventional-commit-changelog-timeline",
-    "version": "3.2.3",
-    "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
-    "keywords": [
-      "unified",
-      "remark",
-      "remark-plugin",
-      "plugin",
-      "mdast",
-      "markdown",
-      "changelog",
-      "conventional",
-      "commits"
-    ],
-    "homepage": "https://codsen.com/os/remark-conventional-commit-changelog-timeline",
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/codsen/codsen.git",
-      "directory": "packages/remark-conventional-commit-changelog-timeline"
-    },
-    "license": "MIT",
-    "author": {
-      "name": "Roy Revelt",
-      "email": "roy@codsen.com",
-      "url": "https://codsen.com"
-    },
-    "type": "module",
-    "exports": {
-      "types": "./types/index.d.ts",
-      "default": "./dist/remark-conventional-commit-changelog-timeline.esm.js"
-    },
-    "types": "types/index.d.ts",
-    "scripts": {
-      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
-      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
-      "devtest": "c8 npm run unit && npm run examples && npm run lint",
-      "dts": "rollup -c && biome format --write types/index.d.ts",
-      "examples": "node '../../ops/scripts/run-examples.js'",
-      "lect": "node '../../ops/lect/lect.js'",
-      "lect:check": "node '../../ops/lect/lect.js' --check",
-      "lint": "biome lint --error-on-warnings . && npm run typecheck",
-      "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
-      "perf": "echo 'skip perf'",
-      "prep": "echo 'ready'",
-      "prettier": "biome format",
-      "prettier:format": "biome format --write .",
-      "pretest": "npm run lect:check && npm run build",
-      "test": "npm run devtest",
-      "typecheck": "tsc --noEmit --pretty false --project tsconfig.json",
-      "unit": "uvu test"
-    },
-    "c8": {
-      "all": true,
-      "check-coverage": true,
-      "exclude": [
-        "**/test/**/*.*"
-      ],
-      "include": [
-        "dist/*.esm.js"
-      ],
-      "lines": 100
-    },
-    "lect": {
-      "licence": {
-        "extras": [
-          ""
-        ]
-      },
-      "various": {}
-    },
-    "dependencies": {
-      "@types/hast": "^3.0.4",
-      "hast-util-raw": "^9.1.0",
-      "object-delete-key": "^4.1.3",
-      "semver-regex": "^4.0.5",
-      "unified": "^11.0.5",
-      "unist-builder": "^4.0.0",
-      "unist-util-visit": "^5.1.0"
-    },
-    "devDependencies": {
-      "mdast-util-to-hast": "^13.2.1"
-    },
-    "engines": {
-      "node": ">=18.20.8"
-    },
-    "publishConfig": {
-      "registry": "https://registry.npmjs.org/"
-    }
-  },
   "array-of-arrays-into-ast": {
     "description": "Turns an array of arrays of data into a nested tree of plain objects"
   },
@@ -2272,11 +2182,13 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.7.3",
       "csv-split-easy": "^7.1.3",
       "currency.js": "^2.0.4",
       "lodash-es": "^4.18.1"
+    },
+    "devDependencies": {
+      "@types/lodash-es": "^4.17.12"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -4619,8 +4531,6 @@ export const packageJSONData = {
       "various": {}
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.12",
-      "@types/semver-compare": "^1.0.3",
       "codsen-utils": "^1.7.3",
       "lodash-es": "^4.18.1",
       "object-fill-missing-keys": "^11.1.3",
@@ -4635,6 +4545,8 @@ export const packageJSONData = {
       "type-detect": "^4.1.0"
     },
     "devDependencies": {
+      "@types/lodash-es": "^4.17.12",
+      "@types/semver-compare": "^1.0.3",
       "p-map": "^7.0.4"
     },
     "engines": {
@@ -5075,9 +4987,11 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.7.3",
       "lodash-es": "^4.18.1"
+    },
+    "devDependencies": {
+      "@types/lodash-es": "^4.17.12"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -5425,9 +5339,11 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.7.3",
       "lodash-es": "^4.18.1"
+    },
+    "devDependencies": {
+      "@types/lodash-es": "^4.17.12"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -5596,12 +5512,12 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.7.3",
       "lodash-es": "^4.18.1",
       "util-nonempty": "^5.1.3"
     },
     "devDependencies": {
+      "@types/lodash-es": "^4.17.12",
       "deep-equal": "^2.2.3"
     },
     "engines": {
@@ -6597,12 +6513,12 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.7.3",
       "lodash-es": "^4.18.1",
       "ranges-merge": "^9.1.3"
     },
     "devDependencies": {
+      "@types/lodash-es": "^4.17.12",
       "ranges-apply": "^7.1.3"
     },
     "engines": {
@@ -7092,14 +7008,104 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@types/hast": "^3.0.4",
-      "@types/lodash-es": "^4.17.12",
       "lodash-es": "^4.18.1",
       "unified": "^11.0.5",
       "unist-util-visit": "^5.1.0"
     },
     "devDependencies": {
+      "@types/lodash-es": "^4.17.12",
       "rehype": "^13.0.2",
       "rehype-parse": "^9.0.1"
+    },
+    "engines": {
+      "node": ">=18.20.8"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.org/"
+    }
+  },
+  "remark-conventional-commit-changelog-timeline": {
+    "name": "remark-conventional-commit-changelog-timeline",
+    "version": "3.2.3",
+    "description": "Remark plugin to process Conventional Commits changelogs to be displayed in a timeline.",
+    "keywords": [
+      "unified",
+      "remark",
+      "remark-plugin",
+      "plugin",
+      "mdast",
+      "markdown",
+      "changelog",
+      "conventional",
+      "commits"
+    ],
+    "homepage": "https://codsen.com/os/remark-conventional-commit-changelog-timeline",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/codsen/codsen.git",
+      "directory": "packages/remark-conventional-commit-changelog-timeline"
+    },
+    "license": "MIT",
+    "author": {
+      "name": "Roy Revelt",
+      "email": "roy@codsen.com",
+      "url": "https://codsen.com"
+    },
+    "type": "module",
+    "exports": {
+      "types": "./types/index.d.ts",
+      "default": "./dist/remark-conventional-commit-changelog-timeline.esm.js"
+    },
+    "types": "types/index.d.ts",
+    "scripts": {
+      "build": "node '../../ops/scripts/esbuild.js' && npm run dts",
+      "dev": "DEV=true node '../../ops/scripts/esbuild.js' && npm run dts",
+      "devtest": "c8 npm run unit && npm run examples && npm run lint",
+      "dts": "rollup -c && biome format --write types/index.d.ts",
+      "examples": "node '../../ops/scripts/run-examples.js'",
+      "lect": "node '../../ops/lect/lect.js'",
+      "lect:check": "node '../../ops/lect/lect.js' --check",
+      "lint": "biome lint --error-on-warnings . && npm run typecheck",
+      "lint:fix": "biome lint --write --error-on-warnings . && npm run typecheck",
+      "perf": "echo 'skip perf'",
+      "prep": "echo 'ready'",
+      "prettier": "biome format",
+      "prettier:format": "biome format --write .",
+      "pretest": "npm run lect:check && npm run build",
+      "test": "npm run devtest",
+      "typecheck": "tsc --noEmit --pretty false --project tsconfig.json",
+      "unit": "uvu test"
+    },
+    "c8": {
+      "all": true,
+      "check-coverage": true,
+      "exclude": [
+        "**/test/**/*.*"
+      ],
+      "include": [
+        "dist/*.esm.js"
+      ],
+      "lines": 100
+    },
+    "lect": {
+      "licence": {
+        "extras": [
+          ""
+        ]
+      },
+      "various": {}
+    },
+    "dependencies": {
+      "@types/hast": "^3.0.4",
+      "hast-util-raw": "^9.1.0",
+      "object-delete-key": "^4.1.3",
+      "semver-regex": "^4.0.5",
+      "unified": "^11.0.5",
+      "unist-builder": "^4.0.0",
+      "unist-util-visit": "^5.1.0"
+    },
+    "devDependencies": {
+      "mdast-util-to-hast": "^13.2.1"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -8719,11 +8725,13 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.7.3",
       "lodash-es": "^4.18.1",
       "ranges-apply": "^7.1.3",
       "ranges-push": "^7.1.3"
+    },
+    "devDependencies": {
+      "@types/lodash-es": "^4.17.12"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -8993,7 +9001,6 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "@types/lodash-es": "^4.17.12",
       "codsen-utils": "^1.7.3",
       "html-entities": "^2.6.0",
       "lodash-es": "^4.18.1",
@@ -9002,6 +9009,7 @@ export const packageJSONData = {
       "string-left-right": "^6.1.3"
     },
     "devDependencies": {
+      "@types/lodash-es": "^4.17.12",
       "ast-monkey-traverse": "^4.1.3",
       "ranges-invert": "^6.1.3",
       "title": "^4.0.1"

@@ -95,7 +95,7 @@ Priorities have the following meanings:
 | REV-018 | P2 | Completed | Supply chain | Add dependency update and security checks |
 | REV-019 | P3 | Completed | Reproducibility | Pin the root build runtime |
 | REV-020 | P3 | Completed | Portability | Add targeted Windows smoke tests |
-| REV-021 | P3 | Pending | Dependencies | Audit production `@types/*` edges |
+| REV-021 | P3 | Completed | Dependencies | Audit production `@types/*` edges |
 
 ## P0 — Restore normal CI and release operation
 
@@ -1219,15 +1219,23 @@ Priorities have the following meanings:
 
 ### REV-021 — Audit production `@types/*` edges
 
-- Status: Pending
-- Evidence status: Candidate list only; each move requires consumer validation
+- Status: Completed
+- Completed: 2026-08-14
+- Evidence status: Reproduced, classified exhaustively, fixed, and validated in
+  a production-only packed consumer
 - Evidence:
-  - Some production manifests include declaration-only packages such as
-    `@types/lodash-es` even though Rollup bundles package declarations into one
-    `types/index.d.ts` file.
-  - Examples include `string-strip-html` and `json-comb-core`.
-  - Public declarations that directly import a type package, such as HAST types,
-    still require a consumer-visible dependency.
+  - The complete workspace inventory contained 13 production `@types/*` edges
+    across 11 manifests. Ten were build-only: nine `@types/lodash-es` edges and
+    one `@types/semver-compare` edge. None appeared in the packages' generated
+    declaration bundles.
+  - Three edges are consumer-visible and remain in production:
+    `@types/hast` in `rehype-responsive-tables` and
+    `remark-conventional-commit-changelog-timeline`, plus `@types/mdast` in
+    `remark-typography`. Their published declarations import `Root` from
+    `hast` or `mdast`.
+  - `@types/he` was already correctly development-only in `ranges-ent-decode`
+    and `string-unfancy`; no production type packages existed in peer or
+    optional dependencies.
 - Problem: Build-only type packages can unnecessarily enlarge production
   dependency closures, but moving a publicly referenced type package would
   break consumers.
@@ -1238,11 +1246,43 @@ Priorities have the following meanings:
   - Every moved package passes a clean packed-consumer typecheck.
   - Publicly referenced type packages remain consumer-visible.
   - Exact Node floor and lockfile checks still pass.
+- Resolution:
+  - `@types/lodash-es` moved from production to package-local development
+    dependencies in `csv-sort`, `json-comb-core`,
+    `object-all-values-equal-to`, `object-flatten-all-arrays`,
+    `object-merge-advanced`, `ranges-regex`, `rehype-responsive-tables`,
+    `string-remove-thousand-separators`, and `string-strip-html`.
+    `@types/semver-compare` moved with it in `json-comb-core`.
+  - The pinned npm 11.16.0 lock now classifies `@types/lodash-es`, its
+    `@types/lodash` dependency, and `@types/semver-compare` as development-only.
+    The three HAST/MDAST production edges remain unchanged.
+  - Regenerated package and dependency data mirrors the new boundary. During
+    that regeneration, the audit found
+    `remark-conventional-commit-changelog-timeline` duplicated in the legacy
+    outside-monorepo inventory. Removing the stale entry restored its omitted
+    dependency statistics and a generator guard now rejects future live/outside
+    overlap by manifest name.
 - Validation:
   - Build and pack each candidate package.
   - Install it into a clean engine-strict consumer.
   - Compile representative imports under strict TypeScript.
   - Run `npm run ci:verify:node-compatibility`.
+- Validation results:
+  - The exact root toolchain built and packed all 112 workspaces. A disposable
+    consumer installed the exact 36-workspace internal runtime closure with
+    `--omit=dev --ignore-scripts --engine-strict`; strict TypeScript 6 NodeNext
+    compilation with `skipLibCheck: false` loaded all 11 audited public
+    declaration surfaces successfully.
+  - The consumer contained `@types/hast` and `@types/mdast` without manual
+    additions, while `@types/lodash-es`, transitive `@types/lodash`, and
+    `@types/semver-compare` were absent. Independent negative controls produced
+    TS2307 when either retained HAST or MDAST typing was hidden.
+  - All nine changed packages' unit suites passed directly on exact Node
+    18.20.8 (1,003 tests total). `lect:check` passed for all 111 lect-managed
+    workspaces, package-kind inventory confirmed 112 total workspaces, and all
+    175 type-check tasks passed. Generated-data compilation and freshness
+    verification also passed. All affected packages retain the exact
+    `>=18.20.8` floor.
 
 ## Completed work
 
