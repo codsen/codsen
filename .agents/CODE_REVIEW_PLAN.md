@@ -90,7 +90,7 @@ Priorities have the following meanings:
 | REV-013 | P2 | Completed | Developer workflow | Separate mutation from verification |
 | REV-014 | P2 | Completed | Release tooling | Modularise and test release-critical code |
 | REV-015 | P2 | Completed | Error handling | Format arbitrary invalid inputs safely |
-| REV-016 | P2 | Pending | Performance | Repair misleading benchmark workloads |
+| REV-016 | P2 | Completed | Performance | Repair misleading benchmark workloads |
 | REV-017 | P2 | Pending | Release safety | Retire or guard direct-publish scripts |
 | REV-018 | P2 | Pending | Supply chain | Add dependency update and security checks |
 | REV-019 | P3 | Completed | Reproducibility | Pin the root build runtime |
@@ -890,11 +890,15 @@ Priorities have the following meanings:
 
 ### REV-016 — Repair misleading benchmark workloads
 
-- Status: Pending
-- Evidence status: Confirmed against tests and benchmark policy
+- Status: Completed
+- Completed: 2026-08-14
+- Evidence status: Confirmed against tests and benchmark policy, fixed, and
+  one-shot validated without recording new baselines
 - Evidence:
   - `packages/ast-compare/perf/check.js:9-16` benchmarks a fixture asserted to
     return `false` in `packages/ast-compare/test/arrays.js:505-519`.
+  - The adjacent `ast-loose-compare` workload duplicated its test `06.01`
+    undefined-property mismatch and also returned `false`.
   - `packages/string-process-comma-separated/perf/check.js:9-28` gathers
     callback output but returns nothing, which weakens one-shot verification.
   - `.agents/PERFORMANCE.md` requires representative success paths and exposed
@@ -903,6 +907,18 @@ Priorities have the following meanings:
   workload conceals the callback work that proves meaningful execution.
 - Recommended change: Audit the affected public contracts, choose meaningful
   deterministic workloads, and expose results without adding unrelated work.
+- Resolution:
+  - Corrected `ast-compare` to exercise the existing nested-array success case
+    and replaced `ast-loose-compare`'s copied failure with its documented nested
+    subset example. Both workloads now assert a `true` result once before
+    entering Benchmark.js.
+  - Made the comma-separated workload return its iteration-local chunks and
+    diagnostics, including the public callback's `fixable` flag. Its one-shot
+    assertion locks the exact two chunks and two repair diagnostics before the
+    timed loop.
+  - Reset the complete histories for exactly those three changed workloads to
+    `{}`. No benchmark was run after the reset, so the next intentional
+    performance run will establish comparable baselines.
 - Done when:
   - Each changed `testme()` has a one-shot assertion showing meaningful work.
   - Mutable state is local to each iteration.
@@ -911,6 +927,16 @@ Priorities have the following meanings:
   - Follow `.agents/PERFORMANCE.md`.
   - Run one-shot workload checks before the benchmark runner.
   - Run targeted perf checks only after resetting invalid histories.
+- Validation results:
+  - Direct public-API assertions passed for both comparator results and the
+    exact comma-separated callback payload.
+  - Targeted unit suites passed 120 `ast-compare`, 47 `ast-loose-compare`, and
+    23 `string-process-comma-separated` tests.
+  - Targeted Biome and syntax checks, history-content and changed-scope audits,
+    Markdown lint, and `git diff --check` passed. Per the performance policy,
+    no benchmark or history-writing command ran after the workload changes.
+  - Independent review rechecked the public contracts, timed boundary, state
+    locality, and adjacent benchmark inventory and found no remaining issue.
 
 ### REV-017 — Retire or guard direct-publish scripts
 
