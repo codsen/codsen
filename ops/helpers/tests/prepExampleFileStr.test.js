@@ -19,7 +19,7 @@ test(`02 - title, import`, () => {
 
 import { strict as assert } from "assert";\n\n`;
   let str = `import { strict as assert } from "assert";`;
-  equal(prepExampleFileStr(source), { str, title: `Quick Take` });
+  equal(prepExampleFileStr(source), { str, title: `Quick Take` }, "02.01");
 });
 
 test(`03 - title, import`, () => {
@@ -29,19 +29,19 @@ test(`03 - title, import`, () => {
 
 import { strict as assert } from "assert";\n\n`;
   let str = `import { strict as assert } from "assert";`;
-  equal(prepExampleFileStr(source), { str, title: `Quick Take` });
+  equal(prepExampleFileStr(source), { str, title: `Quick Take` }, "03.01");
 });
 
-test(`03 - biome configs, title, import`, () => {
+test(`04 - biome configs, title, import`, () => {
   let source = `\n\n// biome-ignore-all lint/correctness/noUnusedImports: example file
 // Quick Take
 
 import { strict as assert } from "assert";\n\n`;
   let str = `import { strict as assert } from "assert";`;
-  equal(prepExampleFileStr(source), { str, title: `Quick Take` });
+  equal(prepExampleFileStr(source), { str, title: `Quick Take` }, "04.01");
 });
 
-test(`04 - title, biome configs, import`, () => {
+test(`05 - title, biome configs, import`, () => {
   let source = `// Quick Take
 
 // biome-ignore lint/correctness/noUnusedImports: example file
@@ -50,10 +50,10 @@ test(`04 - title, biome configs, import`, () => {
 
 import { strict as assert } from "assert";\n\n`;
   let str = `import { strict as assert } from "assert";`;
-  equal(prepExampleFileStr(source), { str, title: `Quick Take` });
+  equal(prepExampleFileStr(source), { str, title: `Quick Take` }, "05.01");
 });
 
-test(`05 - single-line local import`, () => {
+test(`06 - single-line local import`, () => {
   let source = `// \`allNamedEntities\`
 
 import { strict as assert } from "assert";
@@ -70,13 +70,17 @@ import { allNamedEntities } from "all-named-html-entities";
 // total named entities count:
 assert.equal(Object.keys(allNamedEntities).length, 2125);`;
 
-  equal(prepExampleFileStr(source), {
-    str,
-    title: "`allNamedEntities`",
-  });
+  equal(
+    prepExampleFileStr(source),
+    {
+      str,
+      title: "`allNamedEntities`",
+    },
+    "06.01",
+  );
 });
 
-test(`06 - multi-line local import`, () => {
+test(`07 - multi-line local import`, () => {
   let source = `// \`allNamedEntities\`
 
 import { strict as assert } from "assert";
@@ -103,16 +107,20 @@ import {
 // total named entities count:
 assert.equal(Object.keys(allNamedEntities).length, 2125);`;
 
-  equal(prepExampleFileStr(source), {
-    str,
-    title: "`allNamedEntities`",
-  });
+  equal(
+    prepExampleFileStr(source),
+    {
+      str,
+      title: "`allNamedEntities`",
+    },
+    "07.01",
+  );
 });
 
-test(`07 - import, title, no biome configs`, () => {
+test(`08 - import, title, no biome configs`, () => {
   let source = `import { strict as assert } from "assert";\n\n// Quick Take\n\nconst z = 1;`;
   let str = `import { strict as assert } from "assert";\n\nconst z = 1;`;
-  equal(prepExampleFileStr(source), { str, title: "Quick Take" });
+  equal(prepExampleFileStr(source), { str, title: "Quick Take" }, "08.01");
 });
 
 test.run();
