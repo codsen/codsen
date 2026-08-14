@@ -11,12 +11,23 @@ implementation before describing it as compliant.
 
 ## Repository improvement backlog
 
-`.agents/CODE_REVIEW_PLAN.md` records audited architectural, CI, release,
-testing, and package-quality improvements. Read it when the task concerns this
-backlog or the user asks to continue the monorepo review plan. Treat it as a
-backlog, not as authority to expand the current task. Revalidate each finding
-against the current tree before implementation, and update the item's status
-and evidence when work is completed.
+When present, the local `secret-plans/20260814-codex.md` records audited
+architectural, CI, release, testing, and package-quality improvements. Read it
+when the task concerns this backlog or the user asks to continue the monorepo
+review plan. Treat it as a backlog, not as authority to expand the current task.
+Revalidate each finding against the current tree before implementation, and
+update the item's status and evidence when work is completed.
+
+## Agent planning documents
+
+Put new agent-authored reviews, investigations, and implementation plans in the
+repository-root `secret-plans/` directory instead of using
+`.agents/CODE_REVIEW_*.md`. Name Codex files `YYYYMMDD-codex.md`, for example
+`secret-plans/20260814-codex.md`, and use the corresponding lowercase agent
+name for other agents. When available, follow
+`secret-plans/20260814-claude.md` as the style reference: use ordinary Markdown
+with a descriptive title and natural sections. Do not use all-caps filenames;
+the directory and document title already identify the file's purpose.
 
 ## Monorepo package kinds
 
