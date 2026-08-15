@@ -67,36 +67,44 @@ function rRegex(
   // ---------------------------------------------------------------------------
 
   let tempArr;
+  let unicodeMode: boolean | null = null;
 
   let resRange: Range[] = [];
-  const fullUnicode = regExp.unicode || regExp.unicodeSets;
   if (
     replacement === null ||
     (typeof replacement === "string" && replacement.length)
   ) {
     for (tempArr = regExp.exec(str); tempArr; tempArr = regExp.exec(str)) {
+      const matchLength = tempArr[0].length;
       resRange.push([
-        regExp.lastIndex - tempArr[0].length,
+        regExp.lastIndex - matchLength,
         regExp.lastIndex,
         replacement,
       ]);
-      if (!tempArr[0].length) {
+      if (!matchLength) {
+        if (unicodeMode === null) {
+          unicodeMode = Boolean(regExp.unicode || regExp.unicodeSets);
+        }
         regExp.lastIndex = advanceStringIndex(
           str,
           regExp.lastIndex,
-          fullUnicode,
+          unicodeMode,
         );
       }
     }
   } else {
     for (tempArr = regExp.exec(str); tempArr; tempArr = regExp.exec(str)) {
-      if (tempArr[0].length) {
-        resRange.push([regExp.lastIndex - tempArr[0].length, regExp.lastIndex]);
+      const matchLength = tempArr[0].length;
+      if (matchLength) {
+        resRange.push([regExp.lastIndex - matchLength, regExp.lastIndex]);
       } else {
+        if (unicodeMode === null) {
+          unicodeMode = Boolean(regExp.unicode || regExp.unicodeSets);
+        }
         regExp.lastIndex = advanceStringIndex(
           str,
           regExp.lastIndex,
-          fullUnicode,
+          unicodeMode,
         );
       }
     }

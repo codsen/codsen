@@ -1,6 +1,6 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
 import { mkdirSync } from "node:fs";
-import { readFile, writeFile } from "node:fs/promises";
+import { chmod, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { execa, execaCommand } from "execa";
@@ -8,6 +8,7 @@ import pMap from "p-map";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+import { processFiles } from "../process-files.js";
 
 const require2 = createRequire(import.meta.url);
 const pack = require2("../package.json");
@@ -203,6 +204,167 @@ test("06 - default search is case-insensitive and excludes node_modules", async 
   match(result.stdout, /1 updated/, "06.01");
   equal(await readFile(upperCaseChangelog, "utf8"), changelog1Fixed, "06.02");
   equal(await readFile(dependencyChangelog, "utf8"), changelog1, "06.03");
+});
+
+test("07 - a read failure rejects with its processing stage", async () => {
+  let receivedError;
+  const logs = [];
+
+  try {
+    await processFiles(["unreadable/changelog.md"], {
+      logger: (message) => logs.push(message),
+      read: async () => {
+        throw new Error("injected read failure");
+      },
+    });
+  } catch (error) {
+    receivedError = error;
+  }
+
+  equal(receivedError?.name, "ProcessingError", "07.01");
+  equal(receivedError?.failures[0].stage, "read", "07.02");
+  equal(receivedError?.successful, [], "07.03");
+  equal(logs.join("\n").includes("\u001b[32m"), false, "07.04");
+});
+
+test("08 - a transform failure rejects with its processing stage", async () => {
+  let receivedError;
+
+  try {
+    await processFiles(["invalid/changelog.md"], {
+      logger: () => {},
+      read: async () => "source",
+      transform: () => {
+        throw new Error("injected transform failure");
+      },
+    });
+  } catch (error) {
+    receivedError = error;
+  }
+
+  equal(receivedError?.failures[0].stage, "transform", "08.01");
+  equal(
+    receivedError?.failures[0].error.message,
+    "injected transform failure",
+    "08.02",
+  );
+});
+
+test("09 - a write failure rejects with its processing stage", async () => {
+  let receivedError;
+
+  try {
+    await processFiles(["unwritable/changelog.md"], {
+      logger: () => {},
+      read: async () => "source",
+      transform: () => ({ res: "changed" }),
+      write: async () => {
+        throw new Error("injected write failure");
+      },
+    });
+  } catch (error) {
+    receivedError = error;
+  }
+
+  equal(receivedError?.failures[0].stage, "write", "09.01");
+  equal(
+    receivedError?.failures[0].error.message,
+    "injected write failure",
+    "09.02",
+  );
+});
+
+test("10 - a mixed programmatic batch finishes independent files", async () => {
+  let receivedError;
+  const writes = [];
+
+  try {
+    await processFiles(
+      ["good/changelog.md", "bad/changelog.md", "same/changelog.md"],
+      {
+        logger: () => {},
+        read: async (filePath) => filePath,
+        transform: (contents) => ({
+          res: contents.startsWith("same/") ? contents : `clean:${contents}`,
+        }),
+        write: async (filePath) => {
+          if (filePath.startsWith("bad/")) {
+            throw new Error("injected mixed failure");
+          }
+          writes.push(filePath);
+        },
+      },
+    );
+  } catch (error) {
+    receivedError = error;
+  }
+
+  equal(receivedError?.successful, ["good/changelog.md"], "10.01");
+  equal(receivedError?.skipped, ["same/changelog.md"], "10.02");
+  equal(receivedError?.failures[0].path, "bad/changelog.md", "10.03");
+  equal(writes, ["good/changelog.md"], "10.04");
+});
+
+test("11 - a discovered file that disappears remains a batch failure", async () => {
+  let receivedError;
+  const logs = [];
+  const writes = [];
+
+  try {
+    await processFiles(["good/changelog.md", "vanished/changelog.md"], {
+      logger: (message) => logs.push(message),
+      read: async (filePath) => {
+        if (filePath.startsWith("vanished/")) {
+          let error = new Error("injected post-discovery read failure");
+          error.code = "ENOENT";
+          throw error;
+        }
+        return changelog1;
+      },
+      transform: () => ({ res: changelog1Fixed }),
+      write: async (filePath) => writes.push(filePath),
+    });
+  } catch (error) {
+    receivedError = error;
+  }
+
+  equal(receivedError?.successful, ["good/changelog.md"], "11.01");
+  equal(receivedError?.failures[0].path, "vanished/changelog.md", "11.02");
+  equal(receivedError?.failures[0].stage, "read", "11.03");
+  equal(writes, ["good/changelog.md"], "11.04");
+  match(logs.join("\n"), /1 updated/, "11.05");
+  match(logs.join("\n"), /1 failed \(vanished\/changelog\.md\)/, "11.06");
+});
+
+test("12 - a mixed CLI batch updates valid files and exits nonzero", async () => {
+  let tempFolder = temporaryDirectory();
+  let writableFolder = path.join(tempFolder, "writable");
+  let unwritableFolder = path.join(tempFolder, "unwritable");
+  mkdirSync(writableFolder, { recursive: true });
+  mkdirSync(unwritableFolder, { recursive: true });
+  let writablePath = path.join(writableFolder, "changelog.md");
+  let unwritablePath = path.join(unwritableFolder, "changelog.md");
+  await Promise.all([
+    writeFile(writablePath, changelog1),
+    writeFile(unwritablePath, changelog1),
+  ]);
+  await chmod(unwritableFolder, 0o555);
+
+  let result;
+  try {
+    result = await execa(path.resolve("./cli.js"), ["**"], {
+      cwd: tempFolder,
+      reject: false,
+    });
+  } finally {
+    await chmod(unwritableFolder, 0o755);
+  }
+
+  equal(result.exitCode, 1, "12.01");
+  match(result.stdout, /1 updated/, "12.02");
+  match(result.stdout, /1 failed/, "12.03");
+  equal(await readFile(writablePath, "utf8"), changelog1Fixed, "12.04");
+  equal(await readFile(unwritablePath, "utf8"), changelog1, "12.05");
 });
 
 test.run();

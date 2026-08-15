@@ -2575,4 +2575,28 @@ test("66 - not finite date", () => {
   equal(m(o2, o1), o2, "66.02");
 });
 
+test("67 - one-sided cyclic input is cloned without losing its cycle", () => {
+  let input = { name: "root" };
+  input.self = input;
+
+  let result = m(input);
+
+  is.not(result, input, "67.01");
+  is(result.self, result, "67.02");
+  equal(result.name, "root", "67.03");
+});
+
+test("68 - merging one shared branch does not mutate its sibling", () => {
+  let shared = { value: 1 };
+  let input = { left: shared, right: shared };
+
+  let result = m(input, { left: { value: 2 } });
+
+  equal(result.left, { value: 2 }, "68.01");
+  equal(result.right, { value: 1 }, "68.02");
+  is.not(result.left, result.right, "68.03");
+  is(input.left, input.right, "68.04");
+  equal(input.left, { value: 1 }, "68.05");
+});
+
 test.run();

@@ -18,6 +18,8 @@ const FORBIDDEN_PACKED_PARTS = new Set([
   "node_modules",
   "tap",
   "perf",
+  "test",
+  "tests",
 ]);
 
 function fail(message) {

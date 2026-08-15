@@ -3,7 +3,7 @@ import { Buffer } from "node:buffer";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
-import { deepClone } from "../dist/codsen-utils.esm.js";
+import { deepClone, deepCloneWithMetadata } from "../dist/codsen-utils.esm.js";
 
 test("01 - nested objects and arrays get distinct references", () => {
   let input = {
@@ -85,7 +85,7 @@ test("07 - typed array views get independent backing buffers", () => {
   is.not(result.buffer, input.buffer, "07.04");
 
   result[0] = 9;
-  equal(input[0], 3, "07.03");
+  equal(input[0], 3, "07.05");
 });
 
 test("08 - DataView and ArrayBuffer get independent backing data", () => {
@@ -101,13 +101,13 @@ test("08 - DataView and ArrayBuffer get independent backing data", () => {
   is.not(result.buffer, input.buffer, "08.05");
 
   result.setUint8(0, 9);
-  equal(input.getUint8(0), 2, "08.04");
+  equal(input.getUint8(0), 2, "08.06");
 
   let clonedBuffer = deepClone(inputBuffer);
   equal(
     [...new Uint8Array(clonedBuffer)],
     [...new Uint8Array(inputBuffer)],
-    "08.05",
+    "08.07",
   );
   is.not(clonedBuffer, inputBuffer, "08.08");
 });
@@ -121,7 +121,7 @@ test("09 - buffers are cloned as buffers", () => {
   is.not(result, input, "09.03");
 
   result[0] = 9;
-  equal(input[0], 1, "09.03");
+  equal(input[0], 1, "09.04");
 });
 
 test("10 - changing a clone does not mutate its input", () => {
@@ -185,12 +185,62 @@ test("13 - sibling views retain their shared cloned backing buffer", () => {
   is.not(result.buffer, buffer, "13.01");
   is(result.first.buffer, result.buffer, "13.02");
   is(result.second.buffer, result.buffer, "13.03");
-  equal(result.first.byteOffset, 1, "13.01");
-  equal(result.second.byteOffset, 2, "13.02");
+  equal(result.first.byteOffset, 1, "13.04");
+  equal(result.second.byteOffset, 2, "13.05");
 
   result.first[1] = 99;
-  equal(result.second.getUint8(0), 99, "13.03");
-  equal(first[1], 2, "13.04");
+  equal(result.second.getUint8(0), 99, "13.06");
+  equal(first[1], 2, "13.07");
+});
+
+test("14 - large graphs retain shared references after memo promotion", () => {
+  let shared = { marker: true };
+  let input = {
+    nodes: Array.from({ length: 40 }, (_, id) => ({ id, shared })),
+    nullPrototype: Object.assign(Object.create(null), { shared }),
+    shared,
+  };
+  input.self = input;
+
+  let result = deepClone(input);
+
+  equal(result.nodes.length, 40, "14.01");
+  is.not(result.shared, shared, "14.02");
+  equal(
+    result.nodes.every((node) => node.shared === result.shared),
+    true,
+    "14.03",
+  );
+  is(result.self, result, "14.04");
+  is(result.nullPrototype.shared, result.shared, "14.05");
+});
+
+test("15 - class instances retain enumerable data as plain records", () => {
+  class Wrapper {
+    constructor() {
+      this.value = { marker: true };
+    }
+  }
+
+  let input = new Wrapper();
+  let result = deepClone(input);
+
+  equal(result, { value: { marker: true } }, "15.01");
+  is.not(result, input, "15.02");
+  is.not(result.value, input.value, "15.03");
+  is(Object.getPrototypeOf(result), Object.prototype, "15.04");
+});
+
+test("16 - clone metadata identifies reused source objects", () => {
+  let shared = { marker: true };
+  let tree = deepCloneWithMetadata({ left: { marker: true } });
+  let graph = deepCloneWithMetadata({ left: shared, right: shared });
+
+  equal(tree.hasRepeatedReferences, false, "16.01");
+  equal(tree.value, { left: { marker: true } }, "16.02");
+  equal(graph.hasRepeatedReferences, true, "16.03");
+  is.not(graph.value.left, shared, "16.04");
+  is(graph.value.left, graph.value.right, "16.05");
 });
 
 test.run();

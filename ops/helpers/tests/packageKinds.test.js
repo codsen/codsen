@@ -80,6 +80,8 @@ test("06 - projects kind-specific build profiles and preserves custom tasks", ()
         build: { dependsOn: ["^build"], outputs: ["dist/**", "types/**"] },
         "external#build": { outputs: ["custom/**"] },
         lint: { outputs: [] },
+        typecheck: { outputs: [] },
+        unit: { outputs: [] },
       },
     },
     registry(),
@@ -90,17 +92,18 @@ test("06 - projects kind-specific build profiles and preserves custom tasks", ()
     {
       dependsOn: ["^build"],
       inputs: [
-        "$TURBO_DEFAULT$",
-        "!dist/**",
-        "!types/**",
+        "package.json",
+        "rollup.config.js",
+        "src/**",
+        "tsconfig.json",
         "$TURBO_ROOT$/.node-version",
-        "$TURBO_ROOT$/.npmrc",
         "$TURBO_ROOT$/biome.json",
         "$TURBO_ROOT$/ops/biome/**",
         "$TURBO_ROOT$/ops/helpers/browserCompatibility.js",
         "$TURBO_ROOT$/ops/helpers/nodeEngine.js",
         "$TURBO_ROOT$/ops/scripts/esbuild.js",
-        "$TURBO_ROOT$/ops/typedefs/**",
+        "$TURBO_ROOT$/ops/typedefs/common.ts",
+        "$TURBO_ROOT$/package-lock.json",
         "$TURBO_ROOT$/package.json",
         "$TURBO_ROOT$/tsconfig.base.json",
       ],
@@ -112,7 +115,7 @@ test("06 - projects kind-specific build profiles and preserves custom tasks", ()
     result.tasks["cli#build"],
     {
       dependsOn: ["^build"],
-      inputs: ["$TURBO_DEFAULT$"],
+      inputs: ["package.json"],
       outputs: [],
     },
     "06.02",
@@ -122,9 +125,13 @@ test("06 - projects kind-specific build profiles and preserves custom tasks", ()
     {
       dependsOn: ["^build"],
       inputs: [
-        "$TURBO_DEFAULT$",
-        "!dist/**",
+        "index.ts",
+        "package.json",
+        "sources/**",
+        "tsconfig.json",
         "$TURBO_ROOT$/.node-version",
+        "$TURBO_ROOT$/package-lock.json",
+        "$TURBO_ROOT$/package.json",
         "$TURBO_ROOT$/tsconfig.base.json",
       ],
       outputs: ["dist/**"],
@@ -133,6 +140,78 @@ test("06 - projects kind-specific build profiles and preserves custom tasks", ()
   );
   equal(result.tasks["external#build"], { outputs: ["custom/**"] }, "06.04");
   equal(result.tasks.lint, { outputs: [] }, "06.05");
+  equal(
+    result.tasks.typecheck,
+    {
+      dependsOn: ["^build"],
+      inputs: [
+        "package.json",
+        "src/**",
+        "test-types/**",
+        "tsconfig.json",
+        "$TURBO_ROOT$/ops/typedefs/common.ts",
+        "$TURBO_ROOT$/package-lock.json",
+        "$TURBO_ROOT$/package.json",
+        "$TURBO_ROOT$/tsconfig.base.json",
+      ],
+      outputs: [],
+    },
+    "06.06",
+  );
+  equal(
+    result.tasks["@example/data#typecheck"],
+    {
+      dependsOn: ["^build"],
+      inputs: [
+        "index.ts",
+        "package.json",
+        "sources/**",
+        "tsconfig.json",
+        "$TURBO_ROOT$/package-lock.json",
+        "$TURBO_ROOT$/package.json",
+        "$TURBO_ROOT$/tsconfig.base.json",
+      ],
+      outputs: [],
+    },
+    "06.07",
+  );
+  equal(
+    result.tasks.unit,
+    {
+      dependsOn: ["build"],
+      inputs: [
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/common.js",
+        "$TURBO_ROOT$/ops/helpers/shallow-compare.js",
+      ],
+      outputs: [],
+    },
+    "06.08",
+  );
+  equal(
+    result.tasks["cli#unit"],
+    {
+      dependsOn: ["build"],
+      inputs: [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js",
+      ],
+      outputs: [],
+    },
+    "06.09",
+  );
+  equal(
+    result.tasks["@example/data#unit"],
+    {
+      dependsOn: ["build"],
+      inputs: ["package.json"],
+      outputs: [],
+    },
+    "06.10",
+  );
 });
 
 test("07 - removes former generated profiles after kind migrations", () => {
@@ -199,7 +278,7 @@ test("09 - returns isolated generated profiles", () => {
   const second = turboConfigForPackageKinds(source, registry());
 
   equal(second.tasks.build.outputs, ["dist/**", "types/**"], "09.01");
-  equal(second.tasks["cli#build"].inputs, ["$TURBO_DEFAULT$"], "09.02");
+  equal(second.tasks["cli#build"].inputs, ["package.json"], "09.02");
 });
 
 test("10 - rejects malformed Turbo configuration", () => {

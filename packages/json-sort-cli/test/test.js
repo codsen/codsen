@@ -8,6 +8,7 @@ import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 import { readJson, writeJson } from "../json-file.js";
+import { processFiles } from "../process-files.js";
 
 // import pack from "../package.json";
 import {
@@ -53,8 +54,8 @@ test("01 - default sort, called on the whole folder", async () => {
     )
     .then(() =>
       writeFile(
-        path.join(tempFolder, "test1/.somethinginyml"), // - dotfile in yml without yml extension
-        "foo:\n  bar",
+        path.join(tempFolder, "test1/.somethinginyml"), // - JSON dotfile without an extension
+        "{}",
       ),
     )
     .then(() => execa("./cli.js", [tempFolder]))
@@ -94,13 +95,11 @@ test("02 - sort, there's a broken JSON among files", async () => {
 
   // 2. asynchronously write all test files
 
-  let processedFileContents = pMap(
-    testFilePaths,
-    (oneOfTestFilePaths, testIndex) =>
-      writeJson(
-        path.join(tempFolder, oneOfTestFilePaths),
-        testFileContents[testIndex],
-      ),
+  await pMap(testFilePaths, (oneOfTestFilePaths, testIndex) =>
+    writeJson(
+      path.join(tempFolder, oneOfTestFilePaths),
+      testFileContents[testIndex],
+    ),
   )
     .then(() =>
       writeFile(
@@ -110,33 +109,26 @@ test("02 - sort, there's a broken JSON among files", async () => {
     )
     .then(() =>
       writeFile(
-        path.join(tempFolder, "test1/.somethinginyml"), // - dotfile in yml without yml extension
-        "foo:\n  bar",
+        path.join(tempFolder, "test1/.somethinginyml"), // - JSON dotfile without an extension
+        "{}",
       ),
     )
     .then(() =>
       writeFile(path.join(tempFolder, "test1/broken.json"), '{a": "b"}\n'),
-    )
-    .then(() => execa("./cli.js", [tempFolder]))
-    .then((receivedStdOut) => {
-      match(receivedStdOut.stdout, /broken\.json/);
-      return pMap(testFilePaths, (oneOfPaths) =>
-        readJson(path.join(tempFolder, oneOfPaths), "utf8"),
-      ).then((contentsArray) => {
-        return pMap(contentsArray, (oneOfArrays) =>
-          JSON.stringify(oneOfArrays, null, 2),
-        );
-      });
-    })
-    .then((received) =>
-      // execaCommand(`rm -rf ${path.join(path.resolve(), "../temp")}`)
-      execaCommand(`rm -rf ${tempFolder}`).then(() => received),
-    )
-    .catch((err) => {
-      throw new Error(err);
-    });
+    );
 
-  equal(await processedFileContents, sortedTestFileContents, "02.01");
+  let result = await execa("./cli.js", [tempFolder], { reject: false });
+  let processedFileContents = await pMap(testFilePaths, (oneOfPaths) =>
+    readJson(path.join(tempFolder, oneOfPaths), "utf8"),
+  ).then((contentsArray) =>
+    pMap(contentsArray, (oneOfArrays) => JSON.stringify(oneOfArrays, null, 2)),
+  );
+
+  equal(result.exitCode, 1, "02.01");
+  match(result.stdout, /broken\.json.*BAD/, "02.02");
+  match(result.stdout, /files sorted/, "02.03");
+  match(result.stdout, /1 file could not be sorted/, "02.04");
+  equal(processedFileContents, sortedTestFileContents, "02.05");
 });
 
 test("03 - fixes minified dotfiles in JSON format", async () => {
@@ -256,11 +248,149 @@ test("08 - reports a file which cannot be written", async () => {
   await chmod(pathOfTheTestfile, 0o444);
 
   try {
-    let result = await execa("./cli.js", [pathOfTheTestfile]);
-    match(result.stdout, /readonly\.json.*BAD/, "08.01");
+    let result = await execa("./cli.js", [pathOfTheTestfile], {
+      reject: false,
+    });
+    equal(result.exitCode, 1, "08.01");
+    match(result.stdout, /readonly\.json.*BAD/, "08.02");
+    match(result.stdout, /1 file could not be sorted/, "08.03");
   } finally {
     await chmod(pathOfTheTestfile, 0o644);
   }
+});
+
+test("09 - an injected read failure has a structured stage", async () => {
+  let receivedError;
+
+  try {
+    await processFiles(["unreadable.json"], {
+      read: async () => {
+        throw new Error("injected read failure");
+      },
+    });
+  } catch (error) {
+    receivedError = error;
+  }
+
+  equal(receivedError?.name, "ProcessingError", "09.01");
+  equal(receivedError?.failures[0].stage, "read", "09.02");
+  equal(receivedError?.successful, [], "09.03");
+});
+
+test("10 - an injected parse failure has a structured stage", async () => {
+  let receivedError;
+
+  try {
+    await processFiles(["malformed.json"], {
+      parse: () => {
+        throw new Error("injected parse failure");
+      },
+      read: async () => "{}",
+    });
+  } catch (error) {
+    receivedError = error;
+  }
+
+  equal(receivedError?.failures[0].stage, "parse", "10.01");
+  equal(
+    receivedError?.failures[0].error.message,
+    "injected parse failure",
+    "10.02",
+  );
+});
+
+test("11 - an injected transform failure has a structured stage", async () => {
+  let receivedError;
+
+  try {
+    await processFiles(["invalid.json"], {
+      read: async () => "{}",
+      transform: () => {
+        throw new Error("injected transform failure");
+      },
+    });
+  } catch (error) {
+    receivedError = error;
+  }
+
+  equal(receivedError?.failures[0].stage, "transform", "11.01");
+  equal(
+    receivedError?.failures[0].error.message,
+    "injected transform failure",
+    "11.02",
+  );
+});
+
+test("12 - an injected write failure has a structured stage", async () => {
+  let receivedError;
+
+  try {
+    await processFiles(["unwritable.json"], {
+      read: async () => "{}",
+      write: async () => {
+        throw new Error("injected write failure");
+      },
+    });
+  } catch (error) {
+    receivedError = error;
+  }
+
+  equal(receivedError?.failures[0].stage, "write", "12.01");
+  equal(
+    receivedError?.failures[0].error.message,
+    "injected write failure",
+    "12.02",
+  );
+});
+
+test("13 - malformed CI input never claims all files are sorted", async () => {
+  let tempFolder = temporaryDirectory();
+  let sortedPath = path.join(tempFolder, "sorted.json");
+  let unsortedPath = path.join(tempFolder, "unsorted.json");
+  let malformedPath = path.join(tempFolder, "malformed.json");
+  await Promise.all([
+    writeFile(sortedPath, '{\n  "a": 1,\n  "b": 2\n}\n'),
+    writeFile(unsortedPath, '{"b":2,"a":1}\n'),
+    writeFile(malformedPath, '{"a":}\n'),
+  ]);
+
+  let result = await execa(path.resolve("./cli.js"), ["--ci", "*.json"], {
+    cwd: tempFolder,
+    reject: false,
+  });
+
+  equal(result.exitCode, 1, "13.01");
+  match(result.stdout, /Unsorted files:/, "13.02");
+  match(result.stdout, /unsorted\.json/, "13.03");
+  match(result.stdout, /1 file could not be checked/, "13.04");
+  equal(
+    result.stdout.includes("All files were already sorted"),
+    false,
+    "13.05",
+  );
+  equal(await readFile(unsortedPath, "utf8"), '{"b":2,"a":1}\n', "13.06");
+});
+
+test("14 - CI failures still report already-sorted files", async () => {
+  let tempFolder = temporaryDirectory();
+  let sortedPath = path.join(tempFolder, "sorted.json");
+  let malformedPath = path.join(tempFolder, "malformed.json");
+  await Promise.all([
+    writeFile(sortedPath, '{\n  "a": 1,\n  "b": 2\n}\n'),
+    writeFile(malformedPath, '{"a":}\n'),
+  ]);
+
+  let result = await execa(path.resolve("./cli.js"), ["--ci", "*.json"], {
+    cwd: tempFolder,
+    reject: false,
+  });
+
+  equal(result.exitCode, 1, "14.01");
+  match(result.stdout, /1 file already sorted:/, "14.02");
+  match(result.stdout, /(?:^|\n)sorted\.json(?:\n|$)/, "14.03");
+  match(result.stdout, /1 file could not be checked/, "14.04");
+  not.match(result.stdout, /All files were already sorted/, "14.05");
+  equal(await readFile(malformedPath, "utf8"), '{"a":}\n', "14.06");
 });
 
 test.run();

@@ -3235,7 +3235,6 @@ export const packageJSONData = {
       "codsen-glob": "^1.0.0",
       "codsen-utils": "^1.7.3",
       "generate-atomic-css": "^3.1.3",
-      "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
       "write-file-atomic": "^6.0.0"
     },
@@ -4367,7 +4366,6 @@ export const packageJSONData = {
       "codsen-glob": "^1.0.0",
       "codsen-utils": "^1.7.3",
       "js-row-num": "^7.1.3",
-      "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
       "write-file-atomic": "^6.0.0"
     },
@@ -4629,8 +4627,6 @@ export const packageJSONData = {
       "ast-monkey-traverse": "^4.1.3",
       "codsen-glob": "^1.0.0",
       "codsen-utils": "^1.7.3",
-      "p-filter": "^4.1.0",
-      "p-reduce": "^3.0.0",
       "sort-package-json": "^2.15.1",
       "update-notifier": "^7.3.1"
     },
@@ -4901,7 +4897,6 @@ export const packageJSONData = {
       "codsen-glob": "^1.0.0",
       "codsen-utils": "^1.7.3",
       "lerna-clean-changelogs": "^5.1.3",
-      "p-filter": "^4.1.0",
       "p-reduce": "^3.0.0",
       "update-notifier": "^7.3.1",
       "write-file-atomic": "^6.0.0"

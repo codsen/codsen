@@ -6,6 +6,7 @@ import { execa } from "execa";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+import { processFiles } from "../process-files.js";
 
 const __filename2 = fileURLToPath(import.meta.url);
 const __dirname2 = path.dirname(__filename2);
@@ -241,6 +242,115 @@ GENERATE-ATOMIC-CSS-CONTENT-ENDS */`;
     originalFile,
     "04.03",
   );
+});
+
+test("05 - a read failure rejects with its processing stage", async () => {
+  let receivedError;
+  const logs = [];
+
+  try {
+    await processFiles(["unreadable.html"], {
+      logger: (message) => logs.push(message),
+      readFile: async () => {
+        throw new Error("injected read failure");
+      },
+    });
+  } catch (error) {
+    receivedError = error;
+  }
+
+  equal(receivedError?.name, "ProcessingError", "05.01");
+  equal(
+    receivedError?.failures.map(({ path: filePath, stage }) => ({
+      path: filePath,
+      stage,
+    })),
+    [{ path: "unreadable.html", stage: "read" }],
+    "05.02",
+  );
+  equal(receivedError?.successful, [], "05.03");
+  equal(logs.join("\n").includes("\u001b[32m"), false, "05.04");
+});
+
+test("06 - a transform failure rejects with its processing stage", async () => {
+  let receivedError;
+
+  try {
+    await processFiles(["invalid.html"], {
+      logger: () => {},
+      readFile: async () => "source",
+      transform: () => {
+        throw new Error("injected transform failure");
+      },
+    });
+  } catch (error) {
+    receivedError = error;
+  }
+
+  equal(receivedError?.failures[0].stage, "transform", "06.01");
+  equal(
+    receivedError?.failures[0].error.message,
+    "injected transform failure",
+    "06.02",
+  );
+});
+
+test("07 - a write failure rejects with its processing stage", async () => {
+  let receivedError;
+
+  try {
+    await processFiles(["unwritable.html"], {
+      logger: () => {},
+      readFile: async () => "source",
+      transform: (contents) => contents,
+      writeFile: async () => {
+        throw new Error("injected write failure");
+      },
+    });
+  } catch (error) {
+    receivedError = error;
+  }
+
+  equal(receivedError?.failures[0].stage, "write", "07.01");
+  equal(
+    receivedError?.failures[0].error.message,
+    "injected write failure",
+    "07.02",
+  );
+});
+
+test("08 - a mixed batch updates valid files and exits nonzero", async () => {
+  let tempFolder = temporaryDirectory();
+  let validPath = path.join(tempFolder, "valid.html");
+  let invalidPath = path.join(tempFolder, "invalid.html");
+  let validContents = `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
+.pt$$$ { padding-top: $$$px !important; } | 0 | 1 |
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS
+GENERATE-ATOMIC-CSS-CONTENT-ENDS */`;
+  let invalidContents = `GENERATE-ATOMIC-CSS-CONFIG-STARTS
+GENERATE-ATOMIC-CSS-CONTENT-STARTS
+GENERATE-ATOMIC-CSS-CONFIG-ENDS
+$$$`;
+
+  await Promise.all([
+    writeFile(validPath, validContents),
+    writeFile(invalidPath, invalidContents),
+  ]);
+  let result = await execa(path.join(__dirname2, "../cli.js"), ["*.html"], {
+    cwd: tempFolder,
+    reject: false,
+  });
+
+  equal(result.exitCode, 1, "08.01");
+  match(result.stdout, /1 file updated/, "08.02");
+  match(result.stdout, /1 file could not be updated/, "08.03");
+  match(
+    await readFile(validPath, "utf8"),
+    /\.pt1 { padding-top: 1px !important; }/,
+    "08.04",
+  );
+  equal(await readFile(invalidPath, "utf8"), invalidContents, "08.05");
 });
 
 //                                  *

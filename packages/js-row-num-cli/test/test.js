@@ -6,6 +6,7 @@ import { execa } from "execa";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
+import { processFiles } from "../process-files.js";
 
 const __filename2 = fileURLToPath(import.meta.url);
 const __dirname2 = path.dirname(__filename2);
@@ -394,6 +395,97 @@ test("09 - a directory operand expands recursively", async () => {
     originalFile,
     "09.03",
   );
+});
+
+test("10 - a read failure rejects with its processing stage", async () => {
+  let receivedError;
+  const logs = [];
+
+  try {
+    await processFiles(["unreadable.js"], {
+      logger: (message) => logs.push(message),
+      readFile: async () => {
+        throw new Error("injected read failure");
+      },
+    });
+  } catch (error) {
+    receivedError = error;
+  }
+
+  equal(receivedError?.name, "ProcessingError", "10.01");
+  equal(receivedError?.failures[0].stage, "read", "10.02");
+  equal(receivedError?.successful, [], "10.03");
+  equal(logs.join("\n").includes("\u001b[32m"), false, "10.04");
+});
+
+test("11 - a transform failure rejects with its processing stage", async () => {
+  let receivedError;
+
+  try {
+    await processFiles(["invalid.js"], {
+      logger: () => {},
+      readFile: async () => "source",
+      transform: () => {
+        throw new Error("injected transform failure");
+      },
+    });
+  } catch (error) {
+    receivedError = error;
+  }
+
+  equal(receivedError?.failures[0].stage, "transform", "11.01");
+  equal(
+    receivedError?.failures[0].error.message,
+    "injected transform failure",
+    "11.02",
+  );
+});
+
+test("12 - a write failure rejects with its processing stage", async () => {
+  let receivedError;
+
+  try {
+    await processFiles(["unwritable.js"], {
+      logger: () => {},
+      readFile: async () => "source",
+      transform: (contents) => contents,
+      writeFile: async () => {
+        throw new Error("injected write failure");
+      },
+    });
+  } catch (error) {
+    receivedError = error;
+  }
+
+  equal(receivedError?.failures[0].stage, "write", "12.01");
+  equal(
+    receivedError?.failures[0].error.message,
+    "injected write failure",
+    "12.02",
+  );
+});
+
+test("13 - a mixed batch updates valid files and exits nonzero", async () => {
+  let tempFolder = temporaryDirectory();
+  let validPath = path.join(tempFolder, "plain.js");
+  let invalidPath = path.join(tempFolder, "numbered.js");
+  let invalidContents = `${letterC}onsole.log('123 zzz');`;
+
+  await Promise.all([
+    fs.writeFile(validPath, "const value = 1;"),
+    fs.writeFile(invalidPath, invalidContents),
+  ]);
+  let result = await execa(
+    path.join(__dirname2, "../cli.js"),
+    ["--pad", "1000000000000", "*.js"],
+    { cwd: tempFolder, reject: false },
+  );
+
+  equal(result.exitCode, 1, "13.01");
+  match(result.stdout, /1 file updated/, "13.02");
+  match(result.stdout, /1 file could not be updated/, "13.03");
+  equal(await fs.readFile(validPath, "utf8"), "const value = 1;", "13.04");
+  equal(await fs.readFile(invalidPath, "utf8"), invalidContents, "13.05");
 });
 
 //                                  *

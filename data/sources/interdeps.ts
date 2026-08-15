@@ -144,7 +144,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-utils",
-    "size": 17071,
+    "size": 17824,
     "imports": []
   },
   {
@@ -198,7 +198,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "size": 24294,
+    "size": 24281,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -280,7 +280,7 @@ export const interdeps = [
   },
   {
     "name": "generate-atomic-css-cli",
-    "size": 3849,
+    "size": 1899,
     "imports": [
       "codsen-glob",
       "codsen-utils",
@@ -372,7 +372,7 @@ export const interdeps = [
   },
   {
     "name": "js-row-num-cli",
-    "size": 4662,
+    "size": 2717,
     "imports": [
       "arrayiffy-if-string",
       "codsen-glob",
@@ -403,7 +403,7 @@ export const interdeps = [
   },
   {
     "name": "json-sort-cli",
-    "size": 14134,
+    "size": 9927,
     "imports": [
       "ast-monkey-traverse",
       "codsen-glob",
@@ -434,7 +434,7 @@ export const interdeps = [
   },
   {
     "name": "lerna-clean-changelogs-cli",
-    "size": 7841,
+    "size": 3544,
     "imports": [
       "codsen-glob",
       "codsen-utils",
@@ -493,7 +493,7 @@ export const interdeps = [
   },
   {
     "name": "object-merge-advanced",
-    "size": 7245,
+    "size": 7484,
     "imports": [
       "codsen-utils",
       "util-nonempty"
@@ -586,7 +586,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-regex",
-    "size": 1797,
+    "size": 1863,
     "imports": [
       "codsen-utils",
       "ranges-merge"
@@ -809,7 +809,7 @@ export const interdeps = [
   },
   {
     "name": "string-uglify",
-    "size": 2831,
+    "size": 2978,
     "imports": []
   },
   {
@@ -837,7 +837,7 @@ export const interdeps = [
   },
   {
     "name": "update-versions",
-    "size": 15755,
+    "size": 27062,
     "imports": [
       "codsen-glob",
       "codsen-utils",

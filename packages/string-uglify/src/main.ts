@@ -105,17 +105,30 @@ function uglifyArr(arr: string[]): string[] {
 
   // final array we'll assemble and eventually return
   let res: string[] = [];
-  const generatedNames = new Set<string>();
-  const generatedByOriginal = new Map<string, string>();
 
   // quick end
   if (!Array.isArray(arr) || !arr.length) {
     return arr;
   }
 
+  // Linear scans win on the small selector lists most callers pass, while
+  // indexed lookups avoid quadratic work on larger CSS inventories.
+  const generatedNames = arr.length >= 48 ? new Set<string>() : undefined;
+  const generatedByOriginal = generatedNames
+    ? new Map<string, string>()
+    : undefined;
+
   for (let id = 0, len = arr.length; id < len; id++) {
     // insurance against duplicate reference array values
-    const previousResult = generatedByOriginal.get(arr[id]);
+    let previousResult: string | undefined;
+    if (generatedByOriginal) {
+      previousResult = generatedByOriginal.get(arr[id]);
+    } else {
+      const firstIndex = arr.indexOf(arr[id]);
+      if (firstIndex < id) {
+        previousResult = res[firstIndex];
+      }
+    }
     if (previousResult !== undefined) {
       // push again the calculated value from "res":
       res.push(previousResult);
@@ -133,10 +146,12 @@ function uglifyArr(arr: string[]): string[] {
       (!`.#`.includes(arr[id][0]) && arr[id].length < 3)
     ) {
       let val = arr[id];
-      if (!generatedNames.has(val)) {
+      if (!(generatedNames ? generatedNames.has(val) : res.includes(val))) {
         res.push(val);
-        generatedNames.add(val);
-        generatedByOriginal.set(arr[id], val);
+        if (generatedNames && generatedByOriginal) {
+          generatedNames.add(val);
+          generatedByOriginal.set(arr[id], val);
+        }
 
         // the first candidates for single-character value are 2-char long classes:
         if (
@@ -170,7 +185,9 @@ function uglifyArr(arr: string[]): string[] {
       lettersAndNumbers[codePointSum % lettersAndNumbers.length]
     }`;
 
-    if (generatedNames.has(generated)) {
+    if (
+      generatedNames ? generatedNames.has(generated) : res.includes(generated)
+    ) {
       // add more characters:
       let soFarWeGot = generated;
       let counter = 0;
@@ -201,7 +218,11 @@ function uglifyArr(arr: string[]): string[] {
       //   )}`
       // );
 
-      while (generatedNames.has(soFarWeGot)) {
+      while (
+        generatedNames
+          ? generatedNames.has(soFarWeGot)
+          : res.includes(soFarWeGot)
+      ) {
         counter += 1;
         soFarWeGot +=
           lettersAndNumbers[
@@ -213,8 +234,10 @@ function uglifyArr(arr: string[]): string[] {
     }
 
     res.push(generated);
-    generatedNames.add(generated);
-    generatedByOriginal.set(arr[id], generated);
+    if (generatedNames && generatedByOriginal) {
+      generatedNames.add(generated);
+      generatedByOriginal.set(arr[id], generated);
+    }
     if (
       generated.startsWith(".") &&
       generated.length === 2 &&
@@ -239,7 +262,7 @@ function uglifyArr(arr: string[]): string[] {
 
   DEV &&
     console.log(
-      `242 ${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
+      `265 ${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
         singleClasses,
         null,
         4,
@@ -258,10 +281,10 @@ function uglifyArr(arr: string[]): string[] {
   // matches current name's first letter (considering it might be id, class or
   // just name), shorten that value up to that single letter.
   for (let i = 0, len = res.length; i < len; i++) {
-    DEV && console.log("261 ----------------------------------------");
+    DEV && console.log("284 ----------------------------------------");
     DEV &&
       console.log(
-        `264 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`,
+        `287 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`,
       );
     if (res[i].startsWith(".")) {
       // if particular class name starts with a letter which hasn't been taken
@@ -269,7 +292,7 @@ function uglifyArr(arr: string[]): string[] {
         singleClasses[res[i].slice(1, 2)] = res[i];
         DEV &&
           console.log(
-            `272 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
+            `295 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
               i
             ].slice(
               0,
@@ -284,7 +307,7 @@ function uglifyArr(arr: string[]): string[] {
       } else if (singleClasses[res[i].slice(1, 2)] === res[i]) {
         DEV &&
           console.log(
-            `287 res[i] = ${res[i]} will also be shortened to ${res[i].slice(
+            `310 res[i] = ${res[i]} will also be shortened to ${res[i].slice(
               0,
               2,
             )}`,
@@ -298,7 +321,7 @@ function uglifyArr(arr: string[]): string[] {
         singleIds[res[i].slice(1, 2)] = res[i];
         DEV &&
           console.log(
-            `301 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
+            `324 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
               i
             ].slice(0, 2)}\u001b[${39}m`};`,
           );
@@ -313,7 +336,7 @@ function uglifyArr(arr: string[]): string[] {
         singleNameOnly[res[i].slice(0, 1)] = res[i];
         DEV &&
           console.log(
-            `316 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
+            `339 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
               i
             ].slice(0, 1)}\u001b[${39}m`}`,
           );

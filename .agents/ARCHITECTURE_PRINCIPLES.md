@@ -49,14 +49,16 @@ gears are not.
 
 When the build infrastructure is sound, producing another target is a build
 configuration concern rather than a parallel source-maintenance burden. The
-main JavaScript distribution families for this repository are ESM, CommonJS
-(CJS), immediately invoked function expression (IIFE), and Universal Module
-Definition (UMD). CJS and UMD are defunct for our purposes.
+supported distributions are ESM for module consumers and a bundled script for
+direct browser use. A CDN-hosted browser script can be added to almost any HTML
+page without a package manager or module loader, so this distribution remains
+a product feature. Do not add CommonJS (CJS) output.
 
-Ship the maximum useful set: ESM for module consumers and a bundled IIFE for
-direct browser use. The IIFE has continuing value because a CDN-hosted script
-can be added to almost any HTML page without a package manager or module
-loader. Do not add CJS or UMD output.
+The repository and its users have historically called the browser distribution
+Universal Module Definition (UMD), and its public filename is `*.umd.js`. The
+current bundler emits an immediately invoked function expression (IIFE), not a
+formal UMD wrapper. When product discussion says “UMD,” interpret it as this
+supported direct-browser script unless the wrapper format itself is relevant.
 
 The current build writes its IIFE to a historically named `*.umd.js` path. This
 filename predates the repository's ES Modules era and now forms part of the CDN
@@ -114,6 +116,94 @@ When improving such code:
 - make repeated operations deterministic and, where appropriate, idempotent;
 - test pure cores directly and cover effectful boundaries with focused
   integration tests.
+
+### Preserve progress and completion observability
+
+Purity applies to the transformation semantics, not to the absence of useful
+observability. Nontrivial libraries can receive large inputs or perform enough
+work that a browser page appears unresponsive. A user who submits a multi-
+megabyte HTML document needs progress feedback while the library works and
+completion statistics when it finishes. Without that feedback, a successful
+operation can look like a stalled application.
+
+Treat progress reporting and completion statistics (including elapsed-time
+“bean-counting”) as an intentional exception to fully deterministic return
+objects. Preserve and invest in both capabilities for every nontrivial library:
+
+- Provide progress callbacks for work that can take perceptible time. Preserve
+  range-composition options such as `reportProgressFuncFrom` and
+  `reportProgressFuncTo` when a library already supports them.
+- Return useful completion statistics. When a result exposes
+  `log.timeTakenInMilliseconds`, keep it as a best-effort elapsed duration for
+  user-facing feedback.
+- Do not treat elapsed time as a precision, performance-benchmark, or stable
+  equality contract. Clock resolution, scheduling, runtime, and hardware can
+  change the value.
+- Keep observational values out of transformation decisions. The transformed
+  result, ranges, deterministic counters, and other semantic data must not
+  change because of the clock or a progress callback.
+- Test deterministic output independently from observational fields. Test
+  progress and elapsed-time plumbing with controlled callbacks or clocks
+  instead of removing those fields to make whole-object equality deterministic.
+- Preserve the same observability API in ESM and the direct-browser script,
+  subject to the browser runtime contract.
+
+This exception does not permit unrelated filesystem, process, network, or
+global-state effects in a library core. It permits the narrow effects needed to
+tell a caller that substantial work is advancing and how long it took.
+
+### Treat codsen.com as a first-party API consumer
+
+The Codsen website is a downstream application for this monorepo, not only a
+place that copies package prose. Its package pages and playgrounds turn parts of
+the published API into documentation, controls, progress indicators, result
+summaries, and diagnostic views. A package change can therefore break a
+first-party user interface even when ordinary imports and unit tests still
+work.
+
+The integration has two related surfaces:
+
+- Package pages consume generated `@codsen/data` exports, including manifests,
+  declarations, defaults, and examples. Their explanatory MDX can also name
+  options and result fields directly.
+- Playgrounds compile against installed ESM types and defaults, while
+  CPU-bound transformations run in Web Workers that load the bundled
+  direct-browser `*.umd.js` files from CDN paths. The current worker URLs do not
+  contain a package version. The website's build-time package and its
+  worker-time browser artifact are therefore separate resolution paths that
+  must remain compatible.
+
+Treat the following as website-facing integration contracts when a package
+exposes them:
+
+- the browser artifact path, global name, and named exports;
+- the main function's inputs, option keys, default values, and result shape;
+- progress callbacks whose numeric updates can cross a worker boundary and
+  drive a progress indicator;
+- completion statistics that explain elapsed time, input/output size, or work
+  performed;
+- input-sensitive applicability metadata that tells a GUI which options could
+  affect the supplied input, independently of whether those options are
+  currently enabled;
+- diagnostic or customization callbacks whose reports can be displayed as an
+  execution trace; and
+- plain, structured-cloneable and JSON-representable results suitable for
+  `postMessage()` and a raw-output panel.
+
+This list identifies categories, not a promise that every present field name is
+immutable. Before removing, renaming, or changing the meaning, type, units, or
+serialization of one of these surfaces, inspect the current website consumer.
+Prefer an additive transition or compatibility period. Coordinate an
+intentional breaking change with the website and its worker before publishing
+the package; a later website deployment is not sufficient protection when an
+unversioned CDN URL can resolve the new browser artifact first.
+
+For nontrivial configurable transformations, design observability for both API
+users and GUI consumers. Progress values need useful monotonic movement, not a
+fixed callback count or timing guarantee. Completion statistics are
+best-effort. Applicability reports answer a different question from the chosen
+settings: whether changing a setting could make a difference for this input.
+Keep all three independent from the transformed result.
 
 ## Treat the JavaScript/TypeScript seam as a core risk
 

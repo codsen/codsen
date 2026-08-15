@@ -29,6 +29,7 @@ declare const defaults: Opts;
 interface Res {
   res: string;
   ranges: Ranges;
+  /** Best-effort elapsed time for user-facing completion feedback. */
   log: {
     timeTakenInMilliseconds: number;
   };

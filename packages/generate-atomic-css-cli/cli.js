@@ -2,20 +2,15 @@
 
 /* eslint no-console:0 */
 
-import { promises as fs } from "node:fs";
 import { createRequire } from "node:module";
-import { promisify } from "node:util";
 import { glob } from "codsen-glob";
 import { codsenCLI } from "codsen-utils";
-import { genAtomic, version } from "generate-atomic-css";
-import pReduce from "p-reduce";
+import { version } from "generate-atomic-css";
 import updateNotifier from "update-notifier";
-import writeFileAtomic from "write-file-atomic";
+import { ProcessingError, processFiles } from "./process-files.js";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
-const write = promisify(writeFileAtomic);
-
 const { log } = console;
 const messagePrefix = `\u001b[${90}m${"✨ generate-atomic-css-cli: "}\u001b[${39}m`;
 
@@ -41,76 +36,12 @@ const cli = codsenCLI(
 );
 updateNotifier({ pkg }).notify();
 
-function readUpdateAndWriteOverFile(oneOfPaths) {
-  return fs
-    .readFile(oneOfPaths, "utf8")
-    .then((filesContent) => {
-      return write(oneOfPaths, genAtomic(filesContent).result).then(() => {
-        log(
-          `${messagePrefix}${oneOfPaths} - ${`\u001b[${32}m${"OK"}\u001b[${39}m`}`,
-        );
-        return true;
-      });
-    })
-    .catch((err) => {
-      console.log(
-        `${oneOfPaths} - ${`\u001b[${31}m${"BAD"}\u001b[${39}m`} - ${err}`,
-      );
-    });
-}
-
-function processPaths(incomingPaths) {
+async function processPaths(incomingPaths) {
   return glob([...incomingPaths, "!**/node_modules/**"])
     .then((res) =>
       res.filter((oneOfPaths) => !oneOfPaths.includes("node_modules")),
     )
-    .then((received) =>
-      pReduce(
-        received,
-        (counter, currentPath) =>
-          readUpdateAndWriteOverFile(currentPath)
-            .then((res) =>
-              res
-                ? {
-                    good: counter.good.concat([currentPath]),
-                    bad: counter.bad,
-                  }
-                : {
-                    good: counter.good,
-                    bad: counter.bad.concat([currentPath]),
-                  },
-            )
-            .catch((err) => {
-              log(
-                `${messagePrefix}${`\u001b[${31}m${"Could not write out the file:"}\u001b[${39}m`}\n${err}`,
-              );
-              return counter;
-            }),
-        { good: [], bad: [] },
-      ).then((counter) => {
-        let message;
-        if (!counter.bad?.length && !counter.good?.length) {
-          message = "Nothing to process.";
-        } else {
-          message = `${`\u001b[${32}m${`${
-            counter.bad?.length === 0 && counter.good.length !== 1 ? "All " : ""
-          }${counter.good.length} file${
-            counter.good.length === 1 ? "" : "s"
-          } updated`}\u001b[${39}m`}${
-            counter?.bad.length
-              ? `\n${messagePrefix}${`\u001b[${31}m${`${
-                  counter.bad.length
-                } file${
-                  counter.bad.length === 1 ? "" : "s"
-                } could not be updated`}\u001b[${39}m`} ${`\u001b[${90}m - ${counter.bad.join(
-                  " - ",
-                )}\u001b[${39}m`}`
-              : ""
-          }`;
-        }
-        log(`\n${messagePrefix}${message}`);
-      }),
-    );
+    .then((received) => processFiles(received, { messagePrefix }));
 }
 
 // Step #0. take care of the short -v and -h flags, which codsenCLI leaves
@@ -129,5 +60,12 @@ if (cli.flags.v) {
 // -----------------------------------------------------------------------------
 
 if (cli.input.length) {
-  processPaths(cli.input);
+  processPaths(cli.input).catch((error) => {
+    if (!(error instanceof ProcessingError)) {
+      log(
+        `${messagePrefix}${`\u001b[${31}mCould not process the requested files\u001b[${39}m`} - ${error}`,
+      );
+    }
+    process.exitCode = 1;
+  });
 }

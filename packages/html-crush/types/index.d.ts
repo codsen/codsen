@@ -18,6 +18,8 @@ interface Opts {
 }
 declare const defaults: Opts;
 interface Res {
+  /** Best-effort completion statistics for user-facing feedback.
+   * Observational fields do not affect the transformation. */
   log: {
     timeTakenInMilliseconds: number;
     originalLength: number;

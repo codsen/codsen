@@ -43,6 +43,12 @@ type EolChar = "\n" | "\r" | "\r\n";
 type EolSetting = "lf" | "crlf" | "cr";
 /** Clone nested data without retaining object or collection references. */
 declare function deepClone<T>(value: T): T;
+interface DeepCloneResult<T> {
+  hasRepeatedReferences: boolean;
+  value: T;
+}
+/** Clone nested data and report whether its source graph reused an object. */
+declare function deepCloneWithMetadata<T>(value: T): DeepCloneResult<T>;
 declare function isNumberChar(value: unknown): boolean;
 declare function isCurrencyChar(value: unknown): boolean;
 declare function isCurrencySymbol(value: unknown): boolean;
@@ -234,6 +240,7 @@ export {
   codsenCLI,
   compareFn,
   deepClone,
+  deepCloneWithMetadata,
   detectEol,
   doublePrime,
   ellipsis,
@@ -289,6 +296,7 @@ export type {
   CliOptions,
   CliPkg,
   CliResult,
+  DeepCloneResult,
   EolChar,
   EolSetting,
   JSONArray,

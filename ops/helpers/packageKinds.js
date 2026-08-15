@@ -11,17 +11,18 @@ const PACKAGE_KIND_VALUES = Object.freeze(Object.values(PACKAGE_KINDS));
 const TYPESCRIPT_LIBRARY_BUILD_PROFILE = Object.freeze({
   dependsOn: ["^build"],
   inputs: [
-    "$TURBO_DEFAULT$",
-    "!dist/**",
-    "!types/**",
+    "package.json",
+    "rollup.config.js",
+    "src/**",
+    "tsconfig.json",
     "$TURBO_ROOT$/.node-version",
-    "$TURBO_ROOT$/.npmrc",
     "$TURBO_ROOT$/biome.json",
     "$TURBO_ROOT$/ops/biome/**",
     "$TURBO_ROOT$/ops/helpers/browserCompatibility.js",
     "$TURBO_ROOT$/ops/helpers/nodeEngine.js",
     "$TURBO_ROOT$/ops/scripts/esbuild.js",
-    "$TURBO_ROOT$/ops/typedefs/**",
+    "$TURBO_ROOT$/ops/typedefs/common.ts",
+    "$TURBO_ROOT$/package-lock.json",
     "$TURBO_ROOT$/package.json",
     "$TURBO_ROOT$/tsconfig.base.json",
   ],
@@ -30,7 +31,7 @@ const TYPESCRIPT_LIBRARY_BUILD_PROFILE = Object.freeze({
 
 const CLI_BUILD_PROFILE = Object.freeze({
   dependsOn: ["^build"],
-  inputs: ["$TURBO_DEFAULT$"],
+  inputs: ["package.json"],
   outputs: [],
 });
 
@@ -39,22 +40,99 @@ const LEGACY_CLI_BUILD_PROFILE = Object.freeze({
   outputs: [],
 });
 
+const PRECISE_INPUT_MIGRATION_CLI_BUILD_PROFILE = Object.freeze({
+  dependsOn: ["^build"],
+  inputs: ["$TURBO_DEFAULT$"],
+  outputs: [],
+});
+
 const GENERATED_DATA_BUILD_PROFILE = Object.freeze({
   dependsOn: ["^build"],
   inputs: [
-    "$TURBO_DEFAULT$",
-    "!dist/**",
+    "index.ts",
+    "package.json",
+    "sources/**",
+    "tsconfig.json",
     "$TURBO_ROOT$/.node-version",
+    "$TURBO_ROOT$/package-lock.json",
+    "$TURBO_ROOT$/package.json",
     "$TURBO_ROOT$/tsconfig.base.json",
   ],
   outputs: ["dist/**"],
 });
 
-const GENERATED_BUILD_PROFILES = Object.freeze([
+const TYPESCRIPT_LIBRARY_TYPECHECK_PROFILE = Object.freeze({
+  dependsOn: ["^build"],
+  inputs: [
+    "package.json",
+    "src/**",
+    "test-types/**",
+    "tsconfig.json",
+    "$TURBO_ROOT$/ops/typedefs/common.ts",
+    "$TURBO_ROOT$/package-lock.json",
+    "$TURBO_ROOT$/package.json",
+    "$TURBO_ROOT$/tsconfig.base.json",
+  ],
+  outputs: [],
+});
+
+const GENERATED_DATA_TYPECHECK_PROFILE = Object.freeze({
+  dependsOn: ["^build"],
+  inputs: [
+    "index.ts",
+    "package.json",
+    "sources/**",
+    "tsconfig.json",
+    "$TURBO_ROOT$/package-lock.json",
+    "$TURBO_ROOT$/package.json",
+    "$TURBO_ROOT$/tsconfig.base.json",
+  ],
+  outputs: [],
+});
+
+const TYPESCRIPT_LIBRARY_UNIT_PROFILE = Object.freeze({
+  dependsOn: ["build"],
+  inputs: [
+    "package.json",
+    "test/**",
+    "$TURBO_ROOT$/ops/helpers/common.js",
+    "$TURBO_ROOT$/ops/helpers/shallow-compare.js",
+  ],
+  outputs: [],
+});
+
+const CLI_UNIT_PROFILE = Object.freeze({
+  dependsOn: ["build"],
+  inputs: [
+    "*.js",
+    "package.json",
+    "test/**",
+    "$TURBO_ROOT$/ops/helpers/spawn.js",
+  ],
+  outputs: [],
+});
+
+const GENERATED_DATA_UNIT_PROFILE = Object.freeze({
+  dependsOn: ["build"],
+  inputs: ["package.json"],
+  outputs: [],
+});
+
+const GENERATED_TASK_PROFILES = Object.freeze([
   CLI_BUILD_PROFILE,
   GENERATED_DATA_BUILD_PROFILE,
+  GENERATED_DATA_TYPECHECK_PROFILE,
+  CLI_UNIT_PROFILE,
+  GENERATED_DATA_UNIT_PROFILE,
   LEGACY_CLI_BUILD_PROFILE,
+  PRECISE_INPUT_MIGRATION_CLI_BUILD_PROFILE,
 ]);
+
+const GENERIC_TASK_PROFILES = Object.freeze({
+  build: TYPESCRIPT_LIBRARY_BUILD_PROFILE,
+  typecheck: TYPESCRIPT_LIBRARY_TYPECHECK_PROFILE,
+  unit: TYPESCRIPT_LIBRARY_UNIT_PROFILE,
+});
 
 const DIRECT_NPM_PUBLISH = new RegExp(
   String.raw`(?:^|[;&|()\r\n])\s*` +
@@ -238,55 +316,71 @@ function turboConfigForPackageKinds(turboConfig, registry) {
   }
 
   const resolver = createPackageKindResolver(registry);
-  const declaredBuildTaskNames = new Set(
+  const declaredGeneratedTaskNames = new Set(
     resolver.entries().map(([name]) => `${name}#build`),
   );
-  const libraryBuildTaskNames = new Set(
-    resolver
-      .namesFor(PACKAGE_KINDS.TYPESCRIPT_LIBRARY)
-      .map((name) => `${name}#build`),
-  );
-  const managedBuildTaskNames = new Set(
-    [
-      ...resolver.namesFor(PACKAGE_KINDS.CLI),
-      ...resolver.namesFor(PACKAGE_KINDS.GENERATED_DATA),
-    ].map((name) => `${name}#build`),
-  );
-  const buildOverrides = {};
+  const libraryGenericTaskNames = new Set();
+  for (const name of resolver.namesFor(PACKAGE_KINDS.TYPESCRIPT_LIBRARY)) {
+    for (const taskName of Object.keys(GENERIC_TASK_PROFILES)) {
+      libraryGenericTaskNames.add(`${name}#${taskName}`);
+    }
+  }
+
+  const overridesAfterTask = new Map([
+    ["build", {}],
+    ["typecheck", {}],
+    ["unit", {}],
+  ]);
   for (const name of resolver.namesFor(PACKAGE_KINDS.CLI)) {
-    buildOverrides[`${name}#build`] = structuredClone(CLI_BUILD_PROFILE);
+    overridesAfterTask.get("build")[`${name}#build`] =
+      structuredClone(CLI_BUILD_PROFILE);
+    overridesAfterTask.get("unit")[`${name}#unit`] =
+      structuredClone(CLI_UNIT_PROFILE);
+    declaredGeneratedTaskNames.add(`${name}#unit`);
   }
   for (const name of resolver.namesFor(PACKAGE_KINDS.GENERATED_DATA)) {
-    buildOverrides[`${name}#build`] = structuredClone(
+    overridesAfterTask.get("build")[`${name}#build`] = structuredClone(
       GENERATED_DATA_BUILD_PROFILE,
     );
+    overridesAfterTask.get("typecheck")[`${name}#typecheck`] = structuredClone(
+      GENERATED_DATA_TYPECHECK_PROFILE,
+    );
+    overridesAfterTask.get("unit")[`${name}#unit`] = structuredClone(
+      GENERATED_DATA_UNIT_PROFILE,
+    );
+    declaredGeneratedTaskNames.add(`${name}#typecheck`);
+    declaredGeneratedTaskNames.add(`${name}#unit`);
   }
+  const managedTaskNames = new Set(
+    [...overridesAfterTask.values()].flatMap((overrides) =>
+      Object.keys(overrides),
+    ),
+  );
 
   const tasks = {};
   for (const [taskName, taskConfig] of Object.entries(turboConfig.tasks)) {
-    const isGeneratedBuildProfile = GENERATED_BUILD_PROFILES.some((profile) =>
+    const isGeneratedTaskProfile = GENERATED_TASK_PROFILES.some((profile) =>
       isDeepStrictEqual(taskConfig, profile),
     );
     const isMigratedGeneratedOverride =
-      libraryBuildTaskNames.has(taskName) && isGeneratedBuildProfile;
+      libraryGenericTaskNames.has(taskName) && isGeneratedTaskProfile;
     const isDeletedGeneratedOverride =
-      taskName.endsWith("#build") &&
+      taskName.includes("#") &&
       !taskName.startsWith("//#") &&
-      !declaredBuildTaskNames.has(taskName) &&
-      isGeneratedBuildProfile;
+      !declaredGeneratedTaskNames.has(taskName) &&
+      isGeneratedTaskProfile;
     if (
-      managedBuildTaskNames.has(taskName) ||
+      managedTaskNames.has(taskName) ||
       isMigratedGeneratedOverride ||
       isDeletedGeneratedOverride
     ) {
       continue;
     }
-    tasks[taskName] =
-      taskName === "build"
-        ? structuredClone(TYPESCRIPT_LIBRARY_BUILD_PROFILE)
-        : taskConfig;
-    if (taskName === "build") {
-      Object.assign(tasks, buildOverrides);
+    tasks[taskName] = Object.hasOwn(GENERIC_TASK_PROFILES, taskName)
+      ? structuredClone(GENERIC_TASK_PROFILES[taskName])
+      : taskConfig;
+    if (overridesAfterTask.has(taskName)) {
+      Object.assign(tasks, overridesAfterTask.get(taskName));
     }
   }
 

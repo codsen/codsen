@@ -249,4 +249,30 @@ test("11 - zero-width matches advance safely", () => {
   equal(rRegex(/(?:)/g, "", "x"), null, "11.08");
 });
 
+test("12 - zero-width matching reads Unicode mode once", () => {
+  let reads = 0;
+  class CountingRegExp extends RegExp {
+    get unicode() {
+      reads += 1;
+      return false;
+    }
+
+    get unicodeSets() {
+      reads += 1;
+      return false;
+    }
+  }
+
+  equal(
+    rRegex(new CountingRegExp("(?:)", "g"), "ab", "x"),
+    [
+      [0, 0, "x"],
+      [1, 1, "x"],
+      [2, 2, "x"],
+    ],
+    "12.01",
+  );
+  equal(reads, 2, "12.02");
+});
+
 test.run();

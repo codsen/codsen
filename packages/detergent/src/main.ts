@@ -1184,7 +1184,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
     convertEntities: resolvedOpts.convertEntities, // full-on setup
     targetLanguage: "html",
     UKPostcodes: true, // full-on setup
-    hyphens: resolvedOpts.convertDashes, // full-on setup
+    hyphens: true, // widow protection around dashes is independent of conversion
     tagRanges: skipArr.current(),
   });
 

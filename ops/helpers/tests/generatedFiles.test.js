@@ -14,6 +14,7 @@ import { test } from "uvu";
 import { equal, match, ok } from "uvu/assert";
 import { deleteGeneratedFile, writeGeneratedFile } from "../generatedFiles.js";
 import { formatGeneratedContents } from "../generatedFormatting.js";
+import { writePackageKindConfig } from "../packageKindConfigGeneration.js";
 
 const repositoryRoot = path.resolve(import.meta.dirname, "../../..");
 
@@ -154,6 +155,106 @@ test("07 - formatter failures retain the generated target", () => {
   }
 
   match(error.message, /package\.json.*injected failure/, "07.01");
+});
+
+function packageKindFixture() {
+  return {
+    registry: {
+      "typescript-library": ["library"],
+      cli: ["cli"],
+      "generated-data": ["@example/data"],
+    },
+    turboConfig: {
+      tasks: {
+        build: { outputs: [] },
+        typecheck: { outputs: [] },
+        unit: { outputs: [] },
+      },
+    },
+  };
+}
+
+test("08 - package-kind formatter failure preserves bytes and metadata", async () => {
+  await withTemporaryRoot(async (root) => {
+    const filename = path.join(root, "turbo.json");
+    writeFileSync(filename, "original\n");
+    const before = statSync(filename);
+    let error;
+    try {
+      await writePackageKindConfig({
+        filename,
+        formatContents: () => {
+          throw new Error("injected formatter failure");
+        },
+        repositoryRoot: root,
+        ...packageKindFixture(),
+      });
+    } catch (caught) {
+      error = caught;
+    }
+
+    match(error.message, /injected formatter failure/, "08.01");
+    equal(readFileSync(filename, "utf8"), "original\n", "08.02");
+    equal(statSync(filename).mtimeMs, before.mtimeMs, "08.03");
+  });
+});
+
+test("09 - package-kind check rejects whitespace drift with its repair command", async () => {
+  await withTemporaryRoot(async (root) => {
+    const filename = path.join(root, "turbo.json");
+    const { registry, turboConfig } = packageKindFixture();
+    const drifted = `${JSON.stringify(turboConfig)}\n`;
+    writeFileSync(filename, drifted);
+    let error;
+    try {
+      await writePackageKindConfig({
+        filename,
+        formatContents: ({ contents }) => contents,
+        mode: "check",
+        registry,
+        repositoryRoot: root,
+        turboConfig,
+      });
+    } catch (caught) {
+      error = caught;
+    }
+
+    match(
+      error.message,
+      /turbo\.json.*npm run ci:generate:package-kind-config/,
+      "09.01",
+    );
+    equal(readFileSync(filename, "utf8"), drifted, "09.02");
+  });
+});
+
+test("10 - package-kind write performs one atomic update and is idempotent", async () => {
+  await withTemporaryRoot(async (root) => {
+    const filename = path.join(root, "turbo.json");
+    const fixture = packageKindFixture();
+    writeFileSync(filename, `${JSON.stringify(fixture.turboConfig)}\n`);
+    let writeCount = 0;
+    const writeGenerated = async (options) => {
+      const changed = await writeGeneratedFile(options);
+      if (changed) {
+        writeCount += 1;
+      }
+      return changed;
+    };
+    const options = {
+      filename,
+      formatContents: ({ contents }) => contents,
+      repositoryRoot: root,
+      writeGenerated,
+      ...fixture,
+    };
+
+    equal(await writePackageKindConfig(options), true, "10.01");
+    const generated = readFileSync(filename, "utf8");
+    equal(await writePackageKindConfig(options), false, "10.02");
+    equal(readFileSync(filename, "utf8"), generated, "10.03");
+    equal(writeCount, 1, "10.04");
+  });
 });
 
 test.run();

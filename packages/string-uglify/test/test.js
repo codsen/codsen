@@ -360,4 +360,19 @@ test("14 - uglifyById validates the index", () => {
   );
 });
 
+test("15 - the linear-to-indexed threshold preserves output", () => {
+  let below = uglifyArr(
+    Array.from({ length: 47 }, (_, index) => `.candidate-${index}`),
+  );
+  let at = uglifyArr(
+    Array.from({ length: 48 }, (_, index) => `.candidate-${index}`),
+  );
+
+  equal(below.length, 47, "15.01");
+  equal(at.length, 48, "15.02");
+  equal(at.slice(0, 47), below, "15.03");
+  equal(below.slice(-3), [".ceq6m", ".dfzod", ".egaaa"], "15.04");
+  equal(at.at(-1), ".fhn0", "15.05");
+});
+
 test.run();

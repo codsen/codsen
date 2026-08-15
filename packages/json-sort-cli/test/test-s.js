@@ -53,17 +53,17 @@ test("01 - sort, -s (silent) mode", async () => {
     )
     .then(() =>
       writeFile(
-        path.join(tempFolder, "test1/.somethinginyml"), // - dotfile in yml without yml extension
-        "foo:\n  bar",
+        path.join(tempFolder, "test1/.somethinginyml"), // - JSON dotfile without an extension
+        "{}",
       ),
     )
     .then(() =>
       writeFile(path.join(tempFolder, "test1/broken.json"), '{a": "b"}\n'),
     )
-    .then(() => execa("./cli.js", [tempFolder, "-s"]))
-    .then(() => {
-      // not.match(receivedStdOut.stdout, /OK/);
-      // not.match(receivedStdOut.stdout, /sorted/);
+    .then(() => execa("./cli.js", [tempFolder, "-s"], { reject: false }))
+    .then((result) => {
+      equal(result.exitCode, 1, "01.01");
+      equal(result.stdout, "", "01.02");
       return pMap(testFilePaths, (oneOfPaths) =>
         readJson(path.join(tempFolder, oneOfPaths), "utf8"),
       ).then((contentsArray) => {
@@ -80,7 +80,7 @@ test("01 - sort, -s (silent) mode", async () => {
       throw new Error(err);
     });
 
-  equal(processedFileContents, sortedTestFileContents, "01.01");
+  equal(processedFileContents, sortedTestFileContents, "01.03");
 });
 
 test.run();

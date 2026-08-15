@@ -3,17 +3,13 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-import { readFile, stat } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
-import { promisify } from "node:util";
 import { glob } from "codsen-glob";
 import { codsenCLI } from "codsen-utils";
-import { cleanChangelogs } from "lerna-clean-changelogs";
-import pFilter from "p-filter";
 import pReduce from "p-reduce";
 import updateNotifier from "update-notifier";
-import write from "write-file-atomic";
+import { ProcessingError, processFiles } from "./process-files.js";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
@@ -33,17 +29,6 @@ function colour(str, colourCode) {
 
 function isStr(something) {
   return typeof something === "string";
-}
-function isObj(something) {
-  return (
-    !!something && typeof something === "object" && !Array.isArray(something)
-  );
-}
-function formatTime(ms) {
-  if (ms < 1000) {
-    return `${ms}ms`;
-  }
-  return `${Math.round(ms / 1000)}s`;
 }
 const cli = codsenCLI(
   `
@@ -84,38 +69,6 @@ if (cli.flags.version) {
   process.exit(0);
 }
 
-// FUNCTIONS
-// -----------------------------------------------------------------------------
-
-function readSortAndWriteOverFile(oneOfPaths) {
-  return readFile(oneOfPaths, "utf8")
-    .then((filesContent) => {
-      let preppedContents;
-      try {
-        preppedContents = cleanChangelogs(filesContent, {
-          extras: cli.flags.extras === true,
-        });
-      } catch (_e) {
-        return null;
-      }
-      // don't write empty files:
-      if (
-        (!isObj(preppedContents) && !preppedContents.length) ||
-        (isObj(preppedContents) && preppedContents.res === filesContent)
-      ) {
-        // return "ok";
-        return "skipped";
-      }
-      // by this point, there should be some valid content to write
-      return promisify(write)(oneOfPaths, preppedContents.res).then(() => {
-        return "ok";
-      });
-    })
-    .catch((err) => {
-      console.log(`${oneOfPaths} - ${err}`);
-    });
-}
-
 // -----------------------------------------------------------------------------
 
 // Create a promise variable and assign it to one of the promises,
@@ -143,23 +96,11 @@ if (isArr(cli.input) && cli.input.length) {
       process.exit(0);
     }
 
-    return pFilter(preppedPathsArr, (onePath) =>
-      stat(path.resolve(onePath)).catch(() => {
-        return Promise.resolve(false);
-      }),
-    ).then((resultArr) => {
-      if (!isArr(resultArr) || !resultArr.length) {
-        // spinner.warn("no changelogs found");
-        process.exit(0);
-      } else {
-        // filter changelog files
-        return resultArr.filter(
-          (p) =>
-            isStr(path.basename(p)) &&
-            path.basename(p).toLowerCase() === "changelog.md",
-        );
-      }
-    });
+    return preppedPathsArr.filter(
+      (p) =>
+        isStr(path.basename(p)) &&
+        path.basename(p).toLowerCase() === "changelog.md",
+    );
   });
 } else {
   thePromise = glob(["**/changelog.md", "!**/node_modules/**"], {
@@ -168,103 +109,24 @@ if (isArr(cli.input) && cli.input.length) {
 }
 
 // ASYNCHRONOUS PART:
-thePromise.then((received) => {
-  if (!isArr(received) || !received.length) {
-    // spinner.warn("no changelogs found");
-    log(`${signature}${colour("no changelogs found", colours.red)}`);
-    process.exit(0);
-  }
-  return pReduce(
-    received,
-    (counter, currentPath) =>
-      readSortAndWriteOverFile(currentPath)
-        .then((res) =>
-          res
-            ? res === "ok"
-              ? {
-                  good: counter.good.concat([currentPath]),
-                  bad: counter.bad,
-                  ignored: counter.ignored,
-                }
-              : {
-                  good: counter.good,
-                  bad: counter.bad,
-                  ignored: counter.ignored.concat([currentPath]),
-                }
-            : {
-                good: counter.good,
-                bad: counter.bad.concat([currentPath]),
-                ignored: counter.ignored,
-              },
-        )
-        .catch((err) => {
-          log(
-            `${signature}${colour(
-              "Could not write the cleaned file:",
-              colours.red,
-            )} ${err}`,
-          );
-          return counter;
-        }),
-    { good: [], bad: [], ignored: [] },
-  ).then((counter) => {
-    // console.log(
-    //   `${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
-    //     counter,
-    //     null,
-    //     4
-    //   )}`
-    // );
-    let writtenAndSkippedMsg = ""; // message regarding written and skipped files
-
-    // calculate writtenAndSkippedMsg
-    if (counter?.good.length) {
-      // some files were written
-      if (counter?.ignored.length) {
-        // some files were written, but there were some skipped/ignored
-        writtenAndSkippedMsg = `${counter.good.length} updated, ${counter.ignored.length} skipped`;
-      }
-      // only written files, no skipped/ignored
-      else if (counter.good.length === 1) {
-        writtenAndSkippedMsg = "1 updated";
-      } else {
-        writtenAndSkippedMsg = `All ${counter.good.length} updated`;
-      }
+thePromise
+  .then((received) => {
+    if (!isArr(received) || !received.length) {
+      // spinner.warn("no changelogs found");
+      log(`${signature}${colour("no changelogs found", colours.red)}`);
+      process.exit(0);
     }
-    // no files were written
-    else if (counter?.ignored.length) {
-      // no files were written, there were some skipped/ignored
-      if (counter.ignored.length === 1) {
-        writtenAndSkippedMsg = "1 skipped";
-      } else {
-        writtenAndSkippedMsg = `All ${counter.ignored.length} skipped`;
-      }
-    } else {
-      // no written files, no skipped/ignored
-      writtenAndSkippedMsg = "";
+    return processFiles(received, {
+      signature,
+      startedAt: start,
+      transformOptions: { extras: cli.flags.extras === true },
+    });
+  })
+  .catch((error) => {
+    if (!(error instanceof ProcessingError)) {
+      log(
+        `${signature}${colour("Could not process the requested changelogs", colours.red)} - ${error}`,
+      );
     }
-
-    // -------------------------------------------------------------------------
-    let errorredMsg = ""; // message regarding files that errorred out
-    let badSupplement =
-      !counter?.good.length && !counter?.ignored.length ? "All " : "";
-
-    if (counter?.bad.length) {
-      errorredMsg = `${badSupplement}${counter.bad.length} errorred`;
-    }
-
-    // -------------------------------------------------------------------------
-    log(
-      `${signature}${
-        writtenAndSkippedMsg
-          ? `${colour(writtenAndSkippedMsg, colours.green)}${
-              errorredMsg ? " " : ""
-            }`
-          : ""
-      }${errorredMsg ? colour(errorredMsg, colours.red) : ""} ${colour(
-        `(${formatTime(Date.now() - start)})`,
-        colours.grey,
-      )}`,
-    );
+    process.exitCode = 1;
   });
-});

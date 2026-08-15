@@ -34,6 +34,7 @@
     "ci:verify:package-kinds": "node ./ops/scripts/verify-package-kinds.js",
     "ci:verify:root-readme": "node ./ops/scripts/generate-readme.js --check",
     "ci:verify:root-toolchain": "node ./ops/scripts/verify-root-toolchain.js",
+    "ci:verify:test-numbering": "node ./ops/scripts/verify-unit-test-numbering.js",
     "ci:verify:data": "node ./ops/scripts/verify-data.js",
     "ci:verify:debug-log-line-labels": "node ./ops/scripts/verify-dev-console-log-line-labels.js",
     "lernacleanchangelog": "lernacleanchangelog '**' --extras",
@@ -63,10 +64,9 @@
     "turbo": "turbo",
     "typecheck": "turbo run typecheck --continue=dependencies-successful",
     "unit": "uvu ops/helpers && turbo run unit",
-    "verify": "npm run ci:verify:root-toolchain && npm run ci:verify:package-kinds && npm run ci:verify:debug-log-line-labels && npm run ci:verify:dependency-security-policy && npm run check && npm run lint:markdown && uvu ops/helpers && npm run ci:verify:coverage-policy && npm run ci:verify:node-compatibility && npm run verify:generated && npm run ci:verify:browser-iifes && npm run typecheck",
+    "verify": "npm run ci:verify:root-toolchain && npm run ci:verify:package-kinds && npm run ci:verify:debug-log-line-labels && npm run ci:verify:test-numbering && npm run ci:verify:dependency-security-policy && npm run check && npm run lint:markdown && uvu ops/helpers && npm run ci:verify:coverage-policy && npm run ci:verify:node-compatibility && npm run verify:generated && npm run ci:verify:browser-iifes && npm run typecheck",
     "verify:generated": "npm run lect:check && npm run ci:verify:info && npm run ci:verify:changelogs && npm run ci:verify:root-readme && npm run build -- '--filter=./data/**' && npm run ci:verify:data",
-    "wipe": "rm package-lock.json || true && rm -rf node_modules && git clean -fXd && npm i",
-    "knip": "npx knip"
+    "wipe": "rm package-lock.json || true && rm -rf node_modules && git clean -fXd && npm i"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.7",

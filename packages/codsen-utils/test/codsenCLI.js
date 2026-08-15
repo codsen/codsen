@@ -580,6 +580,7 @@ test("59 - works without newer globals when argv is explicit", () => {
   Reflect.deleteProperty(Object, "hasOwn");
   Reflect.deleteProperty(globalObject, "globalThis");
 
+  let fallbackInput;
   let flags;
   try {
     flags = codsenCLI("", {
@@ -592,6 +593,10 @@ test("59 - works without newer globals when argv is explicit", () => {
       autoHelp: false,
       autoVersion: false,
     }).flags;
+    fallbackInput = codsenCLI("", {
+      autoHelp: false,
+      autoVersion: false,
+    }).input;
   } finally {
     Object.defineProperty(globalObject, "globalThis", globalThisDescriptor);
     Object.defineProperty(globalObject, "process", processDescriptor);
@@ -599,6 +604,7 @@ test("59 - works without newer globals when argv is explicit", () => {
   }
 
   equal(flags, { b: "x" }, "59.01");
+  equal(fallbackInput, [], "59.02");
 });
 
 test.run();

@@ -25,7 +25,6 @@ export const dependencyStats: DependencyStats = {
     "leven",
     "lodash-es",
     "object-path",
-    "p-filter",
     "p-map",
     "p-one",
     "p-progress",
@@ -160,11 +159,10 @@ export const dependencyStats: DependencyStats = {
     "object-no-new-keys": 1,
     "object-path": 3,
     "object-set-all-values-to": 1,
-    "p-filter": 2,
     "p-map": 1,
     "p-one": 1,
     "p-progress": 1,
-    "p-reduce": 6,
+    "p-reduce": 3,
     "package-json": 1,
     "picomatch": 1,
     "ranges-apply": 16,
@@ -244,9 +242,6 @@ export const dependencyStats: DependencyStats = {
       "update-notifier": 9
     },
     {
-      "p-reduce": 6
-    },
-    {
       "write-file-atomic": 4
     },
     {
@@ -254,6 +249,9 @@ export const dependencyStats: DependencyStats = {
     },
     {
       "object-path": 3
+    },
+    {
+      "p-reduce": 3
     },
     {
       "unified": 3

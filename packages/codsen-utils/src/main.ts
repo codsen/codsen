@@ -86,8 +86,51 @@ export type Obj = JSONObject;
 export type EolChar = "\n" | "\r" | "\r\n";
 export type EolSetting = "lf" | "crlf" | "cr";
 
-type CloneMemo = WeakMap<object, unknown>;
 type CloneableArrayBuffer = ArrayBuffer | SharedArrayBuffer;
+
+// Small object graphs are the overwhelmingly common cloning workload. An
+// array lookup is faster than constructing and querying a WeakMap at that
+// scale, while promotion keeps large or highly connected graphs linear.
+class CloneMemo {
+  hasRepeatedReferences = false;
+  private clones: unknown[] = [];
+  private index: WeakMap<object, unknown> | undefined;
+  private sources: object[] = [];
+
+  get(source: object): unknown {
+    if (this.index) {
+      const existing = this.index.get(source);
+      if (existing !== undefined) {
+        this.hasRepeatedReferences = true;
+      }
+      return existing;
+    }
+    const sourceIndex = this.sources.indexOf(source);
+    if (sourceIndex === -1) {
+      return undefined;
+    }
+    this.hasRepeatedReferences = true;
+    return this.clones[sourceIndex];
+  }
+
+  set(source: object, clone: unknown): void {
+    if (this.index) {
+      this.index.set(source, clone);
+      return;
+    }
+
+    this.sources.push(source);
+    this.clones.push(clone);
+    if (this.sources.length === 32) {
+      this.index = new WeakMap();
+      for (let i = 0; i < this.sources.length; i++) {
+        this.index.set(this.sources[i], this.clones[i]);
+      }
+      this.sources = [];
+      this.clones = [];
+    }
+  }
+}
 
 function cloneArrayBuffer(
   value: CloneableArrayBuffer,
@@ -194,6 +237,22 @@ function cloneValue<T>(value: T, memo: CloneMemo): T {
     return result as T;
   }
 
+  // Plain records dominate real call sites. Settle them before paying for the
+  // complete collection/view checks below. Cross-realm and class instances
+  // still take the generic fallback after those checks.
+  const prototype = Object.getPrototypeOf(value);
+  if (prototype === Object.prototype || prototype === null) {
+    const result: Record<string, unknown> = {};
+    memo.set(value, result);
+    cloneOwnKeys(
+      result,
+      value as Record<string, unknown>,
+      Object.keys(value),
+      memo,
+    );
+    return result as T;
+  }
+
   if (value instanceof Date) {
     const result = new Date(value.getTime());
     memo.set(value, result);
@@ -243,7 +302,22 @@ function cloneValue<T>(value: T, memo: CloneMemo): T {
 
 /** Clone nested data without retaining object or collection references. */
 export function deepClone<T>(value: T): T {
-  return cloneValue(value, new WeakMap());
+  return cloneValue(value, new CloneMemo());
+}
+
+export interface DeepCloneResult<T> {
+  hasRepeatedReferences: boolean;
+  value: T;
+}
+
+/** Clone nested data and report whether its source graph reused an object. */
+export function deepCloneWithMetadata<T>(value: T): DeepCloneResult<T> {
+  const memo = new CloneMemo();
+  const clonedValue = cloneValue(value, memo);
+  return {
+    hasRepeatedReferences: memo.hasRepeatedReferences,
+    value: clonedValue,
+  };
 }
 
 export function isNumberChar(value: unknown): boolean {
@@ -1101,7 +1175,8 @@ export function omit(obj: JSONObject, keysToRemove: string[] = []): JSONObject {
       `codsen-utils/omit(): [THROW_ID_02] Input must be a plain object! It was given as ${formatDiagnosticValue(obj, 4)} (typeof is "${typeof obj}")`,
     );
   const result: JSONObject = {};
-  const memo: CloneMemo = new WeakMap([[obj, result]]);
+  const memo = new CloneMemo();
+  memo.set(obj, result);
   const keys = Object.keys(obj);
   const removals =
     keys.length < 128 || keysToRemove.length < 5

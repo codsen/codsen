@@ -4,11 +4,13 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { dequal } from "dequal";
-
+import {
+  FIX_COMMAND as PACKAGE_KIND_FIX_COMMAND,
+  packageKindConfigContents,
+} from "../helpers/packageKindConfigGeneration.js";
 import {
   createPackageKindResolver,
   PACKAGE_KINDS,
-  turboConfigForPackageKinds,
   validatePackageKindInventory,
   validatePackagePublishScripts,
 } from "../helpers/packageKinds.js";
@@ -217,14 +219,17 @@ if (process.argv.length !== 2) {
     }
 
     const turboFilename = path.join(repositoryRoot, "turbo.json");
-    const turboConfig = JSON.parse(readFileSync(turboFilename, "utf8"));
-    const expectedTurboConfig = turboConfigForPackageKinds(
-      turboConfig,
+    const turboContents = readFileSync(turboFilename, "utf8");
+    const turboConfig = JSON.parse(turboContents);
+    const expectedTurboContents = packageKindConfigContents({
+      filename: turboFilename,
       registry,
-    );
-    if (!dequal(turboConfig, expectedTurboConfig)) {
+      repositoryRoot,
+      turboConfig,
+    });
+    if (turboContents !== expectedTurboContents) {
       errors.push(
-        'turbo.json package-kind profiles are stale; run "npm run ci:generate:package-kind-config"',
+        `turbo.json package-kind profiles are stale; run "${PACKAGE_KIND_FIX_COMMAND}"`,
       );
     }
   }

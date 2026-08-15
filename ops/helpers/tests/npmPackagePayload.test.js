@@ -138,9 +138,10 @@ test("04 - classifies transient and generated paths as forbidden", () => {
     [
       forbiddenPackedPath("node_modules/pkg/index.js"),
       forbiddenPackedPath("dist/cache.tsbuildinfo"),
+      forbiddenPackedPath("test/basic.js"),
       forbiddenPackedPath("dist/index.js"),
     ],
-    [true, true, false],
+    [true, true, true, false],
     "04.01",
   );
 });
@@ -224,6 +225,19 @@ test("06 - rejects missing closure files, duplicate paths, and non-executable bi
       ),
     /not executable/,
     "06.03",
+  );
+  throws(
+    () =>
+      validatePackedFiles(
+        item,
+        {},
+        { files: [base[0]] },
+        new Set(["package.json", "dist/index.js"]),
+        ["dist/index.js"],
+        [],
+      ),
+    /does not contain entrypoint dist\/index\.js/,
+    "06.04",
   );
 });
 

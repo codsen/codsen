@@ -3,17 +3,18 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": [
-        "$TURBO_DEFAULT$",
-        "!dist/**",
-        "!types/**",
+        "package.json",
+        "rollup.config.js",
+        "src/**",
+        "tsconfig.json",
         "$TURBO_ROOT$/.node-version",
-        "$TURBO_ROOT$/.npmrc",
         "$TURBO_ROOT$/biome.json",
         "$TURBO_ROOT$/ops/biome/**",
         "$TURBO_ROOT$/ops/helpers/browserCompatibility.js",
         "$TURBO_ROOT$/ops/helpers/nodeEngine.js",
         "$TURBO_ROOT$/ops/scripts/esbuild.js",
-        "$TURBO_ROOT$/ops/typedefs/**",
+        "$TURBO_ROOT$/ops/typedefs/common.ts",
+        "$TURBO_ROOT$/package-lock.json",
         "$TURBO_ROOT$/package.json",
         "$TURBO_ROOT$/tsconfig.base.json"
       ],
@@ -21,55 +22,59 @@
     },
     "codsen#build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$"],
+      "inputs": ["package.json"],
       "outputs": []
     },
     "csv-sort-cli#build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$"],
+      "inputs": ["package.json"],
       "outputs": []
     },
     "email-all-chars-within-ascii-cli#build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$"],
+      "inputs": ["package.json"],
       "outputs": []
     },
     "generate-atomic-css-cli#build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$"],
+      "inputs": ["package.json"],
       "outputs": []
     },
     "js-row-num-cli#build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$"],
+      "inputs": ["package.json"],
       "outputs": []
     },
     "json-comb#build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$"],
+      "inputs": ["package.json"],
       "outputs": []
     },
     "json-sort-cli#build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$"],
+      "inputs": ["package.json"],
       "outputs": []
     },
     "lerna-clean-changelogs-cli#build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$"],
+      "inputs": ["package.json"],
       "outputs": []
     },
     "update-versions#build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$"],
+      "inputs": ["package.json"],
       "outputs": []
     },
     "@codsen/data#build": {
       "dependsOn": ["^build"],
       "inputs": [
-        "$TURBO_DEFAULT$",
-        "!dist/**",
+        "index.ts",
+        "package.json",
+        "sources/**",
+        "tsconfig.json",
         "$TURBO_ROOT$/.node-version",
+        "$TURBO_ROOT$/package-lock.json",
+        "$TURBO_ROOT$/package.json",
         "$TURBO_ROOT$/tsconfig.base.json"
       ],
       "outputs": ["dist/**"]
@@ -82,16 +87,133 @@
     "typecheck": {
       "dependsOn": ["^build"],
       "inputs": [
-        "$TURBO_DEFAULT$",
-        "!dist/**",
-        "!types/**",
+        "package.json",
+        "src/**",
+        "test-types/**",
+        "tsconfig.json",
         "$TURBO_ROOT$/ops/typedefs/common.ts",
+        "$TURBO_ROOT$/package-lock.json",
+        "$TURBO_ROOT$/package.json",
+        "$TURBO_ROOT$/tsconfig.base.json"
+      ],
+      "outputs": []
+    },
+    "@codsen/data#typecheck": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "index.ts",
+        "package.json",
+        "sources/**",
+        "tsconfig.json",
+        "$TURBO_ROOT$/package-lock.json",
+        "$TURBO_ROOT$/package.json",
         "$TURBO_ROOT$/tsconfig.base.json"
       ],
       "outputs": []
     },
     "unit": {
       "dependsOn": ["build"],
+      "inputs": [
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/common.js",
+        "$TURBO_ROOT$/ops/helpers/shallow-compare.js"
+      ],
+      "outputs": []
+    },
+    "codsen#unit": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "csv-sort-cli#unit": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "email-all-chars-within-ascii-cli#unit": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "generate-atomic-css-cli#unit": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "js-row-num-cli#unit": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "json-comb#unit": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "json-sort-cli#unit": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "lerna-clean-changelogs-cli#unit": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "update-versions#unit": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "@codsen/data#unit": {
+      "dependsOn": ["build"],
+      "inputs": ["package.json"],
       "outputs": []
     },
     "dev": {

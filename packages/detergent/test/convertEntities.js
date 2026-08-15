@@ -376,8 +376,7 @@ test("023 - opts.convertApostrophes - mixed #3 - convertApostrophes=off - right 
   });
 });
 
-// biome-ignore lint/suspicious/noSkippedTests: known removeWidows/convertDashes=false behavior since the string-dashes migration; retain as pending regression coverage
-test.skip(`024 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #4 - convertApostrophes=on`, () => {
+test(`024 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #4 - convertApostrophes=on`, () => {
   mixer({
     convertEntities: true, // <-----
     convertApostrophes: true,
@@ -406,8 +405,7 @@ test.skip(`024 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - m
   });
 });
 
-// biome-ignore lint/suspicious/noSkippedTests: known removeWidows/convertDashes=false behavior since the string-dashes migration; retain as pending regression coverage
-test.skip(`025 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`, () => {
+test(`025 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`, () => {
   mixer({
     convertEntities: true,
     convertApostrophes: false,
@@ -436,8 +434,7 @@ test.skip(`025 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - m
   });
 });
 
-// biome-ignore lint/suspicious/noSkippedTests: known removeWidows/convertDashes=false behavior since the string-dashes migration; retain as pending regression coverage
-test.skip(`026 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`, () => {
+test(`026 - ${`\u001b[${33}m${"opts.convertApostrophes"}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`, () => {
   mixer({
     convertEntities: true, // <-----
     convertApostrophes: false,
@@ -577,8 +574,7 @@ test("031 - m-dash", () => {
   });
 });
 
-// biome-ignore lint/suspicious/noSkippedTests: known removeWidows/convertDashes=false behavior since the string-dashes migration; retain as pending regression coverage
-test.skip(`032 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
+test(`032 - ${`\u001b[${32}m${"m-dash"}\u001b[${39}m`}`, () => {
   mixer({
     convertDashes: false,
     removeWidows: true,

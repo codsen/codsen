@@ -1263,8 +1263,7 @@ test(`084 - opts.convertDashes - \u001b[${36}m${"hyphens"}\u001b[${39}m - dashes
   });
 });
 
-// biome-ignore lint/suspicious/noSkippedTests: known removeWidows/convertDashes=false behavior since the string-dashes migration; retain as pending regression coverage
-test.skip(`085 - \u001b[${35}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"hyphens"}\u001b[${39}m - when dashes are off, widow removal still works`, () => {
+test(`085 - \u001b[${35}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36}m${"hyphens"}\u001b[${39}m - when dashes are off, widow removal still works`, () => {
   equal(
     det1("a - b", {
       removeWidows: true,
@@ -1292,7 +1291,7 @@ test.skip(`085 - \u001b[${35}m${"opts.convertDashes"}\u001b[${39}m - \u001b[${36
       det(ok, not, n, "One day - and I mean some day - we will travel", opt)
         .res,
       "One day&nbsp;- and I mean some day&nbsp;- we will&nbsp;travel",
-      "085.02",
+      "085.03",
     );
   });
 });

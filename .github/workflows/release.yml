@@ -18,7 +18,7 @@ jobs:
   pack:
     name: Verify and pack the exact release
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     outputs:
       package_node_matrix: ${{ steps.package_node_matrix.outputs.matrix }}
     steps:
@@ -105,6 +105,12 @@ jobs:
             --plan .github/npm-release-plan.json \
             --output "${{ runner.temp }}/npm-release-reproducibility" \
             --reference npm-release-artifacts/manifest.json
+
+      - name: Verify isolated consumers of the exact publish artifacts
+        run: >-
+          node ops/scripts/npm-release.js verify-consumers
+          --manifest npm-release-artifacts/manifest.json
+          --concurrency 8
 
       - name: Pack all Node compatibility artifacts
         run: >-

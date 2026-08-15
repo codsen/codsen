@@ -152,6 +152,65 @@ contract.
   principle, local emulation, pinned browser job, and validation evidence in
   the same change.
 
+## Progress and completion observability
+
+Progress reporting and completion statistics are product features for
+nontrivial libraries, especially when ESM or direct-browser consumers can send
+large inputs through a long-running transformation.
+
+- Preserve existing progress callbacks and their composition ranges. Do not
+  remove them merely to make the core mathematically pure.
+- Preserve best-effort elapsed-time fields such as
+  `log.timeTakenInMilliseconds`. A clock read used only for completion feedback
+  is an intentional exception to deterministic result objects.
+- When adding or substantially redesigning a nontrivial library, provide
+  progress feedback and completion statistics, or record a concrete reason why
+  the workload cannot take perceptible time and does not benefit from them.
+- Keep observability separate from semantics. Clock values and callback effects
+  must not change the transformed result, ranges, or deterministic counters.
+- Do not assert naturally measured durations exactly. Stub the clock when
+  testing timing plumbing, and compare deterministic result fields separately
+  when testing transformations.
+- Keep progress and completion APIs equivalent across ESM and the
+  direct-browser `*.umd.js` script. Any implementation must still satisfy the
+  Chromium 58 runtime contract.
+
+## Codsen website API contract
+
+The sibling `codsen.com` project is a first-party consumer of published package
+APIs. When its checkout is available, inspect
+`../_____WEB-PROJ/codsen.com/v5/app/routes/**/play.tsx` and
+`../_____WEB-PROJ/codsen.com/v5/public/web-workers/*.js` before removing,
+renaming, or changing:
+
+- package exports, browser filenames, browser globals, or callable entrypoints;
+- option keys, defaults, result keys, types, units, or serialization;
+- progress, completion-statistics, applicability, diagnostic, or customization
+  callbacks; or
+- metadata projected into `@codsen/data`, including declarations, defaults,
+  examples, manifests, and versions.
+
+The playground routes use installed ESM types and defaults, but their workers
+load direct-browser bundles from CDN URLs without a version segment. Preserve
+compatibility across both paths. Results sent from a worker must remain plain,
+structured-cloneable, and meaningfully JSON-representable because the GUIs send
+them through `postMessage()` and expose full-output panels.
+
+Treat input-sensitive applicability reporting as a product capability. It lets
+the GUI separate relevant controls from controls that cannot affect the current
+input. Compute applicability independently from the user's current option
+settings so the report answers whether toggling an option could change the
+result.
+
+If a contract change is intentional, prefer an additive migration and update
+the package, generated data, website route, worker, and documentation together.
+When the website checkout is available, run its typecheck and relevant
+playground end-to-end tests. Its current smoke suite exercises representative
+results but does not explicitly protect every progress, timing, applicability,
+or raw-output field, so retain focused package-side contract tests too. If the
+checkout is unavailable, treat the consumer impact as unknown rather than
+assuming that no website dependency exists.
+
 ## Biome scope
 
 `packages/*/tap` directories are DIY testbeds, not maintained source. They may

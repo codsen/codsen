@@ -31,6 +31,8 @@ interface InputOpts {
 }
 type StringifiedLegend = [string, string];
 interface Res {
+  /** Best-effort completion statistics for user-facing feedback.
+   * Observational fields do not affect the transformation. */
   log: {
     timeTakenInMilliseconds: number;
     traversedTotalCharacters: number;

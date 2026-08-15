@@ -13,6 +13,7 @@ interface Opts {
 }
 declare const defaults: Opts;
 interface Res {
+  /** Best-effort elapsed time for user-facing completion feedback. */
   log: {
     timeTakenInMilliseconds: number;
   };

@@ -3,17 +3,12 @@
 // VARS
 // -----------------------------------------------------------------------------
 
-import { readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
-import { traverse } from "ast-monkey-traverse";
 import { glob } from "codsen-glob";
-import { codsenCLI, isPlainObject, resolveEolSetting } from "codsen-utils";
-import pFilter from "p-filter";
-import pReduce from "p-reduce";
-import sortPackageJson, { sortOrder } from "sort-package-json";
+import { codsenCLI } from "codsen-utils";
 import updateNotifier from "update-notifier";
-import { writeJson } from "./json-file.js";
+import { ProcessingError, processFiles } from "./process-files.js";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
@@ -28,39 +23,6 @@ const colours = {
 
 function colour(str, colourCode) {
   return `\u001b[${colourCode}m${str}\u001b[39m`;
-}
-
-function isStr(something) {
-  return typeof something === "string";
-}
-function format(obj) {
-  if (typeof obj !== "object") {
-    return obj;
-  }
-  let newSortOrder = sortOrder
-    // 1. delete tap and lect fields
-    .filter((field) => !["lect", "tap"].includes(field));
-
-  // 2. then, insert both after resolutions, first tap then lect
-  let idxOfResolutions = newSortOrder.indexOf("resolutions");
-  // console.log(idxOfResolutions);
-  // => 63
-
-  newSortOrder.splice(idxOfResolutions, 0, "tap", "lect");
-
-  // use custom array for sorting order:
-  return sortPackageJson(obj, {
-    sortOrder: newSortOrder,
-  });
-}
-function sortObj(obj) {
-  let res = {};
-  Object.keys(obj)
-    .sort()
-    .forEach((key) => {
-      res[key] = obj[key];
-    });
-  return res;
 }
 
 const prefix = "✨ json-sort-cli: ";
@@ -174,152 +136,6 @@ if (cli.flags.indentationCount) {
   indentationCount = +cli.flags.indentationCount;
 }
 
-// FUNCTIONS
-// -----------------------------------------------------------------------------
-
-function readSortAndWriteOverFile(oneOfPaths) {
-  return readFile(oneOfPaths, "utf8")
-    .then((filesContent) => {
-      let eolChar = resolveEolSetting(filesContent, cli.flags.lineEnding);
-
-      let parsedJson;
-      try {
-        // try to parse JSON
-        parsedJson = JSON.parse(filesContent);
-      } catch (err) {
-        // if it is not parseable, stop
-        if (!cli.flags.silent) {
-          log(
-            `${colour(prefix, colours.grey)}${oneOfPaths} - ${colour(
-              err,
-              colours.red,
-            )}`,
-          );
-        }
-        return Promise.resolve(null);
-      }
-      let result;
-
-      if (isPlainObject(parsedJson)) {
-        result = sortObj(parsedJson);
-      } else if (
-        cli.flags.arrays &&
-        Array.isArray(parsedJson) &&
-        parsedJson.length &&
-        parsedJson.every(isStr)
-      ) {
-        // if it was an array full of strings, it's an early ending:
-        return writeJson(
-          oneOfPaths,
-          parsedJson.sort((a, b) => a.localeCompare(b)),
-          {
-            spaces: cli.flags.tabs
-              ? "\t".repeat(indentationCount)
-              : indentationCount,
-            EOL: eolChar,
-          },
-        );
-      } else {
-        result = parsedJson;
-      }
-
-      return Promise.resolve(
-        !cli.flags.pack && path.basename(oneOfPaths) === "package.json"
-          ? format(result)
-          : result,
-      ).then((obj) => {
-        if (cli.flags.ci) {
-          // if it's CI mode, we only gather a list of files that differ from
-          // input after processing, then we return an array.
-          // In this function, readSortAndWriteOverFile(), path came in,
-          // we read it, now we return true if result differs after processing
-
-          let stringified = JSON.stringify(
-            // The traversal below will mutate, not just traverse, -
-            // whatever you return from the callback below, gets written
-            traverse(obj, (key, val) => {
-              let current = val !== undefined ? val : key;
-              if (isPlainObject(current)) {
-                return sortObj(current);
-              }
-              if (
-                cli.flags.arrays &&
-                Array.isArray(current) &&
-                current.length > 1 &&
-                current.every(isStr)
-              ) {
-                // alphabetical sort, this value gets written
-                return current.sort((a, b) => a.localeCompare(b));
-              }
-              return current;
-            }),
-            null,
-            cli.flags.tabs ? "\t".repeat(indentationCount) : indentationCount,
-          );
-
-          if (eolChar === "\r\n") {
-            // CRLF
-            stringified = stringified
-              .replaceAll(/(?<!\r)\n/g, "\r\n")
-              .replaceAll(/\r(?!\n)/g, "\n");
-          } else {
-            // LF or CR
-            stringified = stringified.replaceAll(/(?:\r?\n)|\r/g, eolChar);
-          }
-
-          return (
-            stringified
-              .replaceAll(
-                /\r\n/g,
-                resolveEolSetting(filesContent, cli.flags.lineEnding),
-              )
-              .trimEnd() !== filesContent.trimEnd()
-          );
-        }
-
-        // ELSE,
-        return writeJson(
-          oneOfPaths,
-          traverse(obj, (key, val) => {
-            let current = val !== undefined ? val : key;
-            if (isPlainObject(current)) {
-              return sortObj(current);
-            }
-            if (
-              cli.flags.arrays &&
-              Array.isArray(current) &&
-              current.length > 1 &&
-              current.every(isStr)
-            ) {
-              // alphabetical sort
-              return current.sort((a, b) => a.localeCompare(b));
-            }
-            return current;
-          }),
-          {
-            spaces: cli.flags.tabs
-              ? "\t".repeat(indentationCount)
-              : indentationCount,
-            EOL: resolveEolSetting(filesContent, cli.flags.lineEnding),
-          },
-        ).then(() => {
-          if (!cli.flags.silent) {
-            log(
-              `${colour(
-                prefix,
-                colours.grey,
-              )}${oneOfPaths} - ${colour("OK", colours.green)}`,
-            );
-          }
-          return true;
-        });
-      });
-    })
-    .catch((err) => {
-      console.log(`${oneOfPaths} - ${colour("BAD", colours.red)} - ${err}`);
-    });
-}
-
 // Step #0. take care of the short -v and -h flags, which codsenCLI leaves
 // to us (it answers the long --version and --help on its own).
 // -----------------------------------------------------------------------------
@@ -410,82 +226,128 @@ glob(
           colours.yellow,
         )}\n${paths.join("\n")}`,
       );
-    } else {
-      if (cli.flags.ci) {
-        // CI setting
-        return pFilter(
-          paths,
-          (currentPath) => readSortAndWriteOverFile(currentPath),
-          { concurrency: 16 },
-        ).then((received2) => {
-          if (received2.length && !cli.flags.silent) {
+      return;
+    }
+
+    const options = {
+      arrays: cli.flags.arrays,
+      ci: cli.flags.ci,
+      indentationCount,
+      lineEnding: cli.flags.lineEnding,
+      pack: cli.flags.pack,
+      tabs: cli.flags.tabs,
+      onOutcome(outcome) {
+        if (cli.flags.silent) {
+          return;
+        }
+        if (outcome.status === "failure") {
+          log(
+            `${colour(prefix, colours.grey)}${outcome.path} - ${colour(
+              "BAD",
+              colours.red,
+            )} (${outcome.stage}) - ${outcome.error}`,
+          );
+        } else if (!cli.flags.ci) {
+          log(
+            `${colour(prefix, colours.grey)}${outcome.path} - ${colour(
+              "OK",
+              colours.green,
+            )}`,
+          );
+        }
+      },
+    };
+
+    return processFiles(paths, options)
+      .then(({ successful, unsorted }) => {
+        if (cli.flags.silent) {
+          if (cli.flags.ci && unsorted.length) {
+            process.exitCode = 9;
+          }
+          return;
+        }
+        if (cli.flags.ci) {
+          if (unsorted.length) {
             log(
               `${colour(prefix, colours.grey)}${colour(
                 "Unsorted files:",
                 colours.red,
-              )}\n${received2.join("\n")}`,
+              )}\n${unsorted.join("\n")}`,
             );
-            process.exit(9);
-          } else if (!cli.flags.silent) {
+            process.exitCode = 9;
+          } else {
             log(
               `${colour(prefix, colours.grey)}${colour(
                 "All files were already sorted:",
                 colours.white,
-              )}\n${paths.join("\n")}`,
+              )}\n${successful.join("\n")}`,
             );
-            process.exit(0);
           }
-        });
-      }
-      // not a CI setting
-      return pReduce(
-        paths,
-        (counter, currentPath) =>
-          readSortAndWriteOverFile(currentPath)
-            .then((res) =>
-              res
-                ? {
-                    good: counter.good.concat([currentPath]),
-                    bad: counter.bad,
-                  }
-                : {
-                    good: counter.good,
-                    bad: counter.bad.concat([currentPath]),
-                  },
-            )
-            .catch((err) => {
-              if (!cli.flags.silent) {
-                log(
-                  `${colour(prefix, colours.grey)}${colour(
-                    "Could not write out the sorted file:",
-                    colours.red,
-                  )} ${err}`,
-                );
-              }
-            }),
-        { good: [], bad: [] },
-      ).then((counter) => {
+          return;
+        }
+        log(
+          `\n${colour(prefix, colours.grey)}${colour(
+            `All ${successful.length} file${
+              successful.length === 1 ? "" : "s"
+            } sorted`,
+            colours.green,
+          )}`,
+        );
+      })
+      .catch((error) => {
+        if (!(error instanceof ProcessingError)) {
+          throw error;
+        }
         if (!cli.flags.silent) {
+          if (cli.flags.ci) {
+            const unsorted = new Set(error.unsorted);
+            const alreadySorted = error.successful.filter(
+              (filePath) => !unsorted.has(filePath),
+            );
+            if (alreadySorted.length) {
+              log(
+                `${colour(prefix, colours.grey)}${colour(
+                  `${alreadySorted.length} file${
+                    alreadySorted.length === 1 ? "" : "s"
+                  } already sorted:`,
+                  colours.green,
+                )}\n${alreadySorted.join("\n")}`,
+              );
+            }
+            if (error.unsorted.length) {
+              log(
+                `${colour(prefix, colours.grey)}${colour(
+                  "Unsorted files:",
+                  colours.red,
+                )}\n${error.unsorted.join("\n")}`,
+              );
+            }
+          } else if (error.successful.length) {
+            log(
+              `\n${colour(prefix, colours.grey)}${colour(
+                `${error.successful.length} file${
+                  error.successful.length === 1 ? "" : "s"
+                } sorted`,
+                colours.green,
+              )}`,
+            );
+          }
           log(
-            `\n${colour(prefix, colours.grey)}${colour(
-              `${counter?.bad.length === 0 ? "All " : ""}${
-                counter.good.length
-              } files sorted`,
-              colours.green,
-            )}${
-              counter?.bad.length
-                ? `\n${colour(prefix, colours.grey)}${colour(
-                    `${counter.bad.length} file${
-                      counter.bad.length === 1 ? "" : "s"
-                    } could not be sorted`,
-                    colours.red,
-                  )} ${colour(` - ${counter.bad.join(" - ")}`, colours.grey)}`
-                : ""
-            }`,
+            `${colour(prefix, colours.grey)}${colour(
+              `${error.failures.length} file${
+                error.failures.length === 1 ? "" : "s"
+              } could not be ${cli.flags.ci ? "checked" : "sorted"}`,
+              colours.red,
+            )} ${colour(
+              ` - ${error.failures
+                .map(({ path: failedPath }) => failedPath)
+                .join(" - ")}`,
+              colours.grey,
+            )}`,
           );
         }
+        process.exitCode = 1;
       });
-    }
   })
   .catch((err) => {
     if (!cli.flags.silent) {
@@ -493,4 +355,5 @@ glob(
         `${colour(prefix, colours.grey)}${colour("Oops!", colours.red)} ${err}`,
       );
     }
+    process.exitCode = 1;
   });

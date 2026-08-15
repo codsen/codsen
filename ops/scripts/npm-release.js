@@ -12,6 +12,7 @@ import {
   readdirSync,
   readFileSync,
   readlinkSync,
+  realpathSync,
   renameSync,
   rmSync,
   statSync,
@@ -20,8 +21,13 @@ import {
 } from "node:fs";
 import { devNull, tmpdir } from "node:os";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
+import {
+  extractDeclarationReferences,
+  resolveDeclarationReferences,
+} from "../helpers/declarationDependencyResolution.js";
+import { installedPackageBinInvocation } from "../helpers/nodeProcessInvocation.js";
 import {
   entrypointTargets,
   forbiddenPackedPath,
@@ -34,6 +40,14 @@ import {
   validateTarball as validateTarballCore,
   wildcardRegExp,
 } from "../helpers/npmPackagePayload.js";
+import {
+  assertConsumerRuntimeSupportsPlans,
+  assertResolvedProductionDeclarationDependencies,
+  createReleaseConsumerPlans,
+  isBareDeclarationSpecifier,
+  strictConsumerTypeScriptConfig,
+  strictConsumerTypeScriptSource,
+} from "../helpers/npmReleaseConsumer.js";
 import {
   assertPackageName,
   assertSha,
@@ -55,6 +69,10 @@ import {
   publishReleaseLayers,
   releaseTagDecisions,
 } from "../helpers/npmReleaseRegistry.js";
+import {
+  assertFunctionalCliSmokeCoverage,
+  runFunctionalCliSmoke,
+} from "../helpers/packedArtifactCliSmokes.js";
 import { assertReproducibleReleaseManifests } from "../helpers/releaseReproducibility.js";
 import { readWorkspaceRecords } from "../helpers/workspaceInventoryFile.js";
 
@@ -86,6 +104,7 @@ function printUsage() {
   node ops/scripts/npm-release.js summary --plan <plan.json> --output <summary.md>
   node ops/scripts/npm-release.js preflight --plan <plan.json> [--concurrency 8]
   node ops/scripts/npm-release.js pack --plan <plan.json> --output <directory> [--reference <manifest.json>] [--concurrency 8]
+  node ops/scripts/npm-release.js verify-consumers --manifest <manifest.json> [--typescript <typescript/bin/tsc>] [--concurrency 8]
   node ops/scripts/npm-release.js publish --manifest <manifest.json> [--concurrency 8]
   node ops/scripts/npm-release.js tags --manifest <manifest.json> [--concurrency 8] [--push] [--remote origin]`);
 }
@@ -141,6 +160,7 @@ function parseArguments(argv) {
     summary: new Set(["plan", "output"]),
     preflight: new Set(["plan", "concurrency"]),
     pack: new Set(["plan", "output", "reference", "concurrency"]),
+    "verify-consumers": new Set(["manifest", "typescript", "concurrency"]),
     publish: new Set(["manifest", "concurrency"]),
     tags: new Set(["manifest", "concurrency", "remote"]),
   }[command];
@@ -967,6 +987,536 @@ function loadReleaseManifest(file) {
   };
 }
 
+function releaseConsumerEnvironment(npmCache) {
+  return {
+    ...sanitizedNpmEnvironment(),
+    CI: "true",
+    FORCE_COLOR: "0",
+    NO_COLOR: "1",
+    NO_UPDATE_NOTIFIER: "1",
+    npm_config_audit: "false",
+    npm_config_cache: npmCache,
+    npm_config_engine_strict: "true",
+    npm_config_fund: "false",
+    npm_config_ignore_scripts: "true",
+    npm_config_update_notifier: "false",
+  };
+}
+
+function installedPackageDirectory(consumerDirectory, packageName) {
+  return path.join(
+    consumerDirectory,
+    "node_modules",
+    ...packageName.split("/"),
+  );
+}
+
+function installedPackageDirectories(nodeModulesDirectory) {
+  if (!existsSync(nodeModulesDirectory)) {
+    return [];
+  }
+  const directories = [];
+  for (const entry of readdirSync(nodeModulesDirectory, {
+    withFileTypes: true,
+  })) {
+    if (entry.name.startsWith(".")) {
+      continue;
+    }
+    const entryPath = path.join(nodeModulesDirectory, entry.name);
+    if (entry.name.startsWith("@") && entry.isDirectory()) {
+      for (const scopedEntry of readdirSync(entryPath, {
+        withFileTypes: true,
+      })) {
+        if (scopedEntry.isDirectory() || scopedEntry.isSymbolicLink()) {
+          directories.push(path.join(entryPath, scopedEntry.name));
+        }
+      }
+    } else if (entry.isDirectory() || entry.isSymbolicLink()) {
+      directories.push(entryPath);
+    }
+  }
+  return directories;
+}
+
+function findReleasePackageCopies(consumerDirectory, releaseNames) {
+  const copies = new Map([...releaseNames].map((name) => [name, []]));
+  const visited = new Set();
+
+  function visit(nodeModulesDirectory) {
+    if (!existsSync(nodeModulesDirectory)) {
+      return;
+    }
+    const realDirectory = realpathSync(nodeModulesDirectory);
+    if (visited.has(realDirectory)) {
+      return;
+    }
+    visited.add(realDirectory);
+    for (const packageDirectory of installedPackageDirectories(
+      nodeModulesDirectory,
+    )) {
+      const manifestFile = path.join(packageDirectory, "package.json");
+      if (!existsSync(manifestFile)) {
+        continue;
+      }
+      const manifest = readJson(manifestFile);
+      if (copies.has(manifest.name)) {
+        copies.get(manifest.name).push({
+          directory: realpathSync(packageDirectory),
+          version: manifest.version,
+        });
+      }
+      visit(path.join(packageDirectory, "node_modules"));
+    }
+  }
+
+  visit(path.join(consumerDirectory, "node_modules"));
+  return copies;
+}
+
+function assertExactNames(actual, expected, context) {
+  const sortedActual = [...actual].sort((left, right) =>
+    left.localeCompare(right),
+  );
+  const sortedExpected = [...expected].sort((left, right) =>
+    left.localeCompare(right),
+  );
+  if (canonicalJson(sortedActual) !== canonicalJson(sortedExpected)) {
+    fail(
+      `${context} contains [${sortedActual.join(", ")}], expected [${sortedExpected.join(", ")}]`,
+    );
+  }
+}
+
+function assertConsumerDependencyPins(
+  consumerDirectory,
+  plan,
+  releasePackageByName,
+) {
+  const consumerManifest = readJson(
+    path.join(consumerDirectory, "package.json"),
+  );
+  const packageLock = readJson(
+    path.join(consumerDirectory, "package-lock.json"),
+  );
+  const lockedRoot = packageLock.packages?.[""];
+  if (!lockedRoot) {
+    fail(`${plan.name} consumer has no root package-lock entry`);
+  }
+  assertExactNames(
+    Object.keys(consumerManifest.dependencies ?? {}),
+    plan.closureNames,
+    `${plan.name} consumer dependencies`,
+  );
+  assertExactNames(
+    Object.keys(lockedRoot.dependencies ?? {}),
+    plan.closureNames,
+    `${plan.name} consumer lockfile dependencies`,
+  );
+
+  for (const name of plan.closureNames) {
+    const releasePackage = releasePackageByName.get(name);
+    for (const [context, specifier] of [
+      ["package.json", consumerManifest.dependencies?.[name]],
+      ["package-lock.json", lockedRoot.dependencies?.[name]],
+    ]) {
+      if (
+        typeof specifier !== "string" ||
+        !specifier.startsWith("file:") ||
+        !specifier.endsWith(releasePackage.tarball.file)
+      ) {
+        fail(
+          `${plan.name} consumer ${context} does not pin ${name} to ${releasePackage.tarball.file}`,
+        );
+      }
+    }
+
+    const installedDirectory = installedPackageDirectory(
+      consumerDirectory,
+      name,
+    );
+    if (!existsSync(installedDirectory)) {
+      fail(`${plan.name} consumer did not install release package ${name}`);
+    }
+    const installedStat = lstatSync(installedDirectory);
+    if (!installedStat.isDirectory() || installedStat.isSymbolicLink()) {
+      fail(`${plan.name} consumer installed ${name} through a non-directory`);
+    }
+    const installedManifest = readJson(
+      path.join(installedDirectory, "package.json"),
+    );
+    if (
+      installedManifest.name !== name ||
+      installedManifest.version !== releasePackage.version
+    ) {
+      fail(
+        `${plan.name} consumer installed ${installedManifest.name}@${installedManifest.version}, expected ${name}@${releasePackage.version}`,
+      );
+    }
+  }
+
+  const expectedNames = new Set(plan.closureNames);
+  const copies = findReleasePackageCopies(
+    consumerDirectory,
+    releasePackageByName.keys(),
+  );
+  for (const [name, found] of copies) {
+    if (!expectedNames.has(name)) {
+      if (found.length > 0) {
+        fail(
+          `${plan.name} consumer unexpectedly installed release package ${name}`,
+        );
+      }
+      continue;
+    }
+    if (found.length !== 1) {
+      fail(
+        `${plan.name} consumer installed ${found.length} copies of release package ${name}; expected exactly one immutable tarball copy`,
+      );
+    }
+    const releasePackage = releasePackageByName.get(name);
+    if (
+      found[0].directory !==
+        realpathSync(installedPackageDirectory(consumerDirectory, name)) ||
+      found[0].version !== releasePackage.version
+    ) {
+      fail(
+        `${plan.name} consumer did not install exact ${name}@${releasePackage.version} at its root`,
+      );
+    }
+  }
+}
+
+function assertInstalledPayload(consumerDirectory, plan) {
+  const packageDirectory = installedPackageDirectory(
+    consumerDirectory,
+    plan.name,
+  );
+  const manifest = readJson(path.join(packageDirectory, "package.json"));
+  const files = new Set(walkFiles(packageDirectory));
+  for (const target of entrypointTargets(manifest)) {
+    const present = target.includes("*")
+      ? [...files].some((file) => wildcardRegExp(target).test(file))
+      : files.has(target);
+    if (!present) {
+      fail(`${plan.name} consumer payload omits entrypoint ${target}`);
+    }
+  }
+  return { files, manifest, packageDirectory };
+}
+
+function assertDeclarationDependencyOwnership(
+  plan,
+  manifest,
+  packageDirectory,
+  files,
+  typescriptApi,
+) {
+  if (!plan.typed) {
+    return;
+  }
+  const resolvedReferences = [];
+  for (const relative of files) {
+    if (!/\.d\.(?:ts|mts|cts)$/.test(relative)) {
+      continue;
+    }
+    const containingFile = path.join(packageDirectory, ...relative.split("/"));
+    const references = extractDeclarationReferences({
+      source: readFileSync(containingFile, "utf8"),
+      typescript: typescriptApi,
+    }).filter(({ specifier }) => isBareDeclarationSpecifier(specifier));
+    resolvedReferences.push(
+      ...resolveDeclarationReferences({
+        containingFile,
+        references,
+        typescript: typescriptApi,
+      }),
+    );
+  }
+  assertResolvedProductionDeclarationDependencies(manifest, resolvedReferences);
+}
+
+async function importReleaseConsumer(consumerDirectory, plan) {
+  if (!plan.importable) {
+    return;
+  }
+  const script = `try {
+  await import(${JSON.stringify(plan.name)});
+} catch (error) {
+  throw new Error(${JSON.stringify(`Could not import ${plan.name}`)} + ": " + (error.stack ?? error.message));
+}`;
+  requireSuccess(
+    await run(process.execPath, ["--input-type=module", "--eval", script], {
+      cwd: consumerDirectory,
+      env: releaseConsumerEnvironment(
+        path.join(consumerDirectory, ".runtime-npm-cache"),
+      ),
+    }),
+    `${plan.name} runtime import`,
+  );
+}
+
+function runInstalledReleaseBinary(consumerDirectory, alias, args, cwd) {
+  const invocation = installedPackageBinInvocation({
+    alias,
+    args,
+    consumerDirectory,
+  });
+  if (!existsSync(invocation.filename)) {
+    fail(`${consumerDirectory} has no installed bin alias ${alias}`);
+  }
+  const result = spawnSync(invocation.command, invocation.args, {
+    cwd,
+    encoding: "utf8",
+    env: releaseConsumerEnvironment(
+      path.join(consumerDirectory, ".cli-npm-cache"),
+    ),
+    maxBuffer: MAX_OUTPUT_BYTES,
+    shell: invocation.shell,
+  });
+  if (result.error || result.status !== 0) {
+    fail(
+      [
+        `${alias} ${args.join(" ")} failed (${result.status ?? result.signal})`,
+        result.error?.message,
+        result.stdout,
+        result.stderr,
+      ]
+        .filter(Boolean)
+        .join("\n"),
+    );
+  }
+  return result;
+}
+
+function smokeReleaseConsumerBins(consumerDirectory, plan) {
+  for (const alias of Object.keys(plan.bins)) {
+    for (const [argument, expected] of [
+      ["--help", /(usage|options|help|call)/i],
+      ["--version", plan.version],
+    ]) {
+      const result = runInstalledReleaseBinary(
+        consumerDirectory,
+        alias,
+        [argument],
+        consumerDirectory,
+      );
+      const output = `${result.stdout}\n${result.stderr}`;
+      const matched =
+        typeof expected === "string"
+          ? output.includes(expected)
+          : expected.test(output);
+      if (!matched) {
+        fail(
+          `${plan.name} bin ${alias} ${argument} returned unexpected output`,
+        );
+      }
+    }
+  }
+  if (Object.keys(plan.bins).length > 0) {
+    runFunctionalCliSmoke({
+      cli: plan,
+      consumerDirectory,
+      runBinary: ({ alias, args, cwd }) =>
+        runInstalledReleaseBinary(consumerDirectory, alias, args, cwd),
+    });
+  }
+}
+
+async function compileReleaseConsumer(consumerDirectory, plan, typescript) {
+  if (!plan.typed) {
+    return;
+  }
+  writeFileSync(
+    path.join(consumerDirectory, "consumer.ts"),
+    strictConsumerTypeScriptSource(plan.name),
+  );
+  writeFileSync(
+    path.join(consumerDirectory, "tsconfig.json"),
+    `${JSON.stringify(strictConsumerTypeScriptConfig(), null, 2)}\n`,
+  );
+  requireSuccess(
+    await run(
+      process.execPath,
+      [typescript, "--pretty", "false", "--project", "tsconfig.json"],
+      {
+        cwd: consumerDirectory,
+        env: releaseConsumerEnvironment(
+          path.join(consumerDirectory, ".typescript-npm-cache"),
+        ),
+      },
+    ),
+    `${plan.name} strict declaration consumer`,
+  );
+}
+
+async function loadTypeScriptApi(typescriptCompiler) {
+  const apiFile = path.resolve(
+    path.dirname(typescriptCompiler),
+    "../lib/typescript.js",
+  );
+  if (!existsSync(apiFile) || !lstatSync(apiFile).isFile()) {
+    fail(`TypeScript API does not exist beside the compiler: ${apiFile}`);
+  }
+  const imported = await import(pathToFileURL(apiFile).href);
+  const typescriptApi = imported.default ?? imported;
+  if (typeof typescriptApi.resolveModuleName !== "function") {
+    fail(`TypeScript API is invalid: ${apiFile}`);
+  }
+  return typescriptApi;
+}
+
+async function verifyReleaseConsumer({
+  artifactsDirectory,
+  consumerRoot,
+  npmCache,
+  plan,
+  releasePackageByName,
+  typescript,
+  typescriptApi,
+}) {
+  const safeName = plan.name.replaceAll("/", "-").replaceAll("@", "");
+  const consumerDirectory = mkdtempSync(
+    path.join(consumerRoot, `${safeName}-`),
+  );
+  writeJsonAtomic(path.join(consumerDirectory, "package.json"), {
+    name: `codsen-release-consumer-${safeName}`,
+    private: true,
+    type: "module",
+    version: "1.0.0",
+  });
+  const tarballs = plan.closureNames.map((name) =>
+    path.join(artifactsDirectory, releasePackageByName.get(name).tarball.file),
+  );
+  requireSuccess(
+    await run(
+      NPM,
+      [
+        "install",
+        "--engine-strict",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "--omit=dev",
+        ...tarballs,
+      ],
+      {
+        cwd: consumerDirectory,
+        env: releaseConsumerEnvironment(npmCache),
+      },
+    ),
+    `${plan.name} production-only consumer install`,
+  );
+  assertConsumerDependencyPins(consumerDirectory, plan, releasePackageByName);
+  const { files, manifest, packageDirectory } = assertInstalledPayload(
+    consumerDirectory,
+    plan,
+  );
+  assertDeclarationDependencyOwnership(
+    plan,
+    manifest,
+    packageDirectory,
+    files,
+    typescriptApi,
+  );
+  await importReleaseConsumer(consumerDirectory, plan);
+  await smokeReleaseConsumerBins(consumerDirectory, plan);
+  await compileReleaseConsumer(consumerDirectory, plan, typescript);
+  console.log(
+    `Verified isolated publish consumer for ${plan.name}@${plan.version}.`,
+  );
+}
+
+async function commandVerifyConsumers(options) {
+  const manifestOption = requiredOption(options, "manifest");
+  const concurrency = positiveInteger(
+    options.values.get("concurrency"),
+    "--concurrency",
+    DEFAULT_CONCURRENCY,
+  );
+  const { directory, manifest } = loadReleaseManifest(manifestOption);
+  assertTrackedWorktreeClean();
+  assertHeadBinding(manifest.headSha, "release manifest");
+  assertBaseAncestor(manifest.baseSha, manifest.headSha);
+  validateCurrentPackageManifests(manifest.packages);
+
+  const plans = createReleaseConsumerPlans(
+    manifest.packages,
+    readWorkspaceRecords(ROOT),
+  );
+  assertConsumerRuntimeSupportsPlans(plans, process.versions.node);
+  assertFunctionalCliSmokeCoverage(
+    plans.filter(({ bins }) => Object.keys(bins).length > 0),
+  );
+  const typescript = path.resolve(
+    process.cwd(),
+    options.values.get("typescript") ?? "node_modules/typescript/bin/tsc",
+  );
+  if (plans.some(({ typed }) => typed)) {
+    if (!existsSync(typescript)) {
+      fail(`TypeScript compiler does not exist: ${typescript}`);
+    }
+    const compilerStat = lstatSync(typescript);
+    if (!compilerStat.isFile() || compilerStat.isSymbolicLink()) {
+      fail(`TypeScript compiler is not a regular file: ${typescript}`);
+    }
+  }
+  const typescriptApi = plans.some(({ typed }) => typed)
+    ? await loadTypeScriptApi(typescript)
+    : null;
+
+  const releasePackageByName = new Map(
+    manifest.packages.map((item) => [item.name, item]),
+  );
+  const temporaryRoot = mkdtempSync(
+    path.join(tmpdir(), "codsen-npm-release-consumers-"),
+  );
+  const consumerRoot = path.join(temporaryRoot, "consumers");
+  const npmCache = path.join(temporaryRoot, "npm-cache");
+  mkdirSync(consumerRoot, { recursive: true });
+  mkdirSync(npmCache, { recursive: true });
+  let succeeded = false;
+  try {
+    const results = await mapLimit(plans, concurrency, async (plan) => {
+      try {
+        await verifyReleaseConsumer({
+          artifactsDirectory: directory,
+          consumerRoot,
+          npmCache,
+          plan,
+          releasePackageByName,
+          typescript,
+          typescriptApi,
+        });
+        return { name: plan.name, status: "passed" };
+      } catch (error) {
+        return {
+          error: error.stack ?? error.message,
+          name: plan.name,
+          status: "failed",
+        };
+      }
+    });
+    const failures = results.filter(({ status }) => status === "failed");
+    if (failures.length > 0) {
+      fail(
+        `Release consumer verification failed:\n${failures
+          .map(({ error, name }) => `\n${name}:\n${error}`)
+          .join("\n")}`,
+      );
+    }
+    succeeded = true;
+    console.log(
+      `Verified ${plans.length} exact publish-shaped tarball consumer(s), including ${plans.filter(({ typed }) => typed).length} strict declaration compilation(s).`,
+    );
+  } finally {
+    if (succeeded) {
+      rmSync(temporaryRoot, { force: true, recursive: true });
+    } else {
+      console.error(`Preserved failing consumers at ${temporaryRoot}`);
+    }
+  }
+}
+
 function sanitizedNpmEnvironment() {
   const environment = { ...process.env };
   for (const key of Object.keys(environment)) {
@@ -1318,6 +1868,8 @@ async function main() {
     await commandPreflight(options);
   } else if (options.command === "pack") {
     await commandPack(options);
+  } else if (options.command === "verify-consumers") {
+    await commandVerifyConsumers(options);
   } else if (options.command === "publish") {
     await commandPublish(options);
   } else if (options.command === "tags") {
