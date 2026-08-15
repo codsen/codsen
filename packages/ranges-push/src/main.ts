@@ -29,6 +29,29 @@ const defaults: Opts = {
   mergeType: 1,
 };
 
+// rMerge() throws away the ranges which cover nothing and insert nothing, so
+// anything mimicking its output has to ignore them too
+function isFutile(range: RangeType): boolean {
+  return range[2] === undefined && range[0] === range[1];
+}
+
+// firstCovers() can read only the leading cluster while the ranges sit in
+// non-descending "from" order - which is how add() receives them in practice
+function isAscending(ranges: RangeType[]): boolean {
+  let previousFrom = -1;
+  for (let i = 0, len = ranges.length; i < len; i++) {
+    const range = ranges[i];
+    if (!Array.isArray(range)) {
+      continue;
+    }
+    if (range[0] < previousFrom) {
+      return false;
+    }
+    previousFrom = range[0];
+  }
+  return true;
+}
+
 // -----------------------------------------------------------------------------
 
 class Ranges {
@@ -60,14 +83,19 @@ class Ranges {
     // so it's correct, let's get it in:
     DEV &&
       console.log(
-        `063 ranges-push: USING opts = ${JSON.stringify(opts, null, 4)}`,
+        `086 ranges-push: USING opts = ${JSON.stringify(opts, null, 4)}`,
       );
     this.opts = opts;
     this.ranges = [];
+    this.sorted = true;
   }
 
   ranges: RangeType[];
   opts: Opts;
+  // true while "ranges" is known to be in non-descending "from" order; it lets
+  // firstCovers() answer from the leading cluster alone instead of walking and
+  // re-walking the whole accumulated array
+  private sorted: boolean;
 
   // A D D ()
   // ========
@@ -81,16 +109,16 @@ class Ranges {
   add(originalFrom?: any, originalTo?: any, addVal?: any): void {
     DEV &&
       console.log(
-        `\n\n\n${`\u001b[${32}m${`084 ${`=`.repeat(80)}`}\u001b[${39}m`}`,
+        `\n\n\n${`\u001b[${32}m${`112 ${`=`.repeat(80)}`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `088 ${`\u001b[${35}m${`ADD()`}\u001b[${39}m`} called; originalFrom = ${originalFrom}; originalTo = ${originalTo}; addVal = ${addVal}`,
+        `116 ${`\u001b[${35}m${`ADD()`}\u001b[${39}m`} called; originalFrom = ${originalFrom}; originalTo = ${originalTo}; addVal = ${addVal}`,
       );
 
     if (originalFrom == null && originalTo == null) {
       // absent ranges are marked as null - instead of array of arrays we can receive a null
-      DEV && console.log(`093 nothing happens`);
+      DEV && console.log(`121 nothing happens`);
       return;
     }
     if (existy(originalFrom) && !existy(originalTo)) {
@@ -102,17 +130,17 @@ class Ranges {
                 // recursively feed this subarray, hopefully it's an array
                 DEV &&
                   console.log(
-                    `105 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
+                    `133 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
                       thing,
                       null,
                       4,
                     )}`,
                   );
                 (this as any).add(...thing);
-                DEV && console.log("112 104\n\n\n");
+                DEV && console.log("140 104\n\n\n");
                 DEV &&
-                  console.log("114 ██ END OF RECURSION, BACK TO NORMAL FLOW");
-                DEV && console.log("115 107\n\n\n");
+                  console.log("142 ██ END OF RECURSION, BACK TO NORMAL FLOW");
+                DEV && console.log("143 107\n\n\n");
               }
               // just skip other cases
             });
@@ -126,16 +154,16 @@ class Ranges {
             // recursively pass in those values
             DEV &&
               console.log(
-                `129 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
+                `157 ██ RECURSIVELY CALLING ITSELF AGAIN WITH ${JSON.stringify(
                   originalFrom,
                   null,
                   4,
                 )}`,
               );
             (this as any).add(...originalFrom);
-            DEV && console.log("136 128\n\n\n");
-            DEV && console.log("137 ██ END OF RECURSION, BACK TO NORMAL FLOW");
-            DEV && console.log("138 130\n\n\n");
+            DEV && console.log("164 128\n\n\n");
+            DEV && console.log("165 ██ END OF RECURSION, BACK TO NORMAL FLOW");
+            DEV && console.log("166 130\n\n\n");
           }
         }
         // else,
@@ -156,7 +184,7 @@ class Ranges {
     if (isInt(from) && isInt(to)) {
       DEV &&
         console.log(
-          `159 ${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`,
+          `187 ${`\u001b[${33}m${`CASE 2`}\u001b[${39}m`} - two indexes were given as arguments`,
         );
       // This means two indexes were given as arguments. Business as usual.
       if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
@@ -166,7 +194,7 @@ class Ranges {
       }
       DEV &&
         console.log(
-          `169 ${`\u001b[${33}m${`addVal`}\u001b[${39}m`} = ${JSON.stringify(
+          `197 ${`\u001b[${33}m${`addVal`}\u001b[${39}m`} = ${JSON.stringify(
             addVal,
             null,
             4,
@@ -182,7 +210,7 @@ class Ranges {
       ) {
         DEV &&
           console.log(
-            `185 ${`\u001b[${32}m${`YES`}\u001b[${39}m`}, incoming "from" value match the existing last element's "to" value`,
+            `213 ${`\u001b[${32}m${`YES`}\u001b[${39}m`}, incoming "from" value match the existing last element's "to" value`,
           );
         // The incoming range is an exact extension of the last range, like
         // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
@@ -192,13 +220,13 @@ class Ranges {
         if ((this.last() as RangeType)[2] === null || addVal === null) {
           DEV &&
             console.log(
-              `195 this.last()[2] = ${(this.last() as RangeType)[2]}`,
+              `223 this.last()[2] = ${(this.last() as RangeType)[2]}`,
             );
-          DEV && console.log(`197 addVal = ${addVal}`);
+          DEV && console.log(`225 addVal = ${addVal}`);
         }
 
         if ((this.last() as RangeType)[2] !== null && existy(addVal)) {
-          DEV && console.log(`201`);
+          DEV && console.log(`229`);
           let calculatedVal =
             (this.last() as RangeType)[2] &&
             ((this.last() as RangeType)[2] as string).length &&
@@ -207,7 +235,7 @@ class Ranges {
               : addVal;
           DEV &&
             console.log(
-              `210 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+              `238 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
                 calculatedVal,
                 null,
                 4,
@@ -221,7 +249,7 @@ class Ranges {
           }
           DEV &&
             console.log(
-              `224 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
+              `252 ${`\u001b[${33}m${`calculatedVal`}\u001b[${39}m`} = ${JSON.stringify(
                 calculatedVal,
                 null,
                 4,
@@ -232,15 +260,21 @@ class Ranges {
             (this.last() as RangeType)[2] = calculatedVal;
           }
         }
-        DEV && console.log(`235`);
+        DEV && console.log(`263`);
       } else {
         DEV &&
           console.log(
-            `239 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`,
+            `267 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`,
           );
 
         if (!this.ranges) {
           this.ranges = [];
+        }
+        const previous = this.last();
+        if (previous && from < previous[0]) {
+          // this range jumps backwards, so the leading-cluster shortcut in
+          // firstCovers() no longer holds
+          this.sorted = false;
         }
         let whatToPush: RangeType =
           addVal !== undefined && !(isStr(addVal) && !addVal.length)
@@ -254,18 +288,18 @@ class Ranges {
             : [from, to];
         DEV &&
           console.log(
-            `257 PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`,
+            `291 PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`,
           );
         this.ranges.push(whatToPush);
         DEV &&
           console.log(
-            `262 this.ranges = ${JSON.stringify(this.ranges, null, 4)};`,
+            `296 this.ranges = ${JSON.stringify(this.ranges, null, 4)};`,
           );
       }
     } else {
       DEV &&
         console.log(
-          `268 ${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`,
+          `302 ${`\u001b[${33}m${`CASE 3`}\u001b[${39}m`} - error somewhere!`,
         );
       // Error somewhere!
       // Let's find out where.
@@ -282,7 +316,7 @@ class Ranges {
         );
       }
     }
-    DEV && console.log(`285`);
+    DEV && console.log(`319`);
   }
 
   // P U S H  ()  -  A L I A S   F O R   A D D ()
@@ -302,7 +336,7 @@ class Ranges {
   current(): null | RangeType[] {
     DEV &&
       console.log(
-        `305 ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
+        `339 ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
           this.ranges,
           null,
           4,
@@ -313,6 +347,8 @@ class Ranges {
       this.ranges = rMerge(this.ranges, {
         mergeType: this.opts.mergeType,
       }) as RangeType[];
+      // rMerge() hands back a sorted result, so the shortcut is usable again
+      this.sorted = true;
 
       if (this.ranges && this.opts.limitToBeAddedWhitespace) {
         return this.ranges.map((val) => {
@@ -328,7 +364,7 @@ class Ranges {
       }
       DEV &&
         console.log(
-          `331 ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
+          `367 ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
             this.ranges,
             null,
             4,
@@ -339,10 +375,84 @@ class Ranges {
     return null;
   }
 
+  // F I R S T C O V E R S ()
+  // ========================
+
+  // Does the first range - the one current() would report at index zero - start
+  // at zero and reach the given index? current() can answer that, but it
+  // re-merges, re-sorts and re-collapses the whole accumulated set to do it,
+  // which is far too much work for a predicate consulted once per iteration of
+  // a caller's character loop. This reads the ranges where they lie instead:
+  // it never merges, sorts, collapses whitespace or allocates.
+  firstCovers(index: number): boolean {
+    if (!isInt(index)) {
+      throw new TypeError(
+        `ranges-push/Ranges/firstCovers(): [THROW_ID_08] the input argument must be a natural number or zero! It was given as ${formatDiagnosticValue(index, 4)} (type ${typeof index})`,
+      );
+    }
+    if (!Array.isArray(this.ranges) || !this.ranges.length) {
+      return false;
+    }
+
+    // how far the cluster of ranges anchored at index zero reaches; null while
+    // nothing starts at zero, because then there is nothing to anchor it
+    let end: null | number = null;
+
+    if (this.sorted) {
+      // ascending ranges mean the first merged range is simply the leading
+      // cluster, so walk it and stop at the first gap
+      for (let i = 0, len = this.ranges.length; i < len; i++) {
+        const range = this.ranges[i];
+        if (!Array.isArray(range) || isFutile(range)) {
+          continue;
+        }
+        if (end === null) {
+          if (range[0] !== 0) {
+            // the leftmost range which survives merging misses index zero
+            return false;
+          }
+          end = range[1];
+        } else if (range[0] > end) {
+          // a gap - whatever sits further right is a separate merged range
+          break;
+        } else if (range[1] > end) {
+          end = range[1];
+        }
+        if (end >= index) {
+          return true;
+        }
+      }
+      return end !== null && end >= index;
+    }
+
+    // ranges arrived out of order, so a range anywhere in the array can extend
+    // the cluster and let another one join it - repeat until it settles
+    let extended = true;
+    while (extended) {
+      extended = false;
+      for (let i = 0, len = this.ranges.length; i < len; i++) {
+        const range = this.ranges[i];
+        if (!Array.isArray(range) || isFutile(range)) {
+          continue;
+        }
+        if (range[0] < 0) {
+          // merging would put a negative index first, not zero
+          return false;
+        }
+        if (end === null ? range[0] === 0 : range[0] <= end && range[1] > end) {
+          end = range[1];
+          extended = true;
+        }
+      }
+    }
+    return end !== null && end >= index;
+  }
+
   // W I P E ()
   // ==========
   wipe(): void {
     this.ranges = [];
+    this.sorted = true;
   }
 
   // R E P L A C E ()
@@ -354,13 +464,15 @@ class Ranges {
       // Let's put safety latch against such cases
       if (!(Array.isArray(givenRanges[0]) && isInt(givenRanges[0][0]))) {
         throw new Error(
-          `ranges-push/Ranges/replace(): [THROW_ID_08] Single range was given but we expected array of arrays! The first element, ${formatDiagnosticValue(givenRanges[0], 4)} should be an array and its first element should be an integer, a string index.`,
+          `ranges-push/Ranges/replace(): [THROW_ID_09] Single range was given but we expected array of arrays! The first element, ${formatDiagnosticValue(givenRanges[0], 4)} should be an array and its first element should be an integer, a string index.`,
         );
       } else {
         this.ranges = Array.from(givenRanges);
+        this.sorted = isAscending(this.ranges);
       }
     } else {
       this.ranges = [];
+      this.sorted = true;
     }
   }
 

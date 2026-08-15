@@ -577,7 +577,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-push",
-    "size": 5714,
+    "size": 6734,
     "imports": [
       "codsen-utils",
       "ranges-sort",
@@ -792,7 +792,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 23085,
+    "size": 23030,
     "imports": [
       "codsen-utils",
       "ranges-apply",

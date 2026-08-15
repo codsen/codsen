@@ -13,6 +13,7 @@ declare class Ranges {
   constructor(originalOpts?: Partial<Opts>);
   ranges: Range[];
   opts: Opts;
+  private sorted;
   add(
     originalFrom: number,
     originalTo?: number,
@@ -26,6 +27,7 @@ declare class Ranges {
   ): void;
   push(originalFrom: Range[] | Range | null): void;
   current(): null | Range[];
+  firstCovers(index: number): boolean;
   wipe(): void;
   replace(givenRanges: Range[]): void;
   last(): Range | null;

@@ -44,7 +44,7 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
 
   if (opts && !isObj(opts)) {
     throw new TypeError(
-      `ranges-push/rMerge(): [THROW_ID_09] the second input argument must be a plain object. It was given as:\n${formatDiagnosticValue(opts, 4)} (type ${typeof opts})`,
+      `ranges-push/rMerge(): [THROW_ID_10] the second input argument must be a plain object. It was given as:\n${formatDiagnosticValue(opts, 4)} (type ${typeof opts})`,
     );
   }
   const resolvedOpts: Opts = { ...defaults, ...opts };
@@ -59,17 +59,17 @@ function rMerge(ranges: Ranges, opts?: Partial<Opts>): Ranges {
     typeof resolvedOpts.progressFn !== "function"
   ) {
     throw new TypeError(
-      `ranges-push/rMerge(): [THROW_ID_10] resolvedOpts.progressFn must be a function! It was given of a type: "${typeof resolvedOpts.progressFn}", equal to ${formatDiagnosticValue(resolvedOpts.progressFn, 4)}`,
+      `ranges-push/rMerge(): [THROW_ID_11] resolvedOpts.progressFn must be a function! It was given of a type: "${typeof resolvedOpts.progressFn}", equal to ${formatDiagnosticValue(resolvedOpts.progressFn, 4)}`,
     );
   }
   if (![1, 2, "1", "2"].includes(resolvedOpts.mergeType)) {
     throw new TypeError(
-      `ranges-push/rMerge(): [THROW_ID_11] resolvedOpts.mergeType was customised to a wrong thing! It was given of a type: "${typeof resolvedOpts.mergeType}", equal to ${formatDiagnosticValue(resolvedOpts.mergeType, 4)}`,
+      `ranges-push/rMerge(): [THROW_ID_12] resolvedOpts.mergeType was customised to a wrong thing! It was given of a type: "${typeof resolvedOpts.mergeType}", equal to ${formatDiagnosticValue(resolvedOpts.mergeType, 4)}`,
     );
   }
   if (typeof resolvedOpts.joinRangesThatTouchEdges !== "boolean") {
     throw new TypeError(
-      `ranges-push/rMerge(): [THROW_ID_12] resolvedOpts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof resolvedOpts.joinRangesThatTouchEdges}", equal to ${formatDiagnosticValue(resolvedOpts.joinRangesThatTouchEdges, 4)}`,
+      `ranges-push/rMerge(): [THROW_ID_13] resolvedOpts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof resolvedOpts.joinRangesThatTouchEdges}", equal to ${formatDiagnosticValue(resolvedOpts.joinRangesThatTouchEdges, 4)}`,
     );
   }
 

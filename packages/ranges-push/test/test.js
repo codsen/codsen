@@ -1212,7 +1212,7 @@ test("109 - REPLACE() - replaces ranges with single range (throws)", () => {
     () => {
       oldRanges.replace([6, 8]);
     },
-    /THROW_ID_08/,
+    /THROW_ID_09/,
     "109.01",
   );
 
@@ -1221,7 +1221,7 @@ test("109 - REPLACE() - replaces ranges with single range (throws)", () => {
     () => {
       oldRanges.replace([6, 8, "zzz"]);
     },
-    /THROW_ID_08/,
+    /THROW_ID_09/,
     "109.02",
   );
 
@@ -1259,6 +1259,237 @@ test("112 - ADD() ignores non-range items in a ranges array", () => {
     ],
     "112.01",
   );
+});
+
+// -----------------------------------------------------------------------------
+// 10. firstCovers()
+// -----------------------------------------------------------------------------
+
+test("113 - FIRSTCOVERS() - nothing gathered yet", () => {
+  const ranges = new Ranges();
+  equal(ranges.firstCovers(0), false, "113.01");
+  equal(ranges.firstCovers(5), false, "113.02");
+
+  // an add() which gathers nothing leaves it answering the same way
+  ranges.add(null, null);
+  equal(ranges.firstCovers(0), false, "113.03");
+});
+
+test("114 - FIRSTCOVERS() - a single range starting at zero", () => {
+  const ranges = new Ranges();
+  ranges.add(0, 5);
+  equal(ranges.firstCovers(0), true, "114.01");
+  equal(ranges.firstCovers(4), true, "114.02");
+  // the reach is inclusive - it answers ">= index", same as current()[0][1]
+  equal(ranges.firstCovers(5), true, "114.03");
+  equal(ranges.firstCovers(6), false, "114.04");
+});
+
+test("115 - FIRSTCOVERS() - a single range which misses zero", () => {
+  const ranges = new Ranges();
+  ranges.add(1, 5);
+  equal(ranges.firstCovers(0), false, "115.01");
+  equal(ranges.firstCovers(3), false, "115.02");
+  equal(ranges.firstCovers(9), false, "115.03");
+});
+
+test("116 - FIRSTCOVERS() - touching and overlapping ranges extend the first", () => {
+  // add() folds an exact extension into the last range
+  const touching = new Ranges();
+  touching.add(0, 5);
+  touching.add(5, 9);
+  equal(touching.ranges.length, 1, "116.01");
+  equal(touching.firstCovers(9), true, "116.02");
+  equal(touching.firstCovers(10), false, "116.03");
+
+  // an overlap is pushed separately, yet still merges into the first range
+  const overlapping = new Ranges();
+  overlapping.add(0, 5);
+  overlapping.add(3, 9);
+  equal(overlapping.ranges.length, 2, "116.04");
+  equal(overlapping.firstCovers(9), true, "116.05");
+  equal(overlapping.firstCovers(10), false, "116.06");
+
+  // a range nested inside the first one cannot shorten it
+  const nested = new Ranges();
+  nested.add(0, 9);
+  nested.add(3, 4);
+  equal(nested.firstCovers(9), true, "116.07");
+});
+
+test("117 - FIRSTCOVERS() - a gap ends the first range", () => {
+  const ranges = new Ranges();
+  ranges.add(0, 5);
+  ranges.add(6, 9);
+  ranges.add(9, 12);
+  equal(ranges.firstCovers(5), true, "117.01");
+  equal(ranges.firstCovers(6), false, "117.02");
+  equal(ranges.firstCovers(12), false, "117.03");
+});
+
+test("118 - FIRSTCOVERS() - ranges which merging discards", () => {
+  // [0, 0] covers nothing and inserts nothing, so merging drops it and the
+  // first range becomes [1, 8], which misses zero
+  const futile = new Ranges();
+  futile.add(0, 0);
+  futile.add(1, 8);
+  equal(futile.current(), [[1, 8]], "118.01");
+  const sameAgain = new Ranges();
+  sameAgain.add(0, 0);
+  sameAgain.add(1, 8);
+  equal(sameAgain.firstCovers(0), false, "118.02");
+
+  // a zero-width range with something to insert survives merging
+  const insert = new Ranges();
+  insert.add(0, 0, "zzz");
+  equal(insert.firstCovers(0), true, "118.03");
+  equal(insert.firstCovers(1), false, "118.04");
+});
+
+test("119 - FIRSTCOVERS() - ranges pushed out of order", () => {
+  // the second add() jumps backwards, so the leading-cluster shortcut is off
+  const bridged = new Ranges();
+  bridged.add(9, 12);
+  bridged.add(0, 5);
+  equal(bridged.firstCovers(5), true, "119.01");
+  equal(bridged.firstCovers(6), false, "119.02");
+
+  // ... and a later range can still bridge the gap between the two
+  bridged.add(5, 9);
+  equal(bridged.firstCovers(12), true, "119.03");
+  equal(bridged.firstCovers(13), false, "119.04");
+
+  // current() sorts the ranges, which puts the shortcut back on
+  equal(bridged.current(), [[0, 12]], "119.05");
+  equal(bridged.firstCovers(12), true, "119.06");
+
+  // out-of-order ranges which never reach zero
+  const unanchored = new Ranges();
+  unanchored.add(9, 12);
+  unanchored.add(1, 5);
+  equal(unanchored.firstCovers(0), false, "119.07");
+});
+
+test("120 - FIRSTCOVERS() - WIPE() and REPLACE()", () => {
+  const ranges = new Ranges();
+  ranges.add(0, 5);
+  equal(ranges.firstCovers(5), true, "120.01");
+  ranges.wipe();
+  equal(ranges.firstCovers(0), false, "120.02");
+
+  ranges.replace([
+    [0, 3],
+    [3, 7],
+  ]);
+  equal(ranges.firstCovers(7), true, "120.03");
+  equal(ranges.firstCovers(8), false, "120.04");
+
+  // replace() accepts out-of-order and malformed members
+  ranges.replace([[6, 9], null, [0, 6]]);
+  equal(ranges.firstCovers(9), true, "120.05");
+  equal(ranges.firstCovers(10), false, "120.06");
+
+  // a negative index sorts ahead of zero, so the first range is not at zero
+  ranges.replace([
+    [0, 9],
+    [-3, 0],
+  ]);
+  equal(ranges.firstCovers(0), false, "120.07");
+
+  ranges.replace([]);
+  equal(ranges.firstCovers(0), false, "120.08");
+});
+
+test("121 - FIRSTCOVERS() - does not merge, sort or collapse", () => {
+  const ranges = new Ranges({ limitToBeAddedWhitespace: true });
+  ranges.add(9, 12);
+  ranges.add(0, 5, "\n\n\n\n");
+  const snapshot = JSON.stringify(ranges.ranges);
+  equal(ranges.firstCovers(5), true, "121.01");
+  equal(JSON.stringify(ranges.ranges), snapshot, "121.02");
+});
+
+test("122 - FIRSTCOVERS() - agrees with CURRENT() on assorted range sets", () => {
+  const sets = [
+    [],
+    [[0, 0]],
+    [[0, 0, "a"]],
+    [[0, 5]],
+    [[1, 5]],
+    [
+      [0, 5],
+      [5, 9],
+    ],
+    [
+      [0, 5],
+      [6, 9],
+    ],
+    [
+      [0, 5],
+      [3, 9],
+    ],
+    [
+      [0, 5],
+      [5, 5],
+    ],
+    [
+      [5, 9],
+      [0, 5],
+    ],
+    [
+      [5, 9],
+      [0, 3],
+    ],
+    [
+      [9, 12],
+      [4, 6],
+      [0, 2],
+      [2, 4],
+    ],
+    [
+      [3, 4],
+      [0, 1],
+    ],
+    [
+      [0, 2],
+      [2, 2],
+      [2, 6],
+    ],
+    [
+      [2, 2],
+      [0, 1],
+    ],
+  ];
+  const actual = [];
+  const expected = [];
+  for (const set of sets) {
+    for (const index of [0, 1, 5, 9, 12]) {
+      const probe = new Ranges();
+      const reference = new Ranges();
+      for (const range of set) {
+        probe.add(...range);
+        reference.add(...range);
+      }
+      // current() is the semantics being matched, so ask it the same question
+      const merged = reference.current();
+      const label = `${JSON.stringify(set)} @ ${index}`;
+      actual.push(`${label} = ${probe.firstCovers(index)}`);
+      expected.push(
+        `${label} = ${Boolean(merged) && merged[0][0] === 0 && merged[0][1] >= index}`,
+      );
+    }
+  }
+  equal(actual, expected, "122.01");
+});
+
+test("123 - FIRSTCOVERS() - rejects an index which is not a natural number", () => {
+  const ranges = new Ranges();
+  ranges.add(0, 5);
+  throws(() => ranges.firstCovers("5"), /THROW_ID_08/, "123.01");
+  throws(() => ranges.firstCovers(null), /THROW_ID_08/, "123.02");
+  throws(() => ranges.firstCovers(1.5), /THROW_ID_08/, "123.03");
+  throws(() => ranges.firstCovers(-1), /THROW_ID_08/, "123.04");
+  throws(() => ranges.firstCovers(), /THROW_ID_08/, "123.05");
 });
 
 test.run();
