@@ -3,6 +3,7 @@ import { equal, throws } from "uvu/assert";
 
 import {
   findUnsupportedIifeApis,
+  findUnsupportedIifeRegexpSyntax,
   IIFE_API_SMOKES,
   IIFE_BROWSER_POLICY,
   iifeGlobalName,
@@ -112,6 +113,107 @@ test("05 - keeps browser smoke functions self-contained and serializable", () =>
     "05.02",
   );
   equal(Object.isFrozen(IIFE_API_SMOKES), true, "05.03");
+});
+
+test("06 - reports regular expression syntax newer than the floor", () => {
+  // esbuild lowers language syntax but leaves these literals untouched, so
+  // each one is a parse error which disables the whole bundle at load
+  equal(
+    findUnsupportedIifeRegexpSyntax("var a = /(?<=x)y/;"),
+    ["regular expression lookbehind (Chromium 62)"],
+    "06.01",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax("var a = /(?<!x)y/;"),
+    ["regular expression lookbehind (Chromium 62)"],
+    "06.02",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax("var a = /(?<year>\\d{4})/;"),
+    ["regular expression named capture group (Chromium 64)"],
+    "06.03",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax("var a = /(?<n>x)\\k<n>/;"),
+    [
+      "regular expression named capture group (Chromium 64)",
+      "regular expression named backreference (Chromium 64)",
+    ],
+    "06.04",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax("var a = /\\p{Letter}/u, b = /\\P{L}/u;"),
+    ["regular expression Unicode property escape (Chromium 64)"],
+    "06.05",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax("var a = /x.y/s;"),
+    ["regular expression dotAll flag (Chromium 62)"],
+    "06.06",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax("var a = /x/d;"),
+    ["regular expression match indices flag (Chromium 90)"],
+    "06.07",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax("var a = /[a]/v;"),
+    ["regular expression unicodeSets flag (Chromium 112)"],
+    "06.08",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax('var a = new RegExp("x.y", "s");'),
+    ["regular expression dotAll flag (Chromium 62)"],
+    "06.09",
+  );
+  throws(
+    () => findUnsupportedIifeRegexpSyntax(null),
+    /must be a string/,
+    "06.10",
+  );
+});
+
+test("07 - does not mistake data or division for a literal", () => {
+  // the exact shape which defeated a substring-only scan: minified array
+  // members whose contents read as a literal ending in an `s` flag
+  equal(
+    findUnsupportedIifeRegexpSyntax(
+      'var t = ["</td","<html","</html","<head","<script","<style"];',
+    ),
+    [],
+    "07.01",
+  );
+  equal(findUnsupportedIifeRegexpSyntax("var q = a/b/s;"), [], "07.02");
+  equal(
+    findUnsupportedIifeRegexpSyntax(
+      'var a = /ab+c/gi, b = str.replace(/x/gu, "y");',
+    ),
+    [],
+    "07.03",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax(`var t = \`x\${a/b/g}y\`;`),
+    [],
+    "07.04",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax(
+      "// mentions /(?:x)/s in a comment\nvar a=1;",
+    ),
+    [],
+    "07.05",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax("/* banner /x/s */ var a = 1;"),
+    [],
+    "07.06",
+  );
+  // a literal is still found after a keyword, and after an operator
+  equal(
+    findUnsupportedIifeRegexpSyntax("function f(){ return /x.y/s; }"),
+    ["regular expression dotAll flag (Chromium 62)"],
+    "07.07",
+  );
 });
 
 test.run();

@@ -9,6 +9,7 @@ import vm from "node:vm";
 
 import {
   findUnsupportedIifeApis,
+  findUnsupportedIifeRegexpSyntax,
   IIFE_API_SMOKES,
   IIFE_BROWSER_POLICY,
   iifeGlobalName,
@@ -119,6 +120,16 @@ function verifyStaticApis(bundles) {
       errors.push(`${bundle.directory}: ${unsupported.join(", ")}`);
     }
 
+    // Syntax, not an API: esbuild does not rewrite regular-expression literals,
+    // so one of these anywhere in the bundled closure is a parse error which
+    // stops the whole bundle loading rather than one call failing.
+    const unsupportedRegexpSyntax = findUnsupportedIifeRegexpSyntax(
+      bundle.source,
+    );
+    if (unsupportedRegexpSyntax.length) {
+      errors.push(`${bundle.directory}: ${unsupportedRegexpSyntax.join(", ")}`);
+    }
+
     const segmenterReferences =
       bundle.source.match(/\bIntl\.Segmenter\b/gu)?.length ?? 0;
     if (
@@ -150,7 +161,7 @@ function verifyStaticApis(bundles) {
   }
   if (errors.length) {
     throw new Error(
-      `IIFEs contain APIs newer than ${IIFE_BROWSER_POLICY.esbuildTarget}:\n- ${errors.join("\n- ")}`,
+      `IIFEs contain APIs or syntax newer than ${IIFE_BROWSER_POLICY.esbuildTarget}:\n- ${errors.join("\n- ")}`,
     );
   }
 }
