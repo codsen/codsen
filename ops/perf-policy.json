@@ -1,0 +1,6 @@
+{
+  "unchangedTolerancePercent": 2,
+  "regressionThresholdPercent": 10,
+  "packageOverrides": {},
+  "waivers": {}
+}

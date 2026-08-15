@@ -17,8 +17,8 @@ truth for benchmark intent, normalization, and history invalidation.
 2. Before benchmarking, record `git status --short -- packages/*/perf/check.js packages/*/perf/historical.json`. These files may already contain user changes; preserve them.
 3. For a release-wide audit, inspect every `packages/*/perf/check.js`; otherwise inspect every working-tree-modified check and each check relevant to the request. Confirm that `testme()` calls the current built public API with valid, meaningful, deterministic inputs and no mutable state that grows across iterations. Use source types, examples, and tests as evidence. If `dist` is missing or stale, treat source/types as the contract and rebuild before a runtime smoke test when the user has authorized builds.
 4. When the measured workload changes, reset that package's complete `perf/historical.json` to `{}` before the next run. This is mandatory for changes to the callable, arguments, options, fixture contents, callbacks, setup placement, or amount of work. Do not reset for imports, comments, or formatting alone. Record every reset; never compare the new workload with old records.
-5. If the user requested only an audit or workload repair, do not run perf merely to refill reset histories; leave them `{}`, complete static/smoke validation, and skip steps 6–9. Otherwise, from the repository root, run `npm run perf`. Allow the command to finish because benchmark callbacks update `packages/*/perf/historical.json` asynchronously. A reset package will gain only a fresh baseline for its new workload.
-6. If the command fails, report the failure and the affected package output. Do not manufacture a whole-monorepo conclusion from an incomplete run. It is acceptable to analyze completed files only when clearly labelled partial.
+5. If the user requested only an audit or workload repair, do not run perf merely to refill reset histories; leave them `{}`, complete static/smoke validation, and skip steps 6–9. Otherwise, from the repository root, run `npm run perf`. Allow the command to finish because each benchmark runs asynchronously and writes `perf/historical.json` when its own suite completes. A reset package will gain only a fresh baseline for its new workload.
+6. If the command fails, distinguish the two causes before reporting. A regression beyond `ops/perf-policy.json#regressionThresholdPercent` sets a non-zero exit code deliberately: that is a measured result, its history is intact, and the package's baseline was deliberately kept rather than overwritten. Any other failure is an incomplete run — report it with the affected package output, and do not manufacture a whole-monorepo conclusion from it. It is acceptable to analyze completed files only when clearly labelled partial.
 7. Run:
 
    ```sh
@@ -43,9 +43,12 @@ releases; do not compare raw machine throughput.
 
 `packages/*/perf/historical.json` is JSON except that its numbers carry underscore separators (`19_069_207`), and anything above 100 is stored rounded to a whole number. `JSON.parse()` throws on those files. Use `parseHistorical()` / `stringifyHistorical()` from `ops/scripts/historicalJson.js` instead — the analyser script and `ops/scripts/perf.js` both go through them.
 
+Keys are either a semver version, `lastVersion`, or `lastSlowerRun`. Only the first two are baselines; see the comparison semantics below.
+
 ## Comparison semantics
 
 - Treat `lastVersion` as the latest normalized score.
+- Ignore `lastSlowerRun` when picking a baseline. It is the score of a run which lost against `lastVersion` by more than 2%, kept as evidence precisely so that it did not become the baseline. Report it as a pending regression for that package rather than comparing against it.
 - Compare the latest score with the last version-keyed numeric entry preceding it.
 - When that entry is the current `package.json` version and duplicates `lastVersion`, skip it and use the preceding version entry. The benchmark writes the current score to both places, so comparing those duplicate values would always produce a misleading 0% change.
 - Calculate `(latest / baseline - 1) * 100`. Positive values mean faster; negative values mean slower.

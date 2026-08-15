@@ -3,6 +3,13 @@ import path from "node:path";
 import Benchmark from "benchmark";
 import { sortAllObjectsSync } from "json-comb-core";
 import { perfRef, opsPerSec as refOpsPerSec } from "perf-ref";
+import {
+  baselineOf,
+  classifyPerfRun,
+  nextHistoricalData,
+  readPerfPolicy,
+  resolvePerfPolicy,
+} from "../helpers/perfPolicy.js";
 import { parseHistorical, stringifyHistorical } from "./historicalJson.js";
 
 export const runPerf = async (cb, callerDir) => {
@@ -20,6 +27,7 @@ export const runPerf = async (cb, callerDir) => {
   let { version, name } = JSON.parse(
     fs.readFileSync(path.resolve(callerDir, "package.json")),
   );
+  let resolvedPolicy = resolvePerfPolicy(readPerfPolicy(), name);
 
   console.log(
     `${`\u001b[${90}m${`scripts/run-perf.js:`}\u001b[${39}m`}${" ".repeat(
@@ -34,10 +42,6 @@ export const runPerf = async (cb, callerDir) => {
     return num > logThreshold
       ? addCommas(Math.floor(num))
       : Math.round(num * 100) / 100;
-  }
-
-  function perc(amount, total) {
-    return Math.round(((amount * 100) / total) * 100) / 100;
   }
 
   function addCommas(nStr) {
@@ -75,48 +79,72 @@ export const runPerf = async (cb, callerDir) => {
       let normalisedBenchmarkedOpsPerSec =
         (this[0].hz * refOpsPerSec) / freshlyRanRefOpsPerSec;
 
-      // what we compare against — grab it before we overwrite anything below
-      let baseline = historicalData.lastVersion ?? historicalData[version];
+      // what we compare against — read it before recording anything
+      let baseline = baselineOf(historicalData, version);
 
-      historicalData[version] = normalisedBenchmarkedOpsPerSec;
-      historicalData.lastVersion = normalisedBenchmarkedOpsPerSec;
-
-      // housekeeping
-      delete historicalData.lastPublished;
-      delete historicalData.lastRan;
+      // Judge the run first, then record it. A materially slower run keeps the
+      // baseline it lost against, so the next run still has a truthful
+      // comparison point instead of the regressed figure.
+      let { changePercent, verdict } = classifyPerfRun({
+        baseline,
+        resolvedPolicy,
+        score: normalisedBenchmarkedOpsPerSec,
+      });
 
       let newHistoricalDataFileContents = `${stringifyHistorical(
-        sortAllObjectsSync(historicalData),
+        sortAllObjectsSync(
+          nextHistoricalData({
+            historicalData,
+            score: normalisedBenchmarkedOpsPerSec,
+            verdict,
+            version,
+          }),
+        ),
       )}\n`;
 
       if (
         historicalDataFileContents.trim() !==
         newHistoricalDataFileContents.trim()
       ) {
-        fs.writeFile(
+        // written synchronously: the file is being changed from a benchmark
+        // completion handler, and a callback write only adds an ordering hazard
+        fs.writeFileSync(
           path.resolve(callerDir, "./perf/historical.json"),
           newHistoricalDataFileContents,
-          (err) => {
-            if (err) {
-              throw err;
-            }
-            console.log(`${heads}✅ historical.json written`);
-          },
         );
+        console.log(`${heads}✅ historical.json written`);
       }
 
       // evaluation:
       // -----------------------------------------------------------------------
 
-      if (typeof baseline !== "number") {
+      if (verdict === "regression") {
+        if (resolvedPolicy.failOnRegression) {
+          process.exitCode = 1;
+        }
+        console.log(
+          `${heads}🐌 ${`[${31}m${`current code is slower by ${Math.abs(
+            changePercent,
+          )}%, beyond the ${
+            resolvedPolicy.regressionThresholdPercent
+          }% regression threshold`}[${39}m`} ${`[${90}m${`(was ${round(
+            baseline,
+          )} — now ${round(
+            normalisedBenchmarkedOpsPerSec,
+          )} ops/sec; the baseline is kept)`}[${39}m`}`,
+        );
+        if (resolvedPolicy.waiverReason) {
+          console.log(
+            `${heads}📝 ${`[${90}m${`waived: ${resolvedPolicy.waiverReason}`}[${39}m`}`,
+          );
+        }
+      } else if (verdict === "baseline") {
         console.log(
           `${heads}🆕 ${`\u001b[${33}m${`no previous record, this run becomes the baseline`}\u001b[${39}m`} ${`\u001b[${90}m${`(${round(
             normalisedBenchmarkedOpsPerSec,
           )} ops/sec)`}\u001b[${39}m`}`,
         );
-      } else if (
-        perc(Math.abs(baseline - normalisedBenchmarkedOpsPerSec), baseline) <= 2
-      ) {
+      } else if (verdict === "unchanged") {
         console.log(
           `${heads}${"⚡️"} ${`\u001b[${32}m${`current code is just as fast as before`}\u001b[${39}m`} ${`\u001b[${90}m${`(was ${round(
             baseline,
@@ -126,20 +154,19 @@ export const runPerf = async (cb, callerDir) => {
         );
       } else {
         console.log(
-          `${heads}${
-            baseline < normalisedBenchmarkedOpsPerSec ? "⚡️" : "🐌"
-          } ${`\u001b[${
-            baseline < normalisedBenchmarkedOpsPerSec ? 32 : 31
-          }m${`current code is ${
-            baseline < normalisedBenchmarkedOpsPerSec ? "faster" : "slower"
-          } by ${perc(
-            Math.abs(baseline - normalisedBenchmarkedOpsPerSec),
-            baseline,
-          )}%`}\u001b[${39}m`} ${`\u001b[${90}m${`(was ${round(
+          `${heads}${verdict === "faster" ? "⚡️" : "🐌"} ${`\u001b[${
+            verdict === "faster" ? 32 : 31
+          }m${`current code is ${verdict} by ${Math.abs(changePercent)}%`}\u001b[${39}m`} ${`\u001b[${90}m${`(was ${round(
             baseline,
           )} \u2014 now ${round(
             normalisedBenchmarkedOpsPerSec,
           )} ops/sec)`}\u001b[${39}m`}`,
+        );
+      }
+
+      if (verdict === "slower") {
+        console.log(
+          `${heads}📌 ${`[${90}m${`the baseline is kept; this run is recorded as lastSlowerRun`}[${39}m`}`,
         );
       }
 

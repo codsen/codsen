@@ -134,3 +134,66 @@ preceding score produced by the same workload. Compare percentage changes, not
 raw score magnitudes across packages, because each package deliberately does a
 different amount of work. For monorepo summaries, prefer the median percentage
 and geometric-mean ratio; large outliers can distort an arithmetic mean.
+
+`lastSlowerRun`, when present, is the score of a run which lost against
+`lastVersion` by more than the unchanged tolerance. It is a record of the
+measurement, never a baseline. A later run which is not materially slower
+removes it.
+
+## A regression keeps the baseline it lost against
+
+`ops/scripts/perf.js` judges each run before recording it, and a run which is
+materially slower than the baseline does not replace it. Without that rule a
+regression is reported once and then treated as the thing to compare against,
+so the same lost performance is reported as "just as fast as before" on every
+later run, and the evidence needed to notice it is gone.
+
+The verdicts, and what each one records:
+
+| Verdict | When | Recorded |
+| --- | --- | --- |
+| `baseline` | no comparable score yet | becomes the baseline |
+| `faster` | faster by more than the tolerance | becomes the baseline |
+| `unchanged` | within the tolerance either way | becomes the baseline |
+| `slower` | slower by more than the tolerance, within the threshold | `lastSlowerRun` only |
+| `regression` | slower by more than the threshold | `lastSlowerRun` only |
+
+A `regression` also sets a non-zero exit code, so it is distinguishable from a
+pass by something other than reading the output.
+
+`ops/perf-policy.json` holds both percentages:
+
+- `unchangedTolerancePercent` is the noise band, `2` by default, matching the
+  2% guidance above.
+- `regressionThresholdPercent` is the point at which a slowdown fails the run,
+  `10` by default. It must not sit inside the tolerance.
+- `packageOverrides` sets either percentage for one package.
+- `waivers` opts a package out of failing, for a workload which is inherently
+  noisy. A waiver needs a substantive reason; the run still reports the
+  regression and still keeps the baseline.
+
+An intentional, accepted slowdown is a deliberate decision, not something the
+harness should absorb silently. Record it by resetting that package's history,
+exactly as a workload change requires, and say in the change why the slower
+score is being accepted.
+
+## Why `perf` is not a hosted job
+
+This is a decision, not an omission. `perf` runs locally, before a release, and
+in no GitHub Actions workflow.
+
+Two reasons, the second decisive:
+
+- Hosted runners are noisy in ways `perf-ref` normalization does not remove.
+  Normalization makes scores comparable across hardware; it does not make one
+  measurement on a shared, throttled runner trustworthy enough to fail a pull
+  request on.
+- The benchmark writes `perf/historical.json` by design, and both hosted lanes
+  end by asserting a clean tree through `git diff --exit-code`. A perf step in
+  either lane would fail that check on any run whose score moved, which is
+  every run. Making perf hosted therefore means separating recording from
+  measuring first; it is not a matter of adding a step.
+
+Revisit this if the recording split is built. Until then, the exit code exists
+for the maintainer running `npm run perf` and for any future job which measures
+without recording.
