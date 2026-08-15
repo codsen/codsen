@@ -1,5 +1,26 @@
 # Repository guidance
 
+## Write instructions for every agent, not for one
+
+Both Codex and Claude work in this repository, and either may pick up any task.
+Keep instructions, conventions, and workflow notes in this file or another file
+that every agent reads, and phrase them for an unnamed agent.
+
+- Do not create tool-specific guidance files such as `CLAUDE.md`, and do not
+  move a shared rule into one tool's configuration.
+- Do not phrase a shared rule as if one assistant were its only reader, and do
+  not rely on behaviour that only one tool's harness provides.
+- When a rule genuinely applies to one tool alone, name that tool inside the
+  shared file rather than splitting the guidance across files.
+
+## Ask before branching
+
+The maintainers are the authors here and normally commit straight to `main`, so
+a `main` checkout is where work is expected to happen, not a hazard to route
+around. Do not create a branch on your own initiative, and do not treat a
+default-branch checkout as a reason to. If a change looks like it warrants its
+own branch, stop and ask first, then follow the answer.
+
 ## Architecture principles
 
 `.agents/ARCHITECTURE_PRINCIPLES.md` defines the repository's direction for
