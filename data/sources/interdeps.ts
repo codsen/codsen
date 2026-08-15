@@ -272,7 +272,7 @@ export const interdeps = [
   },
   {
     "name": "generate-atomic-css",
-    "size": 8169,
+    "size": 8144,
     "imports": [
       "codsen-utils",
       "string-left-right"
@@ -311,7 +311,7 @@ export const interdeps = [
   },
   {
     "name": "html-img-alt",
-    "size": 3097,
+    "size": 3072,
     "imports": [
       "check-types-mini",
       "codsen-utils",
@@ -739,7 +739,7 @@ export const interdeps = [
   },
   {
     "name": "string-process-comma-separated",
-    "size": 2625,
+    "size": 2557,
     "imports": [
       "codsen-utils"
     ]
@@ -792,7 +792,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 23030,
+    "size": 22917,
     "imports": [
       "codsen-utils",
       "ranges-apply",

@@ -628,14 +628,14 @@ function prepLine(
     // if (pad) {
     let startPoint = 0;
     for (let y = 0, len = source.length; y < len; y++) {
-      let charcode = source[y].charCodeAt(0);
+      // the charcode is read inside the log, not hoisted into a local above it
       DEV &&
         console.log(
           `634 \u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`source[ ${y} ] = ${
             source[y].trim().length
               ? source[y]
               : JSON.stringify(source[y], null, 0)
-          }`}\u001b[${39}m ${`\u001b[${90}m#${charcode}\u001b[${39}m`} \u001b[${36}m${`===============================`}\u001b[${39}m`,
+          }`}\u001b[${39}m ${`\u001b[${90}m#${source[y].charCodeAt(0)}\u001b[${39}m`} \u001b[${36}m${`===============================`}\u001b[${39}m`,
         );
 
       // catch third dollar of three dollars in a row

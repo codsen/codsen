@@ -70,18 +70,18 @@ function notWithinAttrQuotes(tag: Obj, str: string, i: number): boolean {
       )}; i=${i}`,
     );
 
+  // These four locals are the clauses of the returned condition. They are
+  // computed once and read by both the log below and the `return`, so nothing
+  // is scanned twice. Each clause is also guarded by the one before it, which
+  // is the order the returned condition consumes them in: R2 and R32 each
+  // rescan the input to the right, and a local computed eagerly for the log
+  // alone survives minification, because esbuild cannot prove that
+  // xBeforeYOnTheRight() is free of side effects.
   let R1 = !tag?.quotes;
-  let R2 =
-    !!tag?.quotes?.value &&
-    !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">");
-
-  let R31 = tag?.quotes?.next !== -1;
-  let R32 = !xBeforeYOnTheRight(
-    str,
-    tag?.quotes?.next - 1,
-    tag?.quotes?.value,
-    `>`,
-  );
+  let R2 = !R1 && !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">");
+  let R31 = R2 && tag.quotes.next !== -1;
+  let R32 =
+    R31 && xBeforeYOnTheRight(str, tag.quotes.next - 1, tag.quotes.value, `>`);
 
   DEV &&
     console.log(
@@ -93,23 +93,18 @@ function notWithinAttrQuotes(tag: Obj, str: string, i: number): boolean {
         R2,
         null,
         4,
-      )} && (${`\u001b[${33}m${`R31`}\u001b[${39}m`} = ${JSON.stringify(
+      )} && ${`\u001b[${33}m${`R31`}\u001b[${39}m`} = ${JSON.stringify(
         R31,
         null,
         4,
-      )} AND ${`\u001b[${33}m${`R32`}\u001b[${39}m`} = ${JSON.stringify(
+      )} && ${`\u001b[${33}m${`R32`}\u001b[${39}m`} = ${JSON.stringify(
         R32,
         null,
         4,
-      )}) ]`,
+      )} ]`,
     );
 
-  return (
-    !tag?.quotes ||
-    (!xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">") &&
-      tag?.quotes?.next !== -1 &&
-      xBeforeYOnTheRight(str, tag?.quotes?.next - 1, tag?.quotes?.value, `>`))
-  );
+  return R1 || (R2 && R31 && R32);
 }
 
 export function countInstancesOf(needle: string, hay: string): number {

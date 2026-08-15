@@ -174,17 +174,17 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
         i + 1 === resolvedOpts.to)
     ) {
       DEV && console.log(`176 chunk ends`);
-      let chunk = str.slice(
-        chunkStartsAt as number,
-        i + 1 === resolvedOpts.to &&
-          str[i] !== resolvedOpts.separator &&
-          str[i].trim()
-          ? i + 1
-          : i,
-      );
+      // the chunk is sliced inside the log, not hoisted into a local above it
       DEV &&
         console.log(
-          `187 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`chunk`}\u001b[${39}m`} = "${`\u001b[${35}m${chunk}\u001b[${39}m`}"`,
+          `180 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`chunk`}\u001b[${39}m`} = "${`\u001b[${35}m${str.slice(
+            chunkStartsAt as number,
+            i + 1 === resolvedOpts.to &&
+              str[i] !== resolvedOpts.separator &&
+              str[i].trim()
+              ? i + 1
+              : i,
+          )}\u001b[${39}m`}"`,
         );
 
       // ping the cb

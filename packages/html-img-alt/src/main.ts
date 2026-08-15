@@ -74,12 +74,12 @@ function alts(str: string, opts?: Partial<Opts>): string {
   // traverse the string
   // ================
   for (let i = 0, len = str.length; i < len; i++) {
-    let charcode = str[i].charCodeAt(0);
+    // the charcode is read inside the log, not hoisted into a local above it
     DEV &&
       console.log(
         `80 \u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i].trim() ? str[i] : JSON.stringify(str[i], null, 0)
-        }`}\u001b[${39}m ${`\u001b[${90}m#${charcode}\u001b[${39}m`} \u001b[${36}m${`===============================`}\u001b[${39}m`,
+        }`}\u001b[${39}m ${`\u001b[${90}m#${str[i].charCodeAt(0)}\u001b[${39}m`} \u001b[${36}m${`===============================`}\u001b[${39}m`,
       );
 
     // catch the beginning of the IMG tag:

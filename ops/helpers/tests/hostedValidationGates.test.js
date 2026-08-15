@@ -20,6 +20,7 @@ const requiredGates = [
   "node ops/scripts/audit-production-dependencies.js --check-policy",
   "npm run ci:verify:package-kinds",
   "npm run ci:verify:debug-log-line-labels",
+  "npm run ci:verify:debug-log-production-cost",
   "npm run ci:verify:test-numbering",
   "npm run ci:verify:coverage-policy",
   "npm run test:quality",
