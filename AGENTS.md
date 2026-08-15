@@ -185,6 +185,14 @@ contract.
   APIs newer than the floor in the complete bundled dependency closure. When a
   newer native API materially improves behavior or performance, feature-detect
   it and retain an equivalent Chrome 58 fallback.
+- Regular-expression literals are the exception to "esbuild lowers syntax":
+  esbuild passes them through untouched, so lookbehind, named capture groups
+  and backreferences, Unicode property escapes, and the `s`, `d`, and `v` flags
+  all reach the browser as written. Each is a parse error on the floor, which
+  disables the entire bundle rather than one call, so `ci:verify:browser-iifes`
+  checks for them statically alongside the runtime APIs. A feature detection
+  cannot rescue a parse error; keep such a literal out of the closure, or build
+  the pattern with `new RegExp()` behind a guard.
 - Build all packages before running `npm run ci:verify:browser-iifes`. The
   verifier scans the emitted bundles, loads all of them in isolated legacy API
   realms, checks every documented global, and runs representative API smokes.
@@ -305,6 +313,14 @@ interpreting `packages/*/perf/check.js` benchmarks.
   alone do not require a reset.
 - Interpret only normalized scores produced through `perf-ref`; raw operations
   per second from different computers are not comparable.
+- A run which is materially slower than the baseline does not become the next
+  baseline; it is recorded as `lastSlowerRun` instead, and a slowdown beyond
+  `ops/perf-policy.json#regressionThresholdPercent` sets a non-zero exit code.
+  Change that policy, including a per-package override or a reasoned waiver for
+  an inherently noisy workload, rather than working around the failure. Accept
+  an intentional slowdown by resetting that package's history and saying why.
+- `perf` deliberately runs in no workflow. `.agents/PERFORMANCE.md` records the
+  reasoning; do not add it to a hosted lane without reading that first.
 
 ## Unit-test title numbering
 
@@ -356,6 +372,15 @@ compile-time `DEV` global, commonly in the form `DEV && console.log(...)`.
   build-time guard instead of replacing it with a runtime environment check. An
   accompanying `declare let DEV: boolean` is an ambient TypeScript declaration
   and does not create a runtime variable.
+- The guard removes the logging, not the work which produced the values it
+  prints. Esbuild cannot prove a call such as `str.slice()` or a bespoke
+  scanning helper free of side effects, so a local declared above a log and read
+  only inside it survives minification, and every consumer of the published
+  bundle pays for work whose only purpose was a development message. Compute
+  such a value inside the log itself, or make the surrounding code read the same
+  local, as `packages/is-html-attribute-closing/src/main.ts` does with the `R*`
+  clauses it both logs and returns. This matters most inside a character loop,
+  where the cost is paid per character.
 - These logs deliberately make heavy use of ANSI colour escapes. Preserve that
   colouring, including its reset sequences, when moving or editing an existing
   log unless the task asks for a different output format.
