@@ -18,9 +18,10 @@ jobs:
   pack:
     name: Verify and pack the exact release
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    # the shared gates now include coverage enforcement on top of packing
+    timeout-minutes: 90
     outputs:
-      package_node_matrix: ${{ steps.package_node_matrix.outputs.matrix }}
+      package_node_matrix: ${{ steps.verify.outputs.package-node-matrix }}
     steps:
       - name: Require main
         run: test "$GITHUB_REF" = refs/heads/main
@@ -32,61 +33,14 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Set up Node and npm
-        uses: ./.github/actions/setup-node
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint maintained Markdown
-        run: npm run lint:markdown
-
-      - name: Assert the complete workspace set
-        run: node ops/scripts/npm-release.js assert-workspaces
-
-      - name: Verify declared package kinds and generated task profiles
-        run: npm run ci:verify:package-kinds
-
-      - name: Verify lect-managed package files
-        run: npm run lect:check
-
-      - name: Build package inputs and verify repository data sources
-        run: |
-          npm run ci:verify:info
-          npm run ci:verify:changelogs
-          npm run ci:verify:root-readme
-
-      - name: Build @codsen/data from regenerated sources
-        run: npm run build -- '--filter=./data/**'
-
-      - name: Unit-test the build, packaging and release tooling
-        run: npm run test:ops-helpers
-
-      - name: Type-check TypeScript sources
-        run: npm run typecheck
-
-      - name: Verify complete and freshly compiled repository data
-        run: npm run ci:verify:data
-
-      - name: Verify browser IIFEs against the minimum runtime API surface
-        run: npm run ci:verify:browser-iifes
-
-      - name: Verify package Node compatibility policy
-        run: npm run ci:verify:node-compatibility
-
-      - name: Define package Node compatibility matrix
-        id: package_node_matrix
-        run: |
-          package_node_matrix=$(node ops/scripts/verify-node-compatibility.js --github-actions-matrix)
-          echo "matrix=$package_node_matrix" >> "$GITHUB_OUTPUT"
-
-      - name: Check formatting, linting and assists without changing files
-        run: npm exec -- biome ci --error-on-warnings .
-
-      - name: Verify the release commit is reproducible
-        run: |
-          git diff --exit-code
-          test -z "$(git status --porcelain --untracked-files=all)"
+      # the same shared action CI runs, so the publish path can never enforce
+      # less than the pull-request path; the tests job runs the examples
+      # against the archived build instead of repeating them here
+      - name: Verify the repository
+        id: verify
+        uses: ./.github/actions/verify-repository
+        with:
+          examples: "false"
 
       - name: Archive built test inputs
         run: >-

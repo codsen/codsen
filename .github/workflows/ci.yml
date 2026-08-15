@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     outputs:
-      package_node_matrix: ${{ steps.package_node_matrix.outputs.matrix }}
+      package_node_matrix: ${{ steps.verify.outputs.package-node-matrix }}
     steps:
       - name: Check out the exact revision
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -28,98 +28,16 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Lint GitHub Actions workflows
-        env:
-          ACTIONLINT_VERSION: 1.7.12
-          ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
-        run: |
-          archive="${RUNNER_TEMP}/actionlint.tar.gz"
-          curl --fail --location --silent --show-error \
-            --output "$archive" \
-            "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
-          echo "${ACTIONLINT_SHA256}  $archive" | sha256sum --check
-          tar --extract --gzip --file "$archive" --directory "$RUNNER_TEMP" actionlint
-          command -v shellcheck >/dev/null
-          "$RUNNER_TEMP/actionlint" -color -shellcheck shellcheck
-
-      - name: Set up Node and npm
-        uses: ./.github/actions/setup-node
-
-      - name: Prevent automated Node engine changes
-        if: github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]'
-        env:
-          BASE_REVISION: ${{ github.event.pull_request.base.sha }}
-        run: >-
-          node ops/scripts/verify-node-compatibility.js
-          --unchanged-from "$BASE_REVISION"
-
-      - name: Verify dependency-security waiver policy
-        run: node ops/scripts/audit-production-dependencies.js --check-policy
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint maintained Markdown
-        run: npm run lint:markdown
-
-      - name: Assert the complete workspace set
-        run: node ops/scripts/npm-release.js assert-workspaces
-
-      - name: Verify declared package kinds and generated task profiles
-        run: npm run ci:verify:package-kinds
-
-      - name: Verify development log navigation labels
-        run: npm run ci:verify:debug-log-line-labels
-
-      - name: Verify lect-managed package files
-        run: npm run lect:check
-
-      - name: Build package inputs and verify repository data sources
-        run: |
-          npm run ci:verify:info
-          npm run ci:verify:changelogs
-          npm run ci:verify:root-readme
-
-      - name: Build @codsen/data from regenerated sources
-        run: npm run build -- '--filter=./data/**'
-
-      - name: Unit-test the build, packaging and release tooling
-        run: npm run test:ops-helpers
-
-      - name: Type-check TypeScript sources
-        run: npm run typecheck
-
-      - name: Verify complete and freshly compiled repository data
-        run: npm run ci:verify:data
-
-      - name: Verify browser IIFEs against the minimum runtime API surface
-        run: npm run ci:verify:browser-iifes
-
-      - name: Run package examples on the root toolchain
-        run: npm run turbo -- run examples --filter='./packages/**' --only
-
-      - name: Verify package coverage policy
-        run: npm run ci:verify:coverage-policy
-
-      - name: Enforce package coverage on the root toolchain
-        run: npm run test:quality
-
-      - name: Verify package Node compatibility policy
-        run: npm run ci:verify:node-compatibility
-
-      - name: Define package Node compatibility matrix
-        id: package_node_matrix
-        run: |
-          package_node_matrix=$(node ops/scripts/verify-node-compatibility.js --github-actions-matrix)
-          echo "matrix=$package_node_matrix" >> "$GITHUB_OUTPUT"
-
-      - name: Check formatting, linting and assists without changing files
-        run: npm exec -- biome ci --error-on-warnings .
-
-      - name: Verify generated files are current
-        run: |
-          git diff --exit-code
-          test -z "$(git status --porcelain --untracked-files=all)"
+      # every gate lives in the shared action so this job and the release pack
+      # job cannot drift apart
+      - name: Verify the repository
+        id: verify
+        uses: ./.github/actions/verify-repository
+        with:
+          node-engine-base-revision: >-
+            ${{ (github.event_name == 'pull_request' &&
+            github.event.pull_request.user.login == 'dependabot[bot]') &&
+            github.event.pull_request.base.sha || '' }}
 
       - name: Pack all Node compatibility artifacts
         run: >-

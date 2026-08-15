@@ -1,0 +1,148 @@
+---
+name: Verify the repository
+
+description: >-
+  Run every repository-wide validation gate shared by the CI validation job and
+  the release pack job
+
+inputs:
+  node-engine-base-revision:
+    description: >-
+      Revision the Node engine ranges must be unchanged from. Empty skips the
+      guard, which only applies to automated dependency pull requests.
+    required: false
+    default: ""
+  examples:
+    description: >-
+      Run the package examples here. Set to "false" when a later job runs them
+      against the archived build instead.
+    required: false
+    default: "true"
+
+outputs:
+  package-node-matrix:
+    description: GitHub Actions matrix of every Node version packages support
+    value: ${{ steps.package_node_matrix.outputs.matrix }}
+
+runs:
+  using: composite
+  steps:
+    - name: Lint GitHub Actions workflows
+      shell: bash
+      env:
+        ACTIONLINT_VERSION: 1.7.12
+        ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
+      run: |
+        archive="${RUNNER_TEMP}/actionlint.tar.gz"
+        curl --fail --location --silent --show-error \
+          --output "$archive" \
+          "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+        echo "${ACTIONLINT_SHA256}  $archive" | sha256sum --check
+        tar --extract --gzip --file "$archive" --directory "$RUNNER_TEMP" actionlint
+        command -v shellcheck >/dev/null
+        "$RUNNER_TEMP/actionlint" -color -shellcheck shellcheck
+
+    - name: Set up Node and npm
+      uses: ./.github/actions/setup-node
+
+    - name: Prevent automated Node engine changes
+      if: inputs.node-engine-base-revision != ''
+      shell: bash
+      env:
+        BASE_REVISION: ${{ inputs.node-engine-base-revision }}
+      run: >-
+        node ops/scripts/verify-node-compatibility.js
+        --unchanged-from "$BASE_REVISION"
+
+    - name: Verify dependency-security waiver policy
+      shell: bash
+      run: node ops/scripts/audit-production-dependencies.js --check-policy
+
+    - name: Install dependencies
+      shell: bash
+      run: npm ci
+
+    - name: Lint maintained Markdown
+      shell: bash
+      run: npm run lint:markdown
+
+    - name: Assert the complete workspace set
+      shell: bash
+      run: node ops/scripts/npm-release.js assert-workspaces
+
+    - name: Verify declared package kinds and generated task profiles
+      shell: bash
+      run: npm run ci:verify:package-kinds
+
+    - name: Verify development log navigation labels
+      shell: bash
+      run: npm run ci:verify:debug-log-line-labels
+
+    - name: Verify mandatory unit test numbering
+      shell: bash
+      run: npm run ci:verify:test-numbering
+
+    - name: Verify lect-managed package files
+      shell: bash
+      run: npm run lect:check
+
+    - name: Build package inputs and verify repository data sources
+      shell: bash
+      run: |
+        npm run ci:verify:info
+        npm run ci:verify:changelogs
+        npm run ci:verify:root-readme
+
+    - name: Build @codsen/data from regenerated sources
+      shell: bash
+      run: npm run build -- '--filter=./data/**'
+
+    - name: Unit-test the build, packaging and release tooling
+      shell: bash
+      run: npm run test:ops-helpers
+
+    - name: Type-check TypeScript sources
+      shell: bash
+      run: npm run typecheck
+
+    - name: Verify complete and freshly compiled repository data
+      shell: bash
+      run: npm run ci:verify:data
+
+    - name: Verify browser IIFEs against the minimum runtime API surface
+      shell: bash
+      run: npm run ci:verify:browser-iifes
+
+    - name: Run package examples on the root toolchain
+      if: inputs.examples == 'true'
+      shell: bash
+      run: npm run turbo -- run examples --filter='./packages/**' --only
+
+    - name: Verify package coverage policy
+      shell: bash
+      run: npm run ci:verify:coverage-policy
+
+    - name: Enforce package coverage on the root toolchain
+      shell: bash
+      run: npm run test:quality
+
+    - name: Verify package Node compatibility policy
+      shell: bash
+      run: npm run ci:verify:node-compatibility
+
+    - name: Define package Node compatibility matrix
+      id: package_node_matrix
+      shell: bash
+      run: |
+        package_node_matrix=$(node ops/scripts/verify-node-compatibility.js --github-actions-matrix)
+        echo "matrix=$package_node_matrix" >> "$GITHUB_OUTPUT"
+
+    - name: Check formatting, linting and assists without changing files
+      shell: bash
+      run: npm exec -- biome ci --error-on-warnings .
+
+    - name: Verify the checked-out revision is reproducible
+      shell: bash
+      run: |
+        git diff --exit-code
+        test -z "$(git status --porcelain --untracked-files=all)"

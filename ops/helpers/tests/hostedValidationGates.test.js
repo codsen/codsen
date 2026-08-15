@@ -10,8 +10,26 @@ const repositoryRoot = path.resolve(
   "../../..",
 );
 
+const sharedAction = ".github/actions/verify-repository/action.yml";
+const sharedActionUse = "uses: ./.github/actions/verify-repository";
 const gateCommand = "npm run test:ops-helpers";
 const packageBuild = "npm run ci:verify:info";
+
+// every policy gate the hosted lanes must run, whichever lane triggered them
+const requiredGates = [
+  "node ops/scripts/audit-production-dependencies.js --check-policy",
+  "npm run ci:verify:package-kinds",
+  "npm run ci:verify:debug-log-line-labels",
+  "npm run ci:verify:test-numbering",
+  "npm run ci:verify:coverage-policy",
+  "npm run test:quality",
+  "npm run ci:verify:node-compatibility",
+  "npm run ci:verify:browser-iifes",
+  "npm run ci:verify:data",
+  "npm run lint:markdown",
+  "npm run typecheck",
+  gateCommand,
+];
 
 function readRepositoryFile(relative) {
   return readFileSync(path.join(repositoryRoot, relative), "utf8");
@@ -29,25 +47,51 @@ test("01 - one root script defines the ops tooling suite", () => {
   ok(manifest.scripts.verify.includes(gateCommand), "01.03");
 });
 
-test("02 - hosted CI runs the suite after the package build", () => {
-  const workflow = readRepositoryFile(".github/workflows/ci.yml");
-  const build = workflow.indexOf(packageBuild);
+test("02 - the shared action runs the suite after the package build", () => {
+  const action = readRepositoryFile(sharedAction);
+  const build = action.indexOf(packageBuild);
 
-  equal(occurrences(workflow, gateCommand), 1, "02.01");
+  equal(occurrences(action, gateCommand), 1, "02.01");
   ok(build > -1, "02.02");
   // the suite audits real package unit runs, so it needs built dist output
-  ok(build < workflow.indexOf(gateCommand), "02.03");
+  ok(build < action.indexOf(gateCommand), "02.03");
 });
 
-test("03 - the release pack job runs the suite before packing", () => {
-  const workflow = readRepositoryFile(".github/workflows/release.yml");
-  const build = workflow.indexOf(packageBuild);
-  const gate = workflow.indexOf(gateCommand);
+test("03 - the shared action defines every required gate once", () => {
+  const action = readRepositoryFile(sharedAction);
 
-  equal(occurrences(workflow, gateCommand), 1, "03.01");
-  ok(build > -1, "03.02");
-  ok(build < gate, "03.03");
-  ok(gate < workflow.indexOf("npm-release.js pack"), "03.04");
+  equal(
+    requiredGates.filter((gate) => occurrences(action, gate) !== 1),
+    [],
+    "03.01",
+  );
+});
+
+test("04 - both hosted lanes validate through the shared action alone", () => {
+  const ci = readRepositoryFile(".github/workflows/ci.yml");
+  const release = readRepositoryFile(".github/workflows/release.yml");
+
+  equal(occurrences(ci, sharedActionUse), 1, "04.01");
+  equal(occurrences(release, sharedActionUse), 1, "04.02");
+  // a gate spelled out in a lane again is that lane drifting from the action
+  equal(
+    requiredGates.filter((gate) => ci.includes(gate)),
+    [],
+    "04.03",
+  );
+  equal(
+    requiredGates.filter((gate) => release.includes(gate)),
+    [],
+    "04.04",
+  );
+});
+
+test("05 - the release pack job validates before packing", () => {
+  const workflow = readRepositoryFile(".github/workflows/release.yml");
+  const verify = workflow.indexOf(sharedActionUse);
+
+  ok(verify > -1, "05.01");
+  ok(verify < workflow.indexOf("npm-release.js pack"), "05.02");
 });
 
 test.run();
