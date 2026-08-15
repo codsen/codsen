@@ -87,13 +87,17 @@ function run(arguments_ = process.argv.slice(2)) {
     }
   } else if (arguments_.length === 0) {
     try {
+      const runningNode = process.versions.node;
+      const runningNpm = npmVersion();
       const policy = readRootToolchainPolicy(repositoryRoot, {
-        actualNodeVersion: process.versions.node,
-        actualNpmVersion: npmVersion(),
+        actualNodeVersion: runningNode,
+        actualNpmVersion: runningNpm,
       });
       if (!reportErrors(policy.errors)) {
+        // report what is running, not what is recorded - they are allowed to
+        // differ, so printing the pin alone would misreport the environment
         console.log(
-          `Root toolchain OK: Node ${policy.nodeVersion}; npm ${policy.npmVersion}.`,
+          `Root toolchain OK: Node ${runningNode} (>=${policy.nodeVersion}); npm ${runningNpm} (>=${policy.npmVersion}).`,
         );
       }
     } catch (error) {

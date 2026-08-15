@@ -20,6 +20,21 @@ function selectedNodeVersion(source) {
   return exactVersion(source?.trim(), ".node-version");
 }
 
+// Node and npm both ship faster than this repository adopts them, and the
+// running pair is whatever the machine or the hosted runner already has.
+// `.node-version` and `packageManager` record the releases last exercised here
+// and are what CI installs; the `engines` ranges are the actual constraints.
+function isAtLeast(actual, floor) {
+  const actualParts = actual.split(".").map(Number);
+  const floorParts = floor.split(".").map(Number);
+  for (let i = 0; i < 3; i++) {
+    if (actualParts[i] !== floorParts[i]) {
+      return actualParts[i] > floorParts[i];
+    }
+  }
+  return true;
+}
+
 function selectedNpmVersion(packageManager) {
   if (
     typeof packageManager !== "string" ||
@@ -71,9 +86,9 @@ function rootToolchainPolicy({
       } catch (error) {
         errors.push(error.message);
       }
-      if (parsedActual && parsedActual !== nodeVersion) {
+      if (parsedActual && !isAtLeast(parsedActual, nodeVersion)) {
         errors.push(
-          `running Node ${parsedActual} does not match the pinned ${nodeVersion}`,
+          `running Node ${parsedActual} does not satisfy engines.node ${expectedEngine}`,
         );
       }
     }
@@ -93,9 +108,9 @@ function rootToolchainPolicy({
       } catch (error) {
         errors.push(error.message);
       }
-      if (parsedActual && parsedActual !== npmVersion) {
+      if (parsedActual && !isAtLeast(parsedActual, npmVersion)) {
         errors.push(
-          `running npm ${parsedActual} does not match the pinned ${npmVersion}`,
+          `running npm ${parsedActual} does not satisfy engines.npm ${expectedEngine}`,
         );
       }
     }

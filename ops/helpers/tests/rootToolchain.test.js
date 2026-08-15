@@ -60,25 +60,74 @@ test("03 - reports manifest and lockfile declaration drift", () => {
   match(message, /package-lock root engines\.npm/, "03.04");
 });
 
-test("04 - rejects same-major runtime patch drift", () => {
+test("04 - accepts a running toolchain which satisfies both engines ranges", () => {
+  // .node-version and packageManager record the releases last exercised here;
+  // neither requires the machine to reproduce that release exactly
+  equal(policy({ actualNodeVersion: "24.19.1" }).errors, [], "04.01");
+  equal(policy({ actualNodeVersion: "26.7.0" }).errors, [], "04.02");
+  equal(policy({ actualNpmVersion: "11.16.1" }).errors, [], "04.03");
+  equal(policy({ actualNpmVersion: "11.17.0" }).errors, [], "04.04");
+  equal(policy({ actualNpmVersion: "12.0.0" }).errors, [], "04.05");
+});
+
+test("05 - rejects a running toolchain below either engines range", () => {
+  const olderPatch = policy({ actualNpmVersion: "11.15.9" }).errors.join("\n");
+  match(olderPatch, /running npm 11\.15\.9.*engines\.npm >=11\.16\.0/, "05.01");
+
+  const olderMinor = policy({ actualNpmVersion: "11.9.0" }).errors.join("\n");
+  match(olderMinor, /running npm 11\.9\.0.*engines\.npm >=11\.16\.0/, "05.02");
+
+  const olderMajor = policy({ actualNpmVersion: "10.99.99" }).errors.join("\n");
+  match(
+    olderMajor,
+    /running npm 10\.99\.99.*engines\.npm >=11\.16\.0/,
+    "05.03",
+  );
+
+  const olderNode = policy({ actualNodeVersion: "24.18.9" }).errors.join("\n");
+  match(
+    olderNode,
+    /running Node 24\.18\.9.*engines\.node >=24\.19\.0/,
+    "05.04",
+  );
+
+  const olderNodeMajor = policy({ actualNodeVersion: "22.20.0" }).errors.join(
+    "\n",
+  );
+  match(
+    olderNodeMajor,
+    /running Node 22\.20\.0.*engines\.node >=24\.19\.0/,
+    "05.05",
+  );
+});
+
+test("06 - still requires an exact pin in the recorded declarations", () => {
+  // relaxing the running check must not let a floating pin through
   const result = policy({
-    actualNodeVersion: "24.19.1",
-    actualNpmVersion: "11.16.1",
+    manifest: {
+      engines: { node: ">=24.19.0", npm: ">=11.16.0" },
+      packageManager: "npm@11",
+    },
+    nodeVersionSource: "24.19\n",
   });
   const message = result.errors.join("\n");
 
-  match(message, /running Node 24\.19\.1.*pinned 24\.19\.0/, "04.01");
-  match(message, /running npm 11\.16\.1.*pinned 11\.16\.0/, "04.02");
+  match(message, /\.node-version must be an exact x\.y\.z version/, "06.01");
+  match(
+    message,
+    /packageManager npm version must be an exact x\.y\.z version/,
+    "06.02",
+  );
 });
 
-test("05 - static policy checks do not require a running toolchain", () => {
+test("07 - static policy checks do not require a running toolchain", () => {
   const result = policy({
     actualNodeVersion: undefined,
     actualNpmVersion: undefined,
   });
 
-  equal(result.errors, [], "05.01");
-  equal(result.npmSpec, "npm@11.16.0", "05.02");
+  equal(result.errors, [], "07.01");
+  equal(result.npmSpec, "npm@11.16.0", "07.02");
 });
 
 test.run();

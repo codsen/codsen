@@ -80,6 +80,28 @@ website taxonomy and does not define workspace architecture.
   Confirm that build-only typings are absent and any public declaration typings
   remain installed without the consumer adding them manually.
 
+## The root toolchain pins are records, not requirements
+
+`.node-version` and `package.json#packageManager` record the Node and npm
+releases the repository was last exercised with, and they are what hosted CI
+installs. The `package.json#engines` ranges are the actual constraints.
+
+- When the machine's Node or npm differs from those records, accept what the
+  machine has as long as it satisfies `engines.node` and `engines.npm`. Say
+  which versions you used and carry on.
+- Do not bump a pin, install a different Node or npm, or work around a tool
+  merely to make the recorded and running versions equal.
+- `ops/helpers/rootToolchain.js` enforces exactly that: the recorded pins must
+  still be exact `x.y.z` values which the `engines` ranges and the
+  `package-lock.json` root `engines` mirror, while the running pair only has to
+  satisfy those ranges.
+- Change a pin only when the release genuinely being adopted has changed. Then
+  update the record, its `engines` range, the `package-lock.json` root
+  `engines`, and any test asserting the pinned value in the same change.
+- Raising `engines.node` is a separate, evidence-backed decision. Read the Node
+  runtime compatibility section before treating a newer local Node as a reason
+  to raise the floor.
+
 ## Node runtime compatibility
 
 Supporting older Node.js release lines than competing packages is a Codsen USP.
