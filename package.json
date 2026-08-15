@@ -59,6 +59,7 @@
     "prettier:format": "npm run check:fix",
     "test": "npm run verify && npm run test:compatibility && npm run test:quality",
     "test:compatibility": "node ./ops/scripts/test-node-compatibility.js",
+    "test:examples-runner": "uvu ops/helpers runExamplesCli",
     "test:ops-helpers": "uvu ops/helpers",
     "test:quality": "turbo run devtest",
     "ts": "deno run --allow-read --allow-run --allow-write --allow-net",

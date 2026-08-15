@@ -172,6 +172,11 @@ jobs:
       - name: Smoke-test the generated development build script
         run: npm run dev --workspace=ast-contains-only-empty-space
 
+      # every package's examples task routes through one runner, and its
+      # fixtures live in nested paths containing spaces
+      - name: Smoke-test the examples runner
+        run: npm run test:examples-runner
+
       - name: Download package compatibility artifacts
         uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
         with:

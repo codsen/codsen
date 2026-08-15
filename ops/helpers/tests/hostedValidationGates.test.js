@@ -39,6 +39,15 @@ function occurrences(source, needle) {
   return source.split(needle).length - 1;
 }
 
+// one job's steps, so a later job cannot satisfy an assertion about this one
+function jobSection(workflow, job) {
+  const start = workflow.indexOf(`\n  ${job}:\n`);
+  const next = workflow.slice(start + 1).search(/\n {2}[\w-]+:\n/u);
+  return next === -1
+    ? workflow.slice(start)
+    : workflow.slice(start, start + 1 + next);
+}
+
 test("01 - one root script defines the ops tooling suite", () => {
   const manifest = JSON.parse(readRepositoryFile("package.json"));
 
@@ -86,12 +95,32 @@ test("04 - both hosted lanes validate through the shared action alone", () => {
   );
 });
 
-test("05 - the release pack job validates before packing", () => {
+test("05 - the Windows lane smokes the examples runner", () => {
+  const manifest = JSON.parse(readRepositoryFile("package.json"));
+  const windows = jobSection(
+    readRepositoryFile(".github/workflows/ci.yml"),
+    "windows-smoke",
+  );
+
+  equal(
+    manifest.scripts["test:examples-runner"],
+    "uvu ops/helpers runExamplesCli",
+    "05.01",
+  );
+  equal(occurrences(windows, "npm run test:examples-runner"), 1, "05.02");
+  // the runner and its test both need the root dependencies
+  ok(
+    windows.indexOf("npm ci") < windows.indexOf("test:examples-runner"),
+    "05.03",
+  );
+});
+
+test("06 - the release pack job validates before packing", () => {
   const workflow = readRepositoryFile(".github/workflows/release.yml");
   const verify = workflow.indexOf(sharedActionUse);
 
-  ok(verify > -1, "05.01");
-  ok(verify < workflow.indexOf("npm-release.js pack"), "05.02");
+  ok(verify > -1, "06.01");
+  ok(verify < workflow.indexOf("npm-release.js pack"), "06.02");
 });
 
 test.run();
