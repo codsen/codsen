@@ -9,11 +9,11 @@ import vm from "node:vm";
 
 import {
   findUnsupportedIifeApis,
-  findUnsupportedIifeRegexpSyntax,
   IIFE_API_SMOKES,
   IIFE_BROWSER_POLICY,
   iifeGlobalName,
 } from "../helpers/browserCompatibility.js";
+import { findUnsupportedIifeRegexpSyntax } from "../helpers/browserRegexpSyntax.js";
 import { readWorkspaceRecords } from "../helpers/workspaceInventoryFile.js";
 
 const repositoryRoot = path.resolve(
@@ -122,7 +122,9 @@ function verifyStaticApis(bundles) {
 
     // Syntax, not an API: esbuild does not rewrite regular-expression literals,
     // so one of these anywhere in the bundled closure is a parse error which
-    // stops the whole bundle loading rather than one call failing.
+    // stops the whole bundle loading rather than one call failing. The audit
+    // parses the bundle, so it reports only what is in a literal or built by a
+    // `RegExp()` call, never a lookalike inside a string or a comment.
     const unsupportedRegexpSyntax = findUnsupportedIifeRegexpSyntax(
       bundle.source,
     );
@@ -161,7 +163,7 @@ function verifyStaticApis(bundles) {
   }
   if (errors.length) {
     throw new Error(
-      `IIFEs contain APIs or syntax newer than ${IIFE_BROWSER_POLICY.esbuildTarget}:\n- ${errors.join("\n- ")}`,
+      `IIFEs contain APIs or syntax newer than ${IIFE_BROWSER_POLICY.esbuildTarget}, or could not be audited:\n- ${errors.join("\n- ")}`,
     );
   }
 }
