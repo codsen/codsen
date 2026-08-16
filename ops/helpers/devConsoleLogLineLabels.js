@@ -1,74 +1,14 @@
 import ts from "typescript";
 
+import {
+  isDevGuarded,
+  locationAt,
+  parseError,
+  parseSourceFile,
+  unwrapExpression,
+} from "./devGuardedSource.js";
+
 const RAW_NAVIGATION_LABEL = /(?:^|[\n*])(?:(?:\\[nr])|[^\S\n])*(\d+)(?=$|\D)/u;
-
-function scriptKind(filePath) {
-  if (filePath.endsWith(".tsx")) {
-    return ts.ScriptKind.TSX;
-  }
-  if (filePath.endsWith(".jsx")) {
-    return ts.ScriptKind.JSX;
-  }
-  if (filePath.endsWith(".js") || filePath.endsWith(".mjs")) {
-    return ts.ScriptKind.JS;
-  }
-  return ts.ScriptKind.TS;
-}
-
-function unwrapExpression(node) {
-  let current = node;
-  while (
-    ts.isParenthesizedExpression(current) ||
-    ts.isAsExpression(current) ||
-    ts.isNonNullExpression(current) ||
-    ts.isSatisfiesExpression(current) ||
-    ts.isTypeAssertionExpression(current)
-  ) {
-    current = current.expression;
-  }
-  return current;
-}
-
-function conditionImpliesDev(node) {
-  const expression = unwrapExpression(node);
-  if (ts.isIdentifier(expression)) {
-    return expression.text === "DEV";
-  }
-  return (
-    ts.isBinaryExpression(expression) &&
-    expression.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken &&
-    (conditionImpliesDev(expression.left) ||
-      conditionImpliesDev(expression.right))
-  );
-}
-
-function isInside(node, ancestor) {
-  return node.pos >= ancestor.pos && node.end <= ancestor.end;
-}
-
-function isDevGuarded(node) {
-  let current = node;
-  while (current.parent) {
-    const parent = current.parent;
-    if (
-      ts.isBinaryExpression(parent) &&
-      parent.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken &&
-      isInside(node, parent.right) &&
-      conditionImpliesDev(parent.left)
-    ) {
-      return true;
-    }
-    if (
-      ts.isIfStatement(parent) &&
-      isInside(node, parent.thenStatement) &&
-      conditionImpliesDev(parent.expression)
-    ) {
-      return true;
-    }
-    current = parent;
-  }
-  return false;
-}
 
 function isConsoleLogCall(node) {
   if (!ts.isCallExpression(node)) {
@@ -138,29 +78,8 @@ function navigationLabel(node, sourceFile) {
   return null;
 }
 
-function locationAt(sourceFile, position) {
-  const { character, line } =
-    sourceFile.getLineAndCharacterOfPosition(position);
-  return { column: character + 1, line: line + 1 };
-}
-
-function parseError(sourceFile, diagnostic) {
-  const location = locationAt(sourceFile, diagnostic.start ?? 0);
-  return {
-    ...location,
-    kind: "parse-error",
-    message: ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"),
-  };
-}
-
 function auditDevConsoleLogLineLabels(sourceText, filePath = "source.ts") {
-  const sourceFile = ts.createSourceFile(
-    filePath,
-    sourceText,
-    ts.ScriptTarget.Latest,
-    true,
-    scriptKind(filePath),
-  );
+  const sourceFile = parseSourceFile(sourceText, filePath);
   const problems = sourceFile.parseDiagnostics.map((diagnostic) =>
     parseError(sourceFile, diagnostic),
   );

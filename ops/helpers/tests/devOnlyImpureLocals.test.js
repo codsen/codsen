@@ -211,8 +211,8 @@ test("10 - counts only reads in the scope the declaration binds", () => {
   );
 });
 
-test("11 - lets shadowing inside the same scope hide a finding", () => {
-  const source = [
+test("11 - sees through shadowing to the declaration a read binds to", () => {
+  const shadowed = [
     "function first(str: string): boolean {",
     "  let hit = xBeforeYOnTheRight(str, 0);",
     `  DEV && console.log(\`003 \${hit}\`);`,
@@ -223,15 +223,27 @@ test("11 - lets shadowing inside the same scope hide a finding", () => {
     "  return inner();",
     "}",
   ].join("\n");
+  // the same file with the shadowing declaration removed, so the inner read
+  // does bind to the outer variable and the call is genuinely used
+  const notShadowed = [
+    "function first(str: string): boolean {",
+    "  let hit = xBeforeYOnTheRight(str, 0);",
+    `  DEV && console.log(\`003 \${hit}\`);`,
+    "  function inner(): boolean {",
+    "    return hit;",
+    "  }",
+    "  return inner();",
+    "}",
+  ].join("\n");
 
-  // a read inside the declaration's own scope still counts however it binds, so
-  // shadowing suppresses a report rather than inventing one, which is the safe
-  // direction for a gate that fails a hosted build
+  // the inner `hit` is a different variable, so reading it says nothing about
+  // the outer one, whose value still reaches only the DEV log
   equal(
-    auditDevOnlyImpureLocals(source),
-    { checkedCount: 1, problems: [] },
+    found(shadowed).map(({ line, name }) => ({ line, name })),
+    [{ line: 2, name: "hit" }],
     "11.01",
   );
+  equal(found(notShadowed), [], "11.02");
 });
 
 test("12 - reproduces and clears the shipped notWithinAttrQuotes defect", () => {
@@ -337,6 +349,124 @@ test("15 - does not count a label or a destructuring key as a read", () => {
     found(key).map(({ name }) => name),
     ["length"],
     "15.02",
+  );
+});
+
+test("16 - does not count overwriting a local as reading it", () => {
+  // `hit = false` discards what the initialiser produced rather than using it,
+  // so once the DEV log is stripped the call still ships for nothing - which is
+  // exactly what this gate exists to catch. A later read of the overwritten
+  // name is a real read, so it is the write standing alone which is the finding
+  const overwritten = [
+    "function scanner(str: string): boolean {",
+    "  let hit = xBeforeYOnTheRight(str, 0);",
+    `  DEV && console.log(\`003 \${hit}\`);`,
+    "  hit = false;",
+    "  return true;",
+    "}",
+  ].join("\n");
+  // a compound assignment and an update both read the old value first, so the
+  // initialiser's result is genuinely used
+  const compound = [
+    "function scanner(str: string): number {",
+    "  let hit = countMatches(str, 0);",
+    `  DEV && console.log(\`003 \${hit}\`);`,
+    "  hit += 1;",
+    "  return hit;",
+    "}",
+  ].join("\n");
+  const updated = [
+    "function scanner(str: string): number {",
+    "  let hit = countMatches(str, 0);",
+    `  DEV && console.log(\`003 \${hit}\`);`,
+    "  hit++;",
+    "  return hit;",
+    "}",
+  ].join("\n");
+
+  equal(
+    found(overwritten).map(({ name }) => name),
+    ["hit"],
+    "16.01",
+  );
+  equal(found(compound), [], "16.02");
+  equal(found(updated), [], "16.03");
+});
+
+test("17 - binds a var to its static block or namespace, not to the file", () => {
+  // a `var` in either binds to that container, so an unrelated same-named read
+  // outside it is a different variable and must not excuse this one
+  const staticBlock = [
+    "class C {",
+    "  static {",
+    "    var hit = xBeforeYOnTheRight('a', 0);",
+    `    DEV && console.log(\`003 \${hit}\`);`,
+    "  }",
+    "}",
+    "function other(): boolean {",
+    "  return hit;",
+    "}",
+  ].join("\n");
+  const namespaced = [
+    "namespace N {",
+    "  var hit = xBeforeYOnTheRight('a', 0);",
+    `  DEV && console.log(\`003 \${hit}\`);`,
+    "}",
+    "function other(): boolean {",
+    "  return hit;",
+    "}",
+  ].join("\n");
+  // a `var` still reaches the whole function it sits in, so a read there counts
+  const hoisted = [
+    "function scanner(str: string): boolean {",
+    "  if (str) {",
+    "    var hit = xBeforeYOnTheRight(str, 0);",
+    `    DEV && console.log(\`003 \${hit}\`);`,
+    "  }",
+    "  return hit;",
+    "}",
+  ].join("\n");
+
+  equal(
+    found(staticBlock).map(({ name }) => name),
+    ["hit"],
+    "17.01",
+  );
+  equal(
+    found(namespaced).map(({ name }) => name),
+    ["hit"],
+    "17.02",
+  );
+  equal(found(hoisted), [], "17.03");
+});
+
+test("18 - counts a shorthand property as a read of the local", () => {
+  // `return { result }` names the local, but asking the binder about that
+  // identifier gives the object's property instead; taking that answer would
+  // report the call as dead while its value is returned to the caller. This is
+  // the shape shipped in packages/html-table-patcher/src/main.ts.
+  const returned = [
+    "function patcher(str: string): { result: string } {",
+    "  const result = rApply(str, 0);",
+    `  DEV && console.log(\`003 \${result}\`);`,
+    "  return { result };",
+    "}",
+  ].join("\n");
+  // a shorthand whose local is read nowhere else is still a finding when the
+  // object itself never escapes the DEV guard
+  const guarded = [
+    "function patcher(str: string): boolean {",
+    "  const result = rApply(str, 0);",
+    `  DEV && console.log(\`003 \${JSON.stringify({ result })}\`);`,
+    "  return true;",
+    "}",
+  ].join("\n");
+
+  equal(found(returned), [], "18.01");
+  equal(
+    found(guarded).map(({ name }) => name),
+    ["result"],
+    "18.02",
   );
 });
 

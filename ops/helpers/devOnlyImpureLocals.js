@@ -1,131 +1,78 @@
 import ts from "typescript";
 
+import {
+  isDevGuarded,
+  locationAt,
+  parseError,
+  parseSourceFile,
+} from "./devGuardedSource.js";
+
 // A `DEV && console.log(...)` guard is removed at build time, but only the
 // logging is removed - not the work which produced the values it printed.
 // Esbuild cannot prove a call free of side effects, so a local initialised from
 // a call and read only inside a DEV guard survives minification, and every
 // consumer of the published bundle pays for it. This audit finds that shape.
 
-function scriptKind(filePath) {
-  if (filePath.endsWith(".tsx")) {
-    return ts.ScriptKind.TSX;
-  }
-  if (filePath.endsWith(".jsx")) {
-    return ts.ScriptKind.JSX;
-  }
-  if (filePath.endsWith(".js") || filePath.endsWith(".mjs")) {
-    return ts.ScriptKind.JS;
-  }
-  return ts.ScriptKind.TS;
+const COMPILER_OPTIONS = Object.freeze({
+  allowJs: true,
+  // the question is which declaration a name binds to, which the binder answers
+  // on its own; loading the standard library would only slow every file down
+  noLib: true,
+  noResolve: true,
+  target: ts.ScriptTarget.Latest,
+});
+
+// A program over this one file, so that reads can be resolved to the
+// declaration they actually bind to. Nothing outside the file is needed: a
+// local is declared and read in the same file by definition, and an unresolved
+// global simply has no symbol, which is the right answer for one.
+function checkedSourceFile(sourceText, filePath) {
+  const sourceFile = parseSourceFile(sourceText, filePath);
+  const host = {
+    fileExists: (name) => name === filePath,
+    getCanonicalFileName: (name) => name,
+    getCurrentDirectory: () => "",
+    getDefaultLibFileName: () => "lib.d.ts",
+    getNewLine: () => "\n",
+    getSourceFile: (name) => (name === filePath ? sourceFile : undefined),
+    readFile: (name) => (name === filePath ? sourceText : undefined),
+    useCaseSensitiveFileNames: () => true,
+    writeFile: () => {},
+  };
+  const program = ts.createProgram([filePath], COMPILER_OPTIONS, host);
+  return { checker: program.getTypeChecker(), sourceFile };
 }
 
-function unwrapExpression(node) {
-  let current = node;
-  while (
-    ts.isParenthesizedExpression(current) ||
-    ts.isAsExpression(current) ||
-    ts.isNonNullExpression(current) ||
-    ts.isSatisfiesExpression(current) ||
-    ts.isTypeAssertionExpression(current)
+// The declaration an identifier binds to. Two shorthand forms name a local but
+// resolve to something else when asked directly, and in both the local really
+// is read - so taking the direct answer would report a call as dead when the
+// value it produced is returned to the caller:
+//   `export { value }`   resolves to the export alias, not the local
+//   `return { value }`   resolves to the object's property, not the local
+function symbolFor(checker, node) {
+  const parent = node.parent;
+  if (parent && ts.isExportSpecifier(parent)) {
+    return checker.getExportSpecifierLocalTargetSymbol(parent);
+  }
+  if (
+    parent &&
+    ts.isShorthandPropertyAssignment(parent) &&
+    parent.name === node
   ) {
-    current = current.expression;
+    return checker.getShorthandAssignmentValueSymbol(parent);
   }
-  return current;
-}
-
-function conditionImpliesDev(node) {
-  const expression = unwrapExpression(node);
-  if (ts.isIdentifier(expression)) {
-    return expression.text === "DEV";
-  }
-  return (
-    ts.isBinaryExpression(expression) &&
-    expression.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken &&
-    (conditionImpliesDev(expression.left) ||
-      conditionImpliesDev(expression.right))
-  );
-}
-
-function isInside(node, ancestor) {
-  return node.pos >= ancestor.pos && node.end <= ancestor.end;
-}
-
-function isFunctionScope(node) {
-  return (
-    ts.isSourceFile(node) ||
-    ts.isFunctionDeclaration(node) ||
-    ts.isFunctionExpression(node) ||
-    ts.isArrowFunction(node) ||
-    ts.isMethodDeclaration(node) ||
-    ts.isConstructorDeclaration(node) ||
-    ts.isGetAccessorDeclaration(node) ||
-    ts.isSetAccessorDeclaration(node)
-  );
-}
-
-function isBlockScope(node) {
-  return (
-    isFunctionScope(node) ||
-    ts.isBlock(node) ||
-    ts.isModuleBlock(node) ||
-    ts.isCaseBlock(node) ||
-    ts.isCatchClause(node) ||
-    ts.isForStatement(node) ||
-    ts.isForInStatement(node) ||
-    ts.isForOfStatement(node) ||
-    ts.isClassDeclaration(node) ||
-    ts.isClassExpression(node)
-  );
-}
-
-// The region of the file in which this declaration's name means this binding:
-// the enclosing block for `let` and `const`, the enclosing function for `var`.
-// A read of the same name outside it is a different variable.
-function bindingScope(declaration) {
-  const blockScoped =
-    ts.isVariableDeclarationList(declaration.parent) &&
-    (declaration.parent.flags & ts.NodeFlags.BlockScoped) !== 0;
-  const bindsHere = blockScoped ? isBlockScope : isFunctionScope;
-  let current = declaration.parent;
-  while (current.parent && !bindsHere(current)) {
-    current = current.parent;
-  }
-  return current;
+  return checker.getSymbolAtLocation(node);
 }
 
 // every identifier a declaration binds, including through a destructuring
 // pattern: `let { length: n }` binds `n`, and `let [a, , b]` binds `a` and `b`
-function boundNames(name) {
+function boundIdentifiers(name) {
   if (ts.isIdentifier(name)) {
-    return [name.text];
+    return [name];
   }
   return name.elements.flatMap((element) =>
-    ts.isBindingElement(element) ? boundNames(element.name) : [],
+    ts.isBindingElement(element) ? boundIdentifiers(element.name) : [],
   );
-}
-
-function isDevGuarded(node) {
-  let current = node;
-  while (current.parent) {
-    const parent = current.parent;
-    if (
-      ts.isBinaryExpression(parent) &&
-      parent.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken &&
-      isInside(node, parent.right) &&
-      conditionImpliesDev(parent.left)
-    ) {
-      return true;
-    }
-    if (
-      ts.isIfStatement(parent) &&
-      isInside(node, parent.thenStatement) &&
-      conditionImpliesDev(parent.expression)
-    ) {
-      return true;
-    }
-    current = parent;
-  }
-  return false;
 }
 
 function initializerCalls(node) {
@@ -160,6 +107,17 @@ function isValueRead(node) {
     return false;
   }
   if (ts.isVariableDeclaration(parent) && parent.name === node) {
+    return false;
+  }
+  // The target of a plain assignment overwrites the value rather than reading
+  // it, so `n = 2` is not a use of what the initialiser produced and must not
+  // excuse the call which produced it. A compound assignment such as `n += 1`
+  // and an update such as `n++` both read the old value first, so they count.
+  if (
+    ts.isBinaryExpression(parent) &&
+    parent.operatorToken.kind === ts.SyntaxKind.EqualsToken &&
+    parent.left === node
+  ) {
     return false;
   }
   if (ts.isPropertyAccessExpression(parent) && parent.name === node) {
@@ -213,36 +171,15 @@ function isExported(declaration) {
   );
 }
 
-function locationAt(sourceFile, position) {
-  const { character, line } =
-    sourceFile.getLineAndCharacterOfPosition(position);
-  return { column: character + 1, line: line + 1 };
-}
-
-function parseError(sourceFile, diagnostic) {
-  const location = locationAt(sourceFile, diagnostic.start ?? 0);
-  return {
-    ...location,
-    kind: "parse-error",
-    message: ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"),
-  };
-}
-
 function auditDevOnlyImpureLocals(sourceText, filePath = "source.ts") {
-  const sourceFile = ts.createSourceFile(
-    filePath,
-    sourceText,
-    ts.ScriptTarget.Latest,
-    true,
-    scriptKind(filePath),
-  );
+  const { checker, sourceFile } = checkedSourceFile(sourceText, filePath);
   const problems = sourceFile.parseDiagnostics.map((diagnostic) =>
     parseError(sourceFile, diagnostic),
   );
   let checkedCount = 0;
 
   const candidates = [];
-  const readsByName = new Map();
+  const readsBySymbol = new Map();
 
   function collect(node) {
     if (
@@ -257,31 +194,35 @@ function auditDevOnlyImpureLocals(sourceText, filePath = "source.ts") {
       candidates.push(node);
     }
     if (ts.isIdentifier(node) && isValueRead(node)) {
-      const reads = readsByName.get(node.text) ?? [];
-      reads.push(node);
-      readsByName.set(node.text, reads);
+      // an identifier which resolves to nothing is a global this file never
+      // declares, so it reads none of the locals under audit
+      const symbol = symbolFor(checker, node);
+      if (symbol) {
+        const reads = readsBySymbol.get(symbol) ?? [];
+        reads.push(node);
+        readsBySymbol.set(symbol, reads);
+      }
     }
     ts.forEachChild(node, collect);
   }
   collect(sourceFile);
 
   for (const declaration of candidates) {
-    const names = boundNames(declaration.name);
-    const scope = bindingScope(declaration);
-    // Only reads inside the scope this declaration binds count; a same-named
-    // read in another function is a different variable. Within that scope every
-    // same-named read still counts, not only the ones this declaration binds,
-    // so genuine shadowing hides a finding rather than inventing one, which is
-    // the safe direction for a policy gate. A destructuring pattern needs its
-    // whole call kept as soon as any one of its bindings is read outside a
-    // guard, so the reads of all its names are pooled.
-    const reads = names.flatMap((name) =>
-      (readsByName.get(name) ?? []).filter((read) => isInside(read, scope)),
-    );
+    const identifiers = boundIdentifiers(declaration.name);
+    // Reads are matched to the declaration they bind to, which is what the
+    // binder already knows: a same-named variable in another function, or one
+    // shadowing this in a nested scope, is a different symbol and says nothing
+    // about this declaration. A destructuring pattern needs its whole call kept
+    // as soon as any one of its bindings is read outside a guard, so the reads
+    // of all its symbols are pooled.
+    const reads = identifiers.flatMap((identifier) => {
+      const symbol = symbolFor(checker, identifier);
+      return symbol ? (readsBySymbol.get(symbol) ?? []) : [];
+    });
     if (!reads.length || !reads.every((read) => isDevGuarded(read))) {
       continue;
     }
-    const name = names.join(", ");
+    const name = identifiers.map((identifier) => identifier.text).join(", ");
     problems.push({
       ...locationAt(sourceFile, declaration.getStart(sourceFile)),
       kind: "dev-only-impure-local",

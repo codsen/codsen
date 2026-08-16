@@ -399,12 +399,14 @@ compile-time `DEV` global, commonly in the form `DEV && console.log(...)`.
   `let { length: n } = str.split(",")` read only in a log ships the `split()` —
   and because one call feeds every binding of the pattern, a single binding read
   outside the guard is enough to justify keeping it.
-- `ci:verify:debug-log-production-cost` resolves each read to the scope its
-  declaration binds, so a local named `chunk` in one function is not excused by
-  an unrelated `chunk` in another. Within that scope every same-named read still
-  counts, so genuine shadowing hides a finding rather than inventing one. Moving
-  the whole declaration inside an `if (DEV) { … }` block is the other accepted
-  fix, since the guard then removes the work along with the log.
+- `ci:verify:debug-log-production-cost` resolves each read to the declaration it
+  actually binds to, using the TypeScript binder rather than matching on the
+  name, so a local named `chunk` in one function is not excused by an unrelated
+  `chunk` in another, and one shadowed in a nested scope is not excused by the
+  variable shadowing it. `export { value }` and the shorthand `return { value }`
+  both count as reads: each lets the value escape the guard. Moving the whole
+  declaration inside an `if (DEV) { … }` block is the other accepted fix, since
+  the guard then removes the work along with the log.
 - These logs deliberately make heavy use of ANSI colour escapes. Preserve that
   colouring, including its reset sequences, when moving or editing an existing
   log unless the task asks for a different output format.
