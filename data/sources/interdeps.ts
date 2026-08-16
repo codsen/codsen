@@ -715,7 +715,7 @@ export const interdeps = [
   },
   {
     "name": "string-fix-broken-named-entities",
-    "size": 11047,
+    "size": 11025,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",

@@ -1069,12 +1069,12 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
               // First, match against case-insensitive list
 
               // 1. check, maybe it's a known HTML entity
-              let firstChar = letterSeqStartAt;
-              /* c8 ignore next */
-              let secondChar = letterSeqStartAt
-                ? right(str, letterSeqStartAt)
-                : null;
-              DEV &&
+              if (DEV) {
+                let firstChar = letterSeqStartAt;
+                /* c8 ignore next */
+                let secondChar = letterSeqStartAt
+                  ? right(str, letterSeqStartAt)
+                  : null;
                 console.log(
                   `1079 firstChar = str[${firstChar}] = ${
                     str[firstChar]
@@ -1082,7 +1082,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                     str[secondChar as number]
                   }`,
                 );
-
+              }
               let tempEnt = "";
               let temp: string[];
 
