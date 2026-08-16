@@ -180,7 +180,7 @@ test("09 - counts an export specifier as a read outside the guard", () => {
   );
 });
 
-test("10 - lets a same-named read elsewhere hide a finding", () => {
+test("10 - counts only reads in the scope the declaration binds", () => {
   const source = [
     "function first(str: string): boolean {",
     "  let hit = xBeforeYOnTheRight(str, 0);",
@@ -193,16 +193,48 @@ test("10 - lets a same-named read elsewhere hide a finding", () => {
     "}",
   ].join("\n");
 
-  // shadowing suppresses a report rather than inventing one, which is the safe
-  // direction for a gate that fails a hosted build
+  // `hit` in the second function is a different variable, and reading it there
+  // says nothing about the first one; names like `chunk` and `charcode` recur
+  // across the scanning functions this gate exists for
   equal(
-    auditDevOnlyImpureLocals(source),
-    { checkedCount: 2, problems: [] },
+    found(source),
+    [
+      {
+        column: 7,
+        kind: "dev-only-impure-local",
+        line: 2,
+        name: "hit",
+        reads: 1,
+      },
+    ],
     "10.01",
   );
 });
 
-test("11 - reproduces and clears the shipped notWithinAttrQuotes defect", () => {
+test("11 - lets shadowing inside the same scope hide a finding", () => {
+  const source = [
+    "function first(str: string): boolean {",
+    "  let hit = xBeforeYOnTheRight(str, 0);",
+    `  DEV && console.log(\`003 \${hit}\`);`,
+    "  function inner(): boolean {",
+    "    let hit = 1;",
+    "    return hit > 0;",
+    "  }",
+    "  return inner();",
+    "}",
+  ].join("\n");
+
+  // a read inside the declaration's own scope still counts however it binds, so
+  // shadowing suppresses a report rather than inventing one, which is the safe
+  // direction for a gate that fails a hosted build
+  equal(
+    auditDevOnlyImpureLocals(source),
+    { checkedCount: 1, problems: [] },
+    "11.01",
+  );
+});
+
+test("12 - reproduces and clears the shipped notWithinAttrQuotes defect", () => {
   const shipped = [
     "function notWithinAttrQuotes(tag: Obj, str: string, i: number): boolean {",
     '  let R2 = !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">");',
@@ -230,9 +262,82 @@ test("11 - reproduces and clears the shipped notWithinAttrQuotes defect", () => 
         reads: 1,
       },
     ],
-    "11.01",
+    "12.01",
   );
-  equal(found(fixed), [], "11.02");
+  equal(found(fixed), [], "12.02");
+});
+
+test("13 - flags a destructured binding read only inside a DEV log", () => {
+  const source = [
+    "function scanner(str: string): boolean {",
+    "  let { length: n } = str.split(',');",
+    `  DEV && console.log(\`003 \${n}\`);`,
+    "  return true;",
+    "}",
+  ].join("\n");
+
+  equal(
+    found(source),
+    [
+      {
+        column: 7,
+        kind: "dev-only-impure-local",
+        line: 2,
+        name: "n",
+        reads: 1,
+      },
+    ],
+    "13.01",
+  );
+});
+
+test("14 - accepts a destructuring whose other binding is read outside", () => {
+  const source = [
+    "function scanner(str: string): string {",
+    "  let [a, b] = str.split(',');",
+    `  DEV && console.log(\`003 \${a}\`);`,
+    "  return b;",
+    "}",
+  ].join("\n");
+
+  // one call feeds every binding of the pattern, so it has to survive for `b`
+  equal(
+    auditDevOnlyImpureLocals(source),
+    { checkedCount: 1, problems: [] },
+    "14.01",
+  );
+});
+
+test("15 - does not count a label or a destructuring key as a read", () => {
+  const source = [
+    "function scanner(str: string): boolean {",
+    "  let hit = xBeforeYOnTheRight(str, 0);",
+    `  DEV && console.log(\`003 \${hit}\`);`,
+    "  hit: for (let i = 0; i < 2; i++) {",
+    "    continue hit;",
+    "  }",
+    "  return true;",
+    "}",
+  ].join("\n");
+  const key = [
+    "function scanner(str: string): boolean {",
+    "  let length = str.split(',');",
+    `  DEV && console.log(\`003 \${length}\`);`,
+    "  let { length: n } = str;",
+    "  return n > 0;",
+    "}",
+  ].join("\n");
+
+  equal(
+    found(source).map(({ name }) => name),
+    ["hit"],
+    "15.01",
+  );
+  equal(
+    found(key).map(({ name }) => name),
+    ["length"],
+    "15.02",
+  );
 });
 
 test.run();

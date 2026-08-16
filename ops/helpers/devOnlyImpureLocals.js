@@ -50,6 +50,60 @@ function isInside(node, ancestor) {
   return node.pos >= ancestor.pos && node.end <= ancestor.end;
 }
 
+function isFunctionScope(node) {
+  return (
+    ts.isSourceFile(node) ||
+    ts.isFunctionDeclaration(node) ||
+    ts.isFunctionExpression(node) ||
+    ts.isArrowFunction(node) ||
+    ts.isMethodDeclaration(node) ||
+    ts.isConstructorDeclaration(node) ||
+    ts.isGetAccessorDeclaration(node) ||
+    ts.isSetAccessorDeclaration(node)
+  );
+}
+
+function isBlockScope(node) {
+  return (
+    isFunctionScope(node) ||
+    ts.isBlock(node) ||
+    ts.isModuleBlock(node) ||
+    ts.isCaseBlock(node) ||
+    ts.isCatchClause(node) ||
+    ts.isForStatement(node) ||
+    ts.isForInStatement(node) ||
+    ts.isForOfStatement(node) ||
+    ts.isClassDeclaration(node) ||
+    ts.isClassExpression(node)
+  );
+}
+
+// The region of the file in which this declaration's name means this binding:
+// the enclosing block for `let` and `const`, the enclosing function for `var`.
+// A read of the same name outside it is a different variable.
+function bindingScope(declaration) {
+  const blockScoped =
+    ts.isVariableDeclarationList(declaration.parent) &&
+    (declaration.parent.flags & ts.NodeFlags.BlockScoped) !== 0;
+  const bindsHere = blockScoped ? isBlockScope : isFunctionScope;
+  let current = declaration.parent;
+  while (current.parent && !bindsHere(current)) {
+    current = current.parent;
+  }
+  return current;
+}
+
+// every identifier a declaration binds, including through a destructuring
+// pattern: `let { length: n }` binds `n`, and `let [a, , b]` binds `a` and `b`
+function boundNames(name) {
+  if (ts.isIdentifier(name)) {
+    return [name.text];
+  }
+  return name.elements.flatMap((element) =>
+    ts.isBindingElement(element) ? boundNames(element.name) : [],
+  );
+}
+
 function isDevGuarded(node) {
   let current = node;
   while (current.parent) {
@@ -123,6 +177,18 @@ function isValueRead(node) {
   ) {
     return false;
   }
+  // the key side of `let { length: n } = …` names a property of the value
+  if (ts.isBindingElement(parent) && parent.propertyName === node) {
+    return false;
+  }
+  // `continue candidate;` names a label, and a label may share a variable's name
+  if (
+    ts.isLabeledStatement(parent) ||
+    ts.isBreakStatement(parent) ||
+    ts.isContinueStatement(parent)
+  ) {
+    return false;
+  }
   if (
     ts.isImportSpecifier(parent) ||
     ts.isTypeReferenceNode(parent) ||
@@ -181,7 +247,6 @@ function auditDevOnlyImpureLocals(sourceText, filePath = "source.ts") {
   function collect(node) {
     if (
       ts.isVariableDeclaration(node) &&
-      ts.isIdentifier(node.name) &&
       node.initializer &&
       // a declaration already inside a DEV guard is removed with the guard
       !isDevGuarded(node) &&
@@ -201,14 +266,22 @@ function auditDevOnlyImpureLocals(sourceText, filePath = "source.ts") {
   collect(sourceFile);
 
   for (const declaration of candidates) {
-    const name = declaration.name.text;
-    // Every same-named read in the file counts, not only the ones this
-    // declaration binds. Shadowing therefore hides a finding rather than
-    // inventing one, which is the safe direction for a policy gate.
-    const reads = readsByName.get(name) ?? [];
+    const names = boundNames(declaration.name);
+    const scope = bindingScope(declaration);
+    // Only reads inside the scope this declaration binds count; a same-named
+    // read in another function is a different variable. Within that scope every
+    // same-named read still counts, not only the ones this declaration binds,
+    // so genuine shadowing hides a finding rather than inventing one, which is
+    // the safe direction for a policy gate. A destructuring pattern needs its
+    // whole call kept as soon as any one of its bindings is read outside a
+    // guard, so the reads of all its names are pooled.
+    const reads = names.flatMap((name) =>
+      (readsByName.get(name) ?? []).filter((read) => isInside(read, scope)),
+    );
     if (!reads.length || !reads.every((read) => isDevGuarded(read))) {
       continue;
     }
+    const name = names.join(", ");
     problems.push({
       ...locationAt(sourceFile, declaration.getStart(sourceFile)),
       kind: "dev-only-impure-local",
