@@ -193,6 +193,15 @@ contract.
   checks for them statically alongside the runtime APIs. A feature detection
   cannot rescue a parse error; keep such a literal out of the closure, or build
   the pattern with `new RegExp()` behind a guard.
+- That check parses each bundle rather than matching its text, so it reports
+  these classes only from a regular-expression literal or from a static string
+  argument of a `RegExp()` call. The same characters inside an ordinary string,
+  a template, or a comment are data, and failing a build over data is failing
+  over nothing. A `RegExp()` built from a literal string is still reported,
+  because it throws on the floor where it is called; a guarded fallback which
+  needs one has to be audited explicitly in `ops/scripts/verify-browser-iifes.js`
+  the way `Intl.Segmenter` and `SharedArrayBuffer` are. A pattern assembled at
+  run time cannot be audited statically at all.
 - Build all packages before running `npm run ci:verify:browser-iifes`. The
   verifier scans the emitted bundles, loads all of them in isolated legacy API
   realms, checks every documented global, and runs representative API smokes.
@@ -380,7 +389,16 @@ compile-time `DEV` global, commonly in the form `DEV && console.log(...)`.
   such a value inside the log itself, or make the surrounding code read the same
   local, as `packages/is-html-attribute-closing/src/main.ts` does with the `R*`
   clauses it both logs and returns. This matters most inside a character loop,
-  where the cost is paid per character.
+  where the cost is paid per character. A destructuring costs the same —
+  `let { length: n } = str.split(",")` read only in a log ships the `split()` —
+  and because one call feeds every binding of the pattern, a single binding read
+  outside the guard is enough to justify keeping it.
+- `ci:verify:debug-log-production-cost` resolves each read to the scope its
+  declaration binds, so a local named `chunk` in one function is not excused by
+  an unrelated `chunk` in another. Within that scope every same-named read still
+  counts, so genuine shadowing hides a finding rather than inventing one. Moving
+  the whole declaration inside an `if (DEV) { … }` block is the other accepted
+  fix, since the guard then removes the work along with the log.
 - These logs deliberately make heavy use of ANSI colour escapes. Preserve that
   colouring, including its reset sequences, when moving or editing an existing
   log unless the task asks for a different output format.
