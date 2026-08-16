@@ -55,6 +55,34 @@ function classify(deltaPct) {
   return deltaPct > 0 ? "faster" : "slower";
 }
 
+// `lastSlowerRun` is written by ops/scripts/perf.js when a run loses to the
+// baseline by more than the noise band. The baseline is deliberately kept, so
+// `lastVersion` still holds the older, better score: reading only that would
+// report the package as unchanged when its latest measurement was slower.
+function readPendingRegression(data) {
+  const pending = data.lastSlowerRun;
+  if (!pending || typeof pending !== "object") {
+    return undefined;
+  }
+  const { against, score, version, worst } = pending;
+  if (
+    typeof against !== "number" ||
+    !Number.isFinite(against) ||
+    against <= 0 ||
+    typeof score !== "number" ||
+    !Number.isFinite(score) ||
+    score <= 0
+  ) {
+    throw new Error("lastSlowerRun must record positive against and score");
+  }
+  return {
+    against,
+    score,
+    version: typeof version === "string" ? version : undefined,
+    worst: typeof worst === "number" && Number.isFinite(worst) ? worst : score,
+  };
+}
+
 function findBaseline(entries, currentVersion, latest) {
   if (!entries.length) return undefined;
 
@@ -104,6 +132,32 @@ function analyzeFile(filePath, packageDirName) {
     ) {
       versionEntries.push({ version: key, score: value });
     }
+  }
+
+  // A kept regression is the newest thing known about the package, and it is
+  // not in `lastVersion` by design, so it decides the comparison when present.
+  const pending = readPendingRegression(data);
+  if (pending) {
+    const baselineEntry = versionEntries.find(
+      ({ score }) => score === pending.against,
+    );
+    const ratio = pending.score / pending.against;
+    return {
+      status: "comparison",
+      package: packageJson.name || packageDirName,
+      packageDir: packageDirName,
+      currentVersion: packageJson.version,
+      measuredVersion: pending.version ?? packageJson.version,
+      baselineVersion: baselineEntry ? baselineEntry.version : null,
+      baselineOpsPerSec: round(pending.against, 6),
+      latestOpsPerSec: round(pending.score, 6),
+      worstOpsPerSec: round(pending.worst, 6),
+      worstPct: round((pending.worst / pending.against - 1) * 100),
+      deltaPct: round((ratio - 1) * 100),
+      classification: "pendingRegression",
+      marker: "lastSlowerRun",
+      ratio,
+    };
   }
 
   const baseline = findBaseline(versionEntries, packageJson.version, latest);
@@ -199,6 +253,11 @@ function main() {
     slower: comparisons.filter(
       ({ classification }) => classification === "slower",
     ).length,
+    // measured, deliberately not absorbed into the baseline: a different thing
+    // from "slower", which is a baseline that already moved
+    pendingRegression: comparisons.filter(
+      ({ classification }) => classification === "pendingRegression",
+    ).length,
   };
   const aggregate = comparisons.length
     ? {
@@ -246,6 +305,11 @@ function main() {
       .filter(({ deltaPct }) => deltaPct < -NOISE_THRESHOLD_PCT)
       .slice(-TOP_LIMIT)
       .reverse(),
+    // listed in full rather than truncated: each one is a regression the
+    // harness measured and refused to adopt as the new baseline
+    pendingRegressions: cleanComparisons.filter(
+      ({ classification }) => classification === "pendingRegression",
+    ),
     freshBaselines,
     pendingBaselines,
     issues,

@@ -139,7 +139,12 @@ test("11 - a slowdown beyond the threshold is a regression", () => {
 test("12 - a faster run advances the baseline and clears a stale slow run", () => {
   equal(
     nextHistoricalData({
-      historicalData: { "1.0.0": 100, lastSlowerRun: 80, lastVersion: 100 },
+      baseline: 100,
+      historicalData: {
+        "1.0.0": 100,
+        lastSlowerRun: { against: 100, score: 80, version: "1.0.0", worst: 80 },
+        lastVersion: 100,
+      },
       score: 120,
       verdict: "faster",
       version: "1.0.1",
@@ -152,12 +157,19 @@ test("12 - a faster run advances the baseline and clears a stale slow run", () =
 test("13 - a slower run keeps the baseline and records the measurement", () => {
   equal(
     nextHistoricalData({
+      baseline: 100,
       historicalData: { "1.0.0": 100, lastVersion: 100 },
       score: 92,
       verdict: "slower",
-      version: "1.0.0",
+      version: "1.0.1",
     }),
-    { "1.0.0": 100, lastSlowerRun: 92, lastVersion: 100 },
+    {
+      "1.0.0": 100,
+      // the released version has no version key, because adopting one would
+      // make it the next baseline; the record names it instead
+      lastSlowerRun: { against: 100, score: 92, version: "1.0.1", worst: 92 },
+      lastVersion: 100,
+    },
     "13.01",
   );
 });
@@ -165,6 +177,7 @@ test("13 - a slower run keeps the baseline and records the measurement", () => {
 test("14 - a regression cannot overwrite the baseline it lost against", () => {
   const historicalData = { "1.0.0": 100, lastVersion: 100 };
   const next = nextHistoricalData({
+    baseline: 100,
     historicalData,
     score: 70,
     verdict: "regression",
@@ -174,7 +187,11 @@ test("14 - a regression cannot overwrite the baseline it lost against", () => {
   // the exact REV-044 failure mode: without this, the next run compares
   // against 70 and calls a 30% regression "just as fast as before"
   equal(baselineOf(next, "1.0.0"), 100, "14.01");
-  equal(next.lastSlowerRun, 70, "14.02");
+  equal(
+    next.lastSlowerRun,
+    { against: 100, score: 70, version: "1.0.0", worst: 70 },
+    "14.02",
+  );
   equal(historicalData, { "1.0.0": 100, lastVersion: 100 }, "14.03");
 });
 
@@ -216,6 +233,48 @@ test("18 - the shipped policy resolves for a real package", () => {
 
   equal(resolved.failOnRegression, true, "18.01");
   equal(typeof resolved.regressionThresholdPercent, "number", "18.02");
+});
+
+test("19 - a partial recovery cannot hide how far the score fell", () => {
+  const afterWorst = nextHistoricalData({
+    baseline: 100,
+    historicalData: { "1.0.0": 100, lastVersion: 100 },
+    score: 70,
+    verdict: "regression",
+    version: "1.0.0",
+  });
+  const afterRecovery = nextHistoricalData({
+    baseline: 100,
+    historicalData: afterWorst,
+    score: 95,
+    verdict: "slower",
+    version: "1.0.0",
+  });
+
+  // 100 -> 70 -> 95 keeps both facts: where it is now, and how far it fell
+  equal(afterRecovery.lastSlowerRun.score, 95, "19.01");
+  equal(afterRecovery.lastSlowerRun.worst, 70, "19.02");
+  equal(baselineOf(afterRecovery, "1.0.0"), 100, "19.03");
+});
+
+test("20 - a worst measured against another baseline is not carried over", () => {
+  const next = nextHistoricalData({
+    baseline: 200,
+    historicalData: {
+      "1.0.0": 200,
+      lastSlowerRun: { against: 100, score: 70, version: "1.0.0", worst: 70 },
+      lastVersion: 200,
+    },
+    score: 150,
+    verdict: "regression",
+    version: "1.0.1",
+  });
+
+  equal(
+    next.lastSlowerRun,
+    { against: 200, score: 150, version: "1.0.1", worst: 150 },
+    "20.01",
+  );
 });
 
 test.run();

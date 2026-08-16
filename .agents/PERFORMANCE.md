@@ -135,10 +135,24 @@ raw score magnitudes across packages, because each package deliberately does a
 different amount of work. For monorepo summaries, prefer the median percentage
 and geometric-mean ratio; large outliers can distort an arithmetic mean.
 
-`lastSlowerRun`, when present, is the score of a run which lost against
-`lastVersion` by more than the unchanged tolerance. It is a record of the
-measurement, never a baseline. A later run which is not materially slower
-removes it.
+`lastSlowerRun`, when present, records a run which lost against `lastVersion`
+by more than the unchanged tolerance. It is a record of the measurement, never
+a baseline. A later run which is not materially slower removes it. It holds
+four fields:
+
+- `against` — the baseline that was kept, so a reader does not have to work out
+  which figure the run lost to. It always equals the current `lastVersion`,
+  because advancing the baseline clears the record.
+- `score` — the latest slower measurement.
+- `worst` — the lowest score seen while this baseline has stood, so a partial
+  recovery cannot hide how far the package fell.
+- `version` — the package version that measured slower. That version has no
+  version key of its own, deliberately: adopting one would make the regressed
+  score the next baseline.
+
+The analyser reads this record and reports the package as `pendingRegression`
+with its percentage. Do not judge a package by `lastVersion` alone; a retained
+baseline means the newest measurement is somewhere else.
 
 ## A regression keeps the baseline it lost against
 
@@ -159,7 +173,11 @@ The verdicts, and what each one records:
 | `regression` | slower by more than the threshold | `lastSlowerRun` only |
 
 A `regression` also sets a non-zero exit code, so it is distinguishable from a
-pass by something other than reading the output.
+pass by something other than reading the output. The root `perf` script passes
+`--continue=dependencies-successful` for that reason: a benchmark sweep is the
+one place you most want every result, and without it Turbo's default would let
+the first regressing package cancel the rest. The aggregate exit code still
+reflects the regression.
 
 `ops/perf-policy.json` holds both percentages:
 

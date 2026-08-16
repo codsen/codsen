@@ -53,7 +53,7 @@
     "lint:fix": "npm run check:fix && npm run typecheck && npm run lint:markdown",
     "lint:markdown": "remark --frail \"AGENTS.md\" \".agents/**/*.md\" \".github/**/*.md\" \"packages/*/AGENTS.md\"",
     "nuke": "git clean -fdx",
-    "perf": "turbo run perf",
+    "perf": "turbo run perf --continue=dependencies-successful",
     "prep": "turbo run prep",
     "prepare": "git config core.hooksPath ops/git-hooks || true",
     "prettier": "npm run check",

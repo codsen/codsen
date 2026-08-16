@@ -18,7 +18,7 @@ truth for benchmark intent, normalization, and history invalidation.
 3. For a release-wide audit, inspect every `packages/*/perf/check.js`; otherwise inspect every working-tree-modified check and each check relevant to the request. Confirm that `testme()` calls the current built public API with valid, meaningful, deterministic inputs and no mutable state that grows across iterations. Use source types, examples, and tests as evidence. If `dist` is missing or stale, treat source/types as the contract and rebuild before a runtime smoke test when the user has authorized builds.
 4. When the measured workload changes, reset that package's complete `perf/historical.json` to `{}` before the next run. This is mandatory for changes to the callable, arguments, options, fixture contents, callbacks, setup placement, or amount of work. Do not reset for imports, comments, or formatting alone. Record every reset; never compare the new workload with old records.
 5. If the user requested only an audit or workload repair, do not run perf merely to refill reset histories; leave them `{}`, complete static/smoke validation, and skip steps 6–9. Otherwise, from the repository root, run `npm run perf`. Allow the command to finish because each benchmark runs asynchronously and writes `perf/historical.json` when its own suite completes. A reset package will gain only a fresh baseline for its new workload.
-6. If the command fails, distinguish the two causes before reporting. A regression beyond `ops/perf-policy.json#regressionThresholdPercent` sets a non-zero exit code deliberately: that is a measured result, its history is intact, and the package's baseline was deliberately kept rather than overwritten. Any other failure is an incomplete run — report it with the affected package output, and do not manufacture a whole-monorepo conclusion from it. It is acceptable to analyze completed files only when clearly labelled partial.
+6. If the command fails, distinguish the two causes before reporting. A regression beyond `ops/perf-policy.json#regressionThresholdPercent` sets a non-zero exit code deliberately: that is a measured result, its history is intact, and the package's baseline was deliberately kept rather than overwritten. The sweep still completes, because the root script passes `--continue=dependencies-successful`, so a regression exit does not mean missing measurements — check Turbo's task count to confirm. Any other failure is an incomplete run — report it with the affected package output, and do not manufacture a whole-monorepo conclusion from it. It is acceptable to analyze completed files only when clearly labelled partial.
 7. Run:
 
    ```sh
@@ -48,7 +48,7 @@ Keys are either a semver version, `lastVersion`, or `lastSlowerRun`. Only the fi
 ## Comparison semantics
 
 - Treat `lastVersion` as the latest normalized score.
-- Ignore `lastSlowerRun` when picking a baseline. It is the score of a run which lost against `lastVersion` by more than 2%, kept as evidence precisely so that it did not become the baseline. Report it as a pending regression for that package rather than comparing against it.
+- Ignore `lastSlowerRun` when picking a baseline. It records a run which lost against `lastVersion` by more than 2%, kept as evidence precisely so that it did not become the baseline. The analyser reads it for you: such a package is classified `pendingRegression`, its `deltaPct` is `score` against `against` rather than anything derived from `lastVersion`, and `worstOpsPerSec` / `worstPct` report the lowest score seen while that baseline has stood. Count these separately from `slower` in the report — a `slower` package has already absorbed the loss into its baseline, whereas a pending regression is one the harness measured and refused to adopt.
 - Compare the latest score with the last version-keyed numeric entry preceding it.
 - When that entry is the current `package.json` version and duplicates `lastVersion`, skip it and use the preceding version entry. The benchmark writes the current score to both places, so comparing those duplicate values would always produce a misleading 0% change.
 - Calculate `(latest / baseline - 1) * 100`. Positive values mean faster; negative values mean slower.
@@ -62,7 +62,8 @@ Keys are either a semver version, `lastVersion`, or `lastSlowerRun`. Only the fi
 Lead with one plain-language verdict: faster, slower, roughly unchanged, or mixed. Then include:
 
 - how many files were found and how many packages were compared;
-- counts of faster, roughly unchanged, and slower packages using the 2% threshold;
+- counts of faster, roughly unchanged, and slower packages using the 2% threshold, plus pending regressions counted separately;
+- every entry in `pendingRegressions`, named individually rather than summarised: each is a regression the harness measured and deliberately did not absorb, and each is why `npm run perf` exited non-zero;
 - median and geometric-mean percentage changes;
 - the most important improvements and regressions, including package name, baseline version, and percentage;
 - skipped or malformed files and any partial benchmark failures;

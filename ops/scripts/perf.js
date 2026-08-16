@@ -94,6 +94,7 @@ export const runPerf = async (cb, callerDir) => {
       let newHistoricalDataFileContents = `${stringifyHistorical(
         sortAllObjectsSync(
           nextHistoricalData({
+            baseline,
             historicalData,
             score: normalisedBenchmarkedOpsPerSec,
             verdict,
@@ -164,9 +165,9 @@ export const runPerf = async (cb, callerDir) => {
         );
       }
 
-      if (verdict === "slower") {
+      if (verdict === "slower" || verdict === "regression") {
         console.log(
-          `${heads}📌 ${`[${90}m${`the baseline is kept; this run is recorded as lastSlowerRun`}[${39}m`}`,
+          `${heads}📌 ${`[${90}m${`the baseline is kept; this run is recorded as lastSlowerRun, and the perf analyser reports it as a pending regression`}[${39}m`}`,
         );
       }
 

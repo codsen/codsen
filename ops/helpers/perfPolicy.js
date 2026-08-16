@@ -114,7 +114,20 @@ function classifyPerfRun({ baseline, resolvedPolicy, score }) {
 // leaves the baseline where it was, so the comparison point survives and the
 // evidence is not lost either. Anything else advances the baseline and clears
 // a stale slow-run record.
-function nextHistoricalData({ historicalData, score, verdict, version }) {
+//
+// The record is an object rather than a bare score so that a reader — the perf
+// analyser above all — can name the regression without re-deriving anything:
+// `against` is the baseline that was kept, `version` is the release which
+// measured slower and therefore has no version key of its own, `score` is the
+// latest such measurement, and `worst` is the lowest seen while this baseline
+// has stood, so a partial recovery cannot hide how far it fell.
+function nextHistoricalData({
+  baseline,
+  historicalData,
+  score,
+  verdict,
+  version,
+}) {
   if (!VERDICTS.has(verdict)) {
     throw new Error(
       `ops/helpers/perfPolicy.js: unknown verdict ${JSON.stringify(verdict)}`,
@@ -125,7 +138,21 @@ function nextHistoricalData({ historicalData, score, verdict, version }) {
   delete next.lastRan;
 
   if (verdict === "slower" || verdict === "regression") {
-    next.lastSlowerRun = score;
+    const previous = next.lastSlowerRun;
+    // only carry the worst forward while it was measured against this baseline
+    const carried =
+      previous &&
+      typeof previous === "object" &&
+      previous.against === baseline &&
+      typeof previous.worst === "number"
+        ? previous.worst
+        : score;
+    next.lastSlowerRun = {
+      against: baseline,
+      score,
+      version,
+      worst: Math.min(score, carried),
+    };
     return next;
   }
 
