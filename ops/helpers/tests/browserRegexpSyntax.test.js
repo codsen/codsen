@@ -208,4 +208,95 @@ test("06 - reports a bundle it cannot parse rather than scanning nothing", () =>
   equal(findUnsupportedIifeRegexpSyntax("var a = 1;"), [], "06.03");
 });
 
+test("07 - reads a pattern held by a name bound once to a string", () => {
+  // the pattern reaches the browser exactly as a written-out one does, so
+  // holding it in a variable is not a way past the floor
+  equal(
+    findUnsupportedIifeRegexpSyntax(
+      'var P = "(?<=x)y"; var a = new RegExp(P);',
+    ),
+    ["regular expression lookbehind (Chromium 62)"],
+    "07.01",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax(
+      "const P = `(?<n>x)`; var a = new RegExp(P);",
+    ),
+    ["regular expression named capture group (Chromium 64)"],
+    "07.02",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax('var F = "s"; var a = new RegExp("x", F);'),
+    ["regular expression dotAll flag (Chromium 62)"],
+    "07.03",
+  );
+  // a name which is written to, or which more than one binding introduces, is
+  // one this audit cannot follow, and guessing at it would fail a build over
+  // nothing
+  equal(
+    findUnsupportedIifeRegexpSyntax(
+      'var P = "(?<=x)y"; P = "z"; var a = new RegExp(P);',
+    ),
+    [],
+    "07.04",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax(
+      'var P = "(?<=x)y"; function g(P) { return new RegExp(P); }',
+    ),
+    [],
+    "07.05",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax(
+      'var P = "(?<=x)y"; var P = "z"; var a = new RegExp(P);',
+    ),
+    [],
+    "07.06",
+  );
+});
+
+test("08 - names RegExp through parentheses and an element access", () => {
+  equal(
+    findUnsupportedIifeRegexpSyntax('var a = new (RegExp)("(?<=x)y");'),
+    ["regular expression lookbehind (Chromium 62)"],
+    "08.01",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax('var a = new window["RegExp"]("(?<=x)y");'),
+    ["regular expression lookbehind (Chromium 62)"],
+    "08.02",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax('var a = window["RegExp"]("(?<n>x)");'),
+    ["regular expression named capture group (Chromium 64)"],
+    "08.03",
+  );
+  // an element access by a computed key names nothing this audit can read
+  equal(
+    findUnsupportedIifeRegexpSyntax('var a = new window[key]("(?<=x)y");'),
+    [],
+    "08.04",
+  );
+});
+
+test("09 - does not read flags out of an unterminated literal", () => {
+  // the text of an unterminated literal has no closing `/`, so splitting it at
+  // index 0 would take the whole body for the flag string and report flags the
+  // bundle never used, on top of the parse error already reported
+  equal(
+    findUnsupportedIifeRegexpSyntax("if(a)/dsv"),
+    ["regular expressions unscannable, the bundle did not parse"],
+    "09.01",
+  );
+  equal(
+    findUnsupportedIifeRegexpSyntax("var a = /x/s; if(a)/dsv"),
+    [
+      "regular expressions unscannable, the bundle did not parse",
+      "regular expression dotAll flag (Chromium 62)",
+    ],
+    "09.02",
+  );
+});
+
 test.run();

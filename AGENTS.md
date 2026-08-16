@@ -191,17 +191,23 @@ contract.
   all reach the browser as written. Each is a parse error on the floor, which
   disables the entire bundle rather than one call, so `ci:verify:browser-iifes`
   checks for them statically alongside the runtime APIs. A feature detection
-  cannot rescue a parse error; keep such a literal out of the closure, or build
-  the pattern with `new RegExp()` behind a guard.
-- That check parses each bundle rather than matching its text, so it reports
-  these classes only from a regular-expression literal or from a static string
-  argument of a `RegExp()` call. The same characters inside an ordinary string,
-  a template, or a comment are data, and failing a build over data is failing
-  over nothing. A `RegExp()` built from a literal string is still reported,
-  because it throws on the floor where it is called; a guarded fallback which
-  needs one has to be audited explicitly in `ops/scripts/verify-browser-iifes.js`
-  the way `Intl.Segmenter` and `SharedArrayBuffer` are. A pattern assembled at
-  run time cannot be audited statically at all.
+  cannot rescue a parse error, so keep such a literal out of the closure.
+- Moving the pattern into a `RegExp()` call is not a way past that check, and is
+  not the fix. The check reports these classes from a regular-expression literal,
+  from a static string argument of a `RegExp()` call, and from a name the bundle
+  binds once to such a string — `new RegExp("(?<=x)y")` and
+  `var P = "(?<=x)y"; new RegExp(P)` are both reported, because both throw on the
+  floor where the call runs. If a package genuinely needs one behind a feature
+  guard, audit it explicitly in `ops/scripts/verify-browser-iifes.js` the way
+  `Intl.Segmenter` and `SharedArrayBuffer` are.
+- What the check cannot see is a pattern assembled at run time, and a name it
+  cannot follow — one bound twice, destructured, or assigned to — is treated as
+  assembled. Do not reach for either to quiet a finding: the bundle still breaks
+  on the floor, and the gate is then blind to it.
+- The same characters inside an ordinary string, a template, or a comment are
+  data, not a pattern. The check parses each bundle rather than matching its
+  text so that it can tell the difference, because failing a build over data is
+  failing over nothing.
 - Build all packages before running `npm run ci:verify:browser-iifes`. The
   verifier scans the emitted bundles, loads all of them in isolated legacy API
   realms, checks every documented global, and runs representative API smokes.

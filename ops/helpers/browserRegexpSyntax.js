@@ -48,10 +48,10 @@ const UNSUPPORTED_IIFE_REGEXP_FLAGS = Object.freeze([
 const UNPARSEABLE_BUNDLE =
   "regular expressions unscannable, the bundle did not parse";
 
-// The static text of an argument, or undefined when it is computed. A pattern
-// or flag string assembled at run time cannot be audited, and guessing at one
-// would fail a build over nothing.
-function staticText(node) {
+// The text of a string written out at this node, or undefined when it is not a
+// string literal. A pattern or flag assembled at run time cannot be audited,
+// and guessing at one would fail a build over nothing.
+function literalText(node) {
   if (node === undefined) {
     return undefined;
   }
@@ -61,10 +61,108 @@ function staticText(node) {
   return undefined;
 }
 
+function isAssignmentOperator(kind) {
+  return (
+    kind >= ts.SyntaxKind.FirstAssignment &&
+    kind <= ts.SyntaxKind.LastAssignment
+  );
+}
+
+// A pattern held in a variable reaches the browser exactly as a written-out one
+// does, so `var P = "(?<=x)y"; new RegExp(P)` breaks the floor just the same and
+// has to be audited too. Only a name the bundle binds once, to a string
+// literal, and never rebinds or writes to is resolved: a name bound twice, or
+// destructured, or assigned anywhere, is one this audit cannot follow, and
+// following it by guessing would fail builds over nothing.
+//
+// The declarations are collected by walking down to them rather than by reading
+// `node.parent`, because this file is parsed without parent pointers - setting
+// them on every node of a 300 KB minified bundle costs more than this audit is
+// worth.
+function staticConstants(sourceFile) {
+  const declared = new Map();
+  const unresolvable = new Set();
+
+  function noteRebound(name) {
+    if (name !== undefined && ts.isIdentifier(name)) {
+      unresolvable.add(name.text);
+    }
+  }
+
+  function visit(node) {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name)) {
+      const texts = declared.get(node.name.text) ?? [];
+      texts.push(literalText(node.initializer));
+      declared.set(node.name.text, texts);
+    } else if (
+      ts.isParameter(node) ||
+      ts.isBindingElement(node) ||
+      ts.isFunctionDeclaration(node) ||
+      ts.isFunctionExpression(node) ||
+      ts.isClassDeclaration(node) ||
+      ts.isClassExpression(node) ||
+      ts.isImportSpecifier(node) ||
+      ts.isImportClause(node) ||
+      ts.isNamespaceImport(node)
+    ) {
+      noteRebound(node.name);
+    } else if (ts.isCatchClause(node)) {
+      noteRebound(node.variableDeclaration?.name);
+    } else if (
+      ts.isBinaryExpression(node) &&
+      isAssignmentOperator(node.operatorToken.kind)
+    ) {
+      noteRebound(node.left);
+    } else if (
+      ts.isPostfixUnaryExpression(node) ||
+      ts.isPrefixUnaryExpression(node)
+    ) {
+      noteRebound(node.operand);
+    }
+    ts.forEachChild(node, visit);
+  }
+  visit(sourceFile);
+
+  const constants = new Map();
+  for (const [name, texts] of declared) {
+    if (
+      !unresolvable.has(name) &&
+      texts.length === 1 &&
+      texts[0] !== undefined
+    ) {
+      constants.set(name, texts[0]);
+    }
+  }
+  return constants;
+}
+
+// The static text of a `RegExp()` argument: written out here, or held by a name
+// this bundle binds exactly once to a string.
+function argumentText(node, constants) {
+  const literal = literalText(node);
+  if (literal !== undefined) {
+    return literal;
+  }
+  if (node !== undefined && ts.isIdentifier(node)) {
+    return constants.get(node.text);
+  }
+  return undefined;
+}
+
+// `new RegExp()`, `RegExp()`, `new (RegExp)()` and `window["RegExp"]()` all
+// construct the same object, so the parentheses and the access form are
+// unwrapped before the callee is named.
 function isRegexpConstructor(expression) {
-  const callee = ts.isPropertyAccessExpression(expression)
-    ? expression.name
-    : expression;
+  let callee = expression;
+  while (ts.isParenthesizedExpression(callee)) {
+    callee = callee.expression;
+  }
+  if (ts.isElementAccessExpression(callee)) {
+    return literalText(callee.argumentExpression) === "RegExp";
+  }
+  if (ts.isPropertyAccessExpression(callee)) {
+    callee = callee.name;
+  }
   return ts.isIdentifier(callee) && callee.text === "RegExp";
 }
 
@@ -86,25 +184,32 @@ function collectRegexpSites(source) {
     false,
     ts.ScriptKind.JS,
   );
+  const constants = staticConstants(sourceFile);
   const sites = [];
 
   function visit(node) {
     if (ts.isRegularExpressionLiteral(node)) {
-      // the literal text is `/pattern/flags`, and a flag is always a letter, so
-      // the last `/` closes the pattern however the pattern itself is written
+      // The literal text is `/pattern/flags`, and a flag is always a letter, so
+      // the last `/` closes the pattern however the pattern itself is written.
+      // An unterminated literal has no closing `/` at all, so there is no
+      // pattern to read: splitting its text at index 0 would take the whole
+      // body for the flag string and invent flag findings on top of the parse
+      // error which is already reported.
       const close = node.text.lastIndexOf("/");
-      sites.push({
-        flags: node.text.slice(close + 1),
-        pattern: node.text.slice(1, close),
-      });
+      if (close > 0) {
+        sites.push({
+          flags: node.text.slice(close + 1),
+          pattern: node.text.slice(1, close),
+        });
+      }
     } else if (
       (ts.isNewExpression(node) || ts.isCallExpression(node)) &&
       isRegexpConstructor(node.expression)
     ) {
       const [patternArgument, flagsArgument] = node.arguments ?? [];
       sites.push({
-        flags: staticText(flagsArgument) ?? "",
-        pattern: staticText(patternArgument) ?? "",
+        flags: argumentText(flagsArgument, constants) ?? "",
+        pattern: argumentText(patternArgument, constants) ?? "",
       });
     }
     ts.forEachChild(node, visit);
