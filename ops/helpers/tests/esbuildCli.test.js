@@ -20,6 +20,8 @@ const repositoryRoot = path.resolve(
 );
 const esbuildScript = path.join(repositoryRoot, "ops/scripts/esbuild.js");
 const debugMarker = "REV022_DEBUG_MARKER";
+// The line createFixture() writes the log on, within the package it writes.
+const debugOrigin = "src/main.ts:6";
 const longIdentifier = "deliberatelyVerboseLocalIdentifier";
 
 function createFixture() {
@@ -128,7 +130,36 @@ test("02 - --dev keeps logging and leaves both bundles unminified", () => {
   }
 });
 
-test("03 - unknown mode flags fail before deleting output", () => {
+test("03 - --dev prefixes kept logging with its source origin", () => {
+  const root = createFixture();
+  try {
+    equal(runBuild(root).status, 0, "03.01");
+    const production = readOutputs(root);
+    equal(production.esm.includes(debugOrigin), false, "03.02");
+    equal(production.iife.includes(debugOrigin), false, "03.03");
+
+    equal(runBuild(root, { args: ["--dev"] }).status, 0, "03.04");
+    const development = readOutputs(root);
+    equal(
+      development.esm.includes(
+        `console.log("${debugOrigin}", "${debugMarker}"`,
+      ),
+      true,
+      "03.05",
+    );
+    equal(
+      development.iife.includes(
+        `console.log("${debugOrigin}", "${debugMarker}"`,
+      ),
+      true,
+      "03.06",
+    );
+  } finally {
+    rmSync(root, { force: true, recursive: true });
+  }
+});
+
+test("04 - unknown mode flags fail before deleting output", () => {
   const root = createFixture();
   const marker = path.join(root, "dist/keep.txt");
   try {
@@ -137,13 +168,13 @@ test("03 - unknown mode flags fail before deleting output", () => {
 
     const result = runBuild(root, { args: ["--development"] });
 
-    equal(result.status, 1, "03.01");
+    equal(result.status, 1, "04.01");
     match(
       result.stderr,
       /Usage: node ops\/scripts\/esbuild\.js \[--dev\]/u,
-      "03.02",
+      "04.02",
     );
-    equal(existsSync(marker), true, "03.03");
+    equal(existsSync(marker), true, "04.03");
   } finally {
     rmSync(root, { force: true, recursive: true });
   }

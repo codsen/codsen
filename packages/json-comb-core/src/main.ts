@@ -92,7 +92,7 @@ function getKeyset(
   let resolvedOpts: GetKeysetOpts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `095 CALLING check-types-mini:\nopts = ${JSON.stringify(
+      `CALLING check-types-mini:\nopts = ${JSON.stringify(
         resolvedOpts,
         null,
         4,

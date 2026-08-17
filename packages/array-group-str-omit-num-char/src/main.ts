@@ -45,7 +45,7 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
   for (let i = 0, len = resolvedArr.length; i < len; i++) {
     DEV &&
       console.log(
-        `48 ${`\u001b[${36}m${`-1--------------------`}\u001b[${39}m`}  ${`\u001b[${33}m${`resolvedArr[${i}]`}\u001b[${39}m`} = ${`\u001b[${35}m${resolvedArr[i]}\u001b[${39}m`}  ${`\u001b[${36}m${`--------------------`}\u001b[${39}m`}`,
+        `${`\u001b[${36}m${`-1--------------------`}\u001b[${39}m`}  ${`\u001b[${33}m${`resolvedArr[${i}]`}\u001b[${39}m`} = ${`\u001b[${35}m${resolvedArr[i]}\u001b[${39}m`}  ${`\u001b[${36}m${`--------------------`}\u001b[${39}m`}`,
       );
 
     // compile an array of digit chunks, consisting of at least one digit
@@ -53,7 +53,7 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
     let digitChunks = resolvedArr[i].match(/\d+/gm);
     DEV &&
       console.log(
-        `056 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`digitChunks`}\u001b[${39}m`} = ${JSON.stringify(
+        `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`digitChunks`}\u001b[${39}m`} = ${JSON.stringify(
           digitChunks,
           null,
           4,
@@ -84,15 +84,15 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
         // for replacement with wildcards), is it different from previous string's
         // chunk at that position (there can be multiple chunks of digits).
 
-        DEV && console.log(`087 compiledObj has entry for "${wildcarded}"`);
+        DEV && console.log(`compiledObj has entry for "${wildcarded}"`);
         DEV &&
           console.log(
-            `090 \u001b[${36}m${`██ ██ ██ CHECK ALL CHUNKS ██ ██ ██`}\u001b[${39}m`,
+            `\u001b[${36}m${`██ ██ ██ CHECK ALL CHUNKS ██ ██ ██`}\u001b[${39}m`,
           );
         digitChunks.forEach((digitsChunkStr, i2) => {
           DEV &&
             console.log(
-              `095 \u001b[${36}m${`██ chunk i2 = ${i2}, val = ${digitsChunkStr}`}\u001b[${39}m`,
+              `\u001b[${36}m${`██ chunk i2 = ${i2}, val = ${digitsChunkStr}`}\u001b[${39}m`,
             );
           if (
             compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards[
@@ -103,7 +103,7 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
           ) {
             DEV &&
               console.log(
-                `106 BEFORE compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards = ${JSON.stringify(
+                `BEFORE compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards = ${JSON.stringify(
                   compiledObj[wildcarded]
                     .elementsWhichWeCanReplaceWithWildcards,
                   null,
@@ -114,7 +114,7 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
               false;
             DEV &&
               console.log(
-                `117 AFTER compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards = ${JSON.stringify(
+                `AFTER compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards = ${JSON.stringify(
                   compiledObj[wildcarded]
                     .elementsWhichWeCanReplaceWithWildcards,
                   null,
@@ -127,7 +127,7 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
         compiledObj[wildcarded].count += 1;
         DEV &&
           console.log(
-            `130 BUMP compiledObj[wildcarded].count is now = ${compiledObj[wildcarded].count}`,
+            `BUMP compiledObj[wildcarded].count is now = ${compiledObj[wildcarded].count}`,
           );
       } else {
         compiledObj[wildcarded] = {
@@ -136,7 +136,7 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
         };
         DEV &&
           console.log(
-            `139 creating entry for "${wildcarded}"; compiledObj[wildcarded] = ${JSON.stringify(
+            `creating entry for "${wildcarded}"; compiledObj[wildcarded] = ${JSON.stringify(
               compiledObj[wildcarded],
               null,
               4,
@@ -148,7 +148,7 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
 
   DEV &&
     console.log(
-      `151 FINAL ${`\u001b[${33}m${`compiledObj`}\u001b[${39}m`} = ${JSON.stringify(
+      `FINAL ${`\u001b[${33}m${`compiledObj`}\u001b[${39}m`} = ${JSON.stringify(
         compiledObj,
         null,
         4,
@@ -159,12 +159,12 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
   Object.keys(compiledObj).forEach((key) => {
     DEV &&
       console.log(
-        `162 \u001b[${36}m${`------------------------------------------`}\u001b[${39}m`,
+        `\u001b[${36}m${`------------------------------------------`}\u001b[${39}m`,
       );
-    DEV && console.log(`164 ${`\u001b[${35}m${`z`}\u001b[${39}m`}`);
+    DEV && console.log(`${`\u001b[${35}m${`z`}\u001b[${39}m`}`);
     DEV &&
       console.log(
-        `167 PROCESSING compiledObj key: ${JSON.stringify(key, null, 4)}`,
+        `PROCESSING compiledObj key: ${JSON.stringify(key, null, 4)}`,
       );
     // here were restore the values which were replaced with wildcards where
     // those values were identical across the whole set. That's the whole point
@@ -189,7 +189,7 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
         (val: any) => val !== false,
       )
     ) {
-      DEV && console.log(`192 ██ PREP ${key}`);
+      DEV && console.log(`██ PREP ${key}`);
 
       // we'll compile ranges array and replace all wildcards in one go using https://www.npmjs.com/package/ranges-apply
       let rangesArr = [];
@@ -197,23 +197,21 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
       let nThIndex = 0;
 
       DEV &&
-        console.log(
-          `201 \u001b[${32}m${`==== while starts ====`}\u001b[${39}m`,
-        );
+        console.log(`\u001b[${32}m${`==== while starts ====`}\u001b[${39}m`);
       for (
         let z = 0;
         z < compiledObj[key].elementsWhichWeCanReplaceWithWildcards.length;
         z++
       ) {
-        DEV && console.log(`208 ${z === 0 ? "" : "\n-------------\n"}`);
-        DEV && console.log(`209 ${`\u001b[${33}m${`z`}\u001b[${39}m`} = ${z}`);
+        DEV && console.log(`${z === 0 ? "" : "\n-------------\n"}`);
+        DEV && console.log(`${`\u001b[${33}m${`z`}\u001b[${39}m`} = ${z}`);
         nThIndex = newKey.indexOf(
           `${resolvedOpts.wildcard || ""}`,
           nThIndex + (resolvedOpts.wildcard || "").length,
         );
         DEV &&
           console.log(
-            `216 ${`\u001b[${33}m${`nThIndex`}\u001b[${39}m`} = ${JSON.stringify(
+            `${`\u001b[${33}m${`nThIndex`}\u001b[${39}m`} = ${JSON.stringify(
               nThIndex,
               null,
               4,
@@ -231,15 +229,13 @@ function groupStr(arr: string[], opts?: Partial<Opts>): MappingObj {
       }
       newKey = rApply(newKey, rangesArr as Range[]);
       DEV &&
-        console.log(
-          `235 \u001b[${32}m${`\n==== while ends ====`}\u001b[${39}m`,
-        );
+        console.log(`\u001b[${32}m${`\n==== while ends ====`}\u001b[${39}m`);
     }
     resObj[newKey] = compiledObj[key].count;
   });
   DEV &&
     console.log(
-      `242 \u001b[${36}m${`------------------------------------------`}\u001b[${39}m`,
+      `\u001b[${36}m${`------------------------------------------`}\u001b[${39}m`,
     );
   return resObj;
 }

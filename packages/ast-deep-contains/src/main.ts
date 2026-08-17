@@ -96,10 +96,10 @@ function deepContains(
       let current = val !== undefined ? val : key;
       let { path } = innerObj;
       // retrieve the path of the current node from the monkey
-      DEV && console.log("099 \n");
+      DEV && console.log("\n");
       DEV &&
         console.log(
-          `102 ${`\u001b[${90}m${`====================================`}\u001b[${39}m`} ${`\u001b[${36}m${`path`}\u001b[${39}m`}: ${path}; ${`\u001b[${36}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
+          `${`\u001b[${90}m${`====================================`}\u001b[${39}m`} ${`\u001b[${36}m${`path`}\u001b[${39}m`}: ${path}; ${`\u001b[${36}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
             current,
             null,
             0,
@@ -114,7 +114,7 @@ function deepContains(
       // );
 
       if (objectPath.has(tree1, path)) {
-        DEV && console.log(`117 tree1 does have the path "${path}"`);
+        DEV && console.log(`tree1 does have the path "${path}"`);
         if (
           !resolvedOpts.arrayStrictComparison &&
           isPlainObject(current) &&
@@ -123,7 +123,7 @@ function deepContains(
         ) {
           DEV &&
             console.log(
-              `126 ${`\u001b[${35}m${`██ object within array`}\u001b[${39}m`}`,
+              `${`\u001b[${35}m${`██ object within array`}\u001b[${39}m`}`,
             );
           // stop the monkey, we'll go further recursively
           stop.now = true;
@@ -135,7 +135,7 @@ function deepContains(
           );
           DEV &&
             console.log(
-              `138 SET ${`\u001b[${33}m${`arr1`}\u001b[${39}m`} = ${JSON.stringify(
+              `SET ${`\u001b[${33}m${`arr1`}\u001b[${39}m`} = ${JSON.stringify(
                 arr1,
                 null,
                 4,
@@ -157,11 +157,11 @@ function deepContains(
               )}`,
             );
           } else {
-            DEV && console.log(`160`);
+            DEV && console.log();
             let arr2: UnknownValueObj[] = innerObj.parent;
             DEV &&
               console.log(
-                `164 SET ${`\u001b[${33}m${`arr2`}\u001b[${39}m`} = ${JSON.stringify(
+                `SET ${`\u001b[${33}m${`arr2`}\u001b[${39}m`} = ${JSON.stringify(
                   arr2,
                   null,
                   4,
@@ -195,7 +195,7 @@ function deepContains(
             const mapping = findBestArrayMapping(arr2, arr1);
             DEV &&
               console.log(
-                `198 SET ${`\u001b[${33}m${`mapping`}\u001b[${39}m`} = ${JSON.stringify(
+                `SET ${`\u001b[${33}m${`mapping`}\u001b[${39}m`} = ${JSON.stringify(
                   mapping,
                   null,
                   4,
@@ -213,12 +213,12 @@ function deepContains(
             }
           }
         } else {
-          DEV && console.log(`216 it is not an object inside an array`);
+          DEV && console.log(`it is not an object inside an array`);
           // if tree1 has that path on tree2, call the callback
           let retrieved = objectPath.get(tree1, path);
           DEV &&
             console.log(
-              `221 ${`\u001b[${33}m${`resolvedOpts.skipContainers`}\u001b[${39}m`} = ${JSON.stringify(
+              `${`\u001b[${33}m${`resolvedOpts.skipContainers`}\u001b[${39}m`} = ${JSON.stringify(
                 resolvedOpts.skipContainers,
                 null,
                 4,
@@ -226,7 +226,7 @@ function deepContains(
             );
           DEV &&
             console.log(
-              `229 ${`\u001b[${33}m${`retrieved`}\u001b[${39}m`} = ${JSON.stringify(
+              `${`\u001b[${33}m${`retrieved`}\u001b[${39}m`} = ${JSON.stringify(
                 retrieved,
                 null,
                 4,
@@ -238,8 +238,7 @@ function deepContains(
             !resolvedOpts.skipContainers ||
             (!isPlainObject(retrieved) && !Array.isArray(retrieved))
           ) {
-            DEV &&
-              console.log(`242 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} cb()`);
+            DEV && console.log(`${`\u001b[${32}m${`PING`}\u001b[${39}m`} cb()`);
             cb(retrieved, current, path);
           }
         }
@@ -259,7 +258,7 @@ function deepContains(
 
       DEV &&
         console.log(
-          `\n\n\n262 ${`\u001b[${90}m${`======================================================`}\u001b[${39}m`} fin. ${`\u001b[${90}m${`======================================================`}\u001b[${39}m`}`,
+          `\n\n\n${`\u001b[${90}m${`======================================================`}\u001b[${39}m`} fin. ${`\u001b[${90}m${`======================================================`}\u001b[${39}m`}`,
         );
       return current;
     });

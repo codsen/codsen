@@ -51,7 +51,7 @@ function sort(input: string): Res {
   let indexAtWhichEmptyCellsStart: number | null = null;
 
   for (let i = content.length - 1; i >= 0; i--) {
-    DEV && console.log(`054 content[${i}] = ${content[i]}`);
+    DEV && console.log(`content[${i}] = ${content[i]}`);
     if (!schema.length) {
       // prevention against last blank row:
       /* c8 ignore next */
@@ -372,7 +372,7 @@ function sort(input: string): Res {
 
   DEV &&
     console.log(
-      `375 after push ${`\u001b[${33}m${`resContent`}\u001b[${39}m`} = ${JSON.stringify(
+      `after push ${`\u001b[${33}m${`resContent`}\u001b[${39}m`} = ${JSON.stringify(
         resContent,
         null,
         4,
@@ -388,11 +388,11 @@ function sort(input: string): Res {
     // go through all the rows and pick the right row which matches to the above:
     DEV &&
       console.log(
-        `391 ${`\n\u001b[${90}m${`                       S`}\u001b[${39}m`.repeat(15)}`,
+        `${`\n\u001b[${90}m${`                       S`}\u001b[${39}m`.repeat(15)}`,
       );
     DEV &&
       console.log(
-        `395 \u001b[${90}m${`████████████████ y = ${y} ████████████████`}\u001b[${39}m`,
+        `\u001b[${90}m${`████████████████ y = ${y} ████████████████`}\u001b[${39}m`,
       );
 
     for (
@@ -400,11 +400,10 @@ function sort(input: string): Res {
       suspectedRowsIndex >= bottom;
       suspectedRowsIndex--
     ) {
-      DEV &&
-        console.log(`404 \n\n\n\n\n ${`\u001b[${90}m${`██`}\u001b[${39}m`}`);
+      DEV && console.log(`\n\n\n\n\n ${`\u001b[${90}m${`██`}\u001b[${39}m`}`);
       DEV &&
         console.log(
-          `407 \u001b[${90}m${`=============== suspected row: ${JSON.stringify(
+          `\u001b[${90}m${`=============== suspected row: ${JSON.stringify(
             content[suspectedRowsIndex],
             null,
             0,
@@ -422,7 +421,7 @@ function sort(input: string): Res {
         ) {
           DEV &&
             console.log(
-              `425 \u001b[${90}m${`--------------- suspectedColIndex = ${suspectedColIndex} ---------------`}\u001b[${39}m`,
+              `\u001b[${90}m${`--------------- suspectedColIndex = ${suspectedColIndex} ---------------`}\u001b[${39}m`,
             );
           let diffVal = null;
           if (
@@ -437,7 +436,7 @@ function sort(input: string): Res {
             );
             DEV &&
               console.log(
-                `440 SET ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
+                `SET ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
                   diffVal,
                   null,
                   4,
@@ -453,7 +452,7 @@ function sort(input: string): Res {
             );
             DEV &&
               console.log(
-                `456 SET ${`\u001b[${33}m${`totalVal`}\u001b[${39}m`} = ${JSON.stringify(
+                `SET ${`\u001b[${33}m${`totalVal`}\u001b[${39}m`} = ${JSON.stringify(
                   totalVal,
                   null,
                   4,
@@ -469,7 +468,7 @@ function sort(input: string): Res {
             ).format();
             DEV &&
               console.log(
-                `472 SET ${`\u001b[${33}m${`topmostResContentBalance`}\u001b[${39}m`} = ${JSON.stringify(
+                `SET ${`\u001b[${33}m${`topmostResContentBalance`}\u001b[${39}m`} = ${JSON.stringify(
                   topmostResContentBalance,
                   null,
                   4,
@@ -491,7 +490,7 @@ function sort(input: string): Res {
             ).format();
             DEV &&
               console.log(
-                `494 ${`\u001b[${33}m${`currentRowsDiffVal`}\u001b[${39}m`} = ${JSON.stringify(
+                `${`\u001b[${33}m${`currentRowsDiffVal`}\u001b[${39}m`} = ${JSON.stringify(
                   currentRowsDiffVal,
                   null,
                   4,
@@ -507,10 +506,10 @@ function sort(input: string): Res {
             );
           }
 
-          DEV && console.log("510 \n\n\n\n\n");
+          DEV && console.log("\n\n\n\n\n");
           DEV &&
             console.log(
-              `513 ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
+              `${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
                 diffVal,
                 null,
                 4,
@@ -519,19 +518,19 @@ function sort(input: string): Res {
 
           DEV &&
             console.log(
-              `522 case 1 totalVal=${totalVal} + diffVal=${diffVal} === topmostResContentBalance=${topmostResContentBalance}`,
+              `case 1 totalVal=${totalVal} + diffVal=${diffVal} === topmostResContentBalance=${topmostResContentBalance}`,
             );
           DEV &&
             console.log(
-              `526 case 2 totalVal=${totalVal} - diffVal=${diffVal} === topmostResContentBalance=${topmostResContentBalance}`,
+              `case 2 totalVal=${totalVal} - diffVal=${diffVal} === topmostResContentBalance=${topmostResContentBalance}`,
             );
           DEV &&
             console.log(
-              `530 case 3 lastResContentRowsBalance=${lastResContentRowsBalance} + currentRowsDiffVal=${currentRowsDiffVal} === totalVal=${totalVal}`,
+              `case 3 lastResContentRowsBalance=${lastResContentRowsBalance} + currentRowsDiffVal=${currentRowsDiffVal} === totalVal=${totalVal}`,
             );
           DEV &&
             console.log(
-              `534 case 4 lastResContentRowsBalance=${lastResContentRowsBalance} - currentRowsDiffVal=${currentRowsDiffVal} === totalVal=${totalVal}`,
+              `case 4 lastResContentRowsBalance=${lastResContentRowsBalance} - currentRowsDiffVal=${currentRowsDiffVal} === totalVal=${totalVal}`,
             );
 
           /* c8 ignore next */
@@ -540,7 +539,7 @@ function sort(input: string): Res {
             (totalVal as currency).add(diffVal).format() ===
               topmostResContentBalance
           ) {
-            DEV && console.log(`543 ADD THIS ROW ABOVE EVERYTHING`);
+            DEV && console.log(`ADD THIS ROW ABOVE EVERYTHING`);
             // ADD THIS ROW ABOVE EVERYTHING
             // add this row above the current HEAD in resContent lines array (index `0`)
             resContent.unshift(
@@ -589,10 +588,10 @@ function sort(input: string): Res {
             break;
           }
 
-          DEV && console.log("592 ----------");
+          DEV && console.log("----------");
           DEV &&
             console.log(
-              `595 ${`\u001b[${33}m${`thisRowIsDone`}\u001b[${39}m`} = ${JSON.stringify(
+              `${`\u001b[${33}m${`thisRowIsDone`}\u001b[${39}m`} = ${JSON.stringify(
                 thisRowIsDone,
                 null,
                 4,
@@ -609,7 +608,7 @@ function sort(input: string): Res {
 
     DEV &&
       console.log(
-        `612 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ENDING \u001b[${33}m${`resContent`}\u001b[${39}m = ${JSON.stringify(
+        `${`\u001b[${32}m${`██`}\u001b[${39}m`} ENDING \u001b[${33}m${`resContent`}\u001b[${39}m = ${JSON.stringify(
           resContent,
           null,
           4,

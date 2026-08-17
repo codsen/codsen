@@ -160,7 +160,7 @@ function expander(opts: Partial<Opts>): Range {
 
   DEV &&
     console.log(
-      `163 START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`,
+      `START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`,
     );
 
   // 1. expand the given range outwards and leave a single space or
@@ -177,13 +177,10 @@ function expander(opts: Partial<Opts>): Range {
       (resolvedOpts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1])))
   ) {
     // loop backwards
-    DEV &&
-      console.log(`181 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
+    DEV && console.log(`${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
     for (let i = from; i--; ) {
       DEV &&
-        console.log(
-          `185 \u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`,
-        );
+        console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
       if (!resolvedOpts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
         if (str[i].trim()) {
           if (
@@ -196,7 +193,7 @@ function expander(opts: Partial<Opts>): Range {
           }
           DEV &&
             console.log(
-              `199 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`,
+              `SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`,
             );
           break;
         } else if (i === 0) {
@@ -207,7 +204,7 @@ function expander(opts: Partial<Opts>): Range {
           }
           DEV &&
             console.log(
-              `210 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`,
+              `SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`,
             );
           break;
         }
@@ -223,12 +220,10 @@ function expander(opts: Partial<Opts>): Range {
       resolvedOpts.ifRightSideIncludesThisCropItToo.includes(str[to]))
   ) {
     // loop forward
-    DEV && console.log(`226 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
+    DEV && console.log(`${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
     for (let i = to, len = str.length; i < len; i++) {
       DEV &&
-        console.log(
-          `230 \u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`,
-        );
+        console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
       if (!resolvedOpts.ifRightSideIncludesThisCropItToo.includes(str[i])) {
         if (str[i].trim()) {
           if (
@@ -236,28 +231,26 @@ function expander(opts: Partial<Opts>): Range {
             resolvedOpts.ifRightSideIncludesThisCropItToo.includes(str[i - 1])
           ) {
             to = i;
-            DEV && console.log(`239`);
+            DEV && console.log();
           } else {
             to = i - 1;
-            DEV && console.log(`242`);
+            DEV && console.log();
           }
           DEV &&
             console.log(
-              `246 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`,
+              `SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`,
             );
           break;
         } else if (i === str.length - 1) {
           if (resolvedOpts.wipeAllWhitespaceOnRight) {
             to = str.length;
-            DEV && console.log(`252`);
+            DEV && console.log();
           } else {
             to = str.length - 1;
-            DEV && console.log(`255`);
+            DEV && console.log();
           }
           DEV &&
-            console.log(
-              `259 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`,
-            );
+            console.log(`SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`);
           break;
         }
       }
@@ -289,7 +282,7 @@ function expander(opts: Partial<Opts>): Range {
             str[to],
           ))))
   ) {
-    DEV && console.log("292");
+    DEV && console.log();
     if (
       resolvedOpts.extendToOneSide !== "right" &&
       isWhitespace(str[from - 1]) &&
@@ -297,9 +290,7 @@ function expander(opts: Partial<Opts>): Range {
     ) {
       from -= 1;
       DEV &&
-        console.log(
-          `301 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`,
-        );
+        console.log(`SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`);
     }
     if (
       resolvedOpts.extendToOneSide !== "left" &&
@@ -307,8 +298,7 @@ function expander(opts: Partial<Opts>): Range {
       !resolvedOpts.wipeAllWhitespaceOnRight
     ) {
       to += 1;
-      DEV &&
-        console.log(`311 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`);
+      DEV && console.log(`SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`);
     }
   }
 
@@ -331,10 +321,10 @@ function expander(opts: Partial<Opts>): Range {
       )) &&
     (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))
   ) {
-    DEV && console.log(`334 RETURN: [${from}, ${to}, " "]`);
+    DEV && console.log(`RETURN: [${from}, ${to}, " "]`);
     return [from, to, " "];
   }
-  DEV && console.log(`337 RETURN: [${from}, ${to}]`);
+  DEV && console.log(`RETURN: [${from}, ${to}]`);
   return [from, to];
 }
 

@@ -15,7 +15,7 @@ export function wrap(
 ): string | false {
   DEV &&
     console.log(
-      `018 >>>>>>>>>> WRAP(): placementValue = ${JSON.stringify(
+      `>>>>>>>>>> WRAP(): placementValue = ${JSON.stringify(
         placementValue,
         null,
         4,
@@ -23,7 +23,7 @@ export function wrap(
     );
   DEV &&
     console.log(
-      `026 >>>>>>>>>> WRAP(): breadCrumbPath = ${JSON.stringify(
+      `>>>>>>>>>> WRAP(): breadCrumbPath = ${JSON.stringify(
         breadCrumbPath,
         null,
         4,
@@ -31,11 +31,11 @@ export function wrap(
     );
   DEV &&
     console.log(
-      `034 >>>>>>>>>> WRAP(): newPath = ${JSON.stringify(newPath, null, 4)}`,
+      `>>>>>>>>>> WRAP(): newPath = ${JSON.stringify(newPath, null, 4)}`,
     );
   DEV &&
     console.log(
-      `038 >>>>>>>>>> WRAP(): oldVarName = ${JSON.stringify(
+      `>>>>>>>>>> WRAP(): oldVarName = ${JSON.stringify(
         oldVarName,
         null,
         4,
@@ -63,21 +63,19 @@ export function wrap(
         !placementValue.includes(resolvedOpts.wrapHeadsWith as string) &&
         !placementValue.includes(resolvedOpts.wrapTailsWith as string)))
   ) {
-    DEV && console.log("066 +++ WE WILL WRAP THIS!");
+    DEV && console.log("+++ WE WILL WRAP THIS!");
     return `${resolvedOpts.wrapHeadsWith}${placementValue}${resolvedOpts.wrapTailsWith}`;
   }
   if (dontWrapTheseVars) {
     DEV &&
+      console.log("\n\n\n💥💥💥💥💥💥 !!! dontWrapTheseVars is ON!!!\n\n\n");
+    DEV &&
       console.log(
-        "\n\n\n072 💥💥💥💥💥💥 !!! dontWrapTheseVars is ON!!!\n\n\n",
+        `placementValue = ${JSON.stringify(placementValue, null, 4)}`,
       );
     DEV &&
       console.log(
-        `076 placementValue = ${JSON.stringify(placementValue, null, 4)}`,
-      );
-    DEV &&
-      console.log(
-        `080 resolvedOpts.wrapHeadsWith = ${JSON.stringify(
+        `resolvedOpts.wrapHeadsWith = ${JSON.stringify(
           resolvedOpts.wrapHeadsWith,
           null,
           4,
@@ -85,7 +83,7 @@ export function wrap(
       );
     DEV &&
       console.log(
-        `088 resolvedOpts.wrapTailsWith = ${JSON.stringify(
+        `resolvedOpts.wrapTailsWith = ${JSON.stringify(
           resolvedOpts.wrapTailsWith,
           null,
           4,
@@ -94,7 +92,7 @@ export function wrap(
 
     DEV &&
       console.log(
-        `097 about to return:\n${JSON.stringify(
+        `about to return:\n${JSON.stringify(
           remDup(placementValue, {
             heads: resolvedOpts.wrapHeadsWith,
             tails: resolvedOpts.wrapTailsWith,
@@ -105,14 +103,14 @@ export function wrap(
       );
     DEV &&
       console.log(
-        `108 \u001b[${36}m placementValue = ${JSON.stringify(
+        `\u001b[${36}m placementValue = ${JSON.stringify(
           placementValue,
           null,
           4,
         )}\u001b[${39}m`,
       );
     if (!isStr(placementValue)) {
-      DEV && console.log(`115 Returning placementValue = ${placementValue}`);
+      DEV && console.log(`Returning placementValue = ${placementValue}`);
       return placementValue;
     }
     let tempValue = remDup(placementValue, {
@@ -128,6 +126,6 @@ export function wrap(
       resolvedOpts.wrapTailsWith,
     );
   }
-  DEV && console.log("131 +++ NO WRAP");
+  DEV && console.log("+++ NO WRAP");
   return placementValue;
 }

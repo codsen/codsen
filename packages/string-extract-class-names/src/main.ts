@@ -57,7 +57,7 @@ function extract(str: string): Result {
   for (let i = 0, len = str.length; i <= len; i++) {
     DEV &&
       console.log(
-        `60 ${`\u001b[${36}m${`============================`}\u001b[${39}m`} ${`\u001b[${33}m${str[i]}\u001b[${39}m`} (${`\u001b[${31}m${i}\u001b[${39}m`})`,
+        `${`\u001b[${36}m${`============================`}\u001b[${39}m`} ${`\u001b[${33}m${str[i]}\u001b[${39}m`} (${`\u001b[${31}m${i}\u001b[${39}m`})`,
       );
 
     // A CSS escape is part of the current identifier. Skipping its complete
@@ -101,14 +101,14 @@ function extract(str: string): Result {
           stateCurrentlyIs = undefined;
           DEV &&
             console.log(
-              `104 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stateCurrentlyIs = undefined`,
+              `${`\u001b[${32}m${`SET`}\u001b[${39}m`} stateCurrentlyIs = undefined`,
             );
         }
       }
       selectorStartsAt = null;
       DEV &&
         console.log(
-          `111 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`,
+          `${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`,
         );
     }
 
@@ -121,7 +121,7 @@ function extract(str: string): Result {
       selectorStartsAt = i;
       DEV &&
         console.log(
-          `124 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`,
+          `SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`,
         );
     }
 
@@ -134,7 +134,7 @@ function extract(str: string): Result {
       typeof temp1 === "number" &&
       str[temp1] === "="
     ) {
-      DEV && console.log(`137 [class= caught`);
+      DEV && console.log(`[class= caught`);
       // if it's zzz[class=something] (without quotes)
       /* c8 ignore next */
       if (
@@ -143,7 +143,7 @@ function extract(str: string): Result {
           cssEscapeEndsAt(str, right(str, temp1) as number) !== null)
       ) {
         selectorStartsAt = right(str, temp1);
-        DEV && console.log(`146 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp1) as number]) &&
         (isLatinLetter(str[right(str, right(str, temp1)) as number]) ||
@@ -151,7 +151,7 @@ function extract(str: string): Result {
             null)
       ) {
         selectorStartsAt = right(str, right(str, temp1));
-        DEV && console.log(`154 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`SET selectorStartsAt = ${selectorStartsAt}`);
       }
       stateCurrentlyIs = ".";
     }
@@ -164,14 +164,14 @@ function extract(str: string): Result {
       temp2 !== null &&
       str[temp2] === "="
     ) {
-      DEV && console.log(`167 [id= caught`);
+      DEV && console.log(`[id= caught`);
       // if it's zzz[id=something] (without quotes)
       if (
         isLatinLetter(str[right(str, temp2) as number]) ||
         cssEscapeEndsAt(str, right(str, temp2) as number) !== null
       ) {
         selectorStartsAt = right(str, temp2);
-        DEV && console.log(`174 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp2) as number]) &&
         (isLatinLetter(str[right(str, right(str, temp2)) as number]) ||
@@ -179,14 +179,14 @@ function extract(str: string): Result {
             null)
       ) {
         selectorStartsAt = right(str, right(str, temp2));
-        DEV && console.log(`182 SET selectorStartsAt = ${selectorStartsAt}`);
+        DEV && console.log(`SET selectorStartsAt = ${selectorStartsAt}`);
       }
       stateCurrentlyIs = "#";
     }
 
     DEV &&
       console.log(
-        `189 \u001b[${90}m${`ended with: selectorStartsAt = ${selectorStartsAt}; result = ${JSON.stringify(
+        `\u001b[${90}m${`ended with: selectorStartsAt = ${selectorStartsAt}; result = ${JSON.stringify(
           result,
           null,
           0,

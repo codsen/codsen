@@ -42,7 +42,7 @@ const changelogTimeline: UnifiedPlugin<[options?: Partial<Opts>]> = (opts) => {
   let resolvedOpts: Opts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `045 final ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `final ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -131,7 +131,7 @@ const changelogTimeline: UnifiedPlugin<[options?: Partial<Opts>]> = (opts) => {
 
     DEV &&
       console.log(
-        `134 ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${stringify(tree)}`,
+        `${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${stringify(tree)}`,
       );
 
     visit(tree, "element", (node, index, parent) => {
@@ -151,7 +151,7 @@ const changelogTimeline: UnifiedPlugin<[options?: Partial<Opts>]> = (opts) => {
       ) {
         DEV &&
           console.log(
-            `154 processing: ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${stringify(
+            `processing: ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${stringify(
               node,
             )}`,
           );
@@ -183,12 +183,11 @@ const changelogTimeline: UnifiedPlugin<[options?: Partial<Opts>]> = (opts) => {
       }
 
       if (versionStr && dateStr) {
-        DEV &&
-          console.log(`187 versionStr: ${versionStr}; dateStr: ${dateStr}`);
+        DEV && console.log(`versionStr: ${versionStr}; dateStr: ${dateStr}`);
 
         DEV &&
           console.log(
-            `191  ███████████████████████████████████████ ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            ` ███████████████████████████████████████ ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
               node,
               null,
               4,
@@ -202,10 +201,10 @@ const changelogTimeline: UnifiedPlugin<[options?: Partial<Opts>]> = (opts) => {
           },
         ];
 
-        DEV && console.log(`205 set the h2 to ${versionStr}`);
+        DEV && console.log(`set the h2 to ${versionStr}`);
 
         if (dateStr && typeof index === "number") {
-          DEV && console.log(`208 add the .release-date div`);
+          DEV && console.log(`add the .release-date div`);
           let date = new Date(dateStr);
           let formatDay = new Intl.DateTimeFormat(resolvedOpts.dateDivLocale, {
             day: "numeric",
@@ -232,7 +231,7 @@ const changelogTimeline: UnifiedPlugin<[options?: Partial<Opts>]> = (opts) => {
           };
           DEV &&
             console.log(
-              `235 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`dateParamsObj`}\u001b[${39}m`} = ${JSON.stringify(
+              `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`dateParamsObj`}\u001b[${39}m`} = ${JSON.stringify(
                 dateParamsObj,
                 null,
                 4,
@@ -247,7 +246,7 @@ const changelogTimeline: UnifiedPlugin<[options?: Partial<Opts>]> = (opts) => {
 
           DEV &&
             console.log(
-              `250 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`newMarkup`}\u001b[${39}m`} = ${JSON.stringify(
+              `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`newMarkup`}\u001b[${39}m`} = ${JSON.stringify(
                 newMarkup,
                 null,
                 4,
@@ -317,7 +316,7 @@ const changelogTimeline: UnifiedPlugin<[options?: Partial<Opts>]> = (opts) => {
       ) {
         DEV &&
           console.log(
-            `320 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            `${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
               node,
               null,
               4,

@@ -55,17 +55,17 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
   // action:
   let newStart;
   let newEnd;
-  DEV && console.log("058 about to check the length");
+  DEV && console.log("about to check the length");
   if (str.length) {
     if (check(str[0])) {
       DEV &&
         console.log(
-          `063 \u001b[${36}m${`traverse forwards to trim heads`}\u001b[${39}m`,
+          `\u001b[${36}m${`traverse forwards to trim heads`}\u001b[${39}m`,
         );
       for (let i = 0, len = str.length; i < len; i++) {
         DEV &&
           console.log(
-            `\u001b[${36}m${`068 ------ str[${i}] = ${JSON.stringify(
+            `\u001b[${36}m${`------ str[${i}] = ${JSON.stringify(
               str[i],
               null,
               0,
@@ -75,7 +75,7 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
           newStart = i;
           DEV &&
             console.log(
-              `078 SET ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
+              `SET ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
                 newStart,
                 null,
                 4,
@@ -88,7 +88,7 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
         // whole thing can be trimmed:
         if (i === str.length - 1) {
           // this means there are only spaces/whitespace from beginning to the end
-          DEV && console.log("091");
+          DEV && console.log();
           return {
             res: "",
             ranges: [[0, str.length]],
@@ -102,18 +102,18 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
     if (check(str[str.length - 1])) {
       DEV &&
         console.log(
-          `105 \u001b[${36}m${`traverse backwards to trim tails`}\u001b[${39}m`,
+          `\u001b[${36}m${`traverse backwards to trim tails`}\u001b[${39}m`,
         );
       for (let i = str.length; i--; ) {
         DEV &&
           console.log(
-            `\u001b[${36}m${`110 ------ str[${i}] = ${str[i]}`}\u001b[${39}m`,
+            `\u001b[${36}m${`------ str[${i}] = ${str[i]}`}\u001b[${39}m`,
           );
         if (!check(str[i])) {
           newEnd = i + 1;
           DEV &&
             console.log(
-              `116 SET ${`\u001b[${33}m${`newEnd`}\u001b[${39}m`} = ${JSON.stringify(
+              `SET ${`\u001b[${33}m${`newEnd`}\u001b[${39}m`} = ${JSON.stringify(
                 newEnd,
                 null,
                 4,
@@ -125,7 +125,7 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
     }
     DEV &&
       console.log(
-        `128 CURRENTLY, ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
+        `CURRENTLY, ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
           newStart,
           null,
           4,
@@ -133,7 +133,7 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
       );
     DEV &&
       console.log(
-        `136 CURRENTLY, ${`\u001b[${33}m${`newEnd`}\u001b[${39}m`} = ${JSON.stringify(
+        `CURRENTLY, ${`\u001b[${33}m${`newEnd`}\u001b[${39}m`} = ${JSON.stringify(
           newEnd,
           null,
           4,
@@ -141,7 +141,7 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
       );
     if (newStart) {
       if (newEnd) {
-        DEV && console.log("144 - returning trimmed both heads and tails");
+        DEV && console.log("- returning trimmed both heads and tails");
         return {
           res: str.slice(newStart, newEnd),
           ranges: [
@@ -150,14 +150,14 @@ function trimSpaces(str: string, opts?: Partial<Opts>): Res {
           ],
         };
       }
-      DEV && console.log("153 - returning trimmed heads");
+      DEV && console.log("- returning trimmed heads");
       return {
         res: str.slice(newStart),
         ranges: [[0, newStart]],
       };
     }
     if (newEnd) {
-      DEV && console.log("160 - returning trimmed tails");
+      DEV && console.log("- returning trimmed tails");
       return {
         res: str.slice(0, newEnd),
         ranges: [[newEnd, str.length]],

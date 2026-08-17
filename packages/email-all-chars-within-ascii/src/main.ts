@@ -66,7 +66,7 @@ function within(str: string, opts?: Partial<Opts>): Res[] {
       (!str[i] || str[i] === "\r" || str[i] === "\n") &&
       column > resolvedOpts.lineLength
     ) {
-      DEV && console.log(`069 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+      DEV && console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
       res.push({
         type: "line length",
         line: currLine,
@@ -100,7 +100,7 @@ function within(str: string, opts?: Partial<Opts>): Res[] {
 
     DEV &&
       console.log(
-        `103 \u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+        `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i]?.trim() ? str[i] : JSON.stringify(str[i], null, 4)
         }; column = ${column}; line = ${currLine}`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`,
       );
@@ -126,7 +126,7 @@ function within(str: string, opts?: Partial<Opts>): Res[] {
         currCodePoint === 12 ||
         (currCodePoint > 13 && currCodePoint < 32)
       ) {
-        DEV && console.log(`129 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+        DEV && console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
         res.push({
           type: "character",
           line: currLine,
@@ -150,7 +150,7 @@ function within(str: string, opts?: Partial<Opts>): Res[] {
 
   DEV &&
     console.log(
-      `153 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+      `${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
         res,
         null,
         4,

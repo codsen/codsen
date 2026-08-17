@@ -74,10 +74,6 @@ runs:
       shell: bash
       run: npm run ci:verify:package-kinds
 
-    - name: Verify development log navigation labels
-      shell: bash
-      run: npm run ci:verify:debug-log-line-labels
-
     - name: Verify development logging costs nothing in production
       shell: bash
       run: npm run ci:verify:debug-log-production-cost

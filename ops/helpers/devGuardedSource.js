@@ -1,12 +1,12 @@
 import ts from "typescript";
 
-// The reading shared by the audits of `DEV &&` guarded code: how a source file
-// is parsed, how a position in it is reported, and what counts as being inside
-// a DEV guard. Both devConsoleLogLineLabels.js and devOnlyImpureLocals.js ask
-// the same question of the same shape, and answering it in one place is what
-// keeps them from drifting apart - a guard form recognised by one but not the
-// other would mean the label gate and the cost gate disagree about which code
-// ships.
+// The reading shared by everything that looks at `DEV &&` guarded code: how a
+// source file is parsed, how a position in it is reported, and what counts as
+// being inside a DEV guard. devLogOrigins.js and devOnlyImpureLocals.js ask the
+// same question of the same shape, and answering it in one place is what keeps
+// them from drifting apart - a guard form recognised by one but not the other
+// would mean the build prefixes a log the cost gate does not police, or the
+// reverse.
 //
 // browserRegexpSyntax.js deliberately does not use this module. It parses a
 // built bundle rather than a source file, without parent pointers and under a
@@ -50,6 +50,20 @@ function unwrapExpression(node) {
     current = current.expression;
   }
   return current;
+}
+
+// The call the build prefixes with its origin.
+function isConsoleLogCall(node) {
+  if (!ts.isCallExpression(node)) {
+    return false;
+  }
+  const expression = unwrapExpression(node.expression);
+  return (
+    ts.isPropertyAccessExpression(expression) &&
+    ts.isIdentifier(expression.expression) &&
+    expression.expression.text === "console" &&
+    expression.name.text === "log"
+  );
 }
 
 function conditionImpliesDev(node) {
@@ -111,6 +125,7 @@ function parseError(sourceFile, diagnostic) {
 }
 
 export {
+  isConsoleLogCall,
   isDevGuarded,
   isInside,
   locationAt,

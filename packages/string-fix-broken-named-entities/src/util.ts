@@ -42,7 +42,7 @@ function resemblesNumericEntity(str2: string, from: number, to: number) {
   for (let i = from; i < to; i++) {
     DEV &&
       console.log(
-        `045 stringFixBrokenNamedEntities: ${`\u001b[${36}m${`resemblesNumericEntity() loop: str2[${i}] = "${str2[i]}"`}\u001b[${39}m`}`,
+        `stringFixBrokenNamedEntities: ${`\u001b[${36}m${`resemblesNumericEntity() loop: str2[${i}] = "${str2[i]}"`}\u001b[${39}m`}`,
       );
     if (str2[i].trim().length) {
       charTrimmed += str2[i];
@@ -66,7 +66,7 @@ function resemblesNumericEntity(str2: string, from: number, to: number) {
 
   DEV &&
     console.log(
-      `069 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`charTrimmed[0]`}\u001b[${39}m`} = ${JSON.stringify(
+      `stringFixBrokenNamedEntities: ${`\u001b[${33}m${`charTrimmed[0]`}\u001b[${39}m`} = ${JSON.stringify(
         charTrimmed[0],
         null,
         4,
@@ -257,7 +257,7 @@ function removeGappedFromMixedCases(
       );
       DEV &&
         console.log(
-          `260 stringFixBrokenNamedEntities: we filtered only entities with semicolons to the right: ${JSON.stringify(
+          `stringFixBrokenNamedEntities: we filtered only entities with semicolons to the right: ${JSON.stringify(
             copy,
             null,
             4,

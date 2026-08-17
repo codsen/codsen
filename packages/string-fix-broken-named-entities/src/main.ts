@@ -66,7 +66,7 @@ export interface Opts {
 function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
   DEV &&
     console.log(
-      `069 fixEnt: ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
+      `fixEnt: ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
         str,
         null,
         0,
@@ -117,7 +117,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
   let resolvedOpts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `120 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -155,7 +155,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
   }
   DEV &&
     console.log(
-      `158 fixEnt: FINAL ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} used: ${JSON.stringify(
+      `fixEnt: FINAL ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} used: ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -195,12 +195,12 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
       typeof resolvedOpts.textAmpersandCatcherCb === "function" &&
       ampPositions.length
     ) {
-      DEV && console.log(`198 loop`);
+      DEV && console.log(`loop`);
       while (ampPositions.length) {
         let currentAmp = ampPositions.shift() as number;
         DEV &&
           console.log(
-            `203 SET ${`\u001b[${36}m${`currentAmp`}\u001b[${39}m`} = ${JSON.stringify(
+            `SET ${`\u001b[${36}m${`currentAmp`}\u001b[${39}m`} = ${JSON.stringify(
               currentAmp,
               null,
               4,
@@ -219,7 +219,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
         ) {
           DEV &&
             console.log(
-              `222 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} resolvedOpts.textAmpersandCatcherCb() with ${`\u001b[${35}m${currentAmp}\u001b[${39}m`}`,
+              `${`\u001b[${32}m${`PING`}\u001b[${39}m`} resolvedOpts.textAmpersandCatcherCb() with ${`\u001b[${35}m${currentAmp}\u001b[${39}m`}`,
             );
           // ping each ampersand's index, starting from zero index:
           resolvedOpts.textAmpersandCatcherCb(currentAmp);
@@ -268,7 +268,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
     //            |
     DEV &&
       console.log(
-        `271 fixEnt: \n\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+        `fixEnt: \n\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
           str[i]?.trim().length ? str[i] : JSON.stringify(str[i], null, 4)
         }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m\n`,
       );
@@ -290,10 +290,10 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
         doNothingUntil = null;
         DEV &&
           console.log(
-            `293 fixEnt: RESET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = null`,
+            `fixEnt: RESET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = null`,
           );
       } else {
-        DEV && console.log(`296 fixEnt: continue`);
+        DEV && console.log(`fixEnt: continue`);
         counter += 1;
         continue;
       }
@@ -316,7 +316,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
       letterSeqStartAt = null;
       DEV &&
         console.log(
-          `319 ${`\u001b[${31}m${`WIPE letterSeqStartAt`}\u001b[${39}m`}`,
+          `${`\u001b[${31}m${`WIPE letterSeqStartAt`}\u001b[${39}m`}`,
         );
     }
 
@@ -328,13 +328,13 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
     ) {
       DEV &&
         console.log(
-          `331 fixEnt: ${`\u001b[${36}m${`██ letterSeqStartAt = ${letterSeqStartAt}`}\u001b[${39}m`}`,
+          `fixEnt: ${`\u001b[${36}m${`██ letterSeqStartAt = ${letterSeqStartAt}`}\u001b[${39}m`}`,
         );
       if (i > (letterSeqStartAt as number) + 1) {
         let potentialEntity = str.slice(letterSeqStartAt, i);
         DEV &&
           console.log(
-            `337 fixEnt: ${`\u001b[${35}m${`██ CARVED A SEQUENCE: ${potentialEntity}`}\u001b[${39}m`}`,
+            `fixEnt: ${`\u001b[${35}m${`██ CARVED A SEQUENCE: ${potentialEntity}`}\u001b[${39}m`}`,
           );
 
         let whatIsOnTheLeft = left(str, letterSeqStartAt);
@@ -358,7 +358,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
         ) {
           DEV &&
             console.log(
-              `361 ${`\u001b[${35}m${`semicolon might be missing`}\u001b[${39}m`}`,
+              `${`\u001b[${35}m${`semicolon might be missing`}\u001b[${39}m`}`,
             );
           // check, what's the index of the character to the right of
           // str[whatIsOnTheLeft], is it any of the known named HTML entities.
@@ -369,7 +369,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             : null;
           DEV &&
             console.log(
-              `372 firstChar = str[${firstChar}] = ${
+              `firstChar = str[${firstChar}] = ${
                 str[firstChar]
               }; secondChar = str[${secondChar}] = ${
                 str[secondChar as number]
@@ -380,7 +380,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
           // and second character first. This reduces amount of matching needed.
           DEV &&
             console.log(
-              `383 ██ ${
+              `██ ${
                 secondChar !== null &&
                 hasOwnProp(entStartsWith, str[firstChar]) &&
                 hasOwnProp(entStartsWith[str[firstChar]], str[secondChar])
@@ -402,7 +402,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             hasOwnProp(entStartsWith, str[firstChar]) &&
             hasOwnProp(entStartsWith[str[firstChar]], str[secondChar as number])
           ) {
-            DEV && console.log(`405`);
+            DEV && console.log();
             let tempEnt = "";
             let tempRes;
 
@@ -424,7 +424,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             }
             DEV &&
               console.log(
-                `427 ${`\u001b[${35}m${`temp1 BEFORE filtering = ${JSON.stringify(
+                `${`\u001b[${35}m${`temp1 BEFORE filtering = ${JSON.stringify(
                   possibleMatches,
                   null,
                   4,
@@ -433,7 +433,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             const temp1 = removeGappedFromMixedCases(str, possibleMatches);
             DEV &&
               console.log(
-                `436 ${`\u001b[${35}m${`temp1 AFTER filtering = ${JSON.stringify(
+                `${`\u001b[${35}m${`temp1 AFTER filtering = ${JSON.stringify(
                   temp1,
                   null,
                   4,
@@ -446,7 +446,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             }
             DEV &&
               console.log(
-                `449 ${`\u001b[${33}m${`tempEnt`}\u001b[${39}m`} = ${tempEnt}; ${`\u001b[${33}m${`tempRes`}\u001b[${39}m`} = ${JSON.stringify(
+                `${`\u001b[${33}m${`tempEnt`}\u001b[${39}m`} = ${tempEnt}; ${`\u001b[${33}m${`tempRes`}\u001b[${39}m`} = ${JSON.stringify(
                   tempRes,
                   null,
                   4,
@@ -455,7 +455,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
             DEV &&
               console.log(
-                `458 ${`\u001b[${33}m${`str[tempRes.rightmostChar + 1] === "&"`}\u001b[${39}m`} = ${
+                `${`\u001b[${33}m${`str[tempRes.rightmostChar + 1] === "&"`}\u001b[${39}m`} = ${
                   tempRes?.rightmostChar
                     ? JSON.stringify(
                         str[tempRes.rightmostChar + 1] === "&",
@@ -478,7 +478,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             ) {
               DEV &&
                 console.log(
-                  `481 ${`\u001b[${35}m${`entity ${tempEnt} is indeed on the left of index ${i}, the situation is: ${JSON.stringify(
+                  `${`\u001b[${35}m${`entity ${tempEnt} is indeed on the left of index ${i}, the situation is: ${JSON.stringify(
                     tempRes,
                     null,
                     4,
@@ -487,8 +487,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
               let decodedEntity = decode(`&${tempEnt};`);
 
-              DEV &&
-                console.log(`491 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+              DEV && console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
               rangesArr2.push({
                 ruleName: `bad-html-entity-malformed-${tempEnt}`,
                 entityName: tempEnt,
@@ -501,11 +500,11 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
               // release all ampersands
               DEV &&
                 console.log(
-                  `504 ███████████████████████████████████████ release ampersands`,
+                  `███████████████████████████████████████ release ampersands`,
                 );
               DEV &&
                 console.log(
-                  `508 FIY, ${`\u001b[${33}m${`tempRes`}\u001b[${39}m`} = ${JSON.stringify(
+                  `FIY, ${`\u001b[${33}m${`tempRes`}\u001b[${39}m`} = ${JSON.stringify(
                     tempRes,
                     null,
                     4,
@@ -513,7 +512,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                 );
               pingAmps(whatIsOnTheLeft || 0, i);
             } else {
-              DEV && console.log(`516 ELSE, it was just a legit ampersand`);
+              DEV && console.log(`ELSE, it was just a legit ampersand`);
             }
           }
         } else if (
@@ -533,7 +532,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
           DEV &&
             console.log(
-              `536 ${`\u001b[${35}m${`ampersand might be missing`}\u001b[${39}m`}`,
+              `${`\u001b[${35}m${`ampersand might be missing`}\u001b[${39}m`}`,
             );
           // check, what's on the left of str[i], is it any of known named HTML
           // entities. There are two thousand of them so we'll match by last
@@ -550,7 +549,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             hasOwnProp(entEndsWith, str[lastChar as number]) &&
             hasOwnProp(entEndsWith[str[lastChar as number]], str[secondToLast])
           ) {
-            DEV && console.log(`553`);
+            DEV && console.log();
             let tempEnt = "";
             let tempRes;
 
@@ -575,7 +574,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
             DEV &&
               console.log(
-                `578 ${`\u001b[${35}m${`temp1 BEFORE filtering = ${JSON.stringify(
+                `${`\u001b[${35}m${`temp1 BEFORE filtering = ${JSON.stringify(
                   possibleMatches,
                   null,
                   4,
@@ -584,7 +583,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             const temp1 = removeGappedFromMixedCases(str, possibleMatches);
             DEV &&
               console.log(
-                `587 ${`\u001b[${35}m${`temp1 AFTER filtering = ${JSON.stringify(
+                `${`\u001b[${35}m${`temp1 AFTER filtering = ${JSON.stringify(
                   temp1,
                   null,
                   4,
@@ -597,7 +596,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             }
             DEV &&
               console.log(
-                `600 ${`\u001b[${33}m${`tempEnt`}\u001b[${39}m`} = ${tempEnt} - ${`\u001b[${33}m${`tempRes`}\u001b[${39}m`} = ${JSON.stringify(
+                `${`\u001b[${33}m${`tempEnt`}\u001b[${39}m`} = ${tempEnt} - ${`\u001b[${33}m${`tempRes`}\u001b[${39}m`} = ${JSON.stringify(
                   tempRes,
                   null,
                   4,
@@ -606,7 +605,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
             DEV &&
               console.log(
-                `609 letterSeqStartAt = ${letterSeqStartAt}; str[letterSeqStartAt] = ${
+                `letterSeqStartAt = ${letterSeqStartAt}; str[letterSeqStartAt] = ${
                   str[letterSeqStartAt]
                 }; tempRes.leftmostChar = ${
                   tempRes?.leftmostChar ? tempRes.leftmostChar : "undefined"
@@ -628,7 +627,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             ) {
               DEV &&
                 console.log(
-                  `631 ${`\u001b[${35}m${`entity ${tempEnt} is indeed on the left of index ${i}, the situation is: ${JSON.stringify(
+                  `${`\u001b[${35}m${`entity ${tempEnt} is indeed on the left of index ${i}, the situation is: ${JSON.stringify(
                     tempRes,
                     null,
                     4,
@@ -637,8 +636,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
               let decodedEntity = decode(`&${tempEnt};`);
 
-              DEV &&
-                console.log(`641 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+              DEV && console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
               rangesArr2.push({
                 ruleName: `bad-html-entity-malformed-${tempEnt}`,
                 entityName: tempEnt,
@@ -651,7 +649,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             } else {
               DEV &&
                 console.log(
-                  `654 ${`\u001b[${31}m${`██`}\u001b[${39}m`} "${tempEnt}" is among uncertain entities`,
+                  `${`\u001b[${31}m${`██`}\u001b[${39}m`} "${tempEnt}" is among uncertain entities`,
                 );
             }
           } else if (brokenNumericEntityStartAt !== null) {
@@ -659,7 +657,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             // an ampersand but with the rest of characters
 
             // 1. push the issue:
-            DEV && console.log(`662 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+            DEV && console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
             rangesArr2.push({
               ruleName: "bad-html-entity-malformed-numeric",
               entityName: null,
@@ -674,7 +672,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             brokenNumericEntityStartAt = null;
             DEV &&
               console.log(
-                `677 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} brokenNumericEntityStartAt = null`,
+                `${`\u001b[${32}m${`SET`}\u001b[${39}m`} brokenNumericEntityStartAt = null`,
               );
           }
         } else if (
@@ -694,13 +692,13 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
           //
           DEV &&
             console.log(
-              `697 ${`\u001b[${32}m${`██ looks like some sort of HTML entity!`}\u001b[${39}m`}`,
+              `${`\u001b[${32}m${`██ looks like some sort of HTML entity!`}\u001b[${39}m`}`,
             );
 
           let startOfTheSeq = letterSeqStartAt - 1;
           DEV &&
             console.log(
-              `703 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startOfTheSeq`}\u001b[${39}m`} = ${JSON.stringify(
+              `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startOfTheSeq`}\u001b[${39}m`} = ${JSON.stringify(
                 startOfTheSeq,
                 null,
                 4,
@@ -713,7 +711,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             startOfTheSeq = whatIsOnTheLeft as number;
             DEV &&
               console.log(
-                `716 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startOfTheSeq`}\u001b[${39}m`} = ${JSON.stringify(
+                `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startOfTheSeq`}\u001b[${39}m`} = ${JSON.stringify(
                   startOfTheSeq,
                   null,
                   4,
@@ -727,7 +725,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
           if (str.slice((whatIsOnTheLeft as number) + 1, i).trim().length > 1) {
             DEV &&
               console.log(
-                `730 ${`\u001b[${90}m${`so there are some characters in between: & and ;`}\u001b[${39}m`}`,
+                `${`\u001b[${90}m${`so there are some characters in between: & and ;`}\u001b[${39}m`}`,
               );
 
             // Maybe it's a numeric entity?
@@ -759,7 +757,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             );
             DEV &&
               console.log(
-                `762 ${`\u001b[${33}m${`situation`}\u001b[${39}m`} = ${JSON.stringify(
+                `${`\u001b[${33}m${`situation`}\u001b[${39}m`} = ${JSON.stringify(
                   situation,
                   null,
                   4,
@@ -769,7 +767,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             if (situation.probablyNumeric) {
               DEV &&
                 console.log(
-                  `772 ${`\u001b[${32}m${`██ seems like a numeric HTML entity!`}\u001b[${39}m`}`,
+                  `${`\u001b[${32}m${`██ seems like a numeric HTML entity!`}\u001b[${39}m`}`,
                 );
 
               // 1. TACKLE HEALTHY DECIMAL NUMERIC CHARACTER REFERENCE ENTITIES:
@@ -798,7 +796,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                 );
                 DEV &&
                   console.log(
-                    `801 ${`\u001b[${32}m${`██ it's a ${
+                    `${`\u001b[${32}m${`██ it's a ${
                       situation.probablyNumeric === "hexi" ? "hexi" : ""
                     }decimal numeric entity reference: "${decodedEntityValue}"`}\u001b[${39}m`}`,
                   );
@@ -808,7 +806,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   parseInt(situation.numbersValue, 10) > 918015
                 ) {
                   DEV &&
-                    console.log(`811 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+                    console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
                   rangesArr2.push({
                     ruleName: `bad-html-entity-malformed-numeric`,
                     entityName: null,
@@ -820,7 +818,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                 } else if (resolvedOpts.decode) {
                   // unless decoding was requested, no further action is needed:
                   DEV &&
-                    console.log(`823 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+                    console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
                   rangesArr2.push({
                     ruleName: `bad-html-entity-encoded-numeric`,
                     entityName: situation.charTrimmed,
@@ -831,12 +829,11 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   });
                 }
 
-                DEV && console.log(`834 pingAmps()`);
+                DEV && console.log(`pingAmps()`);
                 pingAmps(whatIsOnTheLeft || 0, i);
               } else {
                 // RAISE A GENERIC ERROR
-                DEV &&
-                  console.log(`839 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+                DEV && console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
                 rangesArr2.push({
                   ruleName: `bad-html-entity-malformed-numeric`,
                   entityName: null,
@@ -850,13 +847,13 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
               // also call the general entity callback if it's given
               if (resolvedOpts.entityCatcherCb) {
-                DEV && console.log(`853 call resolvedOpts.entityCatcherCb()`);
+                DEV && console.log(`call resolvedOpts.entityCatcherCb()`);
                 resolvedOpts.entityCatcherCb(whatIsOnTheLeft as number, i + 1);
               }
             } else {
               DEV &&
                 console.log(
-                  `859 ${`\u001b[${32}m${`it's either named or some sort of messed up HTML entity`}\u001b[${39}m`}`,
+                  `${`\u001b[${32}m${`it's either named or some sort of messed up HTML entity`}\u001b[${39}m`}`,
                 );
 
               //
@@ -885,12 +882,12 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
               ) {
                 DEV &&
                   console.log(
-                    `888 ${`\u001b[${32}m${`MATCHED HEALTHY "${potentialEntityOnlyNonWhitespaceChars}"!!!`}\u001b[${39}m`}`,
+                    `${`\u001b[${32}m${`MATCHED HEALTHY "${potentialEntityOnlyNonWhitespaceChars}"!!!`}\u001b[${39}m`}`,
                   );
 
                 DEV &&
                   console.log(
-                    `893 FIY, ${`\u001b[${33}m${`ampPositions`}\u001b[${39}m`} = ${JSON.stringify(
+                    `FIY, ${`\u001b[${33}m${`ampPositions`}\u001b[${39}m`} = ${JSON.stringify(
                       ampPositions,
                       null,
                       4,
@@ -899,7 +896,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
                 DEV &&
                   console.log(
-                    `902 FIY, ${`\u001b[${33}m${`whatIsOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
+                    `FIY, ${`\u001b[${33}m${`whatIsOnTheLeft`}\u001b[${39}m`} = ${JSON.stringify(
                       whatIsOnTheLeft,
                       null,
                       4,
@@ -915,7 +912,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                 ) {
                   DEV &&
                     console.log(
-                      `918 ${`\u001b[${31}m${`a problem with letter case!`}\u001b[${39}m`}`,
+                      `${`\u001b[${31}m${`a problem with letter case!`}\u001b[${39}m`}`,
                     );
                   let matchingEntitiesOfCorrectCaseArr = [
                     ...allNamedEntitiesSetOnly,
@@ -927,7 +924,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
                   DEV &&
                     console.log(
-                      `930 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`}: ${`\u001b[${33}m${`matchingEntitiesOfCorrectCaseArr`}\u001b[${39}m`} = ${JSON.stringify(
+                      `${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`}: ${`\u001b[${33}m${`matchingEntitiesOfCorrectCaseArr`}\u001b[${39}m`} = ${JSON.stringify(
                         matchingEntitiesOfCorrectCaseArr,
                         null,
                         4,
@@ -936,9 +933,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
                   if (matchingEntitiesOfCorrectCaseArr.length === 1) {
                     DEV &&
-                      console.log(
-                        `940 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`,
-                      );
+                      console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
                     rangesArr2.push({
                       ruleName: `bad-html-entity-malformed-${matchingEntitiesOfCorrectCaseArr[0]}`,
                       entityName: matchingEntitiesOfCorrectCaseArr[0],
@@ -952,9 +947,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                     pingAmps(whatIsOnTheLeft as number, i);
                   } else {
                     DEV &&
-                      console.log(
-                        `956 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`,
-                      );
+                      console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
                     rangesArr2.push({
                       ruleName: `bad-html-entity-unrecognised`,
                       entityName: null,
@@ -974,7 +967,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                 ) {
                   DEV &&
                     console.log(
-                      `977 ${`\u001b[${31}m${`whitespace present!`}\u001b[${39}m`}`,
+                      `${`\u001b[${31}m${`whitespace present!`}\u001b[${39}m`}`,
                     );
 
                   let rangeFrom =
@@ -992,16 +985,14 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   ) {
                     DEV &&
                       console.log(
-                        `0995 ${`\u001b[${31}m${`BAIL EARLY`}\u001b[${39}m`} - reset and continue - it's a known uncertain entity!`,
+                        `${`\u001b[${31}m${`BAIL EARLY`}\u001b[${39}m`} - reset and continue - it's a known uncertain entity!`,
                       );
                     letterSeqStartAt = null;
                     continue;
                   }
 
                   DEV &&
-                    console.log(
-                      `1003 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`,
-                    );
+                    console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
                   rangesArr2.push({
                     ruleName: `bad-html-entity-malformed-${potentialEntityOnlyNonWhitespaceChars}`,
                     entityName: potentialEntityOnlyNonWhitespaceChars,
@@ -1016,14 +1007,12 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                 } else if (resolvedOpts.decode) {
                   DEV &&
                     console.log(
-                      `1019 ${`\u001b[${31}m${`decode requested!!!`}\u001b[${39}m`}`,
+                      `${`\u001b[${31}m${`decode requested!!!`}\u001b[${39}m`}`,
                     );
 
                   // last thing, if decode is required, we've got an error still...
                   DEV &&
-                    console.log(
-                      `1025 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`,
-                    );
+                    console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
                   rangesArr2.push({
                     ruleName: `bad-html-entity-encoded-${potentialEntityOnlyNonWhitespaceChars}`,
                     entityName: potentialEntityOnlyNonWhitespaceChars,
@@ -1042,8 +1031,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   // it's healthy - so at least ping the entity catcher
 
                   if (resolvedOpts.entityCatcherCb) {
-                    DEV &&
-                      console.log(`1046 call resolvedOpts.entityCatcherCb()`);
+                    DEV && console.log(`call resolvedOpts.entityCatcherCb()`);
                     resolvedOpts.entityCatcherCb(
                       whatIsOnTheLeft as number,
                       i + 1,
@@ -1051,18 +1039,18 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   }
 
                   if (resolvedOpts.textAmpersandCatcherCb) {
-                    DEV && console.log(`1054 call pingAmps()`);
+                    DEV && console.log(`call pingAmps()`);
                     pingAmps(whatIsOnTheLeft as number, i);
                   }
                 }
 
-                DEV && console.log(`1059 reset and continue`);
+                DEV && console.log(`reset and continue`);
                 letterSeqStartAt = null;
                 continue;
               } else {
                 DEV &&
                   console.log(
-                    `1065 ${`\u001b[${31}m${`not recognised "${potentialEntity}" - moving on`}\u001b[${39}m`}`,
+                    `${`\u001b[${31}m${`not recognised "${potentialEntity}" - moving on`}\u001b[${39}m`}`,
                   );
               }
 
@@ -1076,7 +1064,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   ? right(str, letterSeqStartAt)
                   : null;
                 console.log(
-                  `1079 firstChar = str[${firstChar}] = ${
+                  `firstChar = str[${firstChar}] = ${
                     str[firstChar]
                   }; secondChar = str[${secondChar}] = ${
                     str[secondChar as number]
@@ -1088,7 +1076,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
               DEV &&
                 console.log(
-                  `1091 FIY, situation.charTrimmed.toLowerCase() = "${situation.charTrimmed.toLowerCase()}"`,
+                  `FIY, situation.charTrimmed.toLowerCase() = "${situation.charTrimmed.toLowerCase()}"`,
                 );
 
               if (
@@ -1103,12 +1091,12 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
                 DEV &&
                   console.log(
-                    `1106 ${`\u001b[${32}m${`██`}\u001b[${39}m`} known broken entity ${situation.charTrimmed.toLowerCase()} is indeed on the right`,
+                    `${`\u001b[${32}m${`██`}\u001b[${39}m`} known broken entity ${situation.charTrimmed.toLowerCase()} is indeed on the right`,
                   );
 
                 DEV &&
                   console.log(
-                    `1111 broken entity ${situation.charTrimmed.toLowerCase()} is indeed on the right`,
+                    `broken entity ${situation.charTrimmed.toLowerCase()} is indeed on the right`,
                   );
                 tempEnt = situation.charTrimmed;
 
@@ -1118,8 +1106,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   };`,
                 );
 
-                DEV &&
-                  console.log(`1122 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+                DEV && console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
                 rangesArr2.push({
                   ruleName: `bad-html-entity-malformed-${
                     brokenNamedEntities[situation.charTrimmed.toLowerCase()]
@@ -1160,7 +1147,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
               ) {
                 DEV &&
                   console.log(
-                    `1163 ${`\u001b[${32}m${`LEVENSHTEIN DIFFERENCE CAUGHT malformed "${temp}"`}\u001b[${39}m`}`,
+                    `${`\u001b[${32}m${`LEVENSHTEIN DIFFERENCE CAUGHT malformed "${temp}"`}\u001b[${39}m`}`,
                   );
 
                 // now the problem: what if there were multiple entities matched?
@@ -1169,9 +1156,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                 if (temp.length === 1) {
                   [tempEnt] = temp;
                   DEV &&
-                    console.log(
-                      `1173 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`,
-                    );
+                    console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
                   rangesArr2.push({
                     ruleName: `bad-html-entity-malformed-${tempEnt}`,
                     entityName: tempEnt,
@@ -1201,7 +1186,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   });
                   DEV &&
                     console.log(
-                      `1204 ███████████████████████████████████████ ${`\u001b[${33}m${`missingLettersCount`}\u001b[${39}m`} = ${JSON.stringify(
+                      `███████████████████████████████████████ ${`\u001b[${33}m${`missingLettersCount`}\u001b[${39}m`} = ${JSON.stringify(
                         missingLettersCount,
                         null,
                         4,
@@ -1210,7 +1195,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   let maxVal = Math.max(...missingLettersCount);
                   DEV &&
                     console.log(
-                      `1213 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`maxVal`}\u001b[${39}m`} = ${JSON.stringify(
+                      `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`maxVal`}\u001b[${39}m`} = ${JSON.stringify(
                         maxVal,
                         null,
                         4,
@@ -1233,7 +1218,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                         tempEnt = temp[z];
                         DEV &&
                           console.log(
-                            `1236 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`tempEnt`}\u001b[${39}m`} = ${JSON.stringify(
+                            `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`tempEnt`}\u001b[${39}m`} = ${JSON.stringify(
                               tempEnt,
                               null,
                               4,
@@ -1241,7 +1226,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                           );
                         DEV &&
                           console.log(
-                            `1244 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`,
+                            `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`,
                           );
                         rangesArr2.push({
                           ruleName: `bad-html-entity-malformed-${tempEnt}`,
@@ -1264,16 +1249,15 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
               if (!tempEnt) {
                 DEV &&
                   console.log(
-                    `1267 ${`\u001b[${90}m${`so it's not one of known named HTML entities`}\u001b[${39}m`}`,
+                    `${`\u001b[${90}m${`so it's not one of known named HTML entities`}\u001b[${39}m`}`,
                   );
                 DEV &&
                   console.log(
-                    `1271 ${`\u001b[${90}m${`checking for broken recognised entities`}\u001b[${39}m`}`,
+                    `${`\u001b[${90}m${`checking for broken recognised entities`}\u001b[${39}m`}`,
                   );
 
                 // it's an unrecognised entity:
-                DEV &&
-                  console.log(`1276 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+                DEV && console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
                 rangesArr2.push({
                   ruleName: `bad-html-entity-unrecognised`,
                   entityName: null,
@@ -1312,7 +1296,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
           //
           DEV &&
             console.log(
-              `1315 ${`\u001b[${32}m${`██`}\u001b[${39}m`} might be a messy entity. We have "${str.slice(
+              `${`\u001b[${32}m${`██`}\u001b[${39}m`} might be a messy entity. We have "${str.slice(
                 whatIsEvenMoreToTheLeft as number,
                 i + 1,
               )}"`,
@@ -1324,7 +1308,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
           );
           DEV &&
             console.log(
-              `1327 ${`\u001b[${32}m${`██ situation:`}\u001b[${39}m`}\n${JSON.stringify(
+              `${`\u001b[${32}m${`██ situation:`}\u001b[${39}m`}\n${JSON.stringify(
                 situation,
                 null,
                 4,
@@ -1333,7 +1317,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
           DEV &&
             console.log(
-              `1336 FIY, ${`\u001b[${33}m${`potentialEntity`}\u001b[${39}m`} = ${JSON.stringify(
+              `FIY, ${`\u001b[${33}m${`potentialEntity`}\u001b[${39}m`} = ${JSON.stringify(
                 potentialEntity,
                 null,
                 4,
@@ -1341,7 +1325,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             );
 
           // push the issue:
-          DEV && console.log(`1344 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+          DEV && console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
           rangesArr2.push({
             ruleName: `${
               /* c8 ignore next */
@@ -1363,7 +1347,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
       letterSeqStartAt = null;
       DEV &&
         console.log(
-          `1366 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`letterSeqStartAt`}\u001b[${39}m`} = null`,
+          `${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`letterSeqStartAt`}\u001b[${39}m`} = null`,
         );
     }
 
@@ -1378,16 +1362,14 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
       letterSeqStartAt = i;
       DEV &&
         console.log(
-          `1381 SET ${`\u001b[${33}m${`letterSeqStartAt`}\u001b[${39}m`} = ${letterSeqStartAt}`,
+          `SET ${`\u001b[${33}m${`letterSeqStartAt`}\u001b[${39}m`} = ${letterSeqStartAt}`,
         );
     }
 
     // catch amp;
     if (str[i] === "a") {
       DEV &&
-        console.log(
-          `1389 ${`\u001b[${90}m${`within a clauses`}\u001b[${39}m`}`,
-        );
+        console.log(`${`\u001b[${90}m${`within a clauses`}\u001b[${39}m`}`);
       // 1. catch recursively-encoded cases. They're easy actually, the task will
       // be deleting sequence of repeated "amp;" between ampersand and letter.
 
@@ -1398,7 +1380,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
       if (singleAmpOnTheRight) {
         DEV &&
           console.log(
-            `1401 ${`\u001b[${90}m${`confirmed amp; from index ${i} onwards`}\u001b[${39}m`}`,
+            `${`\u001b[${90}m${`confirmed amp; from index ${i} onwards`}\u001b[${39}m`}`,
           );
 
         // if we had to delete all amp;amp;amp; and leave only ampersand, this
@@ -1406,7 +1388,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
         let toDeleteAllAmpEndHere = singleAmpOnTheRight.rightmostChar + 1;
         DEV &&
           console.log(
-            `1409 SET ${`\u001b[${33}m${`toDeleteAllAmpEndHere`}\u001b[${39}m`} = ${toDeleteAllAmpEndHere}`,
+            `SET ${`\u001b[${33}m${`toDeleteAllAmpEndHere`}\u001b[${39}m`} = ${toDeleteAllAmpEndHere}`,
           );
 
         // so one &amp; is confirmed.
@@ -1421,25 +1403,25 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
         if (nextAmpOnTheRight) {
           DEV &&
             console.log(
-              `1424 ${`\u001b[${90}m${`confirmed another amp; on the right of index ${singleAmpOnTheRight.rightmostChar}`}\u001b[${39}m`}`,
+              `${`\u001b[${90}m${`confirmed another amp; on the right of index ${singleAmpOnTheRight.rightmostChar}`}\u001b[${39}m`}`,
             );
 
           toDeleteAllAmpEndHere = nextAmpOnTheRight.rightmostChar + 1;
           DEV &&
             console.log(
-              `1430 SET ${`\u001b[${33}m${`toDeleteAllAmpEndHere`}\u001b[${39}m`} = ${toDeleteAllAmpEndHere}`,
+              `SET ${`\u001b[${33}m${`toDeleteAllAmpEndHere`}\u001b[${39}m`} = ${toDeleteAllAmpEndHere}`,
             );
 
           let temp;
           do {
             DEV &&
               console.log(
-                `1437 ${`\u001b[${36}m${`======== loop ========`}\u001b[${39}m`}`,
+                `${`\u001b[${36}m${`======== loop ========`}\u001b[${39}m`}`,
               );
             temp = rightSeq(str, toDeleteAllAmpEndHere - 1, "a", "m", "p", ";");
             DEV &&
               console.log(
-                `1442 ${`\u001b[${36}m${`temp = ${JSON.stringify(
+                `${`\u001b[${36}m${`temp = ${JSON.stringify(
                   temp,
                   null,
                   4,
@@ -1450,7 +1432,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
               toDeleteAllAmpEndHere = temp.rightmostChar + 1;
               DEV &&
                 console.log(
-                  `1453 ${`\u001b[${36}m${`another amp; confirmed! Now`}\u001b[${39}m`} ${`\u001b[${33}m${`toDeleteAllAmpEndHere`}\u001b[${39}m`} = ${JSON.stringify(
+                  `${`\u001b[${36}m${`another amp; confirmed! Now`}\u001b[${39}m`} ${`\u001b[${33}m${`toDeleteAllAmpEndHere`}\u001b[${39}m`} = ${JSON.stringify(
                     toDeleteAllAmpEndHere,
                     null,
                     4,
@@ -1461,7 +1443,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
           DEV &&
             console.log(
-              `1464 FINAL ${`\u001b[${32}m${`toDeleteAllAmpEndHere`}\u001b[${39}m`} = ${JSON.stringify(
+              `FINAL ${`\u001b[${32}m${`toDeleteAllAmpEndHere`}\u001b[${39}m`} = ${JSON.stringify(
                 toDeleteAllAmpEndHere,
                 null,
                 4,
@@ -1484,7 +1466,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
           : null;
         DEV &&
           console.log(
-            `1487 SET initial ${`\u001b[${33}m${`firstCharThatFollows`}\u001b[${39}m`} = str[${firstCharThatFollows}] = ${
+            `SET initial ${`\u001b[${33}m${`firstCharThatFollows`}\u001b[${39}m`} = str[${firstCharThatFollows}] = ${
               str[firstCharThatFollows as number]
             }; ${`\u001b[${33}m${`secondCharThatFollows`}\u001b[${39}m`} = str[${secondCharThatFollows}] = ${
               str[secondCharThatFollows as number]
@@ -1525,12 +1507,12 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             (firstCharThatFollows as number) + matchedTemp.length + 1;
           DEV &&
             console.log(
-              `1528 ${`\u001b[${31}m${`██ ACTIVATE doNothingUntil = ${doNothingUntil}`}\u001b[${39}m`}`,
+              `${`\u001b[${31}m${`██ ACTIVATE doNothingUntil = ${doNothingUntil}`}\u001b[${39}m`}`,
             );
 
           DEV &&
             console.log(
-              `1533 ENTITY ${`\u001b[${32}m${matchedTemp}\u001b[${39}m`} FOLLOWS`,
+              `ENTITY ${`\u001b[${32}m${matchedTemp}\u001b[${39}m`} FOLLOWS`,
             );
           // is there ampersand on the left of "i", the first amp;?
           /* c8 ignore next */
@@ -1538,10 +1520,10 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
           /* c8 ignore next */
           if (str[whatsOnTheLeft] === "&") {
-            DEV && console.log(`1541 ampersand on the left`);
+            DEV && console.log(`ampersand on the left`);
             DEV &&
               console.log(
-                `1544 ${`\u001b[${33}m${`matchedTemp`}\u001b[${39}m`} = ${JSON.stringify(
+                `${`\u001b[${33}m${`matchedTemp`}\u001b[${39}m`} = ${JSON.stringify(
                   matchedTemp,
                   null,
                   4,
@@ -1551,7 +1533,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
                   4,
                 )}`,
               );
-            DEV && console.log(`1554 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+            DEV && console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
             rangesArr2.push({
               ruleName: "bad-html-entity-multiple-encoding",
               entityName: matchedTemp,
@@ -1566,20 +1548,19 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
             // appears: whitespace and where exactly to put it. Algorithmically,
             // right here, at this first letter "a" from "amp;&<some-entity>;"
             let rangeFrom = i;
-            DEV && console.log(`1569 rangeFrom = ${rangeFrom}`);
+            DEV && console.log(`rangeFrom = ${rangeFrom}`);
             let spaceReplacement = "";
 
             if (str[i - 1] === " ") {
-              DEV && console.log(`1573`);
+              DEV && console.log();
               // chomp spaces to the left, but otherwise, don't touch anything
               // TODO
             }
-            DEV && console.log(`1577 final rangeFrom = ${rangeFrom}`);
+            DEV && console.log(`final rangeFrom = ${rangeFrom}`);
 
             /* c8 ignore next */
             if (typeof resolvedOpts.cb === "function") {
-              DEV &&
-                console.log(`1582 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+              DEV && console.log(`${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
               rangesArr2.push({
                 ruleName: "bad-html-entity-multiple-encoding",
                 entityName: matchedTemp,
@@ -1605,9 +1586,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
       (!str[i - 1] || str[left(str, i) as number] !== "&")
     ) {
       DEV &&
-        console.log(
-          `1609 ${`\u001b[${31}m${`██`}\u001b[${39}m`} #x pattern caught`,
-        );
+        console.log(`${`\u001b[${31}m${`██`}\u001b[${39}m`} #x pattern caught`);
       if (isNumberChar(str[right(str, right(str, i)) as number])) {
         brokenNumericEntityStartAt = i;
       }
@@ -1631,7 +1610,7 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
       ampPositions.push(i);
       DEV &&
         console.log(
-          `1634 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`ampPositions`}\u001b[${39}m`} now = ${JSON.stringify(
+          `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to ${`\u001b[${33}m${`ampPositions`}\u001b[${39}m`} now = ${JSON.stringify(
             ampPositions,
             null,
             4,
@@ -1646,19 +1625,19 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
     ) {
       DEV &&
         console.log(
-          `1649 ${`\u001b[${32}m${`PING last remaining amp indexes`}\u001b[${39}m`}`,
+          `${`\u001b[${32}m${`PING last remaining amp indexes`}\u001b[${39}m`}`,
         );
       pingAmps();
     }
 
-    DEV && console.log("1654 ---------------");
+    DEV && console.log("---------------");
     DEV &&
       console.log(
-        `1657 ${`\u001b[${90}m${`letterSeqStartAt = ${letterSeqStartAt}`}\u001b[${39}m`}`,
+        `${`\u001b[${90}m${`letterSeqStartAt = ${letterSeqStartAt}`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `1661 ${`\u001b[${90}m${`ampPositions = ${JSON.stringify(
+        `${`\u001b[${90}m${`ampPositions = ${JSON.stringify(
           ampPositions,
           null,
           4,
@@ -1685,15 +1664,13 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
   if (!rangesArr2.length) {
     DEV &&
-      console.log(
-        `1689 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} empty array`,
-      );
+      console.log(`${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} empty array`);
     return [];
   }
 
   DEV &&
     console.log(
-      `1696 IN THE END, before merge rangesArr2 = ${JSON.stringify(
+      `IN THE END, before merge rangesArr2 = ${JSON.stringify(
         rangesArr2,
         null,
         4,
@@ -1728,14 +1705,13 @@ function fixEnt(str: string, opts?: Partial<Opts>): Ranges {
 
   /* c8 ignore next */
   if (typeof resolvedOpts.cb === "function") {
-    DEV &&
-      console.log(`1732 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} mapped`);
+    DEV && console.log(`${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} mapped`);
     return res.map(resolvedOpts.cb);
   }
 
   DEV &&
     console.log(
-      `1738 RETURN ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+      `RETURN ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
         res,
         null,
         4,

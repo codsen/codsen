@@ -47,27 +47,27 @@ function traverse<T>(tree1: T, cb1: Callback): T {
     originalInnerObj: Partial<InnerObj>,
     stop: Stop,
   ): U {
-    DEV && console.log(`050 ======= traverseInner() =======`);
+    DEV && console.log(`======= traverseInner() =======`);
     let tree: any = treeOriginal;
 
     let res;
     let innerObj = { depth: -1, path: "", ...originalInnerObj };
     innerObj.depth += 1;
     if (Array.isArray(tree)) {
-      DEV && console.log(`057 tree is array!`);
+      DEV && console.log(`tree is array!`);
       for (let i = 0, len = tree.length; i < len; i++) {
         DEV &&
           console.log(
-            `061 a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
+            `a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
           );
         if (stop.now) {
-          DEV && console.log(`064 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          DEV && console.log(`${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
         let path = innerObj.path ? `${innerObj.path}.${i}` : `${i}`;
         DEV &&
           console.log(
-            `070 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+            `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
               path,
               null,
               4,
@@ -81,7 +81,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
             : null;
           DEV &&
             console.log(
-              `084 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
+              `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
                 innerObj.parentKey,
                 null,
                 4,
@@ -114,20 +114,20 @@ function traverse<T>(tree1: T, cb1: Callback): T {
         }
       }
     } else if (isObj(tree)) {
-      DEV && console.log(`117 tree is object`);
+      DEV && console.log(`tree is object`);
 
       for (let key in tree) {
         DEV &&
           console.log(
-            `122 ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
+            `${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
           );
         if (stop.now && key != null) {
-          DEV && console.log(`125 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          DEV && console.log(`${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
         DEV &&
           console.log(
-            `130 FIY, ${`\u001b[${33}m${`innerObj.path`}\u001b[${39}m`} = ${JSON.stringify(
+            `FIY, ${`\u001b[${33}m${`innerObj.path`}\u001b[${39}m`} = ${JSON.stringify(
               innerObj.path,
               null,
               4,
@@ -136,7 +136,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
         let path = innerObj.path ? `${innerObj.path}.${key}` : key;
         DEV &&
           console.log(
-            `139 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+            `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
               path,
               null,
               4,
@@ -152,7 +152,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
           : null;
         DEV &&
           console.log(
-            `155 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
+            `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
               innerObj.parentKey,
               null,
               4,
@@ -180,8 +180,7 @@ function traverse<T>(tree1: T, cb1: Callback): T {
         }
       }
     }
-    DEV &&
-      console.log(`184 just returning tree, ${JSON.stringify(tree, null, 4)}`);
+    DEV && console.log(`just returning tree, ${JSON.stringify(tree, null, 4)}`);
     return tree;
   }
   return traverseInner(clone(tree1), cb1, {}, stop2);

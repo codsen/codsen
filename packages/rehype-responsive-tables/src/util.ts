@@ -36,22 +36,21 @@ export const contains = (
   tree: any,
   something: string | string[],
 ): string | undefined => {
-  DEV &&
-    console.log(`040 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: start`);
+  DEV && console.log(`${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: start`);
   let result: string | undefined;
 
   // early exit
   if (!something?.length) {
     DEV &&
       console.log(
-        `047 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${31}m${`early return`}\u001b[${39}m`}`,
+        `${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${31}m${`early return`}\u001b[${39}m`}`,
       );
     return undefined;
   }
 
   DEV &&
     console.log(
-      `054 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${JSON.stringify(
+      `${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${JSON.stringify(
         tree,
         null,
         4,
@@ -78,7 +77,7 @@ export const contains = (
 
   DEV &&
     console.log(
-      `081 ${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${JSON.stringify(
+      `${`\u001b[${35}m${`contains()`}\u001b[${39}m`}: ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${JSON.stringify(
         result,
         null,
         4,

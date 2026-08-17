@@ -34,21 +34,21 @@ function xBeforeYOnTheRight(
   x: string,
   y: string,
 ): boolean {
-  DEV && console.log(`037 xBeforeYOnTheRight(): called; x=${x}; y=${y}`);
+  DEV && console.log(`xBeforeYOnTheRight(): called; x=${x}; y=${y}`);
   for (let i = startingIdx, len = str.length; i < len; i++) {
-    DEV && console.log(`039 xBeforeYOnTheRight(): loop str[${i}] = ${str[i]}`);
+    DEV && console.log(`xBeforeYOnTheRight(): loop str[${i}] = ${str[i]}`);
     if (str.startsWith(x, i)) {
-      DEV && console.log(`041 xBeforeYOnTheRight(): return true`);
+      DEV && console.log(`xBeforeYOnTheRight(): return true`);
       return true;
     }
 
     if (str.startsWith(y, i)) {
-      DEV && console.log(`046 xBeforeYOnTheRight(): return false`);
+      DEV && console.log(`xBeforeYOnTheRight(): return false`);
       return false;
     }
   }
 
-  DEV && console.log(`051 xBeforeYOnTheRight(): return false`);
+  DEV && console.log(`xBeforeYOnTheRight(): return false`);
   return false;
 }
 
@@ -60,10 +60,10 @@ function xBeforeYOnTheRight(
 //
 /* c8 ignore next */
 function notWithinAttrQuotes(tag: Obj, str: string, i: number): boolean {
-  DEV && console.log(`063 notWithinAttrQuotes(): start`);
+  DEV && console.log(`notWithinAttrQuotes(): start`);
   DEV &&
     console.log(
-      `066 notWithinAttrQuotes(): ${`\u001b[${33}m${`tag`}\u001b[${39}m`} = ${JSON.stringify(
+      `notWithinAttrQuotes(): ${`\u001b[${33}m${`tag`}\u001b[${39}m`} = ${JSON.stringify(
         tag,
         null,
         4,
@@ -85,7 +85,7 @@ function notWithinAttrQuotes(tag: Obj, str: string, i: number): boolean {
 
   DEV &&
     console.log(
-      `088 notWithinAttrQuotes(): ███████████████████████████████████████ ${`\u001b[${33}m${`R1`}\u001b[${39}m`} = ${JSON.stringify(
+      `notWithinAttrQuotes(): ███████████████████████████████████████ ${`\u001b[${33}m${`R1`}\u001b[${39}m`} = ${JSON.stringify(
         R1,
         null,
         4,

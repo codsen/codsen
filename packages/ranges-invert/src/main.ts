@@ -57,7 +57,7 @@ function rInvert(
 
   // opts validation
 
-  DEV && console.log("060 ███████████████████████████████████████");
+  DEV && console.log("███████████████████████████████████████");
   // declare defaults, so we can enforce types later:
   // fill any settings with defaults if missing:
   let opts = { ...defaults, ...originalOptions };
@@ -120,7 +120,7 @@ function rInvert(
 
   DEV &&
     console.log(
-      `123 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
+      `${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
         prep,
         null,
         4,
@@ -130,21 +130,18 @@ function rInvert(
   const res: Range[] = [];
   for (let i = 0; i < prep.length; i++) {
     const currArr = prep[i];
-    DEV &&
-      console.log(`134 \u001b[${35}m${`=====================`}\u001b[${39}m`);
+    DEV && console.log(`\u001b[${35}m${`=====================`}\u001b[${39}m`);
     DEV &&
       console.log(
-        `137 accum = ${res.length ? JSON.stringify(res, null, 0) : "[]"}`,
+        `accum = ${res.length ? JSON.stringify(res, null, 0) : "[]"}`,
       );
-    DEV && console.log(`139 currArr = ${JSON.stringify(currArr, null, 0)}`);
-    DEV && console.log(`140 i = ${i}`);
+    DEV && console.log(`currArr = ${JSON.stringify(currArr, null, 0)}`);
+    DEV && console.log(`i = ${i}`);
 
     // if the first range's first index is not zero, additionally add zero range:
     if (i === 0 && prep[0][0] !== 0) {
       DEV &&
-        console.log(
-          `146 \u001b[${36}m${`PUSH [0, ${prep[0][0]}]`}\u001b[${39}m`,
-        );
+        console.log(`\u001b[${36}m${`PUSH [0, ${prep[0][0]}]`}\u001b[${39}m`);
       res.push([0, prep[0][0]]);
     }
 
@@ -155,7 +152,7 @@ function rInvert(
     if (currArr[1] !== endingIndex) {
       DEV &&
         console.log(
-          `158 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`,
+          `\u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`,
         );
 
       // this can happen only when opts.skipChecks is on:
@@ -172,7 +169,7 @@ function rInvert(
 
   DEV &&
     console.log(
-      `175 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
+      `${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
         res,
         null,
         4,

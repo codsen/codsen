@@ -44,16 +44,16 @@ function containsOnlyWhitespace(value: unknown): boolean {
  */
 function empty(input: unknown): boolean {
   if (typeof input === "string") {
-    DEV && console.log(`047 return ${!input.trim()}`);
+    DEV && console.log(`return ${!input.trim()}`);
     return !input.trim();
   }
   if (typeof input !== "object" || !input) {
-    DEV && console.log(`051 return false`);
+    DEV && console.log(`return false`);
     return false;
   }
-  DEV && console.log(`054 ${`\u001b[${36}m${`AST traversal!`}\u001b[${39}m`}`);
+  DEV && console.log(`${`\u001b[${36}m${`AST traversal!`}\u001b[${39}m`}`);
   let result = containsOnlyWhitespace(input);
-  DEV && console.log(`056 return ${result}`);
+  DEV && console.log(`return ${result}`);
   return result;
 }
 

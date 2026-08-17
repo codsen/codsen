@@ -75,7 +75,7 @@ function strConvertIndexes(
 
       DEV &&
         console.log(
-          `078 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
+          `#${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
             graphemeStrArr[i]
           } (${graphemeStrArr[i].split("").length})`,
         );
@@ -131,11 +131,11 @@ function strConvertIndexes(
   // leading up to this
 
   if (isStringOrNumber(indexes)) {
-    DEV && console.log(`134 ██ no AST`);
+    DEV && console.log(`██ no AST`);
     // no need for traversal
     // validate
     if (isItOk(indexes)) {
-      DEV && console.log(`138 OK`);
+      DEV && console.log(`OK`);
 
       if (mode === "u") {
         return typeof indexes === "string"
@@ -152,7 +152,7 @@ function strConvertIndexes(
       `string-convert-indexes/${functionName}(): [THROW_ID_04] the second input argument, "indexes" is not suitable to describe string index - it was given as ${formatDiagnosticValue(indexes, 4)} (${typeof indexes})`,
     );
   } else if (indexes && typeof indexes === "object") {
-    DEV && console.log(`155 ██ AST - traverse!`);
+    DEV && console.log(`██ AST - traverse!`);
     // if it's array or object, traverse
     return mode === "u"
       ? traverse(indexes, (key, val, innerObj) => {

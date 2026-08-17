@@ -19,6 +19,8 @@ const TYPESCRIPT_LIBRARY_BUILD_PROFILE = Object.freeze({
     "$TURBO_ROOT$/biome.json",
     "$TURBO_ROOT$/ops/biome/**",
     "$TURBO_ROOT$/ops/helpers/browserCompatibility.js",
+    "$TURBO_ROOT$/ops/helpers/devGuardedSource.js",
+    "$TURBO_ROOT$/ops/helpers/devLogOrigins.js",
     "$TURBO_ROOT$/ops/helpers/nodeEngine.js",
     "$TURBO_ROOT$/ops/scripts/esbuild.js",
     "$TURBO_ROOT$/ops/typedefs/common.ts",

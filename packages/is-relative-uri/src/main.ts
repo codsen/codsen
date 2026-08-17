@@ -349,7 +349,7 @@ function isRel(str: string, opts?: Partial<Opts>): Res {
   let resolvedOpts: Opts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `352 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} resolvedOpts = ${JSON.stringify(
+      `${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} resolvedOpts = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -498,7 +498,7 @@ function isRel(str: string, opts?: Partial<Opts>): Res {
   }
 
   // ---------------------------------------------------------------------------
-  DEV && console.log(`501 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  DEV && console.log(`${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
   return {
     res: true,
     message: null,

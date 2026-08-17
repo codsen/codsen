@@ -144,7 +144,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-utils",
-    "size": 17824,
+    "size": 17859,
     "imports": []
   },
   {
@@ -198,7 +198,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "size": 24281,
+    "size": 24236,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -294,7 +294,7 @@ export const interdeps = [
   },
   {
     "name": "html-crush",
-    "size": 10892,
+    "size": 10897,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -724,14 +724,14 @@ export const interdeps = [
   },
   {
     "name": "string-left-right",
-    "size": 5863,
+    "size": 5907,
     "imports": [
       "codsen-utils"
     ]
   },
   {
     "name": "string-match-left-right",
-    "size": 5608,
+    "size": 5620,
     "imports": [
       "arrayiffy-if-string",
       "codsen-utils"
@@ -829,7 +829,7 @@ export const interdeps = [
   },
   {
     "name": "tsd-extract",
-    "size": 7578,
+    "size": 7717,
     "imports": [
       "codsen-utils",
       "string-left-right"

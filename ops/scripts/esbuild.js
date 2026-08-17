@@ -6,6 +6,7 @@ import {
   IIFE_BROWSER_POLICY,
   iifeGlobalName,
 } from "../helpers/browserCompatibility.js";
+import { devLogOriginsPlugin } from "../helpers/devLogOrigins.js";
 import { nodeTargetFromEngineRange } from "../helpers/nodeEngine.js";
 
 const arguments_ = process.argv.slice(2);
@@ -35,6 +36,17 @@ const external2 = [
   ...Object.keys(pkg.peerDependencies || {}),
 ];
 
+// Prepends `<path-within-package>:<line> ` to the debug logging the --dev
+// build keeps, which is also why the builds below use the asynchronous API:
+// esbuild rejects plugins passed to buildSync.
+//
+// The production build has nothing to prefix - minification has already
+// removed every DEV-guarded log - and running the rewrite there anyway would
+// not be free. Esbuild picks minified names by character frequency over the
+// whole input, so injected text it goes on to discard still renames variables
+// in the published bundle.
+const plugins = isDevelopment ? [devLogOriginsPlugin(path.resolve("./"))] : [];
+
 const banner = {
   js: `/**
  * @name ${name2}
@@ -52,7 +64,7 @@ if (
   (pkg.exports && (typeof pkg.exports === "string" || pkg.exports.default)) ||
   !pkg.type
 ) {
-  esbuild.buildSync({
+  await esbuild.build({
     entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
     platform: "node",
     format: "esm",
@@ -65,12 +77,13 @@ if (
     // pure,
     banner,
     external: external2,
+    plugins,
   });
 }
 
 // IIFE
 if (pkg.exports?.script) {
-  esbuild.buildSync({
+  await esbuild.build({
     entryPoints: [path.join(path.resolve("./"), "src/main.ts")],
     format: "iife",
     globalName: iifeGlobalName(name2),
@@ -83,5 +96,6 @@ if (pkg.exports?.script) {
     // pure,
     banner,
     // no "external" - bundle everything
+    plugins,
   });
 }

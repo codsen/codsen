@@ -52,13 +52,13 @@ function compareIsEqual(a: any, b: any): boolean {
 // -----------------------------------------------------------------------------
 
 function monkey(originalInput: JsonValue, opts: InternalOpts) {
-  DEV && console.log(`055 monkey() called`);
+  DEV && console.log(`monkey() called`);
   let resolvedOpts: InternalOpts = {
     ...opts,
   };
   DEV &&
     console.log(
-      `061 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -87,7 +87,7 @@ function monkey(originalInput: JsonValue, opts: InternalOpts) {
   }
   DEV &&
     console.log(
-      `090 ${`\u001b[${33}m${`keyOnly, ko`}\u001b[${39}m`} = ${JSON.stringify(
+      `${`\u001b[${33}m${`keyOnly, ko`}\u001b[${39}m`} = ${JSON.stringify(
         ko,
         null,
         4,
@@ -111,13 +111,12 @@ function monkey(originalInput: JsonValue, opts: InternalOpts) {
   //
   //
 
-  DEV && console.log(`114 ${`\u001b[${32}m${`CALL`}\u001b[${39}m`} traverse()`);
+  DEV && console.log(`${`\u001b[${32}m${`CALL`}\u001b[${39}m`} traverse()`);
   input = traverse(input, (key, val, innerObj) => {
-    DEV &&
-      console.log(`117 ${`\u001b[${35}m${`---------------`}\u001b[${39}m`}`);
+    DEV && console.log(`${`\u001b[${35}m${`---------------`}\u001b[${39}m`}`);
     DEV &&
       console.log(
-        `120 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${JSON.stringify(
+        `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${JSON.stringify(
           key,
           null,
           4,
@@ -193,7 +192,7 @@ function monkey(originalInput: JsonValue, opts: InternalOpts) {
     return innerObj.parentType === "object" ? val : key;
   });
   DEV &&
-    console.log(`196 ${`\u001b[${35}m${`--------------- fin.`}\u001b[${39}m`}`);
+    console.log(`${`\u001b[${35}m${`--------------- fin.`}\u001b[${39}m`}`);
 
   // returns
   if (resolvedOpts.mode === "get") {

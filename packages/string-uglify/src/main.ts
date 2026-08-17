@@ -262,7 +262,7 @@ function uglifyArr(arr: string[]): string[] {
 
   DEV &&
     console.log(
-      `265 ${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
+      `${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
         singleClasses,
         null,
         4,
@@ -281,10 +281,10 @@ function uglifyArr(arr: string[]): string[] {
   // matches current name's first letter (considering it might be id, class or
   // just name), shorten that value up to that single letter.
   for (let i = 0, len = res.length; i < len; i++) {
-    DEV && console.log("284 ----------------------------------------");
+    DEV && console.log("----------------------------------------");
     DEV &&
       console.log(
-        `287 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`,
+        `processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`,
       );
     if (res[i].startsWith(".")) {
       // if particular class name starts with a letter which hasn't been taken
@@ -292,7 +292,7 @@ function uglifyArr(arr: string[]): string[] {
         singleClasses[res[i].slice(1, 2)] = res[i];
         DEV &&
           console.log(
-            `295 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
+            `shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
               i
             ].slice(
               0,
@@ -307,7 +307,7 @@ function uglifyArr(arr: string[]): string[] {
       } else if (singleClasses[res[i].slice(1, 2)] === res[i]) {
         DEV &&
           console.log(
-            `310 res[i] = ${res[i]} will also be shortened to ${res[i].slice(
+            `res[i] = ${res[i]} will also be shortened to ${res[i].slice(
               0,
               2,
             )}`,
@@ -321,7 +321,7 @@ function uglifyArr(arr: string[]): string[] {
         singleIds[res[i].slice(1, 2)] = res[i];
         DEV &&
           console.log(
-            `324 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
+            `shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
               i
             ].slice(0, 2)}\u001b[${39}m`};`,
           );
@@ -336,7 +336,7 @@ function uglifyArr(arr: string[]): string[] {
         singleNameOnly[res[i].slice(0, 1)] = res[i];
         DEV &&
           console.log(
-            `339 shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
+            `shortened ${`\u001b[${33}m${res[i]}\u001b[${39}m`} to ${`\u001b[${33}m${res[
               i
             ].slice(0, 1)}\u001b[${39}m`}`,
           );

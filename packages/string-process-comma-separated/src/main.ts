@@ -31,7 +31,7 @@ export interface Opts {
 function processCommaSep(str: string, opts?: Partial<Opts>): void {
   DEV &&
     console.log(
-      `034 processCommaSep: INCOMING ${`\u001b[${33}m${`str`}\u001b[${39}m`}: ${JSON.stringify(
+      `processCommaSep: INCOMING ${`\u001b[${33}m${`str`}\u001b[${39}m`}: ${JSON.stringify(
         str,
         null,
         0,
@@ -39,7 +39,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
     );
   DEV &&
     console.log(
-      `042 processCommaSep: INCOMING ${`\u001b[${33}m${`opts`}\u001b[${39}m`} keys: ${JSON.stringify(
+      `processCommaSep: INCOMING ${`\u001b[${33}m${`opts`}\u001b[${39}m`} keys: ${JSON.stringify(
         opts,
         null,
         0,
@@ -83,7 +83,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
 
   DEV &&
     console.log(
-      `086 processCommaSep: FINAL ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `processCommaSep: FINAL ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -101,7 +101,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
   for (let i = resolvedOpts.from; i < resolvedOpts.to; i++) {
     DEV &&
       console.log(
-        `104 ${`\u001b[${36}m${`----------------------------------- str[${i}] = ${JSON.stringify(
+        `${`\u001b[${36}m${`----------------------------------- str[${i}] = ${JSON.stringify(
           str[i],
           null,
           0,
@@ -113,7 +113,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
       lastNonWhitespaceCharAt = i;
       DEV &&
         console.log(
-          `116 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastNonWhitespaceCharAt`}\u001b[${39}m`} = ${lastNonWhitespaceCharAt}`,
+          `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastNonWhitespaceCharAt`}\u001b[${39}m`} = ${lastNonWhitespaceCharAt}`,
         );
     }
 
@@ -127,7 +127,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
         firstNonWhitespaceNonSeparatorCharFound = true;
         DEV &&
           console.log(
-            `130 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`firstNonwhitespaceNonseparatorCharFound`}\u001b[${39}m`} = ${JSON.stringify(
+            `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`firstNonwhitespaceNonseparatorCharFound`}\u001b[${39}m`} = ${JSON.stringify(
               firstNonWhitespaceNonSeparatorCharFound,
             )}`,
           );
@@ -154,14 +154,14 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
         separatorsArr = [];
         DEV &&
           console.log(
-            `157 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`separatorsArr`}\u001b[${39}m`}`,
+            `${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`separatorsArr`}\u001b[${39}m`}`,
           );
       }
 
       chunkStartsAt = i;
       DEV &&
         console.log(
-          `164 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`,
+          `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`,
         );
     }
 
@@ -173,11 +173,11 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
         str[i] === resolvedOpts.separator) ||
         i + 1 === resolvedOpts.to)
     ) {
-      DEV && console.log(`176 chunk ends`);
+      DEV && console.log(`chunk ends`);
       // the chunk is sliced inside the log, not hoisted into a local above it
       DEV &&
         console.log(
-          `180 ${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`chunk`}\u001b[${39}m`} = "${`\u001b[${35}m${str.slice(
+          `${`\u001b[${32}m${`EXTRACTED`}\u001b[${39}m`} ${`\u001b[${33}m${`chunk`}\u001b[${39}m`} = "${`\u001b[${35}m${str.slice(
             chunkStartsAt as number,
             i + 1 === resolvedOpts.to &&
               str[i] !== resolvedOpts.separator &&
@@ -191,7 +191,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
       if (typeof resolvedOpts.cb === "function") {
         DEV &&
           console.log(
-            `194 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+            `${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
               [
                 (chunkStartsAt as number) + resolvedOpts.offset,
                 (i + 1 === resolvedOpts.to &&
@@ -219,7 +219,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
       chunkStartsAt = null;
       DEV &&
         console.log(
-          `222 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`,
+          `${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`} = ${chunkStartsAt}`,
         );
     }
 
@@ -228,7 +228,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
       whitespaceStartsAt = i;
       DEV &&
         console.log(
-          `231 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`,
+          `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`,
         );
     }
 
@@ -237,17 +237,17 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
       whitespaceStartsAt !== null &&
       (str[i].trim() || i + 1 === resolvedOpts.to)
     ) {
-      DEV && console.log(`240 whitespace ends`);
+      DEV && console.log(`whitespace ends`);
 
       if (whitespaceStartsAt === resolvedOpts.from) {
-        DEV && console.log(`243 leading whitespace clauses`);
+        DEV && console.log(`leading whitespace clauses`);
         if (
           !resolvedOpts.leadingWhitespaceOK &&
           typeof resolvedOpts.errCb === "function"
         ) {
           DEV &&
             console.log(
-              `250 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+              `${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
                 [
                   [
                     whitespaceStartsAt + resolvedOpts.offset,
@@ -275,14 +275,14 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
       } else if (!str[i].trim() && i + 1 === resolvedOpts.to) {
         // if it's trailing whitespace, we're on the last character
         // (right before resolvedOpts.to)
-        DEV && console.log(`278 trailing whitespace clauses`);
+        DEV && console.log(`trailing whitespace clauses`);
         if (
           !resolvedOpts.trailingWhitespaceOK &&
           typeof resolvedOpts.errCb === "function"
         ) {
           DEV &&
             console.log(
-              `285 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+              `${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
                 [[whitespaceStartsAt, i + 1], "Remove whitespace."],
                 null,
                 4,
@@ -319,7 +319,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
       ) {
         DEV &&
           console.log(
-            `322 ███████████████████████████████████████ regular whitespace clauses`,
+            `███████████████████████████████████████ regular whitespace clauses`,
           );
         // exclude single space after a comma, with condition that something
         // non-whitespacey follows
@@ -340,7 +340,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
 
         DEV &&
           console.log(
-            `343 ${`\u001b[${33}m${`endingIdx`}\u001b[${39}m`} = ${JSON.stringify(
+            `${`\u001b[${33}m${`endingIdx`}\u001b[${39}m`} = ${JSON.stringify(
               endingIdx,
               null,
               4,
@@ -348,7 +348,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
           );
         let whatToAdd = "";
         if (resolvedOpts.oneSpaceAfterCommaOK) {
-          DEV && console.log(`351 resolvedOpts.oneSpaceAfterCommaOK is on`);
+          DEV && console.log(`resolvedOpts.oneSpaceAfterCommaOK is on`);
           if (
             str[whitespaceStartsAt] === " " &&
             str[whitespaceStartsAt - 1] === resolvedOpts.separator
@@ -372,9 +372,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
 
         DEV &&
           console.log(
-            `375 ██ str[whitespaceStartsAt - 1] = ${
-              str[whitespaceStartsAt - 1]
-            }`,
+            `██ str[whitespaceStartsAt - 1] = ${str[whitespaceStartsAt - 1]}`,
           );
         if (
           !resolvedOpts.innerWhitespaceAllowed &&
@@ -390,7 +388,7 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
 
         DEV &&
           console.log(
-            `393 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+            `${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
               [
                 [
                   [
@@ -442,11 +440,11 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
 
     // catch the separator
     if (str[i] === resolvedOpts.separator) {
-      DEV && console.log(`445 separator caught`);
+      DEV && console.log(`separator caught`);
       if (!firstNonWhitespaceNonSeparatorCharFound && resolvedOpts.errCb) {
         DEV &&
           console.log(
-            `449 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
+            `${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
               [i, i + 1, "Remove separator."],
               null,
               4,
@@ -499,10 +497,10 @@ function processCommaSep(str: string, opts?: Partial<Opts>): void {
     }
 
     // logging
-    DEV && console.log(`502 ${`\u001b[${90}m${`ENDING`}\u001b[${39}m`}`);
+    DEV && console.log(`${`\u001b[${90}m${`ENDING`}\u001b[${39}m`}`);
     DEV &&
       console.log(
-        `505 ${`\u001b[${90}m${`separatorsArr = ${JSON.stringify(
+        `${`\u001b[${90}m${`separatorsArr = ${JSON.stringify(
           separatorsArr,
           null,
           0,

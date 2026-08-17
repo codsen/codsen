@@ -18,16 +18,16 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
     limit: number,
     trailing: boolean,
   ): string {
-    DEV && console.log(`21  `);
-    DEV && console.log(`22  `);
-    DEV && console.log(`23  `);
+    DEV && console.log(` `);
+    DEV && console.log(` `);
+    DEV && console.log(` `);
     DEV &&
       console.log(
-        `26 ${`\u001b[${34}m${`============== prep() ==============`}\u001b[${39}m`}`,
+        `${`\u001b[${34}m${`============== prep() ==============`}\u001b[${39}m`}`,
       );
     DEV &&
       console.log(
-        `030 ${`\u001b[${36}m${`prep()`}\u001b[${39}m`}: incoming whitespaceChunk=${JSON.stringify(
+        `${`\u001b[${36}m${`prep()`}\u001b[${39}m`}: incoming whitespaceChunk=${JSON.stringify(
           whitespaceChunk,
           null,
           4,
@@ -46,7 +46,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
     if (!whitespaceChunk) {
       DEV &&
         console.log(
-          `049 ${`\u001b[${36}m${`prep()`}\u001b[${39}m`}: RETURN ${JSON.stringify(
+          `${`\u001b[${36}m${`prep()`}\u001b[${39}m`}: RETURN ${JSON.stringify(
             whitespaceChunk,
             null,
             4,
@@ -63,7 +63,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
     for (let i = 0, len = whitespaceChunk.length; i < len; i++) {
       DEV &&
         console.log(
-          `066 ${`\u001b[${36}m${`===============`}\u001b[${39}m`} whitespaceChunk[${`\u001b[${33}m${i}\u001b[${39}m`}] = ${
+          `${`\u001b[${36}m${`===============`}\u001b[${39}m`} whitespaceChunk[${`\u001b[${33}m${i}\u001b[${39}m`}] = ${
             whitespaceChunk[i] === rawNbsp
               ? "nbsp"
               : JSON.stringify(whitespaceChunk[i], null, 0)
@@ -80,7 +80,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
 
       DEV &&
         console.log(
-          `083 FIY, ${`\u001b[${33}m${`crlfCount`}\u001b[${39}m`} = ${JSON.stringify(
+          `FIY, ${`\u001b[${33}m${`crlfCount`}\u001b[${39}m`} = ${JSON.stringify(
             crlfCount,
             null,
             4,
@@ -97,7 +97,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
           res += whitespaceChunk[i];
           DEV &&
             console.log(
-              `100 PUSH ${JSON.stringify(
+              `PUSH ${JSON.stringify(
                 whitespaceChunk[i],
                 null,
                 4,
@@ -107,7 +107,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
           if (crlfCount <= limit) {
             DEV &&
               console.log(
-                `110 FIY, ${`\u001b[${33}m${`crlfCount`}\u001b[${39}m`} = ${JSON.stringify(
+                `FIY, ${`\u001b[${33}m${`crlfCount`}\u001b[${39}m`} = ${JSON.stringify(
                   crlfCount,
                   null,
                   4,
@@ -121,7 +121,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
             res += whitespaceChunk[i];
             DEV &&
               console.log(
-                `124 PUSH ${JSON.stringify(
+                `PUSH ${JSON.stringify(
                   whitespaceChunk[i],
                   null,
                   4,
@@ -132,7 +132,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
               res += whitespaceChunk[i + 1];
               DEV &&
                 console.log(
-                  `135 PUSH ${JSON.stringify(
+                  `PUSH ${JSON.stringify(
                     whitespaceChunk[i + 1],
                     null,
                     4,
@@ -140,7 +140,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
                 );
 
               i++;
-              DEV && console.log(`143 BUMP i = ${i}`);
+              DEV && console.log(`BUMP i = ${i}`);
             }
           }
         } else if (
@@ -151,7 +151,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
           res += whitespaceChunk[i];
           DEV &&
             console.log(
-              `154 PUSH ${JSON.stringify(
+              `PUSH ${JSON.stringify(
                 whitespaceChunk[i],
                 null,
                 4,
@@ -163,14 +163,12 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
         if (!whitespaceChunk[i + 1] && !crlfCount) {
           res += " ";
           DEV &&
-            console.log(
-              `167 PUSH " ", now res = ${JSON.stringify(res, null, 4)}`,
-            );
+            console.log(`PUSH " ", now res = ${JSON.stringify(res, null, 4)}`);
         }
       }
       DEV &&
         console.log(
-          `173 ${`\u001b[${90}m${`██ whspCount = ${whspCount}; res = ${JSON.stringify(
+          `${`\u001b[${90}m${`██ whspCount = ${whspCount}; res = ${JSON.stringify(
             res,
             null,
             0,
@@ -179,7 +177,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
     }
     DEV &&
       console.log(
-        `182 ${`\u001b[${36}m${`prep()`}\u001b[${39}m`}: ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+        `${`\u001b[${36}m${`prep()`}\u001b[${39}m`}: ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
           res,
           null,
           4,
@@ -200,7 +198,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
     }
     DEV &&
       console.log(
-        `203 ${`\u001b[${33}m${`resolvedLineBreakLimit`}\u001b[${39}m`} = ${JSON.stringify(
+        `${`\u001b[${33}m${`resolvedLineBreakLimit`}\u001b[${39}m`} = ${JSON.stringify(
           resolvedLineBreakLimit,
           null,
           4,
@@ -214,7 +212,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
     if (!str.trim()) {
       frontPart = str;
     } else if (!str[0].trim()) {
-      DEV && console.log(`217 the first char is whitespace`);
+      DEV && console.log(`the first char is whitespace`);
       for (let i = 0, len = str.length; i < len; i++) {
         if (str[i].trim()) {
           frontPart = str.slice(0, i);
@@ -222,23 +220,23 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
         }
       }
     }
-    DEV && console.log("225 .");
+    DEV && console.log(".");
     DEV &&
       console.log(
-        `228 ${`\u001b[${35}m${`██ frontPart`}\u001b[${39}m`} = ${JSON.stringify(
+        `${`\u001b[${35}m${`██ frontPart`}\u001b[${39}m`} = ${JSON.stringify(
           frontPart,
           null,
           4,
         )}`,
       );
-    DEV && console.log("234 .");
+    DEV && console.log(".");
 
     // if whole string is whitespace, endPart is empty string
     if (
       str.trim() &&
       (str.slice(-1).trim() === "" || str.slice(-1) === rawNbsp)
     ) {
-      DEV && console.log(`241 the last char is whitespace`);
+      DEV && console.log(`the last char is whitespace`);
       for (let i = str.length; i--; ) {
         // DEV && console.log(
         //   `${`\u001b[${36}m${`----------------------------------------------\niterating through: ${JSON.stringify(
@@ -253,20 +251,20 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
         }
       }
     }
-    DEV && console.log("256 .");
+    DEV && console.log(".");
     DEV &&
       console.log(
-        `259 ${`\u001b[${35}m${`██ endPart`}\u001b[${39}m`} = ${JSON.stringify(
+        `${`\u001b[${35}m${`██ endPart`}\u001b[${39}m`} = ${JSON.stringify(
           endPart,
           null,
           4,
         )}`,
       );
-    DEV && console.log("265 .");
+    DEV && console.log(".");
 
     // -------------------------------------------------------------------------
 
-    DEV && console.log(`269 end reached`);
+    DEV && console.log(`end reached`);
     return `${prep(
       frontPart,
       resolvedLineBreakLimit,
@@ -275,7 +273,7 @@ function collWhitespace(str: string, lineBreakLimit = 1): string {
       prep(reverse(endPart), resolvedLineBreakLimit, true),
     )}`;
   }
-  DEV && console.log(`278 just return whatever was given`);
+  DEV && console.log(`just return whatever was given`);
   return str;
 }
 

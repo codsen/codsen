@@ -56,11 +56,11 @@ function rProcessOutside(
   function iterator(str: string, arrOfArrays: Ranges): void {
     DEV &&
       console.log(
-        `059 iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`,
+        `iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`,
       );
     DEV &&
       console.log(
-        `063 ${`\u001b[${36}m${`loop [${JSON.stringify(
+        `${`\u001b[${36}m${`loop [${JSON.stringify(
           arrOfArrays,
           null,
           0,
@@ -76,34 +76,34 @@ function rProcessOutside(
     (arrOfArrays || []).forEach(([fromIdx, toIdx]) => {
       DEV &&
         console.log(
-          `079 ${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`,
+          `${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`,
         );
-      DEV && console.log(`081 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
+      DEV && console.log(`fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
       for (let i = fromIdx; i < toIdx; i++) {
-        DEV && console.log(`083 ${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
+        DEV && console.log(`${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
         const charLength = characterLengths[i] || 1;
 
-        DEV && console.log(`086 charLength = ${charLength}`);
+        DEV && console.log(`charLength = ${charLength}`);
 
         cb(i, i + charLength, (offsetValue) => {
           /* c8 ignore next */
           if (offsetValue != null) {
-            DEV && console.log(`091 offset i by "${offsetValue}" requested`);
-            DEV && console.log(`092 old i = ${i}`);
+            DEV && console.log(`offset i by "${offsetValue}" requested`);
+            DEV && console.log(`old i = ${i}`);
             i += offsetValue;
-            DEV && console.log(`094 new i = ${i}`);
+            DEV && console.log(`new i = ${i}`);
           }
         });
         if (charLength && charLength > 1) {
-          DEV && console.log(`098 old i = ${i}`);
+          DEV && console.log(`old i = ${i}`);
           i += charLength - 1;
-          DEV && console.log(`100 new i = ${i}`);
+          DEV && console.log(`new i = ${i}`);
         }
       }
     });
     DEV &&
       console.log(
-        `106 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`,
+        `${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`,
       );
   }
 
@@ -117,7 +117,7 @@ function rProcessOutside(
     );
     DEV &&
       console.log(
-        `120 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+        `${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
           temp,
           null,
           0,

@@ -410,22 +410,30 @@ compile-time `DEV` global, commonly in the form `DEV && console.log(...)`.
 - These logs deliberately make heavy use of ANSI colour escapes. Preserve that
   colouring, including its reset sequences, when moving or editing an existing
   log unless the task asks for a different output format.
-- Every active debug message must include its current source line number. The
-  number is a manually maintained navigation aid, not runtime metadata. For a
-  multiline log, it must match the line that contains the number inside the
-  message, rather than the earlier `DEV` or `console.log` line. For example, a
-  message written on line 1037 starts with `1037`. Purely visual separator or
-  banner logs need a label too; add it inside the existing output structure
-  without removing the ANSI styling. Existing zero-padding below line 100 may
-  be preserved, for example `083` on line 83.
-- Perform the line-number audit after final formatting. If an edit adds or
-  removes source lines, inspect every later active debug log in that file, not
-  only logs near the edit, because every downstream label may have shifted.
-  When adding a new debug log, include its line number from the start.
-- Audit executable syntax rather than blindly replacing numeric text. Ignore
-  commented-out log examples, but include active logs nested inside callbacks.
-  Update only the navigation label: ANSI codes such as `90` and `39`, plus
-  numbers in the diagnostic payload, are not line-number labels.
+- The build labels each message with where it came from, so do not write a line
+  number into one by hand. `ops/helpers/devLogOrigins.js` inserts
+  `"<path-within-package>:<line>"` as an extra leading argument of every
+  `DEV`-guarded `console.log` under `src/`, and a message read out of a bundle
+  reads `src/main.ts:1037 LOOP BACKWARDS`. The line comes from the message
+  rather than from the call, so a log written across several lines reports the
+  line its first argument starts on. `console.log` supplies the separating
+  space, and an argument stays an argument, so an object still prints inspected.
+  A breadcrumb that has nothing to say beyond where execution reached is written
+  `DEV && console.log()` and prints its origin alone.
+- The origin cannot go stale, which is why there is no line-number audit and why
+  reformatting or inserting lines above a log needs no follow-up. Until
+  2026-08-17 every message carried a manually maintained numeric label and
+  `ci:verify:debug-log-line-labels` policed it; both are gone, along with the
+  renumbering that any edit shifting source lines used to force.
+- Unguarded `console.log` calls are program output rather than debug messages —
+  `codsen-utils` prints its `--help` and `--version` that way — so the build
+  leaves them alone. CLI packages ship the JavaScript they are written in and
+  have no esbuild step at all, so nothing prefixes their output either.
+- The production build skips the rewrite: minification has already removed every
+  guarded log, and esbuild picks minified names by character frequency over the
+  whole input, so text injected and then discarded would still rename variables
+  in the published bundle. Plugins force the asynchronous esbuild API, which is
+  why `ops/scripts/esbuild.js` awaits `build()` rather than `buildSync()`.
 
 ## Examples and Quick Takes
 

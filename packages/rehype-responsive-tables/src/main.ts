@@ -74,7 +74,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
   const resolvedOpts: Opts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `077 final ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `final ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -103,7 +103,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
       ) {
         DEV &&
           console.log(
-            `106 ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+            `${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
               node,
               null,
               4,
@@ -111,7 +111,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
           );
         DEV &&
           console.log(
-            `114 ${`\u001b[${33}m${`tdCount`}\u001b[${39}m`} = ${JSON.stringify(
+            `${`\u001b[${33}m${`tdCount`}\u001b[${39}m`} = ${JSON.stringify(
               tdCount,
               null,
               4,
@@ -123,7 +123,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
 
           // 1. TACKLE THEAD VIA PARENT
           if (parent.children.some((c: Obj) => c.tagName === "thead")) {
-            DEV && console.log(`126 thead found`);
+            DEV && console.log(`thead found`);
             parent.children = parent.children.map((ch: Element2) => {
               if (
                 (ch as Obj).tagName === "thead" &&
@@ -151,7 +151,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                           (acc: Obj[], curr2: Obj) => {
                             DEV &&
                               console.log(
-                                `154 ${`\u001b[${33}m${`curr2`}\u001b[${39}m`} = ${JSON.stringify(
+                                `${`\u001b[${33}m${`curr2`}\u001b[${39}m`} = ${JSON.stringify(
                                   curr2,
                                   null,
                                   4,
@@ -178,7 +178,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                               ) {
                                 DEV &&
                                   console.log(
-                                    `181 ${`\u001b[${32}m${`CONTAINS ${matchedUpVal}`}\u001b[${39}m`}`,
+                                    `${`\u001b[${32}m${`CONTAINS ${matchedUpVal}`}\u001b[${39}m`}`,
                                   );
                                 // make a note of this
                                 theadChildrenToSet.push({
@@ -232,7 +232,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
 
           DEV &&
             console.log(
-              `235 final gathered ${`\u001b[${33}m${`theadChildrenToSet`}\u001b[${39}m`} = ${JSON.stringify(
+              `final gathered ${`\u001b[${33}m${`theadChildrenToSet`}\u001b[${39}m`} = ${JSON.stringify(
                 theadChildrenToSet,
                 null,
                 4,
@@ -247,7 +247,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                 trCounter++;
                 DEV &&
                   console.log(
-                    `250 ${`\u001b[${33}m${`trCounter`}\u001b[${39}m`} = ${JSON.stringify(
+                    `${`\u001b[${33}m${`trCounter`}\u001b[${39}m`} = ${JSON.stringify(
                       trCounter,
                       null,
                       4,
@@ -278,7 +278,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                   tdCounter++;
                   DEV &&
                     console.log(
-                      `281 - inside td ${(curr as Obj)?.children[
+                      `- inside td ${(curr as Obj)?.children[
                         i
                       ]?.children[0].value.trim()} #${tdCounter}`,
                     );
@@ -290,7 +290,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                         ?.value;
                       DEV &&
                         console.log(
-                          `293 SET ${`\u001b[${33}m${`firstTdVal`}\u001b[${39}m`} = ${JSON.stringify(
+                          `SET ${`\u001b[${33}m${`firstTdVal`}\u001b[${39}m`} = ${JSON.stringify(
                             firstTdVal,
                             null,
                             4,
@@ -300,7 +300,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                       firstTdChild = (curr as Obj).children[i].children;
                       DEV &&
                         console.log(
-                          `303 SET ${`\u001b[${33}m${`firstTdChild`}\u001b[${39}m`} = ${JSON.stringify(
+                          `SET ${`\u001b[${33}m${`firstTdChild`}\u001b[${39}m`} = ${JSON.stringify(
                             firstTdChild,
                             null,
                             4,
@@ -315,7 +315,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                       return c.thIdx === tdCounter - 1;
                     })
                   ) {
-                    DEV && console.log(`318 this td was moved up`);
+                    DEV && console.log(`this td was moved up`);
                     if (
                       !Array.isArray(
                         (curr as Obj).children[i].properties.className,
@@ -328,7 +328,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                     );
                     DEV &&
                       console.log(
-                        `331 final ${`\u001b[${33}m${`(curr as Obj).children[i]`}\u001b[${39}m`} = ${JSON.stringify(
+                        `final ${`\u001b[${33}m${`(curr as Obj).children[i]`}\u001b[${39}m`} = ${JSON.stringify(
                           (curr as Obj).children[i],
                           null,
                           4,
@@ -405,7 +405,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                         (acc2, curr2) => {
                           DEV &&
                             console.log(
-                              `408 ███████████████████████████████████████ ${`\u001b[${33}m${`curr`}\u001b[${39}m`} = ${JSON.stringify(
+                              `███████████████████████████████████████ ${`\u001b[${33}m${`curr`}\u001b[${39}m`} = ${JSON.stringify(
                                 curr,
                                 null,
                                 4,
@@ -419,7 +419,7 @@ const rehypeResponsiveTables: Plugin2<[Partial<Opts>?], Root> = (opts) => {
                           );
                           DEV &&
                             console.log(
-                              `422 retrieved ${`\u001b[${33}m${`tdValue`}\u001b[${39}m`} = ${JSON.stringify(
+                              `retrieved ${`\u001b[${33}m${`tdValue`}\u001b[${39}m`} = ${JSON.stringify(
                                 tdValue,
                                 null,
                                 4,

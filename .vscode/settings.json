@@ -168,5 +168,6 @@
     "withinascii",
     "wscript",
     "yourfile"
-  ]
+  ],
+  "js/ts.experimental.useTsgo": false
 }

@@ -51,7 +51,7 @@ function fillMissingKeys(
   skippedPaths: ReadonlySet<string>,
   path = "",
 ): Obj {
-  DEV && console.log(`054 fillMissingKeys() starts`);
+  DEV && console.log(`fillMissingKeys() starts`);
   const incomplete = incompleteOriginal;
   if (
     existy(incomplete) ||
@@ -61,9 +61,9 @@ function fillMissingKeys(
       allEq(incomplete, resolvedOpts.placeholder)
     )
   ) {
-    DEV && console.log(`064`);
+    DEV && console.log();
     if (isObj(schema) && isObj(incomplete)) {
-      DEV && console.log(`066 - it's a plain object`);
+      DEV && console.log(`- it's a plain object`);
       // traverse the keys on schema and add them onto incomplete
       Object.keys(schema).forEach((key) => {
         // calculate the path for current key
@@ -97,7 +97,7 @@ function fillMissingKeys(
         }
       });
     } else if (Array.isArray(schema) && Array.isArray(incomplete)) {
-      DEV && console.log(`100 - it's an array`);
+      DEV && console.log(`- it's an array`);
       if (incomplete.length === 0) {
         return clone(schema);
       }
@@ -116,7 +116,7 @@ function fillMissingKeys(
         }
       }
     } else {
-      DEV && console.log(`119 - mergeAdvanced()`);
+      DEV && console.log(`- mergeAdvanced()`);
       return mergeAdvanced(schema, incomplete, {
         useNullAsExplicitFalse: resolvedOpts.useNullAsExplicitFalse,
         cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
@@ -176,7 +176,7 @@ function fillMissing(incomplete: Obj, schema: Obj, opts?: Partial<Opts>): Obj {
   let resolvedOpts: Opts = { ...defaults, ...opts };
   DEV &&
     console.log(
-      `179 ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,

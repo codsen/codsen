@@ -88,8 +88,8 @@ function compareInner(
   s: JsonValue,
   resolvedOpts: Opts,
 ): boolean | string {
-  DEV && console.log("091 \n███████████████████████████████████████\n ");
-  DEV && console.log(`092 compare() CALLED`);
+  DEV && console.log("\n███████████████████████████████████████\n ");
+  DEV && console.log(`compare() CALLED`);
 
   let sKeys: string[];
   let bKeys: string[];
@@ -98,7 +98,7 @@ function compareInner(
 
   DEV &&
     console.log(
-      `101 compare(): ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      `compare(): ${`\u001b[${33}m${`resolvedOpts`}\u001b[${39}m`} = ${JSON.stringify(
         resolvedOpts,
         null,
         4,
@@ -114,7 +114,7 @@ function compareInner(
     isObj(s) &&
     !Object.keys(s).length
   ) {
-    DEV && console.log(`117 return true`);
+    DEV && console.log(`return true`);
     return true;
   }
 
@@ -130,7 +130,7 @@ function compareInner(
       (!resolvedOpts.hungryForWhitespace ||
         (resolvedOpts.hungryForWhitespace && !empty(b))))
   ) {
-    DEV && console.log(`133 return false`);
+    DEV && console.log(`return false`);
     return false;
   }
 
@@ -139,7 +139,7 @@ function compareInner(
   if (typeof b === "string" && typeof s === "string") {
     DEV &&
       console.log(
-        `142 ${`\u001b[${33}m${`big`}\u001b[${39}m`}: ${JSON.stringify(
+        `${`\u001b[${33}m${`big`}\u001b[${39}m`}: ${JSON.stringify(
           b,
           null,
           4,
@@ -147,7 +147,7 @@ function compareInner(
       );
     DEV &&
       console.log(
-        `150 ${`\u001b[${33}m${`small`}\u001b[${39}m`}: ${JSON.stringify(
+        `${`\u001b[${33}m${`small`}\u001b[${39}m`}: ${JSON.stringify(
           s,
           null,
           4,
@@ -156,7 +156,7 @@ function compareInner(
     if (resolvedOpts.hungryForWhitespace && empty(b) && empty(s)) {
       DEV &&
         console.log(
-          `159 ${`\u001b[${32}m${`return true, both empty`}\u001b[${39}m`}`,
+          `${`\u001b[${32}m${`return true, both empty`}\u001b[${39}m`}`,
         );
       return true;
     }
@@ -164,23 +164,23 @@ function compareInner(
       ? match(b, s, { caseSensitiveMatch: true })
       : b === s;
     if (resolvedOpts.verboseWhenMismatches) {
-      DEV && console.log(`167 return ${stringsMatch}`);
+      DEV && console.log(`return ${stringsMatch}`);
       return stringsMatch
         ? true
         : `Given string ${s} is not matched! We have ${b} on the other end.`;
     }
-    DEV && console.log(`172 return ${stringsMatch}`);
+    DEV && console.log(`return ${stringsMatch}`);
     return stringsMatch;
   }
   if (Array.isArray(b) && Array.isArray(s)) {
-    DEV && console.log(`176 both arrays`);
+    DEV && console.log(`both arrays`);
     if (
       resolvedOpts.hungryForWhitespace &&
       empty(s) &&
       (!resolvedOpts.matchStrictly ||
         (resolvedOpts.matchStrictly && b.length === s.length))
     ) {
-      DEV && console.log(`183 return true`);
+      DEV && console.log(`return true`);
       return true;
     }
     if (
@@ -188,10 +188,10 @@ function compareInner(
       (resolvedOpts.matchStrictly && s.length !== b.length)
     ) {
       if (!resolvedOpts.verboseWhenMismatches) {
-        DEV && console.log(`191 return false`);
+        DEV && console.log(`return false`);
         return false;
       }
-      DEV && console.log(`194 return`);
+      DEV && console.log(`return`);
       return `The length of a given array, ${JSON.stringify(s, null, 4)} is ${
         s.length
       } but the length of an array on the other end, ${JSON.stringify(
@@ -202,19 +202,19 @@ function compareInner(
     }
     if (s.length === 0) {
       if (b.length === 0) {
-        DEV && console.log(`205 return true`);
+        DEV && console.log(`return true`);
         return true;
       }
       // so b is not zero-long, but s is.
       if (resolvedOpts.verboseWhenMismatches) {
-        DEV && console.log(`210 return`);
+        DEV && console.log(`return`);
         return `The given array has no elements, but the array on the other end, ${JSON.stringify(
           b,
           null,
           4,
         )} does have some`;
       }
-      DEV && console.log(`217 return false`);
+      DEV && console.log(`return false`);
       return false;
     }
     if (resolvedOpts.arrayOrder === "any") {
@@ -225,7 +225,7 @@ function compareInner(
         found = false;
         for (let j = bOffset, bLen = b.length; j < bLen; j++) {
           bOffset += 1;
-          DEV && console.log(`228 enter recursion`);
+          DEV && console.log(`enter recursion`);
           if (compareInner(b[j], s[i], resolvedOpts) === true) {
             found = true;
             break;
@@ -238,10 +238,10 @@ function compareInner(
     }
     if (!found) {
       if (!resolvedOpts.verboseWhenMismatches) {
-        DEV && console.log(`241 return false`);
+        DEV && console.log(`return false`);
         return false;
       }
-      DEV && console.log(`244 return`);
+      DEV && console.log(`return`);
       return `The given array ${JSON.stringify(
         s,
         null,
@@ -257,7 +257,7 @@ function compareInner(
     bKeys = Object.keys(b);
     if (resolvedOpts.matchStrictly && sKeys.length !== bKeys.length) {
       if (!resolvedOpts.verboseWhenMismatches) {
-        DEV && console.log(`260 return false`);
+        DEV && console.log(`return false`);
         return false;
       }
       let sKeySet = new Set(sKeys);
@@ -277,26 +277,25 @@ function compareInner(
         ${JSON.stringify(uniqueKeysOnB, null, 4)}.`
         : "";
 
-      DEV && console.log(`280 return`);
+      DEV && console.log(`return`);
       return `When matching strictly, we found that both objects have different amount of keys.${sMessage}${bMessage}`;
     }
 
-    DEV && console.log(`284 ${`\u001b[${36}m${`LOOP`}\u001b[${39}m`}`);
+    DEV && console.log(`${`\u001b[${36}m${`LOOP`}\u001b[${39}m`}`);
 
     for (const sKey of sKeys) {
-      DEV &&
-        console.log(`288 ${`\u001b[${35}m${`sKey = ${sKey}`}\u001b[${39}m`}`);
+      DEV && console.log(`${`\u001b[${35}m${`sKey = ${sKey}`}\u001b[${39}m`}`);
       if (!hasOwnProp(b, sKey)) {
-        DEV && console.log(`290 case #1.`);
+        DEV && console.log(`case #1.`);
         if (
           !resolvedOpts.useWildcards ||
           (resolvedOpts.useWildcards && !sKey.includes("*"))
         ) {
           if (!resolvedOpts.verboseWhenMismatches) {
-            DEV && console.log(`296 return false`);
+            DEV && console.log(`return false`);
             return false;
           }
-          DEV && console.log(`299 return`);
+          DEV && console.log(`return`);
           return `The given object has key "${sKey}" which the other-one does not have.`;
         }
         // so wildcards are on and sKeys[i] contains a wildcard
@@ -304,19 +303,19 @@ function compareInner(
           bKeys.some((bKey) => match(bKey, sKey, { caseSensitiveMatch: true }))
         ) {
           // This wildcard key matched; keep checking the remaining subset keys.
-          DEV && console.log(`307 continue`);
+          DEV && console.log(`continue`);
           continue;
         }
         if (!resolvedOpts.verboseWhenMismatches) {
-          DEV && console.log(`311 return false`);
+          DEV && console.log(`return false`);
           return false;
         }
-        DEV && console.log(`314 return`);
+        DEV && console.log(`return`);
         return `The given object has key "${sKey}" which the other-one does not have.`;
       }
       if (b[sKey] != null && !sameType(b[sKey], s[sKey])) {
-        DEV && console.log(`318 case #2.`);
-        DEV && console.log(`319 types mismatch`);
+        DEV && console.log(`case #2.`);
+        DEV && console.log(`types mismatch`);
         // Types mismatch. Probably falsy result, unless comparing with
         // empty/blank things. Let's check.
         // it might be blank array vs blank object:
@@ -328,19 +327,19 @@ function compareInner(
           )
         ) {
           if (!resolvedOpts.verboseWhenMismatches) {
-            DEV && console.log(`331 return false`);
+            DEV && console.log(`return false`);
             return false;
           }
-          DEV && console.log(`334 return`);
+          DEV && console.log(`return`);
           return `The given key ${sKey} is of a different type on both objects. On the first-one, it's ${typeLabel(
             s[sKey],
           )}, on the second-one, it's ${typeLabel(b[sKey])}`;
         }
       } else if (compareInner(b[sKey], s[sKey], resolvedOpts) !== true) {
-        DEV && console.log(`340 case #3. - recursion returned false`);
+        DEV && console.log(`case #3. - recursion returned false`);
         DEV &&
           console.log(
-            `343 ██ ${`\u001b[${33}m${`b[sKey]`}\u001b[${39}m`} = ${JSON.stringify(
+            `██ ${`\u001b[${33}m${`b[sKey]`}\u001b[${39}m`} = ${JSON.stringify(
               b[sKey],
               null,
               4,
@@ -348,28 +347,28 @@ function compareInner(
           );
         DEV &&
           console.log(
-            `351 ██ ${`\u001b[${33}m${`s[sKey]`}\u001b[${39}m`} = ${JSON.stringify(
+            `██ ${`\u001b[${33}m${`s[sKey]`}\u001b[${39}m`} = ${JSON.stringify(
               s[sKey],
               null,
               4,
             )}`,
           );
-        DEV && console.log(`357 so key does exist and type matches`);
+        DEV && console.log(`so key does exist and type matches`);
         if (!resolvedOpts.verboseWhenMismatches) {
-          DEV && console.log(`359 return false`);
+          DEV && console.log(`return false`);
           return false;
         }
-        DEV && console.log(`362 return`);
+        DEV && console.log(`return`);
         return `The given piece ${JSON.stringify(
           s[sKey],
           null,
           4,
         )} and ${JSON.stringify(b[sKey], null, 4)} don't match.`;
       }
-      DEV && console.log(`369 end reached, case #4.`);
+      DEV && console.log(`end reached, case #4.`);
     }
   } else {
-    DEV && console.log(`372 else clauses`);
+    DEV && console.log(`else clauses`);
     if (
       resolvedOpts.hungryForWhitespace &&
       empty(b) &&
@@ -377,13 +376,13 @@ function compareInner(
       (!resolvedOpts.matchStrictly ||
         (resolvedOpts.matchStrictly && isBlank(s)))
     ) {
-      DEV && console.log(`380 return true`);
+      DEV && console.log(`return true`);
       return true;
     }
-    DEV && console.log(`383 return ${b === s}`);
+    DEV && console.log(`return ${b === s}`);
     return b === s;
   }
-  DEV && console.log(`386 return true`);
+  DEV && console.log(`return true`);
   return true;
 }
 
