@@ -1063,35 +1063,33 @@ function extractStrChunksBetweenCurlies(str: string): string[] {
     return [];
   }
 
-  let openings: number[] = [];
-  let closings: number[] = [];
+  // Braces are paired by nesting depth rather than by position in two flat
+  // lists. Zipping the n-th "{" with the n-th "}" makes a chunk run from an
+  // outer opening to an inner closing as soon as a type contains a nested
+  // object, so that chunk is cut short at the inner brace and its tail is then
+  // repeated by the following chunk. Only outermost groups are collected: the
+  // contents of a nested group are already inside the group enclosing it.
+  let chunks: string[] = [];
+  let depth = 0;
+  let openedAt = -1;
 
-  let opening: number = str.indexOf("{");
-  while (opening !== -1) {
-    if (opening !== -1) {
-      openings.push(opening);
-    }
-    opening = str.indexOf("{", opening + 1);
-  }
-
-  let closing: number = str.indexOf("}");
-  while (closing !== -1) {
-    if (closing !== -1) {
-      closings.push(closing);
-    }
-    closing = str.indexOf("}", closing + 1);
-  }
-
-  return openings.reduce(
-    (acc, curr, idx) => {
-      if (typeof closings[idx] === "number") {
-        acc.push(str.slice(curr + 1, closings[idx]));
+  for (let i = 0, len = str.length; i < len; i++) {
+    if (str[i] === "{") {
+      if (!depth) {
+        openedAt = i;
       }
-      // else, bail
-      return acc;
-    },
-    <string[]>[],
-  );
+      depth += 1;
+    } else if (str[i] === "}" && depth) {
+      depth -= 1;
+      if (!depth) {
+        chunks.push(str.slice(openedAt + 1, i));
+        openedAt = -1;
+      }
+    }
+  }
+
+  // an opening brace which is never closed yields no chunk, same as before
+  return chunks;
 }
 
 function join(...args: string[]): string {
@@ -1136,7 +1134,7 @@ function fixIndentation<Type>(s: Type): Type {
 function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
   DEV &&
     console.log(
-      `1139 ███████████████████████████████████████ looking for: ${`\u001b[${33}m${`def`}\u001b[${39}m`} = ${JSON.stringify(
+      `1137 ███████████████████████████████████████ looking for: ${`\u001b[${33}m${`def`}\u001b[${39}m`} = ${JSON.stringify(
         def,
         null,
         4,
@@ -1160,14 +1158,14 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
 
   let resolvedOpts: Opts = { ...defaults, ...opts };
   DEV &&
-    console.log(`1163 resolvedOpts: ${JSON.stringify(resolvedOpts, null, 4)}`);
+    console.log(`1161 resolvedOpts: ${JSON.stringify(resolvedOpts, null, 4)}`);
 
   // -----------------------------------------------------------------------------
 
   let defs = def.split(".");
   DEV &&
     console.log(
-      `1170 ${`\u001b[${33}m${`defs`}\u001b[${39}m`} = ${JSON.stringify(
+      `1168 ${`\u001b[${33}m${`defs`}\u001b[${39}m`} = ${JSON.stringify(
         defs,
         null,
         4,
@@ -1188,7 +1186,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
   while (defs.length) {
     DEV &&
       console.log(
-        `1191 ${`${`\u001b[${31}m${`██`}\u001b[${39}m`}${`\u001b[${33}m${`██`}\u001b[${39}m`}`.repeat(
+        `1189 ${`${`\u001b[${31}m${`██`}\u001b[${39}m`}${`\u001b[${33}m${`██`}\u001b[${39}m`}`.repeat(
           30,
         )}`,
       );
@@ -1202,9 +1200,9 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
     );
 
     if (def.includes(".")) {
-      DEV && console.log(`1205`);
+      DEV && console.log(`1203`);
       if (firstLoopIteration) {
-        DEV && console.log(`1207 - initial loop, save the keys`);
+        DEV && console.log(`1205 - initial loop, save the keys`);
         // make a note of these, but only if it's the first loop
         // (meaning we're querying "foo" from def="foo.bar" if it's
         // the interface sub-key querying, or it's simply def="foo")
@@ -1213,7 +1211,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
         identifiersStartAt = res.identifiersStartAt;
         identifiersEndAt = res.identifiersEndAt;
       } else {
-        DEV && console.log(`1216 - restore keys`);
+        DEV && console.log(`1214 - restore keys`);
         // restore keys from the first loop because "identifiers" and
         // "all" will be wrong at this deeper level loop; inputs here
         // couldn't "see" the outer identifiers, they operate from
@@ -1236,7 +1234,7 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
 
     DEV &&
       console.log(
-        `1239 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+        `1237 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
           res,
           null,
           4,
@@ -1246,12 +1244,12 @@ function extract(str: string, def: string, opts?: Partial<Opts>): ReturnType {
     if (!defs.length) {
       if (!def.includes(".")) {
         DEV &&
-          console.log(`1249 normal return ${JSON.stringify(res, null, 4)}`);
+          console.log(`1247 normal return ${JSON.stringify(res, null, 4)}`);
         return res;
       } else {
         DEV &&
           console.log(
-            `1254 sub-key return ${JSON.stringify(
+            `1252 sub-key return ${JSON.stringify(
               { ...res, identifiers, all },
               null,
               4,

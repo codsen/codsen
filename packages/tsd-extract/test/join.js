@@ -96,4 +96,29 @@ test("04 - many objects", () => {
   );
 });
 
+test("05 - pairs braces by nesting, not by position", () => {
+  // openings and closings used to be zipped by index, so a chunk ran from an
+  // outer "{" to an inner "}" - truncating it and repeating its tail
+  equal(
+    join(
+      "interface A { x: string; y: { z: number }; }",
+      "interface B { q: boolean; }",
+    ),
+    "{\n  x: string; y: { z: number };\n  q: boolean;\n}",
+    "05.01",
+  );
+  // two top-level groups in one argument are both collected
+  equal(
+    join("interface A { a: 1; }\ninterface B { b: 2; }"),
+    "{\n  a: 1;\n  b: 2;\n}",
+    "05.02",
+  );
+  // an opening brace which is never closed yields nothing, as before
+  equal(
+    join("interface A { x: string;", "interface B { q: boolean; }"),
+    "{\n  q: boolean;\n}",
+    "05.03",
+  );
+});
+
 test.run();
