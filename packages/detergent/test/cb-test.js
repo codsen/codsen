@@ -113,4 +113,17 @@ test("006 - change letter case - with strip HTML option", () => {
   );
 });
 
+test("007 - cb is invoked once per range", () => {
+  // it used to be called twice - once to compare, once to build the
+  // replacement - so a callback with any side effect ran twice and the second
+  // call's value was the one which landed in the output
+  // det1 is the raw export; the det helper runs a matrix of option combos, so
+  // it would call the counter many times over
+  let calls = 0;
+  let res = det1("<b>a</b> b", { cb: () => `[${++calls}]` }).res;
+
+  equal(res, "<b>[1]</b>[2]", "007.01");
+  equal(calls, 2, "007.02");
+});
+
 test.run();
