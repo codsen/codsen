@@ -154,7 +154,7 @@ jobs:
         run: npm ci
 
       - name: Download built test inputs
-        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: release-built-packages
           path: ${{ runner.temp }}/built-packages
@@ -192,7 +192,7 @@ jobs:
           npm --version
 
       - name: Download package compatibility artifacts
-        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: release-package-node-artifacts
           path: ${{ runner.temp }}/package-node-artifacts
@@ -227,7 +227,7 @@ jobs:
         run: npm ci
 
       - name: Download built release inputs
-        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: release-built-packages
           path: ${{ runner.temp }}/built-packages
@@ -277,7 +277,7 @@ jobs:
           cache: "false"
 
       - name: Download immutable npm artifacts
-        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: npm-release-artifacts
           path: npm-release-artifacts
@@ -310,7 +310,7 @@ jobs:
           cache: "false"
 
       - name: Download the published manifest
-        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: npm-release-artifacts
           path: npm-release-artifacts
