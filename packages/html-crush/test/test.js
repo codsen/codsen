@@ -1499,4 +1499,29 @@ test("32 - issue #5", () => {
   });
 });
 
+test("33 - protects every Jinja expression, not only the first", () => {
+  // the skip-ahead used to search for "}}" from index zero, so for every
+  // expression after the first it found a position already behind the cursor
+  // and the protection was dropped
+  equal(
+    crush("<style>a{color:{{x}}}b{color:{{y}}}</style>", {
+      removeLineBreaks: true,
+    }).result,
+    "<style>a{color:{{x}}}b{color:{{y}}}\n</style>",
+    "33.01",
+  );
+  equal(
+    crush("<style>a{color:{{x}}}</style>", { removeLineBreaks: true }).result,
+    "<style>a{color:{{x}}}\n</style>",
+    "33.02",
+  );
+  equal(
+    crush("<style>a{c:{{x}}}b{c:{{y}}}d{c:{{z}}}</style>", {
+      removeLineBreaks: true,
+    }).result,
+    "<style>a{c:{{x}}}b{c:{{y}}}d{c:{{z}}}\n</style>",
+    "33.03",
+  );
+});
+
 test.run();
