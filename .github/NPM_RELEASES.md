@@ -26,8 +26,9 @@ Re-registering instead would mean editing every package by hand on npmjs.com.
    **Allow GitHub Actions to create and approve pull requests**. The preparation
    workflow needs this permission to open its release PR.
 4. Protect `main` (or add an equivalent ruleset), require the `verify.yml`
-   checks, and require release branches to be up to date before merging. Do not use GitHub's
-   **Update branch** button on a generated release PR; regenerate it instead.
+   checks, and require release branches to be up to date before merging. Do not
+   use GitHub's **Update branch** button on a generated release PR; regenerate
+   it instead.
 
 ### npm
 
@@ -42,6 +43,24 @@ in this repository, including `@codsen/data`. Use these exact values:
 Repeat this setup whenever a new package is added. Do not create an `NPM_TOKEN`
 repository secret for this flow: the release job receives short-lived npm
 credentials through GitHub OIDC and the trusted-publisher configuration.
+
+## Ordinary pushes
+
+Pushing commits publishes nothing. A push to `main` runs `verify.yml` and stops
+there. The publishing lane wakes only for a push to `main` that changes
+`.github/npm-release-plan.json`, and only a generated release proposal contains
+that file, so no ordinary commit can reach npm however it is worded.
+
+Preparation reads `origin/main` and nothing else. Unpushed local commits are
+invisible to it: they select no package for versioning and contribute no
+changelog entry. Push everything intended for the release, and let its
+`verify.yml` run pass, before starting **Prepare npm release**.
+
+Treat `main` as frozen from then until the release PR merges. The preparation
+run records its base commit and aborts if `origin/main` moved while it worked,
+it refuses to start while another release proposal is open, and a proposal
+generated against an older `main` has to be closed and regenerated rather than
+updated. Merging the reviewed proposal is itself the push that starts `ci.yml`.
 
 ## Prepare and release
 
