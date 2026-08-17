@@ -61,7 +61,9 @@ test("06 - backslash escaping", () => {
   equal(match("a\\b", String.raw`a\b`), false, "06.05");
   equal(match("abc\\", "abc\\"), true, "06.06");
   equal(match("abc", "abc\\"), false, "06.07");
-  equal(match("*", String.raw`\\*`), true, "06.08");
+  // an even-length backslash run is all escaped pairs, so the `*` after it is
+  // unescaped and stays a wildcard - see 06.35 onwards
+  equal(match("*", String.raw`\\*`), false, "06.08");
   equal(match("*", String.raw`\*`), true, "06.09");
   equal(match("!", String.raw`\!`), true, "06.10");
   equal(match("!foo", String.raw`\!foo`), true, "06.11");
@@ -72,9 +74,11 @@ test("06 - backslash escaping", () => {
   equal(match(`${slash.repeat(2)}b`, `${slash.repeat(4)}b`), true, "06.16");
   equal(match("b", `${slash.repeat(2)}b`), false, "06.17");
   equal(match("*", `${slash.repeat(1)}*`), true, "06.18");
-  equal(match("*", `${slash.repeat(2)}*`), true, "06.19");
+  equal(match("*", `${slash.repeat(2)}*`), false, "06.19");
   equal(match(`${slash}*`, `${slash.repeat(3)}*`), true, "06.20");
-  equal(match(`${slash}*`, `${slash.repeat(4)}*`), true, "06.21");
+  // four slashes are two literal backslashes, then a wildcard, so a single
+  // leading backslash is one short
+  equal(match(`${slash}*`, `${slash.repeat(4)}*`), false, "06.21");
   equal(match("anything", `${slash.repeat(2)}*`), false, "06.22");
   equal(match(slash, slash.repeat(1)), true, "06.23");
   equal(match(slash, slash.repeat(2)), true, "06.24");
@@ -88,6 +92,27 @@ test("06 - backslash escaping", () => {
   equal(match(`${slash}\u2028`, `${slash.repeat(1)}\u2028`), true, "06.32");
   equal(match(`${slash}\u2029`, `${slash.repeat(1)}\u2029`), true, "06.33");
   equal(match(`${slash}\r\n`, `${slash.repeat(1)}\r\n`), true, "06.34");
+
+  // A backslash run before `*` follows the same rule as a run before any other
+  // character: each pair is one literal backslash. An odd run has one left over
+  // to escape the `*` into a literal asterisk; an even run has none, so the `*`
+  // is still a wildcard. Before this was fixed an even run both dropped a
+  // backslash and demoted the wildcard, so `\\*` matched only the string "*"
+  // while `\\b` correctly meant backslash-then-b.
+  equal(match(slash, `${slash.repeat(2)}*`), true, "06.35");
+  equal(match(`${slash}abc`, `${slash.repeat(2)}*`), true, "06.36");
+  equal(match(`${slash}*`, `${slash.repeat(2)}*`), true, "06.37");
+  equal(match("abc", `${slash.repeat(2)}*`), false, "06.38");
+  equal(match(slash.repeat(2), `${slash.repeat(4)}*`), true, "06.39");
+  equal(match(`${slash.repeat(2)}xyz`, `${slash.repeat(4)}*`), true, "06.40");
+  equal(match(slash, `${slash.repeat(4)}*`), false, "06.41");
+  // the wildcard still spans line breaks and pairs of surrogates
+  equal(match(`${slash}a\nb`, `${slash.repeat(2)}*`), true, "06.42");
+  equal(match(`${slash}\u{1F600}`, `${slash.repeat(2)}*`), true, "06.43");
+  // mid-pattern, not only at the end
+  equal(match(`a${slash}b`, `a${slash.repeat(2)}*b`), true, "06.44");
+  equal(match(`a${slash}xyzb`, `a${slash.repeat(2)}*b`), true, "06.45");
+  equal(match("a*b", `a${slash.repeat(2)}*b`), false, "06.46");
 });
 
 test("07 - case sensitivity defaults to off", () => {

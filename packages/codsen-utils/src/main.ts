@@ -1423,9 +1423,19 @@ function createCompiledMatchPattern(
     const runLength = runEnd - index;
     const nextCodePoint = pattern.codePointAt(runEnd);
     let literalBackslashCount: number;
+    // An even-length backslash run is made up entirely of escaped pairs, so the
+    // `*` after it is not itself escaped and stays a wildcard; only an odd run
+    // leaves a trailing backslash to turn it into a literal asterisk. Treating
+    // every run before a `*` as escaping it dropped one backslash from the pair
+    // count and demoted the wildcard, so the pattern `\\*` - documented to mean
+    // "a literal backslash, then anything" - matched only the string "*".
+    let wildcardFollows = false;
 
     if (nextCodePoint === 42) {
-      literalBackslashCount = Math.floor((runLength - 1) / 2);
+      wildcardFollows = runLength % 2 === 0;
+      literalBackslashCount = wildcardFollows
+        ? runLength / 2
+        : (runLength - 1) / 2;
     } else if (
       nextCodePoint === undefined ||
       nextCodePoint === 10 ||
@@ -1441,6 +1451,16 @@ function createCompiledMatchPattern(
     for (let count = 0; count < literalBackslashCount; count++) {
       rawSegments[rawSegments.length - 1].push(92);
       minimumInputLength++;
+    }
+
+    if (wildcardFollows) {
+      // an even run always yields at least one literal backslash above, so the
+      // current segment is never empty here and a new one is always wanted
+      hasWildcard = true;
+      rawSegments.push([]);
+      lastWasWildcard = true;
+      index = runEnd + 1;
+      continue;
     }
 
     if (nextCodePoint !== undefined) {
