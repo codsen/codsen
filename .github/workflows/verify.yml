@@ -1,0 +1,191 @@
+---
+# the pull-request lane. `ci.yml` is the publishing lane, because npm's trusted
+# publisher configuration pins that filename for every package.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Build and validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      package_node_matrix: ${{ steps.verify.outputs.package-node-matrix }}
+    steps:
+      - name: Check out the exact revision
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      # every gate lives in the shared action so this job and the release pack
+      # job cannot drift apart
+      - name: Verify the repository
+        id: verify
+        uses: ./.github/actions/verify-repository
+        with:
+          node-engine-base-revision: >-
+            ${{ (github.event_name == 'pull_request' &&
+            github.event.pull_request.user.login == 'dependabot[bot]') &&
+            github.event.pull_request.base.sha || '' }}
+
+      - name: Pack all Node compatibility artifacts
+        run: >-
+          node ops/scripts/package-node-compatibility.js pack
+          --output "${{ runner.temp }}/package-node-artifacts"
+
+      - name: Archive built browser IIFEs
+        run: >-
+          tar --create --gzip
+          --file "${{ runner.temp }}/browser-iifes.tar.gz"
+          packages/*/dist/*.umd.js
+
+      - name: Upload built browser IIFEs
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        with:
+          name: ci-browser-iifes
+          path: ${{ runner.temp }}/browser-iifes.tar.gz
+          compression-level: 0
+          if-no-files-found: error
+          overwrite: true
+          retention-days: 1
+
+      - name: Upload all Node compatibility artifacts
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        with:
+          name: ci-package-node-artifacts
+          path: ${{ runner.temp }}/package-node-artifacts/
+          compression-level: 0
+          if-no-files-found: error
+          overwrite: true
+          retention-days: 1
+
+  package-node-compatibility:
+    name: All packages / Node ${{ matrix.node-major }}
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.validate.outputs.package_node_matrix) }}
+    steps:
+      - name: Check out the exact revision
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up package runtime
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Report the isolated runtime
+        run: |
+          node --version
+          npm --version
+
+      - name: Download package compatibility artifacts
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        with:
+          name: ci-package-node-artifacts
+          path: ${{ runner.temp }}/package-node-artifacts
+
+      - name: Install, import, smoke-test and unit-test every eligible package
+        run: >-
+          node ops/scripts/package-node-compatibility.js verify
+          --artifacts "${{ runner.temp }}/package-node-artifacts"
+          --node-major "${{ matrix.node-major }}"
+          --unit-concurrency 4
+
+  browser-iife-compatibility:
+    name: All browser IIFEs / Chromium 58
+    needs: validate
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out the exact revision
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up the repository Node runtime
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version-file: .node-version
+          package-manager-cache: false
+
+      - name: Download built browser IIFEs
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        with:
+          name: ci-browser-iifes
+          path: ${{ runner.temp }}/browser-iifes
+
+      - name: Restore built browser IIFEs
+        run: >-
+          tar --extract --gzip
+          --file "${{ runner.temp }}/browser-iifes/browser-iifes.tar.gz"
+
+      - name: Set up the minimum IIFE browser
+        id: browser
+        uses: ./.github/actions/setup-iife-browser
+
+      - name: Load and smoke-test every IIFE in Chromium 58
+        run: >-
+          xvfb-run --auto-servernum
+          --server-args="-screen 0 1280x720x24 -nolisten tcp"
+          node ops/scripts/verify-browser-iifes.js
+          --browser "${{ steps.browser.outputs.chrome-path }}"
+
+  windows-smoke:
+    name: Build scripts, packed CLIs and codsen-glob / Windows
+    needs: validate
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the exact revision
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up the pinned root toolchain
+        uses: ./.github/actions/setup-node
+
+      - name: Install build dependencies
+        run: npm ci
+
+      - name: Smoke-test the generated production build script
+        run: npm run build --workspace=ast-contains-only-empty-space
+
+      - name: Smoke-test the generated development build script
+        run: npm run dev --workspace=ast-contains-only-empty-space
+
+      # every package's examples task routes through one runner, and its
+      # fixtures live in nested paths containing spaces
+      - name: Smoke-test the examples runner
+        run: npm run test:examples-runner
+
+      - name: Download package compatibility artifacts
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        with:
+          name: ci-package-node-artifacts
+          path: ${{ runner.temp }}/package-node-artifacts
+
+      - name: Smoke-test packed CLIs and codsen-glob
+        run: >-
+          node ops/scripts/package-node-compatibility.js smoke
+          --artifacts "${{ runner.temp }}/package-node-artifacts"

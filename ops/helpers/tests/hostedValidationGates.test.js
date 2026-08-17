@@ -10,6 +10,12 @@ const repositoryRoot = path.resolve(
   "../../..",
 );
 
+// npm pins a workflow filename per trusted publisher and every package is
+// registered against `ci.yml`, so the publishing lane owns that filename and
+// the pull-request lane is `verify.yml`
+const checksWorkflow = ".github/workflows/verify.yml";
+const releaseWorkflow = ".github/workflows/ci.yml";
+
 const sharedAction = ".github/actions/verify-repository/action.yml";
 const sharedActionUse = "uses: ./.github/actions/verify-repository";
 const gateCommand = "npm run test:ops-helpers";
@@ -77,8 +83,8 @@ test("03 - the shared action defines every required gate once", () => {
 });
 
 test("04 - both hosted lanes validate through the shared action alone", () => {
-  const ci = readRepositoryFile(".github/workflows/ci.yml");
-  const release = readRepositoryFile(".github/workflows/release.yml");
+  const ci = readRepositoryFile(checksWorkflow);
+  const release = readRepositoryFile(releaseWorkflow);
 
   equal(occurrences(ci, sharedActionUse), 1, "04.01");
   equal(occurrences(release, sharedActionUse), 1, "04.02");
@@ -98,7 +104,7 @@ test("04 - both hosted lanes validate through the shared action alone", () => {
 test("05 - the Windows lane smokes the examples runner", () => {
   const manifest = JSON.parse(readRepositoryFile("package.json"));
   const windows = jobSection(
-    readRepositoryFile(".github/workflows/ci.yml"),
+    readRepositoryFile(checksWorkflow),
     "windows-smoke",
   );
 
@@ -116,7 +122,7 @@ test("05 - the Windows lane smokes the examples runner", () => {
 });
 
 test("06 - the release pack job validates before packing", () => {
-  const workflow = readRepositoryFile(".github/workflows/release.yml");
+  const workflow = readRepositoryFile(releaseWorkflow);
   const verify = workflow.indexOf(sharedActionUse);
 
   ok(verify > -1, "06.01");

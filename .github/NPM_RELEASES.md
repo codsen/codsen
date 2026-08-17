@@ -5,8 +5,14 @@ OIDC-authenticated publish of the exact commit that passed CI. Publishing does
 not use a long-lived npm token.
 
 The only supported production path is **Prepare npm release** → reviewed
-release PR → protected `release.yml`. Workspace manifests intentionally expose
+release PR → protected `ci.yml`. Workspace manifests intentionally expose
 no local or emergency publish alias.
+
+`ci.yml` is the publishing lane and `verify.yml` is the pull-request lane. The
+names read backwards on purpose: npm pins one workflow filename per trusted
+publisher, every package in this repository is registered against `ci.yml`, and
+renaming the publishing workflow breaks OIDC publishing for all of them at once.
+Re-registering instead would mean editing every package by hand on npmjs.com.
 
 ## One-time setup
 
@@ -19,8 +25,8 @@ no local or emergency publish alias.
 3. In **Settings → Actions → General → Workflow permissions**, enable
    **Allow GitHub Actions to create and approve pull requests**. The preparation
    workflow needs this permission to open its release PR.
-4. Protect `main` (or add an equivalent ruleset), require the CI workflow, and
-   require release branches to be up to date before merging. Do not use GitHub's
+4. Protect `main` (or add an equivalent ruleset), require the `verify.yml`
+   checks, and require release branches to be up to date before merging. Do not use GitHub's
    **Update branch** button on a generated release PR; regenerate it instead.
 
 ### npm
@@ -30,7 +36,7 @@ in this repository, including `@codsen/data`. Use these exact values:
 
 - Organization or user: `codsen`
 - Repository: `codsen`
-- Workflow filename: `release.yml`
+- Workflow filename: `ci.yml`
 - Environment: `npm-production`
 
 Repeat this setup whenever a new package is added. Do not create an `NPM_TOKEN`
@@ -58,7 +64,7 @@ credentials through GitHub OIDC and the trusted-publisher configuration.
    advances or the proposal is edited after generation, close it and run
    **Prepare npm release** again from the new `main` instead of updating or
    merging the stale proposal.
-4. Merging the release plan starts `release.yml`. Its unprivileged job repeats
+4. Merging the release plan starts `ci.yml`. Its unprivileged job repeats
    the exact-commit build and verification before creating the tarballs.
    Approve the protected `npm-production` deployment when ready. The workflow
    publishes only registry-pending versions, verifies them on npm, and then
