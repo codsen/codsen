@@ -2229,7 +2229,12 @@ function crush(str: string, opts?: Partial<Opts>): Res {
 
       // catch Jinja/Nunjucks two opening curlies and jump to the closing ones if latter exists
       // ███████████████████████████████████████
-      if (withinStyleTag && str[i] === "{" && str[i + 1] === "{") {
+      if (
+        !doNothing &&
+        withinStyleTag &&
+        str[i] === "{" &&
+        str[i + 1] === "{"
+      ) {
         // search from past the opening curlies, the way the </pre>, </code> and
         // ]]> handlers above do. Searching from zero finds the first `}}` in the
         // whole string, which for every expression after the first is already
@@ -2238,7 +2243,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         let locationOfClosingCurlies = str.indexOf("}}", i + 2);
         if (locationOfClosingCurlies !== -1) {
           doNothing = locationOfClosingCurlies + 2;
-          DEV && console.log(`2241 SET doNothing = ${doNothing}`);
+          DEV && console.log(`2246 SET doNothing = ${doNothing}`);
         }
       }
 
@@ -2246,18 +2251,18 @@ function crush(str: string, opts?: Partial<Opts>): Res {
       // ███████████████████████████████████████
       DEV &&
         console.log(
-          `2249     \u001b[${90}m${`██ ██ ██ ██ ██ END ██ ██ ██ ██ ██`}\u001b[${39}m`,
+          `2254     \u001b[${90}m${`██ ██ ██ ██ ██ END ██ ██ ██ ██ ██`}\u001b[${39}m`,
         );
       DEV &&
         console.log(
-          `2253 ${`\u001b[${35}m${`cpl`}\u001b[${39}m`} = ${`\u001b[${35}m${cpl}\u001b[${39}m`};`,
+          `2258 ${`\u001b[${35}m${`cpl`}\u001b[${39}m`} = ${`\u001b[${35}m${cpl}\u001b[${39}m`};`,
         );
 
       let logDoNothing = true;
 
       DEV &&
         console.log(
-          `2260 ${`\u001b[${36}m${`countCharactersPerLine`}\u001b[${39}m`} = ${JSON.stringify(
+          `2265 ${`\u001b[${36}m${`countCharactersPerLine`}\u001b[${39}m`} = ${JSON.stringify(
             countCharactersPerLine,
             null,
             0,
@@ -2287,7 +2292,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
     }
     DEV &&
       console.log(
-        `2290 AFTER THE LOOP, finalIndexesToDelete.current() = ${JSON.stringify(
+        `2295 AFTER THE LOOP, finalIndexesToDelete.current() = ${JSON.stringify(
           finalIndexesToDelete.current(),
           null,
           4,
@@ -2305,7 +2310,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
           leavePercForLastStage;
       DEV &&
         console.log(
-          `2308 ${`\u001b[${33}m${`startingPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
+          `2313 ${`\u001b[${33}m${`startingPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
             startingPercentageDone,
             null,
             4,
@@ -2331,7 +2336,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
 
       DEV &&
         console.log(
-          `2334 returning ${`\u001b[${33}m${`res`}\u001b[${39}m`} =\n\n${JSON.stringify(
+          `2339 returning ${`\u001b[${33}m${`res`}\u001b[${39}m`} =\n\n${JSON.stringify(
             res,
             null,
             4,
@@ -2339,7 +2344,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         );
       DEV &&
         console.log(
-          `\u001b[${90}m${`2342 \n      ██ FIN ██\n\n`}\u001b[${39}m`,
+          `\u001b[${90}m${`2347 \n      ██ FIN ██\n\n`}\u001b[${39}m`,
         );
       let resLen = res.length;
       return {
@@ -2361,18 +2366,18 @@ function crush(str: string, opts?: Partial<Opts>): Res {
   // ELSE - return the original input string
   DEV &&
     console.log(
-      `2364 returning original ${`\u001b[${33}m${`str`}\u001b[${39}m`} =\n\n${JSON.stringify(
+      `2369 returning original ${`\u001b[${33}m${`str`}\u001b[${39}m`} =\n\n${JSON.stringify(
         str,
         null,
         4,
       )}\n\n ${`\u001b[${90}m${`or:`}\u001b[${39}m`}\n\n${str}`,
     );
 
-  DEV && console.log("2371 ");
-  DEV && console.log("2372 ");
-  DEV && console.log(`\u001b[${90}m${`2373       ██ FIN ██\n\n`}\u001b[${39}m`);
-  DEV && console.log("2374 ");
-  DEV && console.log("2375 ");
+  DEV && console.log("2376 ");
+  DEV && console.log("2377 ");
+  DEV && console.log(`\u001b[${90}m${`2378       ██ FIN ██\n\n`}\u001b[${39}m`);
+  DEV && console.log("2379 ");
+  DEV && console.log("2380 ");
 
   return {
     log: {
