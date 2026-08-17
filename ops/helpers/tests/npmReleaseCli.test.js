@@ -74,6 +74,16 @@ function cli(root, ...arguments_) {
     npm_config_cache: path.join(path.dirname(root), "npm cache"),
   };
   delete environment.FORCE_COLOR;
+  // The fixture is a standalone repository, so the ambient workflow variables
+  // describe a foreign checkout; GITHUB_SHA in particular would pin the CLI to
+  // a commit this repository does not contain. Re-point it at the fixture HEAD
+  // so the pack head binding is exercised instead of merely bypassed.
+  for (const key of Object.keys(environment)) {
+    if (key.startsWith("GITHUB_")) {
+      delete environment[key];
+    }
+  }
+  environment.GITHUB_SHA = git(root, "rev-parse", "HEAD");
   return run(
     process.execPath,
     [path.join(root, "ops/scripts/npm-release.js"), ...arguments_],
