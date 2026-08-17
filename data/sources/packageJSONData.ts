@@ -102,6 +102,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -182,6 +183,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -269,6 +271,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -359,6 +362,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -447,6 +451,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -537,6 +542,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -627,6 +633,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -724,6 +731,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -817,6 +825,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -910,6 +919,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -1004,6 +1014,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -1098,6 +1109,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -1192,6 +1204,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -1286,6 +1299,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -1386,6 +1400,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -1486,6 +1501,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -1575,6 +1591,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -1662,6 +1679,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -1746,6 +1764,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -1818,6 +1837,7 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
+      "coverage": "c8 uvu test",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
@@ -1891,6 +1911,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -1976,6 +1997,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -2061,6 +2083,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -2148,6 +2171,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -2240,6 +2264,7 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
+      "coverage": "c8 uvu test",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
@@ -2326,6 +2351,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -2413,6 +2439,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -2491,6 +2518,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -2578,6 +2606,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -2682,6 +2711,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -2771,6 +2801,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -2851,6 +2882,7 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
+      "coverage": "c8 uvu test",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
@@ -2936,6 +2968,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -3030,6 +3063,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -3114,6 +3148,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -3199,6 +3234,7 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
+      "coverage": "c8 uvu test",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
@@ -3280,6 +3316,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -3369,6 +3406,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -3457,6 +3495,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -3542,6 +3581,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -3632,6 +3672,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -3728,6 +3769,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -3811,6 +3853,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -3900,6 +3943,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -3993,6 +4037,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -4076,6 +4121,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -4160,6 +4206,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -4243,6 +4290,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -4330,6 +4378,7 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
+      "coverage": "c8 uvu test",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
@@ -4413,6 +4462,7 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
+      "coverage": "c8 uvu test",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
@@ -4495,6 +4545,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -4592,6 +4643,7 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
+      "coverage": "c8 uvu test",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
@@ -4684,6 +4736,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -4778,6 +4831,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -4860,6 +4914,7 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
+      "coverage": "c8 uvu test",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
@@ -4949,6 +5004,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -5032,6 +5088,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -5123,6 +5180,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -5215,6 +5273,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -5301,6 +5360,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -5387,6 +5447,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -5474,6 +5535,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -5564,6 +5626,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -5647,6 +5710,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -5729,6 +5793,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -5814,6 +5879,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -5901,6 +5967,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -5984,6 +6051,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -6063,6 +6131,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -6142,6 +6211,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -6224,6 +6294,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -6305,6 +6376,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -6389,6 +6461,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -6475,6 +6548,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -6558,6 +6632,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -6645,6 +6720,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -6729,6 +6805,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -6812,6 +6889,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -6893,6 +6971,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -6968,6 +7047,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -7057,6 +7137,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -7149,6 +7230,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -7241,6 +7323,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -7319,6 +7402,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -7406,6 +7490,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -7492,6 +7577,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -7573,6 +7659,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -7660,6 +7747,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -7746,6 +7834,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -7829,6 +7918,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -7917,6 +8007,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -8004,6 +8095,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -8091,6 +8183,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -8178,6 +8271,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -8267,6 +8361,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -8347,6 +8442,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -8430,6 +8526,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -8511,6 +8608,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -8600,6 +8698,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -8688,6 +8787,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -8781,6 +8881,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -8874,6 +8975,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -8964,6 +9066,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -9057,6 +9160,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -9148,6 +9252,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -9232,6 +9337,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -9316,6 +9422,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -9407,6 +9514,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -9496,6 +9604,7 @@ export const packageJSONData = {
     },
     "scripts": {
       "build": "exit 0",
+      "coverage": "c8 uvu test",
       "dev": "exit 0",
       "devtest": "npm run test",
       "dts": "exit 0",
@@ -9585,6 +9694,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
@@ -9665,6 +9775,7 @@ export const packageJSONData = {
     "types": "types/index.d.ts",
     "scripts": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "devtest": "c8 npm run unit && npm run examples && npm run lint",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",

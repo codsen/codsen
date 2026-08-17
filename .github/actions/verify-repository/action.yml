@@ -3,7 +3,8 @@ name: Verify the repository
 
 description: >-
   Run every repository-wide validation gate shared by the CI validation job and
-  the release pack job
+  the release pack job, except the workflow linting that runs off the critical
+  path in its own job from ./.github/actions/lint-workflows
 
 inputs:
   node-engine-base-revision:
@@ -18,6 +19,13 @@ inputs:
       against the archived build instead.
     required: false
     default: "true"
+  cache:
+    description: >-
+      Restore the installed dependencies and the Turborepo cache, and write
+      them back on main. Set to "false" on the release lane, which builds every
+      artifact it publishes from a cold tree.
+    required: false
+    default: "true"
 
 outputs:
   package-node-matrix:
@@ -27,21 +35,6 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Lint GitHub Actions workflows
-      shell: bash
-      env:
-        ACTIONLINT_VERSION: 1.7.12
-        ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
-      run: |
-        archive="${RUNNER_TEMP}/actionlint.tar.gz"
-        curl --fail --location --silent --show-error \
-          --output "$archive" \
-          "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
-        echo "${ACTIONLINT_SHA256}  $archive" | sha256sum --check
-        tar --extract --gzip --file "$archive" --directory "$RUNNER_TEMP" actionlint
-        command -v shellcheck >/dev/null
-        "$RUNNER_TEMP/actionlint" -color -shellcheck shellcheck
-
     - name: Set up Node and npm
       uses: ./.github/actions/setup-node
 
@@ -58,9 +51,68 @@ runs:
       shell: bash
       run: node ops/scripts/audit-production-dependencies.js --check-policy
 
+    # one hash feeds both caches. The lockfile decides what `npm ci` writes into
+    # node_modules, and turbo hashes the same lockfile into every task, so a
+    # dependency bump has to invalidate the two together or not at all.
+    - name: Derive the cache keys
+      if: inputs.cache == 'true'
+      shell: bash
+      env:
+        INSTALL_HASH: ${{ hashFiles('package-lock.json', '.node-version') }}
+      run: |
+        printf 'CODSEN_NODE_MODULES_CACHE_KEY=node-modules-%s-%s\n' \
+          "$RUNNER_OS" "$INSTALL_HASH" >> "$GITHUB_ENV"
+        printf 'CODSEN_TURBO_CACHE_KEY=turbo-%s-%s\n' \
+          "$RUNNER_OS" "$INSTALL_HASH" >> "$GITHUB_ENV"
+
+    # keyed on the lockfile alone, because the lockfile is what decides the
+    # installed tree. A manifest edited without re-running `npm i` therefore
+    # skips the lockfile-sync check `npm ci` would have made; `lect:check` and
+    # the build catch that case instead.
+    - name: Restore installed dependencies
+      id: node_modules_cache
+      if: inputs.cache == 'true'
+      uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: |
+          node_modules
+          data/node_modules
+          packages/*/node_modules
+        key: ${{ env.CODSEN_NODE_MODULES_CACHE_KEY }}
+
     - name: Install dependencies
+      if: steps.node_modules_cache.outputs.cache-hit != 'true'
       shell: bash
       run: npm ci
+
+    # a cache written on main is readable from every pull request branch, but a
+    # cache written on a branch is not readable from main or its siblings. Main
+    # is therefore the only branch that populates either cache, which also
+    # keeps a pull request from seeding what a later run consumes.
+    - name: Save installed dependencies
+      if: >-
+        inputs.cache == 'true' &&
+        steps.node_modules_cache.outputs.cache-hit != 'true' &&
+        github.ref == 'refs/heads/main'
+      uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: |
+          node_modules
+          data/node_modules
+          packages/*/node_modules
+        key: ${{ env.CODSEN_NODE_MODULES_CACHE_KEY }}
+
+    # rolling cache: restore the newest entry recorded for this lockfile, then
+    # save back whatever this run ended with under its own revision. Restoring
+    # across lockfiles is pointless because the lockfile is part of every task
+    # hash, so there is no broader restore-key than this one.
+    - name: Restore the Turborepo cache
+      if: inputs.cache == 'true'
+      uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: .turbo/cache
+        key: ${{ env.CODSEN_TURBO_CACHE_KEY }}-${{ github.sha }}
+        restore-keys: ${{ env.CODSEN_TURBO_CACHE_KEY }}-
 
     - name: Lint maintained Markdown
       shell: bash
@@ -122,9 +174,12 @@ runs:
       shell: bash
       run: npm run ci:verify:coverage-policy
 
+    # the unit suites under c8 and nothing else: this job already type-checks,
+    # lints and runs the examples in dedicated steps, so `devtest` stays a local
+    # convenience alias rather than a third re-run of all three
     - name: Enforce package coverage on the root toolchain
       shell: bash
-      run: npm run test:quality
+      run: npm run test:coverage
 
     - name: Verify package Node compatibility policy
       shell: bash
@@ -146,3 +201,11 @@ runs:
       run: |
         git diff --exit-code
         test -z "$(git status --porcelain --untracked-files=all)"
+
+    # last, so it captures every task this action ran, whichever job called it
+    - name: Save the Turborepo cache
+      if: inputs.cache == 'true' && github.ref == 'refs/heads/main'
+      uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      with:
+        path: .turbo/cache
+        key: ${{ env.CODSEN_TURBO_CACHE_KEY }}-${{ github.sha }}

@@ -41,6 +41,7 @@
   },
   "scripts": {
     "build": "exit 0",
+    "coverage": "c8 uvu test",
     "dev": "exit 0",
     "devtest": "npm run test",
     "dts": "exit 0",

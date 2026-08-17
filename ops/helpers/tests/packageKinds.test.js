@@ -79,6 +79,7 @@ test("06 - projects kind-specific build profiles and preserves custom tasks", ()
       tasks: {
         build: { dependsOn: ["^build"], outputs: ["dist/**", "types/**"] },
         "external#build": { outputs: ["custom/**"] },
+        coverage: { outputs: [] },
         lint: { outputs: [] },
         typecheck: { outputs: [] },
         unit: { outputs: [] },
@@ -214,6 +215,37 @@ test("06 - projects kind-specific build profiles and preserves custom tasks", ()
     },
     "06.10",
   );
+  // coverage reruns the unit suite under c8, so it mirrors the unit inputs;
+  // the coverage-exempt generated-data workspace has no coverage script
+  equal(
+    result.tasks.coverage,
+    {
+      dependsOn: ["build"],
+      inputs: [
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/common.js",
+        "$TURBO_ROOT$/ops/helpers/shallow-compare.js",
+      ],
+      outputs: [],
+    },
+    "06.11",
+  );
+  equal(
+    result.tasks["cli#coverage"],
+    {
+      dependsOn: ["build"],
+      inputs: [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js",
+      ],
+      outputs: [],
+    },
+    "06.12",
+  );
+  equal(Object.hasOwn(result.tasks, "@example/data#coverage"), false, "06.13");
 });
 
 test("07 - removes former generated profiles after kind migrations", () => {

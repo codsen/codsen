@@ -29,6 +29,7 @@ function packageManifest(name, dependencies = {}) {
       private: true,
       scripts: {
         build: 'node -e ""',
+        coverage: 'node -e ""',
         typecheck: 'node -e ""',
         unit: 'node -e ""',
       },
@@ -77,6 +78,7 @@ test("01 - task hashes include only the files each task consumes", () => {
       {
         tasks: {
           build: { outputs: [] },
+          coverage: { outputs: [] },
           typecheck: { outputs: [] },
           unit: { outputs: [] },
         },
@@ -205,18 +207,35 @@ test("01 - task hashes include only the files each task consumes", () => {
       "01.06",
     );
 
+    // coverage is the unit suite under c8, so it tracks the same files
+    const coverageHash = taskHash(fixture, "library", "coverage");
+    write(fixture, "packages/library/README.md", "third doc change\n");
+    equal(taskHash(fixture, "library", "coverage"), coverageHash, "01.07");
+    write(fixture, "packages/library/test/basic.js", "test change\n");
+    equal(
+      taskHash(fixture, "library", "coverage") === coverageHash,
+      false,
+      "01.08",
+    );
+
     const cliUnitHash = taskHash(fixture, "cli", "unit");
+    const cliCoverageHash = taskHash(fixture, "cli", "coverage");
     write(fixture, "packages/cli/cli.js", "cli source change\n");
-    equal(taskHash(fixture, "cli", "unit") === cliUnitHash, false, "01.07");
+    equal(taskHash(fixture, "cli", "unit") === cliUnitHash, false, "01.09");
+    equal(
+      taskHash(fixture, "cli", "coverage") === cliCoverageHash,
+      false,
+      "01.10",
+    );
 
     const dataBuildHash = taskHash(fixture, "@example/data", "build");
     write(fixture, "packages/data/README.md", "data docs change\n");
-    equal(taskHash(fixture, "@example/data", "build"), dataBuildHash, "01.08");
+    equal(taskHash(fixture, "@example/data", "build"), dataBuildHash, "01.11");
     write(fixture, "packages/data/sources/generated.ts", "data change\n");
     equal(
       taskHash(fixture, "@example/data", "build") === dataBuildHash,
       false,
-      "01.09",
+      "01.12",
     );
   } finally {
     rmSync(fixture, { force: true, recursive: true });

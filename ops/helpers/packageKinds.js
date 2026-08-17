@@ -120,6 +120,11 @@ const GENERATED_DATA_UNIT_PROFILE = Object.freeze({
   outputs: [],
 });
 
+// coverage is the unit suite run under c8, so each kind reads exactly the files
+// its unit task reads; the c8 thresholds themselves live in package.json
+const TYPESCRIPT_LIBRARY_COVERAGE_PROFILE = TYPESCRIPT_LIBRARY_UNIT_PROFILE;
+const CLI_COVERAGE_PROFILE = CLI_UNIT_PROFILE;
+
 const GENERATED_TASK_PROFILES = Object.freeze([
   CLI_BUILD_PROFILE,
   GENERATED_DATA_BUILD_PROFILE,
@@ -132,6 +137,7 @@ const GENERATED_TASK_PROFILES = Object.freeze([
 
 const GENERIC_TASK_PROFILES = Object.freeze({
   build: TYPESCRIPT_LIBRARY_BUILD_PROFILE,
+  coverage: TYPESCRIPT_LIBRARY_COVERAGE_PROFILE,
   typecheck: TYPESCRIPT_LIBRARY_TYPECHECK_PROFILE,
   unit: TYPESCRIPT_LIBRARY_UNIT_PROFILE,
 });
@@ -330,14 +336,18 @@ function turboConfigForPackageKinds(turboConfig, registry) {
 
   const overridesAfterTask = new Map([
     ["build", {}],
+    ["coverage", {}],
     ["typecheck", {}],
     ["unit", {}],
   ]);
   for (const name of resolver.namesFor(PACKAGE_KINDS.CLI)) {
     overridesAfterTask.get("build")[`${name}#build`] =
       structuredClone(CLI_BUILD_PROFILE);
+    overridesAfterTask.get("coverage")[`${name}#coverage`] =
+      structuredClone(CLI_COVERAGE_PROFILE);
     overridesAfterTask.get("unit")[`${name}#unit`] =
       structuredClone(CLI_UNIT_PROFILE);
+    declaredGeneratedTaskNames.add(`${name}#coverage`);
     declaredGeneratedTaskNames.add(`${name}#unit`);
   }
   for (const name of resolver.namesFor(PACKAGE_KINDS.GENERATED_DATA)) {

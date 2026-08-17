@@ -19,6 +19,22 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # its own job so the actionlint download and shellcheck run never sit in
+  # front of the pack; `publish` needs it, so it still gates the release
+  lint-workflows:
+    name: Lint workflows
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the exact release revision
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Lint GitHub Actions workflows
+        uses: ./.github/actions/lint-workflows
+
   pack:
     name: Verify and pack the exact release
     runs-on: ubuntu-latest
@@ -39,12 +55,16 @@ jobs:
 
       # the same shared action CI runs, so the publish path can never enforce
       # less than the pull-request path; the tests job runs the examples
-      # against the archived build instead of repeating them here
+      # against the archived build instead of repeating them here, and the
+      # workflow lint is its own job that `publish` waits on
       - name: Verify the repository
         id: verify
         uses: ./.github/actions/verify-repository
         with:
           examples: "false"
+          # nothing published to npm comes out of a cache. This job has a
+          # 90-minute budget and no deadline, so it installs and builds cold
+          cache: "false"
 
       - name: Archive built test inputs
         run: >-
@@ -231,7 +251,12 @@ jobs:
 
   publish:
     name: Publish to npm
-    needs: [pack, tests, package-node-compatibility, browser-iife-compatibility]
+    needs:
+      - lint-workflows
+      - pack
+      - tests
+      - package-node-compatibility
+      - browser-iife-compatibility
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment: npm-production

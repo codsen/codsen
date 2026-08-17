@@ -1,4 +1,5 @@
 {
+  "concurrency": "100%",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -218,6 +219,106 @@
       "inputs": ["package.json"],
       "outputs": []
     },
+    "coverage": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/common.js",
+        "$TURBO_ROOT$/ops/helpers/shallow-compare.js"
+      ],
+      "outputs": []
+    },
+    "codsen#coverage": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "csv-sort-cli#coverage": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "email-all-chars-within-ascii-cli#coverage": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "generate-atomic-css-cli#coverage": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "js-row-num-cli#coverage": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "json-comb#coverage": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "json-sort-cli#coverage": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "lerna-clean-changelogs-cli#coverage": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
+    "update-versions#coverage": {
+      "dependsOn": ["build"],
+      "inputs": [
+        "*.js",
+        "package.json",
+        "test/**",
+        "$TURBO_ROOT$/ops/helpers/spawn.js"
+      ],
+      "outputs": []
+    },
     "dev": {
       "outputs": [],
       "cache": false
@@ -232,8 +333,19 @@
       "cache": false
     },
     "lect:check": {
-      "outputs": [],
-      "cache": false
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/biome.json",
+        "$TURBO_ROOT$/data/sources/esmBump.ts",
+        "$TURBO_ROOT$/ops/biome/**",
+        "$TURBO_ROOT$/ops/coverage-policy.json",
+        "$TURBO_ROOT$/ops/helpers/*.js",
+        "$TURBO_ROOT$/ops/lect/**",
+        "$TURBO_ROOT$/ops/package-kinds.json",
+        "$TURBO_ROOT$/package-lock.json",
+        "$TURBO_ROOT$/package.json"
+      ],
+      "outputs": []
     },
     "prettier:format": {
       "outputs": [],
@@ -246,8 +358,12 @@
     },
     "examples": {
       "dependsOn": ["build"],
-      "outputs": [],
-      "cache": false
+      "inputs": [
+        "examples/**",
+        "package.json",
+        "$TURBO_ROOT$/ops/scripts/run-examples.js"
+      ],
+      "outputs": []
     },
     "prep": {
       "dependsOn": ["unit", "examples", "lint"]

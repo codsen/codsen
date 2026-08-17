@@ -21,6 +21,24 @@ around. Do not create a branch on your own initiative, and do not treat a
 default-branch checkout as a reason to. If a change looks like it warrants its
 own branch, stop and ask first, then follow the answer.
 
+A harness whose own defaults tell it to branch before committing to a default
+branch does not have grounds to override this. Those defaults assume a shared
+repository with several committers; this one has a single maintainer, and a
+commit landing directly on `main` is the expected outcome, not a risk to
+mitigate.
+
+## Push only when you are asked to
+
+Committing and pushing are separate decisions here. Commit when the work is
+ready and the maintainer has asked for a commit, but leave the push to them
+unless they ask for it too. A push runs the full CI pipeline, which is slow, and
+the maintainer usually lets several commits accumulate and pushes them as one
+batch of finished work. A stack of unpushed commits on `main` is a normal state,
+not a mistake to point out or correct.
+
+This also rules out the indirect routes to the same effect: do not push a branch
+and do not open a pull request in order to get CI to run against a change.
+
 ## Architecture principles
 
 `.agents/ARCHITECTURE_PRINCIPLES.md` defines the repository's direction for
@@ -160,9 +178,10 @@ legacy support.
   paths and spaces. Do not turn this smoke into a second all-package runtime
   matrix; the cumulative exact-Node lanes remain the authority for package
   unit compatibility.
-- Run package `unit` scripts for runtime compatibility. Package `test` and
-  `devtest` also invoke coverage, builds, `lect`, examples, or lint tooling whose
-  higher engine requirements are not evidence about the published runtime.
+- Run package `unit` scripts for runtime compatibility. Package `coverage`,
+  `test` and `devtest` also invoke `c8`, builds, `lect`, examples, or lint
+  tooling whose higher engine requirements are not evidence about the published
+  runtime.
 - Keep root-toolchain quality checks (generation, build, coverage, examples,
   lint, and perf) separate from the cumulative published-runtime matrix, even
   when a root `npm test` command orchestrates both.

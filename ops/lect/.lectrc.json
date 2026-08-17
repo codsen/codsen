@@ -179,6 +179,7 @@
   "scripts": {
     "cli": {
       "build": "exit 0",
+      "coverage": "c8 uvu test",
       "dev": "exit 0",
       "dts": "exit 0",
       "examples": "exit 0",
@@ -197,6 +198,7 @@
     },
     "rollup": {
       "build": "node ../../ops/scripts/esbuild.js && npm run dts",
+      "coverage": "c8 uvu test",
       "dev": "node ../../ops/scripts/esbuild.js --dev && npm run dts",
       "dts": "rollup -c && biome format --write --config-path=../../biome.json --vcs-enabled=false --use-editorconfig=false types/index.d.ts",
       "examples": "node '../../ops/scripts/run-examples.js'",

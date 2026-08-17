@@ -17,29 +17,55 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # its own job so the actionlint download and shellcheck run never sit in
+  # front of the build; nothing needs it, so nothing waits on it either
+  lint-workflows:
+    name: Lint workflows
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the exact revision
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          # nothing in this job reads git history
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Lint GitHub Actions workflows
+        uses: ./.github/actions/lint-workflows
+
   validate:
     name: Build and validate
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      # the engine guard is the only gate in this lane that reads git history,
+      # and it only has a base revision to read on automated dependency pull
+      # requests. Derived once here so the guard and the clone depth below can
+      # never disagree about when history is needed.
+      DEPENDABOT_BASE_SHA: >-
+        ${{ (github.event_name == 'pull_request' &&
+        github.event.pull_request.user.login == 'dependabot[bot]') &&
+        github.event.pull_request.base.sha || '' }}
     outputs:
       package_node_matrix: ${{ steps.verify.outputs.package-node-matrix }}
     steps:
       - name: Check out the exact revision
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          fetch-depth: 0
+          # the guard runs `git merge-base --is-ancestor`, which needs the whole
+          # chain back to the base commit. Every other gate reads the working
+          # tree, so they get a single commit instead of 9.5k
+          fetch-depth: ${{ env.DEPENDABOT_BASE_SHA && '0' || '1' }}
           persist-credentials: false
 
-      # every gate lives in the shared action so this job and the release pack
-      # job cannot drift apart
+      # every remaining gate lives in the shared action so this job and the
+      # release pack job cannot drift apart
       - name: Verify the repository
         id: verify
         uses: ./.github/actions/verify-repository
         with:
-          node-engine-base-revision: >-
-            ${{ (github.event_name == 'pull_request' &&
-            github.event.pull_request.user.login == 'dependabot[bot]') &&
-            github.event.pull_request.base.sha || '' }}
+          node-engine-base-revision: ${{ env.DEPENDABOT_BASE_SHA }}
 
       - name: Pack all Node compatibility artifacts
         run: >-
@@ -84,7 +110,8 @@ jobs:
       - name: Check out the exact revision
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          fetch-depth: 0
+          # nothing in this job reads git history
+          fetch-depth: 1
           persist-credentials: false
 
       - name: Set up package runtime
@@ -119,7 +146,8 @@ jobs:
       - name: Check out the exact revision
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          fetch-depth: 0
+          # nothing in this job reads git history
+          fetch-depth: 1
           persist-credentials: false
 
       - name: Set up the pinned root toolchain
@@ -162,7 +190,8 @@ jobs:
       - name: Check out the exact revision
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          fetch-depth: 0
+          # nothing in this job reads git history
+          fetch-depth: 1
           persist-credentials: false
 
       - name: Set up the pinned root toolchain

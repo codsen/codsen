@@ -28,7 +28,7 @@ const requiredGates = [
   "npm run ci:verify:debug-log-production-cost",
   "npm run ci:verify:test-numbering",
   "npm run ci:verify:coverage-policy",
-  "npm run test:quality",
+  "npm run test:coverage",
   "npm run ci:verify:node-compatibility",
   "npm run ci:verify:browser-iifes",
   "npm run ci:verify:data",
