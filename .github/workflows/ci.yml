@@ -79,7 +79,7 @@ jobs:
           --output "${{ runner.temp }}/package-node-artifacts"
 
       - name: Upload built test inputs
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: release-built-packages
           path: ${{ runner.temp }}/built-packages.tar.gz
@@ -89,7 +89,7 @@ jobs:
           retention-days: 1
 
       - name: Upload immutable npm artifacts
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: npm-release-artifacts
           path: npm-release-artifacts/
@@ -99,7 +99,7 @@ jobs:
           retention-days: 30
 
       - name: Upload all Node compatibility artifacts
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: release-package-node-artifacts
           path: ${{ runner.temp }}/package-node-artifacts/
