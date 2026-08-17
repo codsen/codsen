@@ -197,11 +197,14 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Set up the repository Node runtime
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version-file: .node-version
-          package-manager-cache: false
+      - name: Set up the pinned root toolchain
+        uses: ./.github/actions/setup-node
+
+      # the static half of the browser gate parses every bundle with TypeScript,
+      # so this job needs the root dependencies even though the IIFEs it loads
+      # are prebuilt
+      - name: Install audit dependencies
+        run: npm ci
 
       - name: Download built release inputs
         uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0

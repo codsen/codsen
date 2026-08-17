@@ -17,10 +17,22 @@ runs:
     - name: Read the browser policy
       id: policy
       shell: bash
+      # assign before writing: a command substitution inside an `echo` argument
+      # discards its exit code, so a script which cannot even load would write
+      # empty outputs and fail later as an unreadable curl error
       run: |
-        echo "archive_url=$(node ops/scripts/verify-browser-iifes.js --print-chromium-archive-url)" >> "$GITHUB_OUTPUT"
-        echo "archive_sha256=$(node ops/scripts/verify-browser-iifes.js --print-chromium-archive-sha256)" >> "$GITHUB_OUTPUT"
-        echo "version=$(node ops/scripts/verify-browser-iifes.js --print-chromium-version)" >> "$GITHUB_OUTPUT"
+        archive_url="$(node ops/scripts/verify-browser-iifes.js --print-chromium-archive-url)"
+        archive_sha256="$(node ops/scripts/verify-browser-iifes.js --print-chromium-archive-sha256)"
+        version="$(node ops/scripts/verify-browser-iifes.js --print-chromium-version)"
+        if [ -z "$archive_url" ] || [ -z "$archive_sha256" ] || [ -z "$version" ]; then
+          echo "The browser policy printed an empty value" >&2
+          exit 1
+        fi
+        {
+          echo "archive_url=$archive_url"
+          echo "archive_sha256=$archive_sha256"
+          echo "version=$version"
+        } >> "$GITHUB_OUTPUT"
 
     - name: Install Chromium 58 runtime libraries
       shell: bash
