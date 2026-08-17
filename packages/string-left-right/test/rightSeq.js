@@ -193,4 +193,22 @@ test("12 - hungry and optional-hungry flags", () => {
   );
 });
 
+test("13 - does not crash when the sequence runs past the end", () => {
+  // right() returns null once there is no solid character left, and the
+  // case-insensitive branch used to call .toLowerCase() on str[null]
+  equal(rightSeq("ab", 0, { i: true }, "b", "c"), null, "13.01");
+  equal(rightSeq("ab", 0, { i: false }, "b", "c"), null, "13.02");
+  // the same, reached through a hungry flag's lookahead
+  equal(
+    rightSeq("ab", 0, { i: true }, "b*"),
+    { gaps: [], leftmostChar: 1, rightmostChar: 1 },
+    "13.03",
+  );
+  equal(
+    rightSeq("ab", 0, { i: false }, "b*"),
+    { gaps: [], leftmostChar: 1, rightmostChar: 1 },
+    "13.04",
+  );
+});
+
 test.run();

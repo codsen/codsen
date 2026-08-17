@@ -609,4 +609,26 @@ test(`23 - matchRight()      opts.maxMismatches === 2, three mismatches`, () => 
   );
 });
 
+test("24 - matchRight()      function matcher with opts.i does not crash", () => {
+  // for a function matcher, whatToMatchVal.length is the function's arity, not
+  // a string length, so the compared-against index came out negative and the
+  // case-insensitive branch called .toLowerCase() on undefined. Both branches
+  // now answer the same for the same input.
+  equal(
+    matchRight("abc", 0, () => "EOL", { i: true }),
+    false,
+    "24.01",
+  );
+  equal(
+    matchRight("abc", 0, () => "EOL", { i: false }),
+    false,
+    "24.02",
+  );
+  equal(
+    matchRight("abc", 0, () => "b", { i: true }),
+    false,
+    "24.03",
+  );
+});
+
 test.run();
