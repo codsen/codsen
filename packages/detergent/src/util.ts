@@ -437,14 +437,22 @@ function doConvertEntities(
     // split, check, encode conditionally
     return Array.from(inputString)
       .map((char) => {
+        // Array.from() splits by code point, so an astral character arrives
+        // here as a two-unit string and charCodeAt(0) reads only its high
+        // surrogate. Every high surrogate sits in [55296, 56319], inside the
+        // [55291, 63744] range below, so every such character was encoded no
+        // matter what the option said. codePointAt() reads the whole character,
+        // and the ranges already extend past 0xFFFF to cover them.
+        //
+        // Read once rather than up to three times per range, since this runs
+        // for every character of the input against ~250 ranges.
+        let code = char.codePointAt(0) as number;
         // Separately check lower character indexes because statistically they are
         // most likely to be encountered. That's letters, quotes brackets and so on.
         if (
-          char.charCodeAt(0) < 880 ||
+          code < 880 ||
           latinAndNonNonLatinRanges.some(
-            (rangeArr) =>
-              char.charCodeAt(0) > rangeArr[0] &&
-              char.charCodeAt(0) < rangeArr[1],
+            (rangeArr) => code > rangeArr[0] && code < rangeArr[1],
           )
         ) {
           return he.encode(char, {
