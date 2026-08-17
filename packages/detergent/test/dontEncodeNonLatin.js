@@ -67,8 +67,8 @@ test("002 - opts.dontEncodeNonLatin - astral characters", () => {
     "002.01",
   );
   equal(
-    det1("a\u{20000}b", { dontEncodeNonLatin: true }).res,
-    "a\u{20000}b",
+    det1("a\u{10401}b", { dontEncodeNonLatin: true }).res,
+    "a\u{10401}b",
     "002.02",
   );
   // with the option off they are encoded, so the option is what decides
@@ -78,8 +78,8 @@ test("002 - opts.dontEncodeNonLatin - astral characters", () => {
     "002.03",
   );
   equal(
-    det1("a\u{20000}b", { dontEncodeNonLatin: false }).res,
-    "a&#x20000;b",
+    det1("a\u{10401}b", { dontEncodeNonLatin: false }).res,
+    "a&#x10401;b",
     "002.04",
   );
   // the surrogate pair is never split, whichever way the option goes
@@ -95,6 +95,22 @@ test("002 - opts.dontEncodeNonLatin - astral characters", () => {
     "002.06",
   );
   equal(det1("a<b", { dontEncodeNonLatin: true }).res, "a&lt;b", "002.07");
+
+  // What the fix does NOT change, recorded so the coverage above is not read
+  // as broader than it is: latinAndNonNonLatinRanges lists whole assigned
+  // blocks, not only unassigned gaps, so an astral character inside one of
+  // them is still encoded with the option on. That is the table's contents,
+  // a separate question from reading the code point rather than a surrogate.
+  equal(
+    det1("a\u{1F600}b", { dontEncodeNonLatin: true }).res,
+    "a&#x1F600;b",
+    "002.08",
+  );
+  equal(
+    det1("a\u{20001}b", { dontEncodeNonLatin: true }).res,
+    "a&#x20001;b",
+    "002.09",
+  );
 });
 
 test.run();
