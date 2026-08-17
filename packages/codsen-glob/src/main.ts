@@ -793,6 +793,13 @@ async function walk(
           );
         }
       } else if (rootLstat.isSymbolicLink()) {
+        // `true` here is deliberate, not an oversight. followSymbolicLinks
+        // governs whether a symlink met as an entry during the walk is
+        // descended into, not whether the search root may be one: a pattern
+        // whose static prefix is a symlinked directory still has to resolve it
+        // to have anywhere to walk at all, which test 10.10 pins. The option is
+        // consulted below, in the branch where the root resolves to a file
+        // rather than a directory - that is what makes 10.05 return nothing.
         const classified = await classifySymlink(
           root.absolutePath,
           true,
@@ -1005,6 +1012,7 @@ function walkSync(
           );
         }
       } else if (rootLstat.isSymbolicLink()) {
+        // `true` is deliberate here too - see the async twin above
         const classified = classifySymlinkSync(
           root.absolutePath,
           true,
