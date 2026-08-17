@@ -1454,12 +1454,12 @@ function createCompiledMatchPattern(
     }
 
     if (wildcardFollows) {
-      // an even run always yields at least one literal backslash above, so the
-      // current segment is never empty here and a new one is always wanted
-      hasWildcard = true;
-      rawSegments.push([]);
-      lastWasWildcard = true;
-      index = runEnd + 1;
+      // Leave the `*` for the next iteration rather than opening a segment
+      // here: the top of the loop already knows how to fold a wildcard into the
+      // segment list, including collapsing a run of them. Duplicating that
+      // bookkeeping would mean two places decide what a `*` does.
+      lastWasWildcard = false;
+      index = runEnd;
       continue;
     }
 
