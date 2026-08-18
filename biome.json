@@ -10,6 +10,7 @@
     "ignoreUnknown": false,
     "includes": [
       "**",
+      "!!.github/npm-release-plan.json",
       "!!data/sources/allDTS.ts",
       "!!data/sources/changelogs.ts",
       "!!data/sources/dependencyStats.ts",
