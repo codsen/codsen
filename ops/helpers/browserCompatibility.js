@@ -1,3 +1,14 @@
+// The floor is one exact Chromium build, and the gate loads the IIFEs in that
+// build's content shell rather than in `chrome`. Both binaries are produced by
+// the same snapshot, so they carry the same Blink and the same V8, which is all
+// an IIFE can observe; the difference is the desktop shell around them. `chrome`
+// links GTK2 and re-exports its own bundled HarfBuzz (285 `hb_*` symbols), so
+// the moment it builds the GTK theme, the host's modern pango binds most of its
+// `hb_*` calls to that 2017 HarfBuzz while the handful of entry points added
+// later (`hb_ot_var_get_axis_infos` first among them) still resolve to the
+// host's, which then reads a face the old code allocated and segfaults before
+// the first page loads. The content shell links no GTK at all and calls pango
+// only to enumerate font families, so it never opens that seam.
 const IIFE_BROWSER_POLICY = Object.freeze({
   family: "Chromium",
   minimumMajor: 58,
@@ -5,9 +16,10 @@ const IIFE_BROWSER_POLICY = Object.freeze({
   snapshotRevision: "454475",
   snapshotVersion: "58.0.3029.0",
   snapshotArchiveSha256:
-    "c43892cbcf8d9d5402c3168aa6d14877f13597a6ed966b74f7837ac4031cadf4",
+    "cd4ca41be0d2614f8d7ae0b98be130e45cccaa3ec06069ae06d10b7a499015db",
   snapshotArchiveUrl:
-    "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/454475/chrome-linux.zip",
+    "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/454475/content-shell.zip",
+  snapshotExecutablePath: "content-shell/content_shell",
 });
 
 const UNSUPPORTED_IIFE_APIS = Object.freeze([

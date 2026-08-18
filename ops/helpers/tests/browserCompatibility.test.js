@@ -18,9 +18,10 @@ test("01 - declares one exact browser floor", () => {
       snapshotRevision: "454475",
       snapshotVersion: "58.0.3029.0",
       snapshotArchiveSha256:
-        "c43892cbcf8d9d5402c3168aa6d14877f13597a6ed966b74f7837ac4031cadf4",
+        "cd4ca41be0d2614f8d7ae0b98be130e45cccaa3ec06069ae06d10b7a499015db",
       snapshotArchiveUrl:
-        "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/454475/chrome-linux.zip",
+        "https://storage.googleapis.com/chromium-browser-snapshots/Linux_x64/454475/content-shell.zip",
+      snapshotExecutablePath: "content-shell/content_shell",
     },
     "01.01",
   );

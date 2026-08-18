@@ -1,4 +1,4 @@
-import { spawn, spawnSync } from "node:child_process";
+import { spawn } from "node:child_process";
 import { randomBytes } from "node:crypto";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { createServer } from "node:http";
@@ -28,6 +28,7 @@ function usage() {
     "       node ops/scripts/verify-browser-iifes.js --print-chromium-version",
     "       node ops/scripts/verify-browser-iifes.js --print-chromium-archive-url",
     "       node ops/scripts/verify-browser-iifes.js --print-chromium-archive-sha256",
+    "       node ops/scripts/verify-browser-iifes.js --print-chromium-executable-path",
   ].join("\n");
 }
 
@@ -45,6 +46,10 @@ function parseArguments(argv) {
     [
       "--print-chromium-archive-sha256",
       IIFE_BROWSER_POLICY.snapshotArchiveSha256,
+    ],
+    [
+      "--print-chromium-executable-path",
+      IIFE_BROWSER_POLICY.snapshotExecutablePath,
     ],
   ]);
   if (argv.length === 1 && printModes.has(argv[0])) {
@@ -394,6 +399,45 @@ function renderRootPage(bundles, token) {
       "?token=" + encodeURIComponent(token);
     document.body.appendChild(frame);
   }
+  function reportRuntime(done) {
+    // the archive is pinned by checksum, so this is not a second identity
+    // check; it is the floor itself, asserted against the engine which is about
+    // to run the bundles. Every entry below shipped after the floor, so a
+    // browser which has one is newer than the IIFEs promise to support and its
+    // pass would mean nothing
+    var newerThanFloor = [];
+    if (typeof globalThis !== "undefined") {
+      newerThanFloor.push("globalThis");
+    }
+    if (typeof Object.fromEntries === "function") {
+      newerThanFloor.push("Object.fromEntries");
+    }
+    if (typeof Array.prototype.flat === "function") {
+      newerThanFloor.push("Array.prototype.flat");
+    }
+    if (typeof String.prototype.matchAll === "function") {
+      newerThanFloor.push("String.prototype.matchAll");
+    }
+    if (typeof Promise.allSettled === "function") {
+      newerThanFloor.push("Promise.allSettled");
+    }
+    if (typeof Promise.prototype.finally === "function") {
+      newerThanFloor.push("Promise.prototype.finally");
+    }
+    var request = new XMLHttpRequest();
+    request.open("POST", "/runtime?token=" + encodeURIComponent(token), true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onreadystatechange = function () {
+      if (request.readyState === 4) {
+        done();
+      }
+    };
+    request.send(JSON.stringify({
+      token: token,
+      userAgent: navigator.userAgent,
+      newerThanFloor: newerThanFloor
+    }));
+  }
   window.addEventListener("message", function (event) {
     var result = event.data || {};
     if (event.origin !== location.protocol + "//" + location.host ||
@@ -412,7 +456,9 @@ function renderRootPage(bundles, token) {
     };
     request.send(JSON.stringify(result));
   });
-  window.addEventListener("DOMContentLoaded", loadNext);
+  window.addEventListener("DOMContentLoaded", function () {
+    reportRuntime(loadNext);
+  });
 })();
 </script>`;
 }
@@ -422,6 +468,7 @@ function startBrowserHarness(bundles, token) {
     bundles.map((bundle) => [bundle.directory, bundle]),
   );
   const results = new Map();
+  let runtimeReport;
   let resolveResults;
   let rejectResults;
   const resultsPromise = new Promise((resolve, reject) => {
@@ -431,7 +478,9 @@ function startBrowserHarness(bundles, token) {
   const timeout = setTimeout(() => {
     rejectResults(
       new Error(
-        `Timed out after ${results.size}/${bundles.length} Chromium IIFE results`,
+        `Timed out after ${results.size}/${bundles.length} Chromium IIFE results${
+          runtimeReport ? "" : " and no runtime report"
+        }`,
       ),
     );
   }, 60_000);
@@ -469,7 +518,14 @@ function startBrowserHarness(bundles, token) {
       }
       return;
     }
-    if (request.method === "POST" && url.pathname === "/result") {
+    // the page reports the engine it runs in once, then one result per bundle;
+    // both arrive as posted JSON, and the run is complete only once every one of
+    // them is in
+    if (
+      request.method === "POST" &&
+      (url.pathname === "/result" || url.pathname === "/runtime")
+    ) {
+      const isRuntimeReport = url.pathname === "/runtime";
       let body = "";
       request.setEncoding("utf8");
       request.on("data", (chunk) => {
@@ -480,19 +536,35 @@ function startBrowserHarness(bundles, token) {
       });
       request.on("end", () => {
         try {
-          const result = JSON.parse(body);
-          if (
-            result.token !== token ||
-            !bundleByName.has(result.packageName) ||
-            results.has(result.packageName)
+          const payload = JSON.parse(body);
+          if (payload.token !== token) {
+            throw new Error("Invalid browser payload");
+          }
+          if (isRuntimeReport) {
+            if (runtimeReport) {
+              throw new Error("Duplicate browser runtime report");
+            }
+            runtimeReport = {
+              newerThanFloor: Array.isArray(payload.newerThanFloor)
+                ? payload.newerThanFloor.map((name) => String(name))
+                : [],
+              userAgent: String(payload.userAgent ?? ""),
+            };
+          } else if (
+            !bundleByName.has(payload.packageName) ||
+            results.has(payload.packageName)
           ) {
             throw new Error("Invalid or duplicate browser result");
+          } else {
+            results.set(payload.packageName, payload);
           }
-          results.set(result.packageName, result);
           response.writeHead(204).end();
-          if (results.size === bundles.length) {
+          if (runtimeReport && results.size === bundles.length) {
             clearTimeout(timeout);
-            resolveResults([...results.values()]);
+            resolveResults({
+              results: [...results.values()],
+              runtime: runtimeReport,
+            });
           }
         } catch (error) {
           response.writeHead(400).end(String(error));
@@ -584,41 +656,30 @@ function waitForBrowserGroupExit(browser, milliseconds) {
   });
 }
 
+// The content shell has no `--version` handshake to check the binary with, and
+// it would not be worth much if it had: the shell reports a placeholder product
+// (`Chrome/99.77.34.5`) which has never tracked the build it ships in. What the
+// binary is comes from the checksum the setup action verifies against the pinned
+// archive; what it can do is asserted from inside the page, against the floor.
 async function verifyInPinnedBrowser(bundles, browserPath) {
-  const versionResult = spawnSync(browserPath, ["--version"], {
-    encoding: "utf8",
-  });
-  const reportedVersion = (versionResult.stdout || "").trim();
-  const versionDiagnostics = (versionResult.stderr || "").trim();
-  const expectedVersion = `${IIFE_BROWSER_POLICY.family} ${IIFE_BROWSER_POLICY.snapshotVersion}`;
-  if (versionResult.status !== 0 || reportedVersion !== expectedVersion) {
-    throw new Error(
-      `Expected ${expectedVersion}, got ${
-        reportedVersion || "no version on stdout"
-      }${versionDiagnostics ? `\nChromium stderr:\n${versionDiagnostics}` : ""}`,
-    );
-  }
-
   const token = randomBytes(24).toString("hex");
   const profileDirectory = mkdtempSync(
     path.join(tmpdir(), "codsen-browser-iifes-"),
   );
   const harness = await startBrowserHarness(bundles, token);
+  // only content-layer switches exist in this binary: the sandbox and GPU ones
+  // keep it alive on a headless runner, and `--data-path` is the shell's own
+  // spelling of a profile directory, so its state lands in the temporary
+  // directory this function removes. Chrome's app switches (`--user-data-dir`,
+  // `--no-first-run`, the `--disable-*` service ones) are not compiled in here
+  // and would be accepted and ignored, which reads as if they still applied
   const browser = spawn(
     browserPath,
     [
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--disable-gpu",
-      "--disable-dev-shm-usage",
-      "--disable-background-networking",
-      "--disable-component-update",
-      "--disable-default-apps",
-      "--disable-extensions",
-      "--disable-sync",
-      "--no-first-run",
-      "--no-default-browser-check",
-      `--user-data-dir=${profileDirectory}`,
+      `--data-path=${profileDirectory}`,
       `http://127.0.0.1:${harness.port}/?token=${token}`,
     ],
     { detached: true, stdio: ["ignore", "ignore", "pipe"] },
@@ -641,9 +702,9 @@ async function verifyInPinnedBrowser(bundles, browserPath) {
   let verificationResult;
   let verificationError;
   try {
-    let results;
+    let report;
     try {
-      results = await Promise.race([harness.resultsPromise, earlyExit]);
+      report = await Promise.race([harness.resultsPromise, earlyExit]);
     } catch (error) {
       throw new Error(
         `${error instanceof Error ? error.message : String(error)}${
@@ -652,7 +713,14 @@ async function verifyInPinnedBrowser(bundles, browserPath) {
         { cause: error },
       );
     }
-    const failures = results.filter(({ ok }) => !ok);
+    // a browser above the floor would pass everything below and prove nothing,
+    // so this is reported before the bundle failures it would explain
+    if (report.runtime.newerThanFloor.length) {
+      throw new Error(
+        `The browser is newer than ${IIFE_BROWSER_POLICY.family} ${IIFE_BROWSER_POLICY.minimumMajor}; it has ${report.runtime.newerThanFloor.join(", ")}`,
+      );
+    }
+    const failures = report.results.filter(({ ok }) => !ok);
     if (failures.length) {
       throw new Error(
         `Chromium IIFE failures:\n- ${failures
@@ -661,11 +729,11 @@ async function verifyInPinnedBrowser(bundles, browserPath) {
       );
     }
     verificationResult = {
-      assertionCount: results.reduce(
+      assertionCount: report.results.reduce(
         (total, result) => total + result.assertionCount,
         0,
       ),
-      reportedVersion,
+      userAgent: report.runtime.userAgent,
     };
   } catch (error) {
     verificationError = error;
@@ -735,8 +803,11 @@ async function main() {
 
   if (options.browserPath) {
     const browser = await verifyInPinnedBrowser(bundles, options.browserPath);
+    // the version is the pinned build's, not the shell's self-report: the user
+    // agent is printed as it came back so the log shows the placeholder product
+    // rather than leaving it to surprise whoever reads it
     console.log(
-      `${browser.reportedVersion} passed: ${bundles.length} IIFEs and ${browser.assertionCount} API assertions.`,
+      `${IIFE_BROWSER_POLICY.family} ${IIFE_BROWSER_POLICY.snapshotVersion} content shell passed: ${bundles.length} IIFEs and ${browser.assertionCount} API assertions (${browser.userAgent}).`,
     );
   }
 }

@@ -247,7 +247,7 @@ jobs:
           xvfb-run --auto-servernum
           --server-args="-screen 0 1280x720x24 -nolisten tcp"
           node ops/scripts/verify-browser-iifes.js
-          --browser "${{ steps.browser.outputs.chrome-path }}"
+          --browser "${{ steps.browser.outputs.browser-path }}"
 
   publish:
     name: Publish to npm

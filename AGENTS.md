@@ -230,8 +230,14 @@ contract.
 - Build all packages before running `npm run ci:verify:browser-iifes`. The
   verifier scans the emitted bundles, loads all of them in isolated legacy API
   realms, checks every documented global, and runs representative API smokes.
-  Hosted CI repeats the gate in the exact SHA-verified Chromium 58 binary under
-  Xvfb.
+  Hosted CI repeats the gate under Xvfb in the SHA-verified content shell from
+  the pinned Chromium 58 snapshot. Keep it on the shell: `chrome` from that same
+  snapshot re-exports its bundled 2017 HarfBuzz, so a modern host pango binds
+  part of its `hb_*` calls there and the rest to its own, and the browser
+  segfaults building the GTK theme before the first page loads. The shell links
+  no GTK. Since it reports a placeholder version, the checksum identifies the
+  build and the harness asserts from inside the page that nothing newer than the
+  floor is present.
 - If the floor must change, audit every `exports.script` package and its bundled
   production dependency closure. Update the central policy, architecture
   principle, local emulation, pinned browser job, and validation evidence in
