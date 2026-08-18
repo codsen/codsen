@@ -1,6 +1,6 @@
 {
   "name": "string-process-comma-separated",
-  "version": "4.3.0",
+  "version": "4.2.3",
   "description": "Extracts chunks from possibly comma or whatever-separated string",
   "keywords": [
     "characters",
@@ -66,7 +66,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.8.0"
+    "codsen-utils": "^1.7.3"
   },
   "engines": {
     "node": ">=18.20.8"

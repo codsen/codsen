@@ -1,6 +1,6 @@
 {
   "name": "is-relative-uri",
-  "version": "5.2.0",
+  "version": "5.1.3",
   "description": "Is given string a relative URI?",
   "keywords": [
     "href",

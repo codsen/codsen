@@ -1,6 +1,6 @@
 {
   "name": "detect-is-it-html-or-xhtml",
-  "version": "6.2.0",
+  "version": "6.1.3",
   "description": "Does the string resemble an HTML or XHTML (or neither)?",
   "keywords": [
     "check",
@@ -70,7 +70,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.8.0"
+    "codsen-utils": "^1.7.3"
   },
   "engines": {
     "node": ">=18.20.8"

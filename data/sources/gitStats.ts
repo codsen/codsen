@@ -1,3 +1,3 @@
 export const gitStats = {
-  "commitTotal": "9549"
+  "commitTotal": "9478"
 }

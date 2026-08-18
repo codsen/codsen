@@ -3,18 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 4.2.0 (2026-08-18)
-
-### Bug Fixes
-
-- normalise short CLI flags ([b6a2790](https://github.com/codsen/codsen/commit/b6a2790506c1fc8d609475b0d384fb2a3d39e6ca))
-- retire direct publish aliases ([f98e31e](https://github.com/codsen/codsen/commit/f98e31eb89bc185471225664e610b55f34fbf648))
-
-### Features
-
-- add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
-- refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
-
 ## 4.0.0 (2024-01-05)
 
 ### Features

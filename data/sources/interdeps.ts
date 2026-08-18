@@ -220,7 +220,7 @@ export const interdeps = [
   },
   {
     "name": "edit-package-json",
-    "size": 9412,
+    "size": 9410,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -306,7 +306,7 @@ export const interdeps = [
   },
   {
     "name": "html-entities-not-email-friendly",
-    "size": 65827,
+    "size": 65826,
     "imports": []
   },
   {
@@ -829,7 +829,7 @@ export const interdeps = [
   },
   {
     "name": "tsd-extract",
-    "size": 7719,
+    "size": 7717,
     "imports": [
       "codsen-utils",
       "string-left-right"

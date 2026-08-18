@@ -3,19 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 3.3.0 (2026-08-18)
-
-### Bug Fixes
-
-- resolve review findings REV-004 through REV-007 ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
-- retire direct publish aliases ([f98e31e](https://github.com/codsen/codsen/commit/f98e31eb89bc185471225664e610b55f34fbf648))
-- tweak deps ([bd41b1f](https://github.com/codsen/codsen/commit/bd41b1fd6a892ab3b939775abd800273cdc3f77a))
-- type raw changelog markup explicitly ([b5ead07](https://github.com/codsen/codsen/commit/b5ead07e1dcfbd468afae3d8cb2e3802205c18e4))
-
-### Features
-
-- refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
-
 ## 3.1.0 (2023-05-21)
 
 ### Features
