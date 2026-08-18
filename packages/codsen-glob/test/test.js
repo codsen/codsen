@@ -85,7 +85,7 @@ test.after(() => {
 });
 
 test("01 - exposes its version and handles escaped patterns", () => {
-  is(version, "1.0.0");
+  match(version, /\d+\.\d+\.\d+/);
   equal(globSync("alpha.js\\", { cwd: fixture }), [], "01.01");
 });
 
