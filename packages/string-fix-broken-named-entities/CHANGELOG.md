@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.2.0 (2026-08-18)
+
+### Bug Fixes
+
+- make validation diagnostics safe ([7b01074](https://github.com/codsen/codsen/commit/7b0107476f12734aeb8e82852ba980b187280110))
+- resolve review findings REV-004 through REV-007 ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
+- retire direct publish aliases ([f98e31e](https://github.com/codsen/codsen/commit/f98e31eb89bc185471225664e610b55f34fbf648))
+- tighten entity match helper results ([c06c071](https://github.com/codsen/codsen/commit/c06c071a79b4f9407d25f101aa3dc7fa7ecf5b4e))
+
+### Features
+
+- add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
+- refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
+
+### Performance Improvements
+
+- reduce allocations while matching broken entities ([6d05cc9](https://github.com/codsen/codsen/commit/6d05cc9aa2081459b29a536259640c129b7ce496))
+- stop shipping a debug-only scan in string-fix-broken-named-entities ([47996ea](https://github.com/codsen/codsen/commit/47996ea45423bc34e61f37822387c6308259dc62))
+
+### Reverts
+
+- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
+
 ## 7.0.0 (2022-12-01)
 
 ### BREAKING CHANGES
