@@ -176,9 +176,38 @@ jobs:
             --body-file "$RELEASE_SUMMARY_FILE"
 
       # Events created by GITHUB_TOKEN do not start another workflow run, so the
-      # release branch needs an explicit CI dispatch after its PR is opened.
+      # release branch needs an explicit CI dispatch after its PR is opened. The
+      # dispatch endpoint can drop the response of an event it already queued,
+      # so a failed attempt is only retried once the branch is confirmed to have
+      # no dispatched run. The branch name is unique to this run and attempt, so
+      # any dispatched run on it is this step's own.
       - name: Run CI on the release proposal
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_BRANCH: ${{ steps.release.outputs.branch }}
-        run: gh workflow run verify.yml --ref "$RELEASE_BRANCH"
+        run: |
+          dispatch_landed() {
+            test -n "$(
+              gh run list \
+                --workflow verify.yml \
+                --branch "$RELEASE_BRANCH" \
+                --event workflow_dispatch \
+                --limit 1 \
+                --json databaseId \
+                --jq '.[].databaseId'
+            )"
+          }
+          for attempt in 1 2 3; do
+            if gh workflow run verify.yml --ref "$RELEASE_BRANCH"; then
+              exit 0
+            fi
+            echo "CI dispatch attempt $attempt failed" >&2
+            sleep 20
+            if dispatch_landed; then
+              echo "The dispatch was queued despite that error." >&2
+              exit 0
+            fi
+          done
+          echo "Could not start CI on $RELEASE_BRANCH; the release pull request" \
+            "is open, so dispatch CI on that branch by hand." >&2
+          exit 1
