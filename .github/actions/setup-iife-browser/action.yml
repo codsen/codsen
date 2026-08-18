@@ -103,7 +103,20 @@ runs:
           echo "Chromium has unresolved runtime libraries" >&2
           exit 1
         fi
-        actual_version="$("$chrome_path" --version)"
-        test "$actual_version" = "Chromium $EXPECTED_VERSION"
+        # `--version` prints "<product> <version> <channel>" and unbranded
+        # snapshots always report an empty channel, so the line ends in a
+        # trailing space which command substitution keeps; trim it the way the
+        # Node policy check trims its own reading, and report what came back
+        # because a bare `test` fails without saying anything
+        if ! reported_version="$("$chrome_path" --version)"; then
+          echo "Chromium could not report its version" >&2
+          exit 1
+        fi
+        actual_version="$(printf '%s' "$reported_version" |
+          sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+        if [ "$actual_version" != "Chromium $EXPECTED_VERSION" ]; then
+          echo "Expected Chromium $EXPECTED_VERSION, got $actual_version" >&2
+          exit 1
+        fi
         echo "chrome-path=$chrome_path" >> "$GITHUB_OUTPUT"
         echo "chrome-version=$EXPECTED_VERSION" >> "$GITHUB_OUTPUT"
