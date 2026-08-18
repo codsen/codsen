@@ -1,6 +1,6 @@
 {
   "name": "ranges-is-index-within",
-  "version": "4.1.3",
+  "version": "4.2.0",
   "description": "Checks if index is within any of the given string index ranges",
   "keywords": ["index", "is", "ranges", "string", "within"],
   "homepage": "https://codsen.com/os/ranges-is-index-within",
