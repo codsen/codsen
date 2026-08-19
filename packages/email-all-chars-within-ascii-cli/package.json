@@ -64,7 +64,7 @@
     }
   },
   "dependencies": {
-    "@inquirer/prompts": "^7.10.1",
+    "@inquirer/prompts": "^8.5.2",
     "codsen-glob": "^1.1.0",
     "codsen-utils": "^1.8.0",
     "email-all-chars-within-ascii": "^5.2.0",
