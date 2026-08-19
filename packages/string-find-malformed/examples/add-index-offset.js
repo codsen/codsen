@@ -1,3 +1,5 @@
+// Offset the reported indexes
+
 import { strict as assert } from "node:assert";
 
 import { findMalformed } from "../dist/string-find-malformed.esm.js";

@@ -117,10 +117,21 @@ assert.equal(Object.keys(allNamedEntities).length, 2125);`;
   );
 });
 
-test(`08 - import, title, no biome configs`, () => {
-  let source = `import { strict as assert } from "assert";\n\n// Quick Take\n\nconst z = 1;`;
-  let str = `import { strict as assert } from "assert";\n\nconst z = 1;`;
-  equal(prepExampleFileStr(source), { str, title: "Quick Take" }, "08.01");
+test(`08 - comment past the header is code, not a title`, () => {
+  let source = `import { strict as assert } from "assert";\n\n// explains the line below\n\nconst z = 1;`;
+  let str = `import { strict as assert } from "assert";\n\n// explains the line below\n\nconst z = 1;`;
+  equal(prepExampleFileStr(source), { str, title: "" }, "08.01");
+});
+
+test(`09 - block comment pragma, title, import`, () => {
+  let source = `/** biome-ignore-all lint/correctness/noUnusedImports: example file */
+// Quick Take
+
+import { strict as assert } from "assert";\n\n`;
+  let str = `/** biome-ignore-all lint/correctness/noUnusedImports: example file */
+
+import { strict as assert } from "assert";`;
+  equal(prepExampleFileStr(source), { str, title: `Quick Take` }, "09.01");
 });
 
 test.run();

@@ -1,3 +1,5 @@
+// Keep only the first element of every array
+
 import { strict as assert } from "node:assert";
 
 import { arrayFirstOnly } from "../dist/ast-monkey.esm.js";

@@ -1,3 +1,5 @@
+// Convert Unicode indexes into native ones
+
 import { strict as assert } from "node:assert";
 
 import { unicodeToNative } from "../dist/string-convert-indexes.esm.js";

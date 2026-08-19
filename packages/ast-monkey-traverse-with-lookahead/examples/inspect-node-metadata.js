@@ -1,3 +1,5 @@
+// Inspect a node's metadata and its lookahead
+
 import { strict as assert } from "node:assert";
 
 import { traverse } from "../dist/ast-monkey-traverse-with-lookahead.esm.js";

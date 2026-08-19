@@ -1,3 +1,5 @@
+// Delete every object key of a given name
+
 import { strict as assert } from "node:assert";
 
 import { del } from "../dist/ast-monkey.esm.js";

@@ -1,3 +1,5 @@
+// Set a node using `key` instead of `val`
+
 import { strict as assert } from "node:assert";
 
 import { set } from "../dist/ast-monkey.esm.js";

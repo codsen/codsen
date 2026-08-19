@@ -1,3 +1,5 @@
+// Extract a nested member
+
 import { strict as assert } from "node:assert";
 
 import { extract } from "../dist/tsd-extract.esm.js";

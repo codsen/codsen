@@ -1,3 +1,5 @@
+// Mark comment keys with a custom suffix
+
 import { strict as assert } from "node:assert";
 
 import { findUnusedSync } from "../dist/json-comb-core.esm.js";

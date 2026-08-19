@@ -1,3 +1,5 @@
+// Set the values within nested objects and arrays
+
 import { strict as assert } from "node:assert";
 
 import { setAllValuesTo } from "../dist/object-set-all-values-to.esm.js";

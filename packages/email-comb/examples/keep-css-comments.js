@@ -1,3 +1,5 @@
+// Keep CSS comments
+
 import { strict as assert } from "node:assert";
 
 import { comb } from "../dist/email-comb.esm.js";

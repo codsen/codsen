@@ -1,3 +1,5 @@
+// Convert continental number style into UK style
+
 import { strict as assert } from "node:assert";
 
 import { splitEasy } from "../dist/csv-split-easy.esm.js";

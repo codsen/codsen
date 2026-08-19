@@ -1,3 +1,5 @@
+// Compute a keyset using a custom placeholder
+
 import { strict as assert } from "node:assert";
 
 import { getKeysetSync } from "../dist/json-comb-core.esm.js";

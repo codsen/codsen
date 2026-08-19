@@ -1,3 +1,5 @@
+// Report the index offsets through a callback
+
 import { strict as assert } from "node:assert";
 
 import { convertOne } from "../dist/string-dashes.esm.js";

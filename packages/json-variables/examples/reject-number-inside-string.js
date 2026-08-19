@@ -1,3 +1,5 @@
+// Reject a number inserted into a string
+
 import { strict as assert } from "node:assert";
 
 import { jVar } from "../dist/json-variables.esm.js";

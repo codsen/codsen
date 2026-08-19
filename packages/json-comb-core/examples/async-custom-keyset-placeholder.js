@@ -1,3 +1,5 @@
+// Compute a keyset from promises with a custom placeholder
+
 import { strict as assert } from "node:assert";
 
 import { getKeyset } from "../dist/json-comb-core.esm.js";

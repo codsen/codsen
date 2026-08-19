@@ -1,3 +1,5 @@
+// Validate a whole XML name
+
 import { strict as assert } from "node:assert";
 
 import {

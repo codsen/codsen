@@ -1,3 +1,5 @@
+// Expand a `null` value into the schema
+
 import { strict as assert } from "node:assert";
 
 import { enforceKeysetSync } from "../dist/json-comb-core.esm.js";

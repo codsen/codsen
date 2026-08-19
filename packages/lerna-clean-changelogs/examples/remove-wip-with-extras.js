@@ -1,3 +1,5 @@
+// Remove WIP entries and tidy the headings
+
 import { strict as assert } from "node:assert";
 
 import { cleanChangelogs } from "../dist/lerna-clean-changelogs.esm.js";

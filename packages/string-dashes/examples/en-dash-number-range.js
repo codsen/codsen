@@ -1,3 +1,5 @@
+// Convert a number range into an en dash
+
 import { strict as assert } from "node:assert";
 
 import { convertAll } from "../dist/string-dashes.esm.js";

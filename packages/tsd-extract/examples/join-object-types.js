@@ -1,3 +1,5 @@
+// Join two object types into one
+
 import { strict as assert } from "node:assert";
 
 import { join } from "../dist/tsd-extract.esm.js";

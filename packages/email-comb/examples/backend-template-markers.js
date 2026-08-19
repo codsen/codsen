@@ -1,3 +1,5 @@
+// Keep classes inside backend template markers
+
 import { strict as assert } from "node:assert";
 
 import { comb } from "../dist/email-comb.esm.js";

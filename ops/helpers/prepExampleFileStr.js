@@ -38,6 +38,16 @@ function prepExampleFileStr(originalStr) {
     // console.log(`046 oneLineBefore=${JSON.stringify(oneLineBefore, null, 4)};`);
     // console.log(`${`\u001b[${36}m${`-`.repeat(80)}\u001b[${39}m`}`);
 
+    // the header ends at the first line of real code - past it, comments are
+    // part of the example, not its title or its lint pragmas
+    if (
+      !codeStarted &&
+      lines[i].trim() &&
+      !lines[i].startsWith("//") &&
+      !lines[i].startsWith("/*")
+    ) {
+      codeStarted = true;
+    }
     if (!codeStarted && lines[i].startsWith("// biome-ignore")) {
       // console.log(`${`\u001b[${31}m${`CONTINUE`}\u001b[${39}m`}`);
       continue;

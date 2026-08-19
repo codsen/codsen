@@ -1,3 +1,5 @@
+// Compare nested arrays without regard to order
+
 import { strict as assert } from "node:assert";
 
 import { compare } from "../dist/ast-compare.esm.js";

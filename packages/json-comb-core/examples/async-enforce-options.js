@@ -1,3 +1,5 @@
+// Enforce a keyset asynchronously, with options
+
 import { strict as assert } from "node:assert";
 
 import { enforceKeyset } from "../dist/json-comb-core.esm.js";

@@ -1,3 +1,5 @@
+// Convert the indexes within a plain object
+
 import { strict as assert } from "node:assert";
 
 import { nativeToUnicode } from "../dist/string-convert-indexes.esm.js";

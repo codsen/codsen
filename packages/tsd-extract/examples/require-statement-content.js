@@ -1,3 +1,5 @@
+// Require a statement to contain a string
+
 import { strict as assert } from "node:assert";
 
 import { extract } from "../dist/tsd-extract.esm.js";

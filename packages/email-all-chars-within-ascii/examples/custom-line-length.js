@@ -1,3 +1,5 @@
+// Set a custom maximum line length
+
 import { strict as assert } from "node:assert";
 
 import { within } from "../dist/email-all-chars-within-ascii.esm.js";

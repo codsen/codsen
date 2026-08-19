@@ -1,3 +1,5 @@
+// Only the first character is checked
+
 import { strict as assert } from "node:assert";
 
 import { isAttrNameChar } from "../dist/is-char-suitable-for-html-attr-name.esm.js";

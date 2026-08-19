@@ -1,3 +1,5 @@
+// Report the merging progress
+
 import { strict as assert } from "node:assert";
 
 import { rMerge } from "../dist/ranges-merge.esm.js";

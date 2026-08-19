@@ -1,3 +1,5 @@
+// Report every non-ASCII character found
+
 import { strict as assert } from "node:assert";
 
 import { within } from "../dist/email-all-chars-within-ascii.esm.js";

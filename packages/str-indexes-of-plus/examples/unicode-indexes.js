@@ -1,3 +1,5 @@
+// Emoji count as single characters
+
 import { strict as assert } from "node:assert";
 
 import { strIndexesOfPlus } from "../dist/str-indexes-of-plus.esm.js";

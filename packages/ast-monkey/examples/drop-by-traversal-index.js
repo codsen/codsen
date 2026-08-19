@@ -1,3 +1,5 @@
+// Drop a node by its traversal index
+
 import { strict as assert } from "node:assert";
 
 import { drop } from "../dist/ast-monkey.esm.js";

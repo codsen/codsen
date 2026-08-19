@@ -1,3 +1,5 @@
+// Report a declaration that was not found
+
 import { strict as assert } from "node:assert";
 
 import { extract } from "../dist/tsd-extract.esm.js";

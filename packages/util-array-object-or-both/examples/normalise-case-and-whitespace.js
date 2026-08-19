@@ -1,3 +1,5 @@
+// Case and surrounding whitespace are normalised
+
 import { strict as assert } from "node:assert";
 
 import { arrObjOrBoth } from "../dist/util-array-object-or-both.esm.js";

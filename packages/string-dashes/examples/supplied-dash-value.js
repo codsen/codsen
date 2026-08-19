@@ -1,3 +1,5 @@
+// Supply the dash value separately
+
 import { strict as assert } from "node:assert";
 
 import { convertOne } from "../dist/string-dashes.esm.js";

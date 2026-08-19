@@ -1,3 +1,5 @@
+// A `null` replacement wins over text
+
 import { strict as assert } from "node:assert";
 
 import { rMerge } from "../dist/ranges-merge.esm.js";

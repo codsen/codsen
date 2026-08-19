@@ -1,3 +1,5 @@
+// Sort object keys in semver order
+
 import { strict as assert } from "node:assert";
 
 import { sortAllObjectsSync } from "../dist/json-comb-core.esm.js";

@@ -1,3 +1,5 @@
+// Convert one apostrophe into an entity
+
 import { strict as assert } from "node:assert";
 
 import { convertOne } from "../dist/string-apostrophes.esm.js";

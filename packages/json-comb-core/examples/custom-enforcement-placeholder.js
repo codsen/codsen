@@ -1,3 +1,5 @@
+// Enforce a keyset using a custom placeholder
+
 import { strict as assert } from "node:assert";
 
 import { enforceKeysetSync } from "../dist/json-comb-core.esm.js";

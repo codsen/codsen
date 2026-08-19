@@ -1,3 +1,5 @@
+// Traverse a tree using the re-exported `traverse`
+
 import { strict as assert } from "node:assert";
 
 import { traverse } from "../dist/ast-monkey.esm.js";

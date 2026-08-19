@@ -1,3 +1,5 @@
+// Keep the thousand separators in numbers
+
 import { strict as assert } from "node:assert";
 
 import { splitEasy } from "../dist/csv-split-easy.esm.js";

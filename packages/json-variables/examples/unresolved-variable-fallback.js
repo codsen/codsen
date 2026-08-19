@@ -1,3 +1,5 @@
+// Replace unresolved variables with a fallback
+
 import { strict as assert } from "node:assert";
 
 import { jVar } from "../dist/json-variables.esm.js";

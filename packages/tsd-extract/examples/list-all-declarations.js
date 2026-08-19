@@ -1,3 +1,5 @@
+// List all declarations in the source
+
 import { strict as assert } from "node:assert";
 
 import { extract } from "../dist/tsd-extract.esm.js";

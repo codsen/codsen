@@ -279,17 +279,15 @@ for (let packageName of packageNames) {
             path.join("packages", name, "examples", fileName),
             "utf-8",
           );
-          let title =
-            exampleContents
-              .split(/(\r?\n)/)
-              .find((lineStr) => lineStr.trim().startsWith("//")) || "";
-          if (title) {
-            // remove "// " part in front of the title
-            title = title.slice(3);
+          let { str, title } = prepExampleFileStr(exampleContents);
+          if (!title) {
+            throw new Error(
+              `generate-info.js: packages/${name}/examples/${fileName} has no title. Every example file must open with a "// Title" comment - the website renders it as the example's label.`,
+            );
           }
           accumulatedObj[fileName] = {
             title,
-            code: prepExampleFileStr(exampleContents).str,
+            code: str,
           };
           return accumulatedObj;
         }, {});

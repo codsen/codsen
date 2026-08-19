@@ -1,3 +1,5 @@
+// Index a zero-width-joiner emoji sequence
+
 import { strict as assert } from "node:assert";
 
 import {

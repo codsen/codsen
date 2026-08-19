@@ -1,3 +1,5 @@
+// Prefer the latter value with merge type two
+
 import { strict as assert } from "node:assert";
 
 import { rMerge } from "../dist/ranges-merge.esm.js";

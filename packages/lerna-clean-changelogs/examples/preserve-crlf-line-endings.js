@@ -1,3 +1,5 @@
+// Preserve CRLF line endings
+
 import { strict as assert } from "node:assert";
 
 import { cleanChangelogs } from "../dist/lerna-clean-changelogs.esm.js";

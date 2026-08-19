@@ -1,3 +1,5 @@
+// Search array elements only
+
 import { strict as assert } from "node:assert";
 
 import { find } from "../dist/ast-monkey.esm.js";

@@ -1,3 +1,5 @@
+// Look ahead two nodes at a time
+
 import { strict as assert } from "node:assert";
 
 import { traverse } from "../dist/ast-monkey-traverse-with-lookahead.esm.js";

@@ -1,3 +1,5 @@
+// Customise the thrown error's context
+
 import { strict as assert } from "node:assert";
 
 import { arrObjOrBoth } from "../dist/util-array-object-or-both.esm.js";

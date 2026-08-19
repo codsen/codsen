@@ -1,3 +1,5 @@
+// Recognise a self-closing tag with attributes
+
 import { strict as assert } from "node:assert";
 
 import { isOpening } from "../dist/is-html-tag-opening.esm.js";

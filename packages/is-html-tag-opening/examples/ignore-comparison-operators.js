@@ -1,3 +1,5 @@
+// Ignore a less-than sign used for comparison
+
 import { strict as assert } from "node:assert";
 
 import { isOpening } from "../dist/is-html-tag-opening.esm.js";

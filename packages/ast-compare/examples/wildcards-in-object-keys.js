@@ -1,3 +1,5 @@
+// Match object keys using wildcards
+
 import { strict as assert } from "node:assert";
 
 import { compare } from "../dist/ast-compare.esm.js";

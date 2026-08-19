@@ -1,3 +1,5 @@
+// Enforce a keyset computed from many objects
+
 import { strict as assert } from "node:assert";
 
 import {

@@ -1,3 +1,5 @@
+// Match keys case-sensitively
+
 import { strict as assert } from "node:assert";
 
 import { getByKey } from "../dist/ast-get-values-by-key.esm.js";

@@ -1,3 +1,5 @@
+// Allow a combining mark after the first character
+
 import { strict as assert } from "node:assert";
 
 import {
