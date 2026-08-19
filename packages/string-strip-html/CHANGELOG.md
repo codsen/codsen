@@ -3,32 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 13.6.0 (2026-08-18)
-
-### Bug Fixes
-
-- make validation diagnostics safe ([7b01074](https://github.com/codsen/codsen/commit/7b0107476f12734aeb8e82852ba980b187280110))
-- migrate the formatting to biome, sort the imports, process all files ([91bd919](https://github.com/codsen/codsen/commit/91bd9190100e1999613c0bb5eb721a952a5aee56))
-- reject invalid HTML tag-name starters ([8a6d780](https://github.com/codsen/codsen/commit/8a6d780883bbfab8f677b2f8cac02d032aa0a124)), closes [#97](https://github.com/codsen/codsen/issues/97)
-- resolve review findings REV-004 through REV-007 ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
-- retire direct publish aliases ([f98e31e](https://github.com/codsen/codsen/commit/f98e31eb89bc185471225664e610b55f34fbf648))
-- trim production type dependencies ([426e081](https://github.com/codsen/codsen/commit/426e081f78e72bf3caecc138b339722309630dd8))
-
-### Features
-
-- add codsen-glob and migrate glob consumers ([5595a2b](https://github.com/codsen/codsen/commit/5595a2b267eaa6cb60072d037aef00b7a28edd42))
-- algorithm improvements, also migrate to biome and format everything ([8ca03c0](https://github.com/codsen/codsen/commit/8ca03c0aeed63755c69d7240270fcc981bf4073f))
-- refresh the tooling and generate with the latest dependencies ([781f802](https://github.com/codsen/codsen/commit/781f802911066a82a4533b0e5a3fcbd742d0dd83))
-- replace string-strip-html's per-tag range re-merge with a ranges-push predicate ([913a9f6](https://github.com/codsen/codsen/commit/913a9f6323e5d4b7f95c9f282e0dacfcf145c128))
-
-### Performance Improvements
-
-- stop shipping debug-only work in published bundles ([6fe5fee](https://github.com/codsen/codsen/commit/6fe5feebdf726b553ae3034690634166b461fca5))
-
-### Reverts
-
-- Revert "Merge pull request #127 from codsen/release/npm-32194020886-1" ([5f1e94d](https://github.com/codsen/codsen/commit/5f1e94deef910ce735266b16aeee08a76de7a862)), closes [#127](https://github.com/codsen/codsen/issues/127)
-
 ## 13.4.8 (2024-04-04)
 
 ### Bug Fixes

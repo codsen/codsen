@@ -1,6 +1,6 @@
 {
   "name": "ranges-process-outside",
-  "version": "6.2.0",
+  "version": "6.1.3",
   "description": "Iterate string considering ranges, as if they were already applied",
   "keywords": ["array", "indexes", "ranges", "sort", "string"],
   "homepage": "https://codsen.com/os/ranges-process-outside",
@@ -55,9 +55,9 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.8.0",
-    "ranges-crop": "^6.2.0",
-    "ranges-invert": "^6.2.0"
+    "codsen-utils": "^1.7.3",
+    "ranges-crop": "^6.1.3",
+    "ranges-invert": "^6.1.3"
   },
   "engines": {
     "node": ">=18.20.8"
