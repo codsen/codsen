@@ -1,0 +1,146 @@
+---
+# The release-only gates run nowhere else: `verify.yml` never sees a release
+# plan or a bumped version, and `ci.yml` only reaches them once a proposal is
+# already merged, so a defect in them surfaces mid-release. This lane rehearses
+# them on demand against throwaway versions and throws the result away. It
+# pushes nothing, tags nothing, and publishes nothing.
+name: Rehearse npm release
+
+on:
+  workflow_dispatch:
+    inputs:
+      force_all:
+        description: Version every package instead of only conventionally changed packages
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-release-rehearsal-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rehearse:
+    name: Rehearse the release gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Check out the dispatched revision with complete history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # the version calculation reads conventional commits back through the
+          # whole history, exactly as preparation does
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Node and npm
+        uses: ./.github/actions/setup-node
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Configure the rehearsal author
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Record the rehearsal base
+        id: rehearsal
+        run: echo "base=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Version conventionally changed packages
+        if: ${{ !inputs.force_all }}
+        run: npm run ci:lerna:version
+
+      - name: Version every package
+        if: ${{ inputs.force_all }}
+        run: npm run ci:lerna:version -- --force-publish '*'
+
+      - name: Regenerate lect-managed package files
+        run: npm run lect
+
+      - name: Build package inputs and regenerate repository data
+        run: |
+          npm run ci:generate:info -- --git-stats
+          npm run ci:generate:changelogs
+          npm run ci:build:root-readme
+
+      - name: Build @codsen/data from regenerated sources
+        run: npm run build -- '--filter=./data/**'
+
+      - name: Create the rehearsal release plan
+        run: >-
+          node ops/scripts/npm-release.js plan
+          --base "${{ steps.rehearsal.outputs.base }}"
+          --output .github/npm-release-plan.json
+
+      - name: Reject package versions already present on npm
+        run: >-
+          node ops/scripts/npm-release.js preflight
+          --plan .github/npm-release-plan.json
+          --concurrency 8
+
+      # packing refuses a dirty tracked worktree, so the rehearsal commits what
+      # preparation would have committed. The commit stays on the runner
+      - name: Commit the rehearsal proposal
+        run: |
+          git add --all
+          git diff --cached --exit-code --quiet && {
+            echo "Nothing to rehearse: no package version changed." >&2
+            exit 1
+          }
+          git commit --no-verify --message "chore: rehearse npm release"
+
+      # the gate that caught a package asserting its own pre-bump version, and
+      # the gate that caught Biome reformatting the generated plan. Neither can
+      # fire until a bumped tree and a plan file exist together
+      - name: Verify the repository against the bumped versions
+        uses: ./.github/actions/verify-repository
+        with:
+          examples: "false"
+          cache: "false"
+
+      # `unset` rather than an `env:` entry, because Actions reserves the
+      # `GITHUB_` prefix and does not promise that a step can override one
+      - name: Pack immutable npm artifacts
+        run: |
+          # the rehearsal commit above deliberately moves HEAD past the
+          # dispatched revision, and only this binding cares. Base ancestry and
+          # the prepared tree hash stay enforced
+          unset GITHUB_SHA
+          node ops/scripts/npm-release.js pack \
+            --plan .github/npm-release-plan.json \
+            --output npm-release-artifacts
+
+      # the gate that caught the packed artifacts entering their own tree hash
+      - name: Rebuild and verify reproducible npm artifacts
+        run: |
+          unset GITHUB_SHA
+          npm run build -- '--filter=./packages/**' --force
+          npm run build -- '--filter=./data/**' --force
+          node ops/scripts/npm-release.js pack \
+            --plan .github/npm-release-plan.json \
+            --output "${{ runner.temp }}/npm-release-rehearsal" \
+            --reference npm-release-artifacts/manifest.json
+
+      # the gate that caught release package names being matched without their
+      # versions, against dependencies resolved from the registry
+      - name: Verify isolated consumers of the packed artifacts
+        run: |
+          unset GITHUB_SHA
+          node ops/scripts/npm-release.js verify-consumers \
+            --manifest npm-release-artifacts/manifest.json \
+            --concurrency 8
+
+      - name: Summarize the rehearsed release
+        run: |
+          {
+            echo "Rehearsed a release of $(
+              node -p "require('./.github/npm-release-plan.json').selectedCount"
+            ) package(s) from ${{ steps.rehearsal.outputs.base }}."
+            echo
+            echo "Nothing was pushed, tagged, or published."
+          } >> "$GITHUB_STEP_SUMMARY"
