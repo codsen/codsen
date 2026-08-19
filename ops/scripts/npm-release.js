@@ -1159,7 +1159,16 @@ function assertConsumerDependencyPins(
     consumerDirectory,
     releasePackageByName.keys(),
   );
-  for (const [name, found] of copies) {
+  for (const [name, installed] of copies) {
+    // A dependency outside this release can pull a release package name in
+    // from the registry through its own graph, at the version published before
+    // this release. Preflight rejects any release version that npm already
+    // serves, so only a copy carrying the release version can have come from a
+    // release tarball, and only those copies are this check's business.
+    const releasePackage = releasePackageByName.get(name);
+    const found = installed.filter(
+      (copy) => copy.version === releasePackage.version,
+    );
     if (!expectedNames.has(name)) {
       if (found.length > 0) {
         fail(
@@ -1173,7 +1182,6 @@ function assertConsumerDependencyPins(
         `${plan.name} consumer installed ${found.length} copies of release package ${name}; expected exactly one immutable tarball copy`,
       );
     }
-    const releasePackage = releasePackageByName.get(name);
     if (
       found[0].directory !==
         realpathSync(installedPackageDirectory(consumerDirectory, name)) ||
