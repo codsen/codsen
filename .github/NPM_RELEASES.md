@@ -83,6 +83,14 @@ updated. Merging the reviewed proposal is itself the push that starts `ci.yml`.
    advances or the proposal is edited after generation, close it and run
    **Prepare npm release** again from the new `main` instead of updating or
    merging the stale proposal.
+
+   The proposal's checks come from the `verify.yml` run that preparation
+   dispatches for the release branch, because a pull request opened by
+   `GITHUB_TOKEN` cannot start one itself. GitHub still queues a second,
+   `pull_request`-triggered run and parks it as `action_required`. Leave that one
+   parked: approving it repeats every job against the same tree and doubles the
+   CI minutes for the release. A parked run keeps the merge state `UNSTABLE`,
+   which is expected here and does not block the merge.
 4. Merging the release plan starts `ci.yml`. Its unprivileged job repeats
    the exact-commit build and verification before creating the tarballs.
    Approve the protected `npm-production` deployment when ready. The workflow
