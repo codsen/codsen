@@ -485,8 +485,8 @@ compile-time `DEV` global, commonly in the form `DEV && console.log(...)`.
   quick take.
 - Open every example file with a `// Title` comment, before any code. The
   website renders that title as the example's link label on each package page
-  and on https://codsen.com/os/examples, so an untitled example shows up as a
-  blank list item. `ops/scripts/generate-info.js` throws when a title is
+  and on `https://codsen.com/os/examples`, so an untitled example shows up
+  as a blank list item. `ops/scripts/generate-info.js` throws when a title is
   missing. Comments past the first line of code stay in the published sample
   and are never treated as the title.
 - Keep at most one `assert.deepEqual()` call in each example file. When another
