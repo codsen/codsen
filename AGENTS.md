@@ -39,6 +39,23 @@ not a mistake to point out or correct.
 This also rules out the indirect routes to the same effect: do not push a branch
 and do not open a pull request in order to get CI to run against a change.
 
+## Dependency updates are manual
+
+Dependabot is disabled. `.github/dependabot.yml` was deleted on 2026-08-19,
+while the npm release lane was still failing on its first end-to-end runs,
+because every automated pull request spent CI minutes on a pipeline that had not
+yet proven itself.
+
+- Update dependencies by hand until then, as this repository did before
+  Dependabot: bump the version, run the root verification commands, and open one
+  pull request for the batch.
+- Re-enable Dependabot only when the maintainer says continuous integration and
+  the release lane are stable and they are happy to resume it. Restoring
+  `.github/dependabot.yml` is the entire change.
+- `verify.yml` keeps its `DEPENDABOT_BASE_SHA` engine guard. That guard is inert
+  without Dependabot pull requests and is left in place deliberately, so
+  re-enabling needs no workflow edit.
+
 ## Architecture principles
 
 `.agents/ARCHITECTURE_PRINCIPLES.md` defines the repository's direction for
