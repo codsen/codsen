@@ -1,6 +1,6 @@
 {
   "name": "ranges-apply",
-  "version": "7.2.0",
+  "version": "7.2.1",
   "description": "Take an array of string index ranges, delete/replace the string according to them",
   "keywords": [
     "delete",
@@ -70,7 +70,7 @@
   },
   "dependencies": {
     "codsen-utils": "^1.8.0",
-    "ranges-merge": "^9.2.0"
+    "ranges-merge": "^9.2.1"
   },
   "engines": {
     "node": ">=18.20.8"
