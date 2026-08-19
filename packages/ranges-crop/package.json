@@ -1,6 +1,6 @@
 {
   "name": "ranges-crop",
-  "version": "6.2.0",
+  "version": "6.2.1",
   "description": "Crop array of ranges when they go beyond the reference string's length",
   "keywords": [
     "array",
@@ -66,10 +66,10 @@
   },
   "dependencies": {
     "codsen-utils": "^1.8.0",
-    "ranges-merge": "^9.2.0"
+    "ranges-merge": "^9.2.1"
   },
   "devDependencies": {
-    "ranges-apply": "^7.2.0"
+    "ranges-apply": "^7.2.1"
   },
   "engines": {
     "node": ">=18.20.8"

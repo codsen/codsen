@@ -1,6 +1,6 @@
 {
   "name": "is-media-descriptor",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "Is given string a valid media descriptor (including media query)?",
   "keywords": [
     "attribute",
@@ -74,7 +74,7 @@
     "string-process-comma-separated": "^4.3.0"
   },
   "devDependencies": {
-    "ranges-apply": "^7.2.0"
+    "ranges-apply": "^7.2.1"
   },
   "engines": {
     "node": ">=18.20.8"
