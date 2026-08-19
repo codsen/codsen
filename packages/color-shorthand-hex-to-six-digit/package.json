@@ -1,6 +1,6 @@
 {
   "name": "color-shorthand-hex-to-six-digit",
-  "version": "5.1.3",
+  "version": "5.2.0",
   "description": "Convert shorthand hex color codes into full",
   "keywords": [
     "characters",
@@ -69,7 +69,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.7.3"
+    "codsen-utils": "^1.8.0"
   },
   "engines": {
     "node": ">=18.20.8"
