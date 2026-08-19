@@ -16,7 +16,6 @@ import pProgress, { PProgress } from "p-progress";
 import pReduce from "p-reduce";
 import packageJson from "package-json";
 import updateNotifier from "update-notifier";
-import write from "write-file-atomic";
 
 const require1 = createRequire(import.meta.url);
 const pkg = require1("./package.json");
@@ -274,6 +273,32 @@ function parseCli(argv = process.argv.slice(2)) {
   });
 }
 
+// stands in for `write-file-atomic`: the file is written under a temporary
+// name and moved into place, so an interrupted run never leaves a package.json
+// half-written. `rename` within one directory is atomic on POSIX and on
+// Windows, and the existing mode is carried over.
+async function writeFileAtomically(filename, contents) {
+  const temporaryFilename = `${filename}.${process.pid}.${Date.now()}.tmp`;
+
+  let mode;
+  try {
+    ({ mode } = await promises.stat(filename));
+  } catch {
+    // a file that does not exist yet keeps the default mode
+  }
+
+  await promises.writeFile(temporaryFilename, contents);
+  try {
+    if (mode !== undefined) {
+      await promises.chmod(temporaryFilename, mode);
+    }
+    await promises.rename(temporaryFilename, filename);
+  } catch (error) {
+    await promises.rm(temporaryFilename, { force: true });
+    throw error;
+  }
+}
+
 // Step #1. the main function
 // -----------------------------------------------------------------------------
 
@@ -289,7 +314,7 @@ export async function updateVersions({
     findPackageJsons = glob,
     readTextFile = readFile,
     setJsonValue = set,
-    writeTextFile = write,
+    writeTextFile = writeFileAtomically,
   } = effects;
 
   // we'll use the object below to distil all unique package updates

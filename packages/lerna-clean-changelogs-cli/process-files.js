@@ -1,6 +1,12 @@
-import { readFile } from "node:fs/promises";
+import {
+  chmod,
+  writeFile as fsWriteFile,
+  readFile,
+  rename,
+  rm,
+  stat,
+} from "node:fs/promises";
 import { cleanChangelogs } from "lerna-clean-changelogs";
-import writeFile from "write-file-atomic";
 
 const colours = {
   green: 32,
@@ -71,6 +77,32 @@ async function processFile(
   return { path: filePath };
 }
 
+// stands in for `write-file-atomic`: the file is written under a temporary
+// name and moved into place, so an interrupted run never leaves the file it
+// was rewriting half-written. `rename` within one directory is atomic on
+// POSIX and on Windows, and the existing mode is carried over.
+async function writeFileAtomically(filename, contents) {
+  const temporaryFilename = `${filename}.${process.pid}.${Date.now()}.tmp`;
+
+  let mode;
+  try {
+    ({ mode } = await stat(filename));
+  } catch {
+    // a file that does not exist yet keeps the default mode
+  }
+
+  await fsWriteFile(temporaryFilename, contents);
+  try {
+    if (mode !== undefined) {
+      await chmod(temporaryFilename, mode);
+    }
+    await rename(temporaryFilename, filename);
+  } catch (error) {
+    await rm(temporaryFilename, { force: true });
+    throw error;
+  }
+}
+
 export async function processFiles(
   paths,
   {
@@ -80,7 +112,7 @@ export async function processFiles(
     startedAt = Date.now(),
     transform = cleanChangelogs,
     transformOptions = {},
-    write = writeFile,
+    write = writeFileAtomically,
   } = {},
 ) {
   const failures = [];

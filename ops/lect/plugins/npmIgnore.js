@@ -2,7 +2,7 @@ import { promises as fs, statSync } from "node:fs";
 import { pull } from "array-pull-all-with-glob";
 import partition from "lodash.partition";
 import objectPath from "object-path";
-import writeFileAtomic from "write-file-atomic";
+import { writeFileAtomically } from "../../helpers/writeFileAtomically.js";
 
 // writes .npmignore
 async function npmIgnore({
@@ -183,7 +183,7 @@ async function npmIgnore({
     .join("\n")}\n`;
 
   try {
-    return writeFileAtomic(".npmignore", finalNpmIgnoreFile);
+    return writeFileAtomically(".npmignore", finalNpmIgnoreFile);
   } catch (err) {
     console.log(
       `lect: ${`\u001b[${31}m${`ERROR`}\u001b[${39}m`} could not write .npmignore - ${err}`,

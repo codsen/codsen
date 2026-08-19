@@ -837,7 +837,7 @@ export const interdeps = [
   },
   {
     "name": "update-versions",
-    "size": 27062,
+    "size": 27910,
     "imports": [
       "codsen-glob",
       "codsen-utils",

@@ -3271,8 +3271,7 @@ export const packageJSONData = {
       "codsen-glob": "^1.1.0",
       "codsen-utils": "^1.8.0",
       "generate-atomic-css": "^3.2.0",
-      "update-notifier": "^7.3.1",
-      "write-file-atomic": "^6.0.0"
+      "update-notifier": "^7.3.1"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -4415,8 +4414,7 @@ export const packageJSONData = {
       "codsen-glob": "^1.1.0",
       "codsen-utils": "^1.8.0",
       "js-row-num": "^7.2.0",
-      "update-notifier": "^7.3.1",
-      "write-file-atomic": "^6.0.0"
+      "update-notifier": "^7.3.1"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -4953,8 +4951,7 @@ export const packageJSONData = {
       "codsen-utils": "^1.8.0",
       "lerna-clean-changelogs": "^5.2.0",
       "p-reduce": "^3.0.0",
-      "update-notifier": "^7.3.1",
-      "write-file-atomic": "^6.0.0"
+      "update-notifier": "^7.3.1"
     },
     "devDependencies": {
       "p-map": "^7.0.4"
@@ -9645,8 +9642,7 @@ export const packageJSONData = {
       "p-progress": "^1.0.0",
       "p-reduce": "^3.0.0",
       "package-json": "^10.0.1",
-      "update-notifier": "^7.3.1",
-      "write-file-atomic": "^6.0.0"
+      "update-notifier": "^7.3.1"
     },
     "devDependencies": {
       "p-map": "^7.0.4"

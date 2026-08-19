@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
-import writeFileAtomic from "write-file-atomic";
+import { writeFileAtomically } from "./writeFileAtomically.js";
 
 const GENERATION_MODES = Object.freeze({
   CHECK: "check",
@@ -50,7 +50,7 @@ async function writeGeneratedFile({
   if (mode === GENERATION_MODES.CHECK) {
     throw staleGeneratedFile(filename, fixCommand);
   }
-  await writeFileAtomic(filename, contents);
+  await writeFileAtomically(filename, contents);
   return true;
 }
 

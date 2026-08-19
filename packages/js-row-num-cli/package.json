@@ -71,8 +71,7 @@
     "codsen-glob": "^1.1.0",
     "codsen-utils": "^1.8.0",
     "js-row-num": "^7.2.0",
-    "update-notifier": "^7.3.1",
-    "write-file-atomic": "^6.0.0"
+    "update-notifier": "^7.3.1"
   },
   "engines": {
     "node": ">=18.20.8"

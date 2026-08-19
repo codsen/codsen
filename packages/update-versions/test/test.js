@@ -9,7 +9,6 @@ import pMap from "p-map";
 import { temporaryDirectory } from "tempy";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
-import writeFileAtomic from "write-file-atomic";
 import { UpdateVersionsError, updateVersions } from "../cli.js";
 
 const clone = structuredClone;
@@ -121,7 +120,7 @@ async function fetchPackageFixture(name) {
 }
 
 async function writeJson(filename, value) {
-  await writeFileAtomic(filename, JSON.stringify(value, null, 2));
+  await promises.writeFile(filename, JSON.stringify(value, null, 2));
 }
 
 async function readJson(filename) {
@@ -153,7 +152,7 @@ test("01 - monorepo", async () => {
   // 2. asynchronously write all test files
 
   await pMap(test1FilePaths, (oneOfTestFilePaths, testIndex) =>
-    writeFileAtomic(
+    promises.writeFile(
       path.join(tempFolder, oneOfTestFilePaths),
       JSON.stringify(test1FileContents[testIndex], null, 2),
     ),
@@ -201,7 +200,7 @@ test("02 - normal repo", async () => {
   // asynchronously write all test files
 
   await pMap(test2FilePaths, (oneOfTestFilePaths, testIndex) =>
-    writeFileAtomic(
+    promises.writeFile(
       path.join(tempFolder, oneOfTestFilePaths),
       JSON.stringify(test2FileContents[testIndex], null, 2),
     ),
@@ -240,7 +239,7 @@ test("03 - deletes deps from dev-deps if they are among normal deps", async () =
   // asynchronously write all test files
 
   await pMap(test2FilePaths, (oneOfTestFilePaths, testIndex) =>
-    writeFileAtomic(
+    promises.writeFile(
       path.join(tempFolder, oneOfTestFilePaths),
       JSON.stringify(tweakedContents[testIndex], null, 2),
     ),
@@ -302,7 +301,7 @@ test("07 - resolves registry metadata before writing", async () => {
     null,
     2,
   );
-  await writeFileAtomic(packagePath, original);
+  await promises.writeFile(packagePath, original);
 
   let releaseBeta;
   let betaMetadata = new Promise((resolve) => {
@@ -325,7 +324,7 @@ test("07 - resolves registry metadata before writing", async () => {
   equal(updated.dependencies.alpha, "^2.0.0", "07.02");
   equal(updated.dependencies.beta, "^3.0.0", "07.03");
 
-  await writeFileAtomic(packagePath, original);
+  await promises.writeFile(packagePath, original);
   let receivedError;
   try {
     await updateVersions({
@@ -356,8 +355,8 @@ test("08 - cwd discovery excludes test package manifests", async () => {
     dependencies: { beta: "^1.0.0" },
   });
   await Promise.all([
-    writeFileAtomic(rootPath, rootContents),
-    writeFileAtomic(testPath, testContents),
+    promises.writeFile(rootPath, rootContents),
+    promises.writeFile(testPath, testContents),
   ]);
 
   await updateVersions({
@@ -506,7 +505,7 @@ test("13 - no-op pins preserve package bytes and skip writes", async () => {
     null,
     4,
   )}\n`;
-  await writeFileAtomic(packagePath, original);
+  await promises.writeFile(packagePath, original);
   await writeJson(path.join(tempFolder, "upd.config.json"), {
     pin: { alpha: "2.0.0" },
   });
@@ -517,7 +516,7 @@ test("13 - no-op pins preserve package bytes and skip writes", async () => {
     effects: {
       writeTextFile: async (...args) => {
         writes += 1;
-        return writeFileAtomic(...args);
+        return promises.writeFile(...args);
       },
     },
   });
@@ -544,8 +543,8 @@ test("14 - malformed configurations fail before lookup or mutation", async () =>
       name: "invalid-config-fixture",
       dependencies: { alpha: "^1.0.0" },
     });
-    await writeFileAtomic(packagePath, original);
-    await writeFileAtomic(
+    await promises.writeFile(packagePath, original);
+    await promises.writeFile(
       path.join(tempFolder, "upd.config.json"),
       configSource,
     );
@@ -557,7 +556,7 @@ test("14 - malformed configurations fail before lookup or mutation", async () =>
       effects: {
         writeTextFile: async (...args) => {
           writes += 1;
-          return writeFileAtomic(...args);
+          return promises.writeFile(...args);
         },
       },
       fetchPackage: async (name) => {
@@ -582,7 +581,7 @@ test("15 - unreadable configuration is not treated as missing", async () => {
     name: "unreadable-config-fixture",
     dependencies: { alpha: "^1.0.0" },
   });
-  await writeFileAtomic(packagePath, original);
+  await promises.writeFile(packagePath, original);
   let registryCalls = 0;
 
   let error = await captureUpdateError({
@@ -619,7 +618,7 @@ test("16 - package read failures stop before lookup and writes", async () => {
     name: "read-root-fixture",
     dependencies: { alpha: "^1.0.0" },
   });
-  await writeFileAtomic(rootPath, rootOriginal);
+  await promises.writeFile(rootPath, rootOriginal);
   await writeJson(badPath, { name: "read-bad-fixture" });
   let registryCalls = 0;
   let writes = 0;
@@ -635,7 +634,7 @@ test("16 - package read failures stop before lookup and writes", async () => {
       },
       writeTextFile: async (...args) => {
         writes += 1;
-        return writeFileAtomic(...args);
+        return promises.writeFile(...args);
       },
     },
     fetchPackage: async (name) => {
@@ -655,7 +654,7 @@ test("17 - package parse failures stop before lookup and writes", async () => {
   let tempFolder = temporaryDirectory();
   let packagePath = path.join(tempFolder, "package.json");
   let malformed = '{"name":"parse-fixture"';
-  await writeFileAtomic(packagePath, malformed);
+  await promises.writeFile(packagePath, malformed);
   let registryCalls = 0;
   let writes = 0;
 
@@ -664,7 +663,7 @@ test("17 - package parse failures stop before lookup and writes", async () => {
     effects: {
       writeTextFile: async (...args) => {
         writes += 1;
-        return writeFileAtomic(...args);
+        return promises.writeFile(...args);
       },
     },
     fetchPackage: async () => {
@@ -687,7 +686,7 @@ test("18 - partial registry failure leaves every package unchanged", async () =>
     name: "registry-fixture",
     dependencies: { alpha: "^1.0.0", beta: "^1.0.0" },
   });
-  await writeFileAtomic(packagePath, original);
+  await promises.writeFile(packagePath, original);
 
   let error = await captureUpdateError({
     cwd: tempFolder,
@@ -720,8 +719,8 @@ test("19 - mixed transform failures report only committed updates", async () => 
     dependencies: { "bad-dependency": "^1.0.0" },
   });
   await Promise.all([
-    writeFileAtomic(goodPath, goodOriginal),
-    writeFileAtomic(badPath, badOriginal),
+    promises.writeFile(goodPath, goodOriginal),
+    promises.writeFile(badPath, badOriginal),
   ]);
 
   let error = await captureUpdateError({
@@ -765,8 +764,8 @@ test("20 - mixed write failures report only committed updates", async () => {
     dependencies: { "bad-dependency": "^1.0.0" },
   });
   await Promise.all([
-    writeFileAtomic(goodPath, goodOriginal),
-    writeFileAtomic(badPath, badOriginal),
+    promises.writeFile(goodPath, goodOriginal),
+    promises.writeFile(badPath, badOriginal),
   ]);
 
   let error = await captureUpdateError({
@@ -776,7 +775,7 @@ test("20 - mixed write failures report only committed updates", async () => {
         if (filename === badPath) {
           throw new Error("injected write failure");
         }
-        return writeFileAtomic(filename, contents);
+        return promises.writeFile(filename, contents);
       },
     },
     fetchPackage: async (name) => ({ name, version: "2.0.0" }),
@@ -799,8 +798,8 @@ test("21 - CLI exits nonzero without success wording on malformed config", async
   let tempFolder = temporaryDirectory();
   let packagePath = path.join(tempFolder, "package.json");
   let original = JSON.stringify({ name: "cli-failure-fixture" });
-  await writeFileAtomic(packagePath, original);
-  await writeFileAtomic(path.join(tempFolder, "upd.config.json"), "{");
+  await promises.writeFile(packagePath, original);
+  await promises.writeFile(path.join(tempFolder, "upd.config.json"), "{");
   let cliError;
 
   try {
@@ -823,7 +822,7 @@ test("22 - module mode blocks major updates for module packages", async () => {
     name: "module-mode-fixture",
     dependencies: { alpha: "^1.0.0" },
   });
-  await writeFileAtomic(packagePath, original);
+  await promises.writeFile(packagePath, original);
 
   let updated = await updateVersions({
     cwd: tempFolder,
@@ -846,7 +845,7 @@ test("23 - CLI reports an accurate transform-failure summary", async () => {
     name: "cli-transform-failure-fixture",
     dependencies: { alpha: 123 },
   });
-  await writeFileAtomic(packagePath, original);
+  await promises.writeFile(packagePath, original);
   let cliError;
 
   try {
@@ -1016,7 +1015,7 @@ test("26 - CLI reports successful metadata-only cleanup", async () => {
 test("27 - non-object package manifests use the ordered throw prefix", async () => {
   let tempFolder = temporaryDirectory();
   let packagePath = path.join(tempFolder, "package.json");
-  await writeFileAtomic(packagePath, "[]");
+  await promises.writeFile(packagePath, "[]");
   let registryCalls = 0;
   let writes = 0;
 
@@ -1025,7 +1024,7 @@ test("27 - non-object package manifests use the ordered throw prefix", async () 
     effects: {
       writeTextFile: async (...args) => {
         writes += 1;
-        return writeFileAtomic(...args);
+        return promises.writeFile(...args);
       },
     },
     fetchPackage: async (name) => {
@@ -1105,7 +1104,7 @@ test("29 - configuration rejects padded names and pin values", async () => {
       name: "padded-config-fixture",
       dependencies: { alpha: "^1.0.0" },
     });
-    await writeFileAtomic(packagePath, original);
+    await promises.writeFile(packagePath, original);
     await writeJson(path.join(tempFolder, "upd.config.json"), value);
     let registryCalls = 0;
     let writes = 0;
@@ -1115,7 +1114,7 @@ test("29 - configuration rejects padded names and pin values", async () => {
       effects: {
         writeTextFile: async (...args) => {
           writes += 1;
-          return writeFileAtomic(...args);
+          return promises.writeFile(...args);
         },
       },
       fetchPackage: async (name) => {

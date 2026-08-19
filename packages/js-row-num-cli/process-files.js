@@ -1,6 +1,5 @@
 import { promises as fs } from "node:fs";
 import { fixRowNums } from "js-row-num";
-import writeFileAtomic from "write-file-atomic";
 
 function asError(error) {
   return error instanceof Error ? error : new Error(String(error));
@@ -45,6 +44,32 @@ async function processFile(
   return { path: filePath };
 }
 
+// stands in for `write-file-atomic`: the file is written under a temporary
+// name and moved into place, so an interrupted run never leaves the file it
+// was rewriting half-written. `rename` within one directory is atomic on
+// POSIX and on Windows, and the existing mode is carried over.
+async function writeFileAtomically(filename, contents) {
+  const temporaryFilename = `${filename}.${process.pid}.${Date.now()}.tmp`;
+
+  let mode;
+  try {
+    ({ mode } = await fs.stat(filename));
+  } catch {
+    // a file that does not exist yet keeps the default mode
+  }
+
+  await fs.writeFile(temporaryFilename, contents);
+  try {
+    if (mode !== undefined) {
+      await fs.chmod(temporaryFilename, mode);
+    }
+    await fs.rename(temporaryFilename, filename);
+  } catch (error) {
+    await fs.rm(temporaryFilename, { force: true });
+    throw error;
+  }
+}
+
 export async function processFiles(
   paths,
   {
@@ -53,7 +78,7 @@ export async function processFiles(
     readFile = fs.readFile,
     transform = (contents, options) => fixRowNums(contents, options).result,
     transformOptions = {},
-    writeFile = writeFileAtomic,
+    writeFile = writeFileAtomically,
   } = {},
 ) {
   const successful = [];

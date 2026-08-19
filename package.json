@@ -118,8 +118,7 @@
     "unified": "^11.0.5",
     "unist-builder": "^4.0.0",
     "unist-util-visit": "^5.1.0",
-    "uvu": "^0.5.6",
-    "write-file-atomic": "^8.0.0"
+    "uvu": "^0.5.6"
   },
   "overrides": {
     "conventional-changelog": "8.1.0"

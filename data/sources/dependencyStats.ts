@@ -40,8 +40,7 @@ export const dependencyStats: DependencyStats = {
     "unified",
     "unist-builder",
     "unist-util-visit",
-    "update-notifier",
-    "write-file-atomic"
+    "update-notifier"
   ],
   "allOwnDeps": [
     "all-named-html-entities",
@@ -207,8 +206,7 @@ export const dependencyStats: DependencyStats = {
     "unist-util-visit": 3,
     "update-notifier": 9,
     "util-array-object-or-both": 2,
-    "util-nonempty": 1,
-    "write-file-atomic": 4
+    "util-nonempty": 1
   },
   "devDependencies": {
     "@types/he": 2,
@@ -242,9 +240,6 @@ export const dependencyStats: DependencyStats = {
       "update-notifier": 9
     },
     {
-      "write-file-atomic": 4
-    },
-    {
       "he": 3
     },
     {
@@ -264,6 +259,9 @@ export const dependencyStats: DependencyStats = {
     },
     {
       "@types/hast": 2
+    },
+    {
+      "html-entities": 2
     }
   ],
   "top10OwnDeps": [
