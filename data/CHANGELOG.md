@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - do not store value into attrObj if empty quotes ([9faad8f](https://github.com/codsen/codsen/commit/9faad8f827f11a9d3ec5ab0597c8101ace60b951))
 - make clean checkouts self-bootstrapping ([ac8b550](https://github.com/codsen/codsen/commit/ac8b55012a50d30e6cc5b1c0890024661f05c2f1))
 - make validation diagnostics safe ([7b01074](https://github.com/codsen/codsen/commit/7b0107476f12734aeb8e82852ba980b187280110))
-- resolve review findings REV-004 through REV-007 ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
+- resolve various review findings ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
 - retire direct publish aliases ([f98e31e](https://github.com/codsen/codsen/commit/f98e31eb89bc185471225664e610b55f34fbf648))
 - trim production type dependencies ([426e081](https://github.com/codsen/codsen/commit/426e081f78e72bf3caecc138b339722309630dd8))
 

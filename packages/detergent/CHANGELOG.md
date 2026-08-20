@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - decide dontEncodeNonLatin by code point, not by a surrogate ([d410a80](https://github.com/codsen/codsen/commit/d410a80cf1f0fcb5113dbf3eed157e581c1d6ae4))
 - make validation diagnostics safe ([7b01074](https://github.com/codsen/codsen/commit/7b0107476f12734aeb8e82852ba980b187280110))
 - require a plain options object ([5514d5a](https://github.com/codsen/codsen/commit/5514d5ac6f006d2f3b6adc07a4b84cd533a99ac6))
-- resolve review findings REV-004 through REV-007 ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
+- resolve various review findings ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
 - retire direct publish aliases ([f98e31e](https://github.com/codsen/codsen/commit/f98e31eb89bc185471225664e610b55f34fbf648))
 
 ### Features

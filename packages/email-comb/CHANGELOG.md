@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - harden email CSS and ID-reference parsing ([ab45754](https://github.com/codsen/codsen/commit/ab457548b31dd0fc583c529d8a52d6fa93a2750e)), closes [#91](https://github.com/codsen/codsen/issues/91) [#96](https://github.com/codsen/codsen/issues/96) [#105](https://github.com/codsen/codsen/issues/105) [#106](https://github.com/codsen/codsen/issues/106)
 - harden options and progress reporting ([9aa04c9](https://github.com/codsen/codsen/commit/9aa04c942b741e40ababbbcffe86aa368b229421))
 - make validation diagnostics safe ([7b01074](https://github.com/codsen/codsen/commit/7b0107476f12734aeb8e82852ba980b187280110))
-- resolve review findings REV-004 through REV-007 ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
+- resolve various review findings ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
 - retire direct publish aliases ([f98e31e](https://github.com/codsen/codsen/commit/f98e31eb89bc185471225664e610b55f34fbf648))
 
 ### Features

@@ -8,7 +8,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 - rebase to correspond with declared types ([8105a8d](https://github.com/codsen/codsen/commit/8105a8da2ae4372278b3406a6d958fe797846ae3))
-- resolve review findings REV-004 through REV-007 ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
+- resolve various review findings ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
 - retire direct publish aliases ([f98e31e](https://github.com/codsen/codsen/commit/f98e31eb89bc185471225664e610b55f34fbf648))
 - validate traversal callbacks ([0e08fd4](https://github.com/codsen/codsen/commit/0e08fd4ecd3c25503801dd74218a5c0df8c1dd40))
 

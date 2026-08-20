@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - make validation diagnostics safe ([7b01074](https://github.com/codsen/codsen/commit/7b0107476f12734aeb8e82852ba980b187280110))
 - pair tsd-extract's braces by nesting depth ([ae1746d](https://github.com/codsen/codsen/commit/ae1746d490c55f28b38c17df0f19aff80d3db26b))
 - report invalid source input and streamline chunk joins ([fc7dd7e](https://github.com/codsen/codsen/commit/fc7dd7e1bab85582ef9b2af1b77525c76bb5f652))
-- resolve review findings REV-004 through REV-007 ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
+- resolve various review findings ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
 - retire direct publish aliases ([f98e31e](https://github.com/codsen/codsen/commit/f98e31eb89bc185471225664e610b55f34fbf648))
 - skip strings and comments when pairing tsd-extract's braces ([54df88c](https://github.com/codsen/codsen/commit/54df88cd0d38040f756569e288f482fa79035c39))
 

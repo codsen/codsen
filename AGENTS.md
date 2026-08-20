@@ -77,6 +77,13 @@ update the item's status and evidence when work is completed.
 When a user references an item by a `REV-*` identifier, search the files in
 `secret-plans/` for that identifier before planning or making changes.
 
+## Keep review details out of commit messages
+
+Never mention a `REV-*` identifier directly in a commit message. Keep references
+to review work deliberately vague: for example, use `Resolve various review
+findings` rather than `Resolve review findings REV-004 through REV-007`. This
+keeps the private review-tracking mechanism out of Git history.
+
 ## Agent planning documents
 
 Put new agent-authored reviews, investigations, and implementation plans in the

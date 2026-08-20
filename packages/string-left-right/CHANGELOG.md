@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- resolve review findings REV-004 through REV-007 ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
+- resolve various review findings ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
 - retire direct publish aliases ([f98e31e](https://github.com/codsen/codsen/commit/f98e31eb89bc185471225664e610b55f34fbf648))
 - stop case-insensitive matching crashing on a null index ([5682575](https://github.com/codsen/codsen/commit/56825755acdcb8c9f2be089bf13cb24ba032e950))
 - validate chomp modes and avoid argument cloning ([577224a](https://github.com/codsen/codsen/commit/577224a0d2eb95673872d5e2a5780f0ee9751dc5))

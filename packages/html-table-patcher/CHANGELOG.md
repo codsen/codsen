@@ -9,7 +9,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - isolate table patch ranges per call ([681715f](https://github.com/codsen/codsen/commit/681715fcdef2fe30973329d607bd0ee59b5d59fa))
 - make clean checkouts self-bootstrapping ([ac8b550](https://github.com/codsen/codsen/commit/ac8b55012a50d30e6cc5b1c0890024661f05c2f1))
-- resolve review findings REV-004 through REV-007 ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
+- resolve various review findings ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
 - retire direct publish aliases ([f98e31e](https://github.com/codsen/codsen/commit/f98e31eb89bc185471225664e610b55f34fbf648))
 
 ### Features

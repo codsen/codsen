@@ -9,7 +9,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - handle edge cases in next paths ([9e1f85a](https://github.com/codsen/codsen/commit/9e1f85a1241af07213d4e288c074ad2cec245391))
 - handle edge cases in previous paths ([53be61e](https://github.com/codsen/codsen/commit/53be61e7dd726fbf859f9166740ec0f2f2f4ce63))
-- resolve review findings REV-004 through REV-007 ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
+- resolve various review findings ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
 - retire direct publish aliases ([f98e31e](https://github.com/codsen/codsen/commit/f98e31eb89bc185471225664e610b55f34fbf648))
 - validate parent path input ([421579c](https://github.com/codsen/codsen/commit/421579c66362e343f2070f2399431660d26de7b9))
 - validate upward path input ([79c637b](https://github.com/codsen/codsen/commit/79c637bceab34da506fb3aa0347a641e71465c69))

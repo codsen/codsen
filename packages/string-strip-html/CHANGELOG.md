@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - make validation diagnostics safe ([7b01074](https://github.com/codsen/codsen/commit/7b0107476f12734aeb8e82852ba980b187280110))
 - migrate the formatting to biome, sort the imports, process all files ([91bd919](https://github.com/codsen/codsen/commit/91bd9190100e1999613c0bb5eb721a952a5aee56))
 - reject invalid HTML tag-name starters ([8a6d780](https://github.com/codsen/codsen/commit/8a6d780883bbfab8f677b2f8cac02d032aa0a124)), closes [#97](https://github.com/codsen/codsen/issues/97)
-- resolve review findings REV-004 through REV-007 ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
+- resolve various review findings ([b60e9ee](https://github.com/codsen/codsen/commit/b60e9eeb499af94685cfb87b4970fe025be1fc10))
 - retire direct publish aliases ([f98e31e](https://github.com/codsen/codsen/commit/f98e31eb89bc185471225664e610b55f34fbf648))
 - trim production type dependencies ([426e081](https://github.com/codsen/codsen/commit/426e081f78e72bf3caecc138b339722309630dd8))
 
