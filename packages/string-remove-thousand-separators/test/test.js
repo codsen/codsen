@@ -338,22 +338,30 @@ test("12 - throws when second arg is not a plain object", () => {
       r("aaa", "aaa");
     },
     /THROW_ID_02/g,
-    "12.01",
+    "12.02",
   );
   throws(
     () => {
       r("aaa", 1);
     },
     /THROW_ID_02/g,
-    "12.02",
+    "12.03",
   );
   throws(
     () => {
       r("aaa", true);
     },
     /THROW_ID_02/g,
-    "12.03",
+    "12.04",
   );
+});
+
+test("13 - trims every wrapping double quote", () => {
+  equal(r('""100,000.01""'), "100000.01", "13.01");
+  equal(r('""""'), "", "13.02");
+  equal(r('"100,000.01'), "100000.01", "13.03");
+  equal(r('100,000.01"'), "100000.01", "13.04");
+  equal(r('100,"000.01'), '100,"000.01', "13.05");
 });
 
 test.run();

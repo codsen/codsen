@@ -156,7 +156,7 @@ export const interdeps = [
   },
   {
     "name": "csv-sort",
-    "size": 4847,
+    "size": 4826,
     "imports": [
       "codsen-utils",
       "csv-split-easy"
@@ -391,7 +391,7 @@ export const interdeps = [
   },
   {
     "name": "json-comb-core",
-    "size": 6870,
+    "size": 6936,
     "imports": [
       "codsen-utils",
       "object-fill-missing-keys",
@@ -443,7 +443,7 @@ export const interdeps = [
   },
   {
     "name": "object-all-values-equal-to",
-    "size": 1345,
+    "size": 2202,
     "imports": [
       "codsen-utils"
     ]
@@ -477,7 +477,7 @@ export const interdeps = [
   },
   {
     "name": "object-flatten-all-arrays",
-    "size": 921,
+    "size": 1455,
     "imports": [
       "codsen-utils"
     ]
@@ -493,7 +493,7 @@ export const interdeps = [
   },
   {
     "name": "object-merge-advanced",
-    "size": 7484,
+    "size": 7454,
     "imports": [
       "codsen-utils",
       "util-nonempty"
@@ -586,7 +586,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-regex",
-    "size": 1863,
+    "size": 1840,
     "imports": [
       "codsen-utils",
       "ranges-merge"
@@ -765,7 +765,7 @@ export const interdeps = [
   },
   {
     "name": "string-remove-thousand-separators",
-    "size": 1905,
+    "size": 1887,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -792,7 +792,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 22917,
+    "size": 22854,
     "imports": [
       "codsen-utils",
       "ranges-apply",

@@ -564,8 +564,73 @@ test("19 - does not mutate input args", () => {
         },
       ],
     },
-    "19.01",
+    "19.02",
   );
+});
+
+test("20 - merges nested objects and arrays by index", () => {
+  let result = flattenAllArrays([
+    {
+      a: { x: 1 },
+      keep: "first",
+      list: [{ a: 1 }, 2],
+    },
+    {
+      a: { y: 2 },
+      keep: "second",
+      list: [{ b: 2 }, 3],
+      missing: undefined,
+    },
+  ]);
+
+  equal(
+    result,
+    [
+      {
+        a: { x: 1, y: 2 },
+        keep: "second",
+        list: [{ a: 1, b: 2 }, 3],
+        missing: undefined,
+      },
+    ],
+    "20.01",
+  );
+  equal(Object.hasOwn(result[0], "missing"), true, "20.02");
+  equal(
+    flattenAllArrays([{ a: 1 }, { a: undefined, b: undefined }]),
+    [{ a: 1, b: undefined }],
+    "20.03",
+  );
+  equal(
+    flattenAllArrays([{ a: 1 }, { a: { b: 2 } }]),
+    [{ a: { b: 2 } }],
+    "20.04",
+  );
+});
+
+test("21 - dangerous property names stay own and cannot pollute prototypes", () => {
+  let dangerous = JSON.parse(
+    '{"__proto__":{"polluted":true},"constructor":{"prototype":{"alsoPolluted":true}}}',
+  );
+  let result = flattenAllArrays([dangerous, { safe: true }]);
+
+  is(Object.getPrototypeOf(result[0]), Object.prototype, "21.01");
+  equal(Object.hasOwn(result[0], "__proto__"), true, "21.02");
+  equal(
+    Object.getOwnPropertyDescriptor(result[0], "__proto__").value,
+    { polluted: true },
+    "21.03",
+  );
+  equal(Object.hasOwn(result[0], "constructor"), true, "21.04");
+  equal(
+    result[0].constructor,
+    {
+      prototype: { alsoPolluted: true },
+    },
+    "21.05",
+  );
+  equal({}.polluted, undefined, "21.06");
+  equal({}.alsoPolluted, undefined, "21.07");
 });
 
 test.run();

@@ -1,12 +1,3 @@
-import type {
-  Comment,
-  Doctype,
-  Element,
-  Root,
-  Text,
-  // ElementContent,
-} from "hast";
-import { iteratee } from "lodash-es";
 import { EXIT, visit } from "unist-util-visit";
 
 declare let DEV: boolean;
@@ -14,23 +5,6 @@ declare let DEV: boolean;
 export interface Obj {
   [key: string]: any;
 }
-
-export const find = (
-  tree: Root | Element | Comment | Doctype | Text,
-  condition: any,
-): Root | Element | Comment | Doctype | Text | undefined => {
-  const predicate = iteratee(condition);
-  let result: Root | Element | Comment | Doctype | Text | undefined;
-
-  visit(tree, (node) => {
-    if (predicate(node)) {
-      result = node;
-      return EXIT;
-    }
-  });
-
-  return result;
-};
 
 export const contains = (
   tree: any,

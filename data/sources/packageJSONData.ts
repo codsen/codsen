@@ -2211,11 +2211,7 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.8.0",
       "csv-split-easy": "^7.2.1",
-      "currency.js": "^2.0.4",
-      "lodash-es": "^4.18.1"
-    },
-    "devDependencies": {
-      "@types/lodash-es": "^4.17.12"
+      "currency.js": "^2.0.4"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -4582,7 +4578,6 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.8.0",
-      "lodash-es": "^4.18.1",
       "object-fill-missing-keys": "^11.2.1",
       "object-flatten-all-arrays": "^7.2.0",
       "object-merge-advanced": "^14.2.0",
@@ -4595,7 +4590,6 @@ export const packageJSONData = {
       "type-detect": "^4.1.0"
     },
     "devDependencies": {
-      "@types/lodash-es": "^4.17.12",
       "@types/semver-compare": "^1.0.3",
       "p-map": "^7.0.4"
     },
@@ -5038,11 +5032,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "codsen-utils": "^1.8.0",
-      "lodash-es": "^4.18.1"
-    },
-    "devDependencies": {
-      "@types/lodash-es": "^4.17.12"
+      "codsen-utils": "^1.8.0"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -5394,11 +5384,7 @@ export const packageJSONData = {
       }
     },
     "dependencies": {
-      "codsen-utils": "^1.8.0",
-      "lodash-es": "^4.18.1"
-    },
-    "devDependencies": {
-      "@types/lodash-es": "^4.17.12"
+      "codsen-utils": "^1.8.0"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -5570,11 +5556,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.8.0",
-      "lodash-es": "^4.18.1",
       "util-nonempty": "^5.2.0"
     },
     "devDependencies": {
-      "@types/lodash-es": "^4.17.12",
       "deep-equal": "^2.2.3"
     },
     "engines": {
@@ -6583,11 +6567,9 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.8.0",
-      "lodash-es": "^4.18.1",
       "ranges-merge": "^9.2.1"
     },
     "devDependencies": {
-      "@types/lodash-es": "^4.17.12",
       "ranges-apply": "^7.2.1"
     },
     "engines": {
@@ -7083,12 +7065,10 @@ export const packageJSONData = {
     },
     "dependencies": {
       "@types/hast": "^3.0.4",
-      "lodash-es": "^4.18.1",
       "unified": "^11.0.5",
       "unist-util-visit": "^5.1.0"
     },
     "devDependencies": {
-      "@types/lodash-es": "^4.17.12",
       "rehype": "^13.0.2",
       "rehype-parse": "^9.0.1"
     },
@@ -8822,12 +8802,8 @@ export const packageJSONData = {
     },
     "dependencies": {
       "codsen-utils": "^1.8.0",
-      "lodash-es": "^4.18.1",
       "ranges-apply": "^7.2.1",
       "ranges-push": "^7.2.0"
-    },
-    "devDependencies": {
-      "@types/lodash-es": "^4.17.12"
     },
     "engines": {
       "node": ">=18.20.8"
@@ -9102,13 +9078,11 @@ export const packageJSONData = {
     "dependencies": {
       "codsen-utils": "^1.8.0",
       "html-entities": "^2.6.0",
-      "lodash-es": "^4.18.1",
       "ranges-apply": "^7.2.1",
       "ranges-push": "^7.2.0",
       "string-left-right": "^6.2.0"
     },
     "devDependencies": {
-      "@types/lodash-es": "^4.17.12",
       "ast-monkey-traverse": "^4.2.1",
       "ranges-invert": "^6.2.1",
       "title": "^4.0.1"

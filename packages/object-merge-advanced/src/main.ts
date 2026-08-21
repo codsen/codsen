@@ -6,11 +6,11 @@ import {
   formatDiagnosticValue,
   hasOwnProp,
   isBool,
+  isDate,
   isNum,
   isPlainObject as isObj,
   isStr,
 } from "codsen-utils";
-import { isDate, includes as lodashIncludes } from "lodash-es";
 import { nonEmpty } from "util-nonempty";
 
 import { version as v } from "../package.json";
@@ -343,7 +343,7 @@ function mergeAdvanced(
             if (index < i1.length) {
               temp.push(i1[index]);
             }
-            if (index < i2.length && !lodashIncludes(i1, i2[index])) {
+            if (index < i2.length && !i1.includes(i2[index])) {
               temp.push(i2[index]);
             }
           }

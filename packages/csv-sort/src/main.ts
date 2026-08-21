@@ -1,7 +1,6 @@
-import { formatDiagnosticValue } from "codsen-utils";
+import { formatDiagnosticValue, pullAll } from "codsen-utils";
 import { splitEasy } from "csv-split-easy";
 import currency from "currency.js";
-import { pull } from "lodash-es";
 import { version as v } from "../package.json";
 import { findType, isNumeric } from "./util/findType";
 
@@ -296,9 +295,9 @@ function sort(input: string): Res {
 
     // now mutate the `potentialBalanceColumnIndexesList` using
     // `deleteFromPotentialBalanceColumnIndexesList`:
-    potentialBalanceColumnIndexesList = pull(
+    potentialBalanceColumnIndexesList = pullAll(
       potentialBalanceColumnIndexesList,
-      ...deleteFromPotentialBalanceColumnIndexesList,
+      deleteFromPotentialBalanceColumnIndexesList,
     );
 
     /* c8 ignore next */
@@ -337,20 +336,19 @@ function sort(input: string): Res {
 
   // take schema, filter all indexes that are equal to or are arrays and have
   // "numeric" among their values, then remove the index of "Balance" column:
-  let potentialCreditDebitColumns = pull(
+  let potentialCreditDebitColumns = pullAll(
     Array.from(
-      schema.reduce((result, el, index) => {
+      schema.reduce<number[]>((result, el, index) => {
         if (
           (typeof el === "string" && el === "numeric") ||
           (Array.isArray(el) && el.includes("numeric"))
         ) {
-          (result as any).push(index);
+          result.push(index);
         }
         return result;
       }, []),
     ),
-    balanceColumnIndex as any,
-    ...stateColumnsContainingSameValueEverywhere,
+    [balanceColumnIndex, ...stateColumnsContainingSameValueEverywhere],
   );
 
   // step 5.

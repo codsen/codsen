@@ -8,7 +8,6 @@ import {
   isStr,
   type Obj,
 } from "codsen-utils";
-import { includes } from "lodash-es";
 import { fillMissing } from "object-fill-missing-keys";
 import { flattenAllArrays } from "object-flatten-all-arrays";
 import { mergeAdvanced } from "object-merge-advanced";
@@ -25,6 +24,18 @@ import { version as v } from "../package.json";
 const version: string = v;
 
 declare let DEV: boolean;
+
+function containsCommentMarker(
+  input: string | Obj | unknown[],
+  marker: string,
+): boolean {
+  if (typeof input === "string") {
+    return input.includes(marker);
+  }
+  return Array.isArray(input)
+    ? input.includes(marker)
+    : Object.values(input).includes(marker);
+}
 
 // -----------------------------------------------------------------------------
 
@@ -442,7 +453,7 @@ function findUnusedSync(
           arr1.every(
             (obj) =>
               (obj[key] === opts1?.placeholder || obj[key] === undefined) &&
-              (!opts1?.comments || !includes(key, opts1.comments)),
+              (!opts1?.comments || !containsCommentMarker(key, opts1.comments)),
           ),
         );
         // DEV && console.log(`unusedKeys = ${JSON.stringify(unusedKeys, null, 4)}`)
@@ -470,7 +481,10 @@ function findUnusedSync(
               existy(obj[el]) &&
               (!opts1 || obj[el] !== opts1.placeholder)
             ) {
-              if (!opts1?.comments || !includes(obj[el], opts1.comments)) {
+              if (
+                !opts1?.comments ||
+                !containsCommentMarker(obj[el], opts1.comments)
+              ) {
                 res1.push(obj[el]);
               }
             }

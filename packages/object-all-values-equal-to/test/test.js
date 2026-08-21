@@ -1,4 +1,6 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import vm from "node:vm";
+
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
@@ -124,6 +126,39 @@ test("05 - various throws", () => {
     /THROW_ID_03/,
     "05.03",
   ); // third arg is not a plain obj
+});
+
+test("06 - SameValueZero and structural placeholder comparisons", () => {
+  equal(allEq([NaN], NaN), false, "06.01");
+  equal(
+    allEq([NaN], NaN, { arraysMustNotContainPlaceholders: false }),
+    true,
+    "06.02",
+  );
+  equal(allEq([-0], 0), false, "06.03");
+  equal(allEq([{ a: [1, 2] }], { a: [1, 2] }), false, "06.04");
+  equal(allEq([{ a: [1] }], { a: [1, 2] }), false, "06.05");
+  equal(allEq([{ a: 1 }], { b: 1 }), false, "06.06");
+  equal(allEq([{ a: 1 }], { a: 2 }), false, "06.07");
+  equal(allEq([{ a: 1 }], { a: 1, b: 2 }), false, "06.08");
+  equal(allEq([1], { a: 1 }), false, "06.09");
+  equal(allEq([[1, 2]], [1, 3]), false, "06.10");
+  equal(allEq([[1, 2]], { 0: 1, 1: 2 }), false, "06.11");
+});
+
+test("07 - date placeholders", () => {
+  equal(allEq(new Date(0), new Date(0)), true, "07.01");
+  equal(allEq(new Date(0), new Date(1)), false, "07.02");
+  equal(allEq(new Date("invalid"), new Date("invalid")), true, "07.03");
+  equal(allEq(vm.runInNewContext("new Date(0)"), new Date(0)), true, "07.04");
+  equal(allEq(new Date(0), 0), false, "07.05");
+});
+
+test("08 - regular-expression placeholders", () => {
+  equal(allEq(/a/gi, /a/gi), true, "08.01");
+  equal(allEq(/a/g, /a/i), false, "08.02");
+  equal(allEq(vm.runInNewContext("/a/gi"), /a/gi), true, "08.03");
+  equal(allEq(/a/g, "a"), false, "08.04");
 });
 
 test.run();

@@ -3941,4 +3941,29 @@ test("89 - enforceKeyset() - opts.useNullAsExplicitFalse", async () => {
   );
 });
 
+test("90 - findUnusedSync() skips comment-marked nested collections", () => {
+  equal(
+    findUnusedSync(
+      [
+        { nested: ["__comment__", { a: false }] },
+        { nested: ["__comment__", { a: false }] },
+      ],
+      { comments: "__comment__" },
+    ),
+    [],
+    "90.01",
+  );
+  equal(
+    findUnusedSync(
+      [
+        { nested: { a: false, note: "__comment__" } },
+        { nested: { a: false, note: "__comment__" } },
+      ],
+      { comments: "__comment__" },
+    ),
+    [],
+    "90.02",
+  );
+});
+
 test.run();

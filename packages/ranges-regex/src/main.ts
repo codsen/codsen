@@ -1,5 +1,4 @@
-import { formatDiagnosticValue } from "codsen-utils";
-import { isRegExp } from "lodash-es";
+import { formatDiagnosticValue, isRegExp } from "codsen-utils";
 import type { Range, Ranges } from "ranges-merge";
 import { rMerge } from "ranges-merge";
 

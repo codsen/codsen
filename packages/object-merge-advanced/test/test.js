@@ -2599,4 +2599,8 @@ test("68 - merging one shared branch does not mutate its sibling", () => {
   equal(input.left, { value: 1 }, "68.05");
 });
 
+test("69 - array de-duplication uses SameValueZero equality", () => {
+  equal(m([NaN], [NaN], { concatInsteadOfMerging: false }), [NaN], "69.01");
+});
+
 test.run();

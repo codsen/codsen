@@ -67,11 +67,7 @@
     }
   },
   "dependencies": {
-    "codsen-utils": "^1.8.0",
-    "lodash-es": "^4.18.1"
-  },
-  "devDependencies": {
-    "@types/lodash-es": "^4.17.12"
+    "codsen-utils": "^1.8.0"
   },
   "engines": {
     "node": ">=18.20.8"

@@ -70,11 +70,9 @@
   },
   "dependencies": {
     "codsen-utils": "^1.8.0",
-    "lodash-es": "^4.18.1",
     "util-nonempty": "^5.2.0"
   },
   "devDependencies": {
-    "@types/lodash-es": "^4.17.12",
     "deep-equal": "^2.2.3"
   },
   "engines": {

@@ -1,4 +1,6 @@
 // biome-ignore-all lint/correctness/noUnusedImports: convenience when writing new tests later
+import vm from "node:vm";
+
 import { rApply } from "ranges-apply";
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
@@ -273,6 +275,17 @@ test("12 - zero-width matching reads Unicode mode once", () => {
     "12.01",
   );
   equal(reads, 2, "12.02");
+});
+
+test("13 - accepts a cross-realm regular expression", () => {
+  equal(
+    rRegex(vm.runInNewContext("/a/g"), "a_a"),
+    [
+      [0, 1],
+      [2, 3],
+    ],
+    "13.01",
+  );
 });
 
 test.run();

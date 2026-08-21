@@ -73,13 +73,11 @@
   "dependencies": {
     "codsen-utils": "^1.8.0",
     "html-entities": "^2.6.0",
-    "lodash-es": "^4.18.1",
     "ranges-apply": "^7.2.1",
     "ranges-push": "^7.2.0",
     "string-left-right": "^6.2.0"
   },
   "devDependencies": {
-    "@types/lodash-es": "^4.17.12",
     "ast-monkey-traverse": "^4.2.1",
     "ranges-invert": "^6.2.1",
     "title": "^4.0.1"

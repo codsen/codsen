@@ -1,7 +1,11 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-import { formatDiagnosticValue, isPlainObject as isObj } from "codsen-utils";
-import { isEqual } from "lodash-es";
+import {
+  formatDiagnosticValue,
+  isDate,
+  isPlainObject as isObj,
+  isRegExp,
+} from "codsen-utils";
 
 import { version as v } from "../package.json";
 
@@ -13,6 +17,81 @@ export interface Opts {
 const defaults: Opts = {
   arraysMustNotContainPlaceholders: true,
 };
+
+const hasOwn = Object.prototype.hasOwnProperty;
+const dateGetTime = Date.prototype.getTime;
+const regexpSourceGetter = Object.getOwnPropertyDescriptor(
+  RegExp.prototype,
+  "source",
+)?.get as (this: RegExp) => string;
+const regexpFlagsGetter = Object.getOwnPropertyDescriptor(
+  RegExp.prototype,
+  "flags",
+)?.get as (this: RegExp) => string;
+
+function isEqual(left: any, right: any): boolean {
+  if (left === right) {
+    return true;
+  }
+  if (
+    left === null ||
+    right === null ||
+    typeof left !== "object" ||
+    typeof right !== "object"
+  ) {
+    return Number.isNaN(left) && Number.isNaN(right);
+  }
+  if (isDate(left) || isDate(right)) {
+    if (!isDate(left) || !isDate(right)) {
+      return false;
+    }
+    const leftTime = dateGetTime.call(left);
+    const rightTime = dateGetTime.call(right);
+    return (
+      leftTime === rightTime ||
+      (Number.isNaN(leftTime) && Number.isNaN(rightTime))
+    );
+  }
+  if (isRegExp(left) || isRegExp(right)) {
+    return (
+      isRegExp(left) &&
+      isRegExp(right) &&
+      regexpSourceGetter.call(left) === regexpSourceGetter.call(right) &&
+      regexpFlagsGetter.call(left) === regexpFlagsGetter.call(right)
+    );
+  }
+  if (Array.isArray(left) || Array.isArray(right)) {
+    if (
+      !Array.isArray(left) ||
+      !Array.isArray(right) ||
+      left.length !== right.length
+    ) {
+      return false;
+    }
+    for (let i = left.length; i--; ) {
+      if (!isEqual(left[i], right[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+  if (!isObj(left) || !isObj(right)) {
+    return false;
+  }
+
+  const leftKeys = Object.keys(left);
+  const rightKeys = Object.keys(right);
+  if (leftKeys.length !== rightKeys.length) {
+    return false;
+  }
+  for (let i = leftKeys.length; i--; ) {
+    const key = leftKeys[i];
+    if (!hasOwn.call(right, key) || !isEqual(left[key], right[key])) {
+      return false;
+    }
+  }
+  return true;
+}
 
 // T H E   M A I N   F U N C T I O N   T H A T   D O E S   T H E   J O B
 // -----------------------------------------------------------------------------

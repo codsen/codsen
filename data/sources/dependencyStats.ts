@@ -23,7 +23,6 @@ export const dependencyStats: DependencyStats = {
     "he",
     "html-entities",
     "leven",
-    "lodash-es",
     "object-path",
     "p-map",
     "p-one",
@@ -148,7 +147,6 @@ export const dependencyStats: DependencyStats = {
     "json-comb-core": 1,
     "lerna-clean-changelogs": 1,
     "leven": 2,
-    "lodash-es": 9,
     "object-all-values-equal-to": 1,
     "object-boolean-combinations": 1,
     "object-delete-key": 1,
@@ -210,7 +208,6 @@ export const dependencyStats: DependencyStats = {
   },
   "devDependencies": {
     "@types/he": 2,
-    "@types/lodash-es": 9,
     "@types/picomatch": 1,
     "@types/semver-compare": 1,
     "ast-monkey-traverse": 2,
@@ -233,9 +230,6 @@ export const dependencyStats: DependencyStats = {
     "title": 1
   },
   "top10ExternalDeps": [
-    {
-      "lodash-es": 9
-    },
     {
       "update-notifier": 9
     },
@@ -262,6 +256,9 @@ export const dependencyStats: DependencyStats = {
     },
     {
       "html-entities": 2
+    },
+    {
+      "leven": 2
     }
   ],
   "top10OwnDeps": [

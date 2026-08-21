@@ -2,9 +2,10 @@ import {
   formatDiagnosticValue,
   hasOwnProp,
   isPlainObject as isObj,
+  pullAll,
+  trimChars,
 } from "codsen-utils";
 import { decode } from "html-entities";
-import { trim, without } from "lodash-es";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 import { right } from "string-left-right";
@@ -848,9 +849,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
   // if both resolvedOpts.onlyStripTags and resolvedOpts.ignoreTags are set, latter is respected,
   // we simply exclude ignored tags from the resolvedOpts.onlyStripTags.
   if (resolvedOpts.onlyStripTags.length && resolvedOpts.ignoreTags.length) {
-    resolvedOpts.onlyStripTags = without(
+    resolvedOpts.onlyStripTags = pullAll(
       resolvedOpts.onlyStripTags,
-      ...resolvedOpts.ignoreTags,
+      resolvedOpts.ignoreTags,
     );
   }
 
@@ -1077,17 +1078,15 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             // Nobody uses puts comparison signs between words like: "article > ",
             // but single letter names can be plausible: "a > b" in math.
 
-            DEV &&
-              console.log(
-                `"${trim(
-                  (culprit as any)
-                    .trim()
-                    .split(/\s+/)
-                    .filter((val2: string) => val2.trim())
-                    .filter((_val3: string, i3: number) => i3 === 0),
-                  "/>",
-                )}"`,
-              );
+            const trimmedCulprit = culprit.trim();
+            const candidateTagName = trimChars(
+              trimmedCulprit.split(/\s+/, 1)[0] || "",
+              "/>",
+            );
+            const normalizedCulprit = trimChars(trimmedCulprit, "/>");
+            const candidateTagNameLower = candidateTagName.toLowerCase();
+
+            DEV && console.log(`"${candidateTagName}"`);
 
             if (
               // quick, more efficient catches:
@@ -1095,19 +1094,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 culprit.includes(`/ >`) ||
                 culprit.includes(`="`) ||
                 culprit.includes(`='`)) &&
-              str !== `<${trim(culprit.trim(), "/>")}>` && // recursion prevention
-              [...definitelyTagNames].some(
-                (val) =>
-                  trim(
-                    (culprit as any)
-                      .trim()
-                      .split(/\s+/)
-                      .filter((val2: string) => val2.trim())
-                      .filter((_val3: string, i3: number) => i3 === 0),
-                    "/>",
-                  ).toLowerCase() === val,
-              ) &&
-              stripHtml(`<${culprit.trim()}>`, resolvedOpts).result === ""
+              str !== `<${normalizedCulprit}>` && // recursion prevention
+              definitelyTagNames.has(candidateTagNameLower) &&
+              stripHtml(`<${trimmedCulprit}>`, resolvedOpts).result === ""
             ) {
               /* c8 ignore next */
               if (

@@ -1,5 +1,4 @@
-import { formatDiagnosticValue } from "codsen-utils";
-import { trim } from "lodash-es";
+import { formatDiagnosticValue, trimChars } from "codsen-utils";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 
@@ -40,7 +39,7 @@ function remSep(str: string, opts?: Partial<Opts>): string {
   let resolvedOpts: Opts = { ...defaults, ...opts };
 
   // trim whitespace and wrapping double quotes:
-  let res = trim(str.trim(), '"');
+  let res = trimChars(str.trim(), '"');
 
   // end sooner if it's an empty string:
   if (res === "") {
