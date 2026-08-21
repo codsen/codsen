@@ -490,8 +490,111 @@ export function isNull(something: unknown): something is null {
 
 // ----------------------------------------------------------------
 
-export function isRegExp(something: any): something is RegExp {
-  return something instanceof RegExp;
+const regexpSourceGetter = Object.getOwnPropertyDescriptor(
+  RegExp.prototype,
+  "source",
+)?.get as (this: RegExp) => string;
+
+export function isRegExp(something: unknown): something is RegExp {
+  if (something instanceof RegExp) {
+    return true;
+  }
+  if (something === null || typeof something !== "object") {
+    return false;
+  }
+  try {
+    regexpSourceGetter.call(something as RegExp);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// ----------------------------------------------------------------
+
+const dateGetTime = Date.prototype.getTime;
+
+export function isDate(something: unknown): something is Date {
+  if (something instanceof Date) {
+    return true;
+  }
+  if (something === null || typeof something !== "object") {
+    return false;
+  }
+  if (Array.isArray(something)) {
+    return false;
+  }
+  const prototype = Object.getPrototypeOf(something);
+  if (prototype === null || prototype === Object.prototype) {
+    return false;
+  }
+  try {
+    dateGetTime.call(something);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// ----------------------------------------------------------------
+
+/**
+ * Trims the supplied Unicode characters from both ends of a string.
+ */
+export function trimChars(input: string, chars: string): string {
+  if (!input || !chars) {
+    return input;
+  }
+
+  let asciiOnly = true;
+  for (let i = chars.length; i--; ) {
+    if (chars.charCodeAt(i) > 127) {
+      asciiOnly = false;
+      break;
+    }
+  }
+
+  if (asciiOnly) {
+    let start = 0;
+    let end = input.length;
+
+    if (chars.length === 1) {
+      const charCode = chars.charCodeAt(0);
+      while (start < end && input.charCodeAt(start) === charCode) {
+        start++;
+      }
+      while (end > start && input.charCodeAt(end - 1) === charCode) {
+        end--;
+      }
+    } else {
+      while (start < end && chars.includes(input[start])) {
+        start++;
+      }
+      while (end > start && chars.includes(input[end - 1])) {
+        end--;
+      }
+    }
+
+    return start === 0 && end === input.length
+      ? input
+      : input.slice(start, end);
+  }
+
+  const values = Array.from(input);
+  const charactersToTrim = new Set(chars);
+  let start = 0;
+  let end = values.length;
+
+  while (start < end && charactersToTrim.has(values[start])) {
+    start++;
+  }
+  while (end > start && charactersToTrim.has(values[end - 1])) {
+    end--;
+  }
+
+  return start === 0 && end === values.length
+    ? input
+    : values.slice(start, end).join("");
 }
 
 // ----------------------------------------------------------------

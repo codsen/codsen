@@ -85,7 +85,12 @@ declare function isNum(something: unknown): something is number;
 declare function isInt(something: unknown): something is number;
 declare function isBool(something: unknown): something is boolean;
 declare function isNull(something: unknown): something is null;
-declare function isRegExp(something: any): something is RegExp;
+declare function isRegExp(something: unknown): something is RegExp;
+declare function isDate(something: unknown): something is Date;
+/**
+ * Trims the supplied Unicode characters from both ends of a string.
+ */
+declare function trimChars(input: string, chars: string): string;
 /**
  * Gives array of indexes of all found substring occurrences
  * @param string source string
@@ -255,6 +260,7 @@ export {
   isBool,
   isCurrencyChar,
   isCurrencySymbol,
+  isDate,
   isInt,
   isLatinLetter,
   isLetter,
@@ -286,6 +292,7 @@ export {
   singlePrime,
   stringSplice,
   thinSpace,
+  trimChars,
   uniq,
   version,
   voidTags,

@@ -144,7 +144,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-utils",
-    "size": 17859,
+    "size": 18803,
     "imports": []
   },
   {

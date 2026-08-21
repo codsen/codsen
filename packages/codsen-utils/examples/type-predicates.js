@@ -4,6 +4,7 @@ import { strict as assert } from "node:assert";
 
 import {
   isBool,
+  isDate,
   isInt,
   isNull,
   isNum,
@@ -17,5 +18,6 @@ assert.equal(isNum(Number.NaN), false);
 assert.equal(isInt(3), true);
 assert.equal(isInt(-1), false);
 assert.equal(isBool(false), true);
+assert.equal(isDate(new Date()), true);
 assert.equal(isNull(null), true);
 assert.equal(isRegExp(/value/), true);
