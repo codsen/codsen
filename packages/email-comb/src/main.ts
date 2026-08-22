@@ -37,8 +37,7 @@ import {
 } from "./util";
 
 const version: string = v;
-const labelOrOutputOpeningTagRegex =
-  /<(?:label|output)(?:[\t\n\f\r />])/i;
+const labelOrOutputOpeningTagRegex = /<(?:label|output)(?:[\t\n\f\r />])/i;
 
 declare let DEV: boolean;
 
@@ -1814,9 +1813,9 @@ function comb(str: string, opts?: InputOpts | null): Res {
             ) {
               DEV &&
                 console.log(
-                  `${`\u001b[${31}m${`PUSH [${singleSelectorStartedAt}, ${selectorEndsAt}, ${
-                      uglifiedBySelector.get(singleSelector)
-                  }]`}\u001b[${39}m`}`,
+                  `${`\u001b[${31}m${`PUSH [${singleSelectorStartedAt}, ${selectorEndsAt}, ${uglifiedBySelector.get(
+                    singleSelector,
+                  )}]`}\u001b[${39}m`}`,
                 );
               currentChunksMinifiedSelectors.push(
                 singleSelectorStartedAt,
@@ -2828,9 +2827,9 @@ function comb(str: string, opts?: InputOpts | null): Res {
               DEV &&
                 console.log(
                   `${`\u001b[${31}m${`PUSH [${bodyClass.valueStart}, ${i},
-                  ${
-                    uglifiedBySelector.get(`.${carvedClass}`)
-                  }]`}\u001b[${39}m`}`,
+                  ${uglifiedBySelector.get(
+                    `.${carvedClass}`,
+                  )}]`}\u001b[${39}m`}`,
                 );
               finalIndexesToDelete.push(
                 bodyClass.valueStart,
@@ -2968,9 +2967,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
             DEV &&
               console.log(
                 `${`\u001b[${31}m${`PUSH [${bodyId.valueStart}, ${i},
-                ${
-                  uglifiedBySelector.get(`#${carvedId}`)
-                }]`}\u001b[${39}m`}`,
+                ${uglifiedBySelector.get(`#${carvedId}`)}]`}\u001b[${39}m`}`,
               );
             finalIndexesToDelete.push(
               bodyId.valueStart,
@@ -3947,12 +3944,8 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
       // ================
 
       let preppedHeadSelectorsArr = Array.from(headSelectorsArr);
-      let preppedCanonicalSelectors = Array.from(
-        canonicalSelectorsByHeadChunk,
-      );
-      const allClassesAndIdsWithinBodySet = new Set(
-        allClassesAndIdsWithinBody,
-      );
+      let preppedCanonicalSelectors = Array.from(canonicalSelectorsByHeadChunk);
+      const allClassesAndIdsWithinBodySet = new Set(allClassesAndIdsWithinBody);
       let deletedFromHeadArr = [];
       DEV &&
         console.log(
@@ -3982,11 +3975,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         ) {
           DEV &&
             console.log(
-              `PUSH to deletedFromHeadArr[] [${JSON.stringify(
-                temp,
-                null,
-                4,
-              )}]`,
+              `PUSH to deletedFromHeadArr[] [${JSON.stringify(temp, null, 4)}]`,
             );
           deletedFromHeadArr.push(...temp);
           DEV &&

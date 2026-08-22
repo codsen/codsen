@@ -471,7 +471,9 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
         continue;
       }
       if (
-        coveredPrefixEnd === -1 ? oneRange[0] === 0 : oneRange[0] <= coveredPrefixEnd
+        coveredPrefixEnd === -1
+          ? oneRange[0] === 0
+          : oneRange[0] <= coveredPrefixEnd
       ) {
         // either it extends the prefix or it sits inside it - either way it is
         // spent, because the prefix never shrinks

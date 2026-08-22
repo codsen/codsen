@@ -1299,9 +1299,7 @@ export function omit(obj: JSONObject, keysToRemove: string[] = []): JSONObject {
   const keys = Object.keys(obj);
   // same crossover as pullAll() above - it is the product that decides
   const removals =
-    keys.length * keysToRemove.length < 400
-      ? undefined
-      : new Set(keysToRemove);
+    keys.length * keysToRemove.length < 400 ? undefined : new Set(keysToRemove);
 
   for (const key of keys) {
     if (removals ? removals.has(key) : keysToRemove.includes(key)) {

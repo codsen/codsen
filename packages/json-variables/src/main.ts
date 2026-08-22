@@ -288,11 +288,7 @@ function findValues(
       }
     } else {
       // it's a path (contains dots)
-      let gotPath = getByKeyCached(
-        input,
-        getTopmostKey(varName),
-        byKeyCache,
-      );
+      let gotPath = getByKeyCached(input, getTopmostKey(varName), byKeyCache);
       DEV && console.log(`*** gotPath = ${JSON.stringify(gotPath, null, 4)}`);
       if (gotPath.length) {
         for (let y = 0, len2 = gotPath.length; y < len2; y++) {
