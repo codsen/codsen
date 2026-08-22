@@ -120,16 +120,16 @@ test("14 - minified - new nested path", () => {
 // Create keys
 // -----------------------------------------------------------------------------
 
-test(`99.01 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should set value under array`, () => {
+test(`15 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should set value under array`, () => {
   // an all-digits segment under a key that does not exist yet makes an array
   let res = set("{}", "b.0", "c");
-  equal(res, '{"b":["c"]}', "99.01.01");
+  equal(res, '{"b":["c"]}', "15.01");
   res = set(res, "b.1", "d");
-  equal(res, '{"b":["c","d"]}', "99.01.02");
-  equal(JSON.parse(res), { b: ["c", "d"] }, "99.01.03");
+  equal(res, '{"b":["c","d"]}', "15.02");
+  equal(JSON.parse(res), { b: ["c", "d"] }, "15.03");
 });
 
-test(`99.02 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should create intermediate objects`, () => {
+test(`16 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should create intermediate objects`, () => {
   let result = `{
   "a": "b",
   "b": {
@@ -146,10 +146,10 @@ test(`99.02 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - shou
     }
   }
 }`;
-  setter(equal, testObj, result, "c.d.e.f", "l", "99.02");
+  setter(equal, testObj, result, "c.d.e.f", "l", "06.16");
 });
 
-test(`99.03 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should create intermediate objects - path as array`, () => {
+test(`17 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should create intermediate objects - path as array`, () => {
   let result = `{
   "a": "b",
   "b": {
@@ -166,12 +166,12 @@ test(`99.03 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - shou
     }
   }
 }`;
-  setter(equal, testObj, result, ["c", "d", "e", "f"], "l", "99.03");
+  setter(equal, testObj, result, ["c", "d", "e", "f"], "l", "06.17");
 });
 
 // the hole object-path leaves at index zero serialises as null - the original
 // version of this test expected a literal "undefined", which is not JSON
-test(`99.04 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should create intermediate arrays`, () => {
+test(`18 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should create intermediate arrays`, () => {
   let result = `{
   "a": "b",
   "b": {
@@ -189,10 +189,10 @@ test(`99.04 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - shou
     ]
   ]
 }`;
-  setter(equal, testObj, result, "c.0.1.m", "l", "99.04");
+  setter(equal, testObj, result, "c.0.1.m", "l", "06.18");
 });
 
-test(`99.05 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should create intermediate arrays - path as array`, () => {
+test(`19 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should create intermediate arrays - path as array`, () => {
   let result = `{
   "a": "b",
   "b": {
@@ -217,20 +217,20 @@ test(`99.05 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - shou
   // address, and both build the array. setter()'s object-path leg would be
   // comparing two different questions, so this checks the string and the parsed
   // value directly
-  equal(set(testObj, ["c", "0", 1, "m"], "l"), result, "99.05.01");
+  equal(set(testObj, ["c", "0", 1, "m"], "l"), result, "19.01");
   equal(
     JSON.parse(set(testObj, ["c", "0", 1, "m"], "l")),
     JSON.parse(result),
-    "99.05.02",
+    "19.02",
   );
   equal(
     set(testObj, ["c", "0", 1, "m"], "l"),
     set(testObj, "c.0.1.m", "l"),
-    "99.05.03 - both spellings of the path mean the same thing",
+    "19.03 - both spellings of the path mean the same thing",
   );
 });
 
-test(`99.06 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should set value under integer-like key`, () => {
+test(`20 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should set value under integer-like key`, () => {
   let result = `{
   "a": "b",
   "b": {
@@ -241,10 +241,10 @@ test(`99.06 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - shou
   },
   "1a": "foo"
 }`;
-  setter(equal, testObj, result, "1a", "foo", "99.06");
+  setter(equal, testObj, result, "1a", "foo", "06.20");
 });
 
-test(`99.07 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should set value under integer-like key - path as array`, () => {
+test(`21 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should set value under integer-like key - path as array`, () => {
   let result = `{
   "a": "b",
   "b": {
@@ -255,15 +255,15 @@ test(`99.07 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - shou
   },
   "1a": "foo"
 }`;
-  setter(equal, testObj, result, ["1a"], "foo", "99.07");
+  setter(equal, testObj, result, ["1a"], "foo", "06.21");
 });
 
-test(`99.08 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should set value under integer-like key - path as array`, () => {
-  setter(equal, "[]", '["foo"]', [0], "foo", "99.08");
+test(`22 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should set value under integer-like key - path as array`, () => {
+  setter(equal, "[]", '["foo"]', [0], "foo", "06.22");
 });
 
-test(`99.09 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should set value under integer-like key - path as string`, () => {
-  setter(equal, "[]", '["foo"]', "0", "foo", "99.09");
+test(`23 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should set value under integer-like key - path as string`, () => {
+  setter(equal, "[]", '["foo"]', "0", "foo", "06.23");
 });
 
 test.run();

@@ -80,26 +80,26 @@ test("06 - the gap after the colon is copied from the input", () => {
 
 // what separates members is whatever already separates them - here the source
 // puts a space in front of its member, so the new one gets one too
-test("06b - the gap in front of a member is copied from the input", () => {
-  setter(equal, '{ "a": "b" }', '{ "a": "b", "c": "d" }', "c", "d", "06b");
+test("07 - the gap in front of a member is copied from the input", () => {
+  setter(equal, '{ "a": "b" }', '{ "a": "b", "c": "d" }', "c", "d", "07");
 });
 
 // -----------------------------------------------------------------------------
 // containers that have to be created
 // -----------------------------------------------------------------------------
 
-test("07 - an empty object gets opened up", () => {
+test("08 - an empty object gets opened up", () => {
   setter(
     equal,
     '{\n  "scripts": {}\n}',
     '{\n  "scripts": {\n    "test": "uvu"\n  }\n}',
     "scripts.test",
     "uvu",
-    "07",
+    "08",
   );
 });
 
-test("08 - the whole missing chain gets built", () => {
+test("09 - the whole missing chain gets built", () => {
   let result = `{
   "name": "demo",
   "version": "1.0.0",
@@ -110,64 +110,64 @@ test("08 - the whole missing chain gets built", () => {
     "uvu": "^0.5.0"
   }
 }`;
-  setter(equal, pkg, result, "dependencies.uvu", "^0.5.0", "08");
+  setter(equal, pkg, result, "dependencies.uvu", "^0.5.0", "09");
 });
 
-test("09 - a whole chain, several levels deep", () => {
+test("10 - a whole chain, several levels deep", () => {
   setter(
     equal,
     '{\n  "a": "b"\n}',
     '{\n  "a": "b",\n  "c": {\n    "d": {\n      "e": "f"\n    }\n  }\n}',
     "c.d.e",
     "f",
-    "09",
+    "10",
   );
 });
 
 // an all-digits segment asks for an array, anything else asks for an object -
 // the same call object-path makes
-test("10 - an all-digits segment creates an array", () => {
+test("11 - an all-digits segment creates an array", () => {
   setter(
     equal,
     '{\n  "a": "b"\n}',
     '{\n  "a": "b",\n  "files": [\n    "dist"\n  ]\n}',
     "files.0",
     "dist",
-    "10",
+    "11",
   );
 });
 
-test("11 - a segment that only looks numeric creates an object", () => {
-  setter(equal, '{"a":"b"}', '{"a":"b","c":{"01":"d"}}', "c.01", "d", "11");
+test("12 - a segment that only looks numeric creates an object", () => {
+  setter(equal, '{"a":"b"}', '{"a":"b","c":{"01":"d"}}', "c.01", "d", "12");
 });
 
 // -----------------------------------------------------------------------------
 // arrays
 // -----------------------------------------------------------------------------
 
-test("12 - appending to an array", () => {
+test("13 - appending to an array", () => {
   setter(
     equal,
     '{\n  "files": [\n    "dist"\n  ]\n}',
     '{\n  "files": [\n    "dist",\n    "types"\n  ]\n}',
     "files.1",
     "types",
-    "12",
+    "13",
   );
 });
 
-test("13 - appending to an empty array", () => {
-  setter(equal, '{"a":[]}', '{"a":["b"]}', "a.0", "b", "13");
+test("14 - appending to an empty array", () => {
+  setter(equal, '{"a":[]}', '{"a":["b"]}', "a.0", "b", "14");
 });
 
-test("14 - a key added to an object inside an array", () => {
+test("15 - a key added to an object inside an array", () => {
   setter(
     equal,
     '{\n  "a": [\n    {\n      "b": 1\n    }\n  ]\n}',
     '{\n  "a": [\n    {\n      "b": 1,\n      "c": 2\n    }\n  ]\n}',
     "a.0.c",
     2,
-    "14",
+    "15",
   );
 });
 
@@ -175,12 +175,12 @@ test("14 - a key added to an object inside an array", () => {
 // values other than strings
 // -----------------------------------------------------------------------------
 
-test("15 - number", () => {
-  setter(equal, '{"a":"b"}', '{"a":"b","c":42}', "c", 42, "15");
+test("16 - number", () => {
+  setter(equal, '{"a":"b"}', '{"a":"b","c":42}', "c", 42, "16");
 });
 
-test("16 - zero", () => {
-  setter(equal, '{"a":"b"}', '{"a":"b","c":0}', "c", 0, "16");
+test("17 - zero", () => {
+  setter(equal, '{"a":"b"}', '{"a":"b","c":0}', "c", 0, "17");
 });
 
 // -----------------------------------------------------------------------------
@@ -190,27 +190,27 @@ test("16 - zero", () => {
 // about with any confidence, so the input comes back as it went in.
 // -----------------------------------------------------------------------------
 
-test("17 - a path under a string is left alone", () => {
-  is(set('{"a":"b"}', "a.c", "x"), '{"a":"b"}', "17.01");
+test("18 - a path under a string is left alone", () => {
+  is(set('{"a":"b"}', "a.c", "x"), '{"a":"b"}', "18.01");
 });
 
-test("18 - a path under a number is left alone", () => {
-  is(set('{"a":1}', "a.c", "x"), '{"a":1}', "18.01");
+test("19 - a path under a number is left alone", () => {
+  is(set('{"a":1}', "a.c", "x"), '{"a":1}', "19.01");
 });
 
-test("19 - a non-index segment on an array is left alone", () => {
-  is(set('{"a":[]}', "a.x", "y"), '{"a":[]}', "19.01");
+test("20 - a non-index segment on an array is left alone", () => {
+  is(set('{"a":[]}', "a.x", "y"), '{"a":[]}', "20.01");
 });
 
-test("20 - an empty path segment is left alone", () => {
-  is(set('{"a":"b"}', "c..d", "x"), '{"a":"b"}', "20.01");
+test("21 - an empty path segment is left alone", () => {
+  is(set('{"a":"b"}', "c..d", "x"), '{"a":"b"}', "21.01");
 });
 
 // -----------------------------------------------------------------------------
 // setting a key that IS there still just replaces it
 // -----------------------------------------------------------------------------
 
-test("21 - an existing key is replaced, not duplicated", () => {
+test("22 - an existing key is replaced, not duplicated", () => {
   let result = `{
   "name": "demo",
   "version": "2.0.0",
@@ -218,10 +218,10 @@ test("21 - an existing key is replaced, not duplicated", () => {
     "build": "tsc"
   }
 }`;
-  setter(equal, pkg, result, "version", "2.0.0", "21");
+  setter(equal, pkg, result, "version", "2.0.0", "22");
 });
 
-test("22 - an existing nested key is replaced, not duplicated", () => {
+test("23 - an existing nested key is replaced, not duplicated", () => {
   let result = `{
   "name": "demo",
   "version": "1.0.0",
@@ -229,7 +229,7 @@ test("22 - an existing nested key is replaced, not duplicated", () => {
     "build": "rollup"
   }
 }`;
-  setter(equal, pkg, result, "scripts.build", "rollup", "22");
+  setter(equal, pkg, result, "scripts.build", "rollup", "23");
 });
 
 test.run();

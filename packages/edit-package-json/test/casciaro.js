@@ -235,7 +235,7 @@ test(`14 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should 
   setter(equal, testObj, result, "b.e.1.f", null, "04.14");
 });
 
-test(`14b - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should add a key to an object inside an array`, () => {
+test(`15 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should add a key to an object inside an array`, () => {
   let result = `{
   "a": "b",
   "b": {
@@ -245,10 +245,10 @@ test(`14b - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should
     "f": "i"
   }
 }`;
-  setter(equal, testObj, result, "b.e.1.g", "f", "04.14b");
+  setter(equal, testObj, result, "b.e.1.g", "f", "04.15");
 });
 
-test(`15 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should set value under array`, () => {
+test(`16 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should set value under array`, () => {
   let result = `{
   "a": "b",
   "b": {
@@ -258,10 +258,10 @@ test(`15 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should 
     "f": "i"
   }
 }`;
-  setter(equal, testObj, result, ["b", "e", 1, "f"], null, "04.15");
+  setter(equal, testObj, result, ["b", "e", 1, "f"], null, "04.16");
 });
 
-test(`15b - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should add a key to an object inside an array - path as array`, () => {
+test(`17 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should add a key to an object inside an array - path as array`, () => {
   let result = `{
   "a": "b",
   "b": {
@@ -271,30 +271,30 @@ test(`15b - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should
     "f": "i"
   }
 }`;
-  setter(equal, testObj, result, ["b", "e", 1, "g"], "f", "04.15b");
+  setter(equal, testObj, result, ["b", "e", 1, "g"], "f", "04.17");
 });
 
-test(`16 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - minimal case, arrays 1`, () => {
+test(`18 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - minimal case, arrays 1`, () => {
   let source = `{
   "a": [{}, { "b": "c" }]
 }`;
   let result = `{
   "a": [{}, { "b": null }]
 }`;
-  setter(equal, source, result, "a.1.b", null, "04.16");
+  setter(equal, source, result, "a.1.b", null, "04.18");
 });
 
-test(`17 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - minimal case, arrays 2`, () => {
+test(`19 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - minimal case, arrays 2`, () => {
   let source = `{
   "a": [{ "b": "c" }]
 }`;
   let result = `{
   "a": [{ "b": null }]
 }`;
-  setter(equal, source, result, "a.0.b", null, "04.17");
+  setter(equal, source, result, "a.0.b", null, "04.19");
 });
 
-test(`18 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - square bracket as value`, () => {
+test(`20 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - square bracket as value`, () => {
   let source = `{
   "a": "[",
   "k": {
@@ -309,10 +309,10 @@ test(`18 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - square 
     "no": "9"
   }
 }`;
-  setter(equal, source, result, "k.no", "9", "04.18");
+  setter(equal, source, result, "k.no", "9", "04.20");
 });
 
-test(`19 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - curly bracket as value`, () => {
+test(`21 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - curly bracket as value`, () => {
   let source = `{
   "a": "{",
   "k": {
@@ -327,13 +327,13 @@ test(`19 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - curly b
     "no": "9"
   }
 }`;
-  setter(equal, source, result, "k.no", "9", "04.19");
+  setter(equal, source, result, "k.no", "9", "04.21");
 });
 
-test(`20 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - curly bracket as value`, () => {
+test(`22 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - curly bracket as value`, () => {
   let source = '{"a": {},"gh": {"mn": "1","yz": "-"}}';
   let result = '{"a": {},"gh": {"mn": "1","yz": "x"}}';
-  setter(equal, source, result, "gh.yz", "x", "04.20");
+  setter(equal, source, result, "gh.yz", "x", "04.22");
 });
 
 test.run();
