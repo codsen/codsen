@@ -33,6 +33,8 @@ interface Opts {
   dedupeStringsInArrayValues: boolean;
   mergeBoolsUsingOrNotAnd: boolean;
   useNullAsExplicitFalse: boolean;
+  /** Reuse exclusively owned input trees without repeated references. Inputs may be mutated. */
+  reuseInputs?: boolean;
 }
 declare const defaults: Opts;
 /**

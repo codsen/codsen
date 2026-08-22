@@ -1,7 +1,6 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import {
-  deepClone as clone,
   existy,
   formatDiagnosticValue,
   isPlainObject as isObj,
@@ -13,11 +12,9 @@ import { flattenAllArrays } from "object-flatten-all-arrays";
 import { mergeAdvanced } from "object-merge-advanced";
 import { noNewKeys } from "object-no-new-keys";
 import { setAllValuesTo } from "object-set-all-values-to";
-import pOne from "p-one";
 import pReduce from "p-reduce";
 import semverCompare from "semver-compare";
 import sortKeys from "sort-keys";
-import typ from "type-detect";
 
 import { version as v } from "../package.json";
 
@@ -25,16 +22,48 @@ const version: string = v;
 
 declare let DEV: boolean;
 
-function containsCommentMarker(
-  input: string | Obj | unknown[],
-  marker: string,
-): boolean {
+const flattenOpts = {
+  flattenArraysContainingStringsToBeEmpty: true,
+};
+const reuseFlattenOpts = {
+  ...flattenOpts,
+  reuseInput: true,
+};
+const reuseMergeOpts = {
+  mergeArraysContainingStringsToBeEmpty: true,
+  reuseInputs: true,
+};
+
+function containsArray(input: unknown): boolean {
+  if (Array.isArray(input)) {
+    return true;
+  }
+  if (isObj(input)) {
+    for (const key of Object.keys(input)) {
+      if (containsArray(input[key])) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function containsCommentMarker(input: unknown, marker: string): boolean {
   if (typeof input === "string") {
     return input.includes(marker);
   }
-  return Array.isArray(input)
-    ? input.includes(marker)
-    : Object.values(input).includes(marker);
+  if (Array.isArray(input)) {
+    return input.includes(marker);
+  }
+  if (!isObj(input)) {
+    return false;
+  }
+  for (const key of Object.keys(input)) {
+    if (input[key] === marker) {
+      return true;
+    }
+  }
+  return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -122,54 +151,34 @@ function getKeyset(
         4,
       )}`,
     );
-  let culpritIndex: any;
-  let culpritVal: any;
-
-  return new Promise((resolve, reject) => {
-    // Map over input array of promises. If any resolve to non-plain-object,
-    // final returned promise will resolve to true. Otherwise, false.
-    pOne(arrOfPromises, (element, index) => {
-      if (!isObj(element)) {
-        culpritIndex = index;
-        culpritVal = element;
-        return true;
-      }
-      return false;
-    }).then((res) => {
-      // truthy option means previous check detected a promise within
-      // "arrOfPromises" which doesn't resolve to a plain object
-      if (res) {
-        reject(
-          Error(
-            `json-comb-core/getKeyset(): [THROW_ID_04] Oops! ${culpritIndex}th element resolved not to a plain object but to a ${typeof culpritVal}\n${JSON.stringify(
-              culpritVal,
-              null,
-              4,
-            )}`,
-          ),
+  let schemaMayNeedFlattening = false;
+  return pReduce(
+    arrOfPromises,
+    (previousValue, currentValue, index) => {
+      if (!isObj(currentValue)) {
+        throw new Error(
+          `json-comb-core/getKeyset(): [THROW_ID_04] Oops! ${index}th element resolved not to a plain object but to a ${typeof currentValue}\n${JSON.stringify(
+            currentValue,
+            null,
+            4,
+          )}`,
         );
-        return;
       }
-      return pReduce(
-        arrOfPromises, // input
-        (previousValue, currentValue: Obj) =>
-          mergeAdvanced(
-            flattenAllArrays(previousValue, {
-              flattenArraysContainingStringsToBeEmpty: true,
-            }),
-            flattenAllArrays(currentValue, {
-              flattenArraysContainingStringsToBeEmpty: true,
-            }),
-            {
-              mergeArraysContainingStringsToBeEmpty: true,
-            },
-          ), // reducer
-        {}, // initialValue
-      ).then((res2) => {
-        resolve(setAllValuesTo(res2, resolvedOpts.placeholder));
-      });
-    });
-  });
+      const flattenedCurrentValue = flattenAllArrays(currentValue, flattenOpts);
+      const result = mergeAdvanced(
+        schemaMayNeedFlattening
+          ? flattenAllArrays(previousValue, reuseFlattenOpts)
+          : previousValue,
+        flattenedCurrentValue,
+        reuseMergeOpts,
+      );
+      if (!schemaMayNeedFlattening && containsArray(flattenedCurrentValue)) {
+        schemaMayNeedFlattening = true;
+      }
+      return result;
+    },
+    {},
+  ).then((result) => setAllValuesTo(result, resolvedOpts.placeholder));
 }
 
 // -----------------------------------------------------------------------------
@@ -201,30 +210,31 @@ function getKeysetSync(arr: Obj[], opts?: Partial<GetKeysetOpts>): Obj {
   }
 
   let schemaObj = {};
-  let resolvedArr = clone(arr);
+  let schemaMayNeedFlattening = false;
   let defaults: GetKeysetOpts = {
     placeholder: false,
   };
   let resolvedOpts: GetKeysetOpts = { ...defaults, ...opts };
 
-  let fOpts = {
-    flattenArraysContainingStringsToBeEmpty: true,
-  };
-
-  resolvedArr.forEach((obj, i) => {
+  for (let i = 0; i < arr.length; i++) {
+    const obj = arr[i];
     if (!isObj(obj)) {
       throw new TypeError(
         `json-comb-core/getKeysetSync(): [THROW_ID_09] Non-object (${typeof obj}) detected within an array! It's the ${i}th element: ${formatDiagnosticValue(obj, 4)}`,
       );
     }
+    const flattenedObj = flattenAllArrays(obj, flattenOpts);
     schemaObj = mergeAdvanced(
-      flattenAllArrays(schemaObj, fOpts),
-      flattenAllArrays(obj, fOpts),
-      {
-        mergeArraysContainingStringsToBeEmpty: true,
-      },
+      schemaMayNeedFlattening
+        ? flattenAllArrays(schemaObj, reuseFlattenOpts)
+        : schemaObj,
+      flattenedObj,
+      reuseMergeOpts,
     );
-  });
+    if (!schemaMayNeedFlattening && containsArray(flattenedObj)) {
+      schemaMayNeedFlattening = true;
+    }
+  }
   schemaObj = sortAllObjectsSync(
     setAllValuesTo(schemaObj, resolvedOpts.placeholder),
   );
@@ -296,11 +306,7 @@ function enforceKeyset(
       );
       return;
     }
-    resolve(
-      sortAllObjectsSync(
-        clone(fillMissing(clone(obj), clone(schemaKeyset), resolvedOpts)),
-      ),
-    );
+    resolve(sortAllObjectsSync(fillMissing(obj, schemaKeyset, resolvedOpts)));
   });
 }
 
@@ -349,9 +355,7 @@ function enforceKeysetSync(
       `json-comb-core/enforceKeysetSync(): [THROW_ID_19] Array resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n${formatDiagnosticValue(resolvedOpts.doNotFillThesePathsIfTheyContainPlaceholders, 4)}`,
     );
   }
-  return sortAllObjectsSync(
-    fillMissing(clone(obj), schemaKeyset, resolvedOpts),
-  );
+  return sortAllObjectsSync(fillMissing(obj, schemaKeyset, resolvedOpts));
 }
 
 // -----------------------------------------------------------------------------
@@ -422,16 +426,6 @@ function findUnusedSync(
   if (!resolvedOpts.comments) {
     resolvedOpts.comments = "";
   }
-  let resolvedArr = clone(arr);
-
-  // ---------------------------------------------------------------------------
-
-  function removeLeadingDot(something: string[]) {
-    return something.map((finding) =>
-      finding.charAt(0) === "." ? finding.slice(1) : finding,
-    );
-  }
-
   function findUnusedSyncInner(
     arr1: Obj[],
     opts1: FindUnusedSyncOpts,
@@ -444,81 +438,73 @@ function findUnusedSync(
     let keySet: Obj;
     if (arr1.every((el) => isObj(el))) {
       keySet = getKeysetSync(arr1);
+      const allKeys = Object.keys(keySet);
       //
       // ------ PART 1 ------
       // iterate all objects within given arr1ay, find unused keys
       //
       if (arr1.length > 1) {
-        let unusedKeys = Object.keys(keySet).filter((key) =>
-          arr1.every(
-            (obj) =>
-              (obj[key] === opts1?.placeholder || obj[key] === undefined) &&
-              (!opts1?.comments || !containsCommentMarker(key, opts1.comments)),
-          ),
-        );
-        // DEV && console.log(`unusedKeys = ${JSON.stringify(unusedKeys, null, 4)}`)
-        res = res.concat(unusedKeys.map((el) => `${path}.${el}`));
-        // DEV && console.log(`res = ${JSON.stringify(res, null, 4)}`)
+        for (const key of allKeys) {
+          if (
+            arr1.every(
+              (obj) =>
+                (obj[key] === opts1.placeholder || obj[key] === undefined) &&
+                (!opts1.comments ||
+                  !containsCommentMarker(key, opts1.comments)),
+            )
+          ) {
+            res.push(`${path}.${key}`);
+          }
+        }
       }
       // ------ PART 2 ------
       // no matter how many objects are there within our array, if any values
       // contain objects or arrays, traverse them recursively
       //
-      let keys: string[] = [].concat(
-        ...(Object.keys(keySet) as any[]).filter(
-          (key) => isObj(keySet[key]) || Array.isArray(keySet[key]),
-        ),
-      );
-      let keysContents = keys.map((key) => typ(keySet[key]));
-
-      // can't use map() because we want to prevent nulls being written.
-      // hence the reduce() contraption
-      let extras = keys.map((el) =>
-        [].concat(
-          ...(arr1 as any[]).reduce((res1, obj) => {
-            if (
-              obj &&
-              existy(obj[el]) &&
-              (!opts1 || obj[el] !== opts1.placeholder)
-            ) {
-              if (
-                !opts1?.comments ||
-                !containsCommentMarker(obj[el], opts1.comments)
-              ) {
-                res1.push(obj[el]);
-              }
-            }
-            return res1;
-          }, []),
-        ),
+      const keys = allKeys.filter(
+        (key) => isObj(keySet[key]) || Array.isArray(keySet[key]),
       );
       let appendix = "";
-      let innerDot = "";
 
-      if (extras.length) {
-        extras.forEach((singleExtra, i) => {
-          if (keysContents[i] === "Array") {
-            appendix = `[${i}]`;
+      keys.forEach((key, i) => {
+        const singleExtra: any[] = [];
+        for (const obj of arr1) {
+          if (
+            obj &&
+            existy(obj[key]) &&
+            obj[key] !== opts1.placeholder &&
+            (!opts1.comments ||
+              !containsCommentMarker(obj[key], opts1.comments))
+          ) {
+            if (Array.isArray(obj[key])) {
+              singleExtra.push(...obj[key]);
+            } else {
+              singleExtra.push(obj[key]);
+            }
           }
-          innerDot = ".";
-          res = findUnusedSyncInner(
-            singleExtra,
-            opts1,
-            res,
-            path + innerDot + keys[i] + appendix,
-          );
-        });
-      }
+        }
+        if (Array.isArray(keySet[key])) {
+          appendix = `[${i}]`;
+        }
+        res = findUnusedSyncInner(
+          singleExtra,
+          opts1,
+          res,
+          `${path}.${key}${appendix}`,
+        );
+      });
     } else if (arr1.every((el) => Array.isArray(el))) {
       (arr1 as any as any[][]).forEach((singleArray, i) => {
         res = findUnusedSyncInner(singleArray, opts1, res, `${path}[${i}]`);
       });
     }
 
-    return removeLeadingDot(res);
+    return res;
   }
 
-  return findUnusedSyncInner(resolvedArr, resolvedOpts);
+  return findUnusedSyncInner(arr, resolvedOpts).map((finding) =>
+    finding.charAt(0) === "." ? finding.slice(1) : finding,
+  );
 }
 
 // -----------------------------------------------------------------------------

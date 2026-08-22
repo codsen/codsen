@@ -633,4 +633,20 @@ test("21 - dangerous property names stay own and cannot pollute prototypes", () 
   equal({}.alsoPolluted, undefined, "21.07");
 });
 
+test("22 - reuseInput reuses owned input", () => {
+  let input = {
+    nested: [{ a: 1 }, { b: 2 }],
+  };
+  let result = flattenAllArrays(input, { reuseInput: true });
+
+  is(result, input, "22.01");
+  equal(
+    input,
+    {
+      nested: [{ a: 1, b: 2 }],
+    },
+    "22.02",
+  );
+});
+
 test.run();

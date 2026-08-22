@@ -1,4 +1,10 @@
 {
   "4.1.3": 15_634,
+  "lastSlowerRun": {
+    "against": 15_634,
+    "score": 13_595,
+    "version": "4.2.1",
+    "worst": 13_595
+  },
   "lastVersion": 15_634
 }

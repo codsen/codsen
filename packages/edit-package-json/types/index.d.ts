@@ -3,7 +3,7 @@ interface Inputs {
   str: string;
   path: string;
   valToInsert?: string | number;
-  mode: "set" | "del";
+  mode: "set" | "del" | "locate";
 }
 declare function set(
   str: string,

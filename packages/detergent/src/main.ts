@@ -15,14 +15,12 @@ import {
 import he from "he";
 import { rApply } from "ranges-apply";
 import { rInvert } from "ranges-invert";
-import { rProcessOutside } from "ranges-process-outside";
 import { Ranges } from "ranges-push";
 import { collapse } from "string-collapse-white-space";
 import { fixEnt } from "string-fix-broken-named-entities";
 import { chompLeft, left, leftStopAtNewLines, right } from "string-left-right";
 import { removeWidows } from "string-remove-widows";
 import { type CbObj, stripHtml } from "string-strip-html";
-import { trimSpaces } from "string-trim-spaces-only";
 import { version as v } from "../package.json";
 import { processCharacter } from "./processCharacter";
 import {
@@ -37,6 +35,30 @@ declare let DEV: boolean;
 
 const version: string = v;
 // import escape from "js-string-escape";
+
+const ansiPattern = ansiRegex();
+
+function isTrimmedWhitespace(char: string): boolean {
+  return char === " " || char === "\r" || char === "\n" || char === "\t";
+}
+
+function trimOuterWhitespace(str: string): string {
+  let start = 0;
+  let end = str.length;
+
+  while (start < end && isTrimmedWhitespace(str[start])) {
+    start += 1;
+  }
+  while (end > start && isTrimmedWhitespace(str[end - 1])) {
+    end -= 1;
+  }
+
+  return start === 0 && end === str.length ? str : str.slice(start, end);
+}
+
+function isNum(something: unknown): boolean {
+  return Number.isInteger(something);
+}
 
 /**
  * Extracts, cleans and encodes text
@@ -135,14 +157,6 @@ function det(str: string, opts?: Partial<Opts>): Res {
   // take measures to ignore ampersand encoding.
   let skipArr = new Ranges();
 
-  function applyAndWipe(): void {
-    str = rApply(str, finalIndexesToDelete.current());
-    finalIndexesToDelete.wipe();
-    // skipArr.wipe();
-  }
-  function isNum(something: any): boolean {
-    return Number.isInteger(something);
-  }
   let state: State = {
     onUrlCurrently: false,
   };
@@ -194,13 +208,13 @@ function det(str: string, opts?: Partial<Opts>): Res {
     console.log(
       `${`\u001b[${90}m${`================= NEXT STEP. Initial =================`}\u001b[${39}m`}`,
     );
-  str = trimSpaces(str.replace(ansiRegex(), "").replace(/\u200A/g, " "), {
-    cr: true,
-    lf: true,
-    tab: true,
-    space: true,
-    nbsp: false,
-  }).res;
+  if (str.includes("\u001B") || str.includes("\u009B")) {
+    str = str.replace(ansiPattern, "");
+  }
+  if (str.includes("\u200A")) {
+    str = str.replace(/\u200A/g, " ");
+  }
+  str = trimOuterWhitespace(str);
 
   DEV &&
     console.log(
@@ -210,15 +224,17 @@ function det(str: string, opts?: Partial<Opts>): Res {
   // ---------------------------------------------------------------------------
   // NEXT STEP.
 
-  let temp = str;
-  let lastVal;
-  do {
-    lastVal = temp;
-    temp = he.decode(temp);
-  } while (temp !== str && lastVal !== temp);
+  if (str.includes("&")) {
+    let temp = str;
+    let lastVal;
+    do {
+      lastVal = temp;
+      temp = he.decode(temp);
+    } while (temp !== str && lastVal !== temp);
 
-  if (str !== temp) {
-    str = temp;
+    if (str !== temp) {
+      str = temp;
+    }
   }
 
   DEV &&
@@ -245,7 +261,12 @@ function det(str: string, opts?: Partial<Opts>): Res {
   // that's mostly some nasties converted into spaces - those spaces will
   // be needed to already by there in the main loop
 
-  for (let i = 0, len = str.length; i < len; i++) {
+  const replacementCharacterAt = str.indexOf("\uFFFD");
+  for (
+    let i = replacementCharacterAt;
+    i !== -1;
+    i = str.indexOf("\uFFFD", i + 1)
+  ) {
     if (str[i].charCodeAt(0) === 65533) {
       // REPLACEMENT CHARACTER, \uFFFD, or "�"
       DEV && console.log(`main.js: entering charcode #65533 catch clauses`);
@@ -337,7 +358,10 @@ function det(str: string, opts?: Partial<Opts>): Res {
   // ---------------------------------------------------------------------------
   // NEXT STEP.
 
-  applyAndWipe();
+  if (replacementCharacterAt !== -1) {
+    str = rApply(str, finalIndexesToDelete.current());
+    finalIndexesToDelete.wipe();
+  }
 
   // ---------------------------------------------------------------------------
   // NEXT STEP.
@@ -349,7 +373,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
       `${`\u001b[${90}m${`================= NEXT STEP. fix broken HTML entity references =================`}\u001b[${39}m`}`,
     );
 
-  let entityFixes = fixEnt(str, { decode: false });
+  let entityFixes = fixEnt(str);
   if (entityFixes?.length) {
     // 1. report option as applicable:
     applicableOpts.fixBrokenEntities = true;
@@ -486,6 +510,9 @@ function det(str: string, opts?: Partial<Opts>): Res {
         );
 
       // if it's a tag
+      const tagName =
+        typeof tag.name === "string" ? tag.name.toLowerCase() : null;
+
       if (
         (isNum(tag.lastOpeningBracketAt) &&
           isNum(tag.lastClosingBracketAt) &&
@@ -522,11 +549,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
         // 2. strip tag if resolvedOpts.stripHtml is enabled
         if (
           resolvedOpts.stripHtml &&
-          (!tag.name ||
-            (typeof tag.name === "string" &&
-              !resolvedOpts.stripHtmlButIgnoreTags.includes(
-                tag.name.toLowerCase(),
-              )))
+          (!tagName || !resolvedOpts.stripHtmlButIgnoreTags.includes(tagName))
         ) {
           // 1. strip tag
           DEV && console.log(`strip tag clauses`);
@@ -536,17 +559,17 @@ function det(str: string, opts?: Partial<Opts>): Res {
             Array.isArray(resolvedOpts.stripHtmlAddNewLine) &&
             resolvedOpts.stripHtmlAddNewLine.length &&
             resolvedOpts.stripHtmlAddNewLine.some(
-              (tagName) =>
-                (tagName.startsWith("/") &&
+              (configuredTagName) =>
+                (configuredTagName.startsWith("/") &&
                   // present slash will be reported for both frontal and
                   // self-closing cases: </td> and <br/> but we want only
                   // frontal, so...
                   tag.slashPresent &&
                   // additional check, is slash frontal
                   tag.slashPresent < tag.nameEnds &&
-                  typeof tag.name === "string" &&
-                  tag.name.toLowerCase() === tagName.slice(1)) ||
-                (!tagName.startsWith("/") &&
+                  tagName !== null &&
+                  tagName === configuredTagName.slice(1)) ||
+                (!configuredTagName.startsWith("/") &&
                   !(
                     // slash is present
                     (
@@ -555,8 +578,8 @@ function det(str: string, opts?: Partial<Opts>): Res {
                       tag.slashPresent < tag.nameEnds
                     )
                   ) &&
-                  typeof tag.name === "string" &&
-                  tag.name.toLowerCase() === removeTrailingSlash(tagName)),
+                  tagName !== null &&
+                  tagName === removeTrailingSlash(configuredTagName)),
             )
           ) {
             DEV && console.log(`resolvedOpts.stripHtmlAddNewLine clauses`);
@@ -663,10 +686,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
         } else {
           DEV && console.log("- not stripping tags");
           // 3. add closing slash on void tags if XHTML mode is on
-          if (
-            typeof tag.name === "string" &&
-            voidTags.includes(tag.name.toLowerCase())
-          ) {
+          if (tagName !== null && voidTags.includes(tagName)) {
             //
             // IF A VOID TAG
             //
@@ -903,8 +923,8 @@ function det(str: string, opts?: Partial<Opts>): Res {
                 tag.nameStarts,
               );
             } else if (
-              typeof tag.name === "string" &&
-              !voidTags.includes(tag.name.toLowerCase()) &&
+              tagName !== null &&
+              !voidTags.includes(tagName) &&
               str
                 .slice(tag.lastOpeningBracketAt + 1, tag.nameStarts)
                 .split("")
@@ -930,11 +950,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
         }
 
         // 9. if it's a BR, take a note of its closing bracket's location:
-        if (
-          typeof tag.name === "string" &&
-          tag.name.toLowerCase() === "br" &&
-          tag.lastClosingBracketAt
-        ) {
+        if (tagName === "br" && tag.lastClosingBracketAt) {
           brClosingBracketIndexesArr.push(tag.lastClosingBracketAt);
 
           DEV &&
@@ -949,8 +965,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
 
         // 10. remove whitespace in front of UL/LI tags
         if (
-          typeof tag.name === "string" &&
-          ["ul", "li"].includes(tag.name.toLowerCase()) &&
+          (tagName === "ul" || tagName === "li") &&
           !resolvedOpts.removeLineBreaks &&
           str[tag.lastOpeningBracketAt - 1] &&
           !str[tag.lastOpeningBracketAt - 1].trim() &&
@@ -1054,26 +1069,52 @@ function det(str: string, opts?: Partial<Opts>): Res {
       `${`\u001b[${90}m${`================= NEXT STEP. Process outside tags =================`}\u001b[${39}m`}`,
     );
 
-  DEV && console.log(`call rProcessOutside()`);
-  rProcessOutside(
-    str,
-    skipArr.current(),
-    (idxFrom, idxTo, offsetBy) => {
-      processCharacter(
-        str,
-        resolvedOpts,
-        finalIndexesToDelete,
-        idxFrom,
-        idxTo,
-        offsetBy,
-        brClosingBracketIndexesArr,
-        state,
-        applicableOpts,
-        eolChar,
-      );
-    },
-    true,
-  );
+  DEV && console.log(`process outside tag ranges`);
+  const tagRanges = skipArr.current();
+  let tagRangeIndex = 0;
+  let offset = 0;
+  const offsetBy = (amount: number): void => {
+    offset += amount;
+  };
+  for (let i = 0, len = str.length; i < len; ) {
+    const tagRange = tagRanges?.[tagRangeIndex];
+    if (tagRange) {
+      if (i >= tagRange[1]) {
+        tagRangeIndex += 1;
+        continue;
+      }
+      if (i >= tagRange[0]) {
+        i = tagRange[1];
+        tagRangeIndex += 1;
+        continue;
+      }
+    }
+
+    const firstCodeUnit = str.charCodeAt(i);
+    const characterLength =
+      firstCodeUnit >= 0xd800 &&
+      firstCodeUnit <= 0xdbff &&
+      str.charCodeAt(i + 1) >= 0xdc00 &&
+      str.charCodeAt(i + 1) <= 0xdfff
+        ? 2
+        : 1;
+    offset = 0;
+
+    processCharacter(
+      str,
+      resolvedOpts,
+      finalIndexesToDelete,
+      i,
+      i + characterLength,
+      offsetBy,
+      brClosingBracketIndexesArr,
+      state,
+      applicableOpts,
+      eolChar,
+    );
+
+    i += characterLength + offset;
+  }
 
   DEV &&
     console.log(
@@ -1118,7 +1159,8 @@ function det(str: string, opts?: Partial<Opts>): Res {
         4,
       )}`,
     );
-  applyAndWipe();
+  str = rApply(str, finalIndexesToDelete.current());
+  finalIndexesToDelete.wipe();
 
   DEV &&
     console.log(
@@ -1129,7 +1171,9 @@ function det(str: string, opts?: Partial<Opts>): Res {
       )}`,
     );
   // patch up spaces in front of <br/>
-  str = str.replace(/ (<br[/]?>)/g, "$1");
+  if (str.includes(" <br")) {
+    str = str.replace(/ (<br[/]?>)/g, "$1");
+  }
 
   str = str.replace(/(\r\n|\r|\n){3,}/g, `${eolChar}${eolChar}`);
 
@@ -1175,7 +1219,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
     targetLanguage: "html",
     UKPostcodes: true, // full-on setup
     hyphens: true, // widow protection around dashes is independent of conversion
-    tagRanges: skipArr.current(),
+    tagRanges,
   });
 
   DEV &&
@@ -1257,7 +1301,10 @@ function det(str: string, opts?: Partial<Opts>): Res {
         4,
       )}`,
     );
-  if (str.trim() !== str.replace(/\r\n|\r|\n/gm, " ").trim()) {
+  if (
+    (str.includes("\r") || str.includes("\n")) &&
+    str.trim() !== str.replace(/\r\n|\r|\n/gm, " ").trim()
+  ) {
     // 1. report resolvedOpts.removeLineBreaks might be applicable
     applicableOpts.removeLineBreaks = true;
 
@@ -1298,7 +1345,7 @@ function det(str: string, opts?: Partial<Opts>): Res {
       `${`\u001b[${90}m${`================= NEXT STEP. final =================`}\u001b[${39}m`}`,
     );
 
-  const result = rApply(str, finalIndexesToDelete.current());
+  const result = str;
   DEV &&
     result.split("").forEach((key, idx) => {
       console.log(

@@ -37,11 +37,39 @@ import {
 } from "./util";
 
 const version: string = v;
+const labelOrOutputOpeningTagRegex =
+  /<(?:label|output)(?:[\t\n\f\r />])/i;
 
 declare let DEV: boolean;
 
-function isHtmlAsciiWhitespace(char: string): boolean {
-  return ["\t", "\n", "\f", "\r", " "].includes(char);
+function isWhitespace(char: string | undefined): boolean {
+  if (!char) {
+    return false;
+  }
+
+  const charCode = char.charCodeAt(0);
+
+  return (
+    charCode === 32 ||
+    (charCode >= 9 && charCode <= 13) ||
+    (charCode > 127 && char.trim() === "")
+  );
+}
+
+function isHtmlAsciiWhitespace(char: string | undefined): boolean {
+  if (!char) {
+    return false;
+  }
+
+  const charCode = char.charCodeAt(0);
+
+  return (
+    charCode === 32 ||
+    charCode === 9 ||
+    charCode === 10 ||
+    charCode === 12 ||
+    charCode === 13
+  );
 }
 
 function extractCanonicalSelectors(str: string): string[] {
@@ -53,14 +81,18 @@ function characterSuitableForBodyToken(
   quoteless: boolean,
   quote: '"' | "'" | null = null,
 ): boolean {
-  return (
-    typeof char === "string" &&
-    !!char.length &&
-    !isHtmlAsciiWhitespace(char) &&
-    (quoteless
-      ? !`"'\`=<>`.includes(char)
-      : char !== quote && !"{}".includes(char))
-  );
+  if (!char || isHtmlAsciiWhitespace(char)) {
+    return false;
+  }
+
+  return quoteless
+    ? char !== '"' &&
+        char !== "'" &&
+        char !== "`" &&
+        char !== "=" &&
+        char !== "<" &&
+        char !== ">"
+    : char !== quote && char !== "{" && char !== "}";
 }
 
 interface NumValObj {
@@ -156,7 +188,15 @@ function comb(str: string, opts?: InputOpts | null): Res {
 
   // PS. badChars is also used
   function characterSuitableForNames(char: string): boolean {
-    return /[-_A-Za-z0-9]/.test(char); // notice, there's no dot or hash!
+    const charCode = char.charCodeAt(0);
+
+    return (
+      char === "-" ||
+      char === "_" ||
+      (charCode >= 48 && charCode <= 57) ||
+      (charCode >= 65 && charCode <= 90) ||
+      (charCode >= 97 && charCode <= 122)
+    ); // notice, there's no dot or hash!
   }
 
   interface BodyClassOrId {
@@ -304,6 +344,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
   // copy of the first round's ranges, used to skip the same ranges
   // in round 2:
   let round1RangesClone: null | Range[] = null;
+  let round1RangeIndex = 0;
 
   // counters:
   let nonIndentationsWhitespaceLength = 0;
@@ -479,6 +520,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
     ...resolvedOpts.doNotRemoveHTMLCommentsWhoseOpeningTagContains,
   ];
   const idsReferencedByForAttributes = extractIdsReferencedByForAttributes(str);
+  const idsReferencedByForAttributesSet = new Set(idsReferencedByForAttributes);
   if (!resolvedOpts.reportProgressFunc) {
     resolvedOpts.reportProgressFunc = null;
   }
@@ -570,13 +612,18 @@ function comb(str: string, opts?: InputOpts | null): Res {
   let currentlyWithinQuotes;
   let whitespaceStartedAt;
   let bodyClassesToDelete: string[] = [];
+  let bodyClassesToDeleteSet = new Set<string>();
   let lastPercentage = 0;
   let stateWithinBody;
   let stateWithinBodyInlineStyle: number | null;
   let bodyIdsToDelete: string[] = [];
+  let bodyIdsToDeleteSet = new Set<string>();
   let bodyIdsReferencedByForAttributes: string[] = [];
+  let bodyIdsReferencedByForAttributesSet = new Set<string>();
   let bodyCssToDelete: string[] = [];
   let headCssToDelete: string[] = [];
+  let headCssToDeleteSet = new Set<string>();
+  let uglifiedBySelector = new Map<string, string>();
   let currentChunk;
   let canDelete;
   let usedOnce;
@@ -701,14 +748,19 @@ function comb(str: string, opts?: InputOpts | null): Res {
     totalCounter += len;
 
     stepOuter: for (let i = 0; i < len; i++) {
+      const chr = str[i];
+      const chrCode = chr.charCodeAt(0);
+      const chrIsWhitespace =
+        chrCode === 32 ||
+        (chrCode >= 9 && chrCode <= 13) ||
+        (chrCode > 127 && chr.trim() === "");
+
       // logging:
       if (round !== 9) {
         DEV &&
           console.log(
             `${`\u001b[${39}m${`---${`\u001b[${32}m round ${round} \u001b[${39}m`}-----------------------`}\u001b[${36}m`} str[${`\u001b[${35}m${i}\u001b[${39}m`}] = ${
-              str[i] && str[i].trim() !== ""
-                ? str[i]
-                : JSON.stringify(str[i], null, 0)
+              chr && !chrIsWhitespace ? chr : JSON.stringify(chr, null, 0)
             }`,
           );
       }
@@ -766,8 +818,6 @@ function comb(str: string, opts?: InputOpts | null): Res {
           }
         }
       }
-
-      let chr = str[i];
 
       if (
         !stateWithinStyleTag &&
@@ -1257,7 +1307,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
           if (
             str[i + matchedAtTagsName.length + 1] === ";" ||
             (str[i + matchedAtTagsName.length + 1] &&
-              !str[i + matchedAtTagsName.length + 1].trim() &&
+              isWhitespace(str[i + matchedAtTagsName.length + 1]) &&
               matchRight(str, i + matchedAtTagsName.length + 1, ";", {
                 trimBeforeMatching: true,
                 cb: (_char, _theRemainderOfTheString, index) => {
@@ -1644,7 +1694,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
                   `SET ${`\u001b[${33}m${`singleSelectorStartedAt`}\u001b[${39}m`} = ${singleSelectorStartedAt}; ${`\u001b[${33}m${`singleSelectorType`}\u001b[${39}m`} = ${singleSelectorType}`,
                 );
             }
-          } else if (chr.trim()) {
+          } else if (!chrIsWhitespace) {
             // logging:
             DEV && console.log("██");
             if (chr === "}") {
@@ -1729,7 +1779,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
           if (
             round === 2 &&
             !selectorChunkCanBeDeleted &&
-            headCssToDelete.includes(singleSelector)
+            headCssToDeleteSet.has(singleSelector)
           ) {
             selectorChunkCanBeDeleted = true;
             DEV &&
@@ -1757,7 +1807,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
             // 1. uglify part
             if (
               resolvedOpts.uglify &&
-              !bodyIdsReferencedByForAttributes.includes(singleSelector) &&
+              !bodyIdsReferencedByForAttributesSet.has(singleSelector) &&
               (!Array.isArray(resolvedOpts.whitelist) ||
                 !resolvedOpts.whitelist.length ||
                 !match(singleSelector, resolvedOpts.whitelist))
@@ -1765,17 +1815,13 @@ function comb(str: string, opts?: InputOpts | null): Res {
               DEV &&
                 console.log(
                   `${`\u001b[${31}m${`PUSH [${singleSelectorStartedAt}, ${selectorEndsAt}, ${
-                    allClassesAndIdsWithinHeadFinalUglified[
-                      allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)
-                    ]
+                      uglifiedBySelector.get(singleSelector)
                   }]`}\u001b[${39}m`}`,
                 );
               currentChunksMinifiedSelectors.push(
                 singleSelectorStartedAt,
                 selectorEndsAt,
-                allClassesAndIdsWithinHeadFinalUglified[
-                  allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)
-                ],
+                uglifiedBySelector.get(singleSelector),
               );
             }
             // 2. tend trailing comma issue (lastKeptChunksCommaAt and
@@ -1821,7 +1867,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
           // catch the start of a chunk
           // if (chr === "." || chr === "#") {
           if (
-            chr.trim() &&
+            !chrIsWhitespace &&
             chr !== "}" &&
             chr !== ";" &&
             !(str[i] === "/" && str[i + 1] === "*")
@@ -1934,7 +1980,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
                   console.log(
                     `\u001b[${36}m${`----- str[${y}]=${str[y]}`}\u001b[${39}m`,
                   );
-                if (str[y].trim() && str[y] !== ",") {
+                if (!isWhitespace(str[y]) && str[y] !== ",") {
                   fromIndex = y + 1;
                   break;
                 }
@@ -1952,13 +1998,13 @@ function comb(str: string, opts?: InputOpts | null): Res {
               // a space in front of it, we need to go back by 1 character
               // to retain that single space in front of opening curly.
               // Otherwise, we'd crop tightly up to curly which would be wrong.
-              if (!str[i - 1].trim()) {
+              if (isWhitespace(str[i - 1])) {
                 toIndex = i - 1;
               }
-            } else if (chr === "," && !str[i + 1].trim()) {
+            } else if (chr === "," && isWhitespace(str[i + 1])) {
               for (let y = i + 1; y < len; y++) {
                 totalCounter += 1;
-                if (str[y].trim()) {
+                if (!isWhitespace(str[y])) {
                   toIndex = y;
                   break;
                 }
@@ -2080,7 +2126,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
                 );
               if ("\n\r".includes(str[lastKeptChunksCommaAt + 1])) {
                 for (let y = lastKeptChunksCommaAt + 1; y < len; y++) {
-                  if (str[y].trim()) {
+                  if (!isWhitespace(str[y])) {
                     deleteUpTo = y;
                     break;
                   }
@@ -2144,7 +2190,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
             if (round === 1) {
               if (
                 char !== undefined &&
-                (char.trim() === "" || char === ">") &&
+                (isWhitespace(char) || char === ">") &&
                 typeof index === "number"
               ) {
                 if (index - i > 5) {
@@ -2229,7 +2275,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
         // a character in front exists
         str[i - 1] &&
         // it's a whitespace character
-        !str[i - 1].trim()
+        isWhitespace(str[i - 1])
       ) {
         // TODO: record which double quote it was exactly, single or double
 
@@ -2249,7 +2295,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
             quoteless = true;
           } else if (
             str[i + 6] &&
-            (!str[i + 6].trim() || "/>".includes(str[i + 6]))
+            (isWhitespace(str[i + 6]) || "/>".includes(str[i + 6]))
           ) {
             let calculatedRange = expander({
               str,
@@ -2262,11 +2308,11 @@ function comb(str: string, opts?: InputOpts | null): Res {
               console.log(`PUSH ${JSON.stringify(calculatedRange, null, 0)}`);
             (finalIndexesToDelete as any).push(...calculatedRange);
           }
-        } else if (!str[i + 5].trim()) {
+        } else if (isWhitespace(str[i + 5])) {
           // loop forward:
           for (let y = i + 5; y < len; y++) {
             totalCounter += 1;
-            if (str[y].trim()) {
+            if (!isWhitespace(str[y])) {
               // 1. is it the "equals" character?
               if (str[y] === "=") {
                 // 1-1. remove this gap:
@@ -2280,11 +2326,11 @@ function comb(str: string, opts?: InputOpts | null): Res {
                   // 1-2-1. we found where values start:
                   valuesStart = y + 2;
                   quote = str[y + 1] as '"' | "'";
-                } else if (str[y + 1] && !str[y + 1].trim()) {
+                } else if (str[y + 1] && isWhitespace(str[y + 1])) {
                   // 1-2-2. traverse even more forward:
                   for (let z = y + 1; z < len; z++) {
                     totalCounter += 1;
-                    if (str[z].trim()) {
+                    if (!isWhitespace(str[z])) {
                       if (z > y + 1 && round === 1) {
                         DEV && console.log(`PUSH [${y + 1}, ${z}]`);
                         finalIndexesToDelete.push(y + 1, z);
@@ -2373,7 +2419,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
         // a character in front exists
         str[i - 1] &&
         // it's a whitespace character
-        !str[i - 1].trim()
+        isWhitespace(str[i - 1])
       ) {
         DEV && console.log();
         let valuesStart;
@@ -2391,7 +2437,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
             quoteless = true;
           } else if (
             str[i + 3] &&
-            (!str[i + 3].trim() || "/>".includes(str[i + 3]))
+            (isWhitespace(str[i + 3]) || "/>".includes(str[i + 3]))
           ) {
             let calculatedRange = expander({
               str,
@@ -2404,11 +2450,11 @@ function comb(str: string, opts?: InputOpts | null): Res {
               console.log(`PUSH ${JSON.stringify(calculatedRange, null, 0)}`);
             (finalIndexesToDelete as any).push(...calculatedRange);
           }
-        } else if (!str[i + 2].trim()) {
+        } else if (isWhitespace(str[i + 2])) {
           // loop forward:
           for (let y = i + 2; y < len; y++) {
             totalCounter += 1;
-            if (str[y].trim()) {
+            if (!isWhitespace(str[y])) {
               // 1. is it the "equals" character?
               if (str[y] === "=") {
                 // 1-1. remove this gap:
@@ -2422,11 +2468,11 @@ function comb(str: string, opts?: InputOpts | null): Res {
                   // 1-2-1. we found where values start:
                   valuesStart = y + 2;
                   quote = str[y + 1] as '"' | "'";
-                } else if (str[y + 1] && !str[y + 1].trim()) {
+                } else if (str[y + 1] && isWhitespace(str[y + 1])) {
                   // 1-2-2. traverse even more forward:
                   for (let z = y + 1; z < len; z++) {
                     totalCounter += 1;
-                    if (str[z].trim()) {
+                    if (!isWhitespace(str[z])) {
                       if (z > y + 1 && round === 1) {
                         DEV && console.log(`PUSH [${y + 1}, ${z}]`);
                         finalIndexesToDelete.push(y + 1, z);
@@ -2711,7 +2757,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
           // round 2
           else if (
             bodyClass.valueStart != null &&
-            bodyClassesToDelete.includes(carvedClass)
+            bodyClassesToDeleteSet.has(carvedClass)
           ) {
             // submit this class for deletion
             DEV &&
@@ -2783,17 +2829,13 @@ function comb(str: string, opts?: InputOpts | null): Res {
                 console.log(
                   `${`\u001b[${31}m${`PUSH [${bodyClass.valueStart}, ${i},
                   ${
-                    allClassesAndIdsWithinHeadFinalUglified[
-                      allClassesAndIdsWithinHeadFinal.indexOf(`.${carvedClass}`)
-                    ]
+                    uglifiedBySelector.get(`.${carvedClass}`)
                   }]`}\u001b[${39}m`}`,
                 );
               finalIndexesToDelete.push(
                 bodyClass.valueStart,
                 i,
-                allClassesAndIdsWithinHeadFinalUglified[
-                  allClassesAndIdsWithinHeadFinal.indexOf(`.${carvedClass}`)
-                ].slice(1),
+                uglifiedBySelector.get(`.${carvedClass}`)?.slice(1),
               );
             }
           }
@@ -2835,7 +2877,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
         // round 2
         else if (
           bodyId.valueStart != null &&
-          bodyIdsToDelete.includes(carvedId)
+          bodyIdsToDeleteSet.has(carvedId)
         ) {
           // submit this id for deletion
           DEV &&
@@ -2916,7 +2958,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
           // 2. uglify?
           if (
             resolvedOpts.uglify &&
-            !bodyIdsReferencedByForAttributes.includes(`#${carvedId}`) &&
+            !bodyIdsReferencedByForAttributesSet.has(`#${carvedId}`) &&
             !(
               Array.isArray(resolvedOpts.whitelist) &&
               resolvedOpts.whitelist.length &&
@@ -2927,17 +2969,13 @@ function comb(str: string, opts?: InputOpts | null): Res {
               console.log(
                 `${`\u001b[${31}m${`PUSH [${bodyId.valueStart}, ${i},
                 ${
-                  allClassesAndIdsWithinHeadFinalUglified[
-                    allClassesAndIdsWithinHeadFinal.indexOf(`#${carvedId}`)
-                  ]
+                  uglifiedBySelector.get(`#${carvedId}`)
                 }]`}\u001b[${39}m`}`,
               );
             finalIndexesToDelete.push(
               bodyId.valueStart,
               i,
-              allClassesAndIdsWithinHeadFinalUglified[
-                allClassesAndIdsWithinHeadFinal.indexOf(`#${carvedId}`)
-              ].slice(1),
+              uglifiedBySelector.get(`#${carvedId}`)?.slice(1),
             );
           }
         }
@@ -3569,7 +3607,7 @@ function comb(str: string, opts?: InputOpts | null): Res {
 
       // catch the whitespace
       if (!doNothing) {
-        if (!str[i].trim()) {
+        if (chrIsWhitespace) {
           if (whitespaceStartedAt === null) {
             whitespaceStartedAt = i;
             // DEV && console.log(
@@ -3591,12 +3629,13 @@ function comb(str: string, opts?: InputOpts | null): Res {
         !doNothing &&
         round === 2 &&
         Array.isArray(round1RangesClone) &&
-        round1RangesClone.length &&
-        i === round1RangesClone[0][0]
+        round1RangeIndex < round1RangesClone.length &&
+        i === round1RangesClone[round1RangeIndex][0]
       ) {
         // offset index, essentially "jumping over" what was submitted for deletion in round 1
         DEV && console.log("3669\n");
-        let temp = round1RangesClone.shift();
+        const temp = round1RangesClone[round1RangeIndex];
+        round1RangeIndex += 1;
         DEV &&
           console.log(
             `${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
@@ -3799,9 +3838,12 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
 
       allClassesAndIdsWithinBody = uniq(bodyClassesArr.concat(bodyIdsArr));
       bodyIdsReferencedByForAttributes = bodyIdsArr.filter((id) =>
-        idsReferencedByForAttributes.includes(
+        idsReferencedByForAttributesSet.has(
           decodeHtmlEntities(id.slice(1), { scope: "attribute" }),
         ),
+      );
+      bodyIdsReferencedByForAttributesSet = new Set(
+        bodyIdsReferencedByForAttributes,
       );
 
       DEV && console.log(`\u001b[${35}m${`\nAFTER STEP 1:`}\u001b[${39}m`);
@@ -3849,8 +3891,11 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
           )}`,
         );
 
-      headSelectorsArr.forEach((el) => {
-        extractCanonicalSelectors(el).forEach((selector) => {
+      const canonicalSelectorsByHeadChunk = headSelectorsArr.map(
+        extractCanonicalSelectors,
+      );
+      canonicalSelectorsByHeadChunk.forEach((selectors) => {
+        selectors.forEach((selector) => {
           if (hasOwnProp(headSelectorsCount, selector)) {
             headSelectorsCount[selector] += 1;
           } else {
@@ -3874,8 +3919,8 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
       // ================
 
       allClassesAndIdsWithinHead = uniq(
-        headSelectorsArr.reduce(
-          (arr, el) => arr.concat(extractCanonicalSelectors(el) as any),
+        canonicalSelectorsByHeadChunk.reduce(
+          (arr, selectors) => arr.concat(selectors),
           [],
         ),
       );
@@ -3902,6 +3947,12 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
       // ================
 
       let preppedHeadSelectorsArr = Array.from(headSelectorsArr);
+      let preppedCanonicalSelectors = Array.from(
+        canonicalSelectorsByHeadChunk,
+      );
+      const allClassesAndIdsWithinBodySet = new Set(
+        allClassesAndIdsWithinBody,
+      );
       let deletedFromHeadArr = [];
       DEV &&
         console.log(
@@ -3922,27 +3973,22 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
               4,
             )}`,
           );
-        let temp;
+        let temp = preppedCanonicalSelectors[y];
 
         // intentional loose comparison !=, that's existy():
-        if (preppedHeadSelectorsArr[y] != null) {
-          temp = extractCanonicalSelectors(preppedHeadSelectorsArr[y]);
-        }
         if (
-          temp &&
-          !temp.every((el) => allClassesAndIdsWithinBody.includes(el))
+          preppedHeadSelectorsArr[y] != null &&
+          !temp.every((el) => allClassesAndIdsWithinBodySet.has(el))
         ) {
           DEV &&
             console.log(
               `PUSH to deletedFromHeadArr[] [${JSON.stringify(
-                extractCanonicalSelectors(preppedHeadSelectorsArr[y]),
+                temp,
                 null,
                 4,
               )}]`,
             );
-          deletedFromHeadArr.push(
-            ...extractCanonicalSelectors(preppedHeadSelectorsArr[y]),
-          );
+          deletedFromHeadArr.push(...temp);
           DEV &&
             console.log(
               `deletedFromHeadArr becomes = ${JSON.stringify(
@@ -3952,6 +3998,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
               )}`,
             );
           preppedHeadSelectorsArr.splice(y, 1);
+          preppedCanonicalSelectors.splice(y, 1);
           y -= 1;
           len2 -= 1;
         }
@@ -3963,9 +4010,9 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
       );
 
       let preppedAllClassesAndIdsWithinHead: string[];
-      if (preppedHeadSelectorsArr?.length) {
-        preppedAllClassesAndIdsWithinHead = preppedHeadSelectorsArr.reduce(
-          (acc, curr) => acc.concat(extractCanonicalSelectors(curr) as any),
+      if (preppedCanonicalSelectors.length) {
+        preppedAllClassesAndIdsWithinHead = preppedCanonicalSelectors.reduce(
+          (acc, selectors) => acc.concat(selectors),
           [],
         );
         DEV &&
@@ -4012,7 +4059,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
           resolvedOpts.whitelist,
         ),
       ).filter(
-        (selector) => !bodyIdsReferencedByForAttributes.includes(selector),
+        (selector) => !bodyIdsReferencedByForAttributesSet.has(selector),
       );
       DEV &&
         console.log(
@@ -4030,6 +4077,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
           intersection(deletedFromHeadArr, bodyCssToDelete),
         ),
       );
+      headCssToDeleteSet = new Set(headCssToDelete);
       DEV &&
         console.log(
           `NEW ${`\u001b[${32}m${`headCssToDelete`}\u001b[${39}m`} = ${JSON.stringify(
@@ -4096,6 +4144,8 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
             .map((val) => val.slice(1)),
         ),
       ); // remove dots from them
+      bodyClassesToDeleteSet = new Set(bodyClassesToDelete);
+      bodyIdsToDeleteSet = new Set(bodyIdsToDelete);
       DEV &&
         console.log(
           `${`\u001b[${33}m${`bodyClassesToDelete`}\u001b[${39}m`} = ${JSON.stringify(
@@ -4154,6 +4204,12 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         allClassesAndIdsWithinHeadFinalUglified = uglifyArr(
           allClassesAndIdsWithinHeadFinal,
         );
+        uglifiedBySelector = new Map(
+          allClassesAndIdsWithinHeadFinal.map((selector, index) => [
+            selector,
+            allClassesAndIdsWithinHeadFinalUglified[index],
+          ]),
+        );
       }
 
       countAfterCleaning = allClassesAndIdsWithinHeadFinal.length;
@@ -4166,7 +4222,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
             ])
             .filter(
               (arr) =>
-                !bodyIdsReferencedByForAttributes.includes(arr[0]) &&
+                !bodyIdsReferencedByForAttributesSet.has(arr[0]) &&
                 !resolvedOpts.whitelist.some((whitelistVal) =>
                   match(arr[0], whitelistVal),
                 ),
@@ -4473,7 +4529,7 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
 
   if (str.length) {
     if (
-      (!str[0].trim() || !str[str.length - 1].trim()) &&
+      (isWhitespace(str[0]) || isWhitespace(str[str.length - 1])) &&
       str.length !== str.trim().length
     ) {
       nonIndentationsWhitespaceLength += str.length - str.trim().length;
@@ -4538,6 +4594,10 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
 }
 
 function extractIdsReferencedByForAttributes(str: string): string[] {
+  if (!labelOrOutputOpeningTagRegex.test(str)) {
+    return [];
+  }
+
   let result: string[] = [];
 
   for (let i = 0; i < str.length; i++) {

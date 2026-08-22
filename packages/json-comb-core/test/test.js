@@ -3966,4 +3966,58 @@ test("90 - findUnusedSync() skips comment-marked nested collections", () => {
   );
 });
 
+test("91 - getKeyset() consumes one-shot iterables once", async () => {
+  function* input() {
+    yield { a: 1 };
+    yield Promise.resolve({ b: 2 });
+  }
+
+  equal(await getKeyset(input()), { a: false, b: false }, "91.01");
+});
+
+test("92 - enforcement does not mutate either input", async () => {
+  let syncInput = { a: { present: true } };
+  let syncSchema = { a: { missing: false, present: false }, b: false };
+  enforceKeysetSync(syncInput, syncSchema);
+
+  equal(syncInput, { a: { present: true } }, "92.01");
+  equal(
+    syncSchema,
+    { a: { missing: false, present: false }, b: false },
+    "92.02",
+  );
+
+  let asyncInput = { a: { present: true } };
+  let asyncSchema = { a: { missing: false, present: false }, b: false };
+  await enforceKeyset(asyncInput, asyncSchema);
+
+  equal(asyncInput, { a: { present: true } }, "92.03");
+  equal(
+    asyncSchema,
+    { a: { missing: false, present: false }, b: false },
+    "92.04",
+  );
+});
+
+test("93 - getKeysetSync() does not mutate its input", () => {
+  let input = [{ nested: [{ a: 1 }, { b: 2 }] }];
+  getKeysetSync(input);
+
+  equal(input, [{ nested: [{ a: 1 }, { b: 2 }] }], "93.01");
+});
+
+test("94 - findUnusedSync() does not mutate its input", () => {
+  let input = [
+    { nested: [{ a: false }] },
+    { nested: [{ a: false, b: false }] },
+  ];
+  findUnusedSync(input);
+
+  equal(
+    input,
+    [{ nested: [{ a: false }] }, { nested: [{ a: false, b: false }] }],
+    "94.01",
+  );
+});
+
 test.run();

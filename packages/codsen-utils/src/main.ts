@@ -495,12 +495,26 @@ const regexpSourceGetter = Object.getOwnPropertyDescriptor(
   "source",
 )?.get as (this: RegExp) => string;
 
+const toStringTagOf = Object.prototype.toString;
+
 export function isRegExp(something: unknown): something is RegExp {
   if (something instanceof RegExp) {
     return true;
   }
   if (something === null || typeof something !== "object") {
     return false;
+  }
+  // Object#toString reads the [[RegExpMatcher]] slot, so it still clears the
+  // cross-realm regexes instanceof misses, and it rejects everything else
+  // without the getter below constructing a TypeError - two orders of
+  // magnitude of the cost of this call sat in that throw. Symbol.toStringTag
+  // can forge the tag, so a pass still has to be confirmed.
+  if (toStringTagOf.call(something) !== "[object RegExp]") {
+    // RegExp.prototype is an ordinary object carrying no [[RegExpMatcher]],
+    // so it fails the tag, yet the getter below answers "(?:)" for it rather
+    // than throwing - a legacy special case in the spec. Kept so this stays
+    // the answer it has always given, at the cost of one reference compare.
+    return something === RegExp.prototype;
   }
   try {
     regexpSourceGetter.call(something as RegExp);
@@ -521,11 +535,11 @@ export function isDate(something: unknown): something is Date {
   if (something === null || typeof something !== "object") {
     return false;
   }
-  if (Array.isArray(something)) {
-    return false;
-  }
-  const prototype = Object.getPrototypeOf(something);
-  if (prototype === null || prototype === Object.prototype) {
+  // as in isRegExp() above: the tag comes off the [[DateValue]] slot, so
+  // subclasses and cross-realm dates keep it while every other object is
+  // turned away before dateGetTime throws. It subsumes the array and
+  // prototype guards this check used to open with.
+  if (toStringTagOf.call(something) !== "[object Date]") {
     return false;
   }
   try {
@@ -641,9 +655,11 @@ export function pullAll<T, U>(input: T[] = [], remove: U[] = []) {
     // does nothing
     return input;
   }
-  // Array#includes is faster for very short removal lists. A Set avoids the
-  // quadratic scan once the list grows.
-  if (input.length < 128 || remove.length < 5) {
+  // Array#includes is faster while there is little to scan. What decides it
+  // is the product of the two lengths, not either one alone - a short input
+  // paired with a long removal list is just as quadratic. Measured crossover
+  // sits around 400.
+  if (input.length * remove.length < 400) {
     return input.filter((val) => !remove.includes(val as any));
   }
   const removals = new Set<unknown>(remove);
@@ -1281,8 +1297,9 @@ export function omit(obj: JSONObject, keysToRemove: string[] = []): JSONObject {
   const memo = new CloneMemo();
   memo.set(obj, result);
   const keys = Object.keys(obj);
+  // same crossover as pullAll() above - it is the product that decides
   const removals =
-    keys.length < 128 || keysToRemove.length < 5
+    keys.length * keysToRemove.length < 400
       ? undefined
       : new Set(keysToRemove);
 

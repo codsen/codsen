@@ -28,6 +28,10 @@ const version: string = v;
 
 declare let DEV: boolean;
 
+// a range as it sits in the Ranges instance, before ranges-merge normalises it:
+// the "what to insert" slot may or may not be there
+type GatheredRange = [number, number, (string | null | undefined)?];
+
 export interface Attribute {
   nameStarts: number;
   nameEnds: number;
@@ -187,6 +191,16 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
   // stripped or not (because they were whitelisted)
   let strip = true;
 
+  // the covered-prefix tracker below (see coveredFromStartUpTo) - how far from
+  // index zero the ranges gathered so far reach without a gap, -1 while nothing
+  // is anchored at zero yet:
+  let coveredPrefixEnd = -1;
+  // how many entries of rangesToDelete.ranges have been folded into it
+  let foldedRangeCount = 0;
+  // ranges that start beyond the covered prefix, parked here in case a later
+  // range bridges the gap to them
+  const rangesAwaitingPrefix: GatheredRange[] = [];
+
   // functions
   // ===========================================================================
 
@@ -266,8 +280,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             // the range
             DEV &&
               console.log(
-                `rangesToDelete.current(): ${JSON.stringify(
-                  rangesToDelete.current(),
+                `rangesToDelete.ranges: ${JSON.stringify(
+                  rangesToDelete.ranges,
                   null,
                   0,
                 )}`,
@@ -418,6 +432,112 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     }
   }
 
+  // Answers "is everything from the string start up to idx already scheduled
+  // for deletion?" - the question rangesToDelete.firstCovers() answers by
+  // re-deriving it from scratch on every call.
+  //
+  // That re-derivation is what made this program quadratic. firstCovers() walks
+  // every range gathered so far, and when the ranges did not arrive in
+  // ascending order it walks them repeatedly, until a whole pass changes
+  // nothing - with no early exit. Ranges stop arriving in order on the first
+  // <script> or <style>, because treatRangedTags() pushes the opening tag, then
+  // the closing tag, then the span between them, which starts before the
+  // closing tag it just pushed. That is the default
+  // stripTogetherWithTheirContents, so ordinary HTML hits it, and every tag
+  // after the first such block pays for every range recorded before it.
+  //
+  // While the loop runs, rangesToDelete is only appended to, so the covered
+  // prefix can only grow. Each range is therefore folded in once and then
+  // forgotten; the ones that do not connect to the prefix wait in
+  // rangesAwaitingPrefix, and are only reconsidered when the prefix actually
+  // moves. Starts are never negative here - Ranges.add() throws on anything
+  // that is not a natural number - so firstCovers()'s negative-start bail has
+  // no equivalent below.
+  function coveredFromStartUpTo(idx: number): boolean {
+    const ranges = rangesToDelete.ranges as GatheredRange[] | null;
+    const total = ranges ? ranges.length : 0;
+    if (!total) {
+      return false;
+    }
+
+    // ranges-push extends the last range in place when the next one starts
+    // where it ends, so everything except the last entry is final
+    const finalCount = total - 1;
+    let prefixMoved = false;
+    while (foldedRangeCount < finalCount) {
+      const oneRange = (ranges as GatheredRange[])[foldedRangeCount];
+      foldedRangeCount += 1;
+      if (!countsTowardsCoverage(oneRange)) {
+        continue;
+      }
+      if (
+        coveredPrefixEnd === -1 ? oneRange[0] === 0 : oneRange[0] <= coveredPrefixEnd
+      ) {
+        // either it extends the prefix or it sits inside it - either way it is
+        // spent, because the prefix never shrinks
+        if (oneRange[1] > coveredPrefixEnd) {
+          coveredPrefixEnd = oneRange[1];
+          prefixMoved = true;
+        }
+      } else {
+        rangesAwaitingPrefix.push(oneRange);
+      }
+    }
+    if (prefixMoved) {
+      coveredPrefixEnd = drainRangesAwaitingPrefix(coveredPrefixEnd, true);
+    }
+
+    // the last range is still growable, so read it fresh instead of folding it
+    let reach = coveredPrefixEnd;
+    const lastRange = (ranges as GatheredRange[])[finalCount];
+    if (
+      countsTowardsCoverage(lastRange) &&
+      (reach === -1 ? lastRange[0] === 0 : lastRange[0] <= reach) &&
+      lastRange[1] > reach
+    ) {
+      reach = drainRangesAwaitingPrefix(lastRange[1], false);
+    }
+
+    return reach !== -1 && reach >= idx;
+  }
+
+  // ranges-merge drops zero-width ranges that insert nothing, so they cannot
+  // contribute to coverage either
+  function countsTowardsCoverage(oneRange: GatheredRange): boolean {
+    return (
+      Array.isArray(oneRange) &&
+      (oneRange[2] !== undefined || oneRange[0] !== oneRange[1])
+    );
+  }
+
+  // pulls in every parked range the moved prefix now reaches, repeating while
+  // it keeps moving. Only removes them from the parking list when the caller
+  // owns the result (commit) - the growable last range is applied on a copy of
+  // the prefix end, so what it reaches must stay parked.
+  function drainRangesAwaitingPrefix(reach: number, commit: boolean): number {
+    let moved = true;
+    while (moved && rangesAwaitingPrefix.length) {
+      moved = false;
+      let keptCount = 0;
+      for (let y = 0, len2 = rangesAwaitingPrefix.length; y < len2; y++) {
+        const oneRange = rangesAwaitingPrefix[y];
+        if (oneRange[0] <= reach) {
+          if (oneRange[1] > reach) {
+            reach = oneRange[1];
+            moved = true;
+          }
+        } else if (commit) {
+          rangesAwaitingPrefix[keptCount] = oneRange;
+          keptCount += 1;
+        }
+      }
+      if (commit) {
+        rangesAwaitingPrefix.length = keptCount;
+      }
+    }
+    return reach;
+  }
+
   function calculateWhitespaceToInsert(
     str2: string, // whole string
     currCharIdx: number, // current index
@@ -492,11 +612,10 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     //                                     ^^^
     //                              frontal whitespace as result
 
-    // firstCovers() reads that off the gathered ranges as they lie. current()
-    // answers it too, but it re-merges, re-sorts and re-collapses everything
-    // gathered so far, and this runs once per stripped tag, so asking current()
-    // here made the whole program quadratic on ordinary HTML.
-    if (typeof fromIdx === "number" && rangesToDelete.firstCovers(fromIdx)) {
+    // coveredFromStartUpTo() reads that off the gathered ranges as they lie,
+    // incrementally - this runs once per stripped tag, so anything that
+    // re-derives it from the whole pile makes the program quadratic.
+    if (typeof fromIdx === "number" && coveredFromStartUpTo(fromIdx)) {
       return "";
     }
 
@@ -622,12 +741,21 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             R3 ? 32 : 31
           }m${`██`}\u001b[${39}m`}`,
         );
-      const foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
-      if (Array.isArray(foundLineBreaks) && foundLineBreaks.length) {
-        if (foundLineBreaks.length === 1) {
+      // String.match() would allocate an array of matched line breaks for a
+      // count that stops mattering past three, and this runs per stripped tag
+      let foundLineBreaks = 0;
+      for (
+        let y = strToEvaluateForLineBreaks.indexOf("\n");
+        y !== -1 && foundLineBreaks < 3;
+        y = strToEvaluateForLineBreaks.indexOf("\n", y + 1)
+      ) {
+        foundLineBreaks += 1;
+      }
+      if (foundLineBreaks) {
+        if (foundLineBreaks === 1) {
           return "\n";
         }
-        if (foundLineBreaks.length === 2) {
+        if (foundLineBreaks === 2) {
           return "\n\n";
         }
         DEV &&
@@ -716,6 +844,14 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     if (resolvedOpts.ignoreTagsWithTheirContents.includes("*")) {
       DEV && console.log(`ignored tag contents: RETURN TRUE`);
       return true;
+    }
+    // past the "*" case above, the only way out of here that is not false is
+    // the very last line, so a tag nobody listed is a "false" already - worth
+    // establishing before the two str.indexOf() below, which each scan the rest
+    // of the input, for every tag, on the default (empty) setting too
+    if (!resolvedOpts.ignoreTagsWithTheirContents.includes(tag2.name)) {
+      DEV && console.log(`checkIgnoreTagsWithTheirContents(): RETURN FALSE`);
+      return false;
     }
     // edge case - two opening ranged tags in sequence
     // <table>... <tr>... <tr>... ... </tr> </table>
@@ -1010,11 +1146,13 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
     // There can be bunch of spaces that end with EOF. In that case it's fine, this variable will
     // be null.
     if (
-      Object.keys(tag).length > 1 &&
+      // cheapest clauses first - Object.keys() allocates an array, and this
+      // runs on every character of the input
       tag.lastClosingBracketAt &&
       tag.lastClosingBracketAt < i &&
+      spacesChunkWhichFollowsTheClosingBracketEndsAt === null &&
       str[i] !== " " &&
-      spacesChunkWhichFollowsTheClosingBracketEndsAt === null
+      Object.keys(tag).length > 1
     ) {
       spacesChunkWhichFollowsTheClosingBracketEndsAt = i;
     }
@@ -2358,8 +2496,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
             }
             DEV &&
               console.log(
-                `${`\u001b[${36}m${`latest`}\u001b[${39}m`} rangesToDelete.current(): ${JSON.stringify(
-                  rangesToDelete.current(),
+                `${`\u001b[${36}m${`latest`}\u001b[${39}m`} rangesToDelete.ranges: ${JSON.stringify(
+                  rangesToDelete.ranges,
                   null,
                   4,
                 )}`,
@@ -2990,13 +3128,25 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 )}`,
               );
           } else if (!resolvedOpts.ignoreIndentations) {
-            DEV &&
-              console.log(
-                `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [lastLFCRAt + 1=${
-                  lastLFCRAt + 1
-                }, ${i}]`,
-              );
-            rangesToDelete.push([lastLFCRAt + 1, i]);
+            // the range recorded for the tag in front of this indentation
+            // usually reaches right up to here already, having swallowed it -
+            // re-pushing it only gives ranges-merge more to collapse later.
+            // The end has to match exactly: this range being last, with this
+            // end, is something the dumpLinkHrefsNearby branch reads later
+            const lastRange = rangesToDelete.last() as Range | null;
+            if (
+              !lastRange ||
+              lastRange[0] > lastLFCRAt + 1 ||
+              lastRange[1] !== i
+            ) {
+              DEV &&
+                console.log(
+                  `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [lastLFCRAt + 1=${
+                    lastLFCRAt + 1
+                  }, ${i}]`,
+                );
+              rangesToDelete.push([lastLFCRAt + 1, i]);
+            }
           }
         }
       }
@@ -3118,8 +3268,8 @@ function stripHtml(str: string, opts?: Partial<Opts>): Res {
                 .join(",\n")}\n`
             : ""
         }${
-          rangesToDelete.current()
-            ? `RANGES: ${JSON.stringify(rangesToDelete.current(), null, 0)}`
+          rangesToDelete.ranges?.length
+            ? `RANGES: ${JSON.stringify(rangesToDelete.ranges, null, 0)}`
             : ""
         }`,
       );

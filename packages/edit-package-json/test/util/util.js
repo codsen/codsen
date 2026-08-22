@@ -28,10 +28,16 @@ function setter(
     );
 
     // 03. result is equivalent to (JSON.parse + object-path.set())
+    //
+    // Round-tripped through JSON, because setting a path past the end of an
+    // array leaves object-path with holes, and a hole is not a value dequal can
+    // match against the null it has to become the moment it is written out.
+    // This library produces JSON text, so JSON is the only shape worth
+    // comparing in.
     let temp = JSON.parse(source);
     objectPath.set(temp, path, val);
     equal(
-      temp,
+      JSON.parse(JSON.stringify(temp)),
       JSON.parse(result),
       `${idNum}.03 - objectPath set is deep-equal`,
     );

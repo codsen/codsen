@@ -856,4 +856,23 @@ test("24 - third arg", () => {
   );
 });
 
+test("25 - right-to-left merge order preserves null insertions", () => {
+  equal(
+    rMerge(
+      [
+        [13, 24, "a"],
+        [10, 15, null],
+        [8, 11, ""],
+        [7, 18, "b"],
+      ],
+      {
+        mergeType: 2,
+        joinRangesThatTouchEdges: false,
+      },
+    ),
+    [[7, 24, null]],
+    "25.01",
+  );
+});
+
 test.run();

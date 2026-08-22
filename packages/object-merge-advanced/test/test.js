@@ -2603,4 +2603,13 @@ test("69 - array de-duplication uses SameValueZero equality", () => {
   equal(m([NaN], [NaN], { concatInsteadOfMerging: false }), [NaN], "69.01");
 });
 
+test("70 - reuseInputs reuses owned inputs", () => {
+  let input1 = { nested: { a: 1 } };
+  let input2 = { nested: { b: 2 } };
+  let result = m(input1, input2, { reuseInputs: true });
+
+  is(result, input1, "70.01");
+  equal(input1, { nested: { a: 1, b: 2 } }, "70.02");
+});
+
 test.run();

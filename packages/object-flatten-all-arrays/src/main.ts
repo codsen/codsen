@@ -9,6 +9,8 @@ export interface Obj {
 }
 export interface Opts {
   flattenArraysContainingStringsToBeEmpty: boolean;
+  /** Reuse an exclusively owned input tree instead of cloning it. The input may be mutated. */
+  reuseInput?: boolean;
 }
 const defaults: Opts = {
   flattenArraysContainingStringsToBeEmpty: false,
@@ -111,7 +113,7 @@ function flattenAllArrays(input: Obj, opts?: Partial<Opts>): Obj {
     return incoming;
   }
 
-  return flattenValue(cloneInput(input));
+  return flattenValue(resolvedOpts.reuseInput ? input : cloneInput(input));
 }
 
 export { defaults, flattenAllArrays, version };

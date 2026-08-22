@@ -65,7 +65,12 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
       `ranges-merge/rMerge(): [THROW_ID_02] opts.progressFn must be a function! It was given of a type: "${typeof opts.progressFn}", equal to ${formatDiagnosticValue(opts.progressFn, 4)}`,
     );
   }
-  if (![1, 2, "1", "2"].includes(opts.mergeType)) {
+  if (
+    opts.mergeType !== 1 &&
+    opts.mergeType !== 2 &&
+    opts.mergeType !== "1" &&
+    opts.mergeType !== "2"
+  ) {
     throw new TypeError(
       `ranges-merge/rMerge(): [THROW_ID_03] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${formatDiagnosticValue(opts.mergeType, 4)}`,
     );
@@ -75,27 +80,29 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
       `ranges-merge/rMerge(): [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof opts.joinRangesThatTouchEdges}", equal to ${formatDiagnosticValue(opts.joinRangesThatTouchEdges, 4)}`,
     );
   }
+  const progressFn = opts.progressFn;
+  const joinRangesThatTouchEdges = opts.joinRangesThatTouchEdges;
 
   DEV && console.log();
 
   // progress-wise, sort takes first 20%
 
-  // two-level-deep array clone:
-  let filtered: any[] = arrOfRanges
-    // filter out null
-    .filter((range) => Array.isArray(range))
-    .map((subarr) => [...subarr])
-    .filter(
-      // filter out futile ranges with identical starting and ending points with
-      // nothing to add (no 3rd argument)
-      (rangeArr) => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1],
-    );
+  // Filter and clone in one pass so the input is never mutated.
+  const filtered: Range[] = [];
+  for (const range of arrOfRanges) {
+    if (
+      Array.isArray(range) &&
+      (range[2] !== undefined || range[0] !== range[1])
+    ) {
+      filtered.push([...range] as Range);
+    }
+  }
 
   let sortedRanges;
   let lastPercentageDone: any;
   let percentageDone;
 
-  if (opts.progressFn) {
+  if (progressFn) {
     // progress already gets reported in [0,100] range, so we just need to
     // divide by 5 in order to "compress" that into 20% range.
     sortedRanges = rSort(filtered, {
@@ -104,7 +111,7 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
         // ensure each percent is passed only once:
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
-          (opts as UnknownValueObj).progressFn(percentageDone);
+          progressFn(percentageDone);
         }
       },
     }) as Range[];
@@ -112,126 +119,102 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Partial<Opts>): Ranges {
     sortedRanges = rSort(filtered) as Range[];
   }
 
-  let len = sortedRanges.length - 1;
-  // reset 80% of progress is this loop:
+  const len = sortedRanges.length - 1;
+  const mergeTypeIsTwo = opts.mergeType === 2 || opts.mergeType === "2";
 
-  // loop from the end:
-  for (let i = len; i > 0; i--) {
+  // Work right-to-left, keeping completed ranges in the unused suffix of the
+  // same array. A newly widened range can absorb as many completed neighbours
+  // as necessary without splicing or restarting the traversal.
+  let writeIndex = sortedRanges.length;
+  for (let readIndex = len; readIndex >= 0; readIndex--) {
+    const currentRange = sortedRanges[readIndex];
+
     DEV && console.log("\n\n");
     DEV &&
       console.log(
-        `\u001b[${36}m${`-------------- sortedRanges[${i}] = ${JSON.stringify(
-          sortedRanges[i],
+        `\u001b[${36}m${`-------------- sortedRanges[${readIndex}] = ${JSON.stringify(
+          currentRange,
           null,
           0,
         )} --------------`}\u001b[${39}m\n`,
       );
 
-    if (opts.progressFn) {
-      percentageDone = Math.floor((1 - i / len) * 78) + 21;
+    if (progressFn && readIndex < len) {
+      percentageDone = Math.floor((1 - (readIndex + 1) / len) * 78) + 21;
       if (
         percentageDone !== lastPercentageDone &&
         percentageDone > lastPercentageDone
       ) {
         lastPercentageDone = percentageDone;
-        opts.progressFn(percentageDone);
+        progressFn(percentageDone);
         // DEV && console.log(
         //   `153 REPORTING ${`\u001b[${33}m${`doneSoFar`}\u001b[${39}m`} = ${doneSoFar}`
         // );
       }
     }
 
-    // if current range is before the preceding-one
-    if (
-      sortedRanges[i][0] <= sortedRanges[i - 1][0] ||
-      (!opts.joinRangesThatTouchEdges &&
-        sortedRanges[i][0] < sortedRanges[i - 1][1]) ||
-      (opts.joinRangesThatTouchEdges &&
-        sortedRanges[i][0] <= sortedRanges[i - 1][1])
-    ) {
+    while (writeIndex < sortedRanges.length) {
+      const nextRange = sortedRanges[writeIndex];
+      const startsAtSameIndex = nextRange[0] === currentRange[0];
+      if (
+        !startsAtSameIndex &&
+        (joinRangesThatTouchEdges
+          ? nextRange[0] > currentRange[1]
+          : nextRange[0] >= currentRange[1])
+      ) {
+        break;
+      }
+
       DEV &&
-        console.log(` sortedRanges[${i}][0] = ${`\u001b[${33}m${sortedRanges[i][0]}\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${
-          i - 1
-        }][0] = ${`\u001b[${33}m${sortedRanges[i - 1][0]}\u001b[${39}m`} ||
-     sortedRanges[${i}][0] = ${`\u001b[${33}m${sortedRanges[i][0]}\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${
-       i - 1
-}][1] = ${`\u001b[${33}m${sortedRanges[i - 1][1]}\u001b[${39}m`}
+        console.log(` nextRange[0] = ${`\u001b[${33}m${nextRange[0]}\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? currentRange[0] = ${`\u001b[${33}m${currentRange[0]}\u001b[${39}m`} ||
+     nextRange[0] = ${`\u001b[${33}m${nextRange[0]}\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? currentRange[1] = ${`\u001b[${33}m${currentRange[1]}\u001b[${39}m`}
 `);
-      sortedRanges[i - 1][0] = Math.min(
-        sortedRanges[i][0],
-        sortedRanges[i - 1][0],
-      );
-      sortedRanges[i - 1][1] = Math.max(
-        sortedRanges[i][1],
-        sortedRanges[i - 1][1],
-      );
+      const nextRangeExtendsEnd = nextRange[1] >= currentRange[1];
+      if (nextRangeExtendsEnd) {
+        currentRange[1] = nextRange[1];
+      }
       DEV &&
         console.log(
-          `${`\u001b[${32}m${`SET`}\u001b[${39}m`} sortedRanges[${
-            i - 1
-          }][0] = ${sortedRanges[i - 1][0]}; sortedRanges[${i - 1}][1] = ${
-            sortedRanges[i - 1][1]
-          }`,
+          `${`\u001b[${32}m${`SET`}\u001b[${39}m`} currentRange[0] = ${currentRange[0]}; currentRange[1] = ${currentRange[1]}`,
         );
 
       // tend the third argument, "what to insert"
       if (
-        sortedRanges[i][2] !== undefined &&
-        (sortedRanges[i - 1][0] >= sortedRanges[i][0] ||
-          sortedRanges[i - 1][1] <= sortedRanges[i][1])
+        nextRange[2] !== undefined &&
+        (startsAtSameIndex || nextRangeExtendsEnd)
       ) {
         DEV && console.log(`inside tend the insert value clauses`);
 
         // if the value of the range before exists:
-        if (sortedRanges[i - 1][2] !== null) {
-          if (sortedRanges[i][2] === null && sortedRanges[i - 1][2] !== null) {
-            sortedRanges[i - 1][2] = null;
-          } else if (sortedRanges[i - 1][2] != null) {
+        if (currentRange[2] !== null) {
+          if (nextRange[2] === null && currentRange[2] !== null) {
+            currentRange[2] = null;
+          } else if (currentRange[2] != null) {
             // if there's a clash of "insert" values:
-            if (
-              +(opts as UnknownValueObj).mergeType === 2 &&
-              sortedRanges[i - 1][0] === sortedRanges[i][0]
-            ) {
+            if (mergeTypeIsTwo && startsAtSameIndex) {
               // take the value from the range that's on the right:
-              sortedRanges[i - 1][2] = sortedRanges[i][2];
+              currentRange[2] = nextRange[2];
             } else {
-              (sortedRanges as [number, number, any])[i - 1][2] +=
-                sortedRanges[i][2];
+              currentRange[2] += nextRange[2];
             }
           } else {
-            sortedRanges[i - 1][2] = sortedRanges[i][2];
+            currentRange[2] = nextRange[2];
           }
         }
       }
 
-      // get rid of the second element:
-      DEV &&
-        console.log("--------------------------------------------------------");
-      DEV &&
-        console.log(
-          `before splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
-            sortedRanges,
-            null,
-            4,
-          )}`,
-        );
-      sortedRanges.splice(i, 1);
-      DEV &&
-        console.log(
-          `after splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
-            sortedRanges,
-            null,
-            4,
-          )}`,
-        );
-      // reset the traversal, start from the end again
-      i = sortedRanges.length;
-      DEV &&
-        console.log(
-          `in the end, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} i = ${i}`,
-        );
+      writeIndex += 1;
     }
+
+    writeIndex -= 1;
+    sortedRanges[writeIndex] = currentRange;
   }
+
+  const mergedLength = sortedRanges.length - writeIndex;
+  for (let i = 0; i < mergedLength; i++) {
+    sortedRanges[i] = sortedRanges[writeIndex + i];
+  }
+  sortedRanges.length = mergedLength;
   DEV &&
     console.log(
       `${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} sortedRanges = ${JSON.stringify(

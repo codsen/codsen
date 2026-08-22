@@ -11,6 +11,22 @@ export interface Opts {
 
 const RAWNBSP = "\u00A0";
 
+function isWhitespace(charCode: number): boolean {
+  return (
+    charCode === 32 ||
+    (charCode >= 9 && charCode <= 13) ||
+    charCode === 160 ||
+    charCode === 5760 ||
+    (charCode >= 8192 && charCode <= 8202) ||
+    charCode === 8232 ||
+    charCode === 8233 ||
+    charCode === 8239 ||
+    charCode === 8287 ||
+    charCode === 12288 ||
+    charCode === 65279
+  );
+}
+
 // separates the value from flags
 interface SeparateValueFromFlags {
   value: string;
@@ -130,7 +146,7 @@ function rightMain({
     return idx + 2;
   }
   // worst case scenario - traverse forwards
-  for (let i = idx + 1, len = str.length; i < len; i++) {
+  for (let i = idx + 3, len = str.length; i < len; i++) {
     if (
       // it's solid
       str[i].trim() ||
@@ -151,7 +167,29 @@ function rightMain({
 }
 
 function right(str: string, idx: number | null = 0): number | null {
-  return rightMain({ str, idx, stopAtNewlines: false, stopAtRawNbsp: false });
+  if (typeof str !== "string" || !str.length) {
+    return null;
+  }
+  if (!idx || typeof idx !== "number") {
+    idx = 0;
+  }
+  let char = str[idx + 1];
+  if (!char) {
+    return null;
+  }
+  if (!isWhitespace(char.charCodeAt(0))) {
+    return idx + 1;
+  }
+  char = str[idx + 2];
+  if (char && !isWhitespace(char.charCodeAt(0))) {
+    return idx + 2;
+  }
+  for (let i = idx + 3, len = str.length; i < len; i++) {
+    if (!isWhitespace(str.charCodeAt(i))) {
+      return i;
+    }
+  }
+  return null;
 }
 
 function rightStopAtNewLines(str: string, idx: number): number | null {

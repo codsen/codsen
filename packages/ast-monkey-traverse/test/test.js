@@ -1216,4 +1216,74 @@ test(`19 - input and callback-owned values remain immutable`, () => {
   throws(() => traverse(input), /THROW_ID_01/, "19.04");
 });
 
+test(`20 - parent snapshot drops a key deleted from an earlier sibling`, () => {
+  let gathered = [];
+  let actual = traverse(
+    { a: "drop", b: "keep", c: "keep" },
+    (key1, val1, innerObj) => {
+      let current = val1 !== undefined ? val1 : key1;
+      gathered.push(innerObj.parent);
+      return current === "drop" ? Number.NaN : current;
+    },
+  );
+
+  equal(actual, { b: "keep", c: "keep" }, "20.01");
+  equal(gathered[0], { a: "drop", b: "keep", c: "keep" }, "20.02");
+  // "a" is gone by the time "b" and "c" are visited
+  equal(gathered[1], { b: "keep", c: "keep" }, "20.03");
+  equal(gathered[2], { b: "keep", c: "keep" }, "20.04");
+});
+
+test(`21 - parent snapshot reflects an edit made deep under an earlier sibling`, () => {
+  let gathered = [];
+  let actual = traverse({ a: { z: 1 }, b: 2 }, (key1, val1, innerObj) => {
+    gathered.push(innerObj.parent);
+    if (key1 === "z") {
+      return 99;
+    }
+    return val1 !== undefined ? val1 : key1;
+  });
+
+  equal(actual, { a: { z: 99 }, b: 2 }, "21.01");
+  equal(gathered[0], { a: { z: 1 }, b: 2 }, "21.02");
+  equal(gathered[1], { z: 1 }, "21.03");
+  // "b" comes after "a"'s subtree was rewritten, so its snapshot shows that
+  equal(gathered[2], { a: { z: 99 }, b: 2 }, "21.04");
+});
+
+test(`22 - array element replaced with a fresh object`, () => {
+  let replacement = { swapped: true };
+  let gathered = [];
+  let actual = traverse(["x", "y"], (key1, val1, innerObj) => {
+    gathered.push(innerObj.parent);
+    if (key1 === "x") {
+      return replacement;
+    }
+    return val1 !== undefined ? val1 : key1;
+  });
+
+  equal(actual, [{ swapped: true }, "y"], "22.01");
+  // the replacement is cloned in, not adopted by reference
+  equal(replacement, { swapped: true }, "22.02");
+  not.ok(actual[0] === replacement, "22.03");
+  equal(gathered[0], ["x", "y"], "22.04");
+  equal(gathered[1], { swapped: true }, "22.05");
+  equal(gathered[2], [{ swapped: true }, "y"], "22.06");
+});
+
+test(`23 - parent snapshot picks up a scalar rewritten in an earlier sibling`, () => {
+  let gathered = [];
+  let actual = traverse({ a: 1, b: 2, c: 3 }, (key1, val1, innerObj) => {
+    let current = val1 !== undefined ? val1 : key1;
+    gathered.push(innerObj.parent);
+    return typeof current === "number" ? current * 10 : current;
+  });
+
+  equal(actual, { a: 10, b: 20, c: 30 }, "23.01");
+  equal(gathered[0], { a: 1, b: 2, c: 3 }, "23.02");
+  // each snapshot carries the rewrites the siblings before it received
+  equal(gathered[1], { a: 10, b: 2, c: 3 }, "23.03");
+  equal(gathered[2], { a: 10, b: 20, c: 3 }, "23.04");
+});
+
 test.run();

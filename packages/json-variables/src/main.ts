@@ -1,7 +1,7 @@
 /* eslint max-len:0 */
 
 import { arrayiffy } from "arrayiffy-if-string";
-import { getByKey } from "ast-get-values-by-key";
+import { type Findings, getByKey } from "ast-get-values-by-key";
 import { traverse } from "ast-monkey-traverse";
 import {
   existy,
@@ -82,11 +82,33 @@ function trimIfString(something: any): any {
   return isStr(something) ? something.trim() : something;
 }
 
+// getByKey() answers "where does this key appear anywhere in the input" by
+// traversing the whole thing, and ast-monkey-traverse deep-clones as it walks.
+// The input is never mutated over a jVar() call - traverse() works on its own
+// copy of it - so for a given key that answer cannot change, yet an input with
+// N values referring to the same variable used to ask for it N times over. One
+// map per jVar() call, keyed by the key asked for, keeps it to once each.
+type ByKeyCache = Map<string, Findings[]>;
+
+function getByKeyCached(
+  input: Obj,
+  whatToFind: string,
+  byKeyCache: ByKeyCache,
+): Findings[] {
+  let found = byKeyCache.get(whatToFind);
+  if (found === undefined) {
+    found = getByKey(input, whatToFind) as Findings[];
+    byKeyCache.set(whatToFind, found);
+  }
+  return found;
+}
+
 function findValues(
   input: Obj,
   varName: string,
   path: string,
   resolvedOpts: Opts,
+  byKeyCache: ByKeyCache,
 ): string | undefined {
   DEV &&
     console.log(
@@ -123,9 +145,12 @@ function findValues(
         currentPath + resolvedOpts.dataContainerIdentifierTails,
       );
       DEV && console.log(`* gotPath = ${JSON.stringify(gotPath, null, 4)}`);
-      if (isObj(gotPath) && objectPath.get(gotPath, varName)) {
+      let gotValue = isObj(gotPath)
+        ? objectPath.get(gotPath, varName)
+        : undefined;
+      if (gotValue) {
         DEV && console.log(`FOUND!\n${gotPath[varName]}`);
-        resolveValue = objectPath.get(gotPath, varName);
+        resolveValue = gotValue;
         DEV &&
           console.log(
             `${`\u001b[${33}m${`resolveValue`}\u001b[${39}m`} = ${JSON.stringify(resolveValue, null, 4)}`,
@@ -168,9 +193,12 @@ function findValues(
           currentPath + resolvedOpts.dataContainerIdentifierTails,
         );
         DEV && console.log(`* gotPath = ${JSON.stringify(gotPath, null, 4)}`);
-        if (isObj(gotPath) && objectPath.get(gotPath, varName)) {
+        let gotValue = isObj(gotPath)
+          ? objectPath.get(gotPath, varName)
+          : undefined;
+        if (gotValue) {
           DEV && console.log(`FOUND!\n${gotPath[varName]}`);
-          resolveValue = objectPath.get(gotPath, varName);
+          resolveValue = gotValue;
           handBrakeOff = false;
         }
       }
@@ -180,7 +208,10 @@ function findValues(
         // 1.1.2. second check for key straight in parent level
         let gotPath = objectPath.get(input, currentPath);
         DEV && console.log(`gotPath = ${JSON.stringify(gotPath, null, 4)}`);
-        if (isObj(gotPath) && objectPath.get(gotPath, varName)) {
+        let gotValue = isObj(gotPath)
+          ? objectPath.get(gotPath, varName)
+          : undefined;
+        if (gotValue) {
           DEV &&
             console.log(
               `SUCCESS! currentPath = ${JSON.stringify(
@@ -189,7 +220,7 @@ function findValues(
                 4,
               )} has key ${varName}`,
             );
-          resolveValue = objectPath.get(gotPath, varName);
+          resolveValue = gotValue;
           handBrakeOff = false;
         }
       }
@@ -222,7 +253,7 @@ function findValues(
 
     // it's not a path (does not contain dots)
     if (varName.indexOf(".") === -1) {
-      let gotPathArr = getByKey(input, varName);
+      let gotPathArr = getByKeyCached(input, varName, byKeyCache);
       DEV &&
         console.log(`*** gotPathArr = ${JSON.stringify(gotPathArr, null, 4)}`);
       if (gotPathArr.length) {
@@ -257,7 +288,11 @@ function findValues(
       }
     } else {
       // it's a path (contains dots)
-      let gotPath = getByKey(input, getTopmostKey(varName));
+      let gotPath = getByKeyCached(
+        input,
+        getTopmostKey(varName),
+        byKeyCache,
+      );
       DEV && console.log(`*** gotPath = ${JSON.stringify(gotPath, null, 4)}`);
       if (gotPath.length) {
         for (let y = 0, len2 = gotPath.length; y < len2; y++) {
@@ -286,6 +321,7 @@ function resolveString(
   string: string,
   path: string,
   resolvedOpts: Opts,
+  byKeyCache: ByKeyCache,
   incomingBreadCrumbPath: string[] = [],
 ): string | false | undefined {
   DEV &&
@@ -406,6 +442,7 @@ function resolveString(
           varName.trim(), // varName
           path, // path
           resolvedOpts, // resolvedOpts
+          byKeyCache, // byKeyCache
         );
         if (resolvedValue === undefined) {
           if (resolvedOpts.allowUnresolved === true) {
@@ -482,6 +519,7 @@ function resolveString(
               resolvedValue,
               newPath,
               resolvedOpts,
+              byKeyCache,
               breadCrumbPath,
             ) as string,
             resolvedOpts,
@@ -822,6 +860,9 @@ function jVar(input: Obj, opts?: Partial<Opts>): Obj {
 
   let current;
 
+  // one per call - see getByKeyCached()
+  const byKeyCache: ByKeyCache = new Map();
+
   DEV && console.log("======== JSON VARIABLES START ========");
   DEV && console.log(`input = ${JSON.stringify(input, null, 4)}`);
   DEV && console.log(`resolvedOpts = ${JSON.stringify(resolvedOpts, null, 4)}`);
@@ -918,7 +959,13 @@ function jVar(input: Obj, opts?: Partial<Opts>): Obj {
     if (isStr(current) && containsHeadsOrTails(current, resolvedOpts)) {
       DEV && console.log("RETURN");
       // breadCrumbPath, the fifth argument is not passed as there're no previous paths
-      return resolveString(input, current, innerObj.path, resolvedOpts);
+      return resolveString(
+        input,
+        current,
+        innerObj.path,
+        resolvedOpts,
+        byKeyCache,
+      );
     }
 
     // otherwise, just return as it is. We're not going to touch plain objects/arrays,numbers/bools etc.

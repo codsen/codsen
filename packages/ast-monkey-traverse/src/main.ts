@@ -28,6 +28,12 @@ export type Callback = (
   stop: Stop,
 ) => any;
 
+// Detaches one just-visited child for storing in a `parent` snapshot.
+// Primitives can hold no references, so only the rest is worth a clone.
+function snapshotChild(value: any): any {
+  return typeof value === "object" && value !== null ? clone(value) : value;
+}
+
 /**
  * Utility library to traverse AST
  */
@@ -38,79 +44,143 @@ function traverse<T>(tree1: T, cb1: Callback): T {
     );
   }
   let stop2: Stop = { now: false };
+
+  // Every node written, deleted or spliced anywhere in the tree bumps this.
+  // Each frame records the value its `parent` snapshot was taken at and
+  // re-clones only once the counter has moved on - siblings whose parent did
+  // not change share one snapshot instead of deep-cloning it once each. The
+  // counter being shared through this closure is what makes an edit deep
+  // inside a child subtree invalidate every ancestor's snapshot as well.
+  let mutations = 0;
+
   //
-  // traverseInner() needs a wrapper to shield the last two input args from the outside
+  // traverseInner() needs a wrapper to shield the last args from the outside
   //
   function traverseInner<U>(
     treeOriginal: U,
     callback: Callback,
-    originalInnerObj: Partial<InnerObj>,
+    depth: number,
+    path: string,
+    topmostKey: string | undefined,
     stop: Stop,
   ): U {
     DEV && console.log(`======= traverseInner() =======`);
     let tree: any = treeOriginal;
 
-    let res;
-    let innerObj = { depth: -1, path: "", ...originalInnerObj };
-    innerObj.depth += 1;
+    // parentKey depends on this frame's path, not on the child being visited,
+    // so it is settled once, ahead of either loop below
+    let parentKey = path ? path.slice(path.lastIndexOf(".") + 1) : null;
+    DEV &&
+      console.log(
+        `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`parentKey`}\u001b[${39}m`} = ${JSON.stringify(
+          parentKey,
+          null,
+          4,
+        )}`,
+      );
+    // The snapshot handed to callbacks as `innerObj.parent`. It is deep-cloned
+    // in full only once per frame; afterwards each sibling gets a shallow copy
+    // with the one changed slot restated, so consecutive snapshots share the
+    // parts neither of them touched. All of them stay detached from the live
+    // tree, which is what the no-mutation guarantee rests on.
+    let parent: any;
+    let parentSnappedAt = -1;
+    // Which single slot the previous iteration changed, applied only once a
+    // later sibling actually asks for a snapshot. A container's last child
+    // never has one asked for, so it never pays for one.
+    let pendingSlot: any;
+    let pendingRemoved = false;
+
     if (Array.isArray(tree)) {
       DEV && console.log(`tree is array!`);
-      for (let i = 0, len = tree.length; i < len; i++) {
+      // the length is read live: the splices below only ever shorten the
+      // array, so a stale upper bound would merely spin through out-of-range
+      // indices, splicing nothing
+      for (let i = 0; i < tree.length; i++) {
         DEV &&
           console.log(
-            `a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
+            `a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
           );
         if (stop.now) {
-          DEV && console.log(`${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          DEV && console.log(`${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
-        let path = innerObj.path ? `${innerObj.path}.${i}` : `${i}`;
+        let currentValue = tree[i];
+        if (currentValue === undefined) {
+          tree.splice(i, 1);
+          mutations += 1;
+          // a splice shifts every later index, so no single-slot patch
+          // describes it - the next snapshot has to be cloned outright
+          pendingSlot = undefined;
+          continue;
+        }
+        let currentPath = path ? `${path}.${i}` : `${i}`;
         DEV &&
           console.log(
-            `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
-              path,
+            `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
+              currentPath,
               null,
               4,
             )}`,
           );
-        if (tree[i] !== undefined) {
-          innerObj.parent = clone(tree);
-          innerObj.parentType = "array";
-          innerObj.parentKey = innerObj.path
-            ? innerObj.path.slice(innerObj.path.lastIndexOf(".") + 1)
-            : null;
-          DEV &&
-            console.log(
-              `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
-                innerObj.parentKey,
-                null,
-                4,
-              )}`,
-            );
-          // innerObj.path = `${innerObj.path}[${i}]`
-          let currentValue = tree[i];
-          let callbackResult = callback(
-            currentValue,
-            undefined,
-            { ...innerObj, path } as InnerObj,
-            stop,
-          );
-          res = traverseInner(
-            callbackResult === currentValue
-              ? callbackResult
-              : clone(callbackResult),
-            callback,
-            { ...innerObj, path },
-            stop,
-          );
-          if (Number.isNaN(res) && i < tree.length) {
-            tree.splice(i, 1);
-            i -= 1;
+        if (parentSnappedAt !== mutations) {
+          if (pendingSlot === undefined) {
+            parent = clone(tree);
           } else {
-            tree[i] = res;
+            parent = parent.slice();
+            if (pendingRemoved) {
+              parent.splice(pendingSlot, 1);
+            } else {
+              parent[pendingSlot] = snapshotChild(tree[pendingSlot]);
+            }
           }
-        } else {
+          parentSnappedAt = mutations;
+        }
+        pendingSlot = undefined;
+        let innerObj: InnerObj = {
+          depth,
+          path: currentPath,
+          parent,
+          parentType: "array",
+          parentKey,
+        };
+        if (topmostKey !== undefined) {
+          innerObj.topmostKey = topmostKey;
+        }
+        let res = callback(currentValue, undefined, innerObj, stop);
+        // primitives - the bulk of any AST - can hold no references and have
+        // nothing to descend into, so they skip both calls below outright
+        if (typeof res === "object" && res !== null) {
+          if (res !== currentValue) {
+            res = clone(res);
+          }
+          res = traverseInner(
+            res,
+            callback,
+            depth + 1,
+            currentPath,
+            topmostKey,
+            stop,
+          );
+        }
+        let spliced = false;
+        if (Number.isNaN(res) && i < tree.length) {
           tree.splice(i, 1);
+          mutations += 1;
+          spliced = true;
+        } else if (res !== currentValue) {
+          tree[i] = res;
+          mutations += 1;
+        }
+        // Depth-first order means index `i` is the only slot that can have
+        // moved since the snapshot above, so record it and let the next
+        // sibling, if there is one, fold it into that snapshot
+        if (parentSnappedAt !== mutations) {
+          pendingSlot = i;
+          pendingRemoved = spliced;
+        }
+        if (spliced) {
+          i -= 1;
         }
       }
     } else if (isObj(tree)) {
@@ -119,71 +189,90 @@ function traverse<T>(tree1: T, cb1: Callback): T {
       for (let key in tree) {
         DEV &&
           console.log(
-            `${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
+            `${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`,
           );
-        if (stop.now && key != null) {
-          DEV && console.log(`${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+        if (stop.now) {
+          DEV && console.log(`${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
         DEV &&
           console.log(
-            `FIY, ${`\u001b[${33}m${`innerObj.path`}\u001b[${39}m`} = ${JSON.stringify(
-              innerObj.path,
-              null,
-              4,
-            )}`,
-          );
-        let path = innerObj.path ? `${innerObj.path}.${key}` : key;
-        DEV &&
-          console.log(
-            `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+            `FIY, ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
               path,
               null,
               4,
             )}`,
           );
-        if (innerObj.depth === 0 && key != null) {
-          innerObj.topmostKey = key;
-        }
-        innerObj.parent = clone(tree);
-        innerObj.parentType = "object";
-        innerObj.parentKey = innerObj.path
-          ? innerObj.path.slice(innerObj.path.lastIndexOf(".") + 1)
-          : null;
+        let currentPath = path ? `${path}.${key}` : key;
         DEV &&
           console.log(
-            `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
-              innerObj.parentKey,
+            `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
+              currentPath,
               null,
               4,
             )}`,
           );
+        if (depth === 0) {
+          topmostKey = key;
+        }
+        if (parentSnappedAt !== mutations) {
+          if (pendingSlot === undefined) {
+            parent = clone(tree);
+          } else {
+            parent = { ...parent };
+            if (pendingRemoved) {
+              delete parent[pendingSlot];
+            } else {
+              parent[pendingSlot] = snapshotChild(tree[pendingSlot]);
+            }
+          }
+          parentSnappedAt = mutations;
+        }
+        pendingSlot = undefined;
         let currentValue = tree[key];
-        let callbackResult = callback(
-          key,
-          currentValue,
-          { ...innerObj, path } as InnerObj,
-          stop,
-        );
-        res = traverseInner(
-          callbackResult === currentValue
-            ? callbackResult
-            : clone(callbackResult),
-          callback,
-          { ...innerObj, path },
-          stop,
-        );
+        let innerObj: InnerObj = {
+          depth,
+          path: currentPath,
+          parent,
+          parentType: "object",
+          parentKey,
+        };
+        if (topmostKey !== undefined) {
+          innerObj.topmostKey = topmostKey;
+        }
+        let res = callback(key, currentValue, innerObj, stop);
+        if (typeof res === "object" && res !== null) {
+          if (res !== currentValue) {
+            res = clone(res);
+          }
+          res = traverseInner(
+            res,
+            callback,
+            depth + 1,
+            currentPath,
+            topmostKey,
+            stop,
+          );
+        }
+        let removed = false;
         if (Number.isNaN(res)) {
           delete tree[key];
-        } else {
+          mutations += 1;
+          removed = true;
+        } else if (res !== currentValue) {
           tree[key] = res;
+          mutations += 1;
+        }
+        if (parentSnappedAt !== mutations) {
+          pendingSlot = key;
+          pendingRemoved = removed;
         }
       }
     }
     DEV && console.log(`just returning tree, ${JSON.stringify(tree, null, 4)}`);
     return tree;
   }
-  return traverseInner(clone(tree1), cb1, {}, stop2);
+  return traverseInner(clone(tree1), cb1, 0, "", undefined, stop2);
 }
 
 // -----------------------------------------------------------------------------

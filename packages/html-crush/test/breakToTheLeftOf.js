@@ -2,6 +2,7 @@
 import { test } from "uvu";
 import { equal, is, match, not, ok, throws, type } from "uvu/assert";
 
+import { crush } from "../dist/html-crush.esm.js";
 import { m } from "./util/util.js";
 
 // opts.breakToTheLeftOf
@@ -168,6 +169,43 @@ test(`02 - opts.breakToTheLeftOf - breaks based on breakpoints (whitespace invol
     }).result,
     "<m><n><o>",
     "02.10",
+  );
+});
+
+// degenerate opts.breakToTheLeftOf lists - these bypass the grouped lookup and
+// fall back to matchRightIncl()
+// -----------------------------------------------------------------------------
+
+test(`03 - opts.breakToTheLeftOf - degenerate lists`, () => {
+  // an empty entry alongside a real one is simply never matched
+  equal(
+    m(equal, "<a>\n<b>", {
+      removeLineBreaks: true,
+      breakToTheLeftOf: ["", "<b"],
+    }).result,
+    "<a>\n<b>",
+    "03.01",
+  );
+  // a lone empty entry leaves nothing to break on
+  equal(
+    m(equal, "<a>\n<b>", {
+      removeLineBreaks: true,
+      breakToTheLeftOf: [""],
+    }).result,
+    "<a> <b>",
+    "03.02",
+  );
+  // a lone whitespace-only entry reaches matchRightIncl(), which reads it as
+  // "match by callback alone" and objects that no callback was given
+  throws(
+    () => {
+      crush("<a>\n<b>", {
+        removeLineBreaks: true,
+        breakToTheLeftOf: [" "],
+      });
+    },
+    /THROW_ID_06/,
+    "03.03",
   );
 });
 

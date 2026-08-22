@@ -59,6 +59,8 @@ export interface Opts {
   dedupeStringsInArrayValues: boolean;
   mergeBoolsUsingOrNotAnd: boolean;
   useNullAsExplicitFalse: boolean;
+  /** Reuse exclusively owned input trees without repeated references. Inputs may be mutated. */
+  reuseInputs?: boolean;
 }
 
 // ===================================
@@ -922,11 +924,15 @@ function externalApi(
 
   // notice we have first argument tracking the current path, which is not
   // exposed to the external API.
+  const reuseInputs =
+    !!resolvedOpts.reuseInputs && !resolvedOpts.oneToManyArrayObjectMerge;
   return mergeAdvanced(
     { key: null, path: "", type: [getType(input1), getType(input2)] },
     input1,
     input2,
     resolvedOpts,
+    reuseInputs,
+    reuseInputs,
   );
 }
 

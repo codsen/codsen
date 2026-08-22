@@ -16,4 +16,11 @@ test("02 - rejects non-regular expressions", () => {
   equal(isRegExp({ [Symbol.toStringTag]: "RegExp" }), false, "02.03");
 });
 
+test("03 - RegExp.prototype answers as it always has", () => {
+  // it is not a regex, but the spec's source getter special-cases it instead
+  // of throwing, so this has always reported true - pinned against drift
+  equal(isRegExp(RegExp.prototype), true, "03.01");
+  equal(isRegExp(vm.runInNewContext("RegExp.prototype")), false, "03.02");
+});
+
 test.run();

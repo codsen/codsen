@@ -129,7 +129,6 @@ test(`06 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should 
   setter(equal, input, result, ["j"], { k: "x" }, "04.06");
 });
 
-// TODO
 test(`07 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should set value using number path`, () => {
   let source = `{
   "a": "b",
@@ -233,10 +232,20 @@ test(`14 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should 
     "f": "i"
   }
 }`;
-  // TODO: creates new keys
-  // setter(equal, testObj, result, "b.e.1.g", "f", "04.14");
-
   setter(equal, testObj, result, "b.e.1.f", null, "04.14");
+});
+
+test(`14b - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should add a key to an object inside an array`, () => {
+  let result = `{
+  "a": "b",
+  "b": {
+    "c": [],
+    "d": ["a", "b"],
+    "e": [{}, { "f": "g", "g": "f" }],
+    "f": "i"
+  }
+}`;
+  setter(equal, testObj, result, "b.e.1.g", "f", "04.14b");
 });
 
 test(`15 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should set value under array`, () => {
@@ -249,10 +258,20 @@ test(`15 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should 
     "f": "i"
   }
 }`;
-  // TODO: creates new keys
-  // setter(equal, testObj, result, "b.e.1.g", "f", "04.15");
-
   setter(equal, testObj, result, ["b", "e", 1, "f"], null, "04.15");
+});
+
+test(`15b - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - should add a key to an object inside an array - path as array`, () => {
+  let result = `{
+  "a": "b",
+  "b": {
+    "c": [],
+    "d": ["a", "b"],
+    "e": [{}, { "f": "g", "g": "f" }],
+    "f": "i"
+  }
+}`;
+  setter(equal, testObj, result, ["b", "e", 1, "g"], "f", "04.15b");
 });
 
 test(`16 - set - ${`\u001b[${35}m${"object-path/set()"}\u001b[${39}m`} - minimal case, arrays 1`, () => {

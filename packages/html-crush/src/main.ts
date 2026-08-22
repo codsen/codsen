@@ -3,6 +3,7 @@ import {
   isLetter,
   isPlainObject as isObj,
   isStr,
+  isWhitespaceChar,
 } from "codsen-utils";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
@@ -16,6 +17,21 @@ import { version as v } from "../package.json";
 const version: string = v;
 
 declare let DEV: boolean;
+
+// \w equivalent - [A-Za-z0-9_] - straight off the char code. The regex
+// literals this replaces sit in the per-character hot path.
+function isWordCharCode(code: number): boolean {
+  return (
+    (code > 96 && code < 123) || // a-z
+    (code > 64 && code < 91) || // A-Z
+    (code > 47 && code < 58) || // 0-9
+    code === 95 // _
+  );
+}
+
+function isWordChar(char: string | undefined): boolean {
+  return char !== undefined && isWordCharCode(char.charCodeAt(0));
+}
 export interface Opts {
   lineLengthLimit: number;
   removeIndentations: boolean;
@@ -235,6 +251,102 @@ function crush(str: string, opts?: Partial<Opts>): Res {
     removeHTMLComments: false,
     removeCSSComments: false,
   };
+
+  // "mindTheInlineTags" is consulted for every "<" in the input, previously
+  // through matchRight() against all ~57 names. Both an array scan and, more
+  // expensively, matchRight()'s per-name options-object rebuild are avoidable:
+  // hold the names in a Set instead.
+  let mindTheInlineTags = Array.isArray(resolvedOpts.mindTheInlineTags)
+    ? resolvedOpts.mindTheInlineTags
+    : [];
+  let mindTheInlineTagsSet = new Set(mindTheInlineTags);
+  // Reading the whole word-character run at once and looking it up is
+  // equivalent to matchRight() + its "next char is not \w" callback only while
+  // every name is itself a run of word characters - which the defaults, and
+  // any real tag name, are. Anything else keeps the original code path.
+  // An empty list is not a "no tag matches" shortcut: matchRight() with
+  // nothing to match falls through to matching by the callback alone, which
+  // accepts any "<" not followed by a word character. Leave that to it.
+  let inlineTagsAreWordsOnly =
+    !!mindTheInlineTags.length &&
+    mindTheInlineTags.every(
+      (tag) =>
+        isStr(tag) && !!tag.length && ![...tag].some((c) => !isWordChar(c)),
+    );
+
+  // resolvedOpts.breakToTheLeftOf is matched at nearly every character, and
+  // matchRightIncl() rebuilds its options object once per name on every call.
+  // Since these are plain, case-sensitive literals with no callback and no
+  // trimming, matching one is just String#startsWith - so group the names by
+  // their first character and only test the ones that could start here.
+  //
+  // Entries that are empty strings are dropped: march() never matches those,
+  // whereas startsWith("") would match anywhere.
+  let breakToTheLeftOfByFirstChar = new Map<string, string[]>();
+  // A lone whitespace-only or empty entry sends matchRightIncl() down its
+  // "match by callback alone" branch, which throws when there is no callback.
+  // Leave any such list to it rather than reproducing that here.
+  let breakToTheLeftOfIsSimple =
+    Array.isArray(resolvedOpts.breakToTheLeftOf) &&
+    !!resolvedOpts.breakToTheLeftOf.length &&
+    resolvedOpts.breakToTheLeftOf.every(isStr) &&
+    !(
+      resolvedOpts.breakToTheLeftOf.length === 1 &&
+      !resolvedOpts.breakToTheLeftOf[0].trim()
+    );
+  if (breakToTheLeftOfIsSimple) {
+    for (let oneOfNames of resolvedOpts.breakToTheLeftOf) {
+      if (!oneOfNames.length) {
+        continue;
+      }
+      let bucket = breakToTheLeftOfByFirstChar.get(oneOfNames[0]);
+      if (bucket) {
+        bucket.push(oneOfNames);
+      } else {
+        breakToTheLeftOfByFirstChar.set(oneOfNames[0], [oneOfNames]);
+      }
+    }
+  }
+
+  // Does any resolvedOpts.breakToTheLeftOf name start at "idx"?
+  function breakToTheLeftOfMatches(idx: number): boolean {
+    if (!breakToTheLeftOfIsSimple) {
+      return !!matchRightIncl(str, idx, resolvedOpts.breakToTheLeftOf);
+    }
+    let bucket = breakToTheLeftOfByFirstChar.get(str[idx]);
+    if (bucket === undefined) {
+      return false;
+    }
+    for (let n = 0, bucketLen = bucket.length; n < bucketLen; n++) {
+      if (str.startsWith(bucket[n], idx)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Is the tag starting at "idx" (which the callers have already established
+  // to be a "<") one of resolvedOpts.mindTheInlineTags? "allowSlash" mirrors
+  // opts.trimCharsBeforeMatching = "/", i.e. it also accepts closing tags.
+  function inlineTagOnTheRight(idx: number, allowSlash: boolean): boolean {
+    if (!inlineTagsAreWordsOnly) {
+      return !!matchRight(str, idx, resolvedOpts.mindTheInlineTags, {
+        ...(allowSlash ? { trimCharsBeforeMatching: "/" } : {}),
+        cb: (nextChar) => !nextChar || !isWordChar(nextChar),
+      });
+    }
+    let start = idx + 1;
+    if (allowSlash) {
+      while (str[start] === "/") {
+        start++;
+      }
+    }
+    let end = start;
+    while (end < len && isWordCharCode(str.charCodeAt(end))) {
+      end++;
+    }
+    return end > start && mindTheInlineTagsSet.has(str.slice(start, end));
+  }
   let lastLinebreak = null;
   let whitespaceStartedAt = null;
   let nonWhitespaceCharMet = false;
@@ -283,6 +395,14 @@ function crush(str: string, opts?: Partial<Opts>): Res {
   // it will be used to trim start of the file.
 
   let len = str.length;
+  // index of the first non-whitespace character, or "len" when the input is
+  // whitespace-only; lets the loop answer "is there content to the left of
+  // i?" in constant time. Walked rather than derived from trimStart(), which
+  // would copy the whole string just to measure it.
+  let contentStartsAt = 0;
+  while (contentStartsAt < len && isWhitespaceChar(str[contentStartsAt])) {
+    contentStartsAt++;
+  }
   let midLen = Math.floor(len / 2);
   let leavePercForLastStage = 0.01; // in range of [0, 1]
 
@@ -432,6 +552,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
 
       if (
         scriptStartedAt !== null &&
+        str[i] === "<" &&
         str.startsWith("</script", i) &&
         !isLetter(str[i + 8])
       ) {
@@ -447,7 +568,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
           (resolvedOpts.removeIndentations || resolvedOpts.removeLineBreaks) &&
           i > 0 &&
           str[~-i] &&
-          !str[~-i].trim()
+          isWhitespaceChar(str[~-i])
         ) {
           // march backwards
           DEV && console.log(`\u001b[${36}m${`march backwards`}\u001b[${39}m`);
@@ -460,7 +581,11 @@ function crush(str: string, opts?: Partial<Opts>): Res {
                   0,
                 )}`}\u001b[${39}m`,
               );
-            if (str[y] === "\n" || str[y] === "\r" || str[y].trim()) {
+            if (
+              str[y] === "\n" ||
+              str[y] === "\r" ||
+              !isWhitespaceChar(str[y])
+            ) {
               if (y + 1 < i) {
                 DEV &&
                   console.log(
@@ -492,6 +617,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
       if (
         !doNothing &&
         !withinStyleTag &&
+        str[i] === "<" &&
         str.startsWith("<script", i) &&
         !isLetter(str[i + 7])
       ) {
@@ -546,7 +672,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
       if (
         tagNameStartsAt !== null &&
         tagName === null &&
-        !/\w/.test(str[i]) // not a letter
+        !isWordChar(str[i]) // not a letter
       ) {
         tagName = str.slice(tagNameStartsAt, i);
         DEV &&
@@ -556,13 +682,14 @@ function crush(str: string, opts?: Partial<Opts>): Res {
 
         // check for inner tag whitespace
         let idxOnTheRight = right(str, ~-i);
+        let idxRightOfI = right(str, i);
         if (
           typeof idxOnTheRight === "number" &&
           str[idxOnTheRight] === ">" &&
-          !str[i].trim() &&
-          right(str, i)
+          isWhitespaceChar(str[i]) &&
+          idxRightOfI
         ) {
-          finalIndexesToDelete.push(i, right(str, i) as number);
+          finalIndexesToDelete.push(i, idxRightOfI as number);
           DEV &&
             console.log(
               `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${right(
@@ -576,8 +703,8 @@ function crush(str: string, opts?: Partial<Opts>): Res {
           str[right(str, idxOnTheRight) as number] === ">"
         ) {
           // if there's a space in front of "/>"
-          if (!str[i].trim() && right(str, i)) {
-            finalIndexesToDelete.push(i, right(str, i) as number);
+          if (isWhitespaceChar(str[i]) && idxRightOfI) {
+            finalIndexesToDelete.push(i, idxRightOfI as number);
             DEV &&
               console.log(
                 `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${right(
@@ -587,10 +714,11 @@ function crush(str: string, opts?: Partial<Opts>): Res {
               );
           }
           // if there's space between slash and bracket
-          if (str[idxOnTheRight + 1] !== ">" && right(str, idxOnTheRight + 1)) {
+          let idxAfterSlashGap = right(str, idxOnTheRight + 1);
+          if (str[idxOnTheRight + 1] !== ">" && idxAfterSlashGap) {
             finalIndexesToDelete.push(
               idxOnTheRight + 1,
-              right(str, idxOnTheRight + 1) as number,
+              idxAfterSlashGap as number,
             );
             DEV &&
               console.log(
@@ -611,15 +739,19 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         str[~-i] === "<" &&
         tagNameStartsAt === null
       ) {
-        if (/\w/.test(str[i])) {
+        if (isWordChar(str[i])) {
           tagNameStartsAt = i;
           DEV && console.log(`SET tagNameStartsAt = ${tagNameStartsAt}`);
-        } else if (
-          str[right(str, ~-i) as number] === "/" &&
-          /\w/.test(str[right(str, right(str, ~-i)) as number] || "")
-        ) {
-          tagNameStartsAt = right(str, right(str, ~-i));
-          DEV && console.log(`SET tagNameStartsAt = ${tagNameStartsAt}`);
+        } else {
+          let idxAfterBracket = right(str, ~-i);
+          let idxAfterSlash = right(str, idxAfterBracket);
+          if (
+            str[idxAfterBracket as number] === "/" &&
+            isWordChar(str[idxAfterSlash as number] || "")
+          ) {
+            tagNameStartsAt = idxAfterSlash;
+            DEV && console.log(`SET tagNameStartsAt = ${tagNameStartsAt}`);
+          }
         }
       }
 
@@ -867,6 +999,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         !doNothing &&
         !withinStyleTag &&
         !withinInlineStyle &&
+        str[i] === "<" &&
         (str.startsWith("<!--", i) ||
           (resolvedOpts.removeHTMLComments === 2 &&
             str.startsWith("<![endif", i))) &&
@@ -953,6 +1086,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         !doNothing &&
         withinStyleTag &&
         styleCommentStartedAt === null &&
+        str[i] === "<" &&
         str.startsWith("</style", i) &&
         !isLetter(str[i + 7])
       ) {
@@ -965,6 +1099,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         !doNothing &&
         !withinStyleTag &&
         styleCommentStartedAt === null &&
+        str[i] === "<" &&
         str.startsWith("<style", i) &&
         !isLetter(str[i + 6])
       ) {
@@ -1010,7 +1145,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
 
       // catch whitespace
       // ███████████████████████████████████████
-      if (!doNothing && !str[i].trim()) {
+      if (!doNothing && isWhitespaceChar(str[i])) {
         // if whitespace
         if (whitespaceStartedAt === null) {
           whitespaceStartedAt = i;
@@ -1154,7 +1289,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
                 );
               if (
                 breakToTheLeftOfFirstLetters.includes(str[i]) &&
-                matchRightIncl(str, i, resolvedOpts.breakToTheLeftOf)
+                breakToTheLeftOfMatches(i)
               ) {
                 DEV && console.log("inside CASE 2-1");
                 DEV &&
@@ -1212,9 +1347,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
               if (
                 // (
                 str[i] === "<" &&
-                matchRight(str, i, resolvedOpts.mindTheInlineTags, {
-                  cb: (nextChar) => !nextChar || !/\w/.test(nextChar), // not a letter
-                })
+                inlineTagOnTheRight(i, false)
                 // ) ||
                 // ("<>".includes(str[i]) &&
                 //   ("0123456789".includes(str[right(str, i)]) ||
@@ -1234,7 +1367,9 @@ function crush(str: string, opts?: Partial<Opts>): Res {
                     str[~-whitespaceStartedAt],
                   ) ||
                     DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[i]))) ||
-                (str.startsWith("!important", i) && !withinHTMLConditional) ||
+                (str[i] === "!" &&
+                  str.startsWith("!important", i) &&
+                  !withinHTMLConditional) ||
                 (withinInlineStyle &&
                   (str[~-whitespaceStartedAt] === "'" ||
                     str[~-whitespaceStartedAt] === '"')) ||
@@ -1249,14 +1384,11 @@ function crush(str: string, opts?: Partial<Opts>): Res {
 
                 whatToAdd = "";
 
-                if (
-                  str[i] === "/" &&
-                  str[i + 1] === ">" &&
-                  right(str, i) &&
-                  (right(str, i) as number) > i + 1
-                ) {
+                let idxRightOfSlash =
+                  str[i] === "/" && str[i + 1] === ">" ? right(str, i) : null;
+                if (idxRightOfSlash && (idxRightOfSlash as number) > i + 1) {
                   // delete whitespace between / and >
-                  finalIndexesToDelete.push(i + 1, right(str, i) as number);
+                  finalIndexesToDelete.push(i + 1, idxRightOfSlash as number);
                   DEV &&
                     console.log(
                       `${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
@@ -1273,7 +1405,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
                         1
                       }`,
                     );
-                  countCharactersPerLine -= (right(str, i) as number) - i + 1;
+                  countCharactersPerLine -= (idxRightOfSlash as number) - i + 1;
                 }
               }
               // tend double closing curlies in sequence
@@ -1510,13 +1642,18 @@ function crush(str: string, opts?: Partial<Opts>): Res {
         i !== 0 &&
         resolvedOpts.removeLineBreaks &&
         (resolvedOpts.lineLengthLimit || breakToTheLeftOfFirstLetters) &&
-        !str.startsWith("</a", i)
+        !(str[i] === "<" && str.startsWith("</a", i))
       ) {
         if (
           breakToTheLeftOfFirstLetters &&
-          matchRightIncl(str, i, resolvedOpts.breakToTheLeftOf) &&
-          str.slice(0, i).trim() &&
-          (!str.startsWith("<![endif]", i) || !matchLeft(str, i, "<!--"))
+          breakToTheLeftOfMatches(i) &&
+          // is there any non-whitespace to the left? Asking str.slice(0, i)
+          // would copy the whole left side on every breakpoint - quadratic
+          // over the input - and the answer never changes once known.
+          contentStartsAt < i &&
+          (str[i] !== "<" ||
+            !str.startsWith("<![endif]", i) ||
+            !matchLeft(str, i, "<!--"))
         ) {
           DEV &&
             console.log(
@@ -1550,7 +1687,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
             (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) &&
               !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i])) ||
             CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) ||
-            !str[i].trim()
+            isWhitespaceChar(str[i])
           ) {
             DEV && console.log(`inside release-stage clauses`);
             // 1. release stage contents - now they'll be definitely deleted
@@ -1583,7 +1720,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
               // amended into linebreak because otherwise we'll exceed the
               // character limit
               if (
-                str[i].trim() &&
+                !isWhitespaceChar(str[i]) &&
                 str[i + 1]?.trim() &&
                 countCharactersPerLine + (stageAdd ? stageAdd.length : 0) >
                   resolvedOpts.lineLengthLimit
@@ -1654,25 +1791,14 @@ function crush(str: string, opts?: Partial<Opts>): Res {
             // 2. put this current place into stage
             // =============================================================
             if (
-              str[i].trim() &&
+              !isWhitespaceChar(str[i]) &&
               (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) ||
                 (str[~-i] &&
                   CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[~-i]))) &&
               isStr(leftTagName) &&
-              (!tagName || !resolvedOpts.mindTheInlineTags.includes(tagName)) &&
-              !(
-                str[i] === "<" &&
-                matchRight(str, i, resolvedOpts.mindTheInlineTags, {
-                  cb: (nextChar) => !nextChar || !/\w/.test(nextChar), // not a letter
-                })
-              ) &&
-              !(
-                str[i] === "<" &&
-                matchRight(str, i, resolvedOpts.mindTheInlineTags, {
-                  trimCharsBeforeMatching: "/",
-                  cb: (nextChar) => !nextChar || !/\w/.test(nextChar), // not a letter
-                })
-              )
+              (!tagName || !mindTheInlineTagsSet.has(tagName)) &&
+              !(str[i] === "<" && inlineTagOnTheRight(i, false)) &&
+              !(str[i] === "<" && inlineTagOnTheRight(i, true))
             ) {
               stageFrom = i;
               stageTo = i;
@@ -1693,14 +1819,8 @@ function crush(str: string, opts?: Partial<Opts>): Res {
                 (Array.isArray(resolvedOpts.mindTheInlineTags) &&
                   resolvedOpts.mindTheInlineTags.length &&
                   isStr(tagName) &&
-                  !resolvedOpts.mindTheInlineTags.includes(tagName))) &&
-              !(
-                str[i] === "<" &&
-                matchRight(str, i, resolvedOpts.mindTheInlineTags, {
-                  trimCharsBeforeMatching: "/",
-                  cb: (nextChar) => !nextChar || !/\w/.test(nextChar), // not a letter
-                })
-              )
+                  !mindTheInlineTagsSet.has(tagName))) &&
+              !(str[i] === "<" && inlineTagOnTheRight(i, true))
             ) {
               stageFrom = null;
               stageTo = null;
@@ -1716,13 +1836,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
           // WE NEED TO BREAK RIGHT HERE
           if (
             CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) &&
-            !(
-              str[i] === "<" &&
-              matchRight(str, i, resolvedOpts.mindTheInlineTags, {
-                trimCharsBeforeMatching: "/",
-                cb: (nextChar) => !nextChar || !/\w/.test(nextChar), // not a letter
-              })
-            )
+            !(str[i] === "<" && inlineTagOnTheRight(i, true))
           ) {
             // ██ 1.
             //
@@ -1832,7 +1946,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
             isStr(tagName) &&
             Array.isArray(resolvedOpts.mindTheInlineTags) &&
             resolvedOpts.mindTheInlineTags.length &&
-            !resolvedOpts.mindTheInlineTags.includes(tagName)
+            !mindTheInlineTagsSet.has(tagName)
           ) {
             // ██ 2.
             //
@@ -1862,7 +1976,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
                   `${`\u001b[${31}m${`RESET`}\u001b[${39}m`} countCharactersPerLine = 0`,
                 );
             }
-          } else if (!str[i].trim()) {
+          } else if (isWhitespaceChar(str[i])) {
             // ██ 3.
             //
             DEV &&
@@ -2121,6 +2235,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
       if (
         !doNothing &&
         !withinStyleTag &&
+        str[i] === "<" &&
         str.startsWith("<pre", i) &&
         !isLetter(str[i + 4])
       ) {
@@ -2142,6 +2257,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
       if (
         !doNothing &&
         !withinStyleTag &&
+        str[i] === "<" &&
         str.startsWith("<code", i) &&
         !isLetter(str[i + 5])
       ) {
@@ -2160,7 +2276,7 @@ function crush(str: string, opts?: Partial<Opts>): Res {
       // catch start of <![CDATA[
       // ███████████████████████████████████████
 
-      if (!doNothing && str.startsWith("<![CDATA[", i)) {
+      if (!doNothing && str[i] === "<" && str.startsWith("<![CDATA[", i)) {
         DEV && console.log(`STARTING OF <![CDATA[`);
 
         let locationOfClosingCData = str.indexOf("]]>", i + 9);

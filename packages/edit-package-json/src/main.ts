@@ -45,16 +45,16 @@ function stringifyAndEscapeValue(something: any): string {
 /* c8 ignore next */
 function isNotEscape(str: string, idx: number): boolean {
   if (str[idx] !== "\\") {
-    // log(`045 yes, it's not excaped`);
+    // log(`045 yes, it's not escaped`);
     return true;
   }
 
   let temp = chompLeft(str, idx, { mode: 1 }, "\\");
   if (isNum(temp) && (idx - temp) % 2 !== 0) {
-    // log(`059 yes, it's not excaped`);
+    // log(`059 yes, it's not escaped`);
     return true;
   }
-  // log(`062 no, it's excaped!`);
+  // log(`062 no, it's escaped!`);
   return false;
 }
 
@@ -62,10 +62,21 @@ export interface Inputs {
   str: string;
   path: string;
   valToInsert?: string | number;
-  mode: "set" | "del";
+  mode: "set" | "del" | "locate";
 }
 
-function main({ str, path, valToInsert, mode }: Inputs): string {
+/** where a value sits in the source string: [from, to) */
+interface Located {
+  from: number;
+  to: number;
+}
+
+function main({
+  str,
+  path,
+  valToInsert,
+  mode,
+}: Inputs): string | Located | null {
   let i = 0;
 
   function log(something: any): void {
@@ -226,6 +237,28 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
       );
     }
 
+    // an array element that is itself an array moves the index on, the same way
+    // an element that is an object does just above. It belongs here rather than
+    // with the rest of the "[" handling further down, because the path is
+    // compared against in between the two, and an element addressed before its
+    // index moved answers to its neighbour's path
+    if (
+      typeof withinQuotesSince !== "number" &&
+      str[i] === "[" &&
+      isNotEscape(str, i - 1) &&
+      !replaceThisValue &&
+      currentlyWithinArray &&
+      !itsTheFirstElem
+    ) {
+      currentPath[currentPath.length - 1] =
+        (currentPath[currentPath.length - 1] as number) + 1;
+      log(
+        `224 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath[${
+          currentPath.length - 1
+        }]`}\u001b[${39}m`} = ${currentPath[currentPath.length - 1]}`,
+      );
+    }
+
     if (
       typeof withinQuotesSince !== "number" &&
       str[i] === "}" &&
@@ -325,6 +358,37 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
       }
     }
 
+    // The index has to move on before the path is compared just below. The
+    // value-start clauses further down used to do it, which left an element
+    // that is a bare number, boolean or null answering to its neighbour's path
+    // for the one character where the two disagreed - and when such an element
+    // was the last one in the array, there was no later character for the
+    // comparison to catch up on, so it never matched at all. Openings are left
+    // out because "{" and "[" are bad characters here, and each moves the index
+    // on in its own handler above
+    if (
+      !replaceThisValue &&
+      currentlyWithinArray &&
+      valueStartedAt === null &&
+      str[i].trim() &&
+      !badChars.includes(str[i])
+    ) {
+      if (itsTheFirstElem) {
+        itsTheFirstElem = false;
+        log(
+          `363 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`itsTheFirstElem`}\u001b[${39}m`} = ${itsTheFirstElem}`,
+        );
+      } else if (typeof currentPath[currentPath.length - 1] === "number") {
+        currentPath[currentPath.length - 1] =
+          (currentPath[currentPath.length - 1] as number) + 1;
+        log(
+          `368 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath[${
+            currentPath.length - 1
+          }]`}\u001b[${39}m`} = ${currentPath[currentPath.length - 1]}`,
+        );
+      }
+    }
+
     // for arrays, this is the beginning of what to replace
     DEV && console.log(`above of beginning of what to replace in arrays`);
     if (
@@ -341,7 +405,15 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
         `329 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`replaceThisValue`}\u001b[${39}m`} = ${replaceThisValue}`,
       );
 
-      valueStartedAt = i;
+      // An element that opens with a bracket is met here first, so this is
+      // where its value starts. An unquoted one - a number, a boolean, null -
+      // is met by the value-start clauses further down instead, which is also
+      // what moves the index on, so the path only matches here one character
+      // in. Overwriting the start it recorded chopped the first character off
+      // every such element that got replaced
+      if (valueStartedAt === null) {
+        valueStartedAt = i;
+      }
       log(
         `334 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`valueStartedAt`}\u001b[${39}m`} = ${valueStartedAt}`,
       );
@@ -429,24 +501,7 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
       log(
         `418 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`valueStartedAt`}\u001b[${39}m`} = ${valueStartedAt}`,
       );
-
-      // calculate the path on arrays
-      if (currentlyWithinArray) {
-        if (itsTheFirstElem) {
-          itsTheFirstElem = false;
-          log(
-            `426 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`itsTheFirstElem`}\u001b[${39}m`} = ${itsTheFirstElem}`,
-          );
-        } else if (typeof currentPath[currentPath.length - 1] === "number") {
-          currentPath[currentPath.length - 1] =
-            (currentPath[currentPath.length - 1] as number) + 1;
-          log(
-            `432 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath[${
-              currentPath.length - 1
-            }]`}\u001b[${39}m`} = ${currentPath[currentPath.length - 1]}`,
-          );
-        }
-      }
+      // the path on arrays has already been moved on, above
     }
 
     // catch the end of a value
@@ -597,9 +652,15 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
 
         if (
           withinArrayIndexes.length &&
-          withinObjectIndexes.length &&
-          withinArrayIndexes[withinArrayIndexes.length - 1] >
-            withinObjectIndexes[withinObjectIndexes.length - 1]
+          // an array that nothing else is open inside of counts too - without
+          // this, closing an object element of a top-level array left us
+          // thinking we were still inside that object, so the next element's
+          // opening brace never bumped the index and every element past the
+          // first answered to the wrong path. Same shape as the "]" handler
+          // above
+          (!withinObjectIndexes.length ||
+            withinArrayIndexes[withinArrayIndexes.length - 1] >
+              withinObjectIndexes[withinObjectIndexes.length - 1])
         ) {
           currentlyWithinObject = false;
           currentlyWithinArray = true;
@@ -681,7 +742,6 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
     } else if (
       (typeof withinQuotesSince !== "number" || withinQuotesSince === i) &&
       replaceThisValue &&
-      !currentlyWithinArray &&
       typeof valueStartedAt === "number"
     ) {
       DEV && console.log(`about to catch various opening brackets/quotes`);
@@ -781,19 +841,56 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
           )}`,
         );
 
+        if (mode === "locate") {
+          // 0. if locate() - report where the value sits and leave the string
+          // alone. Only bracketed and quoted values include the character we
+          // stopped on; numbers, booleans and null stop on whatever follows
+          // them, be that whitespace or a comma
+          return {
+            from: valueStartedAt,
+            to: ["[", "{", `"`].includes(str[valueStartedAt]) ? i + 1 : i,
+          };
+        }
         if (mode === "set") {
           // 1. if set()
           log(`789 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
-          let extraLineBreak = "";
-          if (
-            str
-              .slice(valueStartedAt, i + (str[i].trim() ? 1 : 0))
-              .includes("\n") &&
-            str[i + (str[i].trim() ? 1 : 0)] !== "\n"
-          ) {
-            extraLineBreak = "\n";
-          }
           let endingPartsBeginning = i + (str[i].trim() ? 1 : 0);
+
+          // Replacing a value that spanned lines with one that does not can
+          // leave whatever follows it stranded on the same line, so a line
+          // break goes in to make up for it - but only when there isn't one
+          // already. The comma that separates members sits before that break,
+          // so it has to be stepped over, or every replacement of a multi-line
+          // value that was not the last one wedged a newline in front of the
+          // comma
+          let extraLineBreak = "";
+          if (str.slice(valueStartedAt, endingPartsBeginning).includes("\n")) {
+            let y = endingPartsBeginning;
+            if (str[y] === ",") {
+              y += 1;
+            }
+            let breakAlreadyFollows = false;
+            while (y < len && !str[y].trim()) {
+              if (str[y] === "\n") {
+                breakAlreadyFollows = true;
+                break;
+              }
+              y += 1;
+            }
+            if (!breakAlreadyFollows) {
+              extraLineBreak = "\n";
+            }
+          }
+          // a number, boolean or null does not own the character that ended
+          // it - counting it in swallowed the "}" or "]" closing the container
+          // around it, which only showed on minified input, where no
+          // whitespace separates the value from the bracket
+          if (
+            ![`"`, `[`, `{`].includes(str[valueStartedAt]) &&
+            ["}", "]"].includes(str[i])
+          ) {
+            endingPartsBeginning -= 1;
+          }
           DEV &&
             console.log(
               `SET ${`\u001b[${33}m${`endingPartsBeginning`}\u001b[${39}m`} = ${JSON.stringify(
@@ -862,18 +959,36 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
                 : keyStartedAt) as number) - 1
             }`,
           );
-          let startingPoint = left(
-            str,
-            ((currentlyWithinArray ? valueStartedAt : keyStartedAt) as number) -
-              1,
-          );
-          if (typeof startingPoint === "number") {
-            startingPoint++;
-          }
+          // an array element is anchored at its value; only an object member
+          // has a key to delete from. An element that is itself an object
+          // leaves currentlyWithinArray false by the time we get here, and
+          // there is no key either, so the value is the only anchor there is
+          let deletingAValue = currentlyWithinArray || keyStartedAt === null;
+          let deleteAnchor = (
+            deletingAValue ? valueStartedAt : keyStartedAt
+          ) as number;
+          // Deletion starts just past whatever non-whitespace precedes the
+          // member. Where to look left from differs between the two anchors:
+          // keyStartedAt sits inside a key's opening quote, so the search has
+          // to begin one earlier to clear it, while valueStartedAt is already
+          // on the value's first character. The fallback covers the first
+          // member of a top-level container, which has nothing to its left.
+          let startingPoint =
+            (left(str, deletingAValue ? deleteAnchor : deleteAnchor - 1) ??
+              deleteAnchor - 1) + 1;
           log(
             `864 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} initial ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${startingPoint}`,
           );
           let endingPoint = i + (str[i].trim() ? 1 : 0);
+          // as in the "set" branch above - a number, boolean or null does not
+          // own the character that ended it, and taking it along deleted the
+          // "}" or "]" that closes the container around it
+          if (
+            ![`"`, `[`, `{`].includes(str[valueStartedAt as number]) &&
+            ["}", "]"].includes(str[i])
+          ) {
+            endingPoint -= 1;
+          }
           if (
             typeof startingPoint === "number" &&
             str[startingPoint - 1] === "," &&
@@ -938,8 +1053,17 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
         str[i] === "]" &&
         isNotEscape(str, i - 1))
     ) {
-      currentlyWithinArray = false;
-      currentlyWithinObject = true;
+      // what we drop back into is whichever container is still open innermost,
+      // which is not always an object - a nested array closing inside an array
+      // used to leave us thinking we were in an object, and then the next
+      // element's opening bracket never moved the index on
+      let innermostOpenIsArray =
+        !!withinArrayIndexes.length &&
+        (!withinObjectIndexes.length ||
+          withinArrayIndexes[withinArrayIndexes.length - 1] >
+            withinObjectIndexes[withinObjectIndexes.length - 1]);
+      currentlyWithinArray = innermostOpenIsArray;
+      currentlyWithinObject = !innermostOpenIsArray;
       DEV &&
         console.log(
           `${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinArray`}\u001b[${39}m`} = ${currentlyWithinArray};  ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}`,
@@ -986,10 +1110,344 @@ function main({ str, path, valToInsert, mode }: Inputs): string {
   }
   log(`\n\u001b[${36}m${`=============================== FIN.`}\u001b[${39}m`);
 
-  log(
-    `947 RETURN applied ${JSON.stringify(rApply(str, ranges as any), null, 4)}`,
+  if (mode === "del") {
+    log(
+      `947 RETURN applied ${JSON.stringify(rApply(str, ranges as any), null, 4)}`,
+    );
+    return rApply(str, ranges as any);
+  }
+
+  // "set" and "locate" walked the whole string without meeting the path. For
+  // set() that is not a no-op any more - it goes on to add the path
+  log(`947 RETURN null - path not found`);
+  return null;
+}
+
+// -----------------------------------------------------------------------------
+//                       A D D I N G   N E W   P A T H S
+// -----------------------------------------------------------------------------
+//
+// Everything above edits values that are already in the string. What follows
+// grafts on the ones that are not, keeping to the formatting the string already
+// uses, and matching what object-path's set() would have done to the parsed
+// equivalent - that is the contract the tests hold this package to.
+
+// object-path reads a segment as an array index only when it is a canonically
+// spelled non-negative integer - "01" addresses a key called "01", not slot one
+function isArrayIndex(segment: string): boolean {
+  return /^(?:0|[1-9]\d*)$/.test(segment);
+}
+
+/** whitespace at the start of the line the given index sits on */
+function indentOfLineAt(str: string, idx: number): string {
+  let lineStartsAt = str.lastIndexOf("\n", idx) + 1;
+  let i = lineStartsAt;
+  while (i < idx && (str[i] === " " || str[i] === "\t")) {
+    i += 1;
+  }
+  return str.slice(lineStartsAt, i);
+}
+
+interface Style {
+  /** what the string puts between a key's colon and its value */
+  colonGap: string;
+  /** one step of indentation, empty when the string is minified */
+  indentUnit: string;
+  multiline: boolean;
+}
+
+// Read the formatting off the string rather than imposing one: a minified
+// package.json must stay minified, and an indented one must keep its indent.
+function detectStyle(str: string): Style {
+  let colonGap = "";
+  let withinQuotes = false;
+  for (let i = 0, len = str.length; i < len; i++) {
+    if (withinQuotes) {
+      if (str[i] === `"` && isNotEscape(str, i - 1)) {
+        withinQuotes = false;
+      }
+      continue;
+    }
+    if (str[i] === `"`) {
+      withinQuotes = true;
+    } else if (str[i] === ":") {
+      let gapEndsAt = i + 1;
+      while (gapEndsAt < len && !str[gapEndsAt].trim()) {
+        gapEndsAt += 1;
+      }
+      colonGap = str.slice(i + 1, gapEndsAt);
+      break;
+    }
+  }
+
+  // the first indented line gives away the indentation unit - the outermost
+  // container starts at column zero, so its members sit exactly one step in
+  let indentUnit = "";
+  let firstLineBreakAt = str.indexOf("\n");
+  if (firstLineBreakAt !== -1) {
+    indentUnit = indentOfLineAt(str, str.length);
+    let i = firstLineBreakAt + 1;
+    while (i < str.length && (str[i] === " " || str[i] === "\t")) {
+      i += 1;
+    }
+    indentUnit = str.slice(firstLineBreakAt + 1, i);
+  }
+
+  return {
+    colonGap: colonGap.includes("\n") ? " " : colonGap,
+    indentUnit,
+    multiline: firstLineBreakAt !== -1,
+  };
+}
+
+interface ContainerContents {
+  memberCount: number;
+  /** index of the first character of the last member, -1 when there are none */
+  lastMemberStart: number;
+  /** index after the last character of the last member, -1 when there are none */
+  lastMemberEnd: number;
+}
+
+// One depth- and quote-aware pass over a container's insides. Enough to tell an
+// empty container from a populated one, to count an array's elements, and to
+// find where the last member ends - which is where a new one goes.
+function scanContainer(
+  str: string,
+  from: number,
+  to: number,
+): ContainerContents {
+  let depth = 0;
+  let withinQuotes = false;
+  let commaCount = 0;
+  let hasContent = false;
+  let expectingMember = true;
+  let lastMemberStart = -1;
+  let lastMemberEnd = -1;
+
+  for (let i = from + 1, upto = to - 1; i < upto; i++) {
+    let char = str[i];
+    if (withinQuotes) {
+      if (char === `"` && isNotEscape(str, i - 1)) {
+        withinQuotes = false;
+      }
+      lastMemberEnd = i + 1;
+      continue;
+    }
+    if (char === `"`) {
+      withinQuotes = true;
+    } else if (char === "{" || char === "[") {
+      depth += 1;
+    } else if (char === "}" || char === "]") {
+      depth -= 1;
+    } else if (char === "," && !depth) {
+      commaCount += 1;
+      expectingMember = true;
+      continue;
+    }
+    if (!char.trim()) {
+      continue;
+    }
+    hasContent = true;
+    if (expectingMember) {
+      expectingMember = false;
+      lastMemberStart = i;
+    }
+    lastMemberEnd = i + 1;
+  }
+
+  return {
+    memberCount: hasContent ? commaCount + 1 : 0,
+    lastMemberStart,
+    lastMemberEnd,
+  };
+}
+
+/** the outermost container - the one no path segment addresses */
+function locateRoot(str: string): Located | null {
+  let from = -1;
+  for (let i = 0, len = str.length; i < len; i++) {
+    if (str[i].trim()) {
+      from = i;
+      break;
+    }
+  }
+  if (from === -1 || (str[from] !== "{" && str[from] !== "[")) {
+    return null;
+  }
+
+  let depth = 0;
+  let withinQuotes = false;
+  for (let i = from, len = str.length; i < len; i++) {
+    let char = str[i];
+    if (withinQuotes) {
+      if (char === `"` && isNotEscape(str, i - 1)) {
+        withinQuotes = false;
+      }
+      continue;
+    }
+    if (char === `"`) {
+      withinQuotes = true;
+    } else if (char === "{" || char === "[") {
+      depth += 1;
+    } else if (char === "}" || char === "]") {
+      depth -= 1;
+      if (!depth) {
+        return { from, to: i + 1 };
+      }
+    }
+  }
+  return null;
+}
+
+// The value for a path whose last few segments don't exist yet - "a.b.0.c"
+// grafted onto an empty object needs {"b":[{"c":<value>}]} building around it.
+// Which container gets created depends on the segment that addresses it, the
+// same way object-path decides: all-digits means an array, anything else an
+// object. An index past the end pads with nulls, again matching object-path.
+function buildNestedValue(
+  segments: string[],
+  leaf: string,
+  style: Style,
+  baseIndent: string,
+): string {
+  if (!segments.length) {
+    return leaf;
+  }
+  let innerIndent = baseIndent + style.indentUnit;
+  let inner = buildNestedValue(segments.slice(1), leaf, style, innerIndent);
+  let [openBracket, closeBracket, member] = isArrayIndex(segments[0])
+    ? ["[", "]", inner]
+    : ["{", "}", `${JSON.stringify(segments[0])}:${style.colonGap}${inner}`];
+
+  let members = isArrayIndex(segments[0])
+    ? [...(new Array(Number(segments[0])).fill("null") as string[]), member]
+    : [member];
+
+  if (!style.multiline) {
+    return `${openBracket}${members.join(",")}${closeBracket}`;
+  }
+  return `${openBracket}\n${innerIndent}${members.join(
+    `,\n${innerIndent}`,
+  )}\n${baseIndent}${closeBracket}`;
+}
+
+// Grafts the segments that don't exist yet onto the container that does.
+function graftOntoContainer(
+  str: string,
+  container: Located,
+  segments: string[],
+  leaf: string,
+  style: Style,
+): string {
+  let opening = str[container.from];
+  if (opening !== "{" && opening !== "[") {
+    // the closest thing that exists is a plain value, so there is nothing to
+    // add a key to. object-path throws here; a string editor that never parses
+    // is better off handing the input back untouched
+    return str;
+  }
+  let { memberCount, lastMemberStart, lastMemberEnd } = scanContainer(
+    str,
+    container.from,
+    container.to,
   );
-  return rApply(str, ranges as any);
+
+  // an array only takes indexes, and only ones at or past its end - anything
+  // before that would already have been found and edited in place
+  let fillerCount = 0;
+  if (opening === "[") {
+    if (!isArrayIndex(segments[0])) {
+      return str;
+    }
+    fillerCount = Number(segments[0]) - memberCount;
+    if (fillerCount < 0) {
+      return str;
+    }
+  }
+
+  // what separates this container's members is whatever already separates
+  // them - copied off the gap in front of the last one
+  let memberGap = "";
+  let memberIndent: string;
+  if (memberCount) {
+    let gapStartsAt = lastMemberStart;
+    while (gapStartsAt > container.from + 1 && !str[gapStartsAt - 1].trim()) {
+      gapStartsAt -= 1;
+    }
+    memberGap = str.slice(gapStartsAt, lastMemberStart);
+    memberIndent = memberGap.includes("\n")
+      ? memberGap.slice(memberGap.lastIndexOf("\n") + 1)
+      : indentOfLineAt(str, container.from) + style.indentUnit;
+  } else {
+    // nothing in there to copy, so open the container up the way the rest of
+    // the string is laid out
+    memberIndent = indentOfLineAt(str, container.from) + style.indentUnit;
+    memberGap = style.multiline ? `\n${memberIndent}` : "";
+  }
+
+  let addition = [
+    ...(new Array(fillerCount).fill("null") as string[]),
+    opening === "["
+      ? buildNestedValue(segments.slice(1), leaf, style, memberIndent)
+      : `${JSON.stringify(segments[0])}:${style.colonGap}${buildNestedValue(
+          segments.slice(1),
+          leaf,
+          style,
+          memberIndent,
+        )}`,
+  ].join(`,${memberGap}`);
+
+  if (memberCount) {
+    return `${str.slice(0, lastMemberEnd)},${memberGap}${addition}${str.slice(
+      lastMemberEnd,
+    )}`;
+  }
+  let closingGap = style.multiline
+    ? `\n${indentOfLineAt(str, container.from)}`
+    : "";
+  return `${str.slice(0, container.from + 1)}${memberGap}${addition}${closingGap}${str.slice(container.to - 1)}`;
+}
+
+// Finds the deepest ancestor of the wanted path that does exist, then grafts
+// the rest of the path onto it.
+function addNewPath(
+  str: string,
+  path: string,
+  valToInsert: string | number,
+): string {
+  let segments = stringifyPath(path).split(".");
+  if (segments.some((segment) => !segment.length)) {
+    return str;
+  }
+  let style = detectStyle(str);
+  let leaf = stringifyAndEscapeValue(
+    isStr(valToInsert) &&
+      !valToInsert.startsWith(`"`) &&
+      !valToInsert.startsWith(`{`)
+      ? `"${valToInsert}"`
+      : valToInsert,
+  );
+
+  for (let take = segments.length - 1; take >= 0; take--) {
+    let container = take
+      ? (main({
+          str,
+          path: segments.slice(0, take).join("."),
+          mode: "locate",
+        }) as Located | null)
+      : locateRoot(str);
+    if (!container) {
+      continue;
+    }
+    return graftOntoContainer(
+      str,
+      container,
+      segments.slice(take),
+      leaf,
+      style,
+    );
+  }
+  return str;
 }
 
 function set(str: string, path: string, valToInsert: string | number): string {
@@ -999,7 +1457,12 @@ function set(str: string, path: string, valToInsert: string | number): string {
       `edit-package-json/set(): [THROW_ID_01] first input argument must be a non-empty string. It was given as ${formatDiagnosticValue(str, 4)} (type ${typeof str})`,
     );
   }
-  return main({ str, path, valToInsert, mode: "set" });
+  let edited = main({ str, path, valToInsert, mode: "set" });
+  if (isStr(edited)) {
+    return edited;
+  }
+  // the path is not in there yet - add it
+  return addNewPath(str, path, valToInsert);
 }
 
 function del(str: string, path: string): string {
@@ -1010,7 +1473,7 @@ function del(str: string, path: string): string {
     );
   }
   // absence of what to insert means delete
-  return main({ str, path, mode: "del" });
+  return main({ str, path, mode: "del" }) as string;
 }
 
 export { del, set, version };

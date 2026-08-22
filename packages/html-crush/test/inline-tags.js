@@ -532,4 +532,35 @@ test(`23 - inline tags - spanner is not span`, () => {
   );
 });
 
+// opts.mindTheInlineTags entries which are not plain words - these bypass the
+// fast tag lookup and fall back to matchRight()
+// -----------------------------------------------------------------------------
+
+test(`24 - opts.mindTheInlineTags - entries containing non-word characters`, () => {
+  equal(
+    m(equal, "<span>1</span>\n<span>2</span>", {
+      removeLineBreaks: true,
+      mindTheInlineTags: ["a-b", "span"],
+    }).result,
+    "<span>1</span> <span>2</span>",
+    "24.01",
+  );
+  equal(
+    m(equal, "<span>1</span>\n<span>2</span>", {
+      removeLineBreaks: true,
+      mindTheInlineTags: ["a-b"],
+    }).result,
+    "<span>1</span><span>2</span>",
+    "24.02",
+  );
+  equal(
+    m(equal, "<span>1</span>\n<span>2</span>", {
+      removeLineBreaks: true,
+      mindTheInlineTags: ["span", ""],
+    }).result,
+    "<span>1</span> <span>2</span>",
+    "24.03",
+  );
+});
+
 test.run();
