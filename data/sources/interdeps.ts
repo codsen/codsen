@@ -104,7 +104,7 @@ export const interdeps = [
   },
   {
     "name": "ast-monkey-traverse",
-    "size": 1303,
+    "size": 1643,
     "imports": [
       "codsen-utils"
     ]
@@ -144,7 +144,7 @@ export const interdeps = [
   },
   {
     "name": "codsen-utils",
-    "size": 18803,
+    "size": 18826,
     "imports": []
   },
   {
@@ -198,7 +198,7 @@ export const interdeps = [
   },
   {
     "name": "detergent",
-    "size": 24236,
+    "size": 24459,
     "imports": [
       "all-named-html-entities",
       "codsen-utils",
@@ -220,7 +220,7 @@ export const interdeps = [
   },
   {
     "name": "edit-package-json",
-    "size": 9412,
+    "size": 12594,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -246,7 +246,7 @@ export const interdeps = [
   },
   {
     "name": "email-comb",
-    "size": 24873,
+    "size": 25246,
     "imports": [
       "array-pull-all-with-glob",
       "codsen-utils",
@@ -294,7 +294,7 @@ export const interdeps = [
   },
   {
     "name": "html-crush",
-    "size": 10897,
+    "size": 11548,
     "imports": [
       "codsen-utils",
       "ranges-apply",
@@ -391,7 +391,7 @@ export const interdeps = [
   },
   {
     "name": "json-comb-core",
-    "size": 6936,
+    "size": 6842,
     "imports": [
       "codsen-utils",
       "object-fill-missing-keys",
@@ -412,7 +412,7 @@ export const interdeps = [
   },
   {
     "name": "json-variables",
-    "size": 10234,
+    "size": 10341,
     "imports": [
       "arrayiffy-if-string",
       "ast-get-values-by-key",
@@ -477,7 +477,7 @@ export const interdeps = [
   },
   {
     "name": "object-flatten-all-arrays",
-    "size": 1455,
+    "size": 1470,
     "imports": [
       "codsen-utils"
     ]
@@ -493,7 +493,7 @@ export const interdeps = [
   },
   {
     "name": "object-merge-advanced",
-    "size": 7454,
+    "size": 7510,
     "imports": [
       "codsen-utils",
       "util-nonempty"
@@ -560,7 +560,7 @@ export const interdeps = [
   },
   {
     "name": "ranges-merge",
-    "size": 2317,
+    "size": 2275,
     "imports": [
       "codsen-utils",
       "ranges-sort"
@@ -724,7 +724,7 @@ export const interdeps = [
   },
   {
     "name": "string-left-right",
-    "size": 5907,
+    "size": 6253,
     "imports": [
       "codsen-utils"
     ]
@@ -792,7 +792,7 @@ export const interdeps = [
   },
   {
     "name": "string-strip-html",
-    "size": 22854,
+    "size": 23523,
     "imports": [
       "codsen-utils",
       "ranges-apply",
